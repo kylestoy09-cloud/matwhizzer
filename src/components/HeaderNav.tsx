@@ -10,7 +10,7 @@ export function HeaderNav() {
   const bgClass = isBoys ? 'bg-slate-900' : 'bg-rose-900'
   const homeHref = isBoys ? '/boys' : '/girls'
   const leaderboardsHref = isBoys ? '/boys/leaderboards' : '/girls/leaderboards'
-  const schoolsHref    = isBoys ? '/boys/schools' : null
+  const schoolsHref    = isBoys ? '/boys/schools' : '/girls/schools'
   const districtsHref  = isBoys ? '/boys/districts' : null
   const regionsHref    = isBoys ? '/boys/regions' : '/girls/regions'
   const stateHref      = isBoys ? '/boys/state' : '/girls/state'

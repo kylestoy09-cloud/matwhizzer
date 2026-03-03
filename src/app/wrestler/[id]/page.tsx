@@ -235,9 +235,9 @@ export default async function WrestlerPage({
       <p className="text-slate-500 mb-8">
         {displaySchool && (
           <>
-            {wrestler.gender === 'M' && primarySchool ? (
+            {primarySchool ? (
               <Link
-                href={`/boys/schools/${encodeURIComponent(primarySchool)}`}
+                href={`/${wrestler.gender === 'M' ? 'boys' : 'girls'}/schools/${encodeURIComponent(primarySchool)}`}
                 className="font-medium text-slate-700 hover:text-blue-600 transition-colors"
               >
                 {displaySchool}
