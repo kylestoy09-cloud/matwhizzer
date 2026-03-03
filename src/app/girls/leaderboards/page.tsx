@@ -1,52 +1,83 @@
 import { supabase } from '@/lib/supabase'
+import Link from 'next/link'
 import {
   LeaderTable, WrestlerCell, TabNav, SectionHeader,
   fmtTime, fmtSchool, cleanTournament, COMEBACK_ROUND_LABEL,
-  type PinRow, type FastPinRow, type TfRow, type MdRow,
-  type WinPctRow, type BonusRow,
   type DomRow, type DistrictRow, type SchoolRow,
   type WeightRow, type ComebackRow,
 } from '@/components/leaderboard-ui'
 
-// ── Page ──────────────────────────────────────────────────────────────────────
+// ── Pool-specific types ───────────────────────────────────────────────────────
 
-export default async function GirlsLeaderboardsPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ tab?: string }>
-}) {
-  const { tab = 'wrestlers' } = await searchParams
-  const isAnalytics = tab === 'analytics'
-
-  const data = isAnalytics ? await fetchAnalytics() : await fetchWrestlers()
-
-  return (
-    <div className="max-w-6xl mx-auto px-4 py-10">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-rose-900">Girls Leaderboards</h1>
-        <p className="text-slate-500 text-sm mt-1">NJSIAA 2024–25 girls postseason — regions &amp; state</p>
-      </div>
-
-      <TabNav active={tab} basePath="/girls/leaderboards" />
-
-      {!isAnalytics ? (
-        <WrestlerTab d={data as WrestlerData} />
-      ) : (
-        <AnalyticsTab d={data as AnalyticsData} />
-      )}
-    </div>
-  )
+type PoolFastRow = {
+  wrestler_id: string
+  wrestler_name: string
+  school: string | null
+  school_name: string | null
+  fall_time_seconds: number
+  weight: number
 }
 
-// ── Data fetching ─────────────────────────────────────────────────────────────
+type PoolPinRow = {
+  wrestler_id: string
+  wrestler_name: string
+  school: string | null
+  school_name: string | null
+  pin_count: number
+}
 
-type WrestlerData = {
-  pins:    PinRow[]
-  fastPin: FastPinRow[]
-  tfs:     TfRow[]
-  mds:     MdRow[]
-  winPct:  WinPctRow[]
-  bonus:   BonusRow[]
+type PoolTfRow = {
+  wrestler_id: string
+  wrestler_name: string
+  school: string | null
+  school_name: string | null
+  tf_count: number
+}
+
+type PoolBonusRow = {
+  wrestler_id: string
+  wrestler_name: string
+  school: string | null
+  school_name: string | null
+  bonus_wins: number
+  total_wins: number
+}
+
+type PoolBonusPctRow = {
+  wrestler_id: string
+  wrestler_name: string
+  school: string | null
+  school_name: string | null
+  bonus_wins: number
+  total_wins: number
+  bonus_pct: number
+}
+
+type PoolMatTimeRow = {
+  wrestler_id: string
+  wrestler_name: string
+  school: string | null
+  school_name: string | null
+  total_seconds: number
+  match_count: number
+}
+
+type PoolTeamRow = {
+  school: string | null
+  school_name: string | null
+  total_points: number
+  match_count: number
+}
+
+type PoolData = {
+  fastestPin:  PoolFastRow[]
+  fastestTf:   PoolFastRow[]
+  mostPins:    PoolPinRow[]
+  mostTf:      PoolTfRow[]
+  mostBonus:   PoolBonusRow[]
+  bonusPct:    PoolBonusPctRow[]
+  matTime:     PoolMatTimeRow[]
+  teamPoints:  PoolTeamRow[]
 }
 
 type AnalyticsData = {
@@ -57,29 +88,38 @@ type AnalyticsData = {
   comebacks:  ComebackRow[]
 }
 
-async function fetchWrestlers(): Promise<WrestlerData> {
+// ── Data fetching ─────────────────────────────────────────────────────────────
+
+async function fetchPoolStats(pool: string): Promise<PoolData> {
+  const p = { p_pool: pool }
   const [
-    { data: pins },
-    { data: fastPin },
-    { data: tfs },
-    { data: mds },
-    { data: winPct },
-    { data: bonus },
+    { data: fastestPin },
+    { data: fastestTf },
+    { data: mostPins },
+    { data: mostTf },
+    { data: mostBonus },
+    { data: bonusPct },
+    { data: matTime },
+    { data: teamPoints },
   ] = await Promise.all([
-    supabase.rpc('lb_most_pins',      { p_gender: 'F' }),
-    supabase.rpc('lb_fastest_pin',    { p_gender: 'F' }),
-    supabase.rpc('lb_most_techfalls', { p_gender: 'F' }),
-    supabase.rpc('lb_most_md',        { p_gender: 'F' }),
-    supabase.rpc('lb_win_pct',        { p_gender: 'F' }),
-    supabase.rpc('lb_bonus_wins',     { p_gender: 'F' }),
+    supabase.rpc('lb_gp_fastest_pin',   p),
+    supabase.rpc('lb_gp_fastest_tf',    p),
+    supabase.rpc('lb_gp_most_pins',     p),
+    supabase.rpc('lb_gp_most_tf',       p),
+    supabase.rpc('lb_gp_most_bonus',    p),
+    supabase.rpc('lb_gp_bonus_pct',     p),
+    supabase.rpc('lb_gp_mat_time',      p),
+    supabase.rpc('lb_gp_team_points',   p),
   ])
   return {
-    pins:    (pins    ?? []) as PinRow[],
-    fastPin: (fastPin ?? []) as FastPinRow[],
-    tfs:     (tfs     ?? []) as TfRow[],
-    mds:     (mds     ?? []) as MdRow[],
-    winPct:  (winPct  ?? []) as WinPctRow[],
-    bonus:   (bonus   ?? []) as BonusRow[],
+    fastestPin:  (fastestPin  ?? []) as PoolFastRow[],
+    fastestTf:   (fastestTf   ?? []) as PoolFastRow[],
+    mostPins:    (mostPins    ?? []) as PoolPinRow[],
+    mostTf:      (mostTf      ?? []) as PoolTfRow[],
+    mostBonus:   (mostBonus   ?? []) as PoolBonusRow[],
+    bonusPct:    (bonusPct    ?? []) as PoolBonusPctRow[],
+    matTime:     (matTime     ?? []) as PoolMatTimeRow[],
+    teamPoints:  (teamPoints  ?? []) as PoolTeamRow[],
   }
 }
 
@@ -106,123 +146,293 @@ async function fetchAnalytics(): Promise<AnalyticsData> {
   }
 }
 
+// ── Pool selector ─────────────────────────────────────────────────────────────
+
+const POOL_OPTIONS = [
+  { key: 'region', label: 'Regions', desc: 'Region matches only' },
+  { key: 'state',  label: 'State',   desc: 'All tournaments' },
+] as const
+
+function PoolNav({ active, tab }: { active: string; tab: string }) {
+  return (
+    <div className="flex items-center gap-2 mb-8">
+      <span className="text-xs text-slate-400 font-medium uppercase tracking-wide mr-1 hidden sm:inline">Pool:</span>
+      {POOL_OPTIONS.map(p => (
+        <Link
+          key={p.key}
+          href={`/girls/leaderboards?tab=${tab}&pool=${p.key}`}
+          title={p.desc}
+          className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+            active === p.key
+              ? 'bg-rose-900 text-white shadow-sm'
+              : 'bg-white border border-slate-200 text-slate-600 hover:border-slate-400 hover:text-slate-900'
+          }`}
+        >
+          {p.label}
+        </Link>
+      ))}
+    </div>
+  )
+}
+
+// ── Pool-aware wrestler cell ───────────────────────────────────────────────────
+
+function PWCell({ id, name, school }: { id: string; name: string; school: string | null }) {
+  return (
+    <span className="flex items-baseline gap-2 min-w-0">
+      <Link
+        href={`/wrestler/${id}`}
+        className="font-medium text-slate-800 hover:text-blue-600 transition-colors truncate"
+      >
+        {name}
+      </Link>
+      {school && (
+        <span className="text-slate-400 text-xs shrink-0">{school}</span>
+      )}
+    </span>
+  )
+}
+
+// ── Page ──────────────────────────────────────────────────────────────────────
+
+export default async function GirlsLeaderboardsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ tab?: string; pool?: string }>
+}) {
+  const { tab = 'wrestlers', pool = 'region' } = await searchParams
+  const isAnalytics = tab === 'analytics'
+  const activePool = (['region', 'state'] as const).includes(pool as 'region' | 'state')
+    ? pool
+    : 'region'
+
+  const data = isAnalytics ? await fetchAnalytics() : await fetchPoolStats(activePool)
+
+  const poolLabel = POOL_OPTIONS.find(p => p.key === activePool)?.desc ?? ''
+
+  return (
+    <div className="max-w-6xl mx-auto px-4 py-10">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-rose-900">Girls Leaderboards</h1>
+        <p className="text-slate-500 text-sm mt-1">NJSIAA 2024–25 girls postseason — regions &amp; state</p>
+      </div>
+
+      <TabNav active={tab} basePath="/girls/leaderboards" />
+
+      {!isAnalytics ? (
+        <>
+          <PoolNav active={activePool} tab={tab} />
+          <WrestlerTab d={data as PoolData} poolLabel={poolLabel} />
+        </>
+      ) : (
+        <AnalyticsTab d={data as AnalyticsData} />
+      )}
+    </div>
+  )
+}
+
 // ── Wrestler tab ──────────────────────────────────────────────────────────────
 
-function WrestlerTab({ d }: { d: WrestlerData }) {
+function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div className="space-y-12">
 
-      <LeaderTable<PinRow>
-        title="Most Pins"
-        description="Total FALL wins across all girls postseason tournaments"
-        rows={d.pins}
-        cols={[
-          {
-            label: 'Wrestler', align: 'left',
-            render: r => <WrestlerCell id={r.wrestler_id} name={r.name} school={r.school} />,
-          },
-          {
-            label: 'Pins', align: 'right',
-            render: r => <span className="font-bold text-slate-800 tabular-nums">{r.pin_count}</span>,
-          },
-        ]}
-      />
+      {/* ── Single-Match Bests ── */}
+      <section>
+        <SectionHeader
+          title="Single-Match Bests"
+          description={`Fastest individual performances — ${poolLabel}`}
+        />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
-      <LeaderTable<TfRow>
-        title="Most Tech Falls"
-        description="TF and TF-1.5 wins across all girls postseason tournaments"
-        rows={d.tfs}
-        cols={[
-          {
-            label: 'Wrestler', align: 'left',
-            render: r => <WrestlerCell id={r.wrestler_id} name={r.name} school={r.school} />,
-          },
-          {
-            label: 'TFs', align: 'right',
-            render: r => <span className="font-bold text-slate-800 tabular-nums">{r.tf_count}</span>,
-          },
-        ]}
-      />
+          <LeaderTable<PoolFastRow>
+            title="Fastest Pin"
+            description="Single quickest fall in any match"
+            rows={d.fastestPin}
+            cols={[
+              {
+                label: 'Wrestler', align: 'left',
+                render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} />,
+              },
+              {
+                label: 'Wt', align: 'right',
+                render: r => <span className="text-slate-500 tabular-nums">{r.weight}</span>,
+              },
+              {
+                label: 'Time', align: 'right',
+                render: r => (
+                  <span className="font-bold text-slate-800 tabular-nums font-mono">
+                    {fmtTime(r.fall_time_seconds)}
+                  </span>
+                ),
+              },
+            ]}
+          />
 
-      <LeaderTable<FastPinRow>
-        title="Fastest Pin"
-        description="Single fastest fall time"
-        rows={d.fastPin}
-        cols={[
-          {
-            label: 'Wrestler', align: 'left',
-            render: r => <WrestlerCell id={r.wrestler_id} name={r.name} school={r.school} />,
-          },
-          {
-            label: 'Pins', align: 'right',
-            render: r => <span className="text-slate-500 tabular-nums">{r.pin_count}</span>,
-          },
-          {
-            label: 'Fastest', align: 'right',
-            render: r => (
-              <span className="font-bold text-slate-800 tabular-nums font-mono">
-                {fmtTime(Number(r.fastest_seconds))}
-              </span>
-            ),
-          },
-        ]}
-      />
+          <LeaderTable<PoolFastRow>
+            title="Fastest Tech Fall"
+            description="Single quickest tech fall in any match"
+            rows={d.fastestTf}
+            cols={[
+              {
+                label: 'Wrestler', align: 'left',
+                render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} />,
+              },
+              {
+                label: 'Wt', align: 'right',
+                render: r => <span className="text-slate-500 tabular-nums">{r.weight}</span>,
+              },
+              {
+                label: 'Time', align: 'right',
+                render: r => (
+                  <span className="font-bold text-slate-800 tabular-nums font-mono">
+                    {fmtTime(r.fall_time_seconds)}
+                  </span>
+                ),
+              },
+            ]}
+          />
 
-      <LeaderTable<MdRow>
-        title="Most Major Decisions"
-        description="MD wins (8–14 point margin) across all girls postseason tournaments"
-        rows={d.mds}
-        cols={[
-          {
-            label: 'Wrestler', align: 'left',
-            render: r => <WrestlerCell id={r.wrestler_id} name={r.name} school={r.school} />,
-          },
-          {
-            label: 'MDs', align: 'right',
-            render: r => <span className="font-bold text-slate-800 tabular-nums">{r.md_count}</span>,
-          },
-        ]}
-      />
+        </div>
+      </section>
 
-      <LeaderTable<WinPctRow>
-        title="Best Win Percentage"
-        description="Win % across all girls postseason matches — minimum 5 matches"
-        rows={d.winPct}
-        cols={[
-          {
-            label: 'Wrestler', align: 'left',
-            render: r => <WrestlerCell id={r.wrestler_id} name={r.name} school={r.school} />,
-          },
-          {
-            label: 'W-L', align: 'right',
-            render: r => <span className="text-slate-500 tabular-nums">{r.wins}-{Number(r.total) - Number(r.wins)}</span>,
-          },
-          {
-            label: 'Pct', align: 'right',
-            render: r => <span className="font-bold text-slate-800 tabular-nums">{r.win_pct}%</span>,
-          },
-        ]}
-      />
+      {/* ── Season Leaders ── */}
+      <section>
+        <SectionHeader
+          title="Season Leaders"
+          description={`Cumulative stats across all matches — ${poolLabel}`}
+        />
+        <div className="space-y-8">
 
-      <LeaderTable<BonusRow>
-        title="Most Bonus-Point Wins"
-        description="FALL + TF + TF-1.5 + MD wins combined"
-        rows={d.bonus}
-        cols={[
-          {
-            label: 'Wrestler', align: 'left',
-            render: r => <WrestlerCell id={r.wrestler_id} name={r.name} school={r.school} />,
-          },
-          {
-            label: 'Bonus', align: 'right',
-            render: r => <span className="font-bold text-slate-800 tabular-nums">{r.bonus_count}</span>,
-          },
-          {
-            label: 'of', align: 'right',
-            render: r => <span className="text-slate-500 tabular-nums">{r.total_wins}</span>,
-          },
-        ]}
-      />
+          {/* Team Points — full width */}
+          <LeaderTable<PoolTeamRow>
+            title="Team Points"
+            description="Champ: Fall=3, TF=2.5, MD=2, Dec=1 · Cons: 2.5/2/1.5/0.5"
+            rows={d.teamPoints.filter(r => r.school !== null)}
+            cols={[
+              {
+                label: 'School', align: 'left',
+                render: r => (
+                  <span className="font-medium text-slate-800">
+                    {r.school_name || r.school || '—'}
+                  </span>
+                ),
+              },
+              {
+                label: 'Points', align: 'right',
+                render: r => <span className="font-bold text-slate-800 tabular-nums">{r.total_points}</span>,
+              },
+              {
+                label: 'Wins', align: 'right',
+                render: r => <span className="text-slate-500 tabular-nums">{r.match_count}</span>,
+              },
+            ]}
+          />
+
+          {/* 2-column grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+            <LeaderTable<PoolPinRow>
+              title="Most Pins"
+              description="Total fall wins"
+              rows={d.mostPins}
+              cols={[
+                {
+                  label: 'Wrestler', align: 'left',
+                  render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} />,
+                },
+                {
+                  label: 'Pins', align: 'right',
+                  render: r => <span className="font-bold text-slate-800 tabular-nums">{r.pin_count}</span>,
+                },
+              ]}
+            />
+
+            <LeaderTable<PoolTfRow>
+              title="Most Tech Falls"
+              description="Total TF and TF-1.5 wins"
+              rows={d.mostTf}
+              cols={[
+                {
+                  label: 'Wrestler', align: 'left',
+                  render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} />,
+                },
+                {
+                  label: 'TFs', align: 'right',
+                  render: r => <span className="font-bold text-slate-800 tabular-nums">{r.tf_count}</span>,
+                },
+              ]}
+            />
+
+            <LeaderTable<PoolBonusRow>
+              title="Most Bonus Wins"
+              description="Total FALL + TF + MD + INJ + DQ wins"
+              rows={d.mostBonus}
+              cols={[
+                {
+                  label: 'Wrestler', align: 'left',
+                  render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} />,
+                },
+                {
+                  label: 'Bonus', align: 'right',
+                  render: r => <span className="font-bold text-slate-800 tabular-nums">{r.bonus_wins}</span>,
+                },
+                {
+                  label: 'of', align: 'right',
+                  render: r => <span className="text-slate-500 tabular-nums">{r.total_wins}</span>,
+                },
+              ]}
+            />
+
+            <LeaderTable<PoolBonusPctRow>
+              title="Bonus Point %"
+              description="Bonus wins / total wins — minimum 2 wins"
+              rows={d.bonusPct}
+              cols={[
+                {
+                  label: 'Wrestler', align: 'left',
+                  render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} />,
+                },
+                {
+                  label: 'Bonus/Total', align: 'right',
+                  render: r => <span className="text-slate-500 tabular-nums">{r.bonus_wins}/{r.total_wins}</span>,
+                },
+                {
+                  label: 'Pct', align: 'right',
+                  render: r => <span className="font-bold text-slate-800 tabular-nums">{r.bonus_pct}%</span>,
+                },
+              ]}
+            />
+
+          </div>
+
+          {/* Least Mat Time — full width */}
+          <LeaderTable<PoolMatTimeRow>
+            title="Least Mat Time"
+            description="Championship wins only (R1–F) · falls/TFs use fall time, decisions use 360s · min 3 wins · lower = more dominant"
+            rows={d.matTime}
+            cols={[
+              {
+                label: 'Wrestler', align: 'left',
+                render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} />,
+              },
+              {
+                label: 'Wins', align: 'right',
+                render: r => <span className="text-slate-500 tabular-nums">{r.match_count}</span>,
+              },
+              {
+                label: 'Total Time', align: 'right',
+                render: r => (
+                  <span className="font-bold text-slate-800 tabular-nums font-mono">
+                    {fmtTime(r.total_seconds)}
+                  </span>
+                ),
+              },
+            ]}
+          />
+
+        </div>
+      </section>
 
     </div>
   )

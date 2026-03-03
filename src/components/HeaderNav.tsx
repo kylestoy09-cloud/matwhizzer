@@ -12,8 +12,8 @@ export function HeaderNav() {
   const leaderboardsHref = isBoys ? '/boys/leaderboards' : '/girls/leaderboards'
   const schoolsHref    = isBoys ? '/boys/schools' : null
   const districtsHref  = isBoys ? '/boys/districts' : null
-  const regionsHref    = isBoys ? '/boys/regions' : null
-  const stateHref      = isBoys ? '/boys/state' : null
+  const regionsHref    = isBoys ? '/boys/regions' : '/girls/regions'
+  const stateHref      = isBoys ? '/boys/state' : '/girls/state'
 
   // Swap /boys ↔ /girls prefix for "equivalent page" toggle
   const toggleHref = isBoys
