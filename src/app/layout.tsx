@@ -14,9 +14,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-50 min-h-screen`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-50 min-h-screen flex flex-col`}>
         <HeaderNav />
-        {children}
+        <main className="flex-1">{children}</main>
+        <footer className="bg-slate-900 text-slate-400 text-xs text-center py-4 mt-8">
+          © 2026 MatWhizzer. All rights reserved.
+        </footer>
       </body>
     </html>
   )
