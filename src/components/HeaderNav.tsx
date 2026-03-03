@@ -33,6 +33,7 @@ export function HeaderNav() {
     { href: regionsHref,      label: 'Regions' },
     districtsHref ? { href: districtsHref, label: 'Districts' } : null,
     { href: schoolsHref,      label: 'Schools' },
+    { href: '/feedback',      label: 'Feedback' },
   ].filter((x): x is { href: string; label: string } => x !== null)
 
   // Close on outside click
