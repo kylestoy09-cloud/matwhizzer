@@ -195,7 +195,7 @@ export default async function GirlsStatePage() {
 
           <StatCard<MatTimeRow>
             title="Least Mat Time"
-            note="lower = more dominant · min 3 champ wins"
+            note="lower = more dominant · min 2 champ wins"
             rows={matTime}
             subtitle={r => `${r.school_name || r.school || '—'} · ${r.match_count} wins`}
             value={r => fmtTime(r.total_seconds)}
