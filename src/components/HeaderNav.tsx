@@ -52,8 +52,11 @@ export function HeaderNav() {
 
   return (
     <header className={`${bgClass} text-white px-6 py-4 shadow-md flex items-center`}>
-      <Link href={homeHref} className="text-xl font-bold tracking-tight hover:opacity-80 transition-opacity">
-        Mat Whizzer
+      <Link href={homeHref} className="hover:opacity-80 transition-opacity">
+        <span className="text-xl font-bold tracking-tight">Mat Whizzer</span>
+        <span className="block text-[11px] font-normal text-white/50 tracking-wide leading-tight">
+          How Jersey Knows Wrestling
+        </span>
       </Link>
       <span className="ml-3 text-slate-400 text-sm hidden sm:inline">NJSIAA Wrestling · 2024–25</span>
 
