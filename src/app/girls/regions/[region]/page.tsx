@@ -268,8 +268,8 @@ export default async function GirlsRegionSummaryPage({
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
 
           <StatCard<MatTimeRow>
-            title="Least Mat Time"
-            note="lower = more dominant · min 3 champ wins"
+            title="Fast Finishers"
+            note="Total Tourney Mat Time"
             rows={matTime}
             subtitle={r => `${r.school_name || r.school || '—'} · ${r.match_count} wins`}
             value={r => fmtTime(r.total_seconds)}

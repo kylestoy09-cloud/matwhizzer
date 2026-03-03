@@ -410,10 +410,10 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
 
           </div>
 
-          {/* Least Mat Time — full width */}
+          {/* Fast Finishers — full width */}
           <LeaderTable<PoolMatTimeRow>
-            title="Least Mat Time"
-            description="Championship wins only (R1–F) · falls/TFs use fall time, decisions use 360s · min 3 wins · lower = more dominant"
+            title="Fast Finishers"
+            description="Total Tourney Mat Time"
             rows={d.matTime}
             cols={[
               {
