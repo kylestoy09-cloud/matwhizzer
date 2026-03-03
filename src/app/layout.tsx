@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <HeaderNav />
         <main className="flex-1">{children}</main>
         <footer className="bg-slate-900 text-slate-400 text-xs text-center py-4 mt-8">
-          © 2026 MatWhizzer. All rights reserved.
+          © 2026 Mat Whizzer LLC. All rights reserved.
         </footer>
       </body>
     </html>
