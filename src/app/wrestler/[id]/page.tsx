@@ -33,7 +33,7 @@ type MatchGroup = {
   tournament_type: string
   weight: number
   season_id: number
-  matches: (Match & { result: 'W' | 'L'; opponent: string; opponentSchool: string | null })[]
+  matches: (Match & { result: 'W' | 'L'; opponent: string; opponentSchool: string | null; opponentId: string | null })[]
 }
 
 const SEASON_LABELS: Record<number, string> = {
@@ -187,14 +187,14 @@ export default async function WrestlerPage({
     )
   ]
 
-  const opponentMap: Record<string, { name: string; school: string | null }> = {}
+  const opponentMap: Record<string, { name: string; school: string | null; wrestlerId: string | null }> = {}
   if (opponentEntryIds.length > 0) {
     const { data: oppEntries } = await supabase
       .from('tournament_entries')
-      .select('id, school_context_raw, wrestler:wrestlers(first_name, last_name)')
+      .select('id, school_context_raw, wrestler:wrestlers(id, first_name, last_name)')
       .in('id', opponentEntryIds)
 
-    type OppEntry = { id: string; school_context_raw: string | null; wrestler: { first_name: string; last_name: string } | { first_name: string; last_name: string }[] | null }
+    type OppEntry = { id: string; school_context_raw: string | null; wrestler: { id: string; first_name: string; last_name: string } | { id: string; first_name: string; last_name: string }[] | null }
 
     // Batch-lookup full school names for all opponent abbreviations
     const oppSchoolAbbrs = new Set<string>()
@@ -216,7 +216,7 @@ export default async function WrestlerPage({
       const w = unwrap(e.wrestler)
       const name = w ? `${w.first_name} ${w.last_name}`.trim() : '—'
       const abbr = e.school_context_raw
-      opponentMap[e.id] = { name, school: abbr ? (schoolNameMap[abbr] ?? abbr) : null }
+      opponentMap[e.id] = { name, school: abbr ? (schoolNameMap[abbr] ?? abbr) : null, wrestlerId: w?.id ?? null }
     }
   }
 
@@ -231,7 +231,8 @@ export default async function WrestlerPage({
       ? 'Bye'
       : (oppData?.name ?? m.winner_context_raw ?? '—')
     const opponentSchool = isBye ? null : (oppData?.school ?? null)
-    return { ...m, result: (isWinner ? 'W' : 'L') as 'W' | 'L', opponent, opponentSchool }
+    const opponentId = isBye ? null : (oppData?.wrestlerId ?? null)
+    return { ...m, result: (isWinner ? 'W' : 'L') as 'W' | 'L', opponent, opponentSchool, opponentId }
   })
 
   // 6. Group by season + tournament + weight
@@ -425,7 +426,16 @@ export default async function WrestlerPage({
                                 </span>
                               </td>
                               <td className="px-4 py-2.5 text-slate-800 font-medium">
-                                {m.opponent}
+                                {m.opponentId ? (
+                                  <Link
+                                    href={`/wrestler/${m.opponentId}`}
+                                    className="hover:text-blue-600 transition-colors"
+                                  >
+                                    {m.opponent}
+                                  </Link>
+                                ) : (
+                                  m.opponent
+                                )}
                                 {m.opponentSchool && (
                                   <span className="ml-1.5 text-slate-400 font-normal text-xs">
                                     {m.opponentSchool}
