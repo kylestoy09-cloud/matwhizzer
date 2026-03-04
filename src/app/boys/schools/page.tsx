@@ -1,6 +1,6 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
-import { getActiveSeason } from '@/lib/get-season'
+import { getActiveSeason, SEASONS } from '@/lib/get-season'
 
 type SchoolDirRow = {
   school: string
@@ -41,7 +41,7 @@ export default async function BoysSchoolsPage({
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-slate-900">Boys School Directory</h1>
         <p className="text-slate-500 text-sm mt-1">
-          {all.length} schools · NJSIAA 2024–25 boys postseason
+          {all.length} schools · NJSIAA {SEASONS[season]?.label ?? '2025-26'} boys postseason
         </p>
       </div>
 

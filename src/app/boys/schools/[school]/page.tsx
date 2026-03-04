@@ -1,7 +1,7 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getActiveSeason } from '@/lib/get-season'
+import { getActiveSeason, SEASONS } from '@/lib/get-season'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -133,7 +133,7 @@ export default async function SchoolProfilePage({
         <p className="text-slate-500 text-sm mt-1">
           {[...districtLabels, ...regionLabels].join(' · ')}
           {(districtLabels.length > 0 || regionLabels.length > 0) && ' · '}
-          Boys postseason · NJSIAA 2024–25 · {rows.length} wrestler{rows.length !== 1 ? 's' : ''}
+          Boys postseason · NJSIAA {SEASONS[season]?.label ?? '2025-26'} · {rows.length} wrestler{rows.length !== 1 ? 's' : ''}
         </p>
       </div>
 
