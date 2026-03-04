@@ -28,10 +28,10 @@ export function HeaderNav() {
     : '/boys' + pathname.slice('/girls'.length)
 
   const navItems = [
-    { href: leaderboardsHref, label: 'Leaderboards' },
     { href: stateHref,        label: 'State' },
     { href: regionsHref,      label: 'Regions' },
     { href: districtsHref,    label: 'Districts' },
+    { href: leaderboardsHref, label: 'Leaderboards' },
     { href: schoolsHref,      label: 'Schools' },
     { href: '/feedback',      label: 'Feedback' },
   ]
