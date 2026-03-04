@@ -22,6 +22,17 @@ type WrestlerRow = {
   state_placement: string | null
 }
 
+type LeaderRow = {
+  wrestler_id: string
+  wrestler_name: string
+  primary_weight: number
+  win_count: number
+  fall_count: number
+  fastest_fall_sec: number | null
+  bonus_pct: number
+  team_points: number
+}
+
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
 const TOURNEY_LABEL: Record<string, string> = {
@@ -72,14 +83,16 @@ export default async function SchoolProfilePage({
 
   const season = await getActiveSeason()
 
-  const [{ data: breakdown }, { data: wrestlers }, { data: nameRow }] = await Promise.all([
+  const [{ data: breakdown }, { data: wrestlers }, { data: nameRow }, { data: leaders }] = await Promise.all([
     supabase.rpc('school_points_breakdown', { p_school: school, p_gender: 'M', p_season: season }),
     supabase.rpc('school_wrestlers',        { p_school: school, p_gender: 'M', p_season: season }),
     supabase.from('school_names').select('school_name').eq('abbreviation', school).maybeSingle(),
+    supabase.rpc('school_leaderboard',      { p_school: school, p_gender: 'M', p_season: season }),
   ])
 
-  const rows     = (wrestlers  ?? []) as WrestlerRow[]
-  const bdRows   = (breakdown  ?? []) as BreakdownRow[]
+  const rows       = (wrestlers ?? []) as WrestlerRow[]
+  const bdRows     = (breakdown ?? []) as BreakdownRow[]
+  const leaderRows = (leaders   ?? []) as LeaderRow[]
 
   if (rows.length === 0) notFound()
 
@@ -162,6 +175,56 @@ export default async function SchoolProfilePage({
                     {totalWins}
                   </td>
                 </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+
+      {/* Team leaderboard */}
+      {leaderRows.length > 0 && (
+        <section className="mb-10">
+          <h3 className="text-base font-semibold text-slate-800 mb-3">Team Leaderboard</h3>
+          <div className="border border-slate-200 rounded-lg overflow-hidden shadow-sm bg-white">
+            <table className="w-full text-sm">
+              <thead className="bg-slate-50 border-b border-slate-200">
+                <tr>
+                  <th className="text-right px-4 py-2.5 font-medium text-slate-500 w-14">Wt</th>
+                  <th className="text-left px-4 py-2.5 font-medium text-slate-500">Wrestler</th>
+                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-14">Wins</th>
+                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-14 hidden sm:table-cell">Falls</th>
+                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-20 hidden md:table-cell">Fast Pin</th>
+                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-16 hidden sm:table-cell">Bonus%</th>
+                  <th className="text-right px-4 py-2.5 font-medium text-slate-500 w-14">Pts</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {leaderRows.map((r, i) => {
+                  const fastPin = r.fastest_fall_sec != null
+                    ? `${Math.floor(r.fastest_fall_sec / 60)}:${String(r.fastest_fall_sec % 60).padStart(2, '0')}`
+                    : '—'
+                  return (
+                    <tr key={r.wrestler_id} className="hover:bg-slate-50">
+                      <td className="px-4 py-2.5 text-right tabular-nums text-slate-400 text-xs font-mono">{r.primary_weight}</td>
+                      <td className="px-4 py-2.5">
+                        <div className="flex items-center gap-2">
+                          <span className="text-[11px] text-slate-300 w-4 text-right shrink-0">{i + 1}</span>
+                          <Link
+                            href={`/wrestler/${r.wrestler_id}`}
+                            className="font-medium text-slate-800 hover:text-slate-600 hover:underline truncate"
+                          >
+                            {r.wrestler_name}
+                          </Link>
+                        </div>
+                      </td>
+                      <td className="px-3 py-2.5 text-right tabular-nums text-slate-700">{r.win_count}</td>
+                      <td className="px-3 py-2.5 text-right tabular-nums text-slate-700 hidden sm:table-cell">{r.fall_count}</td>
+                      <td className="px-3 py-2.5 text-right tabular-nums text-slate-500 hidden md:table-cell">{fastPin}</td>
+                      <td className="px-3 py-2.5 text-right tabular-nums text-slate-500 hidden sm:table-cell">{r.bonus_pct}%</td>
+                      <td className="px-4 py-2.5 text-right tabular-nums font-semibold text-slate-800">{r.team_points}</td>
+                    </tr>
+                  )
+                })}
               </tbody>
             </table>
           </div>
