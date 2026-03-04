@@ -195,12 +195,33 @@ export default async function WrestlerPage({
       .in('id', opponentEntryIds)
 
     type OppEntry = { id: string; school_context_raw: string | null; wrestler: { id: string; first_name: string; last_name: string } | { id: string; first_name: string; last_name: string }[] | null }
+    const typedOppEntries = (oppEntries ?? []) as unknown as OppEntry[]
 
-    // Batch-lookup full school names for all opponent abbreviations
+    // State entries have null school — find their school from other entries (district/region)
+    const noSchoolWrestlerIds = typedOppEntries
+      .filter(e => !e.school_context_raw)
+      .map(e => unwrap(e.wrestler)?.id)
+      .filter((wid): wid is string => wid != null)
+
+    const fallbackSchoolMap: Record<string, string> = {}  // wrestler_id → school_abbr
+    if (noSchoolWrestlerIds.length > 0) {
+      const { data: altEntries } = await supabase
+        .from('tournament_entries')
+        .select('wrestler_id, school_context_raw')
+        .in('wrestler_id', noSchoolWrestlerIds)
+        .not('school_context_raw', 'is', null)
+      for (const e of (altEntries ?? []) as { wrestler_id: string; school_context_raw: string }[]) {
+        if (!fallbackSchoolMap[e.wrestler_id]) fallbackSchoolMap[e.wrestler_id] = e.school_context_raw
+      }
+    }
+
+    // Batch-lookup full school names for all collected abbreviations
     const oppSchoolAbbrs = new Set<string>()
-    for (const e of (oppEntries ?? []) as unknown as OppEntry[]) {
+    for (const e of typedOppEntries) {
       if (e.school_context_raw) oppSchoolAbbrs.add(e.school_context_raw)
     }
+    for (const abbr of Object.values(fallbackSchoolMap)) oppSchoolAbbrs.add(abbr)
+
     const schoolNameMap: Record<string, string> = {}
     if (oppSchoolAbbrs.size > 0) {
       const { data: schoolRows } = await supabase
@@ -212,10 +233,10 @@ export default async function WrestlerPage({
       }
     }
 
-    for (const e of (oppEntries ?? []) as unknown as OppEntry[]) {
+    for (const e of typedOppEntries) {
       const w = unwrap(e.wrestler)
       const name = w ? `${w.first_name} ${w.last_name}`.trim() : '—'
-      const abbr = e.school_context_raw
+      const abbr = e.school_context_raw ?? (w?.id ? fallbackSchoolMap[w.id] : null)
       opponentMap[e.id] = { name, school: abbr ? (schoolNameMap[abbr] ?? abbr) : null, wrestlerId: w?.id ?? null }
     }
   }
