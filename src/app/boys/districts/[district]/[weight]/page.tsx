@@ -281,8 +281,9 @@ export default async function DistrictBracketPage({
   // Build ordered championship map (tree traversal)
   const champOrdered = orderChampMatches(champ)
 
-  // R2 (prelims) — shown separately if present
-  const r2Matches = champOrdered.get('R2') ?? []
+  // R2 (prelims): keep full list for tree traversal, filter byes for display
+  const r2Matches    = champOrdered.get('R2') ?? []
+  const r2Display    = r2Matches.filter(m => m.loser_wrestler_id !== null)
 
   // Championship columns (QF → SF → F)
   const champCols = CHAMP_COLS.filter(r => (champOrdered.get(r) ?? []).length > 0)
@@ -302,9 +303,9 @@ export default async function DistrictBracketPage({
     consolByRound.set(m.round, list)
   }
 
-  // All rounds for mobile display
+  // All rounds for mobile display (only show prelims if there are non-bye matches)
   const allRoundsOrdered = [
-    ...(['R2'] as const).filter(() => r2Matches.length > 0),
+    ...(['R2'] as const).filter(() => r2Display.length > 0),
     ...champCols,
     ...consolRounds,
   ]
@@ -327,14 +328,14 @@ export default async function DistrictBracketPage({
         <p className="text-slate-500 text-sm mt-1">NJSIAA 2024–25 · Boys postseason</p>
       </div>
 
-      {/* Prelim round (R2) — only some brackets */}
-      {r2Matches.length > 0 && (
+      {/* Prelim round (R2) — hide bye-only prelims */}
+      {r2Display.length > 0 && (
         <div className="mb-6">
           <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
             Prelims
           </h2>
           <div className="flex gap-3 flex-wrap">
-            {r2Matches.map(m => <MatchCard key={m.match_id} m={m} />)}
+            {r2Display.map(m => <MatchCard key={m.match_id} m={m} />)}
           </div>
         </div>
       )}
@@ -395,7 +396,7 @@ export default async function DistrictBracketPage({
       <div className="md:hidden space-y-6">
         {allRoundsOrdered.map(round => {
           const ms = round === 'R2'
-            ? r2Matches
+            ? r2Display
             : round === 'QF' || round === 'SF' || round === 'F'
               ? (champOrdered.get(round) ?? [])
               : (consolByRound.get(round) ?? [])
