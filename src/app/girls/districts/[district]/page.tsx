@@ -156,7 +156,8 @@ export default async function GirlsDistrictSummaryPage({
   const d = Number(raw)
   if (!d || d < 1 || d > 12) notFound()
 
-  const season = await getActiveSeason()
+  // Girls districts only exist from season 2 onward
+  const season = Math.max(await getActiveSeason(), 2)
 
   const [placementsRes, matTimeRes, fastPinRes, fastTfRes, bonusPctRes, teamScoreRes] =
     await Promise.all([

@@ -4,7 +4,15 @@ import { useRouter } from 'next/navigation'
 import { SEASONS } from '@/lib/seasons'
 
 // Inline variant — blends into page subtitles (dark text on light background)
-export function InlineSeasonPicker({ activeSeason }: { activeSeason: number }) {
+// Pass `seasons` to restrict which season IDs are shown. If only one ID is
+// provided the label is rendered as static text (no dropdown).
+export function InlineSeasonPicker({
+  activeSeason,
+  seasons,
+}: {
+  activeSeason: number
+  seasons?: number[]
+}) {
   const router = useRouter()
 
   function pickSeason(id: number) {
@@ -12,7 +20,16 @@ export function InlineSeasonPicker({ activeSeason }: { activeSeason: number }) {
     router.refresh()
   }
 
-  const ids = Object.keys(SEASONS).map(Number).sort()
+  const ids = (seasons ?? Object.keys(SEASONS).map(Number)).sort()
+
+  // Single season — render as non-interactive label
+  if (ids.length === 1) {
+    return (
+      <span className="font-medium text-slate-600 text-sm">
+        {SEASONS[ids[0]]?.label ?? ids[0]}
+      </span>
+    )
+  }
 
   return (
     <select

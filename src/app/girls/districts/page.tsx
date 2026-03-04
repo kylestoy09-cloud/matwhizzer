@@ -3,7 +3,8 @@ import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 
 export default async function GirlsDistrictsPage() {
-  const season = await getActiveSeason()
+  // Girls districts only exist from season 2 onward
+  const season = Math.max(await getActiveSeason(), 2)
   const districts = Array.from({ length: 12 }, (_, i) => i + 1)
 
   return (
@@ -19,7 +20,7 @@ export default async function GirlsDistrictsPage() {
         <h1 className="text-2xl font-bold text-rose-900">Girls District Brackets</h1>
         <div className="flex items-center gap-1 text-slate-500 text-sm mt-1">
           <span>NJSIAA</span>
-          <InlineSeasonPicker activeSeason={season} />
+          <InlineSeasonPicker activeSeason={season} seasons={[2]} />
           <span>· Select a district</span>
         </div>
       </div>

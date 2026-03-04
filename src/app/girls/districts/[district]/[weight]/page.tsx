@@ -241,7 +241,8 @@ export default async function GirlsDistrictBracketPage({
 
   if (!district || district < 1 || district > 12 || !weight) notFound()
 
-  const season = await getActiveSeason()
+  // Girls districts only exist from season 2 onward
+  const season = Math.max(await getActiveSeason(), 2)
 
   const { data } = await supabase.rpc('district_bracket', {
     p_district: district,
