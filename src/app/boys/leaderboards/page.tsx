@@ -45,14 +45,13 @@ type PoolBonusRow = {
   total_wins: number
 }
 
-type PoolBonusPctRow = {
+type PoolDomRow = {
   wrestler_id: string
   wrestler_name: string
   school: string | null
   school_name: string | null
-  bonus_wins: number
-  total_wins: number
-  bonus_pct: number
+  dominance_score: number
+  win_count: number
 }
 
 type PoolMatTimeRow = {
@@ -77,7 +76,7 @@ type PoolData = {
   mostPins:    PoolPinRow[]
   mostTf:      PoolTfRow[]
   mostBonus:   PoolBonusRow[]
-  bonusPct:    PoolBonusPctRow[]
+  poolDom:     PoolDomRow[]
   matTime:     PoolMatTimeRow[]
   teamPoints:  PoolTeamRow[]
 }
@@ -100,7 +99,7 @@ async function fetchPoolStats(pool: string, season: number): Promise<PoolData> {
     { data: mostPins },
     { data: mostTf },
     { data: mostBonus },
-    { data: bonusPct },
+    { data: poolDom },
     { data: matTime },
     { data: teamPoints },
   ] = await Promise.all([
@@ -109,7 +108,7 @@ async function fetchPoolStats(pool: string, season: number): Promise<PoolData> {
     supabase.rpc('lb_p_most_pins',     p),
     supabase.rpc('lb_p_most_tf',       p),
     supabase.rpc('lb_p_most_bonus',    p),
-    supabase.rpc('lb_p_bonus_pct',     p),
+    supabase.rpc('lb_p_dominance',     p),
     supabase.rpc('lb_p_mat_time',      p),
     supabase.rpc('lb_p_team_points',   p),
   ])
@@ -119,7 +118,7 @@ async function fetchPoolStats(pool: string, season: number): Promise<PoolData> {
     mostPins:    (mostPins    ?? []) as PoolPinRow[],
     mostTf:      (mostTf      ?? []) as PoolTfRow[],
     mostBonus:   (mostBonus   ?? []) as PoolBonusRow[],
-    bonusPct:    (bonusPct    ?? []) as PoolBonusPctRow[],
+    poolDom:     (poolDom     ?? []) as PoolDomRow[],
     matTime:     (matTime     ?? []) as PoolMatTimeRow[],
     teamPoints:  (teamPoints  ?? []) as PoolTeamRow[],
   }
@@ -396,22 +395,22 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
               ]}
             />
 
-            <LeaderTable<PoolBonusPctRow>
-              title="Bonus Point %"
-              description="Bonus wins / total wins — minimum 2 wins"
-              rows={d.bonusPct}
+            <LeaderTable<PoolDomRow>
+              title="Dominance Score"
+              description="Avg pts/match (wins + losses) — Pin: 9−sec/60 · TF: 5 · MD: 2 · Dec: 1 · min 2 wins"
+              rows={d.poolDom}
               cols={[
                 {
                   label: 'Wrestler', align: 'left',
                   render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} />,
                 },
                 {
-                  label: 'Bonus/Total', align: 'right',
-                  render: r => <span className="text-slate-500 tabular-nums">{r.bonus_wins}/{r.total_wins}</span>,
+                  label: 'Wins', align: 'right',
+                  render: r => <span className="text-slate-500 tabular-nums">{r.win_count}</span>,
                 },
                 {
-                  label: 'Pct', align: 'right',
-                  render: r => <span className="font-bold text-slate-800 tabular-nums">{r.bonus_pct}%</span>,
+                  label: 'Score', align: 'right',
+                  render: r => <span className="font-bold text-slate-800 tabular-nums">{r.dominance_score}</span>,
                 },
               ]}
             />
@@ -460,7 +459,7 @@ function AnalyticsTab({ d }: { d: AnalyticsData }) {
 
       <LeaderTable<DomRow>
         title="Dominance Score"
-        description="Avg pts/match across wins & losses — Pin/TF: +8 (≤1min) to +3 (≤6min) · MD +2 · Dec +1 · losses are negative"
+        description="Avg pts/match across wins & losses — Pin: 9−(sec÷60) · TF: 5.0 · MD: 2.0 · Dec: 1.0 · loser gets −score"
         rows={d.dominance}
         cols={[
           {
