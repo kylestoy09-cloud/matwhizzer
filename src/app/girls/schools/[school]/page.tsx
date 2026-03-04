@@ -1,7 +1,7 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getActiveSeason } from '@/lib/get-season'
+import { getActiveSeason, SEASONS } from '@/lib/get-season'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -116,13 +116,10 @@ export default async function GirlsSchoolProfilePage({
 
       {/* School header */}
       <div className="mb-8">
-        <div className="flex items-baseline gap-2">
-          <h2 className="text-2xl font-bold text-rose-900">{schoolName}</h2>
-          <span className="text-slate-400 text-sm">{school}</span>
-        </div>
+        <h2 className="text-2xl font-bold text-rose-900">{schoolName}</h2>
         <p className="text-slate-500 text-sm mt-1">
           {regionLabels.length > 0 && regionLabels.join(' · ') + ' · '}
-          Girls postseason · NJSIAA 2024–25 · {rows.length} wrestler{rows.length !== 1 ? 's' : ''}
+          Girls postseason · NJSIAA {SEASONS[season]?.label ?? '2024–25'} · {rows.length} wrestler{rows.length !== 1 ? 's' : ''}
         </p>
       </div>
 
