@@ -129,7 +129,6 @@ export default async function SchoolProfilePage({
       <div className="mb-8">
         <div className="flex items-baseline gap-2">
           <h2 className="text-2xl font-bold text-slate-900">{schoolName}</h2>
-          <span className="text-slate-400 text-sm">{school}</span>
         </div>
         <p className="text-slate-500 text-sm mt-1">
           {[...districtLabels, ...regionLabels].join(' · ')}

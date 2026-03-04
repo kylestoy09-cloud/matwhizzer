@@ -97,7 +97,6 @@ export default async function BoysSchoolsPage({
                     >
                       {r.school_name}
                     </Link>
-                    <span className="ml-2 text-slate-400 text-xs">{r.school}</span>
                   </td>
                   <td className="px-4 py-2.5 text-right tabular-nums text-slate-700">
                     {r.total_points > 0 ? r.total_points : '—'}
