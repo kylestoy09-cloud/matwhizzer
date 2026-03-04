@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
-type TournamentInfo  = { name: string; tournament_type: string }
+type TournamentInfo  = { name: string; tournament_type: string; season_id: number }
 type WeightClassInfo = { weight: number }
 
 type Match = {
@@ -28,13 +28,26 @@ function unwrap<T>(v: T | T[] | null): T | null {
   return Array.isArray(v) ? (v[0] ?? null) : v
 }
 
-type GroupKey = string  // "{tournament_name}||{weight}"
-
 type MatchGroup = {
   tournament_name: string
   tournament_type: string
   weight: number
+  season_id: number
   matches: (Match & { result: 'W' | 'L'; opponent: string })[]
+}
+
+const SEASON_LABELS: Record<number, string> = {
+  1: '2024–25',
+  2: '2025–26',
+}
+
+// Sort order for tournament types within a season
+const TOURNAMENT_TYPE_ORDER: Record<string, number> = {
+  districts:    0,
+  regions:      1,
+  girls_regions: 1,
+  boys_state:   2,
+  girls_state:  2,
 }
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
@@ -97,10 +110,10 @@ export default async function WrestlerPage({
 
   if (!wrestler) notFound()
 
-  // 2. All entries for this wrestler (include school + grade)
+  // 2. All entries for this wrestler (include school, grade, and season via tournament join)
   const { data: entries } = await supabase
     .from('tournament_entries')
-    .select('id, school_context_raw, grade_label')
+    .select('id, school_context_raw, grade_label, tournament:tournaments(season_id)')
     .eq('wrestler_id', id)
 
   const entryIds = (entries ?? []).map((e: { id: string }) => e.id)
@@ -117,18 +130,36 @@ export default async function WrestlerPage({
     )
   }
 
-  // Primary school and grade from district entries (most complete data source)
-  type EntryRow = { id: string; school_context_raw: string | null; grade_label: string | null }
+  // Determine the current (latest) season this wrestler has entries in
+  type EntryRow = {
+    id: string
+    school_context_raw: string | null
+    grade_label: string | null
+    tournament: { season_id: number } | { season_id: number }[] | null
+  }
   const typedEntries = (entries ?? []) as unknown as EntryRow[]
-  const primarySchool = typedEntries.find(e => e.school_context_raw)?.school_context_raw ?? null
-  const primaryGrade  = typedEntries.find(e => e.grade_label)?.grade_label ?? null
+  const entrySeasons = typedEntries.map(
+    e => (unwrap(e.tournament) as { season_id: number } | null)?.season_id ?? 0
+  )
+  const currentSeason = entrySeasons.length > 0 ? Math.max(...entrySeasons) : 1
+
+  // School and grade: prefer current season entries, fall back to any
+  const currentEntries = typedEntries.filter(
+    e => ((unwrap(e.tournament) as { season_id: number } | null)?.season_id ?? 0) === currentSeason
+  )
+  const primarySchool =
+    currentEntries.find(e => e.school_context_raw)?.school_context_raw ??
+    typedEntries.find(e => e.school_context_raw)?.school_context_raw ?? null
+  const primaryGrade =
+    currentEntries.find(e => e.grade_label)?.grade_label ??
+    typedEntries.find(e => e.grade_label)?.grade_label ?? null
 
   // 3. Matches as winner + matches as loser (parallel), plus school name lookup
   const selectFields = `
     id, round, bracket_side, win_type,
     winner_score, loser_score, fall_time_seconds,
     winner_entry_id, loser_entry_id, winner_context_raw,
-    tournament:tournaments(name, tournament_type),
+    tournament:tournaments(name, tournament_type, season_id),
     weight_class:weight_classes(weight)
   `
 
@@ -175,8 +206,6 @@ export default async function WrestlerPage({
   const annotated = allMatches.map(m => {
     const isWinner = m.winner_entry_id != null && entrySet.has(m.winner_entry_id)
     const opponentEntryId = isWinner ? m.loser_entry_id : m.winner_entry_id
-    // A bye is win_type=null with no resolved loser entry.
-    // A regions match with win_type=null but a real opponent has loser_entry_id set.
     const isBye = m.win_type == null && m.loser_entry_id == null
     const opponent = isBye
       ? 'Bye'
@@ -186,17 +215,18 @@ export default async function WrestlerPage({
     return { ...m, result: (isWinner ? 'W' : 'L') as 'W' | 'L', opponent }
   })
 
-  // 6. Group by tournament + weight, sort rounds within each group
-  const groups = new Map<GroupKey, MatchGroup>()
+  // 6. Group by season + tournament + weight
+  const groups = new Map<string, MatchGroup>()
   for (const m of annotated) {
     const t      = unwrap(m.tournament)
     const wc     = unwrap(m.weight_class)
     const tname  = t?.name ?? 'Unknown'
     const ttype  = t?.tournament_type ?? ''
     const weight = wc?.weight ?? 0
-    const key: GroupKey = `${tname}||${weight}`
+    const seasonId = t?.season_id ?? 1
+    const key = `${seasonId}||${tname}||${weight}`
     if (!groups.has(key)) {
-      groups.set(key, { tournament_name: tname, tournament_type: ttype, weight, matches: [] })
+      groups.set(key, { tournament_name: tname, tournament_type: ttype, weight, season_id: seasonId, matches: [] })
     }
     groups.get(key)!.matches.push(m)
   }
@@ -208,29 +238,45 @@ export default async function WrestlerPage({
     )
   }
 
-  // Sort groups: tournaments alphabetically, then by weight
-  const sortedGroups = [...groups.values()].sort((a, b) =>
-    a.tournament_name.localeCompare(b.tournament_name) || a.weight - b.weight
+  // All groups sorted: districts → regions → state, then by tournament name, then weight
+  const allGroupsSorted = [...groups.values()].sort((a, b) => {
+    const typeOrder =
+      (TOURNAMENT_TYPE_ORDER[a.tournament_type] ?? 9) -
+      (TOURNAMENT_TYPE_ORDER[b.tournament_type] ?? 9)
+    if (typeOrder !== 0) return typeOrder
+    return a.tournament_name.localeCompare(b.tournament_name) || a.weight - b.weight
+  })
+
+  // Bucket by season, seasons in descending order (latest first)
+  const seasonIds = [...new Set(allGroupsSorted.map(g => g.season_id))].sort((a, b) => b - a)
+  const bySeason = new Map<number, MatchGroup[]>()
+  for (const g of allGroupsSorted) {
+    if (!bySeason.has(g.season_id)) bySeason.set(g.season_id, [])
+    bySeason.get(g.season_id)!.push(g)
+  }
+
+  // Current-season stats for the profile header
+  const currentGroups = bySeason.get(currentSeason) ?? []
+  const currentAnnotated = annotated.filter(
+    m => (unwrap(m.tournament)?.season_id ?? 1) === currentSeason
   )
+  const wins   = currentAnnotated.filter(m => m.result === 'W').length
+  const losses = currentAnnotated.filter(m => m.result === 'L').length
 
-  const wins   = annotated.filter(m => m.result === 'W').length
-  const losses = annotated.filter(m => m.result === 'L').length
+  // Primary weight from current season
+  const currentWeights = currentGroups.map(g => g.weight).filter(w => w > 0)
+  const primaryWeight = currentWeights.length > 0 ? Math.min(...currentWeights) : null
 
-  // Primary weight: smallest weight across all groups
-  const allWeights = sortedGroups.map(g => g.weight).filter(w => w > 0)
-  const primaryWeight = allWeights.length > 0 ? Math.min(...allWeights) : null
-
-  // District labels e.g. "D5"
+  // District and region labels from current season
   const districtNames = [...new Set(
-    sortedGroups
+    currentGroups
       .filter(g => g.tournament_type === 'districts')
       .map(g => { const m = g.tournament_name.match(/District (\d+)$/); return m ? `D${m[1]}` : null })
       .filter((x): x is string => x !== null)
   )].sort()
 
-  // Region labels e.g. "R2" (boys) or "Central" (girls)
   const regionNames = [...new Set(
-    sortedGroups
+    currentGroups
       .filter(g => g.tournament_type === 'regions' || g.tournament_type === 'girls_regions')
       .map(g => {
         const mBoys = g.tournament_name.match(/Regions r(\d+)$/i)
@@ -244,6 +290,8 @@ export default async function WrestlerPage({
 
   const displayName = [wrestler.first_name, wrestler.last_name, wrestler.suffix]
     .filter(Boolean).join(' ')
+
+  const totalTournaments = groups.size
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-10">
@@ -308,59 +356,72 @@ export default async function WrestlerPage({
         ))}
         {primaryGrade && <>{primaryGrade} · </>}
         <span className="font-semibold text-slate-700">{wins}-{losses}</span>
-        {' '}record · {sortedGroups.length} tournament{sortedGroups.length !== 1 ? 's' : ''}
+        {' '}this season · {totalTournaments} tournament{totalTournaments !== 1 ? 's' : ''}
       </p>
 
-      {/* Match history grouped by tournament + weight */}
-      <div className="space-y-8">
-        {sortedGroups.map(g => (
-          <section key={`${g.tournament_name}||${g.weight}`}>
-            <div className="flex items-center gap-2 mb-3">
-              <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${tournamentTypeColor(g.tournament_type)}`}>
-                {TOURNAMENT_TYPE_LABEL[g.tournament_type] ?? g.tournament_type}
-              </span>
-              <h3 className="font-semibold text-slate-800">
-                {g.tournament_name.replace('Boy_s ', '').replace('Girl_s ', '')}
+      {/* Match history grouped by season, then by tournament + weight */}
+      <div className="space-y-10">
+        {seasonIds.map(seasonId => {
+          const seasonGroups = bySeason.get(seasonId) ?? []
+          const label = SEASON_LABELS[seasonId] ?? `Season ${seasonId}`
+          return (
+            <div key={seasonId}>
+              <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4 pb-1 border-b border-slate-100">
+                {label}
               </h3>
-              <span className="text-slate-400 text-sm">&middot; {g.weight} lb</span>
-            </div>
+              <div className="space-y-8">
+                {seasonGroups.map(g => (
+                  <section key={`${g.season_id}||${g.tournament_name}||${g.weight}`}>
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${tournamentTypeColor(g.tournament_type)}`}>
+                        {TOURNAMENT_TYPE_LABEL[g.tournament_type] ?? g.tournament_type}
+                      </span>
+                      <h4 className="font-semibold text-slate-800">
+                        {g.tournament_name.replace('Boy_s ', '').replace('Girl_s ', '')}
+                      </h4>
+                      <span className="text-slate-400 text-sm">&middot; {g.weight} lb</span>
+                    </div>
 
-            <div className="border border-slate-200 rounded-lg overflow-hidden shadow-sm bg-white">
-              <table className="w-full text-sm">
-                <thead className="bg-slate-50 border-b border-slate-200">
-                  <tr>
-                    <th className="text-left px-4 py-2 font-medium text-slate-500 w-28">Round</th>
-                    <th className="text-left px-4 py-2 font-medium text-slate-500 w-10">Result</th>
-                    <th className="text-left px-4 py-2 font-medium text-slate-500">Opponent</th>
-                    <th className="text-right px-4 py-2 font-medium text-slate-500 w-32">Score</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100">
-                  {g.matches.map(m => (
-                    <tr key={m.id} className="hover:bg-slate-50">
-                      <td className="px-4 py-2.5 text-slate-500">
-                        {ROUND_LABEL[m.round ?? ''] ?? m.round ?? '—'}
-                      </td>
-                      <td className="px-4 py-2.5">
-                        <span className={`font-bold text-sm ${
-                          m.result === 'W' ? 'text-emerald-600' : 'text-red-500'
-                        }`}>
-                          {m.result}
-                        </span>
-                      </td>
-                      <td className="px-4 py-2.5 text-slate-800 font-medium">
-                        {m.opponent}
-                      </td>
-                      <td className="px-4 py-2.5 text-right text-slate-500 font-mono text-xs">
-                        {m.win_type ? formatScore(m, m.result === 'W') : '—'}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                    <div className="border border-slate-200 rounded-lg overflow-hidden shadow-sm bg-white">
+                      <table className="w-full text-sm">
+                        <thead className="bg-slate-50 border-b border-slate-200">
+                          <tr>
+                            <th className="text-left px-4 py-2 font-medium text-slate-500 w-28">Round</th>
+                            <th className="text-left px-4 py-2 font-medium text-slate-500 w-10">Result</th>
+                            <th className="text-left px-4 py-2 font-medium text-slate-500">Opponent</th>
+                            <th className="text-right px-4 py-2 font-medium text-slate-500 w-32">Score</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100">
+                          {g.matches.map(m => (
+                            <tr key={m.id} className="hover:bg-slate-50">
+                              <td className="px-4 py-2.5 text-slate-500">
+                                {ROUND_LABEL[m.round ?? ''] ?? m.round ?? '—'}
+                              </td>
+                              <td className="px-4 py-2.5">
+                                <span className={`font-bold text-sm ${
+                                  m.result === 'W' ? 'text-emerald-600' : 'text-red-500'
+                                }`}>
+                                  {m.result}
+                                </span>
+                              </td>
+                              <td className="px-4 py-2.5 text-slate-800 font-medium">
+                                {m.opponent}
+                              </td>
+                              <td className="px-4 py-2.5 text-right text-slate-500 font-mono text-xs">
+                                {m.win_type ? formatScore(m, m.result === 'W') : '—'}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+                ))}
+              </div>
             </div>
-          </section>
-        ))}
+          )
+        })}
       </div>
     </div>
   )
