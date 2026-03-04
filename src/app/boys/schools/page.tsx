@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
+import { getActiveSeason } from '@/lib/get-season'
 
 type SchoolDirRow = {
   school: string
@@ -16,7 +17,9 @@ export default async function BoysSchoolsPage({
   const { q: raw } = await searchParams
   const q = raw?.trim().toLowerCase() ?? ''
 
-  const { data } = await supabase.rpc('school_directory', { p_gender: 'M' })
+  const season = await getActiveSeason()
+
+  const { data } = await supabase.rpc('school_directory', { p_gender: 'M', p_season: season })
   const all = (data ?? []) as SchoolDirRow[]
 
   const rows = q

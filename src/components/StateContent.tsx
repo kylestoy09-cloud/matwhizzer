@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
+import { getActiveSeason } from '@/lib/get-season'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -93,7 +94,7 @@ function TeamScoreCard({ rows, schoolPrefix }: { rows: TeamScoreRow[]; schoolPre
 
 // ── Main exported component ───────────────────────────────────────────────────
 
-export async function StateContent({ gender }: { gender: 'M' | 'F' }) {
+export async function StateContent({ gender, season }: { gender: 'M' | 'F', season: number }) {
   const isBoys = gender === 'M'
 
   const WEIGHTS = isBoys
@@ -113,12 +114,12 @@ export async function StateContent({ gender }: { gender: 'M' | 'F' }) {
 
   const [placementsRes, matTimeRes, fastPinRes, fastTfRes, bonusPctRes, teamScoreRes] =
     await Promise.all([
-      supabase.rpc('state_placements',  { p_gender: g }),
-      supabase.rpc('state_mat_time',    { p_gender: g }),
-      supabase.rpc('state_fastest_pin', { p_gender: g }),
-      supabase.rpc('state_fastest_tf',  { p_gender: g }),
-      supabase.rpc('state_bonus_pct',   { p_gender: g }),
-      supabase.rpc('state_team_score',  { p_gender: g }),
+      supabase.rpc('state_placements',  { p_gender: g, p_season: season }),
+      supabase.rpc('state_mat_time',    { p_gender: g, p_season: season }),
+      supabase.rpc('state_fastest_pin', { p_gender: g, p_season: season }),
+      supabase.rpc('state_fastest_tf',  { p_gender: g, p_season: season }),
+      supabase.rpc('state_bonus_pct',   { p_gender: g, p_season: season }),
+      supabase.rpc('state_team_score',  { p_gender: g, p_season: season }),
     ])
 
   const placements = (placementsRes.data ?? []) as PlacementRow[]

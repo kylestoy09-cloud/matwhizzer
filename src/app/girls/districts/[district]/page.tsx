@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { getActiveSeason } from '@/lib/get-season'
 
-const WEIGHTS = [106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285]
+const WEIGHTS = [100, 107, 114, 120, 126, 132, 138, 145, 152, 165, 185, 235]
 
 const PLACE_LABEL: Record<number, string> = {
   1: 'Champion',
@@ -76,7 +76,6 @@ function fmtTime(secs: number): string {
 
 // ── Sub-components ───────────────────────────────────────────────────────────
 
-/** Generic card for wrestler-keyed stats */
 function StatCard<T extends { wrestler_id: string; wrestler_name: string; school: string | null; school_name: string | null }>({
   title,
   rows,
@@ -134,12 +133,9 @@ function TeamScoreCard({ rows }: { rows: TeamScoreRow[] }) {
           <div key={r.school} className="flex items-center gap-2 px-4 py-2.5">
             <span className="text-xs text-slate-400 w-4 shrink-0 text-right">{i + 1}</span>
             <div className="flex-1 min-w-0">
-              <Link
-                href={`/boys/schools/${encodeURIComponent(r.school)}`}
-                className="text-sm font-medium text-slate-800 hover:underline truncate block"
-              >
+              <span className="text-sm font-medium text-slate-800 truncate block">
                 {r.school_name || r.school}
-              </Link>
+              </span>
             </div>
             <span className="text-sm font-semibold text-slate-700 shrink-0">{r.total_points} pts</span>
           </div>
@@ -151,25 +147,25 @@ function TeamScoreCard({ rows }: { rows: TeamScoreRow[] }) {
 
 // ── Page ─────────────────────────────────────────────────────────────────────
 
-export default async function DistrictSummaryPage({
+export default async function GirlsDistrictSummaryPage({
   params,
 }: {
   params: Promise<{ district: string }>
 }) {
   const { district: raw } = await params
   const d = Number(raw)
-  if (!d || d < 1 || d > 32) notFound()
+  if (!d || d < 1 || d > 12) notFound()
 
   const season = await getActiveSeason()
 
   const [placementsRes, matTimeRes, fastPinRes, fastTfRes, bonusPctRes, teamScoreRes] =
     await Promise.all([
-      supabase.rpc('district_placements',  { p_district: d, p_gender: 'M', p_season: season }),
-      supabase.rpc('district_mat_time',    { p_district: d, p_gender: 'M', p_season: season }),
-      supabase.rpc('district_fastest_pin', { p_district: d, p_gender: 'M', p_season: season }),
-      supabase.rpc('district_fastest_tf',  { p_district: d, p_gender: 'M', p_season: season }),
-      supabase.rpc('district_bonus_pct',   { p_district: d, p_gender: 'M', p_season: season }),
-      supabase.rpc('district_team_score',  { p_district: d, p_gender: 'M', p_season: season }),
+      supabase.rpc('district_placements',  { p_district: d, p_gender: 'F', p_season: season }),
+      supabase.rpc('district_mat_time',    { p_district: d, p_gender: 'F', p_season: season }),
+      supabase.rpc('district_fastest_pin', { p_district: d, p_gender: 'F', p_season: season }),
+      supabase.rpc('district_fastest_tf',  { p_district: d, p_gender: 'F', p_season: season }),
+      supabase.rpc('district_bonus_pct',   { p_district: d, p_gender: 'F', p_season: season }),
+      supabase.rpc('district_team_score',  { p_district: d, p_gender: 'F', p_season: season }),
     ])
 
   const placements = (placementsRes.data ?? []) as PlacementRow[]
@@ -179,7 +175,6 @@ export default async function DistrictSummaryPage({
   const bonusPct   = (bonusPctRes.data   ?? []) as BonusPctRow[]
   const teamScore  = (teamScoreRes.data  ?? []) as TeamScoreRow[]
 
-  // Organize placements by weight → place
   const placementsByWeight = new Map<number, Map<number, PlacementRow>>()
   for (const p of placements) {
     if (!placementsByWeight.has(p.weight)) placementsByWeight.set(p.weight, new Map())
@@ -189,18 +184,16 @@ export default async function DistrictSummaryPage({
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
 
-      {/* Back link */}
       <Link
-        href="/boys/districts"
+        href="/girls/districts"
         className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 mb-6 transition-colors"
       >
         ← District Index
       </Link>
 
-      {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-slate-900">District {d}</h1>
-        <p className="text-slate-500 text-sm mt-1">NJSIAA 2024–25 · Boys postseason</p>
+        <h1 className="text-2xl font-bold text-rose-900">District {d}</h1>
+        <p className="text-slate-500 text-sm mt-1">NJSIAA 2025–26 · Girls postseason</p>
       </div>
 
       {/* ── Placements ── */}
@@ -302,12 +295,12 @@ export default async function DistrictSummaryPage({
       {/* ── Bracket selector ── */}
       <section>
         <h2 className="text-base font-semibold text-slate-800 mb-3">Brackets</h2>
-        <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
+        <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
           {WEIGHTS.map(w => (
             <Link
               key={w}
-              href={`/boys/districts/${d}/${w}`}
-              className="flex flex-col items-center justify-center py-4 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-400 transition-colors shadow-sm"
+              href={`/girls/districts/${d}/${w}`}
+              className="flex flex-col items-center justify-center py-4 rounded-lg border border-rose-200 bg-white hover:bg-rose-50 hover:border-rose-400 transition-colors shadow-sm"
             >
               <span className="text-base font-bold text-slate-800">{w}</span>
               <span className="text-[10px] text-slate-400 font-medium tracking-wide">lbs</span>

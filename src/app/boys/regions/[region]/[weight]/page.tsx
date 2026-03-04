@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { getActiveSeason } from '@/lib/get-season'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -245,10 +246,13 @@ export default async function RegionBracketPage({
 
   if (!region || region < 1 || region > 8 || !weight) notFound()
 
+  const season = await getActiveSeason()
+
   const { data } = await supabase.rpc('region_bracket', {
     p_region: region,
     p_weight: weight,
     p_gender: 'M',
+    p_season: season,
   })
 
   const matches = (data ?? []) as MatchRow[]

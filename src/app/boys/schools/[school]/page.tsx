@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { getActiveSeason } from '@/lib/get-season'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -69,9 +70,11 @@ export default async function SchoolProfilePage({
   const { school: encoded } = await params
   const school = decodeURIComponent(encoded)
 
+  const season = await getActiveSeason()
+
   const [{ data: breakdown }, { data: wrestlers }, { data: nameRow }] = await Promise.all([
-    supabase.rpc('school_points_breakdown', { p_school: school, p_gender: 'M' }),
-    supabase.rpc('school_wrestlers',        { p_school: school, p_gender: 'M' }),
+    supabase.rpc('school_points_breakdown', { p_school: school, p_gender: 'M', p_season: season }),
+    supabase.rpc('school_wrestlers',        { p_school: school, p_gender: 'M', p_season: season }),
     supabase.from('school_names').select('school_name').eq('abbreviation', school).maybeSingle(),
   ])
 

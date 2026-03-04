@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import { StateContent } from '@/components/StateContent'
+import { getActiveSeason } from '@/lib/get-season'
 
-export default function StateBoysPage() {
+export default async function StateBoysPage() {
+  const season = await getActiveSeason()
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <Link href="/boys" className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 mb-6 transition-colors">
@@ -11,7 +13,7 @@ export default function StateBoysPage() {
         <h1 className="text-2xl font-bold text-slate-900">Boys State Championships</h1>
         <p className="text-slate-500 text-sm mt-1">NJSIAA 2024–25 · Atlantic City · 32-man double elimination</p>
       </div>
-      <StateContent gender="M" />
+      <StateContent gender="M" season={season} />
     </div>
   )
 }

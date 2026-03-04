@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
+import { getActiveSeason } from '@/lib/get-season'
 
 const WEIGHTS = [106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285]
 
@@ -159,14 +160,16 @@ export default async function RegionSummaryPage({
   const r = Number(raw)
   if (!r || r < 1 || r > 8) notFound()
 
+  const season = await getActiveSeason()
+
   const [placementsRes, matTimeRes, fastPinRes, fastTfRes, bonusPctRes, teamScoreRes] =
     await Promise.all([
-      supabase.rpc('region_placements',  { p_region: r, p_gender: 'M' }),
-      supabase.rpc('region_mat_time',    { p_region: r, p_gender: 'M' }),
-      supabase.rpc('region_fastest_pin', { p_region: r, p_gender: 'M' }),
-      supabase.rpc('region_fastest_tf',  { p_region: r, p_gender: 'M' }),
-      supabase.rpc('region_bonus_pct',   { p_region: r, p_gender: 'M' }),
-      supabase.rpc('region_team_score',  { p_region: r, p_gender: 'M' }),
+      supabase.rpc('region_placements',  { p_region: r, p_gender: 'M', p_season: season }),
+      supabase.rpc('region_mat_time',    { p_region: r, p_gender: 'M', p_season: season }),
+      supabase.rpc('region_fastest_pin', { p_region: r, p_gender: 'M', p_season: season }),
+      supabase.rpc('region_fastest_tf',  { p_region: r, p_gender: 'M', p_season: season }),
+      supabase.rpc('region_bonus_pct',   { p_region: r, p_gender: 'M', p_season: season }),
+      supabase.rpc('region_team_score',  { p_region: r, p_gender: 'M', p_season: season }),
     ])
 
   const placements = (placementsRes.data ?? []) as PlacementRow[]

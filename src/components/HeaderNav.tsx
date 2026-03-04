@@ -3,8 +3,9 @@
 import { useState, useRef, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
+import { SeasonPicker } from '@/components/SeasonPicker'
 
-export function HeaderNav() {
+export function HeaderNav({ activeSeason }: { activeSeason: number }) {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
@@ -18,7 +19,7 @@ export function HeaderNav() {
   const homeHref         = isBoys ? '/boys' : '/girls'
   const leaderboardsHref = isBoys ? '/boys/leaderboards' : '/girls/leaderboards'
   const schoolsHref      = isBoys ? '/boys/schools' : '/girls/schools'
-  const districtsHref    = isBoys ? '/boys/districts' : null
+  const districtsHref    = isBoys ? '/boys/districts' : '/girls/districts'
   const regionsHref      = isBoys ? '/boys/regions' : '/girls/regions'
   const stateHref        = isBoys ? '/boys/state' : '/girls/state'
 
@@ -31,10 +32,10 @@ export function HeaderNav() {
     { href: leaderboardsHref, label: 'Leaderboards' },
     { href: stateHref,        label: 'State' },
     { href: regionsHref,      label: 'Regions' },
-    districtsHref ? { href: districtsHref, label: 'Districts' } : null,
+    { href: districtsHref,    label: 'Districts' },
     { href: schoolsHref,      label: 'Schools' },
     { href: '/feedback',      label: 'Feedback' },
-  ].filter((x): x is { href: string; label: string } => x !== null)
+  ]
 
   // Close on outside click
   useEffect(() => {
@@ -92,7 +93,9 @@ export function HeaderNav() {
           How Jersey Knows Wrestling
         </span>
       </Link>
-      <span className="ml-3 text-slate-400 text-sm hidden sm:inline">NJSIAA Wrestling · 2024–25</span>
+
+      {/* Season picker */}
+      <SeasonPicker activeSeason={activeSeason} />
 
       {/* Boys ↔ Girls toggle — right side */}
       <Link

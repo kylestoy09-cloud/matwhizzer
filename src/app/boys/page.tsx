@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { StateContent } from '@/components/StateContent'
+import { getActiveSeason } from '@/lib/get-season'
 
 type WrestlerRow = { id: string; first_name: string; last_name: string }
 type SchoolRow   = { school: string; school_name: string; total_points: number; wrestler_count: number }
@@ -13,6 +14,7 @@ export default async function BoysSearchPage({
   const { q: rawQ, sq: rawSq } = await searchParams
   const q  = rawQ?.trim()  ?? ''
   const sq = rawSq?.trim() ?? ''
+  const season = await getActiveSeason()
 
   const [wrestlerRes, schoolDirRes] = await Promise.all([
     q.length >= 2
@@ -22,7 +24,7 @@ export default async function BoysSearchPage({
           .order('last_name').order('first_name').limit(30)
       : Promise.resolve({ data: null }),
     sq.length >= 2
-      ? supabase.rpc('school_directory', { p_gender: 'M' })
+      ? supabase.rpc('school_directory', { p_gender: 'M', p_season: season })
       : Promise.resolve({ data: null }),
   ])
 
@@ -119,7 +121,7 @@ export default async function BoysSearchPage({
           <h2 className="text-2xl font-bold text-slate-900">State Championships</h2>
           <p className="text-slate-500 text-sm mt-1">NJSIAA 2024–25 · Atlantic City · 32-man double elimination</p>
         </div>
-        <StateContent gender="M" />
+        <StateContent gender="M" season={season} />
       </div>
 
     </div>

@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { getActiveSeason } from '@/lib/get-season'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -261,10 +262,13 @@ export default async function DistrictBracketPage({
 
   if (!district || district < 1 || district > 32 || !weight) notFound()
 
+  const season = await getActiveSeason()
+
   const { data } = await supabase.rpc('district_bracket', {
     p_district: district,
     p_weight: weight,
     p_gender: 'M',
+    p_season: season,
   })
 
   const matches = (data ?? []) as MatchRow[]

@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
+import { getActiveSeason } from '@/lib/get-season'
 import {
   LeaderTable, WrestlerCell, TabNav, SectionHeader,
   fmtTime, fmtSchool, cleanTournament, COMEBACK_ROUND_LABEL,
@@ -90,8 +91,8 @@ type AnalyticsData = {
 
 // ── Data fetching ─────────────────────────────────────────────────────────────
 
-async function fetchPoolStats(pool: string): Promise<PoolData> {
-  const p = { p_pool: pool }
+async function fetchPoolStats(pool: string, season: number): Promise<PoolData> {
+  const p = { p_pool: pool, p_season: season }
   const [
     { data: fastestPin },
     { data: fastestTf },
@@ -123,7 +124,7 @@ async function fetchPoolStats(pool: string): Promise<PoolData> {
   }
 }
 
-async function fetchAnalytics(): Promise<AnalyticsData> {
+async function fetchAnalytics(season: number): Promise<AnalyticsData> {
   const [
     { data: dominance },
     { data: districts },
@@ -131,11 +132,11 @@ async function fetchAnalytics(): Promise<AnalyticsData> {
     { data: weights },
     { data: comebacks },
   ] = await Promise.all([
-    supabase.rpc('lb_dominance',              { p_gender: 'F' }),
-    supabase.rpc('lb_district_strength',      { p_gender: 'F' }),
-    supabase.rpc('lb_school_depth',           { p_gender: 'F' }),
-    supabase.rpc('lb_weight_competitiveness', { p_gender: 'F' }),
-    supabase.rpc('lb_comebacks',              { p_gender: 'F' }),
+    supabase.rpc('lb_dominance',              { p_gender: 'F', p_season: season }),
+    supabase.rpc('lb_district_strength',      { p_gender: 'F', p_season: season }),
+    supabase.rpc('lb_school_depth',           { p_gender: 'F', p_season: season }),
+    supabase.rpc('lb_weight_competitiveness', { p_gender: 'F', p_season: season }),
+    supabase.rpc('lb_comebacks',              { p_gender: 'F', p_season: season }),
   ])
   return {
     dominance:  (dominance  ?? []) as DomRow[],
@@ -206,7 +207,9 @@ export default async function GirlsLeaderboardsPage({
     ? pool
     : 'region'
 
-  const data = isAnalytics ? await fetchAnalytics() : await fetchPoolStats(activePool)
+  const season = await getActiveSeason()
+
+  const data = isAnalytics ? await fetchAnalytics(season) : await fetchPoolStats(activePool, season)
 
   const poolLabel = POOL_OPTIONS.find(p => p.key === activePool)?.desc ?? ''
 

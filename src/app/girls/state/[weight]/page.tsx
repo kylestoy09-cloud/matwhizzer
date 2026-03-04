@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { getActiveSeason } from '@/lib/get-season'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -288,9 +289,12 @@ export default async function GirlsStateBracketPage({
   const weight = Number(rawW)
   if (!weight) notFound()
 
+  const season = await getActiveSeason()
+
   const { data } = await supabase.rpc('state_bracket', {
     p_weight: weight,
     p_gender: 'F',
+    p_season: season,
   })
 
   const matches = (data ?? []) as MatchRow[]
