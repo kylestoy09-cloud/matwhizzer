@@ -4,6 +4,7 @@ import { getActiveSeason } from '@/lib/get-season'
 
 type WrestlerRow = { id: string; first_name: string; last_name: string; gender: string }
 type SchoolRow   = { school: string; school_name: string; total_points: number; wrestler_count: number }
+type SchoolResult = SchoolRow & { gender: 'M' | 'F' }
 
 export default async function RootPage({
   searchParams,
@@ -15,7 +16,7 @@ export default async function RootPage({
   const sq = rawSq?.trim() ?? ''
   const season = await getActiveSeason()
 
-  const [wrestlerRes, schoolDirRes] = await Promise.all([
+  const [wrestlerRes, boysSchoolRes, girlsSchoolRes] = await Promise.all([
     q.length >= 2
       ? supabase.from('wrestlers').select('id, first_name, last_name, gender')
           .or(`first_name.ilike.%${q}%,last_name.ilike.%${q}%`)
@@ -24,16 +25,25 @@ export default async function RootPage({
     sq.length >= 2
       ? supabase.rpc('school_directory', { p_gender: 'M', p_season: season })
       : Promise.resolve({ data: null }),
+    sq.length >= 2
+      ? supabase.rpc('school_directory', { p_gender: 'F', p_season: season })
+      : Promise.resolve({ data: null }),
   ])
 
   const wrestlers = (wrestlerRes.data ?? []) as WrestlerRow[]
 
-  let schools: SchoolRow[] = []
-  if (sq.length >= 2 && schoolDirRes.data) {
+  let schools: SchoolResult[] = []
+  if (sq.length >= 2) {
     const ql = sq.toLowerCase()
-    schools = (schoolDirRes.data as SchoolRow[])
+    const boysList = ((boysSchoolRes.data ?? []) as SchoolRow[])
       .filter(s => s.school_name?.toLowerCase().includes(ql) || s.school?.toLowerCase().includes(ql))
-      .slice(0, 15)
+      .map(s => ({ ...s, gender: 'M' as const }))
+    const boysAbbrs = new Set(boysList.map(s => s.school))
+    const girlsList = ((girlsSchoolRes.data ?? []) as SchoolRow[])
+      .filter(s => s.school_name?.toLowerCase().includes(ql) || s.school?.toLowerCase().includes(ql))
+      .filter(s => !boysAbbrs.has(s.school))   // deduplicate by abbreviation
+      .map(s => ({ ...s, gender: 'F' as const }))
+    schools = [...boysList, ...girlsList].slice(0, 15)
   }
 
   const boysDistricts  = Array.from({ length: 32 }, (_, i) => i + 1)
@@ -109,9 +119,17 @@ export default async function RootPage({
           {schools.length > 0 && (
             <ul className="mt-3 divide-y divide-slate-200 border border-slate-200 rounded-lg overflow-hidden shadow-sm bg-white">
               {schools.map(s => (
-                <li key={s.school}>
-                  <Link href={`/boys/schools/${encodeURIComponent(s.school)}`} className="flex items-center px-4 py-3 hover:bg-slate-50 transition-colors">
+                <li key={`${s.gender}-${s.school}`}>
+                  <Link
+                    href={`/${s.gender === 'M' ? 'boys' : 'girls'}/schools/${encodeURIComponent(s.school)}`}
+                    className="flex items-center justify-between px-4 py-3 hover:bg-slate-50 transition-colors"
+                  >
                     <span className="font-medium text-slate-800">{s.school_name}</span>
+                    <span className={`text-xs font-medium px-2 py-0.5 rounded-full ml-3 shrink-0 ${
+                      s.gender === 'F' ? 'bg-pink-100 text-pink-700' : 'bg-blue-100 text-blue-700'
+                    }`}>
+                      {s.gender === 'F' ? 'Girls' : 'Boys'}
+                    </span>
                   </Link>
                 </li>
               ))}
