@@ -1,7 +1,8 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getActiveSeason, SEASONS } from '@/lib/get-season'
+import { getActiveSeason } from '@/lib/get-season'
+import { InlineSeasonPicker } from '@/components/SeasonPicker'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -117,10 +118,12 @@ export default async function GirlsSchoolProfilePage({
       {/* School header */}
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-rose-900">{schoolName}</h2>
-        <p className="text-slate-500 text-sm mt-1">
-          {regionLabels.length > 0 && regionLabels.join(' · ') + ' · '}
-          Girls postseason · NJSIAA {SEASONS[season]?.label ?? '2024–25'} · {rows.length} wrestler{rows.length !== 1 ? 's' : ''}
-        </p>
+        <div className="flex flex-wrap items-center gap-1 text-slate-500 text-sm mt-1">
+          {regionLabels.length > 0 && <span>{regionLabels.join(' · ')} ·</span>}
+          <span>Girls postseason · NJSIAA</span>
+          <InlineSeasonPicker activeSeason={season} />
+          <span>· {rows.length} wrestler{rows.length !== 1 ? 's' : ''}</span>
+        </div>
       </div>
 
       {/* Team points breakdown */}

@@ -1,7 +1,8 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getActiveSeason, SEASONS } from '@/lib/get-season'
+import { getActiveSeason } from '@/lib/get-season'
+import { InlineSeasonPicker } from '@/components/SeasonPicker'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -130,11 +131,14 @@ export default async function SchoolProfilePage({
         <div className="flex items-baseline gap-2">
           <h2 className="text-2xl font-bold text-slate-900">{schoolName}</h2>
         </div>
-        <p className="text-slate-500 text-sm mt-1">
-          {[...districtLabels, ...regionLabels].join(' · ')}
-          {(districtLabels.length > 0 || regionLabels.length > 0) && ' · '}
-          Boys postseason · NJSIAA {SEASONS[season]?.label ?? '2025-26'} · {rows.length} wrestler{rows.length !== 1 ? 's' : ''}
-        </p>
+        <div className="flex flex-wrap items-center gap-1 text-slate-500 text-sm mt-1">
+          {(districtLabels.length > 0 || regionLabels.length > 0) && (
+            <span>{[...districtLabels, ...regionLabels].join(' · ')} ·</span>
+          )}
+          <span>Boys postseason · NJSIAA</span>
+          <InlineSeasonPicker activeSeason={season} />
+          <span>· {rows.length} wrestler{rows.length !== 1 ? 's' : ''}</span>
+        </div>
       </div>
 
       {/* Team points breakdown */}
