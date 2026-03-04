@@ -110,10 +110,10 @@ export default async function WrestlerPage({
 
   if (!wrestler) notFound()
 
-  // 2. All entries for this wrestler (include school, grade, and season via tournament join)
+  // 2. All entries for this wrestler (include school, grade, season record, and season via tournament join)
   const { data: entries } = await supabase
     .from('tournament_entries')
-    .select('id, school_context_raw, grade_label, tournament:tournaments(season_id)')
+    .select('id, school_context_raw, grade_label, wins, losses, tournament:tournaments(season_id, tournament_type)')
     .eq('wrestler_id', id)
 
   const entryIds = (entries ?? []).map((e: { id: string }) => e.id)
@@ -135,7 +135,9 @@ export default async function WrestlerPage({
     id: string
     school_context_raw: string | null
     grade_label: string | null
-    tournament: { season_id: number } | { season_id: number }[] | null
+    wins: number | null
+    losses: number | null
+    tournament: { season_id: number; tournament_type: string } | { season_id: number; tournament_type: string }[] | null
   }
   const typedEntries = (entries ?? []) as unknown as EntryRow[]
   const entrySeasons = typedEntries.map(
@@ -153,6 +155,18 @@ export default async function WrestlerPage({
   const primaryGrade =
     currentEntries.find(e => e.grade_label)?.grade_label ??
     typedEntries.find(e => e.grade_label)?.grade_label ?? null
+
+  // Season record: wins/losses from the earliest tournament the wrestler entered this season
+  const currentEntriesWithRecord = currentEntries
+    .filter(e => (e.wins ?? 0) > 0 || (e.losses ?? 0) > 0)
+    .sort((a, b) => {
+      const ttA = TOURNAMENT_TYPE_ORDER[(unwrap(a.tournament) as { tournament_type: string } | null)?.tournament_type ?? ''] ?? 9
+      const ttB = TOURNAMENT_TYPE_ORDER[(unwrap(b.tournament) as { tournament_type: string } | null)?.tournament_type ?? ''] ?? 9
+      return ttA - ttB
+    })
+  const seasonRecord = currentEntriesWithRecord.length > 0
+    ? { wins: currentEntriesWithRecord[0].wins ?? 0, losses: currentEntriesWithRecord[0].losses ?? 0 }
+    : null
 
   // 3. Matches as winner + matches as loser (parallel), plus school name lookup
   const selectFields = `
@@ -396,8 +410,11 @@ export default async function WrestlerPage({
           </span>
         ))}
         {primaryGrade && <>{primaryGrade} · </>}
+        {seasonRecord && (
+          <>Season record: <span className="font-semibold text-slate-700">{seasonRecord.wins}-{seasonRecord.losses}</span> · </>
+        )}
         <span className="font-semibold text-slate-700">{wins}-{losses}</span>
-        {' '}this season · {totalTournaments} tournament{totalTournaments !== 1 ? 's' : ''}
+        {' '}postseason · {totalTournaments} tournament{totalTournaments !== 1 ? 's' : ''}
       </p>
 
       {/* Match history grouped by season, then by tournament + weight */}
