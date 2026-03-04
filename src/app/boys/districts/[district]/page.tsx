@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { getActiveSeason } from '@/lib/get-season'
+import { InlineSeasonPicker } from '@/components/SeasonPicker'
 
 const WEIGHTS = [106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285]
 
@@ -63,6 +64,11 @@ type TeamScoreRow = {
   school: string
   school_name: string | null
   total_points: number
+}
+
+type SchoolRow = {
+  school: string
+  school_name: string | null
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -162,7 +168,7 @@ export default async function DistrictSummaryPage({
 
   const season = await getActiveSeason()
 
-  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, bonusPctRes, teamScoreRes] =
+  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, bonusPctRes, teamScoreRes, schoolsRes] =
     await Promise.all([
       supabase.rpc('district_placements',  { p_district: d, p_gender: 'M', p_season: season }),
       supabase.rpc('district_mat_time',    { p_district: d, p_gender: 'M', p_season: season }),
@@ -170,6 +176,7 @@ export default async function DistrictSummaryPage({
       supabase.rpc('district_fastest_tf',  { p_district: d, p_gender: 'M', p_season: season }),
       supabase.rpc('district_bonus_pct',   { p_district: d, p_gender: 'M', p_season: season }),
       supabase.rpc('district_team_score',  { p_district: d, p_gender: 'M', p_season: season }),
+      supabase.rpc('district_schools',     { p_district: d, p_gender: 'M', p_season: season }),
     ])
 
   const placements = (placementsRes.data ?? []) as PlacementRow[]
@@ -178,6 +185,7 @@ export default async function DistrictSummaryPage({
   const fastTf     = (fastTfRes.data     ?? []) as FastestTfRow[]
   const bonusPct   = (bonusPctRes.data   ?? []) as BonusPctRow[]
   const teamScore  = (teamScoreRes.data  ?? []) as TeamScoreRow[]
+  const schools    = (schoolsRes.data    ?? []) as SchoolRow[]
 
   // Organize placements by weight → place
   const placementsByWeight = new Map<number, Map<number, PlacementRow>>()
@@ -200,7 +208,11 @@ export default async function DistrictSummaryPage({
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-slate-900">District {d}</h1>
-        <p className="text-slate-500 text-sm mt-1">NJSIAA 2024–25 · Boys postseason</p>
+        <div className="flex items-center gap-1 text-slate-500 text-sm mt-1">
+          <span>NJSIAA</span>
+          <InlineSeasonPicker activeSeason={season} />
+          <span>· Boys postseason</span>
+        </div>
       </div>
 
       {/* ── Placements ── */}
@@ -315,6 +327,24 @@ export default async function DistrictSummaryPage({
           ))}
         </div>
       </section>
+
+      {/* ── Schools ── */}
+      {schools.length > 0 && (
+        <section className="mt-10">
+          <h2 className="text-base font-semibold text-slate-800 mb-3">Schools</h2>
+          <div className="flex flex-wrap gap-2">
+            {schools.map(s => (
+              <Link
+                key={s.school}
+                href={`/boys/schools/${encodeURIComponent(s.school)}`}
+                className="px-3 py-1.5 text-sm font-medium bg-white border border-slate-200 rounded-full hover:border-slate-400 hover:bg-slate-50 transition-colors shadow-sm"
+              >
+                {s.school_name || s.school}
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
     </div>
   )

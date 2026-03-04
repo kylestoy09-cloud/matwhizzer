@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { getActiveSeason } from '@/lib/get-season'
+import { InlineSeasonPicker } from '@/components/SeasonPicker'
 
 const WEIGHTS = [106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285]
 
@@ -64,6 +65,12 @@ type TeamScoreRow = {
   school: string
   school_name: string | null
   total_points: number
+}
+
+type RegionSchoolRow = {
+  district_num: number
+  school: string
+  school_name: string | null
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -162,7 +169,7 @@ export default async function RegionSummaryPage({
 
   const season = await getActiveSeason()
 
-  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, bonusPctRes, teamScoreRes] =
+  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, bonusPctRes, teamScoreRes, regionSchoolsRes] =
     await Promise.all([
       supabase.rpc('region_placements',  { p_region: r, p_gender: 'M', p_season: season }),
       supabase.rpc('region_mat_time',    { p_region: r, p_gender: 'M', p_season: season }),
@@ -170,14 +177,27 @@ export default async function RegionSummaryPage({
       supabase.rpc('region_fastest_tf',  { p_region: r, p_gender: 'M', p_season: season }),
       supabase.rpc('region_bonus_pct',   { p_region: r, p_gender: 'M', p_season: season }),
       supabase.rpc('region_team_score',  { p_region: r, p_gender: 'M', p_season: season }),
+      supabase.rpc('region_schools',     { p_region: r, p_gender: 'M', p_season: season }),
     ])
 
-  const placements = (placementsRes.data ?? []) as PlacementRow[]
-  const matTime    = (matTimeRes.data    ?? []) as MatTimeRow[]
-  const fastPin    = (fastPinRes.data    ?? []) as FastestPinRow[]
-  const fastTf     = (fastTfRes.data     ?? []) as FastestTfRow[]
-  const bonusPct   = (bonusPctRes.data   ?? []) as BonusPctRow[]
-  const teamScore  = (teamScoreRes.data  ?? []) as TeamScoreRow[]
+  const placements    = (placementsRes.data    ?? []) as PlacementRow[]
+  const matTime       = (matTimeRes.data       ?? []) as MatTimeRow[]
+  const fastPin       = (fastPinRes.data       ?? []) as FastestPinRow[]
+  const fastTf        = (fastTfRes.data        ?? []) as FastestTfRow[]
+  const bonusPct      = (bonusPctRes.data      ?? []) as BonusPctRow[]
+  const teamScore     = (teamScoreRes.data     ?? []) as TeamScoreRow[]
+  const regionSchools = (regionSchoolsRes.data ?? []) as RegionSchoolRow[]
+
+  // Group region schools by district number (already sorted by district_num from RPC)
+  const districtGroups: { districtNum: number; schools: RegionSchoolRow[] }[] = []
+  for (const row of regionSchools) {
+    const last = districtGroups.at(-1)
+    if (last?.districtNum === row.district_num) {
+      last.schools.push(row)
+    } else {
+      districtGroups.push({ districtNum: row.district_num, schools: [row] })
+    }
+  }
 
   // Organize placements by weight → place
   const placementsByWeight = new Map<number, Map<number, PlacementRow>>()
@@ -200,7 +220,11 @@ export default async function RegionSummaryPage({
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-slate-900">Region {r}</h1>
-        <p className="text-slate-500 text-sm mt-1">NJSIAA 2024–25 · Boys postseason · Top 4 advance to state</p>
+        <div className="flex items-center gap-1 text-slate-500 text-sm mt-1">
+          <span>NJSIAA</span>
+          <InlineSeasonPicker activeSeason={season} />
+          <span>· Boys postseason · Top 4 advance to state</span>
+        </div>
       </div>
 
       {/* ── Placements ── */}
@@ -315,6 +339,33 @@ export default async function RegionSummaryPage({
           ))}
         </div>
       </section>
+
+      {/* ── Schools by District ── */}
+      {districtGroups.length > 0 && (
+        <section className="mt-10">
+          <h2 className="text-base font-semibold text-slate-800 mb-3">Schools by District</h2>
+          <div className="space-y-3">
+            {districtGroups.map(({ districtNum, schools }) => (
+              <div key={districtNum} className="flex items-start gap-3">
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide pt-1.5 w-16 shrink-0 text-right">
+                  Dist.&nbsp;{districtNum}
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {schools.map(s => (
+                    <Link
+                      key={s.school}
+                      href={`/boys/schools/${encodeURIComponent(s.school)}`}
+                      className="px-3 py-1.5 text-sm font-medium bg-white border border-slate-200 rounded-full hover:border-slate-400 hover:bg-slate-50 transition-colors shadow-sm"
+                    >
+                      {s.school_name || s.school}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
     </div>
   )
