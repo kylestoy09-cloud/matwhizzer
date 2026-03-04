@@ -455,7 +455,7 @@ function AnalyticsTab({ d }: { d: AnalyticsData }) {
 
       <LeaderTable<DomRow>
         title="Dominance Score"
-        description="Average margin per win (DEC/MD = score diff · TF = score diff · FALL = time remaining × 15/360) — min 5 wins"
+        description="Avg pts/match across wins & losses — Pin/TF: +8 (≤1min) to +3 (≤6min) · MD +2 · Dec +1 · losses are negative — min 5 matches"
         rows={d.dominance}
         cols={[
           {
