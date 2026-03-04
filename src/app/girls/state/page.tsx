@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { StateContent } from '@/components/StateContent'
 import { getActiveSeason } from '@/lib/get-season'
+import { InlineSeasonPicker } from '@/components/SeasonPicker'
 
 export default async function GirlsStatePage() {
   const season = await getActiveSeason()
@@ -11,7 +12,11 @@ export default async function GirlsStatePage() {
       </Link>
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-rose-900">Girls State Championships</h1>
-        <p className="text-slate-500 text-sm mt-1">NJSIAA 2024–25 · Boardwalk Hall · double elimination</p>
+        <div className="flex items-center gap-1 text-slate-500 text-sm mt-1">
+          <span>NJSIAA</span>
+          <InlineSeasonPicker activeSeason={season} />
+          <span>· Boardwalk Hall · double elimination</span>
+        </div>
       </div>
       <StateContent gender="F" season={season} />
     </div>

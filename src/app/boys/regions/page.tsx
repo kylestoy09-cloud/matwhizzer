@@ -1,6 +1,9 @@
 import Link from 'next/link'
+import { getActiveSeason } from '@/lib/get-season'
+import { InlineSeasonPicker } from '@/components/SeasonPicker'
 
-export default function BoysRegionsPage() {
+export default async function BoysRegionsPage() {
+  const season = await getActiveSeason()
   const regions = Array.from({ length: 8 }, (_, i) => i + 1)
 
   return (
@@ -14,7 +17,11 @@ export default function BoysRegionsPage() {
 
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-slate-900">Boys Region Brackets</h1>
-        <p className="text-slate-500 text-sm mt-1">NJSIAA 2024–25 · Select a region</p>
+        <div className="flex items-center gap-1 text-slate-500 text-sm mt-1">
+          <span>NJSIAA</span>
+          <InlineSeasonPicker activeSeason={season} />
+          <span>· Select a region</span>
+        </div>
       </div>
 
       <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">

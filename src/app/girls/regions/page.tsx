@@ -1,4 +1,6 @@
 import Link from 'next/link'
+import { getActiveSeason } from '@/lib/get-season'
+import { InlineSeasonPicker } from '@/components/SeasonPicker'
 
 const REGIONS = [
   { slug: 'central', label: 'Central' },
@@ -7,7 +9,9 @@ const REGIONS = [
   { slug: 'south',   label: 'South' },
 ]
 
-export default function GirlsRegionsPage() {
+export default async function GirlsRegionsPage() {
+  const season = await getActiveSeason()
+
   return (
     <div className="max-w-3xl mx-auto px-4 py-10">
       <Link
@@ -19,7 +23,11 @@ export default function GirlsRegionsPage() {
 
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-rose-900">Girls Region Brackets</h1>
-        <p className="text-slate-500 text-sm mt-1">NJSIAA 2024–25 · Select a region</p>
+        <div className="flex items-center gap-1 text-slate-500 text-sm mt-1">
+          <span>NJSIAA</span>
+          <InlineSeasonPicker activeSeason={season} />
+          <span>· Select a region</span>
+        </div>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">

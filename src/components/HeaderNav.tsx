@@ -3,9 +3,8 @@
 import { useState, useRef, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { SeasonPicker } from '@/components/SeasonPicker'
 
-export function HeaderNav({ activeSeason }: { activeSeason: number }) {
+export function HeaderNav() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
@@ -93,9 +92,6 @@ export function HeaderNav({ activeSeason }: { activeSeason: number }) {
           How Jersey Knows Wrestling
         </span>
       </Link>
-
-      {/* Season picker */}
-      <SeasonPicker activeSeason={activeSeason} />
 
       {/* Boys ↔ Girls toggle — right side */}
       <Link

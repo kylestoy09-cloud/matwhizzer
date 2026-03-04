@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { getActiveSeason } from '@/lib/get-season'
+import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import {
   LeaderTable, WrestlerCell, TabNav, SectionHeader,
   fmtTime, fmtSchool, cleanTournament, COMEBACK_ROUND_LABEL,
@@ -218,7 +219,11 @@ export default async function BoysLeaderboardsPage({
     <div className="max-w-6xl mx-auto px-4 py-10">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-slate-900">Boys Leaderboards</h1>
-        <p className="text-slate-500 text-sm mt-1">NJSIAA 2024–25 boys postseason — districts, regions &amp; state</p>
+        <div className="flex items-center gap-1 text-slate-500 text-sm mt-1">
+          <span>NJSIAA</span>
+          <InlineSeasonPicker activeSeason={season} />
+          <span>boys postseason — districts, regions &amp; state</span>
+        </div>
       </div>
 
       <TabNav active={tab} basePath="/boys/leaderboards" />

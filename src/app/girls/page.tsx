@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { getActiveSeason } from '@/lib/get-season'
+import { InlineSeasonPicker } from '@/components/SeasonPicker'
 
 type WrestlerRow = { id: string; first_name: string; last_name: string }
 type SchoolRow   = { school: string; school_name: string; total_points: number; wrestler_count: number }
@@ -118,7 +119,11 @@ export default async function GirlsSearchPage({
       <div className="border-t border-slate-200 pt-10">
         <div className="mb-4">
           <h2 className="text-xl font-bold text-rose-900">Districts</h2>
-          <p className="text-slate-500 text-sm mt-0.5">NJSIAA 2025–26 · Select a district</p>
+          <div className="flex items-center gap-1 text-slate-500 text-sm mt-0.5">
+            <span>NJSIAA</span>
+            <InlineSeasonPicker activeSeason={season} />
+            <span>· Select a district</span>
+          </div>
         </div>
         <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
           {Array.from({ length: 12 }, (_, i) => i + 1).map(d => (
