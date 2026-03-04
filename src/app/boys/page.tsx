@@ -1,6 +1,5 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
-import { StateContent } from '@/components/StateContent'
 import { getActiveSeason } from '@/lib/get-season'
 
 type WrestlerRow = { id: string; first_name: string; last_name: string }
@@ -115,13 +114,24 @@ export default async function BoysSearchPage({
         </section>
       </div>
 
-      {/* ── State Championships ── */}
+      {/* ── Districts ── */}
       <div className="border-t border-slate-200 pt-10">
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-slate-900">State Championships</h2>
-          <p className="text-slate-500 text-sm mt-1">NJSIAA 2024–25 · Atlantic City · 32-man double elimination</p>
+        <div className="mb-4">
+          <h2 className="text-xl font-bold text-slate-900">Districts</h2>
+          <p className="text-slate-500 text-sm mt-0.5">NJSIAA 2025–26 · Select a district</p>
         </div>
-        <StateContent gender="M" season={season} />
+        <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
+          {Array.from({ length: 32 }, (_, i) => i + 1).map(d => (
+            <Link
+              key={d}
+              href={`/boys/districts/${d}`}
+              className="flex flex-col items-center justify-center aspect-square rounded-lg border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-400 transition-colors shadow-sm"
+            >
+              <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide leading-none mb-0.5">Dist.</span>
+              <span className="text-xl font-bold text-slate-800">{d}</span>
+            </Link>
+          ))}
+        </div>
       </div>
 
     </div>
