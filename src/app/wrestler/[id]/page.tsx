@@ -216,6 +216,32 @@ export default async function WrestlerPage({
   const wins   = annotated.filter(m => m.result === 'W').length
   const losses = annotated.filter(m => m.result === 'L').length
 
+  // Primary weight: smallest weight across all groups
+  const allWeights = sortedGroups.map(g => g.weight).filter(w => w > 0)
+  const primaryWeight = allWeights.length > 0 ? Math.min(...allWeights) : null
+
+  // District labels e.g. "D5"
+  const districtNames = [...new Set(
+    sortedGroups
+      .filter(g => g.tournament_type === 'districts')
+      .map(g => { const m = g.tournament_name.match(/District (\d+)$/); return m ? `D${m[1]}` : null })
+      .filter((x): x is string => x !== null)
+  )].sort()
+
+  // Region labels e.g. "R2" (boys) or "Central" (girls)
+  const regionNames = [...new Set(
+    sortedGroups
+      .filter(g => g.tournament_type === 'regions' || g.tournament_type === 'girls_regions')
+      .map(g => {
+        const mBoys = g.tournament_name.match(/Regions r(\d+)$/i)
+        if (mBoys) return `R${mBoys[1]}`
+        const mGirls = g.tournament_name.match(/Regions (.+)$/)
+        if (mGirls) return mGirls[1]
+        return null
+      })
+      .filter((x): x is string => x !== null)
+  )].sort()
+
   const displayName = [wrestler.first_name, wrestler.last_name, wrestler.suffix]
     .filter(Boolean).join(' ')
 
@@ -245,10 +271,42 @@ export default async function WrestlerPage({
             ) : (
               <span className="font-medium text-slate-700">{displaySchool}</span>
             )}
-            {primaryGrade && <span className="text-slate-400"> · {primaryGrade}</span>}
             {' · '}
           </>
         )}
+        {primaryWeight && <>{primaryWeight} lb · </>}
+        {districtNames.map(d => (
+          <span key={d}>
+            <Link
+              href={`/${wrestler.gender === 'M' ? 'boys' : 'girls'}/districts/${d.slice(1)}`}
+              className="hover:text-slate-800 transition-colors"
+            >
+              {d}
+            </Link>
+            {' · '}
+          </span>
+        ))}
+        {regionNames.map(r => (
+          <span key={r}>
+            {wrestler.gender === 'M' ? (
+              <Link
+                href={`/boys/regions/${r.slice(1)}`}
+                className="hover:text-slate-800 transition-colors"
+              >
+                {r}
+              </Link>
+            ) : (
+              <Link
+                href={`/girls/regions/${r.toLowerCase().replace(/ /g, '-')}`}
+                className="hover:text-slate-800 transition-colors"
+              >
+                {r}
+              </Link>
+            )}
+            {' · '}
+          </span>
+        ))}
+        {primaryGrade && <>{primaryGrade} · </>}
         <span className="font-semibold text-slate-700">{wins}-{losses}</span>
         {' '}record · {sortedGroups.length} tournament{sortedGroups.length !== 1 ? 's' : ''}
       </p>
