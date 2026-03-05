@@ -22,6 +22,7 @@ export type BracketEntry = {
 
 export type DistrictChamp = {
   district_num: number
+  place: number
   wrestler_name: string
   wrestler_id: string
   school_name: string
@@ -263,29 +264,9 @@ export function BracketPoll({
         </div>
       )}
 
-      {/* ── District Winners ── */}
+      {/* ── District Podiums ── */}
       {districtChamps.length > 0 && (
-        <section className="border-t border-slate-100 pt-6">
-          <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
-            District Champions
-          </h3>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            {districtChamps.map(dc => (
-              <div key={dc.district_num} className="bg-white border border-slate-200 rounded-lg px-3 py-2.5 shadow-sm">
-                <div className="text-[10px] font-semibold text-slate-400 uppercase mb-1">
-                  District {dc.district_num}
-                </div>
-                <Link
-                  href={`/wrestler/${dc.wrestler_id}`}
-                  className="text-sm font-medium text-slate-800 hover:underline truncate block"
-                >
-                  {dc.wrestler_name}
-                </Link>
-                <span className="text-[10px] text-slate-400">{dc.school_name}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+        <DistrictPodiums champs={districtChamps} />
       )}
     </div>
   )
@@ -492,5 +473,54 @@ function EntryRow({
         </span>
       )}
     </div>
+  )
+}
+
+// ── District Podiums ────────────────────────────────────────────────────────
+
+const PLACE_MEDAL = ['\u{1F947}', '\u{1F948}', '\u{1F949}']
+
+function DistrictPodiums({ champs }: { champs: DistrictChamp[] }) {
+  const byDistrict = new Map<number, DistrictChamp[]>()
+  for (const dc of champs) {
+    const list = byDistrict.get(dc.district_num) ?? []
+    list.push(dc)
+    byDistrict.set(dc.district_num, list)
+  }
+  const districts = [...byDistrict.entries()].sort((a, b) => a[0] - b[0])
+
+  return (
+    <section className="border-t border-slate-100 pt-6">
+      <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
+        District Qualifiers
+      </h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {districts.map(([distNum, placers]) => (
+          <div key={distNum} className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm">
+            <div className="px-3 py-1.5 bg-slate-50 border-b border-slate-100">
+              <span className="text-[11px] font-semibold text-slate-500">District {distNum}</span>
+            </div>
+            <div className="divide-y divide-slate-50">
+              {placers.map(dc => (
+                <div key={dc.wrestler_id} className="flex items-center gap-2 px-3 py-1.5">
+                  <span className="text-[11px] w-4 text-center shrink-0">
+                    {dc.place <= 3 ? PLACE_MEDAL[dc.place - 1] : String(dc.place)}
+                  </span>
+                  <Link
+                    href={`/wrestler/${dc.wrestler_id}`}
+                    className="text-[13px] font-medium text-slate-800 hover:underline truncate"
+                  >
+                    {dc.wrestler_name}
+                  </Link>
+                  <span className="text-[10px] text-slate-400 truncate ml-auto shrink-0">
+                    {dc.school_name}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
   )
 }
