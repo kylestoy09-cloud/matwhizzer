@@ -6,12 +6,7 @@ import { InlineSeasonPicker } from '@/components/SeasonPicker'
 
 const WEIGHTS = [100, 107, 114, 120, 126, 132, 138, 145, 152, 165, 185, 235]
 
-const REGION_DISPLAY: Record<string, string> = {
-  central:  'Central',
-  'north-1': 'North 1',
-  'north-2': 'North 2',
-  south:    'South',
-}
+const VALID_REGIONS = new Set(['1', '2', '3', '4'])
 
 const PLACE_LABEL: Record<number, string> = {
   1: 'Champion',
@@ -176,9 +171,9 @@ export default async function GirlsRegionSummaryPage({
   params: Promise<{ region: string }>
 }) {
   const { region } = await params
-  if (!REGION_DISPLAY[region]) notFound()
+  if (!VALID_REGIONS.has(region)) notFound()
 
-  const displayName = REGION_DISPLAY[region]
+  const displayName = `Region ${region}`
 
   const season = await getActiveSeason()
 
@@ -234,7 +229,7 @@ export default async function GirlsRegionSummaryPage({
 
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-rose-900">Region {displayName}</h1>
+        <h1 className="text-2xl font-bold text-rose-900">Girls {displayName}</h1>
         <div className="flex items-center gap-1 text-slate-500 text-sm mt-1">
           <span>NJSIAA</span>
           <InlineSeasonPicker activeSeason={season} />

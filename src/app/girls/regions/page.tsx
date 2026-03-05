@@ -3,10 +3,10 @@ import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 
 const REGIONS = [
-  { slug: 'central', label: 'Central' },
-  { slug: 'north-1', label: 'North 1' },
-  { slug: 'north-2', label: 'North 2' },
-  { slug: 'south',   label: 'South' },
+  { slug: '1', label: 'Region 1' },
+  { slug: '2', label: 'Region 2' },
+  { slug: '3', label: 'Region 3' },
+  { slug: '4', label: 'Region 4' },
 ]
 
 export default async function GirlsRegionsPage() {

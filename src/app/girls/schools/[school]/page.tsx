@@ -41,10 +41,10 @@ const TOURNEY_LABEL: Record<string, string> = {
 }
 
 const REGION_FULL: Record<string, string> = {
-  Central: 'Central',
-  N1:      'North 1',
-  N2:      'North 2',
-  South:   'South',
+  R1: 'Region 1',
+  R2: 'Region 2',
+  R3: 'Region 3',
+  R4: 'Region 4',
 }
 
 function placeBadgeClass(p: string | null): string {

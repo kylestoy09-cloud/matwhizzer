@@ -278,19 +278,14 @@ export default async function RootPage({
             <p className="text-slate-500 text-sm mt-0.5">NJSIAA 2025-26 · Select a region</p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            {[
-              { slug: 'central', label: 'Central' },
-              { slug: 'north-1', label: 'North 1' },
-              { slug: 'north-2', label: 'North 2' },
-              { slug: 'south', label: 'South' },
-            ].map(r => (
+            {Array.from({ length: 4 }, (_, i) => i + 1).map(r => (
               <Link
-                key={r.slug}
-                href={`/girls/regions/${r.slug}`}
+                key={r}
+                href={`/girls/regions/${r}`}
                 className="flex flex-col items-center justify-center py-4 rounded-lg border border-purple-200 bg-white hover:bg-purple-50 hover:border-purple-400 transition-colors shadow-sm"
               >
                 <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide leading-none mb-0.5">Reg.</span>
-                <span className="text-base font-bold text-slate-800">{r.label}</span>
+                <span className="text-xl font-bold text-slate-800">{r}</span>
               </Link>
             ))}
           </div>

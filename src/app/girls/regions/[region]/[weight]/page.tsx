@@ -32,12 +32,7 @@ type MatchRow = {
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-const REGION_DISPLAY: Record<string, string> = {
-  central:   'Central',
-  'north-1': 'North 1',
-  'north-2': 'North 2',
-  south:     'South',
-}
+const VALID_REGIONS = new Set(['1', '2', '3', '4'])
 
 const CARD_H = 88
 
@@ -360,7 +355,7 @@ export default async function GirlsRegionBracketPage({
   const { region, weight: rawW } = await params
   const weight = Number(rawW)
 
-  if (!REGION_DISPLAY[region] || !weight) notFound()
+  if (!VALID_REGIONS.has(region) || !weight) notFound()
 
   const season = await getActiveSeason()
 
@@ -421,12 +416,12 @@ export default async function GirlsRegionBracketPage({
         href={`/girls/regions/${region}`}
         className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 mb-6 transition-colors"
       >
-        ← Region {REGION_DISPLAY[region]}
+        ← Region {region}
       </Link>
 
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-rose-900">
-          Region {REGION_DISPLAY[region]}
+          Region {region}
           <span className="text-slate-400 font-normal ml-2">·</span>
           <span className="text-slate-600 font-semibold ml-2">{weight} lb</span>
         </h1>
