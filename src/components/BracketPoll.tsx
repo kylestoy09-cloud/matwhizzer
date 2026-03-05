@@ -150,7 +150,6 @@ export function BracketPoll({
   const [loading, setLoading] = useState(true)
 
   const visitorId = typeof window !== 'undefined' ? getVisitorId() : ''
-  const matchups = buildMatchups(entries, bracketSize)
   const entryMap = new Map(entries.map(e => [e.wrestler_id, e]))
   const pollClosed = hasMatches
 
@@ -219,10 +218,15 @@ export function BracketPoll({
   // Build podium display: use poll results if available, otherwise default to seeds
   const podium = buildPodium(results, totalVoters, entries, entryMap)
 
+  // Entries sorted by seed for the seeded list
+  const seededEntries = [...entries].sort((a, b) => (a.seed ?? 999) - (b.seed ?? 999))
+
   return (
     <div className="mt-6 space-y-6">
-      {/* ── Podium / Leaders ── */}
-      <PodiumBar podium={podium} totalVoters={totalVoters} loading={loading} />
+      {/* ── Poll Results (only if votes exist) ── */}
+      {!loading && totalVoters > 0 && (
+        <PodiumBar podium={podium} totalVoters={totalVoters} loading={loading} />
+      )}
 
       {/* ── Instructions ── */}
       {!pollClosed && !submitted && (
@@ -231,23 +235,22 @@ export function BracketPoll({
         </p>
       )}
 
-      {/* ── First Round Matchups ── */}
+      {/* ── Seeded Entry List ── */}
       <section>
         <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
-          First Round Draw
+          Entries
         </h3>
-        <div className="flex flex-col gap-0 max-w-lg">
-          {matchups.map(([top, bot], i) => (
-            <MatchupCard
-              key={i}
-              top={top}
-              bot={bot}
-              matchNum={i + 1}
-              togglePick={togglePick}
-              getPickSlot={getPickSlot}
-              pollClosed={pollClosed}
-              provenancePrefix={provenancePrefix}
-            />
+        <div className="max-w-lg bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm">
+          {seededEntries.map((entry, i) => (
+            <div key={entry.entry_id} className={i > 0 ? 'border-t border-slate-100' : ''}>
+              <EntryRow
+                entry={entry}
+                togglePick={togglePick}
+                getPickSlot={getPickSlot}
+                pollClosed={pollClosed}
+                provenancePrefix={provenancePrefix}
+              />
+            </div>
           ))}
         </div>
       </section>
