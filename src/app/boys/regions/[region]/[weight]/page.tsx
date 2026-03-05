@@ -2,7 +2,7 @@ import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
-import { BracketPoll, type BracketEntry } from '@/components/BracketPoll'
+import { BracketPoll, type BracketEntry, type DistrictChamp } from '@/components/BracketPoll'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -356,7 +356,7 @@ export default async function RegionBracketPage({
 
   const season = await getActiveSeason()
 
-  const [{ data: matchData }, { data: entryData }] = await Promise.all([
+  const [{ data: matchData }, { data: entryData }, { data: champData }] = await Promise.all([
     supabase.rpc('region_bracket', {
       p_region: region,
       p_weight: weight,
@@ -369,10 +369,17 @@ export default async function RegionBracketPage({
       p_gender: 'M',
       p_season: season,
     }),
+    supabase.rpc('region_district_champs', {
+      p_region: region,
+      p_weight: weight,
+      p_gender: 'M',
+      p_season: season,
+    }),
   ])
 
   const matches = (matchData ?? []) as MatchRow[]
   const entries = (entryData ?? []) as (BracketEntry & { tournament_id: number; weight_class_id: number })[]
+  const districtChamps = (champData ?? []) as DistrictChamp[]
   if (matches.length === 0 && entries.length === 0) notFound()
 
   // Split sides
@@ -433,6 +440,8 @@ export default async function RegionBracketPage({
           weightClassId={entries[0]?.weight_class_id ?? 0}
           hasMatches={false}
           bracketSize={16}
+          provenancePrefix="D"
+          districtChamps={districtChamps}
         />
       ) : (<>
 
@@ -522,6 +531,8 @@ export default async function RegionBracketPage({
           weightClassId={entries[0]?.weight_class_id ?? 0}
           hasMatches={true}
           bracketSize={16}
+          provenancePrefix="D"
+          districtChamps={districtChamps}
         />
       )}
       </>)}

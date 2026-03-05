@@ -17,6 +17,14 @@ export type BracketEntry = {
   losses: number | null
   district_num: number | null
   district_place: number | null
+  bracket_position: number | null
+}
+
+export type DistrictChamp = {
+  district_num: number
+  wrestler_name: string
+  wrestler_id: string
+  school_name: string
 }
 
 type PollResult = {
@@ -36,46 +44,64 @@ type MyPick = {
   pick_4th: string | null
 }
 
-// ── Bracket seeding: simple fold (1vN, 2v(N-1), 3v(N-2)...) ────────────────
+// ── Bracket matchup building from bracket_position ──────────────────────────
+// Uses bracket_position (1-16 or 1-32) from the actual PDF bracket.
+// Consecutive pairs of positions form first-round matchups:
+//   slots 1-2 = Match 1, slots 3-4 = Match 2, etc.
+// Byes are empty slots (no wrestler at that position).
 
 function buildMatchups(entries: BracketEntry[], bracketSize: 16 | 32 = 16): [BracketEntry | null, BracketEntry | null][] {
-  // Map seed → entry (for seeded wrestlers)
+  // If entries have bracket_position data, use it for exact matchup placement
+  const withPosition = entries.filter(e => e.bracket_position != null)
+
+  if (withPosition.length > 0) {
+    // Build position map
+    const byPos = new Map<number, BracketEntry>()
+    for (const e of withPosition) {
+      byPos.set(e.bracket_position!, e)
+    }
+
+    // Entries without positions go at the end
+    const withoutPosition = entries.filter(e => e.bracket_position == null)
+    let extraIdx = 0
+
+    const matchups: [BracketEntry | null, BracketEntry | null][] = []
+    for (let i = 1; i <= bracketSize; i += 2) {
+      let top = byPos.get(i) ?? null
+      let bot = byPos.get(i + 1) ?? null
+
+      // Fill unpositioned entries into empty slots
+      if (!top && extraIdx < withoutPosition.length) {
+        top = withoutPosition[extraIdx++]
+      }
+      if (!bot && extraIdx < withoutPosition.length) {
+        bot = withoutPosition[extraIdx++]
+      }
+
+      if (top || bot) {
+        matchups.push([top, bot])
+      }
+    }
+    return matchups
+  }
+
+  // Fallback: seed-based pairing (for entries without bracket_position)
   const bySeed = new Map<number, BracketEntry>()
   const unseeded: BracketEntry[] = []
-
   for (const e of entries) {
-    if (e.seed != null) {
-      bySeed.set(e.seed, e)
-    } else {
-      unseeded.push(e)
-    }
+    if (e.seed != null && e.seed >= 1) bySeed.set(e.seed, e)
+    else unseeded.push(e)
   }
 
-  // Simple fold: 1vN, 2v(N-1), 3v(N-2), ...
+  const numSeeds = bracketSize / 2
   const matchups: [BracketEntry | null, BracketEntry | null][] = []
-  const half = bracketSize / 2
   let unseededIdx = 0
-
-  for (let i = 1; i <= half; i++) {
-    const topSeed = i
-    const botSeed = bracketSize + 1 - i
-    let top = bySeed.get(topSeed) ?? null
-    let bot = bySeed.get(botSeed) ?? null
-
-    // Fill unseeded wrestlers into empty slots
-    if (!top && unseededIdx < unseeded.length) {
-      top = unseeded[unseededIdx++]
-    }
-    if (!bot && unseededIdx < unseeded.length) {
-      bot = unseeded[unseededIdx++]
-    }
-
-    // Only include matchup if at least one wrestler exists
-    if (top || bot) {
-      matchups.push([top, bot])
-    }
+  for (let seed = 1; seed <= numSeeds; seed++) {
+    const seeded = bySeed.get(seed) ?? null
+    let opponent: BracketEntry | null = null
+    if (unseededIdx < unseeded.length) opponent = unseeded[unseededIdx++]
+    if (seeded || opponent) matchups.push([seeded, opponent])
   }
-
   return matchups
 }
 
@@ -146,6 +172,7 @@ export function BracketPoll({
   hasMatches,
   bracketSize = 16,
   provenancePrefix = 'D',
+  districtChamps = [],
 }: {
   entries: BracketEntry[]
   tournamentId: number
@@ -153,6 +180,7 @@ export function BracketPoll({
   hasMatches: boolean
   bracketSize?: 16 | 32
   provenancePrefix?: string
+  districtChamps?: DistrictChamp[]
 }) {
   const [picks, setPicks] = useState<MyPick>({ pick_1st: null, pick_2nd: null, pick_3rd: null, pick_4th: null })
   const [results, setResults] = useState<PollResult[]>([])
@@ -337,6 +365,31 @@ export function BracketPoll({
           <PollResultsTable results={results} totalVoters={totalVoters} />
         </section>
       )}
+
+      {/* ── District Winners feeding this bracket ── */}
+      {districtChamps.length > 0 && (
+        <section className="border-t border-slate-100 pt-6">
+          <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
+            District Champions
+          </h3>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            {districtChamps.map(dc => (
+              <div key={dc.district_num} className="bg-white border border-slate-200 rounded-lg px-3 py-2.5 shadow-sm">
+                <div className="text-[10px] font-semibold text-slate-400 uppercase mb-1">
+                  District {dc.district_num}
+                </div>
+                <Link
+                  href={`/wrestler/${dc.wrestler_id}`}
+                  className="text-sm font-medium text-slate-800 hover:underline truncate block"
+                >
+                  {dc.wrestler_name}
+                </Link>
+                <span className="text-[10px] text-slate-400">{dc.school_name}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   )
 }
@@ -367,7 +420,13 @@ function MatchupCard({
       <div className="px-2.5 py-1 bg-slate-50 border-b border-slate-100">
         <span className="text-[10px] text-slate-400 font-medium">Match {matchNum}</span>
       </div>
-      <EntryRow entry={top} onSelect={onSelect} activeSlot={activeSlot} getPickSlot={getPickSlot} pollClosed={pollClosed} provenancePrefix={provenancePrefix} />
+      {top ? (
+        <EntryRow entry={top} onSelect={onSelect} activeSlot={activeSlot} getPickSlot={getPickSlot} pollClosed={pollClosed} provenancePrefix={provenancePrefix} />
+      ) : (
+        <div className="flex items-center px-2.5 text-xs text-slate-400 italic" style={{ height: 52 }}>
+          Bye
+        </div>
+      )}
       <div className="border-t border-slate-100" />
       {bot ? (
         <EntryRow entry={bot} onSelect={onSelect} activeSlot={activeSlot} getPickSlot={getPickSlot} pollClosed={pollClosed} provenancePrefix={provenancePrefix} />
