@@ -324,7 +324,7 @@ function PodiumBar({ podium, totalVoters, loading }: { podium: PodiumEntry[]; to
     <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
       <div className="flex items-center justify-between mb-3">
         <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
-          {podium[0]?.isDefault ? 'Projected Podium' : 'Community Picks'}
+          {podium[0]?.isDefault ? 'Projected Podium' : 'Peanut Gallery Wisdom'}
         </h3>
         {totalVoters > 0 && (
           <span className="text-[10px] text-slate-400">
