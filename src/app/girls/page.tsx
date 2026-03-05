@@ -1,7 +1,6 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { getActiveSeason } from '@/lib/get-season'
-import { InlineSeasonPicker } from '@/components/SeasonPicker'
 
 type WrestlerRow = { id: string; first_name: string; last_name: string }
 type SchoolRow   = { school: string; school_name: string; total_points: number; wrestler_count: number }
@@ -220,22 +219,6 @@ export default async function GirlsPage({
 
       {/* ── Tournament grids ── */}
       <div className="space-y-10 border-t border-slate-200 pt-10">
-
-        <section>
-          <div className="mb-4">
-            <h2 className="text-xl font-bold text-rose-900">State Tournament</h2>
-            <div className="flex items-center gap-1 text-slate-500 text-sm mt-0.5">
-              <span>NJSIAA</span>
-              <InlineSeasonPicker activeSeason={season} />
-            </div>
-          </div>
-          <Link
-            href="/girls/state"
-            className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-pink-200 bg-white hover:bg-pink-50 hover:border-pink-400 transition-colors shadow-sm font-bold text-slate-800"
-          >
-            View State Brackets
-          </Link>
-        </section>
 
         <section>
           <div className="mb-4">

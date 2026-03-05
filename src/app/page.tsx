@@ -251,34 +251,6 @@ export default async function RootPage({
       {/* ── Tournament grids ── */}
       <div className="space-y-10 border-t border-slate-200 pt-10">
 
-        {/* Boys State */}
-        <section>
-          <div className="mb-4">
-            <h2 className="text-xl font-bold text-slate-900">Boys State Tournament</h2>
-            <p className="text-slate-500 text-sm mt-0.5">NJSIAA 2025-26</p>
-          </div>
-          <Link
-            href="/boys/state"
-            className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-blue-200 bg-white hover:bg-blue-50 hover:border-blue-400 transition-colors shadow-sm font-bold text-slate-800"
-          >
-            View State Brackets
-          </Link>
-        </section>
-
-        {/* Girls State */}
-        <section>
-          <div className="mb-4">
-            <h2 className="text-xl font-bold text-rose-900">Girls State Tournament</h2>
-            <p className="text-slate-500 text-sm mt-0.5">NJSIAA 2025-26</p>
-          </div>
-          <Link
-            href="/girls/state"
-            className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-pink-200 bg-white hover:bg-pink-50 hover:border-pink-400 transition-colors shadow-sm font-bold text-slate-800"
-          >
-            View State Brackets
-          </Link>
-        </section>
-
         {/* Boys Regions */}
         <section>
           <div className="mb-4">
