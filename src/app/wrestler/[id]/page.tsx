@@ -347,7 +347,7 @@ export default async function WrestlerPage({
   const losses = currentAnnotated.filter(m => m.result === 'L').length
 
   // Detect placements (champion = won Finals on championship side)
-  type PlacementInfo = { tournament: string; place: number; tournamentType: string }
+  type PlacementInfo = { tournament: string; place: number; tournamentType: string; seasonId: number }
   const placements: PlacementInfo[] = []
   for (const g of allGroupsSorted) {
     const finals = g.matches.find(
@@ -355,9 +355,9 @@ export default async function WrestlerPage({
     )
     if (finals) {
       if (finals.result === 'W') {
-        placements.push({ tournament: g.tournament_name, place: 1, tournamentType: g.tournament_type })
+        placements.push({ tournament: g.tournament_name, place: 1, tournamentType: g.tournament_type, seasonId: g.season_id })
       } else if (finals.result === 'L') {
-        placements.push({ tournament: g.tournament_name, place: 2, tournamentType: g.tournament_type })
+        placements.push({ tournament: g.tournament_name, place: 2, tournamentType: g.tournament_type, seasonId: g.season_id })
       }
     }
     const thirdPlace = g.matches.find(
@@ -365,9 +365,9 @@ export default async function WrestlerPage({
     )
     if (thirdPlace) {
       if (thirdPlace.result === 'W') {
-        placements.push({ tournament: g.tournament_name, place: 3, tournamentType: g.tournament_type })
+        placements.push({ tournament: g.tournament_name, place: 3, tournamentType: g.tournament_type, seasonId: g.season_id })
       } else if (thirdPlace.result === 'L') {
-        placements.push({ tournament: g.tournament_name, place: 4, tournamentType: g.tournament_type })
+        placements.push({ tournament: g.tournament_name, place: 4, tournamentType: g.tournament_type, seasonId: g.season_id })
       }
     }
     const fifthPlace = g.matches.find(
@@ -375,9 +375,9 @@ export default async function WrestlerPage({
     )
     if (fifthPlace) {
       if (fifthPlace.result === 'W') {
-        placements.push({ tournament: g.tournament_name, place: 5, tournamentType: g.tournament_type })
+        placements.push({ tournament: g.tournament_name, place: 5, tournamentType: g.tournament_type, seasonId: g.season_id })
       } else if (fifthPlace.result === 'L') {
-        placements.push({ tournament: g.tournament_name, place: 6, tournamentType: g.tournament_type })
+        placements.push({ tournament: g.tournament_name, place: 6, tournamentType: g.tournament_type, seasonId: g.season_id })
       }
     }
     const seventhPlace = g.matches.find(
@@ -385,9 +385,9 @@ export default async function WrestlerPage({
     )
     if (seventhPlace) {
       if (seventhPlace.result === 'W') {
-        placements.push({ tournament: g.tournament_name, place: 7, tournamentType: g.tournament_type })
+        placements.push({ tournament: g.tournament_name, place: 7, tournamentType: g.tournament_type, seasonId: g.season_id })
       } else if (seventhPlace.result === 'L') {
-        placements.push({ tournament: g.tournament_name, place: 8, tournamentType: g.tournament_type })
+        placements.push({ tournament: g.tournament_name, place: 8, tournamentType: g.tournament_type, seasonId: g.season_id })
       }
     }
   }
@@ -447,30 +447,47 @@ export default async function WrestlerPage({
         </div>
       </div>
 
-      {/* Placement badges */}
-      {placements.length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-3">
-          {placements.map((p, i) => {
-            const label = p.tournament.replace('Boy_s ', '').replace('Girl_s ', '')
-            const placeLabel = p.place === 1 ? 'Champion' : p.place === 2 ? 'Runner-Up' : `${p.place}${p.place === 3 ? 'rd' : 'th'} Place`
-            const icon = p.place === 1 ? '\u{1F451}' : p.place <= 3 ? '\u{1F3C5}' : '\u{1F396}'
-            const colors = p.place === 1
-              ? 'bg-yellow-50 border-yellow-300 text-yellow-800'
-              : p.place === 2
-              ? 'bg-slate-50 border-slate-300 text-slate-700'
-              : p.place === 3
-              ? 'bg-orange-50 border-orange-300 text-orange-800'
-              : 'bg-slate-50 border-slate-200 text-slate-600'
-            return (
-              <span key={i} className={`inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full border ${colors}`}>
-                <span>{icon}</span>
-                <span>{placeLabel}</span>
-                <span className="font-normal text-[10px] opacity-70">({label})</span>
-              </span>
-            )
-          })}
-        </div>
-      )}
+      {/* Placement badges grouped by season */}
+      {placements.length > 0 && (() => {
+        const placementSeasons = [...new Set(placements.map(p => p.seasonId))].sort((a, b) => b - a)
+        return (
+          <div className="mb-3 space-y-2">
+            {placementSeasons.map(sid => {
+              const seasonPlacements = placements
+                .filter(p => p.seasonId === sid)
+                .sort((a, b) => (TOURNAMENT_TYPE_ORDER[a.tournamentType] ?? 9) - (TOURNAMENT_TYPE_ORDER[b.tournamentType] ?? 9) || a.place - b.place)
+              return (
+                <div key={sid} className="flex flex-wrap items-center gap-2">
+                  {placementSeasons.length > 1 && (
+                    <span className="text-[10px] font-medium text-slate-400 uppercase tracking-wide w-14 shrink-0">
+                      {SEASON_LABELS[sid] ?? `S${sid}`}
+                    </span>
+                  )}
+                  {seasonPlacements.map((p, i) => {
+                    const label = p.tournament.replace('Boy_s ', '').replace('Girl_s ', '')
+                    const placeLabel = p.place === 1 ? 'Champion' : p.place === 2 ? 'Runner-Up' : `${p.place}${p.place === 3 ? 'rd' : 'th'} Place`
+                    const icon = p.place === 1 ? '\u{1F451}' : p.place <= 3 ? '\u{1F3C5}' : '\u{1F396}'
+                    const colors = p.place === 1
+                      ? 'bg-yellow-50 border-yellow-300 text-yellow-800'
+                      : p.place === 2
+                      ? 'bg-slate-50 border-slate-300 text-slate-700'
+                      : p.place === 3
+                      ? 'bg-orange-50 border-orange-300 text-orange-800'
+                      : 'bg-slate-50 border-slate-200 text-slate-600'
+                    return (
+                      <span key={i} className={`inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full border ${colors}`}>
+                        <span>{icon}</span>
+                        <span>{placeLabel}</span>
+                        <span className="font-normal text-[10px] opacity-70">({label})</span>
+                      </span>
+                    )
+                  })}
+                </div>
+              )
+            })}
+          </div>
+        )
+      })()}
 
       <p className="text-slate-500 mb-8">
         {displaySchool && (
