@@ -56,52 +56,15 @@ export default async function RootPage({
   let topSchoolsByWrestlers: { school: string; school_name: string | null; wrestler_count: number; gender: string }[] = []
 
   if (showLeaderboards) {
-    // Fetch top 24 district team scores + top 8 dominance + schools with 10+ wrestlers
-    const [dominanceRes, teamScoreRes] = await Promise.all([
+    const [dominanceRes, teamScoreRes, activeSchoolsRes] = await Promise.all([
       supabase.rpc('lb_dominance', { p_gender: 'M', p_season: season }),
-      supabase.rpc('top_district_team_scores', { p_gender: 'M', p_season: season, p_limit: 24 }),
+      supabase.rpc('top_district_team_scores', { p_gender: 'M', p_season: season, p_limit: 25 }),
+      supabase.rpc('top_active_schools', { p_gender: 'M', p_season: season, p_limit: 20 }),
     ])
     topDominance = (dominanceRes.data ?? []).slice(0, 8) as DominanceRow[]
     topTeamScores = (teamScoreRes.data ?? []) as TeamScoreRow[]
-
-    // Schools with 10+ wrestlers alive (across all tournaments)
-    const { data: schoolRows } = await supabase
-      .from('tournament_entries')
-      .select('school_context_raw, wrestler_id, tournaments!inner(season_id)')
-      .eq('tournaments.season_id', season)
-      .not('school_context_raw', 'is', null)
-
-    if (schoolRows) {
-      const schoolMap = new Map<string, Set<string>>()
-      for (const row of schoolRows as { school_context_raw: string; wrestler_id: string }[]) {
-        if (!row.school_context_raw) continue
-        if (!schoolMap.has(row.school_context_raw)) schoolMap.set(row.school_context_raw, new Set())
-        schoolMap.get(row.school_context_raw)!.add(row.wrestler_id)
-      }
-      const schoolAbbrs = [...schoolMap.entries()]
-        .filter(([, wids]) => wids.size >= 10)
-        .sort((a, b) => b[1].size - a[1].size)
-        .slice(0, 20)
-        .map(([abbr, wids]) => ({ school: abbr, wrestler_count: wids.size }))
-
-      // Lookup school names
-      if (schoolAbbrs.length > 0) {
-        const { data: snRows } = await supabase
-          .from('school_names')
-          .select('abbreviation, school_name')
-          .in('abbreviation', schoolAbbrs.map(s => s.school))
-        const snMap: Record<string, string> = {}
-        for (const row of (snRows ?? []) as { abbreviation: string; school_name: string }[]) {
-          snMap[row.abbreviation] = row.school_name
-        }
-        topSchoolsByWrestlers = schoolAbbrs.map(s => ({
-          school: s.school,
-          school_name: snMap[s.school] ?? null,
-          wrestler_count: s.wrestler_count,
-          gender: 'M',
-        }))
-      }
-    }
+    topSchoolsByWrestlers = ((activeSchoolsRes.data ?? []) as { school: string; school_name: string | null; wrestler_count: number }[])
+      .map(s => ({ ...s, gender: 'M' }))
   }
 
   const boysDistricts  = Array.from({ length: 32 }, (_, i) => i + 1)
@@ -203,8 +166,7 @@ export default async function RootPage({
           {/* Schools with 10+ wrestlers */}
           {topSchoolsByWrestlers.length > 0 && (
             <section>
-              <h2 className="text-lg font-bold text-slate-900 mb-3">Top Schools by Roster</h2>
-              <p className="text-slate-500 text-sm mb-4">Schools with 10+ postseason wrestlers</p>
+              <h2 className="text-lg font-bold text-slate-900 mb-3">Teams with Most Active Wrestlers</h2>
               <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2">
                 {topSchoolsByWrestlers.map(s => (
                   <Link
