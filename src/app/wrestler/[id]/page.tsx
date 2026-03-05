@@ -434,7 +434,7 @@ export default async function WrestlerPage({
             alt={displayName}
             width={64}
             height={64}
-            className="rounded-full object-cover w-16 h-16 border-2 border-slate-200 shadow-sm"
+            className="object-contain w-16 h-16"
           />
         )}
         <div className="flex items-baseline gap-4">
