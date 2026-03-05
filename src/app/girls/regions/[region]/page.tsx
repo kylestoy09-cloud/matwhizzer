@@ -58,14 +58,13 @@ type FastestTfRow = {
   weight: number
 }
 
-type BonusPctRow = {
+type DominanceRow = {
   wrestler_id: string
   wrestler_name: string
   school: string | null
   school_name: string | null
-  bonus_wins: number
-  total_wins: number
-  bonus_pct: number
+  dominance_score: number
+  win_count: number
 }
 
 type TeamScoreRow = {
@@ -174,13 +173,13 @@ export default async function GirlsRegionSummaryPage({
 
   const season = await getActiveSeason()
 
-  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, bonusPctRes, teamScoreRes, regionSchoolsRes] =
+  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, regionSchoolsRes] =
     await Promise.all([
       supabase.rpc('girls_region_placements',  { p_region: region, p_season: season }),
       supabase.rpc('girls_region_mat_time',    { p_region: region, p_season: season }),
       supabase.rpc('girls_region_fastest_pin', { p_region: region, p_season: season }),
       supabase.rpc('girls_region_fastest_tf',  { p_region: region, p_season: season }),
-      supabase.rpc('girls_region_bonus_pct',   { p_region: region, p_season: season }),
+      supabase.rpc('girls_region_dominance',   { p_region: region, p_season: season }),
       supabase.rpc('girls_region_team_score',  { p_region: region, p_season: season }),
       supabase.rpc('girls_region_schools',     { p_region: region, p_season: season }),
     ])
@@ -189,7 +188,7 @@ export default async function GirlsRegionSummaryPage({
   const matTime       = (matTimeRes.data       ?? []) as MatTimeRow[]
   const fastPin       = (fastPinRes.data       ?? []) as FastestPinRow[]
   const fastTf        = (fastTfRes.data        ?? []) as FastestTfRow[]
-  const bonusPct      = (bonusPctRes.data      ?? []) as BonusPctRow[]
+  const dominance     = (dominanceRes.data     ?? []) as DominanceRow[]
   const teamScore     = (teamScoreRes.data     ?? []) as TeamScoreRow[]
   const regionSchools = (regionSchoolsRes.data ?? []) as RegionSchoolRow[]
 
@@ -316,11 +315,12 @@ export default async function GirlsRegionSummaryPage({
             value={r => fmtTime(r.fall_time_seconds)}
           />
 
-          <StatCard<BonusPctRow>
-            title="Bonus Point %"
-            rows={bonusPct}
-            subtitle={r => `${r.school_name || r.school || '—'} · ${r.bonus_wins}/${r.total_wins} wins`}
-            value={r => `${r.bonus_pct}%`}
+          <StatCard<DominanceRow>
+            title="Dominance Score"
+            note="Pin: 9−sec/60 · TF: 5 · MD: 2 · else: 1"
+            rows={dominance}
+            subtitle={r => `${r.school_name || r.school || '—'} · ${r.win_count} wins`}
+            value={r => String(r.dominance_score)}
           />
 
           <TeamScoreCard rows={teamScore} />

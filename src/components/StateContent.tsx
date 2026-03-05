@@ -19,10 +19,10 @@ type FastestPinRow = {
   fall_time_seconds: number; weight: number
 }
 type FastestTfRow = FastestPinRow
-type BonusPctRow = {
+type DominanceRow = {
   wrestler_id: string; wrestler_name: string
   school: string | null; school_name: string | null
-  bonus_wins: number; total_wins: number; bonus_pct: number
+  dominance_score: number; win_count: number
 }
 type TeamScoreRow = { school: string; school_name: string | null; total_points: number }
 
@@ -112,13 +112,13 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
   const schoolPrefix = isBoys ? '/boys/schools' : '/girls/schools'
   const g = gender
 
-  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, bonusPctRes, teamScoreRes] =
+  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes] =
     await Promise.all([
       supabase.rpc('state_placements',  { p_gender: g, p_season: season }),
       supabase.rpc('state_mat_time',    { p_gender: g, p_season: season }),
       supabase.rpc('state_fastest_pin', { p_gender: g, p_season: season }),
       supabase.rpc('state_fastest_tf',  { p_gender: g, p_season: season }),
-      supabase.rpc('state_bonus_pct',   { p_gender: g, p_season: season }),
+      supabase.rpc('state_dominance',   { p_gender: g, p_season: season }),
       supabase.rpc('state_team_score',  { p_gender: g, p_season: season }),
     ])
 
@@ -126,7 +126,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
   const matTime    = (matTimeRes.data    ?? []) as MatTimeRow[]
   const fastPin    = (fastPinRes.data    ?? []) as FastestPinRow[]
   const fastTf     = (fastTfRes.data     ?? []) as FastestTfRow[]
-  const bonusPct   = (bonusPctRes.data   ?? []) as BonusPctRow[]
+  const dominance  = (dominanceRes.data  ?? []) as DominanceRow[]
   const teamScore  = (teamScoreRes.data  ?? []) as TeamScoreRow[]
 
   const placementsByWeight = new Map<number, Map<number, PlacementRow>>()
@@ -160,11 +160,12 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
             subtitle={r => `${r.school_name || r.school || '—'} · ${r.weight} lb`}
             value={r => fmtTime(r.fall_time_seconds)}
           />
-          <StatCard<BonusPctRow>
-            title="Bonus Point %"
-            rows={bonusPct}
-            subtitle={r => `${r.school_name || r.school || '—'} · ${r.bonus_wins}/${r.total_wins} wins`}
-            value={r => `${r.bonus_pct}%`}
+          <StatCard<DominanceRow>
+            title="Dominance Score"
+            note="Pin: 9−sec/60 · TF: 5 · MD: 2 · else: 1"
+            rows={dominance}
+            subtitle={r => `${r.school_name || r.school || '—'} · ${r.win_count} wins`}
+            value={r => String(r.dominance_score)}
           />
           <TeamScoreCard rows={teamScore} schoolPrefix={schoolPrefix} />
         </div>
