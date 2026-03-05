@@ -235,7 +235,7 @@ export function BracketPoll({
         <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
           First Round Draw
         </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="flex flex-col gap-0 max-w-lg">
           {matchups.map(([top, bot], i) => (
             <MatchupCard
               key={i}
@@ -394,21 +394,19 @@ function MatchupCard({
   provenancePrefix: string
 }) {
   return (
-    <div className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm">
-      <div className="px-2.5 py-1 bg-slate-50 border-b border-slate-100">
-        <span className="text-[10px] text-slate-400 font-medium">Match {matchNum}</span>
-      </div>
+    <div className="border-l-2 border-slate-300 bg-white">
       {top ? (
         <EntryRow entry={top} togglePick={togglePick} getPickSlot={getPickSlot} pollClosed={pollClosed} provenancePrefix={provenancePrefix} />
       ) : (
-        <div className="flex items-center px-2.5 text-xs text-slate-400 italic" style={{ height: 48 }}>Bye</div>
+        <div className="flex items-center px-2.5 text-xs text-slate-400 italic border-b border-slate-100" style={{ height: 40 }}>Bye</div>
       )}
-      <div className="border-t border-slate-100" />
+      <div className="border-b border-slate-300" />
       {bot ? (
         <EntryRow entry={bot} togglePick={togglePick} getPickSlot={getPickSlot} pollClosed={pollClosed} provenancePrefix={provenancePrefix} />
       ) : (
-        <div className="flex items-center px-2.5 text-xs text-slate-400 italic" style={{ height: 48 }}>Bye</div>
+        <div className="flex items-center px-2.5 text-xs text-slate-400 italic" style={{ height: 40 }}>Bye</div>
       )}
+      {matchNum % 2 === 0 && <div className="h-3" />}
     </div>
   )
 }
