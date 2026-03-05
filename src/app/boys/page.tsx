@@ -115,15 +115,35 @@ export default async function BoysSearchPage({
         </section>
       </div>
 
-      {/* ── Districts ── */}
+      {/* ── Regions ── */}
       <div className="border-t border-slate-200 pt-10">
         <div className="mb-4">
-          <h2 className="text-xl font-bold text-slate-900">Districts</h2>
+          <h2 className="text-xl font-bold text-slate-900">Regions</h2>
           <div className="flex items-center gap-1 text-slate-500 text-sm mt-0.5">
             <span>NJSIAA</span>
             <InlineSeasonPicker activeSeason={season} />
-            <span>· Select a district</span>
+            <span>· Select a region</span>
           </div>
+        </div>
+        <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
+          {Array.from({ length: 8 }, (_, i) => i + 1).map(r => (
+            <Link
+              key={r}
+              href={`/boys/regions/${r}`}
+              className="flex flex-col items-center justify-center aspect-square rounded-lg border border-emerald-200 bg-white hover:bg-emerald-50 hover:border-emerald-400 transition-colors shadow-sm"
+            >
+              <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide leading-none mb-0.5">Reg.</span>
+              <span className="text-xl font-bold text-slate-800">{r}</span>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Districts ── */}
+      <div className="pt-10">
+        <div className="mb-4">
+          <h2 className="text-xl font-bold text-slate-900">Districts</h2>
+          <p className="text-slate-500 text-sm mt-0.5">Select a district</p>
         </div>
         <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
           {Array.from({ length: 32 }, (_, i) => i + 1).map(d => (

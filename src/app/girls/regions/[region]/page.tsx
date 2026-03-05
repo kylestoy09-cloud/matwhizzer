@@ -73,6 +73,15 @@ type TeamScoreRow = {
   total_points: number
 }
 
+type TeamPtsRow = {
+  wrestler_id: string
+  wrestler_name: string
+  school: string | null
+  school_name: string | null
+  weight: number
+  team_points: number
+}
+
 type RegionSchoolRow = {
   district_num: number
   school: string
@@ -173,7 +182,7 @@ export default async function GirlsRegionSummaryPage({
 
   const season = await getActiveSeason()
 
-  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, regionSchoolsRes] =
+  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, teamPtsRes, regionSchoolsRes] =
     await Promise.all([
       supabase.rpc('girls_region_placements',  { p_region: region, p_season: season }),
       supabase.rpc('girls_region_mat_time',    { p_region: region, p_season: season }),
@@ -181,6 +190,7 @@ export default async function GirlsRegionSummaryPage({
       supabase.rpc('girls_region_fastest_tf',  { p_region: region, p_season: season }),
       supabase.rpc('girls_region_dominance',   { p_region: region, p_season: season }),
       supabase.rpc('girls_region_team_score',  { p_region: region, p_season: season }),
+      supabase.rpc('girls_region_team_pts',    { p_region: region, p_season: season }),
       supabase.rpc('girls_region_schools',     { p_region: region, p_season: season }),
     ])
 
@@ -190,6 +200,7 @@ export default async function GirlsRegionSummaryPage({
   const fastTf        = (fastTfRes.data        ?? []) as FastestTfRow[]
   const dominance     = (dominanceRes.data     ?? []) as DominanceRow[]
   const teamScore     = (teamScoreRes.data     ?? []) as TeamScoreRow[]
+  const teamPts       = (teamPtsRes.data       ?? []) as TeamPtsRow[]
   const regionSchools = (regionSchoolsRes.data ?? []) as RegionSchoolRow[]
 
   // Group region schools by district number (already sorted by district_num from RPC)
@@ -229,6 +240,20 @@ export default async function GirlsRegionSummaryPage({
           <InlineSeasonPicker activeSeason={season} />
           <span>· Girls postseason · Top 4 advance to state</span>
         </div>
+      </div>
+
+      {/* ── Bracket grid ── */}
+      <div className="grid grid-cols-4 sm:grid-cols-6 gap-2 mb-8">
+        {WEIGHTS.map(w => (
+          <Link
+            key={w}
+            href={`/girls/regions/${region}/${w}`}
+            className="flex flex-col items-center justify-center py-4 rounded-lg border border-slate-200 bg-white hover:bg-rose-50 hover:border-rose-300 transition-colors shadow-sm"
+          >
+            <span className="text-base font-bold text-slate-800">{w}</span>
+            <span className="text-[10px] text-slate-400 font-medium tracking-wide">lbs</span>
+          </Link>
+        ))}
       </div>
 
       {/* ── Placements ── */}
@@ -274,7 +299,7 @@ export default async function GirlsRegionSummaryPage({
                           >
                             {p.wrestler_name}
                           </Link>
-                          <span className="text-[11px] text-slate-400 truncate block max-w-[140px]">
+                          <span className="text-xs text-slate-500 truncate block">
                             {p.school_name || p.school}
                           </span>
                         </td>
@@ -317,7 +342,7 @@ export default async function GirlsRegionSummaryPage({
 
           <StatCard<DominanceRow>
             title="Dominance Score"
-            note="Pin: 9−sec/60 · TF: 5 · MD: 2 · else: 1"
+            note="Pin/TF: 9−sec/60 · MD: 2 · Dec: 1 · loser: −score"
             rows={dominance}
             subtitle={r => `${r.school_name || r.school || '—'} · ${r.win_count} wins`}
             value={r => String(r.dominance_score)}
@@ -328,22 +353,40 @@ export default async function GirlsRegionSummaryPage({
         </div>
       </section>
 
-      {/* ── Bracket selector ── */}
-      <section>
-        <h2 className="text-base font-semibold text-slate-800 mb-3">Brackets</h2>
-        <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
-          {WEIGHTS.map(w => (
-            <Link
-              key={w}
-              href={`/girls/regions/${region}/${w}`}
-              className="flex flex-col items-center justify-center py-4 rounded-lg border border-slate-200 bg-white hover:bg-rose-50 hover:border-rose-300 transition-colors shadow-sm"
-            >
-              <span className="text-base font-bold text-slate-800">{w}</span>
-              <span className="text-[10px] text-slate-400 font-medium tracking-wide">lbs</span>
-            </Link>
-          ))}
-        </div>
-      </section>
+      {/* ── Individual Team Points ── */}
+      {teamPts.length > 0 && (
+        <section className="mb-10">
+          <h2 className="text-base font-semibold text-slate-800 mb-3">Individual Team Points</h2>
+          <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+            <table className="min-w-full text-sm">
+              <thead>
+                <tr className="bg-slate-50 border-b border-slate-200">
+                  <th className="px-3 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide w-8">#</th>
+                  <th className="px-3 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Wrestler</th>
+                  <th className="px-3 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">School</th>
+                  <th className="px-3 py-2.5 text-right text-xs font-semibold text-slate-500 uppercase tracking-wide w-14">Wt</th>
+                  <th className="px-3 py-2.5 text-right text-xs font-semibold text-slate-500 uppercase tracking-wide w-16">Pts</th>
+                </tr>
+              </thead>
+              <tbody>
+                {teamPts.map((r, i) => (
+                  <tr key={`${r.wrestler_id}-${i}`} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
+                    <td className="px-3 py-2 text-xs text-slate-400">{i + 1}</td>
+                    <td className="px-3 py-2">
+                      <Link href={`/wrestler/${r.wrestler_id}`} className="font-medium text-slate-800 hover:underline">
+                        {r.wrestler_name}
+                      </Link>
+                    </td>
+                    <td className="px-3 py-2 text-slate-500">{r.school_name || r.school}</td>
+                    <td className="px-3 py-2 text-right text-slate-600">{r.weight}</td>
+                    <td className="px-3 py-2 text-right font-semibold text-slate-700">{r.team_points}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
 
       {/* ── Schools by District ── */}
       {districtGroups.length > 0 && (

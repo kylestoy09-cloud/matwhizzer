@@ -25,6 +25,11 @@ type DominanceRow = {
   dominance_score: number; win_count: number
 }
 type TeamScoreRow = { school: string; school_name: string | null; total_points: number }
+type TeamPtsRow = {
+  wrestler_id: string; wrestler_name: string;
+  school: string | null; school_name: string | null;
+  weight: number; team_points: number
+}
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -101,7 +106,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
     ? [106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285]
     : [100, 107, 114, 120, 126, 132, 138, 145, 152, 165, 185, 235]
 
-  const PLACES = isBoys ? [1, 2, 3, 4, 5, 6, 7, 8] : [1, 2, 3, 4]
+  const PLACES = [1, 2, 3, 4, 5, 6, 7, 8]
 
   const PLACE_LABEL: Record<number, string> = {
     1: 'Champion', 2: 'Runner-Up', 3: '3rd Place', 4: '4th Place',
@@ -112,7 +117,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
   const schoolPrefix = isBoys ? '/boys/schools' : '/girls/schools'
   const g = gender
 
-  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes] =
+  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, teamPtsRes] =
     await Promise.all([
       supabase.rpc('state_placements',  { p_gender: g, p_season: season }),
       supabase.rpc('state_mat_time',    { p_gender: g, p_season: season }),
@@ -120,6 +125,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
       supabase.rpc('state_fastest_tf',  { p_gender: g, p_season: season }),
       supabase.rpc('state_dominance',   { p_gender: g, p_season: season }),
       supabase.rpc('state_team_score',  { p_gender: g, p_season: season }),
+      supabase.rpc('state_team_pts',    { p_gender: g, p_season: season }),
     ])
 
   const placements = (placementsRes.data ?? []) as PlacementRow[]
@@ -128,6 +134,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
   const fastTf     = (fastTfRes.data     ?? []) as FastestTfRow[]
   const dominance  = (dominanceRes.data  ?? []) as DominanceRow[]
   const teamScore  = (teamScoreRes.data  ?? []) as TeamScoreRow[]
+  const teamPts    = (teamPtsRes.data    ?? []) as TeamPtsRow[]
 
   const placementsByWeight = new Map<number, Map<number, PlacementRow>>()
   for (const p of placements) {
@@ -137,39 +144,19 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
 
   return (
     <>
-      {/* ── State Leaders ── */}
-      <section className="mb-10">
-        <h2 className="text-base font-semibold text-slate-800 mb-3">State Leaders</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-          <StatCard<MatTimeRow>
-            title="Fast Finishers"
-            note="Total Tourney Mat Time"
-            rows={matTime}
-            subtitle={r => `${r.school_name || r.school || '—'} · ${r.match_count} wins`}
-            value={r => fmtTime(r.total_seconds)}
-          />
-          <StatCard<FastestPinRow>
-            title="Fastest Pin"
-            rows={fastPin}
-            subtitle={r => `${r.school_name || r.school || '—'} · ${r.weight} lb`}
-            value={r => fmtTime(r.fall_time_seconds)}
-          />
-          <StatCard<FastestTfRow>
-            title="Fastest Tech Fall"
-            rows={fastTf}
-            subtitle={r => `${r.school_name || r.school || '—'} · ${r.weight} lb`}
-            value={r => fmtTime(r.fall_time_seconds)}
-          />
-          <StatCard<DominanceRow>
-            title="Dominance Score"
-            note="Pin: 9−sec/60 · TF: 5 · MD: 2 · else: 1"
-            rows={dominance}
-            subtitle={r => `${r.school_name || r.school || '—'} · ${r.win_count} wins`}
-            value={r => String(r.dominance_score)}
-          />
-          <TeamScoreCard rows={teamScore} schoolPrefix={schoolPrefix} />
-        </div>
-      </section>
+      {/* ── Bracket grid ── */}
+      <div className={`grid gap-2 mb-8 ${isBoys ? 'grid-cols-4 sm:grid-cols-7' : 'grid-cols-4 sm:grid-cols-6'}`}>
+        {WEIGHTS.map(w => (
+          <Link
+            key={w}
+            href={`${bracketBase}/${w}`}
+            className="flex flex-col items-center justify-center py-4 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-400 transition-colors shadow-sm"
+          >
+            <span className="text-base font-bold text-slate-800">{w}</span>
+            <span className="text-[10px] text-slate-400 font-medium tracking-wide">lbs</span>
+          </Link>
+        ))}
+      </div>
 
       {/* ── Placewinners ── */}
       <section className="mb-10">
@@ -203,7 +190,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
                           >
                             {p.wrestler_name}
                           </Link>
-                          <span className="text-[11px] text-slate-400 truncate block max-w-[140px]">
+                          <span className="text-xs text-slate-500 truncate block">
                             {p.school_name || p.school}
                           </span>
                         </td>
@@ -217,22 +204,75 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
         </div>
       </section>
 
-      {/* ── Brackets ── */}
-      <section>
-        <h2 className="text-base font-semibold text-slate-800 mb-3">Brackets</h2>
-        <div className={`grid gap-2 ${isBoys ? 'grid-cols-4 sm:grid-cols-7' : 'grid-cols-4 sm:grid-cols-6'}`}>
-          {WEIGHTS.map(w => (
-            <Link
-              key={w}
-              href={`${bracketBase}/${w}`}
-              className="flex flex-col items-center justify-center py-4 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-400 transition-colors shadow-sm"
-            >
-              <span className="text-base font-bold text-slate-800">{w}</span>
-              <span className="text-[10px] text-slate-400 font-medium tracking-wide">lbs</span>
-            </Link>
-          ))}
+      {/* ── State Leaders ── */}
+      <section className="mb-10">
+        <h2 className="text-base font-semibold text-slate-800 mb-3">State Leaders</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+          <StatCard<MatTimeRow>
+            title="Fast Finishers"
+            note="Total Tourney Mat Time"
+            rows={matTime}
+            subtitle={r => `${r.school_name || r.school || '—'} · ${r.match_count} wins`}
+            value={r => fmtTime(r.total_seconds)}
+          />
+          <StatCard<FastestPinRow>
+            title="Fastest Pin"
+            rows={fastPin}
+            subtitle={r => `${r.school_name || r.school || '—'} · ${r.weight} lb`}
+            value={r => fmtTime(r.fall_time_seconds)}
+          />
+          <StatCard<FastestTfRow>
+            title="Fastest Tech Fall"
+            rows={fastTf}
+            subtitle={r => `${r.school_name || r.school || '—'} · ${r.weight} lb`}
+            value={r => fmtTime(r.fall_time_seconds)}
+          />
+          <StatCard<DominanceRow>
+            title="Dominance Score"
+            note="Pin/TF: 9−sec/60 · MD: 2 · Dec: 1 · loser: −score"
+            rows={dominance}
+            subtitle={r => `${r.school_name || r.school || '—'} · ${r.win_count} wins`}
+            value={r => String(r.dominance_score)}
+          />
+          <TeamScoreCard rows={teamScore} schoolPrefix={schoolPrefix} />
         </div>
       </section>
+
+      {/* ── Individual Team Points ── */}
+      {teamPts.length > 0 && (
+        <section className="mb-10">
+          <h2 className="text-base font-semibold text-slate-800 mb-3">Individual Team Points</h2>
+          <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+            <table className="min-w-full text-sm">
+              <thead>
+                <tr className="bg-slate-50 border-b border-slate-200">
+                  <th className="px-3 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide w-8">#</th>
+                  <th className="px-3 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Wrestler</th>
+                  <th className="px-3 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">School</th>
+                  <th className="px-3 py-2.5 text-right text-xs font-semibold text-slate-500 uppercase tracking-wide w-14">Wt</th>
+                  <th className="px-3 py-2.5 text-right text-xs font-semibold text-slate-500 uppercase tracking-wide w-16">Pts</th>
+                </tr>
+              </thead>
+              <tbody>
+                {teamPts.map((r, i) => (
+                  <tr key={`${r.wrestler_id}-${i}`} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
+                    <td className="px-3 py-2 text-xs text-slate-400">{i + 1}</td>
+                    <td className="px-3 py-2">
+                      <Link href={`/wrestler/${r.wrestler_id}`} className="font-medium text-slate-800 hover:underline">
+                        {r.wrestler_name}
+                      </Link>
+                    </td>
+                    <td className="px-3 py-2 text-slate-500">{r.school_name || r.school}</td>
+                    <td className="px-3 py-2 text-right text-slate-600">{r.weight}</td>
+                    <td className="px-3 py-2 text-right font-semibold text-slate-700">{r.team_points}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+
     </>
   )
 }

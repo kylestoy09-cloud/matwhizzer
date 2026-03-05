@@ -228,6 +228,34 @@ function MobileRound({ label, matches }: { label: string; matches: MatchRow[] })
   )
 }
 
+const WEIGHTS = [100, 107, 114, 120, 126, 132, 138, 145, 152, 165, 185, 235] as const
+
+function WeightNav({ weights, current, base }: {
+  weights: readonly number[]
+  current: number
+  base: string
+}) {
+  return (
+    <div className="mt-10 pt-6 border-t border-slate-100">
+      <div className="flex flex-wrap gap-1.5">
+        {weights.map(w => (
+          <Link
+            key={w}
+            href={`${base}/${w}`}
+            className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-colors ${
+              w === current
+                ? 'bg-slate-800 text-white'
+                : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-400 shadow-sm'
+            }`}
+          >
+            {w}
+          </Link>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default async function GirlsDistrictBracketPage({
@@ -298,6 +326,8 @@ export default async function GirlsDistrictBracketPage({
         </h1>
         <p className="text-slate-500 text-sm mt-1">NJSIAA 2025–26 · Girls postseason</p>
       </div>
+
+      <WeightNav weights={WEIGHTS} current={weight} base={`/girls/districts/${district}`} />
 
       {r2Matches.length > 0 && (
         <div className="mb-6">
@@ -376,6 +406,7 @@ export default async function GirlsDistrictBracketPage({
           )
         })}
       </div>
+      <WeightNav weights={WEIGHTS} current={weight} base={`/girls/districts/${district}`} />
     </div>
   )
 }

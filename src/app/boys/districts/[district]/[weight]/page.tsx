@@ -249,6 +249,34 @@ function MobileRound({ label, matches }: { label: string; matches: MatchRow[] })
   )
 }
 
+const WEIGHTS = [106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285] as const
+
+function WeightNav({ weights, current, base }: {
+  weights: readonly number[]
+  current: number
+  base: string
+}) {
+  return (
+    <div className="mt-10 pt-6 border-t border-slate-100">
+      <div className="flex flex-wrap gap-1.5">
+        {weights.map(w => (
+          <Link
+            key={w}
+            href={`${base}/${w}`}
+            className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-colors ${
+              w === current
+                ? 'bg-slate-800 text-white'
+                : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-400 shadow-sm'
+            }`}
+          >
+            {w}
+          </Link>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default async function DistrictBracketPage({
@@ -327,6 +355,8 @@ export default async function DistrictBracketPage({
         </h1>
         <p className="text-slate-500 text-sm mt-1">NJSIAA 2024–25 · Boys postseason</p>
       </div>
+
+      <WeightNav weights={WEIGHTS} current={weight} base={`/boys/districts/${district}`} />
 
       {/* Prelim round (R2) — hide bye-only prelims */}
       {r2Display.length > 0 && (
@@ -410,6 +440,7 @@ export default async function DistrictBracketPage({
           )
         })}
       </div>
+      <WeightNav weights={WEIGHTS} current={weight} base={`/boys/districts/${district}`} />
     </div>
   )
 }

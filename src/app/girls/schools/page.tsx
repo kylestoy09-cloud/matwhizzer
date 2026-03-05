@@ -81,7 +81,7 @@ export default async function GirlsSchoolsPage({
       {rows.length === 0 ? (
         <p className="text-slate-500 text-sm">No schools match &ldquo;{raw}&rdquo;.</p>
       ) : (
-        <div className="border border-slate-200 rounded-lg overflow-hidden shadow-sm bg-white">
+        <div className="border border-slate-200 rounded-lg overflow-x-auto shadow-sm bg-white">
           <table className="w-full text-sm">
             <thead className="bg-slate-50 border-b border-slate-200">
               <tr>

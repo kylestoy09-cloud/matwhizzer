@@ -21,9 +21,21 @@ type WrestlerRow = {
   state_placement: string | null
 }
 
+type LeaderRow = {
+  wrestler_id: string
+  wrestler_name: string
+  primary_weight: number
+  win_count: number
+  fall_count: number
+  fastest_fall_sec: number | null
+  bonus_pct: number
+  team_points: number
+}
+
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
 const TOURNEY_LABEL: Record<string, string> = {
+  districts:     'Districts',
   girls_regions: 'Regions',
   girls_state:   'State',
 }
@@ -77,14 +89,16 @@ export default async function GirlsSchoolProfilePage({
 
   const season = await getActiveSeason()
 
-  const [{ data: breakdown }, { data: wrestlers }, { data: nameRow }] = await Promise.all([
+  const [{ data: breakdown }, { data: wrestlers }, { data: leaders }, { data: nameRow }] = await Promise.all([
     supabase.rpc('school_points_breakdown', { p_school: school, p_gender: 'F', p_season: season }),
     supabase.rpc('girls_school_wrestlers',  { p_school: school, p_season: season }),
+    supabase.rpc('school_leaderboard',      { p_school: school, p_gender: 'F', p_season: season }),
     supabase.from('school_names').select('school_name').eq('abbreviation', school).maybeSingle(),
   ])
 
-  const rows   = (wrestlers ?? []) as WrestlerRow[]
-  const bdRows = (breakdown  ?? []) as BreakdownRow[]
+  const rows      = (wrestlers ?? []) as WrestlerRow[]
+  const bdRows    = (breakdown  ?? []) as BreakdownRow[]
+  const leaderRows = (leaders   ?? []) as LeaderRow[]
 
   if (rows.length === 0) notFound()
 
@@ -148,7 +162,7 @@ export default async function GirlsSchoolProfilePage({
       {bdRows.length > 0 && (
         <section className="mb-10">
           <h3 className="text-base font-semibold text-slate-800 mb-3">Team Points</h3>
-          <div className="inline-block border border-slate-200 rounded-lg overflow-hidden shadow-sm bg-white">
+          <div className="inline-block border border-slate-200 rounded-lg overflow-x-auto shadow-sm bg-white">
             <table className="text-sm">
               <thead className="bg-slate-50 border-b border-slate-200">
                 <tr>
@@ -191,7 +205,7 @@ export default async function GirlsSchoolProfilePage({
       {champSections.length > 0 && (
         <section className="mb-10">
           <h3 className="text-base font-semibold text-slate-800 mb-3">Champions</h3>
-          <div className="border border-amber-200 rounded-lg overflow-hidden shadow-sm bg-white">
+          <div className="border border-amber-200 rounded-lg overflow-x-auto shadow-sm bg-white">
             {champSections.map((sec, i) => (
               <div key={sec.label} className={i > 0 ? 'border-t border-slate-200' : ''}>
                 <div className="px-4 py-1.5 bg-amber-50 text-xs font-semibold text-amber-700 uppercase tracking-wide">
@@ -213,10 +227,51 @@ export default async function GirlsSchoolProfilePage({
         </section>
       )}
 
+      {/* Wrestler stats leaderboard */}
+      {leaderRows.length > 0 && (
+        <section className="mb-10">
+          <h3 className="text-base font-semibold text-slate-800 mb-3">Wrestler Stats</h3>
+          <div className="border border-slate-200 rounded-lg overflow-x-auto shadow-sm bg-white">
+            <table className="w-full text-sm">
+              <thead className="bg-slate-50 border-b border-slate-200">
+                <tr>
+                  <th className="text-left px-3 py-2.5 font-medium text-slate-500">Wrestler</th>
+                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-12">Wt</th>
+                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-10">W</th>
+                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-12 hidden sm:table-cell">Falls</th>
+                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-16 hidden sm:table-cell">Fast Pin</th>
+                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-14 hidden sm:table-cell">Bonus%</th>
+                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-14">Pts</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {leaderRows.map(r => (
+                  <tr key={r.wrestler_id} className="hover:bg-slate-50">
+                    <td className="px-3 py-2.5">
+                      <Link href={`/wrestler/${r.wrestler_id}`} className="font-medium text-slate-800 hover:text-rose-700 hover:underline">
+                        {r.wrestler_name}
+                      </Link>
+                    </td>
+                    <td className="px-3 py-2.5 text-right tabular-nums text-slate-500">{r.primary_weight}</td>
+                    <td className="px-3 py-2.5 text-right tabular-nums text-slate-700 font-semibold">{r.win_count}</td>
+                    <td className="px-3 py-2.5 text-right tabular-nums text-slate-500 hidden sm:table-cell">{r.fall_count}</td>
+                    <td className="px-3 py-2.5 text-right tabular-nums text-slate-500 hidden sm:table-cell">
+                      {r.fastest_fall_sec ? `${Math.floor(r.fastest_fall_sec / 60)}:${String(r.fastest_fall_sec % 60).padStart(2, '0')}` : '—'}
+                    </td>
+                    <td className="px-3 py-2.5 text-right tabular-nums text-slate-500 hidden sm:table-cell">{Math.round(r.bonus_pct)}%</td>
+                    <td className="px-3 py-2.5 text-right tabular-nums font-bold text-slate-800">{r.team_points}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+
       {/* Wrestler results */}
       <section>
         <h3 className="text-base font-semibold text-slate-800 mb-3">Wrestlers</h3>
-        <div className="border border-slate-200 rounded-lg overflow-hidden shadow-sm bg-white">
+        <div className="border border-slate-200 rounded-lg overflow-x-auto shadow-sm bg-white">
           <table className="w-full text-sm">
             <thead className="bg-slate-50 border-b border-slate-200">
               <tr>

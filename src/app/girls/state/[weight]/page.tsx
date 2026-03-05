@@ -2,6 +2,7 @@ import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
+import { BracketPoll, type BracketEntry } from '@/components/BracketPoll'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -278,6 +279,34 @@ function MobileRound({ label, matches }: { label: string; matches: MatchRow[] })
   )
 }
 
+const WEIGHTS = [100, 107, 114, 120, 126, 132, 138, 145, 152, 165, 185, 235] as const
+
+function WeightNav({ weights, current, base }: {
+  weights: readonly number[]
+  current: number
+  base: string
+}) {
+  return (
+    <div className="mt-10 pt-6 border-t border-slate-100">
+      <div className="flex flex-wrap gap-1.5">
+        {weights.map(w => (
+          <Link
+            key={w}
+            href={`${base}/${w}`}
+            className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-colors ${
+              w === current
+                ? 'bg-slate-800 text-white'
+                : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-400 shadow-sm'
+            }`}
+          >
+            {w}
+          </Link>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default async function GirlsStateBracketPage({
@@ -291,14 +320,22 @@ export default async function GirlsStateBracketPage({
 
   const season = await getActiveSeason()
 
-  const { data } = await supabase.rpc('state_bracket', {
-    p_weight: weight,
-    p_gender: 'F',
-    p_season: season,
-  })
+  const [{ data }, { data: entryData }] = await Promise.all([
+    supabase.rpc('state_bracket', {
+      p_weight: weight,
+      p_gender: 'F',
+      p_season: season,
+    }),
+    supabase.rpc('state_bracket_entries_v2', {
+      p_weight: weight,
+      p_gender: 'F',
+      p_season: season,
+    }),
+  ])
 
   const matches = (data ?? []) as MatchRow[]
-  if (matches.length === 0) notFound()
+  const entries = (entryData ?? []) as (BracketEntry & { tournament_id: number; weight_class_id: number })[]
+  if (matches.length === 0 && entries.length === 0) notFound()
 
   const champ  = matches.filter(m => m.bracket_side === 'championship')
   const consol = matches.filter(m => m.bracket_side === 'consolation')
@@ -340,6 +377,19 @@ export default async function GirlsStateBracketPage({
         </h1>
         <p className="text-slate-500 text-sm mt-1">NJSIAA 2024–25 · 8-man double elimination</p>
       </div>
+
+      <WeightNav weights={WEIGHTS} current={weight} base="/girls/state" />
+
+      {matches.length === 0 ? (
+        <BracketPoll
+          entries={entries}
+          tournamentId={entries[0]?.tournament_id ?? 0}
+          weightClassId={entries[0]?.weight_class_id ?? 0}
+          hasMatches={false}
+          bracketSize={16}
+          provenancePrefix="R"
+        />
+      ) : (<>
 
       {/* ── DESKTOP bracket (lg+) ── */}
       <div className="hidden lg:block space-y-0">
@@ -398,6 +448,18 @@ export default async function GirlsStateBracketPage({
           </div>
         </div>
       </div>
+      {entries.length > 0 && (
+        <BracketPoll
+          entries={entries}
+          tournamentId={entries[0]?.tournament_id ?? 0}
+          weightClassId={entries[0]?.weight_class_id ?? 0}
+          hasMatches={true}
+          bracketSize={16}
+          provenancePrefix="R"
+        />
+      )}
+      </>)}
+      <WeightNav weights={WEIGHTS} current={weight} base="/girls/state" />
     </div>
   )
 }

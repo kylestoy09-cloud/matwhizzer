@@ -10,6 +10,7 @@ const PLACE_LABEL: Record<number, string> = {
   1: 'Champion',
   2: 'Runner-Up',
   3: '3rd Place',
+  4: '4th Place',
 }
 
 // ── Types ───────────────────────────────────────────────────────────────────
@@ -63,6 +64,15 @@ type TeamScoreRow = {
   school: string
   school_name: string | null
   total_points: number
+}
+
+type TeamPtsRow = {
+  wrestler_id: string
+  wrestler_name: string
+  school: string | null
+  school_name: string | null
+  weight: number
+  team_points: number
 }
 
 type SchoolRow = {
@@ -167,7 +177,7 @@ export default async function DistrictSummaryPage({
 
   const season = await getActiveSeason()
 
-  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, bonusPctRes, teamScoreRes, schoolsRes] =
+  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, bonusPctRes, teamScoreRes, teamPtsRes, schoolsRes] =
     await Promise.all([
       supabase.rpc('district_placements',  { p_district: d, p_gender: 'M', p_season: season }),
       supabase.rpc('district_mat_time',    { p_district: d, p_gender: 'M', p_season: season }),
@@ -175,6 +185,7 @@ export default async function DistrictSummaryPage({
       supabase.rpc('district_fastest_tf',  { p_district: d, p_gender: 'M', p_season: season }),
       supabase.rpc('district_dominance',   { p_district: d, p_gender: 'M', p_season: season }),
       supabase.rpc('district_team_score',  { p_district: d, p_gender: 'M', p_season: season }),
+      supabase.rpc('district_team_pts',    { p_district: d, p_gender: 'M', p_season: season }),
       supabase.rpc('district_schools',     { p_district: d, p_gender: 'M', p_season: season }),
     ])
 
@@ -184,6 +195,7 @@ export default async function DistrictSummaryPage({
   const fastTf     = (fastTfRes.data     ?? []) as FastestTfRow[]
   const dominance  = (bonusPctRes.data   ?? []) as DominanceRow[]
   const teamScore  = (teamScoreRes.data  ?? []) as TeamScoreRow[]
+  const teamPts    = (teamPtsRes.data    ?? []) as TeamPtsRow[]
   const schools    = (schoolsRes.data    ?? []) as SchoolRow[]
 
   // Organize placements by weight → place
@@ -214,6 +226,20 @@ export default async function DistrictSummaryPage({
         </div>
       </div>
 
+      {/* ── Bracket grid ── */}
+      <div className="grid grid-cols-4 sm:grid-cols-7 gap-2 mb-8">
+        {WEIGHTS.map(w => (
+          <Link
+            key={w}
+            href={`/boys/districts/${d}/${w}`}
+            className="flex flex-col items-center justify-center py-4 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-400 transition-colors shadow-sm"
+          >
+            <span className="text-base font-bold text-slate-800">{w}</span>
+            <span className="text-[10px] text-slate-400 font-medium tracking-wide">lbs</span>
+          </Link>
+        ))}
+      </div>
+
       {/* ── Placements ── */}
       <section className="mb-10">
         <h2 className="text-base font-semibold text-slate-800 mb-3">Placements</h2>
@@ -224,7 +250,7 @@ export default async function DistrictSummaryPage({
                 <th className="px-4 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide w-14">
                   Wt
                 </th>
-                {[1, 2, 3].map(place => (
+                {[1, 2, 3, 4].map(place => (
                   <th
                     key={place}
                     className="px-4 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide"
@@ -240,7 +266,7 @@ export default async function DistrictSummaryPage({
                 return (
                   <tr key={w} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
                     <td className="px-4 py-2.5 font-bold text-slate-700">{w}</td>
-                    {[1, 2, 3].map(place => {
+                    {[1, 2, 3, 4].map(place => {
                       const p = row.get(place)
                       if (!p) {
                         return (
@@ -257,7 +283,7 @@ export default async function DistrictSummaryPage({
                           >
                             {p.wrestler_name}
                           </Link>
-                          <span className="text-[11px] text-slate-400 truncate block max-w-[160px]">
+                          <span className="text-xs text-slate-500 truncate block">
                             {p.school_name || p.school}
                           </span>
                         </td>
@@ -300,7 +326,7 @@ export default async function DistrictSummaryPage({
 
           <StatCard<DominanceRow>
             title="Dominance Score"
-            note="Pin: 9−sec/60 · TF: 5 · MD: 2 · else: 1"
+            note="Pin/TF: 9−sec/60 · MD: 2 · Dec: 1 · loser: −score"
             rows={dominance}
             subtitle={r => `${r.school_name || r.school || '—'} · ${r.win_count} wins`}
             value={r => String(r.dominance_score)}
@@ -311,22 +337,40 @@ export default async function DistrictSummaryPage({
         </div>
       </section>
 
-      {/* ── Bracket selector ── */}
-      <section>
-        <h2 className="text-base font-semibold text-slate-800 mb-3">Brackets</h2>
-        <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
-          {WEIGHTS.map(w => (
-            <Link
-              key={w}
-              href={`/boys/districts/${d}/${w}`}
-              className="flex flex-col items-center justify-center py-4 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-400 transition-colors shadow-sm"
-            >
-              <span className="text-base font-bold text-slate-800">{w}</span>
-              <span className="text-[10px] text-slate-400 font-medium tracking-wide">lbs</span>
-            </Link>
-          ))}
-        </div>
-      </section>
+      {/* ── Individual Team Points ── */}
+      {teamPts.length > 0 && (
+        <section className="mb-10">
+          <h2 className="text-base font-semibold text-slate-800 mb-3">Individual Team Points</h2>
+          <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+            <table className="min-w-full text-sm">
+              <thead>
+                <tr className="bg-slate-50 border-b border-slate-200">
+                  <th className="px-3 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide w-8">#</th>
+                  <th className="px-3 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Wrestler</th>
+                  <th className="px-3 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">School</th>
+                  <th className="px-3 py-2.5 text-right text-xs font-semibold text-slate-500 uppercase tracking-wide w-14">Wt</th>
+                  <th className="px-3 py-2.5 text-right text-xs font-semibold text-slate-500 uppercase tracking-wide w-16">Pts</th>
+                </tr>
+              </thead>
+              <tbody>
+                {teamPts.map((r, i) => (
+                  <tr key={`${r.wrestler_id}-${i}`} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
+                    <td className="px-3 py-2 text-xs text-slate-400">{i + 1}</td>
+                    <td className="px-3 py-2">
+                      <Link href={`/wrestler/${r.wrestler_id}`} className="font-medium text-slate-800 hover:underline">
+                        {r.wrestler_name}
+                      </Link>
+                    </td>
+                    <td className="px-3 py-2 text-slate-500">{r.school_name || r.school}</td>
+                    <td className="px-3 py-2 text-right text-slate-600">{r.weight}</td>
+                    <td className="px-3 py-2 text-right font-semibold text-slate-700">{r.team_points}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
 
       {/* ── Schools ── */}
       {schools.length > 0 && (

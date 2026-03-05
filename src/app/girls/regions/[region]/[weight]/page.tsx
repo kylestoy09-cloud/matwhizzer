@@ -2,6 +2,7 @@ import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
+import { BracketPoll, type BracketEntry } from '@/components/BracketPoll'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -242,6 +243,113 @@ function MobileRound({ label, matches }: { label: string; matches: MatchRow[] })
   )
 }
 
+// ── Entry Card (pre-tournament) ──────────────────────────────────────────────
+
+type EntryRow = {
+  entry_id: string
+  wrestler_id: string
+  wrestler_name: string
+  school: string
+  school_name: string
+  seed: number | null
+  grade: string | null
+  wins: number | null
+  losses: number | null
+}
+
+function EntryWrestlerRow({ entry }: { entry: EntryRow }) {
+  const record = (entry.wins != null && entry.losses != null)
+    ? `${entry.wins}-${entry.losses}` : null
+
+  return (
+    <div className="flex items-center gap-1.5 px-2.5" style={{ height: 44 }}>
+      {entry.seed != null ? (
+        <span className="text-[10px] text-slate-400 w-3.5 shrink-0 text-right">{entry.seed}</span>
+      ) : (
+        <span className="w-3.5 shrink-0" />
+      )}
+      <div className="flex-1 min-w-0">
+        <Link
+          href={`/wrestler/${entry.wrestler_id}`}
+          className="text-sm font-medium text-slate-700 hover:underline block truncate"
+        >
+          {entry.wrestler_name}
+        </Link>
+        <div className="flex items-center gap-1.5 mt-0.5">
+          {entry.grade && <span className="text-[10px] text-slate-400">{entry.grade}</span>}
+          {record && <span className="text-[10px] text-slate-400 tabular-nums">{record}</span>}
+        </div>
+      </div>
+      <span className="text-[10px] text-slate-400 shrink-0 max-w-[52px] truncate">
+        {entry.school}
+      </span>
+    </div>
+  )
+}
+
+function EntryCard({ top, bot }: { top: EntryRow; bot: EntryRow | null }) {
+  return (
+    <div className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm w-56 shrink-0">
+      <EntryWrestlerRow entry={top} />
+      <div className="border-t border-slate-100" />
+      {bot ? (
+        <EntryWrestlerRow entry={bot} />
+      ) : (
+        <div className="flex items-center px-2.5 text-xs text-slate-400 italic" style={{ height: 44 }}>
+          Bye
+        </div>
+      )}
+    </div>
+  )
+}
+
+function EntriesView({ entries }: { entries: EntryRow[] }) {
+  const n = entries.length
+  const pairs: [EntryRow, EntryRow | null][] = []
+  for (let i = 0; i < Math.ceil(n / 2); i++) {
+    pairs.push([entries[i], n - 1 - i > i ? entries[n - 1 - i] : null])
+  }
+
+  return (
+    <div>
+      <p className="text-xs text-slate-400 mb-4">Entries · Results not yet available</p>
+      <div className="flex flex-col gap-3">
+        {pairs.map(([top, bot]) => (
+          <EntryCard key={top.entry_id} top={top} bot={bot} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+const WEIGHTS = [100, 107, 114, 120, 126, 132, 138, 145, 152, 165, 185, 235] as const
+
+function WeightNav({ weights, current, base }: {
+  weights: readonly number[]
+  current: number
+  base: string
+}) {
+  return (
+    <div className="mt-10 pt-6 border-t border-slate-100">
+      <div className="flex flex-wrap gap-1.5">
+        {weights.map(w => (
+          <Link
+            key={w}
+            href={`${base}/${w}`}
+            className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-colors ${
+              w === current
+                ? 'bg-slate-800 text-white'
+                : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-400 shadow-sm'
+            }`}
+          >
+            {w}
+          </Link>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default async function GirlsRegionBracketPage({
@@ -256,14 +364,22 @@ export default async function GirlsRegionBracketPage({
 
   const season = await getActiveSeason()
 
-  const { data } = await supabase.rpc('girls_region_bracket', {
-    p_region: region,
-    p_weight: weight,
-    p_season: season,
-  })
+  const [{ data: matchData }, { data: entryData }] = await Promise.all([
+    supabase.rpc('girls_region_bracket', {
+      p_region: region,
+      p_weight: weight,
+      p_season: season,
+    }),
+    supabase.rpc('girls_region_bracket_entries_v2', {
+      p_region: region,
+      p_weight: weight,
+      p_season: season,
+    }),
+  ])
 
-  const matches = (data ?? []) as MatchRow[]
-  if (matches.length === 0) notFound()
+  const matches = (matchData ?? []) as MatchRow[]
+  const entries = (entryData ?? []) as (BracketEntry & { tournament_id: number; weight_class_id: number })[]
+  if (matches.length === 0 && entries.length === 0) notFound()
 
   // Split sides
   const champ  = matches.filter(m => m.bracket_side === 'championship')
@@ -308,8 +424,20 @@ export default async function GirlsRegionBracketPage({
           <span className="text-slate-400 font-normal ml-2">·</span>
           <span className="text-slate-600 font-semibold ml-2">{weight} lb</span>
         </h1>
-        <p className="text-slate-500 text-sm mt-1">NJSIAA 2024–25 · Girls postseason</p>
+        <p className="text-slate-500 text-sm mt-1">NJSIAA {season === 1 ? '2024–25' : '2025–26'} · Girls postseason</p>
       </div>
+
+      <WeightNav weights={WEIGHTS} current={weight} base={`/girls/regions/${region}`} />
+
+      {matches.length === 0 ? (
+        <BracketPoll
+          entries={entries}
+          tournamentId={entries[0]?.tournament_id ?? 0}
+          weightClassId={entries[0]?.weight_class_id ?? 0}
+          hasMatches={false}
+          bracketSize={16}
+        />
+      ) : (<>
 
       {/* ── DESKTOP bracket (md+) ── */}
       <div className="hidden md:block overflow-x-auto">
@@ -389,6 +517,17 @@ export default async function GirlsRegionBracketPage({
           )
         })}
       </div>
+      {entries.length > 0 && (
+        <BracketPoll
+          entries={entries}
+          tournamentId={entries[0]?.tournament_id ?? 0}
+          weightClassId={entries[0]?.weight_class_id ?? 0}
+          hasMatches={true}
+          bracketSize={16}
+        />
+      )}
+      </>)}
+      <WeightNav weights={WEIGHTS} current={weight} base={`/girls/regions/${region}`} />
     </div>
   )
 }

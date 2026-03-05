@@ -5,6 +5,8 @@ import { getActiveSeason } from '@/lib/get-season'
 type WrestlerRow = { id: string; first_name: string; last_name: string; gender: string }
 type SchoolRow   = { school: string; school_name: string; total_points: number; wrestler_count: number }
 type SchoolResult = SchoolRow & { gender: 'M' | 'F' }
+type TeamScoreRow = { school: string; school_name: string | null; total_points: number; district: number }
+type DominanceRow = { wrestler_id: string; name: string; school: string | null; dominance_score: number; win_count: number }
 
 export default async function RootPage({
   searchParams,
@@ -41,9 +43,65 @@ export default async function RootPage({
     const boysAbbrs = new Set(boysList.map(s => s.school))
     const girlsList = ((girlsSchoolRes.data ?? []) as SchoolRow[])
       .filter(s => s.school_name?.toLowerCase().includes(ql) || s.school?.toLowerCase().includes(ql))
-      .filter(s => !boysAbbrs.has(s.school))   // deduplicate by abbreviation
+      .filter(s => !boysAbbrs.has(s.school))
       .map(s => ({ ...s, gender: 'F' as const }))
     schools = [...boysList, ...girlsList].slice(0, 15)
+  }
+
+  // Fetch leaderboard data for the home page (only when not searching)
+  const showLeaderboards = q.length < 2 && sq.length < 2
+
+  let topTeamScores: TeamScoreRow[] = []
+  let topDominance: DominanceRow[] = []
+  let topSchoolsByWrestlers: { school: string; school_name: string | null; wrestler_count: number; gender: string }[] = []
+
+  if (showLeaderboards) {
+    // Fetch top 24 district team scores + top 8 dominance + schools with 10+ wrestlers
+    const [dominanceRes, teamScoreRes] = await Promise.all([
+      supabase.rpc('lb_dominance', { p_gender: 'M', p_season: season }),
+      supabase.rpc('top_district_team_scores', { p_gender: 'M', p_season: season, p_limit: 24 }),
+    ])
+    topDominance = (dominanceRes.data ?? []).slice(0, 8) as DominanceRow[]
+    topTeamScores = (teamScoreRes.data ?? []) as TeamScoreRow[]
+
+    // Schools with 10+ wrestlers alive (across all tournaments)
+    const { data: schoolRows } = await supabase
+      .from('tournament_entries')
+      .select('school_context_raw, wrestler_id, tournaments!inner(season_id)')
+      .eq('tournaments.season_id', season)
+      .not('school_context_raw', 'is', null)
+
+    if (schoolRows) {
+      const schoolMap = new Map<string, Set<string>>()
+      for (const row of schoolRows as { school_context_raw: string; wrestler_id: string }[]) {
+        if (!row.school_context_raw) continue
+        if (!schoolMap.has(row.school_context_raw)) schoolMap.set(row.school_context_raw, new Set())
+        schoolMap.get(row.school_context_raw)!.add(row.wrestler_id)
+      }
+      const schoolAbbrs = [...schoolMap.entries()]
+        .filter(([, wids]) => wids.size >= 10)
+        .sort((a, b) => b[1].size - a[1].size)
+        .slice(0, 20)
+        .map(([abbr, wids]) => ({ school: abbr, wrestler_count: wids.size }))
+
+      // Lookup school names
+      if (schoolAbbrs.length > 0) {
+        const { data: snRows } = await supabase
+          .from('school_names')
+          .select('abbreviation, school_name')
+          .in('abbreviation', schoolAbbrs.map(s => s.school))
+        const snMap: Record<string, string> = {}
+        for (const row of (snRows ?? []) as { abbreviation: string; school_name: string }[]) {
+          snMap[row.abbreviation] = row.school_name
+        }
+        topSchoolsByWrestlers = schoolAbbrs.map(s => ({
+          school: s.school,
+          school_name: snMap[s.school] ?? null,
+          wrestler_count: s.wrestler_count,
+          gender: 'M',
+        }))
+      }
+    }
   }
 
   const boysDistricts  = Array.from({ length: 32 }, (_, i) => i + 1)
@@ -64,7 +122,7 @@ export default async function RootPage({
             <div className="flex gap-2">
               <input
                 type="text" name="q" defaultValue={q}
-                placeholder="Search by first or last name…"
+                placeholder="Search by first or last name..."
                 autoComplete="off"
                 className="flex-1 border border-slate-300 rounded-lg px-4 py-2.5 text-base shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500"
               />
@@ -103,7 +161,7 @@ export default async function RootPage({
             <div className="flex gap-2">
               <input
                 type="text" name="sq" defaultValue={sq}
-                placeholder="Search by school name…"
+                placeholder="Search by school name..."
                 autoComplete="off"
                 className="flex-1 border border-slate-300 rounded-lg px-4 py-2.5 text-base shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500"
               />
@@ -138,14 +196,177 @@ export default async function RootPage({
         </section>
       </div>
 
-      {/* ── District grids ── */}
+      {/* ── Leaderboards (shown when not searching) ── */}
+      {showLeaderboards && (
+        <div className="space-y-10 border-t border-slate-200 pt-10 mb-10">
+
+          {/* Schools with 10+ wrestlers */}
+          {topSchoolsByWrestlers.length > 0 && (
+            <section>
+              <h2 className="text-lg font-bold text-slate-900 mb-3">Top Schools by Roster</h2>
+              <p className="text-slate-500 text-sm mb-4">Schools with 10+ postseason wrestlers</p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2">
+                {topSchoolsByWrestlers.map(s => (
+                  <Link
+                    key={s.school}
+                    href={`/boys/schools/${encodeURIComponent(s.school)}`}
+                    className="flex items-center justify-between px-3 py-2.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-400 transition-colors shadow-sm"
+                  >
+                    <span className="text-sm font-medium text-slate-800 truncate">{s.school_name || s.school}</span>
+                    <span className="text-xs text-slate-400 ml-2 shrink-0">{s.wrestler_count}</span>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Top 24 District Team Scores */}
+          {topTeamScores.length > 0 && (
+            <section>
+              <h2 className="text-lg font-bold text-slate-900 mb-3">Top District Team Scores</h2>
+              <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+                <table className="min-w-full text-sm">
+                  <thead>
+                    <tr className="bg-slate-50 border-b border-slate-200">
+                      <th className="px-3 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide w-8">#</th>
+                      <th className="px-3 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">School</th>
+                      <th className="px-3 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide w-16">Dist.</th>
+                      <th className="px-3 py-2.5 text-right text-xs font-semibold text-slate-500 uppercase tracking-wide w-16">Pts</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {topTeamScores.map((r, i) => (
+                      <tr key={`${r.school}-${r.district}`} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
+                        <td className="px-3 py-2 text-xs text-slate-400">{i + 1}</td>
+                        <td className="px-3 py-2">
+                          <Link href={`/boys/schools/${encodeURIComponent(r.school)}`} className="font-medium text-slate-800 hover:underline">
+                            {r.school_name || r.school}
+                          </Link>
+                        </td>
+                        <td className="px-3 py-2 text-slate-500">
+                          <Link href={`/boys/districts/${r.district}`} className="hover:underline">
+                            D{r.district}
+                          </Link>
+                        </td>
+                        <td className="px-3 py-2 text-right font-semibold text-slate-700">{r.total_points}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          )}
+
+          {/* Top 8 Dominance */}
+          {topDominance.length > 0 && (
+            <section>
+              <h2 className="text-lg font-bold text-slate-900 mb-3">Dominance Leaders</h2>
+              <p className="text-slate-500 text-sm mb-4">Pin/TF: 9-sec/60 | MD: 2 | Dec: 1 | Loser: -score | Averaged across all matches</p>
+              <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                <div className="divide-y divide-slate-100">
+                  {topDominance.map((r, i) => (
+                    <div key={r.wrestler_id} className="flex items-center gap-2 px-4 py-2.5">
+                      <span className="text-xs text-slate-400 w-4 shrink-0 text-right">{i + 1}</span>
+                      <div className="flex-1 min-w-0">
+                        <Link
+                          href={`/wrestler/${r.wrestler_id}`}
+                          className="text-sm font-medium text-slate-800 hover:underline truncate block"
+                        >
+                          {r.name}
+                        </Link>
+                        <div className="text-[11px] text-slate-400 truncate">{r.school || '—'} · {r.win_count} wins</div>
+                      </div>
+                      <span className="text-sm font-semibold text-slate-700 shrink-0">{r.dominance_score}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+        </div>
+      )}
+
+      {/* ── Tournament grids ── */}
       <div className="space-y-10 border-t border-slate-200 pt-10">
+
+        {/* Boys State */}
+        <section>
+          <div className="mb-4">
+            <h2 className="text-xl font-bold text-slate-900">Boys State Tournament</h2>
+            <p className="text-slate-500 text-sm mt-0.5">NJSIAA 2025-26</p>
+          </div>
+          <Link
+            href="/boys/state"
+            className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-blue-200 bg-white hover:bg-blue-50 hover:border-blue-400 transition-colors shadow-sm font-bold text-slate-800"
+          >
+            View State Brackets
+          </Link>
+        </section>
+
+        {/* Girls State */}
+        <section>
+          <div className="mb-4">
+            <h2 className="text-xl font-bold text-rose-900">Girls State Tournament</h2>
+            <p className="text-slate-500 text-sm mt-0.5">NJSIAA 2025-26</p>
+          </div>
+          <Link
+            href="/girls/state"
+            className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-pink-200 bg-white hover:bg-pink-50 hover:border-pink-400 transition-colors shadow-sm font-bold text-slate-800"
+          >
+            View State Brackets
+          </Link>
+        </section>
+
+        {/* Boys Regions */}
+        <section>
+          <div className="mb-4">
+            <h2 className="text-xl font-bold text-slate-900">Boys Regions</h2>
+            <p className="text-slate-500 text-sm mt-0.5">NJSIAA 2025-26 · Select a region</p>
+          </div>
+          <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
+            {Array.from({ length: 8 }, (_, i) => i + 1).map(r => (
+              <Link
+                key={r}
+                href={`/boys/regions/${r}`}
+                className="flex flex-col items-center justify-center aspect-square rounded-lg border border-emerald-200 bg-white hover:bg-emerald-50 hover:border-emerald-400 transition-colors shadow-sm"
+              >
+                <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide leading-none mb-0.5">Reg.</span>
+                <span className="text-xl font-bold text-slate-800">{r}</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* Girls Regions */}
+        <section>
+          <div className="mb-4">
+            <h2 className="text-xl font-bold text-rose-900">Girls Regions</h2>
+            <p className="text-slate-500 text-sm mt-0.5">NJSIAA 2025-26 · Select a region</p>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            {[
+              { slug: 'central', label: 'Central' },
+              { slug: 'north-1', label: 'North 1' },
+              { slug: 'north-2', label: 'North 2' },
+              { slug: 'south', label: 'South' },
+            ].map(r => (
+              <Link
+                key={r.slug}
+                href={`/girls/regions/${r.slug}`}
+                className="flex flex-col items-center justify-center py-4 rounded-lg border border-purple-200 bg-white hover:bg-purple-50 hover:border-purple-400 transition-colors shadow-sm"
+              >
+                <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide leading-none mb-0.5">Reg.</span>
+                <span className="text-base font-bold text-slate-800">{r.label}</span>
+              </Link>
+            ))}
+          </div>
+        </section>
 
         {/* Boys Districts */}
         <section>
           <div className="mb-4">
             <h2 className="text-xl font-bold text-slate-900">Boys Districts</h2>
-            <p className="text-slate-500 text-sm mt-0.5">NJSIAA 2025–26 · Select a district</p>
+            <p className="text-slate-500 text-sm mt-0.5">Select a district</p>
           </div>
           <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
             {boysDistricts.map(d => (
@@ -165,7 +386,7 @@ export default async function RootPage({
         <section>
           <div className="mb-4">
             <h2 className="text-xl font-bold text-rose-900">Girls Districts</h2>
-            <p className="text-slate-500 text-sm mt-0.5">NJSIAA 2025–26 · Select a district</p>
+            <p className="text-slate-500 text-sm mt-0.5">Select a district</p>
           </div>
           <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
             {girlsDistricts.map(d => (

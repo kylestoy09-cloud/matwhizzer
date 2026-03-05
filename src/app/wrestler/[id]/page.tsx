@@ -310,6 +310,29 @@ export default async function WrestlerPage({
     bySeason.get(g.season_id)!.push(g)
   }
 
+  // Build school name per season from entries
+  const schoolBySeason = new Map<number, string>()
+  const allSchoolAbbrs = new Set<string>()
+  for (const e of typedEntries) {
+    if (e.school_context_raw) allSchoolAbbrs.add(e.school_context_raw)
+  }
+  const schoolNameLookup: Record<string, string> = {}
+  if (allSchoolAbbrs.size > 0) {
+    const { data: snRows } = await supabase
+      .from('school_names')
+      .select('abbreviation, school_name')
+      .in('abbreviation', [...allSchoolAbbrs])
+    for (const row of (snRows ?? []) as { abbreviation: string; school_name: string }[]) {
+      schoolNameLookup[row.abbreviation] = row.school_name
+    }
+  }
+  for (const e of typedEntries) {
+    const sid = (unwrap(e.tournament) as { season_id: number } | null)?.season_id ?? 0
+    if (sid && e.school_context_raw && !schoolBySeason.has(sid)) {
+      schoolBySeason.set(sid, schoolNameLookup[e.school_context_raw] ?? e.school_context_raw)
+    }
+  }
+
   // Current-season stats for the profile header
   const currentGroups = bySeason.get(currentSeason) ?? []
   const currentAnnotated = annotated.filter(
@@ -317,6 +340,52 @@ export default async function WrestlerPage({
   )
   const wins   = currentAnnotated.filter(m => m.result === 'W').length
   const losses = currentAnnotated.filter(m => m.result === 'L').length
+
+  // Detect placements (champion = won Finals on championship side)
+  type PlacementInfo = { tournament: string; place: number; tournamentType: string }
+  const placements: PlacementInfo[] = []
+  for (const g of allGroupsSorted) {
+    const finals = g.matches.find(
+      m => m.round === 'F' && (m.bracket_side === 'championship' || !m.bracket_side)
+    )
+    if (finals) {
+      if (finals.result === 'W') {
+        placements.push({ tournament: g.tournament_name, place: 1, tournamentType: g.tournament_type })
+      } else if (finals.result === 'L') {
+        placements.push({ tournament: g.tournament_name, place: 2, tournamentType: g.tournament_type })
+      }
+    }
+    const thirdPlace = g.matches.find(
+      m => m.round === '3rd_Place' && m.bracket_side === 'consolation'
+    )
+    if (thirdPlace) {
+      if (thirdPlace.result === 'W') {
+        placements.push({ tournament: g.tournament_name, place: 3, tournamentType: g.tournament_type })
+      } else if (thirdPlace.result === 'L') {
+        placements.push({ tournament: g.tournament_name, place: 4, tournamentType: g.tournament_type })
+      }
+    }
+    const fifthPlace = g.matches.find(
+      m => m.round === '5th_Place' && m.bracket_side === 'consolation'
+    )
+    if (fifthPlace) {
+      if (fifthPlace.result === 'W') {
+        placements.push({ tournament: g.tournament_name, place: 5, tournamentType: g.tournament_type })
+      } else if (fifthPlace.result === 'L') {
+        placements.push({ tournament: g.tournament_name, place: 6, tournamentType: g.tournament_type })
+      }
+    }
+    const seventhPlace = g.matches.find(
+      m => m.round === '7th_Place' && m.bracket_side === 'consolation'
+    )
+    if (seventhPlace) {
+      if (seventhPlace.result === 'W') {
+        placements.push({ tournament: g.tournament_name, place: 7, tournamentType: g.tournament_type })
+      } else if (seventhPlace.result === 'L') {
+        placements.push({ tournament: g.tournament_name, place: 8, tournamentType: g.tournament_type })
+      }
+    }
+  }
 
   // Primary weight from current season
   const currentWeights = currentGroups.map(g => g.weight).filter(w => w > 0)
@@ -361,6 +430,32 @@ export default async function WrestlerPage({
           {wrestler.gender === 'F' ? 'Girls' : 'Boys'}
         </span>
       </div>
+
+      {/* Placement badges */}
+      {placements.length > 0 && (
+        <div className="flex flex-wrap gap-2 mb-3">
+          {placements.map((p, i) => {
+            const label = p.tournament.replace('Boy_s ', '').replace('Girl_s ', '')
+            const placeLabel = p.place === 1 ? 'Champion' : p.place === 2 ? 'Runner-Up' : `${p.place}${p.place === 3 ? 'rd' : 'th'} Place`
+            const icon = p.place === 1 ? '\u{1F451}' : p.place <= 3 ? '\u{1F3C5}' : '\u{1F396}'
+            const colors = p.place === 1
+              ? 'bg-yellow-50 border-yellow-300 text-yellow-800'
+              : p.place === 2
+              ? 'bg-slate-50 border-slate-300 text-slate-700'
+              : p.place === 3
+              ? 'bg-orange-50 border-orange-300 text-orange-800'
+              : 'bg-slate-50 border-slate-200 text-slate-600'
+            return (
+              <span key={i} className={`inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full border ${colors}`}>
+                <span>{icon}</span>
+                <span>{placeLabel}</span>
+                <span className="font-normal text-[10px] opacity-70">({label})</span>
+              </span>
+            )
+          })}
+        </div>
+      )}
+
       <p className="text-slate-500 mb-8">
         {displaySchool && (
           <>
@@ -426,6 +521,11 @@ export default async function WrestlerPage({
             <div key={seasonId}>
               <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4 pb-1 border-b border-slate-100">
                 {label}
+                {schoolBySeason.get(seasonId) && (
+                  <span className="ml-2 normal-case tracking-normal text-slate-500 font-medium">
+                    — {schoolBySeason.get(seasonId)}
+                  </span>
+                )}
               </h3>
               <div className="space-y-8">
                 {seasonGroups.map(g => (
@@ -440,8 +540,8 @@ export default async function WrestlerPage({
                       <span className="text-slate-400 text-sm">&middot; {g.weight} lb</span>
                     </div>
 
-                    <div className="border border-slate-200 rounded-lg overflow-hidden shadow-sm bg-white">
-                      <table className="w-full text-sm">
+                    <div className="border border-slate-200 rounded-lg overflow-hidden shadow-sm bg-white overflow-x-auto">
+                      <table className="min-w-[480px] w-full text-sm">
                         <thead className="bg-slate-50 border-b border-slate-200">
                           <tr>
                             <th className="text-left px-4 py-2 font-medium text-slate-500 w-28">Round</th>
@@ -454,6 +554,12 @@ export default async function WrestlerPage({
                           {g.matches.map(m => (
                             <tr key={m.id} className="hover:bg-slate-50">
                               <td className="px-4 py-2.5 text-slate-500">
+                                {m.round === 'F' && m.bracket_side === 'championship' && m.result === 'W' && (
+                                  <span className="mr-1">{'\u{1F451}'}</span>
+                                )}
+                                {m.round === 'F' && m.bracket_side === 'championship' && m.result === 'L' && (
+                                  <span className="mr-1">{'\u{1F948}'}</span>
+                                )}
                                 {ROUND_LABEL[m.round ?? ''] ?? m.round ?? '—'}
                               </td>
                               <td className="px-4 py-2.5">

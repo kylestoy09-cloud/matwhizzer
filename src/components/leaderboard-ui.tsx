@@ -13,7 +13,7 @@ export type DomRow        = { wrestler_id: string; name: string; school: string 
 export type DistrictRow   = { district_name: string; wrestlers_advancing: number; state_qualifiers: number }
 export type SchoolRow     = { school: string; weight_classes_placed: number; wrestlers: number }
 export type WeightRow     = { weight: number; gender: string; avg_margin: number; match_count: number }
-export type ComebackRow   = { wrestler_id: string; name: string; school: string | null; lost_round: string; placed_round: string; tournament_name: string; weight: number }
+export type ComebackRow   = { wrestler_id: string; name: string; school: string | null; school_name: string | null; consol_wins: number; tournament_name: string; weight: number }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -63,8 +63,8 @@ export function LeaderTable<T extends object>({
   return (
     <section>
       <SectionHeader title={title} description={description} />
-      <div className="border border-slate-200 rounded-lg overflow-hidden shadow-sm bg-white">
-        <table className="w-full text-sm">
+      <div className="border border-slate-200 rounded-lg overflow-x-auto shadow-sm bg-white">
+        <table className="w-full text-sm min-w-[400px]">
           <thead className="bg-slate-50 border-b border-slate-200">
             <tr>
               <th className="text-left px-3 py-2 font-medium text-slate-500 w-8">#</th>

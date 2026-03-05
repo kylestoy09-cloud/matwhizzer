@@ -115,15 +115,36 @@ export default async function GirlsSearchPage({
         </section>
       </div>
 
-      {/* ── Districts ── */}
+      {/* ── Regions ── */}
       <div className="border-t border-slate-200 pt-10">
         <div className="mb-4">
+          <h2 className="text-xl font-bold text-rose-900">Regions</h2>
+          <p className="text-slate-500 text-sm mt-0.5">NJSIAA 2025–26 · Select a region</p>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          {[
+            { slug: 'central', label: 'Central' },
+            { slug: 'north-1', label: 'North 1' },
+            { slug: 'north-2', label: 'North 2' },
+            { slug: 'south', label: 'South' },
+          ].map(r => (
+            <Link
+              key={r.slug}
+              href={`/girls/regions/${r.slug}`}
+              className="flex flex-col items-center justify-center py-4 rounded-lg border border-purple-200 bg-white hover:bg-purple-50 hover:border-purple-400 transition-colors shadow-sm"
+            >
+              <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide leading-none mb-0.5">Reg.</span>
+              <span className="text-base font-bold text-slate-800">{r.label}</span>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Districts ── */}
+      <div className="pt-10">
+        <div className="mb-4">
           <h2 className="text-xl font-bold text-rose-900">Districts</h2>
-          <div className="flex items-center gap-1 text-slate-500 text-sm mt-0.5">
-            <span>NJSIAA</span>
-            <InlineSeasonPicker activeSeason={season} />
-            <span>· Select a district</span>
-          </div>
+          <p className="text-slate-500 text-sm mt-0.5">NJSIAA 2025–26 · Select a district</p>
         </div>
         <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
           {Array.from({ length: 12 }, (_, i) => i + 1).map(d => (
