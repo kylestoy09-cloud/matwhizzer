@@ -44,24 +44,17 @@ type MyPick = {
   pick_4th: string | null
 }
 
+const PICK_KEYS: (keyof MyPick)[] = ['pick_1st', 'pick_2nd', 'pick_3rd', 'pick_4th']
+
 // ── Bracket matchup building from bracket_position ──────────────────────────
-// Uses bracket_position (1-16 or 1-32) from the actual PDF bracket.
-// Consecutive pairs of positions form first-round matchups:
-//   slots 1-2 = Match 1, slots 3-4 = Match 2, etc.
-// Byes are empty slots (no wrestler at that position).
 
 function buildMatchups(entries: BracketEntry[], bracketSize: 16 | 32 = 16): [BracketEntry | null, BracketEntry | null][] {
-  // If entries have bracket_position data, use it for exact matchup placement
   const withPosition = entries.filter(e => e.bracket_position != null)
 
   if (withPosition.length > 0) {
-    // Build position map
     const byPos = new Map<number, BracketEntry>()
-    for (const e of withPosition) {
-      byPos.set(e.bracket_position!, e)
-    }
+    for (const e of withPosition) byPos.set(e.bracket_position!, e)
 
-    // Entries without positions go at the end
     const withoutPosition = entries.filter(e => e.bracket_position == null)
     let extraIdx = 0
 
@@ -69,30 +62,20 @@ function buildMatchups(entries: BracketEntry[], bracketSize: 16 | 32 = 16): [Bra
     for (let i = 1; i <= bracketSize; i += 2) {
       let top = byPos.get(i) ?? null
       let bot = byPos.get(i + 1) ?? null
-
-      // Fill unpositioned entries into empty slots
-      if (!top && extraIdx < withoutPosition.length) {
-        top = withoutPosition[extraIdx++]
-      }
-      if (!bot && extraIdx < withoutPosition.length) {
-        bot = withoutPosition[extraIdx++]
-      }
-
-      if (top || bot) {
-        matchups.push([top, bot])
-      }
+      if (!top && extraIdx < withoutPosition.length) top = withoutPosition[extraIdx++]
+      if (!bot && extraIdx < withoutPosition.length) bot = withoutPosition[extraIdx++]
+      if (top || bot) matchups.push([top, bot])
     }
     return matchups
   }
 
-  // Fallback: seed-based pairing (for entries without bracket_position)
+  // Fallback: seed-based pairing
   const bySeed = new Map<number, BracketEntry>()
   const unseeded: BracketEntry[] = []
   for (const e of entries) {
     if (e.seed != null && e.seed >= 1) bySeed.set(e.seed, e)
     else unseeded.push(e)
   }
-
   const numSeeds = bracketSize / 2
   const matchups: [BracketEntry | null, BracketEntry | null][] = []
   let unseededIdx = 0
@@ -105,7 +88,7 @@ function buildMatchups(entries: BracketEntry[], bracketSize: 16 | 32 = 16): [Bra
   return matchups
 }
 
-// ── Seed badge styling ──────────────────────────────────────────────────────
+// ── Helpers ──────────────────────────────────────────────────────────────────
 
 function seedColor(seed: number | null): string {
   if (seed === 1) return 'bg-amber-100 text-amber-700 font-bold'
@@ -116,33 +99,11 @@ function seedColor(seed: number | null): string {
   return 'bg-slate-50 text-slate-400'
 }
 
-// ── District provenance label ───────────────────────────────────────────────
-
 function provenanceLabel(prefix: string, num: number | null, place: number | null): string | null {
   if (num == null) return null
   const placeStr = place === 1 ? 'Champ' : place === 2 ? '2nd' : place === 3 ? '3rd' : place === 4 ? '4th' : place === 5 ? '5th' : place === 6 ? '6th' : null
   return placeStr ? `${prefix}${num} ${placeStr}` : `${prefix}${num}`
 }
-
-// ── Projected QF matchups ───────────────────────────────────────────────────
-
-function projectedQFs(matchups: [BracketEntry | null, BracketEntry | null][]): string[] {
-  // QF = winner of matchup[0] vs winner of matchup[1], etc.
-  const qfs: string[] = []
-  for (let i = 0; i < matchups.length; i += 2) {
-    const a = matchups[i]
-    const b = matchups[i + 1]
-    if (!a || !b) continue
-    const aName = a[0]?.seed ? `(${a[0].seed})` : a[0]?.wrestler_name.split(' ').pop() ?? '?'
-    const bName = b[0]?.seed ? `(${b[0].seed})` : b[0]?.wrestler_name.split(' ').pop() ?? '?'
-    const aBot = a[1] ? (a[1].seed ? `/${a[1].seed}` : '') : ' bye'
-    const bBot = b[1] ? (b[1].seed ? `/${b[1].seed}` : '') : ' bye'
-    qfs.push(`${aName}${aBot} vs ${bName}${bBot}`)
-  }
-  return qfs
-}
-
-// ── Visitor ID (cookie-based) ───────────────────────────────────────────────
 
 function getVisitorId(): string {
   if (typeof window === 'undefined') return ''
@@ -154,13 +115,12 @@ function getVisitorId(): string {
   return id
 }
 
-// ── Pick slot labels ────────────────────────────────────────────────────────
-
-const PICK_LABELS = [
-  { key: 'pick_1st' as const, label: 'Champion', color: 'border-amber-400 bg-amber-50' },
-  { key: 'pick_2nd' as const, label: 'Runner-Up', color: 'border-slate-400 bg-slate-50' },
-  { key: 'pick_3rd' as const, label: '3rd Place', color: 'border-orange-300 bg-orange-50' },
-  { key: 'pick_4th' as const, label: '4th Place', color: 'border-sky-300 bg-sky-50' },
+// Place circle colors
+const PLACE_STYLES = [
+  { bg: 'bg-amber-400', text: 'text-white', ring: 'ring-amber-400', label: '1st', labelColor: 'text-amber-600' },
+  { bg: 'bg-slate-400', text: 'text-white', ring: 'ring-slate-400', label: '2nd', labelColor: 'text-slate-500' },
+  { bg: 'bg-orange-400', text: 'text-white', ring: 'ring-orange-400', label: '3rd', labelColor: 'text-orange-500' },
+  { bg: 'bg-sky-400', text: 'text-white', ring: 'ring-sky-400', label: '4th', labelColor: 'text-sky-500' },
 ]
 
 // ── Main Component ──────────────────────────────────────────────────────────
@@ -187,11 +147,11 @@ export function BracketPoll({
   const [totalVoters, setTotalVoters] = useState(0)
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(true)
-  const [activeSlot, setActiveSlot] = useState<keyof MyPick | null>(null)
 
   const visitorId = typeof window !== 'undefined' ? getVisitorId() : ''
   const matchups = buildMatchups(entries, bracketSize)
-  const qfPreview = projectedQFs(matchups)
+  const entryMap = new Map(entries.map(e => [e.wrestler_id, e]))
+  const pollClosed = hasMatches
 
   const fetchPoll = useCallback(async () => {
     if (!tournamentId || !weightClassId) return
@@ -225,36 +185,51 @@ export function BracketPoll({
     fetchPoll()
   }
 
-  const selectWrestler = (wrestlerId: string) => {
-    if (!activeSlot || hasMatches) return
-    // Remove wrestler from any existing slot
+  // Toggle a place pick for a wrestler
+  const togglePick = (wrestlerId: string, placeIdx: number) => {
+    if (pollClosed) return
+    const key = PICK_KEYS[placeIdx]
     const newPicks = { ...picks }
-    for (const key of Object.keys(newPicks) as (keyof MyPick)[]) {
-      if (newPicks[key] === wrestlerId) newPicks[key] = null
-    }
-    newPicks[activeSlot] = wrestlerId
-    setPicks(newPicks)
 
-    // Auto-advance to next empty slot
-    const slotOrder: (keyof MyPick)[] = ['pick_1st', 'pick_2nd', 'pick_3rd', 'pick_4th']
-    const nextEmpty = slotOrder.find(k => k !== activeSlot && !newPicks[k])
-    setActiveSlot(nextEmpty ?? null)
+    // If this wrestler already has this place, remove it
+    if (newPicks[key] === wrestlerId) {
+      newPicks[key] = null
+      setPicks(newPicks)
+      return
+    }
+
+    // Remove this wrestler from any other place
+    for (const k of PICK_KEYS) {
+      if (newPicks[k] === wrestlerId) newPicks[k] = null
+    }
+
+    // Remove whoever currently holds this place
+    newPicks[key] = wrestlerId
+    setPicks(newPicks)
   }
 
-  const entryMap = new Map(entries.map(e => [e.wrestler_id, e]))
-  const pollClosed = hasMatches
-
-  // Get pick assignment for a wrestler (which slot they're in)
   const getPickSlot = (wrestlerId: string): number | null => {
-    if (picks.pick_1st === wrestlerId) return 0
-    if (picks.pick_2nd === wrestlerId) return 1
-    if (picks.pick_3rd === wrestlerId) return 2
-    if (picks.pick_4th === wrestlerId) return 3
+    for (let i = 0; i < PICK_KEYS.length; i++) {
+      if (picks[PICK_KEYS[i]] === wrestlerId) return i
+    }
     return null
   }
 
+  // Build podium display: use poll results if available, otherwise default to seeds
+  const podium = buildPodium(results, totalVoters, entries, entryMap)
+
   return (
     <div className="mt-6 space-y-6">
+      {/* ── Podium / Leaders ── */}
+      <PodiumBar podium={podium} totalVoters={totalVoters} loading={loading} />
+
+      {/* ── Instructions ── */}
+      {!pollClosed && !submitted && (
+        <p className="text-xs text-slate-400 text-center">
+          Select your podium — tap a place circle next to any wrestler
+        </p>
+      )}
+
       {/* ── First Round Matchups ── */}
       <section>
         <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
@@ -267,8 +242,7 @@ export function BracketPoll({
               top={top}
               bot={bot}
               matchNum={i + 1}
-              onSelect={selectWrestler}
-              activeSlot={activeSlot}
+              togglePick={togglePick}
               getPickSlot={getPickSlot}
               pollClosed={pollClosed}
               provenancePrefix={provenancePrefix}
@@ -277,96 +251,19 @@ export function BracketPoll({
         </div>
       </section>
 
-      {/* ── Projected QF Preview ── */}
-      {qfPreview.length > 0 && (
-        <section>
-          <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">
-            Projected Quarterfinals
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {qfPreview.map((qf, i) => (
-              <div key={i} className="px-3 py-2 bg-slate-50 rounded-lg text-xs text-slate-500 border border-slate-100">
-                <span className="text-slate-400 mr-1.5">QF{i + 1}</span> {qf}
-              </div>
-            ))}
-          </div>
-        </section>
+      {/* ── Submit / Update ── */}
+      {!pollClosed && picks.pick_1st && (
+        <div className="flex justify-center">
+          <button
+            onClick={submitPicks}
+            className="px-6 py-2.5 bg-slate-800 text-white text-sm font-semibold rounded-lg hover:bg-slate-700 transition-colors"
+          >
+            {submitted ? 'Update Picks' : 'Submit Picks'}
+          </button>
+        </div>
       )}
 
-      {/* ── Poll Section ── */}
-      {!pollClosed && (
-        <section className="border-t border-slate-100 pt-6">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
-              Pick Your Placewinners
-            </h3>
-            {totalVoters > 0 && (
-              <span className="text-[10px] text-slate-400">
-                {totalVoters} pick{totalVoters !== 1 ? 's' : ''} submitted
-              </span>
-            )}
-          </div>
-
-          {/* Pick slots */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
-            {PICK_LABELS.map(({ key, label, color }) => {
-              const wrestlerId = picks[key]
-              const wrestler = wrestlerId ? entryMap.get(wrestlerId) : null
-              const isActive = activeSlot === key
-
-              return (
-                <button
-                  key={key}
-                  onClick={() => setActiveSlot(isActive ? null : key)}
-                  className={`rounded-lg border-2 px-3 py-2.5 text-left transition-all ${
-                    isActive ? `${color} ring-2 ring-offset-1 ring-slate-400` : wrestler ? color : 'border-dashed border-slate-200 bg-white'
-                  }`}
-                >
-                  <div className="text-[10px] font-semibold text-slate-500 uppercase">{label}</div>
-                  {wrestler ? (
-                    <div className="text-sm font-medium text-slate-800 truncate mt-0.5">
-                      {wrestler.wrestler_name}
-                    </div>
-                  ) : (
-                    <div className="text-xs text-slate-400 italic mt-0.5">
-                      {isActive ? 'Select from bracket...' : 'Tap to select'}
-                    </div>
-                  )}
-                </button>
-              )
-            })}
-          </div>
-
-          {/* Submit button */}
-          {picks.pick_1st && (
-            <button
-              onClick={submitPicks}
-              className="w-full sm:w-auto px-6 py-2.5 bg-slate-800 text-white text-sm font-semibold rounded-lg hover:bg-slate-700 transition-colors"
-            >
-              {submitted ? 'Update Picks' : 'Submit Picks'}
-            </button>
-          )}
-        </section>
-      )}
-
-      {/* ── Poll Results ── */}
-      {(submitted || pollClosed) && !loading && (
-        <section className={pollClosed ? '' : 'border-t border-slate-100 pt-6'}>
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
-              {pollClosed ? 'Community Predictions' : 'Community Picks'}
-            </h3>
-            {totalVoters > 0 && (
-              <span className="text-[10px] text-slate-400">
-                {totalVoters} vote{totalVoters !== 1 ? 's' : ''}
-              </span>
-            )}
-          </div>
-          <PollResultsTable results={results} totalVoters={totalVoters} />
-        </section>
-      )}
-
-      {/* ── District Winners feeding this bracket ── */}
+      {/* ── District Winners ── */}
       {districtChamps.length > 0 && (
         <section className="border-t border-slate-100 pt-6">
           <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
@@ -394,14 +291,96 @@ export function BracketPoll({
   )
 }
 
+// ── Podium builder ──────────────────────────────────────────────────────────
+
+type PodiumEntry = { wrestler_name: string; wrestler_id: string; school: string; pct: number | null; isDefault: boolean }
+
+function buildPodium(
+  results: PollResult[],
+  totalVoters: number,
+  entries: BracketEntry[],
+  entryMap: Map<string, BracketEntry>,
+): PodiumEntry[] {
+  // If we have votes, use the leaders
+  if (totalVoters > 0 && results.length > 0) {
+    const countKeys = ['pick_1st_count', 'pick_2nd_count', 'pick_3rd_count', 'pick_4th_count'] as const
+    const podium: PodiumEntry[] = []
+
+    for (const ck of countKeys) {
+      const leader = results.reduce((best, r) => r[ck] > best[ck] ? r : best, results[0])
+      if (leader[ck] > 0) {
+        const entry = entryMap.get(leader.wrestler_id)
+        podium.push({
+          wrestler_name: leader.wrestler_name,
+          wrestler_id: leader.wrestler_id,
+          school: entry?.school_name || entry?.school || '',
+          pct: Math.round((leader[ck] / totalVoters) * 100),
+          isDefault: false,
+        })
+      }
+    }
+    if (podium.length > 0) return podium
+  }
+
+  // Default to top 4 seeds
+  const seeded = [...entries].filter(e => e.seed != null).sort((a, b) => a.seed! - b.seed!)
+  return seeded.slice(0, 4).map(e => ({
+    wrestler_name: e.wrestler_name,
+    wrestler_id: e.wrestler_id,
+    school: e.school_name || e.school,
+    pct: null,
+    isDefault: true,
+  }))
+}
+
+// ── Podium Bar ──────────────────────────────────────────────────────────────
+
+function PodiumBar({ podium, totalVoters, loading }: { podium: PodiumEntry[]; totalVoters: number; loading: boolean }) {
+  return (
+    <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+      <div className="flex items-center justify-between mb-3">
+        <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+          {podium[0]?.isDefault ? 'Projected Podium' : 'Community Picks'}
+        </h3>
+        {totalVoters > 0 && (
+          <span className="text-[10px] text-slate-400">
+            {totalVoters} vote{totalVoters !== 1 ? 's' : ''}
+          </span>
+        )}
+      </div>
+      <div className="grid grid-cols-4 gap-2">
+        {podium.map((p, i) => (
+          <div key={i} className="text-center">
+            <div className={`w-7 h-7 rounded-full flex items-center justify-center mx-auto mb-1 ${PLACE_STYLES[i].bg} ${PLACE_STYLES[i].text} text-xs font-bold`}>
+              {i + 1}
+            </div>
+            <Link
+              href={`/wrestler/${p.wrestler_id}`}
+              className="text-xs font-medium text-slate-800 hover:underline block truncate"
+            >
+              {p.wrestler_name}
+            </Link>
+            <span className="text-[9px] text-slate-400 truncate block">{p.school}</span>
+            {p.pct != null && (
+              <span className={`text-[9px] font-semibold ${PLACE_STYLES[i].labelColor}`}>{p.pct}%</span>
+            )}
+          </div>
+        ))}
+        {loading && podium.length === 0 && (
+          <div className="col-span-4 text-center text-xs text-slate-400 py-2">Loading...</div>
+        )}
+      </div>
+    </div>
+  )
+}
+
 // ── Matchup Card ────────────────────────────────────────────────────────────
 
 function MatchupCard({
   top,
   bot,
   matchNum,
-  onSelect,
-  activeSlot,
+  togglePick,
   getPickSlot,
   pollClosed,
   provenancePrefix,
@@ -409,8 +388,7 @@ function MatchupCard({
   top: BracketEntry | null
   bot: BracketEntry | null
   matchNum: number
-  onSelect: (id: string) => void
-  activeSlot: string | null
+  togglePick: (wrestlerId: string, placeIdx: number) => void
   getPickSlot: (id: string) => number | null
   pollClosed: boolean
   provenancePrefix: string
@@ -421,19 +399,15 @@ function MatchupCard({
         <span className="text-[10px] text-slate-400 font-medium">Match {matchNum}</span>
       </div>
       {top ? (
-        <EntryRow entry={top} onSelect={onSelect} activeSlot={activeSlot} getPickSlot={getPickSlot} pollClosed={pollClosed} provenancePrefix={provenancePrefix} />
+        <EntryRow entry={top} togglePick={togglePick} getPickSlot={getPickSlot} pollClosed={pollClosed} provenancePrefix={provenancePrefix} />
       ) : (
-        <div className="flex items-center px-2.5 text-xs text-slate-400 italic" style={{ height: 52 }}>
-          Bye
-        </div>
+        <div className="flex items-center px-2.5 text-xs text-slate-400 italic" style={{ height: 48 }}>Bye</div>
       )}
       <div className="border-t border-slate-100" />
       {bot ? (
-        <EntryRow entry={bot} onSelect={onSelect} activeSlot={activeSlot} getPickSlot={getPickSlot} pollClosed={pollClosed} provenancePrefix={provenancePrefix} />
+        <EntryRow entry={bot} togglePick={togglePick} getPickSlot={getPickSlot} pollClosed={pollClosed} provenancePrefix={provenancePrefix} />
       ) : (
-        <div className="flex items-center px-2.5 text-xs text-slate-400 italic" style={{ height: 52 }}>
-          Bye
-        </div>
+        <div className="flex items-center px-2.5 text-xs text-slate-400 italic" style={{ height: 48 }}>Bye</div>
       )}
     </div>
   )
@@ -443,41 +417,23 @@ function MatchupCard({
 
 function EntryRow({
   entry,
-  onSelect,
-  activeSlot,
+  togglePick,
   getPickSlot,
   pollClosed,
   provenancePrefix,
 }: {
-  entry: BracketEntry | null
-  onSelect: (id: string) => void
-  activeSlot: string | null
+  entry: BracketEntry
+  togglePick: (wrestlerId: string, placeIdx: number) => void
   getPickSlot: (id: string) => number | null
   pollClosed: boolean
   provenancePrefix: string
 }) {
-  if (!entry) return null
-
   const record = (entry.wins != null && entry.losses != null) ? `${entry.wins}-${entry.losses}` : null
   const provenance = provenanceLabel(provenancePrefix, entry.district_num, entry.district_place)
-  const pickSlot = getPickSlot(entry.wrestler_id)
-  const isSelectable = activeSlot && !pollClosed
-
-  const pickBorders = [
-    'ring-2 ring-amber-400',
-    'ring-2 ring-slate-400',
-    'ring-2 ring-orange-300',
-    'ring-2 ring-sky-300',
-  ]
+  const currentSlot = getPickSlot(entry.wrestler_id)
 
   return (
-    <div
-      className={`flex items-center gap-1.5 px-2.5 py-1.5 transition-colors ${
-        isSelectable ? 'cursor-pointer hover:bg-blue-50' : ''
-      } ${pickSlot != null ? 'bg-emerald-50/50' : ''}`}
-      style={{ minHeight: 52 }}
-      onClick={() => isSelectable && onSelect(entry.wrestler_id)}
-    >
+    <div className="flex items-center gap-1.5 px-2 py-1.5" style={{ minHeight: 48 }}>
       {/* Seed badge */}
       {entry.seed != null ? (
         <span className={`text-[10px] w-5 h-5 flex items-center justify-center rounded-full shrink-0 ${seedColor(entry.seed)}`}>
@@ -489,110 +445,54 @@ function EntryRow({
 
       {/* Wrestler info */}
       <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-1.5">
-          <Link
-            href={`/wrestler/${entry.wrestler_id}`}
-            className="text-sm font-medium text-slate-800 hover:underline truncate"
-            onClick={e => e.stopPropagation()}
-          >
-            {entry.wrestler_name}
-          </Link>
-          {pickSlot != null && (
-            <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-semibold shrink-0 ${
-              pickSlot === 0 ? 'bg-amber-100 text-amber-700' :
-              pickSlot === 1 ? 'bg-slate-200 text-slate-600' :
-              pickSlot === 2 ? 'bg-orange-100 text-orange-600' :
-              'bg-sky-100 text-sky-600'
-            }`}>
-              {['1st', '2nd', '3rd', '4th'][pickSlot]}
-            </span>
-          )}
-        </div>
-        <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
-          <span className="text-[10px] text-slate-400 truncate max-w-[120px]">
+        <Link
+          href={`/wrestler/${entry.wrestler_id}`}
+          className="text-[13px] font-medium text-slate-800 hover:underline truncate block"
+        >
+          {entry.wrestler_name}
+        </Link>
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <span className="text-[10px] text-slate-400 truncate max-w-[100px]">
             {entry.school_name || entry.school}
           </span>
           {record && <span className="text-[10px] text-slate-400 tabular-nums">{record}</span>}
           {provenance && (
-            <span className="text-[10px] px-1 py-0 rounded bg-slate-100 text-slate-500 font-medium">
+            <span className="text-[10px] px-1 rounded bg-slate-100 text-slate-500 font-medium">
               {provenance}
             </span>
           )}
-          {entry.grade && <span className="text-[10px] text-slate-300">{entry.grade}</span>}
         </div>
       </div>
 
-      {/* Pick indicator ring */}
-      {pickSlot != null && (
-        <div className={`w-2 h-2 rounded-full shrink-0 ${
-          pickSlot === 0 ? 'bg-amber-400' :
-          pickSlot === 1 ? 'bg-slate-400' :
-          pickSlot === 2 ? 'bg-orange-400' :
-          'bg-sky-400'
-        }`} />
+      {/* Place pick circles */}
+      {!pollClosed && (
+        <div className="flex gap-1 shrink-0">
+          {PLACE_STYLES.map((style, idx) => {
+            const isSelected = currentSlot === idx
+            return (
+              <button
+                key={idx}
+                onClick={() => togglePick(entry.wrestler_id, idx)}
+                className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-all ${
+                  isSelected
+                    ? `${style.bg} ${style.text} ring-2 ${style.ring} ring-offset-1`
+                    : 'bg-slate-100 text-slate-400 hover:bg-slate-200'
+                }`}
+                title={`Pick as ${style.label}`}
+              >
+                {idx + 1}
+              </button>
+            )
+          })}
+        </div>
+      )}
+
+      {/* Show assigned place when poll is closed */}
+      {pollClosed && currentSlot != null && (
+        <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-semibold shrink-0 ${PLACE_STYLES[currentSlot].bg} ${PLACE_STYLES[currentSlot].text}`}>
+          {PLACE_STYLES[currentSlot].label}
+        </span>
       )}
     </div>
-  )
-}
-
-// ── Poll Results Table ──────────────────────────────────────────────────────
-
-function PollResultsTable({ results, totalVoters }: { results: PollResult[]; totalVoters: number }) {
-  if (results.length === 0 || totalVoters === 0) {
-    return <p className="text-sm text-slate-400">No picks yet. Be the first!</p>
-  }
-
-  // Sort by champion picks descending
-  const sorted = [...results].sort((a, b) => b.pick_1st_count - a.pick_1st_count || b.pick_2nd_count - a.pick_2nd_count)
-
-  return (
-    <div className="overflow-x-auto rounded-lg border border-slate-200">
-      <table className="min-w-full text-sm">
-        <thead>
-          <tr className="bg-slate-50 border-b border-slate-200">
-            <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase">Wrestler</th>
-            <th className="px-3 py-2 text-center text-[10px] font-semibold text-amber-600 uppercase">Champ</th>
-            <th className="px-3 py-2 text-center text-[10px] font-semibold text-slate-500 uppercase">2nd</th>
-            <th className="px-3 py-2 text-center text-[10px] font-semibold text-orange-500 uppercase">3rd</th>
-            <th className="px-3 py-2 text-center text-[10px] font-semibold text-sky-500 uppercase">4th</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sorted.map(r => (
-            <tr key={r.wrestler_id} className="border-t border-slate-100">
-              <td className="px-3 py-1.5 font-medium text-slate-700">{r.wrestler_name}</td>
-              <td className="px-3 py-1.5 text-center">
-                <PctBadge count={r.pick_1st_count} total={totalVoters} color="amber" />
-              </td>
-              <td className="px-3 py-1.5 text-center">
-                <PctBadge count={r.pick_2nd_count} total={totalVoters} color="slate" />
-              </td>
-              <td className="px-3 py-1.5 text-center">
-                <PctBadge count={r.pick_3rd_count} total={totalVoters} color="orange" />
-              </td>
-              <td className="px-3 py-1.5 text-center">
-                <PctBadge count={r.pick_4th_count} total={totalVoters} color="sky" />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  )
-}
-
-function PctBadge({ count, total, color }: { count: number; total: number; color: string }) {
-  if (count === 0) return <span className="text-[10px] text-slate-300">-</span>
-  const pct = Math.round((count / total) * 100)
-  const colorMap: Record<string, string> = {
-    amber: 'bg-amber-100 text-amber-700',
-    slate: 'bg-slate-100 text-slate-600',
-    orange: 'bg-orange-100 text-orange-600',
-    sky: 'bg-sky-100 text-sky-600',
-  }
-  return (
-    <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-semibold ${colorMap[color]}`}>
-      {pct}%
-    </span>
   )
 }
