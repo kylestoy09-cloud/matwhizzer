@@ -70,15 +70,25 @@ type PoolTeamRow = {
   match_count: number
 }
 
+type PoolWrestlerPtsRow = {
+  wrestler_id: string
+  wrestler_name: string
+  school: string | null
+  school_name: string | null
+  total_points: number
+  win_count: number
+}
+
 type PoolData = {
-  fastestPin:  PoolFastRow[]
-  fastestTf:   PoolFastRow[]
-  mostPins:    PoolPinRow[]
-  mostTf:      PoolTfRow[]
-  mostBonus:   PoolBonusRow[]
-  poolDom:     PoolDomRow[]
-  matTime:     PoolMatTimeRow[]
-  teamPoints:  PoolTeamRow[]
+  fastestPin:   PoolFastRow[]
+  fastestTf:    PoolFastRow[]
+  mostPins:     PoolPinRow[]
+  mostTf:       PoolTfRow[]
+  mostBonus:    PoolBonusRow[]
+  poolDom:      PoolDomRow[]
+  matTime:      PoolMatTimeRow[]
+  teamPoints:   PoolTeamRow[]
+  wrestlerPts:  PoolWrestlerPtsRow[]
 }
 
 type AnalyticsData = {
@@ -102,15 +112,17 @@ async function fetchPoolStats(pool: string, season: number): Promise<PoolData> {
     { data: poolDom },
     { data: matTime },
     { data: teamPoints },
+    { data: wrestlerPts },
   ] = await Promise.all([
-    supabase.rpc('lb_p_fastest_pin',   p),
-    supabase.rpc('lb_p_fastest_tf',    p),
-    supabase.rpc('lb_p_most_pins',     p),
-    supabase.rpc('lb_p_most_tf',       p),
-    supabase.rpc('lb_p_most_bonus',    p),
-    supabase.rpc('lb_p_dominance',     p),
-    supabase.rpc('lb_p_mat_time',      p),
-    supabase.rpc('lb_p_team_points',   p),
+    supabase.rpc('lb_p_fastest_pin',        p),
+    supabase.rpc('lb_p_fastest_tf',         p),
+    supabase.rpc('lb_p_most_pins',          p),
+    supabase.rpc('lb_p_most_tf',            p),
+    supabase.rpc('lb_p_most_bonus',         p),
+    supabase.rpc('lb_p_dominance',          p),
+    supabase.rpc('lb_p_mat_time',           p),
+    supabase.rpc('lb_p_team_points',        p),
+    supabase.rpc('lb_p_wrestler_points',    p),
   ])
   return {
     fastestPin:  (fastestPin  ?? []) as PoolFastRow[],
@@ -121,6 +133,7 @@ async function fetchPoolStats(pool: string, season: number): Promise<PoolData> {
     poolDom:     (poolDom     ?? []) as PoolDomRow[],
     matTime:     (matTime     ?? []) as PoolMatTimeRow[],
     teamPoints:  (teamPoints  ?? []) as PoolTeamRow[],
+    wrestlerPts: (wrestlerPts ?? []) as PoolWrestlerPtsRow[],
   }
 }
 
@@ -312,10 +325,31 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
         />
         <div className="space-y-8">
 
+          {/* Wrestler Points — full width */}
+          <LeaderTable<PoolWrestlerPtsRow>
+            title="Wrestler Points"
+            description="TrackWrestling formula — round base + FALL+2, TF+1.5, MD+1 + placement bonus (district only)"
+            rows={d.wrestlerPts}
+            cols={[
+              {
+                label: 'Wrestler', align: 'left',
+                render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} />,
+              },
+              {
+                label: 'Wins', align: 'right',
+                render: r => <span className="text-slate-500 tabular-nums">{r.win_count}</span>,
+              },
+              {
+                label: 'Points', align: 'right',
+                render: r => <span className="font-bold text-slate-800 tabular-nums">{r.total_points}</span>,
+              },
+            ]}
+          />
+
           {/* Team Points — full width */}
           <LeaderTable<PoolTeamRow>
             title="Team Points"
-            description="Champ: Fall=3, TF=2.5, MD=2, Dec=1 · Cons: 2.5/2/1.5/0.5"
+            description="TrackWrestling formula — round base + win bonus (FALL+2, TF+1.5, MD+1) + placement bonus"
             rows={d.teamPoints}
             cols={[
               {
