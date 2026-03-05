@@ -528,7 +528,7 @@ export default async function WrestlerPage({
               </Link>
             ) : (
               <Link
-                href={`/girls/regions/${r.toLowerCase().replace(/ /g, '-')}`}
+                href={`/girls/regions/${r.slice(1)}`}
                 className="hover:text-slate-800 transition-colors"
               >
                 {r}

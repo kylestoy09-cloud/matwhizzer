@@ -151,9 +151,12 @@ function TeamScoreCard({ rows }: { rows: TeamScoreRow[] }) {
           <div key={r.school} className="flex items-center gap-2 px-4 py-2.5">
             <span className="text-xs text-slate-400 w-4 shrink-0 text-right">{i + 1}</span>
             <div className="flex-1 min-w-0">
-              <span className="text-sm font-medium text-slate-800 truncate block">
+              <Link
+                href={`/girls/schools/${encodeURIComponent(r.school)}`}
+                className="text-sm font-medium text-slate-800 hover:underline truncate block"
+              >
                 {r.school_name || r.school}
-              </span>
+              </Link>
             </div>
             <span className="text-sm font-semibold text-slate-700 shrink-0">{r.total_points} pts</span>
           </div>
