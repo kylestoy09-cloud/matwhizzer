@@ -1,6 +1,11 @@
 import { supabase, ROUND_ORDER, ROUND_LABEL, TOURNAMENT_TYPE_LABEL } from '@/lib/supabase'
 import Link from 'next/link'
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
+
+const WRESTLER_PHOTOS: Record<string, string> = {
+  'bb3ebca6-4993-4cd4-87a0-fbcd3b1c12c8': '/wrestlers/zachary-akers.png',
+}
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -422,13 +427,24 @@ export default async function WrestlerPage({
       <BackLink gender={wrestler.gender} />
 
       {/* Wrestler header */}
-      <div className="flex items-baseline gap-4 mb-1">
-        <h2 className="text-2xl font-bold text-slate-900">{displayName}</h2>
-        <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-          wrestler.gender === 'F' ? 'bg-pink-100 text-pink-700' : 'bg-blue-100 text-blue-700'
-        }`}>
-          {wrestler.gender === 'F' ? 'Girls' : 'Boys'}
-        </span>
+      <div className="flex items-center gap-4 mb-1">
+        {WRESTLER_PHOTOS[wrestler.id] && (
+          <Image
+            src={WRESTLER_PHOTOS[wrestler.id]}
+            alt={displayName}
+            width={64}
+            height={64}
+            className="rounded-full object-cover w-16 h-16 border-2 border-slate-200 shadow-sm"
+          />
+        )}
+        <div className="flex items-baseline gap-4">
+          <h2 className="text-2xl font-bold text-slate-900">{displayName}</h2>
+          <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
+            wrestler.gender === 'F' ? 'bg-pink-100 text-pink-700' : 'bg-blue-100 text-blue-700'
+          }`}>
+            {wrestler.gender === 'F' ? 'Girls' : 'Boys'}
+          </span>
+        </div>
       </div>
 
       {/* Placement badges */}
