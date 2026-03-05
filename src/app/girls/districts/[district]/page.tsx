@@ -174,15 +174,13 @@ export default async function GirlsDistrictSummaryPage({
   // Girls districts only exist from season 2 onward
   const season = Math.max(await getActiveSeason(), 2)
 
-  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, bonusPctRes, teamScoreRes, teamPtsRes, schoolsRes] =
+  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, bonusPctRes, schoolsRes] =
     await Promise.all([
       supabase.rpc('district_placements',  { p_district: d, p_gender: 'F', p_season: season }),
       supabase.rpc('district_mat_time',    { p_district: d, p_gender: 'F', p_season: season }),
       supabase.rpc('district_fastest_pin', { p_district: d, p_gender: 'F', p_season: season }),
       supabase.rpc('district_fastest_tf',  { p_district: d, p_gender: 'F', p_season: season }),
       supabase.rpc('district_dominance',   { p_district: d, p_gender: 'F', p_season: season }),
-      supabase.rpc('district_team_score',  { p_district: d, p_gender: 'F', p_season: season }),
-      supabase.rpc('district_team_pts',    { p_district: d, p_gender: 'F', p_season: season }),
       supabase.rpc('district_schools',     { p_district: d, p_gender: 'F', p_season: season }),
     ])
 
@@ -191,8 +189,6 @@ export default async function GirlsDistrictSummaryPage({
   const fastPin    = (fastPinRes.data    ?? []) as FastestPinRow[]
   const fastTf     = (fastTfRes.data     ?? []) as FastestTfRow[]
   const dominance  = (bonusPctRes.data   ?? []) as DominanceRow[]
-  const teamScore  = (teamScoreRes.data  ?? []) as TeamScoreRow[]
-  const teamPts    = (teamPtsRes.data    ?? []) as TeamPtsRow[]
   const schools    = (schoolsRes.data    ?? []) as SchoolRow[]
 
   const placementsByWeight = new Map<number, Map<number, PlacementRow>>()
@@ -326,45 +322,8 @@ export default async function GirlsDistrictSummaryPage({
             value={r => String(r.dominance_score)}
           />
 
-          <TeamScoreCard rows={teamScore} />
-
         </div>
       </section>
-
-      {/* ── Individual Team Points ── */}
-      {teamPts.length > 0 && (
-        <section className="mb-10">
-          <h2 className="text-base font-semibold text-slate-800 mb-3">Individual Team Points</h2>
-          <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
-            <table className="min-w-full text-sm">
-              <thead>
-                <tr className="bg-slate-50 border-b border-slate-200">
-                  <th className="px-3 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide w-8">#</th>
-                  <th className="px-3 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Wrestler</th>
-                  <th className="px-3 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">School</th>
-                  <th className="px-3 py-2.5 text-right text-xs font-semibold text-slate-500 uppercase tracking-wide w-14">Wt</th>
-                  <th className="px-3 py-2.5 text-right text-xs font-semibold text-slate-500 uppercase tracking-wide w-16">Pts</th>
-                </tr>
-              </thead>
-              <tbody>
-                {teamPts.map((r, i) => (
-                  <tr key={`${r.wrestler_id}-${i}`} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
-                    <td className="px-3 py-2 text-xs text-slate-400">{i + 1}</td>
-                    <td className="px-3 py-2">
-                      <Link href={`/wrestler/${r.wrestler_id}`} className="font-medium text-slate-800 hover:underline">
-                        {r.wrestler_name}
-                      </Link>
-                    </td>
-                    <td className="px-3 py-2 text-slate-500">{r.school_name || r.school}</td>
-                    <td className="px-3 py-2 text-right text-slate-600">{r.weight}</td>
-                    <td className="px-3 py-2 text-right font-semibold text-slate-700">{r.team_points}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-      )}
 
       {/* ── Schools ── */}
       {schools.length > 0 && (
