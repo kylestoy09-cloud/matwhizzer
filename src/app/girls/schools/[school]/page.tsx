@@ -16,6 +16,8 @@ type WrestlerRow = {
   wrestler_id: string
   wrestler_name: string
   primary_weight: number
+  districts_placement: string | null
+  districts_short: string | null
   regions_placement: string | null
   regions_short: string | null
   state_placement: string | null
@@ -107,8 +109,10 @@ export default async function GirlsSchoolProfilePage({
   const totalPts  = bdRows.reduce((sum, r) => sum + Number(r.total_points), 0)
   const totalWins = bdRows.reduce((sum, r) => sum + Number(r.win_count), 0)
 
-  // Collect unique region identifiers for subtitle
+  // Collect unique district/region identifiers for subtitle
+  const districtSet = new Set(rows.map(r => r.districts_short).filter(Boolean))
   const regionSet = new Set(rows.map(r => r.regions_short).filter(Boolean))
+  const districtLabels = [...districtSet].sort().map(d => `District ${(d as string).replace('GD', '')}`)
   const regionLabels = [...regionSet].sort().map(s => REGION_FULL[s as string] ?? s)
 
   // Group wrestlers by weight class for display
@@ -138,6 +142,15 @@ export default async function GirlsSchoolProfilePage({
   for (const [key, wrestlers] of [...regionChampGroups.entries()].sort())
     champSections.push({ label: REGION_FULL[key] ?? key, wrestlers })
 
+  const districtChampGroups = new Map<string, WrestlerRow[]>()
+  for (const w of rows.filter(r => r.districts_placement === '1st').sort((a, b) => a.primary_weight - b.primary_weight)) {
+    const key = w.districts_short ?? ''
+    if (!districtChampGroups.has(key)) districtChampGroups.set(key, [])
+    districtChampGroups.get(key)!.push(w)
+  }
+  for (const [key, wrestlers] of [...districtChampGroups.entries()].sort())
+    champSections.push({ label: `District ${key.replace('GD', '')}`, wrestlers })
+
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
       <Link
@@ -151,7 +164,9 @@ export default async function GirlsSchoolProfilePage({
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-rose-900">{schoolName}</h2>
         <div className="flex flex-wrap items-center gap-1 text-slate-500 text-sm mt-1">
-          {regionLabels.length > 0 && <span>{regionLabels.join(' · ')} ·</span>}
+          {(districtLabels.length > 0 || regionLabels.length > 0) && (
+            <span>{[...districtLabels, ...regionLabels].join(' · ')} ·</span>
+          )}
           <span>Girls postseason · NJSIAA</span>
           <InlineSeasonPicker activeSeason={season} />
           <span>· {rows.length} wrestler{rows.length !== 1 ? 's' : ''}</span>
@@ -277,6 +292,7 @@ export default async function GirlsSchoolProfilePage({
               <tr>
                 <th className="text-right px-4 py-2.5 font-medium text-slate-500 w-16">Wt</th>
                 <th className="text-left px-4 py-2.5 font-medium text-slate-500">Wrestler</th>
+                <th className="text-left px-4 py-2.5 font-medium text-slate-500 hidden sm:table-cell">Districts</th>
                 <th className="text-left px-4 py-2.5 font-medium text-slate-500 hidden sm:table-cell">Regions</th>
                 <th className="text-left px-4 py-2.5 font-medium text-slate-500">State</th>
               </tr>
@@ -295,6 +311,9 @@ export default async function GirlsSchoolProfilePage({
                       >
                         {w.wrestler_name}
                       </Link>
+                    </td>
+                    <td className="px-4 py-2.5 hidden sm:table-cell">
+                      <PlaceBadge placement={w.districts_placement} short={w.districts_short} />
                     </td>
                     <td className="px-4 py-2.5 hidden sm:table-cell">
                       <PlaceBadge placement={w.regions_placement} short={w.regions_short} />

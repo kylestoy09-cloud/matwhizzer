@@ -537,7 +537,9 @@ export default async function WrestlerPage({
             {' · '}
           </span>
         ))}
-        {primaryGrade && <>{primaryGrade} · </>}
+        {primaryGrade && <>{
+          ({ Fr: 'Freshman', So: 'Sophomore', Jr: 'Junior', Sr: 'Senior' } as Record<string, string>)[primaryGrade] ?? primaryGrade
+        } · </>}
         {seasonRecord && (
           <>Season record: <span className="font-semibold text-slate-700">{seasonRecord.wins}-{seasonRecord.losses}</span> · </>
         )}
