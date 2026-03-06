@@ -367,6 +367,7 @@ export default async function GirlsDistrictBracketPage({
   const champOrdered = orderChampMatches(champ)
 
   const r2Matches = champOrdered.get('R2') ?? []
+  const r2Display = r2Matches.filter(m => m.loser_wrestler_id !== null)
   const champCols = CHAMP_COLS.filter(r => (champOrdered.get(r) ?? []).length > 0)
 
   const qfCount = (champOrdered.get('QF') ?? []).length || 1
@@ -383,7 +384,7 @@ export default async function GirlsDistrictBracketPage({
   }
 
   const allRoundsOrdered = [
-    ...(['R2'] as const).filter(() => r2Matches.length > 0),
+    ...(['R2'] as const).filter(() => r2Display.length > 0),
     ...champCols,
     ...consolRounds,
   ]
@@ -408,13 +409,13 @@ export default async function GirlsDistrictBracketPage({
 
       <WeightNav weights={WEIGHTS} current={weight} base={`/girls/districts/${district}`} />
 
-      {r2Matches.length > 0 && (
+      {r2Display.length > 0 && (
         <div className="mb-6">
           <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
             Prelims
           </h2>
           <div className="flex gap-3 flex-wrap">
-            {r2Matches.map(m => <MatchCard key={m.match_id} m={m} />)}
+            {r2Display.map(m => <MatchCard key={m.match_id} m={m} />)}
           </div>
         </div>
       )}
@@ -471,7 +472,7 @@ export default async function GirlsDistrictBracketPage({
       <div className="md:hidden space-y-6">
         {allRoundsOrdered.map(round => {
           const ms = round === 'R2'
-            ? r2Matches
+            ? r2Display
             : round === 'QF' || round === 'SF' || round === 'F'
               ? (champOrdered.get(round) ?? [])
               : (consolByRound.get(round) ?? [])
