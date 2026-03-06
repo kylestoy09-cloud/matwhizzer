@@ -177,7 +177,7 @@ export default async function DistrictSummaryPage({
 
   const season = await getActiveSeason()
 
-  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, bonusPctRes, schoolsRes] =
+  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, bonusPctRes, schoolsRes, teamScoreRes, teamPtsRes] =
     await Promise.all([
       supabase.rpc('district_placements',  { p_district: d, p_gender: 'M', p_season: season }),
       supabase.rpc('district_mat_time',    { p_district: d, p_gender: 'M', p_season: season }),
@@ -185,6 +185,8 @@ export default async function DistrictSummaryPage({
       supabase.rpc('district_fastest_tf',  { p_district: d, p_gender: 'M', p_season: season }),
       supabase.rpc('district_dominance',   { p_district: d, p_gender: 'M', p_season: season }),
       supabase.rpc('district_schools',     { p_district: d, p_gender: 'M', p_season: season }),
+      supabase.rpc('district_team_score',  { p_district: d, p_gender: 'M', p_season: season }),
+      supabase.rpc('district_team_pts',    { p_district: d, p_gender: 'M', p_season: season }),
     ])
 
   const placements = (placementsRes.data ?? []) as PlacementRow[]
@@ -193,6 +195,8 @@ export default async function DistrictSummaryPage({
   const fastTf     = (fastTfRes.data     ?? []) as FastestTfRow[]
   const dominance  = (bonusPctRes.data   ?? []) as DominanceRow[]
   const schools    = (schoolsRes.data    ?? []) as SchoolRow[]
+  const teamScore  = (teamScoreRes.data  ?? []) as TeamScoreRow[]
+  const teamPts    = (teamPtsRes.data    ?? []) as TeamPtsRow[]
 
   // Organize placements by weight → place
   const placementsByWeight = new Map<number, Map<number, PlacementRow>>()
@@ -235,6 +239,42 @@ export default async function DistrictSummaryPage({
           </Link>
         ))}
       </div>
+
+      {/* ── Team Results ── */}
+      <section className="mb-10">
+        <h2 className="text-base font-semibold text-slate-800 mb-3">Team Results</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <TeamScoreCard rows={teamScore} />
+
+          <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+            <div className="px-4 py-3 border-b border-slate-100 bg-slate-50">
+              <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Individual Team Points</h3>
+            </div>
+            <div className="divide-y divide-slate-100">
+              {teamPts.length === 0 && (
+                <p className="px-4 py-3 text-sm text-slate-400">No data</p>
+              )}
+              {teamPts.map((r, i) => (
+                <div key={`${r.wrestler_id}-${i}`} className="flex items-center gap-2 px-4 py-2.5">
+                  <span className="text-xs text-slate-400 w-4 shrink-0 text-right">{i + 1}</span>
+                  <div className="flex-1 min-w-0">
+                    <Link
+                      href={`/wrestler/${r.wrestler_id}`}
+                      className="text-sm font-medium text-slate-800 hover:underline truncate block"
+                    >
+                      {r.wrestler_name}
+                    </Link>
+                    <div className="text-[11px] text-slate-400 truncate">
+                      {r.school_name || r.school || '—'} · {r.weight} lb
+                    </div>
+                  </div>
+                  <span className="text-sm font-semibold text-slate-700 shrink-0">{r.team_points} pts</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ── Placements ── */}
       <section className="mb-10">

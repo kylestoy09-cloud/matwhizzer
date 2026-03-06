@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { getActiveSeason } from '@/lib/get-season'
+import { SEASONS } from '@/lib/seasons'
 
 type WrestlerRow = { id: string; first_name: string; last_name: string; gender: string }
 type SchoolRow   = { school: string; school_name: string; total_points: number; wrestler_count: number }
@@ -255,7 +256,7 @@ export default async function RootPage({
         <section>
           <div className="mb-4">
             <h2 className="text-xl font-bold text-slate-900">Boys Regions</h2>
-            <p className="text-slate-500 text-sm mt-0.5">NJSIAA 2025-26 · Select a region</p>
+            <p className="text-slate-500 text-sm mt-0.5">NJSIAA {SEASONS[season]?.label ?? season} · Select a region</p>
           </div>
           <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
             {Array.from({ length: 8 }, (_, i) => i + 1).map(r => (
@@ -275,7 +276,7 @@ export default async function RootPage({
         <section>
           <div className="mb-4">
             <h2 className="text-xl font-bold text-rose-900">Girls Regions</h2>
-            <p className="text-slate-500 text-sm mt-0.5">NJSIAA 2025-26 · Select a region</p>
+            <p className="text-slate-500 text-sm mt-0.5">NJSIAA {SEASONS[season]?.label ?? season} · Select a region</p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {Array.from({ length: 4 }, (_, i) => i + 1).map(r => (

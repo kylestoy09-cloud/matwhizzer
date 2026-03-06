@@ -2,6 +2,7 @@ import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
+import { SEASONS } from '@/lib/seasons'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -431,7 +432,7 @@ export default async function DistrictBracketPage({
           <span className="text-slate-400 font-normal ml-2">·</span>
           <span className="text-slate-600 font-semibold ml-2">{weight} lb</span>
         </h1>
-        <p className="text-slate-500 text-sm mt-1">NJSIAA 2024–25 · Boys postseason</p>
+        <p className="text-slate-500 text-sm mt-1">NJSIAA {SEASONS[season]?.label ?? season} · Boys postseason</p>
       </div>
 
       <WeightNav weights={WEIGHTS} current={weight} base={`/boys/districts/${district}`} />
