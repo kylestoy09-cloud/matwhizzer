@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
+import { IndividualTeamPoints } from '@/components/IndividualTeamPoints'
 
 const WEIGHTS = [106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285]
 
@@ -246,33 +247,7 @@ export default async function DistrictSummaryPage({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <TeamScoreCard rows={teamScore} />
 
-          <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-            <div className="px-4 py-3 border-b border-slate-100 bg-slate-50">
-              <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Individual Team Points</h3>
-            </div>
-            <div className="divide-y divide-slate-100">
-              {teamPts.length === 0 && (
-                <p className="px-4 py-3 text-sm text-slate-400">No data</p>
-              )}
-              {teamPts.map((r, i) => (
-                <div key={`${r.wrestler_id}-${i}`} className="flex items-center gap-2 px-4 py-2.5">
-                  <span className="text-xs text-slate-400 w-4 shrink-0 text-right">{i + 1}</span>
-                  <div className="flex-1 min-w-0">
-                    <Link
-                      href={`/wrestler/${r.wrestler_id}`}
-                      className="text-sm font-medium text-slate-800 hover:underline truncate block"
-                    >
-                      {r.wrestler_name}
-                    </Link>
-                    <div className="text-[11px] text-slate-400 truncate">
-                      {r.school_name || r.school || '—'} · {r.weight} lb
-                    </div>
-                  </div>
-                  <span className="text-sm font-semibold text-slate-700 shrink-0">{r.team_points} pts</span>
-                </div>
-              ))}
-            </div>
-          </div>
+          <IndividualTeamPoints rows={teamPts} />
         </div>
       </section>
 
