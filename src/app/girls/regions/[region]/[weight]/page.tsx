@@ -375,7 +375,7 @@ function buildRosterFromEntries(entries: EntryRow[]): RosterItem[] {
 function RosterTable({ roster }: { roster: RosterItem[] }) {
   if (roster.length === 0) return null
   return (
-    <section className="mt-10">
+    <section>
       <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
         Entries ({roster.length})
       </h2>
@@ -404,6 +404,60 @@ function RosterTable({ roster }: { roster: RosterItem[] }) {
             ))}
           </tbody>
         </table>
+      </div>
+    </section>
+  )
+}
+
+const PLACE_MEDAL = ['\u{1F947}', '\u{1F948}', '\u{1F949}']
+
+function DistrictQualifiers({ champs }: { champs: DistrictChamp[] }) {
+  if (champs.length === 0) return null
+
+  const byDistrict = new Map<number, DistrictChamp[]>()
+  for (const dc of champs) {
+    const list = byDistrict.get(dc.district_num) ?? []
+    list.push(dc)
+    byDistrict.set(dc.district_num, list)
+  }
+  const districts = [...byDistrict.entries()].sort((a, b) => a[0] - b[0])
+
+  return (
+    <section>
+      <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
+        District Qualifiers
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        {districts.map(([distNum, placers]) => (
+          <div key={distNum} className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm">
+            <div className="px-3 py-1.5 bg-slate-50 border-b border-slate-100">
+              <Link
+                href={`/girls/districts/${distNum}`}
+                className="text-[11px] font-semibold text-slate-500 hover:underline"
+              >
+                District {distNum}
+              </Link>
+            </div>
+            <div className="divide-y divide-slate-50">
+              {placers.map(dc => (
+                <div key={dc.wrestler_id} className="flex items-center gap-2 px-3 py-1.5">
+                  <span className="text-[11px] w-4 text-center shrink-0">
+                    {dc.place <= 3 ? PLACE_MEDAL[dc.place - 1] : String(dc.place)}
+                  </span>
+                  <Link
+                    href={`/wrestler/${dc.wrestler_id}`}
+                    className="text-[13px] font-medium text-slate-800 hover:underline truncate"
+                  >
+                    {dc.wrestler_name}
+                  </Link>
+                  <span className="text-[10px] text-slate-400 truncate ml-auto shrink-0">
+                    {dc.school_name}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   )
@@ -522,109 +576,111 @@ export default async function GirlsRegionBracketPage({
 
       <WeightNav weights={WEIGHTS} current={weight} base={`/girls/regions/${region}`} />
 
-      {matches.length === 0 ? (
-        <BracketPoll
-          entries={entries}
-          tournamentId={entries[0]?.tournament_id ?? 0}
-          weightClassId={entries[0]?.weight_class_id ?? 0}
-          hasMatches={false}
-          bracketSize={16}
-          provenancePrefix="D"
-          districtChamps={districtChamps}
-        />
-      ) : (<>
+      <div className="mt-8 space-y-8">
+        {/* ── Poll / Peanut Gallery ── */}
+        {entries.length > 0 && (
+          <BracketPoll
+            entries={entries}
+            tournamentId={entries[0]?.tournament_id ?? 0}
+            weightClassId={entries[0]?.weight_class_id ?? 0}
+            hasMatches={matches.length > 0}
+            bracketSize={16}
+            provenancePrefix="D"
+          />
+        )}
 
-      {/* ── DESKTOP bracket (md+) ── */}
-      <div className="hidden md:block overflow-x-auto">
-        <div className="flex gap-0 items-start min-w-max">
+        {/* ── Seed List ── */}
+        <RosterTable roster={matches.length > 0 ? buildRosterFromMatches(matches) : buildRosterFromEntries(entries as EntryRow[])} />
 
-          {/* Championship columns */}
-          {champCols.map(round => {
-            const colMatches = champOrdered.get(round) ?? []
-            const slotH = totalH / colMatches.length
+        {/* ── District Qualifiers ── */}
+        <DistrictQualifiers champs={districtChamps} />
 
-            return (
-              <div key={round} className="flex flex-col shrink-0">
-                <div className="h-8 flex items-center justify-center px-4">
-                  <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest whitespace-nowrap">
-                    {ROUND_LABEL[round]}
-                  </span>
-                </div>
-                {colMatches.map(m => (
-                  <div
-                    key={m.match_id}
-                    className="flex items-center justify-center px-2"
-                    style={{ height: slotH }}
-                  >
-                    <MatchCard m={m} />
+        {/* ── Bracket / Entries ── */}
+        {matches.length === 0 ? (
+          entries.length > 0 && <EntriesView entries={entries as EntryRow[]} />
+        ) : (<>
+
+        {/* ── DESKTOP bracket (md+) ── */}
+        <div className="hidden md:block overflow-x-auto">
+          <div className="flex gap-0 items-start min-w-max">
+
+            {/* Championship columns */}
+            {champCols.map(round => {
+              const colMatches = champOrdered.get(round) ?? []
+              const slotH = totalH / colMatches.length
+
+              return (
+                <div key={round} className="flex flex-col shrink-0">
+                  <div className="h-8 flex items-center justify-center px-4">
+                    <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest whitespace-nowrap">
+                      {ROUND_LABEL[round]}
+                    </span>
                   </div>
-                ))}
-              </div>
-            )
-          })}
-
-          {/* Divider */}
-          {consolCols.length > 0 && (
-            <div className="w-px bg-slate-200 mx-2 self-stretch mt-8" />
-          )}
-
-          {/* Consolation columns */}
-          {consolCols.map(round => {
-            const colMatches = consolByRound.get(round) ?? []
-            const slotH = totalH / colMatches.length
-
-            return (
-              <div key={round} className="flex flex-col shrink-0">
-                <div className="h-8 flex items-center justify-center px-4">
-                  <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest whitespace-nowrap">
-                    {ROUND_LABEL[round]}
-                  </span>
+                  {colMatches.map(m => (
+                    <div
+                      key={m.match_id}
+                      className="flex items-center justify-center px-2"
+                      style={{ height: slotH }}
+                    >
+                      <MatchCard m={m} />
+                    </div>
+                  ))}
                 </div>
-                {colMatches.map(m => (
-                  <div
-                    key={m.match_id}
-                    className="flex items-center justify-center px-2"
-                    style={{ height: slotH }}
-                  >
-                    <MatchCard m={m} />
-                  </div>
-                ))}
-              </div>
-            )
-          })}
+              )
+            })}
 
+            {/* Divider */}
+            {consolCols.length > 0 && (
+              <div className="w-px bg-slate-200 mx-2 self-stretch mt-8" />
+            )}
+
+            {/* Consolation columns */}
+            {consolCols.map(round => {
+              const colMatches = consolByRound.get(round) ?? []
+              const slotH = totalH / colMatches.length
+
+              return (
+                <div key={round} className="flex flex-col shrink-0">
+                  <div className="h-8 flex items-center justify-center px-4">
+                    <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest whitespace-nowrap">
+                      {ROUND_LABEL[round]}
+                    </span>
+                  </div>
+                  {colMatches.map(m => (
+                    <div
+                      key={m.match_id}
+                      className="flex items-center justify-center px-2"
+                      style={{ height: slotH }}
+                    >
+                      <MatchCard m={m} />
+                    </div>
+                  ))}
+                </div>
+              )
+            })}
+
+          </div>
         </div>
+
+        {/* ── MOBILE bracket (<md) ── */}
+        <div className="md:hidden space-y-6">
+          {allRounds.map(round => {
+            const ms = champCols.includes(round as typeof champCols[number])
+              ? (champOrdered.get(round) ?? [])
+              : (consolByRound.get(round) ?? [])
+            if (ms.length === 0) return null
+            return (
+              <MobileRound
+                key={round}
+                label={ROUND_LABEL[round] ?? round}
+                matches={ms}
+              />
+            )
+          })}
+        </div>
+        </>)}
       </div>
 
-      {/* ── MOBILE bracket (<md) ── */}
-      <div className="md:hidden space-y-6">
-        {allRounds.map(round => {
-          const ms = champCols.includes(round as typeof champCols[number])
-            ? (champOrdered.get(round) ?? [])
-            : (consolByRound.get(round) ?? [])
-          if (ms.length === 0) return null
-          return (
-            <MobileRound
-              key={round}
-              label={ROUND_LABEL[round] ?? round}
-              matches={ms}
-            />
-          )
-        })}
-      </div>
-      {entries.length > 0 && (
-        <BracketPoll
-          entries={entries}
-          tournamentId={entries[0]?.tournament_id ?? 0}
-          weightClassId={entries[0]?.weight_class_id ?? 0}
-          hasMatches={true}
-          bracketSize={16}
-          provenancePrefix="D"
-          districtChamps={districtChamps}
-        />
-      )}
-      </>)}
-      <RosterTable roster={matches.length > 0 ? buildRosterFromMatches(matches) : buildRosterFromEntries(entries as EntryRow[])} />
       <WeightNav weights={WEIGHTS} current={weight} base={`/girls/regions/${region}`} />
     </div>
   )
