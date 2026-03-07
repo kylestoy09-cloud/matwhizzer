@@ -152,7 +152,7 @@ async function fetchAnalytics(season: number): Promise<AnalyticsData> {
     supabase.rpc('lb_comebacks',              { p_gender: 'F', p_season: season }),
   ])
   return {
-    dominance:  (dominance  ?? []) as DomRow[],
+    dominance:  ((dominance  ?? []) as DomRow[]).slice(0, 25),
     districts:  (districts  ?? []) as DistrictRow[],
     schools:    (schools    ?? []) as SchoolRow[],
     weights:    (weights    ?? []) as WeightRow[],

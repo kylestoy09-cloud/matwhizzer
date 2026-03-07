@@ -1,3 +1,6 @@
+'use client'
+
+import { useState } from 'react'
 import Link from 'next/link'
 
 // ── Types ──────────────────────────────────────────────────────────────────────
@@ -54,12 +57,18 @@ export function LeaderTable<T extends object>({
   description,
   rows,
   cols,
+  pageSize = 8,
 }: {
   title: string
   description: string
   rows: T[]
   cols: Col<T>[]
+  pageSize?: number
 }) {
+  const [visible, setVisible] = useState(pageSize)
+  const shown = rows.slice(0, visible)
+  const hasMore = visible < rows.length
+
   return (
     <section>
       <SectionHeader title={title} description={description} />
@@ -86,7 +95,7 @@ export function LeaderTable<T extends object>({
                 </td>
               </tr>
             )}
-            {rows.map((row, i) => (
+            {shown.map((row, i) => (
               <tr key={i} className="hover:bg-slate-50">
                 <td className="px-3 py-2 text-slate-400 text-xs tabular-nums">{i + 1}</td>
                 {cols.map(c => (
@@ -101,6 +110,14 @@ export function LeaderTable<T extends object>({
             ))}
           </tbody>
         </table>
+        {hasMore && (
+          <button
+            onClick={() => setVisible(v => v + pageSize)}
+            className="w-full py-2 text-xs font-medium text-slate-500 hover:text-slate-800 hover:bg-slate-50 border-t border-slate-200 transition-colors"
+          >
+            Show more ({rows.length - visible} remaining)
+          </button>
+        )}
       </div>
     </section>
   )
