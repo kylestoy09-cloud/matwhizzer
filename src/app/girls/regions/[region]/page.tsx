@@ -5,6 +5,7 @@ import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { BracketBuster } from '@/components/BracketBuster'
 import { TeamScoreCard } from '@/components/TeamScoreCard'
+import RegionVideo from '@/components/RegionVideo'
 
 const WEIGHTS = [100, 107, 114, 120, 126, 132, 138, 145, 152, 165, 185, 235]
 
@@ -153,7 +154,7 @@ export default async function GirlsRegionSummaryPage({
 
   const season = await getActiveSeason()
 
-  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, teamPtsRes, regionSchoolsRes] =
+  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, teamPtsRes, regionSchoolsRes, videoRes] =
     await Promise.all([
       supabase.rpc('girls_region_placements',  { p_region: region, p_season: season }),
       supabase.rpc('girls_region_mat_time',    { p_region: region, p_season: season }),
@@ -163,6 +164,7 @@ export default async function GirlsRegionSummaryPage({
       supabase.rpc('girls_region_team_score',  { p_region: region, p_season: season }),
       supabase.rpc('girls_region_team_pts',    { p_region: region, p_season: season }),
       supabase.rpc('girls_region_schools',     { p_region: region, p_season: season }),
+      supabase.from('tournaments').select('youtube_url').eq('name', `Girl_s Regions r${region}`).eq('season_id', season).single(),
     ])
 
   const placements    = (placementsRes.data    ?? []) as PlacementRow[]
@@ -173,6 +175,7 @@ export default async function GirlsRegionSummaryPage({
   const teamScore     = (teamScoreRes.data     ?? []) as TeamScoreRow[]
   const teamPts       = (teamPtsRes.data       ?? []) as TeamPtsRow[]
   const regionSchools = (regionSchoolsRes.data ?? []) as RegionSchoolRow[]
+  const youtubeUrl = (videoRes.data?.youtube_url as string | null) ?? null
 
   // Group region schools by district number (already sorted by district_num from RPC)
   const districtGroups: { districtNum: number; schools: RegionSchoolRow[] }[] = []
@@ -282,6 +285,9 @@ export default async function GirlsRegionSummaryPage({
           </table>
         </div>
       </section>
+
+      {/* ── Region Video ── */}
+      <RegionVideo youtubeUrl={youtubeUrl} regionName={`Girls ${displayName}`} />
 
       {/* ── Region Leaders ── */}
       <section className="mb-10">
