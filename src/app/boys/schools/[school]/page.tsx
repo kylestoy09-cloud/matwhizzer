@@ -156,7 +156,7 @@ export default async function SchoolProfilePage({
       {/* School header */}
       <div className="mb-8">
         <div className="flex items-baseline gap-2">
-          <h2 className="text-2xl font-bold text-slate-900">{schoolName}</h2>
+          <h2 className="text-2xl font-bold text-blue-900">{schoolName}</h2>
         </div>
         <div className="flex flex-wrap items-center gap-1 text-slate-500 text-sm mt-1">
           {(districtLabels.length > 0 || regionLabels.length > 0) && (

@@ -40,7 +40,7 @@ export default async function BoysSchoolsPage({
       </Link>
 
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-slate-900">Boys School Directory</h1>
+        <h1 className="text-2xl font-bold text-blue-900">Boys School Directory</h1>
         <div className="flex items-center gap-1 text-slate-500 text-sm mt-1">
           <span>{all.length} schools · NJSIAA</span>
           <InlineSeasonPicker activeSeason={season} />
@@ -61,7 +61,7 @@ export default async function BoysSchoolsPage({
           />
           <button
             type="submit"
-            className="bg-slate-800 text-white px-5 py-2.5 rounded-lg font-medium
+            className="bg-blue-900 text-white px-5 py-2.5 rounded-lg font-medium
                        hover:bg-slate-700 transition-colors"
           >
             Filter
