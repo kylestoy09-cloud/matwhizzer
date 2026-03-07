@@ -76,6 +76,8 @@ type TeamPtsRow = {
   school: string | null
   school_name: string | null
   weight: number
+  district_pts: number
+  region_pts: number
   team_points: number
 }
 
@@ -160,7 +162,7 @@ export default async function RegionSummaryPage({
       supabase.rpc('region_fastest_tf',  { p_region: r, p_gender: 'M', p_season: season }),
       supabase.rpc('region_dominance',   { p_region: r, p_gender: 'M', p_season: season }),
       supabase.rpc('region_team_score',  { p_region: r, p_gender: 'M', p_season: season }),
-      supabase.rpc('region_team_pts',    { p_region: r, p_gender: 'M', p_season: season }),
+      supabase.rpc('region_postseason_pts', { p_region: r, p_gender: 'M', p_season: season }),
       supabase.rpc('region_schools',     { p_region: r, p_gender: 'M', p_season: season }),
       supabase.from('tournaments').select('youtube_url').eq('name', `Boy_s Regions r${r}`).eq('season_id', season).single(),
     ])
@@ -330,7 +332,7 @@ export default async function RegionSummaryPage({
       {/* ── Individual Team Points ── */}
       {teamPts.length > 0 && (
         <section className="mb-10">
-          <IndividualTeamPoints rows={teamPts} />
+          <IndividualTeamPoints rows={teamPts} title="Postseason Individual Points Leaders" />
         </section>
       )}
 
