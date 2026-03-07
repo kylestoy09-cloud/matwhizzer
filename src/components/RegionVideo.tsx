@@ -8,6 +8,9 @@ interface RegionVideoProps {
 }
 
 export default function RegionVideo({ youtubeUrl, regionName }: RegionVideoProps) {
+  // Temporarily disabled — videos need updating
+  return null
+
   const embedUrl = getYouTubeEmbedUrl(youtubeUrl)
 
   if (!embedUrl) return null
