@@ -439,7 +439,7 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
 
             <LeaderTable<PoolDomRow>
               title="Hammer Rating"
-              description="Avg pts per win — Pin/TF: 9−sec/60 · MD: 2 · Dec: 1 · min 3 wins"
+              description="Avg score per match · wins score high, losses penalized · FORF/INJ/DQ excluded · min 3 wins"
               rows={d.poolDom}
               cols={[
                 {
@@ -501,7 +501,7 @@ function AnalyticsTab({ d }: { d: AnalyticsData }) {
 
       <LeaderTable<DomRow>
         title="Hammer Rating"
-        description="Avg pts per win — Pin/TF: 9−(sec÷60) · MD: 2.0 · Dec: 1.0 · min 3 wins"
+        description="Avg score per match · wins score high, losses penalized · FORF/INJ/DQ excluded · min 3 wins"
         rows={d.dominance}
         cols={[
           {

@@ -235,7 +235,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
           />
           <StatCard<DominanceRow>
             title="Hammer Rating"
-            note="Avg pts per win · min 3 wins"
+            note="Avg score per match · losses penalized · min 3 wins"
             rows={dominance}
             subtitle={r => `${r.school_name || r.school || '—'} · ${r.win_count} wins`}
             value={r => String(r.dominance_score)}
