@@ -75,7 +75,7 @@ export default async function BoysPage({
         </div>
 
         <div className="max-w-2xl flex-1">
-          <h1 className="text-2xl font-bold text-blue-900 mb-8">Boys Wrestling</h1>
+          <h1 className="text-2xl font-bold text-slate-800 mb-8">Boys Wrestling</h1>
 
           <section className="mb-6">
             <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-2">Wrestler</h2>
@@ -86,9 +86,9 @@ export default async function BoysPage({
                   type="text" name="q" defaultValue={q}
                   placeholder="Search by first or last name..."
                   autoComplete="off"
-                  className="flex-1 border border-slate-300 rounded-lg px-4 py-2.5 text-base shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="flex-1 border border-slate-300 rounded-lg px-4 py-2.5 text-base shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500"
                 />
-                <button type="submit" className="bg-blue-900 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-blue-800 transition-colors">
+                <button type="submit" className="bg-slate-800 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-slate-700 transition-colors">
                   Search
                 </button>
               </div>
@@ -119,9 +119,9 @@ export default async function BoysPage({
                   type="text" name="sq" defaultValue={sq}
                   placeholder="Search by school name..."
                   autoComplete="off"
-                  className="flex-1 border border-slate-300 rounded-lg px-4 py-2.5 text-base shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="flex-1 border border-slate-300 rounded-lg px-4 py-2.5 text-base shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500"
                 />
-                <button type="submit" className="bg-blue-900 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-blue-800 transition-colors">
+                <button type="submit" className="bg-slate-800 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-slate-700 transition-colors">
                   Search
                 </button>
               </div>
@@ -164,7 +164,7 @@ export default async function BoysPage({
 
           {topSchoolsByWrestlers.length > 0 && (
             <section>
-              <h2 className="text-lg font-bold text-blue-900 mb-3">Teams with Most Active Wrestlers</h2>
+              <h2 className="text-lg font-bold text-slate-900 mb-3">Teams with Most Active Wrestlers</h2>
               <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2">
                 {topSchoolsByWrestlers.map(s => (
                   <Link
@@ -182,7 +182,7 @@ export default async function BoysPage({
 
           {topTeamScores.length > 0 && (
             <section>
-              <h2 className="text-lg font-bold text-blue-900 mb-3">Top District Team Scores</h2>
+              <h2 className="text-lg font-bold text-slate-900 mb-3">Top District Team Scores</h2>
               <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
                 <table className="min-w-full text-sm">
                   <thead>
@@ -218,7 +218,7 @@ export default async function BoysPage({
 
           {topDominance.length > 0 && (
             <section>
-              <h2 className="text-lg font-bold text-blue-900 mb-3">Dominance Leaders</h2>
+              <h2 className="text-lg font-bold text-slate-900 mb-3">Dominance Leaders</h2>
               <p className="text-slate-500 text-sm mb-4">Pin/TF: 9-sec/60 | MD: 2 | Dec: 1 | Loser: -score | Averaged across all matches</p>
               <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
                 <div className="divide-y divide-slate-100">
@@ -249,7 +249,7 @@ export default async function BoysPage({
 
         <section>
           <div className="mb-4">
-            <h2 className="text-xl font-bold text-blue-900">Regions</h2>
+            <h2 className="text-xl font-bold text-slate-900">Regions</h2>
             <p className="text-slate-500 text-sm mt-0.5">Select a region</p>
           </div>
           <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
@@ -268,7 +268,7 @@ export default async function BoysPage({
 
         <section>
           <div className="mb-4">
-            <h2 className="text-xl font-bold text-blue-900">Districts</h2>
+            <h2 className="text-xl font-bold text-slate-900">Districts</h2>
             <p className="text-slate-500 text-sm mt-0.5">Select a district</p>
           </div>
           <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">

@@ -344,7 +344,7 @@ function WeightNav({ weights, current, base }: {
             href={`${base}/${w}`}
             className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-colors ${
               w === current
-                ? 'bg-blue-900 text-white'
+                ? 'bg-slate-800 text-white'
                 : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-400 shadow-sm'
             }`}
           >
@@ -427,7 +427,7 @@ export default async function DistrictBracketPage({
       </Link>
 
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-blue-900">
+        <h1 className="text-2xl font-bold text-slate-900">
           District {district}
           <span className="text-slate-400 font-normal ml-2">·</span>
           <span className="text-slate-600 font-semibold ml-2">{weight} lb</span>

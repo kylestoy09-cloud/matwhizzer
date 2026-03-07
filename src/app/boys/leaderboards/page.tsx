@@ -179,7 +179,7 @@ function PoolNav({ active, tab }: { active: string; tab: string }) {
           title={p.desc}
           className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
             active === p.key
-              ? 'bg-blue-900 text-white shadow-sm'
+              ? 'bg-slate-900 text-white shadow-sm'
               : 'bg-white border border-slate-200 text-slate-600 hover:border-slate-400 hover:text-slate-900'
           }`}
         >
@@ -197,7 +197,7 @@ function PWCell({ id, name, school }: { id: string; name: string; school: string
     <span className="flex items-baseline gap-2 min-w-0">
       <Link
         href={`/wrestler/${id}`}
-        className="font-medium text-slate-800 hover:text-blue-600 transition-colors truncate"
+        className="font-medium text-slate-800 hover:text-slate-600 transition-colors truncate"
       >
         {name}
       </Link>
@@ -230,7 +230,7 @@ export default async function BoysLeaderboardsPage({
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-blue-900">Boys Leaderboards</h1>
+        <h1 className="text-2xl font-bold text-slate-900">Boys Leaderboards</h1>
         <div className="flex items-center gap-1 text-slate-500 text-sm mt-1">
           <span>NJSIAA</span>
           <InlineSeasonPicker activeSeason={season} />

@@ -11,7 +11,7 @@ export default async function StateBoysPage() {
         ← Boys Search
       </Link>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-blue-900">Boys State Championships</h1>
+        <h1 className="text-2xl font-bold text-slate-900">Boys State Championships</h1>
         <div className="flex items-center gap-1 text-slate-500 text-sm mt-1">
           <span>NJSIAA</span>
           <InlineSeasonPicker activeSeason={season} />
