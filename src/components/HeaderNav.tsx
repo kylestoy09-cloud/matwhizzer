@@ -13,7 +13,6 @@ export function HeaderNav() {
   const isBoys = !pathname.startsWith('/girls')
 
   const bgClass       = isBoys ? 'bg-slate-900' : 'bg-rose-900'
-  const borderClass   = isBoys ? 'bg-blue-900' : 'bg-purple-800'
   const dropdownBg    = isBoys ? 'bg-slate-800 border-slate-700' : 'bg-rose-800 border-rose-700'
   const dropdownHover = isBoys ? 'hover:bg-slate-700' : 'hover:bg-rose-700'
 
@@ -90,7 +89,7 @@ export function HeaderNav() {
           href={homeHref}
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hover:opacity-90 transition-opacity"
         >
-          <div className="bg-white rounded-full p-2 shadow-lg">
+          <div className="bg-white rounded-full p-2 shadow-lg border-2 border-blue-900">
             <Image
               src="/mwl-word.png"
               alt="Mat Whizzer"
@@ -115,8 +114,6 @@ export function HeaderNav() {
         </Link>
 
       </header>
-      {/* Thick colored line under header */}
-      <div className={`h-1.5 ${borderClass}`} />
     </>
   )
 }
