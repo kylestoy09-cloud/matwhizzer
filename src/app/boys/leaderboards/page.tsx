@@ -9,6 +9,7 @@ import {
   type WeightRow, type ComebackRow,
 } from '@/components/leaderboard-ui'
 import { BracketBuster } from '@/components/BracketBuster'
+import { TechnicalMasters } from '@/components/TechnicalMasters'
 
 // ── Pool-specific types ───────────────────────────────────────────────────────
 
@@ -99,13 +100,27 @@ type UpsetRow = {
   round: string; tournament_name: string; weight: number
 }
 
+type TechMasterRow = {
+  wrestler_id: string
+  wrestler_name: string
+  school: string | null
+  school_name: string | null
+  weight: number
+  tech_fall_wins: number
+  avg_tf_time_seconds: number | null
+  fastest_tf_seconds: number | null
+  avg_tf_time_display: string | null
+  fastest_tf_display: string | null
+}
+
 type AnalyticsData = {
-  dominance:  DomRow[]
-  districts:  DistrictRow[]
-  schools:    SchoolRow[]
-  weights:    WeightRow[]
-  comebacks:  ComebackRow[]
-  upsets:     UpsetRow[]
+  dominance:    DomRow[]
+  districts:    DistrictRow[]
+  schools:      SchoolRow[]
+  weights:      WeightRow[]
+  comebacks:    ComebackRow[]
+  upsets:       UpsetRow[]
+  techMasters:  TechMasterRow[]
 }
 
 // ── Data fetching ─────────────────────────────────────────────────────────────
@@ -154,6 +169,7 @@ async function fetchAnalytics(season: number): Promise<AnalyticsData> {
     { data: weights },
     { data: comebacks },
     { data: upsets },
+    { data: techMasters },
   ] = await Promise.all([
     supabase.rpc('lb_dominance',              { p_gender: 'M', p_season: season }),
     supabase.rpc('lb_district_strength',      { p_gender: 'M', p_season: season }),
@@ -161,14 +177,16 @@ async function fetchAnalytics(season: number): Promise<AnalyticsData> {
     supabase.rpc('lb_weight_competitiveness', { p_gender: 'M', p_season: season }),
     supabase.rpc('lb_comebacks',              { p_gender: 'M', p_season: season }),
     supabase.rpc('lb_bracket_buster',         { p_gender: 'M', p_season: season }),
+    supabase.rpc('lb_technical_masters',      { p_gender: 'M', p_season: season }),
   ])
   return {
-    dominance:  ((dominance  ?? []) as DomRow[]).slice(0, 25),
-    districts:  (districts  ?? []) as DistrictRow[],
-    schools:    (schools    ?? []) as SchoolRow[],
-    weights:    (weights    ?? []) as WeightRow[],
-    comebacks:  (comebacks  ?? []) as ComebackRow[],
-    upsets:     (upsets      ?? []) as UpsetRow[],
+    dominance:    ((dominance  ?? []) as DomRow[]).slice(0, 25),
+    districts:    (districts  ?? []) as DistrictRow[],
+    schools:      (schools    ?? []) as SchoolRow[],
+    weights:      (weights    ?? []) as WeightRow[],
+    comebacks:    (comebacks  ?? []) as ComebackRow[],
+    upsets:       (upsets      ?? []) as UpsetRow[],
+    techMasters:  (techMasters ?? []) as TechMasterRow[],
   }
 }
 
@@ -582,6 +600,8 @@ function AnalyticsTab({ d, season }: { d: AnalyticsData; season: number }) {
         title="Bracket Buster — Detailed Upsets"
         limit={25}
       />
+
+      <TechnicalMasters rows={d.techMasters} limit={25} />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 

@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import { getActiveSeason } from '@/lib/get-season'
 import { BracketBuster } from '@/components/BracketBuster'
+import { TeamScoreCard } from '@/components/TeamScoreCard'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -67,30 +68,6 @@ function StatCard<T extends { wrestler_id: string; wrestler_name: string; school
               <div className="text-[11px] text-slate-400 truncate">{subtitle(r)}</div>
             </div>
             <span className="text-sm font-semibold text-slate-700 shrink-0">{value(r)}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-function TeamScoreCard({ rows, schoolPrefix }: { rows: TeamScoreRow[]; schoolPrefix: string }) {
-  return (
-    <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-      <div className="px-4 py-3 border-b border-slate-100 bg-slate-50">
-        <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Team Scoring</h3>
-      </div>
-      <div className="divide-y divide-slate-100">
-        {rows.length === 0 && <p className="px-4 py-3 text-sm text-slate-400">No data</p>}
-        {rows.map((r, i) => (
-          <div key={r.school ?? i} className="flex items-center gap-2 px-4 py-2.5">
-            <span className="text-xs text-slate-400 w-4 shrink-0 text-right">{i + 1}</span>
-            <div className="flex-1 min-w-0">
-              <Link href={`${schoolPrefix}/${encodeURIComponent(r.school)}`} className="text-sm font-medium text-slate-800 hover:underline truncate block">
-                {r.school_name || r.school || '—'}
-              </Link>
-            </div>
-            <span className="text-sm font-semibold text-slate-700 shrink-0">{r.total_points} pts</span>
           </div>
         ))}
       </div>

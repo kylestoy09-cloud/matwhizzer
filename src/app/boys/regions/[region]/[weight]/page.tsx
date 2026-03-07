@@ -519,17 +519,22 @@ export default async function RegionBracketPage({
   const entries = (entryData ?? []) as (BracketEntry & { tournament_id: number; weight_class_id: number })[]
   const rawChamps = (champData ?? []) as DistrictChamp[]
 
-  // Annotate district champs who withdrew (not in region entries) and their replacements
+  // Annotate district placers who withdrew (not in region entries) and their replacements
   const entryWrestlerIds = new Set(entries.map(e => e.wrestler_id))
   const districtChamps = rawChamps.map(dc => {
-    if (dc.place === 1 && !entryWrestlerIds.has(dc.wrestler_id)) {
-      return { ...dc, annotation: 'INJ' }
+    // Top-3 finisher not in region entries = Withdrawn
+    if (dc.place >= 1 && dc.place <= 3 && !entryWrestlerIds.has(dc.wrestler_id)) {
+      return { ...dc, annotation: 'Withdrawn' }
     }
+    // 4th place finisher in region entries = Alternate
     if (dc.place === 4 && entryWrestlerIds.has(dc.wrestler_id)) {
-      // Check if the 1st placer from same district withdrew
-      const champ = rawChamps.find(c => c.district_num === dc.district_num && c.place === 1)
-      if (champ && !entryWrestlerIds.has(champ.wrestler_id)) {
-        return { ...dc, annotation: 'Replaced D' + dc.district_num + ' champ' }
+      // Check if any top-3 from same district withdrew
+      const withdrawn = rawChamps.find(c =>
+        c.district_num === dc.district_num && c.place >= 1 && c.place <= 3
+        && !entryWrestlerIds.has(c.wrestler_id)
+      )
+      if (withdrawn) {
+        return { ...dc, annotation: 'Alternate' }
       }
     }
     return dc

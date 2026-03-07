@@ -2,6 +2,12 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { useState } from 'react'
+
+const ERROR_MESSAGES = [
+  "Dog must have unplugged the old Compaq Presario. Someone email me and I'll plug her back in when I get home.",
+  "Kevin got ringworm again and we had to quarantine the server room. We'll be back once he clears the skin check.",
+]
 
 export default function Error({
   error,
@@ -10,6 +16,8 @@ export default function Error({
   error: Error & { digest?: string }
   reset: () => void
 }) {
+  const [msg] = useState(() => ERROR_MESSAGES[Math.floor(Math.random() * ERROR_MESSAGES.length)])
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-white px-6 text-center">
       <div
@@ -26,8 +34,7 @@ export default function Error({
       </div>
 
       <p className="text-xl text-gray-700 max-w-lg leading-relaxed">
-        Dog must have unplugged the old Compaq Presario. Someone email me
-        and I&apos;ll plug her back in when I get home.
+        {msg}
       </p>
 
       <button

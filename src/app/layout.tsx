@@ -50,8 +50,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         gtag('config', 'G-XN8HTK8ZY1');
       `}</Script>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white min-h-screen flex flex-col`}>
+        {/* Faint fixed background watermark */}
+        <div
+          className="fixed inset-0 pointer-events-none z-0"
+          style={{
+            backgroundImage: 'url(/hat_logo_update.jpg)',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center center',
+            backgroundSize: '320px',
+            opacity: 0.05,
+          }}
+        />
         <HeaderNav />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 relative z-10">{children}</main>
         {/* Logo in white section above footer */}
         <div className="bg-white flex justify-center py-6 mt-8">
           <Image
