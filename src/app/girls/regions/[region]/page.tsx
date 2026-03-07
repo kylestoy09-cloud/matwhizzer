@@ -339,7 +339,7 @@ export default async function GirlsRegionSummaryPage({
 
           <StatCard<DominanceRow>
             title="Hammer Rating"
-            note="All postseason · avg score per match · losses penalized · min 3 wins"
+            note="All postseason · avg score per match · losses penalized · FORF/INJ/DQ excluded"
             rows={dominance}
             subtitle={r => `${r.school_name || r.school || '—'} · ${r.win_count} wins`}
             value={r => String(r.dominance_score)}
