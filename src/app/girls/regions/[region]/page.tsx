@@ -317,7 +317,7 @@ export default async function GirlsRegionSummaryPage({
 
           <StatCard<MatTimeRow>
             title="The Terminators"
-            note="Total Tourney Mat Time"
+            note="Total Postseason Mat Time"
             rows={matTime}
             subtitle={r => `${r.school_name || r.school || '—'} · ${r.match_count} wins`}
             value={r => fmtTime(r.total_seconds)}
@@ -339,7 +339,7 @@ export default async function GirlsRegionSummaryPage({
 
           <StatCard<DominanceRow>
             title="Hammer Rating"
-            note="Avg score per match · losses penalized · min 3 wins"
+            note="All postseason · avg score per match · losses penalized · min 3 wins"
             rows={dominance}
             subtitle={r => `${r.school_name || r.school || '—'} · ${r.win_count} wins`}
             value={r => String(r.dominance_score)}
