@@ -31,7 +31,10 @@ type LeaderRow = {
   fall_count: number
   fastest_fall_sec: number | null
   bonus_pct: number
-  team_points: number
+  district_points: number
+  region_points: number
+  state_points: number
+  total_points: number
 }
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
@@ -242,7 +245,7 @@ export default async function SchoolProfilePage({
         <section className="mb-10">
           <h3 className="text-base font-semibold text-slate-800 mb-3">Team Leaderboard</h3>
           <div className="border border-slate-200 rounded-lg overflow-x-auto shadow-sm bg-white">
-            <table className="w-full text-sm min-w-[520px]">
+            <table className="w-full text-sm min-w-[640px]">
               <thead className="bg-slate-50 border-b border-slate-200">
                 <tr>
                   <th className="text-right px-4 py-2.5 font-medium text-slate-500 w-14">Wt</th>
@@ -251,7 +254,10 @@ export default async function SchoolProfilePage({
                   <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-14">Falls</th>
                   <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-20">Fast Pin</th>
                   <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-16">Bonus%</th>
-                  <th className="text-right px-4 py-2.5 font-medium text-slate-500 w-14">Pts</th>
+                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-14">Districts</th>
+                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-14">Regions</th>
+                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-14">States</th>
+                  <th className="text-right px-4 py-2.5 font-medium text-slate-500 w-14">Total</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
@@ -277,10 +283,29 @@ export default async function SchoolProfilePage({
                       <td className="px-3 py-2.5 text-right tabular-nums text-slate-700">{r.fall_count}</td>
                       <td className="px-3 py-2.5 text-right tabular-nums text-slate-500">{fastPin}</td>
                       <td className="px-3 py-2.5 text-right tabular-nums text-slate-500">{r.bonus_pct}%</td>
-                      <td className="px-4 py-2.5 text-right tabular-nums font-semibold text-slate-800">{r.team_points}</td>
+                      <td className="px-3 py-2.5 text-right tabular-nums text-slate-500">{r.district_points ? r.district_points : '—'}</td>
+                      <td className="px-3 py-2.5 text-right tabular-nums text-slate-500">{r.region_points ? r.region_points : '—'}</td>
+                      <td className="px-3 py-2.5 text-right tabular-nums text-slate-500">{r.state_points ? r.state_points : '—'}</td>
+                      <td className="px-4 py-2.5 text-right tabular-nums font-semibold text-slate-800">{r.total_points}</td>
                     </tr>
                   )
                 })}
+                {/* Total row */}
+                <tr className="bg-slate-50 border-t-2 border-slate-200">
+                  <td className="px-4 py-2.5" colSpan={6}></td>
+                  <td className="px-3 py-2.5 text-right tabular-nums font-bold text-slate-800">
+                    {leaderRows.reduce((s, r) => s + Number(r.district_points), 0) || '—'}
+                  </td>
+                  <td className="px-3 py-2.5 text-right tabular-nums font-bold text-slate-800">
+                    {leaderRows.reduce((s, r) => s + Number(r.region_points), 0) || '—'}
+                  </td>
+                  <td className="px-3 py-2.5 text-right tabular-nums font-bold text-slate-800">
+                    {leaderRows.reduce((s, r) => s + Number(r.state_points), 0) || '—'}
+                  </td>
+                  <td className="px-4 py-2.5 text-right tabular-nums font-bold text-slate-900">
+                    {leaderRows.reduce((s, r) => s + Number(r.total_points), 0)}
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
