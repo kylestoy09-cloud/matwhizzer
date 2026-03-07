@@ -192,7 +192,7 @@ function MatchCard({ m }: { m: MatchRow }) {
   const result = formatResult(m)
   return (
     <div
-      className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm w-52 shrink-0"
+      className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm w-60 shrink-0"
       style={{ height: CARD_H }}
     >
       <WrestlerRow

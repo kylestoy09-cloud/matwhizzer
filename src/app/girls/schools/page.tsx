@@ -39,9 +39,9 @@ export default async function GirlsSchoolsPage({
         ← Girls Search
       </Link>
 
-      <div className="mb-6">
+      <div className="mb-6 text-center">
         <h1 className="text-2xl font-bold text-rose-900">Girls School Directory</h1>
-        <div className="flex items-center gap-1 text-slate-500 text-sm mt-1">
+        <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
           <span>{all.length} schools · NJSIAA</span>
           <InlineSeasonPicker activeSeason={season} />
           <span>girls postseason</span>

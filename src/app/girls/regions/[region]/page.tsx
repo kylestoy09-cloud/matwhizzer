@@ -231,8 +231,8 @@ export default async function GirlsRegionSummaryPage({
       </Link>
 
       {/* Header */}
-      <div className="mb-8">
-        <div className="flex items-center gap-3">
+      <div className="mb-8 text-center">
+        <div className="flex items-center justify-center gap-3">
           <h1 className="text-2xl font-bold text-rose-900">Girls {displayName}</h1>
           <InlineSeasonPicker activeSeason={season} />
         </div>
@@ -339,7 +339,7 @@ export default async function GirlsRegionSummaryPage({
 
           <StatCard<DominanceRow>
             title="Hammer Rating"
-            note="Pin/TF: 9−sec/60 · MD: 2 · Dec: 1 · loser: −score"
+            note="Avg pts per win · min 3 wins"
             rows={dominance}
             subtitle={r => `${r.school_name || r.school || '—'} · ${r.win_count} wins`}
             value={r => String(r.dominance_score)}

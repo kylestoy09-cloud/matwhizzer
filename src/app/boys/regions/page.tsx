@@ -15,9 +15,9 @@ export default async function BoysRegionsPage() {
         ← Boys Search
       </Link>
 
-      <div className="mb-8">
+      <div className="mb-8 text-center">
         <h1 className="text-2xl font-bold text-slate-900">Boys Region Brackets</h1>
-        <div className="flex items-center gap-1 text-slate-500 text-sm mt-1">
+        <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
           <span>NJSIAA</span>
           <InlineSeasonPicker activeSeason={season} />
           <span>· Select a region</span>

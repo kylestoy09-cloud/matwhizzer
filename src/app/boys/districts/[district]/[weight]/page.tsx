@@ -202,7 +202,7 @@ function MatchCard({ m }: { m: MatchRow }) {
 
   return (
     <div
-      className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm w-56 shrink-0"
+      className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm w-64 shrink-0"
       style={{ height: CARD_H }}
     >
       <WrestlerRow
@@ -501,24 +501,6 @@ export default async function DistrictBracketPage({
         </div>
       </div>
 
-      {/* Mobile round list (fallback below bracket for quick scanning) */}
-      <div className="md:hidden space-y-6 mt-6">
-        {allRoundsOrdered.map(round => {
-          const ms = round === 'R2'
-            ? r2Display
-            : round === 'QF' || round === 'SF' || round === 'F'
-              ? (champOrdered.get(round) ?? [])
-              : (consolByRound.get(round) ?? [])
-          if (ms.length === 0) return null
-          return (
-            <MobileRound
-              key={round}
-              label={ROUND_LABEL[round] ?? round}
-              matches={ms}
-            />
-          )
-        })}
-      </div>
       <EntryRoster roster={buildRoster(matches)} />
       <WeightNav weights={WEIGHTS} current={weight} base={`/boys/districts/${district}`} />
     </div>

@@ -196,7 +196,7 @@ function MatchCard({ m }: { m: MatchRow }) {
 
   return (
     <div
-      className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm w-56 shrink-0"
+      className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm w-64 shrink-0"
       style={{ height: CARD_H }}
     >
       <WrestlerRow
@@ -285,7 +285,7 @@ function EntryWrestlerRow({ entry }: { entry: EntryRow }) {
 
 function EntryCard({ top, bot }: { top: EntryRow; bot: EntryRow | null }) {
   return (
-    <div className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm w-56 shrink-0">
+    <div className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm w-64 shrink-0">
       <EntryWrestlerRow entry={top} />
       <div className="border-t border-slate-100" />
       {bot ? (
@@ -577,24 +577,6 @@ export default async function GirlsRegionBracketPage({
       <WeightNav weights={WEIGHTS} current={weight} base={`/girls/regions/${region}`} />
 
       <div className="mt-8 space-y-8">
-        {/* ── Poll / Peanut Gallery ── */}
-        {entries.length > 0 && (
-          <BracketPoll
-            entries={entries}
-            tournamentId={entries[0]?.tournament_id ?? 0}
-            weightClassId={entries[0]?.weight_class_id ?? 0}
-            hasMatches={matches.length > 0}
-            bracketSize={16}
-            provenancePrefix="D"
-          />
-        )}
-
-        {/* ── Seed List ── */}
-        <RosterTable roster={matches.length > 0 ? buildRosterFromMatches(matches) : buildRosterFromEntries(entries as EntryRow[])} />
-
-        {/* ── District Qualifiers ── */}
-        <DistrictQualifiers champs={districtChamps} />
-
         {/* ── Bracket / Entries ── */}
         {matches.length === 0 ? (
           entries.length > 0 && <EntriesView entries={entries as EntryRow[]} />
@@ -662,23 +644,25 @@ export default async function GirlsRegionBracketPage({
           </div>
         </div>
 
-        {/* Mobile round list (fallback below bracket for quick scanning) */}
-        <div className="md:hidden space-y-6 mt-6">
-          {allRounds.map(round => {
-            const ms = champCols.includes(round as typeof champCols[number])
-              ? (champOrdered.get(round) ?? [])
-              : (consolByRound.get(round) ?? [])
-            if (ms.length === 0) return null
-            return (
-              <MobileRound
-                key={round}
-                label={ROUND_LABEL[round] ?? round}
-                matches={ms}
-              />
-            )
-          })}
-        </div>
         </>)}
+
+        {/* ── Seed List ── */}
+        <RosterTable roster={matches.length > 0 ? buildRosterFromMatches(matches) : buildRosterFromEntries(entries as EntryRow[])} />
+
+        {/* ── District Qualifiers ── */}
+        <DistrictQualifiers champs={districtChamps} />
+
+        {/* ── Poll / Peanut Gallery ── */}
+        {entries.length > 0 && (
+          <BracketPoll
+            entries={entries}
+            tournamentId={entries[0]?.tournament_id ?? 0}
+            weightClassId={entries[0]?.weight_class_id ?? 0}
+            hasMatches={matches.length > 0}
+            bracketSize={16}
+            provenancePrefix="D"
+          />
+        )}
       </div>
 
       <WeightNav weights={WEIGHTS} current={weight} base={`/girls/regions/${region}`} />

@@ -10,9 +10,9 @@ export default async function GirlsStatePage() {
       <Link href="/girls" className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 mb-6 transition-colors">
         ← Girls Search
       </Link>
-      <div className="mb-8">
+      <div className="mb-8 text-center">
         <h1 className="text-2xl font-bold text-rose-900">Girls State Championships</h1>
-        <div className="flex items-center gap-1 text-slate-500 text-sm mt-1">
+        <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
           <span>NJSIAA</span>
           <InlineSeasonPicker activeSeason={season} />
           <span>· Boardwalk Hall · double elimination</span>

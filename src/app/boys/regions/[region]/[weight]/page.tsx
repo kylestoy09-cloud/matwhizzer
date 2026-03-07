@@ -192,7 +192,7 @@ function MatchCard({ m }: { m: MatchRow }) {
 
   return (
     <div
-      className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm w-56 shrink-0"
+      className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm w-64 shrink-0"
       style={{ height: CARD_H }}
     >
       <WrestlerRow
@@ -281,7 +281,7 @@ function EntryWrestlerRow({ entry }: { entry: EntryRow }) {
 
 function EntryCard({ top, bot }: { top: EntryRow; bot: EntryRow | null }) {
   return (
-    <div className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm w-56 shrink-0">
+    <div className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm w-64 shrink-0">
       <EntryWrestlerRow entry={top} />
       <div className="border-t border-slate-100" />
       {bot ? (
@@ -616,24 +616,10 @@ export default async function RegionBracketPage({
         </div>
       </div>
 
-      {/* Mobile round list (fallback below bracket for quick scanning) */}
-      <div className="md:hidden space-y-6 mt-6">
-        {allRounds.map(round => {
-          const ms = champCols.includes(round as typeof champCols[number])
-            ? (champOrdered.get(round) ?? [])
-            : (consolByRound.get(round) ?? [])
-          if (ms.length === 0) return null
-          return (
-            <MobileRound
-              key={round}
-              label={ROUND_LABEL[round] ?? round}
-              matches={ms}
-            />
-          )
-        })}
-      </div>
-      {/* Show locked poll results after bracket */}
-      {entries.length > 0 && (
+      </>)}
+      <RosterTable roster={matches.length > 0 ? buildRosterFromMatches(matches) : buildRosterFromEntries(entries as EntryRow[])} />
+      {/* Poll results below entries */}
+      {matches.length > 0 && entries.length > 0 && (
         <BracketPoll
           entries={entries}
           tournamentId={entries[0]?.tournament_id ?? 0}
@@ -644,8 +630,6 @@ export default async function RegionBracketPage({
           districtChamps={districtChamps}
         />
       )}
-      </>)}
-      <RosterTable roster={matches.length > 0 ? buildRosterFromMatches(matches) : buildRosterFromEntries(entries as EntryRow[])} />
       <WeightNav weights={WEIGHTS} current={weight} base={`/boys/regions/${region}`} />
     </div>
   )

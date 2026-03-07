@@ -16,9 +16,9 @@ export default async function GirlsDistrictsPage() {
         ← Girls Search
       </Link>
 
-      <div className="mb-8">
+      <div className="mb-8 text-center">
         <h1 className="text-2xl font-bold text-rose-900">Girls District Brackets</h1>
-        <div className="flex items-center gap-1 text-slate-500 text-sm mt-1">
+        <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
           <span>NJSIAA</span>
           <InlineSeasonPicker activeSeason={season} seasons={[2]} />
           <span>· Select a district</span>

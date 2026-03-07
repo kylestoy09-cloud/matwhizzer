@@ -240,9 +240,9 @@ export default async function GirlsLeaderboardsPage({
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
-      <div className="mb-6">
+      <div className="mb-6 text-center">
         <h1 className="text-2xl font-bold text-rose-900">Girls Leaderboards</h1>
-        <div className="flex items-center gap-1 text-slate-500 text-sm mt-1">
+        <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
           <span>NJSIAA</span>
           <InlineSeasonPicker activeSeason={season} />
           <span>girls postseason — regions &amp; state</span>
@@ -439,7 +439,7 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
 
             <LeaderTable<PoolDomRow>
               title="Hammer Rating"
-              description="Avg pts/match (wins + losses) — Pin/TF: 9−sec/60 · MD: 2 · Dec: 1 · loser: −score · min 2 wins"
+              description="Avg pts per win — Pin/TF: 9−sec/60 · MD: 2 · Dec: 1 · min 3 wins"
               rows={d.poolDom}
               cols={[
                 {
@@ -501,7 +501,7 @@ function AnalyticsTab({ d }: { d: AnalyticsData }) {
 
       <LeaderTable<DomRow>
         title="Hammer Rating"
-        description="Avg pts/match across wins & losses — Pin/TF: 9−(sec÷60) · MD: 2.0 · Dec: 1.0 · loser gets −score"
+        description="Avg pts per win — Pin/TF: 9−(sec÷60) · MD: 2.0 · Dec: 1.0 · min 3 wins"
         rows={d.dominance}
         cols={[
           {

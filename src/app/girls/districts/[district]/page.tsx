@@ -215,9 +215,9 @@ export default async function GirlsDistrictSummaryPage({
         ← District Index
       </Link>
 
-      <div className="mb-8">
+      <div className="mb-8 text-center">
         <h1 className="text-2xl font-bold text-rose-900">District {d}</h1>
-        <div className="flex items-center gap-1 text-slate-500 text-sm mt-1">
+        <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
           <span>NJSIAA</span>
           <InlineSeasonPicker activeSeason={season} seasons={[2]} />
           <span>· Girls postseason</span>
@@ -334,7 +334,7 @@ export default async function GirlsDistrictSummaryPage({
 
           <StatCard<DominanceRow>
             title="Hammer Rating"
-            note="Pin/TF: 9−sec/60 · MD: 2 · Dec: 1 · loser: −score"
+            note="Avg pts per win · min 3 wins"
             rows={dominance}
             subtitle={r => `${r.school_name || r.school || '—'} · ${r.win_count} wins`}
             value={r => String(r.dominance_score)}

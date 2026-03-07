@@ -219,7 +219,7 @@ export default async function BoysPage({
           {topDominance.length > 0 && (
             <section>
               <h2 className="text-lg font-bold text-slate-900 mb-3">Hammer Rating</h2>
-              <p className="text-slate-500 text-sm mb-4">Pin/TF: 9-sec/60 | MD: 2 | Dec: 1 | Loser: -score | Averaged across all matches</p>
+              <p className="text-slate-500 text-sm mb-4">Avg pts per win — Pin/TF: 9-sec/60 | MD: 2 | Dec: 1 | min 3 wins</p>
               <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
                 <div className="divide-y divide-slate-100">
                   {topDominance.map((r, i) => (
