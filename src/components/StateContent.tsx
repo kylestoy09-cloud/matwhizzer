@@ -117,24 +117,30 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
   const schoolPrefix = isBoys ? '/boys/schools' : '/girls/schools'
   const g = gender
 
-  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, teamPtsRes] =
+  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, teamPtsRes, distStrengthRes, marginsRes, upsetsRes] =
     await Promise.all([
-      supabase.rpc('state_placements',  { p_gender: g, p_season: season }),
-      supabase.rpc('state_mat_time',    { p_gender: g, p_season: season }),
-      supabase.rpc('state_fastest_pin', { p_gender: g, p_season: season }),
-      supabase.rpc('state_fastest_tf',  { p_gender: g, p_season: season }),
-      supabase.rpc('state_dominance',   { p_gender: g, p_season: season }),
-      supabase.rpc('state_team_score',  { p_gender: g, p_season: season }),
-      supabase.rpc('state_team_pts',    { p_gender: g, p_season: season }),
+      supabase.rpc('state_placements',           { p_gender: g, p_season: season }),
+      supabase.rpc('state_mat_time',             { p_gender: g, p_season: season }),
+      supabase.rpc('state_fastest_pin',          { p_gender: g, p_season: season }),
+      supabase.rpc('state_fastest_tf',           { p_gender: g, p_season: season }),
+      supabase.rpc('state_dominance',            { p_gender: g, p_season: season }),
+      supabase.rpc('state_team_score',           { p_gender: g, p_season: season }),
+      supabase.rpc('state_team_pts',             { p_gender: g, p_season: season }),
+      supabase.rpc('lb_district_strength',       { p_gender: g, p_season: season }),
+      supabase.rpc('lb_weight_competitiveness',  { p_gender: g, p_season: season }),
+      supabase.rpc('lb_bracket_buster',          { p_gender: g, p_season: season }),
     ])
 
-  const placements = (placementsRes.data ?? []) as PlacementRow[]
-  const matTime    = (matTimeRes.data    ?? []) as MatTimeRow[]
-  const fastPin    = (fastPinRes.data    ?? []) as FastestPinRow[]
-  const fastTf     = (fastTfRes.data     ?? []) as FastestTfRow[]
-  const dominance  = (dominanceRes.data  ?? []) as DominanceRow[]
-  const teamScore  = (teamScoreRes.data  ?? []) as TeamScoreRow[]
-  const teamPts    = (teamPtsRes.data    ?? []) as TeamPtsRow[]
+  const placements     = (placementsRes.data     ?? []) as PlacementRow[]
+  const matTime        = (matTimeRes.data        ?? []) as MatTimeRow[]
+  const fastPin        = (fastPinRes.data        ?? []) as FastestPinRow[]
+  const fastTf         = (fastTfRes.data         ?? []) as FastestTfRow[]
+  const dominance      = (dominanceRes.data      ?? []) as DominanceRow[]
+  const teamScore      = (teamScoreRes.data      ?? []) as TeamScoreRow[]
+  const teamPts        = (teamPtsRes.data        ?? []) as TeamPtsRow[]
+  const distStrength   = (distStrengthRes.data   ?? []) as { district_name: string; wrestlers_advancing: number; state_qualifiers: number }[]
+  const margins        = ((marginsRes.data ?? []) as { weight: number; avg_margin: number; match_count: number }[]).sort((a, b) => Number(a.avg_margin) - Number(b.avg_margin))
+  const upsets         = (upsetsRes.data         ?? []) as { winner_id: string; winner_name: string; winner_school: string | null; loser_name: string; winner_seed: number; loser_seed: number; seed_gap: number; weight: number }[]
 
   const placementsByWeight = new Map<number, Map<number, PlacementRow>>()
   for (const p of placements) {
@@ -265,6 +271,102 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
                     <td className="px-3 py-2 text-slate-500">{r.school_name || r.school}</td>
                     <td className="px-3 py-2 text-right text-slate-600">{r.weight}</td>
                     <td className="px-3 py-2 text-right font-semibold text-slate-700">{r.team_points}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+
+      {/* ── Strongest Districts ── */}
+      {distStrength.length > 0 && (
+        <section className="mb-10">
+          <h2 className="text-base font-semibold text-slate-800 mb-3">Strongest Districts</h2>
+          <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm max-w-md">
+            <table className="min-w-full text-sm">
+              <thead>
+                <tr className="bg-slate-50 border-b border-slate-200">
+                  <th className="px-3 py-2 text-left text-xs font-semibold text-slate-500 uppercase">District</th>
+                  <th className="px-3 py-2 text-right text-xs font-semibold text-slate-500 uppercase">Advanced</th>
+                  <th className="px-3 py-2 text-right text-xs font-semibold text-slate-500 uppercase">State</th>
+                </tr>
+              </thead>
+              <tbody>
+                {distStrength.slice(0, 12).map((r, i) => (
+                  <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
+                    <td className="px-3 py-2 font-medium text-slate-800">{r.district_name}</td>
+                    <td className="px-3 py-2 text-right tabular-nums text-slate-700">{r.wrestlers_advancing}</td>
+                    <td className="px-3 py-2 text-right tabular-nums text-slate-500">{r.state_qualifiers}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+
+      {/* ── The Margins ── */}
+      {margins.length > 0 && (
+        <section className="mb-10">
+          <h2 className="text-base font-semibold text-slate-800 mb-3">The Margins</h2>
+          <p className="text-xs text-slate-500 mb-2">Average score margin in DEC + MD — tightest first</p>
+          <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm max-w-sm">
+            <table className="min-w-full text-sm">
+              <thead>
+                <tr className="bg-slate-50 border-b border-slate-200">
+                  <th className="px-3 py-2 text-left text-xs font-semibold text-slate-500 uppercase">Weight</th>
+                  <th className="px-3 py-2 text-right text-xs font-semibold text-slate-500 uppercase">Avg Margin</th>
+                  <th className="px-3 py-2 text-right text-xs font-semibold text-slate-500 uppercase">Matches</th>
+                </tr>
+              </thead>
+              <tbody>
+                {margins.map((r, i) => (
+                  <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
+                    <td className="px-3 py-2 font-medium text-slate-800 tabular-nums">{r.weight} lb</td>
+                    <td className="px-3 py-2 text-right tabular-nums">
+                      <span className={`font-bold ${Number(r.avg_margin) <= 3 ? 'text-emerald-600' : Number(r.avg_margin) <= 6 ? 'text-amber-600' : 'text-slate-700'}`}>
+                        +{r.avg_margin}
+                      </span>
+                    </td>
+                    <td className="px-3 py-2 text-right text-slate-500 tabular-nums">{r.match_count}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+
+      {/* ── Bracket Buster ── */}
+      {upsets.length > 0 && (
+        <section className="mb-10">
+          <h2 className="text-base font-semibold text-slate-800 mb-3">Bracket Buster</h2>
+          <p className="text-xs text-slate-500 mb-2">Biggest upsets by seed differential</p>
+          <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+            <table className="min-w-full text-sm">
+              <thead>
+                <tr className="bg-slate-50 border-b border-slate-200">
+                  <th className="px-3 py-2 text-left text-xs font-semibold text-slate-500 uppercase">Winner</th>
+                  <th className="px-3 py-2 text-right text-xs font-semibold text-slate-500 uppercase">Seed</th>
+                  <th className="px-3 py-2 text-left text-xs font-semibold text-slate-500 uppercase">Over</th>
+                  <th className="px-3 py-2 text-right text-xs font-semibold text-slate-500 uppercase">Gap</th>
+                  <th className="px-3 py-2 text-right text-xs font-semibold text-slate-500 uppercase">Wt</th>
+                </tr>
+              </thead>
+              <tbody>
+                {upsets.slice(0, 10).map((r, i) => (
+                  <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
+                    <td className="px-3 py-2">
+                      <Link href={`/wrestler/${r.winner_id}`} className="font-medium text-slate-800 hover:underline">
+                        {r.winner_name}
+                      </Link>
+                      {r.winner_school && <span className="text-slate-400 text-xs ml-1">{r.winner_school}</span>}
+                    </td>
+                    <td className="px-3 py-2 text-right text-slate-500 tabular-nums">#{r.winner_seed}</td>
+                    <td className="px-3 py-2 text-slate-500 text-xs">{r.loser_name} (#{r.loser_seed})</td>
+                    <td className="px-3 py-2 text-right font-bold text-slate-800 tabular-nums">+{r.seed_gap}</td>
+                    <td className="px-3 py-2 text-right text-slate-500 tabular-nums">{r.weight}</td>
                   </tr>
                 ))}
               </tbody>
