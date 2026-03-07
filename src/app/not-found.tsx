@@ -20,8 +20,8 @@ export default function NotFound() {
       </div>
 
       <p className="text-xl text-gray-700 max-w-lg leading-relaxed">
-        Dog must have unplugged the old Compaq Presario someone email me
-        and i&apos;ll plug her back in when I get home.
+        Dog must have unplugged the old Compaq Presario. Someone email me
+        and I&apos;ll plug her back in when I get home.
       </p>
 
       <Link

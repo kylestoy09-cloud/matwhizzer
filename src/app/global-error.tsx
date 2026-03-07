@@ -40,8 +40,8 @@ export default function GlobalError({
             margin: '0 0 32px 0',
           }}
         >
-          Dog must have unplugged the old Compaq Presario someone email me
-          and i&apos;ll plug her back in when I get home.
+          Dog must have unplugged the old Compaq Presario. Someone email me
+          and I&apos;ll plug her back in when I get home.
         </p>
 
         <button
