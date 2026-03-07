@@ -227,6 +227,7 @@ export default async function BoysLeaderboardsPage({
 }: {
   searchParams: Promise<{ tab?: string; pool?: string }>
 }) {
+  throw new Error('Testing error page') // TODO: REMOVE — temporary test
   const { tab = 'wrestlers', pool = 'district' } = await searchParams
   const isAnalytics = tab === 'analytics'
   const activePool = (['district', 'region', 'state'] as const).includes(pool as 'district' | 'region' | 'state')
