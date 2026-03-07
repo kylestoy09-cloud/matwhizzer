@@ -474,7 +474,7 @@ export default async function StateBracketPage({
       ) : (<>
 
       {/* ── DESKTOP bracket (lg+) ── */}
-      <div className="hidden lg:block space-y-0">
+      <div className="overflow-x-auto space-y-0" style={{ WebkitOverflowScrolling: 'touch' }}>
 
         {/* Championship section */}
         <div>
@@ -508,7 +508,7 @@ export default async function StateBracketPage({
       </div>
 
       {/* ── MOBILE bracket (<lg) ── */}
-      <div className="lg:hidden space-y-8">
+      <div className="lg:hidden space-y-8 mt-6">
         <div>
           <h2 className="text-sm font-semibold text-slate-600 mb-4 uppercase tracking-wide">Championship</h2>
           <div className="space-y-6">
