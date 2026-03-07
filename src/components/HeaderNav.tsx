@@ -86,7 +86,7 @@ export function HeaderNav() {
 
         {/* Brand — centered logo in white circle */}
         <Link
-          href={homeHref}
+          href="/"
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hover:opacity-90 transition-opacity"
         >
           <div className="bg-white rounded-full p-2 shadow-lg border-2 border-blue-900">
