@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase'
+import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
@@ -227,7 +228,7 @@ export default async function BoysLeaderboardsPage({
 }: {
   searchParams: Promise<{ tab?: string; pool?: string }>
 }) {
-  throw new Error('Testing error page') // TODO: REMOVE — temporary test
+  notFound() // TODO: REMOVE — temporary test to preview 404 page
   const { tab = 'wrestlers', pool = 'district' } = await searchParams
   const isAnalytics = tab === 'analytics'
   const activePool = (['district', 'region', 'state'] as const).includes(pool as 'district' | 'region' | 'state')
