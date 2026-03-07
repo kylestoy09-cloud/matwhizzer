@@ -67,9 +67,9 @@ export default async function GirlsPage({
           <Image
             src="/mwl-word.png"
             alt="Mat Whizzer"
-            width={200}
-            height={86}
-            className="h-24 w-auto"
+            width={400}
+            height={172}
+            className="w-3/4 h-auto"
             priority
           />
         </div>
