@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
+import { BracketBuster } from '@/components/BracketBuster'
 
 const WEIGHTS = [100, 107, 114, 120, 126, 132, 138, 145, 152, 165, 185, 235]
 
@@ -384,6 +385,20 @@ export default async function GirlsRegionSummaryPage({
           </div>
         </section>
       )}
+
+      {/* ── Bracket Buster ── */}
+      <section className="mb-10">
+        <BracketBuster
+          season={season}
+          gender="F"
+          tournamentType="regions"
+          region={Number(region)}
+          title="Bracket Buster — Region Upsets"
+          limit={8}
+          schoolBase="/girls/schools"
+          accentColor="rose"
+        />
+      </section>
 
       {/* ── Schools by District ── */}
       {districtGroups.length > 0 && (

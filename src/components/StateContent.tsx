@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import { getActiveSeason } from '@/lib/get-season'
+import { BracketBuster } from '@/components/BracketBuster'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -117,7 +118,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
   const schoolPrefix = isBoys ? '/boys/schools' : '/girls/schools'
   const g = gender
 
-  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, teamPtsRes, distStrengthRes, marginsRes, upsetsRes] =
+  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, teamPtsRes, distStrengthRes, marginsRes] =
     await Promise.all([
       supabase.rpc('state_placements',           { p_gender: g, p_season: season }),
       supabase.rpc('state_mat_time',             { p_gender: g, p_season: season }),
@@ -128,7 +129,6 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
       supabase.rpc('state_team_pts',             { p_gender: g, p_season: season }),
       supabase.rpc('lb_district_strength',       { p_gender: g, p_season: season }),
       supabase.rpc('lb_weight_competitiveness',  { p_gender: g, p_season: season }),
-      supabase.rpc('lb_bracket_buster',          { p_gender: g, p_season: season }),
     ])
 
   const placements     = (placementsRes.data     ?? []) as PlacementRow[]
@@ -140,7 +140,6 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
   const teamPts        = (teamPtsRes.data        ?? []) as TeamPtsRow[]
   const distStrength   = (distStrengthRes.data   ?? []) as { district_name: string; wrestlers_advancing: number; state_qualifiers: number }[]
   const margins        = ((marginsRes.data ?? []) as { weight: number; avg_margin: number; match_count: number }[]).sort((a, b) => Number(a.avg_margin) - Number(b.avg_margin))
-  const upsets         = (upsetsRes.data         ?? []) as { winner_id: string; winner_name: string; winner_school: string | null; loser_name: string; winner_seed: number; loser_seed: number; seed_gap: number; weight: number }[]
 
   const placementsByWeight = new Map<number, Map<number, PlacementRow>>()
   for (const p of placements) {
@@ -339,41 +338,17 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
       )}
 
       {/* ── Bracket Buster ── */}
-      {upsets.length > 0 && (
-        <section className="mb-10">
-          <h2 className="text-base font-semibold text-slate-800 mb-3">Bracket Buster</h2>
-          <p className="text-xs text-slate-500 mb-2">Biggest upsets by seed differential</p>
-          <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
-            <table className="min-w-full text-sm">
-              <thead>
-                <tr className="bg-slate-50 border-b border-slate-200">
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-slate-500 uppercase">Winner</th>
-                  <th className="px-3 py-2 text-right text-xs font-semibold text-slate-500 uppercase">Seed</th>
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-slate-500 uppercase">Over</th>
-                  <th className="px-3 py-2 text-right text-xs font-semibold text-slate-500 uppercase">Gap</th>
-                  <th className="px-3 py-2 text-right text-xs font-semibold text-slate-500 uppercase">Wt</th>
-                </tr>
-              </thead>
-              <tbody>
-                {upsets.slice(0, 10).map((r, i) => (
-                  <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
-                    <td className="px-3 py-2">
-                      <Link href={`/wrestler/${r.winner_id}`} className="font-medium text-slate-800 hover:underline">
-                        {r.winner_name}
-                      </Link>
-                      {r.winner_school && <span className="text-slate-400 text-xs ml-1">{r.winner_school}</span>}
-                    </td>
-                    <td className="px-3 py-2 text-right text-slate-500 tabular-nums">#{r.winner_seed}</td>
-                    <td className="px-3 py-2 text-slate-500 text-xs">{r.loser_name} (#{r.loser_seed})</td>
-                    <td className="px-3 py-2 text-right font-bold text-slate-800 tabular-nums">+{r.seed_gap}</td>
-                    <td className="px-3 py-2 text-right text-slate-500 tabular-nums">{r.weight}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-      )}
+      <section className="mb-10">
+        <BracketBuster
+          season={season}
+          gender={gender}
+          tournamentType="state"
+          title="Bracket Buster — State Upsets"
+          limit={10}
+          schoolBase={schoolPrefix}
+          accentColor={isBoys ? 'slate' : 'rose'}
+        />
+      </section>
 
     </>
   )

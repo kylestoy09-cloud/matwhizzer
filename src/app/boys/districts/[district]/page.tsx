@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabase'
 import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { IndividualTeamPoints } from '@/components/IndividualTeamPoints'
+import { BracketBuster } from '@/components/BracketBuster'
 
 const WEIGHTS = [106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285]
 
@@ -344,6 +345,18 @@ export default async function DistrictSummaryPage({
           />
 
         </div>
+      </section>
+
+      {/* ── Bracket Buster ── */}
+      <section className="mb-10">
+        <BracketBuster
+          season={season}
+          gender="M"
+          tournamentType="districts"
+          district={d}
+          title="Bracket Buster — District Upsets"
+          limit={8}
+        />
       </section>
 
       {/* ── Schools ── */}

@@ -8,6 +8,7 @@ import {
   type DomRow, type DistrictRow, type SchoolRow,
   type WeightRow, type ComebackRow,
 } from '@/components/leaderboard-ui'
+import { BracketBuster } from '@/components/BracketBuster'
 
 // ── Pool-specific types ───────────────────────────────────────────────────────
 
@@ -257,7 +258,7 @@ export default async function BoysLeaderboardsPage({
           <WrestlerTab d={data as PoolData} poolLabel={poolLabel} />
         </>
       ) : (
-        <AnalyticsTab d={data as AnalyticsData} />
+        <AnalyticsTab d={data as AnalyticsData} season={season} />
       )}
     </div>
   )
@@ -496,7 +497,7 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
 
 // ── Analytics tab (unchanged) ─────────────────────────────────────────────────
 
-function AnalyticsTab({ d }: { d: AnalyticsData }) {
+function AnalyticsTab({ d, season }: { d: AnalyticsData; season: number }) {
   const weights = [...d.weights].sort((a, b) => Number(a.avg_margin) - Number(b.avg_margin))
 
   return (
@@ -572,6 +573,14 @@ function AnalyticsTab({ d }: { d: AnalyticsData }) {
             render: r => <span className="text-slate-500 tabular-nums">{r.weight}</span>,
           },
         ]}
+      />
+
+      <BracketBuster
+        season={season}
+        gender="M"
+        tournamentType="all"
+        title="Bracket Buster — Detailed Upsets"
+        limit={25}
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
