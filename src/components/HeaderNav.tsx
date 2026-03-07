@@ -23,9 +23,7 @@ export function HeaderNav() {
   const regionsHref      = isBoys ? '/boys/regions' : '/girls/regions'
   const stateHref        = isBoys ? '/boys/state' : '/girls/state'
 
-  const toggleHref = isBoys
-    ? (pathname.startsWith('/boys') ? '/girls' + pathname.slice('/boys'.length) : '/girls')
-    : '/boys' + pathname.slice('/girls'.length)
+  const toggleHref = isBoys ? '/girls' : '/boys'
 
   const navItems = [
     { href: stateHref,        label: 'State' },
