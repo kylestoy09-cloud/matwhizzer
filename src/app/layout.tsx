@@ -12,6 +12,22 @@ const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin']
 export const metadata: Metadata = {
   title: 'Mat Whizzer',
   description: 'NJSIAA Wrestling Results 2024–25',
+  openGraph: {
+    title: 'Mat Whizzer',
+    description: 'NJSIAA Wrestling Results 2024–25',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Mat Whizzer — NJSIAA Wrestling',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/og-image.jpg'],
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
