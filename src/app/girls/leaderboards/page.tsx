@@ -483,7 +483,7 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
 // ── Analytics tab ─────────────────────────────────────────────────────────────
 
 function AnalyticsTab({ d }: { d: AnalyticsData }) {
-  const weights = [...d.weights].sort((a, b) => a.weight - b.weight)
+  const weights = [...d.weights].sort((a, b) => Number(a.avg_margin) - Number(b.avg_margin))
 
   return (
     <div className="space-y-10">
