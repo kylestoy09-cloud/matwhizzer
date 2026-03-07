@@ -421,8 +421,8 @@ export default async function GirlsDistrictBracketPage({
       )}
 
       {/* ── DESKTOP bracket ── */}
-      <div className="hidden md:block">
-        <div className="flex gap-0 items-start">
+      <div className="overflow-x-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
+        <div className="flex gap-0 items-start min-w-max">
           {champCols.map((round, ri) => {
             const colMatches = champOrdered.get(round) ?? []
             const slotH = totalH / colMatches.length
@@ -469,7 +469,7 @@ export default async function GirlsDistrictBracketPage({
       </div>
 
       {/* ── MOBILE bracket ── */}
-      <div className="md:hidden space-y-6">
+      <div className="md:hidden space-y-6 mt-6">
         {allRoundsOrdered.map(round => {
           const ms = round === 'R2'
             ? r2Display

@@ -449,9 +449,9 @@ export default async function DistrictBracketPage({
         </div>
       )}
 
-      {/* ── DESKTOP bracket (md+) ── */}
-      <div className="hidden md:block">
-        <div className="flex gap-0 items-start">
+      {/* ── Bracket (horizontal scroll on mobile) ── */}
+      <div className="overflow-x-auto -webkit-overflow-scrolling-touch">
+        <div className="flex gap-0 items-start min-w-max">
           {champCols.map((round, ri) => {
             const colMatches = champOrdered.get(round) ?? []
             const slotH = totalH / colMatches.length
@@ -501,8 +501,8 @@ export default async function DistrictBracketPage({
         </div>
       </div>
 
-      {/* ── MOBILE bracket (< md) ── */}
-      <div className="md:hidden space-y-6">
+      {/* Mobile round list (fallback below bracket for quick scanning) */}
+      <div className="md:hidden space-y-6 mt-6">
         {allRoundsOrdered.map(round => {
           const ms = round === 'R2'
             ? r2Display

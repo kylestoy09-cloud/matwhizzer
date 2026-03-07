@@ -554,8 +554,8 @@ export default async function RegionBracketPage({
         />
       ) : (<>
 
-      {/* ── DESKTOP bracket (md+) ── */}
-      <div className="hidden md:block overflow-x-auto">
+      {/* ── Bracket (horizontal scroll on mobile) ── */}
+      <div className="overflow-x-auto -webkit-overflow-scrolling-touch">
         <div className="flex gap-0 items-start min-w-max">
 
           {/* Championship columns: R2 → QF → SF → F */}
@@ -616,8 +616,8 @@ export default async function RegionBracketPage({
         </div>
       </div>
 
-      {/* ── MOBILE bracket (<md) ── */}
-      <div className="md:hidden space-y-6">
+      {/* Mobile round list (fallback below bracket for quick scanning) */}
+      <div className="md:hidden space-y-6 mt-6">
         {allRounds.map(round => {
           const ms = champCols.includes(round as typeof champCols[number])
             ? (champOrdered.get(round) ?? [])
