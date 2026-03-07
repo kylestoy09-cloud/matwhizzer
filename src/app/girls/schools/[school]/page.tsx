@@ -247,15 +247,15 @@ export default async function GirlsSchoolProfilePage({
         <section className="mb-10">
           <h3 className="text-base font-semibold text-slate-800 mb-3">Wrestler Stats</h3>
           <div className="border border-slate-200 rounded-lg overflow-x-auto shadow-sm bg-white">
-            <table className="w-full text-sm">
+            <table className="w-full text-sm min-w-[480px]">
               <thead className="bg-slate-50 border-b border-slate-200">
                 <tr>
                   <th className="text-left px-3 py-2.5 font-medium text-slate-500">Wrestler</th>
                   <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-12">Wt</th>
                   <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-10">W</th>
-                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-12 hidden sm:table-cell">Falls</th>
-                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-16 hidden sm:table-cell">Fast Pin</th>
-                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-14 hidden sm:table-cell">Bonus%</th>
+                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-12">Falls</th>
+                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-16">Fast Pin</th>
+                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-14">Bonus%</th>
                   <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-14">Pts</th>
                 </tr>
               </thead>
@@ -269,11 +269,11 @@ export default async function GirlsSchoolProfilePage({
                     </td>
                     <td className="px-3 py-2.5 text-right tabular-nums text-slate-500">{r.primary_weight}</td>
                     <td className="px-3 py-2.5 text-right tabular-nums text-slate-700 font-semibold">{r.win_count}</td>
-                    <td className="px-3 py-2.5 text-right tabular-nums text-slate-500 hidden sm:table-cell">{r.fall_count}</td>
-                    <td className="px-3 py-2.5 text-right tabular-nums text-slate-500 hidden sm:table-cell">
+                    <td className="px-3 py-2.5 text-right tabular-nums text-slate-500">{r.fall_count}</td>
+                    <td className="px-3 py-2.5 text-right tabular-nums text-slate-500">
                       {r.fastest_fall_sec ? `${Math.floor(r.fastest_fall_sec / 60)}:${String(r.fastest_fall_sec % 60).padStart(2, '0')}` : '—'}
                     </td>
-                    <td className="px-3 py-2.5 text-right tabular-nums text-slate-500 hidden sm:table-cell">{Math.round(r.bonus_pct)}%</td>
+                    <td className="px-3 py-2.5 text-right tabular-nums text-slate-500">{Math.round(r.bonus_pct)}%</td>
                     <td className="px-3 py-2.5 text-right tabular-nums font-bold text-slate-800">{r.team_points}</td>
                   </tr>
                 ))}
@@ -287,13 +287,13 @@ export default async function GirlsSchoolProfilePage({
       <section>
         <h3 className="text-base font-semibold text-slate-800 mb-3">Wrestlers</h3>
         <div className="border border-slate-200 rounded-lg overflow-x-auto shadow-sm bg-white">
-          <table className="w-full text-sm">
+          <table className="w-full text-sm min-w-[480px]">
             <thead className="bg-slate-50 border-b border-slate-200">
               <tr>
                 <th className="text-right px-4 py-2.5 font-medium text-slate-500 w-16">Wt</th>
                 <th className="text-left px-4 py-2.5 font-medium text-slate-500">Wrestler</th>
-                <th className="text-left px-4 py-2.5 font-medium text-slate-500 hidden sm:table-cell">Districts</th>
-                <th className="text-left px-4 py-2.5 font-medium text-slate-500 hidden sm:table-cell">Regions</th>
+                <th className="text-left px-4 py-2.5 font-medium text-slate-500">Districts</th>
+                <th className="text-left px-4 py-2.5 font-medium text-slate-500">Regions</th>
                 <th className="text-left px-4 py-2.5 font-medium text-slate-500">State</th>
               </tr>
             </thead>
@@ -312,10 +312,10 @@ export default async function GirlsSchoolProfilePage({
                         {w.wrestler_name}
                       </Link>
                     </td>
-                    <td className="px-4 py-2.5 hidden sm:table-cell">
+                    <td className="px-4 py-2.5">
                       <PlaceBadge placement={w.districts_placement} short={w.districts_short} />
                     </td>
-                    <td className="px-4 py-2.5 hidden sm:table-cell">
+                    <td className="px-4 py-2.5">
                       <PlaceBadge placement={w.regions_placement} short={w.regions_short} />
                     </td>
                     <td className="px-4 py-2.5">
