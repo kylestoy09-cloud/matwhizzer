@@ -5,7 +5,7 @@ import { getActiveSeason } from '@/lib/get-season'
 
 type WrestlerRow = { id: string; first_name: string; last_name: string }
 type SchoolRow   = { school: string; school_name: string; total_points: number; wrestler_count: number }
-type TeamScoreRow = { school: string; school_name: string | null; total_points: number; district: number }
+type TeamScoreRow = { school: string; school_name: string | null; district_points: number; region_points: number; state_points: number; total_points: number }
 type DominanceRow = { wrestler_id: string; name: string; school: string | null; dominance_score: number; win_count: number }
 
 export default async function BoysPage({
@@ -49,7 +49,7 @@ export default async function BoysPage({
   if (showLeaderboards) {
     const [dominanceRes, teamScoreRes, activeSchoolsRes] = await Promise.all([
       supabase.rpc('lb_dominance', { p_gender: 'M', p_season: season }),
-      supabase.rpc('top_district_team_scores', { p_gender: 'M', p_season: season, p_limit: 25 }),
+      supabase.rpc('top_postseason_team_scores', { p_gender: 'M', p_season: season, p_limit: 25 }),
       supabase.rpc('top_active_schools', { p_gender: 'M', p_season: season, p_limit: 20 }),
     ])
     topDominance = (dominanceRes.data ?? []).slice(0, 8) as DominanceRow[]
@@ -182,31 +182,31 @@ export default async function BoysPage({
 
           {topTeamScores.length > 0 && (
             <section>
-              <h2 className="text-lg font-bold text-slate-900 mb-3">Top District Team Scores</h2>
+              <h2 className="text-lg font-bold text-slate-900 mb-3">Postseason Point Leaders</h2>
               <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
                 <table className="min-w-full text-sm">
                   <thead>
                     <tr className="bg-slate-50 border-b border-slate-200">
                       <th className="px-3 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide w-8">#</th>
                       <th className="px-3 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">School</th>
-                      <th className="px-3 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide w-16">Dist.</th>
-                      <th className="px-3 py-2.5 text-right text-xs font-semibold text-slate-500 uppercase tracking-wide w-16">Pts</th>
+                      <th className="px-3 py-2.5 text-right text-xs font-semibold text-slate-500 uppercase tracking-wide w-16">Dist</th>
+                      <th className="px-3 py-2.5 text-right text-xs font-semibold text-slate-500 uppercase tracking-wide w-16">Reg</th>
+                      <th className="px-3 py-2.5 text-right text-xs font-semibold text-slate-500 uppercase tracking-wide w-16">State</th>
+                      <th className="px-3 py-2.5 text-right text-xs font-semibold text-slate-500 uppercase tracking-wide w-16">Total</th>
                     </tr>
                   </thead>
                   <tbody>
                     {topTeamScores.map((r, i) => (
-                      <tr key={`${r.school}-${r.district}`} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
+                      <tr key={r.school} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
                         <td className="px-3 py-2 text-xs text-slate-400">{i + 1}</td>
                         <td className="px-3 py-2">
                           <Link href={`/boys/schools/${encodeURIComponent(r.school)}`} className="font-medium text-slate-800 hover:underline">
                             {r.school_name || r.school}
                           </Link>
                         </td>
-                        <td className="px-3 py-2 text-slate-500">
-                          <Link href={`/boys/districts/${r.district}`} className="hover:underline">
-                            D{r.district}
-                          </Link>
-                        </td>
+                        <td className="px-3 py-2 text-right text-slate-500">{r.district_points}</td>
+                        <td className="px-3 py-2 text-right text-slate-500">{r.region_points}</td>
+                        <td className="px-3 py-2 text-right text-slate-500">{r.state_points}</td>
                         <td className="px-3 py-2 text-right font-semibold text-slate-700">{r.total_points}</td>
                       </tr>
                     ))}
