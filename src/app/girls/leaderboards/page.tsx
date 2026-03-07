@@ -408,7 +408,7 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
 
             <LeaderTable<PoolBonusRow>
               title="Bonus Point Percentage"
-              description="Total FALL + TF + MD + INJ + DQ wins"
+              description="Bonus wins (FALL + TF + MD) ÷ total matches — min 3 matches"
               rows={d.mostBonus}
               cols={[
                 {
@@ -416,12 +416,12 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
                   render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} />,
                 },
                 {
-                  label: 'Bonus', align: 'right',
-                  render: r => <span className="font-bold text-slate-800 tabular-nums">{r.bonus_wins}</span>,
+                  label: 'Pct', align: 'right',
+                  render: r => <span className="font-bold text-slate-800 tabular-nums">{r.total_wins > 0 ? `${(r.bonus_wins / r.total_wins * 100).toFixed(1)}%` : '—'}</span>,
                 },
                 {
-                  label: 'of', align: 'right',
-                  render: r => <span className="text-slate-500 tabular-nums">{r.total_wins}</span>,
+                  label: 'W/M', align: 'right',
+                  render: r => <span className="text-slate-500 tabular-nums text-xs">{r.bonus_wins}/{r.total_wins}</span>,
                 },
               ]}
             />
