@@ -91,12 +91,20 @@ type PoolData = {
   wrestlerPts:  PoolWrestlerPtsRow[]
 }
 
+type UpsetRow = {
+  winner_id: string; winner_name: string; winner_school: string | null
+  loser_id: string; loser_name: string; loser_school: string | null
+  winner_seed: number; loser_seed: number; seed_gap: number
+  round: string; tournament_name: string; weight: number
+}
+
 type AnalyticsData = {
   dominance:  DomRow[]
   districts:  DistrictRow[]
   schools:    SchoolRow[]
   weights:    WeightRow[]
   comebacks:  ComebackRow[]
+  upsets:     UpsetRow[]
 }
 
 // ── Data fetching ─────────────────────────────────────────────────────────────
@@ -144,12 +152,14 @@ async function fetchAnalytics(season: number): Promise<AnalyticsData> {
     { data: schools },
     { data: weights },
     { data: comebacks },
+    { data: upsets },
   ] = await Promise.all([
     supabase.rpc('lb_dominance',              { p_gender: 'M', p_season: season }),
     supabase.rpc('lb_district_strength',      { p_gender: 'M', p_season: season }),
     supabase.rpc('lb_school_depth',           { p_gender: 'M', p_season: season }),
     supabase.rpc('lb_weight_competitiveness', { p_gender: 'M', p_season: season }),
     supabase.rpc('lb_comebacks',              { p_gender: 'M', p_season: season }),
+    supabase.rpc('lb_bracket_buster',         { p_gender: 'M', p_season: season }),
   ])
   return {
     dominance:  ((dominance  ?? []) as DomRow[]).slice(0, 25),
@@ -157,6 +167,7 @@ async function fetchAnalytics(season: number): Promise<AnalyticsData> {
     schools:    (schools    ?? []) as SchoolRow[],
     weights:    (weights    ?? []) as WeightRow[],
     comebacks:  (comebacks  ?? []) as ComebackRow[],
+    upsets:     (upsets      ?? []) as UpsetRow[],
   }
 }
 
@@ -527,6 +538,34 @@ function AnalyticsTab({ d }: { d: AnalyticsData }) {
           {
             label: 'Tournament', align: 'left',
             render: r => <span className="text-slate-500 text-xs">{cleanTournament(r.tournament_name)}</span>,
+          },
+          {
+            label: 'Wt', align: 'right',
+            render: r => <span className="text-slate-500 tabular-nums">{r.weight}</span>,
+          },
+        ]}
+      />
+
+      <LeaderTable<UpsetRow>
+        title="Bracket Buster"
+        description="Biggest upsets by seed differential — higher seed beats lower seed"
+        rows={d.upsets}
+        cols={[
+          {
+            label: 'Winner', align: 'left',
+            render: r => <WrestlerCell id={r.winner_id} name={r.winner_name} school={r.winner_school} />,
+          },
+          {
+            label: 'Seed', align: 'right',
+            render: r => <span className="text-slate-500 tabular-nums">#{r.winner_seed}</span>,
+          },
+          {
+            label: 'Over', align: 'left',
+            render: r => <span className="text-slate-500 text-xs truncate">{r.loser_name} (#{r.loser_seed})</span>,
+          },
+          {
+            label: 'Gap', align: 'right',
+            render: r => <span className="font-bold text-slate-800 tabular-nums">+{r.seed_gap}</span>,
           },
           {
             label: 'Wt', align: 'right',
