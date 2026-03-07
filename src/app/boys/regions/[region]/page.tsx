@@ -229,12 +229,11 @@ export default async function RegionSummaryPage({
 
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-slate-900">Region {r}</h1>
-        <div className="flex items-center gap-1 text-slate-500 text-sm mt-1">
-          <span>NJSIAA</span>
+        <div className="flex items-center gap-3">
+          <h1 className="text-2xl font-bold text-slate-900">Region {r}</h1>
           <InlineSeasonPicker activeSeason={season} />
-          <span>· Boys postseason · Top 4 advance to state</span>
         </div>
+        <p className="text-slate-500 text-sm mt-1">Boys Postseason — Top 4 Advance</p>
       </div>
 
       {/* ── Bracket grid ── */}
