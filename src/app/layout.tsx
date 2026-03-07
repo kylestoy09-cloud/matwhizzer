@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import Script from 'next/script'
+import Image from 'next/image'
 import './globals.css'
 import { HeaderNav } from '@/components/HeaderNav'
 
@@ -25,9 +26,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-50 min-h-screen flex flex-col`}>
         <HeaderNav />
         <main className="flex-1">{children}</main>
-        <footer className="bg-slate-900 text-slate-400 text-xs text-center py-4 mt-8 flex items-center justify-center gap-4">
-          <span>© 2026 Mat Whizzer LLC. All rights reserved.</span>
-          <a href="/feedback" className="hover:text-slate-200 transition-colors underline underline-offset-2">Feedback</a>
+        <footer className="bg-slate-900 text-slate-400 text-xs text-center py-4 mt-8 flex flex-col items-center gap-3">
+          <Image
+            src="/whizzer-logo.jpg"
+            alt="Mat Whizzer"
+            width={80}
+            height={34}
+            className="h-8 w-auto opacity-70"
+          />
+          <div className="flex items-center gap-4">
+            <span>&copy; 2026 Mat Whizzer LLC. All rights reserved.</span>
+            <a href="/feedback" className="hover:text-slate-200 transition-colors underline underline-offset-2">Feedback</a>
+          </div>
         </footer>
       </body>
     </html>
