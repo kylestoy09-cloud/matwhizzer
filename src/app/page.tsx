@@ -80,7 +80,7 @@ export default async function RootPage({
         {/* Mobile: logo above search */}
         <div className="flex justify-center mb-6 md:hidden">
           <Image
-            src="/whizzer-logo.jpg"
+            src="/mwl-word.png"
             alt="Mat Whizzer"
             width={200}
             height={86}
@@ -177,11 +177,11 @@ export default async function RootPage({
         {/* Desktop: logo to the right of search */}
         <div className="hidden md:flex md:items-center md:justify-center md:pt-8">
           <Image
-            src="/whizzer-logo.jpg"
+            src="/mwl-word.png"
             alt="Mat Whizzer"
-            width={260}
-            height={112}
-            className="h-32 w-auto"
+            width={360}
+            height={155}
+            className="h-48 w-auto"
             priority
           />
         </div>

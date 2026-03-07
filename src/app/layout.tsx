@@ -28,11 +28,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="flex-1">{children}</main>
         <footer className="bg-slate-900 text-slate-400 text-xs text-center py-4 mt-8 flex flex-col items-center gap-3">
           <Image
-            src="/whizzer-logo.jpg"
+            src="/mwl-hat.png"
             alt="Mat Whizzer"
-            width={80}
-            height={34}
-            className="h-8 w-auto opacity-70"
+            width={48}
+            height={48}
+            className="h-10 w-auto opacity-70"
           />
           <div className="flex items-center gap-4">
             <span>&copy; 2026 Mat Whizzer LLC. All rights reserved.</span>
