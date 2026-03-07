@@ -51,7 +51,7 @@ export function HeaderNav() {
 
   return (
     <>
-      <header className={`${bgClass} text-white px-6 py-6 shadow-md flex items-center relative`}>
+      <header className={`${bgClass} text-white px-6 py-6 shadow-md flex items-center relative sticky top-0 z-40`}>
 
         {/* Hamburger + dropdown — left side */}
         <div ref={menuRef} className="relative z-10">
