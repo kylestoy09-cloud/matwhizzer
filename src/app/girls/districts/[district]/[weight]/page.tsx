@@ -399,7 +399,7 @@ export default async function GirlsDistrictBracketPage({
       </Link>
 
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-purple-900">
+        <h1 className="text-2xl font-bold text-rose-900">
           District {district}
           <span className="text-slate-400 font-normal ml-2">·</span>
           <span className="text-slate-600 font-semibold ml-2">{weight} lb</span>

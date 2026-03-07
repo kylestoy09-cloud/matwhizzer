@@ -302,7 +302,7 @@ export default async function RootPage({
         {/* Girls Regions */}
         <section>
           <div className="mb-4">
-            <h2 className="text-xl font-bold text-purple-900">Girls Regions</h2>
+            <h2 className="text-xl font-bold text-rose-900">Girls Regions</h2>
             <p className="text-slate-500 text-sm mt-0.5">NJSIAA {SEASONS[season]?.label ?? season} · Select a region</p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -310,7 +310,7 @@ export default async function RootPage({
               <Link
                 key={r}
                 href={`/girls/regions/${r}`}
-                className="flex flex-col items-center justify-center py-4 rounded-lg border border-purple-200 bg-white hover:bg-purple-50 hover:border-purple-400 transition-colors shadow-sm"
+                className="flex flex-col items-center justify-center py-4 rounded-lg border border-rose-200 bg-white hover:bg-rose-50 hover:border-rose-400 transition-colors shadow-sm"
               >
                 <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide leading-none mb-0.5">Reg.</span>
                 <span className="text-xl font-bold text-slate-800">{r}</span>
@@ -342,7 +342,7 @@ export default async function RootPage({
         {/* Girls Districts */}
         <section>
           <div className="mb-4">
-            <h2 className="text-xl font-bold text-purple-900">Girls Districts</h2>
+            <h2 className="text-xl font-bold text-rose-900">Girls Districts</h2>
             <p className="text-slate-500 text-sm mt-0.5">Select a district</p>
           </div>
           <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">

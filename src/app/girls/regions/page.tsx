@@ -22,7 +22,7 @@ export default async function GirlsRegionsPage() {
       </Link>
 
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-purple-900">Girls Region Brackets</h1>
+        <h1 className="text-2xl font-bold text-rose-900">Girls Region Brackets</h1>
         <div className="flex items-center gap-1 text-slate-500 text-sm mt-1">
           <span>NJSIAA</span>
           <InlineSeasonPicker activeSeason={season} />

@@ -23,21 +23,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         gtag('js', new Date());
         gtag('config', 'G-XN8HTK8ZY1');
       `}</Script>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-50 min-h-screen flex flex-col`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white min-h-screen flex flex-col`}>
         <HeaderNav />
         <main className="flex-1">{children}</main>
-        <footer className="bg-slate-900 text-slate-400 text-xs text-center py-4 mt-8 flex flex-col items-center gap-3">
+        {/* Logo in white section above footer */}
+        <div className="bg-white flex justify-center py-6 mt-8">
           <Image
             src="/mwl-hat.png"
             alt="Mat Whizzer"
             width={48}
             height={48}
-            className="h-10 w-auto opacity-70"
+            className="h-10 w-auto opacity-60"
           />
-          <div className="flex items-center gap-4">
-            <span>&copy; 2026 Mat Whizzer LLC. All rights reserved.</span>
-            <a href="/feedback" className="hover:text-slate-200 transition-colors underline underline-offset-2">Feedback</a>
-          </div>
+        </div>
+        <footer className="bg-slate-900 text-slate-400 text-xs text-center py-4 flex items-center justify-center gap-4">
+          <span>&copy; 2026 Mat Whizzer LLC. All rights reserved.</span>
+          <a href="/feedback" className="hover:text-slate-200 transition-colors underline underline-offset-2">Feedback</a>
         </footer>
       </body>
     </html>

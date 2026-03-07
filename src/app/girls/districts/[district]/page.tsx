@@ -216,7 +216,7 @@ export default async function GirlsDistrictSummaryPage({
       </Link>
 
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-purple-900">District {d}</h1>
+        <h1 className="text-2xl font-bold text-rose-900">District {d}</h1>
         <div className="flex items-center gap-1 text-slate-500 text-sm mt-1">
           <span>NJSIAA</span>
           <InlineSeasonPicker activeSeason={season} seasons={[2]} />

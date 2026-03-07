@@ -162,7 +162,7 @@ export default async function GirlsSchoolProfilePage({
 
       {/* School header */}
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-purple-900">{schoolName}</h2>
+        <h2 className="text-2xl font-bold text-rose-900">{schoolName}</h2>
         <div className="flex flex-wrap items-center gap-1 text-slate-500 text-sm mt-1">
           {(districtLabels.length > 0 || regionLabels.length > 0) && (
             <span>{[...districtLabels, ...regionLabels].join(' · ')} ·</span>
