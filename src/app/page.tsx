@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
+import Image from 'next/image'
 import { getActiveSeason } from '@/lib/get-season'
 import { SEASONS } from '@/lib/seasons'
 
@@ -74,8 +75,21 @@ export default async function RootPage({
   return (
     <div className="max-w-5xl mx-auto px-4 py-10">
 
-      {/* ── Search bars ── */}
-      <div className="max-w-2xl mb-12">
+      {/* ── Logo + Search bars ── */}
+      <div className="mb-12 flex flex-col md:flex-row md:items-start md:gap-8">
+        {/* Mobile: logo above search */}
+        <div className="flex justify-center mb-6 md:hidden">
+          <Image
+            src="/whizzer-logo.jpg"
+            alt="Mat Whizzer"
+            width={200}
+            height={86}
+            className="h-24 w-auto"
+            priority
+          />
+        </div>
+
+      <div className="max-w-2xl flex-1">
         <h1 className="text-2xl font-bold text-slate-800 mb-8">NJSIAA Wrestling</h1>
 
         {/* Wrestler search */}
@@ -158,6 +172,19 @@ export default async function RootPage({
             </ul>
           )}
         </section>
+      </div>
+
+        {/* Desktop: logo to the right of search */}
+        <div className="hidden md:flex md:items-center md:justify-center md:pt-8">
+          <Image
+            src="/whizzer-logo.jpg"
+            alt="Mat Whizzer"
+            width={260}
+            height={112}
+            className="h-32 w-auto"
+            priority
+          />
+        </div>
       </div>
 
       {/* ── Leaderboards (shown when not searching) ── */}
@@ -275,7 +302,7 @@ export default async function RootPage({
         {/* Girls Regions */}
         <section>
           <div className="mb-4">
-            <h2 className="text-xl font-bold text-rose-900">Girls Regions</h2>
+            <h2 className="text-xl font-bold text-purple-900">Girls Regions</h2>
             <p className="text-slate-500 text-sm mt-0.5">NJSIAA {SEASONS[season]?.label ?? season} · Select a region</p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -315,7 +342,7 @@ export default async function RootPage({
         {/* Girls Districts */}
         <section>
           <div className="mb-4">
-            <h2 className="text-xl font-bold text-rose-900">Girls Districts</h2>
+            <h2 className="text-xl font-bold text-purple-900">Girls Districts</h2>
             <p className="text-slate-500 text-sm mt-0.5">Select a district</p>
           </div>
           <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
