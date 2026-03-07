@@ -277,7 +277,7 @@ export default async function WrestlerPage({
   const annotated = allMatches.map(m => {
     const isWinner = m.winner_entry_id != null && entrySet.has(m.winner_entry_id)
     const opponentEntryId = isWinner ? m.loser_entry_id : m.winner_entry_id
-    const isBye = m.win_type == null && m.loser_entry_id == null
+    const isBye = m.win_type === 'BYE' || (m.win_type == null && m.loser_entry_id == null)
     const oppData = opponentEntryId ? opponentMap[opponentEntryId] : null
     const opponent = isBye
       ? 'Bye'
@@ -355,8 +355,9 @@ export default async function WrestlerPage({
   const currentAnnotated = annotated.filter(
     m => (unwrap(m.tournament)?.season_id ?? 1) === currentSeason
   )
-  const wins   = currentAnnotated.filter(m => m.result === 'W').length
-  const losses = currentAnnotated.filter(m => m.result === 'L').length
+  const nonBye = currentAnnotated.filter(m => m.opponent !== 'Bye')
+  const wins   = nonBye.filter(m => m.result === 'W').length
+  const losses = nonBye.filter(m => m.result === 'L').length
 
   // Detect placements (champion = won Finals on championship side)
   type PlacementInfo = { tournament: string; place: number; tournamentType: string; seasonId: number }
@@ -598,8 +599,10 @@ export default async function WrestlerPage({
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100">
-                          {g.matches.map(m => (
-                            <tr key={m.id} className="hover:bg-slate-50">
+                          {g.matches.map(m => {
+                            const mIsBye = m.opponent === 'Bye'
+                            return (
+                            <tr key={m.id} className={mIsBye ? 'opacity-50' : 'hover:bg-slate-50'}>
                               <td className="px-4 py-2.5 text-slate-500">
                                 {m.round === 'F' && m.bracket_side === 'championship' && m.result === 'W' && (
                                   <span className="mr-1">{'\u{1F451}'}</span>
@@ -610,11 +613,15 @@ export default async function WrestlerPage({
                                 {ROUND_LABEL[m.round ?? ''] ?? m.round ?? '—'}
                               </td>
                               <td className="px-4 py-2.5">
-                                <span className={`font-bold text-sm ${
-                                  m.result === 'W' ? 'text-emerald-600' : 'text-red-500'
-                                }`}>
-                                  {m.result}
-                                </span>
+                                {mIsBye ? (
+                                  <span className="text-sm text-slate-400 italic">Bye</span>
+                                ) : (
+                                  <span className={`font-bold text-sm ${
+                                    m.result === 'W' ? 'text-emerald-600' : 'text-red-500'
+                                  }`}>
+                                    {m.result}
+                                  </span>
+                                )}
                               </td>
                               <td className="px-4 py-2.5 text-slate-800 font-medium">
                                 {m.opponentId ? (
@@ -634,10 +641,11 @@ export default async function WrestlerPage({
                                 )}
                               </td>
                               <td className="px-4 py-2.5 text-right text-slate-500 font-mono text-xs">
-                                {m.win_type ? formatScore(m, m.result === 'W') : '—'}
+                                {mIsBye ? '' : (m.win_type ? formatScore(m, m.result === 'W') : '—')}
                               </td>
                             </tr>
-                          ))}
+                            )
+                          })}
                         </tbody>
                       </table>
                     </div>

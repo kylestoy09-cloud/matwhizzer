@@ -36,6 +36,7 @@ type MatchRow = {
 const CARD_H = 88
 
 const ROUND_LABEL: Record<string, string> = {
+  BYE: 'Byes',
   R2: 'Prelims',
   QF: 'Quarters',
   SF: 'Semis',
@@ -53,6 +54,7 @@ const PREV_ROUND: Record<string, string> = { SF: 'QF', F: 'SF', QF: 'R2' }
 
 function formatResult(m: MatchRow): string {
   if (!m.win_type) return ''
+  if (m.win_type === 'BYE') return 'Adv.'
   if (m.win_type === 'FALL') {
     if (m.fall_time_seconds) {
       const mn = Math.floor(m.fall_time_seconds / 60)
@@ -139,6 +141,51 @@ function orderChampMatches(allChamp: MatchRow[]): Map<string, MatchRow[]> {
   }
 
   return ordered
+}
+
+// ── Bye synthesis from match data ──────────────────────────────────────────────
+
+function synthesizeByesFromMatches(
+  champMatches: MatchRow[],
+  firstRound: string,
+  feedingRound: string,
+): MatchRow[] {
+  const inFeeding = new Set<string>()
+  for (const m of champMatches) {
+    if (m.round === feedingRound) {
+      if (m.winner_entry_id) inFeeding.add(m.winner_entry_id)
+      if (m.loser_entry_id) inFeeding.add(m.loser_entry_id)
+    }
+  }
+  const byes: MatchRow[] = []
+  const seen = new Set<string>()
+  for (const m of champMatches) {
+    if (m.round === firstRound) {
+      for (const side of ['winner', 'loser'] as const) {
+        const eid = side === 'winner' ? m.winner_entry_id : m.loser_entry_id
+        if (!eid || inFeeding.has(eid) || seen.has(eid)) continue
+        seen.add(eid)
+        byes.push({
+          match_id: `bye-${eid}`,
+          round: 'BYE',
+          bracket_side: 'championship',
+          win_type: 'BYE',
+          winner_score: null, loser_score: null, fall_time_seconds: null,
+          winner_entry_id: eid,
+          winner_wrestler_id: side === 'winner' ? m.winner_wrestler_id : m.loser_wrestler_id,
+          winner_name: side === 'winner' ? m.winner_name : m.loser_name,
+          winner_school: side === 'winner' ? m.winner_school : m.loser_school,
+          winner_school_name: side === 'winner' ? m.winner_school_name : m.loser_school_name,
+          winner_seed: side === 'winner' ? m.winner_seed : m.loser_seed,
+          winner_grade: side === 'winner' ? m.winner_grade : m.loser_grade,
+          loser_entry_id: null, loser_wrestler_id: null,
+          loser_name: null, loser_school: null, loser_school_name: null,
+          loser_seed: null, loser_grade: null,
+        })
+      }
+    }
+  }
+  return byes.sort((a, b) => (a.winner_seed ?? 99) - (b.winner_seed ?? 99))
 }
 
 // ── Match Card ─────────────────────────────────────────────────────────────────
@@ -392,12 +439,16 @@ export default async function DistrictBracketPage({
   const r2Matches    = champOrdered.get('R2') ?? []
   const r2Display    = r2Matches.filter(m => m.loser_wrestler_id !== null)
 
+  // Synthesize bye cards: entries in QF but not in R2
+  const byeMatches = synthesizeByesFromMatches(champ, 'QF', 'R2')
+
   // Championship columns (QF → SF → F)
   const champCols = CHAMP_COLS.filter(r => (champOrdered.get(r) ?? []).length > 0)
 
   // Number of QF matches drives all slot heights
   const qfCount = (champOrdered.get('QF') ?? []).length || 1
-  const totalH = qfCount * CARD_H
+  const baseCount = Math.max(byeMatches.length, qfCount, 1)
+  const totalH = baseCount * CARD_H
 
   // Consolation rounds in display order
   const consolRounds = ['3rd_Place', '5th_Place', '7th_Place'].filter(r =>
@@ -452,6 +503,27 @@ export default async function DistrictBracketPage({
       {/* ── Bracket (horizontal scroll on mobile) ── */}
       <div className="overflow-x-auto -webkit-overflow-scrolling-touch">
         <div className="flex gap-0 items-start min-w-max">
+
+          {/* Bye column */}
+          {byeMatches.length > 0 && (
+            <div className="flex flex-col shrink-0">
+              <div className="h-8 flex items-center justify-center px-4">
+                <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">
+                  Byes
+                </span>
+              </div>
+              {byeMatches.map(m => (
+                <div
+                  key={m.match_id}
+                  className="flex items-center justify-center px-2"
+                  style={{ height: totalH / byeMatches.length }}
+                >
+                  <MatchCard m={m} />
+                </div>
+              ))}
+            </div>
+          )}
+
           {champCols.map((round, ri) => {
             const colMatches = champOrdered.get(round) ?? []
             const slotH = totalH / colMatches.length
