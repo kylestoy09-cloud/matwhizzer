@@ -311,7 +311,7 @@ export default async function GirlsDistrictSummaryPage({
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
 
           <StatCard<MatTimeRow>
-            title="Fast Finishers"
+            title="The Terminators"
             note="Total Tourney Mat Time"
             rows={matTime}
             subtitle={r => `${r.school_name || r.school || '—'} · ${r.match_count} wins`}
@@ -319,21 +319,21 @@ export default async function GirlsDistrictSummaryPage({
           />
 
           <StatCard<FastestPinRow>
-            title="Fastest Pin"
+            title="Quickest Deck"
             rows={fastPin}
             subtitle={r => `${r.school_name || r.school || '—'} · ${r.weight} lb`}
             value={r => fmtTime(r.fall_time_seconds)}
           />
 
           <StatCard<FastestTfRow>
-            title="Fastest Tech Fall"
+            title="Quickest Tech"
             rows={fastTf}
             subtitle={r => `${r.school_name || r.school || '—'} · ${r.weight} lb`}
             value={r => fmtTime(r.fall_time_seconds)}
           />
 
           <StatCard<DominanceRow>
-            title="Dominance Score"
+            title="Hammer Rating"
             note="Pin/TF: 9−sec/60 · MD: 2 · Dec: 1 · loser: −score"
             rows={dominance}
             subtitle={r => `${r.school_name || r.school || '—'} · ${r.win_count} wins`}

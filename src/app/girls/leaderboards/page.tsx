@@ -267,7 +267,7 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
           <LeaderTable<PoolFastRow>
-            title="Fastest Pin"
+            title="Quickest Deck"
             description="Single quickest fall in any match"
             rows={d.fastestPin}
             cols={[
@@ -291,7 +291,7 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
           />
 
           <LeaderTable<PoolFastRow>
-            title="Fastest Tech Fall"
+            title="Quickest Tech"
             description="Single quickest tech fall in any match"
             rows={d.fastestTf}
             cols={[
@@ -407,7 +407,7 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
             />
 
             <LeaderTable<PoolBonusRow>
-              title="Most Bonus Wins"
+              title="Bonus Point Percentage"
               description="Total FALL + TF + MD + INJ + DQ wins"
               rows={d.mostBonus}
               cols={[
@@ -427,7 +427,7 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
             />
 
             <LeaderTable<PoolDomRow>
-              title="Dominance Score"
+              title="Hammer Rating"
               description="Avg pts/match (wins + losses) — Pin/TF: 9−sec/60 · MD: 2 · Dec: 1 · loser: −score · min 2 wins"
               rows={d.poolDom}
               cols={[
@@ -448,9 +448,9 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
 
           </div>
 
-          {/* Fast Finishers — full width */}
+          {/* The Terminators — full width */}
           <LeaderTable<PoolMatTimeRow>
-            title="Fast Finishers"
+            title="The Terminators"
             description="Total Tourney Mat Time"
             rows={d.matTime}
             cols={[
@@ -489,7 +489,7 @@ function AnalyticsTab({ d }: { d: AnalyticsData }) {
     <div className="space-y-10">
 
       <LeaderTable<DomRow>
-        title="Dominance Score"
+        title="Hammer Rating"
         description="Avg pts/match across wins & losses — Pin/TF: 9−(sec÷60) · MD: 2.0 · Dec: 1.0 · loser gets −score"
         rows={d.dominance}
         cols={[
@@ -509,7 +509,7 @@ function AnalyticsTab({ d }: { d: AnalyticsData }) {
       />
 
       <LeaderTable<ComebackRow>
-        title="Consolation Warriors"
+        title="Backside Warriors"
         description="Most consolation bracket wins in a single tournament"
         rows={d.comebacks}
         cols={[
@@ -578,7 +578,7 @@ function AnalyticsTab({ d }: { d: AnalyticsData }) {
 
       <section>
         <SectionHeader
-          title="Weight Class Competitiveness"
+          title="The Margins"
           description="Average score margin in decision matches (DEC + MD) — lower = tighter competition"
         />
         <div className="max-w-sm">

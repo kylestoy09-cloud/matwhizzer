@@ -209,26 +209,26 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
         <h2 className="text-base font-semibold text-slate-800 mb-3">State Leaders</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
           <StatCard<MatTimeRow>
-            title="Fast Finishers"
+            title="The Terminators"
             note="Total Tourney Mat Time"
             rows={matTime}
             subtitle={r => `${r.school_name || r.school || '—'} · ${r.match_count} wins`}
             value={r => fmtTime(r.total_seconds)}
           />
           <StatCard<FastestPinRow>
-            title="Fastest Pin"
+            title="Quickest Deck"
             rows={fastPin}
             subtitle={r => `${r.school_name || r.school || '—'} · ${r.weight} lb`}
             value={r => fmtTime(r.fall_time_seconds)}
           />
           <StatCard<FastestTfRow>
-            title="Fastest Tech Fall"
+            title="Quickest Tech"
             rows={fastTf}
             subtitle={r => `${r.school_name || r.school || '—'} · ${r.weight} lb`}
             value={r => fmtTime(r.fall_time_seconds)}
           />
           <StatCard<DominanceRow>
-            title="Dominance Score"
+            title="Hammer Rating"
             note="Pin/TF: 9−sec/60 · MD: 2 · Dec: 1 · loser: −score"
             rows={dominance}
             subtitle={r => `${r.school_name || r.school || '—'} · ${r.win_count} wins`}

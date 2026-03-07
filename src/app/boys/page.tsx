@@ -164,7 +164,7 @@ export default async function BoysPage({
 
           {topSchoolsByWrestlers.length > 0 && (
             <section>
-              <h2 className="text-lg font-bold text-slate-900 mb-3">Teams with Most Active Wrestlers</h2>
+              <h2 className="text-lg font-bold text-slate-900 mb-3">Still in the Room</h2>
               <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2">
                 {topSchoolsByWrestlers.map(s => (
                   <Link
@@ -218,7 +218,7 @@ export default async function BoysPage({
 
           {topDominance.length > 0 && (
             <section>
-              <h2 className="text-lg font-bold text-slate-900 mb-3">Dominance Leaders</h2>
+              <h2 className="text-lg font-bold text-slate-900 mb-3">Hammer Rating</h2>
               <p className="text-slate-500 text-sm mb-4">Pin/TF: 9-sec/60 | MD: 2 | Dec: 1 | Loser: -score | Averaged across all matches</p>
               <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
                 <div className="divide-y divide-slate-100">
