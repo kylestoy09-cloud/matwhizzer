@@ -97,6 +97,18 @@ function tournamentTypeColor(tt: string): string {
   }
 }
 
+function cleanTournamentName(raw: string): string {
+  let n = raw.replace('Boy_s ', '').replace('Girl_s ', '')
+  // "Districts District 2" → "District 2"
+  n = n.replace(/^Districts /, '')
+  // "Regions r1" → "Region 1", "Regions Region 2" → "Region 2"
+  n = n.replace(/^Regions r(\d+)$/i, 'Region $1')
+  n = n.replace(/^Regions /, '')
+  // "States" → "State"
+  n = n.replace(/^States$/, 'State')
+  return n
+}
+
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default async function WrestlerPage({
@@ -464,7 +476,7 @@ export default async function WrestlerPage({
                     </span>
                   )}
                   {seasonPlacements.map((p, i) => {
-                    const label = p.tournament.replace('Boy_s ', '').replace('Girl_s ', '')
+                    const label = cleanTournamentName(p.tournament)
                     const placeLabel = p.place === 1 ? 'Champion' : p.place === 2 ? 'Runner-Up' : `${p.place}${p.place === 3 ? 'rd' : 'th'} Place`
                     const icon = p.place === 1 ? '\u{1F451}' : p.place <= 3 ? '\u{1F3C5}' : '\u{1F396}'
                     const colors = p.place === 1
@@ -570,7 +582,7 @@ export default async function WrestlerPage({
                         {TOURNAMENT_TYPE_LABEL[g.tournament_type] ?? g.tournament_type}
                       </span>
                       <h4 className="font-semibold text-slate-800">
-                        {g.tournament_name.replace('Boy_s ', '').replace('Girl_s ', '')}
+                        {cleanTournamentName(g.tournament_name)}
                       </h4>
                       <span className="text-slate-400 text-sm">&middot; {g.weight} lb</span>
                     </div>
