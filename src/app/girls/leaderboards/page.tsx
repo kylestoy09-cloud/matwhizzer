@@ -20,6 +20,7 @@ type PoolFastRow = {
   school_name: string | null
   fall_time_seconds: number
   weight: number
+  match_context: string | null
 }
 
 type PoolPinRow = {
@@ -113,6 +114,33 @@ type TechMasterRow = {
   fastest_tf_display: string | null
 }
 
+type LowSeedChampRow = {
+  wrestler_id: string
+  wrestler_name: string
+  school: string | null
+  school_name: string | null
+  weight: number
+  seed: number
+  region: string
+  win_type: string
+}
+
+type RevengeRow = {
+  avenger_id: string
+  avenger_name: string
+  avenger_school: string | null
+  avenger_school_name: string | null
+  opponent_id: string
+  opponent_name: string
+  opponent_school: string | null
+  weight: number
+  revenge_round: string
+  revenge_win_type: string
+  region: string
+  district_round: string
+  district_loss_type: string
+}
+
 type AnalyticsData = {
   dominance:    DomRow[]
   districts:    DistrictRow[]
@@ -121,6 +149,8 @@ type AnalyticsData = {
   comebacks:    ComebackRow[]
   upsets:       UpsetRow[]
   techMasters:  TechMasterRow[]
+  lowSeedChamps: LowSeedChampRow[]
+  revenge:      RevengeRow[]
 }
 
 // ── Data fetching ─────────────────────────────────────────────────────────────
@@ -170,6 +200,8 @@ async function fetchAnalytics(season: number): Promise<AnalyticsData> {
     { data: comebacks },
     { data: upsets },
     { data: techMasters },
+    { data: lowSeedChamps },
+    { data: revenge },
   ] = await Promise.all([
     supabase.rpc('lb_dominance',              { p_gender: 'F', p_season: season }),
     supabase.rpc('lb_district_strength',      { p_gender: 'F', p_season: season }),
@@ -178,6 +210,8 @@ async function fetchAnalytics(season: number): Promise<AnalyticsData> {
     supabase.rpc('lb_comebacks',              { p_gender: 'F', p_season: season }),
     supabase.rpc('lb_bracket_buster',         { p_gender: 'F', p_season: season }),
     supabase.rpc('lb_technical_masters',      { p_gender: 'F', p_season: season }),
+    supabase.rpc('lb_lowest_seeded_champs',   { p_gender: 'F', p_season: season }),
+    supabase.rpc('lb_revenge_matches',        { p_gender: 'F', p_season: season }),
   ])
   return {
     dominance:    ((dominance  ?? []) as DomRow[]).slice(0, 25),
@@ -187,6 +221,8 @@ async function fetchAnalytics(season: number): Promise<AnalyticsData> {
     comebacks:    (comebacks  ?? []) as ComebackRow[],
     upsets:       (upsets      ?? []) as UpsetRow[],
     techMasters:  (techMasters ?? []) as TechMasterRow[],
+    lowSeedChamps: (lowSeedChamps ?? []) as LowSeedChampRow[],
+    revenge:      (revenge ?? []) as RevengeRow[],
   }
 }
 
@@ -310,6 +346,10 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
                 render: r => <span className="text-slate-500 tabular-nums">{r.weight}</span>,
               },
               {
+                label: 'Match', align: 'right',
+                render: r => <span className="text-slate-400 text-xs">{r.match_context}</span>,
+              },
+              {
                 label: 'Time', align: 'right',
                 render: r => (
                   <span className="font-bold text-slate-800 tabular-nums font-mono">
@@ -332,6 +372,10 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
               {
                 label: 'Wt', align: 'right',
                 render: r => <span className="text-slate-500 tabular-nums">{r.weight}</span>,
+              },
+              {
+                label: 'Match', align: 'right',
+                render: r => <span className="text-slate-400 text-xs">{r.match_context}</span>,
               },
               {
                 label: 'Time', align: 'right',
@@ -601,6 +645,62 @@ function AnalyticsTab({ d, season }: { d: AnalyticsData; season: number }) {
       />
 
       <TechnicalMasters rows={d.techMasters} limit={25} />
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+        <LeaderTable<LowSeedChampRow>
+          title="Cinderella Champs"
+          description="Lowest-seeded region champions — seed 3 or worse"
+          rows={d.lowSeedChamps}
+          cols={[
+            {
+              label: 'Champion', align: 'left',
+              render: r => <WrestlerCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} />,
+            },
+            {
+              label: 'Wt', align: 'right',
+              render: r => <span className="text-slate-500 tabular-nums">{r.weight}</span>,
+            },
+            {
+              label: 'Seed', align: 'right',
+              render: r => <span className="font-bold text-slate-800 tabular-nums">#{r.seed}</span>,
+            },
+            {
+              label: 'Region', align: 'right',
+              render: r => <span className="text-slate-500 text-xs">{r.region}</span>,
+            },
+          ]}
+        />
+
+        <LeaderTable<RevengeRow>
+          title="Revenge Tour"
+          description="Avenged a district loss at regions — same opponent, different result"
+          rows={d.revenge}
+          cols={[
+            {
+              label: 'Avenger', align: 'left',
+              render: r => <WrestlerCell id={r.avenger_id} name={r.avenger_name} school={r.avenger_school_name || r.avenger_school} />,
+            },
+            {
+              label: 'Over', align: 'left',
+              render: r => (
+                <Link href={`/wrestler/${r.opponent_id}`} className="text-slate-500 text-xs hover:underline truncate block">
+                  {r.opponent_name}
+                </Link>
+              ),
+            },
+            {
+              label: 'Wt', align: 'right',
+              render: r => <span className="text-slate-500 tabular-nums">{r.weight}</span>,
+            },
+            {
+              label: 'Round', align: 'right',
+              render: r => <span className="text-slate-400 text-xs">{r.region} {r.revenge_round === 'F' ? 'Final' : r.revenge_round}</span>,
+            },
+          ]}
+        />
+
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
