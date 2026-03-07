@@ -3,6 +3,7 @@ import { supabase } from '@/lib/supabase'
 import { getActiveSeason } from '@/lib/get-season'
 import { BracketBuster } from '@/components/BracketBuster'
 import { TeamScoreCard } from '@/components/TeamScoreCard'
+import { IndividualTeamPoints } from '@/components/IndividualTeamPoints'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -223,35 +224,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
       {/* ── Individual Team Points ── */}
       {teamPts.length > 0 && (
         <section className="mb-10">
-          <h2 className="text-base font-semibold text-slate-800 mb-3">Individual Team Points</h2>
-          <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
-            <table className="min-w-full text-sm">
-              <thead>
-                <tr className="bg-slate-50 border-b border-slate-200">
-                  <th className="px-3 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide w-8">#</th>
-                  <th className="px-3 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Wrestler</th>
-                  <th className="px-3 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">School</th>
-                  <th className="px-3 py-2.5 text-right text-xs font-semibold text-slate-500 uppercase tracking-wide w-14">Wt</th>
-                  <th className="px-3 py-2.5 text-right text-xs font-semibold text-slate-500 uppercase tracking-wide w-16">Pts</th>
-                </tr>
-              </thead>
-              <tbody>
-                {teamPts.map((r, i) => (
-                  <tr key={`${r.wrestler_id}-${i}`} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
-                    <td className="px-3 py-2 text-xs text-slate-400">{i + 1}</td>
-                    <td className="px-3 py-2">
-                      <Link href={`/wrestler/${r.wrestler_id}`} className="font-medium text-slate-800 hover:underline">
-                        {r.wrestler_name}
-                      </Link>
-                    </td>
-                    <td className="px-3 py-2 text-slate-500">{r.school_name || r.school}</td>
-                    <td className="px-3 py-2 text-right text-slate-600">{r.weight}</td>
-                    <td className="px-3 py-2 text-right font-semibold text-slate-700">{r.team_points}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <IndividualTeamPoints rows={teamPts} />
         </section>
       )}
 

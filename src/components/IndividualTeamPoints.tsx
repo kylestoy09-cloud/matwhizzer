@@ -13,9 +13,9 @@ type TeamPtsRow = {
 }
 
 export function IndividualTeamPoints({ rows }: { rows: TeamPtsRow[] }) {
-  const [expanded, setExpanded] = useState(false)
-  const visible = expanded ? rows : rows.slice(0, 8)
-  const hasMore = rows.length > 8
+  const [visibleCount, setVisibleCount] = useState(10)
+  const visible = rows.slice(0, visibleCount)
+  const hasMore = visibleCount < rows.length
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
@@ -44,13 +44,25 @@ export function IndividualTeamPoints({ rows }: { rows: TeamPtsRow[] }) {
           </div>
         ))}
       </div>
-      {hasMore && (
-        <button
-          onClick={() => setExpanded(!expanded)}
-          className="w-full px-4 py-2 text-xs font-medium text-slate-500 hover:text-slate-700 hover:bg-slate-50 border-t border-slate-100 transition-colors"
-        >
-          {expanded ? 'Show top 8' : `Show all ${rows.length}`}
-        </button>
+      {(hasMore || visibleCount > 10) && (
+        <div className="flex border-t border-slate-100">
+          {hasMore && (
+            <button
+              onClick={() => setVisibleCount(c => Math.min(c + 10, rows.length))}
+              className="flex-1 px-4 py-2 text-xs font-medium text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition-colors"
+            >
+              Show 10 More
+            </button>
+          )}
+          {visibleCount > 10 && (
+            <button
+              onClick={() => setVisibleCount(10)}
+              className="flex-1 px-4 py-2 text-xs font-medium text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition-colors"
+            >
+              Show Less
+            </button>
+          )}
+        </div>
       )}
     </div>
   )
