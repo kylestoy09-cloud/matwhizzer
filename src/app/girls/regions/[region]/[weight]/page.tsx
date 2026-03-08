@@ -446,10 +446,25 @@ function DistrictQualifiers({ champs }: { champs: DistrictChamp[] }) {
                   </span>
                   <Link
                     href={`/wrestler/${dc.wrestler_id}`}
-                    className="text-[13px] font-medium text-slate-800 hover:underline truncate"
+                    className={`text-[13px] font-medium hover:underline truncate ${dc.annotation === 'Withdrawn' ? 'text-slate-400 line-through' : 'text-slate-800'}`}
                   >
                     {dc.wrestler_name}
                   </Link>
+                  {dc.annotation === 'Withdrawn' && (
+                    <span className="text-[10px] px-1 rounded bg-red-50 text-red-500 font-medium shrink-0">
+                      WD
+                    </span>
+                  )}
+                  {dc.annotation === 'ActiveAlternate' && (
+                    <span className="text-[10px] px-1 rounded bg-amber-50 text-amber-700 font-bold shrink-0">
+                      (Alternate)
+                    </span>
+                  )}
+                  {dc.annotation === 'Alternate' && (
+                    <span className="text-[10px] px-1 rounded bg-slate-50 text-slate-500 font-medium shrink-0">
+                      (Alternate)
+                    </span>
+                  )}
                   <span className="text-[10px] text-slate-400 truncate ml-auto shrink-0">
                     {dc.school_name}
                   </span>
@@ -525,7 +540,31 @@ export default async function GirlsRegionBracketPage({
 
   const matches = (matchData ?? []) as MatchRow[]
   const entries = (entryData ?? []) as (BracketEntry & { tournament_id: number; weight_class_id: number })[]
-  const districtChamps = (champData ?? []) as DistrictChamp[]
+  const rawChamps = (champData ?? []) as DistrictChamp[]
+
+  // Annotate district placers who withdrew (not in region entries) and their replacements
+  const entryWrestlerIds = new Set(entries.map(e => e.wrestler_id))
+  const districtChamps = rawChamps.map(dc => {
+    // Top-3 finisher not in region entries = Withdrawn
+    if (dc.place >= 1 && dc.place <= 3 && !entryWrestlerIds.has(dc.wrestler_id)) {
+      return { ...dc, annotation: 'Withdrawn' }
+    }
+    // All 4th place finishers are alternates
+    if (dc.place === 4) {
+      if (entryWrestlerIds.has(dc.wrestler_id)) {
+        const withdrawn = rawChamps.find(c =>
+          c.district_num === dc.district_num && c.place >= 1 && c.place <= 3
+          && !entryWrestlerIds.has(c.wrestler_id)
+        )
+        if (withdrawn) {
+          return { ...dc, annotation: 'ActiveAlternate' }
+        }
+      }
+      return { ...dc, annotation: 'Alternate' }
+    }
+    return dc
+  })
+
   if (matches.length === 0 && entries.length === 0) notFound()
 
   // Split sides

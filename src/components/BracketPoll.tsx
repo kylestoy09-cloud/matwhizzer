@@ -512,7 +512,7 @@ function DistrictPodiums({ champs }: { champs: DistrictChamp[] }) {
                   </span>
                   <Link
                     href={`/wrestler/${dc.wrestler_id}`}
-                    className={`text-[13px] font-medium hover:underline truncate ${dc.annotation === 'Withdrawn' ? 'text-slate-400 line-through' : dc.annotation ? 'text-slate-600' : 'text-slate-800'}`}
+                    className={`text-[13px] font-medium hover:underline truncate ${dc.annotation === 'Withdrawn' ? 'text-slate-400 line-through' : 'text-slate-800'}`}
                   >
                     {dc.wrestler_name}
                   </Link>
@@ -521,9 +521,14 @@ function DistrictPodiums({ champs }: { champs: DistrictChamp[] }) {
                       WD
                     </span>
                   )}
+                  {dc.annotation === 'ActiveAlternate' && (
+                    <span className="text-[10px] px-1 rounded bg-amber-50 text-amber-700 font-bold shrink-0">
+                      (Alternate)
+                    </span>
+                  )}
                   {dc.annotation === 'Alternate' && (
-                    <span className="text-[10px] px-1 rounded bg-amber-50 text-amber-600 font-semibold shrink-0">
-                      Alt
+                    <span className="text-[10px] px-1 rounded bg-slate-50 text-slate-500 font-medium shrink-0">
+                      (Alternate)
                     </span>
                   )}
                   <span className="text-[10px] text-slate-400 truncate ml-auto shrink-0">

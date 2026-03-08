@@ -526,16 +526,19 @@ export default async function RegionBracketPage({
     if (dc.place >= 1 && dc.place <= 3 && !entryWrestlerIds.has(dc.wrestler_id)) {
       return { ...dc, annotation: 'Withdrawn' }
     }
-    // 4th place finisher in region entries = Alternate
-    if (dc.place === 4 && entryWrestlerIds.has(dc.wrestler_id)) {
-      // Check if any top-3 from same district withdrew
-      const withdrawn = rawChamps.find(c =>
-        c.district_num === dc.district_num && c.place >= 1 && c.place <= 3
-        && !entryWrestlerIds.has(c.wrestler_id)
-      )
-      if (withdrawn) {
-        return { ...dc, annotation: 'Alternate' }
+    // All 4th place finishers are alternates
+    if (dc.place === 4) {
+      // If they're in the bracket replacing a WD, mark as active alternate
+      if (entryWrestlerIds.has(dc.wrestler_id)) {
+        const withdrawn = rawChamps.find(c =>
+          c.district_num === dc.district_num && c.place >= 1 && c.place <= 3
+          && !entryWrestlerIds.has(c.wrestler_id)
+        )
+        if (withdrawn) {
+          return { ...dc, annotation: 'ActiveAlternate' }
+        }
       }
+      return { ...dc, annotation: 'Alternate' }
     }
     return dc
   })
