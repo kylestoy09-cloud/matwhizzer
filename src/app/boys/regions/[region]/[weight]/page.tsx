@@ -596,12 +596,12 @@ export default async function RegionBracketPage({
   const r2Matches = champOrdered.get('R2') ?? []
   const combinedFirstRound = buildCombinedFirstRound(r2Matches, byeMatches, entries)
 
-  // Championship display: Combined → QF → SF → F → 3rd_Place
+  // Championship display: Combined → QF → SF → F
   const champRounds = (['QF', 'SF', 'F'] as const).filter(r => (champOrdered.get(r) ?? []).length > 0)
-  const thirdPlaceMatches = champOrdered.get('3rd_Place') ?? matchesByRound.get('3rd_Place') ?? []
 
-  // Consolation display: C1 → C2 → 5th_Place
+  // Consolation display: C1 → C2 → 3rd_Place → 5th_Place
   const consolRounds = (['C1', 'C2'] as const).filter(r => (matchesByRound.get(r) ?? []).length > 0)
+  const thirdPlaceMatches = champOrdered.get('3rd_Place') ?? matchesByRound.get('3rd_Place') ?? []
   const fifthPlaceMatches = matchesByRound.get('5th_Place') ?? []
 
   // Heights
@@ -610,12 +610,13 @@ export default async function RegionBracketPage({
 
   const consolBaseCount = Math.max(
     ...consolRounds.map(r => (matchesByRound.get(r) ?? []).length),
+    thirdPlaceMatches.length,
     fifthPlaceMatches.length,
     1,
   )
   const consolTotalH = consolBaseCount * CARD_H
 
-  const hasConsol = consolRounds.length > 0 || fifthPlaceMatches.length > 0
+  const hasConsol = consolRounds.length > 0 || thirdPlaceMatches.length > 0 || fifthPlaceMatches.length > 0
 
   return (
     <div className="max-w-fit mx-auto px-4 py-8">
@@ -676,10 +677,6 @@ export default async function RegionBracketPage({
               />
             ))}
 
-            {/* 3rd Place */}
-            {thirdPlaceMatches.length > 0 && (
-              <BracketColumn label="3rd Place" matches={thirdPlaceMatches} totalH={champTotalH} />
-            )}
           </div>
         </div>
         <p
@@ -713,6 +710,10 @@ export default async function RegionBracketPage({
                   totalH={consolTotalH}
                 />
               ))}
+
+              {thirdPlaceMatches.length > 0 && (
+                <BracketColumn label="3rd Place" matches={thirdPlaceMatches} totalH={consolTotalH} />
+              )}
 
               {fifthPlaceMatches.length > 0 && (
                 <BracketColumn label="5th Place" matches={fifthPlaceMatches} totalH={consolTotalH} />

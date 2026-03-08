@@ -594,12 +594,12 @@ export default async function GirlsRegionBracketPage({
   const champ = matches.filter(m => m.bracket_side === 'championship')
   const champOrdered = orderChampMatches(champ)
 
-  // Championship display: R1 → R2 → QF → SF → F → 3rd_Place
+  // Championship display: R1 → R2 → QF → SF → F
   const champRounds = (['R1', 'R2', 'QF', 'SF', 'F'] as const).filter(r => (champOrdered.get(r) ?? []).length > 0)
-  const thirdPlaceMatches = champOrdered.get('3rd_Place') ?? matchesByRound.get('3rd_Place') ?? []
 
-  // Consolation display: C1 → C2 → C3 → C4 → 5th_Place
+  // Consolation display: C1 → C2 → C3 → C4 → 3rd_Place → 5th_Place
   const consolRounds = (['C1', 'C2', 'C3', 'C4'] as const).filter(r => (matchesByRound.get(r) ?? []).length > 0)
+  const thirdPlaceMatches = champOrdered.get('3rd_Place') ?? matchesByRound.get('3rd_Place') ?? []
   const fifthPlaceMatches = matchesByRound.get('5th_Place') ?? []
 
   // Heights
@@ -611,12 +611,13 @@ export default async function GirlsRegionBracketPage({
 
   const consolBaseCount = Math.max(
     ...consolRounds.map(r => (matchesByRound.get(r) ?? []).length),
+    thirdPlaceMatches.length,
     fifthPlaceMatches.length,
     1,
   )
   const consolTotalH = consolBaseCount * CARD_H
 
-  const hasConsol = consolRounds.length > 0 || fifthPlaceMatches.length > 0
+  const hasConsol = consolRounds.length > 0 || thirdPlaceMatches.length > 0 || fifthPlaceMatches.length > 0
 
   return (
     <div className="max-w-fit mx-auto px-4 py-8">
@@ -665,9 +666,6 @@ export default async function GirlsRegionBracketPage({
                 />
               ))}
 
-              {thirdPlaceMatches.length > 0 && (
-                <BracketColumn label="3rd Place" matches={thirdPlaceMatches} totalH={champTotalH} />
-              )}
             </div>
           </div>
           <p
@@ -701,6 +699,10 @@ export default async function GirlsRegionBracketPage({
                     totalH={consolTotalH}
                   />
                 ))}
+
+                {thirdPlaceMatches.length > 0 && (
+                  <BracketColumn label="3rd Place" matches={thirdPlaceMatches} totalH={consolTotalH} />
+                )}
 
                 {fifthPlaceMatches.length > 0 && (
                   <BracketColumn label="5th Place" matches={fifthPlaceMatches} totalH={consolTotalH} />
