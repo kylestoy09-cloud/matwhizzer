@@ -247,6 +247,24 @@ export default async function RootPage({
       {/* ── Tournament grids ── */}
       <div className="space-y-10 border-t border-slate-200 pt-10">
 
+        {/* State Tournament buttons */}
+        <section className="flex flex-col sm:flex-row gap-3">
+          <Link
+            href="/boys/state"
+            className="flex items-center justify-center gap-2 flex-1 py-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-lg transition-colors shadow-md"
+          >
+            Boys State Tournament
+            <span className="text-white/70">→</span>
+          </Link>
+          <Link
+            href="/girls/state"
+            className="flex items-center justify-center gap-2 flex-1 py-4 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-lg transition-colors shadow-md"
+          >
+            Girls State Tournament
+            <span className="text-white/70">→</span>
+          </Link>
+        </section>
+
         {/* Boys Regions */}
         <section>
           <div className="mb-4">
