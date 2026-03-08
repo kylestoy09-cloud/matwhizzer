@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 const ERROR_MESSAGES = [
   "Dog must have unplugged the old Compaq Presario. Someone email me and I'll plug her back in when I get home.",
-  "Kevin got ringworm again and we had to quarantine the server room. We'll be back once he clears the skin check.",
+  "Kevin gave this page ringworm, so we gotta scrub it down. Please don't hate Kevin, he's really trying.",
 ]
 
 export default function Error({

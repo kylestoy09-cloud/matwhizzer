@@ -198,13 +198,22 @@ export default async function RegionSummaryPage({
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
 
-      {/* Back link */}
-      <Link
-        href="/boys/regions"
-        className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 mb-6 transition-colors"
-      >
-        ← Region Index
-      </Link>
+      {/* Region navigation */}
+      <div className="flex gap-1.5 mb-4">
+        {[1, 2, 3, 4, 5, 6, 7, 8].map(rn => (
+          <Link
+            key={rn}
+            href={`/boys/regions/${rn}`}
+            className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-colors ${
+              rn === r
+                ? 'bg-slate-800 text-white'
+                : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-400 shadow-sm'
+            }`}
+          >
+            R{rn}
+          </Link>
+        ))}
+      </div>
 
       {/* Header */}
       <div className="mb-8 text-center">

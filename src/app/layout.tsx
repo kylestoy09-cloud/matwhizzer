@@ -57,7 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             backgroundImage: 'url(/hat_logo_update.jpg)',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center center',
-            backgroundSize: '2100px',
+            backgroundSize: '1050px',
             opacity: 0.05,
           }}
         />

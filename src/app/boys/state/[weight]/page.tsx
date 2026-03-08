@@ -363,6 +363,66 @@ function RosterTable({ roster }: { roster: RosterItem[] }) {
 
 const WEIGHTS = [106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285] as const
 
+const PLACE_GROUP_LABEL: Record<string, string> = {
+  champ: 'Region Champions',
+  runner: 'Runners-Up',
+  third: '3rd Place',
+  fourth: '4th Place',
+}
+
+function StateQualifiers({ entries }: { entries: (BracketEntry & { tournament_id: number; weight_class_id: number })[] }) {
+  if (entries.length === 0) return null
+  const groups = [
+    { key: 'champ', seeds: [1, 8], label: 'Region Champions — Seeds 1-8' },
+    { key: 'runner', seeds: [9, 16], label: 'Runners-Up — Seeds 9-16' },
+    { key: 'third', seeds: [17, 24], label: '3rd Place — Seeds 17-24' },
+    { key: 'fourth', seeds: [25, 32], label: '4th Place — Seeds 25-32' },
+  ]
+  return (
+    <section className="mt-8 mb-4">
+      <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
+        State Qualifiers ({entries.length})
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {groups.map(g => {
+          const groupEntries = entries.filter(e => e.seed != null && e.seed >= g.seeds[0] && e.seed <= g.seeds[1])
+            .sort((a, b) => (a.seed ?? 0) - (b.seed ?? 0))
+          if (groupEntries.length === 0) return null
+          return (
+            <div key={g.key} className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm">
+              <div className="px-3 py-2 bg-slate-50 border-b border-slate-100">
+                <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide">{g.label}</span>
+              </div>
+              <div className="divide-y divide-slate-50">
+                {groupEntries.map(e => {
+                  const regionNum = e.seed != null ? ((e.seed - 1) % 8) + 1 : null
+                  return (
+                    <div key={e.entry_id} className="flex items-center gap-2 px-3 py-1.5">
+                      <span className="text-[10px] text-slate-400 w-4 text-right shrink-0">{e.seed}</span>
+                      <Link
+                        href={`/wrestler/${e.wrestler_id}`}
+                        className="text-[13px] font-medium text-slate-800 hover:underline truncate flex-1"
+                      >
+                        {e.wrestler_name}
+                      </Link>
+                      <span className="text-[10px] text-slate-400 truncate max-w-[80px]">{e.school_name || e.school}</span>
+                      {regionNum && (
+                        <span className="text-[10px] px-1 rounded bg-slate-100 text-slate-500 font-medium shrink-0">
+                          R{regionNum}
+                        </span>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </section>
+  )
+}
+
 function WeightNav({ weights, current, base }: {
   weights: readonly number[]
   current: number
@@ -461,6 +521,8 @@ export default async function StateBracketPage({
       </div>
 
       <WeightNav weights={WEIGHTS} current={weight} base="/boys/state" />
+
+      {entries.length > 0 && <StateQualifiers entries={entries} />}
 
       {matches.length === 0 ? (
         <BracketPoll

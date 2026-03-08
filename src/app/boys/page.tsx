@@ -217,6 +217,17 @@ export default async function BoysPage({
       <div className="space-y-10 border-t border-slate-200 pt-10">
 
         <section>
+          <Link
+            href="/boys/state"
+            className="flex items-center justify-center gap-2 w-full py-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-lg transition-colors shadow-md mb-6"
+          >
+            <span className="text-2xl">🏆</span>
+            Boys State Tournament
+            <span className="text-white/70 ml-1">→</span>
+          </Link>
+        </section>
+
+        <section>
           <div className="mb-4">
             <h2 className="text-xl font-bold text-slate-900">Regions</h2>
             <p className="text-slate-500 text-sm mt-0.5">Select a region</p>
