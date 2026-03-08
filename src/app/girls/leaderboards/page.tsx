@@ -243,12 +243,13 @@ function PoolNav({ active, tab }: { active: string; tab: string }) {
           key={p.key}
           href={`/girls/leaderboards?tab=${tab}&pool=${p.key}`}
           title={p.desc}
-          className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+          className={`flex flex-col items-center px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
             active === p.key
               ? 'bg-rose-900 text-white shadow-sm'
               : 'bg-white border border-slate-200 text-slate-600 hover:border-slate-400 hover:text-slate-900'
           }`}
         >
+          <span className="text-[9px] uppercase tracking-wider leading-none mb-0.5 opacity-60">Through</span>
           {p.label}
         </Link>
       ))}
