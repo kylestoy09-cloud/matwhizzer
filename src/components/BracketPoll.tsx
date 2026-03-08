@@ -36,6 +36,10 @@ type PollResult = {
   pick_2nd_count: number
   pick_3rd_count: number
   pick_4th_count: number
+  pick_5th_count: number
+  pick_6th_count: number
+  pick_7th_count: number
+  pick_8th_count: number
   total_picks: number
 }
 
@@ -44,9 +48,13 @@ type MyPick = {
   pick_2nd: string | null
   pick_3rd: string | null
   pick_4th: string | null
+  pick_5th: string | null
+  pick_6th: string | null
+  pick_7th: string | null
+  pick_8th: string | null
 }
 
-const PICK_KEYS: (keyof MyPick)[] = ['pick_1st', 'pick_2nd', 'pick_3rd', 'pick_4th']
+const PICK_KEYS: (keyof MyPick)[] = ['pick_1st', 'pick_2nd', 'pick_3rd', 'pick_4th', 'pick_5th', 'pick_6th', 'pick_7th', 'pick_8th']
 
 // ── Bracket matchup building from bracket_position ──────────────────────────
 
@@ -123,6 +131,10 @@ const PLACE_STYLES = [
   { bg: 'bg-slate-400', text: 'text-white', ring: 'ring-slate-400', label: '2nd', labelColor: 'text-slate-500' },
   { bg: 'bg-orange-400', text: 'text-white', ring: 'ring-orange-400', label: '3rd', labelColor: 'text-orange-500' },
   { bg: 'bg-sky-400', text: 'text-white', ring: 'ring-sky-400', label: '4th', labelColor: 'text-sky-500' },
+  { bg: 'bg-emerald-400', text: 'text-white', ring: 'ring-emerald-400', label: '5th', labelColor: 'text-emerald-600' },
+  { bg: 'bg-purple-400', text: 'text-white', ring: 'ring-purple-400', label: '6th', labelColor: 'text-purple-500' },
+  { bg: 'bg-rose-400', text: 'text-white', ring: 'ring-rose-400', label: '7th', labelColor: 'text-rose-500' },
+  { bg: 'bg-teal-400', text: 'text-white', ring: 'ring-teal-400', label: '8th', labelColor: 'text-teal-500' },
 ]
 
 // ── Main Component ──────────────────────────────────────────────────────────
@@ -144,7 +156,7 @@ export function BracketPoll({
   provenancePrefix?: string
   districtChamps?: DistrictChamp[]
 }) {
-  const [picks, setPicks] = useState<MyPick>({ pick_1st: null, pick_2nd: null, pick_3rd: null, pick_4th: null })
+  const [picks, setPicks] = useState<MyPick>({ pick_1st: null, pick_2nd: null, pick_3rd: null, pick_4th: null, pick_5th: null, pick_6th: null, pick_7th: null, pick_8th: null })
   const [results, setResults] = useState<PollResult[]>([])
   const [totalVoters, setTotalVoters] = useState(0)
   const [submitted, setSubmitted] = useState(false)
@@ -288,7 +300,7 @@ function buildPodium(
 ): PodiumEntry[] {
   // If we have votes, use the leaders
   if (totalVoters > 0 && results.length > 0) {
-    const countKeys = ['pick_1st_count', 'pick_2nd_count', 'pick_3rd_count', 'pick_4th_count'] as const
+    const countKeys = ['pick_1st_count', 'pick_2nd_count', 'pick_3rd_count', 'pick_4th_count', 'pick_5th_count', 'pick_6th_count', 'pick_7th_count', 'pick_8th_count'] as const
     const podium: PodiumEntry[] = []
 
     for (const ck of countKeys) {
@@ -307,9 +319,9 @@ function buildPodium(
     if (podium.length > 0) return podium
   }
 
-  // Default to top 4 seeds
+  // Default to top 8 seeds
   const seeded = [...entries].filter(e => e.seed != null).sort((a, b) => a.seed! - b.seed!)
-  return seeded.slice(0, 4).map(e => ({
+  return seeded.slice(0, 8).map(e => ({
     wrestler_name: e.wrestler_name,
     wrestler_id: e.wrestler_id,
     school: e.school_name || e.school,
@@ -333,7 +345,7 @@ function PodiumBar({ podium, totalVoters, loading }: { podium: PodiumEntry[]; to
           </span>
         )}
       </div>
-      <div className="grid grid-cols-4 gap-2">
+      <div className="grid grid-cols-4 gap-x-2 gap-y-3">
         {podium.map((p, i) => (
           <div key={i} className="text-center">
             <div className={`w-7 h-7 rounded-full flex items-center justify-center mx-auto mb-1 ${PLACE_STYLES[i].bg} ${PLACE_STYLES[i].text} text-xs font-bold`}>
@@ -449,7 +461,7 @@ function EntryRow({
 
       {/* Place pick circles */}
       {!pollClosed && (
-        <div className="flex gap-1 shrink-0">
+        <div className="grid grid-cols-4 gap-1 shrink-0">
           {PLACE_STYLES.map((style, idx) => {
             const isSelected = currentSlot === idx
             return (

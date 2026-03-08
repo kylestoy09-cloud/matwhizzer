@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
   // Fetch this visitor's picks
   const { data: myPick } = await supabase
     .from('bracket_picks')
-    .select('pick_1st, pick_2nd, pick_3rd, pick_4th')
+    .select('pick_1st, pick_2nd, pick_3rd, pick_4th, pick_5th, pick_6th, pick_7th, pick_8th')
     .eq('tournament_id', tournamentId)
     .eq('weight_class_id', weightClassId)
     .eq('visitor_id', visitorId)
@@ -44,7 +44,7 @@ export async function GET(req: NextRequest) {
 // POST /api/picks
 export async function POST(req: NextRequest) {
   const body = await req.json()
-  const { tournament_id, weight_class_id, visitor_id, pick_1st, pick_2nd, pick_3rd, pick_4th } = body
+  const { tournament_id, weight_class_id, visitor_id, pick_1st, pick_2nd, pick_3rd, pick_4th, pick_5th, pick_6th, pick_7th, pick_8th } = body
 
   if (!tournament_id || !weight_class_id || !visitor_id) {
     return NextResponse.json({ error: 'Missing params' }, { status: 400 })
@@ -60,6 +60,10 @@ export async function POST(req: NextRequest) {
       pick_2nd: pick_2nd || null,
       pick_3rd: pick_3rd || null,
       pick_4th: pick_4th || null,
+      pick_5th: pick_5th || null,
+      pick_6th: pick_6th || null,
+      pick_7th: pick_7th || null,
+      pick_8th: pick_8th || null,
       updated_at: new Date().toISOString(),
     }, {
       onConflict: 'tournament_id,weight_class_id,visitor_id',
