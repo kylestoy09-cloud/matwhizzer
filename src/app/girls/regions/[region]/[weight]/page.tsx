@@ -35,7 +35,7 @@ type MatchRow = {
 
 const VALID_REGIONS = new Set(['1', '2', '3', '4'])
 
-const CARD_H = 88
+const CARD_H = 72
 
 const ROUND_LABEL: Record<string, string> = {
   R1:          'Round 1',
@@ -50,10 +50,6 @@ const ROUND_LABEL: Record<string, string> = {
   '3rd_Place': '3rd Place',
   '5th_Place': '5th Place',
 }
-
-// Girls regions are 32-man: R1→R2→QF→SF→F
-const CHAMP_COLS  = ['R1', 'R2', 'QF', 'SF', 'F'] as const
-const CONSOL_COLS = ['C1', 'C2', 'C3', 'C4', '3rd_Place', '5th_Place'] as const
 
 // DFS traversal
 const PREV_ROUND: Record<string, string> = { R2: 'R1', QF: 'R2', SF: 'QF', F: 'SF' }
@@ -158,8 +154,8 @@ function WrestlerRow({
 
   return (
     <div
-      className={`flex items-center gap-1.5 px-2.5 ${isWinner ? 'bg-emerald-50' : ''}`}
-      style={{ height: 36 }}
+      className={`flex items-center gap-1 px-2 ${isWinner ? 'bg-emerald-50' : ''}`}
+      style={{ height: 28 }}
     >
       {seed != null ? (
         <span className="text-[10px] text-slate-400 w-3.5 shrink-0 text-right">{seed}</span>
@@ -168,22 +164,22 @@ function WrestlerRow({
       )}
       <span className="flex-1 min-w-0 truncate">
         {isBye ? (
-          <span className="text-xs text-slate-400 italic">Bye</span>
+          <span className="text-[11px] text-slate-400 italic">Bye</span>
         ) : wrestlerId ? (
           <Link
             href={`/wrestler/${wrestlerId}`}
-            className={`text-sm truncate hover:underline ${
+            className={`text-[13px] truncate hover:underline ${
               isWinner ? 'font-semibold text-slate-900' : 'font-medium text-slate-600'
             }`}
           >
             {name}
           </Link>
         ) : (
-          <span className="text-xs text-slate-400">—</span>
+          <span className="text-[11px] text-slate-400">—</span>
         )}
       </span>
       {!isBye && (
-        <span className="text-[10px] text-slate-400 shrink-0 max-w-[52px] truncate">
+        <span className="text-[11px] text-slate-400 shrink-0 max-w-[100px] truncate">
           {school ?? ''}
         </span>
       )}
@@ -196,7 +192,7 @@ function MatchCard({ m }: { m: MatchRow }) {
 
   return (
     <div
-      className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm w-64 shrink-0"
+      className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm w-[216px] shrink-0"
       style={{ height: CARD_H }}
     >
       <WrestlerRow
@@ -215,27 +211,12 @@ function MatchCard({ m }: { m: MatchRow }) {
         isWinner={false}
       />
       <div
-        className="flex items-center justify-end px-2.5 border-t border-slate-100"
-        style={{ height: CARD_H - 73 }}
+        className="flex items-center justify-end px-2 border-t border-slate-100"
+        style={{ height: CARD_H - 57 }}
       >
-        <span className="text-[10px] text-slate-400 tabular-nums">{result}</span>
+        <span className="text-[11px] text-slate-400 tabular-nums">{result}</span>
       </div>
     </div>
-  )
-}
-
-// ── Mobile round list ─────────────────────────────────────────────────────────
-
-function MobileRound({ label, matches }: { label: string; matches: MatchRow[] }) {
-  return (
-    <section>
-      <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">{label}</h3>
-      <div className="space-y-2">
-        {matches.map(m => (
-          <MatchCard key={m.match_id} m={m} />
-        ))}
-      </div>
-    </section>
   )
 }
 
@@ -258,7 +239,7 @@ function EntryWrestlerRow({ entry }: { entry: EntryRow }) {
     ? `${entry.wins}-${entry.losses}` : null
 
   return (
-    <div className="flex items-center gap-1.5 px-2.5" style={{ height: 44 }}>
+    <div className="flex items-center gap-1 px-2" style={{ height: 36 }}>
       {entry.seed != null ? (
         <span className="text-[10px] text-slate-400 w-3.5 shrink-0 text-right">{entry.seed}</span>
       ) : (
@@ -267,7 +248,7 @@ function EntryWrestlerRow({ entry }: { entry: EntryRow }) {
       <div className="flex-1 min-w-0">
         <Link
           href={`/wrestler/${entry.wrestler_id}`}
-          className="text-sm font-medium text-slate-700 hover:underline block truncate"
+          className="text-[13px] font-medium text-slate-700 hover:underline block truncate"
         >
           {entry.wrestler_name}
         </Link>
@@ -276,7 +257,7 @@ function EntryWrestlerRow({ entry }: { entry: EntryRow }) {
           {record && <span className="text-[10px] text-slate-400 tabular-nums">{record}</span>}
         </div>
       </div>
-      <span className="text-[10px] text-slate-400 shrink-0 max-w-[52px] truncate">
+      <span className="text-[10px] text-slate-400 shrink-0 max-w-[100px] truncate">
         {entry.school}
       </span>
     </div>
@@ -285,13 +266,13 @@ function EntryWrestlerRow({ entry }: { entry: EntryRow }) {
 
 function EntryCard({ top, bot }: { top: EntryRow; bot: EntryRow | null }) {
   return (
-    <div className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm w-64 shrink-0">
+    <div className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm w-[216px] shrink-0">
       <EntryWrestlerRow entry={top} />
       <div className="border-t border-slate-100" />
       {bot ? (
         <EntryWrestlerRow entry={bot} />
       ) : (
-        <div className="flex items-center px-2.5 text-xs text-slate-400 italic" style={{ height: 44 }}>
+        <div className="flex items-center px-2 text-[11px] text-slate-400 italic" style={{ height: 36 }}>
           Bye
         </div>
       )}
@@ -506,6 +487,40 @@ function WeightNav({ weights, current, base }: {
   )
 }
 
+// ── Bracket column renderer ──────────────────────────────────────────────────
+
+function BracketColumn({
+  label,
+  matches: colMatches,
+  totalH,
+}: {
+  label: string
+  matches: MatchRow[]
+  totalH: number
+}) {
+  if (colMatches.length === 0) return null
+  const slotH = totalH / colMatches.length
+
+  return (
+    <div className="flex flex-col shrink-0">
+      <div className="h-7 flex items-center justify-center px-3">
+        <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest whitespace-nowrap">
+          {label}
+        </span>
+      </div>
+      {colMatches.map(m => (
+        <div
+          key={m.match_id}
+          className="flex items-center justify-center px-1"
+          style={{ height: slotH }}
+        >
+          <MatchCard m={m} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default async function GirlsRegionBracketPage({
@@ -545,11 +560,9 @@ export default async function GirlsRegionBracketPage({
   // Annotate district placers who withdrew (not in region entries) and their replacements
   const entryWrestlerIds = new Set(entries.map(e => e.wrestler_id))
   const districtChamps = rawChamps.map(dc => {
-    // Top-3 finisher not in region entries = Withdrawn
     if (dc.place >= 1 && dc.place <= 3 && !entryWrestlerIds.has(dc.wrestler_id)) {
       return { ...dc, annotation: 'Withdrawn' }
     }
-    // All 4th place finishers are alternates
     if (dc.place === 4) {
       if (entryWrestlerIds.has(dc.wrestler_id)) {
         const withdrawn = rawChamps.find(c =>
@@ -567,36 +580,48 @@ export default async function GirlsRegionBracketPage({
 
   if (matches.length === 0 && entries.length === 0) notFound()
 
-  // Split sides
-  const champ  = matches.filter(m => m.bracket_side === 'championship')
-  const consol = matches.filter(m => m.bracket_side === 'consolation')
+  // ── Build bracket data ──────────────────────────────────────────────────────
 
-  // Order championship by DFS tree traversal
+  // Group all matches by round
+  const matchesByRound = new Map<string, MatchRow[]>()
+  for (const m of matches) {
+    const list = matchesByRound.get(m.round) ?? []
+    list.push(m)
+    matchesByRound.set(m.round, list)
+  }
+
+  // DFS ordering for championship side
+  const champ = matches.filter(m => m.bracket_side === 'championship')
   const champOrdered = orderChampMatches(champ)
 
-  // Active championship columns
-  const champCols = CHAMP_COLS.filter(r => (champOrdered.get(r) ?? []).length > 0)
+  // Championship display: R1 → R2 → QF → SF → F → 3rd_Place
+  const champRounds = (['R1', 'R2', 'QF', 'SF', 'F'] as const).filter(r => (champOrdered.get(r) ?? []).length > 0)
+  const thirdPlaceMatches = champOrdered.get('3rd_Place') ?? matchesByRound.get('3rd_Place') ?? []
 
-  // Consolation: group by round
-  const consolByRound = new Map<string, MatchRow[]>()
-  for (const m of consol) {
-    const list = consolByRound.get(m.round) ?? []
-    list.push(m)
-    consolByRound.set(m.round, list)
-  }
-  const consolCols = CONSOL_COLS.filter(r => (consolByRound.get(r) ?? []).length > 0)
+  // Consolation display: C1 → C2 → C3 → C4 → 5th_Place
+  const consolRounds = (['C1', 'C2', 'C3', 'C4'] as const).filter(r => (matchesByRound.get(r) ?? []).length > 0)
+  const fifthPlaceMatches = matchesByRound.get('5th_Place') ?? []
 
-  // Base height from widest round
-  const r1Count   = (champOrdered.get('R1') ?? []).length
-  const r2Count   = (champOrdered.get('R2') ?? []).length
-  const baseCount = r1Count || r2Count || 1
-  const totalH    = baseCount * CARD_H
+  // Heights
+  const champBaseCount = Math.max(
+    ...champRounds.map(r => (champOrdered.get(r) ?? []).length),
+    1,
+  )
+  const champTotalH = champBaseCount * CARD_H
 
-  // All rounds for mobile
-  const allRounds = [...champCols, ...consolCols]
+  const consolBaseCount = Math.max(
+    ...consolRounds.map(r => (matchesByRound.get(r) ?? []).length),
+    fifthPlaceMatches.length,
+    1,
+  )
+  const consolTotalH = consolBaseCount * CARD_H
+
+  const hasConsol = consolRounds.length > 0 || fifthPlaceMatches.length > 0
 
   return (
     <div className="max-w-fit mx-auto px-4 py-8">
+      <style>{`@keyframes bracketFade{from{opacity:1}to{opacity:0}}`}</style>
+
       <Link
         href={`/girls/regions/${region}`}
         className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 mb-6 transition-colors"
@@ -621,67 +646,75 @@ export default async function GirlsRegionBracketPage({
           entries.length > 0 && <EntriesView entries={entries as EntryRow[]} />
         ) : (<>
 
-        {/* ── Bracket (horizontal scroll on mobile) ── */}
-        <div className="overflow-x-auto -webkit-overflow-scrolling-touch">
-          <div className="flex gap-0 items-start min-w-max">
+        {/* ── Championship Bracket ── */}
+        <section>
+          <h2 className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest mb-2">
+            Championship Bracket
+          </h2>
+          <div
+            className="overflow-auto border border-slate-200 md:border-0 rounded-lg md:rounded-none max-h-[70vh] md:max-h-none"
+            style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
+          >
+            <div className="flex gap-0 items-start min-w-max p-2 md:p-0">
+              {champRounds.map(round => (
+                <BracketColumn
+                  key={round}
+                  label={ROUND_LABEL[round]}
+                  matches={champOrdered.get(round) ?? []}
+                  totalH={champTotalH}
+                />
+              ))}
 
-            {/* Championship columns */}
-            {champCols.map(round => {
-              const colMatches = champOrdered.get(round) ?? []
-              const slotH = totalH / colMatches.length
-
-              return (
-                <div key={round} className="flex flex-col shrink-0">
-                  <div className="h-8 flex items-center justify-center px-4">
-                    <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest whitespace-nowrap">
-                      {ROUND_LABEL[round]}
-                    </span>
-                  </div>
-                  {colMatches.map(m => (
-                    <div
-                      key={m.match_id}
-                      className="flex items-center justify-center px-2"
-                      style={{ height: slotH }}
-                    >
-                      <MatchCard m={m} />
-                    </div>
-                  ))}
-                </div>
-              )
-            })}
-
-            {/* Divider */}
-            {consolCols.length > 0 && (
-              <div className="w-px bg-slate-200 mx-2 self-stretch mt-8" />
-            )}
-
-            {/* Consolation columns */}
-            {consolCols.map(round => {
-              const colMatches = consolByRound.get(round) ?? []
-              const slotH = totalH / colMatches.length
-
-              return (
-                <div key={round} className="flex flex-col shrink-0">
-                  <div className="h-8 flex items-center justify-center px-4">
-                    <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest whitespace-nowrap">
-                      {ROUND_LABEL[round]}
-                    </span>
-                  </div>
-                  {colMatches.map(m => (
-                    <div
-                      key={m.match_id}
-                      className="flex items-center justify-center px-2"
-                      style={{ height: slotH }}
-                    >
-                      <MatchCard m={m} />
-                    </div>
-                  ))}
-                </div>
-              )
-            })}
-
+              {thirdPlaceMatches.length > 0 && (
+                <BracketColumn label="3rd Place" matches={thirdPlaceMatches} totalH={champTotalH} />
+              )}
+            </div>
           </div>
-        </div>
+          <p
+            className="md:hidden text-center text-[11px] text-slate-400 py-1 pointer-events-none"
+            style={{ animation: 'bracketFade 2s ease-out 1.5s forwards' }}
+          >
+            ← scroll →
+          </p>
+        </section>
+
+        {/* ── Consolation Bracket ── */}
+        {hasConsol && (
+          <section>
+            <div className="relative flex items-center my-4">
+              <div className="flex-1 border-t border-slate-300" />
+              <span className="px-4 text-[11px] font-semibold text-slate-400 uppercase tracking-widest">
+                Consolation Bracket
+              </span>
+              <div className="flex-1 border-t border-slate-300" />
+            </div>
+            <div
+              className="overflow-auto border border-slate-200 md:border-0 rounded-lg md:rounded-none max-h-[50vh] md:max-h-none"
+              style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
+            >
+              <div className="flex gap-0 items-start min-w-max p-2 md:p-0">
+                {consolRounds.map(round => (
+                  <BracketColumn
+                    key={round}
+                    label={ROUND_LABEL[round]}
+                    matches={matchesByRound.get(round) ?? []}
+                    totalH={consolTotalH}
+                  />
+                ))}
+
+                {fifthPlaceMatches.length > 0 && (
+                  <BracketColumn label="5th Place" matches={fifthPlaceMatches} totalH={consolTotalH} />
+                )}
+              </div>
+            </div>
+            <p
+              className="md:hidden text-center text-[11px] text-slate-400 py-1 pointer-events-none"
+              style={{ animation: 'bracketFade 2s ease-out 1.5s forwards' }}
+            >
+              ← scroll →
+            </p>
+          </section>
+        )}
 
         </>)}
 
