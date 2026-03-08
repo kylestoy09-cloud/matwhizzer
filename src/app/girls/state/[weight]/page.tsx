@@ -53,6 +53,60 @@ const CONSOL_COLS = ['C1', 'C2', 'C3', 'C4', '3rd_Place'] as const
 // DFS traversal (QF is first round for 8-man)
 const PREV_ROUND: Record<string, string> = { SF: 'QF', F: 'SF' }
 
+// ── State Qualifiers ─────────────────────────────────────────────────────────
+
+function StateQualifiers({ entries }: { entries: (BracketEntry & { tournament_id: number; weight_class_id: number })[] }) {
+  if (entries.length === 0) return null
+  const groups = [
+    { key: 'champ', seeds: [1, 4], label: 'Region Champions' },
+    { key: 'runner', seeds: [5, 8], label: 'Runners-Up' },
+    { key: 'third', seeds: [9, 12], label: '3rd Place' },
+    { key: 'fourth', seeds: [13, 16], label: '4th Place' },
+  ]
+  return (
+    <section className="mt-8 mb-4">
+      <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
+        State Qualifiers ({entries.length})
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {groups.map(g => {
+          const groupEntries = entries.filter(e => e.seed != null && e.seed >= g.seeds[0] && e.seed <= g.seeds[1])
+            .sort((a, b) => (a.seed ?? 0) - (b.seed ?? 0))
+          if (groupEntries.length === 0) return null
+          return (
+            <div key={g.key} className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm">
+              <div className="px-3 py-2 bg-slate-50 border-b border-slate-100">
+                <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide">{g.label}</span>
+              </div>
+              <div className="divide-y divide-slate-50">
+                {groupEntries.map(e => {
+                  const regionNum = e.seed != null ? ((e.seed - 1) % 4) + 1 : null
+                  return (
+                    <div key={e.entry_id} className="flex items-center gap-2 px-3 py-1.5">
+                      <Link
+                        href={`/wrestler/${e.wrestler_id}`}
+                        className="text-[13px] font-medium text-slate-800 hover:underline truncate flex-1"
+                      >
+                        {e.wrestler_name}
+                      </Link>
+                      <span className="text-[10px] text-slate-400 truncate max-w-[80px]">{e.school_name || e.school}</span>
+                      {regionNum && (
+                        <span className="text-[10px] px-1 rounded bg-slate-100 text-slate-500 font-medium shrink-0">
+                          R{regionNum}
+                        </span>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </section>
+  )
+}
+
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function formatResult(m: MatchRow): string {
@@ -458,6 +512,8 @@ export default async function GirlsStateBracketPage({
       </div>
 
       <WeightNav weights={WEIGHTS} current={weight} base="/girls/state" />
+
+      {entries.length > 0 && <StateQualifiers entries={entries} />}
 
       {matches.length === 0 ? (
         <BracketPoll
