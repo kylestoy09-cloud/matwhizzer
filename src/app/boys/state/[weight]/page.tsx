@@ -373,10 +373,10 @@ const PLACE_GROUP_LABEL: Record<string, string> = {
 function StateQualifiers({ entries }: { entries: (BracketEntry & { tournament_id: number; weight_class_id: number })[] }) {
   if (entries.length === 0) return null
   const groups = [
-    { key: 'champ', seeds: [1, 8], label: 'Region Champions — Seeds 1-8' },
-    { key: 'runner', seeds: [9, 16], label: 'Runners-Up — Seeds 9-16' },
-    { key: 'third', seeds: [17, 24], label: '3rd Place — Seeds 17-24' },
-    { key: 'fourth', seeds: [25, 32], label: '4th Place — Seeds 25-32' },
+    { key: 'champ', seeds: [1, 8], label: 'Region Champions' },
+    { key: 'runner', seeds: [9, 16], label: 'Runners-Up' },
+    { key: 'third', seeds: [17, 24], label: '3rd Place' },
+    { key: 'fourth', seeds: [25, 32], label: '4th Place' },
   ]
   return (
     <section className="mt-8 mb-4">
@@ -398,7 +398,6 @@ function StateQualifiers({ entries }: { entries: (BracketEntry & { tournament_id
                   const regionNum = e.seed != null ? ((e.seed - 1) % 8) + 1 : null
                   return (
                     <div key={e.entry_id} className="flex items-center gap-2 px-3 py-1.5">
-                      <span className="text-[10px] text-slate-400 w-4 text-right shrink-0">{e.seed}</span>
                       <Link
                         href={`/wrestler/${e.wrestler_id}`}
                         className="text-[13px] font-medium text-slate-800 hover:underline truncate flex-1"
