@@ -718,7 +718,7 @@ function AnalyticsTab({ d, season }: { d: AnalyticsData; season: number }) {
 
         <LeaderTable<DistrictRow>
           title="Region Strength"
-          description="Regions ranked by wrestlers advancing to state"
+          description="Regions ranked by state qualifiers"
           rows={d.districts}
           cols={[
             {
@@ -726,12 +726,8 @@ function AnalyticsTab({ d, season }: { d: AnalyticsData; season: number }) {
               render: r => <span className="font-medium text-slate-800">{r.district_name}</span>,
             },
             {
-              label: 'Advanced', align: 'right',
-              render: r => <span className="font-bold text-slate-800 tabular-nums">{r.wrestlers_advancing}</span>,
-            },
-            {
-              label: 'State', align: 'right',
-              render: r => <span className="text-slate-500 tabular-nums">{r.state_qualifiers}</span>,
+              label: 'State Qualifiers', align: 'right',
+              render: r => <span className="font-bold text-slate-800 tabular-nums">{r.state_qualifiers}</span>,
             },
           ]}
         />
