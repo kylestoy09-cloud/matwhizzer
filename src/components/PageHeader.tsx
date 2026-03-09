@@ -3,9 +3,10 @@ import Image from 'next/image'
 interface PageHeaderProps {
   title: string
   showLogo?: boolean
+  goldTrim?: boolean
 }
 
-export function PageHeader({ title, showLogo = true }: PageHeaderProps) {
+export function PageHeader({ title, showLogo = true, goldTrim = false }: PageHeaderProps) {
   return (
     <div className="flex flex-col items-center select-none">
       {showLogo && (
@@ -18,24 +19,22 @@ export function PageHeader({ title, showLogo = true }: PageHeaderProps) {
           priority
         />
       )}
-      <h1 className="page-header-text text-3xl sm:text-4xl font-extrabold italic leading-tight text-center">
+      <h1
+        className="text-3xl sm:text-4xl font-extrabold italic leading-tight text-center"
+        style={{
+          color: '#1b2a4a',
+          ...(goldTrim ? {
+            textShadow: [
+              '-1px -1px 0 #b8943e', '1px -1px 0 #b8943e',
+              '-1px  1px 0 #b8943e', '1px  1px 0 #b8943e',
+              ' 0   -1px 0 #b8943e', '0    1px 0 #b8943e',
+              '-1px  0   0 #b8943e', '1px  0   0 #b8943e',
+            ].join(','),
+          } : {}),
+        }}
+      >
         {title}
       </h1>
-      <style>{`
-        .page-header-text {
-          color: #1b2a4a;
-          text-shadow:
-            -1px -1px 0 #b8943e,
-             1px -1px 0 #b8943e,
-            -1px  1px 0 #b8943e,
-             1px  1px 0 #b8943e,
-             0   -1px 0 #b8943e,
-             0    1px 0 #b8943e,
-            -1px  0   0 #b8943e,
-             1px  0   0 #b8943e;
-          font-style: italic;
-        }
-      `}</style>
     </div>
   )
 }

@@ -512,7 +512,7 @@ export default async function StateBracketPage({
       </Link>
 
       <div className="mb-8 text-center">
-        <PageHeader title={`Boys State · ${weight} lb`} />
+        <PageHeader title={`Boys State · ${weight} lb`} goldTrim />
         <p className="text-slate-500 text-sm mt-1">NJSIAA {SEASONS[season]?.label ?? season} · 32-man double elimination</p>
       </div>
 
