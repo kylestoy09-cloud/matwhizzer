@@ -143,14 +143,16 @@ function WrestlerRow({
   school,
   seed,
   isWinner,
+  hasResult,
 }: {
   wrestlerId: string | null
   name: string | null
   school: string | null
   seed: number | null
   isWinner: boolean
+  hasResult?: boolean
 }) {
-  const isBye = !name
+  const isBye = !name && !hasResult
 
   return (
     <div
@@ -209,6 +211,7 @@ function MatchCard({ m }: { m: MatchRow }) {
         school={m.loser_school}
         seed={m.loser_seed}
         isWinner={false}
+        hasResult={!!m.win_type}
       />
       <div
         className="flex items-center justify-end px-2 border-t border-slate-100"
