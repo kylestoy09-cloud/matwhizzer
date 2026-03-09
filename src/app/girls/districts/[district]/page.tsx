@@ -152,7 +152,7 @@ export default async function GirlsDistrictSummaryPage({
   // Girls districts only exist from season 2 onward
   const season = Math.max(await getActiveSeason(), 2)
 
-  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, bonusPctRes, schoolsRes, teamScoreRes, teamPtsRes] =
+  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, bonusPctRes, schoolsRes, teamScoreRes, teamPtsRes, stateEntRes] =
     await Promise.all([
       supabase.rpc('district_placements',  { p_district: d, p_gender: 'F', p_season: season }),
       supabase.rpc('district_mat_time',    { p_district: d, p_gender: 'F', p_season: season }),
@@ -162,6 +162,11 @@ export default async function GirlsDistrictSummaryPage({
       supabase.rpc('district_schools',     { p_district: d, p_gender: 'F', p_season: season }),
       supabase.rpc('district_team_score',  { p_district: d, p_gender: 'F', p_season: season }),
       supabase.rpc('district_team_pts',    { p_district: d, p_gender: 'F', p_season: season }),
+      supabase
+        .from('tournament_entries')
+        .select('wrestler_id, tournaments!inner(season_id, tournament_type)')
+        .eq('tournaments.season_id', season)
+        .eq('tournaments.tournament_type', 'girls_state'),
     ])
 
   const placements = (placementsRes.data ?? []) as PlacementRow[]
@@ -172,6 +177,9 @@ export default async function GirlsDistrictSummaryPage({
   const schools    = (schoolsRes.data    ?? []) as SchoolRow[]
   const teamScore  = (teamScoreRes.data  ?? []) as TeamScoreRow[]
   const teamPts    = (teamPtsRes.data    ?? []) as TeamPtsRow[]
+  const stateQualIds = new Set(
+    ((stateEntRes.data ?? []) as { wrestler_id: string }[]).map(e => e.wrestler_id)
+  )
 
   const placementsByWeight = new Map<number, Map<number, PlacementRow>>()
   for (const p of placements) {
@@ -255,16 +263,24 @@ export default async function GirlsDistrictSummaryPage({
                           <td key={place} className="px-4 py-2.5 text-slate-300 text-sm">—</td>
                         )
                       }
+                      const isSQ = stateQualIds.has(p.wrestler_id)
                       return (
                         <td key={place} className="px-4 py-2.5">
-                          <Link
-                            href={`/wrestler/${p.wrestler_id}`}
-                            className={`block font-medium hover:underline leading-tight ${
-                              place === 1 ? 'text-slate-900' : 'text-slate-700'
-                            }`}
-                          >
-                            {p.wrestler_name}
-                          </Link>
+                          <div className="flex items-center gap-1.5">
+                            <Link
+                              href={`/wrestler/${p.wrestler_id}`}
+                              className={`font-medium hover:underline leading-tight ${
+                                place === 1 ? 'text-slate-900' : 'text-slate-700'
+                              }`}
+                            >
+                              {p.wrestler_name}
+                            </Link>
+                            {isSQ && (
+                              <span className="text-[9px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-1 rounded shrink-0">
+                                SQ
+                              </span>
+                            )}
+                          </div>
                           <span className="text-xs text-slate-500 truncate block">
                             {p.school_name || p.school}
                           </span>
@@ -277,6 +293,10 @@ export default async function GirlsDistrictSummaryPage({
             </tbody>
           </table>
         </div>
+        <p className="text-[11px] text-slate-400 mt-2 ml-1">
+          <span className="text-[9px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-1 rounded">SQ</span>
+          {' '}= State Qualifier
+        </p>
       </section>
 
       {/* ── District Leaders ── */}
