@@ -4,7 +4,9 @@ const supabaseUrl  = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseKey  = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
 // Single client instance — safe for server components and client components alike
-export const supabase = createClient(supabaseUrl, supabaseKey)
+export const supabase = createClient(supabaseUrl, supabaseKey, {
+  global: { fetch: (url, options) => fetch(url, { ...options, cache: 'no-store' }) },
+})
 
 // ── Display helpers ────────────────────────────────────────────────────────────
 
