@@ -105,7 +105,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
       supabase.rpc('state_dominance',            { p_gender: g, p_season: season }),
       supabase.rpc('state_team_score',           { p_gender: g, p_season: season }),
       supabase.rpc('state_team_pts',             { p_gender: g, p_season: season }),
-      supabase.rpc('lb_district_strength',       { p_gender: g, p_season: season }),
+      isBoys ? supabase.rpc('lb_district_strength', { p_gender: g, p_season: season }) : { data: [] },
       supabase.rpc('lb_weight_competitiveness',  { p_gender: g, p_season: season }),
     ])
 
