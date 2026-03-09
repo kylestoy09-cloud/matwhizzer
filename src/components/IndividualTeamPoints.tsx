@@ -87,7 +87,7 @@ export function IndividualTeamPoints({
                   {r.wrestler_name}
                 </Link>
                 <div className="text-[11px] text-slate-400 truncate">
-                  {r.school_name || r.school || '\u2014'} · {r.weight} lb
+                  {r.school_name || r.school || '\u2014'}{r.weight ? ` · ${r.weight} lb` : ''}
                 </div>
               </div>
               <span className="text-sm font-semibold text-slate-700 shrink-0">{r.team_points} pts</span>

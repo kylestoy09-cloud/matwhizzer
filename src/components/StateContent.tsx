@@ -96,17 +96,23 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
   const schoolPrefix = isBoys ? '/boys/schools' : '/girls/schools'
   const g = gender
 
+  // Use pool-based RPCs so leaders show cumulative data through all tournaments
+  const poolParams = isBoys
+    ? { p_gender: g, p_pool: 'state', p_season: season }
+    : { p_pool: 'state', p_season: season }
+  const poolRpc = isBoys ? 'lb_p' : 'lb_gp'
+
   const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, teamPtsRes, distStrengthRes, marginsRes] =
     await Promise.all([
-      supabase.rpc('state_placements',           { p_gender: g, p_season: season }),
-      supabase.rpc('state_mat_time',             { p_gender: g, p_season: season }),
-      supabase.rpc('state_fastest_pin',          { p_gender: g, p_season: season }),
-      supabase.rpc('state_fastest_tf',           { p_gender: g, p_season: season }),
-      supabase.rpc('state_dominance',            { p_gender: g, p_season: season }),
-      supabase.rpc('state_team_score',           { p_gender: g, p_season: season }),
-      supabase.rpc('state_team_pts',             { p_gender: g, p_season: season }),
-      supabase.rpc('lb_district_strength',       { p_gender: g, p_season: season }),
-      supabase.rpc('lb_weight_competitiveness',  { p_gender: g, p_season: season }),
+      supabase.rpc('state_placements',                    { p_gender: g, p_season: season }),
+      supabase.rpc(`${poolRpc}_mat_time`,                 poolParams),
+      supabase.rpc(`${poolRpc}_fastest_pin`,              poolParams),
+      supabase.rpc(`${poolRpc}_fastest_tf`,               poolParams),
+      supabase.rpc(`${poolRpc}_dominance`,                poolParams),
+      supabase.rpc(`${poolRpc}_team_points`,              poolParams),
+      supabase.rpc(`${poolRpc}_wrestler_points`,          poolParams),
+      supabase.rpc('lb_district_strength',                { p_gender: g, p_season: season }),
+      supabase.rpc('lb_weight_competitiveness',           { p_gender: g, p_season: season }),
     ])
 
   const placements     = (placementsRes.data     ?? []) as PlacementRow[]
@@ -115,7 +121,8 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
   const fastTf         = (fastTfRes.data         ?? []) as FastestTfRow[]
   const dominance      = (dominanceRes.data      ?? []) as DominanceRow[]
   const teamScore      = (teamScoreRes.data      ?? []) as TeamScoreRow[]
-  const teamPts        = (teamPtsRes.data        ?? []) as TeamPtsRow[]
+  const teamPts        = ((teamPtsRes.data ?? []) as { wrestler_id: string; wrestler_name: string; school: string | null; school_name: string | null; total_points: number; win_count: number }[])
+    .map(r => ({ wrestler_id: r.wrestler_id, wrestler_name: r.wrestler_name, school: r.school, school_name: r.school_name, weight: 0, team_points: Number(r.total_points) })) as TeamPtsRow[]
   const distStrength   = ((distStrengthRes.data   ?? []) as { district_name: string; wrestlers_advancing: number; state_qualifiers: number }[])
     .sort((a, b) => b.state_qualifiers - a.state_qualifiers)
   const margins        = ((marginsRes.data ?? []) as { weight: number; avg_margin: number; match_count: number }[]).sort((a, b) => Number(a.avg_margin) - Number(b.avg_margin))
