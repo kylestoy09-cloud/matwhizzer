@@ -20,7 +20,7 @@ export function PageHeader({ title, showLogo = true, goldTrim = false }: PageHea
         />
       )}
       <h1
-        className="text-3xl sm:text-4xl font-extrabold italic leading-tight text-center"
+        className="text-3xl sm:text-4xl font-extrabold leading-tight text-center"
         style={{
           color: '#1b2a4a',
           ...(goldTrim ? {

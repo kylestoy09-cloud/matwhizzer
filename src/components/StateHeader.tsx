@@ -18,13 +18,13 @@ export function StateHeader({ gender }: StateHeaderProps) {
         priority
       />
       <p className="page-header-text text-sm tracking-[0.15em] uppercase">NJSIAA</p>
-      <h1 className="page-header-text text-4xl sm:text-5xl font-extrabold italic leading-tight">
+      <h1 className="page-header-text text-4xl sm:text-5xl font-extrabold leading-tight">
         {label} Wrestling
       </h1>
-      <p className="page-header-text text-2xl sm:text-3xl font-extrabold italic leading-tight">
+      <p className="page-header-text text-2xl sm:text-3xl font-extrabold leading-tight">
         State Tournament
       </p>
-      <p className="page-header-text text-3xl sm:text-4xl font-extrabold italic mt-0.5">
+      <p className="page-header-text text-3xl sm:text-4xl font-extrabold mt-0.5">
         2026
       </p>
       <style>{`
@@ -39,7 +39,7 @@ export function StateHeader({ gender }: StateHeaderProps) {
              0    1px 0 #b8943e,
             -1px  0   0 #b8943e,
              1px  0   0 #b8943e;
-          font-style: italic;
+          font-style: normal;
         }
       `}</style>
     </div>
