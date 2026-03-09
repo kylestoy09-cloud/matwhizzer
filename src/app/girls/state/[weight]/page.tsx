@@ -510,8 +510,6 @@ export default async function GirlsStateBracketPage({
 
       <WeightNav weights={WEIGHTS} current={weight} base="/girls/state" />
 
-      {entries.length > 0 && <StateQualifiers entries={entries} />}
-
       {matches.length === 0 ? (
         <BracketPoll
           entries={entries}
@@ -580,17 +578,21 @@ export default async function GirlsStateBracketPage({
           </div>
         </div>
       </div>
+      </>)}
+
       {entries.length > 0 && (
         <BracketPoll
           entries={entries}
           tournamentId={entries[0]?.tournament_id ?? 0}
           weightClassId={entries[0]?.weight_class_id ?? 0}
-          hasMatches={true}
+          hasMatches={matches.length > 0}
           bracketSize={16}
           provenancePrefix="R"
         />
       )}
-      </>)}
+
+      {entries.length > 0 && <StateQualifiers entries={entries} />}
+
       <RosterTable roster={buildRosterFromMatches(matches)} />
       <WeightNav weights={WEIGHTS} current={weight} base="/girls/state" />
     </div>

@@ -518,8 +518,6 @@ export default async function StateBracketPage({
 
       <WeightNav weights={WEIGHTS} current={weight} base="/boys/state" />
 
-      {entries.length > 0 && <StateQualifiers entries={entries} />}
-
       {matches.length === 0 ? (
         <BracketPoll
           entries={entries}
@@ -588,17 +586,21 @@ export default async function StateBracketPage({
           </div>
         </div>
       </div>
+      </>)}
+
       {entries.length > 0 && (
         <BracketPoll
           entries={entries}
           tournamentId={entries[0]?.tournament_id ?? 0}
           weightClassId={entries[0]?.weight_class_id ?? 0}
-          hasMatches={true}
+          hasMatches={matches.length > 0}
           bracketSize={32}
           provenancePrefix="R"
         />
       )}
-      </>)}
+
+      {entries.length > 0 && <StateQualifiers entries={entries} />}
+
       <RosterTable roster={buildRosterFromMatches(matches)} />
       <WeightNav weights={WEIGHTS} current={weight} base="/boys/state" />
     </div>
