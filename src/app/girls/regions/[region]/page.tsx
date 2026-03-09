@@ -7,6 +7,7 @@ import { BracketBuster } from '@/components/BracketBuster'
 import { TeamScoreCard } from '@/components/TeamScoreCard'
 import { IndividualTeamPoints } from '@/components/IndividualTeamPoints'
 import RegionVideo from '@/components/RegionVideo'
+import { PageHeader } from '@/components/PageHeader'
 
 const WEIGHTS = [100, 107, 114, 120, 126, 132, 138, 145, 152, 165, 185, 235]
 
@@ -220,11 +221,11 @@ export default async function GirlsRegionSummaryPage({
 
       {/* Header */}
       <div className="mb-8 text-center">
-        <div className="flex items-center justify-center gap-3">
-          <h1 className="text-2xl font-bold text-rose-900">Girls {displayName}</h1>
+        <PageHeader title={`Girls ${displayName}`} />
+        <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
           <InlineSeasonPicker activeSeason={season} />
+          <span>· Girls Postseason — Top 4 Advance</span>
         </div>
-        <p className="text-slate-500 text-sm mt-1">Girls Postseason — Top 4 Advance</p>
       </div>
 
       {/* ── Bracket grid ── */}

@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
 import { SEASONS } from '@/lib/seasons'
 import { BracketPoll, type BracketEntry, type DistrictChamp } from '@/components/BracketPoll'
+import { PageHeader } from '@/components/PageHeader'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -629,12 +630,8 @@ export default async function RegionBracketPage({
         ← Region {region}
       </Link>
 
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-slate-900">
-          Region {region}
-          <span className="text-slate-400 font-normal ml-2">·</span>
-          <span className="text-slate-600 font-semibold ml-2">{weight} lb</span>
-        </h1>
+      <div className="mb-8 text-center">
+        <PageHeader title={`Region ${region} · ${weight} lb`} />
         <p className="text-slate-500 text-sm mt-1">NJSIAA {SEASONS[season]?.label ?? season} · Boys postseason</p>
       </div>
 

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
+import { PageHeader } from '@/components/PageHeader'
 
 export default async function BoysDistrictsPage() {
   const season = await getActiveSeason()
@@ -16,7 +17,7 @@ export default async function BoysDistrictsPage() {
       </Link>
 
       <div className="mb-8 text-center">
-        <h1 className="text-2xl font-bold text-slate-900">Boys District Brackets</h1>
+        <PageHeader title="Boys District Brackets" />
         <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
           <span>NJSIAA</span>
           <InlineSeasonPicker activeSeason={season} />

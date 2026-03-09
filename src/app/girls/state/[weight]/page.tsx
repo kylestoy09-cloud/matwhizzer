@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
 import { SEASONS } from '@/lib/seasons'
 import { BracketPoll, type BracketEntry } from '@/components/BracketPoll'
+import { PageHeader } from '@/components/PageHeader'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -502,12 +503,8 @@ export default async function GirlsStateBracketPage({
         ← State Championships
       </Link>
 
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-rose-900">
-          Girls State
-          <span className="text-slate-400 font-normal ml-2">·</span>
-          <span className="text-slate-600 font-semibold ml-2">{weight} lb</span>
-        </h1>
+      <div className="mb-8 text-center">
+        <PageHeader title={`Girls State · ${weight} lb`} />
         <p className="text-slate-500 text-sm mt-1">NJSIAA {SEASONS[season]?.label ?? season} · 8-man double elimination</p>
       </div>
 

@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { getActiveSeason } from '@/lib/get-season'
 import { SEASONS } from '@/lib/seasons'
 import { PostseasonLeaders } from '@/components/PostseasonLeaders'
+import { PageHeader } from '@/components/PageHeader'
 
 type WrestlerRow = { id: string; first_name: string; last_name: string; gender: string }
 type SchoolRow   = { school: string; school_name: string; total_points: number; wrestler_count: number }
@@ -91,7 +92,9 @@ export default async function RootPage({
         </div>
 
       <div className="max-w-2xl flex-1">
-        <h1 className="text-2xl font-bold text-slate-800 mb-8">NJSIAA Wrestling</h1>
+        <div className="mb-8">
+          <PageHeader title="NJSIAA Wrestling" showLogo={false} />
+        </div>
 
         {/* Wrestler search */}
         <section className="mb-6">

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
+import { PageHeader } from '@/components/PageHeader'
 import { IndividualTeamPoints } from '@/components/IndividualTeamPoints'
 import { BracketBuster } from '@/components/BracketBuster'
 import { TeamScoreCard } from '@/components/TeamScoreCard'
@@ -189,7 +190,7 @@ export default async function GirlsDistrictSummaryPage({
       </Link>
 
       <div className="mb-8 text-center">
-        <h1 className="text-2xl font-bold text-rose-900">District {d}</h1>
+        <PageHeader title={`District ${d}`} />
         <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
           <span>NJSIAA</span>
           <InlineSeasonPicker activeSeason={season} seasons={[2]} />

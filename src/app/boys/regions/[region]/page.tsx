@@ -6,6 +6,7 @@ import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { BracketBuster } from '@/components/BracketBuster'
 import { TeamScoreCard } from '@/components/TeamScoreCard'
 import { IndividualTeamPoints } from '@/components/IndividualTeamPoints'
+import { PageHeader } from '@/components/PageHeader'
 import RegionVideo from '@/components/RegionVideo'
 
 const WEIGHTS = [106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285]
@@ -217,11 +218,11 @@ export default async function RegionSummaryPage({
 
       {/* Header */}
       <div className="mb-8 text-center">
-        <div className="flex items-center justify-center gap-3">
-          <h1 className="text-2xl font-bold text-slate-900">Region {r}</h1>
+        <PageHeader title={`Region ${r}`} />
+        <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
           <InlineSeasonPicker activeSeason={season} />
+          <span>· Boys Postseason — Top 4 Advance</span>
         </div>
-        <p className="text-slate-500 text-sm mt-1">Boys Postseason — Top 4 Advance</p>
       </div>
 
       {/* ── Bracket grid ── */}

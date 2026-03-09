@@ -2,6 +2,7 @@ import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
+import { PageHeader } from '@/components/PageHeader'
 
 type SchoolDirRow = {
   school: string
@@ -40,7 +41,7 @@ export default async function BoysSchoolsPage({
       </Link>
 
       <div className="mb-6 text-center">
-        <h1 className="text-2xl font-bold text-slate-900">Boys School Directory</h1>
+        <PageHeader title="Boys School Directory" />
         <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
           <span>{all.length} schools · NJSIAA</span>
           <InlineSeasonPicker activeSeason={season} />

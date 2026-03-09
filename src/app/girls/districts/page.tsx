@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
+import { PageHeader } from '@/components/PageHeader'
 
 export default async function GirlsDistrictsPage() {
   // Girls districts only exist from season 2 onward
@@ -17,7 +18,7 @@ export default async function GirlsDistrictsPage() {
       </Link>
 
       <div className="mb-8 text-center">
-        <h1 className="text-2xl font-bold text-rose-900">Girls District Brackets</h1>
+        <PageHeader title="Girls District Brackets" />
         <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
           <span>NJSIAA</span>
           <InlineSeasonPicker activeSeason={season} seasons={[2]} />
