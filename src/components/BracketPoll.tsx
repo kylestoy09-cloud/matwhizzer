@@ -244,7 +244,7 @@ export function BracketPoll({
       {/* ── Instructions ── */}
       {!pollClosed && !submitted && (
         <p className="text-xs text-slate-400 text-center">
-          Select your podium — tap a place circle next to any wrestler
+          So you think you have the crystal ball, huh? Pick your podium hot shot! Tap a place circle for the wrestler you think will get that place
         </p>
       )}
 
