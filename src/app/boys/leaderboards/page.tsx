@@ -29,6 +29,7 @@ type PoolPinRow = {
   school: string | null
   school_name: string | null
   pin_count: number
+  total_mat_time: number
 }
 
 type PoolTfRow = {
@@ -37,6 +38,7 @@ type PoolTfRow = {
   school: string | null
   school_name: string | null
   tf_count: number
+  total_mat_time: number
 }
 
 type PoolBonusRow = {
@@ -466,6 +468,10 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
                   label: 'Pins', align: 'right',
                   render: r => <span className="font-bold text-slate-800 tabular-nums">{r.pin_count}</span>,
                 },
+                {
+                  label: 'Mat Time', align: 'right',
+                  render: r => <span className="text-slate-500 tabular-nums text-xs">{fmtTime(r.total_mat_time)}</span>,
+                },
               ]}
             />
 
@@ -481,6 +487,10 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
                 {
                   label: 'TFs', align: 'right',
                   render: r => <span className="font-bold text-slate-800 tabular-nums">{r.tf_count}</span>,
+                },
+                {
+                  label: 'Mat Time', align: 'right',
+                  render: r => <span className="text-slate-500 tabular-nums text-xs">{fmtTime(r.total_mat_time)}</span>,
                 },
               ]}
             />
