@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { StateContent } from '@/components/StateContent'
 import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
@@ -11,9 +12,8 @@ export default async function StateBoysPage() {
         ← Boys Search
       </Link>
       <div className="mb-8 text-center">
-        <h1 className="text-2xl font-bold text-slate-900">Boys State Championships</h1>
-        <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
-          <span>NJSIAA</span>
+        <Image src="/boys-state-header.jpg" alt="NJSIAA Boy's Wrestling State Tournament 2026" width={600} height={338} className="mx-auto" priority />
+        <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-2">
           <InlineSeasonPicker activeSeason={season} />
           <span>· Atlantic City · 32-man double elimination</span>
         </div>
