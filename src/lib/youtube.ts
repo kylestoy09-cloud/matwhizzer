@@ -12,6 +12,11 @@ export function getYouTubeEmbedUrl(url: string | null): string | null {
       if (id) return `https://www.youtube.com/embed/${id}`
     }
 
+    if (url.includes('/live/')) {
+      const id = url.split('/live/')[1].split('?')[0]
+      return `https://www.youtube.com/embed/${id}`
+    }
+
     if (url.includes('/embed/')) return url
 
     return null
