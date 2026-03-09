@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { StateContent } from '@/components/StateContent'
+import { StateHeader } from '@/components/StateHeader'
 import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 
@@ -12,7 +12,7 @@ export default async function GirlsStatePage() {
         ← Girls Search
       </Link>
       <div className="mb-8 text-center">
-        <Image src="/girls-state-header.jpg" alt="NJSIAA Girl's Wrestling State Tournament 2026" width={600} height={338} className="mx-auto" priority />
+        <StateHeader gender="F" />
         <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-2">
           <InlineSeasonPicker activeSeason={season} />
           <span>· Boardwalk Hall · double elimination</span>
