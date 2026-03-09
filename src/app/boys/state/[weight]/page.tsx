@@ -601,7 +601,6 @@ export default async function StateBracketPage({
 
       {entries.length > 0 && <StateQualifiers entries={entries} />}
 
-      <RosterTable roster={buildRosterFromMatches(matches)} />
       <WeightNav weights={WEIGHTS} current={weight} base="/boys/state" />
     </div>
   )

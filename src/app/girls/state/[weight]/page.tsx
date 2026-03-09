@@ -593,7 +593,6 @@ export default async function GirlsStateBracketPage({
 
       {entries.length > 0 && <StateQualifiers entries={entries} />}
 
-      <RosterTable roster={buildRosterFromMatches(matches)} />
       <WeightNav weights={WEIGHTS} current={weight} base="/girls/state" />
     </div>
   )
