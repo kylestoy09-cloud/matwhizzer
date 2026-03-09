@@ -105,7 +105,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
       supabase.rpc('state_dominance',            { p_gender: g, p_season: season }),
       supabase.rpc('state_team_score',           { p_gender: g, p_season: season }),
       supabase.rpc('state_team_pts',             { p_gender: g, p_season: season }),
-      isBoys ? supabase.rpc('lb_district_strength', { p_gender: g, p_season: season }) : { data: [] },
+      supabase.rpc('lb_district_strength',       { p_gender: g, p_season: season }),
       supabase.rpc('lb_weight_competitiveness',  { p_gender: g, p_season: season }),
     ])
 
@@ -116,7 +116,8 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
   const dominance      = (dominanceRes.data      ?? []) as DominanceRow[]
   const teamScore      = (teamScoreRes.data      ?? []) as TeamScoreRow[]
   const teamPts        = (teamPtsRes.data        ?? []) as TeamPtsRow[]
-  const distStrength   = (distStrengthRes.data   ?? []) as { district_name: string; wrestlers_advancing: number; state_qualifiers: number }[]
+  const distStrength   = ((distStrengthRes.data   ?? []) as { district_name: string; wrestlers_advancing: number; state_qualifiers: number }[])
+    .sort((a, b) => b.state_qualifiers - a.state_qualifiers)
   const margins        = ((marginsRes.data ?? []) as { weight: number; avg_margin: number; match_count: number }[]).sort((a, b) => Number(a.avg_margin) - Number(b.avg_margin))
 
   const placementsByWeight = new Map<number, Map<number, PlacementRow>>()
@@ -237,16 +238,14 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-200">
                   <th className="px-3 py-2 text-left text-xs font-semibold text-slate-500 uppercase">District</th>
-                  <th className="px-3 py-2 text-right text-xs font-semibold text-slate-500 uppercase">Advanced</th>
-                  <th className="px-3 py-2 text-right text-xs font-semibold text-slate-500 uppercase">State</th>
+                  <th className="px-3 py-2 text-right text-xs font-semibold text-slate-500 uppercase">State Qualifiers</th>
                 </tr>
               </thead>
               <tbody>
                 {distStrength.slice(0, 12).map((r, i) => (
                   <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
                     <td className="px-3 py-2 font-medium text-slate-800">{r.district_name}</td>
-                    <td className="px-3 py-2 text-right tabular-nums text-slate-700">{r.wrestlers_advancing}</td>
-                    <td className="px-3 py-2 text-right tabular-nums text-slate-500">{r.state_qualifiers}</td>
+                    <td className="px-3 py-2 text-right tabular-nums text-slate-700">{r.state_qualifiers}</td>
                   </tr>
                 ))}
               </tbody>
