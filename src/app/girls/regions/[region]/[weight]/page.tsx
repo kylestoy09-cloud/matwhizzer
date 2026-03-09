@@ -439,16 +439,6 @@ function DistrictQualifiers({ champs }: { champs: DistrictChamp[] }) {
                       WD
                     </span>
                   )}
-                  {dc.annotation === 'ActiveAlternate' && (
-                    <span className="text-[10px] px-1 rounded bg-amber-50 text-amber-700 font-bold shrink-0">
-                      (Alternate)
-                    </span>
-                  )}
-                  {dc.annotation === 'Alternate' && (
-                    <span className="text-[10px] px-1 rounded bg-slate-50 text-slate-500 font-medium shrink-0">
-                      (Alternate)
-                    </span>
-                  )}
                   <span className="text-[10px] text-slate-400 truncate ml-auto shrink-0">
                     {dc.school_name}
                   </span>
@@ -566,18 +556,7 @@ export default async function GirlsRegionBracketPage({
     if (dc.place >= 1 && dc.place <= 3 && !entryWrestlerIds.has(dc.wrestler_id)) {
       return { ...dc, annotation: 'Withdrawn' }
     }
-    if (dc.place === 4) {
-      if (entryWrestlerIds.has(dc.wrestler_id)) {
-        const withdrawn = rawChamps.find(c =>
-          c.district_num === dc.district_num && c.place >= 1 && c.place <= 3
-          && !entryWrestlerIds.has(c.wrestler_id)
-        )
-        if (withdrawn) {
-          return { ...dc, annotation: 'ActiveAlternate' }
-        }
-      }
-      return { ...dc, annotation: 'Alternate' }
-    }
+    // Girls top 4 all qualify (no alternates)
     return dc
   })
 
