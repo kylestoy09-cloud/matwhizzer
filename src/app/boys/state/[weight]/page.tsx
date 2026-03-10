@@ -518,16 +518,7 @@ export default async function StateBracketPage({
 
       <WeightNav weights={WEIGHTS} current={weight} base="/boys/state" />
 
-      {matches.length === 0 ? (
-        <BracketPoll
-          entries={entries}
-          tournamentId={entries[0]?.tournament_id ?? 0}
-          weightClassId={entries[0]?.weight_class_id ?? 0}
-          hasMatches={false}
-          bracketSize={32}
-          provenancePrefix="R"
-        />
-      ) : (<>
+      {matches.length === 0 ? null : (<>
 
       {/* ── DESKTOP bracket (lg+) ── */}
       <div className="overflow-x-auto space-y-0" style={{ WebkitOverflowScrolling: 'touch' }}>
