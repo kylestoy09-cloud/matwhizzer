@@ -333,7 +333,7 @@ export default async function DistrictSummaryPage({
 
           <StatCard<DominanceRow>
             title="Hammer Rating"
-            note="Avg score per match · losses penalized · FORF/INJ/DQ excluded"
+            note="Avg dominance per match: pins/TFs graded by speed (max 9), MD=2, Dec=1, losses scored inverse"
             rows={dominance}
             subtitle={r => `${r.school_name || r.school || '—'} · ${r.win_count} wins`}
             value={r => String(r.dominance_score)}
