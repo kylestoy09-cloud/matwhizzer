@@ -333,7 +333,7 @@ export default async function WrestlerPage({
   const annotated = allMatches.map(m => {
     const isWinner = m.winner_entry_id != null && entrySet.has(m.winner_entry_id)
     const opponentEntryId = isWinner ? m.loser_entry_id : m.winner_entry_id
-    const isBye = m.win_type === 'BYE' || (m.win_type == null && m.loser_entry_id == null)
+    const isBye = m.win_type === 'BYE' || (m.win_type == null && m.loser_entry_id == null) || (m.win_type === 'FORF' && m.loser_entry_id == null)
     const oppData = opponentEntryId ? opponentMap[opponentEntryId] : null
     const opponent = isBye
       ? 'Bye'
