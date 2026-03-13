@@ -3,6 +3,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 
+export const dynamic = 'force-dynamic'
+
 const WRESTLER_PHOTOS: Record<string, string> = {
   'bb3ebca6-4993-4cd4-87a0-fbcd3b1c12c8': '/wrestlers/zachary-akers.png',
 }
@@ -109,6 +111,41 @@ function cleanTournamentName(raw: string): string {
   return n
 }
 
+function formatMatTime(totalSeconds: number): string {
+  const hours = Math.floor(totalSeconds / 3600)
+  const mins = Math.floor((totalSeconds % 3600) / 60)
+  const secs = totalSeconds % 60
+  if (hours > 0) return `${hours}h ${mins}m`
+  return `${mins}m ${secs}s`
+}
+
+function formatPinTimeStat(seconds: number): string {
+  const min = Math.floor(seconds / 60)
+  const sec = String(seconds % 60).padStart(2, '0')
+  return `${min}:${sec}`
+}
+
+function computeMatchMatTime(winType: string | null, fallTime: number | null): number {
+  if (!winType || winType === 'BYE') return 0
+  if (['FORF', 'INJ', 'DQ', 'FF', 'DEF', 'MFF'].includes(winType)) return 0
+  if (['FALL', 'TF', 'TF-1.5'].includes(winType) && fallTime && fallTime > 0) return fallTime
+  if (['DEC', 'MD'].includes(winType)) return 420
+  if (['SV-1', 'TB-1'].includes(winType)) return 480
+  if (['TB-2', 'UTB', '2-OT'].includes(winType)) return 540
+  if (['FALL', 'TF', 'TF-1.5'].includes(winType)) return 420
+  return 420
+}
+
+function computeDomMatchScore(winType: string | null, fallTime: number | null): number {
+  if (!winType) return 0
+  if (['FALL', 'TF', 'TF-1.5'].includes(winType)) {
+    return Math.max(9 - (fallTime ?? 0) / 60, 0)
+  }
+  if (winType === 'MD') return 2
+  if (['DEC', 'SV-1', '2-OT', 'UTB'].includes(winType)) return 1
+  return 0
+}
+
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default async function WrestlerPage({
@@ -202,6 +239,25 @@ export default async function WrestlerPage({
       : Promise.resolve({ data: null }),
   ])
   const displaySchool = (schoolNameRow as { school_name: string } | null)?.school_name ?? primarySchool
+
+  // Fetch ghost championships and revenge wins
+  const [{ data: ghostChamps }, { data: revengeWinsData }] = await Promise.all([
+    supabase.rpc('get_wrestler_ghost_championships', { p_wrestler_id: id }),
+    supabase.rpc('get_wrestler_revenge_wins', { p_wrestler_id: id }),
+  ])
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  const ghostChampionships = (ghostChamps ?? []) as any[]
+  const revengeWinsList = (revengeWinsData ?? []) as any[]
+  /* eslint-enable @typescript-eslint/no-explicit-any */
+
+  // Deduplicate revenge wins (same revenge match may appear multiple times if multiple prior losses)
+  const seenRevenge = new Set<string>()
+  const revengeWins = revengeWinsList.filter((rw: any) => {
+    const key = `${rw.opponent_id}||${rw.revenge_tournament_name}||${rw.revenge_round}`
+    if (seenRevenge.has(key)) return false
+    seenRevenge.add(key)
+    return true
+  })
 
   // Deduplicate (a match won't appear in both, but be safe)
   const seen = new Set<string>()
@@ -359,6 +415,63 @@ export default async function WrestlerPage({
   const wins   = nonBye.filter(m => m.result === 'W').length
   const losses = nonBye.filter(m => m.result === 'L').length
 
+  // Career stats computation
+  type SeasonStat = {
+    seasonId: number; wins: number; losses: number; pins: number; tfs: number; mds: number
+    bonusPct: number; hammerRating: number; bestPin: number | null; matTime: number; consolationWins: number
+  }
+  const seasonStatsMap = new Map<number, SeasonStat>()
+  for (const m of annotated) {
+    if (m.opponent === 'Bye') continue
+    const sid = unwrap(m.tournament)?.season_id ?? 1
+    if (!seasonStatsMap.has(sid)) {
+      seasonStatsMap.set(sid, {
+        seasonId: sid, wins: 0, losses: 0, pins: 0, tfs: 0, mds: 0,
+        bonusPct: 0, hammerRating: 0, bestPin: null, matTime: 0, consolationWins: 0,
+      })
+    }
+    const s = seasonStatsMap.get(sid)!
+    const wt = m.win_type ?? ''
+    s.matTime += computeMatchMatTime(m.win_type, m.fall_time_seconds)
+    if (m.result === 'W') {
+      s.wins++
+      if (wt === 'FALL') {
+        s.pins++
+        if (m.fall_time_seconds && (s.bestPin === null || m.fall_time_seconds < s.bestPin)) {
+          s.bestPin = m.fall_time_seconds
+        }
+      }
+      if (wt === 'TF' || wt === 'TF-1.5') s.tfs++
+      if (wt === 'MD') s.mds++
+      if (m.bracket_side === 'consolation') s.consolationWins++
+    } else {
+      s.losses++
+    }
+  }
+  for (const s of seasonStatsMap.values()) {
+    s.bonusPct = s.wins > 0 ? Math.round(((s.pins + s.tfs + s.mds) / s.wins) * 100) : 0
+    const seasonMatches = annotated.filter(m => m.opponent !== 'Bye' && (unwrap(m.tournament)?.season_id ?? 1) === s.seasonId)
+    const domScores = seasonMatches.map(m => {
+      const score = computeDomMatchScore(m.win_type, m.fall_time_seconds)
+      return m.result === 'W' ? score : -score
+    })
+    s.hammerRating = domScores.length > 0 ? domScores.reduce((a, b) => a + b, 0) / domScores.length : 0
+  }
+  const seasonStats = [...seasonStatsMap.values()].sort((a, b) => b.seasonId - a.seasonId)
+  const careerTotals = seasonStats.reduce((acc, s) => ({
+    wins: acc.wins + s.wins, losses: acc.losses + s.losses,
+    pins: acc.pins + s.pins, tfs: acc.tfs + s.tfs, mds: acc.mds + s.mds,
+    bonusPct: 0, hammerRating: 0,
+    bestPin: s.bestPin !== null ? (acc.bestPin !== null ? Math.min(acc.bestPin, s.bestPin) : s.bestPin) : acc.bestPin,
+    matTime: acc.matTime + s.matTime, consolationWins: acc.consolationWins + s.consolationWins,
+  }), { wins: 0, losses: 0, pins: 0, tfs: 0, mds: 0, bonusPct: 0, hammerRating: 0, bestPin: null as number | null, matTime: 0, consolationWins: 0 })
+  careerTotals.bonusPct = careerTotals.wins > 0 ? Math.round(((careerTotals.pins + careerTotals.tfs + careerTotals.mds) / careerTotals.wins) * 100) : 0
+  const allDomScores = annotated.filter(m => m.opponent !== 'Bye').map(m => {
+    const score = computeDomMatchScore(m.win_type, m.fall_time_seconds)
+    return m.result === 'W' ? score : -score
+  })
+  careerTotals.hammerRating = allDomScores.length > 0 ? allDomScores.reduce((a, b) => a + b, 0) / allDomScores.length : 0
+
   // Detect placements (champion = won Finals on championship side)
   type PlacementInfo = { tournament: string; place: number; tournamentType: string; seasonId: number }
   const placements: PlacementInfo[] = []
@@ -502,6 +615,40 @@ export default async function WrestlerPage({
         )
       })()}
 
+      {/* Ghost Champion badge */}
+      {ghostChampionships.length > 0 && (
+        <div className="mb-4 space-y-2">
+          {ghostChampionships.map((gc: any, i: number) => (
+            <div key={i} className="bg-slate-900 text-white rounded-lg px-4 py-3">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-lg">{'\u{1F47B}'}</span>
+                <span className="font-bold text-sm uppercase tracking-wide">Ghost Champion</span>
+                <span className="text-xs text-slate-400">
+                  #{gc.seed} seed &middot; {cleanTournamentName(gc.tournament_name)} &middot; {gc.weight}lb
+                  {seasonIds.length > 1 && ` \u00B7 ${SEASON_LABELS[gc.season_id as number] ?? ''}`}
+                </span>
+              </div>
+              {gc.wins_on_path && gc.wins_on_path.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 text-xs">
+                  <span className="text-slate-400">Path:</span>
+                  {(gc.wins_on_path as any[]).map((w: any, j: number) => (
+                    <span key={j} className="bg-slate-800 px-2 py-0.5 rounded">
+                      {ROUND_LABEL[w.round] ?? w.round}: {w.opponent}
+                      {w.opponent_seed && <span className="text-slate-400"> (#{w.opponent_seed})</span>}
+                      {' '}
+                      <span className="text-emerald-400">
+                        {w.win_type}
+                        {w.fall_time ? ` ${Math.floor(w.fall_time / 60)}:${String(w.fall_time % 60).padStart(2, '0')}` : ''}
+                      </span>
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+
       <p className="text-slate-500 mb-8">
         {displaySchool && (
           <>
@@ -559,6 +706,98 @@ export default async function WrestlerPage({
         <span className="font-semibold text-slate-700">{wins}-{losses}</span>
         {' '}postseason · {totalTournaments} tournament{totalTournaments !== 1 ? 's' : ''}
       </p>
+
+      {/* Career Stats Table */}
+      {seasonStats.length > 0 && (
+        <div className="mb-8">
+          <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">Career Stats</h3>
+          <div className="border border-slate-200 rounded-lg overflow-hidden shadow-sm bg-white overflow-x-auto">
+            <table className="min-w-[700px] w-full text-sm">
+              <thead className="bg-slate-50 border-b border-slate-200">
+                <tr>
+                  <th className="text-left px-3 py-2 font-medium text-slate-500">Season</th>
+                  <th className="text-center px-3 py-2 font-medium text-slate-500">W-L</th>
+                  <th className="text-center px-3 py-2 font-medium text-slate-500">Pins</th>
+                  <th className="text-center px-3 py-2 font-medium text-slate-500">TFs</th>
+                  <th className="text-center px-3 py-2 font-medium text-slate-500">Bonus%</th>
+                  <th className="text-center px-3 py-2 font-medium text-slate-500">Hammer</th>
+                  <th className="text-center px-3 py-2 font-medium text-slate-500">Best Pin</th>
+                  <th className="text-center px-3 py-2 font-medium text-slate-500">Mat Time</th>
+                  <th className="text-center px-3 py-2 font-medium text-slate-500">Consol. W</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {seasonStats.map(s => (
+                  <tr key={s.seasonId} className="hover:bg-slate-50">
+                    <td className="px-3 py-2 font-medium text-slate-700">{SEASON_LABELS[s.seasonId] ?? `S${s.seasonId}`}</td>
+                    <td className="px-3 py-2 text-center font-semibold text-slate-800">{s.wins}-{s.losses}</td>
+                    <td className="px-3 py-2 text-center text-slate-600">{s.pins}</td>
+                    <td className="px-3 py-2 text-center text-slate-600">{s.tfs}</td>
+                    <td className="px-3 py-2 text-center text-slate-600">{s.bonusPct}%</td>
+                    <td className="px-3 py-2 text-center text-slate-600">{s.hammerRating.toFixed(2)}</td>
+                    <td className="px-3 py-2 text-center text-slate-600 font-mono text-xs">{s.bestPin !== null ? formatPinTimeStat(s.bestPin) : '\u2014'}</td>
+                    <td className="px-3 py-2 text-center text-slate-600">{formatMatTime(s.matTime)}</td>
+                    <td className="px-3 py-2 text-center text-slate-600">{s.consolationWins}</td>
+                  </tr>
+                ))}
+                {seasonStats.length > 1 && (
+                  <tr className="bg-slate-50 font-semibold">
+                    <td className="px-3 py-2 text-slate-700">Career</td>
+                    <td className="px-3 py-2 text-center text-slate-800">{careerTotals.wins}-{careerTotals.losses}</td>
+                    <td className="px-3 py-2 text-center text-slate-700">{careerTotals.pins}</td>
+                    <td className="px-3 py-2 text-center text-slate-700">{careerTotals.tfs}</td>
+                    <td className="px-3 py-2 text-center text-slate-700">{careerTotals.bonusPct}%</td>
+                    <td className="px-3 py-2 text-center text-slate-700">{careerTotals.hammerRating.toFixed(2)}</td>
+                    <td className="px-3 py-2 text-center text-slate-700 font-mono text-xs">{careerTotals.bestPin !== null ? formatPinTimeStat(careerTotals.bestPin) : '\u2014'}</td>
+                    <td className="px-3 py-2 text-center text-slate-700">{formatMatTime(careerTotals.matTime)}</td>
+                    <td className="px-3 py-2 text-center text-slate-700">{careerTotals.consolationWins}</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* Revenge Wins */}
+      {revengeWins.length > 0 && (
+        <div className="mb-8">
+          <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">
+            Revenge Wins <span className="text-slate-300">({revengeWins.length})</span>
+          </h3>
+          <div className="space-y-3">
+            {revengeWins.map((rw: any, i: number) => (
+              <div key={i} className="border border-slate-200 rounded-lg bg-white p-4 shadow-sm">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-emerald-600 font-bold text-sm">W</span>
+                  <span className="font-medium text-slate-800">
+                    {rw.opponent_id ? (
+                      <Link href={`/wrestler/${rw.opponent_id}`} className="hover:text-blue-600 transition-colors">
+                        {rw.opponent_name}
+                      </Link>
+                    ) : rw.opponent_name}
+                  </span>
+                  {rw.opponent_school_name && (
+                    <span className="text-xs text-slate-400">{rw.opponent_school_name}</span>
+                  )}
+                  <span className="text-xs text-slate-400">
+                    &middot; {cleanTournamentName(rw.revenge_tournament_name)} {ROUND_LABEL[rw.revenge_round] ?? rw.revenge_round} &middot; {rw.weight}lb
+                    &middot; {rw.revenge_win_type}
+                    {rw.revenge_fall_time ? ` ${Math.floor(rw.revenge_fall_time / 60)}:${String(rw.revenge_fall_time % 60).padStart(2, '0')}` : ''}
+                  </span>
+                </div>
+                <div className="text-xs text-slate-500 flex items-center gap-1.5">
+                  <span className="text-red-400 font-semibold">L</span>
+                  <span>
+                    Originally lost at {cleanTournamentName(rw.original_tournament_name)} ({ROUND_LABEL[rw.original_round] ?? rw.original_round})
+                    {rw.original_win_type && ` by ${rw.original_win_type}`}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Match history grouped by season, then by tournament + weight */}
       <div className="space-y-10">
