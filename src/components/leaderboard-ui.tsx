@@ -152,5 +152,5 @@ export function TabNav({ active, basePath }: { active: string; basePath: string 
 
 export const COMEBACK_ROUND_LABEL: Record<string, string> = {
   C1: 'Cons. R1', C2: 'Cons. R2',
-  '3rd_Place': '3rd Place', '5th_Place': '5th Place',
+  '3rd_Place': '3rd Place', '5th_Place': '5th Place', '7th_Place': '7th Place',
 }

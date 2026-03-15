@@ -29,7 +29,7 @@ function gapColor(gap: number): string {
 
 const ROUND_LABEL: Record<string, string> = {
   R1: 'R1', R2: 'R2', QF: 'QF', SF: 'SF', F: 'Final',
-  C1: 'C1', C2: 'C2', '3rd_Place': '3rd', '5th_Place': '5th',
+  C1: 'C1', C2: 'C2', '3rd_Place': '3rd', '5th_Place': '5th', '7th_Place': '7th',
 }
 
 export async function BracketBuster({

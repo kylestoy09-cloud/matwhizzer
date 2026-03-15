@@ -21,12 +21,12 @@ export const TOURNAMENT_TYPE_LABEL: Record<string, string> = {
 export const ROUND_ORDER: Record<string, number> = {
   R1: 0, R2: 1, QF: 2, SF: 3, F: 4,
   C1: 5, C2: 6, C3: 7, C4: 8, C5: 9, C6: 10,
-  '3rd_Place': 11, '5th_Place': 12,
+  '3rd_Place': 11, '5th_Place': 12, '7th_Place': 13,
 }
 
 export const ROUND_LABEL: Record<string, string> = {
   R1: 'Round 1', R2: 'Round 2', QF: 'Quarterfinal', SF: 'Semifinal', F: 'Final',
   C1: 'Cons. R1', C2: 'Cons. R2', C3: 'Cons. R3',
   C4: 'Cons. R4', C5: 'Cons. R5', C6: 'Cons. R6',
-  '3rd_Place': '3rd Place', '5th_Place': '5th Place',
+  '3rd_Place': '3rd Place', '5th_Place': '5th Place', '7th_Place': '7th Place',
 }
