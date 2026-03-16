@@ -40,6 +40,7 @@ type MatchRow = {
 const CARD_H = 80
 
 const ROUND_LABEL: Record<string, string> = {
+  R1:          'Round 1',
   QF:          'Quarters',
   SF:          'Semis',
   F:           'Finals',
@@ -52,12 +53,11 @@ const ROUND_LABEL: Record<string, string> = {
   '7th_Place': '7th Place',
 }
 
-// Girls state is 8-man: no R1
-const CHAMP_COLS  = ['QF', 'SF', 'F'] as const
-const CONSOL_COLS = ['C1', 'C2', 'C3', 'C4', '3rd_Place'] as const
+const CHAMP_COLS  = ['R1', 'QF', 'SF', 'F'] as const
+const CONSOL_COLS = ['C1', 'C2', 'C3', 'C4', '3rd_Place', '5th_Place', '7th_Place'] as const
 
-// DFS traversal (QF is first round for 8-man)
-const PREV_ROUND: Record<string, string> = { SF: 'QF', F: 'SF' }
+// DFS traversal (girls goes R1 → QF directly, no R2)
+const PREV_ROUND: Record<string, string> = { QF: 'R1', SF: 'QF', F: 'SF' }
 
 // ── State Qualifiers ─────────────────────────────────────────────────────────
 
@@ -547,7 +547,7 @@ export default async function GirlsStateBracketPage({
   const consolCols = CONSOL_COLS.filter(r => (consolByRound.get(r) ?? []).length > 0)
 
   // Base counts for slot-height calculation
-  const qfCount = (champOrdered.get('QF') ?? []).length || 1
+  const r1Count = (champOrdered.get('R1') ?? []).length || 1
   const c1Count = (consolByRound.get('C1') ?? []).length || 1
 
   // Finals match for highlight card
@@ -567,7 +567,7 @@ export default async function GirlsStateBracketPage({
 
       <div className="mb-8 text-center">
         <PageHeader title={`Girls State · ${weight} lb`} goldTrim />
-        <p className="text-slate-500 text-sm mt-1">NJSIAA {SEASONS[season]?.label ?? season} · 8-man double elimination</p>
+        <p className="text-slate-500 text-sm mt-1">NJSIAA {SEASONS[season]?.label ?? season} · 16-man double elimination</p>
       </div>
 
       <WeightNav weights={WEIGHTS} current={weight} base="/girls/state" />
@@ -586,7 +586,7 @@ export default async function GirlsStateBracketPage({
           <BracketSection
             cols={champCols}
             matchesByRound={champOrdered}
-            baseMatchCount={qfCount}
+            baseMatchCount={r1Count}
           />
         </div>
 
