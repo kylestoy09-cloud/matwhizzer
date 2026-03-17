@@ -395,7 +395,7 @@ function Podium({ matches }: { matches: MatchRow[] }) {
   const byPlace = new Map(placements.map(p => [p.place, p]))
 
   return (
-    <div className="mb-8">
+    <div className="mt-10 mb-8">
       {/* Podium — 2nd, 1st, 3rd */}
       <div className="flex items-end justify-center gap-2 mb-4">
         {[2, 1, 3].map(place => {
