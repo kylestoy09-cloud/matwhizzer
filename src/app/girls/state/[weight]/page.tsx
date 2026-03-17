@@ -445,21 +445,6 @@ function BracketSection({
   )
 }
 
-// ── Mobile round list ─────────────────────────────────────────────────────────
-
-function MobileRound({ label, matches }: { label: string; matches: MatchRow[] }) {
-  return (
-    <section>
-      <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">{label}</h3>
-      <div className="space-y-2">
-        {matches.map(m => (
-          <MatchCard key={m.match_id} m={m} />
-        ))}
-      </div>
-    </section>
-  )
-}
-
 // ── Roster builder ───────────────────────────────────────────────────────────
 
 type RosterItem = {
@@ -622,9 +607,6 @@ export default async function GirlsStateBracketPage({
   // Finals match for highlight card
   const finalsMatch = champ.find(m => m.round === 'F') ?? null
 
-  // All rounds for mobile
-  const allRounds = [...champCols, ...consolCols]
-
   return (
     <div className="max-w-fit mx-auto px-4 py-8">
       <Link
@@ -682,30 +664,6 @@ export default async function GirlsStateBracketPage({
           />
         </div>
 
-      </div>
-
-      {/* ── MOBILE bracket (<lg) ── */}
-      <div className="lg:hidden space-y-8 mt-6">
-        <div>
-          <h2 className="text-sm font-semibold text-slate-600 mb-4 uppercase tracking-wide">Championship</h2>
-          <div className="space-y-6">
-            {champCols.map(round => {
-              const ms = champOrdered.get(round) ?? []
-              if (ms.length === 0) return null
-              return <MobileRound key={round} label={ROUND_LABEL[round] ?? round} matches={ms} />
-            })}
-          </div>
-        </div>
-        <div className="border-t border-slate-200 pt-8">
-          <h2 className="text-sm font-semibold text-slate-600 mb-4 uppercase tracking-wide">Consolation</h2>
-          <div className="space-y-6">
-            {consolCols.map(round => {
-              const ms = consolByRound.get(round) ?? []
-              if (ms.length === 0) return null
-              return <MobileRound key={round} label={ROUND_LABEL[round] ?? round} matches={ms} />
-            })}
-          </div>
-        </div>
       </div>
       </>)}
 
