@@ -366,62 +366,35 @@ function derivePlacements(matches: MatchRow[]): PlaceWinner[] {
   return placements.sort((a, b) => a.place - b.place)
 }
 
-const PODIUM_STYLE: Record<number, { bg: string; border: string; text: string; label: string; h: string }> = {
-  1: { bg: 'bg-amber-50', border: 'border-amber-300', text: 'text-amber-700', label: '1st', h: 'h-28' },
-  2: { bg: 'bg-slate-50', border: 'border-slate-300', text: 'text-slate-600', label: '2nd', h: 'h-24' },
-  3: { bg: 'bg-orange-50', border: 'border-orange-300', text: 'text-orange-700', label: '3rd', h: 'h-20' },
-}
-
-function PodiumBlock({ p }: { p: PlaceWinner }) {
-  const style = PODIUM_STYLE[p.place]!
-  return (
-    <div className={`${style.bg} border-2 ${style.border} rounded-xl flex flex-col items-center justify-end ${style.h} w-32 sm:w-40 px-2 pb-2 shadow-sm`}>
-      <span className={`text-lg font-black ${style.text}`}>{style.label}</span>
-      {p.wrestlerId ? (
-        <Link href={`/wrestler/${p.wrestlerId}`} className="text-xs font-semibold text-slate-800 hover:underline text-center truncate w-full">
-          {p.name}
-        </Link>
-      ) : (
-        <span className="text-xs font-semibold text-slate-800 text-center truncate w-full">{p.name}</span>
-      )}
-      <span className="text-[10px] text-slate-400 truncate w-full text-center">{p.school ?? ''}</span>
-    </div>
-  )
-}
+const PLACE_SUFFIX: Record<number, string> = { 1: 'st', 2: 'nd', 3: 'rd' }
 
 function Podium({ matches }: { matches: MatchRow[] }) {
   const placements = derivePlacements(matches)
   if (placements.length === 0) return null
-  const byPlace = new Map(placements.map(p => [p.place, p]))
 
   return (
-    <div className="mt-10 mb-8">
-      {/* Podium — 2nd, 1st, 3rd */}
-      <div className="flex items-end justify-center gap-2 mb-4">
-        {[2, 1, 3].map(place => {
-          const p = byPlace.get(place)
-          return p ? <PodiumBlock key={place} p={p} /> : null
-        })}
-      </div>
-      {/* 4th through 8th */}
-      <div className="flex flex-wrap items-start justify-center gap-2">
-        {[4, 5, 6, 7, 8].map(place => {
-          const p = byPlace.get(place)
-          if (!p) return null
-          return (
-            <div key={place} className="bg-white border border-slate-200 rounded-lg px-3 py-2 w-28 sm:w-32 text-center shadow-sm">
-              <span className="text-xs font-bold text-slate-400">{place}th</span>
+    <div className="mt-10 mb-8 max-w-sm mx-auto">
+      <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Placewinners</h2>
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden divide-y divide-slate-100">
+        {placements.map(p => (
+          <div key={p.place} className={`flex items-center gap-2.5 px-3 py-2 ${p.place === 1 ? 'bg-amber-50' : ''}`}>
+            <span className={`text-xs font-bold w-6 text-right shrink-0 ${
+              p.place === 1 ? 'text-amber-600' : p.place === 2 ? 'text-slate-500' : p.place === 3 ? 'text-orange-500' : 'text-slate-400'
+            }`}>
+              {p.place}{PLACE_SUFFIX[p.place] ?? 'th'}
+            </span>
+            <span className="flex-1 min-w-0 truncate">
               {p.wrestlerId ? (
-                <Link href={`/wrestler/${p.wrestlerId}`} className="block text-xs font-semibold text-slate-700 hover:underline truncate">
+                <Link href={`/wrestler/${p.wrestlerId}`} className={`text-sm hover:underline truncate ${p.place === 1 ? 'font-bold text-slate-900' : 'font-medium text-slate-700'}`}>
                   {p.name}
                 </Link>
               ) : (
-                <span className="block text-xs font-semibold text-slate-700 truncate">{p.name}</span>
+                <span className="text-sm font-medium text-slate-700">{p.name}</span>
               )}
-              <span className="text-[10px] text-slate-400 truncate block">{p.school ?? ''}</span>
-            </div>
-          )
-        })}
+            </span>
+            <span className="text-[11px] text-slate-400 shrink-0">{p.school ?? ''}</span>
+          </div>
+        ))}
       </div>
     </div>
   )
