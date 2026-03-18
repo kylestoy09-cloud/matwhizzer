@@ -248,25 +248,27 @@ export function BracketPoll({
         </p>
       )}
 
-      {/* ── Seeded Entry List ── */}
-      <section>
-        <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
-          Entries
-        </h3>
-        <div className="max-w-lg bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm">
-          {seededEntries.map((entry, i) => (
-            <div key={entry.entry_id} className={i > 0 ? 'border-t border-slate-100' : ''}>
-              <EntryRow
-                entry={entry}
-                togglePick={togglePick}
-                getPickSlot={getPickSlot}
-                pollClosed={pollClosed}
-                provenancePrefix={provenancePrefix}
-              />
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* ── Seeded Entry List (hidden when poll closed) ── */}
+      {!pollClosed && (
+        <section>
+          <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
+            Make Your Picks
+          </h3>
+          <div className="max-w-lg bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm">
+            {seededEntries.map((entry, i) => (
+              <div key={entry.entry_id} className={i > 0 ? 'border-t border-slate-100' : ''}>
+                <EntryRow
+                  entry={entry}
+                  togglePick={togglePick}
+                  getPickSlot={getPickSlot}
+                  pollClosed={pollClosed}
+                  provenancePrefix={provenancePrefix}
+                />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* ── Submit / Update ── */}
       {!pollClosed && picks.pick_1st && (
