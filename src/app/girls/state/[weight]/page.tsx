@@ -280,57 +280,6 @@ function MatchCard({ m }: { m: MatchRow }) {
   )
 }
 
-// ── Finals highlight ──────────────────────────────────────────────────────────
-
-function FinalsCard({ m }: { m: MatchRow }) {
-  const result = formatResult(m)
-  return (
-    <div className="bg-gradient-to-br from-amber-50 to-yellow-50 border-2 border-amber-300 rounded-xl p-4 shadow-md max-w-md mx-auto">
-      <div className="text-center mb-3">
-        <span className="text-xs font-bold text-amber-600 uppercase tracking-widest">Championship Final</span>
-      </div>
-      <div className="bg-white rounded-lg overflow-hidden border border-amber-200">
-        <div className="flex items-center gap-2 px-3 py-2.5 bg-emerald-50">
-          {m.winner_seed != null && (
-            <span className="text-xs text-slate-400 w-4 text-right">{m.winner_seed}</span>
-          )}
-          <span className="flex-1 min-w-0 truncate">
-            {m.winner_wrestler_id ? (
-              <Link href={`/wrestler/${m.winner_wrestler_id}`} className="text-sm font-bold text-slate-900 hover:underline">
-                {m.winner_name}
-              </Link>
-            ) : (
-              <span className="text-sm font-bold text-slate-900">{m.winner_name}</span>
-            )}
-          </span>
-          <span className="text-[10px] text-slate-400 shrink-0">{m.winner_school_name || m.winner_school}</span>
-        </div>
-        <div className="border-t border-slate-100" />
-        <div className="flex items-center gap-2 px-3 py-2.5">
-          {m.loser_seed != null && (
-            <span className="text-xs text-slate-400 w-4 text-right">{m.loser_seed}</span>
-          )}
-          <span className="flex-1 min-w-0 truncate">
-            {m.loser_wrestler_id ? (
-              <Link href={`/wrestler/${m.loser_wrestler_id}`} className="text-sm font-medium text-slate-600 hover:underline">
-                {m.loser_name}
-              </Link>
-            ) : (
-              <span className="text-sm font-medium text-slate-600">{m.loser_name}</span>
-            )}
-          </span>
-          <span className="text-[10px] text-slate-400 shrink-0">{m.loser_school_name || m.loser_school}</span>
-        </div>
-      </div>
-      {result && (
-        <div className="text-center mt-2">
-          <span className="text-xs font-semibold text-amber-700">{result}</span>
-        </div>
-      )}
-    </div>
-  )
-}
-
 // ── Podium ──────────────────────────────────────────────────────────────────
 
 type PlaceWinner = {
@@ -604,9 +553,6 @@ export default async function GirlsStateBracketPage({
   const r1Count = (champOrdered.get('R1') ?? []).length || 1
   const c1Count = (consolByRound.get('C1') ?? []).length || 1
 
-  // Finals match for highlight card
-  const finalsMatch = champ.find(m => m.round === 'F') ?? null
-
   return (
     <div className="max-w-fit mx-auto px-4 py-8">
       <Link
@@ -643,13 +589,6 @@ export default async function GirlsStateBracketPage({
             baseMatchCount={r1Count}
           />
         </div>
-
-        {/* Finals highlight */}
-        {finalsMatch && (
-          <div className="my-6">
-            <FinalsCard m={finalsMatch} />
-          </div>
-        )}
 
         {/* Consolation section */}
         <div>
