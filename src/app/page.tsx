@@ -60,18 +60,32 @@ export default async function RootPage({
 
   let topTeamScores: TeamScoreRow[] = []
   let topDominance: DominanceRow[] = []
-  let topSchoolsByWrestlers: { school: string; school_name: string | null; wrestler_count: number; gender: string }[] = []
+  let podiumSchools: { school_name: string; count: number }[] = []
 
   if (showLeaderboards) {
-    const [dominanceRes, teamScoreRes, activeSchoolsRes] = await Promise.all([
+    const [dominanceRes, teamScoreRes, boysPlacementsRes, girlsPlacementsRes] = await Promise.all([
       supabase.rpc('lb_dominance', { p_gender: 'M', p_season: season }),
       supabase.rpc('top_postseason_team_scores', { p_gender: 'M', p_season: season, p_limit: 25 }),
-      supabase.rpc('top_active_schools', { p_gender: 'M', p_season: season, p_limit: 20 }),
+      supabase.rpc('state_placements', { p_gender: 'M', p_season: season }),
+      supabase.rpc('state_placements', { p_gender: 'F', p_season: season }),
     ])
     topDominance = (dominanceRes.data ?? []).slice(0, 8) as DominanceRow[]
     topTeamScores = (teamScoreRes.data ?? []) as TeamScoreRow[]
-    topSchoolsByWrestlers = ((activeSchoolsRes.data ?? []) as { school: string; school_name: string | null; wrestler_count: number }[])
-      .map(s => ({ ...s, gender: 'M' }))
+
+    const allPlacements = [
+      ...((boysPlacementsRes.data ?? []) as { school_name: string; school: string }[]),
+      ...((girlsPlacementsRes.data ?? []) as { school_name: string; school: string }[]),
+    ]
+    const schoolCounts = new Map<string, number>()
+    for (const p of allPlacements) {
+      const name = p.school_name || p.school || ''
+      if (!name) continue
+      schoolCounts.set(name, (schoolCounts.get(name) ?? 0) + 1)
+    }
+    podiumSchools = [...schoolCounts.entries()]
+      .map(([school_name, count]) => ({ school_name, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 20)
   }
 
   const boysDistricts  = Array.from({ length: 32 }, (_, i) => i + 1)
@@ -198,20 +212,20 @@ export default async function RootPage({
       {showLeaderboards && (
         <div className="space-y-10 border-t border-slate-200 pt-10 mb-10">
 
-          {/* Schools with 10+ wrestlers */}
-          {topSchoolsByWrestlers.length > 0 && (
+          {/* Top schools by state podium finishes */}
+          {podiumSchools.length > 0 && (
             <section>
-              <h2 className="text-lg font-bold text-slate-900 mb-3">Still in the Room</h2>
+              <h2 className="text-lg font-bold text-slate-900 mb-3">On the Podium</h2>
+              <p className="text-xs text-slate-500 mb-3">Schools ranked by total wrestlers finishing 1st–8th at States (boys + girls combined)</p>
               <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2">
-                {topSchoolsByWrestlers.map(s => (
-                  <Link
-                    key={s.school}
-                    href={`/boys/schools/${encodeURIComponent(s.school)}`}
-                    className="flex items-center justify-between px-3 py-2.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-400 transition-colors shadow-sm"
+                {podiumSchools.map(s => (
+                  <div
+                    key={s.school_name}
+                    className="flex items-center justify-between px-3 py-2.5 rounded-lg border border-slate-200 bg-white shadow-sm"
                   >
-                    <span className="text-sm font-medium text-slate-800 truncate">{s.school_name || s.school}</span>
-                    <span className="text-xs text-slate-400 ml-2 shrink-0">{s.wrestler_count}</span>
-                  </Link>
+                    <span className="text-sm font-medium text-slate-800 truncate">{s.school_name}</span>
+                    <span className="text-xs font-semibold text-amber-600 ml-2 shrink-0">{s.count}</span>
+                  </div>
                 ))}
               </div>
             </section>
