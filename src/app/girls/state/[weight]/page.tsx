@@ -5,6 +5,7 @@ import { getActiveSeason } from '@/lib/get-season'
 import { SEASONS } from '@/lib/seasons'
 import { BracketPoll, type BracketEntry } from '@/components/BracketPoll'
 import { PageHeader } from '@/components/PageHeader'
+import { orderChampMatchesBySeed } from '@/lib/bracketOrder'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -534,7 +535,7 @@ export default async function GirlsStateBracketPage({
   const consol = matches.filter(m => m.bracket_side === 'consolation')
 
   // Championship — DFS ordered
-  const champOrdered = orderChampMatches(champ)
+  const champOrdered = orderChampMatchesBySeed(champ, 16)
   const champCols    = CHAMP_COLS.filter(r => (champOrdered.get(r) ?? []).length > 0)
 
   // Consolation — grouped by round, sorted by bout_number within each round
