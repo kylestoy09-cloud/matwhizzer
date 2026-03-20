@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { getActiveSeason } from '@/lib/get-season'
 import { PostseasonLeaders } from '@/components/PostseasonLeaders'
+import { StateChampions } from '@/components/StateChampions'
 import { PageHeader } from '@/components/PageHeader'
 
 type WrestlerRow = { id: string; first_name: string; last_name: string }
@@ -47,15 +48,18 @@ export default async function BoysPage({
   let topTeamScores: TeamScoreRow[] = []
   let topDominance: DominanceRow[] = []
   let podiumSchools: { school_name: string; count: number }[] = []
+  let stateChampions: { weight: number; wrestler_id: string; wrestler_name: string; school: string; dominance_score: number }[] = []
 
   if (showLeaderboards) {
-    const [dominanceRes, teamScoreRes, placementsRes] = await Promise.all([
+    const [dominanceRes, teamScoreRes, placementsRes, championsRes] = await Promise.all([
       supabase.rpc('lb_dominance', { p_gender: 'M', p_season: season }),
       supabase.rpc('top_postseason_team_scores', { p_gender: 'M', p_season: season, p_limit: 25 }),
       supabase.rpc('state_placements', { p_gender: 'M', p_season: season }),
+      supabase.rpc('state_champions', { p_tournament_id: season === 2 ? 180 : 133 }),
     ])
     topDominance = (dominanceRes.data ?? []).slice(0, 8) as DominanceRow[]
     topTeamScores = (teamScoreRes.data ?? []) as TeamScoreRow[]
+    stateChampions = (championsRes.data ?? []) as typeof stateChampions
 
     const schoolCounts = new Map<string, number>()
     for (const p of ((placementsRes.data ?? []) as { school_name: string; school: string }[])) {
@@ -173,6 +177,10 @@ export default async function BoysPage({
       {/* ── Leaderboards ── */}
       {showLeaderboards && (
         <div className="space-y-10 border-t border-slate-200 pt-10 mb-10">
+
+          {stateChampions.length > 0 && (
+            <StateChampions rows={stateChampions} seasonYear={season === 2 ? 2026 : 2025} />
+          )}
 
           {podiumSchools.length > 0 && (
             <section>
