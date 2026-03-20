@@ -63,18 +63,16 @@ export default async function RootPage({
   let podiumSchools: { school_name: string; count: number }[] = []
 
   if (showLeaderboards) {
-    const [dominanceRes, teamScoreRes, boysPlacementsRes, girlsPlacementsRes] = await Promise.all([
+    const [dominanceRes, teamScoreRes, boysPlacementsRes] = await Promise.all([
       supabase.rpc('lb_dominance', { p_gender: 'M', p_season: season }),
       supabase.rpc('top_postseason_team_scores', { p_gender: 'M', p_season: season, p_limit: 25 }),
       supabase.rpc('state_placements', { p_gender: 'M', p_season: season }),
-      supabase.rpc('state_placements', { p_gender: 'F', p_season: season }),
     ])
     topDominance = (dominanceRes.data ?? []).slice(0, 8) as DominanceRow[]
     topTeamScores = (teamScoreRes.data ?? []) as TeamScoreRow[]
 
     const allPlacements = [
       ...((boysPlacementsRes.data ?? []) as { school_name: string; school: string }[]),
-      ...((girlsPlacementsRes.data ?? []) as { school_name: string; school: string }[]),
     ]
     const schoolCounts = new Map<string, number>()
     for (const p of allPlacements) {
@@ -216,7 +214,7 @@ export default async function RootPage({
           {podiumSchools.length > 0 && (
             <section>
               <h2 className="text-lg font-bold text-slate-900 mb-3">On the Podium</h2>
-              <p className="text-xs text-slate-500 mb-3">Schools ranked by total wrestlers finishing 1st–8th at States (boys + girls combined)</p>
+              <p className="text-xs text-slate-500 mb-3">Schools ranked by total boys wrestlers finishing 1st–8th at States</p>
               <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2">
                 {podiumSchools.map(s => (
                   <div
