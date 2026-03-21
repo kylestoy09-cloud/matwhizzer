@@ -45,13 +45,6 @@ export default async function AdminDashboard() {
           <h2 className="text-sm font-semibold text-slate-900 mb-1">District Verify</h2>
           <p className="text-xs text-slate-500">Add abbreviations for each school by district</p>
         </Link>
-        <Link
-          href="/admin/region-seeds"
-          className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow"
-        >
-          <h2 className="text-sm font-semibold text-slate-900 mb-1">Region Seeds</h2>
-          <p className="text-xs text-slate-500">Assign and adjust bracket seeding for girls regions</p>
-        </Link>
       </div>
     </div>
   )
