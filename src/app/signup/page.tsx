@@ -61,24 +61,8 @@ export default function SignUpPage() {
       return
     }
 
-    // Create public.users row
-    if (data.user) {
-      const { error: insertError } = await supabase
-        .from('users')
-        .insert({
-          id: data.user.id,
-          username,
-          user_type: 'fan',
-          truth_score: 50,
-          truth_tier: 'Novice',
-        })
-
-      if (insertError) {
-        setError(insertError.message)
-        setLoading(false)
-        return
-      }
-    }
+    // public.users row is created automatically by database trigger
+    // using the username from raw_user_meta_data
 
     setSuccess(true)
     setLoading(false)
