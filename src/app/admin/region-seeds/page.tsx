@@ -19,6 +19,32 @@ const REGIONS = [
 
 const WEIGHTS = [100, 107, 114, 120, 126, 132, 138, 145, 152, 165, 185, 235]
 
+// Brackets with known issues — bracket-only or DB-only wrestlers
+const FLAGGED_BRACKETS: { tid: number; weight: number; issue: string }[] = [
+  // Bracket only (pulled out, seeding may have shifted)
+  { tid: 181, weight: 100, issue: 'Faith Mellito on bracket, not in DB' },
+  { tid: 181, weight: 120, issue: 'Daraly Estevez on bracket, not in DB' },
+  { tid: 181, weight: 132, issue: 'Scarlett Miele on bracket, not in DB — Valeria Veliz in DB, not on bracket' },
+  { tid: 181, weight: 145, issue: 'Izvella Avila on bracket, not in DB' },
+  { tid: 181, weight: 165, issue: 'Julia Cirillo on bracket, not in DB' },
+  { tid: 181, weight: 235, issue: 'Stefany Dovale on bracket, not in DB' },
+  { tid: 182, weight: 152, issue: 'Madison Favereaux on bracket, not in DB — Gania Moran in DB, not on bracket' },
+  { tid: 182, weight: 185, issue: 'Issy Beam on bracket, not in DB — Azalea Tejada in DB, not on bracket' },
+  { tid: 183, weight: 107, issue: 'Haylen Vega & Sephora Jean on bracket, not in DB' },
+  { tid: 183, weight: 120, issue: 'Genesis Erroa on bracket, not in DB — Ariana Dugo in DB, not on bracket' },
+  { tid: 183, weight: 138, issue: 'Kelin DeJesus on bracket, not in DB' },
+  { tid: 183, weight: 152, issue: 'Isabella Kay on bracket, not in DB' },
+  { tid: 184, weight: 100, issue: 'Lily Cohen on bracket, not in DB' },
+  { tid: 184, weight: 107, issue: 'Malayah Calm & Josalyn Hurlburt on bracket, not in DB' },
+  { tid: 184, weight: 114, issue: 'Brianna Roeder on bracket, not in DB — Gianna Petracci in DB, not on bracket' },
+  { tid: 184, weight: 126, issue: 'Iyanna McCombs on bracket, not in DB' },
+  { tid: 184, weight: 138, issue: 'Haley Batista on bracket, not in DB — McKenna Thomas in DB, not on bracket' },
+  { tid: 184, weight: 145, issue: "Key'ari Jones on bracket, not in DB" },
+  { tid: 184, weight: 152, issue: 'Lailah Bolton & Zahily Avery on bracket, not in DB — Mackenzi Cerchiaro in DB, not on bracket' },
+  { tid: 184, weight: 185, issue: 'Haliey Reyes & Samaiya Figueroa on bracket, not in DB — Audra Marcinkiewicz & Destiny Cabarcas Rincon in DB, not on bracket' },
+  { tid: 184, weight: 235, issue: "Aniyah Parker-Taylor on bracket, not in DB" },
+]
+
 type Entry = {
   id: string
   wrestler_name: string
@@ -147,6 +173,8 @@ export default function RegionSeedsPage() {
     await loadData()
   }
 
+  const currentFlag = FLAGGED_BRACKETS.find(f => f.tid === selectedTid && f.weight === selectedWeight)
+
   return (
     <div className="max-w-2xl mx-auto px-4 py-10">
       <h1 className="text-xl font-bold text-slate-900 mb-6">
@@ -154,7 +182,7 @@ export default function RegionSeedsPage() {
       </h1>
 
       {/* Selectors */}
-      <div className="flex gap-4 mb-6">
+      <div className="flex gap-4 mb-4">
         <select
           className="border border-slate-300 rounded-lg px-3 py-2 text-sm"
           value={selectedTid}
@@ -174,6 +202,36 @@ export default function RegionSeedsPage() {
           ))}
         </select>
       </div>
+
+      {/* Flagged brackets quick-jump */}
+      <div className="mb-6">
+        <label className="text-xs text-slate-500 font-medium block mb-1">Jump to flagged bracket:</label>
+        <select
+          className="border border-red-300 bg-red-50 rounded-lg px-3 py-2 text-sm w-full"
+          value=""
+          onChange={e => {
+            const [tid, weight] = e.target.value.split(':').map(Number)
+            if (tid && weight) { setSelectedTid(tid); setSelectedWeight(weight) }
+          }}
+        >
+          <option value="">— {FLAGGED_BRACKETS.length} brackets with issues —</option>
+          {FLAGGED_BRACKETS.map(f => {
+            const region = REGIONS.find(r => r.tid === f.tid)?.label ?? ''
+            return (
+              <option key={`${f.tid}:${f.weight}`} value={`${f.tid}:${f.weight}`}>
+                {region} {f.weight}lb — {f.issue.slice(0, 60)}
+              </option>
+            )
+          })}
+        </select>
+      </div>
+
+      {/* Issue banner */}
+      {currentFlag && (
+        <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-3 mb-4 text-sm text-red-800">
+          <span className="font-semibold">Issue:</span> {currentFlag.issue}
+        </div>
+      )}
 
       {/* Slot list */}
       <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden mb-6">
