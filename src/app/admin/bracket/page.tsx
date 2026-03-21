@@ -1,5 +1,6 @@
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { BracketEditor } from './BracketEditor'
+import { AdminBackButton } from '../AdminBackButton'
 
 export const dynamic = 'force-dynamic'
 
@@ -20,9 +21,14 @@ export default async function BracketPage() {
   ])
 
   return (
-    <BracketEditor
-      tournaments={tournamentsRes.data ?? []}
-      weightClasses={weightClassesRes.data ?? []}
-    />
+    <>
+      <div className="max-w-5xl mx-auto px-4 pt-4">
+        <AdminBackButton />
+      </div>
+      <BracketEditor
+        tournaments={tournamentsRes.data ?? []}
+        weightClasses={weightClassesRes.data ?? []}
+      />
+    </>
   )
 }

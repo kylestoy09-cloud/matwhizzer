@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import Link from 'next/link'
 import { createBrowserClient } from '@supabase/ssr'
 
 const supabase = createBrowserClient(
@@ -180,6 +181,9 @@ export default function RegionSeedsPage() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-10">
+      <Link href="/admin" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-800 mb-4">
+        <span>←</span> Back to Admin
+      </Link>
       <h1 className="text-xl font-bold text-slate-900 mb-6">
         Region Bracket Seeding
       </h1>

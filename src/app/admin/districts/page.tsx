@@ -1,5 +1,6 @@
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { DistrictVerifier } from './DistrictVerifier'
+import { AdminBackButton } from '../AdminBackButton'
 
 export const dynamic = 'force-dynamic'
 
@@ -12,9 +13,14 @@ export default async function DistrictsPage() {
   ])
 
   return (
+    <>
+    <div className="max-w-5xl mx-auto px-4 pt-4">
+      <AdminBackButton />
+    </div>
     <DistrictVerifier
       districts={(districtsRes.data ?? []) as Array<{ id: number; name: string; region_id: number | null }>}
       allSchools={(schoolsRes.data ?? []) as Array<{ id: number; display_name: string; short_name: string | null }>}
     />
+    </>
   )
 }
