@@ -48,7 +48,7 @@ export default async function GirlsPage({
   let topTeamScores: TeamScoreRow[] = []
   let topDominance: DominanceRow[] = []
   let podiumSchools: { school_name: string; count: number }[] = []
-  let stateChampions: { weight: number; wrestler_id: string; wrestler_name: string; school: string; dominance_score: number }[] = []
+  let stateChampions: { weight: number; wrestler_id: string; wrestler_name: string; school: string; dominance_score: number; seed: number | null }[] = []
 
   if (showLeaderboards) {
     const [dominanceRes, teamScoreRes, placementsRes, championsRes] = await Promise.all([

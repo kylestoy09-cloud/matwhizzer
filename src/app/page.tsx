@@ -9,7 +9,7 @@ import { SEASONS } from '@/lib/seasons'
 import { PostseasonLeaders } from '@/components/PostseasonLeaders'
 import { PageHeader } from '@/components/PageHeader'
 
-type ChampionRow = { weight: number; wrestler_id: string; wrestler_name: string; school: string; dominance_score: number }
+type ChampionRow = { weight: number; wrestler_id: string; wrestler_name: string; school: string; dominance_score: number; seed: number | null }
 
 type WrestlerRow = { id: string; first_name: string; last_name: string; gender: string }
 type SchoolRow   = { school: string; school_name: string; total_points: number; wrestler_count: number }
@@ -237,6 +237,7 @@ export default async function RootPage({
                           <Link href={`/wrestler/${c.wrestler_id}`} className="text-sm font-medium text-slate-800 hover:underline truncate">
                             {c.wrestler_name}
                           </Link>
+                          {c.seed != null && c.seed >= 5 && <span className="shrink-0" title={`#${c.seed} seed — Ghost Champion`}>👻</span>}
                           <span className="text-[11px] text-slate-400 shrink-0 ml-auto truncate max-w-[100px]">{c.school}</span>
                         </div>
                       ))}
@@ -253,6 +254,7 @@ export default async function RootPage({
                           <Link href={`/wrestler/${c.wrestler_id}`} className="text-sm font-medium text-slate-800 hover:underline truncate">
                             {c.wrestler_name}
                           </Link>
+                          {c.seed != null && c.seed >= 5 && <span className="shrink-0" title={`#${c.seed} seed — Ghost Champion`}>👻</span>}
                           <span className="text-[11px] text-slate-400 shrink-0 ml-auto truncate max-w-[100px]">{c.school}</span>
                         </div>
                       ))}
