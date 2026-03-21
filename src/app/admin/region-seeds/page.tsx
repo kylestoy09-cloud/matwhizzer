@@ -67,6 +67,7 @@ export default function RegionSeedsPage() {
   const [entries, setEntries] = useState<Entry[]>([])
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState('')
+  const [resolved, setResolved] = useState<Set<string>>(new Set())
 
   const loadData = useCallback(async () => {
     setMessage('')
@@ -170,10 +171,12 @@ export default function RegionSeedsPage() {
 
     setMessage(`Saved ${written} seeds`)
     setSaving(false)
+    setResolved(prev => new Set([...prev, `${selectedTid}:${selectedWeight}`]))
     await loadData()
   }
 
-  const currentFlag = FLAGGED_BRACKETS.find(f => f.tid === selectedTid && f.weight === selectedWeight)
+  const remainingFlags = FLAGGED_BRACKETS.filter(f => !resolved.has(`${f.tid}:${f.weight}`))
+  const currentFlag = remainingFlags.find(f => f.tid === selectedTid && f.weight === selectedWeight)
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-10">
@@ -214,8 +217,8 @@ export default function RegionSeedsPage() {
             if (tid && weight) { setSelectedTid(tid); setSelectedWeight(weight) }
           }}
         >
-          <option value="">— {FLAGGED_BRACKETS.length} brackets with issues —</option>
-          {FLAGGED_BRACKETS.map(f => {
+          <option value="">— {remainingFlags.length} brackets with issues —</option>
+          {remainingFlags.map(f => {
             const region = REGIONS.find(r => r.tid === f.tid)?.label ?? ''
             return (
               <option key={`${f.tid}:${f.weight}`} value={`${f.tid}:${f.weight}`}>
