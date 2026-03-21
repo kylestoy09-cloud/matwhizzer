@@ -125,9 +125,11 @@ function formatPinTimeStat(seconds: number): string {
   return `${min}:${sec}`
 }
 
-function computeMatchMatTime(winType: string | null, fallTime: number | null): number {
+function computeMatchMatTime(winType: string | null, fallTime: number | null, isLoss: boolean = false): number {
   if (!winType || winType === 'BYE') return 0
   if (['FORF', 'INJ', 'DQ', 'FF', 'DEF', 'MFF'].includes(winType)) return 0
+  // Loss by fall = full 6:00 period regardless of when the pin occurred
+  if (isLoss && winType === 'FALL') return 360
   if (['FALL', 'TF', 'TF-1.5'].includes(winType) && fallTime && fallTime > 0) return fallTime
   if (['DEC', 'MD'].includes(winType)) return 420
   if (['SV-1', 'TB-1'].includes(winType)) return 480
@@ -432,7 +434,7 @@ export default async function WrestlerPage({
     }
     const s = seasonStatsMap.get(sid)!
     const wt = m.win_type ?? ''
-    s.matTime += computeMatchMatTime(m.win_type, m.fall_time_seconds)
+    s.matTime += computeMatchMatTime(m.win_type, m.fall_time_seconds, m.result === 'L')
     if (m.result === 'W') {
       s.wins++
       if (wt === 'FALL') {
