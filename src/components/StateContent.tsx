@@ -102,7 +102,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
     : { p_pool: 'state', p_season: season }
   const poolRpc = isBoys ? 'lb_p' : 'lb_gp'
 
-  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, teamPtsRes, distStrengthRes, marginsRes] =
+  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, teamPtsRes, distStrengthRes, marginsRes, podiumDistRes] =
     await Promise.all([
       supabase.rpc('state_placements',                    { p_gender: g, p_season: season }),
       supabase.rpc(`${poolRpc}_mat_time`,                 poolParams),
@@ -113,6 +113,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
       supabase.rpc(`${poolRpc}_wrestler_points`,          poolParams),
       supabase.rpc('lb_district_strength',                { p_gender: g, p_season: season }),
       supabase.rpc('lb_weight_competitiveness',           { p_gender: g, p_season: season }),
+      supabase.rpc('lb_district_podium_placers',          { p_gender: g, p_season: season }),
     ])
 
   const placements     = (placementsRes.data     ?? []) as PlacementRow[]
@@ -125,6 +126,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
     .map(r => ({ wrestler_id: r.wrestler_id, wrestler_name: r.wrestler_name, school: r.school, school_name: r.school_name, weight: 0, team_points: Number(r.total_points) })) as TeamPtsRow[]
   const distStrength   = ((distStrengthRes.data   ?? []) as { district_name: string; wrestlers_advancing: number; state_qualifiers: number }[])
     .sort((a, b) => b.state_qualifiers - a.state_qualifiers)
+  const podiumDist     = ((podiumDistRes.data ?? []) as { district_id: number; district_name: string; podium_count: number }[])
   const margins        = ((marginsRes.data ?? []) as { weight: number; avg_margin: number; match_count: number }[]).sort((a, b) => Number(a.avg_margin) - Number(b.avg_margin))
 
   const placementsByWeight = new Map<number, Map<number, PlacementRow>>()
@@ -236,27 +238,56 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
         </section>
       )}
 
-      {/* ── Strongest Districts ── */}
-      {distStrength.length > 0 && (
+      {/* ── Strongest Districts + Podium Placers ── */}
+      {(distStrength.length > 0 || podiumDist.length > 0) && (
         <section className="mb-10">
-          <h2 className="text-base font-semibold text-slate-800 mb-3">Strongest Districts</h2>
-          <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm max-w-md">
-            <table className="min-w-full text-sm">
-              <thead>
-                <tr className="bg-slate-50 border-b border-slate-200">
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-slate-500 uppercase">District</th>
-                  <th className="px-3 py-2 text-right text-xs font-semibold text-slate-500 uppercase">State Qualifiers</th>
-                </tr>
-              </thead>
-              <tbody>
-                {distStrength.slice(0, 12).map((r, i) => (
-                  <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
-                    <td className="px-3 py-2 font-medium text-slate-800">{r.district_name}</td>
-                    <td className="px-3 py-2 text-right tabular-nums text-slate-700">{r.state_qualifiers}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {distStrength.length > 0 && (
+              <div>
+                <h2 className="text-base font-semibold text-slate-800 mb-3">Strongest Districts</h2>
+                <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+                  <table className="min-w-full text-sm">
+                    <thead>
+                      <tr className="bg-slate-50 border-b border-slate-200">
+                        <th className="px-3 py-2 text-left text-xs font-semibold text-slate-500 uppercase">District</th>
+                        <th className="px-3 py-2 text-right text-xs font-semibold text-slate-500 uppercase">State Qualifiers</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {distStrength.slice(0, 12).map((r, i) => (
+                        <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
+                          <td className="px-3 py-2 font-medium text-slate-800">{r.district_name}</td>
+                          <td className="px-3 py-2 text-right tabular-nums text-slate-700">{r.state_qualifiers}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+            {podiumDist.length > 0 && (
+              <div>
+                <h2 className="text-base font-semibold text-slate-800 mb-3">Most Podium Placers by District</h2>
+                <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+                  <table className="min-w-full text-sm">
+                    <thead>
+                      <tr className="bg-slate-50 border-b border-slate-200">
+                        <th className="px-3 py-2 text-left text-xs font-semibold text-slate-500 uppercase">District</th>
+                        <th className="px-3 py-2 text-right text-xs font-semibold text-slate-500 uppercase">Podium Placers</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {podiumDist.slice(0, 12).map((r, i) => (
+                        <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
+                          <td className="px-3 py-2 font-medium text-slate-800">{r.district_name}</td>
+                          <td className="px-3 py-2 text-right tabular-nums text-slate-700">{r.podium_count}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
           </div>
         </section>
       )}
