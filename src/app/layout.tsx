@@ -6,6 +6,7 @@ import './globals.css'
 import { HeaderNav } from '@/components/HeaderNav'
 import { Footer } from '@/components/Footer'
 import { DataDisclosure } from '@/components/DataDisclosure'
+import { StagingBanner } from '@/components/StagingBanner'
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
 const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] })
@@ -62,6 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             opacity: 0.05,
           }}
         />
+        <StagingBanner />
         <HeaderNav />
         <main className="flex-1 relative z-10">{children}</main>
         <DataDisclosure />

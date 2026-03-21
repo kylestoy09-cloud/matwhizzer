@@ -23,6 +23,23 @@ export default async function AdminDashboard() {
         <p className="text-slate-900 font-medium">{user.email}</p>
       </div>
 
+      {process.env.NEXT_PUBLIC_STAGING_URL && (
+        <a
+          href={process.env.NEXT_PUBLIC_STAGING_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block bg-orange-50 border border-orange-200 rounded-xl p-4 mb-6 hover:bg-orange-100 transition-colors"
+        >
+          <div className="flex items-center gap-2">
+            <span className="text-orange-500 text-lg">↗</span>
+            <div>
+              <h2 className="text-sm font-semibold text-orange-800">Preview Staging</h2>
+              <p className="text-xs text-orange-600">Review changes before pushing live</p>
+            </div>
+          </div>
+        </a>
+      )}
+
       <div className="grid grid-cols-2 gap-4">
         <Link
           href="/admin/bracket"
