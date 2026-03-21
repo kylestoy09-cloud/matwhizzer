@@ -102,7 +102,12 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
     : { p_pool: 'state', p_season: season }
   const poolRpc = isBoys ? 'lb_p' : 'lb_gp'
 
-  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, teamPtsRes, distStrengthRes, marginsRes, podiumDistRes] =
+  // Get state tournament ID for ghost champions
+  const stateTid = isBoys
+    ? (season === 2 ? 180 : 133)
+    : (season === 2 ? 185 : 138)
+
+  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, teamPtsRes, distStrengthRes, marginsRes, podiumDistRes, ghostRes] =
     await Promise.all([
       supabase.rpc('state_placements',                    { p_gender: g, p_season: season }),
       supabase.rpc(`${poolRpc}_mat_time`,                 poolParams),
@@ -114,6 +119,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
       supabase.rpc('lb_district_strength',                { p_gender: g, p_season: season }),
       supabase.rpc('lb_weight_competitiveness',           { p_gender: g, p_season: season }),
       supabase.rpc('lb_district_podium_placers',          { p_gender: g, p_season: season }),
+      supabase.rpc('ghost_champions',                     { p_season: season }),
     ])
 
   const placements     = (placementsRes.data     ?? []) as PlacementRow[]
@@ -128,6 +134,14 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
     .sort((a, b) => b.state_qualifiers - a.state_qualifiers)
   const podiumDist     = ((podiumDistRes.data ?? []) as { district_id: number; district_name: string; podium_count: number }[])
   const margins        = ((marginsRes.data ?? []) as { weight: number; avg_margin: number; match_count: number }[]).sort((a, b) => Number(a.avg_margin) - Number(b.avg_margin))
+
+  type GhostChamp = {
+    seed: number; wrestler_id: string; wrestler_name: string; school: string
+    weight: number; gender: string; tournament_name: string; tournament_type: string
+    wins_on_path: { round: string; opponent: string; opponent_seed: number | null; win_type: string; fall_time: number | null }[] | null
+  }
+  const ghostChamps = ((ghostRes.data ?? []) as GhostChamp[])
+    .filter(gc => gc.tournament_type === (isBoys ? 'boys_state' : 'girls_state'))
 
   const placementsByWeight = new Map<number, Map<number, PlacementRow>>()
   for (const p of placements) {
@@ -320,6 +334,54 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
                 ))}
               </tbody>
             </table>
+          </div>
+        </section>
+      )}
+
+      {/* ── Ghost Champions ── */}
+      {ghostChamps.length > 0 && (
+        <section className="mb-10">
+          <h2 className="text-base font-semibold text-slate-800 mb-1">Ghost Champions</h2>
+          <p className="text-xs text-slate-500 mb-3">Wrestlers seeded 5th or lower who won a state championship</p>
+          <div className="space-y-3">
+            {ghostChamps
+              .sort((a, b) => b.seed - a.seed)
+              .map(gc => (
+              <div key={`${gc.wrestler_id}-${gc.weight}`} className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+                <div className="flex items-center gap-3 px-4 py-3">
+                  <span className="text-2xl font-black text-amber-500 w-10 text-center shrink-0">
+                    {gc.seed}
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <Link
+                      href={`/wrestler/${gc.wrestler_id}`}
+                      className="text-sm font-semibold text-slate-900 hover:underline"
+                    >
+                      {gc.wrestler_name}
+                    </Link>
+                    <div className="text-xs text-slate-500">{gc.school} · {gc.weight}lb</div>
+                  </div>
+                </div>
+                {gc.wins_on_path && gc.wins_on_path.length > 0 && (
+                  <div className="border-t border-slate-100 px-4 py-2 bg-slate-50">
+                    <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-slate-500">
+                      {gc.wins_on_path.map((w, j) => (
+                        <span key={j}>
+                          <span className="font-medium text-slate-600">{w.round}</span>
+                          {' '}beat{' '}
+                          <span className="text-slate-700">
+                            {w.opponent_seed != null && <span className="text-amber-600">#{w.opponent_seed} </span>}
+                            {w.opponent}
+                          </span>
+                          {' '}
+                          <span className="text-slate-400">({w.win_type})</span>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </section>
       )}
