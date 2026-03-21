@@ -9,6 +9,8 @@ import { SEASONS } from '@/lib/seasons'
 import { PostseasonLeaders } from '@/components/PostseasonLeaders'
 import { PageHeader } from '@/components/PageHeader'
 
+type ChampionRow = { weight: number; wrestler_id: string; wrestler_name: string; school: string; dominance_score: number }
+
 type WrestlerRow = { id: string; first_name: string; last_name: string; gender: string }
 type SchoolRow   = { school: string; school_name: string; total_points: number; wrestler_count: number }
 type SchoolResult = SchoolRow & { gender: 'M' | 'F' }
@@ -60,30 +62,40 @@ export default async function RootPage({
 
   let topTeamScores: TeamScoreRow[] = []
   let topDominance: DominanceRow[] = []
-  let podiumSchools: { school_name: string; count: number }[] = []
+  let boysPodium: { school_name: string; count: number }[] = []
+  let girlsPodium: { school_name: string; count: number }[] = []
+  let boysChampions: ChampionRow[] = []
+  let girlsChampions: ChampionRow[] = []
 
   if (showLeaderboards) {
-    const [dominanceRes, teamScoreRes, boysPlacementsRes] = await Promise.all([
+    const [dominanceRes, teamScoreRes, boysPlacementsRes, girlsPlacementsRes, boysChampRes, girlsChampRes] = await Promise.all([
       supabase.rpc('lb_dominance', { p_gender: 'M', p_season: season }),
       supabase.rpc('top_postseason_team_scores', { p_gender: 'M', p_season: season, p_limit: 25 }),
       supabase.rpc('state_placements', { p_gender: 'M', p_season: season }),
+      supabase.rpc('state_placements', { p_gender: 'F', p_season: season }),
+      supabase.rpc('state_champions', { p_tournament_id: season === 2 ? 180 : 133 }),
+      supabase.rpc('state_champions', { p_tournament_id: season === 2 ? 185 : null }),
     ])
     topDominance = (dominanceRes.data ?? []).slice(0, 8) as DominanceRow[]
     topTeamScores = (teamScoreRes.data ?? []) as TeamScoreRow[]
+    boysChampions = (boysChampRes.data ?? []) as ChampionRow[]
+    girlsChampions = (girlsChampRes.data ?? []) as ChampionRow[]
 
-    const allPlacements = [
-      ...((boysPlacementsRes.data ?? []) as { school_name: string; school: string }[]),
-    ]
-    const schoolCounts = new Map<string, number>()
-    for (const p of allPlacements) {
-      const name = p.school_name || p.school || ''
-      if (!name) continue
-      schoolCounts.set(name, (schoolCounts.get(name) ?? 0) + 1)
+    function buildPodium(placements: { school_name: string; school: string }[]) {
+      const counts = new Map<string, number>()
+      for (const p of placements) {
+        const name = p.school_name || p.school || ''
+        if (!name) continue
+        counts.set(name, (counts.get(name) ?? 0) + 1)
+      }
+      return [...counts.entries()]
+        .map(([school_name, count]) => ({ school_name, count }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 10)
     }
-    podiumSchools = [...schoolCounts.entries()]
-      .map(([school_name, count]) => ({ school_name, count }))
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 20)
+
+    boysPodium = buildPodium((boysPlacementsRes.data ?? []) as { school_name: string; school: string }[])
+    girlsPodium = buildPodium((girlsPlacementsRes.data ?? []) as { school_name: string; school: string }[])
   }
 
   const boysDistricts  = Array.from({ length: 32 }, (_, i) => i + 1)
@@ -210,21 +222,85 @@ export default async function RootPage({
       {showLeaderboards && (
         <div className="space-y-10 border-t border-slate-200 pt-10 mb-10">
 
-          {/* Top schools by state podium finishes */}
-          {podiumSchools.length > 0 && (
+          {/* State Champions — boys and girls side by side */}
+          {(boysChampions.length > 0 || girlsChampions.length > 0) && (
+            <section>
+              <h2 className="text-lg font-bold text-slate-900 mb-3">{season === 2 ? '2026' : '2025'} State Champions</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {boysChampions.length > 0 && (
+                  <div>
+                    <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Boys</h3>
+                    <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden divide-y divide-slate-100">
+                      {boysChampions.map(c => (
+                        <div key={c.weight} className="flex items-center gap-2 px-3 py-2">
+                          <span className="text-xs text-slate-400 w-8 shrink-0 text-right">{c.weight}</span>
+                          <Link href={`/wrestler/${c.wrestler_id}`} className="text-sm font-medium text-slate-800 hover:underline truncate">
+                            {c.wrestler_name}
+                          </Link>
+                          <span className="text-[11px] text-slate-400 shrink-0 ml-auto truncate max-w-[100px]">{c.school}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {girlsChampions.length > 0 && (
+                  <div>
+                    <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Girls</h3>
+                    <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden divide-y divide-slate-100">
+                      {girlsChampions.map(c => (
+                        <div key={c.weight} className="flex items-center gap-2 px-3 py-2">
+                          <span className="text-xs text-slate-400 w-8 shrink-0 text-right">{c.weight}</span>
+                          <Link href={`/wrestler/${c.wrestler_id}`} className="text-sm font-medium text-slate-800 hover:underline truncate">
+                            {c.wrestler_name}
+                          </Link>
+                          <span className="text-[11px] text-slate-400 shrink-0 ml-auto truncate max-w-[100px]">{c.school}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </section>
+          )}
+
+          {/* On the Podium — boys and girls side by side */}
+          {(boysPodium.length > 0 || girlsPodium.length > 0) && (
             <section>
               <h2 className="text-lg font-bold text-slate-900 mb-3">On the Podium</h2>
-              <p className="text-xs text-slate-500 mb-3">Schools ranked by total boys wrestlers finishing 1st–8th at States</p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2">
-                {podiumSchools.map(s => (
-                  <div
-                    key={s.school_name}
-                    className="flex items-center justify-between px-3 py-2.5 rounded-lg border border-slate-200 bg-white shadow-sm"
-                  >
-                    <span className="text-sm font-medium text-slate-800 truncate">{s.school_name}</span>
-                    <span className="text-xs font-semibold text-amber-600 ml-2 shrink-0">{s.count}</span>
+              <p className="text-xs text-slate-500 mb-3">Schools ranked by wrestlers finishing 1st–8th at States</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {boysPodium.length > 0 && (
+                  <div>
+                    <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Boys</h3>
+                    <div className="space-y-1.5">
+                      {boysPodium.map(s => (
+                        <div
+                          key={s.school_name}
+                          className="flex items-center justify-between px-3 py-2 rounded-lg border border-slate-200 bg-white shadow-sm"
+                        >
+                          <span className="text-sm font-medium text-slate-800 truncate">{s.school_name}</span>
+                          <span className="text-xs font-semibold text-amber-600 ml-2 shrink-0">{s.count}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                ))}
+                )}
+                {girlsPodium.length > 0 && (
+                  <div>
+                    <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Girls</h3>
+                    <div className="space-y-1.5">
+                      {girlsPodium.map(s => (
+                        <div
+                          key={s.school_name}
+                          className="flex items-center justify-between px-3 py-2 rounded-lg border border-slate-200 bg-white shadow-sm"
+                        >
+                          <span className="text-sm font-medium text-slate-800 truncate">{s.school_name}</span>
+                          <span className="text-xs font-semibold text-rose-500 ml-2 shrink-0">{s.count}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </section>
           )}
