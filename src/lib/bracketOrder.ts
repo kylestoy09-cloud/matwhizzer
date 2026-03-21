@@ -2,8 +2,12 @@
  * bracketOrder.ts
  *
  * NJSIAA bracket slot ordering by seed.
- * Defines the exact top-to-bottom visual order for bracket matches
- * based on the standard 32-man and 16-man bracket draws.
+ *
+ * The bracket path is locked to the SLOT, not the seed. When an upset
+ * happens, the winner inherits the loser's slot position and follows
+ * that slot's path for all subsequent rounds. Ordering in every round
+ * is derived from the original R1 slot index (0-31), never re-ranked
+ * by seed.
  */
 
 // The array index is the slot position (0-31), the value is the seed
@@ -20,16 +24,10 @@ const SLOT_ORDER_32 = [
   15, 18, 31,  2,
 ]
 
-// Build seed → slot index lookup
-const SEED_TO_SLOT_32 = new Map<number, number>()
+// seed → original R1 slot index (0-31)
+const SEED_TO_SLOT = new Map<number, number>()
 for (let i = 0; i < SLOT_ORDER_32.length; i++) {
-  SEED_TO_SLOT_32.set(SLOT_ORDER_32[i], i)
-}
-
-// Build seed → R1 match index (each pair of slots is one match)
-const SEED_TO_R1_MATCH_32 = new Map<number, number>()
-for (let i = 0; i < SLOT_ORDER_32.length; i++) {
-  SEED_TO_R1_MATCH_32.set(SLOT_ORDER_32[i], Math.floor(i / 2))
+  SEED_TO_SLOT.set(SLOT_ORDER_32[i], i)
 }
 
 type MatchLike = {
@@ -43,15 +41,29 @@ type MatchLike = {
 }
 
 /**
- * Returns the R1 match index (0-15) for a match based on the seeds present.
- * Uses the lowest slot index of either participant's seed.
+ * Get the original R1 slot index for an entry based on its seed.
+ * Returns 999 for null/unknown seeds (pushed to end).
  */
-function r1MatchIndex(m: MatchLike): number {
+function slotOf(seed: number | null): number {
+  if (seed == null) return 999
+  return SEED_TO_SLOT.get(seed) ?? 999
+}
+
+/**
+ * Get the minimum original R1 slot index among a match's participants.
+ * This determines the match's position within its round — the match
+ * containing the entry from the lower slot always appears higher
+ * (closer to the top of the bracket).
+ */
+function matchSlotKey(m: MatchLike, entrySlot: Map<string, number>): number {
   let best = 999
-  for (const seed of [m.winner_seed, m.loser_seed]) {
-    if (seed == null) continue
-    const idx = SEED_TO_R1_MATCH_32.get(seed)
-    if (idx != null && idx < best) best = idx
+  if (m.winner_entry_id) {
+    const s = entrySlot.get(m.winner_entry_id)
+    if (s != null && s < best) best = s
+  }
+  if (m.loser_entry_id) {
+    const s = entrySlot.get(m.loser_entry_id)
+    if (s != null && s < best) best = s
   }
   return best
 }
@@ -59,11 +71,18 @@ function r1MatchIndex(m: MatchLike): number {
 /**
  * Orders championship matches for bracket display.
  *
- * R1 matches are sorted by seed-based match index (deterministic from
- * the NJSIAA 32-man bracket draw). Later rounds inherit order by
- * tracking which R1 pod each entry came from and propagating forward.
+ * 1. Every entry is assigned an immutable slot index from R1 based on
+ *    its seed (using SLOT_ORDER_32). This slot index never changes —
+ *    upset winners inherit the slot path of the position they won into.
  *
- * Entries with null seeds or seeds not in the bracket are pushed to the end.
+ * 2. R1 matches are sorted by the lower slot index of their two entries.
+ *
+ * 3. For R2 and beyond, each entry keeps its original R1 slot index.
+ *    Matches are sorted by the minimum slot index among their participants.
+ *    Within a match, the entry from the lower slot index is the "top"
+ *    participant and the higher slot index is "bottom" — but since the
+ *    DB stores winner/loser (not top/bottom), the visual rendering
+ *    handles that separately.
  */
 export function orderChampMatchesBySeed<T extends MatchLike>(
   allChamp: T[],
@@ -77,59 +96,39 @@ export function orderChampMatchesBySeed<T extends MatchLike>(
   }
 
   if (bracketSize === 32) {
-    // Sort R1 by seed-based match index
+    // Assign every entry an immutable slot index from their seed in R1.
+    // This map persists across all rounds — entries never get re-indexed.
+    const entrySlot = new Map<string, number>()
+
+    // Phase 1: Seed all entries from R1 matches
     const r1 = byRound.get('R1') ?? []
-    r1.sort((a, b) => r1MatchIndex(a) - r1MatchIndex(b))
-
-    // Build entry → R1 match position for propagation to later rounds
-    const entryToR1Pos = new Map<string, number>()
-    for (let i = 0; i < r1.length; i++) {
-      if (r1[i].winner_entry_id) entryToR1Pos.set(r1[i].winner_entry_id!, i)
-      if (r1[i].loser_entry_id) entryToR1Pos.set(r1[i].loser_entry_id!, i)
+    for (const m of r1) {
+      if (m.winner_entry_id && m.winner_seed != null) {
+        entrySlot.set(m.winner_entry_id, slotOf(m.winner_seed))
+      }
+      if (m.loser_entry_id && m.loser_seed != null) {
+        entrySlot.set(m.loser_entry_id, slotOf(m.loser_seed))
+      }
     }
 
-    // R2: sort by pod (pairs of adjacent R1 matches feed one R2 match)
-    const r2 = byRound.get('R2') ?? []
-    r2.sort((a, b) => getPodPos(a, entryToR1Pos, 2) - getPodPos(b, entryToR1Pos, 2))
-
-    const entryToR2Pos = new Map<string, number>()
-    for (let i = 0; i < r2.length; i++) {
-      if (r2[i].winner_entry_id) entryToR2Pos.set(r2[i].winner_entry_id!, i)
-      if (r2[i].loser_entry_id) entryToR2Pos.set(r2[i].loser_entry_id!, i)
+    // Phase 2: For entries in later rounds that weren't in R1 (shouldn't
+    // happen in a normal bracket, but handle gracefully), assign slot
+    // from their seed if available.
+    for (const m of allChamp) {
+      if (m.winner_entry_id && !entrySlot.has(m.winner_entry_id) && m.winner_seed != null) {
+        entrySlot.set(m.winner_entry_id, slotOf(m.winner_seed))
+      }
+      if (m.loser_entry_id && !entrySlot.has(m.loser_entry_id) && m.loser_seed != null) {
+        entrySlot.set(m.loser_entry_id, slotOf(m.loser_seed))
+      }
     }
 
-    // QF
-    const qf = byRound.get('QF') ?? []
-    qf.sort((a, b) => getPodPos(a, entryToR2Pos, 2) - getPodPos(b, entryToR2Pos, 2))
-
-    const entryToQFPos = new Map<string, number>()
-    for (let i = 0; i < qf.length; i++) {
-      if (qf[i].winner_entry_id) entryToQFPos.set(qf[i].winner_entry_id!, i)
-      if (qf[i].loser_entry_id) entryToQFPos.set(qf[i].loser_entry_id!, i)
+    // Sort every round by the minimum slot index of the match's participants.
+    // This preserves the bracket path structure across all rounds.
+    for (const [, matches] of byRound) {
+      matches.sort((a, b) => matchSlotKey(a, entrySlot) - matchSlotKey(b, entrySlot))
     }
-
-    // SF
-    const sf = byRound.get('SF') ?? []
-    sf.sort((a, b) => getPodPos(a, entryToQFPos, 2) - getPodPos(b, entryToQFPos, 2))
   }
 
   return byRound
-}
-
-/** Get the minimum pod position of a match's participants in the previous round. */
-function getPodPos(
-  m: MatchLike,
-  entryToPrevPos: Map<string, number>,
-  podSize: number,
-): number {
-  let minPos = 999
-  if (m.winner_entry_id) {
-    const pos = entryToPrevPos.get(m.winner_entry_id)
-    if (pos != null) minPos = Math.min(minPos, Math.floor(pos / podSize))
-  }
-  if (m.loser_entry_id) {
-    const pos = entryToPrevPos.get(m.loser_entry_id)
-    if (pos != null) minPos = Math.min(minPos, Math.floor(pos / podSize))
-  }
-  return minPos
 }
