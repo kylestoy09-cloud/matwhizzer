@@ -407,7 +407,7 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
           {/* Wrestler Points — full width */}
           <LeaderTable<PoolWrestlerPtsRow>
             title="Wrestler Points"
-            description="TrackWrestling formula — round base + FALL+2, TF+1.5, MD+1 + placement bonus (district only)"
+            description="NJSIAA formula — round base + FALL+2, TF+1.5, MD+1 + placement bonus (district only)"
             rows={d.wrestlerPts}
             cols={[
               {
@@ -428,7 +428,7 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
           {/* Team Points — full width */}
           <LeaderTable<PoolTeamRow>
             title="Team Points"
-            description="TrackWrestling formula — round base + win bonus (FALL+2, TF+1.5, MD+1) + placement bonus"
+            description="NJSIAA formula — round base + win bonus (FALL+2, TF+1.5, MD+1) + placement bonus"
             rows={d.teamPoints}
             cols={[
               {
