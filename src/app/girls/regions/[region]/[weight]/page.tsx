@@ -5,6 +5,7 @@ import { getActiveSeason } from '@/lib/get-season'
 import { SEASONS } from '@/lib/seasons'
 import { BracketPoll, type BracketEntry, type DistrictChamp } from '@/components/BracketPoll'
 import { PageHeader } from '@/components/PageHeader'
+import { orderChampMatchesBySeed } from '@/lib/bracketOrder'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -190,8 +191,22 @@ function WrestlerRow({
   )
 }
 
-function MatchCard({ m }: { m: MatchRow }) {
+function MatchCard({ m, entrySlot }: { m: MatchRow; entrySlot?: Map<string, number> }) {
   const result = formatResult(m)
+
+  let topIsWinner = true
+  if (entrySlot && m.winner_entry_id && m.loser_entry_id) {
+    const wSlot = entrySlot.get(m.winner_entry_id) ?? 999
+    const lSlot = entrySlot.get(m.loser_entry_id) ?? 999
+    topIsWinner = wSlot <= lSlot
+  }
+
+  const top = topIsWinner
+    ? { id: m.winner_wrestler_id, name: m.winner_name, school: m.winner_school, seed: m.winner_seed, won: true }
+    : { id: m.loser_wrestler_id, name: m.loser_name, school: m.loser_school, seed: m.loser_seed, won: false }
+  const bot = topIsWinner
+    ? { id: m.loser_wrestler_id, name: m.loser_name, school: m.loser_school, seed: m.loser_seed, won: false }
+    : { id: m.winner_wrestler_id, name: m.winner_name, school: m.winner_school, seed: m.winner_seed, won: true }
 
   return (
     <div
@@ -199,19 +214,19 @@ function MatchCard({ m }: { m: MatchRow }) {
       style={{ height: CARD_H }}
     >
       <WrestlerRow
-        wrestlerId={m.winner_wrestler_id}
-        name={m.winner_name}
-        school={m.winner_school}
-        seed={m.winner_seed}
-        isWinner
+        wrestlerId={top.id}
+        name={top.name}
+        school={top.school}
+        seed={top.seed}
+        isWinner={top.won}
       />
       <div className="border-t border-slate-100" />
       <WrestlerRow
-        wrestlerId={m.loser_wrestler_id}
-        name={m.loser_name}
-        school={m.loser_school}
-        seed={m.loser_seed}
-        isWinner={false}
+        wrestlerId={bot.id}
+        name={bot.name}
+        school={bot.school}
+        seed={bot.seed}
+        isWinner={bot.won}
         hasResult={!!m.win_type}
       />
       <div
@@ -487,10 +502,12 @@ function BracketColumn({
   label,
   matches: colMatches,
   totalH,
+  entrySlot,
 }: {
   label: string
   matches: MatchRow[]
   totalH: number
+  entrySlot?: Map<string, number>
 }) {
   if (colMatches.length === 0) return null
   const slotH = totalH / colMatches.length
@@ -508,7 +525,7 @@ function BracketColumn({
           className="flex items-center justify-center px-1"
           style={{ height: slotH }}
         >
-          <MatchCard m={m} />
+          <MatchCard m={m} entrySlot={entrySlot} />
         </div>
       ))}
     </div>
@@ -573,9 +590,9 @@ export default async function GirlsRegionBracketPage({
     matchesByRound.set(m.round, list)
   }
 
-  // DFS ordering for championship side
+  // Seed-based slot ordering for championship side
   const champ = matches.filter(m => m.bracket_side === 'championship')
-  const champOrdered = orderChampMatches(champ)
+  const { byRound: champOrdered, entrySlot } = orderChampMatchesBySeed(champ, 16)
 
   // Championship display: R1 → R2 → QF → SF → F
   const champRounds = (['R1', 'R2', 'QF', 'SF', 'F'] as const).filter(r => (champOrdered.get(r) ?? []).length > 0)
@@ -642,6 +659,7 @@ export default async function GirlsRegionBracketPage({
                   label={ROUND_LABEL[round]}
                   matches={champOrdered.get(round) ?? []}
                   totalH={champTotalH}
+                  entrySlot={entrySlot}
                 />
               ))}
 
@@ -676,15 +694,16 @@ export default async function GirlsRegionBracketPage({
                     label={ROUND_LABEL[round]}
                     matches={matchesByRound.get(round) ?? []}
                     totalH={consolTotalH}
+                    entrySlot={entrySlot}
                   />
                 ))}
 
                 {thirdPlaceMatches.length > 0 && (
-                  <BracketColumn label="3rd Place" matches={thirdPlaceMatches} totalH={consolTotalH} />
+                  <BracketColumn label="3rd Place" matches={thirdPlaceMatches} totalH={consolTotalH} entrySlot={entrySlot} />
                 )}
 
                 {fifthPlaceMatches.length > 0 && (
-                  <BracketColumn label="5th Place" matches={fifthPlaceMatches} totalH={consolTotalH} />
+                  <BracketColumn label="5th Place" matches={fifthPlaceMatches} totalH={consolTotalH} entrySlot={entrySlot} />
                 )}
               </div>
             </div>

@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
 import { SEASONS } from '@/lib/seasons'
 import { PageHeader } from '@/components/PageHeader'
+import { orderChampMatchesBySeed } from '@/lib/bracketOrder'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -244,9 +245,23 @@ function WrestlerRow({
   )
 }
 
-function MatchCard({ m }: { m: MatchRow }) {
+function MatchCard({ m, entrySlot }: { m: MatchRow; entrySlot?: Map<string, number> }) {
   const isBye = !m.loser_wrestler_id
   const result = formatResult(m)
+
+  let topIsWinner = true
+  if (entrySlot && m.winner_entry_id && m.loser_entry_id) {
+    const wSlot = entrySlot.get(m.winner_entry_id) ?? 999
+    const lSlot = entrySlot.get(m.loser_entry_id) ?? 999
+    topIsWinner = wSlot <= lSlot
+  }
+
+  const top = topIsWinner
+    ? { id: m.winner_wrestler_id, name: m.winner_name, school: m.winner_school, seed: m.winner_seed, grade: m.winner_grade, won: true, isBye: false }
+    : { id: m.loser_wrestler_id, name: m.loser_name, school: m.loser_school, seed: m.loser_seed, grade: m.loser_grade, won: false, isBye: isBye }
+  const bot = topIsWinner
+    ? { id: m.loser_wrestler_id, name: m.loser_name, school: m.loser_school, seed: m.loser_seed, grade: m.loser_grade, won: false, isBye: isBye }
+    : { id: m.winner_wrestler_id, name: m.winner_name, school: m.winner_school, seed: m.winner_seed, grade: m.winner_grade, won: true, isBye: false }
 
   return (
     <div
@@ -254,23 +269,23 @@ function MatchCard({ m }: { m: MatchRow }) {
       style={{ height: CARD_H }}
     >
       <WrestlerRow
-        wrestlerId={m.winner_wrestler_id}
-        name={m.winner_name}
-        school={m.winner_school}
-        seed={m.winner_seed}
-        grade={m.winner_grade}
-        isWinner
-        isBye={false}
+        wrestlerId={top.id}
+        name={top.name}
+        school={top.school}
+        seed={top.seed}
+        grade={top.grade}
+        isWinner={top.won}
+        isBye={top.isBye}
       />
       <div className="border-t border-slate-100" />
       <WrestlerRow
-        wrestlerId={m.loser_wrestler_id}
-        name={m.loser_name}
-        school={m.loser_school}
-        seed={m.loser_seed}
-        grade={m.loser_grade}
-        isWinner={false}
-        isBye={isBye}
+        wrestlerId={bot.id}
+        name={bot.name}
+        school={bot.school}
+        seed={bot.seed}
+        grade={bot.grade}
+        isWinner={bot.won}
+        isBye={bot.isBye}
       />
       {/* Result strip */}
       <div
@@ -285,13 +300,13 @@ function MatchCard({ m }: { m: MatchRow }) {
 
 // ── Mobile round list ──────────────────────────────────────────────────────────
 
-function MobileRound({ label, matches }: { label: string; matches: MatchRow[] }) {
+function MobileRound({ label, matches, entrySlot }: { label: string; matches: MatchRow[]; entrySlot?: Map<string, number> }) {
   return (
     <section>
       <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">{label}</h3>
       <div className="space-y-2">
         {matches.map(m => (
-          <MatchCard key={m.match_id} m={m} />
+          <MatchCard key={m.match_id} m={m} entrySlot={entrySlot} />
         ))}
       </div>
     </section>
@@ -433,8 +448,8 @@ export default async function DistrictBracketPage({
   const champ  = matches.filter(m => m.bracket_side === 'championship')
   const consol = matches.filter(m => m.bracket_side === 'consolation')
 
-  // Build ordered championship map (tree traversal)
-  const champOrdered = orderChampMatches(champ)
+  // Build ordered championship map (seed-based slot ordering)
+  const { byRound: champOrdered, entrySlot } = orderChampMatchesBySeed(champ, 16)
 
   // R2 (prelims): keep full list for tree traversal, filter byes for display
   const r2Matches    = champOrdered.get('R2') ?? []
@@ -492,7 +507,7 @@ export default async function DistrictBracketPage({
             Prelims
           </h2>
           <div className="flex gap-3 flex-wrap">
-            {r2Display.map(m => <MatchCard key={m.match_id} m={m} />)}
+            {r2Display.map(m => <MatchCard key={m.match_id} m={m} entrySlot={entrySlot} />)}
           </div>
         </div>
       )}
@@ -515,7 +530,7 @@ export default async function DistrictBracketPage({
                   className="flex items-center justify-center px-2"
                   style={{ height: totalH / byeMatches.length }}
                 >
-                  <MatchCard m={m} />
+                  <MatchCard m={m} entrySlot={entrySlot} />
                 </div>
               ))}
             </div>
@@ -540,7 +555,7 @@ export default async function DistrictBracketPage({
                     className="flex items-center justify-center px-2"
                     style={{ height: slotH }}
                   >
-                    <MatchCard m={m} />
+                    <MatchCard m={m} entrySlot={entrySlot} />
                   </div>
                 ))}
                 {/* Spacer so columns all have same height */}
@@ -563,7 +578,7 @@ export default async function DistrictBracketPage({
                 className="flex items-center justify-center px-2"
                 style={{ height: totalH }}
               >
-                <MatchCard m={(consolByRound.get(consolRounds[0]) ?? [])[0]!} />
+                <MatchCard m={(consolByRound.get(consolRounds[0]) ?? [])[0]!} entrySlot={entrySlot} />
               </div>
             </div>
           )}

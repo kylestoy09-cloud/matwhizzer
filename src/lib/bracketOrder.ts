@@ -10,9 +10,7 @@
  * by seed.
  */
 
-// The array index is the slot position (0-31), the value is the seed
-// that belongs in that slot. Adjacent pairs form R1 matches:
-// slots [0,1] = match 0, slots [2,3] = match 1, etc.
+// Slot order arrays: array index = slot position, value = seed
 const SLOT_ORDER_32 = [
    1, 32, 17, 16,
    9, 24, 25,  8,
@@ -24,10 +22,22 @@ const SLOT_ORDER_32 = [
   15, 18, 31,  2,
 ]
 
-// seed → original R1 slot index (0-31)
-const SEED_TO_SLOT = new Map<number, number>()
+const SLOT_ORDER_16 = [
+  1, 16, 9, 8,
+  5, 12, 13, 4,
+  3, 14, 11, 6,
+  7, 10, 15, 2,
+]
+
+// Build seed → slot index maps for both sizes
+const SEED_TO_SLOT_32 = new Map<number, number>()
 for (let i = 0; i < SLOT_ORDER_32.length; i++) {
-  SEED_TO_SLOT.set(SLOT_ORDER_32[i], i)
+  SEED_TO_SLOT_32.set(SLOT_ORDER_32[i], i)
+}
+
+const SEED_TO_SLOT_16 = new Map<number, number>()
+for (let i = 0; i < SLOT_ORDER_16.length; i++) {
+  SEED_TO_SLOT_16.set(SLOT_ORDER_16[i], i)
 }
 
 type MatchLike = {
@@ -44,9 +54,9 @@ type MatchLike = {
  * Get the original R1 slot index for an entry based on its seed.
  * Returns 999 for null/unknown seeds (pushed to end).
  */
-function slotOf(seed: number | null): number {
+function slotOf(seed: number | null, seedToSlot: Map<number, number>): number {
   if (seed == null) return 999
-  return SEED_TO_SLOT.get(seed) ?? 999
+  return seedToSlot.get(seed) ?? 999
 }
 
 /**
@@ -102,39 +112,36 @@ export function orderChampMatchesBySeed<T extends MatchLike>(
   }
 
   const entrySlot = new Map<string, number>()
+  const seedToSlot = bracketSize === 32 ? SEED_TO_SLOT_32 : SEED_TO_SLOT_16
 
-  if (bracketSize === 32) {
-    // Assign every entry an immutable slot index from their seed in R1.
-    // This map persists across all rounds — entries never get re-indexed.
+  // Determine the first championship round name
+  // 32-man: R1. 16-man: could be R1 or R2 (districts use R2 as first round)
+  const firstRound = byRound.has('R1') ? 'R1' : 'R2'
 
-    // Phase 1: Seed all entries from R1 matches
-    const r1 = byRound.get('R1') ?? []
-    for (const m of r1) {
-      if (m.winner_entry_id && m.winner_seed != null) {
-        entrySlot.set(m.winner_entry_id, slotOf(m.winner_seed))
-      }
-      if (m.loser_entry_id && m.loser_seed != null) {
-        entrySlot.set(m.loser_entry_id, slotOf(m.loser_seed))
-      }
+  // Phase 1: Assign slot index from seed for entries in the first round
+  const firstRoundMatches = byRound.get(firstRound) ?? []
+  for (const m of firstRoundMatches) {
+    if (m.winner_entry_id && m.winner_seed != null) {
+      entrySlot.set(m.winner_entry_id, slotOf(m.winner_seed, seedToSlot))
     }
-
-    // Phase 2: For entries in later rounds that weren't in R1 (shouldn't
-    // happen in a normal bracket, but handle gracefully), assign slot
-    // from their seed if available.
-    for (const m of allChamp) {
-      if (m.winner_entry_id && !entrySlot.has(m.winner_entry_id) && m.winner_seed != null) {
-        entrySlot.set(m.winner_entry_id, slotOf(m.winner_seed))
-      }
-      if (m.loser_entry_id && !entrySlot.has(m.loser_entry_id) && m.loser_seed != null) {
-        entrySlot.set(m.loser_entry_id, slotOf(m.loser_seed))
-      }
+    if (m.loser_entry_id && m.loser_seed != null) {
+      entrySlot.set(m.loser_entry_id, slotOf(m.loser_seed, seedToSlot))
     }
+  }
 
-    // Sort every round by the minimum slot index of the match's participants.
-    // This preserves the bracket path structure across all rounds.
-    for (const [, matches] of byRound) {
-      matches.sort((a, b) => matchSlotKey(a, entrySlot) - matchSlotKey(b, entrySlot))
+  // Phase 2: Assign slot index for entries in later rounds not yet mapped
+  for (const m of allChamp) {
+    if (m.winner_entry_id && !entrySlot.has(m.winner_entry_id) && m.winner_seed != null) {
+      entrySlot.set(m.winner_entry_id, slotOf(m.winner_seed, seedToSlot))
     }
+    if (m.loser_entry_id && !entrySlot.has(m.loser_entry_id) && m.loser_seed != null) {
+      entrySlot.set(m.loser_entry_id, slotOf(m.loser_seed, seedToSlot))
+    }
+  }
+
+  // Sort every round by the minimum slot index of the match's participants
+  for (const [, matches] of byRound) {
+    matches.sort((a, b) => matchSlotKey(a, entrySlot) - matchSlotKey(b, entrySlot))
   }
 
   return { byRound, entrySlot }
