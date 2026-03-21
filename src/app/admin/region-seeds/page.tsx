@@ -192,32 +192,19 @@ export default function RegionSeedsPage() {
                 <td className="px-3 py-2 text-slate-400">{slot.position}</td>
                 <td className="px-3 py-2 font-semibold text-slate-700">{slot.seed}</td>
                 <td className="px-3 py-2">
-                  {slot.entry_id || slot.name === 'Forfeit' ? (
-                    <span className={`font-medium ${slot.name === 'Forfeit' ? 'text-slate-400 italic' : 'text-slate-800'}`}>
-                      {slot.name}
-                    </span>
-                  ) : (
-                    <select
-                      className="border border-slate-300 rounded px-2 py-1 text-sm w-full"
-                      value=""
-                      onChange={e => handleSlotChange(slot.position, e.target.value)}
-                    >
-                      <option value="">— select —</option>
-                      <option value="__forfeit__">Forfeit</option>
-                      {unassigned.map(e => (
-                        <option key={e.id} value={e.id}>
-                          {e.wrestler_name} ({e.school})
-                        </option>
-                      ))}
-                      {entries
-                        .filter(e => !unassigned.some(u => u.id === e.id) && !slots.some(s => s.entry_id === e.id))
-                        .map(e => (
-                          <option key={e.id} value={e.id}>
-                            {e.wrestler_name} ({e.school})
-                          </option>
-                        ))}
-                    </select>
-                  )}
+                  <select
+                    className="border border-slate-300 rounded px-2 py-1 text-sm w-full"
+                    value={slot.entry_id ?? (slot.name === 'Forfeit' ? '__forfeit__' : '')}
+                    onChange={e => handleSlotChange(slot.position, e.target.value)}
+                  >
+                    <option value="">— empty —</option>
+                    <option value="__forfeit__">Forfeit</option>
+                    {entries.map(e => (
+                      <option key={e.id} value={e.id}>
+                        {e.wrestler_name} ({e.school})
+                      </option>
+                    ))}
+                  </select>
                 </td>
                 <td className="px-3 py-2 text-right">
                   {(slot.entry_id || slot.name === 'Forfeit') && (
@@ -225,7 +212,7 @@ export default function RegionSeedsPage() {
                       className="text-xs text-red-500 hover:text-red-700"
                       onClick={() => handleRemove(slot.position)}
                     >
-                      remove
+                      clear
                     </button>
                   )}
                 </td>
