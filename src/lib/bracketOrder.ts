@@ -84,10 +84,16 @@ function matchSlotKey(m: MatchLike, entrySlot: Map<string, number>): number {
  *    DB stores winner/loser (not top/bottom), the visual rendering
  *    handles that separately.
  */
+export type BracketOrderResult<T> = {
+  byRound: Map<string, T[]>
+  /** Maps entry_id → original R1 slot index (0-31). Lower = higher on bracket. */
+  entrySlot: Map<string, number>
+}
+
 export function orderChampMatchesBySeed<T extends MatchLike>(
   allChamp: T[],
   bracketSize: 32 | 16 = 32,
-): Map<string, T[]> {
+): BracketOrderResult<T> {
   const byRound = new Map<string, T[]>()
   for (const m of allChamp) {
     const list = byRound.get(m.round) ?? []
@@ -95,10 +101,11 @@ export function orderChampMatchesBySeed<T extends MatchLike>(
     byRound.set(m.round, list)
   }
 
+  const entrySlot = new Map<string, number>()
+
   if (bracketSize === 32) {
     // Assign every entry an immutable slot index from their seed in R1.
     // This map persists across all rounds — entries never get re-indexed.
-    const entrySlot = new Map<string, number>()
 
     // Phase 1: Seed all entries from R1 matches
     const r1 = byRound.get('R1') ?? []
@@ -130,5 +137,5 @@ export function orderChampMatchesBySeed<T extends MatchLike>(
     }
   }
 
-  return byRound
+  return { byRound, entrySlot }
 }

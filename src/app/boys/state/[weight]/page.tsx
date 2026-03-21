@@ -198,27 +198,44 @@ function WrestlerRow({
   )
 }
 
-function MatchCard({ m }: { m: MatchRow }) {
+function MatchCard({ m, entrySlot }: { m: MatchRow; entrySlot?: Map<string, number> }) {
   const result = formatResult(m)
+
+  // Determine top/bottom by slot index (lower slot = top), not by winner/loser.
+  // If no slot map available, fall back to winner-on-top.
+  let topIsWinner = true
+  if (entrySlot && m.winner_entry_id && m.loser_entry_id) {
+    const wSlot = entrySlot.get(m.winner_entry_id) ?? 999
+    const lSlot = entrySlot.get(m.loser_entry_id) ?? 999
+    topIsWinner = wSlot <= lSlot
+  }
+
+  const top = topIsWinner
+    ? { id: m.winner_wrestler_id, name: m.winner_name, school: m.winner_school, seed: m.winner_seed, won: true }
+    : { id: m.loser_wrestler_id, name: m.loser_name, school: m.loser_school, seed: m.loser_seed, won: false }
+  const bot = topIsWinner
+    ? { id: m.loser_wrestler_id, name: m.loser_name, school: m.loser_school, seed: m.loser_seed, won: false }
+    : { id: m.winner_wrestler_id, name: m.winner_name, school: m.winner_school, seed: m.winner_seed, won: true }
+
   return (
     <div
       className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm w-60 shrink-0"
       style={{ height: CARD_H }}
     >
       <WrestlerRow
-        wrestlerId={m.winner_wrestler_id}
-        name={m.winner_name}
-        school={m.winner_school}
-        seed={m.winner_seed}
-        isWinner
+        wrestlerId={top.id}
+        name={top.name}
+        school={top.school}
+        seed={top.seed}
+        isWinner={top.won}
       />
       <div className="border-t border-slate-100" style={{ height: DIV_H }} />
       <WrestlerRow
-        wrestlerId={m.loser_wrestler_id}
-        name={m.loser_name}
-        school={m.loser_school}
-        seed={m.loser_seed}
-        isWinner={false}
+        wrestlerId={bot.id}
+        name={bot.name}
+        school={bot.school}
+        seed={bot.seed}
+        isWinner={bot.won}
       />
       <div
         className="flex items-center justify-end px-2 border-t border-slate-100"
@@ -305,10 +322,12 @@ function BracketSection({
   cols,
   matchesByRound,
   baseMatchCount,
+  entrySlot,
 }: {
   cols: readonly string[]
   matchesByRound: Map<string, MatchRow[]>
   baseMatchCount: number
+  entrySlot?: Map<string, number>
 }) {
   const totalH = baseMatchCount * CARD_H
 
@@ -333,7 +352,7 @@ function BracketSection({
                   className="flex items-center justify-center px-1.5"
                   style={{ height: slotH }}
                 >
-                  <MatchCard m={m} />
+                  <MatchCard m={m} entrySlot={entrySlot} />
                 </div>
               ))}
             </div>
@@ -542,8 +561,8 @@ export default async function StateBracketPage({
   const champ  = matches.filter(m => m.bracket_side === 'championship')
   const consol = matches.filter(m => m.bracket_side === 'consolation')
 
-  // Championship — DFS ordered
-  const champOrdered = orderChampMatchesBySeed(champ, 32)
+  // Championship — seed-ordered with slot map
+  const { byRound: champOrdered, entrySlot } = orderChampMatchesBySeed(champ, 32)
   const champCols    = CHAMP_COLS.filter(r => (champOrdered.get(r) ?? []).length > 0)
 
   // Consolation — grouped by round, sorted by bout_number within each round
@@ -596,6 +615,7 @@ export default async function StateBracketPage({
             cols={champCols}
             matchesByRound={champOrdered}
             baseMatchCount={r1Count}
+            entrySlot={entrySlot}
           />
         </div>
 
@@ -609,6 +629,7 @@ export default async function StateBracketPage({
             cols={consolCols}
             matchesByRound={consolByRound}
             baseMatchCount={c1Count}
+            entrySlot={entrySlot}
           />
         </div>
 
