@@ -180,11 +180,11 @@ export function HeaderNav() {
                     <p className="text-sm text-white font-medium truncate">{username}</p>
                   </div>
                   <Link
-                    href="/profile"
+                    href="/settings"
                     onClick={() => setUserOpen(false)}
                     className={`block w-full text-left px-4 py-3 text-sm text-slate-100 ${dropdownHover} hover:text-white transition-colors`}
                   >
-                    Profile
+                    Settings
                   </Link>
                   <button
                     onClick={handleSignOut}
