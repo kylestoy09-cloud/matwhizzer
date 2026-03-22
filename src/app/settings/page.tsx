@@ -168,6 +168,7 @@ export default function SettingsPage() {
   const [preference, setPreference] = useState<Preference>('both')
   const [saving, setSaving] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const supabase = createSupabaseBrowser()
@@ -250,7 +251,8 @@ export default function SettingsPage() {
     if (!user || !profile) return
     setSaving(true)
     const supabase = createSupabaseBrowser()
-    await supabase.from('users').update({ primary_school_id: school.id }).eq('id', user.id)
+    const { error: dbErr } = await supabase.from('users').update({ primary_school_id: school.id }).eq('id', user.id)
+    if (dbErr) { setError(`Failed to save school: ${dbErr.message}`); setSaving(false); return }
 
     const { data: info } = await supabase
       .from('school_names').select('id, abbreviation, school_name').eq('id', school.id).maybeSingle()
@@ -278,7 +280,8 @@ export default function SettingsPage() {
     setSaving(true)
     const updated = [...current, school.id]
     const supabase = createSupabaseBrowser()
-    await supabase.from('users').update({ followed_school_ids: updated }).eq('id', user.id)
+    const { error: dbErr } = await supabase.from('users').update({ followed_school_ids: updated }).eq('id', user.id)
+    if (dbErr) { setError(`Failed to save school: ${dbErr.message}`); setSaving(false); return }
 
     const { data: info } = await supabase
       .from('school_names').select('id, abbreviation, school_name').eq('id', school.id).maybeSingle()
@@ -342,6 +345,13 @@ export default function SettingsPage() {
   return (
     <div className="max-w-lg mx-auto px-4 py-12">
       <h1 className="text-xl font-bold text-slate-900 mb-6">Settings</h1>
+
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-3 mb-6">
+          <p className="text-sm text-red-700">{error}</p>
+          <button onClick={() => setError(null)} className="text-xs text-red-500 hover:underline mt-1">dismiss</button>
+        </div>
+      )}
 
       {/* ── Account ── */}
       <section className="bg-white border border-slate-200 rounded-xl shadow-sm p-6 mb-6">
