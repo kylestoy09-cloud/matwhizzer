@@ -155,7 +155,7 @@ export default async function RegionSummaryPage({
 
   const season = await getActiveSeason()
 
-  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, teamPtsRes, regionSchoolsRes, videoRes] =
+  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, teamPtsRes, regionSchoolsRes, videoRes, ghostRes, regionEntriesRes, statePlacementsRes] =
     await Promise.all([
       supabase.rpc('region_placements',  { p_region: r, p_gender: 'M', p_season: season }),
       supabase.rpc('region_mat_time',    { p_region: r, p_gender: 'M', p_season: season }),
@@ -166,6 +166,14 @@ export default async function RegionSummaryPage({
       supabase.rpc('region_postseason_pts', { p_region: r, p_gender: 'M', p_season: season }),
       supabase.rpc('region_schools',     { p_region: r, p_gender: 'M', p_season: season }),
       supabase.from('tournaments').select('youtube_url').eq('name', `Boy_s Regions r${r}`).eq('season_id', season).single(),
+      supabase.rpc('ghost_champions', { p_season: season }),
+      supabase
+        .from('tournament_entries')
+        .select('wrestler_id, seed, tournaments!inner(name, season_id, tournament_type)')
+        .eq('tournaments.season_id', season)
+        .eq('tournaments.tournament_type', 'regions')
+        .like('tournaments.name', `%r${r}%`),
+      supabase.rpc('state_placements', { p_gender: 'M', p_season: season }),
     ])
 
   const placements    = (placementsRes.data    ?? []) as PlacementRow[]
@@ -177,6 +185,21 @@ export default async function RegionSummaryPage({
   const teamPts       = (teamPtsRes.data       ?? []) as TeamPtsRow[]
   const regionSchools = (regionSchoolsRes.data ?? []) as RegionSchoolRow[]
   const youtubeUrl = (videoRes.data?.youtube_url as string | null) ?? null
+
+  // Ghost champion IDs + seed map for badges
+  const ghostIds = new Set(
+    ((ghostRes.data ?? []) as { wrestler_id: string; gender: string }[])
+      .filter(g => g.gender === 'M')
+      .map(g => g.wrestler_id)
+  )
+  const seedMap = new Map<string, number>()
+  for (const e of ((regionEntriesRes.data ?? []) as { wrestler_id: string; seed: number | null }[])) {
+    if (e.wrestler_id && e.seed) seedMap.set(e.wrestler_id, e.seed)
+  }
+  const statePlaceMap = new Map<string, number>()
+  for (const sp of ((statePlacementsRes.data ?? []) as { wrestler_id: string; place: number }[])) {
+    statePlaceMap.set(sp.wrestler_id, sp.place)
+  }
 
   // Group region schools by district number (already sorted by district_num from RPC)
   const districtGroups: { districtNum: number; schools: RegionSchoolRow[] }[] = []
@@ -272,16 +295,36 @@ export default async function RegionSummaryPage({
                           <td key={place} className="px-4 py-2.5 text-slate-300 text-sm">—</td>
                         )
                       }
+                      const seed = seedMap.get(p.wrestler_id)
+                      const showUpset = seed != null && seed > 4
+                      const statePlace = statePlaceMap.get(p.wrestler_id)
                       return (
                         <td key={place} className="px-4 py-2.5">
-                          <Link
-                            href={`/wrestler/${p.wrestler_id}`}
-                            className={`block font-medium hover:underline leading-tight ${
-                              place === 1 ? 'text-slate-900' : 'text-slate-700'
-                            }`}
-                          >
-                            {p.wrestler_name}
-                          </Link>
+                          <div className="flex items-center gap-1">
+                            <Link
+                              href={`/wrestler/${p.wrestler_id}`}
+                              className={`font-medium hover:underline leading-tight ${
+                                place === 1 ? 'text-slate-900' : 'text-slate-700'
+                              }`}
+                            >
+                              {p.wrestler_name}
+                            </Link>
+                            {statePlace === 1 && <span title="State Champion" className="shrink-0">👑</span>}
+                            {statePlace != null && statePlace >= 2 && statePlace <= 3 && (
+                              <span className="text-[10px] font-bold text-amber-600 bg-amber-50 border border-amber-200 px-1 rounded shrink-0" title={`State ${statePlace}${statePlace === 2 ? 'nd' : 'rd'}`}>
+                                {statePlace === 2 ? '🥈' : '🥉'}
+                              </span>
+                            )}
+                            {statePlace != null && statePlace >= 4 && statePlace <= 8 && (
+                              <span className="text-[10px] font-bold text-slate-500 bg-slate-100 border border-slate-200 px-1 rounded shrink-0" title={`State ${statePlace}th`}>
+                                S{statePlace}
+                              </span>
+                            )}
+                            {ghostIds.has(p.wrestler_id) && <span title="Ghost Champion" className="shrink-0">👻</span>}
+                            {showUpset && (
+                              <span className="text-[10px] font-bold text-emerald-600 shrink-0" title={`Seed #${seed}`}>↑{seed - place}</span>
+                            )}
+                          </div>
                           <span className="text-xs text-slate-500 truncate block">
                             {p.school_name || p.school}
                           </span>

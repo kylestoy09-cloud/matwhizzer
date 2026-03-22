@@ -152,7 +152,7 @@ export default async function GirlsDistrictSummaryPage({
   // Girls districts only exist from season 2 onward
   const season = Math.max(await getActiveSeason(), 2)
 
-  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, bonusPctRes, schoolsRes, teamScoreRes, teamPtsRes, stateEntRes] =
+  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, bonusPctRes, schoolsRes, teamScoreRes, teamPtsRes, stateEntRes, ghostRes, distEntriesRes, statePlacementsRes] =
     await Promise.all([
       supabase.rpc('district_placements',  { p_district: d, p_gender: 'F', p_season: season }),
       supabase.rpc('district_mat_time',    { p_district: d, p_gender: 'F', p_season: season }),
@@ -167,6 +167,14 @@ export default async function GirlsDistrictSummaryPage({
         .select('wrestler_id, tournaments!inner(season_id, tournament_type)')
         .eq('tournaments.season_id', season)
         .eq('tournaments.tournament_type', 'girls_state'),
+      supabase.rpc('ghost_champions', { p_season: season }),
+      supabase
+        .from('tournament_entries')
+        .select('wrestler_id, seed, tournaments!inner(name, season_id, tournament_type)')
+        .eq('tournaments.season_id', season)
+        .eq('tournaments.tournament_type', 'districts')
+        .like('tournaments.name', `%d${d}%`),
+      supabase.rpc('state_placements', { p_gender: 'F', p_season: season }),
     ])
 
   const placements = (placementsRes.data ?? []) as PlacementRow[]
@@ -180,6 +188,19 @@ export default async function GirlsDistrictSummaryPage({
   const stateQualIds = new Set(
     ((stateEntRes.data ?? []) as { wrestler_id: string }[]).map(e => e.wrestler_id)
   )
+  const ghostIds = new Set(
+    ((ghostRes.data ?? []) as { wrestler_id: string; gender: string }[])
+      .filter(g => g.gender === 'F')
+      .map(g => g.wrestler_id)
+  )
+  const seedMap = new Map<string, number>()
+  for (const e of ((distEntriesRes.data ?? []) as { wrestler_id: string; seed: number | null }[])) {
+    if (e.wrestler_id && e.seed) seedMap.set(e.wrestler_id, e.seed)
+  }
+  const statePlaceMap = new Map<string, number>()
+  for (const sp of ((statePlacementsRes.data ?? []) as { wrestler_id: string; place: number }[])) {
+    statePlaceMap.set(sp.wrestler_id, sp.place)
+  }
 
   const placementsByWeight = new Map<number, Map<number, PlacementRow>>()
   for (const p of placements) {
@@ -264,6 +285,9 @@ export default async function GirlsDistrictSummaryPage({
                         )
                       }
                       const isSQ = stateQualIds.has(p.wrestler_id)
+                      const seed = seedMap.get(p.wrestler_id)
+                      const showUpset = seed != null && seed > 4
+                      const statePlace = statePlaceMap.get(p.wrestler_id)
                       return (
                         <td key={place} className="px-4 py-2.5">
                           <div className="flex items-center gap-1.5">
@@ -275,7 +299,22 @@ export default async function GirlsDistrictSummaryPage({
                             >
                               {p.wrestler_name}
                             </Link>
-                            {isSQ && (
+                            {statePlace === 1 && <span title="State Champion" className="shrink-0">👑</span>}
+                            {statePlace != null && statePlace >= 2 && statePlace <= 3 && (
+                              <span className="shrink-0" title={`State ${statePlace}${statePlace === 2 ? 'nd' : 'rd'}`}>
+                                {statePlace === 2 ? '🥈' : '🥉'}
+                              </span>
+                            )}
+                            {statePlace != null && statePlace >= 4 && statePlace <= 8 && (
+                              <span className="text-[10px] font-bold text-slate-500 bg-slate-100 border border-slate-200 px-1 rounded shrink-0" title={`State ${statePlace}th`}>
+                                S{statePlace}
+                              </span>
+                            )}
+                            {ghostIds.has(p.wrestler_id) && <span title="Ghost Champion" className="shrink-0">👻</span>}
+                            {showUpset && (
+                              <span className="text-[10px] font-bold text-emerald-600 shrink-0" title={`Seed #${seed}`}>↑{seed - place}</span>
+                            )}
+                            {isSQ && !statePlace && (
                               <span className="text-[9px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-1 rounded shrink-0">
                                 SQ
                               </span>

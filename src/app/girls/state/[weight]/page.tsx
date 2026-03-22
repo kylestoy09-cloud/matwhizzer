@@ -333,7 +333,7 @@ function derivePlacements(matches: MatchRow[]): PlaceWinner[] {
 
 const PLACE_SUFFIX: Record<number, string> = { 1: 'st', 2: 'nd', 3: 'rd' }
 
-function Podium({ matches }: { matches: MatchRow[] }) {
+function Podium({ matches, ghostIds, seedMap }: { matches: MatchRow[]; ghostIds: Set<string>; seedMap: Map<string, number> }) {
   const placements = derivePlacements(matches)
   if (placements.length === 0) return null
 
@@ -341,25 +341,34 @@ function Podium({ matches }: { matches: MatchRow[] }) {
     <div className="mt-10 mb-8 max-w-sm mx-auto">
       <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Placewinners</h2>
       <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden divide-y divide-slate-100">
-        {placements.map(p => (
-          <div key={p.place} className={`flex items-center gap-2.5 px-3 py-2 ${p.place === 1 ? 'bg-amber-50' : ''}`}>
-            <span className={`text-xs font-bold w-6 text-right shrink-0 ${
-              p.place === 1 ? 'text-amber-600' : p.place === 2 ? 'text-slate-500' : p.place === 3 ? 'text-orange-500' : 'text-slate-400'
-            }`}>
-              {p.place}{PLACE_SUFFIX[p.place] ?? 'th'}
-            </span>
-            <span className="flex-1 min-w-0 truncate">
-              {p.wrestlerId ? (
-                <Link href={`/wrestler/${p.wrestlerId}`} className={`text-sm hover:underline truncate ${p.place === 1 ? 'font-bold text-slate-900' : 'font-medium text-slate-700'}`}>
-                  {p.name}
-                </Link>
-              ) : (
-                <span className="text-sm font-medium text-slate-700">{p.name}</span>
-              )}
-            </span>
-            <span className="text-[11px] text-slate-400 shrink-0">{p.school ?? ''}</span>
-          </div>
-        ))}
+        {placements.map(p => {
+          const seed = p.wrestlerId ? seedMap.get(p.wrestlerId) : undefined
+          const outperform = seed != null ? seed - p.place : 0
+          return (
+            <div key={p.place} className={`flex items-center gap-2.5 px-3 py-2 ${p.place === 1 ? 'bg-amber-50' : ''}`}>
+              <span className={`text-xs font-bold w-6 text-right shrink-0 ${
+                p.place === 1 ? 'text-amber-600' : p.place === 2 ? 'text-slate-500' : p.place === 3 ? 'text-orange-500' : 'text-slate-400'
+              }`}>
+                {p.place}{PLACE_SUFFIX[p.place] ?? 'th'}
+              </span>
+              <span className="flex-1 min-w-0 flex items-center gap-1">
+                {p.wrestlerId ? (
+                  <Link href={`/wrestler/${p.wrestlerId}`} className={`text-sm hover:underline truncate ${p.place === 1 ? 'font-bold text-slate-900' : 'font-medium text-slate-700'}`}>
+                    {p.name}
+                  </Link>
+                ) : (
+                  <span className="text-sm font-medium text-slate-700">{p.name}</span>
+                )}
+                {p.place === 1 && <span title="State Champion" className="shrink-0">👑</span>}
+                {p.wrestlerId && ghostIds.has(p.wrestlerId) && <span title="Ghost Champion" className="shrink-0">👻</span>}
+                {outperform > 5 && (
+                  <span className="text-[10px] font-bold text-emerald-600 shrink-0" title={`Seed #${seed}`}>↑{outperform}</span>
+                )}
+              </span>
+              <span className="text-[11px] text-slate-400 shrink-0">{p.school ?? ''}</span>
+            </div>
+          )
+        })}
       </div>
     </div>
   )
@@ -531,7 +540,7 @@ export default async function GirlsStateBracketPage({
 
   const season = await getActiveSeason()
 
-  const [{ data }, { data: entryData }] = await Promise.all([
+  const [{ data }, { data: entryData }, { data: ghostData }] = await Promise.all([
     supabase.rpc('state_bracket', {
       p_weight: weight,
       p_gender: 'F',
@@ -542,11 +551,23 @@ export default async function GirlsStateBracketPage({
       p_gender: 'F',
       p_season: season,
     }),
+    supabase.rpc('ghost_champions', { p_season: season }),
   ])
 
   const matches = (data ?? []) as MatchRow[]
   const entries = (entryData ?? []) as (BracketEntry & { tournament_id: number; weight_class_id: number })[]
   if (matches.length === 0 && entries.length === 0) notFound()
+
+  const ghostIds = new Set(
+    ((ghostData ?? []) as { wrestler_id: string; gender: string }[])
+      .filter(g => g.gender === 'F')
+      .map(g => g.wrestler_id)
+  )
+  const seedMap = new Map<string, number>()
+  for (const m of matches) {
+    if (m.winner_wrestler_id && m.winner_seed) seedMap.set(m.winner_wrestler_id, m.winner_seed)
+    if (m.loser_wrestler_id && m.loser_seed) seedMap.set(m.loser_wrestler_id, m.loser_seed)
+  }
 
   const champ  = matches.filter(m => m.bracket_side === 'championship')
   const consol = matches.filter(m => m.bracket_side === 'consolation')
@@ -590,7 +611,7 @@ export default async function GirlsStateBracketPage({
       {matches.length === 0 ? null : (<>
 
       {/* ── PODIUM ── */}
-      <Podium matches={matches} />
+      <Podium matches={matches} ghostIds={ghostIds} seedMap={seedMap} />
 
       {/* ── DESKTOP bracket (lg+) ── */}
       <div className="overflow-x-auto space-y-0" style={{ WebkitOverflowScrolling: 'touch' }}>

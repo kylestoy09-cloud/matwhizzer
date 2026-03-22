@@ -107,7 +107,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
     ? (season === 2 ? 180 : 133)
     : (season === 2 ? 185 : 138)
 
-  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, teamPtsRes, distStrengthRes, marginsRes, podiumDistRes, ghostRes] =
+  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, teamPtsRes, distStrengthRes, marginsRes, podiumDistRes, ghostRes, stateEntriesRes] =
     await Promise.all([
       supabase.rpc('state_placements',                    { p_gender: g, p_season: season }),
       supabase.rpc(`${poolRpc}_mat_time`,                 poolParams),
@@ -120,6 +120,11 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
       supabase.rpc('lb_weight_competitiveness',           { p_gender: g, p_season: season }),
       supabase.rpc('lb_district_podium_placers',          { p_gender: g, p_season: season }),
       supabase.rpc('ghost_champions',                     { p_season: season }),
+      supabase
+        .from('tournament_entries')
+        .select('wrestler_id, seed, tournaments!inner(tournament_type, season_id)')
+        .eq('tournaments.season_id', season)
+        .eq('tournaments.tournament_type', isBoys ? 'boys_state' : 'girls_state'),
     ])
 
   const placements     = (placementsRes.data     ?? []) as PlacementRow[]
@@ -140,8 +145,22 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
     weight: number; gender: string; tournament_name: string; tournament_type: string
     wins_on_path: { round: string; opponent: string; opponent_seed: number | null; win_type: string; fall_time: number | null }[] | null
   }
-  const ghostChamps = ((ghostRes.data ?? []) as GhostChamp[])
+  const allGhostChamps = (ghostRes.data ?? []) as GhostChamp[]
+  const ghostChamps = allGhostChamps
     .filter(gc => gc.tournament_type === (isBoys ? 'boys_state' : 'girls_state'))
+
+  // Ghost champion wrestler IDs (all tournament levels for this season/gender)
+  const ghostIds = new Set(
+    allGhostChamps
+      .filter(gc => gc.gender === (isBoys ? 'M' : 'F'))
+      .map(gc => gc.wrestler_id)
+  )
+
+  // Seed map from state entries
+  const seedMap = new Map<string, number>()
+  for (const e of ((stateEntriesRes.data ?? []) as { wrestler_id: string; seed: number | null }[])) {
+    if (e.wrestler_id && e.seed) seedMap.set(e.wrestler_id, e.seed)
+  }
 
   const placementsByWeight = new Map<number, Map<number, PlacementRow>>()
   for (const p of placements) {
@@ -189,14 +208,27 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
                     {PLACES.map(place => {
                       const p = row.get(place)
                       if (!p) return <td key={place} className="px-4 py-2.5 text-slate-300">—</td>
+                      const seed = seedMap.get(p.wrestler_id)
+                      const outperform = seed != null ? seed - place : 0
                       return (
                         <td key={place} className="px-4 py-2.5">
-                          <Link
-                            href={`/wrestler/${p.wrestler_id}`}
-                            className={`block font-medium hover:underline leading-tight ${place === 1 ? 'text-slate-900' : 'text-slate-700'}`}
-                          >
-                            {p.wrestler_name}
-                          </Link>
+                          <div className="flex items-center gap-1">
+                            <Link
+                              href={`/wrestler/${p.wrestler_id}`}
+                              className={`font-medium hover:underline leading-tight ${place === 1 ? 'text-slate-900' : 'text-slate-700'}`}
+                            >
+                              {p.wrestler_name}
+                            </Link>
+                            {place === 1 && <span title="State Champion" className="shrink-0">👑</span>}
+                            {ghostIds.has(p.wrestler_id) && (
+                              <span title="Ghost Champion" className="shrink-0">👻</span>
+                            )}
+                            {outperform > 5 && (
+                              <span className="text-[10px] font-bold text-emerald-600 shrink-0" title={`Seed #${seed} → ${place}${place === 1 ? 'st' : place === 2 ? 'nd' : place === 3 ? 'rd' : 'th'}`}>
+                                ↑{outperform}
+                              </span>
+                            )}
+                          </div>
                           <span className="text-xs text-slate-500 truncate block">
                             {p.school_name || p.school}
                           </span>
