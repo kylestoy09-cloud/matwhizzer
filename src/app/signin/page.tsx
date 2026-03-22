@@ -29,6 +29,18 @@ export default function SignInPage() {
       return
     }
 
+    // Set preference cookie for homepage personalization
+    const { data: { user } } = await supabase.auth.getUser()
+    if (user) {
+      const { data: profile } = await supabase
+        .from('users')
+        .select('wrestling_preference')
+        .eq('id', user.id)
+        .maybeSingle()
+      const pref = (profile as { wrestling_preference: string } | null)?.wrestling_preference ?? 'both'
+      document.cookie = `wrestling_pref=${pref};path=/;max-age=${60 * 60 * 24 * 365};samesite=lax`
+    }
+
     router.push('/')
     router.refresh()
   }

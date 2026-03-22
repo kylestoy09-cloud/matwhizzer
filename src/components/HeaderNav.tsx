@@ -74,6 +74,7 @@ export function HeaderNav() {
   async function handleSignOut() {
     const supabase = createSupabaseBrowser()
     await supabase.auth.signOut()
+    document.cookie = 'wrestling_pref=;path=/;max-age=0'
     setUser(null)
     setUsername(null)
     setUserOpen(false)
@@ -97,35 +98,49 @@ export function HeaderNav() {
     <>
       <header className={`${bgClass} text-white px-6 py-6 shadow-md flex items-center relative sticky top-0 z-40`}>
 
-        {/* Hamburger + dropdown — left side */}
-        <div ref={menuRef} className="relative z-10">
-          <button
-            onClick={() => setOpen(v => !v)}
-            aria-label="Open navigation menu"
-            aria-expanded={open}
-            className="p-2 rounded-md hover:bg-white/10 transition-colors"
-          >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <rect y="3"  width="20" height="2" rx="1" />
-              <rect y="9"  width="20" height="2" rx="1" />
-              <rect y="15" width="20" height="2" rx="1" />
-            </svg>
-          </button>
+        {/* Hamburger + Boys/Girls toggle — left side */}
+        <div className="flex items-center gap-2 z-10">
+          <div ref={menuRef} className="relative">
+            <button
+              onClick={() => setOpen(v => !v)}
+              aria-label="Open navigation menu"
+              aria-expanded={open}
+              className="p-2 rounded-md hover:bg-white/10 transition-colors"
+            >
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <rect y="3"  width="20" height="2" rx="1" />
+                <rect y="9"  width="20" height="2" rx="1" />
+                <rect y="15" width="20" height="2" rx="1" />
+              </svg>
+            </button>
 
-          {open && (
-            <div className={`absolute left-0 top-full mt-2 w-44 rounded-lg shadow-xl border z-50 overflow-hidden ${dropdownBg}`}>
-              {navItems.map(item => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className={`block px-4 py-3 text-sm text-slate-100 ${dropdownHover} hover:text-white transition-colors`}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-          )}
+            {open && (
+              <div className={`absolute left-0 top-full mt-2 w-44 rounded-lg shadow-xl border z-50 overflow-hidden ${dropdownBg}`}>
+                {navItems.map(item => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setOpen(false)}
+                    className={`block px-4 py-3 text-sm text-slate-100 ${dropdownHover} hover:text-white transition-colors`}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Boys/Girls toggle */}
+          <Link
+            href={toggleHref}
+            className={`text-sm font-semibold px-4 py-1.5 rounded-full border transition-colors ${
+              isBoys
+                ? 'border-rose-400 text-rose-300 hover:bg-rose-800 hover:text-rose-100'
+                : 'border-slate-400 text-slate-300 hover:bg-slate-800 hover:text-slate-100'
+            }`}
+          >
+            {isBoys ? 'Girls \u2192' : '\u2190 Boys'}
+          </Link>
         </div>
 
         {/* Brand — centered logo in white circle */}
@@ -145,21 +160,8 @@ export function HeaderNav() {
           </div>
         </Link>
 
-        {/* Right side — toggle + auth */}
+        {/* Right side — auth */}
         <div className="ml-auto flex items-center gap-3 z-10">
-          {/* Boys/Girls toggle */}
-          <Link
-            href={toggleHref}
-            className={`text-sm font-semibold px-4 py-1.5 rounded-full border transition-colors ${
-              isBoys
-                ? 'border-rose-400 text-rose-300 hover:bg-rose-800 hover:text-rose-100'
-                : 'border-slate-400 text-slate-300 hover:bg-slate-800 hover:text-slate-100'
-            }`}
-          >
-            {isBoys ? 'Girls \u2192' : '\u2190 Boys'}
-          </Link>
-
-          {/* Auth */}
           {user ? (
             <div ref={userMenuRef} className="relative">
               <button
@@ -177,6 +179,13 @@ export function HeaderNav() {
                     <p className="text-xs text-slate-400">Signed in as</p>
                     <p className="text-sm text-white font-medium truncate">{username}</p>
                   </div>
+                  <Link
+                    href="/profile"
+                    onClick={() => setUserOpen(false)}
+                    className={`block w-full text-left px-4 py-3 text-sm text-slate-100 ${dropdownHover} hover:text-white transition-colors`}
+                  >
+                    Profile
+                  </Link>
                   <button
                     onClick={handleSignOut}
                     className={`block w-full text-left px-4 py-3 text-sm text-slate-100 ${dropdownHover} hover:text-white transition-colors`}

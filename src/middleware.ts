@@ -4,6 +4,14 @@ import { NextResponse, type NextRequest } from 'next/server'
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
+  // Homepage personalization: redirect based on wrestling preference cookie
+  if (pathname === '/') {
+    const pref = request.cookies.get('wrestling_pref')?.value
+    if (pref === 'boys') return NextResponse.redirect(new URL('/boys', request.url))
+    if (pref === 'girls') return NextResponse.redirect(new URL('/girls', request.url))
+    return NextResponse.next()
+  }
+
   // Only protect /admin routes (except the login page itself)
   if (!pathname.startsWith('/admin')) return NextResponse.next()
   if (pathname === '/admin/login') return handleSessionRefresh(request)
@@ -65,5 +73,5 @@ function createSupabaseMiddlewareClient(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*'],
+  matcher: ['/', '/admin/:path*'],
 }

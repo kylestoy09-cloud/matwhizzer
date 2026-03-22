@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
+import { FollowSchoolButton } from '@/components/FollowSchoolButton'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -158,8 +159,9 @@ export default async function SchoolProfilePage({
 
       {/* School header */}
       <div className="mb-8">
-        <div className="flex items-baseline gap-2">
+        <div className="flex items-center gap-3">
           <h2 className="text-2xl font-bold text-slate-900">{schoolName}</h2>
+          <FollowSchoolButton schoolAbbreviation={school} />
         </div>
         <div className="flex flex-wrap items-center gap-1 text-slate-500 text-sm mt-1">
           {(districtLabels.length > 0 || regionLabels.length > 0) && (
