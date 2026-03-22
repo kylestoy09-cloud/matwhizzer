@@ -248,11 +248,25 @@ export default function SettingsPage() {
   // ── Primary School ──
 
   async function handleSetPrimary(school: SchoolOption) {
-    if (!user || !profile) return
+    setError(null)
+    if (!user) { setError('Not logged in'); return }
+    if (!profile) { setError('No profile loaded — try refreshing'); return }
     setSaving(true)
     const supabase = createSupabaseBrowser()
-    const { error: dbErr } = await supabase.from('users').update({ primary_school_id: school.id }).eq('id', user.id)
-    if (dbErr) { setError(`Failed to save school: ${dbErr.message}`); setSaving(false); return }
+
+    // Upsert to handle both existing and missing rows
+    const { error: dbErr } = await supabase.from('users').upsert({
+      id: user.id,
+      username: profile.username,
+      primary_school_id: school.id,
+      wrestling_preference: profile.wrestling_preference ?? 'both',
+    })
+
+    if (dbErr) {
+      setError(`Save failed: ${dbErr.message} (code: ${dbErr.code})`)
+      setSaving(false)
+      return
+    }
 
     const { data: info } = await supabase
       .from('school_names').select('id, abbreviation, school_name').eq('id', school.id).maybeSingle()
