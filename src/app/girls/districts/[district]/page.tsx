@@ -189,8 +189,8 @@ export default async function GirlsDistrictSummaryPage({
     ((stateEntRes.data ?? []) as { wrestler_id: string }[]).map(e => e.wrestler_id)
   )
   const ghostIds = new Set(
-    ((ghostRes.data ?? []) as { wrestler_id: string; gender: string }[])
-      .filter(g => g.gender === 'F')
+    ((ghostRes.data ?? []) as { wrestler_id: string; gender: string; tournament_type: string }[])
+      .filter(g => g.gender === 'F' && g.tournament_type === 'districts')
       .map(g => g.wrestler_id)
   )
   const seedMap = new Map<string, number>()

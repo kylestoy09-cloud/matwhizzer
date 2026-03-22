@@ -190,8 +190,8 @@ export default async function GirlsRegionSummaryPage({
   const youtubeUrl = (videoRes.data?.youtube_url as string | null) ?? null
 
   const ghostIds = new Set(
-    ((ghostRes.data ?? []) as { wrestler_id: string; gender: string }[])
-      .filter(g => g.gender === 'F')
+    ((ghostRes.data ?? []) as { wrestler_id: string; gender: string; tournament_type: string }[])
+      .filter(g => g.gender === 'F' && g.tournament_type === 'girls_regions')
       .map(g => g.wrestler_id)
   )
   const seedMap = new Map<string, number>()

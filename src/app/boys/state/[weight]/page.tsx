@@ -569,8 +569,8 @@ export default async function StateBracketPage({
   if (matches.length === 0 && entries.length === 0) notFound()
 
   const ghostIds = new Set(
-    ((ghostData ?? []) as { wrestler_id: string; gender: string }[])
-      .filter(g => g.gender === 'M')
+    ((ghostData ?? []) as { wrestler_id: string; gender: string; tournament_type: string }[])
+      .filter(g => g.gender === 'M' && g.tournament_type === 'boys_state')
       .map(g => g.wrestler_id)
   )
   // Build seed map from match data

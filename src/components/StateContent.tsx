@@ -149,11 +149,9 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
   const ghostChamps = allGhostChamps
     .filter(gc => gc.tournament_type === (isBoys ? 'boys_state' : 'girls_state'))
 
-  // Ghost champion wrestler IDs (all tournament levels for this season/gender)
+  // Ghost champion wrestler IDs — only state-level ghost champs on the state page
   const ghostIds = new Set(
-    allGhostChamps
-      .filter(gc => gc.gender === (isBoys ? 'M' : 'F'))
-      .map(gc => gc.wrestler_id)
+    ghostChamps.map(gc => gc.wrestler_id)
   )
 
   // Seed map from state entries

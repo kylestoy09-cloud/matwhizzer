@@ -188,8 +188,8 @@ export default async function RegionSummaryPage({
 
   // Ghost champion IDs + seed map for badges
   const ghostIds = new Set(
-    ((ghostRes.data ?? []) as { wrestler_id: string; gender: string }[])
-      .filter(g => g.gender === 'M')
+    ((ghostRes.data ?? []) as { wrestler_id: string; gender: string; tournament_type: string }[])
+      .filter(g => g.gender === 'M' && g.tournament_type === 'regions')
       .map(g => g.wrestler_id)
   )
   const seedMap = new Map<string, number>()
