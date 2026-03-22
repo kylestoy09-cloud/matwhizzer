@@ -176,15 +176,26 @@ export default function SettingsPage() {
       if (!data.user) { router.push('/signin'); return }
       setUser(data.user)
 
-      const { data: prof } = await supabase
+      let { data: prof } = await supabase
         .from('users')
         .select('username, primary_school_id, followed_school_ids, followed_wrestler_ids, wrestling_preference')
         .eq('id', data.user.id)
         .maybeSingle()
 
-      const p = prof as ProfileData | null
+      // Create row if missing (accounts created before the trigger)
+      if (!prof) {
+        const username = data.user.user_metadata?.username ?? null
+        await supabase.from('users').upsert({
+          id: data.user.id,
+          username,
+          wrestling_preference: 'both',
+        })
+        prof = { username, primary_school_id: null, followed_school_ids: null, followed_wrestler_ids: null, wrestling_preference: 'both' }
+      }
+
+      const p = prof as ProfileData
       setProfile(p)
-      setPreference((p?.wrestling_preference as Preference) ?? 'both')
+      setPreference((p.wrestling_preference as Preference) ?? 'both')
 
       // Fetch schools
       const allSchoolIds = [
