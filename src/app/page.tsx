@@ -8,7 +8,7 @@ import { getActiveSeason } from '@/lib/get-season'
 import { SEASONS } from '@/lib/seasons'
 import { PostseasonLeaders } from '@/components/PostseasonLeaders'
 import { PageHeader } from '@/components/PageHeader'
-import { YourSchools } from '@/components/YourSchools'
+import { PersonalizedHome } from '@/components/PersonalizedHome'
 
 type ChampionRow = { weight: number; wrestler_id: string; wrestler_name: string; school: string; dominance_score: number; seed: number | null }
 
@@ -219,8 +219,8 @@ export default async function RootPage({
         </div>
       </div>
 
-      {/* ── Your Schools (logged-in users) ── */}
-      {showLeaderboards && <YourSchools />}
+      {/* ── Personalized content (logged-in users) ── */}
+      {showLeaderboards && <PersonalizedHome />}
 
       {/* ── Leaderboards (shown when not searching) ── */}
       {showLeaderboards && (
