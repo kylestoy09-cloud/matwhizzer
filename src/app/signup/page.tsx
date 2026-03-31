@@ -33,7 +33,7 @@ function SchoolPicker({ value, onChange }: { value: SchoolOption | null; onChang
 
   return (
     <div ref={ref} className="relative">
-      <label className="block text-xs font-medium text-slate-600 mb-1">School</label>
+      <label className="block text-xs font-medium text-slate-600 mb-1">School (optional)</label>
       {value ? (
         <div className="flex items-center justify-between border border-slate-300 rounded-lg px-3 py-2">
           <span className="text-sm text-slate-800">{value.display_name}</span>
@@ -88,8 +88,6 @@ export default function SignUpPage() {
     if (password !== confirm) { setError('Passwords do not match'); return }
     if (password.length < 6) { setError('Password must be at least 6 characters'); return }
     if (username.length < 3) { setError('Username must be at least 3 characters'); return }
-    if (!school) { setError('Please select your school'); return }
-
     setLoading(true)
     const supabase = createSupabaseBrowser()
 
@@ -104,7 +102,11 @@ export default function SignUpPage() {
       password,
       options: {
         emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://matwhizzer.com'}/auth/confirm`,
-        data: { username, primary_school_id: String(school.id), wrestling_preference: preference },
+        data: {
+          username,
+          ...(school ? { primary_school_id: String(school.id) } : {}),
+          wrestling_preference: preference,
+        },
       },
     })
 
