@@ -1,21 +1,33 @@
-import { createSupabaseServer } from '@/lib/supabase/server'
-import { type NextRequest, NextResponse } from 'next/server'
+import { createServerClient } from '@supabase/ssr'
+import { cookies } from 'next/headers'
+import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url)
+  const { searchParams, origin } = new URL(request.url)
+  const code = searchParams.get('code')
   const token_hash = searchParams.get('token_hash')
-  const type = searchParams.get('type') as 'signup' | 'email' | 'recovery' | null
-  const next = searchParams.get('next') ?? '/'
+  const type = searchParams.get('type')
 
-  if (token_hash && type) {
-    const supabase = await createSupabaseServer()
-    const { error } = await supabase.auth.verifyOtp({ token_hash, type })
+  const cookieStore = await cookies()
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    { cookies: { get: (name: string) => cookieStore.get(name)?.value } }
+  )
 
+  if (code) {
+    const { error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
-      return NextResponse.redirect(new URL('/email-confirmed', request.url))
+      return NextResponse.redirect(new URL('/email-confirmed', origin))
     }
   }
 
-  // If verification fails, redirect to sign-in with an error hint
-  return NextResponse.redirect(new URL('/signin?error=confirmation-failed', request.url))
+  if (token_hash && type) {
+    const { error } = await supabase.auth.verifyOtp({ token_hash, type: type as any })
+    if (!error) {
+      return NextResponse.redirect(new URL('/email-confirmed', origin))
+    }
+  }
+
+  return NextResponse.redirect(new URL('/signin?error=confirmation-failed', origin))
 }
