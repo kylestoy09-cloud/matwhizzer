@@ -3,6 +3,8 @@ import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(request: NextRequest) {
+  console.log('Auth confirm params:', Object.fromEntries(new URL(request.url).searchParams))
+
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get('code')
   const token_hash = searchParams.get('token_hash')
@@ -27,6 +29,12 @@ export async function GET(request: NextRequest) {
     if (!error) {
       return NextResponse.redirect(new URL('/email-confirmed', origin))
     }
+  }
+
+  // Fallback: check if user already has a valid session (Supabase may have verified on their end)
+  const { data: { user } } = await supabase.auth.getUser()
+  if (user) {
+    return NextResponse.redirect(new URL('/email-confirmed', origin))
   }
 
   return NextResponse.redirect(new URL('/signin?error=confirmation-failed', origin))
