@@ -12,10 +12,10 @@ export async function GET(request: NextRequest) {
     const { error } = await supabase.auth.verifyOtp({ token_hash, type })
 
     if (!error) {
-      return NextResponse.redirect(new URL(next, request.url))
+      return NextResponse.redirect(new URL('/email-confirmed', request.url))
     }
   }
 
   // If verification fails, redirect to sign-in with an error hint
-  return NextResponse.redirect(new URL('/signin?error=confirmation', request.url))
+  return NextResponse.redirect(new URL('/signin?error=confirmation-failed', request.url))
 }
