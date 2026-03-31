@@ -6,8 +6,11 @@ import { createSupabaseBrowser } from '@/lib/supabase/client'
 
 type SchoolInfo = {
   id: number
-  abbreviation: string
-  school_name: string
+  display_name: string
+  abbreviation: string | null
+  section: string | null
+  classification: string | null
+  isPrimary: boolean
 }
 
 type BreakdownRow = {
@@ -40,6 +43,26 @@ type WrestlerPlacement = {
   tournament_type: string
 }
 
+type MatchRow = {
+  id: string
+  win_type: string
+  winner_score: number | null
+  loser_score: number | null
+  round: string
+  fall_time_seconds: number | null
+  winner_entry: {
+    wrestler: { first_name: string; last_name: string } | null
+    school_context_raw: string | null
+    weight_class: { weight: number } | null
+  } | null
+  loser_entry: {
+    wrestler: { first_name: string; last_name: string } | null
+    school_context_raw: string | null
+    weight_class: { weight: number } | null
+  } | null
+  tournament: { name: string } | null
+}
+
 const TOURNEY_LABEL: Record<string, string> = {
   districts: 'Districts',
   regions: 'Regions',
@@ -57,21 +80,42 @@ function placeBadge(p: string | null) {
   return <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full ${cls}`}>{p}</span>
 }
 
+function classificationLabel(s: SchoolInfo) {
+  if (!s.section || !s.classification) return null
+  if (s.section === 'Non-Public') return `Non-Public ${s.classification}`
+  return `${s.section} Group ${s.classification}`
+}
+
+function resultLabel(m: MatchRow) {
+  const wt = m.win_type
+  if (wt === 'FALL') {
+    const t = m.fall_time_seconds
+    if (t) { const min = Math.floor(t / 60); const sec = t % 60; return `Fall ${min}:${String(sec).padStart(2, '0')}` }
+    return 'Fall'
+  }
+  if (wt === 'DEC' && m.winner_score != null && m.loser_score != null) return `Dec ${m.winner_score}-${m.loser_score}`
+  if (wt === 'MD' && m.winner_score != null && m.loser_score != null) return `MD ${m.winner_score}-${m.loser_score}`
+  if (wt === 'TF' && m.winner_score != null && m.loser_score != null) return `TF ${m.winner_score}-${m.loser_score}`
+  return wt ?? ''
+}
+
 export function PersonalizedHome() {
-  const [primarySchool, setPrimarySchool] = useState<SchoolInfo | null>(null)
-  const [followedSchools, setFollowedSchools] = useState<SchoolInfo[]>([])
+  const [schools, setSchools] = useState<SchoolInfo[]>([])
   const [preference, setPreference] = useState<string>('both')
   const [breakdown, setBreakdown] = useState<BreakdownRow[]>([])
-  const [wrestlers, setWrestlers] = useState<WrestlerRow[]>([])
+  const [schoolWrestlers, setSchoolWrestlers] = useState<Map<number, WrestlerRow[]>>(new Map())
   const [followedWrestlers, setFollowedWrestlers] = useState<FollowedWrestlerRow[]>([])
   const [wrestlerPlacements, setWrestlerPlacements] = useState<Map<string, WrestlerPlacement[]>>(new Map())
+  const [recentMatches, setRecentMatches] = useState<MatchRow[]>([])
   const [loaded, setLoaded] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
     const supabase = createSupabaseBrowser()
 
     supabase.auth.getUser().then(async ({ data }) => {
       if (!data.user) { setLoaded(true); return }
+      setIsLoggedIn(true)
 
       const { data: profile } = await supabase
         .from('users')
@@ -87,46 +131,123 @@ export function PersonalizedHome() {
         wrestling_preference: string | null
       }
 
-      setPreference(p.wrestling_preference ?? 'both')
+      const pref = p.wrestling_preference ?? 'both'
+      setPreference(pref)
+      const gender = pref === 'girls' ? 'F' : 'M'
 
-      // Fetch school info
-      const allSchoolIds = [
+      // Collect all school IDs (deduplicated)
+      const allSchoolIds = [...new Set([
         ...(p.primary_school_id ? [p.primary_school_id] : []),
         ...(p.followed_school_ids ?? []),
-      ]
+      ])]
+
+      if (allSchoolIds.length === 0) { setLoaded(true); return }
+
+      // Fetch school data from schools table (has id, display_name, section, classification)
+      const { data: schoolsData } = await supabase
+        .from('schools')
+        .select('id, display_name, section, classification')
+        .in('id', allSchoolIds)
+
+      if (!schoolsData || schoolsData.length === 0) { setLoaded(true); return }
+
+      // Fetch abbreviations from school_names by matching display_name
+      const names = schoolsData.map(s => s.display_name)
+      const { data: abbrevData } = await supabase
+        .from('school_names')
+        .select('abbreviation, school_name')
+        .in('school_name', names)
+
+      const abbrevMap = new Map((abbrevData ?? []).map(a => [a.school_name, a.abbreviation]))
+
+      // Build school info
+      const schoolInfoList: SchoolInfo[] = schoolsData.map(s => ({
+        id: s.id,
+        display_name: s.display_name,
+        abbreviation: abbrevMap.get(s.display_name) ?? null,
+        section: s.section,
+        classification: s.classification,
+        isPrimary: s.id === p.primary_school_id,
+      }))
+
+      // Sort: primary first, then followed
+      schoolInfoList.sort((a, b) => (a.isPrimary ? -1 : b.isPrimary ? 1 : 0))
+      setSchools(schoolInfoList)
+
+      // Fetch school wrestlers and breakdown for each school that has an abbreviation
+      const schoolsWithAbbrev = schoolInfoList.filter(s => s.abbreviation)
+      const primary = schoolInfoList.find(s => s.isPrimary && s.abbreviation)
+
+      const wrPromises = schoolsWithAbbrev.map(s =>
+        supabase.rpc('school_wrestlers', { p_school: s.abbreviation!, p_gender: gender, p_season: 2 })
+          .then(res => ({ schoolId: s.id, data: (res.data ?? []) as WrestlerRow[] }))
+      )
+
+      const bdPromise = primary
+        ? supabase.rpc('school_points_breakdown', { p_school: primary.abbreviation!, p_gender: gender, p_season: 2 })
+        : Promise.resolve({ data: null })
+
+      const [wrResults, bdRes] = await Promise.all([
+        Promise.all(wrPromises),
+        bdPromise,
+      ])
+
+      setBreakdown((bdRes.data ?? []) as BreakdownRow[])
+
+      // Build wrestler map per school (sorted: state placers first)
+      const wrMap = new Map<number, WrestlerRow[]>()
+      const allWrestlerIds: string[] = []
+      for (const { schoolId, data: wr } of wrResults) {
+        wr.sort((a, b) => {
+          const aRank = a.state_placement ? 0 : a.regions_placement ? 1 : a.districts_placement ? 2 : 3
+          const bRank = b.state_placement ? 0 : b.regions_placement ? 1 : b.districts_placement ? 2 : 3
+          if (aRank !== bRank) return aRank - bRank
+          return a.primary_weight - b.primary_weight
+        })
+        wrMap.set(schoolId, wr)
+        for (const w of wr) allWrestlerIds.push(w.wrestler_id)
+      }
+      setSchoolWrestlers(wrMap)
+
+      // Fetch recent matches for wrestlers from user's schools
       if (allSchoolIds.length > 0) {
-        const { data: schools } = await supabase
-          .from('school_names')
-          .select('id, abbreviation, school_name')
-          .in('id', allSchoolIds)
-        const schoolMap = new Map((schools as SchoolInfo[] ?? []).map(s => [s.id, s]))
+        try {
+          // Get recent tournament entries for user's schools
+          const { data: entries } = await supabase
+            .from('tournament_entries')
+            .select('id')
+            .in('school_id', allSchoolIds)
+            .order('tournament_id', { ascending: false })
+            .limit(200)
 
-        if (p.primary_school_id && schoolMap.has(p.primary_school_id)) {
-          const primary = schoolMap.get(p.primary_school_id)!
-          setPrimarySchool(primary)
+          if (entries && entries.length > 0) {
+            const entryIds = entries.map(e => e.id)
+            // Query matches where winner or loser is from user's schools
+            const { data: matchesData } = await supabase
+              .from('matches')
+              .select(`
+                id, win_type, winner_score, loser_score, round, fall_time_seconds,
+                winner_entry:tournament_entries!winner_entry_id(
+                  wrestler:wrestlers(first_name, last_name),
+                  school_context_raw,
+                  weight_class:weight_classes(weight)
+                ),
+                loser_entry:tournament_entries!loser_entry_id(
+                  wrestler:wrestlers(first_name, last_name),
+                  school_context_raw,
+                  weight_class:weight_classes(weight)
+                ),
+                tournament:tournaments(name)
+              `)
+              .or(`winner_entry_id.in.(${entryIds.join(',')}),loser_entry_id.in.(${entryIds.join(',')})`)
+              .order('id', { ascending: false })
+              .limit(10)
 
-          // Fetch school data for primary school
-          const gender = p.wrestling_preference === 'girls' ? 'F' : 'M'
-          const [bdRes, wrRes] = await Promise.all([
-            supabase.rpc('school_points_breakdown', { p_school: primary.abbreviation, p_gender: gender, p_season: 2 }),
-            supabase.rpc('school_wrestlers', { p_school: primary.abbreviation, p_gender: gender, p_season: 2 }),
-          ])
-          setBreakdown((bdRes.data ?? []) as BreakdownRow[])
-          const wr = (wrRes.data ?? []) as WrestlerRow[]
-          // Sort: state placers first, then region, then district, by weight
-          wr.sort((a, b) => {
-            const aRank = a.state_placement ? 0 : a.regions_placement ? 1 : a.districts_placement ? 2 : 3
-            const bRank = b.state_placement ? 0 : b.regions_placement ? 1 : b.districts_placement ? 2 : 3
-            if (aRank !== bRank) return aRank - bRank
-            return a.primary_weight - b.primary_weight
-          })
-          setWrestlers(wr.slice(0, 14))
+            setRecentMatches((matchesData ?? []) as unknown as MatchRow[])
+          }
+        } catch {
+          // Matches query failed — not critical, skip silently
         }
-
-        const followed = (p.followed_school_ids ?? [])
-          .filter(id => id !== p.primary_school_id && schoolMap.has(id))
-          .map(id => schoolMap.get(id)!)
-        setFollowedSchools(followed)
       }
 
       // Fetch followed wrestlers
@@ -136,10 +257,8 @@ export function PersonalizedHome() {
           .from('wrestlers')
           .select('id, first_name, last_name, gender')
           .in('id', wrestlerIds)
-        const fw = (wData ?? []) as FollowedWrestlerRow[]
-        setFollowedWrestlers(fw)
+        setFollowedWrestlers((wData ?? []) as FollowedWrestlerRow[])
 
-        // Fetch placements for followed wrestlers
         const { data: plData } = await supabase
           .from('placements')
           .select('wrestler_id, weight_class:weight_classes(weight), place, tournament:tournaments(tournament_type)')
@@ -168,16 +287,75 @@ export function PersonalizedHome() {
   }, [])
 
   if (!loaded) return null
-  if (!primarySchool && followedSchools.length === 0 && followedWrestlers.length === 0) return null
+
+  // Not logged in — show nothing
+  if (!isLoggedIn) return null
+
+  // Logged in but no schools — show prompt
+  if (schools.length === 0 && followedWrestlers.length === 0) {
+    return (
+      <div className="mb-8 bg-white border border-slate-200 rounded-xl shadow-sm px-5 py-6 text-center">
+        <p className="text-sm text-slate-600 mb-2">Follow some schools to personalize your feed</p>
+        <Link href="/schools" className="text-sm font-medium text-blue-600 hover:underline">
+          Browse schools →
+        </Link>
+      </div>
+    )
+  }
 
   const base = preference === 'girls' ? '/girls' : '/boys'
+  const primarySchool = schools.find(s => s.isPrimary)
   const totalPts = breakdown.reduce((sum, r) => sum + Number(r.total_points), 0)
   const totalWins = breakdown.reduce((sum, r) => sum + Number(r.win_count), 0)
 
+  // Build school leaderboard data: top placers (1-8) for each school
+  const schoolLeaderboards = schools
+    .filter(s => {
+      const wr = schoolWrestlers.get(s.id) ?? []
+      return wr.some(w => w.state_placement || w.regions_placement || w.districts_placement)
+    })
+    .map(s => {
+      const wr = schoolWrestlers.get(s.id) ?? []
+      const placers = wr.filter(w => w.state_placement || w.regions_placement || w.districts_placement)
+      return { school: s, placers: placers.slice(0, 8) }
+    })
+
   return (
     <div className="mb-8 space-y-6">
-      {/* ── Primary School Section ── */}
-      {primarySchool && (
+
+      {/* ── YOUR SCHOOLS ── */}
+      <section>
+        <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">Your Schools</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {schools.map(s => {
+            const label = classificationLabel(s)
+            return (
+              <Link
+                key={s.id}
+                href={s.abbreviation ? `${base}/schools/${encodeURIComponent(s.abbreviation)}` : '#'}
+                className={`block px-4 py-3 rounded-xl border shadow-sm transition-colors ${
+                  s.isPrimary
+                    ? 'border-blue-200 bg-blue-50 hover:bg-blue-100'
+                    : 'border-slate-200 bg-white hover:bg-slate-50'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-bold text-slate-900">{s.display_name}</span>
+                  {s.isPrimary && (
+                    <span className="text-[10px] font-medium text-blue-500 bg-blue-100 px-1.5 py-0.5 rounded-full">Primary</span>
+                  )}
+                </div>
+                {label && (
+                  <p className="text-xs text-slate-500 mt-0.5">{label}</p>
+                )}
+              </Link>
+            )
+          })}
+        </div>
+      </section>
+
+      {/* ── Primary School Detail ── */}
+      {primarySchool && primarySchool.abbreviation && (
         <section className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
           <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
             <div>
@@ -185,9 +363,11 @@ export function PersonalizedHome() {
                 href={`${base}/schools/${encodeURIComponent(primarySchool.abbreviation)}`}
                 className="text-lg font-bold text-slate-900 hover:underline"
               >
-                {primarySchool.school_name}
+                {primarySchool.display_name}
               </Link>
-              <p className="text-xs text-slate-500 mt-0.5">Your primary school</p>
+              <p className="text-xs text-slate-500 mt-0.5">
+                {classificationLabel(primarySchool) ?? 'Your primary school'}
+              </p>
             </div>
             {totalPts > 0 && (
               <div className="text-right">
@@ -197,7 +377,6 @@ export function PersonalizedHome() {
             )}
           </div>
 
-          {/* Points breakdown */}
           {breakdown.length > 0 && (
             <div className="px-5 py-3 border-b border-slate-50 flex gap-4">
               {breakdown.map(r => (
@@ -213,27 +392,29 @@ export function PersonalizedHome() {
             </div>
           )}
 
-          {/* Top wrestlers */}
-          {wrestlers.length > 0 && (
-            <div className="divide-y divide-slate-50">
-              {wrestlers.map(w => (
-                <div key={w.wrestler_id} className="flex items-center gap-2 px-5 py-2">
-                  <span className="text-[10px] text-slate-400 w-8 shrink-0 text-right tabular-nums">{w.primary_weight}</span>
-                  <Link
-                    href={`/wrestler/${w.wrestler_id}`}
-                    className="text-sm font-medium text-slate-800 hover:underline truncate flex-1"
-                  >
-                    {w.wrestler_name}
-                  </Link>
-                  <div className="flex items-center gap-1 shrink-0">
-                    {placeBadge(w.state_placement)}
-                    {!w.state_placement && placeBadge(w.regions_placement)}
-                    {!w.state_placement && !w.regions_placement && placeBadge(w.districts_placement)}
+          {(() => {
+            const wr = schoolWrestlers.get(primarySchool.id) ?? []
+            return wr.length > 0 ? (
+              <div className="divide-y divide-slate-50">
+                {wr.slice(0, 14).map(w => (
+                  <div key={w.wrestler_id} className="flex items-center gap-2 px-5 py-2">
+                    <span className="text-[10px] text-slate-400 w-8 shrink-0 text-right tabular-nums">{w.primary_weight}</span>
+                    <Link
+                      href={`/wrestler/${w.wrestler_id}`}
+                      className="text-sm font-medium text-slate-800 hover:underline truncate flex-1"
+                    >
+                      {w.wrestler_name}
+                    </Link>
+                    <div className="flex items-center gap-1 shrink-0">
+                      {placeBadge(w.state_placement)}
+                      {!w.state_placement && placeBadge(w.regions_placement)}
+                      {!w.state_placement && !w.regions_placement && placeBadge(w.districts_placement)}
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          )}
+                ))}
+              </div>
+            ) : null
+          })()}
 
           <div className="px-5 py-3 bg-slate-50 border-t border-slate-100">
             <Link
@@ -246,19 +427,86 @@ export function PersonalizedHome() {
         </section>
       )}
 
-      {/* ── Followed Schools ── */}
-      {followedSchools.length > 0 && (
+      {/* ── RECENT MATCHES ── */}
+      {recentMatches.length > 0 && (
         <section>
-          <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-2">Following</h2>
-          <div className="flex flex-wrap gap-2">
-            {followedSchools.map(s => (
-              <Link
-                key={s.id}
-                href={`${base}/schools/${encodeURIComponent(s.abbreviation)}`}
-                className="inline-flex items-center px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm font-medium text-slate-800 hover:bg-slate-50 shadow-sm transition-colors"
-              >
-                {s.school_name}
-              </Link>
+          <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">Recent Matches</h2>
+          <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden divide-y divide-slate-50">
+            {recentMatches.map(m => {
+              const winner = m.winner_entry
+              const loser = m.loser_entry
+              if (!winner?.wrestler || !loser?.wrestler) return null
+              const wName = `${winner.wrestler.first_name} ${winner.wrestler.last_name}`
+              const lName = `${loser.wrestler.first_name} ${loser.wrestler.last_name}`
+              const weight = winner.weight_class?.weight ?? loser.weight_class?.weight
+              return (
+                <div key={m.id} className="px-4 py-2.5">
+                  <div className="flex items-center gap-2">
+                    {weight && <span className="text-[10px] text-slate-400 w-8 shrink-0 text-right tabular-nums">{weight}</span>}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-1 text-sm">
+                        <span className="font-medium text-slate-800 truncate">{wName}</span>
+                        <span className="text-slate-400 shrink-0">def.</span>
+                        <span className="text-slate-600 truncate">{lName}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[11px] text-slate-400 mt-0.5">
+                        <span>{resultLabel(m)}</span>
+                        {m.tournament?.name && (
+                          <>
+                            <span>·</span>
+                            <span className="truncate">{m.tournament.name}</span>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </section>
+      )}
+
+      {/* ── SCHOOL LEADERBOARDS ── */}
+      {schoolLeaderboards.length > 0 && (
+        <section>
+          <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">School Leaderboards</h2>
+          <div className="space-y-4">
+            {schoolLeaderboards.map(({ school: s, placers }) => (
+              <div key={s.id} className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+                <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
+                  <div>
+                    <Link
+                      href={s.abbreviation ? `${base}/schools/${encodeURIComponent(s.abbreviation)}` : '#'}
+                      className="text-sm font-bold text-slate-900 hover:underline"
+                    >
+                      {s.display_name}
+                    </Link>
+                    {classificationLabel(s) && (
+                      <span className="text-[11px] text-slate-400 ml-2">{classificationLabel(s)}</span>
+                    )}
+                  </div>
+                  <span className="text-[10px] text-slate-400 font-medium">{placers.length} placer{placers.length !== 1 ? 's' : ''}</span>
+                </div>
+                <div className="divide-y divide-slate-50">
+                  {placers.map(w => (
+                    <div key={w.wrestler_id} className="flex items-center gap-2 px-4 py-2">
+                      <span className="text-[10px] text-slate-400 w-8 shrink-0 text-right tabular-nums">{w.primary_weight}</span>
+                      <Link
+                        href={`/wrestler/${w.wrestler_id}`}
+                        className="text-sm font-medium text-slate-800 hover:underline truncate flex-1"
+                      >
+                        {w.wrestler_name}
+                      </Link>
+                      <div className="flex items-center gap-1 shrink-0">
+                        {placeBadge(w.state_placement)}
+                        {!w.state_placement && placeBadge(w.regions_placement)}
+                        {!w.state_placement && !w.regions_placement && placeBadge(w.districts_placement)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </section>
@@ -273,7 +521,6 @@ export function PersonalizedHome() {
           <div className="divide-y divide-slate-50">
             {followedWrestlers.map(w => {
               const pls = wrestlerPlacements.get(w.id) ?? []
-              // Show best placement per tournament type
               const best = new Map<string, WrestlerPlacement>()
               for (const pl of pls) {
                 const existing = best.get(pl.tournament_type)

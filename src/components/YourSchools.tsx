@@ -6,8 +6,10 @@ import { createSupabaseBrowser } from '@/lib/supabase/client'
 
 type SchoolInfo = {
   id: number
-  abbreviation: string
-  school_name: string
+  display_name: string
+  abbreviation: string | null
+  section: string | null
+  classification: string | null
 }
 
 export function YourSchools() {
@@ -33,19 +35,37 @@ export function YourSchools() {
 
       setPreference(p.wrestling_preference ?? 'both')
 
-      const allIds = [
+      const allIds = [...new Set([
         ...(p.primary_school_id ? [p.primary_school_id] : []),
         ...(p.followed_school_ids ?? []),
-      ]
+      ])]
 
       if (allIds.length === 0) { setLoaded(true); return }
 
-      const { data: schools } = await supabase
-        .from('school_names')
-        .select('id, abbreviation, school_name')
+      // Fetch from schools table (has id column)
+      const { data: schoolsData } = await supabase
+        .from('schools')
+        .select('id, display_name, section, classification')
         .in('id', allIds)
 
-      const schoolMap = new Map((schools as SchoolInfo[] ?? []).map(s => [s.id, s]))
+      if (!schoolsData || schoolsData.length === 0) { setLoaded(true); return }
+
+      // Get abbreviations from school_names by matching display_name
+      const names = schoolsData.map(s => s.display_name)
+      const { data: abbrevData } = await supabase
+        .from('school_names')
+        .select('abbreviation, school_name')
+        .in('school_name', names)
+
+      const abbrevMap = new Map((abbrevData ?? []).map(a => [a.school_name, a.abbreviation]))
+
+      const schoolMap = new Map(schoolsData.map(s => [s.id, {
+        id: s.id,
+        display_name: s.display_name,
+        abbreviation: abbrevMap.get(s.display_name) ?? null,
+        section: s.section,
+        classification: s.classification,
+      }]))
 
       if (p.primary_school_id && schoolMap.has(p.primary_school_id)) {
         setPrimarySchool(schoolMap.get(p.primary_school_id)!)
@@ -74,22 +94,28 @@ export function YourSchools() {
     <section className="mb-8">
       <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-2">Your Schools</h2>
       <div className="flex flex-wrap gap-2">
-        {allSchools.map(s => (
-          <Link
-            key={s.id}
-            href={`${base}/schools/${encodeURIComponent(s.abbreviation)}`}
-            className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border text-sm font-medium transition-colors shadow-sm ${
-              s.isPrimary
-                ? 'border-blue-200 bg-blue-50 text-blue-800 hover:bg-blue-100'
-                : 'border-slate-200 bg-white text-slate-800 hover:bg-slate-50'
-            }`}
-          >
-            {s.school_name}
-            {s.isPrimary && (
-              <span className="text-[10px] text-blue-500 font-normal">Primary</span>
-            )}
-          </Link>
-        ))}
+        {allSchools.map(s => {
+          const label = s.section && s.classification
+            ? s.section === 'Non-Public' ? `NP-${s.classification}` : `${s.section} G${s.classification}`
+            : null
+          return (
+            <Link
+              key={s.id}
+              href={s.abbreviation ? `${base}/schools/${encodeURIComponent(s.abbreviation)}` : '#'}
+              className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border text-sm font-medium transition-colors shadow-sm ${
+                s.isPrimary
+                  ? 'border-blue-200 bg-blue-50 text-blue-800 hover:bg-blue-100'
+                  : 'border-slate-200 bg-white text-slate-800 hover:bg-slate-50'
+              }`}
+            >
+              {s.display_name}
+              {label && <span className="text-[10px] text-slate-400 font-normal">{label}</span>}
+              {s.isPrimary && (
+                <span className="text-[10px] text-blue-500 font-normal">Primary</span>
+              )}
+            </Link>
+          )
+        })}
       </div>
     </section>
   )
