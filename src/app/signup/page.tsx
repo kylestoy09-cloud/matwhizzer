@@ -103,6 +103,7 @@ export default function SignUpPage() {
       email,
       password,
       options: {
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://matwhizzer.com'}/auth/confirm`,
         data: { username, primary_school_id: String(school.id), wrestling_preference: preference },
       },
     })
