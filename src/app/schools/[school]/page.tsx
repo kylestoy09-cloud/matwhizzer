@@ -103,7 +103,12 @@ export default async function SchoolProfilePage({
 
   const TOURNEY_LABEL = gender === 'girls' ? TOURNEY_LABEL_F : TOURNEY_LABEL_M
 
-  // Step 1: Look up school abbreviation
+  // Step 1: Resolve the URL slug to a school name
+  // The slug could be an abbreviation (e.g. "BECA") OR a display name (e.g. "Bergen Catholic")
+  // Try abbreviation lookup first, then fall back to treating it as a display name
+  let schoolName: string
+  let schoolAbbrev: string = school
+
   const { data: nameRow, error: nameError } = await supabase
     .from('school_names')
     .select('abbreviation, school_name')
@@ -112,17 +117,28 @@ export default async function SchoolProfilePage({
 
   if (nameError) {
     console.error('[SchoolProfile] school_names query error:', nameError)
-    return (
-      <div className="max-w-4xl mx-auto px-4 py-20 text-center">
-        <h1 className="text-xl font-bold text-red-600 mb-2">Error loading school</h1>
-        <p className="text-sm text-slate-600">school_names query failed: {nameError.message}</p>
-        <p className="text-xs text-slate-400 mt-1">School abbreviation: {school}</p>
-      </div>
-    )
   }
 
-  if (!nameRow) notFound()
-  const schoolName = (nameRow as { school_name: string }).school_name
+  if (nameRow) {
+    // Found by abbreviation
+    schoolName = (nameRow as { school_name: string }).school_name
+  } else {
+    // Not an abbreviation — treat the slug as a display name (old URL format)
+    // Try to find the abbreviation for it
+    const { data: reverseRow } = await supabase
+      .from('school_names')
+      .select('abbreviation, school_name')
+      .eq('school_name', school)
+      .maybeSingle()
+
+    if (reverseRow) {
+      schoolName = (reverseRow as { school_name: string }).school_name
+      schoolAbbrev = (reverseRow as { abbreviation: string }).abbreviation
+    } else {
+      // Last resort: use the slug as-is (it might match a schools.display_name directly)
+      schoolName = school
+    }
+  }
 
   // Step 2: Look up full profile from schools table
   const { data: profileData, error: profileError } = await supabase
@@ -159,13 +175,13 @@ export default async function SchoolProfilePage({
 
   try {
     const wrestlersPromise = gender === 'girls'
-      ? supabase.rpc('girls_school_wrestlers', { p_school: school, p_season: season })
-      : supabase.rpc('school_wrestlers', { p_school: school, p_gender: genderCode, p_season: season })
+      ? supabase.rpc('girls_school_wrestlers', { p_school: schoolName, p_season: season })
+      : supabase.rpc('school_wrestlers', { p_school: schoolName, p_gender: genderCode, p_season: season })
 
     const [bdResult, wrResult, ldResult] = await Promise.all([
-      supabase.rpc('school_points_breakdown', { p_school: school, p_gender: genderCode, p_season: season }),
+      supabase.rpc('school_points_breakdown', { p_school: schoolName, p_gender: genderCode, p_season: season }),
       wrestlersPromise,
-      supabase.rpc('school_leaderboard', { p_school: school, p_gender: genderCode, p_season: season }),
+      supabase.rpc('school_leaderboard', { p_school: schoolName, p_gender: genderCode, p_season: season }),
     ])
 
     if (bdResult.error) console.error('[SchoolProfile] breakdown RPC error:', bdResult.error)
@@ -273,7 +289,7 @@ export default async function SchoolProfilePage({
                   Girls
                 </Link>
               </div>
-              <FollowSchoolButton schoolAbbreviation={school} />
+              <FollowSchoolButton schoolAbbreviation={schoolAbbrev} />
               <div className="flex items-center text-xs text-slate-400">
                 <InlineSeasonPicker activeSeason={season} />
               </div>
