@@ -20,10 +20,18 @@ export function FollowSchoolButton({ schoolAbbreviation }: { schoolAbbreviation:
       if (!user) { setLoading(false); return }
       setUserId(user.id)
 
-      const { data: school } = await supabase
+      // Get school_name from abbreviation, then find school id
+      const { data: nameRow } = await supabase
         .from('school_names')
-        .select('id')
+        .select('school_name')
         .eq('abbreviation', schoolAbbreviation)
+        .maybeSingle()
+
+      if (!nameRow) { setLoading(false); return }
+      const { data: school } = await supabase
+        .from('schools')
+        .select('id')
+        .eq('display_name', (nameRow as { school_name: string }).school_name)
         .maybeSingle()
 
       if (!school) { setLoading(false); return }

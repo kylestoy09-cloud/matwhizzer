@@ -2,7 +2,6 @@ import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
-import { SEASONS } from '@/lib/seasons'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { FollowSchoolButton } from '@/components/FollowSchoolButton'
 import { SchoolTabs } from './SchoolTabs'
@@ -124,10 +123,14 @@ export default async function SchoolProfilePage({
   const sc = profile.secondary_color ?? '#FFD700'
 
   // Fetch wrestling data
-  const rpcWrestlers = gender === 'girls' ? 'girls_school_wrestlers' : 'school_wrestlers'
+  // girls_school_wrestlers RPC does not take p_gender param
+  const wrestlersPromise = gender === 'girls'
+    ? supabase.rpc('girls_school_wrestlers', { p_school: school, p_season: season })
+    : supabase.rpc('school_wrestlers', { p_school: school, p_gender: genderCode, p_season: season })
+
   const [{ data: breakdown }, { data: wrestlers }, { data: leaders }] = await Promise.all([
     supabase.rpc('school_points_breakdown', { p_school: school, p_gender: genderCode, p_season: season }),
-    supabase.rpc(rpcWrestlers, { p_school: school, p_gender: genderCode, p_season: season }),
+    wrestlersPromise,
     supabase.rpc('school_leaderboard', { p_school: school, p_gender: genderCode, p_season: season }),
   ])
 
