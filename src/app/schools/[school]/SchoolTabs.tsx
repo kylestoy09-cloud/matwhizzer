@@ -52,13 +52,16 @@ const TABS = [
   { id: 'schedule', label: 'Schedule' },
 ]
 
+type TeamScoreData = { district_points: number; region_points: number; state_points: number; total_points: number } | null
+
 export function SchoolTabs({
   school, gender, activeTab, primaryColor,
-  wrestlers, breakdown, leaders,
+  wrestlers, breakdown, leaders, teamScore,
   totalPts, totalWins, stateMedalists, tourneyLabel,
 }: {
   school: string; gender: string; activeTab: string; primaryColor: string
   wrestlers: WrestlerRow[]; breakdown: BreakdownRow[]; leaders: LeaderRow[]
+  teamScore: TeamScoreData
   totalPts: number; totalWins: number; stateMedalists: number
   tourneyLabel: Record<string, string>
 }) {
@@ -337,33 +340,70 @@ export function SchoolTabs({
       {/* ── Tab: Team Scores ── */}
       {activeTab === 'scores' && (
         <div>
-          {breakdown.length === 0 ? (
+          {!teamScore && breakdown.length === 0 ? (
             <p className="text-sm text-slate-500">No team score data available.</p>
           ) : (
-            <div className="inline-block border border-slate-200 rounded-lg overflow-hidden shadow-sm bg-white">
-              <table className="text-sm">
-                <thead className="bg-slate-50 border-b border-slate-200">
-                  <tr>
-                    <th className="text-left px-5 py-2.5 font-medium text-slate-500 w-36">Tournament</th>
-                    <th className="text-right px-5 py-2.5 font-medium text-slate-500 w-24">Points</th>
-                    <th className="text-right px-5 py-2.5 font-medium text-slate-500 w-20">Wins</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100">
-                  {breakdown.map(r => (
-                    <tr key={r.tournament_type} className="hover:bg-slate-50">
-                      <td className="px-5 py-2.5 text-slate-700 font-medium">{tourneyLabel[r.tournament_type] ?? r.tournament_type}</td>
-                      <td className="px-5 py-2.5 text-right tabular-nums font-semibold text-slate-800">{r.total_points}</td>
-                      <td className="px-5 py-2.5 text-right tabular-nums text-slate-500">{r.win_count}</td>
-                    </tr>
-                  ))}
-                  <tr className="bg-slate-50 border-t-2 border-slate-200">
-                    <td className="px-5 py-2.5 font-bold text-slate-800">Total</td>
-                    <td className="px-5 py-2.5 text-right tabular-nums font-bold text-slate-900">{Math.round(totalPts * 10) / 10}</td>
-                    <td className="px-5 py-2.5 text-right tabular-nums font-semibold text-slate-600">{totalWins}</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div className="space-y-6">
+              {/* Authoritative team scores from top_postseason_team_scores */}
+              {teamScore && (
+                <div className="inline-block border border-slate-200 rounded-lg overflow-hidden shadow-sm bg-white">
+                  <table className="text-sm">
+                    <thead className="bg-slate-50 border-b border-slate-200">
+                      <tr>
+                        <th className="text-left px-5 py-2.5 font-medium text-slate-500 w-36">Tournament</th>
+                        <th className="text-right px-5 py-2.5 font-medium text-slate-500 w-24">Points</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      <tr className="hover:bg-slate-50">
+                        <td className="px-5 py-2.5 text-slate-700 font-medium">Districts</td>
+                        <td className="px-5 py-2.5 text-right tabular-nums font-semibold text-slate-800">{teamScore.district_points}</td>
+                      </tr>
+                      <tr className="hover:bg-slate-50">
+                        <td className="px-5 py-2.5 text-slate-700 font-medium">Regions</td>
+                        <td className="px-5 py-2.5 text-right tabular-nums font-semibold text-slate-800">{teamScore.region_points}</td>
+                      </tr>
+                      <tr className="hover:bg-slate-50">
+                        <td className="px-5 py-2.5 text-slate-700 font-medium">State</td>
+                        <td className="px-5 py-2.5 text-right tabular-nums font-semibold text-slate-800">{teamScore.state_points}</td>
+                      </tr>
+                      <tr className="bg-slate-50 border-t-2 border-slate-200">
+                        <td className="px-5 py-2.5 font-bold text-slate-800">Total</td>
+                        <td className="px-5 py-2.5 text-right tabular-nums font-bold text-slate-900">{teamScore.total_points}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              )}
+
+              {/* Win breakdown from school_points_breakdown */}
+              {breakdown.length > 0 && (
+                <div>
+                  <h3 className="text-sm font-semibold text-slate-800 mb-2">Win Breakdown</h3>
+                  <div className="inline-block border border-slate-200 rounded-lg overflow-hidden shadow-sm bg-white">
+                    <table className="text-sm">
+                      <thead className="bg-slate-50 border-b border-slate-200">
+                        <tr>
+                          <th className="text-left px-5 py-2.5 font-medium text-slate-500 w-36">Tournament</th>
+                          <th className="text-right px-5 py-2.5 font-medium text-slate-500 w-20">Wins</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100">
+                        {breakdown.map(r => (
+                          <tr key={r.tournament_type} className="hover:bg-slate-50">
+                            <td className="px-5 py-2.5 text-slate-700 font-medium">{tourneyLabel[r.tournament_type] ?? r.tournament_type}</td>
+                            <td className="px-5 py-2.5 text-right tabular-nums text-slate-700">{r.win_count}</td>
+                          </tr>
+                        ))}
+                        <tr className="bg-slate-50 border-t-2 border-slate-200">
+                          <td className="px-5 py-2.5 font-bold text-slate-800">Total</td>
+                          <td className="px-5 py-2.5 text-right tabular-nums font-bold text-slate-900">{totalWins}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>

@@ -172,16 +172,18 @@ export default async function SchoolProfilePage({
   let rows: WrestlerRow[] = []
   let bdRows: BreakdownRow[] = []
   let leaderRows: LeaderRow[] = []
+  let teamScore: { district_points: number; region_points: number; state_points: number; total_points: number } | null = null
 
   try {
     const wrestlersPromise = gender === 'girls'
       ? supabase.rpc('girls_school_wrestlers', { p_school: schoolName, p_season: season })
       : supabase.rpc('school_wrestlers', { p_school: schoolName, p_gender: genderCode, p_season: season })
 
-    const [bdResult, wrResult, ldResult] = await Promise.all([
+    const [bdResult, wrResult, ldResult, tsResult] = await Promise.all([
       supabase.rpc('school_points_breakdown', { p_school: schoolName, p_gender: genderCode, p_season: season }),
       wrestlersPromise,
       supabase.rpc('school_leaderboard', { p_school: schoolName, p_gender: genderCode, p_season: season }),
+      supabase.rpc('top_postseason_team_scores', { p_gender: genderCode, p_season: season, p_limit: 500 }),
     ])
 
     if (bdResult.error) console.error('[SchoolProfile] breakdown RPC error:', bdResult.error)
@@ -191,6 +193,10 @@ export default async function SchoolProfilePage({
     rows = (wrResult.data ?? []) as WrestlerRow[]
     bdRows = (bdResult.data ?? []) as BreakdownRow[]
     leaderRows = (ldResult.data ?? []) as LeaderRow[]
+
+    // Find this school's team score from the full ranked list
+    const allTeamScores = (tsResult.data ?? []) as { school: string; district_points: number; region_points: number; state_points: number; total_points: number }[]
+    teamScore = allTeamScores.find(r => r.school === schoolName) ?? null
   } catch (e) {
     console.error('[SchoolProfile] RPC fetch error:', e)
     return (
@@ -204,7 +210,7 @@ export default async function SchoolProfilePage({
 
   if (rows.length === 0 && bdRows.length === 0) notFound()
 
-  const totalPts = bdRows.reduce((sum, r) => sum + Number(r.total_points), 0)
+  const totalPts = teamScore?.total_points ?? bdRows.reduce((sum, r) => sum + Number(r.total_points), 0)
   const totalWins = bdRows.reduce((sum, r) => sum + Number(r.win_count), 0)
 
   // Build pill tags
@@ -307,6 +313,7 @@ export default async function SchoolProfilePage({
         wrestlers={rows}
         breakdown={bdRows}
         leaders={leaderRows}
+        teamScore={teamScore}
         totalPts={totalPts}
         totalWins={totalWins}
         stateMedalists={stateMedalists}
