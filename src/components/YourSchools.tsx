@@ -101,7 +101,7 @@ export function YourSchools() {
           return (
             <Link
               key={s.id}
-              href={s.abbreviation ? `${base}/schools/${encodeURIComponent(s.abbreviation)}` : '#'}
+              href={s.abbreviation ? `/schools/${encodeURIComponent(s.abbreviation)}` : '#'}
               className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border text-sm font-medium transition-colors shadow-sm ${
                 s.isPrimary
                   ? 'border-blue-200 bg-blue-50 text-blue-800 hover:bg-blue-100'

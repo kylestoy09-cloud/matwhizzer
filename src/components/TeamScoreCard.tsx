@@ -11,7 +11,7 @@ type TeamScoreRow = {
 
 export function TeamScoreCard({
   rows,
-  schoolPrefix = '/boys/schools',
+  schoolPrefix = '/schools',
 }: {
   rows: TeamScoreRow[]
   schoolPrefix?: string

@@ -150,7 +150,7 @@ export default async function GirlsPage({
               <ul className="mt-3 divide-y divide-slate-200 border border-slate-200 rounded-lg overflow-hidden shadow-sm bg-white">
                 {schools.map(s => (
                   <li key={s.school}>
-                    <Link href={`/girls/schools/${encodeURIComponent(s.school)}`} className="flex items-center justify-between px-4 py-3 hover:bg-rose-50 transition-colors">
+                    <Link href={`/schools/${encodeURIComponent(s.school)}?gender=girls`} className="flex items-center justify-between px-4 py-3 hover:bg-rose-50 transition-colors">
                       <span className="font-medium text-slate-800">{s.school_name}</span>
                       <span className="text-xs text-slate-400 ml-3 shrink-0">{s.school}</span>
                     </Link>
@@ -201,7 +201,7 @@ export default async function GirlsPage({
           )}
 
           {topTeamScores.length > 0 && (
-            <PostseasonLeaders rows={topTeamScores} schoolBase="/girls/schools" accentColor="rose" />
+            <PostseasonLeaders rows={topTeamScores} schoolBase="/schools" accentColor="rose" />
           )}
 
           {topDominance.length > 0 && (

@@ -435,7 +435,7 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
                 label: 'School', align: 'left',
                 render: r => (
                   <Link
-                    href={`/boys/schools/${encodeURIComponent(r.school)}`}
+                    href={`/schools/${encodeURIComponent(r.school)}`}
                     className="font-medium text-slate-800 hover:text-slate-600 hover:underline"
                   >
                     {r.school_name || r.school}

@@ -47,7 +47,7 @@ export function PostseasonLeaders({
               <tr key={r.school} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
                 <td className="px-3 py-2 text-xs text-slate-400">{i + 1}</td>
                 <td className="px-3 py-2">
-                  <Link href={`${schoolBase}/${encodeURIComponent(r.school)}`} className="font-medium text-slate-800 hover:underline">
+                  <Link href={`/schools/${encodeURIComponent(r.school)}`} className="font-medium text-slate-800 hover:underline">
                     {r.school_name || r.school}
                   </Link>
                 </td>

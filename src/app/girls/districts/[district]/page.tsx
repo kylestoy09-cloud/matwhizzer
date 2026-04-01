@@ -245,7 +245,7 @@ export default async function GirlsDistrictSummaryPage({
       <section className="mb-10">
         <h2 className="text-base font-semibold text-slate-800 mb-3">Team Results</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <TeamScoreCard rows={teamScore} schoolPrefix="/girls/schools" />
+          <TeamScoreCard rows={teamScore} schoolPrefix="/schools" />
 
           <IndividualTeamPoints rows={teamPts} />
         </div>
@@ -385,7 +385,7 @@ export default async function GirlsDistrictSummaryPage({
           district={d}
           title="Bracket Buster — District Upsets"
           limit={8}
-          schoolBase="/girls/schools"
+          schoolBase="/schools"
           accentColor="rose"
         />
       </section>
@@ -398,7 +398,7 @@ export default async function GirlsDistrictSummaryPage({
             {schools.map(s => (
               <Link
                 key={s.school}
-                href={`/girls/schools/${encodeURIComponent(s.school)}`}
+                href={`/schools/${encodeURIComponent(s.school)}`}
                 className="px-3 py-1.5 text-sm font-medium bg-white border border-rose-200 rounded-full hover:border-rose-400 hover:bg-rose-50 transition-colors shadow-sm"
               >
                 {s.school_name || s.school}

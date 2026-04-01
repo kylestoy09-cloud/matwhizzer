@@ -415,7 +415,7 @@ export default async function RegionSummaryPage({
                   {schools.map(s => (
                     <Link
                       key={s.school}
-                      href={`/boys/schools/${encodeURIComponent(s.school)}`}
+                      href={`/schools/${encodeURIComponent(s.school)}`}
                       className="px-3 py-1.5 text-sm font-medium bg-white border border-slate-200 rounded-full hover:border-slate-400 hover:bg-slate-50 transition-colors shadow-sm"
                     >
                       {s.school_name || s.school}

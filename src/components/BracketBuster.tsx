@@ -40,7 +40,7 @@ export async function BracketBuster({
   district,
   title = 'Bracket Buster',
   limit = 8,
-  schoolBase = '/boys/schools',
+  schoolBase = '/schools',
   accentColor = 'slate',
 }: {
   season: number

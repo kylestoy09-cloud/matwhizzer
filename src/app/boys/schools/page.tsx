@@ -96,7 +96,7 @@ export default async function BoysSchoolsPage({
                 <tr key={r.school} className="hover:bg-slate-50">
                   <td className="px-4 py-2.5">
                     <Link
-                      href={`/boys/schools/${encodeURIComponent(r.school)}`}
+                      href={`/schools/${encodeURIComponent(r.school)}`}
                       className="font-medium text-slate-800 hover:text-slate-600 hover:underline"
                     >
                       {r.school_name}

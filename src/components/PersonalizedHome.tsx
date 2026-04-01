@@ -349,7 +349,7 @@ export function PersonalizedHome() {
             return (
               <Link
                 key={s.id}
-                href={s.abbreviation ? `${base}/schools/${encodeURIComponent(s.abbreviation)}` : '#'}
+                href={s.abbreviation ? `/schools/${encodeURIComponent(s.abbreviation)}` : '#'}
                 className="block rounded-xl border border-slate-200 bg-white shadow-sm hover:bg-slate-50 transition-colors overflow-hidden"
               >
                 <div className="flex items-center gap-3 px-4 py-3" style={{ borderLeft: `4px solid ${pc}` }}>
@@ -392,7 +392,7 @@ export function PersonalizedHome() {
               </div>
               <div>
                 <Link
-                  href={`${base}/schools/${encodeURIComponent(primarySchool.abbreviation)}`}
+                  href={`/schools/${encodeURIComponent(primarySchool.abbreviation)}`}
                   className="text-lg font-bold text-slate-900 hover:underline"
                 >
                   {primarySchool.display_name}
@@ -451,7 +451,7 @@ export function PersonalizedHome() {
 
           <div className="px-5 py-3 bg-slate-50 border-t border-slate-100">
             <Link
-              href={`${base}/schools/${encodeURIComponent(primarySchool.abbreviation)}`}
+              href={`/schools/${encodeURIComponent(primarySchool.abbreviation)}`}
               className="text-xs font-medium text-blue-600 hover:underline"
             >
               View full school profile →
@@ -517,7 +517,7 @@ export function PersonalizedHome() {
                     </div>
                     <div>
                       <Link
-                        href={s.abbreviation ? `${base}/schools/${encodeURIComponent(s.abbreviation)}` : '#'}
+                        href={s.abbreviation ? `/schools/${encodeURIComponent(s.abbreviation)}` : '#'}
                         className="text-sm font-bold text-slate-900 hover:underline"
                       >
                         {s.display_name}

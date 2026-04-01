@@ -26,7 +26,7 @@ export function HeaderNav() {
 
   const homeHref         = isBoys ? '/boys' : '/girls'
   const leaderboardsHref = isBoys ? '/boys/leaderboards' : '/girls/leaderboards'
-  const schoolsHref      = isBoys ? '/boys/schools' : '/girls/schools'
+  const schoolsHref      = '/schools'
   const districtsHref    = isBoys ? '/boys/districts' : '/girls/districts'
   const regionsHref      = isBoys ? '/boys/regions' : '/girls/regions'
   const stateHref        = isBoys ? '/boys/state' : '/girls/state'

@@ -379,7 +379,7 @@ export default async function GirlsRegionSummaryPage({
             value={r => String(r.dominance_score)}
           />
 
-          <TeamScoreCard rows={teamScore} schoolPrefix="/girls/schools" />
+          <TeamScoreCard rows={teamScore} schoolPrefix="/schools" />
 
         </div>
       </section>
@@ -400,7 +400,7 @@ export default async function GirlsRegionSummaryPage({
           region={Number(region)}
           title="Bracket Buster — Region Upsets"
           limit={8}
-          schoolBase="/girls/schools"
+          schoolBase="/schools"
           accentColor="rose"
         />
       </section>
@@ -419,7 +419,7 @@ export default async function GirlsRegionSummaryPage({
                   {schools.map(s => (
                     <Link
                       key={s.school}
-                      href={`/girls/schools/${encodeURIComponent(s.school)}`}
+                      href={`/schools/${encodeURIComponent(s.school)}`}
                       className="px-3 py-1.5 text-sm font-medium bg-white border border-rose-200 rounded-full hover:border-rose-400 hover:bg-rose-50 transition-colors shadow-sm"
                     >
                       {s.school_name || s.school}

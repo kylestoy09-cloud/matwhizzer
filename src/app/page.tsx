@@ -189,7 +189,7 @@ export default async function RootPage({
               {schools.map(s => (
                 <li key={`${s.gender}-${s.school}`}>
                   <Link
-                    href={`/${s.gender === 'M' ? 'boys' : 'girls'}/schools/${encodeURIComponent(s.school)}`}
+                    href={`/schools/${encodeURIComponent(s.school)}?gender=${s.gender === 'M' ? 'boys' : 'girls'}`}
                     className="flex items-center justify-between px-4 py-3 hover:bg-slate-50 transition-colors"
                   >
                     <span className="font-medium text-slate-800">{s.school_name}</span>
@@ -312,7 +312,7 @@ export default async function RootPage({
           )}
 
           {topTeamScores.length > 0 && (
-            <PostseasonLeaders rows={topTeamScores} schoolBase="/boys/schools" />
+            <PostseasonLeaders rows={topTeamScores} schoolBase="/schools" />
           )}
 
           {/* Top 8 Dominance */}

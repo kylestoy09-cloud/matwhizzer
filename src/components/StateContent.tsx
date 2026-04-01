@@ -93,7 +93,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
   }
 
   const bracketBase  = isBoys ? '/boys/state' : '/girls/state'
-  const schoolPrefix = isBoys ? '/boys/schools' : '/girls/schools'
+  const schoolPrefix = '/schools'
   const g = gender
 
   // Use pool-based RPCs so leaders show cumulative data through all tournaments

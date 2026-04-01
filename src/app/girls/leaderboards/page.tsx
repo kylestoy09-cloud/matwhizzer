@@ -652,7 +652,7 @@ function AnalyticsTab({ d, season }: { d: AnalyticsData; season: number }) {
         tournamentType="all"
         title="Bracket Buster — Detailed Upsets"
         limit={25}
-        schoolBase="/girls/schools"
+        schoolBase="/schools"
         accentColor="rose"
       />
 
