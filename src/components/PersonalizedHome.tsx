@@ -10,7 +10,18 @@ type SchoolInfo = {
   abbreviation: string | null
   section: string | null
   classification: string | null
+  mascot: string | null
+  primary_color: string | null
+  secondary_color: string | null
+  short_name: string | null
   isPrimary: boolean
+}
+
+function schoolInitials(s: SchoolInfo) {
+  if (s.short_name) return s.short_name.slice(0, 3)
+  const words = s.display_name.split(/[\s-]+/).filter(w => !['of', 'at', 'the'].includes(w.toLowerCase()))
+  if (words.length >= 2) return (words[0][0] + words[1][0]).toUpperCase()
+  return s.display_name.slice(0, 2).toUpperCase()
 }
 
 type BreakdownRow = {
@@ -146,7 +157,7 @@ export function PersonalizedHome() {
       // Fetch school data from schools table (has id, display_name, section, classification)
       const { data: schoolsData } = await supabase
         .from('schools')
-        .select('id, display_name, section, classification')
+        .select('id, display_name, section, classification, mascot, primary_color, secondary_color, short_name')
         .in('id', allSchoolIds)
 
       if (!schoolsData || schoolsData.length === 0) { setLoaded(true); return }
@@ -167,6 +178,10 @@ export function PersonalizedHome() {
         abbreviation: abbrevMap.get(s.display_name) ?? null,
         section: s.section,
         classification: s.classification,
+        mascot: s.mascot,
+        primary_color: s.primary_color,
+        secondary_color: s.secondary_color,
+        short_name: s.short_name,
         isPrimary: s.id === p.primary_school_id,
       }))
 
@@ -329,25 +344,35 @@ export function PersonalizedHome() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {schools.map(s => {
             const label = classificationLabel(s)
+            const pc = s.primary_color ?? '#1a1a2e'
+            const sc = s.secondary_color ?? '#FFD700'
             return (
               <Link
                 key={s.id}
                 href={s.abbreviation ? `${base}/schools/${encodeURIComponent(s.abbreviation)}` : '#'}
-                className={`block px-4 py-3 rounded-xl border shadow-sm transition-colors ${
-                  s.isPrimary
-                    ? 'border-blue-200 bg-blue-50 hover:bg-blue-100'
-                    : 'border-slate-200 bg-white hover:bg-slate-50'
-                }`}
+                className="block rounded-xl border border-slate-200 bg-white shadow-sm hover:bg-slate-50 transition-colors overflow-hidden"
               >
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-bold text-slate-900">{s.display_name}</span>
-                  {s.isPrimary && (
-                    <span className="text-[10px] font-medium text-blue-500 bg-blue-100 px-1.5 py-0.5 rounded-full">Primary</span>
-                  )}
+                <div className="flex items-center gap-3 px-4 py-3" style={{ borderLeft: `4px solid ${pc}` }}>
+                  <div
+                    className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 text-xs font-bold"
+                    style={{ backgroundColor: pc, color: sc }}
+                  >
+                    {schoolInitials(s)}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-bold text-slate-900 truncate">{s.display_name}</span>
+                      {s.isPrimary && (
+                        <span className="text-[10px] font-medium text-blue-500 bg-blue-100 px-1.5 py-0.5 rounded-full shrink-0">Primary</span>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      {s.mascot && <span className="text-xs text-slate-400">{s.mascot}</span>}
+                      {s.mascot && label && <span className="text-xs text-slate-300">·</span>}
+                      {label && <span className="text-xs text-slate-400">{label}</span>}
+                    </div>
+                  </div>
                 </div>
-                {label && (
-                  <p className="text-xs text-slate-500 mt-0.5">{label}</p>
-                )}
               </Link>
             )
           })}
@@ -357,17 +382,25 @@ export function PersonalizedHome() {
       {/* ── Primary School Detail ── */}
       {primarySchool && primarySchool.abbreviation && (
         <section className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
-          <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
-            <div>
-              <Link
-                href={`${base}/schools/${encodeURIComponent(primarySchool.abbreviation)}`}
-                className="text-lg font-bold text-slate-900 hover:underline"
+          <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between" style={{ borderTop: `3px solid ${primarySchool.primary_color ?? '#1a1a2e'}` }}>
+            <div className="flex items-center gap-3">
+              <div
+                className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-sm font-bold"
+                style={{ backgroundColor: primarySchool.primary_color ?? '#1a1a2e', color: primarySchool.secondary_color ?? '#FFD700' }}
               >
-                {primarySchool.display_name}
-              </Link>
-              <p className="text-xs text-slate-500 mt-0.5">
-                {classificationLabel(primarySchool) ?? 'Your primary school'}
-              </p>
+                {schoolInitials(primarySchool)}
+              </div>
+              <div>
+                <Link
+                  href={`${base}/schools/${encodeURIComponent(primarySchool.abbreviation)}`}
+                  className="text-lg font-bold text-slate-900 hover:underline"
+                >
+                  {primarySchool.display_name}
+                </Link>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  {[primarySchool.mascot, classificationLabel(primarySchool)].filter(Boolean).join(' · ') || 'Your primary school'}
+                </p>
+              </div>
             </div>
             {totalPts > 0 && (
               <div className="text-right">
@@ -473,18 +506,26 @@ export function PersonalizedHome() {
           <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">School Leaderboards</h2>
           <div className="space-y-4">
             {schoolLeaderboards.map(({ school: s, placers }) => (
-              <div key={s.id} className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+              <div key={s.id} className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden" style={{ borderTop: `3px solid ${s.primary_color ?? '#1a1a2e'}` }}>
                 <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
-                  <div>
-                    <Link
-                      href={s.abbreviation ? `${base}/schools/${encodeURIComponent(s.abbreviation)}` : '#'}
-                      className="text-sm font-bold text-slate-900 hover:underline"
+                  <div className="flex items-center gap-2.5">
+                    <div
+                      className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold"
+                      style={{ backgroundColor: s.primary_color ?? '#1a1a2e', color: s.secondary_color ?? '#FFD700' }}
                     >
-                      {s.display_name}
-                    </Link>
-                    {classificationLabel(s) && (
-                      <span className="text-[11px] text-slate-400 ml-2">{classificationLabel(s)}</span>
-                    )}
+                      {schoolInitials(s)}
+                    </div>
+                    <div>
+                      <Link
+                        href={s.abbreviation ? `${base}/schools/${encodeURIComponent(s.abbreviation)}` : '#'}
+                        className="text-sm font-bold text-slate-900 hover:underline"
+                      >
+                        {s.display_name}
+                      </Link>
+                      {(s.mascot || classificationLabel(s)) && (
+                        <span className="text-[11px] text-slate-400 ml-2">{[s.mascot, classificationLabel(s)].filter(Boolean).join(' · ')}</span>
+                      )}
+                    </div>
                   </div>
                   <span className="text-[10px] text-slate-400 font-medium">{placers.length} placer{placers.length !== 1 ? 's' : ''}</span>
                 </div>
