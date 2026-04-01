@@ -92,27 +92,57 @@ export default async function SchoolProfilePage({
   const gender = genderParam === 'girls' ? 'girls' : 'boys'
   const genderCode = gender === 'girls' ? 'F' : 'M'
   const activeTab = tabParam ?? 'overview'
-  const season = await getActiveSeason()
+
+  let season: number
+  try {
+    season = await getActiveSeason()
+  } catch (e) {
+    console.error('[SchoolProfile] getActiveSeason failed:', e)
+    season = 2
+  }
+
   const TOURNEY_LABEL = gender === 'girls' ? TOURNEY_LABEL_F : TOURNEY_LABEL_M
 
-  // Fetch school profile from schools table (matched by abbreviation via school_names)
-  const { data: nameRow } = await supabase
+  // Step 1: Look up school abbreviation
+  const { data: nameRow, error: nameError } = await supabase
     .from('school_names')
     .select('abbreviation, school_name')
     .eq('abbreviation', school)
     .maybeSingle()
 
+  if (nameError) {
+    console.error('[SchoolProfile] school_names query error:', nameError)
+    return (
+      <div className="max-w-4xl mx-auto px-4 py-20 text-center">
+        <h1 className="text-xl font-bold text-red-600 mb-2">Error loading school</h1>
+        <p className="text-sm text-slate-600">school_names query failed: {nameError.message}</p>
+        <p className="text-xs text-slate-400 mt-1">School abbreviation: {school}</p>
+      </div>
+    )
+  }
+
   if (!nameRow) notFound()
   const schoolName = (nameRow as { school_name: string }).school_name
 
-  // Fetch full profile from schools table by matching display_name
-  const { data: profileData } = await supabase
+  // Step 2: Look up full profile from schools table
+  const { data: profileData, error: profileError } = await supabase
     .from('schools')
     .select('id, display_name, short_name, mascot, nickname, primary_color, secondary_color, tertiary_color, town, county, section, classification, founded_year, website_url, twitter_handle, athletic_conference')
     .eq('display_name', schoolName)
     .maybeSingle()
 
-  const profile = (profileData as SchoolProfile | null) ?? {
+  if (profileError) {
+    console.error('[SchoolProfile] schools query error:', profileError)
+    return (
+      <div className="max-w-4xl mx-auto px-4 py-20 text-center">
+        <h1 className="text-xl font-bold text-red-600 mb-2">Error loading school profile</h1>
+        <p className="text-sm text-slate-600">schools query failed: {profileError.message}</p>
+        <p className="text-xs text-slate-400 mt-1">School name: {schoolName}</p>
+      </div>
+    )
+  }
+
+  const profile: SchoolProfile = (profileData as SchoolProfile | null) ?? {
     id: 0, display_name: schoolName, short_name: null, mascot: null, nickname: null,
     primary_color: '#1a1a2e', secondary_color: '#FFD700', tertiary_color: null,
     town: null, county: null, section: null, classification: null,
@@ -122,21 +152,39 @@ export default async function SchoolProfilePage({
   const pc = profile.primary_color ?? '#1a1a2e'
   const sc = profile.secondary_color ?? '#FFD700'
 
-  // Fetch wrestling data
-  // girls_school_wrestlers RPC does not take p_gender param
-  const wrestlersPromise = gender === 'girls'
-    ? supabase.rpc('girls_school_wrestlers', { p_school: school, p_season: season })
-    : supabase.rpc('school_wrestlers', { p_school: school, p_gender: genderCode, p_season: season })
+  // Step 3: Fetch wrestling data
+  let rows: WrestlerRow[] = []
+  let bdRows: BreakdownRow[] = []
+  let leaderRows: LeaderRow[] = []
 
-  const [{ data: breakdown }, { data: wrestlers }, { data: leaders }] = await Promise.all([
-    supabase.rpc('school_points_breakdown', { p_school: school, p_gender: genderCode, p_season: season }),
-    wrestlersPromise,
-    supabase.rpc('school_leaderboard', { p_school: school, p_gender: genderCode, p_season: season }),
-  ])
+  try {
+    const wrestlersPromise = gender === 'girls'
+      ? supabase.rpc('girls_school_wrestlers', { p_school: school, p_season: season })
+      : supabase.rpc('school_wrestlers', { p_school: school, p_gender: genderCode, p_season: season })
 
-  const rows = (wrestlers ?? []) as WrestlerRow[]
-  const bdRows = (breakdown ?? []) as BreakdownRow[]
-  const leaderRows = (leaders ?? []) as LeaderRow[]
+    const [bdResult, wrResult, ldResult] = await Promise.all([
+      supabase.rpc('school_points_breakdown', { p_school: school, p_gender: genderCode, p_season: season }),
+      wrestlersPromise,
+      supabase.rpc('school_leaderboard', { p_school: school, p_gender: genderCode, p_season: season }),
+    ])
+
+    if (bdResult.error) console.error('[SchoolProfile] breakdown RPC error:', bdResult.error)
+    if (wrResult.error) console.error('[SchoolProfile] wrestlers RPC error:', wrResult.error)
+    if (ldResult.error) console.error('[SchoolProfile] leaderboard RPC error:', ldResult.error)
+
+    rows = (wrResult.data ?? []) as WrestlerRow[]
+    bdRows = (bdResult.data ?? []) as BreakdownRow[]
+    leaderRows = (ldResult.data ?? []) as LeaderRow[]
+  } catch (e) {
+    console.error('[SchoolProfile] RPC fetch error:', e)
+    return (
+      <div className="max-w-4xl mx-auto px-4 py-20 text-center">
+        <h1 className="text-xl font-bold text-red-600 mb-2">Error loading wrestling data</h1>
+        <p className="text-sm text-slate-600">{e instanceof Error ? e.message : 'Unknown error'}</p>
+        <p className="text-xs text-slate-400 mt-1">School: {school}, Gender: {gender}, Season: {season}</p>
+      </div>
+    )
+  }
 
   if (rows.length === 0 && bdRows.length === 0) notFound()
 
