@@ -198,8 +198,13 @@ export default async function SchoolProfilePage({
     leaderRows = (ldResult.data ?? []) as LeaderRow[]
 
     // Find this school's team score from the full ranked list
+    // Match by exact name first, then try case-insensitive contains (school_names vs school_context_raw can differ)
     const allTeamScores = (tsResult.data ?? []) as { school: string; district_points: number; region_points: number; state_points: number; total_points: number }[]
-    teamScore = allTeamScores.find(r => r.school === schoolName) ?? null
+    const snLower = schoolName.toLowerCase()
+    teamScore = allTeamScores.find(r => r.school === schoolName)
+      ?? allTeamScores.find(r => r.school.toLowerCase() === snLower)
+      ?? allTeamScores.find(r => r.school.toLowerCase().includes(snLower) || snLower.includes(r.school.toLowerCase()))
+      ?? null
   } catch (e) {
     console.error('[SchoolProfile] RPC fetch error:', e)
     return (
