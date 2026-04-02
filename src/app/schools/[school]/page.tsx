@@ -241,20 +241,20 @@ export default async function SchoolProfilePage({
       </Link>
 
       {/* ── HEADER ── */}
-      <div className="relative mb-14">
+      <div className="relative mb-20 mt-10">
         {/* Square logo — overflows the header card */}
-        <div className="absolute left-5 -top-4 z-10">
+        <div className="absolute left-0 -top-8 z-10">
           {profile.logo_url ? (
             <Image
               src={profile.logo_url}
               alt={profile.display_name}
-              width={120}
-              height={120}
-              className="w-[120px] h-[120px] rounded-xl object-cover shadow-lg border-2 border-white"
+              width={200}
+              height={200}
+              className="w-[200px] h-[200px] rounded-xl object-cover shadow-lg border-2 border-white"
             />
           ) : (
             <div
-              className="w-[120px] h-[120px] rounded-xl flex items-center justify-center shadow-lg border-2 border-white text-3xl font-bold"
+              className="w-[200px] h-[200px] rounded-xl flex items-center justify-center shadow-lg border-2 border-white text-5xl font-bold"
               style={{ backgroundColor: pc, color: sc }}
             >
               {schoolInitials(profile)}
@@ -263,7 +263,7 @@ export default async function SchoolProfilePage({
         </div>
 
         {/* Header card */}
-        <div className="bg-white border border-slate-200 rounded-xl shadow-sm pt-4 pb-5 pl-[160px] pr-5" style={{ borderTop: `3px solid ${pc}` }}>
+        <div className="bg-white border border-slate-200 rounded-xl shadow-sm pt-4 pb-5 pl-[220px] pr-5" style={{ borderTop: `3px solid ${pc}` }}>
           <div className="flex items-start justify-between gap-4">
             {/* Left: school info */}
             <div>
