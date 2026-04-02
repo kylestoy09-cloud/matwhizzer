@@ -206,6 +206,16 @@ export default async function SchoolProfilePage({
     leaderRows = (ldResult.data ?? []) as LeaderRow[]
     teamScoreRows = (tsResult.data ?? []) as { tournament_type: string; total_points: number }[]
 
+    // DEBUG: log team score query details
+    console.log('[TeamScores DEBUG]', {
+      querySchoolName: schoolName,
+      profileDisplayName: profile.display_name,
+      season,
+      gender,
+      rawRows: teamScoreRows,
+      tsError: tsResult.error,
+    })
+
     // If no results with schoolName, try profile.display_name (which may differ)
     if (teamScoreRows.length === 0 && profile.display_name !== schoolName) {
       const { data: tsRetry } = await supabase
@@ -214,6 +224,7 @@ export default async function SchoolProfilePage({
         .eq('school_name', profile.display_name)
         .eq('season_id', season)
       teamScoreRows = (tsRetry ?? []) as { tournament_type: string; total_points: number }[]
+      console.log('[TeamScores DEBUG] Retry with display_name:', { retryRows: teamScoreRows })
     }
   } catch (e) {
     console.error('[SchoolProfile] RPC fetch error:', e)
@@ -243,6 +254,13 @@ export default async function SchoolProfilePage({
   const districtKey = 'districts'
   const regionKey = gender === 'girls' ? 'girls_regions' : 'regions'
   const stateKey = gender === 'girls' ? 'girls_state' : 'boys_state'
+
+  // DEBUG: log computed values
+  console.log('[TeamScores DEBUG] Computed:', {
+    relevantTypes,
+    tsMapEntries: [...tsMap.entries()],
+    districtKey, regionKey, stateKey,
+  })
 
   const teamScore = tsMap.size > 0 ? {
     district_points: tsMap.get(districtKey) ?? 0,
