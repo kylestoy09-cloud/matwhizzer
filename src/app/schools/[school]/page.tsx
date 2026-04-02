@@ -287,20 +287,74 @@ export default async function SchoolProfilePage({
       </Link>
 
       {/* ── HEADER ── */}
-      <div className="relative mb-8 md:mb-20 md:mt-10">
-        {/* Square logo — mobile: centered above card; desktop: overflows left */}
-        <div className="flex justify-center mb-4 md:mb-0 md:absolute md:left-0 md:-top-8 md:z-10">
+
+      {/* Mobile: full-width logo + sticky info bar */}
+      <div className="md:hidden">
+        {/* Full-width logo */}
+        {profile.logo_url ? (
+          <Image
+            src={profile.logo_url}
+            alt={profile.display_name}
+            width={512}
+            height={512}
+            className="w-full aspect-square object-cover"
+          />
+        ) : (
+          <div
+            className="w-full aspect-square flex items-center justify-center text-6xl font-bold"
+            style={{ backgroundColor: pc, color: sc }}
+          >
+            {schoolInitials(profile)}
+          </div>
+        )}
+
+        {/* Sticky info bar */}
+        <div className="sticky top-0 z-20 bg-white border-b border-slate-200 shadow-sm px-4 py-3" style={{ borderTop: `3px solid ${pc}` }}>
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <h1 className="text-lg font-bold text-slate-900 truncate">{profile.display_name}</h1>
+              {profile.mascot && <p className="text-xs text-slate-500 truncate">{profile.mascot}</p>}
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <div className="flex rounded-lg border border-slate-200 overflow-hidden text-xs">
+                <Link href={`/schools/${school}?gender=boys${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
+                  className={`px-2.5 py-1 font-medium ${gender === 'boys' ? 'bg-slate-900 text-white' : 'bg-white text-slate-500'}`}>B</Link>
+                <Link href={`/schools/${school}?gender=girls${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
+                  className={`px-2.5 py-1 font-medium ${gender === 'girls' ? 'bg-rose-700 text-white' : 'bg-white text-slate-500'}`}>G</Link>
+              </div>
+              <FollowSchoolButton schoolAbbreviation={schoolAbbrev} />
+            </div>
+          </div>
+          {(tags.length > 0 || classLabel || conferenceSlug) && (
+            <div className="flex flex-wrap gap-1 mt-2">
+              {tags.map(tag => (
+                <span key={tag} className="text-[10px] px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-500">{tag}</span>
+              ))}
+              {classLabel && secSlug && grpSlug && (
+                <Link href={`/sections/${secSlug}/${grpSlug}?gender=${gender}`} className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-600">{classLabel}</Link>
+              )}
+              {profile.athletic_conference && conferenceSlug && (
+                <Link href={`/conferences/${conferenceSlug}?gender=${gender}`} className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-600">{profile.athletic_conference}</Link>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Desktop: logo overflows header card */}
+      <div className="relative mb-20 mt-10 hidden md:block">
+        <div className="absolute left-0 -top-8 z-10">
           {profile.logo_url ? (
             <Image
               src={profile.logo_url}
               alt={profile.display_name}
               width={200}
               height={200}
-              className="w-[160px] h-[160px] md:w-[200px] md:h-[200px] rounded-xl object-cover shadow-lg border-2 border-white"
+              className="w-[200px] h-[200px] rounded-xl object-cover shadow-lg border-2 border-white"
             />
           ) : (
             <div
-              className="w-[160px] h-[160px] md:w-[200px] md:h-[200px] rounded-xl flex items-center justify-center shadow-lg border-2 border-white text-4xl md:text-5xl font-bold"
+              className="w-[200px] h-[200px] rounded-xl flex items-center justify-center shadow-lg border-2 border-white text-5xl font-bold"
               style={{ backgroundColor: pc, color: sc }}
             >
               {schoolInitials(profile)}
@@ -308,10 +362,8 @@ export default async function SchoolProfilePage({
           )}
         </div>
 
-        {/* Header card */}
-        <div className="bg-white border border-slate-200 rounded-xl shadow-sm pt-4 pb-5 px-5 md:pl-[220px] md:pr-5" style={{ borderTop: `3px solid ${pc}` }}>
+        <div className="bg-white border border-slate-200 rounded-xl shadow-sm pt-4 pb-5 pl-[230px] pr-[15px]" style={{ borderTop: `3px solid ${pc}` }}>
           <div className="flex items-start justify-between gap-4">
-            {/* Left: school info */}
             <div>
               <h1 className="text-2xl font-bold text-slate-900">{profile.display_name}</h1>
               {(profile.mascot || profile.nickname) && (
@@ -351,21 +403,12 @@ export default async function SchoolProfilePage({
               </div>
             </div>
 
-            {/* Right: gender toggle + follow */}
             <div className="flex flex-col items-end gap-2 shrink-0">
               <div className="flex rounded-lg border border-slate-200 overflow-hidden text-sm">
-                <Link
-                  href={`/schools/${school}?gender=boys${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
-                  className={`px-3 py-1.5 font-medium transition-colors ${gender === 'boys' ? 'bg-slate-900 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}
-                >
-                  Boys
-                </Link>
-                <Link
-                  href={`/schools/${school}?gender=girls${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
-                  className={`px-3 py-1.5 font-medium transition-colors ${gender === 'girls' ? 'bg-rose-700 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}
-                >
-                  Girls
-                </Link>
+                <Link href={`/schools/${school}?gender=boys${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
+                  className={`px-3 py-1.5 font-medium transition-colors ${gender === 'boys' ? 'bg-slate-900 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}>Boys</Link>
+                <Link href={`/schools/${school}?gender=girls${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
+                  className={`px-3 py-1.5 font-medium transition-colors ${gender === 'girls' ? 'bg-rose-700 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}>Girls</Link>
               </div>
               <FollowSchoolButton schoolAbbreviation={schoolAbbrev} />
               <div className="flex items-center text-xs text-slate-400">
