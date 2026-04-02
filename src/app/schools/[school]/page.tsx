@@ -284,7 +284,9 @@ export default async function SchoolProfilePage({
   rows.sort((a, b) => a.primary_weight - b.primary_weight)
 
   // State medalists
-  const stateMedalists = rows.filter(w => w.state_placement).length
+  // State medalists = places 1st through 8th only (not round codes like R1, C4)
+  const medalPlaces = new Set(['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th'])
+  const stateMedalists = rows.filter(w => w.state_placement && medalPlaces.has(w.state_placement)).length
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
