@@ -391,6 +391,25 @@ export default async function SchoolProfilePage({
         stateMedalists={stateMedalists}
         tourneyLabel={TOURNEY_LABEL}
       />
+
+      {/* TEMPORARY DEBUG — remove after fixing */}
+      <details className="mt-8 border border-orange-300 rounded-lg bg-orange-50 p-4 text-xs">
+        <summary className="font-bold text-orange-700 cursor-pointer">Debug: Team Scores Query</summary>
+        <pre className="mt-2 overflow-x-auto whitespace-pre-wrap text-slate-700">
+{JSON.stringify({
+  querySchoolName: schoolName,
+  profileDisplayName: profile.display_name,
+  season,
+  gender,
+  genderCode,
+  rawRowsFromPrecomputed: teamScoreRows,
+  relevantTypes: gender === 'girls' ? ['districts', 'girls_regions', 'girls_state'] : ['districts', 'regions', 'boys_state'],
+  computedTeamScore: teamScore,
+  fallbackTotalPts: bdRows.reduce((sum, r) => sum + Number(r.total_points), 0),
+  actualTotalPts: totalPts,
+}, null, 2)}
+        </pre>
+      </details>
     </div>
   )
 }
