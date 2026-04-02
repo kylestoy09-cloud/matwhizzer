@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
 import { conferenceToSlug } from '@/lib/conferences'
+import { sectionToSlug, groupToSlug } from '@/lib/sections'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { FollowSchoolButton } from '@/components/FollowSchoolButton'
 import { SchoolTabs } from './SchoolTabs'
@@ -260,9 +261,12 @@ export default async function SchoolProfilePage({
   const tags: string[] = []
   if (profile.town) tags.push(profile.town)
   if (profile.county) tags.push(`${profile.county} County`)
-  const classLabel = classificationLabel(profile)
-  if (classLabel) tags.push(classLabel)
   const conferenceSlug = profile.athletic_conference ? conferenceToSlug(profile.athletic_conference) : null
+  const secSlug = profile.section ? sectionToSlug(profile.section) : null
+  const grpSlug = profile.classification ? groupToSlug(profile.classification) : null
+  const classLabel = profile.section && profile.classification
+    ? (profile.section === 'Non-Public' ? `Non-Public ${profile.classification}` : `${profile.section} Group ${profile.classification}`)
+    : null
 
   // Sort wrestlers by weight
   rows.sort((a, b) => a.primary_weight - b.primary_weight)
@@ -315,11 +319,16 @@ export default async function SchoolProfilePage({
                   {[profile.mascot, profile.nickname ? `"${profile.nickname}"` : null].filter(Boolean).join(' · ')}
                 </p>
               )}
-              {tags.length > 0 && (
+              {(tags.length > 0 || classLabel || conferenceSlug) && (
                 <div className="flex flex-wrap gap-1.5 mt-2">
                   {tags.map(tag => (
                     <span key={tag} className="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">{tag}</span>
                   ))}
+                  {classLabel && secSlug && grpSlug && (
+                    <Link href={`/sections/${secSlug}/${grpSlug}?gender=${gender}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
+                      {classLabel}
+                    </Link>
+                  )}
                   {profile.athletic_conference && conferenceSlug && (
                     <Link href={`/conferences/${conferenceSlug}?gender=${gender}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
                       {profile.athletic_conference}
