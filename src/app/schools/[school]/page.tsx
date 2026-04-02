@@ -250,13 +250,13 @@ export default async function SchoolProfilePage({
                 <Image
                   src={profile.logo_url}
                   alt={profile.display_name}
-                  width={56}
-                  height={56}
-                  className="w-14 h-14 rounded-full object-cover shrink-0"
+                  width={112}
+                  height={112}
+                  className="w-28 h-28 rounded-full object-cover shrink-0"
                 />
               ) : (
                 <div
-                  className="w-14 h-14 rounded-full flex items-center justify-center shrink-0 text-lg font-bold"
+                  className="w-28 h-28 rounded-full flex items-center justify-center shrink-0 text-2xl font-bold"
                   style={{ backgroundColor: pc, color: sc }}
                 >
                   {schoolInitials(profile)}
