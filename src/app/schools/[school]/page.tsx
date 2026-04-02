@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase'
+import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
@@ -25,6 +26,7 @@ type SchoolProfile = {
   website_url: string | null
   twitter_handle: string | null
   athletic_conference: string | null
+  logo_url: string | null
 }
 
 type BreakdownRow = {
@@ -143,7 +145,7 @@ export default async function SchoolProfilePage({
   // Step 2: Look up full profile from schools table
   const { data: profileData, error: profileError } = await supabase
     .from('schools')
-    .select('id, display_name, short_name, mascot, nickname, primary_color, secondary_color, tertiary_color, town, county, section, classification, founded_year, website_url, twitter_handle, athletic_conference')
+    .select('id, display_name, short_name, mascot, nickname, primary_color, secondary_color, tertiary_color, town, county, section, classification, founded_year, website_url, twitter_handle, athletic_conference, logo_url')
     .eq('display_name', schoolName)
     .maybeSingle()
 
@@ -163,6 +165,7 @@ export default async function SchoolProfilePage({
     primary_color: '#1a1a2e', secondary_color: '#FFD700', tertiary_color: null,
     town: null, county: null, section: null, classification: null,
     founded_year: null, website_url: null, twitter_handle: null, athletic_conference: null,
+    logo_url: null,
   }
 
   const pc = profile.primary_color ?? '#1a1a2e'
@@ -243,12 +246,22 @@ export default async function SchoolProfilePage({
           <div className="flex items-start justify-between gap-4">
             {/* Left: avatar + info */}
             <div className="flex items-start gap-4">
-              <div
-                className="w-14 h-14 rounded-full flex items-center justify-center shrink-0 text-lg font-bold"
-                style={{ backgroundColor: pc, color: sc }}
-              >
-                {schoolInitials(profile)}
-              </div>
+              {profile.logo_url ? (
+                <Image
+                  src={profile.logo_url}
+                  alt={profile.display_name}
+                  width={56}
+                  height={56}
+                  className="w-14 h-14 rounded-full object-cover shrink-0"
+                />
+              ) : (
+                <div
+                  className="w-14 h-14 rounded-full flex items-center justify-center shrink-0 text-lg font-bold"
+                  style={{ backgroundColor: pc, color: sc }}
+                >
+                  {schoolInitials(profile)}
+                </div>
+              )}
               <div>
                 <h1 className="text-2xl font-bold text-slate-900">{profile.display_name}</h1>
                 {(profile.mascot || profile.nickname) && (
