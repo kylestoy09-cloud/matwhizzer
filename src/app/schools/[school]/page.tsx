@@ -241,54 +241,57 @@ export default async function SchoolProfilePage({
       </Link>
 
       {/* ── HEADER ── */}
-      <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden mb-8" style={{ borderTop: `3px solid ${pc}` }}>
-        <div className="px-5 py-5">
+      <div className="relative mb-14">
+        {/* Square logo — overflows the header card */}
+        <div className="absolute left-5 -top-4 z-10">
+          {profile.logo_url ? (
+            <Image
+              src={profile.logo_url}
+              alt={profile.display_name}
+              width={120}
+              height={120}
+              className="w-[120px] h-[120px] rounded-xl object-cover shadow-lg border-2 border-white"
+            />
+          ) : (
+            <div
+              className="w-[120px] h-[120px] rounded-xl flex items-center justify-center shadow-lg border-2 border-white text-3xl font-bold"
+              style={{ backgroundColor: pc, color: sc }}
+            >
+              {schoolInitials(profile)}
+            </div>
+          )}
+        </div>
+
+        {/* Header card */}
+        <div className="bg-white border border-slate-200 rounded-xl shadow-sm pt-4 pb-5 pl-[160px] pr-5" style={{ borderTop: `3px solid ${pc}` }}>
           <div className="flex items-start justify-between gap-4">
-            {/* Left: avatar + info */}
-            <div className="flex items-start gap-4">
-              {profile.logo_url ? (
-                <Image
-                  src={profile.logo_url}
-                  alt={profile.display_name}
-                  width={112}
-                  height={112}
-                  className="w-28 h-28 rounded-full object-cover shrink-0"
-                />
-              ) : (
-                <div
-                  className="w-28 h-28 rounded-full flex items-center justify-center shrink-0 text-2xl font-bold"
-                  style={{ backgroundColor: pc, color: sc }}
-                >
-                  {schoolInitials(profile)}
+            {/* Left: school info */}
+            <div>
+              <h1 className="text-2xl font-bold text-slate-900">{profile.display_name}</h1>
+              {(profile.mascot || profile.nickname) && (
+                <p className="text-sm text-slate-500 mt-0.5">
+                  {[profile.mascot, profile.nickname ? `"${profile.nickname}"` : null].filter(Boolean).join(' · ')}
+                </p>
+              )}
+              {tags.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 mt-2">
+                  {tags.map(tag => (
+                    <span key={tag} className="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">{tag}</span>
+                  ))}
                 </div>
               )}
-              <div>
-                <h1 className="text-2xl font-bold text-slate-900">{profile.display_name}</h1>
-                {(profile.mascot || profile.nickname) && (
-                  <p className="text-sm text-slate-500 mt-0.5">
-                    {[profile.mascot, profile.nickname ? `"${profile.nickname}"` : null].filter(Boolean).join(' · ')}
-                  </p>
+              <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-slate-400">
+                {profile.founded_year && <span>Est. {profile.founded_year}</span>}
+                {profile.website_url && (
+                  <a href={profile.website_url} target="_blank" rel="noopener noreferrer" className="hover:text-slate-600 inline-flex items-center gap-0.5">
+                    Website <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-4.5-6H21m0 0v7.5m0-7.5l-9 9" /></svg>
+                  </a>
                 )}
-                {tags.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 mt-2">
-                    {tags.map(tag => (
-                      <span key={tag} className="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">{tag}</span>
-                    ))}
-                  </div>
+                {profile.twitter_handle && (
+                  <a href={`https://x.com/${profile.twitter_handle.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="hover:text-slate-600">
+                    {profile.twitter_handle}
+                  </a>
                 )}
-                <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-slate-400">
-                  {profile.founded_year && <span>Est. {profile.founded_year}</span>}
-                  {profile.website_url && (
-                    <a href={profile.website_url} target="_blank" rel="noopener noreferrer" className="hover:text-slate-600 inline-flex items-center gap-0.5">
-                      Website <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-4.5-6H21m0 0v7.5m0-7.5l-9 9" /></svg>
-                    </a>
-                  )}
-                  {profile.twitter_handle && (
-                    <a href={`https://x.com/${profile.twitter_handle.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="hover:text-slate-600">
-                      {profile.twitter_handle}
-                    </a>
-                  )}
-                </div>
               </div>
             </div>
 
