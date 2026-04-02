@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
+import { conferenceToSlug } from '@/lib/conferences'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { FollowSchoolButton } from '@/components/FollowSchoolButton'
 import { SchoolTabs } from './SchoolTabs'
@@ -261,7 +262,7 @@ export default async function SchoolProfilePage({
   if (profile.county) tags.push(`${profile.county} County`)
   const classLabel = classificationLabel(profile)
   if (classLabel) tags.push(classLabel)
-  if (profile.athletic_conference) tags.push(profile.athletic_conference)
+  const conferenceSlug = profile.athletic_conference ? conferenceToSlug(profile.athletic_conference) : null
 
   // Sort wrestlers by weight
   rows.sort((a, b) => a.primary_weight - b.primary_weight)
@@ -319,6 +320,11 @@ export default async function SchoolProfilePage({
                   {tags.map(tag => (
                     <span key={tag} className="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">{tag}</span>
                   ))}
+                  {profile.athletic_conference && conferenceSlug && (
+                    <Link href={`/conferences/${conferenceSlug}?gender=${gender}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
+                      {profile.athletic_conference}
+                    </Link>
+                  )}
                 </div>
               )}
               <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-slate-400">
