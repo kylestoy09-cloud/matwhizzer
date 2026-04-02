@@ -1,10 +1,11 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl  = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseKey  = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+const supabaseUrl  = process.env.NEXT_PUBLIC_SUPABASE_URL ?? ''
+const supabaseKey  = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''
 
 // Single client instance — safe for server components and client components alike
-export const supabase = createClient(supabaseUrl, supabaseKey, {
+// Falls back to empty strings during build if env vars aren't set (won't crash the build)
+export const supabase = createClient(supabaseUrl || 'https://placeholder.supabase.co', supabaseKey || 'placeholder', {
   global: { fetch: (url, options) => fetch(url, { ...options, cache: 'no-store' }) },
 })
 
