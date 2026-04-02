@@ -241,20 +241,20 @@ export default async function SchoolProfilePage({
       </Link>
 
       {/* ── HEADER ── */}
-      <div className="relative mb-20 mt-10">
-        {/* Square logo — overflows the header card */}
-        <div className="absolute left-0 -top-8 z-10">
+      <div className="relative mb-8 md:mb-20 md:mt-10">
+        {/* Square logo — mobile: centered above card; desktop: overflows left */}
+        <div className="flex justify-center mb-4 md:mb-0 md:absolute md:left-0 md:-top-8 md:z-10">
           {profile.logo_url ? (
             <Image
               src={profile.logo_url}
               alt={profile.display_name}
               width={200}
               height={200}
-              className="w-[200px] h-[200px] rounded-xl object-cover shadow-lg border-2 border-white"
+              className="w-[160px] h-[160px] md:w-[200px] md:h-[200px] rounded-xl object-cover shadow-lg border-2 border-white"
             />
           ) : (
             <div
-              className="w-[200px] h-[200px] rounded-xl flex items-center justify-center shadow-lg border-2 border-white text-5xl font-bold"
+              className="w-[160px] h-[160px] md:w-[200px] md:h-[200px] rounded-xl flex items-center justify-center shadow-lg border-2 border-white text-4xl md:text-5xl font-bold"
               style={{ backgroundColor: pc, color: sc }}
             >
               {schoolInitials(profile)}
@@ -263,7 +263,7 @@ export default async function SchoolProfilePage({
         </div>
 
         {/* Header card */}
-        <div className="bg-white border border-slate-200 rounded-xl shadow-sm pt-4 pb-5 pl-[220px] pr-5" style={{ borderTop: `3px solid ${pc}` }}>
+        <div className="bg-white border border-slate-200 rounded-xl shadow-sm pt-4 pb-5 px-5 md:pl-[220px] md:pr-5" style={{ borderTop: `3px solid ${pc}` }}>
           <div className="flex items-start justify-between gap-4">
             {/* Left: school info */}
             <div>
