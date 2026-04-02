@@ -175,36 +175,46 @@ export default async function SchoolProfilePage({
   let rows: WrestlerRow[] = []
   let bdRows: BreakdownRow[] = []
   let leaderRows: LeaderRow[] = []
-  let teamScore: { district_points: number; region_points: number; state_points: number; total_points: number } | null = null
+  let teamScoreRows: { tournament_type: string; total_points: number }[] = []
 
   try {
     const wrestlersPromise = gender === 'girls'
       ? supabase.rpc('girls_school_wrestlers', { p_school: schoolName, p_season: season })
       : supabase.rpc('school_wrestlers', { p_school: schoolName, p_gender: genderCode, p_season: season })
 
+    // Query precomputed_team_scores directly for this school
+    // Try schoolName first (from school_names), then profile.display_name (from schools table)
+    const tsPromise = supabase
+      .from('precomputed_team_scores')
+      .select('tournament_type, total_points')
+      .eq('school_name', schoolName)
+      .eq('season_id', season)
+
     const [bdResult, wrResult, ldResult, tsResult] = await Promise.all([
       supabase.rpc('school_points_breakdown', { p_school: schoolName, p_gender: genderCode, p_season: season }),
       wrestlersPromise,
       supabase.rpc('school_leaderboard', { p_school: schoolName, p_gender: genderCode, p_season: season }),
-      supabase.rpc('top_postseason_team_scores', { p_gender: genderCode, p_season: season, p_limit: 500 }),
+      tsPromise,
     ])
 
     if (bdResult.error) console.error('[SchoolProfile] breakdown RPC error:', bdResult.error)
     if (wrResult.error) console.error('[SchoolProfile] wrestlers RPC error:', wrResult.error)
-    if (ldResult.error) console.error('[SchoolProfile] leaderboard RPC error:', ldResult.error)
+    if (ldResult.error) console.error('[SchoolProfile] team scores query error:', ldResult.error)
 
     rows = (wrResult.data ?? []) as WrestlerRow[]
     bdRows = (bdResult.data ?? []) as BreakdownRow[]
     leaderRows = (ldResult.data ?? []) as LeaderRow[]
+    teamScoreRows = (tsResult.data ?? []) as { tournament_type: string; total_points: number }[]
 
-    // Find this school's team score from the full ranked list
-    // Match by exact name first, then try case-insensitive contains (school_names vs school_context_raw can differ)
-    const allTeamScores = (tsResult.data ?? []) as { school: string; district_points: number; region_points: number; state_points: number; total_points: number }[]
-    const snLower = schoolName.toLowerCase()
-    teamScore = allTeamScores.find(r => r.school === schoolName)
-      ?? allTeamScores.find(r => r.school.toLowerCase() === snLower)
-      ?? allTeamScores.find(r => r.school.toLowerCase().includes(snLower) || snLower.includes(r.school.toLowerCase()))
-      ?? null
+    // If no results with schoolName, try profile.display_name (which may differ)
+    if (teamScoreRows.length === 0 && profile.display_name !== schoolName) {
+      const { data: tsRetry } = await supabase
+        .from('precomputed_team_scores')
+        .select('tournament_type, total_points')
+        .eq('school_name', profile.display_name)
+        .eq('season_id', season)
+      teamScoreRows = (tsRetry ?? []) as { tournament_type: string; total_points: number }[]
+    }
   } catch (e) {
     console.error('[SchoolProfile] RPC fetch error:', e)
     return (
@@ -217,6 +227,29 @@ export default async function SchoolProfilePage({
   }
 
   if (rows.length === 0 && bdRows.length === 0) notFound()
+
+  // Build team score from precomputed rows, filtered by gender
+  const boysTypes = ['districts', 'regions', 'boys_state']
+  const girlsTypes = ['districts', 'girls_regions', 'girls_state']
+  const relevantTypes = gender === 'girls' ? girlsTypes : boysTypes
+
+  const tsMap = new Map<string, number>()
+  for (const r of teamScoreRows) {
+    if (relevantTypes.includes(r.tournament_type)) {
+      tsMap.set(r.tournament_type, (tsMap.get(r.tournament_type) ?? 0) + Number(r.total_points))
+    }
+  }
+
+  const districtKey = 'districts'
+  const regionKey = gender === 'girls' ? 'girls_regions' : 'regions'
+  const stateKey = gender === 'girls' ? 'girls_state' : 'boys_state'
+
+  const teamScore = tsMap.size > 0 ? {
+    district_points: tsMap.get(districtKey) ?? 0,
+    region_points: tsMap.get(regionKey) ?? 0,
+    state_points: tsMap.get(stateKey) ?? 0,
+    total_points: [...tsMap.values()].reduce((a, b) => a + b, 0),
+  } : null
 
   const totalPts = teamScore?.total_points ?? bdRows.reduce((sum, r) => sum + Number(r.total_points), 0)
   const totalWins = bdRows.reduce((sum, r) => sum + Number(r.win_count), 0)
