@@ -132,8 +132,8 @@ export function SchoolTabs({
             </div>
           </div>
 
-          {/* Points breakdown */}
-          {breakdown.length > 0 && (
+          {/* Points breakdown — use precomputed team scores */}
+          {teamScore && (
             <section>
               <h3 className="text-sm font-semibold text-slate-800 mb-2">Points Breakdown</h3>
               <div className="inline-block border border-slate-200 rounded-lg overflow-hidden shadow-sm bg-white">
@@ -146,13 +146,24 @@ export function SchoolTabs({
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100">
-                    {breakdown.map(r => (
-                      <tr key={r.tournament_type}>
-                        <td className="px-5 py-2 text-slate-700">{tourneyLabel[r.tournament_type] ?? r.tournament_type}</td>
-                        <td className="px-5 py-2 text-right tabular-nums font-semibold text-slate-800">{r.total_points}</td>
-                        <td className="px-5 py-2 text-right tabular-nums text-slate-500">{r.win_count}</td>
+                    {[
+                      { label: 'Districts', pts: teamScore.district_points, type: 'districts' },
+                      { label: 'Regions', pts: teamScore.region_points, type: gender === 'girls' ? 'girls_regions' : 'regions' },
+                      { label: 'State', pts: teamScore.state_points, type: gender === 'girls' ? 'girls_state' : 'boys_state' },
+                    ].filter(r => r.pts > 0).map(r => (
+                      <tr key={r.label}>
+                        <td className="px-5 py-2 text-slate-700">{r.label}</td>
+                        <td className="px-5 py-2 text-right tabular-nums font-semibold text-slate-800">{r.pts}</td>
+                        <td className="px-5 py-2 text-right tabular-nums text-slate-500">
+                          {breakdown.find(b => b.tournament_type === r.type)?.win_count ?? '—'}
+                        </td>
                       </tr>
                     ))}
+                    <tr className="bg-slate-50 border-t-2 border-slate-200">
+                      <td className="px-5 py-2 font-bold text-slate-800">Total</td>
+                      <td className="px-5 py-2 text-right tabular-nums font-bold text-slate-900">{teamScore.total_points}</td>
+                      <td className="px-5 py-2 text-right tabular-nums font-semibold text-slate-600">{totalWins}</td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
