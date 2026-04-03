@@ -682,69 +682,75 @@ export default async function WrestlerPage({
         </div>
       </div>
 
-      {/* Desktop: sticky header card with avatar left, info right */}
+      {/* Desktop: centered vertical layout */}
       <div className="hidden md:block sticky top-0 z-20 bg-white border border-slate-200 rounded-xl shadow-sm mb-6" style={{ borderTop: `3px solid ${pc}` }}>
-        <div className="flex items-center gap-5 p-4">
-          <div className="shrink-0">
-            {WRESTLER_PHOTOS[wrestler.id] ? (
-              <Image src={WRESTLER_PHOTOS[wrestler.id]} alt={displayName} width={200} height={200} className="object-contain w-[200px] h-auto" />
-            ) : (
-              <WrestlerAvatar school={schoolProfile} weight={bestWeight} size="lg" />
+        <div className="flex flex-col items-center p-5 gap-3">
+          {/* Name + gender badge */}
+          <div className="flex items-baseline gap-3">
+            <h1 className="text-2xl font-bold text-slate-900">{displayName}</h1>
+            <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
+              wrestler.gender === 'F' ? 'bg-pink-100 text-pink-700' : 'bg-blue-100 text-blue-700'
+            }`}>
+              {wrestler.gender === 'F' ? 'Girls' : 'Boys'}
+            </span>
+            {recordStr && <span className="text-sm text-slate-500">{recordStr}</span>}
+            {primaryGrade && <span className="text-sm text-slate-500">· {primaryGrade}</span>}
+          </div>
+
+          {/* School logo — clickable */}
+          {displaySchool ? (
+            <Link href={`/schools/${encodeURIComponent(displaySchool)}?gender=${gender}`} className="block" style={{ width: 240 }}>
+              {WRESTLER_PHOTOS[wrestler.id] ? (
+                <Image src={WRESTLER_PHOTOS[wrestler.id]} alt={displayName} width={200} height={200} className="object-contain w-full h-auto" />
+              ) : (
+                <WrestlerAvatar school={schoolProfile} weight={bestWeight} size="lg" />
+              )}
+            </Link>
+          ) : (
+            <div style={{ width: 240 }}>
+              {WRESTLER_PHOTOS[wrestler.id] ? (
+                <Image src={WRESTLER_PHOTOS[wrestler.id]} alt={displayName} width={200} height={200} className="object-contain w-full h-auto" />
+              ) : (
+                <WrestlerAvatar school={schoolProfile} weight={bestWeight} size="lg" />
+              )}
+            </div>
+          )}
+
+          {/* Info pills */}
+          <div className="flex flex-wrap justify-center gap-1.5">
+            {districtLabel && districtNum && (
+              <Link href={`${genderBase}/districts/${districtNum}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">{districtLabel}</Link>
+            )}
+            {regionLabel && regionNum && (
+              <Link href={`${genderBase}/regions/${regionNum}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">{regionLabel}</Link>
+            )}
+            {classLabel && secSlug && grpSlug && (
+              <Link href={`/sections/${secSlug}/${grpSlug}?gender=${gender}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">{classLabel}</Link>
+            )}
+            {schoolProfile.athletic_conference && confSlug && (
+              <Link href={`/conferences/${confSlug}?gender=${gender}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">{schoolProfile.athletic_conference}</Link>
             )}
           </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-baseline gap-3">
-              <h1 className="text-2xl font-bold text-slate-900">{displayName}</h1>
-              <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-                wrestler.gender === 'F' ? 'bg-pink-100 text-pink-700' : 'bg-blue-100 text-blue-700'
-              }`}>
-                {wrestler.gender === 'F' ? 'Girls' : 'Boys'}
-              </span>
+
+          {/* Compact postseason placements */}
+          {placements.length > 0 && (
+            <div className="flex flex-wrap justify-center items-center gap-x-3 gap-y-1 text-xs text-slate-600">
+              {placements
+                .sort((a, b) => b.seasonId - a.seasonId || (TOURNAMENT_TYPE_ORDER[a.tournamentType] ?? 9) - (TOURNAMENT_TYPE_ORDER[b.tournamentType] ?? 9) || a.place - b.place)
+                .map((p, i) => {
+                  const short = placementShortLabel(p.tournament, p.tournamentType)
+                  const yr = SEASON_SHORT[p.seasonId] ?? ''
+                  const medal = p.place === 1 ? '\u{1F947}' : p.place === 2 ? '\u{1F948}' : p.place === 3 ? '\u{1F949}' : null
+                  return (
+                    <span key={i} className="inline-flex items-center gap-0.5 font-medium">
+                      {medal ? <span>{medal}</span> : <span className="text-slate-400">{p.place}th</span>}
+                      <span>{short}</span>
+                      <span className="text-slate-400">{yr}</span>
+                    </span>
+                  )
+                })}
             </div>
-            {/* School + weight + record */}
-            <div className="flex flex-wrap items-center gap-2 mt-1 text-sm text-slate-500">
-              {displaySchool && (
-                <Link href={`/schools/${encodeURIComponent(displaySchool)}?gender=${gender}`} className="hover:underline font-medium text-slate-700">{displaySchool}</Link>
-              )}
-              {bestWeight && <span>· {bestWeight} lbs</span>}
-              {recordStr && <span>· {recordStr}</span>}
-              {primaryGrade && <span>· {primaryGrade}</span>}
-            </div>
-            {/* Info pills */}
-            <div className="flex flex-wrap gap-1.5 mt-2">
-              {districtLabel && districtNum && (
-                <Link href={`${genderBase}/districts/${districtNum}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">{districtLabel}</Link>
-              )}
-              {regionLabel && regionNum && (
-                <Link href={`${genderBase}/regions/${regionNum}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">{regionLabel}</Link>
-              )}
-              {classLabel && secSlug && grpSlug && (
-                <Link href={`/sections/${secSlug}/${grpSlug}?gender=${gender}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">{classLabel}</Link>
-              )}
-              {schoolProfile.athletic_conference && confSlug && (
-                <Link href={`/conferences/${confSlug}?gender=${gender}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">{schoolProfile.athletic_conference}</Link>
-              )}
-            </div>
-            {/* Compact postseason placements */}
-            {placements.length > 0 && (
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-xs text-slate-600">
-                {placements
-                  .sort((a, b) => b.seasonId - a.seasonId || (TOURNAMENT_TYPE_ORDER[a.tournamentType] ?? 9) - (TOURNAMENT_TYPE_ORDER[b.tournamentType] ?? 9) || a.place - b.place)
-                  .map((p, i) => {
-                    const short = placementShortLabel(p.tournament, p.tournamentType)
-                    const yr = SEASON_SHORT[p.seasonId] ?? ''
-                    const medal = p.place === 1 ? '\u{1F947}' : p.place === 2 ? '\u{1F948}' : p.place === 3 ? '\u{1F949}' : null
-                    return (
-                      <span key={i} className="inline-flex items-center gap-0.5 font-medium">
-                        {medal ? <span>{medal}</span> : <span className="text-slate-400">{p.place}th</span>}
-                        <span>{short}</span>
-                        <span className="text-slate-400">{yr}</span>
-                      </span>
-                    )
-                  })}
-              </div>
-            )}
-          </div>
+          )}
         </div>
       </div>
 
