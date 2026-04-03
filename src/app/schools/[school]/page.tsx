@@ -291,9 +291,9 @@ export default async function SchoolProfilePage({
 
       {/* ── HEADER ── */}
 
-      {/* Mobile: full-width logo + sticky info bar */}
-      <div className="md:hidden">
-        {/* Full-width logo */}
+      {/* Mobile: logo banner + sticky info bar */}
+      <div className="md:hidden sticky top-0 z-20">
+        {/* Logo banner */}
         {profile.logo_url ? (
           <Image
             src={profile.logo_url}
@@ -311,8 +311,8 @@ export default async function SchoolProfilePage({
           </div>
         )}
 
-        {/* Sticky info bar */}
-        <div className="sticky top-0 z-20 bg-white border-b border-slate-200 shadow-sm px-4 py-3" style={{ borderTop: `3px solid ${pc}` }}>
+        {/* Info bar */}
+        <div className="bg-white border-b border-slate-200 shadow-sm px-4 py-3" style={{ borderTop: `3px solid ${pc}` }}>
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0">
               <h1 className="text-lg font-bold text-slate-900 truncate">{profile.display_name}</h1>
@@ -344,78 +344,82 @@ export default async function SchoolProfilePage({
         </div>
       </div>
 
-      {/* Desktop: logo overflows header card */}
-      <div className="relative mb-20 mt-10 hidden md:block">
-        <div className="absolute left-0 -top-8 z-10">
-          {profile.logo_url ? (
-            <Image
-              src={profile.logo_url}
-              alt={profile.display_name}
-              width={1079}
-              height={647}
-              className="w-[280px] h-auto rounded-xl shadow-lg border-2 border-white"
-            />
-          ) : (
-            <div
-              className="w-[200px] h-[200px] rounded-xl flex items-center justify-center shadow-lg border-2 border-white text-5xl font-bold"
-              style={{ backgroundColor: pc, color: sc }}
-            >
-              {schoolInitials(profile)}
-            </div>
-          )}
-        </div>
+      {/* Desktop: sticky header with logo left + info right */}
+      <div className="hidden md:block sticky top-0 z-20 bg-white border border-slate-200 rounded-xl shadow-sm mb-8" style={{ borderTop: `3px solid ${pc}` }}>
+        <div className="flex items-center gap-5 p-4">
+          {/* Logo left */}
+          <div className="shrink-0">
+            {profile.logo_url ? (
+              <Image
+                src={profile.logo_url}
+                alt={profile.display_name}
+                width={1079}
+                height={647}
+                className="w-[240px] h-auto rounded-lg"
+              />
+            ) : (
+              <div
+                className="w-[160px] h-[96px] rounded-lg flex items-center justify-center text-4xl font-bold"
+                style={{ backgroundColor: pc, color: sc }}
+              >
+                {schoolInitials(profile)}
+              </div>
+            )}
+          </div>
 
-        <div className="bg-white border border-slate-200 rounded-xl shadow-sm pt-4 pb-5 pl-[230px] pr-[15px]" style={{ borderTop: `3px solid ${pc}` }}>
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <h1 className="text-2xl font-bold text-slate-900">{profile.display_name}</h1>
-              {(profile.mascot || profile.nickname) && (
-                <p className="text-sm text-slate-500 mt-0.5">
-                  {[profile.mascot, profile.nickname ? `"${profile.nickname}"` : null].filter(Boolean).join(' · ')}
-                </p>
-              )}
-              {(tags.length > 0 || classLabel || conferenceSlug) && (
-                <div className="flex flex-wrap gap-1.5 mt-2">
-                  {tags.map(tag => (
-                    <span key={tag} className="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">{tag}</span>
-                  ))}
-                  {classLabel && secSlug && grpSlug && (
-                    <Link href={`/sections/${secSlug}/${grpSlug}?gender=${gender}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
-                      {classLabel}
-                    </Link>
+          {/* Info right */}
+          <div className="flex-1 min-w-0">
+            <div className="flex items-start justify-between gap-4">
+              <div className="min-w-0">
+                <h1 className="text-2xl font-bold text-slate-900 truncate">{profile.display_name}</h1>
+                {(profile.mascot || profile.nickname) && (
+                  <p className="text-sm text-slate-500 mt-0.5">
+                    {[profile.mascot, profile.nickname ? `"${profile.nickname}"` : null].filter(Boolean).join(' · ')}
+                  </p>
+                )}
+                {(tags.length > 0 || classLabel || conferenceSlug) && (
+                  <div className="flex flex-wrap gap-1.5 mt-2">
+                    {tags.map(tag => (
+                      <span key={tag} className="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">{tag}</span>
+                    ))}
+                    {classLabel && secSlug && grpSlug && (
+                      <Link href={`/sections/${secSlug}/${grpSlug}?gender=${gender}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
+                        {classLabel}
+                      </Link>
+                    )}
+                    {profile.athletic_conference && conferenceSlug && (
+                      <Link href={`/conferences/${conferenceSlug}?gender=${gender}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
+                        {profile.athletic_conference}
+                      </Link>
+                    )}
+                  </div>
+                )}
+                <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-slate-400">
+                  {profile.founded_year && <span>Est. {profile.founded_year}</span>}
+                  {profile.website_url && (
+                    <a href={profile.website_url} target="_blank" rel="noopener noreferrer" className="hover:text-slate-600 inline-flex items-center gap-0.5">
+                      Website <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-4.5-6H21m0 0v7.5m0-7.5l-9 9" /></svg>
+                    </a>
                   )}
-                  {profile.athletic_conference && conferenceSlug && (
-                    <Link href={`/conferences/${conferenceSlug}?gender=${gender}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
-                      {profile.athletic_conference}
-                    </Link>
+                  {profile.twitter_handle && (
+                    <a href={`https://x.com/${profile.twitter_handle.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="hover:text-slate-600">
+                      {profile.twitter_handle}
+                    </a>
                   )}
                 </div>
-              )}
-              <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-slate-400">
-                {profile.founded_year && <span>Est. {profile.founded_year}</span>}
-                {profile.website_url && (
-                  <a href={profile.website_url} target="_blank" rel="noopener noreferrer" className="hover:text-slate-600 inline-flex items-center gap-0.5">
-                    Website <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-4.5-6H21m0 0v7.5m0-7.5l-9 9" /></svg>
-                  </a>
-                )}
-                {profile.twitter_handle && (
-                  <a href={`https://x.com/${profile.twitter_handle.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="hover:text-slate-600">
-                    {profile.twitter_handle}
-                  </a>
-                )}
               </div>
-            </div>
 
-            <div className="flex flex-col items-end gap-2 shrink-0">
-              <div className="flex rounded-lg border border-slate-200 overflow-hidden text-sm">
-                <Link href={`/schools/${school}?gender=boys${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
-                  className={`px-3 py-1.5 font-medium transition-colors ${gender === 'boys' ? 'bg-slate-900 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}>Boys</Link>
-                <Link href={`/schools/${school}?gender=girls${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
-                  className={`px-3 py-1.5 font-medium transition-colors ${gender === 'girls' ? 'bg-rose-700 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}>Girls</Link>
-              </div>
-              <FollowSchoolButton schoolAbbreviation={schoolAbbrev} />
-              <div className="flex items-center text-xs text-slate-400">
-                <InlineSeasonPicker activeSeason={season} />
+              <div className="flex flex-col items-end gap-2 shrink-0">
+                <div className="flex rounded-lg border border-slate-200 overflow-hidden text-sm">
+                  <Link href={`/schools/${school}?gender=boys${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
+                    className={`px-3 py-1.5 font-medium transition-colors ${gender === 'boys' ? 'bg-slate-900 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}>Boys</Link>
+                  <Link href={`/schools/${school}?gender=girls${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
+                    className={`px-3 py-1.5 font-medium transition-colors ${gender === 'girls' ? 'bg-rose-700 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}>Girls</Link>
+                </div>
+                <FollowSchoolButton schoolAbbreviation={schoolAbbrev} />
+                <div className="flex items-center text-xs text-slate-400">
+                  <InlineSeasonPicker activeSeason={season} />
+                </div>
               </div>
             </div>
           </div>
