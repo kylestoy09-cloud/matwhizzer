@@ -2,6 +2,7 @@ import { supabase, ROUND_ORDER, ROUND_LABEL, TOURNAMENT_TYPE_LABEL } from '@/lib
 import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
+import { WrestlerAvatar } from '@/components/WrestlerAvatar'
 
 export const dynamic = 'force-dynamic'
 
@@ -241,6 +242,31 @@ export default async function WrestlerPage({
       : Promise.resolve({ data: null }),
   ])
   const displaySchool = (schoolNameRow as { school_name: string } | null)?.school_name ?? primarySchool
+
+  // Fetch school profile (colors, logo) and wrestler's most recent weight class
+  const [{ data: schoolProfileData }, { data: weightData }] = await Promise.all([
+    displaySchool
+      ? supabase.from('schools').select('display_name, primary_color, secondary_color, logo_url')
+          .eq('display_name', displaySchool).maybeSingle()
+      : Promise.resolve({ data: null }),
+    supabase.from('tournament_entries')
+      .select('weight_class:weight_classes(weight), tournament:tournaments(tournament_type, season_id)')
+      .eq('wrestler_id', wrestler.id)
+      .order('tournament_id', { ascending: false })
+      .limit(10),
+  ])
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const schoolProfile = schoolProfileData as any ?? { display_name: displaySchool ?? '', primary_color: null, secondary_color: null, logo_url: null }
+
+  // Pick the most advanced tournament's weight (state > regions > districts)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const weightEntries = (weightData ?? []) as any[]
+  const typeOrder: Record<string, number> = { boys_state: 3, girls_state: 3, regions: 2, girls_regions: 2, districts: 1 }
+  const bestWeight = weightEntries
+    .filter(e => e.weight_class?.weight && e.tournament?.season_id === currentSeason)
+    .sort((a, b) => (typeOrder[b.tournament?.tournament_type] ?? 0) - (typeOrder[a.tournament?.tournament_type] ?? 0))
+    [0]?.weight_class?.weight ?? null
 
   // Fetch ghost championships and revenge wins
   const [{ data: ghostChamps }, { data: revengeWinsData }] = await Promise.all([
@@ -555,8 +581,8 @@ export default async function WrestlerPage({
       <BackLink gender={wrestler.gender} />
 
       {/* Wrestler header */}
-      <div className="flex items-center gap-4 mb-1">
-        {WRESTLER_PHOTOS[wrestler.id] && (
+      <div className="flex items-center gap-5 mb-1">
+        {WRESTLER_PHOTOS[wrestler.id] ? (
           <Image
             src={WRESTLER_PHOTOS[wrestler.id]}
             alt={displayName}
@@ -564,14 +590,22 @@ export default async function WrestlerPage({
             height={64}
             className="object-contain w-16 h-16"
           />
+        ) : (
+          <WrestlerAvatar
+            school={schoolProfile}
+            weight={bestWeight}
+            size="lg"
+          />
         )}
-        <div className="flex items-baseline gap-4">
-          <h2 className="text-2xl font-bold text-slate-900">{displayName}</h2>
-          <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-            wrestler.gender === 'F' ? 'bg-pink-100 text-pink-700' : 'bg-blue-100 text-blue-700'
-          }`}>
-            {wrestler.gender === 'F' ? 'Girls' : 'Boys'}
-          </span>
+        <div>
+          <div className="flex items-baseline gap-3">
+            <h2 className="text-2xl font-bold text-slate-900">{displayName}</h2>
+            <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
+              wrestler.gender === 'F' ? 'bg-pink-100 text-pink-700' : 'bg-blue-100 text-blue-700'
+            }`}>
+              {wrestler.gender === 'F' ? 'Girls' : 'Boys'}
+            </span>
+          </div>
         </div>
       </div>
 
