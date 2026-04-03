@@ -3,6 +3,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { WrestlerAvatar } from '@/components/WrestlerAvatar'
+import { conferenceToSlug } from '@/lib/conferences'
+import { sectionToSlug, groupToSlug } from '@/lib/sections'
 
 export const dynamic = 'force-dynamic'
 
@@ -243,10 +245,10 @@ export default async function WrestlerPage({
   ])
   const displaySchool = (schoolNameRow as { school_name: string } | null)?.school_name ?? primarySchool
 
-  // Fetch school profile (colors, logo) and wrestler's most recent weight class
+  // Fetch school profile (colors, logo, section, conference) and wrestler's weight
   const [{ data: schoolProfileData }, { data: weightData }] = await Promise.all([
     displaySchool
-      ? supabase.from('schools').select('display_name, primary_color, secondary_color, logo_url')
+      ? supabase.from('schools').select('id, display_name, primary_color, secondary_color, logo_url, section, classification, athletic_conference')
           .eq('display_name', displaySchool).maybeSingle()
       : Promise.resolve({ data: null }),
     supabase.from('tournament_entries')
@@ -257,7 +259,29 @@ export default async function WrestlerPage({
   ])
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const schoolProfile = schoolProfileData as any ?? { display_name: displaySchool ?? '', primary_color: null, secondary_color: null, logo_url: null }
+  const schoolProfile = schoolProfileData as any ?? {
+    id: 0, display_name: displaySchool ?? '', primary_color: null, secondary_color: null,
+    logo_url: null, section: null, classification: null, athletic_conference: null,
+  }
+
+  // Fetch district and region for this school
+  let districtLabel: string | null = null
+  let regionLabel: string | null = null
+  if (schoolProfile.id > 0) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const [{ data: distData }, { data: regData }] = await Promise.all([
+      supabase.from('school_districts').select('district:districts(name)').eq('school_id', schoolProfile.id),
+      supabase.from('school_regions').select('region:regions(name,gender)').eq('school_id', schoolProfile.id),
+    ])
+    if (distData && distData.length > 0) {
+      districtLabel = (distData[0] as any).district?.name ?? null
+    }
+    if (regData && regData.length > 0) {
+      const gCode = wrestler.gender === 'F' ? 'F' : 'M'
+      const genderMatch = (regData as any[]).find(r => r.region?.gender === gCode)
+      regionLabel = (genderMatch ?? regData[0] as any)?.region?.name ?? null
+    }
+  }
 
   // Pick the most advanced tournament's weight (state > regions > districts)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -575,36 +599,100 @@ export default async function WrestlerPage({
     .filter(Boolean).join(' ')
 
   const totalTournaments = groups.size
+  const pc = schoolProfile.primary_color ?? '#1a1a2e'
+  const gender = wrestler.gender === 'F' ? 'girls' : 'boys'
+  const genderBase = `/${gender}`
+
+  // Build info pills
+  const secSlug = schoolProfile.section ? sectionToSlug(schoolProfile.section) : null
+  const grpSlug = schoolProfile.classification ? groupToSlug(schoolProfile.classification) : null
+  const confSlug = schoolProfile.athletic_conference ? conferenceToSlug(schoolProfile.athletic_conference) : null
+  const classLabel = schoolProfile.section && schoolProfile.classification
+    ? (schoolProfile.section === 'Non-Public' ? `Non-Public ${schoolProfile.classification}` : `${schoolProfile.section} Group ${schoolProfile.classification}`)
+    : null
+  const districtNum = districtLabel?.match(/\d+/)?.[0] ?? null
+  const regionNum = regionLabel?.match(/\d+/)?.[0] ?? null
+
+  // Season record
+  const recordStr = seasonRecord ? `${seasonRecord.wins}-${seasonRecord.losses}` : null
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-10">
       <BackLink gender={wrestler.gender} />
 
-      {/* Wrestler header */}
-      <div className="flex items-center gap-5 mb-1">
-        {WRESTLER_PHOTOS[wrestler.id] ? (
-          <Image
-            src={WRESTLER_PHOTOS[wrestler.id]}
-            alt={displayName}
-            width={64}
-            height={64}
-            className="object-contain w-16 h-16"
-          />
-        ) : (
-          <WrestlerAvatar
-            school={schoolProfile}
-            weight={bestWeight}
-            size="lg"
-          />
-        )}
-        <div>
-          <div className="flex items-baseline gap-3">
-            <h2 className="text-2xl font-bold text-slate-900">{displayName}</h2>
-            <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
+      {/* ── HEADER ── */}
+
+      {/* Mobile: avatar above, sticky info bar */}
+      <div className="md:hidden sticky top-0 z-20">
+        <div className="flex justify-center bg-white pb-2">
+          {WRESTLER_PHOTOS[wrestler.id] ? (
+            <Image src={WRESTLER_PHOTOS[wrestler.id]} alt={displayName} width={120} height={120} className="object-contain w-[120px] h-[120px]" />
+          ) : (
+            <WrestlerAvatar school={schoolProfile} weight={bestWeight} size="lg" />
+          )}
+        </div>
+        <div className="bg-white border-b border-slate-200 shadow-sm px-4 py-3" style={{ borderTop: `3px solid ${pc}` }}>
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <h1 className="text-lg font-bold text-slate-900 truncate">{displayName}</h1>
+              <div className="flex items-center gap-2 text-xs text-slate-500">
+                {displaySchool && <Link href={`/schools/${encodeURIComponent(displaySchool)}?gender=${gender}`} className="hover:underline truncate">{displaySchool}</Link>}
+                {bestWeight && <span>· {bestWeight} lbs</span>}
+                {recordStr && <span>· {recordStr}</span>}
+              </div>
+            </div>
+            <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full shrink-0 ${
               wrestler.gender === 'F' ? 'bg-pink-100 text-pink-700' : 'bg-blue-100 text-blue-700'
             }`}>
               {wrestler.gender === 'F' ? 'Girls' : 'Boys'}
             </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop: sticky header card with avatar left, info right */}
+      <div className="hidden md:block sticky top-0 z-20 bg-white border border-slate-200 rounded-xl shadow-sm mb-6" style={{ borderTop: `3px solid ${pc}` }}>
+        <div className="flex items-center gap-5 p-4">
+          <div className="shrink-0">
+            {WRESTLER_PHOTOS[wrestler.id] ? (
+              <Image src={WRESTLER_PHOTOS[wrestler.id]} alt={displayName} width={200} height={200} className="object-contain w-[200px] h-auto" />
+            ) : (
+              <WrestlerAvatar school={schoolProfile} weight={bestWeight} size="lg" />
+            )}
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-baseline gap-3">
+              <h1 className="text-2xl font-bold text-slate-900">{displayName}</h1>
+              <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
+                wrestler.gender === 'F' ? 'bg-pink-100 text-pink-700' : 'bg-blue-100 text-blue-700'
+              }`}>
+                {wrestler.gender === 'F' ? 'Girls' : 'Boys'}
+              </span>
+            </div>
+            {/* School + weight + record */}
+            <div className="flex flex-wrap items-center gap-2 mt-1 text-sm text-slate-500">
+              {displaySchool && (
+                <Link href={`/schools/${encodeURIComponent(displaySchool)}?gender=${gender}`} className="hover:underline font-medium text-slate-700">{displaySchool}</Link>
+              )}
+              {bestWeight && <span>· {bestWeight} lbs</span>}
+              {recordStr && <span>· {recordStr}</span>}
+              {primaryGrade && <span>· {primaryGrade}</span>}
+            </div>
+            {/* Info pills */}
+            <div className="flex flex-wrap gap-1.5 mt-2">
+              {districtLabel && districtNum && (
+                <Link href={`${genderBase}/districts/${districtNum}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">{districtLabel}</Link>
+              )}
+              {regionLabel && regionNum && (
+                <Link href={`${genderBase}/regions/${regionNum}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">{regionLabel}</Link>
+              )}
+              {classLabel && secSlug && grpSlug && (
+                <Link href={`/sections/${secSlug}/${grpSlug}?gender=${gender}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">{classLabel}</Link>
+              )}
+              {schoolProfile.athletic_conference && confSlug && (
+                <Link href={`/conferences/${confSlug}?gender=${gender}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">{schoolProfile.athletic_conference}</Link>
+              )}
+            </div>
           </div>
         </div>
       </div>
