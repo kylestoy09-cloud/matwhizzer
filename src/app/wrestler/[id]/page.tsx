@@ -685,14 +685,9 @@ export default async function WrestlerPage({
       {/* Desktop: centered vertical layout */}
       <div className="hidden md:block sticky top-0 z-20 bg-white border border-slate-200 rounded-xl shadow-sm mb-6" style={{ borderTop: `3px solid ${pc}` }}>
         <div className="flex flex-col items-center p-5 gap-3">
-          {/* Name + gender badge */}
+          {/* Name + record + grade */}
           <div className="flex items-baseline gap-3">
             <h1 className="text-2xl font-bold text-slate-900">{displayName}</h1>
-            <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-              wrestler.gender === 'F' ? 'bg-pink-100 text-pink-700' : 'bg-blue-100 text-blue-700'
-            }`}>
-              {wrestler.gender === 'F' ? 'Girls' : 'Boys'}
-            </span>
             {recordStr && <span className="text-sm text-slate-500">{recordStr}</span>}
             {primaryGrade && <span className="text-sm text-slate-500">· {primaryGrade}</span>}
           </div>
@@ -718,6 +713,11 @@ export default async function WrestlerPage({
 
           {/* Info pills */}
           <div className="flex flex-wrap justify-center gap-1.5">
+            <span className={`text-[11px] font-medium px-2 py-0.5 rounded-full ${
+              wrestler.gender === 'F' ? 'bg-pink-100 text-pink-700' : 'bg-blue-100 text-blue-700'
+            }`}>
+              {wrestler.gender === 'F' ? 'Girls' : 'Boys'}
+            </span>
             {districtLabel && districtNum && (
               <Link href={`${genderBase}/districts/${districtNum}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">{districtLabel}</Link>
             )}
