@@ -51,6 +51,18 @@ const SEASON_LABELS: Record<number, string> = {
   2: '2025–26',
 }
 
+const SEASON_SHORT: Record<number, string> = { 1: "\u201925", 2: "\u201926" }
+
+function placementShortLabel(tournamentName: string, tournamentType: string): string {
+  const clean = cleanTournamentName(tournamentName)
+  const distMatch = clean.match(/District (\d+)/)
+  if (distMatch) return `D${distMatch[1]}`
+  const regMatch = clean.match(/Region (\d+)/)
+  if (regMatch) return `R${regMatch[1]}`
+  if (tournamentType.includes('state')) return 'State'
+  return clean
+}
+
 // Sort order for tournament types within a season
 const TOURNAMENT_TYPE_ORDER: Record<string, number> = {
   districts:    0,
@@ -647,27 +659,20 @@ export default async function WrestlerPage({
               {wrestler.gender === 'F' ? 'Girls' : 'Boys'}
             </span>
           </div>
-          {/* Mobile postseason badges */}
-          {placements.filter(p => p.seasonId === currentSeason).length > 0 && (
-            <div className="flex flex-wrap gap-1.5 mt-2">
+          {/* Mobile compact postseason placements */}
+          {placements.length > 0 && (
+            <div className="flex flex-wrap items-center gap-x-2.5 gap-y-0.5 mt-1.5 text-[10px] text-slate-600">
               {placements
-                .filter(p => p.seasonId === currentSeason)
-                .sort((a, b) => (TOURNAMENT_TYPE_ORDER[a.tournamentType] ?? 9) - (TOURNAMENT_TYPE_ORDER[b.tournamentType] ?? 9) || a.place - b.place)
+                .sort((a, b) => b.seasonId - a.seasonId || (TOURNAMENT_TYPE_ORDER[a.tournamentType] ?? 9) - (TOURNAMENT_TYPE_ORDER[b.tournamentType] ?? 9) || a.place - b.place)
                 .map((p, i) => {
-                  const label = cleanTournamentName(p.tournament)
-                  const placeLabel = p.place === 1 ? 'Champion' : p.place === 2 ? '2nd' : `${p.place}${p.place === 3 ? 'rd' : 'th'}`
-                  const isChamp = p.place === 1
-                  const colors = isChamp
-                    ? 'bg-yellow-400 border-yellow-500 text-yellow-900'
-                    : p.place === 2
-                    ? 'bg-slate-200 border-slate-400 text-slate-800'
-                    : p.place === 3
-                    ? 'bg-orange-200 border-orange-400 text-orange-900'
-                    : 'bg-slate-100 border-slate-300 text-slate-600'
+                  const short = placementShortLabel(p.tournament, p.tournamentType)
+                  const yr = SEASON_SHORT[p.seasonId] ?? ''
+                  const medal = p.place === 1 ? '\u{1F947}' : p.place === 2 ? '\u{1F948}' : p.place === 3 ? '\u{1F949}' : null
                   return (
-                    <span key={i} className={`inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-lg border-2 shadow-sm ${colors}`}>
-                      <span>{isChamp ? '\u{1F3C6}' : p.place <= 3 ? '\u{1F3C5}' : '\u{1F396}'}</span>
-                      <span>{label} {placeLabel}</span>
+                    <span key={i} className="inline-flex items-center gap-0.5 font-medium">
+                      {medal ? <span>{medal}</span> : <span className="text-slate-400">{p.place}th</span>}
+                      <span>{short}</span>
+                      <span className="text-slate-400">{yr}</span>
                     </span>
                   )
                 })}
@@ -719,27 +724,20 @@ export default async function WrestlerPage({
                 <Link href={`/conferences/${confSlug}?gender=${gender}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">{schoolProfile.athletic_conference}</Link>
               )}
             </div>
-            {/* Postseason placement badges */}
-            {placements.filter(p => p.seasonId === currentSeason).length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-3">
+            {/* Compact postseason placements */}
+            {placements.length > 0 && (
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-xs text-slate-600">
                 {placements
-                  .filter(p => p.seasonId === currentSeason)
-                  .sort((a, b) => (TOURNAMENT_TYPE_ORDER[a.tournamentType] ?? 9) - (TOURNAMENT_TYPE_ORDER[b.tournamentType] ?? 9) || a.place - b.place)
+                  .sort((a, b) => b.seasonId - a.seasonId || (TOURNAMENT_TYPE_ORDER[a.tournamentType] ?? 9) - (TOURNAMENT_TYPE_ORDER[b.tournamentType] ?? 9) || a.place - b.place)
                   .map((p, i) => {
-                    const label = cleanTournamentName(p.tournament)
-                    const placeLabel = p.place === 1 ? 'Champion' : p.place === 2 ? 'Runner-Up' : `${p.place}${p.place === 3 ? 'rd' : 'th'} Place`
-                    const isChamp = p.place === 1
-                    const colors = isChamp
-                      ? 'bg-yellow-400 border-yellow-500 text-yellow-900'
-                      : p.place === 2
-                      ? 'bg-slate-200 border-slate-400 text-slate-800'
-                      : p.place === 3
-                      ? 'bg-orange-200 border-orange-400 text-orange-900'
-                      : 'bg-slate-100 border-slate-300 text-slate-600'
+                    const short = placementShortLabel(p.tournament, p.tournamentType)
+                    const yr = SEASON_SHORT[p.seasonId] ?? ''
+                    const medal = p.place === 1 ? '\u{1F947}' : p.place === 2 ? '\u{1F948}' : p.place === 3 ? '\u{1F949}' : null
                     return (
-                      <span key={i} className={`inline-flex items-center gap-1.5 text-sm font-bold px-3 py-1.5 rounded-lg border-2 shadow-sm ${colors}`}>
-                        <span className="text-base">{isChamp ? '\u{1F3C6}' : p.place <= 3 ? '\u{1F3C5}' : '\u{1F396}'}</span>
-                        <span>{label} {placeLabel}</span>
+                      <span key={i} className="inline-flex items-center gap-0.5 font-medium">
+                        {medal ? <span>{medal}</span> : <span className="text-slate-400">{p.place}th</span>}
+                        <span>{short}</span>
+                        <span className="text-slate-400">{yr}</span>
                       </span>
                     )
                   })}
@@ -748,48 +746,6 @@ export default async function WrestlerPage({
           </div>
         </div>
       </div>
-
-      {/* Placement badges grouped by season */}
-      {placements.length > 0 && (() => {
-        const placementSeasons = [...new Set(placements.map(p => p.seasonId))].sort((a, b) => b - a)
-        return (
-          <div className="mb-3 space-y-2">
-            {placementSeasons.map(sid => {
-              const seasonPlacements = placements
-                .filter(p => p.seasonId === sid)
-                .sort((a, b) => (TOURNAMENT_TYPE_ORDER[a.tournamentType] ?? 9) - (TOURNAMENT_TYPE_ORDER[b.tournamentType] ?? 9) || a.place - b.place)
-              return (
-                <div key={sid} className="flex flex-wrap items-center gap-2">
-                  {placementSeasons.length > 1 && (
-                    <span className="text-[10px] font-medium text-slate-400 uppercase tracking-wide w-14 shrink-0">
-                      {SEASON_LABELS[sid] ?? `S${sid}`}
-                    </span>
-                  )}
-                  {seasonPlacements.map((p, i) => {
-                    const label = cleanTournamentName(p.tournament)
-                    const placeLabel = p.place === 1 ? 'Champion' : p.place === 2 ? 'Runner-Up' : `${p.place}${p.place === 3 ? 'rd' : 'th'} Place`
-                    const icon = p.place === 1 ? '\u{1F451}' : p.place <= 3 ? '\u{1F3C5}' : '\u{1F396}'
-                    const colors = p.place === 1
-                      ? 'bg-yellow-50 border-yellow-300 text-yellow-800'
-                      : p.place === 2
-                      ? 'bg-slate-50 border-slate-300 text-slate-700'
-                      : p.place === 3
-                      ? 'bg-orange-50 border-orange-300 text-orange-800'
-                      : 'bg-slate-50 border-slate-200 text-slate-600'
-                    return (
-                      <span key={i} className={`inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full border ${colors}`}>
-                        <span>{icon}</span>
-                        <span>{placeLabel}</span>
-                        <span className="font-normal text-[10px] opacity-70">({label})</span>
-                      </span>
-                    )
-                  })}
-                </div>
-              )
-            })}
-          </div>
-        )
-      })()}
 
       {/* Ghost Champion badge */}
       {ghostChampionships.length > 0 && (
