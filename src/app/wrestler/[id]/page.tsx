@@ -384,9 +384,27 @@ export default async function WrestlerPage({
       }
     }
 
+    // Fetch grades for opponent wrestlers
+    const oppWrestlerIds = typedOppEntries.map(e => unwrap(e.wrestler)?.id).filter((id): id is string => id != null)
+    const oppGradeMap: Record<string, string> = {}
+    if (oppWrestlerIds.length > 0) {
+      const { data: oppGrades } = await supabase.rpc('wrestler_grade', { p_wrestler_id: oppWrestlerIds[0] })
+      // wrestler_grade is scalar — need to batch. Use tournament_entries instead
+      const { data: gradeRows } = await supabase
+        .from('tournament_entries')
+        .select('wrestler_id, grade_label, tournament:tournaments(season_id)')
+        .in('wrestler_id', oppWrestlerIds)
+        .not('grade_label', 'is', null)
+        .order('tournament_id', { ascending: false })
+      for (const gr of (gradeRows ?? []) as { wrestler_id: string; grade_label: string }[]) {
+        if (!oppGradeMap[gr.wrestler_id]) oppGradeMap[gr.wrestler_id] = gr.grade_label
+      }
+    }
+
     for (const e of typedOppEntries) {
       const w = unwrap(e.wrestler)
-      const name = w ? `${w.first_name} ${w.last_name}`.trim() : '—'
+      const grade = w?.id ? oppGradeMap[w.id] : null
+      const name = w ? `${w.first_name} ${w.last_name}${grade ? `, ${grade}` : ''}`.trim() : '—'
       const abbr = e.school_context_raw ?? (w?.id ? fallbackSchoolMap[w.id] : null)
       opponentMap[e.id] = { name, school: abbr ? (schoolNameMap[abbr] ?? abbr) : null, wrestlerId: w?.id ?? null }
     }
@@ -665,8 +683,9 @@ export default async function WrestlerPage({
     }
   }
 
-  const displayName = [wrestler.first_name, wrestler.last_name, wrestler.suffix]
+  const baseName = [wrestler.first_name, wrestler.last_name, wrestler.suffix]
     .filter(Boolean).join(' ')
+  const displayName = primaryGrade ? `${baseName}, ${primaryGrade}` : baseName
 
   const totalTournaments = groups.size
   const pc = schoolProfile.primary_color ?? '#1a1a2e'
@@ -765,7 +784,6 @@ export default async function WrestlerPage({
           <div className="flex items-baseline gap-3">
             <h1 className="text-2xl font-bold text-slate-900">{displayName}</h1>
             {recordStr && <span className="text-sm text-slate-500">{recordStr}</span>}
-            {primaryGrade && <span className="text-sm text-slate-500">· {primaryGrade}</span>}
           </div>
 
           {/* School logo — clickable */}

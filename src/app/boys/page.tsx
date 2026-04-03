@@ -33,7 +33,20 @@ export default async function BoysPage({
       : Promise.resolve({ data: null }),
   ])
 
-  const wrestlers = (wrestlerRes.data ?? []) as WrestlerRow[]
+  const rawWrestlers = (wrestlerRes.data ?? []) as WrestlerRow[]
+  const gradeMap: Record<string, string> = {}
+  if (rawWrestlers.length > 0) {
+    const { data: gradeRows } = await supabase
+      .from('tournament_entries')
+      .select('wrestler_id, grade_label')
+      .in('wrestler_id', rawWrestlers.map(w => w.id))
+      .not('grade_label', 'is', null)
+      .order('tournament_id', { ascending: false })
+    for (const gr of (gradeRows ?? []) as { wrestler_id: string; grade_label: string }[]) {
+      if (!gradeMap[gr.wrestler_id]) gradeMap[gr.wrestler_id] = gr.grade_label
+    }
+  }
+  const wrestlers = rawWrestlers
 
   let schools: SchoolRow[] = []
   if (sq.length >= 2 && schoolDirRes.data) {
@@ -118,7 +131,7 @@ export default async function BoysPage({
                 {wrestlers.map(w => (
                   <li key={w.id}>
                     <Link href={`/wrestler/${w.id}`} className="flex items-center px-4 py-3 hover:bg-slate-50 transition-colors">
-                      <span className="font-medium text-slate-800">{w.first_name} {w.last_name}</span>
+                      <span className="font-medium text-slate-800">{w.first_name} {w.last_name}{gradeMap[w.id] ? `, ${gradeMap[w.id]}` : ''}</span>
                     </Link>
                   </li>
                 ))}
