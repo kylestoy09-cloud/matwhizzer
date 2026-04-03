@@ -45,9 +45,10 @@ export async function buildStandings(
     scoresData = data
   }
 
+  const districtKey = gender === 'girls' ? 'girls_districts' : 'boys_districts'
   const regionKey = gender === 'girls' ? 'girls_regions' : 'regions'
   const stateKey = gender === 'girls' ? 'girls_state' : 'boys_state'
-  const relevantTypes = ['districts', regionKey, stateKey]
+  const relevantTypes = [districtKey, regionKey, stateKey]
 
   // Build score map keyed by id or name
   const scoreMap = new Map<string | number, { district: number; region: number; state: number }>()
@@ -55,7 +56,7 @@ export async function buildStandings(
     if (!relevantTypes.includes(r.tournament_type)) continue
     const key = useIds ? r.school_id! : r.school_name!
     const entry = scoreMap.get(key) ?? { district: 0, region: 0, state: 0 }
-    if (r.tournament_type === 'districts') entry.district += r.total_points
+    if (r.tournament_type === districtKey) entry.district += r.total_points
     else if (r.tournament_type === regionKey) entry.region += r.total_points
     else if (r.tournament_type === stateKey) entry.state += r.total_points
     scoreMap.set(key, entry)

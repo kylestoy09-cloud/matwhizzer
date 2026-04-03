@@ -282,8 +282,8 @@ export default async function SchoolProfilePage({
   if (rows.length === 0 && bdRows.length === 0) notFound()
 
   // Build team score from precomputed rows, filtered by gender
-  const boysTypes = ['districts', 'regions', 'boys_state']
-  const girlsTypes = ['districts', 'girls_regions', 'girls_state']
+  const boysTypes = ['boys_districts', 'regions', 'boys_state']
+  const girlsTypes = ['girls_districts', 'girls_regions', 'girls_state']
   const relevantTypes = gender === 'girls' ? girlsTypes : boysTypes
 
   const tsMap = new Map<string, number>()
@@ -293,7 +293,7 @@ export default async function SchoolProfilePage({
     }
   }
 
-  const districtKey = 'districts'
+  const districtKey = gender === 'girls' ? 'girls_districts' : 'boys_districts'
   const regionKey = gender === 'girls' ? 'girls_regions' : 'regions'
   const stateKey = gender === 'girls' ? 'girls_state' : 'boys_state'
 

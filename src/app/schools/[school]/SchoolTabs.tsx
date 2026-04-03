@@ -147,7 +147,7 @@ export function SchoolTabs({
                   </thead>
                   <tbody className="divide-y divide-slate-100">
                     {[
-                      { label: 'Districts', pts: teamScore.district_points, type: 'districts' },
+                      { label: 'Districts', pts: teamScore.district_points, type: gender === 'girls' ? 'girls_districts' : 'boys_districts' },
                       { label: 'Regions', pts: teamScore.region_points, type: gender === 'girls' ? 'girls_regions' : 'regions' },
                       { label: 'State', pts: teamScore.state_points, type: gender === 'girls' ? 'girls_state' : 'boys_state' },
                     ].filter(r => r.pts > 0).map(r => (
