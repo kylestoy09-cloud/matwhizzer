@@ -607,6 +607,64 @@ export default async function WrestlerPage({
       .filter((x): x is string => x !== null)
   )].sort()
 
+  // Detect Hammer Champ & Terminator awards across all seasons
+  type AwardInfo = { type: 'hammer' | 'terminator'; label: string; seasonId: number }
+  const awards: AwardInfo[] = []
+
+  // Build list of tournaments to check: { seasonId, level, num } for each district/region/state
+  type TournCheck = { seasonId: number; level: 'district' | 'region' | 'state'; num: number | null }
+  const tournChecks: TournCheck[] = []
+  for (const g of allGroupsSorted) {
+    if (g.tournament_type === 'districts') {
+      const m = g.tournament_name.match(/District (\d+)$/)
+      if (m) tournChecks.push({ seasonId: g.season_id, level: 'district', num: parseInt(m[1]) })
+    } else if (g.tournament_type === 'regions' || g.tournament_type === 'girls_regions') {
+      const m = g.tournament_name.match(/r(\d+)$/i)
+      if (m) tournChecks.push({ seasonId: g.season_id, level: 'region', num: parseInt(m[1]) })
+    } else if (g.tournament_type === 'boys_state' || g.tournament_type === 'girls_state') {
+      tournChecks.push({ seasonId: g.season_id, level: 'state', num: null })
+    }
+  }
+  // Deduplicate
+  const checkKey = (c: TournCheck) => `${c.seasonId}|${c.level}|${c.num}`
+  const uniqueChecks = [...new Map(tournChecks.map(c => [checkKey(c), c])).values()]
+
+  const genderType = wrestler.gender === 'F' ? 'F' : 'M'
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  type AwardCall = { check: TournCheck; kind: 'hammer' | 'terminator'; promise: PromiseLike<{ data: any }> }
+  // Build RPC calls for each tournament check
+  const awardPromises = uniqueChecks.flatMap(c => {
+    const calls: AwardCall[] = []
+    if (c.level === 'district') {
+      calls.push({ check: c, kind: 'hammer', promise: supabase.rpc('district_dominance', { p_district: c.num, p_gender: genderType, p_season: c.seasonId }) })
+      calls.push({ check: c, kind: 'terminator', promise: supabase.rpc('district_mat_time', { p_district: c.num, p_gender: genderType, p_season: c.seasonId }) })
+    } else if (c.level === 'region') {
+      if (genderType === 'M') {
+        calls.push({ check: c, kind: 'hammer', promise: supabase.rpc('region_dominance', { p_region: c.num, p_gender: genderType, p_season: c.seasonId }) })
+        calls.push({ check: c, kind: 'terminator', promise: supabase.rpc('region_mat_time', { p_region: c.num, p_gender: genderType, p_season: c.seasonId }) })
+      } else {
+        calls.push({ check: c, kind: 'hammer', promise: supabase.rpc('girls_region_dominance', { p_region: c.num, p_season: c.seasonId }) })
+        calls.push({ check: c, kind: 'terminator', promise: supabase.rpc('girls_region_mat_time', { p_region: c.num, p_season: c.seasonId }) })
+      }
+    } else if (c.level === 'state') {
+      calls.push({ check: c, kind: 'hammer', promise: supabase.rpc('state_dominance', { p_gender: genderType, p_season: c.seasonId }) })
+      calls.push({ check: c, kind: 'terminator', promise: supabase.rpc('state_mat_time', { p_gender: genderType, p_season: c.seasonId }) })
+    }
+    return calls
+  })
+
+  const awardResults = await Promise.all(awardPromises.map(a => a.promise))
+  for (let i = 0; i < awardPromises.length; i++) {
+    const { check, kind } = awardPromises[i]
+    const rows = (awardResults[i].data ?? []) as { wrestler_id: string }[]
+    if (rows.length > 0 && rows[0].wrestler_id === wrestler.id) {
+      const label = check.level === 'district' ? `D${check.num}`
+        : check.level === 'region' ? `R${check.num}`
+        : 'State'
+      awards.push({ type: kind, label, seasonId: check.seasonId })
+    }
+  }
+
   const displayName = [wrestler.first_name, wrestler.last_name, wrestler.suffix]
     .filter(Boolean).join(' ')
 
@@ -679,6 +737,24 @@ export default async function WrestlerPage({
                 })}
             </div>
           )}
+          {/* Mobile Hammer & Terminator awards */}
+          {awards.length > 0 && (
+            <div className="flex flex-wrap items-center gap-x-2.5 gap-y-0.5 mt-1 text-[10px] text-slate-600">
+              {awards
+                .sort((a, b) => b.seasonId - a.seasonId || (a.type === 'hammer' ? 0 : 1) - (b.type === 'hammer' ? 0 : 1))
+                .map((a, i) => {
+                  const yr = SEASON_SHORT[a.seasonId] ?? ''
+                  const icon = a.type === 'hammer' ? '\u{1F528}' : '\u{26A1}'
+                  return (
+                    <span key={i} className="inline-flex items-center gap-0.5 font-medium">
+                      <span>{icon}</span>
+                      <span>{a.label}</span>
+                      <span className="text-slate-400">{yr}</span>
+                    </span>
+                  )
+                })}
+            </div>
+          )}
         </div>
       </div>
 
@@ -745,6 +821,25 @@ export default async function WrestlerPage({
                     <span key={i} className="inline-flex items-center gap-0.5 font-medium">
                       {medal ? <span>{medal}</span> : <span className="text-slate-400">{p.place}th</span>}
                       <span>{short}</span>
+                      <span className="text-slate-400">{yr}</span>
+                    </span>
+                  )
+                })}
+            </div>
+          )}
+
+          {/* Hammer & Terminator awards */}
+          {awards.length > 0 && (
+            <div className="flex flex-wrap justify-center items-center gap-x-3 gap-y-1 text-xs text-slate-600">
+              {awards
+                .sort((a, b) => b.seasonId - a.seasonId || (a.type === 'hammer' ? 0 : 1) - (b.type === 'hammer' ? 0 : 1))
+                .map((a, i) => {
+                  const yr = SEASON_SHORT[a.seasonId] ?? ''
+                  const icon = a.type === 'hammer' ? '\u{1F528}' : '\u{26A1}'
+                  return (
+                    <span key={i} className="inline-flex items-center gap-0.5 font-medium">
+                      <span>{icon}</span>
+                      <span>{a.label}</span>
                       <span className="text-slate-400">{yr}</span>
                     </span>
                   )
