@@ -176,6 +176,25 @@ export default async function SchoolProfilePage({
   const pc = profile.primary_color ?? '#1a1a2e'
   const sc = profile.secondary_color ?? '#FFD700'
 
+  // Resolve the RPC-compatible school name
+  // RPCs use school_context_raw which matches school_names.school_name, not schools.display_name
+  // e.g. "Lower Cape May Reg" (school_names) vs "Lower Cape May Regional" (schools.display_name)
+  let rpcSchoolName = schoolName
+  if (profileData && profile.display_name !== schoolName) {
+    // schoolName already came from school_names, should be fine
+  } else if (profileData) {
+    // schoolName came from display_name fallback — look up the RPC-compatible name
+    const { data: snLookup } = await supabase
+      .from('school_names')
+      .select('school_name')
+      .ilike('school_name', `${profile.display_name.substring(0, Math.min(15, profile.display_name.length))}%`)
+      .limit(1)
+      .maybeSingle()
+    if (snLookup) {
+      rpcSchoolName = (snLookup as { school_name: string }).school_name
+    }
+  }
+
   // Step 3: Fetch wrestling data
   let rows: WrestlerRow[] = []
   let bdRows: BreakdownRow[] = []
@@ -184,21 +203,21 @@ export default async function SchoolProfilePage({
 
   try {
     const wrestlersPromise = gender === 'girls'
-      ? supabase.rpc('girls_school_wrestlers', { p_school: schoolName, p_season: season })
-      : supabase.rpc('school_wrestlers', { p_school: schoolName, p_gender: genderCode, p_season: season })
+      ? supabase.rpc('girls_school_wrestlers', { p_school: rpcSchoolName, p_season: season })
+      : supabase.rpc('school_wrestlers', { p_school: rpcSchoolName, p_gender: genderCode, p_season: season })
 
     // Query precomputed_team_scores directly for this school
-    // Try schoolName first (from school_names), then profile.display_name (from schools table)
+    // Try rpcSchoolName first, then schoolName, then display_name for precomputed scores
     const tsPromise = supabase
       .from('precomputed_team_scores')
       .select('tournament_type, total_points')
-      .eq('school_name', schoolName)
+      .eq('school_name', rpcSchoolName)
       .eq('season_id', season)
 
     const [bdResult, wrResult, ldResult, tsResult] = await Promise.all([
-      supabase.rpc('school_points_breakdown', { p_school: schoolName, p_gender: genderCode, p_season: season }),
+      supabase.rpc('school_points_breakdown', { p_school: rpcSchoolName, p_gender: genderCode, p_season: season }),
       wrestlersPromise,
-      supabase.rpc('school_leaderboard', { p_school: schoolName, p_gender: genderCode, p_season: season }),
+      supabase.rpc('school_leaderboard', { p_school: rpcSchoolName, p_gender: genderCode, p_season: season }),
       tsPromise,
     ])
 
@@ -211,14 +230,20 @@ export default async function SchoolProfilePage({
     leaderRows = (ldResult.data ?? []) as LeaderRow[]
     teamScoreRows = (tsResult.data ?? []) as { tournament_type: string; total_points: number }[]
 
-    // If no results with schoolName, try profile.display_name (which may differ)
-    if (teamScoreRows.length === 0 && profile.display_name !== schoolName) {
-      const { data: tsRetry } = await supabase
-        .from('precomputed_team_scores')
-        .select('tournament_type, total_points')
-        .eq('school_name', profile.display_name)
-        .eq('season_id', season)
-      teamScoreRows = (tsRetry ?? []) as { tournament_type: string; total_points: number }[]
+    // If no results, try alternative names (display_name, schoolName)
+    if (teamScoreRows.length === 0) {
+      const altNames = [profile.display_name, schoolName].filter(n => n !== rpcSchoolName)
+      for (const altName of altNames) {
+        const { data: tsRetry } = await supabase
+          .from('precomputed_team_scores')
+          .select('tournament_type, total_points')
+          .eq('school_name', altName)
+          .eq('season_id', season)
+        if (tsRetry && tsRetry.length > 0) {
+          teamScoreRows = tsRetry as { tournament_type: string; total_points: number }[]
+          break
+        }
+      }
     }
   } catch (e) {
     console.error('[SchoolProfile] RPC fetch error:', e)
