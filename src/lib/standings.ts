@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase'
 
 type SchoolRow = {
+  id?: number
   display_name: string
   mascot: string | null
   primary_color: string | null
@@ -19,31 +20,50 @@ export async function buildStandings(
   gender: string,
   season: number,
 ): Promise<StandingsRow[]> {
-  const schoolNames = schools.map(s => s.display_name)
-  if (schoolNames.length === 0) return []
+  if (schools.length === 0) return []
 
-  const { data: scoresData } = await supabase
-    .from('precomputed_team_scores')
-    .select('school_name, tournament_type, total_points')
-    .in('school_name', schoolNames)
-    .eq('season_id', season)
+  // Prefer school_id join, fall back to school_name
+  const schoolIds = schools.map(s => s.id).filter((id): id is number => id != null && id > 0)
+  const useIds = schoolIds.length === schools.length
+
+  let scoresData: { school_id?: number; school_name?: string; tournament_type: string; total_points: number }[] | null
+
+  if (useIds) {
+    const { data } = await supabase
+      .from('precomputed_team_scores')
+      .select('school_id, tournament_type, total_points')
+      .in('school_id', schoolIds)
+      .eq('season_id', season)
+    scoresData = data
+  } else {
+    const schoolNames = schools.map(s => s.display_name)
+    const { data } = await supabase
+      .from('precomputed_team_scores')
+      .select('school_name, tournament_type, total_points')
+      .in('school_name', schoolNames)
+      .eq('season_id', season)
+    scoresData = data
+  }
 
   const regionKey = gender === 'girls' ? 'girls_regions' : 'regions'
   const stateKey = gender === 'girls' ? 'girls_state' : 'boys_state'
   const relevantTypes = ['districts', regionKey, stateKey]
 
-  const scoreMap = new Map<string, { district: number; region: number; state: number }>()
-  for (const r of (scoresData ?? []) as { school_name: string; tournament_type: string; total_points: number }[]) {
+  // Build score map keyed by id or name
+  const scoreMap = new Map<string | number, { district: number; region: number; state: number }>()
+  for (const r of (scoresData ?? []) as { school_id?: number; school_name?: string; tournament_type: string; total_points: number }[]) {
     if (!relevantTypes.includes(r.tournament_type)) continue
-    const entry = scoreMap.get(r.school_name) ?? { district: 0, region: 0, state: 0 }
+    const key = useIds ? r.school_id! : r.school_name!
+    const entry = scoreMap.get(key) ?? { district: 0, region: 0, state: 0 }
     if (r.tournament_type === 'districts') entry.district += r.total_points
     else if (r.tournament_type === regionKey) entry.region += r.total_points
     else if (r.tournament_type === stateKey) entry.state += r.total_points
-    scoreMap.set(r.school_name, entry)
+    scoreMap.set(key, entry)
   }
 
   const standings: StandingsRow[] = schools.map(s => {
-    const scores = scoreMap.get(s.display_name)
+    const key = useIds ? s.id! : s.display_name
+    const scores = scoreMap.get(key)
     return {
       ...s,
       district_points: scores?.district ?? 0,

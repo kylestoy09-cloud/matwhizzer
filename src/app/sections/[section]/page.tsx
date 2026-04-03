@@ -24,7 +24,7 @@ export default async function SectionPage({
 
   const { data: schoolsData } = await supabase
     .from('schools')
-    .select('display_name, mascot, primary_color, logo_url, classification')
+    .select('id, display_name, mascot, primary_color, logo_url, classification')
     .eq('section', sectionName)
     .eq('is_combined', false)
     .order('display_name')

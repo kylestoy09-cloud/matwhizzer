@@ -230,12 +230,12 @@ export default async function SchoolProfilePage({
       ? supabase.rpc('girls_school_wrestlers', { p_school: rpcSchoolName, p_season: season })
       : supabase.rpc('school_wrestlers', { p_school: rpcSchoolName, p_gender: genderCode, p_season: season })
 
-    // Query precomputed_team_scores — try profile.display_name first (matches precomputed data)
-    const tsPromise = supabase
-      .from('precomputed_team_scores')
-      .select('tournament_type, total_points')
-      .eq('school_name', profile.display_name)
-      .eq('season_id', season)
+    // Query precomputed_team_scores by school_id (reliable) with school_name fallback
+    const tsPromise = profile.id > 0
+      ? supabase.from('precomputed_team_scores').select('tournament_type, total_points')
+          .eq('school_id', profile.id).eq('season_id', season)
+      : supabase.from('precomputed_team_scores').select('tournament_type, total_points')
+          .eq('school_name', profile.display_name).eq('season_id', season)
 
     const [bdResult, wrResult, ldResult, tsResult] = await Promise.all([
       supabase.rpc('school_points_breakdown', { p_school: rpcSchoolName, p_gender: genderCode, p_season: season }),
@@ -253,10 +253,10 @@ export default async function SchoolProfilePage({
     leaderRows = (ldResult.data ?? []) as LeaderRow[]
     teamScoreRows = (tsResult.data ?? []) as { tournament_type: string; total_points: number }[]
 
-    // If no results, try alternative names (rpcSchoolName, schoolName)
-    if (teamScoreRows.length === 0) {
-      const altNames = [rpcSchoolName, schoolName].filter(n => n !== profile.display_name)
-      for (const altName of altNames) {
+    // Fallback: if school_id query returned nothing, try by name
+    if (teamScoreRows.length === 0 && profile.id > 0) {
+      const altNames = [profile.display_name, rpcSchoolName, schoolName]
+      for (const altName of new Set(altNames)) {
         const { data: tsRetry } = await supabase
           .from('precomputed_team_scores')
           .select('tournament_type, total_points')

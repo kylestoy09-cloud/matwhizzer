@@ -26,7 +26,7 @@ export default async function GroupPage({
 
   const { data: schoolsData } = await supabase
     .from('schools')
-    .select('display_name, mascot, primary_color, logo_url, section')
+    .select('id, display_name, mascot, primary_color, logo_url, section')
     .eq('classification', groupName)
     .eq('is_combined', false)
     .order('display_name')
