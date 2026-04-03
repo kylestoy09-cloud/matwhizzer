@@ -8,7 +8,6 @@ import { notFound } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
 import { conferenceToSlug } from '@/lib/conferences'
 import { sectionToSlug, groupToSlug } from '@/lib/sections'
-import { districtToSlug, regionToSlug } from '@/lib/districts'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { FollowSchoolButton } from '@/components/FollowSchoolButton'
 import { SchoolTabs } from './SchoolTabs'
@@ -336,8 +335,10 @@ export default async function SchoolProfilePage({
   const tags: string[] = []
   if (profile.town) tags.push(profile.town)
   if (profile.county) tags.push(`${profile.county} County`)
-  const districtSlug = districtLabel ? districtToSlug(districtLabel) : null
-  const regionSlug = regionLabel ? regionToSlug(regionLabel) : null
+  // Extract number from "District 25" → "25", "Region 7" → "7"
+  const districtNum = districtLabel?.match(/\d+/)?.[0] ?? null
+  const regionNum = regionLabel?.match(/\d+/)?.[0] ?? null
+  const genderBase = gender === 'girls' ? '/girls' : '/boys'
   const conferenceSlug = profile.athletic_conference ? conferenceToSlug(profile.athletic_conference) : null
   const secSlug = profile.section ? sectionToSlug(profile.section) : null
   const grpSlug = profile.classification ? groupToSlug(profile.classification) : null
@@ -407,11 +408,11 @@ export default async function SchoolProfilePage({
               {tags.map(tag => (
                 <span key={tag} className="text-[10px] px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-500">{tag}</span>
               ))}
-              {districtLabel && districtSlug && (
-                <Link href={`/districts/${districtSlug}`} className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-600">{districtLabel}</Link>
+              {districtLabel && districtNum && (
+                <Link href={`${genderBase}/districts/${districtNum}`} className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-600">{districtLabel}</Link>
               )}
-              {regionLabel && regionSlug && (
-                <Link href={`/regions/${regionSlug}`} className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-600">{regionLabel}</Link>
+              {regionLabel && regionNum && (
+                <Link href={`${genderBase}/regions/${regionNum}`} className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-600">{regionLabel}</Link>
               )}
               {classLabel && secSlug && grpSlug && (
                 <Link href={`/sections/${secSlug}/${grpSlug}?gender=${gender}`} className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-600">{classLabel}</Link>
@@ -462,13 +463,13 @@ export default async function SchoolProfilePage({
                     {tags.map(tag => (
                       <span key={tag} className="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">{tag}</span>
                     ))}
-                    {districtLabel && districtSlug && (
-                      <Link href={`/districts/${districtSlug}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
+                    {districtLabel && districtNum && (
+                      <Link href={`${genderBase}/districts/${districtNum}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
                         {districtLabel}
                       </Link>
                     )}
-                    {regionLabel && regionSlug && (
-                      <Link href={`/regions/${regionSlug}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
+                    {regionLabel && regionNum && (
+                      <Link href={`${genderBase}/regions/${regionNum}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
                         {regionLabel}
                       </Link>
                     )}
