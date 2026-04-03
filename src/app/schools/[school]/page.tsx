@@ -451,6 +451,19 @@ export default async function SchoolProfilePage({
         </div>
       </div>
 
+      {/* DEBUG: visible on staging — remove after fixing */}
+      <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-3 mb-4 text-xs font-mono">
+        <p><strong>DEBUG query info:</strong></p>
+        <p>schoolName (from URL): <code>{schoolName}</code></p>
+        <p>rpcSchoolName (for RPCs): <code>{rpcSchoolName}</code></p>
+        <p>profile.display_name: <code>{profile.display_name}</code></p>
+        <p>season: <code>{season}</code></p>
+        <p>gender: <code>{gender}</code> / genderCode: <code>{genderCode}</code></p>
+        <p>teamScoreRows ({teamScoreRows.length}): <code>{JSON.stringify(teamScoreRows)}</code></p>
+        <p>computed teamScore: <code>{JSON.stringify(teamScore)}</code></p>
+        <p>totalPts: <code>{totalPts}</code></p>
+      </div>
+
       {/* ── TABS ── */}
       <SchoolTabs
         school={school}
