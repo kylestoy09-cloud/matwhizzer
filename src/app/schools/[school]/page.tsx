@@ -308,10 +308,35 @@ export default async function SchoolProfilePage({
   const totalPts = teamScore?.total_points ?? bdRows.reduce((sum, r) => sum + Number(r.total_points), 0)
   const totalWins = bdRows.reduce((sum, r) => sum + Number(r.win_count), 0)
 
+  // Fetch district and region assignments for this school
+  let districtLabel: string | null = null
+  let regionLabel: string | null = null
+
+  if (profile.id > 0) {
+    const [{ data: distData }, { data: regData }] = await Promise.all([
+      supabase.from('school_districts').select('district:districts(name)').eq('school_id', profile.id),
+      supabase.from('school_regions').select('region:regions(name,gender)').eq('school_id', profile.id),
+    ])
+    if (distData && distData.length > 0) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const d = distData[0] as any
+      districtLabel = d.district?.name ?? null
+    }
+    if (regData && regData.length > 0) {
+      // Pick the region matching the selected gender, or the first one
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const regions = regData as any[]
+      const genderMatch = regions.find(r => r.region?.gender === genderCode)
+      regionLabel = (genderMatch ?? regions[0])?.region?.name ?? null
+    }
+  }
+
   // Build pill tags
   const tags: string[] = []
   if (profile.town) tags.push(profile.town)
   if (profile.county) tags.push(`${profile.county} County`)
+  if (districtLabel) tags.push(districtLabel)
+  if (regionLabel) tags.push(regionLabel)
   const conferenceSlug = profile.athletic_conference ? conferenceToSlug(profile.athletic_conference) : null
   const secSlug = profile.section ? sectionToSlug(profile.section) : null
   const grpSlug = profile.classification ? groupToSlug(profile.classification) : null
