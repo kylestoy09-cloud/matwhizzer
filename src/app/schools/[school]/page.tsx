@@ -295,13 +295,13 @@ export default async function SchoolProfilePage({
           <Image
             src={profile.logo_url}
             alt={profile.display_name}
-            width={512}
-            height={512}
-            className="w-full aspect-square object-cover"
+            width={1079}
+            height={647}
+            className="w-full h-auto"
           />
         ) : (
           <div
-            className="w-full aspect-square flex items-center justify-center text-6xl font-bold"
+            className="w-full aspect-video flex items-center justify-center text-6xl font-bold"
             style={{ backgroundColor: pc, color: sc }}
           >
             {schoolInitials(profile)}
@@ -348,9 +348,9 @@ export default async function SchoolProfilePage({
             <Image
               src={profile.logo_url}
               alt={profile.display_name}
-              width={200}
-              height={200}
-              className="w-[200px] h-[200px] rounded-xl object-cover shadow-lg border-2 border-white"
+              width={1079}
+              height={647}
+              className="w-[280px] h-auto rounded-xl shadow-lg border-2 border-white"
             />
           ) : (
             <div
