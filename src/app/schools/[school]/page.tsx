@@ -148,11 +148,35 @@ export default async function SchoolProfilePage({
   }
 
   // Step 2: Look up full profile from schools table
-  const { data: profileData, error: profileError } = await supabase
+  // Try exact match first, then ILIKE prefix match for abbreviated names
+  let profileData: SchoolProfile | null = null
+  let profileError: { message: string } | null = null
+
+  const { data: profileExact, error: profileErr1 } = await supabase
     .from('schools')
     .select('id, display_name, short_name, mascot, nickname, primary_color, secondary_color, tertiary_color, town, county, section, classification, founded_year, website_url, twitter_handle, athletic_conference, logo_url')
     .eq('display_name', schoolName)
     .maybeSingle()
+
+  if (profileErr1) {
+    profileError = profileErr1
+  } else if (profileExact) {
+    profileData = profileExact as SchoolProfile
+  } else {
+    // Exact match failed — try ILIKE prefix (handles "Lower Cape May Reg" → "Lower Cape May Regional")
+    const { data: profileFuzzy, error: profileErr2 } = await supabase
+      .from('schools')
+      .select('id, display_name, short_name, mascot, nickname, primary_color, secondary_color, tertiary_color, town, county, section, classification, founded_year, website_url, twitter_handle, athletic_conference, logo_url')
+      .ilike('display_name', `${schoolName}%`)
+      .limit(1)
+      .maybeSingle()
+
+    if (profileErr2) {
+      profileError = profileErr2
+    } else if (profileFuzzy) {
+      profileData = profileFuzzy as SchoolProfile
+    }
+  }
 
   if (profileError) {
     console.error('[SchoolProfile] schools query error:', profileError)
@@ -165,7 +189,7 @@ export default async function SchoolProfilePage({
     )
   }
 
-  const profile: SchoolProfile = (profileData as SchoolProfile | null) ?? {
+  const profile: SchoolProfile = profileData ?? {
     id: 0, display_name: schoolName, short_name: null, mascot: null, nickname: null,
     primary_color: '#1a1a2e', secondary_color: '#FFD700', tertiary_color: null,
     town: null, county: null, section: null, classification: null,
@@ -206,12 +230,11 @@ export default async function SchoolProfilePage({
       ? supabase.rpc('girls_school_wrestlers', { p_school: rpcSchoolName, p_season: season })
       : supabase.rpc('school_wrestlers', { p_school: rpcSchoolName, p_gender: genderCode, p_season: season })
 
-    // Query precomputed_team_scores directly for this school
-    // Try rpcSchoolName first, then schoolName, then display_name for precomputed scores
+    // Query precomputed_team_scores — try profile.display_name first (matches precomputed data)
     const tsPromise = supabase
       .from('precomputed_team_scores')
       .select('tournament_type, total_points')
-      .eq('school_name', rpcSchoolName)
+      .eq('school_name', profile.display_name)
       .eq('season_id', season)
 
     const [bdResult, wrResult, ldResult, tsResult] = await Promise.all([
@@ -230,9 +253,9 @@ export default async function SchoolProfilePage({
     leaderRows = (ldResult.data ?? []) as LeaderRow[]
     teamScoreRows = (tsResult.data ?? []) as { tournament_type: string; total_points: number }[]
 
-    // If no results, try alternative names (display_name, schoolName)
+    // If no results, try alternative names (rpcSchoolName, schoolName)
     if (teamScoreRows.length === 0) {
-      const altNames = [profile.display_name, schoolName].filter(n => n !== rpcSchoolName)
+      const altNames = [rpcSchoolName, schoolName].filter(n => n !== profile.display_name)
       for (const altName of altNames) {
         const { data: tsRetry } = await supabase
           .from('precomputed_team_scores')
