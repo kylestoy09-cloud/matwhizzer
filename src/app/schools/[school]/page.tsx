@@ -11,6 +11,7 @@ import { sectionToSlug, groupToSlug } from '@/lib/sections'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { FollowSchoolButton } from '@/components/FollowSchoolButton'
 import { SchoolTabs } from './SchoolTabs'
+import { WrestlerAvatar } from '@/components/WrestlerAvatar'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -515,6 +516,34 @@ export default async function SchoolProfilePage({
             </div>
           </div>
         </div>
+      </div>
+
+      {/* TEMPORARY TEST — remove after confirming avatar renders */}
+      <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-4 mb-4">
+        <p className="text-xs font-bold text-yellow-700 mb-2">WrestlerAvatar test:</p>
+        <div className="flex gap-4 items-end">
+          <WrestlerAvatar
+            school={{ display_name: 'Test School', primary_color: '#1e40af', secondary_color: '#f5c400', logo_url: null }}
+            weight={157}
+            size="sm"
+          />
+          <WrestlerAvatar
+            school={{ display_name: 'Test School', primary_color: '#1e40af', secondary_color: '#f5c400', logo_url: null }}
+            weight={157}
+            size="md"
+          />
+          <WrestlerAvatar
+            school={{ display_name: 'Test School', primary_color: '#1e40af', secondary_color: '#f5c400', logo_url: null }}
+            weight={157}
+            size="lg"
+          />
+          <WrestlerAvatar
+            school={{ display_name: profile.display_name, primary_color: profile.primary_color, secondary_color: profile.secondary_color, logo_url: profile.logo_url }}
+            weight={165}
+            size="md"
+          />
+        </div>
+        <p className="text-[10px] text-yellow-600 mt-2">schoolData passed: pc={profile.primary_color}, sc={profile.secondary_color}, logo={profile.logo_url ? 'yes' : 'null'}</p>
       </div>
 
       {/* ── TABS ── */}
