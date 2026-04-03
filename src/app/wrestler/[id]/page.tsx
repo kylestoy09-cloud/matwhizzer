@@ -634,11 +634,12 @@ export default async function WrestlerPage({
 
       {/* ── HEADER ── */}
 
-      {/* Mobile: avatar above, sticky info bar */}
+      {/* Mobile: full width logo, edge to edge */}
       <div className="md:hidden sticky top-0 z-20">
-        <div className="flex justify-center bg-white pb-2">
+        <div className="w-full relative">
           {WRESTLER_PHOTOS[wrestler.id] ? (
-            <Image src={WRESTLER_PHOTOS[wrestler.id]} alt={displayName} width={120} height={120} className="object-contain w-[120px] h-[120px]" />
+            <Image src={WRESTLER_PHOTOS[wrestler.id]} alt={displayName}
+              width={1079} height={647} className="w-full h-auto" />
           ) : (
             <WrestlerAvatar school={schoolProfile} weight={bestWeight} size="lg" />
           )}

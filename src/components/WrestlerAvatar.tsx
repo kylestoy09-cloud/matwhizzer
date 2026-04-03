@@ -29,19 +29,24 @@ export function WrestlerAvatar({ school, weight, size = 'sm' }: WrestlerAvatarPr
   const sc = school.secondary_color ?? '#FFD700'
   const hasWeight = weight != null && weight > 0
 
+  const isLg = size === 'lg'
+
   return (
-    <div className="relative inline-block shrink-0" style={{ width: s.width }}>
+    <div
+      className={`relative ${isLg ? 'w-full' : 'inline-block shrink-0'}`}
+      style={isLg ? { paddingBottom: 32 } : { width: s.width }}
+    >
       {school.logo_url ? (
         <Image
           src={school.logo_url}
           alt={school.display_name}
           width={1079}
           height={647}
-          className="w-full h-auto rounded-lg"
+          className={`w-full h-auto ${isLg ? '' : 'rounded-lg'}`}
         />
       ) : (
         <div
-          className={`w-full aspect-[1079/647] rounded-lg flex items-center justify-center font-bold ${s.initials}`}
+          className={`w-full aspect-[1079/647] ${isLg ? '' : 'rounded-lg'} flex items-center justify-center font-bold ${s.initials}`}
           style={{ backgroundColor: pc, color: sc }}
         >
           {schoolInitials(school.display_name)}
