@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { WrestlerAvatar } from '@/components/WrestlerAvatar'
 
 type WrestlerRow = {
   wrestler_id: string
@@ -54,12 +55,21 @@ const TABS = [
 
 type TeamScoreData = { district_points: number; region_points: number; state_points: number; total_points: number } | null
 
+type SchoolData = {
+  display_name: string
+  primary_color: string | null
+  secondary_color: string | null
+  logo_url: string | null
+}
+
 export function SchoolTabs({
   school, gender, activeTab, primaryColor,
+  schoolData,
   wrestlers, breakdown, leaders, teamScore,
   totalPts, totalWins, stateMedalists, tourneyLabel,
 }: {
   school: string; gender: string; activeTab: string; primaryColor: string
+  schoolData: SchoolData
   wrestlers: WrestlerRow[]; breakdown: BreakdownRow[]; leaders: LeaderRow[]
   teamScore: TeamScoreData
   totalPts: number; totalWins: number; stateMedalists: number
@@ -203,8 +213,8 @@ export function SchoolTabs({
               </div>
               <div className="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden divide-y divide-slate-50">
                 {wrestlers.filter(w => w.state_placement || w.regions_placement || w.districts_placement).slice(0, 10).map(w => (
-                  <div key={w.wrestler_id} className="flex items-center gap-2 px-4 py-2">
-                    <span className="text-[10px] text-slate-400 w-8 text-right tabular-nums shrink-0">{w.primary_weight}</span>
+                  <div key={w.wrestler_id} className="flex items-center gap-3 px-4 py-2">
+                    <WrestlerAvatar school={schoolData} weight={w.primary_weight} size="sm" />
                     <Link href={`/wrestler/${w.wrestler_id}`} className="text-sm font-medium text-slate-800 hover:underline truncate flex-1">{w.wrestler_name}</Link>
                     <div className="flex items-center gap-1 shrink-0">
                       {w.state_placement && <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full ${placeBadgeClass(w.state_placement)}`}>{w.state_placement}</span>}
@@ -238,7 +248,10 @@ export function SchoolTabs({
                   <tr key={w.wrestler_id} className="hover:bg-slate-50">
                     <td className="px-4 py-2.5 text-right tabular-nums text-slate-500 font-mono text-xs">{i === 0 ? `${wt} lb` : ''}</td>
                     <td className="px-4 py-2.5">
-                      <Link href={`/wrestler/${w.wrestler_id}`} className="font-medium text-slate-800 hover:underline">{w.wrestler_name}</Link>
+                      <Link href={`/wrestler/${w.wrestler_id}`} className="flex items-center gap-2.5 group">
+                        <WrestlerAvatar school={schoolData} weight={w.primary_weight} size="sm" />
+                        <span className="font-medium text-slate-800 group-hover:underline">{w.wrestler_name}</span>
+                      </Link>
                     </td>
                     <td className="px-4 py-2.5 hidden sm:table-cell"><PlaceBadge placement={w.districts_placement} short={w.districts_short} /></td>
                     <td className="px-4 py-2.5 hidden sm:table-cell"><PlaceBadge placement={w.regions_placement} short={w.regions_short} /></td>

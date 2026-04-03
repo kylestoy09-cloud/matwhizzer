@@ -523,6 +523,12 @@ export default async function SchoolProfilePage({
         gender={gender}
         activeTab={activeTab}
         primaryColor={pc}
+        schoolData={{
+          display_name: profile.display_name,
+          primary_color: profile.primary_color,
+          secondary_color: profile.secondary_color,
+          logo_url: profile.logo_url,
+        }}
         wrestlers={rows}
         breakdown={bdRows}
         leaders={leaderRows}
