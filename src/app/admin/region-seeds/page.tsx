@@ -191,7 +191,7 @@ export default function RegionSeedsPage() {
       {/* Selectors */}
       <div className="flex gap-4 mb-4">
         <select
-          className="border border-slate-300 rounded-lg px-3 py-2 text-sm"
+          className="border border-slate-300 rounded-none px-3 py-2 text-sm"
           value={selectedTid}
           onChange={e => setSelectedTid(Number(e.target.value))}
         >
@@ -200,7 +200,7 @@ export default function RegionSeedsPage() {
           ))}
         </select>
         <select
-          className="border border-slate-300 rounded-lg px-3 py-2 text-sm"
+          className="border border-slate-300 rounded-none px-3 py-2 text-sm"
           value={selectedWeight}
           onChange={e => setSelectedWeight(Number(e.target.value))}
         >
@@ -214,7 +214,7 @@ export default function RegionSeedsPage() {
       <div className="mb-6">
         <label className="text-xs text-slate-500 font-medium block mb-1">Jump to flagged bracket:</label>
         <select
-          className="border border-red-300 bg-red-50 rounded-lg px-3 py-2 text-sm w-full"
+          className="border border-red-300 bg-red-50 rounded-none px-3 py-2 text-sm w-full"
           value=""
           onChange={e => {
             const [tid, weight] = e.target.value.split(':').map(Number)
@@ -235,13 +235,13 @@ export default function RegionSeedsPage() {
 
       {/* Issue banner */}
       {currentFlag && (
-        <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-3 mb-4 text-sm text-red-800">
+        <div className="bg-red-50 border border-red-200 rounded-none px-4 py-3 mb-4 text-sm text-red-800">
           <span className="font-semibold">Issue:</span> {currentFlag.issue}
         </div>
       )}
 
       {/* Slot list */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden mb-6">
+      <div className="bg-white rounded-none border border-black shadow-none overflow-hidden mb-6">
         <table className="w-full text-sm">
           <thead>
             <tr className="bg-slate-50 border-b border-slate-200 text-xs uppercase text-slate-500">
@@ -304,7 +304,7 @@ export default function RegionSeedsPage() {
       {/* Save */}
       <div className="flex items-center gap-4">
         <button
-          className="px-4 py-2 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 disabled:opacity-50"
+          className="px-4 py-2 bg-emerald-600 text-white rounded-none font-medium hover:bg-emerald-700 disabled:opacity-50"
           onClick={handleSave}
           disabled={saving}
         >

@@ -115,7 +115,7 @@ function StatCard<T extends { wrestler_id: string; wrestler_name: string; school
   note?: string
 }) {
   return (
-    <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+    <div className="bg-white rounded-none border border-black shadow-none overflow-hidden">
       <div className="px-4 py-3 border-b border-slate-100 bg-slate-50">
         <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide">{title}</h3>
         {note && <p className="text-[10px] text-slate-400 mt-0.5">{note}</p>}
@@ -230,10 +230,10 @@ export default async function GirlsRegionSummaryPage({
           <Link
             key={rn}
             href={`/girls/regions/${rn}`}
-            className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-colors ${
+            className={`px-3 py-1.5 rounded-none text-sm font-semibold transition-colors ${
               rn === region
                 ? 'bg-rose-800 text-white'
-                : 'bg-white border border-rose-200 text-slate-700 hover:bg-rose-50 hover:border-rose-400 shadow-sm'
+                : 'bg-white border border-black text-slate-700 hover:bg-rose-50 hover:border-rose-400 shadow-none'
             }`}
           >
             R{rn}
@@ -256,7 +256,7 @@ export default async function GirlsRegionSummaryPage({
           <Link
             key={w}
             href={`/girls/regions/${region}/${w}`}
-            className="flex flex-col items-center justify-center py-4 rounded-lg border border-slate-200 bg-white hover:bg-rose-50 hover:border-rose-300 transition-colors shadow-sm"
+            className="flex flex-col items-center justify-center py-4 rounded-none border border-black bg-white hover:bg-rose-50 hover:border-rose-300 transition-colors shadow-none"
           >
             <span className="text-base font-bold text-slate-800">{w}</span>
             <span className="text-[10px] text-slate-400 font-medium tracking-wide">lbs</span>
@@ -267,7 +267,7 @@ export default async function GirlsRegionSummaryPage({
       {/* ── Placements ── */}
       <section className="mb-10">
         <h2 className="text-base font-semibold text-slate-800 mb-3">Placements</h2>
-        <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+        <div className="overflow-x-auto rounded-none border border-black shadow-none">
           <table className="min-w-full text-sm">
             <thead>
               <tr className="bg-slate-50 border-b border-slate-200">
@@ -420,7 +420,7 @@ export default async function GirlsRegionSummaryPage({
                     <Link
                       key={s.school}
                       href={`/schools/${encodeURIComponent(s.school)}`}
-                      className="px-3 py-1.5 text-sm font-medium bg-white border border-rose-200 rounded-full hover:border-rose-400 hover:bg-rose-50 transition-colors shadow-sm"
+                      className="px-3 py-1.5 text-sm font-medium bg-white border border-rose-200 rounded-full hover:border-rose-400 hover:bg-rose-50 transition-colors shadow-none"
                     >
                       {s.school_name || s.school}
                     </Link>

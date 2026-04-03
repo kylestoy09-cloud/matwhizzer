@@ -333,7 +333,7 @@ export function BracketEditor({ tournaments, weightClasses }: BracketEditorProps
       {/* Toast */}
       {toast && (
         <div
-          className={`fixed bottom-6 right-6 z-50 px-4 py-2 rounded-lg shadow-lg text-sm font-medium ${
+          className={`fixed bottom-6 right-6 z-50 px-4 py-2 rounded-none shadow-none text-sm font-medium ${
             toast.type === 'success'
               ? 'bg-green-600 text-white'
               : 'bg-red-600 text-white'
@@ -509,7 +509,7 @@ function MatchCard({
       onClick={onClick}
       tabIndex={0}
       className={`w-full text-left border-l-4 ${BORDER_COLORS[status]}
-        bg-white rounded-r shadow-sm px-2 py-1 text-[11px] leading-tight
+        bg-white rounded-none shadow-none px-2 py-1 text-[11px] leading-tight
         hover:bg-blue-50 transition-colors group cursor-pointer
         ${isSelected ? 'ring-2 ring-blue-500 bg-blue-50' : ''}`}
     >

@@ -49,7 +49,7 @@ export default async function SectionPage({
           <p className="text-sm text-slate-500 mt-1">{standings.length} schools · {gender === 'girls' ? 'Girls' : 'Boys'} Wrestling</p>
         </div>
         <div className="flex flex-col items-end gap-2 shrink-0">
-          <div className="flex rounded-lg border border-slate-200 overflow-hidden text-sm">
+          <div className="flex rounded-none border border-slate-200 overflow-hidden text-sm">
             <Link href={`/sections/${slug}?gender=boys`} className={`px-3 py-1.5 font-medium transition-colors ${gender === 'boys' ? 'bg-slate-900 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}>Boys</Link>
             <Link href={`/sections/${slug}?gender=girls`} className={`px-3 py-1.5 font-medium transition-colors ${gender === 'girls' ? 'bg-rose-700 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}>Girls</Link>
           </div>
@@ -61,7 +61,7 @@ export default async function SectionPage({
       <div className="flex flex-wrap gap-2 mb-6">
         {groups.map(g => (
           <Link key={g.slug} href={`/sections/${slug}/${g.slug}?gender=${gender}`}
-            className="px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-sm font-medium text-slate-700 hover:bg-slate-100 transition-colors">
+            className="px-3 py-1.5 rounded-none border border-slate-200 bg-slate-50 text-sm font-medium text-slate-700 hover:bg-slate-100 transition-colors">
             {g.label}
           </Link>
         ))}

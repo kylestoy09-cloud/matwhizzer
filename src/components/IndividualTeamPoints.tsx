@@ -27,7 +27,7 @@ export function IndividualTeamPoints({
   const hasBreakdown = rows.length > 0 && rows[0].district_pts != null
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+    <div className="bg-white rounded-none border border-black shadow-none overflow-hidden">
       <div className="px-4 py-3 border-b border-slate-100 bg-slate-50">
         <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide">{title}</h3>
       </div>

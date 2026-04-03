@@ -46,7 +46,7 @@ export default function FeedbackPage() {
       <p className="text-slate-500 text-sm mb-8">Questions, corrections, or suggestions — we read everything.</p>
 
       {status === 'sent' ? (
-        <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-6 py-8 text-center">
+        <div className="rounded-none border border-black shadow-none bg-emerald-50 px-6 py-8 text-center">
           <p className="text-lg font-semibold text-emerald-800 mb-1">Thanks for reaching out!</p>
           <p className="text-sm text-emerald-700">We&apos;ll get back to you if you left an email.</p>
           <button
@@ -67,7 +67,7 @@ export default function FeedbackPage() {
               value={name}
               onChange={e => setName(e.target.value)}
               placeholder="Your name"
-              className="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-base shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500"
+              className="w-full border border-slate-300 rounded-none px-4 py-2.5 text-base shadow-none focus:outline-none focus:ring-2 focus:ring-slate-500"
             />
           </div>
 
@@ -80,7 +80,7 @@ export default function FeedbackPage() {
               value={email}
               onChange={e => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-base shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500"
+              className="w-full border border-slate-300 rounded-none px-4 py-2.5 text-base shadow-none focus:outline-none focus:ring-2 focus:ring-slate-500"
             />
           </div>
 
@@ -94,7 +94,7 @@ export default function FeedbackPage() {
               placeholder="What's on your mind?"
               rows={5}
               required
-              className="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-base shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 resize-none"
+              className="w-full border border-slate-300 rounded-none px-4 py-2.5 text-base shadow-none focus:outline-none focus:ring-2 focus:ring-slate-500 resize-none"
             />
           </div>
 
@@ -105,7 +105,7 @@ export default function FeedbackPage() {
           <button
             type="submit"
             disabled={status === 'sending' || !message.trim()}
-            className="w-full bg-slate-800 text-white py-2.5 rounded-lg font-medium hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-slate-800 text-white py-2.5 rounded-none font-medium hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {status === 'sending' ? 'Sending…' : 'Send Message'}
           </button>

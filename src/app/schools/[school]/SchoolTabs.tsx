@@ -124,19 +124,19 @@ export function SchoolTabs({
         <div className="space-y-8">
           {/* Quick stats */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div className="bg-white border border-slate-200 rounded-lg p-4 text-center">
+            <div className="bg-white border border-black rounded-none p-4 text-center">
               <p className="text-2xl font-bold text-slate-900 tabular-nums">{Math.round(totalPts * 10) / 10}</p>
               <p className="text-xs text-slate-500 mt-0.5">Team Points</p>
             </div>
-            <div className="bg-white border border-slate-200 rounded-lg p-4 text-center">
+            <div className="bg-white border border-black rounded-none p-4 text-center">
               <p className="text-2xl font-bold text-slate-900 tabular-nums">{totalWins}</p>
               <p className="text-xs text-slate-500 mt-0.5">Total Wins</p>
             </div>
-            <div className="bg-white border border-slate-200 rounded-lg p-4 text-center">
+            <div className="bg-white border border-black rounded-none p-4 text-center">
               <p className="text-2xl font-bold text-slate-900 tabular-nums">{stateMedalists}</p>
               <p className="text-xs text-slate-500 mt-0.5">State Medalists</p>
             </div>
-            <div className="bg-white border border-slate-200 rounded-lg p-4 text-center">
+            <div className="bg-white border border-black rounded-none p-4 text-center">
               <p className="text-2xl font-bold text-slate-900 tabular-nums">{wrestlers.length}</p>
               <p className="text-xs text-slate-500 mt-0.5">Wrestlers</p>
             </div>
@@ -146,7 +146,7 @@ export function SchoolTabs({
           {teamScore && (
             <section>
               <h3 className="text-sm font-semibold text-slate-800 mb-2">Points Breakdown</h3>
-              <div className="inline-block border border-slate-200 rounded-lg overflow-hidden shadow-sm bg-white">
+              <div className="inline-block border border-black rounded-none overflow-hidden shadow-none bg-white">
                 <table className="text-sm">
                   <thead className="bg-slate-50 border-b border-slate-200">
                     <tr>
@@ -184,7 +184,7 @@ export function SchoolTabs({
           {(stateChamps.length > 0 || regionChamps.length > 0 || districtChamps.length > 0) && (
             <section>
               <h3 className="text-sm font-semibold text-slate-800 mb-2">Champions</h3>
-              <div className="border border-amber-200 rounded-lg overflow-hidden shadow-sm bg-white">
+              <div className="border border-black rounded-none overflow-hidden shadow-none bg-white">
                 {[
                   { label: 'State', list: stateChamps },
                   { label: 'Region', list: regionChamps },
@@ -211,7 +211,7 @@ export function SchoolTabs({
                 <h3 className="text-sm font-semibold text-slate-800">Top Wrestlers</h3>
                 <button onClick={() => router.push(tabUrl('roster'), { scroll: false })} className="text-xs text-blue-600 hover:underline">View full roster →</button>
               </div>
-              <div className="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden divide-y divide-slate-50">
+              <div className="bg-white border border-black rounded-none shadow-none overflow-hidden divide-y divide-slate-50">
                 {wrestlers.filter(w => w.state_placement || w.regions_placement || w.districts_placement).slice(0, 10).map(w => (
                   <div key={w.wrestler_id} className="flex items-center gap-3 px-4 py-2">
                     <WrestlerAvatar school={schoolData} weight={w.primary_weight} size="sm" />
@@ -231,7 +231,7 @@ export function SchoolTabs({
 
       {/* ── Tab: Roster ── */}
       {activeTab === 'roster' && (
-        <div className="border border-slate-200 rounded-lg overflow-x-auto shadow-sm bg-white">
+        <div className="border border-black rounded-none overflow-x-auto shadow-none bg-white">
           <table className="w-full text-sm">
             <thead className="bg-slate-50 border-b border-slate-200">
               <tr>
@@ -286,7 +286,7 @@ export function SchoolTabs({
               return (
                 <section key={level}>
                   <h3 className="text-sm font-semibold text-slate-800 mb-2">{level}</h3>
-                  <div className="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden divide-y divide-slate-50">
+                  <div className="bg-white border border-black rounded-none shadow-none overflow-hidden divide-y divide-slate-50">
                     {filtered.map(w => (
                       <div key={`${level}-${w.wrestler_id}`} className="flex items-center gap-3 px-4 py-2.5">
                         <span className="text-xs tabular-nums text-slate-400 w-10 text-right shrink-0">{w.primary_weight}</span>
@@ -304,7 +304,7 @@ export function SchoolTabs({
 
       {/* ── Tab: Leaders ── */}
       {activeTab === 'leaders' && (
-        <div className="border border-slate-200 rounded-lg overflow-x-auto shadow-sm bg-white">
+        <div className="border border-black rounded-none overflow-x-auto shadow-none bg-white">
           {leaders.length === 0 ? (
             <p className="text-sm text-slate-500 p-4">No leaderboard data available.</p>
           ) : (
@@ -370,7 +370,7 @@ export function SchoolTabs({
             <div className="space-y-6">
               {/* Authoritative team scores from top_postseason_team_scores */}
               {teamScore && (
-                <div className="inline-block border border-slate-200 rounded-lg overflow-hidden shadow-sm bg-white">
+                <div className="inline-block border border-black rounded-none overflow-hidden shadow-none bg-white">
                   <table className="text-sm">
                     <thead className="bg-slate-50 border-b border-slate-200">
                       <tr>
@@ -404,7 +404,7 @@ export function SchoolTabs({
               {breakdown.length > 0 && (
                 <div>
                   <h3 className="text-sm font-semibold text-slate-800 mb-2">Win Breakdown</h3>
-                  <div className="inline-block border border-slate-200 rounded-lg overflow-hidden shadow-sm bg-white">
+                  <div className="inline-block border border-black rounded-none overflow-hidden shadow-none bg-white">
                     <table className="text-sm">
                       <thead className="bg-slate-50 border-b border-slate-200">
                         <tr>
@@ -435,7 +435,7 @@ export function SchoolTabs({
 
       {/* ── Tab: Schedule ── */}
       {activeTab === 'schedule' && (
-        <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 text-center">
+        <div className="bg-white border border-black rounded-none shadow-none p-8 text-center">
           <div className="w-12 h-12 rounded-full mx-auto mb-3 flex items-center justify-center" style={{ backgroundColor: primaryColor + '15' }}>
             <svg className="w-6 h-6" style={{ color: primaryColor }} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />

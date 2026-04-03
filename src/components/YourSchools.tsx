@@ -102,10 +102,10 @@ export function YourSchools() {
             <Link
               key={s.id}
               href={s.abbreviation ? `/schools/${encodeURIComponent(s.abbreviation)}` : '#'}
-              className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border text-sm font-medium transition-colors shadow-sm ${
+              className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-none border text-sm font-medium transition-colors shadow-none ${
                 s.isPrimary
-                  ? 'border-blue-200 bg-blue-50 text-blue-800 hover:bg-blue-100'
-                  : 'border-slate-200 bg-white text-slate-800 hover:bg-slate-50'
+                  ? 'border-black bg-blue-50 text-blue-800 hover:bg-blue-100'
+                  : 'border-black bg-white text-slate-800 hover:bg-slate-50'
               }`}
             >
               {s.display_name}

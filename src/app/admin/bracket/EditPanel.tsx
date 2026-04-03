@@ -109,10 +109,10 @@ export function EditPanel({
       <div className="p-6 text-center text-slate-400 space-y-3">
         <p className="text-lg font-medium">Select any match to edit</p>
         <div className="text-xs space-y-1">
-          <p><span className="inline-block w-3 h-3 bg-green-500 rounded-sm mr-1" /> Complete</p>
-          <p><span className="inline-block w-3 h-3 bg-yellow-500 rounded-sm mr-1" /> Missing data</p>
-          <p><span className="inline-block w-3 h-3 bg-red-500 rounded-sm mr-1" /> Broken entry</p>
-          <p><span className="inline-block w-3 h-3 bg-slate-300 rounded-sm mr-1" /> Empty</p>
+          <p><span className="inline-block w-3 h-3 bg-green-500 rounded-none mr-1" /> Complete</p>
+          <p><span className="inline-block w-3 h-3 bg-yellow-500 rounded-none mr-1" /> Missing data</p>
+          <p><span className="inline-block w-3 h-3 bg-red-500 rounded-none mr-1" /> Broken entry</p>
+          <p><span className="inline-block w-3 h-3 bg-slate-300 rounded-none mr-1" /> Empty</p>
         </div>
       </div>
     )

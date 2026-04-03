@@ -388,14 +388,14 @@ export default async function SchoolProfilePage({
         )}
 
         {/* Info bar */}
-        <div className="bg-white border-b border-slate-200 shadow-sm px-4 py-3" style={{ borderTop: `3px solid ${pc}` }}>
+        <div className="bg-white border-b border-black shadow-none px-4 py-3" style={{ borderTop: `3px solid ${pc}` }}>
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0">
               <h1 className="text-lg font-bold text-slate-900 truncate">{profile.display_name}</h1>
               {profile.mascot && <p className="text-xs text-slate-500 truncate">{profile.mascot}</p>}
             </div>
             <div className="flex items-center gap-2 shrink-0">
-              <div className="flex rounded-lg border border-slate-200 overflow-hidden text-xs">
+              <div className="flex rounded-none border border-slate-200 overflow-hidden text-xs">
                 <Link href={`/schools/${school}?gender=boys${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
                   className={`px-2.5 py-1 font-medium ${gender === 'boys' ? 'bg-slate-900 text-white' : 'bg-white text-slate-500'}`}>B</Link>
                 <Link href={`/schools/${school}?gender=girls${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
@@ -427,7 +427,7 @@ export default async function SchoolProfilePage({
       </div>
 
       {/* Desktop: sticky header with logo left + info right */}
-      <div className="hidden md:block sticky top-0 z-20 bg-white border border-slate-200 rounded-xl shadow-sm mb-8" style={{ borderTop: `3px solid ${pc}` }}>
+      <div className="hidden md:block sticky top-0 z-20 bg-white border border-black rounded-none shadow-none mb-8" style={{ borderTop: `3px solid ${pc}` }}>
         <div className="flex items-center gap-5 p-4">
           {/* Logo left */}
           <div className="shrink-0">
@@ -437,11 +437,11 @@ export default async function SchoolProfilePage({
                 alt={profile.display_name}
                 width={1079}
                 height={647}
-                className="w-[240px] h-auto rounded-lg"
+                className="w-[240px] h-auto rounded-none"
               />
             ) : (
               <div
-                className="w-[160px] h-[96px] rounded-lg flex items-center justify-center text-4xl font-bold"
+                className="w-[160px] h-[96px] rounded-none flex items-center justify-center text-4xl font-bold"
                 style={{ backgroundColor: pc, color: sc }}
               >
                 {schoolInitials(profile)}
@@ -502,7 +502,7 @@ export default async function SchoolProfilePage({
               </div>
 
               <div className="flex flex-col items-end gap-2 shrink-0">
-                <div className="flex rounded-lg border border-slate-200 overflow-hidden text-sm">
+                <div className="flex rounded-none border border-slate-200 overflow-hidden text-sm">
                   <Link href={`/schools/${school}?gender=boys${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
                     className={`px-3 py-1.5 font-medium transition-colors ${gender === 'boys' ? 'bg-slate-900 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}>Boys</Link>
                   <Link href={`/schools/${school}?gender=girls${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}

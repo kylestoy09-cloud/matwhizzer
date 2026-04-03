@@ -388,7 +388,7 @@ export function SchoolAliasManager({ schools, districts }: Props) {
       )}
 
       {toast && (
-        <div className={`fixed bottom-6 right-6 z-50 px-4 py-2 rounded-lg shadow-lg text-sm font-medium max-w-md ${
+        <div className={`fixed bottom-6 right-6 z-50 px-4 py-2 rounded-none shadow-none text-sm font-medium max-w-md ${
           toast.type === 'success' ? 'bg-green-600 text-white' : 'bg-red-600 text-white'
         }`}>
           {toast.message}
@@ -407,7 +407,7 @@ function UnresolvedTab({ rows, schools, onAssign, onMarkError }: {
 }) {
   if (rows.length === 0) return <div className="text-sm text-slate-400 py-8 text-center">No unresolved abbreviations</div>
   return (
-    <div className="border border-slate-200 rounded-lg overflow-hidden">
+    <div className="border border-black rounded-none shadow-none overflow-hidden">
       <table className="w-full text-sm">
         <thead className="bg-slate-50 text-slate-600 text-xs uppercase">
           <tr>
@@ -464,7 +464,7 @@ function MappingsTab({ rows, schools, onEdit }: {
   const [editingAbbrev, setEditingAbbrev] = useState<string | null>(null)
   if (rows.length === 0) return <div className="text-sm text-slate-400 py-8 text-center">No mappings found</div>
   return (
-    <div className="border border-slate-200 rounded-lg overflow-hidden">
+    <div className="border border-black rounded-none shadow-none overflow-hidden">
       <table className="w-full text-sm">
         <thead className="bg-slate-50 text-slate-600 text-xs uppercase">
           <tr>
@@ -550,7 +550,7 @@ function DistrictVerifyTab({ districts, selectedId, onSelectDistrict, aliases, l
   return (
     <div className="flex gap-4" style={{ minHeight: 500 }}>
       {/* Left: district list */}
-      <div className="w-[240px] flex-shrink-0 border border-slate-200 rounded-lg overflow-auto">
+      <div className="w-[240px] flex-shrink-0 border border-black rounded-none shadow-none overflow-auto">
         {districts.map(d => {
           const fc = flagCountMap.get(d.id) ?? 0
           return (
@@ -579,7 +579,7 @@ function DistrictVerifyTab({ districts, selectedId, onSelectDistrict, aliases, l
         ) : aliases.length === 0 ? (
           <div className="text-sm text-slate-400 py-8 text-center">No abbreviation aliases found for this district</div>
         ) : (
-          <div className="border border-slate-200 rounded-lg overflow-hidden">
+          <div className="border border-black rounded-none shadow-none overflow-hidden">
             <table className="w-full text-sm">
               <thead className="bg-slate-50 text-slate-600 text-xs uppercase">
                 <tr>
@@ -707,7 +707,7 @@ function WrestlerAuditTab({ rows, allRows, loading, filter, onFilterChange, onMa
         </button>
       </div>
 
-      <div className="border border-slate-200 rounded-lg overflow-hidden">
+      <div className="border border-black rounded-none shadow-none overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-slate-50 text-slate-600 text-xs uppercase">
             <tr>
@@ -779,7 +779,7 @@ function SchoolSearchDropdown({ schools, value, onChange, showErrorOption }: {
         onFocus={() => { setOpen(true); setQuery('') }}
         className="w-full rounded border border-slate-300 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400" />
       {open && (
-        <div className="absolute z-50 top-full mt-1 w-full bg-white border border-slate-200 rounded-lg shadow-lg max-h-60 overflow-auto">
+        <div className="absolute z-50 top-full mt-1 w-full bg-white border border-slate-200 rounded-none shadow-none max-h-60 overflow-auto">
           {showErrorOption && (
             <button onClick={() => { onChange('error'); setOpen(false); setQuery('') }}
               className="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50 border-b border-slate-100">

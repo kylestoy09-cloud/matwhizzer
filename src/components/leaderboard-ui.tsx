@@ -67,7 +67,7 @@ export function LeaderTable<T extends object>({
   return (
     <section>
       <SectionHeader title={title} description={description} />
-      <div className="border border-slate-200 rounded-lg overflow-x-auto shadow-sm bg-white">
+      <div className="border border-black rounded-none overflow-x-auto shadow-none bg-white">
         <table className="w-full text-sm min-w-[400px]">
           <thead className="bg-slate-50 border-b border-slate-200">
             <tr>

@@ -249,7 +249,7 @@ function PoolNav({ active, tab }: { active: string; tab: string }) {
           title={p.desc}
           className={`flex flex-col items-center px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
             active === p.key
-              ? 'bg-slate-900 text-white shadow-sm'
+              ? 'bg-slate-900 text-white shadow-none'
               : 'bg-white border border-slate-200 text-slate-600 hover:border-slate-400 hover:text-slate-900'
           }`}
         >
@@ -762,7 +762,7 @@ function AnalyticsTab({ d, season }: { d: AnalyticsData; season: number }) {
           description="Average score margin in decision matches (DEC + MD) — lower = tighter competition"
         />
         <div className="max-w-sm">
-          <div className="border border-slate-200 rounded-lg overflow-x-auto shadow-sm bg-white">
+          <div className="border border-black rounded-none overflow-x-auto shadow-none bg-white">
             <table className="w-full text-sm">
               <thead className="bg-slate-50 border-b border-slate-200">
                 <tr>

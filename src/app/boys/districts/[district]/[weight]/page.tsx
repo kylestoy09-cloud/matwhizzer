@@ -265,7 +265,7 @@ function MatchCard({ m, entrySlot }: { m: MatchRow; entrySlot?: Map<string, numb
 
   return (
     <div
-      className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm w-64 shrink-0"
+      className="bg-white border border-black rounded-none overflow-hidden shadow-none w-64 shrink-0"
       style={{ height: CARD_H }}
     >
       <WrestlerRow
@@ -361,7 +361,7 @@ function EntryRoster({ roster }: { roster: RosterEntry[] }) {
       <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
         Entries ({roster.length})
       </h2>
-      <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+      <div className="overflow-x-auto rounded-none border border-black shadow-none">
         <table className="min-w-full text-sm">
           <thead>
             <tr className="bg-slate-50 border-b border-slate-200">
@@ -405,10 +405,10 @@ function WeightNav({ weights, current, base }: {
           <Link
             key={w}
             href={`${base}/${w}`}
-            className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-colors ${
+            className={`px-3 py-1.5 rounded-none text-sm font-semibold transition-colors ${
               w === current
                 ? 'bg-slate-800 text-white'
-                : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-400 shadow-sm'
+                : 'bg-white border border-black text-slate-700 hover:bg-slate-50 hover:border-slate-400 shadow-none'
             }`}
           >
             {w}

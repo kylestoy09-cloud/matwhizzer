@@ -35,7 +35,7 @@ export default async function ConferencesIndexPage({
 
       {/* Gender toggle */}
       <div className="flex items-center gap-2 mb-8">
-        <div className="flex rounded-lg border border-slate-200 overflow-hidden text-sm">
+        <div className="flex rounded-none border border-slate-200 overflow-hidden text-sm">
           <Link
             href="/conferences?gender=boys"
             className={`px-4 py-2 font-medium transition-colors ${gender === 'boys' ? 'bg-slate-900 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}
@@ -57,7 +57,7 @@ export default async function ConferencesIndexPage({
           <Link
             key={c.slug}
             href={`/conferences/${c.slug}?gender=${gender}`}
-            className="block bg-white border border-slate-200 rounded-xl shadow-sm p-5 hover:bg-slate-50 hover:border-slate-300 transition-colors"
+            className="block bg-white border border-black rounded-none shadow-none p-5 hover:bg-slate-50 hover:border-slate-300 transition-colors"
           >
             <h2 className="text-base font-bold text-slate-900">{c.name}</h2>
             <p className="text-xs text-slate-400 mt-1">{c.schoolCount} school{c.schoolCount !== 1 ? 's' : ''}</p>

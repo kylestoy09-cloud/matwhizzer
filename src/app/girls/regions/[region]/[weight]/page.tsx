@@ -210,7 +210,7 @@ function MatchCard({ m, entrySlot }: { m: MatchRow; entrySlot?: Map<string, numb
 
   return (
     <div
-      className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm w-[216px] shrink-0"
+      className="bg-white border border-black rounded-none overflow-hidden shadow-none w-[216px] shrink-0"
       style={{ height: CARD_H }}
     >
       <WrestlerRow
@@ -285,7 +285,7 @@ function EntryWrestlerRow({ entry }: { entry: EntryRow }) {
 
 function EntryCard({ top, bot }: { top: EntryRow; bot: EntryRow | null }) {
   return (
-    <div className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm w-[216px] shrink-0">
+    <div className="bg-white border border-black rounded-none overflow-hidden shadow-none w-[216px] shrink-0">
       <EntryWrestlerRow entry={top} />
       <div className="border-t border-slate-100" />
       {bot ? (
@@ -379,7 +379,7 @@ function RosterTable({ roster }: { roster: RosterItem[] }) {
       <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
         Entries ({roster.length})
       </h2>
-      <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+      <div className="overflow-x-auto rounded-none border border-black shadow-none">
         <table className="min-w-full text-sm">
           <thead>
             <tr className="bg-slate-50 border-b border-slate-200">
@@ -429,7 +429,7 @@ function DistrictQualifiers({ champs }: { champs: DistrictChamp[] }) {
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         {districts.map(([distNum, placers]) => (
-          <div key={distNum} className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm">
+          <div key={distNum} className="bg-white border border-black rounded-none overflow-hidden shadow-none">
             <div className="px-3 py-1.5 bg-slate-50 border-b border-slate-100">
               <Link
                 href={`/girls/districts/${distNum}`}
@@ -482,10 +482,10 @@ function WeightNav({ weights, current, base }: {
           <Link
             key={w}
             href={`${base}/${w}`}
-            className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-colors ${
+            className={`px-3 py-1.5 rounded-none text-sm font-semibold transition-colors ${
               w === current
                 ? 'bg-slate-800 text-white'
-                : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-400 shadow-sm'
+                : 'bg-white border border-black text-slate-700 hover:bg-slate-50 hover:border-slate-400 shadow-none'
             }`}
           >
             {w}
@@ -649,7 +649,7 @@ export default async function GirlsRegionBracketPage({
             Championship Bracket
           </h2>
           <div
-            className="overflow-auto border border-slate-200 md:border-0 rounded-lg md:rounded-none max-h-[70vh] md:max-h-none"
+            className="overflow-auto border border-slate-200 md:border-0 rounded-none md:rounded-none max-h-[70vh] md:max-h-none"
             style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
           >
             <div className="flex gap-0 items-start min-w-max p-2 md:p-0">
@@ -684,7 +684,7 @@ export default async function GirlsRegionBracketPage({
               <div className="flex-1 border-t border-slate-300" />
             </div>
             <div
-              className="overflow-auto border border-slate-200 md:border-0 rounded-lg md:rounded-none max-h-[50vh] md:max-h-none"
+              className="overflow-auto border border-slate-200 md:border-0 rounded-none md:rounded-none max-h-[50vh] md:max-h-none"
               style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
             >
               <div className="flex gap-0 items-start min-w-max p-2 md:p-0">

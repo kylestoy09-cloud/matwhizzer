@@ -20,7 +20,7 @@ export default function RegionVideo({ youtubeUrl, regionName }: RegionVideoProps
       )}
       <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
         <iframe
-          className="absolute top-0 left-0 w-full h-full rounded-lg"
+          className="absolute top-0 left-0 w-full h-full rounded-none"
           src={embedUrl}
           title={regionName ? `${regionName} Championship` : 'Championship Stream'}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

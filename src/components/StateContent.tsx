@@ -52,7 +52,7 @@ function StatCard<T extends { wrestler_id: string; wrestler_name: string; school
   subtitle: (r: T) => string; value: (r: T) => string; note?: string
 }) {
   return (
-    <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+    <div className="bg-white rounded-none border border-black shadow-none overflow-hidden">
       <div className="px-4 py-3 border-b border-slate-100 bg-slate-50">
         <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide">{title}</h3>
         {note && <p className="text-[10px] text-slate-400 mt-0.5">{note}</p>}
@@ -174,7 +174,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
           <Link
             key={w}
             href={`${bracketBase}/${w}`}
-            className="flex flex-col items-center justify-center py-4 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-400 transition-colors shadow-sm"
+            className="flex flex-col items-center justify-center py-4 rounded-none border border-black bg-white hover:bg-slate-50 hover:border-slate-400 transition-colors shadow-none"
           >
             <span className="text-base font-bold text-slate-800">{w}</span>
             <span className="text-[10px] text-slate-400 font-medium tracking-wide">lbs</span>
@@ -185,7 +185,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
       {/* ── Placewinners ── */}
       <section className="mb-10">
         <h2 className="text-base font-semibold text-slate-800 mb-3">State Placewinners</h2>
-        <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+        <div className="overflow-x-auto rounded-none border border-black shadow-none">
           <table className="min-w-full text-sm">
             <thead>
               <tr className="bg-slate-50 border-b border-slate-200">
@@ -289,7 +289,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
             {distStrength.length > 0 && (
               <div>
                 <h2 className="text-base font-semibold text-slate-800 mb-3">Strongest Districts</h2>
-                <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+                <div className="overflow-x-auto rounded-none border border-black shadow-none">
                   <table className="min-w-full text-sm">
                     <thead>
                       <tr className="bg-slate-50 border-b border-slate-200">
@@ -312,7 +312,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
             {podiumDist.length > 0 && (
               <div>
                 <h2 className="text-base font-semibold text-slate-800 mb-3">Most Podium Placers by District</h2>
-                <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+                <div className="overflow-x-auto rounded-none border border-black shadow-none">
                   <table className="min-w-full text-sm">
                     <thead>
                       <tr className="bg-slate-50 border-b border-slate-200">
@@ -341,7 +341,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
         <section className="mb-10">
           <h2 className="text-base font-semibold text-slate-800 mb-3">The Margins</h2>
           <p className="text-xs text-slate-500 mb-2">Average score margin in DEC + MD — tightest first</p>
-          <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm max-w-sm">
+          <div className="overflow-x-auto rounded-none border border-black shadow-none max-w-sm">
             <table className="min-w-full text-sm">
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-200">
@@ -377,7 +377,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
             {ghostChamps
               .sort((a, b) => b.seed - a.seed)
               .map(gc => (
-              <div key={`${gc.wrestler_id}-${gc.weight}`} className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+              <div key={`${gc.wrestler_id}-${gc.weight}`} className="bg-white border border-black rounded-none shadow-none overflow-hidden">
                 <div className="flex items-center gap-3 px-4 py-3">
                   <span className="text-2xl font-black text-amber-500 w-10 text-center shrink-0">
                     {gc.seed}

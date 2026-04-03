@@ -55,7 +55,7 @@ export default async function SectionGroupPage({
           <p className="text-sm text-slate-500 mt-1">{standings.length} schools · {gender === 'girls' ? 'Girls' : 'Boys'} Wrestling</p>
         </div>
         <div className="flex flex-col items-end gap-2 shrink-0">
-          <div className="flex rounded-lg border border-slate-200 overflow-hidden text-sm">
+          <div className="flex rounded-none border border-slate-200 overflow-hidden text-sm">
             <Link href={`/sections/${secSlug}/${grpSlug}?gender=boys`} className={`px-3 py-1.5 font-medium transition-colors ${gender === 'boys' ? 'bg-slate-900 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}>Boys</Link>
             <Link href={`/sections/${secSlug}/${grpSlug}?gender=girls`} className={`px-3 py-1.5 font-medium transition-colors ${gender === 'girls' ? 'bg-rose-700 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}>Girls</Link>
           </div>

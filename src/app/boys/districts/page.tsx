@@ -30,7 +30,7 @@ export default async function BoysDistrictsPage() {
           <Link
             key={d}
             href={`/boys/districts/${d}`}
-            className="flex flex-col items-center justify-center aspect-square rounded-lg border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-400 transition-colors shadow-sm"
+            className="flex flex-col items-center justify-center aspect-square rounded-none border border-black bg-white hover:bg-slate-50 hover:border-slate-400 transition-colors shadow-none"
           >
             <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide leading-none mb-0.5">Dist.</span>
             <span className="text-xl font-bold text-slate-800">{d}</span>

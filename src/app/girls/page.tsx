@@ -115,9 +115,9 @@ export default async function GirlsPage({
                   type="text" name="q" defaultValue={q}
                   placeholder="Search by first or last name..."
                   autoComplete="off"
-                  className="flex-1 border border-slate-300 rounded-lg px-4 py-2.5 text-base shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-400"
+                  className="flex-1 border border-slate-300 rounded-none px-4 py-2.5 text-base shadow-none focus:outline-none focus:ring-2 focus:ring-rose-400"
                 />
-                <button type="submit" className="bg-rose-800 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-rose-700 transition-colors">
+                <button type="submit" className="bg-rose-800 text-white px-5 py-2.5 rounded-none font-medium hover:bg-rose-700 transition-colors">
                   Search
                 </button>
               </div>
@@ -127,7 +127,7 @@ export default async function GirlsPage({
               <p className="text-slate-500 text-sm mt-2">No girls wrestlers found for <strong>&ldquo;{q}&rdquo;</strong>.</p>
             )}
             {wrestlers.length > 0 && (
-              <ul className="mt-3 divide-y divide-slate-200 border border-slate-200 rounded-lg overflow-hidden shadow-sm bg-white">
+              <ul className="mt-3 divide-y divide-slate-200 border border-black rounded-none overflow-hidden shadow-none bg-white">
                 {wrestlers.map(w => (
                   <li key={w.id}>
                     <Link href={`/wrestler/${w.id}`} className="flex items-center px-4 py-3 hover:bg-rose-50 transition-colors">
@@ -148,9 +148,9 @@ export default async function GirlsPage({
                   type="text" name="sq" defaultValue={sq}
                   placeholder="Search by school name..."
                   autoComplete="off"
-                  className="flex-1 border border-slate-300 rounded-lg px-4 py-2.5 text-base shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-400"
+                  className="flex-1 border border-slate-300 rounded-none px-4 py-2.5 text-base shadow-none focus:outline-none focus:ring-2 focus:ring-rose-400"
                 />
-                <button type="submit" className="bg-rose-800 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-rose-700 transition-colors">
+                <button type="submit" className="bg-rose-800 text-white px-5 py-2.5 rounded-none font-medium hover:bg-rose-700 transition-colors">
                   Search
                 </button>
               </div>
@@ -160,7 +160,7 @@ export default async function GirlsPage({
               <p className="text-slate-500 text-sm mt-2">No schools found for <strong>&ldquo;{sq}&rdquo;</strong>.</p>
             )}
             {schools.length > 0 && (
-              <ul className="mt-3 divide-y divide-slate-200 border border-slate-200 rounded-lg overflow-hidden shadow-sm bg-white">
+              <ul className="mt-3 divide-y divide-slate-200 border border-black rounded-none overflow-hidden shadow-none bg-white">
                 {schools.map(s => (
                   <li key={s.school}>
                     <Link href={`/schools/${encodeURIComponent(s.school)}?gender=girls`} className="flex items-center justify-between px-4 py-3 hover:bg-rose-50 transition-colors">
@@ -203,7 +203,7 @@ export default async function GirlsPage({
                 {podiumSchools.map(s => (
                   <div
                     key={s.school_name}
-                    className="flex items-center justify-between px-3 py-2.5 rounded-lg border border-rose-200 bg-white shadow-sm"
+                    className="flex items-center justify-between px-3 py-2.5 rounded-none border border-black bg-white shadow-none"
                   >
                     <span className="text-sm font-medium text-slate-800 truncate">{s.school_name}</span>
                     <span className="text-xs font-semibold text-amber-600 ml-2 shrink-0">{s.count}</span>
@@ -221,7 +221,7 @@ export default async function GirlsPage({
             <section>
               <h2 className="text-lg font-bold text-rose-900 mb-3">Hammer Rating</h2>
               <p className="text-slate-500 text-sm mb-4">Avg dominance per match: pins/TFs graded by speed (max 9), MD=2, Dec=1, losses scored inverse</p>
-              <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+              <div className="bg-white rounded-none border border-black shadow-none overflow-hidden">
                 <div className="divide-y divide-slate-100">
                   {topDominance.map((r, i) => (
                     <div key={r.wrestler_id} className="flex items-center gap-2 px-4 py-2.5">
@@ -251,7 +251,7 @@ export default async function GirlsPage({
         <section>
           <Link
             href="/girls/state"
-            className="flex items-center justify-center gap-2 w-full py-4 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-lg transition-colors shadow-md mb-6"
+            className="flex items-center justify-center gap-2 w-full py-4 rounded-none bg-rose-600 hover:bg-rose-700 text-white font-bold text-lg transition-colors shadow-none mb-6"
           >
             <span className="text-2xl">🏆</span>
             Girls State Tournament
@@ -269,7 +269,7 @@ export default async function GirlsPage({
               <Link
                 key={r}
                 href={`/girls/regions/${r}`}
-                className="flex flex-col items-center justify-center py-4 rounded-lg border border-rose-200 bg-white hover:bg-rose-50 hover:border-rose-400 transition-colors shadow-sm"
+                className="flex flex-col items-center justify-center py-4 rounded-none border border-black bg-white hover:bg-rose-50 hover:border-rose-400 transition-colors shadow-none"
               >
                 <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide leading-none mb-0.5">Reg.</span>
                 <span className="text-base font-bold text-slate-800">{r}</span>
@@ -288,7 +288,7 @@ export default async function GirlsPage({
               <Link
                 key={d}
                 href={`/girls/districts/${d}`}
-                className="flex flex-col items-center justify-center aspect-square rounded-lg border border-rose-200 bg-white hover:bg-rose-50 hover:border-rose-400 transition-colors shadow-sm"
+                className="flex flex-col items-center justify-center aspect-square rounded-none border border-black bg-white hover:bg-rose-50 hover:border-rose-400 transition-colors shadow-none"
               >
                 <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide leading-none mb-0.5">Dist.</span>
                 <span className="text-xl font-bold text-slate-800">{d}</span>

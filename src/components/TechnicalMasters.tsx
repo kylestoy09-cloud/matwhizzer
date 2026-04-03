@@ -37,7 +37,7 @@ export function TechnicalMasters({
   if (rows.length === 0) return null
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+    <div className="bg-white rounded-none border border-black shadow-none overflow-hidden">
       <div className="px-4 py-3 border-b border-slate-100 bg-slate-50">
         <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Technical Masters</h3>
         <p className="text-[10px] text-slate-400 mt-0.5">100% tech fall win rate · min. 2 wins</p>

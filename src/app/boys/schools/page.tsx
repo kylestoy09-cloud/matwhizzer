@@ -57,12 +57,12 @@ export default async function BoysSchoolsPage({
             defaultValue={raw ?? ''}
             placeholder="Search by school name…"
             autoComplete="off"
-            className="flex-1 border border-slate-300 rounded-lg px-4 py-2.5 text-base
-                       shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500"
+            className="flex-1 border border-slate-300 rounded-none px-4 py-2.5 text-base
+                       shadow-none focus:outline-none focus:ring-2 focus:ring-slate-500"
           />
           <button
             type="submit"
-            className="bg-slate-800 text-white px-5 py-2.5 rounded-lg font-medium
+            className="bg-slate-800 text-white px-5 py-2.5 rounded-none font-medium
                        hover:bg-slate-700 transition-colors"
           >
             Filter
@@ -70,7 +70,7 @@ export default async function BoysSchoolsPage({
           {q && (
             <Link
               href="/boys/schools"
-              className="px-4 py-2.5 rounded-lg border border-slate-300 text-slate-600
+              className="px-4 py-2.5 rounded-none border border-slate-300 text-slate-600
                          hover:bg-slate-50 transition-colors text-sm font-medium"
             >
               Clear
@@ -82,7 +82,7 @@ export default async function BoysSchoolsPage({
       {rows.length === 0 ? (
         <p className="text-slate-500 text-sm">No schools match &ldquo;{raw}&rdquo;.</p>
       ) : (
-        <div className="border border-slate-200 rounded-lg overflow-x-auto shadow-sm bg-white">
+        <div className="border border-black rounded-none overflow-x-auto shadow-none bg-white">
           <table className="w-full text-sm">
             <thead className="bg-slate-50 border-b border-slate-200">
               <tr>

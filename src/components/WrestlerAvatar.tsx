@@ -41,11 +41,11 @@ export function WrestlerAvatar({ school, weight, size = 'sm' }: WrestlerAvatarPr
           alt={school.display_name}
           width={1079}
           height={647}
-          className={`w-full h-auto ${isLg ? '' : 'rounded-t-lg'}`}
+          className={`w-full h-auto ${isLg ? '' : 'rounded-none'}`}
         />
       ) : (
         <div
-          className={`w-full aspect-[1079/647] ${isLg ? '' : 'rounded-t-lg'} flex items-center justify-center font-bold ${s.initials}`}
+          className={`w-full aspect-[1079/647] ${isLg ? '' : 'rounded-none'} flex items-center justify-center font-bold ${s.initials}`}
           style={{ backgroundColor: pc, color: sc }}
         >
           {schoolInitials(school.display_name)}
@@ -54,7 +54,7 @@ export function WrestlerAvatar({ school, weight, size = 'sm' }: WrestlerAvatarPr
 
       {hasWeight && (
         <div
-          className={`bg-white text-center ${s.stripPy} ${isLg ? '' : 'rounded-b-lg'}`}
+          className={`bg-white text-center ${s.stripPy} ${isLg ? '' : 'rounded-none'}`}
           style={{ borderTop: `3px solid ${pc}` }}
         >
           <span className={`font-bold tracking-wide ${s.weightNum}`} style={{ color: pc }}>

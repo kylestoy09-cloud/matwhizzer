@@ -38,7 +38,7 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="flex justify-center mb-8">
-          <div className="bg-white rounded-full p-3 shadow-lg border-2 border-blue-900">
+          <div className="bg-white rounded-full p-3 shadow-none border-2 border-blue-900">
             <Image
               src="/mwl-word.png"
               alt="Mat Whizzer"
@@ -50,9 +50,9 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-md p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="bg-white rounded-none border border-black shadow-none p-6 space-y-4">
           {error && (
-            <div className="bg-red-50 text-red-700 text-sm rounded-lg px-4 py-3">
+            <div className="bg-red-50 text-red-700 text-sm rounded-none px-4 py-3">
               {error}
             </div>
           )}
@@ -67,7 +67,7 @@ export default function LoginPage() {
               required
               value={email}
               onChange={e => setEmail(e.target.value)}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm
+              className="w-full rounded-none border border-slate-300 px-3 py-2 text-sm
                          focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent"
               placeholder="you@example.com"
             />
@@ -83,7 +83,7 @@ export default function LoginPage() {
               required
               value={password}
               onChange={e => setPassword(e.target.value)}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm
+              className="w-full rounded-none border border-slate-300 px-3 py-2 text-sm
                          focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent"
               placeholder="Enter password"
             />
@@ -92,7 +92,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-slate-900 text-white rounded-lg py-2.5 text-sm font-semibold
+            className="w-full bg-slate-900 text-white rounded-none py-2.5 text-sm font-semibold
                        hover:bg-slate-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? 'Signing in\u2026' : 'Sign In'}

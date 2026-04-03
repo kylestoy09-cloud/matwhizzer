@@ -35,7 +35,7 @@ function SchoolPicker({ value, onChange }: { value: SchoolOption | null; onChang
     <div ref={ref} className="relative">
       <label className="block text-xs font-medium text-slate-600 mb-1">School (optional)</label>
       {value ? (
-        <div className="flex items-center justify-between border border-slate-300 rounded-lg px-3 py-2">
+        <div className="flex items-center justify-between border border-slate-300 rounded-none px-3 py-2">
           <span className="text-sm text-slate-800">{value.display_name}</span>
           <button type="button" onClick={() => { onChange(null); setQuery('') }}
             className="text-xs text-slate-400 hover:text-red-500">change</button>
@@ -47,11 +47,11 @@ function SchoolPicker({ value, onChange }: { value: SchoolOption | null; onChang
           value={query}
           onChange={e => setQuery(e.target.value)}
           onFocus={() => query.length >= 2 && setShowDropdown(true)}
-          className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full border border-slate-300 rounded-none px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       )}
       {showDropdown && results.length > 0 && !value && (
-        <div className="absolute z-10 mt-1 w-full bg-white border border-slate-200 rounded-lg shadow-lg max-h-48 overflow-y-auto">
+        <div className="absolute z-10 mt-1 w-full bg-white border border-slate-200 rounded-none shadow-none max-h-48 overflow-y-auto">
           {results.map(s => (
             <button key={s.id} type="button"
               onClick={() => { onChange(s); setShowDropdown(false); setQuery('') }}
@@ -62,7 +62,7 @@ function SchoolPicker({ value, onChange }: { value: SchoolOption | null; onChang
         </div>
       )}
       {showDropdown && query.length >= 2 && results.length === 0 && !value && (
-        <div className="absolute z-10 mt-1 w-full bg-white border border-slate-200 rounded-lg shadow-lg px-3 py-2 text-sm text-slate-400">
+        <div className="absolute z-10 mt-1 w-full bg-white border border-slate-200 rounded-none shadow-none px-3 py-2 text-sm text-slate-400">
           No schools found
         </div>
       )}
@@ -137,12 +137,12 @@ export default function SignUpPage() {
         <div>
           <label className="block text-xs font-medium text-slate-600 mb-1">Email</label>
           <input type="email" required value={email} onChange={e => setEmail(e.target.value)}
-            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            className="w-full border border-slate-300 rounded-none px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
         </div>
         <div>
           <label className="block text-xs font-medium text-slate-600 mb-1">Username</label>
           <input type="text" required value={username} onChange={e => setUsername(e.target.value)}
-            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            className="w-full border border-slate-300 rounded-none px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
         </div>
         <SchoolPicker value={school} onChange={setSchool} />
         <div>
@@ -153,7 +153,7 @@ export default function SignUpPage() {
                 key={opt}
                 type="button"
                 onClick={() => setPreference(opt)}
-                className={`flex-1 py-2 rounded-lg text-sm font-medium border transition-colors ${
+                className={`flex-1 py-2 rounded-none text-sm font-medium border transition-colors ${
                   preference === opt
                     ? opt === 'boys' ? 'bg-slate-900 text-white border-slate-900'
                     : opt === 'girls' ? 'bg-rose-700 text-white border-rose-700'
@@ -169,16 +169,16 @@ export default function SignUpPage() {
         <div>
           <label className="block text-xs font-medium text-slate-600 mb-1">Password</label>
           <input type="password" required value={password} onChange={e => setPassword(e.target.value)}
-            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            className="w-full border border-slate-300 rounded-none px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
         </div>
         <div>
           <label className="block text-xs font-medium text-slate-600 mb-1">Confirm Password</label>
           <input type="password" required value={confirm} onChange={e => setConfirm(e.target.value)}
-            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            className="w-full border border-slate-300 rounded-none px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
         </div>
-        {error && <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2">{error}</p>}
+        {error && <p className="text-sm text-red-600 bg-red-50 rounded-none px-3 py-2">{error}</p>}
         <button type="submit" disabled={loading}
-          className="w-full bg-slate-900 text-white rounded-lg py-2.5 text-sm font-medium hover:bg-slate-800 disabled:opacity-50 transition-colors">
+          className="w-full bg-slate-900 text-white rounded-none py-2.5 text-sm font-medium hover:bg-slate-800 disabled:opacity-50 transition-colors">
           {loading ? 'Creating account...' : 'Sign Up'}
         </button>
       </form>

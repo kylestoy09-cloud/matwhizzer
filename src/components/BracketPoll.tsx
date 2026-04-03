@@ -254,7 +254,7 @@ export function BracketPoll({
           <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
             Make Your Picks
           </h3>
-          <div className="max-w-lg bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm">
+          <div className="max-w-lg bg-white border border-black rounded-none overflow-hidden shadow-none">
             {seededEntries.map((entry, i) => (
               <div key={entry.entry_id} className={i > 0 ? 'border-t border-slate-100' : ''}>
                 <EntryRow
@@ -275,7 +275,7 @@ export function BracketPoll({
         <div className="flex justify-center">
           <button
             onClick={submitPicks}
-            className="px-6 py-2.5 bg-slate-800 text-white text-sm font-semibold rounded-lg hover:bg-slate-700 transition-colors"
+            className="px-6 py-2.5 bg-slate-800 text-white text-sm font-semibold rounded-none hover:bg-slate-700 transition-colors"
           >
             {submitted ? 'Update Picks' : 'Submit Picks'}
           </button>
@@ -336,7 +336,7 @@ function buildPodium(
 
 function PodiumBar({ podium, totalVoters, loading }: { podium: PodiumEntry[]; totalVoters: number; loading: boolean }) {
   return (
-    <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+    <div className="bg-white border border-black rounded-none p-4 shadow-none">
       <div className="flex items-center justify-between mb-3">
         <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
           {podium[0]?.isDefault ? 'Projected Podium' : 'Peanut Gallery Wisdom'}
@@ -514,7 +514,7 @@ function DistrictPodiums({ champs }: { champs: DistrictChamp[] }) {
       </h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {districts.map(([distNum, placers]) => (
-          <div key={distNum} className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm">
+          <div key={distNum} className="bg-white border border-black rounded-none overflow-hidden shadow-none">
             <div className="px-3 py-1.5 bg-slate-50 border-b border-slate-100">
               <span className="text-[11px] font-semibold text-slate-500">District {distNum}</span>
             </div>

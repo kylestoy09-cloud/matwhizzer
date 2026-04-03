@@ -36,7 +36,7 @@ export default async function GirlsRegionsPage() {
           <Link
             key={r.slug}
             href={`/girls/regions/${r.slug}`}
-            className="flex flex-col items-center justify-center py-8 rounded-lg border border-slate-200 bg-white hover:bg-rose-50 hover:border-rose-300 transition-colors shadow-sm"
+            className="flex flex-col items-center justify-center py-8 rounded-none border border-black bg-white hover:bg-rose-50 hover:border-rose-300 transition-colors shadow-none"
           >
             <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide leading-none mb-1">Region</span>
             <span className="text-xl font-bold text-slate-800">{r.label}</span>

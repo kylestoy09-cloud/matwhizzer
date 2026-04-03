@@ -25,7 +25,7 @@ export function StandingsTable({
   gender: string
 }) {
   return (
-    <div className="border border-slate-200 rounded-xl overflow-hidden shadow-sm bg-white">
+    <div className="border border-black rounded-none overflow-hidden shadow-none bg-white">
       <div className="overflow-x-auto">
         <table className="w-full text-sm min-w-[600px]">
           <thead className="bg-slate-50 border-b border-slate-200">

@@ -70,7 +70,7 @@ export async function BracketBuster({
   const headColor = accentColor === 'rose' ? 'text-rose-500' : 'text-slate-500'
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+    <div className="bg-white rounded-none border border-black shadow-none overflow-hidden">
       <div className="px-4 py-3 border-b border-slate-100 bg-slate-50">
         <h3 className={`text-xs font-semibold ${headColor} uppercase tracking-wide`}>{title}</h3>
         <p className="text-[10px] text-slate-400 mt-0.5">Higher seed beats lower seed · ranked by seed gap</p>

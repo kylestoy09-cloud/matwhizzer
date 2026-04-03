@@ -721,7 +721,7 @@ export default async function WrestlerPage({
             <WrestlerAvatar school={schoolProfile} weight={bestWeight} size="lg" />
           )}
         </div>
-        <div className="bg-white border-b border-slate-200 shadow-sm px-4 py-3" style={{ borderTop: `3px solid ${pc}` }}>
+        <div className="bg-white border-b border-black shadow-none px-4 py-3" style={{ borderTop: `3px solid ${pc}` }}>
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0">
               <h1 className="text-lg font-bold text-slate-900 truncate">{displayName}</h1>
@@ -778,7 +778,7 @@ export default async function WrestlerPage({
       </div>
 
       {/* Desktop: centered vertical layout */}
-      <div className="hidden md:block sticky top-0 z-20 bg-white border border-slate-200 rounded-xl shadow-sm mb-6" style={{ borderTop: `3px solid ${pc}` }}>
+      <div className="hidden md:block sticky top-0 z-20 bg-white border border-black rounded-none shadow-none mb-6" style={{ borderTop: `3px solid ${pc}` }}>
         <div className="flex flex-col items-center p-5 gap-3">
           {/* Name + record + grade */}
           <div className="flex items-baseline gap-3">
@@ -871,7 +871,7 @@ export default async function WrestlerPage({
       {ghostChampionships.length > 0 && (
         <div className="mb-4 space-y-2">
           {ghostChampionships.map((gc: any, i: number) => (
-            <div key={i} className="bg-slate-900 text-white rounded-lg px-4 py-3">
+            <div key={i} className="bg-slate-900 text-white rounded-none px-4 py-3">
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-lg">{'\u{1F47B}'}</span>
                 <span className="font-bold text-sm uppercase tracking-wide">Ghost Champion</span>
@@ -906,7 +906,7 @@ export default async function WrestlerPage({
       {seasonStats.length > 0 && (
         <div className="mb-8">
           <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">Career Stats</h3>
-          <div className="border border-slate-200 rounded-lg overflow-hidden shadow-sm bg-white overflow-x-auto">
+          <div className="border border-black rounded-none overflow-hidden shadow-none bg-white overflow-x-auto">
             <table className="min-w-[700px] w-full text-sm">
               <thead className="bg-slate-50 border-b border-slate-200">
                 <tr>
@@ -962,7 +962,7 @@ export default async function WrestlerPage({
           </h3>
           <div className="space-y-3">
             {revengeWins.map((rw: any, i: number) => (
-              <div key={i} className="border border-slate-200 rounded-lg bg-white p-4 shadow-sm">
+              <div key={i} className="border border-black rounded-none bg-white p-4 shadow-none">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-emerald-600 font-bold text-sm">W</span>
                   <span className="font-medium text-slate-800">
@@ -1022,7 +1022,7 @@ export default async function WrestlerPage({
                       <span className="text-slate-400 text-sm">&middot; {g.weight} lb</span>
                     </div>
 
-                    <div className="border border-slate-200 rounded-lg overflow-hidden shadow-sm bg-white overflow-x-auto">
+                    <div className="border border-black rounded-none overflow-hidden shadow-none bg-white overflow-x-auto">
                       <table className="min-w-[480px] w-full text-sm">
                         <thead className="bg-slate-50 border-b border-slate-200">
                           <tr>

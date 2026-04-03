@@ -68,10 +68,10 @@ function SchoolSearch({ onSelect }: { onSelect: (s: SchoolOption) => void }) {
         value={query}
         onChange={e => setQuery(e.target.value)}
         onFocus={() => query.length >= 2 && setShowDropdown(true)}
-        className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full border border-slate-300 rounded-none px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       {showDropdown && results.length > 0 && (
-        <div className="absolute z-10 mt-1 w-full bg-white border border-slate-200 rounded-lg shadow-lg max-h-48 overflow-y-auto">
+        <div className="absolute z-10 mt-1 w-full bg-white border border-slate-200 rounded-none shadow-none max-h-48 overflow-y-auto">
           {results.map(s => (
             <button key={s.id} type="button"
               onClick={() => { onSelect(s); setShowDropdown(false); setQuery('') }}
@@ -82,7 +82,7 @@ function SchoolSearch({ onSelect }: { onSelect: (s: SchoolOption) => void }) {
         </div>
       )}
       {showDropdown && query.length >= 2 && results.length === 0 && (
-        <div className="absolute z-10 mt-1 w-full bg-white border border-slate-200 rounded-lg shadow-lg px-3 py-2 text-sm text-slate-400">
+        <div className="absolute z-10 mt-1 w-full bg-white border border-slate-200 rounded-none shadow-none px-3 py-2 text-sm text-slate-400">
           No schools found
         </div>
       )}
@@ -129,10 +129,10 @@ function WrestlerSearch({ onSelect }: { onSelect: (w: WrestlerInfo) => void }) {
         value={query}
         onChange={e => setQuery(e.target.value)}
         onFocus={() => query.length >= 2 && setShowDropdown(true)}
-        className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full border border-slate-300 rounded-none px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       {showDropdown && results.length > 0 && (
-        <div className="absolute z-10 mt-1 w-full bg-white border border-slate-200 rounded-lg shadow-lg max-h-48 overflow-y-auto">
+        <div className="absolute z-10 mt-1 w-full bg-white border border-slate-200 rounded-none shadow-none max-h-48 overflow-y-auto">
           {results.map(w => (
             <button key={w.id} type="button"
               onClick={() => { onSelect(w); setShowDropdown(false); setQuery('') }}
@@ -148,7 +148,7 @@ function WrestlerSearch({ onSelect }: { onSelect: (w: WrestlerInfo) => void }) {
         </div>
       )}
       {showDropdown && query.length >= 2 && results.length === 0 && (
-        <div className="absolute z-10 mt-1 w-full bg-white border border-slate-200 rounded-lg shadow-lg px-3 py-2 text-sm text-slate-400">
+        <div className="absolute z-10 mt-1 w-full bg-white border border-slate-200 rounded-none shadow-none px-3 py-2 text-sm text-slate-400">
           No wrestlers found
         </div>
       )}
@@ -361,14 +361,14 @@ export default function SettingsPage() {
       <h1 className="text-xl font-bold text-slate-900 mb-6">Settings</h1>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-3 mb-6">
+        <div className="bg-red-50 border border-red-200 rounded-none px-4 py-3 mb-6">
           <p className="text-sm text-red-700">{error}</p>
           <button onClick={() => setError(null)} className="text-xs text-red-500 hover:underline mt-1">dismiss</button>
         </div>
       )}
 
       {/* ── Account ── */}
-      <section className="bg-white border border-slate-200 rounded-xl shadow-sm p-6 mb-6">
+      <section className="bg-white border border-black rounded-none shadow-none p-6 mb-6">
         <h2 className="text-sm font-semibold text-slate-800 mb-4">Account</h2>
         <div className="space-y-3">
           <div>
@@ -383,7 +383,7 @@ export default function SettingsPage() {
       </section>
 
       {/* ── Wrestling Preference ── */}
-      <section className="bg-white border border-slate-200 rounded-xl shadow-sm p-6 mb-6">
+      <section className="bg-white border border-black rounded-none shadow-none p-6 mb-6">
         <h2 className="text-sm font-semibold text-slate-800 mb-3">Wrestling Preference</h2>
         <div className="flex gap-2">
           {(['boys', 'girls', 'both'] as const).map(opt => (
@@ -392,7 +392,7 @@ export default function SettingsPage() {
               type="button"
               onClick={() => handlePreferenceChange(opt)}
               disabled={saving}
-              className={`flex-1 py-2 rounded-lg text-sm font-medium border transition-colors ${
+              className={`flex-1 py-2 rounded-none text-sm font-medium border transition-colors ${
                 preference === opt
                   ? opt === 'boys' ? 'bg-slate-900 text-white border-slate-900'
                   : opt === 'girls' ? 'bg-rose-700 text-white border-rose-700'
@@ -412,14 +412,14 @@ export default function SettingsPage() {
       </section>
 
       {/* ── Schools ── */}
-      <section className="bg-white border border-slate-200 rounded-xl shadow-sm p-6 mb-6">
+      <section className="bg-white border border-black rounded-none shadow-none p-6 mb-6">
         <h2 className="text-sm font-semibold text-slate-800 mb-4">Schools</h2>
 
         {/* Primary School */}
         <div className="mb-4">
           <p className="text-xs font-medium text-slate-500 mb-1.5">Primary School</p>
           {primarySchool ? (
-            <div className="flex items-center justify-between border border-blue-200 bg-blue-50 rounded-lg px-3 py-2.5">
+            <div className="flex items-center justify-between border border-blue-200 bg-blue-50 rounded-none px-3 py-2.5">
               <Link href={schoolHref(primarySchool.abbreviation)} className="text-sm font-medium text-blue-800 hover:underline">
                 {primarySchool.school_name}
               </Link>
@@ -439,7 +439,7 @@ export default function SettingsPage() {
           {followedSchools.length > 0 && (
             <div className="space-y-1.5 mb-3">
               {followedSchools.map(s => (
-                <div key={s.id} className="flex items-center justify-between border border-slate-200 rounded-lg px-3 py-2">
+                <div key={s.id} className="flex items-center justify-between border border-slate-200 rounded-none px-3 py-2">
                   <Link href={schoolHref(s.abbreviation)} className="text-sm font-medium text-slate-800 hover:text-blue-600 hover:underline">
                     {s.school_name}
                   </Link>
@@ -453,12 +453,12 @@ export default function SettingsPage() {
       </section>
 
       {/* ── Wrestlers ── */}
-      <section className="bg-white border border-slate-200 rounded-xl shadow-sm p-6">
+      <section className="bg-white border border-black rounded-none shadow-none p-6">
         <h2 className="text-sm font-semibold text-slate-800 mb-4">Wrestlers</h2>
         {followedWrestlers.length > 0 && (
           <div className="space-y-1.5 mb-3">
             {followedWrestlers.map(w => (
-              <div key={w.id} className="flex items-center justify-between border border-slate-200 rounded-lg px-3 py-2">
+              <div key={w.id} className="flex items-center justify-between border border-slate-200 rounded-none px-3 py-2">
                 <Link href={`/wrestler/${w.id}`} className="text-sm font-medium text-slate-800 hover:text-blue-600 hover:underline">
                   {w.first_name} {w.last_name}
                 </Link>

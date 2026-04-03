@@ -227,7 +227,7 @@ export function DistrictVerifier({ districts, allSchools }: Props) {
           {loading ? (
             <div className="text-sm text-slate-400 py-12 text-center">Loading...</div>
           ) : (
-            <div className="border border-slate-200 rounded-lg overflow-hidden">
+            <div className="border border-black rounded-none shadow-none overflow-hidden">
               <table className="w-full text-sm">
                 <thead className="bg-slate-50 text-slate-600 text-xs uppercase">
                   <tr>
@@ -258,7 +258,7 @@ export function DistrictVerifier({ districts, allSchools }: Props) {
 
       {/* Toast */}
       {toast && (
-        <div className={`fixed bottom-6 right-6 z-50 px-4 py-2 rounded-lg shadow-lg text-sm font-medium max-w-md ${
+        <div className={`fixed bottom-6 right-6 z-50 px-4 py-2 rounded-none shadow-none text-sm font-medium max-w-md ${
           toast.type === 'success' ? 'bg-green-600 text-white' : 'bg-red-600 text-white'
         }`}>
           {toast.msg}

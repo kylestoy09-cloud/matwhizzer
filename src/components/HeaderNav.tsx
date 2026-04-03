@@ -96,7 +96,7 @@ export function HeaderNav() {
 
   return (
     <>
-      <header className={`${bgClass} text-white px-6 py-6 shadow-md flex items-center relative sticky top-0 z-40`}>
+      <header className={`${bgClass} text-white px-6 py-6 shadow-none flex items-center relative sticky top-0 z-40`}>
 
         {/* Hamburger + Boys/Girls toggle — left side */}
         <div className="flex items-center gap-2 z-10">
@@ -105,7 +105,7 @@ export function HeaderNav() {
               onClick={() => setOpen(v => !v)}
               aria-label="Open navigation menu"
               aria-expanded={open}
-              className="p-2 rounded-md hover:bg-white/10 transition-colors"
+              className="p-2 rounded-none hover:bg-white/10 transition-colors"
             >
               <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <rect y="3"  width="20" height="2" rx="1" />
@@ -115,7 +115,7 @@ export function HeaderNav() {
             </button>
 
             {open && (
-              <div className={`absolute left-0 top-full mt-2 w-44 rounded-lg shadow-xl border z-50 overflow-hidden ${dropdownBg}`}>
+              <div className={`absolute left-0 top-full mt-2 w-44 rounded-none shadow-none border border-black z-50 overflow-hidden ${dropdownBg}`}>
                 {navItems.map(item => (
                   <Link
                     key={item.href}
@@ -148,7 +148,7 @@ export function HeaderNav() {
           href="/"
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hover:opacity-90 transition-opacity"
         >
-          <div className="bg-white rounded-full p-2 shadow-lg border-2 border-blue-900">
+          <div className="bg-white rounded-full p-2 shadow-none border-2 border-blue-900">
             <Image
               src="/mwl-word.png"
               alt="Mat Whizzer"
@@ -166,7 +166,7 @@ export function HeaderNav() {
             <div ref={userMenuRef} className="relative">
               <button
                 onClick={() => setUserOpen(v => !v)}
-                className="flex items-center gap-1.5 text-sm text-slate-300 hover:text-white transition-colors px-2 py-1 rounded-md hover:bg-white/10"
+                className="flex items-center gap-1.5 text-sm text-slate-300 hover:text-white transition-colors px-2 py-1 rounded-none hover:bg-white/10"
               >
                 <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-xs font-bold">
                   {(username ?? '?')[0].toUpperCase()}
@@ -174,7 +174,7 @@ export function HeaderNav() {
                 <span className="hidden sm:inline">{username}</span>
               </button>
               {userOpen && (
-                <div className={`absolute right-0 top-full mt-2 w-40 rounded-lg shadow-xl border z-50 overflow-hidden ${dropdownBg}`}>
+                <div className={`absolute right-0 top-full mt-2 w-40 rounded-none shadow-none border border-black z-50 overflow-hidden ${dropdownBg}`}>
                   <div className="px-4 py-2 border-b border-white/10">
                     <p className="text-xs text-slate-400">Signed in as</p>
                     <p className="text-sm text-white font-medium truncate">{username}</p>
@@ -198,7 +198,7 @@ export function HeaderNav() {
           ) : (
             <Link
               href="/signin"
-              className="text-sm text-slate-300 hover:text-white transition-colors px-3 py-1.5 rounded-md hover:bg-white/10"
+              className="text-sm text-slate-300 hover:text-white transition-colors px-3 py-1.5 rounded-none hover:bg-white/10"
             >
               Sign In
             </Link>

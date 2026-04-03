@@ -81,7 +81,7 @@ export default async function GhostChampionsPage() {
             {champs.map((g, i) => (
               <div
                 key={`${g.wrestler_id}-${g.weight}`}
-                className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden"
+                className="bg-white border border-black rounded-none shadow-none overflow-hidden"
               >
                 <div className="flex items-center gap-3 px-4 py-3">
                   <span className="text-2xl font-black text-amber-500 w-10 text-center shrink-0">

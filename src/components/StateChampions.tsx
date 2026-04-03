@@ -25,7 +25,7 @@ export function StateChampions({
       <h2 className="text-lg font-bold text-slate-900 mb-3">
         {seasonYear} State Champions
       </h2>
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-none border border-black shadow-none overflow-hidden">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-slate-100 bg-slate-50 text-slate-500 text-xs uppercase tracking-wider">

@@ -309,7 +309,7 @@ export function PersonalizedHome() {
   // Logged in but no schools — show prompt
   if (schools.length === 0 && followedWrestlers.length === 0) {
     return (
-      <div className="mb-8 bg-white border border-slate-200 rounded-xl shadow-sm px-5 py-6 text-center">
+      <div className="mb-8 bg-white border border-black rounded-none shadow-none px-5 py-6 text-center">
         <p className="text-sm text-slate-600 mb-2">Follow some schools to personalize your feed</p>
         <Link href="/schools" className="text-sm font-medium text-blue-600 hover:underline">
           Browse schools →
@@ -350,7 +350,7 @@ export function PersonalizedHome() {
               <Link
                 key={s.id}
                 href={s.abbreviation ? `/schools/${encodeURIComponent(s.abbreviation)}` : '#'}
-                className="block rounded-xl border border-slate-200 bg-white shadow-sm hover:bg-slate-50 transition-colors overflow-hidden"
+                className="block rounded-none border border-black bg-white shadow-none hover:bg-slate-50 transition-colors overflow-hidden"
               >
                 <div className="flex items-center gap-3 px-4 py-3" style={{ borderLeft: `4px solid ${pc}` }}>
                   <div
@@ -381,7 +381,7 @@ export function PersonalizedHome() {
 
       {/* ── Primary School Detail ── */}
       {primarySchool && primarySchool.abbreviation && (
-        <section className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+        <section className="bg-white border border-black rounded-none shadow-none overflow-hidden">
           <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between" style={{ borderTop: `3px solid ${primarySchool.primary_color ?? '#1a1a2e'}` }}>
             <div className="flex items-center gap-3">
               <div
@@ -464,7 +464,7 @@ export function PersonalizedHome() {
       {recentMatches.length > 0 && (
         <section>
           <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">Recent Matches</h2>
-          <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden divide-y divide-slate-50">
+          <div className="bg-white border border-black rounded-none shadow-none overflow-hidden divide-y divide-slate-50">
             {recentMatches.map(m => {
               const winner = m.winner_entry
               const loser = m.loser_entry
@@ -506,7 +506,7 @@ export function PersonalizedHome() {
           <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">School Leaderboards</h2>
           <div className="space-y-4">
             {schoolLeaderboards.map(({ school: s, placers }) => (
-              <div key={s.id} className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden" style={{ borderTop: `3px solid ${s.primary_color ?? '#1a1a2e'}` }}>
+              <div key={s.id} className="bg-white border border-black rounded-none shadow-none overflow-hidden" style={{ borderTop: `3px solid ${s.primary_color ?? '#1a1a2e'}` }}>
                 <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
                     <div
@@ -555,7 +555,7 @@ export function PersonalizedHome() {
 
       {/* ── Followed Wrestlers ── */}
       {followedWrestlers.length > 0 && (
-        <section className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+        <section className="bg-white border border-black rounded-none shadow-none overflow-hidden">
           <div className="px-5 py-3 border-b border-slate-100">
             <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Your Wrestlers</h2>
           </div>

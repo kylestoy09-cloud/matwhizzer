@@ -184,7 +184,7 @@ export default async function GirlsSchoolProfilePage({
       {bdRows.length > 0 && (
         <section className="mb-10">
           <h3 className="text-base font-semibold text-slate-800 mb-3">Team Points</h3>
-          <div className="inline-block border border-slate-200 rounded-lg overflow-x-auto shadow-sm bg-white">
+          <div className="inline-block border border-black rounded-none overflow-x-auto shadow-none bg-white">
             <table className="text-sm">
               <thead className="bg-slate-50 border-b border-slate-200">
                 <tr>
@@ -227,7 +227,7 @@ export default async function GirlsSchoolProfilePage({
       {champSections.length > 0 && (
         <section className="mb-10">
           <h3 className="text-base font-semibold text-slate-800 mb-3">Champions</h3>
-          <div className="border border-amber-200 rounded-lg overflow-x-auto shadow-sm bg-white">
+          <div className="border border-black rounded-none overflow-x-auto shadow-none bg-white">
             {champSections.map((sec, i) => (
               <div key={sec.label} className={i > 0 ? 'border-t border-slate-200' : ''}>
                 <div className="px-4 py-1.5 bg-amber-50 text-xs font-semibold text-amber-700 uppercase tracking-wide">
@@ -253,7 +253,7 @@ export default async function GirlsSchoolProfilePage({
       {leaderRows.length > 0 && (
         <section className="mb-10">
           <h3 className="text-base font-semibold text-slate-800 mb-3">Wrestler Stats</h3>
-          <div className="border border-slate-200 rounded-lg overflow-x-auto shadow-sm bg-white">
+          <div className="border border-black rounded-none overflow-x-auto shadow-none bg-white">
             <table className="w-full text-sm min-w-[600px]">
               <thead className="bg-slate-50 border-b border-slate-200">
                 <tr>
@@ -315,7 +315,7 @@ export default async function GirlsSchoolProfilePage({
       {/* Wrestler results */}
       <section>
         <h3 className="text-base font-semibold text-slate-800 mb-3">Wrestlers</h3>
-        <div className="border border-slate-200 rounded-lg overflow-x-auto shadow-sm bg-white">
+        <div className="border border-black rounded-none overflow-x-auto shadow-none bg-white">
           <table className="w-full text-sm min-w-[480px]">
             <thead className="bg-slate-50 border-b border-slate-200">
               <tr>

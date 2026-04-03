@@ -18,7 +18,7 @@ export default async function AdminDashboard() {
         <SignOutButton />
       </div>
 
-      <div className="bg-white rounded-xl shadow-md p-6 mb-6">
+      <div className="bg-white rounded-none border border-black shadow-none p-6 mb-6">
         <p className="text-sm text-slate-500 mb-1">Signed in as</p>
         <p className="text-slate-900 font-medium">{user.email}</p>
       </div>
@@ -28,7 +28,7 @@ export default async function AdminDashboard() {
           href={process.env.NEXT_PUBLIC_STAGING_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="block bg-orange-50 border border-orange-200 rounded-xl p-4 mb-6 hover:bg-orange-100 transition-colors"
+          className="block bg-orange-50 border border-black rounded-none shadow-none p-4 mb-6 hover:bg-orange-100 transition-colors"
         >
           <div className="flex items-center gap-2">
             <span className="text-orange-500 text-lg">↗</span>
@@ -43,21 +43,21 @@ export default async function AdminDashboard() {
       <div className="grid grid-cols-2 gap-4">
         <Link
           href="/admin/bracket"
-          className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow"
+          className="bg-white rounded-none border border-black shadow-none p-6 transition-shadow"
         >
           <h2 className="text-sm font-semibold text-slate-900 mb-1">Bracket Editor</h2>
           <p className="text-xs text-slate-500">View and edit state tournament bracket data</p>
         </Link>
         <Link
           href="/admin/schools"
-          className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow"
+          className="bg-white rounded-none border border-black shadow-none p-6 transition-shadow"
         >
           <h2 className="text-sm font-semibold text-slate-900 mb-1">School Aliases</h2>
           <p className="text-xs text-slate-500">Resolve unmatched abbreviations and verify mappings</p>
         </Link>
         <Link
           href="/admin/districts"
-          className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow"
+          className="bg-white rounded-none border border-black shadow-none p-6 transition-shadow"
         >
           <h2 className="text-sm font-semibold text-slate-900 mb-1">District Verify</h2>
           <p className="text-xs text-slate-500">Add abbreviations for each school by district</p>

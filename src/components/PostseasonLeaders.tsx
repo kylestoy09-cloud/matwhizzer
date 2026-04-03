@@ -30,7 +30,7 @@ export function PostseasonLeaders({
   return (
     <section>
       <h2 className={`text-lg font-bold ${titleColor} mb-3`}>Postseason Point Leaders</h2>
-      <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+      <div className="overflow-x-auto rounded-none border border-black shadow-none">
         <table className="min-w-full text-sm">
           <thead>
             <tr className="bg-slate-50 border-b border-slate-200">
@@ -63,7 +63,7 @@ export function PostseasonLeaders({
       {hasMore && (
         <button
           onClick={() => setVisible(v => Math.min(v + 10, rows.length))}
-          className="mt-3 w-full py-2 text-sm font-medium text-slate-500 hover:text-slate-800 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+          className="mt-3 w-full py-2 text-sm font-medium text-slate-500 hover:text-slate-800 border border-slate-200 rounded-none hover:bg-slate-50 transition-colors"
         >
           Show more ({Math.min(10, rows.length - visible)} more)
         </button>

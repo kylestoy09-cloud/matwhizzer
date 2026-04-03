@@ -39,7 +39,7 @@ export default async function SectionsIndexPage() {
 
       <div className="space-y-6">
         {sections.map(s => (
-          <div key={s.slug} className="bg-white border border-slate-200 rounded-xl shadow-sm p-5">
+          <div key={s.slug} className="bg-white border border-black rounded-none shadow-none p-5">
             <div className="flex items-center justify-between mb-3">
               <Link href={`/sections/${s.slug}`} className="text-lg font-bold text-slate-900 hover:underline">
                 {s.name}
@@ -51,7 +51,7 @@ export default async function SectionsIndexPage() {
                 <Link
                   key={g.slug}
                   href={`/sections/${s.slug}/${g.slug}`}
-                  className="px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-sm font-medium text-slate-700 hover:bg-slate-100 transition-colors"
+                  className="px-3 py-1.5 rounded-none border border-slate-200 bg-slate-50 text-sm font-medium text-slate-700 hover:bg-slate-100 transition-colors"
                 >
                   {g.label} <span className="text-slate-400 text-xs ml-1">{g.count}</span>
                 </Link>
