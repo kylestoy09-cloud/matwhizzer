@@ -647,6 +647,32 @@ export default async function WrestlerPage({
               {wrestler.gender === 'F' ? 'Girls' : 'Boys'}
             </span>
           </div>
+          {/* Mobile postseason badges */}
+          {placements.filter(p => p.seasonId === currentSeason).length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mt-2">
+              {placements
+                .filter(p => p.seasonId === currentSeason)
+                .sort((a, b) => (TOURNAMENT_TYPE_ORDER[a.tournamentType] ?? 9) - (TOURNAMENT_TYPE_ORDER[b.tournamentType] ?? 9) || a.place - b.place)
+                .map((p, i) => {
+                  const label = cleanTournamentName(p.tournament)
+                  const placeLabel = p.place === 1 ? 'Champion' : p.place === 2 ? '2nd' : `${p.place}${p.place === 3 ? 'rd' : 'th'}`
+                  const isChamp = p.place === 1
+                  const colors = isChamp
+                    ? 'bg-yellow-400 border-yellow-500 text-yellow-900'
+                    : p.place === 2
+                    ? 'bg-slate-200 border-slate-400 text-slate-800'
+                    : p.place === 3
+                    ? 'bg-orange-200 border-orange-400 text-orange-900'
+                    : 'bg-slate-100 border-slate-300 text-slate-600'
+                  return (
+                    <span key={i} className={`inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-lg border-2 shadow-sm ${colors}`}>
+                      <span>{isChamp ? '\u{1F3C6}' : p.place <= 3 ? '\u{1F3C5}' : '\u{1F396}'}</span>
+                      <span>{label} {placeLabel}</span>
+                    </span>
+                  )
+                })}
+            </div>
+          )}
         </div>
       </div>
 
@@ -693,6 +719,32 @@ export default async function WrestlerPage({
                 <Link href={`/conferences/${confSlug}?gender=${gender}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">{schoolProfile.athletic_conference}</Link>
               )}
             </div>
+            {/* Postseason placement badges */}
+            {placements.filter(p => p.seasonId === currentSeason).length > 0 && (
+              <div className="flex flex-wrap gap-2 mt-3">
+                {placements
+                  .filter(p => p.seasonId === currentSeason)
+                  .sort((a, b) => (TOURNAMENT_TYPE_ORDER[a.tournamentType] ?? 9) - (TOURNAMENT_TYPE_ORDER[b.tournamentType] ?? 9) || a.place - b.place)
+                  .map((p, i) => {
+                    const label = cleanTournamentName(p.tournament)
+                    const placeLabel = p.place === 1 ? 'Champion' : p.place === 2 ? 'Runner-Up' : `${p.place}${p.place === 3 ? 'rd' : 'th'} Place`
+                    const isChamp = p.place === 1
+                    const colors = isChamp
+                      ? 'bg-yellow-400 border-yellow-500 text-yellow-900'
+                      : p.place === 2
+                      ? 'bg-slate-200 border-slate-400 text-slate-800'
+                      : p.place === 3
+                      ? 'bg-orange-200 border-orange-400 text-orange-900'
+                      : 'bg-slate-100 border-slate-300 text-slate-600'
+                    return (
+                      <span key={i} className={`inline-flex items-center gap-1.5 text-sm font-bold px-3 py-1.5 rounded-lg border-2 shadow-sm ${colors}`}>
+                        <span className="text-base">{isChamp ? '\u{1F3C6}' : p.place <= 3 ? '\u{1F3C5}' : '\u{1F396}'}</span>
+                        <span>{label} {placeLabel}</span>
+                      </span>
+                    )
+                  })}
+              </div>
+            )}
           </div>
         </div>
       </div>
