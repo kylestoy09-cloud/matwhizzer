@@ -782,63 +782,6 @@ export default async function WrestlerPage({
         </div>
       )}
 
-      <p className="text-slate-500 mb-8">
-        {displaySchool && (
-          <>
-            {primarySchool ? (
-              <Link
-                href={`/${wrestler.gender === 'M' ? 'boys' : 'girls'}/schools/${encodeURIComponent(primarySchool)}`}
-                className="font-medium text-slate-700 hover:text-blue-600 transition-colors"
-              >
-                {displaySchool}
-              </Link>
-            ) : (
-              <span className="font-medium text-slate-700">{displaySchool}</span>
-            )}
-            {' · '}
-          </>
-        )}
-        {primaryWeight && <>{primaryWeight} lb · </>}
-        {districtNames.map(d => (
-          <span key={d}>
-            <Link
-              href={`/${wrestler.gender === 'M' ? 'boys' : 'girls'}/districts/${d.slice(1)}`}
-              className="hover:text-slate-800 transition-colors"
-            >
-              {d}
-            </Link>
-            {' · '}
-          </span>
-        ))}
-        {regionNames.map(r => (
-          <span key={r}>
-            {wrestler.gender === 'M' ? (
-              <Link
-                href={`/boys/regions/${r.slice(1)}`}
-                className="hover:text-slate-800 transition-colors"
-              >
-                {r}
-              </Link>
-            ) : (
-              <Link
-                href={`/girls/regions/${r.slice(1)}`}
-                className="hover:text-slate-800 transition-colors"
-              >
-                {r}
-              </Link>
-            )}
-            {' · '}
-          </span>
-        ))}
-        {primaryGrade && <>{
-          ({ Fr: 'Freshman', So: 'Sophomore', Jr: 'Junior', Sr: 'Senior' } as Record<string, string>)[primaryGrade] ?? primaryGrade
-        } · </>}
-        {seasonRecord && (
-          <>Season record: <span className="font-semibold text-slate-700">{seasonRecord.wins}-{seasonRecord.losses}</span> · </>
-        )}
-        <span className="font-semibold text-slate-700">{wins}-{losses}</span>
-        {' '}postseason · {totalTournaments} tournament{totalTournaments !== 1 ? 's' : ''}
-      </p>
 
       {/* Career Stats Table */}
       {seasonStats.length > 0 && (
