@@ -705,6 +705,56 @@ export default async function WrestlerPage({
   // Season record
   const recordStr = seasonRecord ? `${seasonRecord.wins}-${seasonRecord.losses}` : null
 
+  // Build unified postseason rows — all groups, sorted season desc then state > regions > districts
+  type PostseasonRow = {
+    seasonId: number
+    tournamentName: string
+    tournamentType: string
+    weight: number
+    place: number | null
+    finalMatch: (typeof allGroupsSorted[0]['matches'][0]) | null
+  }
+  const postseasonRows: PostseasonRow[] = allGroupsSorted.map(g => {
+    const placement = placements.find(
+      p => p.seasonId === g.season_id && p.tournament === g.tournament_name
+    )
+    // Find the last significant match (Finals → 3rd → 5th → 7th → last non-bye)
+    const priorityRounds = ['F', '3rd_Place', '5th_Place', '7th_Place']
+    let finalMatch: PostseasonRow['finalMatch'] = null
+    for (const r of priorityRounds) {
+      const m = g.matches.find(m2 => m2.round === r && m2.opponent !== 'Bye')
+      if (m) { finalMatch = m; break }
+    }
+    if (!finalMatch) {
+      const nonBye = g.matches.filter(m => m.opponent !== 'Bye')
+      finalMatch = nonBye.length > 0 ? nonBye[nonBye.length - 1] : null
+    }
+    return {
+      seasonId: g.season_id,
+      tournamentName: cleanTournamentName(g.tournament_name),
+      tournamentType: g.tournament_type,
+      weight: g.weight,
+      place: placement?.place ?? null,
+      finalMatch,
+    }
+  }).sort((a, b) => {
+    if (b.seasonId !== a.seasonId) return b.seasonId - a.seasonId
+    const tOrd = (tt: string) => tt.includes('state') ? 2 : tt.includes('region') ? 1 : 0
+    const tDiff = tOrd(b.tournamentType) - tOrd(a.tournamentType)
+    if (tDiff !== 0) return tDiff
+    return a.tournamentName.localeCompare(b.tournamentName) || a.weight - b.weight
+  })
+  // Flatten into season-divider + data rows for clean key-safe rendering
+  type PSTableItem = { kind: 'divider'; sid: number } | { kind: 'data'; row: PostseasonRow; key: string }
+  const psTableItems: PSTableItem[] = []
+  const psSeasonIds = [...new Set(postseasonRows.map(r => r.seasonId))]
+  for (const sid of psSeasonIds) {
+    psTableItems.push({ kind: 'divider', sid })
+    for (const row of postseasonRows.filter(r => r.seasonId === sid)) {
+      psTableItems.push({ kind: 'data', row, key: `${sid}||${row.tournamentName}||${row.weight}` })
+    }
+  }
+
   return (
     <div className="max-w-3xl mx-auto px-4 py-10">
       <BackLink gender={wrestler.gender} />
@@ -994,102 +1044,83 @@ export default async function WrestlerPage({
         </div>
       )}
 
-      {/* Match history grouped by season, then by tournament + weight */}
-      <div className="space-y-10">
-        {seasonIds.map(seasonId => {
-          const seasonGroups = bySeason.get(seasonId) ?? []
-          const label = SEASON_LABELS[seasonId] ?? `Season ${seasonId}`
-          return (
-            <div key={seasonId}>
-              <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4 pb-1 border-b border-slate-100">
-                {label}
-                {schoolBySeason.get(seasonId) && (
-                  <span className="ml-2 normal-case tracking-normal text-slate-500 font-medium">
-                    — {schoolBySeason.get(seasonId)}
-                  </span>
-                )}
-              </h3>
-              <div className="space-y-8">
-                {seasonGroups.map(g => (
-                  <section key={`${g.season_id}||${g.tournament_name}||${g.weight}`}>
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${tournamentTypeColor(g.tournament_type)}`}>
-                        {TOURNAMENT_TYPE_LABEL[g.tournament_type] ?? g.tournament_type}
-                      </span>
-                      <h4 className="font-semibold text-slate-800">
-                        {cleanTournamentName(g.tournament_name)}
-                      </h4>
-                      <span className="text-slate-400 text-sm">&middot; {g.weight} lb</span>
-                    </div>
-
-                    <div className="border border-black rounded-none overflow-hidden shadow-none bg-white overflow-x-auto">
-                      <table className="min-w-[480px] w-full text-sm">
-                        <thead className="bg-slate-50 border-b border-slate-200">
-                          <tr>
-                            <th className="text-left px-4 py-2 font-medium text-slate-500 w-28">Round</th>
-                            <th className="text-left px-4 py-2 font-medium text-slate-500 w-10">Result</th>
-                            <th className="text-left px-4 py-2 font-medium text-slate-500">Opponent</th>
-                            <th className="text-right px-4 py-2 font-medium text-slate-500 w-32">Score</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-slate-100">
-                          {g.matches.map(m => {
-                            const mIsBye = m.opponent === 'Bye'
-                            return (
-                            <tr key={m.id} className={mIsBye ? 'opacity-50' : 'hover:bg-slate-50'}>
-                              <td className="px-4 py-2.5 text-slate-500">
-                                {m.round === 'F' && m.bracket_side === 'championship' && m.result === 'W' && (
-                                  <span className="mr-1">{'\u{1F451}'}</span>
-                                )}
-                                {m.round === 'F' && m.bracket_side === 'championship' && m.result === 'L' && (
-                                  <span className="mr-1">{'\u{1F948}'}</span>
-                                )}
-                                {ROUND_LABEL[m.round ?? ''] ?? m.round ?? '—'}
-                              </td>
-                              <td className="px-4 py-2.5">
-                                {mIsBye ? (
-                                  <span className="text-sm text-slate-400 italic">Bye</span>
-                                ) : (
-                                  <span className={`font-bold text-sm ${
-                                    m.result === 'W' ? 'text-emerald-600' : 'text-red-500'
-                                  }`}>
-                                    {m.result}
-                                  </span>
-                                )}
-                              </td>
-                              <td className="px-4 py-2.5 text-slate-800 font-medium">
-                                {m.opponentId ? (
-                                  <Link
-                                    href={`/wrestler/${m.opponentId}`}
-                                    className="hover:text-blue-600 transition-colors"
-                                  >
-                                    {m.opponent}
-                                  </Link>
-                                ) : (
-                                  m.opponent
-                                )}
-                                {m.opponentSchool && (
-                                  <span className="ml-1.5 text-slate-400 font-normal text-xs">
-                                    {m.opponentSchool}
-                                  </span>
-                                )}
-                              </td>
-                              <td className="px-4 py-2.5 text-right text-slate-500 font-mono text-xs">
-                                {mIsBye ? '' : (m.win_type ? formatScore(m, m.result === 'W') : '—')}
-                              </td>
-                            </tr>
-                            )
-                          })}
-                        </tbody>
-                      </table>
-                    </div>
-                  </section>
-                ))}
-              </div>
-            </div>
-          )
-        })}
-      </div>
+      {/* Unified Postseason Results */}
+      {psTableItems.length > 0 && (
+        <div className="mb-8">
+          <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">Postseason Results</h3>
+          <div className="border border-black rounded-none overflow-hidden shadow-none bg-white overflow-x-auto">
+            <table className="min-w-[480px] w-full text-sm">
+              <thead className="bg-slate-50 border-b border-slate-200">
+                <tr>
+                  <th className="text-left px-3 py-2 font-medium text-slate-500">Tournament</th>
+                  <th className="text-center px-3 py-2 font-medium text-slate-500 w-16">Wt</th>
+                  <th className="text-center px-3 py-2 font-medium text-slate-500 w-24">Place</th>
+                  <th className="text-left px-3 py-2 font-medium text-slate-500 w-28">Result</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {psTableItems.map(item => {
+                  if (item.kind === 'divider') {
+                    return (
+                      <tr key={`s-${item.sid}`} className="bg-slate-50 border-t border-slate-200">
+                        <td colSpan={4} className="px-3 py-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest">
+                          {SEASON_LABELS[item.sid] ?? `Season ${item.sid}`}
+                          {schoolBySeason.get(item.sid) && (
+                            <span className="ml-2 normal-case tracking-normal text-slate-400 font-medium">
+                              — {schoolBySeason.get(item.sid)}
+                            </span>
+                          )}
+                        </td>
+                      </tr>
+                    )
+                  }
+                  const { row } = item
+                  const medal = row.place === 1 ? '\u{1F947}' : row.place === 2 ? '\u{1F948}' : row.place === 3 ? '\u{1F949}' : null
+                  const ordinal = row.place == null ? null
+                    : row.place === 1 ? '1st' : row.place === 2 ? '2nd' : row.place === 3 ? '3rd' : `${row.place}th`
+                  return (
+                    <tr key={item.key} className="hover:bg-slate-50">
+                      <td className="px-3 py-2.5 font-medium text-slate-800">
+                        <span className="inline-flex items-center gap-1.5">
+                          <span className={`text-[10px] font-semibold px-1.5 py-0.5 ${tournamentTypeColor(row.tournamentType)}`}>
+                            {TOURNAMENT_TYPE_LABEL[row.tournamentType] ?? row.tournamentType}
+                          </span>
+                          {row.tournamentName}
+                        </span>
+                      </td>
+                      <td className="px-3 py-2.5 text-center text-slate-500 tabular-nums">
+                        {row.weight} lb
+                      </td>
+                      <td className="px-3 py-2.5 text-center">
+                        {row.place != null ? (
+                          <span className="inline-flex items-center gap-0.5 font-semibold text-slate-800">
+                            {medal && <span>{medal}</span>}
+                            <span>{ordinal}</span>
+                          </span>
+                        ) : <span className="text-slate-400">—</span>}
+                      </td>
+                      <td className="px-3 py-2.5">
+                        {row.finalMatch ? (
+                          <span className="inline-flex items-center gap-1">
+                            <span className={`font-bold text-sm ${row.finalMatch.result === 'W' ? 'text-emerald-600' : 'text-red-500'}`}>
+                              {row.finalMatch.result}
+                            </span>
+                            {row.finalMatch.win_type && (
+                              <span className="text-xs text-slate-500">
+                                · {formatScore(row.finalMatch, row.finalMatch.result === 'W')}
+                              </span>
+                            )}
+                          </span>
+                        ) : <span className="text-slate-400">—</span>}
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
