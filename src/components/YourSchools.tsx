@@ -71,7 +71,7 @@ export function YourSchools() {
         setPrimarySchool(schoolMap.get(p.primary_school_id)!)
       }
 
-      const followed = (p.followed_school_ids ?? [])
+      const followed = [...new Set(p.followed_school_ids ?? [])]
         .filter(id => id !== p.primary_school_id && schoolMap.has(id))
         .map(id => schoolMap.get(id)!)
       setFollowedSchools(followed)

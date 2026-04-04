@@ -39,6 +39,7 @@ export function HeaderNav() {
     { href: districtsHref,    label: 'Districts' },
     { href: leaderboardsHref, label: 'Leaderboards' },
     { href: schoolsHref,      label: 'Schools' },
+    { href: '/conferences',   label: 'Conferences' },
     { href: '/feedback',      label: 'Feedback' },
   ]
 
