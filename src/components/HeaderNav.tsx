@@ -37,9 +37,9 @@ export function HeaderNav() {
     { href: stateHref,        label: 'State' },
     { href: regionsHref,      label: 'Regions' },
     { href: districtsHref,    label: 'Districts' },
+    { href: '/conferences',   label: 'Conferences' },
     { href: leaderboardsHref, label: 'Leaderboards' },
     { href: schoolsHref,      label: 'Schools' },
-    { href: '/conferences',   label: 'Conferences' },
     { href: '/feedback',      label: 'Feedback' },
   ]
 
