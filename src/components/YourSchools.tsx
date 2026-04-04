@@ -71,7 +71,7 @@ export function YourSchools() {
         setPrimarySchool(schoolMap.get(p.primary_school_id)!)
       }
 
-      const followed = [...new Set(p.followed_school_ids ?? [])]
+      const followed = [...new Set((p.followed_school_ids ?? []).map(Number))]
         .filter(id => id !== p.primary_school_id && schoolMap.has(id))
         .map(id => schoolMap.get(id)!)
       setFollowedSchools(followed)
@@ -85,10 +85,15 @@ export function YourSchools() {
 
   const base = preference === 'girls' ? '/girls' : '/boys'
 
+  const seenIds = new Set<number>()
   const allSchools = [
     ...(primarySchool ? [{ ...primarySchool, isPrimary: true }] : []),
     ...followedSchools.map(s => ({ ...s, isPrimary: false })),
-  ]
+  ].filter(s => {
+    if (seenIds.has(s.id)) return false
+    seenIds.add(s.id)
+    return true
+  })
 
   return (
     <section className="mb-8">
