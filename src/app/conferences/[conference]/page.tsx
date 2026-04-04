@@ -118,8 +118,8 @@ export default async function ConferencePage({
           <Image
             src={logoUrl}
             alt={conferenceName!}
-            width={512}
-            height={512}
+            width={1079}
+            height={647}
             className="w-full h-auto"
           />
         ) : (
@@ -159,8 +159,8 @@ export default async function ConferencePage({
               <Image
                 src={logoUrl}
                 alt={conferenceName!}
-                width={512}
-                height={512}
+                width={1079}
+                height={647}
                 className="w-[240px] h-auto rounded-none"
               />
             ) : (

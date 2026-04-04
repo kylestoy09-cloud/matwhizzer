@@ -73,19 +73,22 @@ export default async function ConferencesIndexPage({
             href={`/conferences/${c.slug}?gender=${gender}`}
             className="block bg-white border border-black rounded-none shadow-none hover:border-slate-400 transition-colors overflow-hidden"
           >
-            {/* Logo area */}
-            <div className="aspect-square w-full overflow-hidden">
+            {/* Logo — exact WrestlerAvatar lg pattern */}
+            <div className="w-full">
               {c.logoUrl ? (
                 <Image
                   src={c.logoUrl}
                   alt={c.name}
-                  width={512}
-                  height={512}
-                  className="w-full h-full object-cover"
+                  width={1079}
+                  height={647}
+                  className="w-full h-auto"
                 />
               ) : (
-                <div className="w-full h-full bg-slate-100 flex items-center justify-center p-3">
-                  <span className="text-slate-400 text-xs font-medium text-center leading-snug">{c.name}</span>
+                <div
+                  className="w-full aspect-[1079/647] flex items-center justify-center font-bold text-4xl"
+                  style={{ backgroundColor: '#1a1a2e', color: '#FFD700' }}
+                >
+                  {c.name[0]}
                 </div>
               )}
             </div>
