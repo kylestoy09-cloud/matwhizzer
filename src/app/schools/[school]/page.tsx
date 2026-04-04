@@ -404,7 +404,7 @@ export default async function SchoolProfilePage({
               <FollowSchoolButton schoolAbbreviation={schoolAbbrev} />
             </div>
           </div>
-          {(tags.length > 0 || classLabel || conferenceSlug) && (
+          {(tags.length > 0 || classLabel || conferenceSlug || profile.athletic_conference === 'Independent') && (
             <div className="flex flex-wrap gap-1 mt-2">
               {tags.map(tag => (
                 <span key={tag} className="text-[10px] px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-500">{tag}</span>
@@ -420,6 +420,9 @@ export default async function SchoolProfilePage({
               )}
               {profile.athletic_conference && conferenceSlug && (
                 <Link href={`/conferences/${conferenceSlug}?gender=${gender}`} className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-600">{profile.athletic_conference}</Link>
+              )}
+              {profile.athletic_conference === 'Independent' && (
+                <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-600">Independent</span>
               )}
             </div>
           )}
@@ -459,7 +462,7 @@ export default async function SchoolProfilePage({
                     {[profile.mascot, profile.nickname ? `"${profile.nickname}"` : null].filter(Boolean).join(' · ')}
                   </p>
                 )}
-                {(tags.length > 0 || classLabel || conferenceSlug) && (
+                {(tags.length > 0 || classLabel || conferenceSlug || profile.athletic_conference === 'Independent') && (
                   <div className="flex flex-wrap gap-1.5 mt-2">
                     {tags.map(tag => (
                       <span key={tag} className="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">{tag}</span>
@@ -483,6 +486,9 @@ export default async function SchoolProfilePage({
                       <Link href={`/conferences/${conferenceSlug}?gender=${gender}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
                         {profile.athletic_conference}
                       </Link>
+                    )}
+                    {profile.athletic_conference === 'Independent' && (
+                      <span className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600">Independent</span>
                     )}
                   </div>
                 )}
