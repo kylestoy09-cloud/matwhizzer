@@ -66,7 +66,7 @@ export default async function ConferencePage({
   const rows = (standingsData ?? []) as StandingRow[]
 
   // Group by division, sort rows within each division by div record desc
-  const divisionNames = [...new Set(rows.map(r => r.division))]
+  const divisionNames = [...new Set(rows.map(r => r.division).filter(Boolean))]
   const byDivision = new Map<string, StandingRow[]>()
   for (const div of divisionNames) {
     const divRows = rows
@@ -128,7 +128,7 @@ export default async function ConferencePage({
               {/* Division header */}
               <div className="px-4 py-2.5 bg-slate-50 border-b border-slate-200">
                 <h2 className="text-sm font-semibold text-slate-700 uppercase tracking-wide">
-                  {div === div.match(/^[A-H]$/)?.[0] ? `Division ${div}` : `${div} Division`}
+                  {div && div.match(/^[A-H]$/) ? `Division ${div}` : `${div ?? ''} Division`}
                 </h2>
               </div>
 
