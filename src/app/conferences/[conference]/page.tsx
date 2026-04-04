@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { conferenceFromSlug } from '@/lib/conferences'
 import { getActiveSeason } from '@/lib/get-season'
@@ -55,6 +56,15 @@ export default async function ConferencePage({
   const conferenceName = conferenceFromSlug(slug)
   if (!conferenceName) notFound()
 
+  // Fetch conference logo
+  const { data: conferenceData } = await supabase
+    .from('conferences')
+    .select('logo_url')
+    .eq('slug', slug)
+    .maybeSingle()
+
+  const logoUrl = conferenceData?.logo_url ?? null
+
   // Fetch division standings
   const { data: standingsData } = await supabase
     .from('conference_standings')
@@ -63,6 +73,7 @@ export default async function ConferencePage({
     .eq('season_id', season ?? 2)
     .order('division')
 
+  console.log('[conference page]', { slug, season, rows: standingsData?.length ?? 0 })
   const rows = (standingsData ?? []) as StandingRow[]
 
   // Group by division, sort rows within each division by div record desc
@@ -99,11 +110,22 @@ export default async function ConferencePage({
 
       {/* Header */}
       <div className="flex items-start justify-between gap-4 mb-8">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-900">{conferenceName}</h1>
-          <p className="text-sm text-slate-500 mt-1">
-            {rows.length} team{rows.length !== 1 ? 's' : ''} · Dual Meet Standings
-          </p>
+        <div className="flex items-center gap-4">
+          {logoUrl && (
+            <Image
+              src={logoUrl}
+              alt={conferenceName!}
+              width={512}
+              height={512}
+              className="w-16 h-16 object-contain rounded-none shrink-0"
+            />
+          )}
+          <div>
+            <h1 className="text-2xl font-bold text-slate-900">{conferenceName}</h1>
+            <p className="text-sm text-slate-500 mt-1">
+              {rows.length} team{rows.length !== 1 ? 's' : ''} · Dual Meet Standings
+            </p>
+          </div>
         </div>
         <div className="flex flex-col items-end gap-2 shrink-0">
           <div className="text-xs text-slate-400">
