@@ -46,7 +46,7 @@ export default async function ConferencePage({
   searchParams,
 }: {
   params: Promise<{ conference: string }>
-  searchParams: Promise<{ gender?: string }>
+  searchParams: Promise<{ gender?: string; season?: string }>
 }) {
   const { conference: slug } = await params
   const { gender: genderParam } = await searchParams
@@ -73,7 +73,6 @@ export default async function ConferencePage({
     .eq('season_id', season ?? 2)
     .order('division')
 
-  console.log('[conference page]', { slug, season, rows: standingsData?.length ?? 0 })
   const rows = (standingsData ?? []) as StandingRow[]
 
   // Group by division, sort rows within each division by div record desc
@@ -86,7 +85,7 @@ export default async function ConferencePage({
     byDivision.set(div, divRows)
   }
 
-  // School lookup for profile links (slug = display_name URL-encoded)
+  // School lookup for profile links
   const schoolSlugs = new Map<number, string>()
   if (rows.length > 0) {
     const ids = [...new Set(rows.filter(r => r.school_id).map(r => r.school_id!))]
@@ -99,114 +98,158 @@ export default async function ConferencePage({
     }
   }
 
-  return (
-    <div className="max-w-5xl mx-auto px-4 py-10">
-      <Link
-        href={`/conferences?gender=${gender}`}
-        className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 mb-6 transition-colors"
-      >
-        ← All Conferences
-      </Link>
+  const subtitle = `${rows.length} team${rows.length !== 1 ? 's' : ''} · Dual Meet Standings`
 
-      {/* Header */}
-      <div className="flex items-start justify-between gap-4 mb-8">
-        <div className="flex items-center gap-4">
-          {logoUrl && (
-            <Image
-              src={logoUrl}
-              alt={conferenceName!}
-              width={512}
-              height={512}
-              className="w-16 h-16 object-contain rounded-none shrink-0"
-            />
-          )}
-          <div>
-            <h1 className="text-2xl font-bold text-slate-900">{conferenceName}</h1>
-            <p className="text-sm text-slate-500 mt-1">
-              {rows.length} team{rows.length !== 1 ? 's' : ''} · Dual Meet Standings
-            </p>
+  return (
+    <div>
+      {/* Back link */}
+      <div className="max-w-5xl mx-auto px-4 pt-6 pb-2">
+        <Link
+          href={`/conferences?gender=${gender}`}
+          className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 transition-colors"
+        >
+          ← All Conferences
+        </Link>
+      </div>
+
+      {/* ── Mobile sticky header ─────────────────────────────────────── */}
+      <div className="md:hidden sticky top-0 z-20">
+        {logoUrl ? (
+          <Image
+            src={logoUrl}
+            alt={conferenceName!}
+            width={512}
+            height={512}
+            className="w-full h-auto"
+          />
+        ) : (
+          <div className="w-full h-32 bg-slate-900 flex items-center justify-center">
+            <span className="text-white text-xl font-bold px-4 text-center">{conferenceName}</span>
+          </div>
+        )}
+        <div className="bg-white border-b border-black px-4 py-3" style={{ borderTop: '3px solid #0f172a' }}>
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <h1 className="text-base font-bold text-slate-900 truncate">{conferenceName}</h1>
+              <p className="text-xs text-slate-500">{subtitle}</p>
+            </div>
+            <div className="shrink-0 text-xs text-slate-400">
+              <InlineSeasonPicker activeSeason={season ?? 2} />
+            </div>
           </div>
         </div>
-        <div className="flex flex-col items-end gap-2 shrink-0">
-          <div className="text-xs text-slate-400">
+      </div>
+
+      {/* ── Desktop sticky header ────────────────────────────────────── */}
+      <div
+        className="hidden md:block sticky top-0 z-20 bg-white border border-black rounded-none shadow-none mb-8"
+        style={{ borderTop: '3px solid #0f172a' }}
+      >
+        <div className="flex items-center gap-5 p-4">
+          {/* Logo — overflows header bottom via negative margin */}
+          <div className="shrink-0 -mb-4">
+            {logoUrl ? (
+              <Image
+                src={logoUrl}
+                alt={conferenceName!}
+                width={512}
+                height={512}
+                className="w-[200px] h-auto rounded-none"
+              />
+            ) : (
+              <div className="w-[160px] h-[96px] bg-slate-900 rounded-none flex items-center justify-center">
+                <span className="text-white font-bold text-sm text-center px-2">{conferenceName}</span>
+              </div>
+            )}
+          </div>
+
+          {/* Conference info */}
+          <div className="flex-1 min-w-0">
+            <h1 className="text-xl font-bold text-slate-900">{conferenceName}</h1>
+            <p className="text-sm text-slate-500 mt-1">{subtitle}</p>
+          </div>
+
+          {/* Season picker */}
+          <div className="shrink-0 text-xs text-slate-400">
             <InlineSeasonPicker activeSeason={season ?? 2} />
           </div>
         </div>
       </div>
 
-      {/* No data state */}
-      {rows.length === 0 && (
-        <div className="border border-black rounded-none bg-white px-6 py-10 text-center text-slate-500 text-sm">
-          No standings data available for this conference.
+      {/* ── Standings ────────────────────────────────────────────────── */}
+      <div className="max-w-5xl mx-auto px-4 pb-10">
+        {rows.length === 0 && (
+          <div className="border border-black rounded-none bg-white px-6 py-10 text-center text-slate-500 text-sm">
+            No standings data available for this conference.
+          </div>
+        )}
+
+        <div className="space-y-8">
+          {divisionNames.map(div => {
+            const divRows = byDivision.get(div) ?? []
+            return (
+              <div key={div} className="border border-black rounded-none overflow-hidden shadow-none bg-white">
+                {/* Division header */}
+                <div className="px-4 py-2.5 bg-slate-50 border-b border-slate-200">
+                  <h2 className="text-sm font-semibold text-slate-700 uppercase tracking-wide">
+                    {div && div.match(/^[A-H]$/) ? `Division ${div}` : `${div ?? ''} Division`}
+                  </h2>
+                </div>
+
+                <div className="overflow-x-auto">
+                  <table className="min-w-[520px] w-full text-sm">
+                    <thead className="bg-slate-50 border-b border-slate-200">
+                      <tr>
+                        <th className="text-center px-3 py-2 font-medium text-slate-500 w-10">#</th>
+                        <th className="text-left px-3 py-2 font-medium text-slate-500">School</th>
+                        <th className="text-center px-3 py-2 font-medium text-slate-500 w-20">Overall</th>
+                        <th className="text-center px-3 py-2 font-medium text-slate-500 w-16">Div</th>
+                        <th className="text-center px-3 py-2 font-medium text-slate-500 w-16">PF</th>
+                        <th className="text-center px-3 py-2 font-medium text-slate-500 w-16">PA</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {divRows.map((row, i) => {
+                        const profileName = row.school_id ? schoolSlugs.get(row.school_id) : null
+                        return (
+                          <tr key={row.id} className="hover:bg-slate-50">
+                            <td className="px-3 py-2.5 text-center text-slate-400 text-xs font-medium">
+                              {i + 1}
+                            </td>
+                            <td className="px-3 py-2.5 font-medium text-slate-800">
+                              {profileName ? (
+                                <Link
+                                  href={`/schools/${encodeURIComponent(profileName)}?gender=${gender}`}
+                                  className="hover:text-blue-600 transition-colors"
+                                >
+                                  {row.school_name}
+                                </Link>
+                              ) : (
+                                row.school_name
+                              )}
+                            </td>
+                            <td className="px-3 py-2.5 text-center text-slate-600 tabular-nums">
+                              {recordStr(row.overall_wins, row.overall_losses)}
+                            </td>
+                            <td className="px-3 py-2.5 text-center font-semibold text-slate-800 tabular-nums">
+                              {recordStr(row.div_wins, row.div_losses)}
+                            </td>
+                            <td className="px-3 py-2.5 text-center text-slate-500 tabular-nums">
+                              {row.pf}
+                            </td>
+                            <td className="px-3 py-2.5 text-center text-slate-500 tabular-nums">
+                              {row.pa}
+                            </td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )
+          })}
         </div>
-      )}
-
-      {/* One table per division */}
-      <div className="space-y-8">
-        {divisionNames.map(div => {
-          const divRows = byDivision.get(div) ?? []
-          return (
-            <div key={div} className="border border-black rounded-none overflow-hidden shadow-none bg-white">
-              {/* Division header */}
-              <div className="px-4 py-2.5 bg-slate-50 border-b border-slate-200">
-                <h2 className="text-sm font-semibold text-slate-700 uppercase tracking-wide">
-                  {div && div.match(/^[A-H]$/) ? `Division ${div}` : `${div ?? ''} Division`}
-                </h2>
-              </div>
-
-              <div className="overflow-x-auto">
-                <table className="min-w-[520px] w-full text-sm">
-                  <thead className="bg-slate-50 border-b border-slate-200">
-                    <tr>
-                      <th className="text-center px-3 py-2 font-medium text-slate-500 w-10">#</th>
-                      <th className="text-left px-3 py-2 font-medium text-slate-500">School</th>
-                      <th className="text-center px-3 py-2 font-medium text-slate-500 w-20">Overall</th>
-                      <th className="text-center px-3 py-2 font-medium text-slate-500 w-16">Div</th>
-                      <th className="text-center px-3 py-2 font-medium text-slate-500 w-16">PF</th>
-                      <th className="text-center px-3 py-2 font-medium text-slate-500 w-16">PA</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100">
-                    {divRows.map((row, i) => {
-                      const profileName = row.school_id ? schoolSlugs.get(row.school_id) : null
-                      return (
-                        <tr key={row.id} className="hover:bg-slate-50">
-                          <td className="px-3 py-2.5 text-center text-slate-400 text-xs font-medium">
-                            {i + 1}
-                          </td>
-                          <td className="px-3 py-2.5 font-medium text-slate-800">
-                            {profileName ? (
-                              <Link
-                                href={`/schools/${encodeURIComponent(profileName)}?gender=${gender}`}
-                                className="hover:text-blue-600 transition-colors"
-                              >
-                                {row.school_name}
-                              </Link>
-                            ) : (
-                              row.school_name
-                            )}
-                          </td>
-                          <td className="px-3 py-2.5 text-center text-slate-600 tabular-nums">
-                            {recordStr(row.overall_wins, row.overall_losses)}
-                          </td>
-                          <td className="px-3 py-2.5 text-center font-semibold text-slate-800 tabular-nums">
-                            {recordStr(row.div_wins, row.div_losses)}
-                          </td>
-                          <td className="px-3 py-2.5 text-center text-slate-500 tabular-nums">
-                            {row.pf}
-                          </td>
-                          <td className="px-3 py-2.5 text-center text-slate-500 tabular-nums">
-                            {row.pa}
-                          </td>
-                        </tr>
-                      )
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )
-        })}
       </div>
     </div>
   )

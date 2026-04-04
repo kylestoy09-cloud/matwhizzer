@@ -1,6 +1,9 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
+import Image from 'next/image'
 import { getAllConferences, conferenceToSlug } from '@/lib/conferences'
+
+export const dynamic = 'force-dynamic'
 
 export default async function ConferencesIndexPage({
   searchParams,
@@ -23,9 +26,20 @@ export default async function ConferencesIndexPage({
     counts.set(conf, (counts.get(conf) ?? 0) + 1)
   }
 
+  // Fetch logo_urls from conferences table
+  const { data: confRows } = await supabase
+    .from('conferences')
+    .select('slug, logo_url')
+
+  const logoMap = new Map<string, string>()
+  for (const c of (confRows ?? [])) {
+    if (c.logo_url) logoMap.set(c.slug, c.logo_url)
+  }
+
   const conferences = getAllConferences().map(c => ({
     ...c,
     schoolCount: counts.get(c.name) ?? 0,
+    logoUrl: logoMap.get(c.slug) ?? null,
   }))
 
   return (
@@ -51,16 +65,36 @@ export default async function ConferencesIndexPage({
         </div>
       </div>
 
-      {/* Conference cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* Conference logo cards */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         {conferences.map(c => (
           <Link
             key={c.slug}
             href={`/conferences/${c.slug}?gender=${gender}`}
-            className="block bg-white border border-black rounded-none shadow-none p-5 hover:bg-slate-50 hover:border-slate-300 transition-colors"
+            className="block bg-white border border-black rounded-none shadow-none hover:border-slate-400 transition-colors overflow-hidden"
           >
-            <h2 className="text-base font-bold text-slate-900">{c.name}</h2>
-            <p className="text-xs text-slate-400 mt-1">{c.schoolCount} school{c.schoolCount !== 1 ? 's' : ''}</p>
+            {/* Logo area */}
+            <div className="aspect-square w-full overflow-hidden">
+              {c.logoUrl ? (
+                <Image
+                  src={c.logoUrl}
+                  alt={c.name}
+                  width={512}
+                  height={512}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full bg-slate-100 flex items-center justify-center p-3">
+                  <span className="text-slate-400 text-xs font-medium text-center leading-snug">{c.name}</span>
+                </div>
+              )}
+            </div>
+
+            {/* Label */}
+            <div className="border-t border-black px-3 py-2">
+              <p className="text-xs font-bold text-slate-900 leading-snug">{c.name}</p>
+              <p className="text-[11px] text-slate-400 mt-0.5">{c.schoolCount} school{c.schoolCount !== 1 ? 's' : ''}</p>
+            </div>
           </Link>
         ))}
       </div>
