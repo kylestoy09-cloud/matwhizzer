@@ -99,21 +99,21 @@ export default async function ConferencePage({
   }
 
   const subtitle = `${rows.length} team${rows.length !== 1 ? 's' : ''} · Dual Meet Standings`
+  const accentColor = '#0f172a'
 
   return (
     <div>
       {/* Back link */}
-      <div className="max-w-5xl mx-auto px-4 pt-6 pb-2">
-        <Link
-          href={`/conferences?gender=${gender}`}
-          className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 transition-colors"
-        >
-          ← All Conferences
-        </Link>
-      </div>
+      <Link
+        href={`/conferences?gender=${gender}`}
+        className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 mb-6 transition-colors px-4 pt-6 block"
+      >
+        ← All Conferences
+      </Link>
 
-      {/* ── Mobile sticky header ─────────────────────────────────────── */}
+      {/* ── Mobile: logo banner + sticky info bar (exact school pattern) ── */}
       <div className="md:hidden sticky top-0 z-20">
+        {/* Logo banner */}
         {logoUrl ? (
           <Image
             src={logoUrl}
@@ -123,55 +123,76 @@ export default async function ConferencePage({
             className="w-full h-auto"
           />
         ) : (
-          <div className="w-full h-32 bg-slate-900 flex items-center justify-center">
-            <span className="text-white text-xl font-bold px-4 text-center">{conferenceName}</span>
+          <div
+            className="w-full aspect-video flex items-center justify-center text-6xl font-bold"
+            style={{ backgroundColor: accentColor, color: '#ffffff' }}
+          >
+            {conferenceName![0]}
           </div>
         )}
-        <div className="bg-white border-b border-black px-4 py-3" style={{ borderTop: '3px solid #0f172a' }}>
+
+        {/* Info bar */}
+        <div className="bg-white border-b border-black shadow-none px-4 py-3" style={{ borderTop: `3px solid ${accentColor}` }}>
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0">
-              <h1 className="text-base font-bold text-slate-900 truncate">{conferenceName}</h1>
-              <p className="text-xs text-slate-500">{subtitle}</p>
+              <h1 className="text-lg font-bold text-slate-900 truncate">{conferenceName}</h1>
+              <p className="text-xs text-slate-500 truncate">{subtitle}</p>
             </div>
-            <div className="shrink-0 text-xs text-slate-400">
-              <InlineSeasonPicker activeSeason={season ?? 2} />
+            <div className="flex items-center gap-2 shrink-0">
+              <div className="flex rounded-none border border-slate-200 overflow-hidden text-xs">
+                <Link href={`/conferences/${slug}?gender=boys`}
+                  className={`px-2.5 py-1 font-medium ${gender === 'boys' ? 'bg-slate-900 text-white' : 'bg-white text-slate-500'}`}>B</Link>
+                <Link href={`/conferences/${slug}?gender=girls`}
+                  className={`px-2.5 py-1 font-medium ${gender === 'girls' ? 'bg-rose-700 text-white' : 'bg-white text-slate-500'}`}>G</Link>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* ── Desktop sticky header ────────────────────────────────────── */}
-      <div
-        className="hidden md:block sticky top-0 z-20 bg-white border border-black rounded-none shadow-none mb-8"
-        style={{ borderTop: '3px solid #0f172a' }}
-      >
+      {/* ── Desktop: sticky header with logo left + info right (exact school pattern) ── */}
+      <div className="hidden md:block sticky top-0 z-20 bg-white border border-black rounded-none shadow-none mb-8" style={{ borderTop: `3px solid ${accentColor}` }}>
         <div className="flex items-center gap-5 p-4">
-          {/* Logo — overflows header bottom via negative margin */}
-          <div className="shrink-0 -mb-4">
+          {/* Logo left */}
+          <div className="shrink-0">
             {logoUrl ? (
               <Image
                 src={logoUrl}
                 alt={conferenceName!}
                 width={512}
                 height={512}
-                className="w-[200px] h-auto rounded-none"
+                className="w-[240px] h-auto rounded-none"
               />
             ) : (
-              <div className="w-[160px] h-[96px] bg-slate-900 rounded-none flex items-center justify-center">
-                <span className="text-white font-bold text-sm text-center px-2">{conferenceName}</span>
+              <div
+                className="w-[160px] h-[96px] rounded-none flex items-center justify-center text-4xl font-bold"
+                style={{ backgroundColor: accentColor, color: '#ffffff' }}
+              >
+                {conferenceName![0]}
               </div>
             )}
           </div>
 
-          {/* Conference info */}
+          {/* Info right */}
           <div className="flex-1 min-w-0">
-            <h1 className="text-xl font-bold text-slate-900">{conferenceName}</h1>
-            <p className="text-sm text-slate-500 mt-1">{subtitle}</p>
-          </div>
+            <div className="flex items-start justify-between gap-4">
+              <div className="min-w-0">
+                <h1 className="text-2xl font-bold text-slate-900 truncate">{conferenceName}</h1>
+                <p className="text-sm text-slate-500 mt-0.5">{subtitle}</p>
+              </div>
 
-          {/* Season picker */}
-          <div className="shrink-0 text-xs text-slate-400">
-            <InlineSeasonPicker activeSeason={season ?? 2} />
+              <div className="flex flex-col items-end gap-2 shrink-0">
+                <div className="flex rounded-none border border-slate-200 overflow-hidden text-sm">
+                  <Link href={`/conferences/${slug}?gender=boys`}
+                    className={`px-3 py-1.5 font-medium transition-colors ${gender === 'boys' ? 'bg-slate-900 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}>Boys</Link>
+                  <Link href={`/conferences/${slug}?gender=girls`}
+                    className={`px-3 py-1.5 font-medium transition-colors ${gender === 'girls' ? 'bg-rose-700 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}>Girls</Link>
+                </div>
+                <div className="flex items-center text-xs text-slate-400">
+                  <InlineSeasonPicker activeSeason={season ?? 2} />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
