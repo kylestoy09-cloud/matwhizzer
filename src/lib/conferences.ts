@@ -7,7 +7,7 @@ const CONFERENCES = [
   'Colonial Conference',
   'Colonial Valley Conference',
   'Greater Middlesex Conference',
-  'Hudson County Interscholastic Athletic League',
+  'Independent',
   'North Jersey Interscholastic Conference',
   'Northwest Jersey Athletic Conference',
   'Olympic Conference',
