@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 type StandingsRow = {
+  id: number
   display_name: string
   mascot: string | null
   primary_color: string | null
@@ -46,7 +47,7 @@ export function StandingsTable({
                   <td className="text-center px-3 py-3 text-slate-400 tabular-nums">{i + 1}</td>
                   <td className="px-4 py-3">
                     <Link
-                      href={`/schools/${encodeURIComponent(s.display_name)}?gender=${gender}`}
+                      href={`/schools/${s.id}?gender=${gender}`}
                       className="flex items-center gap-3 group"
                     >
                       {logo ? (

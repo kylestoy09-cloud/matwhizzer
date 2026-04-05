@@ -339,9 +339,8 @@ export default function SettingsPage() {
 
   // ── Helpers ──
 
-  function schoolHref(abbreviation: string) {
-    const base = preference === 'girls' ? '/girls' : '/boys'
-    return `${base}/schools/${encodeURIComponent(abbreviation)}`
+  function schoolHref(id: number) {
+    return `/schools/${id}?gender=${preference === 'girls' ? 'girls' : 'boys'}`
   }
 
   const totalSchools = (primarySchool ? 1 : 0) + followedSchools.length
@@ -420,7 +419,7 @@ export default function SettingsPage() {
           <p className="text-xs font-medium text-slate-500 mb-1.5">Primary School</p>
           {primarySchool ? (
             <div className="flex items-center justify-between border border-blue-200 bg-blue-50 rounded-none px-3 py-2.5">
-              <Link href={schoolHref(primarySchool.abbreviation)} className="text-sm font-medium text-blue-800 hover:underline">
+              <Link href={schoolHref(primarySchool.id)} className="text-sm font-medium text-blue-800 hover:underline">
                 {primarySchool.school_name}
               </Link>
               <button onClick={handleClearPrimary} className="text-xs text-slate-400 hover:text-red-500">change</button>
@@ -440,7 +439,7 @@ export default function SettingsPage() {
             <div className="space-y-1.5 mb-3">
               {followedSchools.map(s => (
                 <div key={s.id} className="flex items-center justify-between border border-slate-200 rounded-none px-3 py-2">
-                  <Link href={schoolHref(s.abbreviation)} className="text-sm font-medium text-slate-800 hover:text-blue-600 hover:underline">
+                  <Link href={schoolHref(s.id)} className="text-sm font-medium text-slate-800 hover:text-blue-600 hover:underline">
                     {s.school_name}
                   </Link>
                   <button onClick={() => handleRemoveSchool(s.id)} className="text-xs text-slate-400 hover:text-red-500">remove</button>

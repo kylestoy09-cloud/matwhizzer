@@ -83,28 +83,20 @@ export default async function SchoolProfilePage({
 }: {
   params: Promise<{ school: string }>
 }) {
-  const { school: encoded } = await params
-  const school = decodeURIComponent(encoded)
+  const { school: schoolParam } = await params
+  const schoolId = parseInt(schoolParam, 10)
+  if (!schoolId) notFound()
 
   const season = await getActiveSeason()
 
-  // Resolve abbreviation → display_name → school_id
-  const { data: nameRow } = await supabase
-    .from('school_names')
-    .select('school_name')
-    .eq('abbreviation', school)
-    .maybeSingle()
-
-  const schoolName = (nameRow as { school_name: string } | null)?.school_name ?? school
-
   const { data: schoolRow } = await supabase
     .from('schools')
-    .select('id')
-    .eq('display_name', schoolName)
+    .select('display_name')
+    .eq('id', schoolId)
     .maybeSingle()
 
-  const schoolId = (schoolRow as { id: number } | null)?.id
-  if (!schoolId) notFound()
+  const schoolName = (schoolRow as { display_name: string } | null)?.display_name
+  if (!schoolName) notFound()
 
   const [{ data: breakdown }, { data: wrestlers }, { data: leaders }] = await Promise.all([
     supabase.rpc('school_points_breakdown', { p_school_id: schoolId, p_gender: 'M', p_season: season }),
@@ -176,7 +168,7 @@ export default async function SchoolProfilePage({
       <div className="mb-8">
         <div className="flex items-center gap-3">
           <h2 className="text-2xl font-bold text-slate-900">{schoolName}</h2>
-          <FollowSchoolButton schoolAbbreviation={school} />
+          <FollowSchoolButton schoolId={schoolId} />
         </div>
         <div className="flex flex-wrap items-center gap-1 text-slate-500 text-sm mt-1">
           {(districtLabels.length > 0 || regionLabels.length > 0) && (

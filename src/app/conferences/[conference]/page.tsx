@@ -76,19 +76,6 @@ export default async function ConferencePage({
 
   const rows = (standingsData ?? []) as unknown as StandingRow[]
 
-  // Fetch abbreviations from school_names for all joined display_names
-  const displayNames = [...new Set(rows.map(r => r.school?.display_name).filter(Boolean))] as string[]
-  const abbrevMap = new Map<string, string>()
-  if (displayNames.length > 0) {
-    const { data: abbrevData } = await supabase
-      .from('school_names')
-      .select('school_name, abbreviation')
-      .in('school_name', displayNames)
-    for (const a of abbrevData ?? []) {
-      if (a.abbreviation) abbrevMap.set(a.school_name, a.abbreviation)
-    }
-  }
-
   // Group by division, sort rows within each division by div record desc
   const divisionNames = [...new Set(rows.map(r => r.division).filter(Boolean))]
   const byDivision = new Map<string, StandingRow[]>()
@@ -234,7 +221,7 @@ export default async function ConferencePage({
                       {divRows.map((row, i) => {
                         const displayName = row.school?.display_name ?? row.school_name
                         const logoUrl = row.school?.logo_url ?? null
-                        const abbreviation = row.school?.display_name ? abbrevMap.get(row.school.display_name) ?? null : null
+                        const schoolId = row.school?.id ?? null
                         return (
                           <tr key={row.id} className="hover:bg-slate-50">
                             <td className="px-3 py-2.5 text-center text-slate-400 text-xs font-medium">
@@ -251,9 +238,9 @@ export default async function ConferencePage({
                                     className="w-6 h-auto shrink-0"
                                   />
                                 )}
-                                {abbreviation ? (
+                                {schoolId ? (
                                   <Link
-                                    href={`/schools/${encodeURIComponent(abbreviation)}?gender=${gender}`}
+                                    href={`/schools/${schoolId}?gender=${gender}`}
                                     className="hover:text-blue-600 transition-colors"
                                   >
                                     {displayName}

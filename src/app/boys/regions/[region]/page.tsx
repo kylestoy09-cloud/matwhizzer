@@ -68,6 +68,7 @@ type DominanceRow = {
 type TeamScoreRow = {
   school: string
   school_name: string | null
+  school_id: number | null
   total_points: number
 }
 
@@ -86,6 +87,7 @@ type RegionSchoolRow = {
   district_num: number
   school: string
   school_name: string | null
+  school_id: number | null
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -415,7 +417,7 @@ export default async function RegionSummaryPage({
                   {schools.map(s => (
                     <Link
                       key={s.school}
-                      href={`/schools/${encodeURIComponent(s.school)}`}
+                      href={s.school_id ? `/schools/${s.school_id}` : '#'}
                       className="px-3 py-1.5 text-sm font-medium bg-white border border-slate-200 rounded-full hover:border-slate-400 hover:bg-slate-50 transition-colors shadow-none"
                     >
                       {s.school_name || s.school}

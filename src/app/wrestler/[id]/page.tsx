@@ -726,7 +726,8 @@ export default async function WrestlerPage({
             <div className="min-w-0">
               <h1 className="text-lg font-bold text-slate-900 truncate">{displayName}</h1>
               <div className="flex items-center gap-2 text-xs text-slate-500">
-                {displaySchool && <Link href={`/schools/${encodeURIComponent(displaySchool)}?gender=${gender}`} className="hover:underline truncate">{displaySchool}</Link>}
+                {displaySchool && schoolProfile.id > 0 && <Link href={`/schools/${schoolProfile.id}?gender=${gender}`} className="hover:underline truncate">{displaySchool}</Link>}
+                {displaySchool && !(schoolProfile.id > 0) && <span className="truncate">{displaySchool}</span>}
                 {bestWeight && <span>· {bestWeight} lbs</span>}
                 {recordStr && <span>· {recordStr}</span>}
               </div>
@@ -787,8 +788,8 @@ export default async function WrestlerPage({
           </div>
 
           {/* School logo — clickable */}
-          {displaySchool ? (
-            <Link href={`/schools/${encodeURIComponent(displaySchool)}?gender=${gender}`} className="block" style={{ width: 240 }}>
+          {displaySchool && schoolProfile.id > 0 ? (
+            <Link href={`/schools/${schoolProfile.id}?gender=${gender}`} className="block" style={{ width: 240 }}>
               {WRESTLER_PHOTOS[wrestler.id] ? (
                 <Image src={WRESTLER_PHOTOS[wrestler.id]} alt={displayName} width={200} height={200} className="object-contain w-full h-auto" />
               ) : (

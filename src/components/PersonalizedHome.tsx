@@ -7,7 +7,6 @@ import { createSupabaseBrowser } from '@/lib/supabase/client'
 type SchoolInfo = {
   id: number
   display_name: string
-  abbreviation: string | null
   section: string | null
   classification: string | null
   mascot: string | null
@@ -162,20 +161,10 @@ export function PersonalizedHome() {
 
       if (!schoolsData || schoolsData.length === 0) { setLoaded(true); return }
 
-      // Fetch abbreviations from school_names by matching display_name
-      const names = schoolsData.map(s => s.display_name)
-      const { data: abbrevData } = await supabase
-        .from('school_names')
-        .select('abbreviation, school_name')
-        .in('school_name', names)
-
-      const abbrevMap = new Map((abbrevData ?? []).map(a => [a.school_name, a.abbreviation]))
-
       // Build school info
       const schoolInfoList: SchoolInfo[] = schoolsData.map(s => ({
         id: s.id,
         display_name: s.display_name,
-        abbreviation: abbrevMap.get(s.display_name) ?? null,
         section: s.section,
         classification: s.classification,
         mascot: s.mascot,
@@ -189,11 +178,9 @@ export function PersonalizedHome() {
       schoolInfoList.sort((a, b) => (a.isPrimary ? -1 : b.isPrimary ? 1 : 0))
       setSchools(schoolInfoList)
 
-      // Fetch school wrestlers and breakdown for each school that has an abbreviation
-      const schoolsWithAbbrev = schoolInfoList.filter(s => s.abbreviation)
-      const primary = schoolInfoList.find(s => s.isPrimary && s.abbreviation)
+      const primary = schoolInfoList.find(s => s.isPrimary)
 
-      const wrPromises = schoolsWithAbbrev.map(s =>
+      const wrPromises = schoolInfoList.map(s =>
         supabase.rpc('school_wrestlers', { p_school_id: s.id, p_gender: gender, p_season: 2 })
           .then(res => ({ schoolId: s.id, data: (res.data ?? []) as WrestlerRow[] }))
       )
@@ -349,7 +336,7 @@ export function PersonalizedHome() {
             return (
               <Link
                 key={s.id}
-                href={s.abbreviation ? `/schools/${encodeURIComponent(s.abbreviation)}` : '#'}
+                href={`/schools/${s.id}`}
                 className="block rounded-none border border-black bg-white shadow-none hover:bg-slate-50 transition-colors overflow-hidden"
               >
                 <div className="flex items-center gap-3 px-4 py-3" style={{ borderLeft: `4px solid ${pc}` }}>
@@ -380,7 +367,7 @@ export function PersonalizedHome() {
       </section>
 
       {/* ── Primary School Detail ── */}
-      {primarySchool && primarySchool.abbreviation && (
+      {primarySchool && (
         <section className="bg-white border border-black rounded-none shadow-none overflow-hidden">
           <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between" style={{ borderTop: `3px solid ${primarySchool.primary_color ?? '#1a1a2e'}` }}>
             <div className="flex items-center gap-3">
@@ -392,7 +379,7 @@ export function PersonalizedHome() {
               </div>
               <div>
                 <Link
-                  href={`/schools/${encodeURIComponent(primarySchool.abbreviation)}`}
+                  href={`/schools/${primarySchool.id}`}
                   className="text-lg font-bold text-slate-900 hover:underline"
                 >
                   {primarySchool.display_name}
@@ -451,7 +438,7 @@ export function PersonalizedHome() {
 
           <div className="px-5 py-3 bg-slate-50 border-t border-slate-100">
             <Link
-              href={`/schools/${encodeURIComponent(primarySchool.abbreviation)}`}
+              href={`/schools/${primarySchool.id}`}
               className="text-xs font-medium text-blue-600 hover:underline"
             >
               View full school profile →
@@ -517,7 +504,7 @@ export function PersonalizedHome() {
                     </div>
                     <div>
                       <Link
-                        href={s.abbreviation ? `/schools/${encodeURIComponent(s.abbreviation)}` : '#'}
+                        href={`/schools/${s.id}`}
                         className="text-sm font-bold text-slate-900 hover:underline"
                       >
                         {s.display_name}

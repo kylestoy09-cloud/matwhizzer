@@ -13,7 +13,7 @@ import { PersonalizedHome } from '@/components/PersonalizedHome'
 type ChampionRow = { weight: number; wrestler_id: string; wrestler_name: string; school: string; dominance_score: number; seed: number | null }
 
 type WrestlerRow = { id: string; first_name: string; last_name: string; gender: string }
-type SchoolRow   = { school: string; school_name: string; total_points: number; wrestler_count: number }
+type SchoolRow   = { school: string; school_name: string; school_id: number | null; total_points: number; wrestler_count: number }
 type SchoolResult = SchoolRow & { gender: 'M' | 'F' }
 type TeamScoreRow = { school: string; school_name: string | null; district_points: number; region_points: number; state_points: number; total_points: number }
 type DominanceRow = { wrestler_id: string; name: string; school: string | null; dominance_score: number; win_count: number }
@@ -204,7 +204,7 @@ export default async function RootPage({
               {schools.map(s => (
                 <li key={`${s.gender}-${s.school}`}>
                   <Link
-                    href={`/schools/${encodeURIComponent(s.school)}?gender=${s.gender === 'M' ? 'boys' : 'girls'}`}
+                    href={s.school_id ? `/schools/${s.school_id}?gender=${s.gender === 'M' ? 'boys' : 'girls'}` : '#'}
                     className="flex items-center justify-between px-4 py-3 hover:bg-slate-50 transition-colors"
                   >
                     <span className="font-medium text-slate-800">{s.school_name}</span>

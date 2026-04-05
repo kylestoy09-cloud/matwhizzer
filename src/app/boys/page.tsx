@@ -7,7 +7,7 @@ import { StateChampions } from '@/components/StateChampions'
 import { PageHeader } from '@/components/PageHeader'
 
 type WrestlerRow = { id: string; first_name: string; last_name: string }
-type SchoolRow   = { school: string; school_name: string; total_points: number; wrestler_count: number }
+type SchoolRow   = { school: string; school_name: string; school_id: number | null; total_points: number; wrestler_count: number }
 type TeamScoreRow = { school: string; school_name: string | null; district_points: number; region_points: number; state_points: number; total_points: number }
 type DominanceRow = { wrestler_id: string; name: string; school: string | null; dominance_score: number; win_count: number }
 
@@ -163,7 +163,7 @@ export default async function BoysPage({
               <ul className="mt-3 divide-y divide-slate-200 border border-black rounded-none shadow-none bg-white overflow-hidden">
                 {schools.map(s => (
                   <li key={s.school}>
-                    <Link href={`/schools/${encodeURIComponent(s.school)}?gender=boys`} className="flex items-center justify-between px-4 py-3 hover:bg-slate-50 transition-colors">
+                    <Link href={s.school_id ? `/schools/${s.school_id}?gender=boys` : '#'} className="flex items-center justify-between px-4 py-3 hover:bg-slate-50 transition-colors">
                       <span className="font-medium text-slate-800">{s.school_name}</span>
                       <span className="text-xs text-slate-400 ml-3 shrink-0">{s.school}</span>
                     </Link>

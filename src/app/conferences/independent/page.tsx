@@ -11,7 +11,7 @@ const SLUG = 'independent'
 const NAME = 'Independent'
 const ACCENT = '#0f172a'
 
-type DirRow = { school: string; school_name: string }
+type DirRow = { school: string; school_name: string; school_id: number | null }
 type SchoolRow = { id: number; display_name: string; section: string | null; classification: string | null; logo_url: string | null }
 
 function classLabel(s: SchoolRow) {
@@ -38,11 +38,11 @@ export default async function IndependentConferencePage({
     .maybeSingle()
   const logoUrl = confData?.logo_url ?? null
 
-  // All boys schools in season via school_directory
+  // All boys schools in season via school_directory — collect their school_ids
   const { data: dirData } = await supabase
     .rpc('school_directory', { p_gender: 'M', p_season: season })
-  const dirNameToAbbrev = new Map<string, string>(
-    ((dirData ?? []) as DirRow[]).map(r => [r.school_name, r.school])
+  const dirSchoolIds = new Set<number>(
+    ((dirData ?? []) as DirRow[]).map(r => r.school_id).filter((id): id is number => id != null)
   )
 
   // All school_ids in conference_standings for season
@@ -62,13 +62,9 @@ export default async function IndependentConferencePage({
   const nameToSchool = new Map(allSchools.map(s => [s.display_name, s]))
 
   // Schools present in directory but absent from conference_standings
-  const independentSchools: (SchoolRow & { abbreviation: string })[] = []
-  for (const [schoolName, abbrev] of dirNameToAbbrev) {
-    const school = nameToSchool.get(schoolName)
-    if (!school) continue
-    if (csIds.has(school.id)) continue
-    independentSchools.push({ ...school, abbreviation: abbrev })
-  }
+  const independentSchools: SchoolRow[] = allSchools.filter(
+    s => dirSchoolIds.has(s.id) && !csIds.has(s.id)
+  )
   independentSchools.sort((a, b) => a.display_name.localeCompare(b.display_name))
 
   const subtitle = `${independentSchools.length} school${independentSchools.length !== 1 ? 's' : ''} · No Conference Affiliation`
@@ -161,7 +157,7 @@ export default async function IndependentConferencePage({
               return (
                 <Link
                   key={s.id}
-                  href={`/schools/${encodeURIComponent(s.abbreviation)}?gender=${gender}`}
+                  href={`/schools/${s.id}?gender=${gender}`}
                   className="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 transition-colors"
                 >
                   <span className="text-xs text-slate-400 w-6 shrink-0 text-right tabular-nums">{i + 1}</span>

@@ -6,15 +6,14 @@ import Link from 'next/link'
 type TeamScoreRow = {
   school: string
   school_name: string | null
+  school_id: number | null
   total_points: number
 }
 
 export function TeamScoreCard({
   rows,
-  schoolPrefix = '/schools',
 }: {
   rows: TeamScoreRow[]
-  schoolPrefix?: string
 }) {
   const [visibleCount, setVisibleCount] = useState(10)
   const visible = rows.slice(0, visibleCount)
@@ -34,7 +33,7 @@ export function TeamScoreCard({
             <span className="text-xs text-slate-400 w-4 shrink-0 text-right">{i + 1}</span>
             <div className="flex-1 min-w-0">
               <Link
-                href={`${schoolPrefix}/${encodeURIComponent(r.school)}`}
+                href={r.school_id ? `/schools/${r.school_id}` : '#'}
                 className="text-sm font-medium text-slate-800 hover:underline truncate block"
               >
                 {r.school_name || r.school}

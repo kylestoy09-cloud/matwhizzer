@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { createSupabaseBrowser } from '@/lib/supabase/client'
 
-export function FollowSchoolButton({ schoolAbbreviation }: { schoolAbbreviation: string }) {
-  const [schoolId, setSchoolId] = useState<number | null>(null)
+export function FollowSchoolButton({ schoolId: sid }: { schoolId: number }) {
+  const [schoolId] = useState<number>(sid)
   const [userId, setUserId] = useState<string | null>(null)
   const [following, setFollowing] = useState(false)
   const [isPrimary, setIsPrimary] = useState(false)
@@ -19,24 +19,6 @@ export function FollowSchoolButton({ schoolAbbreviation }: { schoolAbbreviation:
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) { setLoading(false); return }
       setUserId(user.id)
-
-      // Get school_name from abbreviation, then find school id
-      const { data: nameRow } = await supabase
-        .from('school_names')
-        .select('school_name')
-        .eq('abbreviation', schoolAbbreviation)
-        .maybeSingle()
-
-      if (!nameRow) { setLoading(false); return }
-      const { data: school } = await supabase
-        .from('schools')
-        .select('id')
-        .eq('display_name', (nameRow as { school_name: string }).school_name)
-        .maybeSingle()
-
-      if (!school) { setLoading(false); return }
-      const sid = (school as { id: number }).id
-      setSchoolId(sid)
 
       const { data: profile } = await supabase
         .from('users')
@@ -53,7 +35,7 @@ export function FollowSchoolButton({ schoolAbbreviation }: { schoolAbbreviation:
     }
 
     load()
-  }, [schoolAbbreviation])
+  }, [sid])
 
   async function handleToggle() {
     // Not logged in — show sign-in prompt

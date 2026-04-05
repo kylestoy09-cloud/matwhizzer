@@ -6,6 +6,7 @@ import Link from 'next/link'
 type TeamScoreRow = {
   school: string
   school_name: string | null
+  school_id: number | null
   district_points: number
   region_points: number
   state_points: number
@@ -47,7 +48,7 @@ export function PostseasonLeaders({
               <tr key={r.school} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
                 <td className="px-3 py-2 text-xs text-slate-400">{i + 1}</td>
                 <td className="px-3 py-2">
-                  <Link href={`/schools/${encodeURIComponent(r.school)}`} className="font-medium text-slate-800 hover:underline">
+                  <Link href={r.school_id ? `/schools/${r.school_id}` : '#'} className="font-medium text-slate-800 hover:underline">
                     {r.school_name || r.school}
                   </Link>
                 </td>

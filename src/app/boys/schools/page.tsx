@@ -7,6 +7,7 @@ import { PageHeader } from '@/components/PageHeader'
 type SchoolDirRow = {
   school: string
   school_name: string
+  school_id: number | null
   total_points: number
   wrestler_count: number
 }
@@ -96,7 +97,7 @@ export default async function BoysSchoolsPage({
                 <tr key={r.school} className="hover:bg-slate-50">
                   <td className="px-4 py-2.5">
                     <Link
-                      href={`/schools/${encodeURIComponent(r.school)}`}
+                      href={r.school_id ? `/schools/${r.school_id}` : '#'}
                       className="font-medium text-slate-800 hover:text-slate-600 hover:underline"
                     >
                       {r.school_name}

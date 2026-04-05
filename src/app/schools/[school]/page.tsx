@@ -93,13 +93,16 @@ export default async function SchoolProfilePage({
   params: Promise<{ school: string }>
   searchParams: Promise<{ gender?: string; tab?: string }>
 }) {
-  const { school: encoded } = await params
-  const school = decodeURIComponent(encoded)
+  const { school: schoolParam } = await params
+  const schoolId = parseInt(schoolParam, 10)
+  if (!schoolId) notFound()
+
   const { gender: genderParam, tab: tabParam } = await searchParams
 
   const gender = genderParam === 'girls' ? 'girls' : 'boys'
   const genderCode = gender === 'girls' ? 'F' : 'M'
   const activeTab = tabParam ?? 'overview'
+  const schoolAbbrev = schoolParam
 
   let season: number
   try {
@@ -111,73 +114,11 @@ export default async function SchoolProfilePage({
 
   const TOURNEY_LABEL = gender === 'girls' ? TOURNEY_LABEL_F : TOURNEY_LABEL_M
 
-  // Step 1: Resolve the URL slug to a school name
-  // The slug could be an abbreviation (e.g. "BECA") OR a display name (e.g. "Bergen Catholic")
-  // Try abbreviation lookup first, then fall back to treating it as a display name
-  let schoolName: string
-  let schoolAbbrev: string = school
-
-  const { data: nameRow, error: nameError } = await supabase
-    .from('school_names')
-    .select('abbreviation, school_name')
-    .eq('abbreviation', school)
-    .maybeSingle()
-
-  if (nameError) {
-    console.error('[SchoolProfile] school_names query error:', nameError)
-  }
-
-  if (nameRow) {
-    // Found by abbreviation
-    schoolName = (nameRow as { school_name: string }).school_name
-  } else {
-    // Not an abbreviation — treat the slug as a display name (old URL format)
-    // Try to find the abbreviation for it
-    const { data: reverseRow } = await supabase
-      .from('school_names')
-      .select('abbreviation, school_name')
-      .eq('school_name', school)
-      .maybeSingle()
-
-    if (reverseRow) {
-      schoolName = (reverseRow as { school_name: string }).school_name
-      schoolAbbrev = (reverseRow as { abbreviation: string }).abbreviation
-    } else {
-      // Last resort: use the slug as-is (it might match a schools.display_name directly)
-      schoolName = school
-    }
-  }
-
-  // Step 2: Look up full profile from schools table
-  // Try exact match first, then ILIKE prefix match for abbreviated names
-  let profileData: SchoolProfile | null = null
-  let profileError: { message: string } | null = null
-
-  const { data: profileExact, error: profileErr1 } = await supabase
+  const { data: profileData, error: profileError } = await supabase
     .from('schools')
     .select('id, display_name, short_name, mascot, nickname, primary_color, secondary_color, tertiary_color, town, county, section, classification, founded_year, website_url, twitter_handle, athletic_conference, logo_url')
-    .eq('display_name', schoolName)
+    .eq('id', schoolId)
     .maybeSingle()
-
-  if (profileErr1) {
-    profileError = profileErr1
-  } else if (profileExact) {
-    profileData = profileExact as SchoolProfile
-  } else {
-    // Exact match failed — try ILIKE prefix (handles "Lower Cape May Reg" → "Lower Cape May Regional")
-    const { data: profileFuzzy, error: profileErr2 } = await supabase
-      .from('schools')
-      .select('id, display_name, short_name, mascot, nickname, primary_color, secondary_color, tertiary_color, town, county, section, classification, founded_year, website_url, twitter_handle, athletic_conference, logo_url')
-      .ilike('display_name', `${schoolName}%`)
-      .limit(1)
-      .maybeSingle()
-
-    if (profileErr2) {
-      profileError = profileErr2
-    } else if (profileFuzzy) {
-      profileData = profileFuzzy as SchoolProfile
-    }
-  }
 
   if (profileError) {
     console.error('[SchoolProfile] schools query error:', profileError)
@@ -185,18 +126,14 @@ export default async function SchoolProfilePage({
       <div className="max-w-4xl mx-auto px-4 py-20 text-center">
         <h1 className="text-xl font-bold text-red-600 mb-2">Error loading school profile</h1>
         <p className="text-sm text-slate-600">schools query failed: {profileError.message}</p>
-        <p className="text-xs text-slate-400 mt-1">School name: {schoolName}</p>
       </div>
     )
   }
 
-  const profile: SchoolProfile = profileData ?? {
-    id: 0, display_name: schoolName, short_name: null, mascot: null, nickname: null,
-    primary_color: '#1a1a2e', secondary_color: '#FFD700', tertiary_color: null,
-    town: null, county: null, section: null, classification: null,
-    founded_year: null, website_url: null, twitter_handle: null, athletic_conference: null,
-    logo_url: null,
-  }
+  if (!profileData) notFound()
+
+  const profile = profileData as SchoolProfile
+  const schoolName = profile.display_name
 
   const pc = profile.primary_color ?? '#1a1a2e'
   const sc = profile.secondary_color ?? '#FFD700'
@@ -382,7 +319,7 @@ export default async function SchoolProfilePage({
                 <Link href={`/schools/${school}?gender=girls${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
                   className={`px-2.5 py-1 font-medium ${gender === 'girls' ? 'bg-rose-700 text-white' : 'bg-white text-slate-500'}`}>G</Link>
               </div>
-              <FollowSchoolButton schoolAbbreviation={schoolAbbrev} />
+              <FollowSchoolButton schoolId={profile.id} />
             </div>
           </div>
           {(tags.length > 0 || classLabel || conferenceSlug || profile.athletic_conference === 'Independent') && (
@@ -495,7 +432,7 @@ export default async function SchoolProfilePage({
                   <Link href={`/schools/${school}?gender=girls${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
                     className={`px-3 py-1.5 font-medium transition-colors ${gender === 'girls' ? 'bg-rose-700 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}>Girls</Link>
                 </div>
-                <FollowSchoolButton schoolAbbreviation={schoolAbbrev} />
+                <FollowSchoolButton schoolId={profile.id} />
                 <div className="flex items-center text-xs text-slate-400">
                   <InlineSeasonPicker activeSeason={season} />
                 </div>

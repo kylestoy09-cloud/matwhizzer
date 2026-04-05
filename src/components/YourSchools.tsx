@@ -7,7 +7,6 @@ import { createSupabaseBrowser } from '@/lib/supabase/client'
 type SchoolInfo = {
   id: number
   display_name: string
-  abbreviation: string | null
   section: string | null
   classification: string | null
 }
@@ -42,7 +41,6 @@ export function YourSchools() {
 
       if (allIds.length === 0) { setLoaded(true); return }
 
-      // Fetch from schools table (has id column)
       const { data: schoolsData } = await supabase
         .from('schools')
         .select('id, display_name, section, classification')
@@ -50,19 +48,9 @@ export function YourSchools() {
 
       if (!schoolsData || schoolsData.length === 0) { setLoaded(true); return }
 
-      // Get abbreviations from school_names by matching display_name
-      const names = schoolsData.map(s => s.display_name)
-      const { data: abbrevData } = await supabase
-        .from('school_names')
-        .select('abbreviation, school_name')
-        .in('school_name', names)
-
-      const abbrevMap = new Map((abbrevData ?? []).map(a => [a.school_name, a.abbreviation]))
-
       const schoolMap = new Map(schoolsData.map(s => [s.id, {
         id: s.id,
         display_name: s.display_name,
-        abbreviation: abbrevMap.get(s.display_name) ?? null,
         section: s.section,
         classification: s.classification,
       }]))
@@ -106,7 +94,7 @@ export function YourSchools() {
           return (
             <Link
               key={s.id}
-              href={s.abbreviation ? `/schools/${encodeURIComponent(s.abbreviation)}` : '#'}
+              href={`/schools/${s.id}`}
               className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-none border text-sm font-medium transition-colors shadow-none ${
                 s.isPrimary
                   ? 'border-black bg-blue-50 text-blue-800 hover:bg-blue-100'

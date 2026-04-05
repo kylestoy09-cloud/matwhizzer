@@ -72,6 +72,7 @@ type PoolMatTimeRow = {
 type PoolTeamRow = {
   school: string
   school_name: string | null
+  school_id: number | null
   total_points: number
   match_count: number
 }
@@ -435,7 +436,7 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
                 label: 'School', align: 'left',
                 render: r => (
                   <Link
-                    href={`/schools/${encodeURIComponent(r.school)}`}
+                    href={r.school_id ? `/schools/${r.school_id}` : '#'}
                     className="font-medium text-slate-800 hover:text-slate-600 hover:underline"
                   >
                     {r.school_name || r.school}
