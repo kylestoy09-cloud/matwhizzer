@@ -153,15 +153,11 @@ export default async function SchoolProfilePage({
   let profileData: SchoolProfile | null = null
   let profileError: { message: string } | null = null
 
-  console.log('[SchoolProfile] Step 2 lookup — schoolName:', schoolName, '| slug:', school, '| schoolAbbrev:', schoolAbbrev)
-
   const { data: profileExact, error: profileErr1 } = await supabase
     .from('schools')
     .select('id, display_name, short_name, mascot, nickname, primary_color, secondary_color, tertiary_color, town, county, section, classification, founded_year, website_url, twitter_handle, athletic_conference, logo_url')
     .eq('display_name', schoolName)
     .maybeSingle()
-
-  console.log('[SchoolProfile] profileExact:', JSON.stringify(profileExact), '| error:', profileErr1?.message)
 
   if (profileErr1) {
     profileError = profileErr1
@@ -175,8 +171,6 @@ export default async function SchoolProfilePage({
       .ilike('display_name', `${schoolName}%`)
       .limit(1)
       .maybeSingle()
-
-    console.log('[SchoolProfile] profileFuzzy:', JSON.stringify(profileFuzzy), '| error:', profileErr2?.message)
 
     if (profileErr2) {
       profileError = profileErr2
@@ -207,9 +201,6 @@ export default async function SchoolProfilePage({
   const pc = profile.primary_color ?? '#1a1a2e'
   const sc = profile.secondary_color ?? '#FFD700'
 
-  // RPCs match on school_context_raw which stores abbreviations (e.g. 'APSC'), not display names
-  const rpcSchoolName = schoolAbbrev
-
   // Step 3: Fetch wrestling data
   let rows: WrestlerRow[] = []
   let bdRows: BreakdownRow[] = []
@@ -218,8 +209,8 @@ export default async function SchoolProfilePage({
 
   try {
     const wrestlersPromise = gender === 'girls'
-      ? supabase.rpc('girls_school_wrestlers', { p_school: rpcSchoolName, p_season: season })
-      : supabase.rpc('school_wrestlers', { p_school: rpcSchoolName, p_gender: genderCode, p_season: season })
+      ? supabase.rpc('girls_school_wrestlers', { p_school_id: profile.id, p_season: season })
+      : supabase.rpc('school_wrestlers', { p_school_id: profile.id, p_gender: genderCode, p_season: season })
 
     // Query precomputed_team_scores by school_id (reliable) with school_name fallback
     const tsPromise = profile.id > 0
@@ -229,9 +220,9 @@ export default async function SchoolProfilePage({
           .eq('school_name', profile.display_name).eq('season_id', season)
 
     const [bdResult, wrResult, ldResult, tsResult] = await Promise.all([
-      supabase.rpc('school_points_breakdown', { p_school: rpcSchoolName, p_gender: genderCode, p_season: season }),
+      supabase.rpc('school_points_breakdown', { p_school_id: profile.id, p_gender: genderCode, p_season: season }),
       wrestlersPromise,
-      supabase.rpc('school_leaderboard', { p_school: rpcSchoolName, p_gender: genderCode, p_season: season }),
+      supabase.rpc('school_leaderboard', { p_school_id: profile.id, p_gender: genderCode, p_season: season }),
       tsPromise,
     ])
 
@@ -246,7 +237,7 @@ export default async function SchoolProfilePage({
 
     // Fallback: if school_id query returned nothing, try by name
     if (teamScoreRows.length === 0 && profile.id > 0) {
-      const altNames = [profile.display_name, rpcSchoolName, schoolName]
+      const altNames = [profile.display_name, schoolAbbrev, schoolName]
       for (const altName of new Set(altNames)) {
         const { data: tsRetry } = await supabase
           .from('precomputed_team_scores')

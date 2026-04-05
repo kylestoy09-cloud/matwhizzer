@@ -194,12 +194,12 @@ export function PersonalizedHome() {
       const primary = schoolInfoList.find(s => s.isPrimary && s.abbreviation)
 
       const wrPromises = schoolsWithAbbrev.map(s =>
-        supabase.rpc('school_wrestlers', { p_school: s.abbreviation!, p_gender: gender, p_season: 2 })
+        supabase.rpc('school_wrestlers', { p_school_id: s.id, p_gender: gender, p_season: 2 })
           .then(res => ({ schoolId: s.id, data: (res.data ?? []) as WrestlerRow[] }))
       )
 
       const bdPromise = primary
-        ? supabase.rpc('school_points_breakdown', { p_school: primary.abbreviation!, p_gender: gender, p_season: 2 })
+        ? supabase.rpc('school_points_breakdown', { p_school_id: primary.id, p_gender: gender, p_season: 2 })
         : Promise.resolve({ data: null })
 
       const [wrResults, bdRes] = await Promise.all([

@@ -88,11 +88,28 @@ export default async function SchoolProfilePage({
 
   const season = await getActiveSeason()
 
-  const [{ data: breakdown }, { data: wrestlers }, { data: nameRow }, { data: leaders }] = await Promise.all([
-    supabase.rpc('school_points_breakdown', { p_school: school, p_gender: 'M', p_season: season }),
-    supabase.rpc('school_wrestlers',        { p_school: school, p_gender: 'M', p_season: season }),
-    supabase.from('school_names').select('school_name').eq('abbreviation', school).maybeSingle(),
-    supabase.rpc('school_leaderboard',      { p_school: school, p_gender: 'M', p_season: season }),
+  // Resolve abbreviation → display_name → school_id
+  const { data: nameRow } = await supabase
+    .from('school_names')
+    .select('school_name')
+    .eq('abbreviation', school)
+    .maybeSingle()
+
+  const schoolName = (nameRow as { school_name: string } | null)?.school_name ?? school
+
+  const { data: schoolRow } = await supabase
+    .from('schools')
+    .select('id')
+    .eq('display_name', schoolName)
+    .maybeSingle()
+
+  const schoolId = (schoolRow as { id: number } | null)?.id
+  if (!schoolId) notFound()
+
+  const [{ data: breakdown }, { data: wrestlers }, { data: leaders }] = await Promise.all([
+    supabase.rpc('school_points_breakdown', { p_school_id: schoolId, p_gender: 'M', p_season: season }),
+    supabase.rpc('school_wrestlers',        { p_school_id: schoolId, p_gender: 'M', p_season: season }),
+    supabase.rpc('school_leaderboard',      { p_school_id: schoolId, p_gender: 'M', p_season: season }),
   ])
 
   const rows       = (wrestlers ?? []) as WrestlerRow[]
@@ -100,8 +117,6 @@ export default async function SchoolProfilePage({
   const leaderRows = (leaders   ?? []) as LeaderRow[]
 
   if (rows.length === 0) notFound()
-
-  const schoolName = (nameRow as { school_name: string } | null)?.school_name ?? school
 
   const totalPts = bdRows.reduce((sum, r) => sum + Number(r.total_points), 0)
   const totalWins = bdRows.reduce((sum, r) => sum + Number(r.win_count), 0)
