@@ -381,7 +381,7 @@ export default async function GirlsRegionSummaryPage({
             value={r => String(r.dominance_score)}
           />
 
-          <TeamScoreCard rows={teamScore} schoolPrefix="/schools" />
+          <TeamScoreCard rows={teamScore} />
 
         </div>
       </section>

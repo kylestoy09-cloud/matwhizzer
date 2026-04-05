@@ -1,9 +1,9 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
-import { PageHeader } from '@/components/PageHeader'
 import { IndividualTeamPoints } from '@/components/IndividualTeamPoints'
 import { BracketBuster } from '@/components/BracketBuster'
 import { TeamScoreCard } from '@/components/TeamScoreCard'
@@ -210,24 +210,56 @@ export default async function GirlsDistrictSummaryPage({
     placementsByWeight.get(p.weight)!.set(p.place, p)
   }
 
+  const { data: logoData } = await supabase.from('districts').select('logo_url').eq('id', d).maybeSingle()
+  const logoUrl = (logoData as { logo_url: string | null } | null)?.logo_url ?? null
+
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8">
+    <div>
 
       <Link
         href="/girls/districts"
-        className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 mb-6 transition-colors"
+        className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 transition-colors px-4 pt-6 block"
       >
         ← District Index
       </Link>
 
-      <div className="mb-8 text-center">
-        <PageHeader title={`District ${d}`} />
-        <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
-          <span>NJSIAA</span>
-          <InlineSeasonPicker activeSeason={season} seasons={[2]} />
-          <span>· Girls postseason</span>
+      {/* ── Mobile: logo banner + info bar ── */}
+      <div className="md:hidden sticky top-0 z-20">
+        {logoUrl ? (
+          <Image src={logoUrl} alt={`District ${d}`} width={512} height={512} className="w-full h-auto max-h-48 object-cover" />
+        ) : (
+          <div className="w-full h-32 flex items-center justify-center text-5xl font-bold bg-rose-900 text-white">{d}</div>
+        )}
+        <div className="bg-white border-b border-black px-4 py-3" style={{ borderTop: '3px solid #881337' }}>
+          <h1 className="text-lg font-bold text-slate-900">District {d}</h1>
+          <div className="flex items-center gap-1 text-slate-500 text-xs mt-0.5">
+            <span>NJSIAA</span>
+            <InlineSeasonPicker activeSeason={season} seasons={[2]} />
+            <span>· Girls postseason</span>
+          </div>
         </div>
       </div>
+
+      {/* ── Desktop: sticky header with logo left + info right ── */}
+      <div className="hidden md:block sticky top-0 z-20 bg-white border border-black shadow-none mb-8" style={{ borderTop: '3px solid #881337' }}>
+        <div className="flex items-center gap-5 p-4">
+          {logoUrl ? (
+            <Image src={logoUrl} alt={`District ${d}`} width={512} height={512} className="w-20 h-20 rounded-none shrink-0" />
+          ) : (
+            <div className="w-20 h-20 flex items-center justify-center font-bold text-3xl bg-rose-900 text-white shrink-0">{d}</div>
+          )}
+          <div className="min-w-0">
+            <h1 className="text-2xl font-bold text-slate-900">District {d}</h1>
+            <div className="flex items-center gap-1 text-slate-500 text-sm mt-0.5">
+              <span>NJSIAA</span>
+              <InlineSeasonPicker activeSeason={season} seasons={[2]} />
+              <span>· Girls postseason</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-5xl mx-auto px-4 py-4">
 
       {/* ── Bracket grid ── */}
       <div className="grid grid-cols-4 sm:grid-cols-6 gap-2 mb-8">
@@ -247,7 +279,7 @@ export default async function GirlsDistrictSummaryPage({
       <section className="mb-10">
         <h2 className="text-base font-semibold text-slate-800 mb-3">Team Results</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <TeamScoreCard rows={teamScore} schoolPrefix="/schools" />
+          <TeamScoreCard rows={teamScore} />
 
           <IndividualTeamPoints rows={teamPts} />
         </div>
@@ -410,6 +442,7 @@ export default async function GirlsDistrictSummaryPage({
         </section>
       )}
 
+      </div>
     </div>
   )
 }

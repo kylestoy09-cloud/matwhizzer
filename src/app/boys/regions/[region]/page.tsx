@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { getActiveSeason } from '@/lib/get-season'
@@ -6,7 +7,6 @@ import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { BracketBuster } from '@/components/BracketBuster'
 import { TeamScoreCard } from '@/components/TeamScoreCard'
 import { IndividualTeamPoints } from '@/components/IndividualTeamPoints'
-import { PageHeader } from '@/components/PageHeader'
 import RegionVideo from '@/components/RegionVideo'
 
 const WEIGHTS = [106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285]
@@ -221,11 +221,57 @@ export default async function RegionSummaryPage({
     placementsByWeight.get(p.weight)!.set(p.place, p)
   }
 
+  const { data: logoData } = await supabase.from('regions').select('logo_url').eq('id', r).maybeSingle()
+  const logoUrl = (logoData as { logo_url: string | null } | null)?.logo_url ?? null
+
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8">
+    <div>
+
+      <Link
+        href="/boys/regions"
+        className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 transition-colors px-4 pt-6 block"
+      >
+        ← Region Index
+      </Link>
+
+      {/* ── Mobile: logo banner + info bar ── */}
+      <div className="md:hidden sticky top-0 z-20">
+        {logoUrl ? (
+          <Image src={logoUrl} alt={`Region ${r}`} width={512} height={512} className="w-full h-auto max-h-48 object-cover" />
+        ) : (
+          <div className="w-full h-32 flex items-center justify-center text-5xl font-bold bg-slate-900 text-white">{r}</div>
+        )}
+        <div className="bg-white border-b border-black px-4 py-3" style={{ borderTop: '3px solid #0f172a' }}>
+          <h1 className="text-lg font-bold text-slate-900">Region {r}</h1>
+          <div className="flex items-center gap-1 text-slate-500 text-xs mt-0.5">
+            <InlineSeasonPicker activeSeason={season} />
+            <span>· Boys Postseason — Top 4 Advance</span>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Desktop: sticky header with logo left + info right ── */}
+      <div className="hidden md:block sticky top-0 z-20 bg-white border border-black shadow-none mb-8" style={{ borderTop: '3px solid #0f172a' }}>
+        <div className="flex items-center gap-5 p-4">
+          {logoUrl ? (
+            <Image src={logoUrl} alt={`Region ${r}`} width={512} height={512} className="w-20 h-20 rounded-none shrink-0" />
+          ) : (
+            <div className="w-20 h-20 flex items-center justify-center font-bold text-3xl bg-slate-900 text-white shrink-0">{r}</div>
+          )}
+          <div className="min-w-0">
+            <h1 className="text-2xl font-bold text-slate-900">Region {r}</h1>
+            <div className="flex items-center gap-1 text-slate-500 text-sm mt-0.5">
+              <InlineSeasonPicker activeSeason={season} />
+              <span>· Boys Postseason — Top 4 Advance</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-5xl mx-auto px-4 py-4">
 
       {/* Region navigation */}
-      <div className="flex gap-1.5 mb-4">
+      <div className="flex gap-1.5 mb-8">
         {[1, 2, 3, 4, 5, 6, 7, 8].map(rn => (
           <Link
             key={rn}
@@ -239,15 +285,6 @@ export default async function RegionSummaryPage({
             R{rn}
           </Link>
         ))}
-      </div>
-
-      {/* Header */}
-      <div className="mb-8 text-center">
-        <PageHeader title={`Region ${r}`} />
-        <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
-          <InlineSeasonPicker activeSeason={season} />
-          <span>· Boys Postseason — Top 4 Advance</span>
-        </div>
       </div>
 
       {/* ── Bracket grid ── */}
@@ -430,6 +467,7 @@ export default async function RegionSummaryPage({
         </section>
       )}
 
+      </div>
     </div>
   )
 }
