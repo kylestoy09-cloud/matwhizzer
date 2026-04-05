@@ -75,6 +75,15 @@ export default async function ConferencePage({
     .order('division')
 
   console.log('[conference standings] raw supabase response:', JSON.stringify(standingsData?.slice(0, 5), null, 2))
+
+  // Debug: direct fetch of school id=286 to confirm client can reach it
+  const { data: debugSchool, error: debugError } = await supabase
+    .from('schools')
+    .select('id, display_name, logo_url')
+    .eq('id', 286)
+    .maybeSingle()
+  console.log('[debug school 286]', JSON.stringify(debugSchool), 'error:', debugError?.message)
+
   const rows = (standingsData ?? []) as unknown as StandingRow[]
 
   // Group by division, sort rows within each division by div record desc
