@@ -207,24 +207,8 @@ export default async function SchoolProfilePage({
   const pc = profile.primary_color ?? '#1a1a2e'
   const sc = profile.secondary_color ?? '#FFD700'
 
-  // Resolve the RPC-compatible school name
-  // RPCs use school_context_raw which matches school_names.school_name, not schools.display_name
-  // e.g. "Lower Cape May Reg" (school_names) vs "Lower Cape May Regional" (schools.display_name)
-  let rpcSchoolName = schoolName
-  if (profileData && profile.display_name !== schoolName) {
-    // schoolName already came from school_names, should be fine
-  } else if (profileData) {
-    // schoolName came from display_name fallback — look up the RPC-compatible name
-    const { data: snLookup } = await supabase
-      .from('school_names')
-      .select('school_name')
-      .ilike('school_name', `${profile.display_name.substring(0, Math.min(15, profile.display_name.length))}%`)
-      .limit(1)
-      .maybeSingle()
-    if (snLookup) {
-      rpcSchoolName = (snLookup as { school_name: string }).school_name
-    }
-  }
+  // RPCs match on school_context_raw which stores abbreviations (e.g. 'APSC'), not display names
+  const rpcSchoolName = schoolAbbrev
 
   // Step 3: Fetch wrestling data
   let rows: WrestlerRow[] = []
