@@ -74,17 +74,20 @@ export default async function ConferencePage({
     .eq('season_id', season ?? 2)
     .order('division')
 
-  console.log('[conference standings] raw supabase response:', JSON.stringify(standingsData?.slice(0, 5), null, 2))
-
-  // Debug: direct fetch of school id=286 to confirm client can reach it
-  const { data: debugSchool, error: debugError } = await supabase
-    .from('schools')
-    .select('id, display_name, logo_url')
-    .eq('id', 286)
-    .maybeSingle()
-  console.log('[debug school 286]', JSON.stringify(debugSchool), 'error:', debugError?.message)
-
   const rows = (standingsData ?? []) as unknown as StandingRow[]
+
+  // Fetch abbreviations from school_names for all joined display_names
+  const displayNames = [...new Set(rows.map(r => r.school?.display_name).filter(Boolean))] as string[]
+  const abbrevMap = new Map<string, string>()
+  if (displayNames.length > 0) {
+    const { data: abbrevData } = await supabase
+      .from('school_names')
+      .select('school_name, abbreviation')
+      .in('school_name', displayNames)
+    for (const a of abbrevData ?? []) {
+      if (a.abbreviation) abbrevMap.set(a.school_name, a.abbreviation)
+    }
+  }
 
   // Group by division, sort rows within each division by div record desc
   const divisionNames = [...new Set(rows.map(r => r.division).filter(Boolean))]
@@ -231,7 +234,7 @@ export default async function ConferencePage({
                       {divRows.map((row, i) => {
                         const displayName = row.school?.display_name ?? row.school_name
                         const logoUrl = row.school?.logo_url ?? null
-                        const profileName = row.school?.display_name ?? null
+                        const abbreviation = row.school?.display_name ? abbrevMap.get(row.school.display_name) ?? null : null
                         return (
                           <tr key={row.id} className="hover:bg-slate-50">
                             <td className="px-3 py-2.5 text-center text-slate-400 text-xs font-medium">
@@ -248,9 +251,9 @@ export default async function ConferencePage({
                                     className="w-6 h-auto shrink-0"
                                   />
                                 )}
-                                {profileName ? (
+                                {abbreviation ? (
                                   <Link
-                                    href={`/schools/${encodeURIComponent(profileName)}?gender=${gender}`}
+                                    href={`/schools/${encodeURIComponent(abbreviation)}?gender=${gender}`}
                                     className="hover:text-blue-600 transition-colors"
                                   >
                                     {displayName}
