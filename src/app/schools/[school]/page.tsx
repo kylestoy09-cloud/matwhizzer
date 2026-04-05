@@ -153,11 +153,15 @@ export default async function SchoolProfilePage({
   let profileData: SchoolProfile | null = null
   let profileError: { message: string } | null = null
 
+  console.log('[SchoolProfile] Step 2 lookup — schoolName:', schoolName, '| slug:', school, '| schoolAbbrev:', schoolAbbrev)
+
   const { data: profileExact, error: profileErr1 } = await supabase
     .from('schools')
     .select('id, display_name, short_name, mascot, nickname, primary_color, secondary_color, tertiary_color, town, county, section, classification, founded_year, website_url, twitter_handle, athletic_conference, logo_url')
     .eq('display_name', schoolName)
     .maybeSingle()
+
+  console.log('[SchoolProfile] profileExact:', JSON.stringify(profileExact), '| error:', profileErr1?.message)
 
   if (profileErr1) {
     profileError = profileErr1
@@ -171,6 +175,8 @@ export default async function SchoolProfilePage({
       .ilike('display_name', `${schoolName}%`)
       .limit(1)
       .maybeSingle()
+
+    console.log('[SchoolProfile] profileFuzzy:', JSON.stringify(profileFuzzy), '| error:', profileErr2?.message)
 
     if (profileErr2) {
       profileError = profileErr2
