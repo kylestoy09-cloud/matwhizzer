@@ -74,6 +74,7 @@ export default async function ConferencePage({
     .eq('season_id', season ?? 2)
     .order('division')
 
+  console.log('[conference standings] raw supabase response:', JSON.stringify(standingsData?.slice(0, 5), null, 2))
   const rows = (standingsData ?? []) as unknown as StandingRow[]
 
   // Group by division, sort rows within each division by div record desc
