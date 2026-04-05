@@ -342,7 +342,7 @@ export function PersonalizedHome() {
       <section>
         <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">Your Schools</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {schools.map(s => {
+          {schools.filter(s => !s.isPrimary).map(s => {
             const label = classificationLabel(s)
             const pc = s.primary_color ?? '#1a1a2e'
             const sc = s.secondary_color ?? '#FFD700'

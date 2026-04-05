@@ -21,6 +21,7 @@ type StandingRow = {
   div_losses: number
   pf: number
   pa: number
+  school: { id: number; display_name: string; logo_url: string | null } | null
 }
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
@@ -65,15 +66,15 @@ export default async function ConferencePage({
 
   const logoUrl = conferenceData?.logo_url ?? null
 
-  // Fetch division standings
+  // Fetch division standings — join schools for display_name and logo_url
   const { data: standingsData } = await supabase
     .from('conference_standings')
-    .select('id,division,school_id,school_name,overall_wins,overall_losses,div_wins,div_losses,pf,pa')
+    .select('id,division,school_id,school_name,overall_wins,overall_losses,div_wins,div_losses,pf,pa,school:schools(id,display_name,logo_url)')
     .eq('conference_slug', slug)
     .eq('season_id', season ?? 2)
     .order('division')
 
-  const rows = (standingsData ?? []) as StandingRow[]
+  const rows = (standingsData ?? []) as unknown as StandingRow[]
 
   // Group by division, sort rows within each division by div record desc
   const divisionNames = [...new Set(rows.map(r => r.division).filter(Boolean))]
@@ -83,19 +84,6 @@ export default async function ConferencePage({
       .filter(r => r.division === div)
       .sort((a, b) => divRecord(b) - divRecord(a) || ovRecord(b) - ovRecord(a) || b.pf - a.pf)
     byDivision.set(div, divRows)
-  }
-
-  // School lookup for profile links
-  const schoolSlugs = new Map<number, string>()
-  if (rows.length > 0) {
-    const ids = [...new Set(rows.filter(r => r.school_id).map(r => r.school_id!))]
-    const { data: schoolData } = await supabase
-      .from('schools')
-      .select('id, display_name')
-      .in('id', ids)
-    for (const s of schoolData ?? []) {
-      schoolSlugs.set(s.id, s.display_name)
-    }
   }
 
   const subtitle = `${rows.length} team${rows.length !== 1 ? 's' : ''} · Dual Meet Standings`
@@ -231,23 +219,36 @@ export default async function ConferencePage({
                     </thead>
                     <tbody className="divide-y divide-slate-100">
                       {divRows.map((row, i) => {
-                        const profileName = row.school_id ? schoolSlugs.get(row.school_id) : null
+                        const displayName = row.school?.display_name ?? row.school_name
+                        const logoUrl = row.school?.logo_url ?? null
+                        const profileName = row.school?.display_name ?? null
                         return (
                           <tr key={row.id} className="hover:bg-slate-50">
                             <td className="px-3 py-2.5 text-center text-slate-400 text-xs font-medium">
                               {i + 1}
                             </td>
                             <td className="px-3 py-2.5 font-medium text-slate-800">
-                              {profileName ? (
-                                <Link
-                                  href={`/schools/${encodeURIComponent(profileName)}?gender=${gender}`}
-                                  className="hover:text-blue-600 transition-colors"
-                                >
-                                  {row.school_name}
-                                </Link>
-                              ) : (
-                                row.school_name
-                              )}
+                              <div className="flex items-center gap-2">
+                                {logoUrl && (
+                                  <Image
+                                    src={logoUrl}
+                                    alt={displayName}
+                                    width={1022}
+                                    height={505}
+                                    className="w-6 h-auto shrink-0"
+                                  />
+                                )}
+                                {profileName ? (
+                                  <Link
+                                    href={`/schools/${encodeURIComponent(profileName)}?gender=${gender}`}
+                                    className="hover:text-blue-600 transition-colors"
+                                  >
+                                    {displayName}
+                                  </Link>
+                                ) : (
+                                  displayName
+                                )}
+                              </div>
                             </td>
                             <td className="px-3 py-2.5 text-center text-slate-600 tabular-nums">
                               {recordStr(row.overall_wins, row.overall_losses)}
