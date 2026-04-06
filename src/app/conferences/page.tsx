@@ -93,11 +93,6 @@ export default async function ConferencesIndexPage({
               )}
             </div>
 
-            {/* Label */}
-            <div className="border-t border-black px-3 py-2">
-              <p className="text-xs font-bold text-slate-900 leading-snug">{c.name}</p>
-              <p className="text-[11px] text-slate-400 mt-0.5">{c.schoolCount} school{c.schoolCount !== 1 ? 's' : ''}</p>
-            </div>
           </Link>
         ))}
       </div>
