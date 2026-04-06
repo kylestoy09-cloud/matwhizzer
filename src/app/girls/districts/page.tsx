@@ -54,8 +54,8 @@ export default async function GirlsDistrictsPage() {
                 <Image
                   src={logoUrl}
                   alt={`District ${d}`}
-                  width={512}
-                  height={512}
+                  width={1022}
+                  height={518}
                   className="w-full h-auto"
                 />
               ) : (

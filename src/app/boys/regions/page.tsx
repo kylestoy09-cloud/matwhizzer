@@ -54,8 +54,8 @@ export default async function BoysRegionsPage() {
                 <Image
                   src={logoUrl}
                   alt={`Region ${r}`}
-                  width={512}
-                  height={512}
+                  width={1022}
+                  height={518}
                   className="w-full h-auto"
                 />
               ) : (

@@ -237,7 +237,7 @@ export default async function RegionSummaryPage({
       {/* ── Mobile: logo banner + info bar ── */}
       <div className="md:hidden sticky top-0 z-20">
         {logoUrl ? (
-          <Image src={logoUrl} alt={`Region ${r}`} width={512} height={512} className="w-full h-auto max-h-48 object-cover" />
+          <Image src={logoUrl} alt={`Region ${r}`} width={1022} height={518} className="w-full h-auto max-h-48 object-cover" />
         ) : (
           <div className="w-full h-32 flex items-center justify-center text-5xl font-bold bg-slate-900 text-white">{r}</div>
         )}
@@ -254,7 +254,7 @@ export default async function RegionSummaryPage({
       <div className="hidden md:block sticky top-0 z-20 bg-white border border-black shadow-none mb-8" style={{ borderTop: '3px solid #0f172a' }}>
         <div className="flex items-center gap-5 p-4">
           {logoUrl ? (
-            <Image src={logoUrl} alt={`Region ${r}`} width={512} height={512} className="w-20 h-20 rounded-none shrink-0" />
+            <Image src={logoUrl} alt={`Region ${r}`} width={1022} height={518} className="w-20 h-20 rounded-none shrink-0 object-cover" />
           ) : (
             <div className="w-20 h-20 flex items-center justify-center font-bold text-3xl bg-slate-900 text-white shrink-0">{r}</div>
           )}
