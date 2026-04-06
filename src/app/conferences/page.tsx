@@ -71,7 +71,7 @@ export default async function ConferencesIndexPage({
           <Link
             key={c.slug}
             href={`/conferences/${c.slug}?gender=${gender}`}
-            className="block bg-white border border-black rounded-none shadow-none hover:border-slate-400 transition-colors overflow-hidden"
+            className="block bg-white border border-black rounded-lg shadow-none hover:border-slate-400 transition-colors overflow-hidden"
           >
             {/* Logo — exact WrestlerAvatar lg pattern */}
             <div className="w-full">
