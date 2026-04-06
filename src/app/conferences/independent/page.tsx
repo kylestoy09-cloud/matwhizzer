@@ -11,7 +11,6 @@ const SLUG = 'independent'
 const NAME = 'Independent'
 const ACCENT = '#0f172a'
 
-type DirRow = { school: string; school_name: string; school_id: number | null }
 type SchoolRow = { id: number; display_name: string; section: string | null; classification: string | null; logo_url: string | null }
 
 function classLabel(s: SchoolRow) {
@@ -38,34 +37,13 @@ export default async function IndependentConferencePage({
     .maybeSingle()
   const logoUrl = confData?.logo_url ?? null
 
-  // All boys schools in season via school_directory — collect their school_ids
-  const { data: dirData } = await supabase
-    .rpc('school_directory', { p_gender: 'M', p_season: season })
-  const dirSchoolIds = new Set<number>(
-    ((dirData ?? []) as DirRow[]).map(r => r.school_id).filter((id): id is number => id != null)
-  )
-
-  // All school_ids in conference_standings for season
-  const { data: csData } = await supabase
-    .from('conference_standings')
-    .select('school_id')
-    .eq('season_id', season)
-    .not('school_id', 'is', null)
-  const csIds = new Set((csData ?? []).map(r => (r as { school_id: number }).school_id))
-
-  // All schools — build display_name → school lookup
-  const { data: allSchoolsData } = await supabase
+  // Directly fetch schools marked as Independent
+  const { data: indData } = await supabase
     .from('schools')
     .select('id, display_name, section, classification, logo_url')
+    .eq('athletic_conference', 'Independent')
     .order('display_name')
-  const allSchools = (allSchoolsData ?? []) as SchoolRow[]
-  const nameToSchool = new Map(allSchools.map(s => [s.display_name, s]))
-
-  // Schools present in directory but absent from conference_standings
-  const independentSchools: SchoolRow[] = allSchools.filter(
-    s => dirSchoolIds.has(s.id) && !csIds.has(s.id)
-  )
-  independentSchools.sort((a, b) => a.display_name.localeCompare(b.display_name))
+  const independentSchools = (indData ?? []) as SchoolRow[]
 
   const subtitle = `${independentSchools.length} school${independentSchools.length !== 1 ? 's' : ''} · No Conference Affiliation`
 
@@ -146,7 +124,7 @@ export default async function IndependentConferencePage({
 
       {/* ── School list ── */}
       <div className="max-w-5xl mx-auto px-4 pb-10">
-        {gender === 'girls' || independentSchools.length === 0 ? (
+        {independentSchools.length === 0 ? (
           <div className="border border-black rounded-none bg-white px-6 py-10 text-center text-slate-500 text-sm">
             No independent school data available.
           </div>
