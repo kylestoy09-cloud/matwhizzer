@@ -282,10 +282,10 @@ export default async function RegionSummaryPage({
           <Link
             key={rn}
             href={`/boys/regions/${rn}`}
-            className={`px-3 py-1.5 rounded-none text-sm font-semibold transition-colors ${
+            className={`px-3 py-1.5 rounded-full text-sm font-semibold transition-colors ${
               rn === r
                 ? 'bg-slate-800 text-white'
-                : 'bg-white border border-black text-slate-700 hover:bg-slate-50 hover:border-slate-400 shadow-none'
+                : 'bg-white border border-black text-slate-700 hover:bg-slate-50 hover:border-slate-400'
             }`}
           >
             R{rn}
