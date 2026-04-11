@@ -27,7 +27,7 @@ type DominanceRow = {
   school: string | null; school_name: string | null
   dominance_score: number; win_count: number
 }
-type TeamScoreRow = { school: string; school_name: string | null; total_points: number }
+type TeamScoreRow = { school: string; school_name: string | null; school_id: number | null; total_points: number }
 type TeamPtsRow = {
   wrestler_id: string; wrestler_name: string;
   school: string | null; school_name: string | null;
@@ -271,7 +271,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
             subtitle={r => `${r.school_name || r.school || '—'} · ${r.win_count} wins`}
             value={r => String(r.dominance_score)}
           />
-          <TeamScoreCard rows={teamScore} schoolPrefix={schoolPrefix} />
+          <TeamScoreCard rows={teamScore} />
         </div>
       </section>
 

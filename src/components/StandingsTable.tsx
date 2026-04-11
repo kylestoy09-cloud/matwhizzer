@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 type StandingsRow = {
-  id: number
+  id?: number
   display_name: string
   mascot: string | null
   primary_color: string | null

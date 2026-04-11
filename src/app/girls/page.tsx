@@ -8,7 +8,7 @@ import { PageHeader } from '@/components/PageHeader'
 
 type WrestlerRow = { id: string; first_name: string; last_name: string }
 type SchoolRow   = { school: string; school_name: string; school_id: number | null; total_points: number; wrestler_count: number }
-type TeamScoreRow = { school: string; school_name: string | null; district_points: number; region_points: number; state_points: number; total_points: number }
+type TeamScoreRow = { school: string; school_name: string | null; school_id: number | null; district_points: number; region_points: number; state_points: number; total_points: number }
 type DominanceRow = { wrestler_id: string; name: string; school: string | null; dominance_score: number; win_count: number }
 
 export default async function GirlsPage({

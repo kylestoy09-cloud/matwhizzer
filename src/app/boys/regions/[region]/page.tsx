@@ -237,32 +237,38 @@ export default async function RegionSummaryPage({
       {/* ── Mobile: logo banner + info bar ── */}
       <div className="md:hidden sticky top-0 z-20">
         {logoUrl ? (
-          <Image src={logoUrl} alt={`Region ${r}`} width={512} height={512} className="w-full h-auto max-h-48 object-cover" />
+          <Image src={logoUrl} alt={`Region ${r}`} width={1022} height={518} className="w-full h-auto" />
         ) : (
-          <div className="w-full h-32 flex items-center justify-center text-5xl font-bold bg-slate-900 text-white">{r}</div>
+          <div className="w-full aspect-video flex items-center justify-center text-6xl font-bold bg-slate-900 text-white">{r}</div>
         )}
-        <div className="bg-white border-b border-black px-4 py-3" style={{ borderTop: '3px solid #0f172a' }}>
-          <h1 className="text-lg font-bold text-slate-900">Region {r}</h1>
-          <div className="flex items-center gap-1 text-slate-500 text-xs mt-0.5">
-            <InlineSeasonPicker activeSeason={season} />
-            <span>· Boys Postseason — Top 4 Advance</span>
+        <div className="bg-white border-b border-black shadow-none px-4 py-3" style={{ borderTop: '3px solid #0f172a' }}>
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <h1 className="text-lg font-bold text-slate-900 truncate">Region {r}</h1>
+              <div className="flex items-center gap-1 text-xs text-slate-500 truncate">
+                <InlineSeasonPicker activeSeason={season} />
+                <span>· Boys Postseason · Top 4 Advance</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       {/* ── Desktop: sticky header with logo left + info right ── */}
-      <div className="hidden md:block sticky top-0 z-20 bg-white border border-black shadow-none mb-8" style={{ borderTop: '3px solid #0f172a' }}>
+      <div className="hidden md:block sticky top-0 z-20 bg-white border border-black rounded-none shadow-none mb-8" style={{ borderTop: '3px solid #0f172a' }}>
         <div className="flex items-center gap-5 p-4">
-          {logoUrl ? (
-            <Image src={logoUrl} alt={`Region ${r}`} width={512} height={512} className="w-20 h-20 rounded-none shrink-0" />
-          ) : (
-            <div className="w-20 h-20 flex items-center justify-center font-bold text-3xl bg-slate-900 text-white shrink-0">{r}</div>
-          )}
-          <div className="min-w-0">
-            <h1 className="text-2xl font-bold text-slate-900">Region {r}</h1>
-            <div className="flex items-center gap-1 text-slate-500 text-sm mt-0.5">
+          <div className="shrink-0">
+            {logoUrl ? (
+              <Image src={logoUrl} alt={`Region ${r}`} width={1022} height={518} className="w-[240px] h-auto rounded-none" />
+            ) : (
+              <div className="w-[160px] h-[96px] rounded-none flex items-center justify-center text-4xl font-bold bg-slate-900 text-white">{r}</div>
+            )}
+          </div>
+          <div className="flex-1 min-w-0">
+            <h1 className="text-2xl font-bold text-slate-900 truncate">Region {r}</h1>
+            <p className="text-sm text-slate-500 mt-0.5">Boys Postseason · Top 4 Advance</p>
+            <div className="flex items-center text-xs text-slate-400 mt-1">
               <InlineSeasonPicker activeSeason={season} />
-              <span>· Boys Postseason — Top 4 Advance</span>
             </div>
           </div>
         </div>
@@ -276,10 +282,10 @@ export default async function RegionSummaryPage({
           <Link
             key={rn}
             href={`/boys/regions/${rn}`}
-            className={`px-3 py-1.5 rounded-none text-sm font-semibold transition-colors ${
+            className={`px-3 py-1.5 rounded-full text-sm font-semibold transition-colors ${
               rn === r
                 ? 'bg-slate-800 text-white'
-                : 'bg-white border border-black text-slate-700 hover:bg-slate-50 hover:border-slate-400 shadow-none'
+                : 'bg-white border border-black text-slate-700 hover:bg-slate-50 hover:border-slate-400'
             }`}
           >
             R{rn}

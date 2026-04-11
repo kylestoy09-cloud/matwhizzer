@@ -71,7 +71,7 @@ export default async function ConferencesIndexPage({
           <Link
             key={c.slug}
             href={`/conferences/${c.slug}?gender=${gender}`}
-            className="block bg-white border border-black rounded-none shadow-none hover:border-slate-400 transition-colors overflow-hidden"
+            className="block bg-white border border-black rounded-lg shadow-none hover:border-slate-400 transition-colors overflow-hidden"
           >
             {/* Logo — exact WrestlerAvatar lg pattern */}
             <div className="w-full">
@@ -93,11 +93,6 @@ export default async function ConferencesIndexPage({
               )}
             </div>
 
-            {/* Label */}
-            <div className="border-t border-black px-3 py-2">
-              <p className="text-xs font-bold text-slate-900 leading-snug">{c.name}</p>
-              <p className="text-[11px] text-slate-400 mt-0.5">{c.schoolCount} school{c.schoolCount !== 1 ? 's' : ''}</p>
-            </div>
           </Link>
         ))}
       </div>

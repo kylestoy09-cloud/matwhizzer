@@ -48,14 +48,14 @@ export default async function BoysRegionsPage() {
             <Link
               key={r}
               href={`/boys/regions/${r}`}
-              className="block bg-white border border-black rounded-none shadow-none hover:border-slate-400 transition-colors overflow-hidden"
+              className="block bg-white border border-black rounded-lg shadow-none hover:border-slate-400 transition-colors overflow-hidden"
             >
               {logoUrl ? (
                 <Image
                   src={logoUrl}
                   alt={`Region ${r}`}
-                  width={512}
-                  height={512}
+                  width={1022}
+                  height={518}
                   className="w-full h-auto"
                 />
               ) : (
@@ -63,9 +63,6 @@ export default async function BoysRegionsPage() {
                   {r}
                 </div>
               )}
-              <div className="border-t border-black px-3 py-2">
-                <p className="text-xs font-bold text-slate-900 leading-snug text-center">Region {r}</p>
-              </div>
             </Link>
           )
         })}

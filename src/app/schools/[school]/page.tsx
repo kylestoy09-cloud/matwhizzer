@@ -193,7 +193,7 @@ export default async function SchoolProfilePage({
       <div className="max-w-4xl mx-auto px-4 py-20 text-center">
         <h1 className="text-xl font-bold text-red-600 mb-2">Error loading wrestling data</h1>
         <p className="text-sm text-slate-600">{e instanceof Error ? e.message : 'Unknown error'}</p>
-        <p className="text-xs text-slate-400 mt-1">School: {school}, Gender: {gender}, Season: {season}</p>
+        <p className="text-xs text-slate-400 mt-1">School: {schoolParam}, Gender: {gender}, Season: {season}</p>
       </div>
     )
   }
@@ -314,9 +314,9 @@ export default async function SchoolProfilePage({
             </div>
             <div className="flex items-center gap-2 shrink-0">
               <div className="flex rounded-none border border-slate-200 overflow-hidden text-xs">
-                <Link href={`/schools/${school}?gender=boys${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
+                <Link href={`/schools/${schoolId}?gender=boys${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
                   className={`px-2.5 py-1 font-medium ${gender === 'boys' ? 'bg-slate-900 text-white' : 'bg-white text-slate-500'}`}>B</Link>
-                <Link href={`/schools/${school}?gender=girls${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
+                <Link href={`/schools/${schoolId}?gender=girls${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
                   className={`px-2.5 py-1 font-medium ${gender === 'girls' ? 'bg-rose-700 text-white' : 'bg-white text-slate-500'}`}>G</Link>
               </div>
               <FollowSchoolButton schoolId={profile.id} />
@@ -427,9 +427,9 @@ export default async function SchoolProfilePage({
 
               <div className="flex flex-col items-end gap-2 shrink-0">
                 <div className="flex rounded-none border border-slate-200 overflow-hidden text-sm">
-                  <Link href={`/schools/${school}?gender=boys${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
+                  <Link href={`/schools/${schoolId}?gender=boys${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
                     className={`px-3 py-1.5 font-medium transition-colors ${gender === 'boys' ? 'bg-slate-900 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}>Boys</Link>
-                  <Link href={`/schools/${school}?gender=girls${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
+                  <Link href={`/schools/${schoolId}?gender=girls${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
                     className={`px-3 py-1.5 font-medium transition-colors ${gender === 'girls' ? 'bg-rose-700 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}>Girls</Link>
                 </div>
                 <FollowSchoolButton schoolId={profile.id} />
@@ -444,7 +444,7 @@ export default async function SchoolProfilePage({
 
       {/* ── TABS ── */}
       <SchoolTabs
-        school={school}
+        school={schoolParam}
         gender={gender}
         activeTab={activeTab}
         primaryColor={pc}

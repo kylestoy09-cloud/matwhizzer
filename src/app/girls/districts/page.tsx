@@ -48,14 +48,14 @@ export default async function GirlsDistrictsPage() {
             <Link
               key={d}
               href={`/girls/districts/${d}`}
-              className="block bg-white border border-black rounded-none shadow-none hover:border-rose-400 transition-colors overflow-hidden"
+              className="block bg-white border border-black rounded-lg shadow-none hover:border-rose-400 transition-colors overflow-hidden"
             >
               {logoUrl ? (
                 <Image
                   src={logoUrl}
                   alt={`District ${d}`}
-                  width={512}
-                  height={512}
+                  width={1022}
+                  height={518}
                   className="w-full h-auto"
                 />
               ) : (
@@ -63,9 +63,6 @@ export default async function GirlsDistrictsPage() {
                   {d}
                 </div>
               )}
-              <div className="border-t border-black px-2 py-1.5">
-                <p className="text-[11px] font-bold text-slate-900 leading-snug text-center">D{d}</p>
-              </div>
             </Link>
           )
         })}
