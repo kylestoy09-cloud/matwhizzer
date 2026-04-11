@@ -1,5 +1,6 @@
 -- Non-Public A school profiles — verified via Wikipedia, MaxPreps, official websites
 -- Add missing columns
+-- APPLIED: 2026-04-01
 ALTER TABLE schools ADD COLUMN IF NOT EXISTS tertiary_color text;
 ALTER TABLE schools ADD COLUMN IF NOT EXISTS nickname text;
 ALTER TABLE schools ADD COLUMN IF NOT EXISTS town text;
@@ -286,3 +287,15 @@ UPDATE schools SET
   athletic_conference = 'Shore Conference',
   twitter_handle = '@SJVHS'
 WHERE display_name ILIKE 'Saint John Vianney%' OR display_name ILIKE 'St. John Vianney%';
+
+-- ROLLBACK:
+-- -- Column drops (only needed once — all batches share these columns):
+-- ALTER TABLE schools DROP COLUMN IF EXISTS tertiary_color;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS nickname;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS town;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS county;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS founded_year;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS website_url;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS athletic_conference;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS twitter_handle;
+-- -- NOTE: All school profile data from all 14 batches will be lost.

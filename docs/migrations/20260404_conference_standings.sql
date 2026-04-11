@@ -1,5 +1,6 @@
 -- Conference standings tables for dual-meet records
 
+-- APPLIED: 2026-04-04
 CREATE TABLE IF NOT EXISTS conferences (
   id SERIAL PRIMARY KEY,
   slug TEXT UNIQUE NOT NULL,
@@ -28,3 +29,9 @@ CREATE INDEX IF NOT EXISTS idx_conf_standings_slug_season
 
 CREATE INDEX IF NOT EXISTS idx_conf_standings_division
   ON conference_standings(conference_slug, season_id, division);
+
+-- ROLLBACK:
+-- DROP INDEX IF EXISTS idx_conf_standings_division;
+-- DROP INDEX IF EXISTS idx_conf_standings_slug_season;
+-- DROP TABLE IF EXISTS conference_standings;
+-- DROP TABLE IF EXISTS conferences;

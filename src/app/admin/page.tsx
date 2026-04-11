@@ -62,6 +62,13 @@ export default async function AdminDashboard() {
           <h2 className="text-sm font-semibold text-slate-900 mb-1">District Verify</h2>
           <p className="text-xs text-slate-500">Add abbreviations for each school by district</p>
         </Link>
+        <Link
+          href="/admin/data-health"
+          className="bg-white rounded-none border border-black shadow-none p-6 transition-shadow"
+        >
+          <h2 className="text-sm font-semibold text-slate-900 mb-1">Data Health</h2>
+          <p className="text-xs text-slate-500">Database integrity and site availability monitoring</p>
+        </Link>
       </div>
     </div>
   )

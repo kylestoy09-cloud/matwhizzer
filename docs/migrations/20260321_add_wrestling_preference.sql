@@ -1,4 +1,5 @@
 -- Add wrestling_preference column to public.users
+-- APPLIED: 2026-03-21
 ALTER TABLE public.users
 ADD COLUMN IF NOT EXISTS wrestling_preference text NOT NULL DEFAULT 'both'
 CHECK (wrestling_preference IN ('boys', 'girls', 'both'));
@@ -25,3 +26,8 @@ BEGIN
   RETURN NEW;
 END;
 $$;
+
+-- ROLLBACK:
+-- ALTER TABLE public.users DROP COLUMN IF EXISTS wrestling_preference;
+-- -- NOTE: The previous version of handle_new_public_user() is not stored here.
+-- --       Restore it from git history: git show HEAD~1:migrations/add_wrestling_preference.sql

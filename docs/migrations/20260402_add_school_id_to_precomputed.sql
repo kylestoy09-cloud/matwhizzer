@@ -1,4 +1,5 @@
 -- Add school_id to precomputed_team_scores for reliable joins
+-- APPLIED: 2026-04-02
 ALTER TABLE precomputed_team_scores ADD COLUMN IF NOT EXISTS school_id integer REFERENCES schools(id);
 
 -- Populate school_id by matching school_name to schools.display_name
@@ -17,3 +18,8 @@ UPDATE precomputed_team_scores SET school_id = (SELECT id FROM schools WHERE dis
 -- Create index for fast lookups
 CREATE INDEX IF NOT EXISTS idx_precomputed_team_scores_school_id ON precomputed_team_scores(school_id);
 CREATE INDEX IF NOT EXISTS idx_precomputed_team_scores_school_season ON precomputed_team_scores(school_id, season_id);
+
+-- ROLLBACK:
+-- DROP INDEX IF EXISTS idx_precomputed_team_scores_school_season;
+-- DROP INDEX IF EXISTS idx_precomputed_team_scores_school_id;
+-- ALTER TABLE precomputed_team_scores DROP COLUMN IF EXISTS school_id;

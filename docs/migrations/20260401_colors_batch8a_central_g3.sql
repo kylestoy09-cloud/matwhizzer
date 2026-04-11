@@ -1,6 +1,7 @@
--- Batch 14: Central missing schools — data from batch 8a research, repackaged
+-- Central Group 3 school profiles — verified via Wikipedia, MaxPreps, athletics sites
 
--- 1. Allentown
+-- 1. Allentown — Sources: Wikipedia, MaxPreps
+-- APPLIED: 2026-04-01
 UPDATE schools SET
   mascot = 'Redbirds', primary_color = '#CC0022', secondary_color = '#222222', tertiary_color = NULL,
   nickname = NULL, town = 'Allentown', county = 'Monmouth', founded_year = 1924,
@@ -8,7 +9,7 @@ UPDATE schools SET
   twitter_handle = '@ATownRedbirds'
 WHERE display_name = 'Allentown';
 
--- 2. Bordentown
+-- 2. Bordentown — Sources: Wikipedia, MaxPreps (3 colors)
 UPDATE schools SET
   mascot = 'Scotties', primary_color = '#000000', secondary_color = '#C8880A', tertiary_color = '#FFFFFF',
   nickname = NULL, town = 'Bordentown', county = 'Burlington', founded_year = 1965,
@@ -16,7 +17,23 @@ UPDATE schools SET
   twitter_handle = '@BRHSAthletics'
 WHERE display_name ILIKE 'Bordentown%' AND display_name NOT ILIKE '%/%';
 
--- 3. Burlington Township
+-- 3. Brick Memorial — Sources: Wikipedia, MaxPreps (3 colors)
+UPDATE schools SET
+  mascot = 'Mustangs', primary_color = '#00341E', secondary_color = '#C8880A', tertiary_color = '#FFFFFF',
+  nickname = NULL, town = 'Brick', county = 'Ocean', founded_year = 1980,
+  website_url = 'https://www.brickschools.org/bmhs', athletic_conference = 'Shore Conference',
+  twitter_handle = '@BrickMemorialHS'
+WHERE display_name = 'Brick Memorial';
+
+-- 4. Brick Township — Sources: Wikipedia, MaxPreps
+UPDATE schools SET
+  mascot = 'Green Dragons', primary_color = '#00824B', secondary_color = '#FFFFFF', tertiary_color = NULL,
+  nickname = NULL, town = 'Brick', county = 'Ocean', founded_year = 1958,
+  website_url = 'https://www.brickschools.org/bths', athletic_conference = 'Shore Conference',
+  twitter_handle = '@BTHS_SPORTS'
+WHERE display_name = 'Brick Township';
+
+-- 5. Burlington Township — Sources: Wikipedia, Burlington Co Football Club (3 colors)
 UPDATE schools SET
   mascot = 'Falcons', primary_color = '#000000', secondary_color = '#C8880A', tertiary_color = '#FFFFFF',
   nickname = NULL, town = 'Burlington Township', county = 'Burlington', founded_year = 1964,
@@ -24,7 +41,7 @@ UPDATE schools SET
   twitter_handle = '@bthsathletics'
 WHERE display_name = 'Burlington Township';
 
--- 4. Ewing
+-- 6. Ewing — Sources: Wikipedia, MaxPreps
 UPDATE schools SET
   mascot = 'Blue Devils', primary_color = '#034CB2', secondary_color = '#FFFFFF', tertiary_color = NULL,
   nickname = NULL, town = 'Ewing', county = 'Mercer', founded_year = 1951,
@@ -32,7 +49,7 @@ UPDATE schools SET
   twitter_handle = '@EwingAthletics'
 WHERE display_name = 'Ewing';
 
--- 5. Hamilton North (Nottingham)
+-- 7. Hamilton North (Nottingham) — Sources: Wikipedia, MaxPreps
 UPDATE schools SET
   mascot = 'Northstars', primary_color = '#034CB2', secondary_color = '#C8880A', tertiary_color = NULL,
   nickname = 'Nottingham', town = 'Hamilton', county = 'Mercer', founded_year = NULL,
@@ -40,7 +57,7 @@ UPDATE schools SET
   twitter_handle = '@NorthstarsAD'
 WHERE display_name ILIKE 'Hamilton North%';
 
--- 6. Hopewell Valley
+-- 8. Hopewell Valley — Sources: Wikipedia, athletics site JSON
 UPDATE schools SET
   mascot = 'Bulldogs', primary_color = '#080206', secondary_color = '#FAD703', tertiary_color = NULL,
   nickname = NULL, town = 'Pennington', county = 'Mercer', founded_year = 1907,
@@ -48,7 +65,7 @@ UPDATE schools SET
   twitter_handle = '@HVCentralHS'
 WHERE display_name ILIKE 'Hopewell Valley%';
 
--- 7. Lawrence
+-- 9. Lawrence — Sources: Wikipedia, athletics site JSON (3 colors)
 UPDATE schools SET
   mascot = 'Cardinals', primary_color = '#BF0000', secondary_color = '#FFFFFF', tertiary_color = '#000000',
   nickname = NULL, town = 'Lawrenceville', county = 'Mercer', founded_year = 1966,
@@ -56,7 +73,15 @@ UPDATE schools SET
   twitter_handle = '@CardinalsLHS'
 WHERE display_name ILIKE 'Lawrence%';
 
--- 8. Middlesex
+-- 10. Matawan Regional — Sources: Wikipedia, athletics site JSON
+UPDATE schools SET
+  mascot = 'Huskies', primary_color = '#580615', secondary_color = '#818181', tertiary_color = NULL,
+  nickname = NULL, town = 'Aberdeen', county = 'Monmouth', founded_year = 1962,
+  website_url = 'https://mrhs.marsd.org', athletic_conference = 'Shore Conference',
+  twitter_handle = '@MRHSNJ'
+WHERE display_name ILIKE 'Matawan%';
+
+-- 11. Middlesex — Sources: Wikipedia, athletics site JSON (3 colors)
 UPDATE schools SET
   mascot = 'Blue Jays', primary_color = '#0605B3', secondary_color = '#FFFFFF', tertiary_color = '#000000',
   nickname = NULL, town = 'Middlesex', county = 'Middlesex', founded_year = 1959,
@@ -64,7 +89,7 @@ UPDATE schools SET
   twitter_handle = '@GoJaysAthletics'
 WHERE display_name ILIKE 'Middlesex%' AND display_name NOT ILIKE '%/%';
 
--- 9. Neptune
+-- 12. Neptune — Sources: Wikipedia, athletics site JSON
 UPDATE schools SET
   mascot = 'Scarlet Fliers', primary_color = '#D90000', secondary_color = '#000000', tertiary_color = NULL,
   nickname = NULL, town = 'Neptune', county = 'Monmouth', founded_year = 1897,
@@ -72,7 +97,7 @@ UPDATE schools SET
   twitter_handle = '@Scarlet_Fliers'
 WHERE display_name = 'Neptune';
 
--- 10. Robbinsville
+-- 13. Robbinsville — Sources: Wikipedia, athletics site JSON
 UPDATE schools SET
   mascot = 'Ravens', primary_color = '#A7192E', secondary_color = '#030303', tertiary_color = NULL,
   nickname = NULL, town = 'Robbinsville', county = 'Mercer', founded_year = 2004,
@@ -80,10 +105,22 @@ UPDATE schools SET
   twitter_handle = NULL
 WHERE display_name = 'Robbinsville';
 
--- 11. Somerville
+-- 14. Somerville — Sources: Wikipedia, athletics site JSON
 UPDATE schools SET
   mascot = 'Pioneers', primary_color = '#000000', secondary_color = '#FFA500', tertiary_color = NULL,
   nickname = NULL, town = 'Somerville', county = 'Somerset', founded_year = 1909,
   website_url = 'https://www.somervilleschools.org/o/shs', athletic_conference = 'Skyland Conference',
   twitter_handle = '@SomervilleHSNJ'
 WHERE display_name = 'Somerville';
+
+-- ROLLBACK:
+-- -- Column drops (only needed once — all batches share these columns):
+-- ALTER TABLE schools DROP COLUMN IF EXISTS tertiary_color;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS nickname;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS town;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS county;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS founded_year;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS website_url;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS athletic_conference;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS twitter_handle;
+-- -- NOTE: All school profile data from all 14 batches will be lost.

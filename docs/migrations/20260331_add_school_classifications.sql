@@ -1,4 +1,5 @@
 -- Add section and classification columns to schools
+-- APPLIED: 2026-03-31
 ALTER TABLE schools ADD COLUMN IF NOT EXISTS section text;
 ALTER TABLE schools ADD COLUMN IF NOT EXISTS classification text;
 
@@ -392,3 +393,8 @@ UPDATE schools SET section = 'South', classification = '1' WHERE display_name = 
 UPDATE schools SET section = 'South', classification = '1' WHERE display_name = 'Riverside';
 UPDATE schools SET section = 'South', classification = '1' WHERE display_name = 'Salem';
 UPDATE schools SET section = 'South', classification = '1' WHERE display_name = 'Woodstown';
+
+-- ROLLBACK:
+-- ALTER TABLE schools DROP COLUMN IF EXISTS section;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS classification;
+-- -- NOTE: All section/classification data will be lost. Re-run migration to restore.

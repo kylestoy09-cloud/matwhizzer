@@ -5,6 +5,7 @@
 -- ============================================================
 
 -- 1. Cedar Creek — Sources: Wikipedia, athletics site CSS
+-- APPLIED: 2026-04-01
 UPDATE schools SET
   mascot = 'Pirates', primary_color = '#602121', secondary_color = '#234C28', tertiary_color = NULL,
   nickname = NULL, town = 'Egg Harbor City', county = 'Atlantic', founded_year = 2010,
@@ -215,3 +216,15 @@ UPDATE schools SET
   website_url = 'https://whs.woodstown.org', athletic_conference = 'Tri-County Conference',
   twitter_handle = '@WHS_AthleticDir'
 WHERE display_name = 'Woodstown';
+
+-- ROLLBACK:
+-- -- Column drops (only needed once — all batches share these columns):
+-- ALTER TABLE schools DROP COLUMN IF EXISTS tertiary_color;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS nickname;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS town;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS county;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS founded_year;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS website_url;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS athletic_conference;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS twitter_handle;
+-- -- NOTE: All school profile data from all 14 batches will be lost.

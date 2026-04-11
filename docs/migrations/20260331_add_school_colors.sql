@@ -1,4 +1,5 @@
 -- Add mascot and color columns to schools
+-- APPLIED: 2026-03-31
 ALTER TABLE schools ADD COLUMN IF NOT EXISTS mascot text;
 ALTER TABLE schools ADD COLUMN IF NOT EXISTS primary_color text;
 ALTER TABLE schools ADD COLUMN IF NOT EXISTS secondary_color text;
@@ -374,3 +375,9 @@ UPDATE schools SET mascot='Bombers', primary_color='#CC0000', secondary_color='#
 
 -- Default fallback: set remaining NULLs to generic dark/gold
 UPDATE schools SET primary_color='#1a1a2e', secondary_color='#FFD700' WHERE primary_color IS NULL;
+
+-- ROLLBACK:
+-- ALTER TABLE schools DROP COLUMN IF EXISTS mascot;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS primary_color;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS secondary_color;
+-- -- NOTE: All mascot/color data will be lost. Re-run migration to restore.

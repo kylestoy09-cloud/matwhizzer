@@ -5,6 +5,7 @@
 -- Sources: Wikipedia, camdencatholic.org, MaxPreps
 -- MaxPreps: Green #00824B, White
 -- ============================================================
+-- APPLIED: 2026-04-01
 UPDATE schools SET
   mascot = 'Fighting Irish',
   primary_color = '#00824B',
@@ -230,3 +231,15 @@ UPDATE schools SET
   athletic_conference = 'Cape-Atlantic League',
   twitter_handle = '@SJA_HammontonNJ'
 WHERE display_name ILIKE 'St. Joseph%Hammonton%' OR display_name ILIKE 'Saint Joseph%Academy%';
+
+-- ROLLBACK:
+-- -- Column drops (only needed once — all batches share these columns):
+-- ALTER TABLE schools DROP COLUMN IF EXISTS tertiary_color;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS nickname;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS town;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS county;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS founded_year;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS website_url;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS athletic_conference;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS twitter_handle;
+-- -- NOTE: All school profile data from all 14 batches will be lost.

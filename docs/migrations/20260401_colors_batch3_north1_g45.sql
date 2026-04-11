@@ -5,6 +5,7 @@
 -- ============================================================
 
 -- 1. Bloomfield — Sources: Wikipedia, MaxPreps
+-- APPLIED: 2026-04-01
 UPDATE schools SET
   mascot = 'Bengals',
   primary_color = '#CC0022',
@@ -434,3 +435,15 @@ UPDATE schools SET
   county = 'Bergen',
   athletic_conference = 'Big North Conference'
 WHERE display_name ILIKE 'Leonia%';
+
+-- ROLLBACK:
+-- -- Column drops (only needed once — all batches share these columns):
+-- ALTER TABLE schools DROP COLUMN IF EXISTS tertiary_color;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS nickname;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS town;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS county;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS founded_year;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS website_url;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS athletic_conference;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS twitter_handle;
+-- -- NOTE: All school profile data from all 14 batches will be lost.

@@ -5,6 +5,7 @@
 -- ============================================================
 
 -- 1. East Brunswick — Sources: Wikipedia, MaxPreps
+-- APPLIED: 2026-04-01
 UPDATE schools SET
   mascot = 'Bears', primary_color = '#00824B', secondary_color = '#FFFFFF', tertiary_color = NULL,
   nickname = 'EB', town = 'East Brunswick', county = 'Middlesex', founded_year = 1958,
@@ -223,3 +224,15 @@ UPDATE schools SET
   town = 'West Windsor', county = 'Mercer',
   athletic_conference = 'Colonial Valley Conference'
 WHERE display_name = 'West Windsor-Plainsboro' AND display_name NOT ILIKE '%N%' AND display_name NOT ILIKE '%S%';
+
+-- ROLLBACK:
+-- -- Column drops (only needed once — all batches share these columns):
+-- ALTER TABLE schools DROP COLUMN IF EXISTS tertiary_color;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS nickname;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS town;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS county;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS founded_year;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS website_url;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS athletic_conference;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS twitter_handle;
+-- -- NOTE: All school profile data from all 14 batches will be lost.

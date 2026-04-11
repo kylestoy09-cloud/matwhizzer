@@ -5,6 +5,7 @@
 -- ============================================================
 
 -- 1. Atlantic City — Sources: Wikipedia, MaxPreps
+-- APPLIED: 2026-04-01
 UPDATE schools SET
   mascot = 'Vikings', primary_color = '#022C66', secondary_color = '#FFFFFF', tertiary_color = NULL,
   nickname = 'ACHS', town = 'Atlantic City', county = 'Atlantic', founded_year = 1895,
@@ -231,3 +232,15 @@ UPDATE schools SET
   website_url = 'https://camdencityschools.org/chs', athletic_conference = 'Olympic Conference',
   twitter_handle = '@CamdenHigh_NJ'
 WHERE display_name = 'Camden' AND display_name NOT ILIKE '%Catholic%' AND display_name NOT ILIKE '%/%';
+
+-- ROLLBACK:
+-- -- Column drops (only needed once — all batches share these columns):
+-- ALTER TABLE schools DROP COLUMN IF EXISTS tertiary_color;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS nickname;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS town;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS county;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS founded_year;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS website_url;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS athletic_conference;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS twitter_handle;
+-- -- NOTE: All school profile data from all 14 batches will be lost.

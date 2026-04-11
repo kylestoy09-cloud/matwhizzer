@@ -1,6 +1,7 @@
 -- Batch 12: North I missing schools — verified via Wikipedia, MaxPreps, athletics sites
 
 -- 1. Cresskill — MaxPreps
+-- APPLIED: 2026-04-01
 UPDATE schools SET
   mascot = 'Cougars', primary_color = '#222222', secondary_color = '#C8880A', tertiary_color = NULL,
   nickname = NULL, town = 'Cresskill', county = 'Bergen', founded_year = 1962,
@@ -111,3 +112,15 @@ UPDATE schools SET
   website_url = 'https://whs.waldwickschools.org', athletic_conference = 'North Jersey Interscholastic Conference',
   twitter_handle = '@WHSWarrior_ATHL'
 WHERE display_name ILIKE 'Waldwick%';
+
+-- ROLLBACK:
+-- -- Column drops (only needed once — all batches share these columns):
+-- ALTER TABLE schools DROP COLUMN IF EXISTS tertiary_color;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS nickname;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS town;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS county;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS founded_year;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS website_url;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS athletic_conference;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS twitter_handle;
+-- -- NOTE: All school profile data from all 14 batches will be lost.

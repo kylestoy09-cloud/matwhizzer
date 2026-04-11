@@ -5,6 +5,7 @@
 -- ============================================================
 
 -- 1. Bergenfield — Sources: Wikipedia, MaxPreps
+-- APPLIED: 2026-04-01
 UPDATE schools SET
   mascot = 'Bears', primary_color = '#CC0022', secondary_color = '#222222', tertiary_color = NULL,
   nickname = NULL, town = 'Bergenfield', county = 'Bergen', founded_year = 1941,
@@ -253,3 +254,15 @@ UPDATE schools SET
   website_url = 'https://bhs.butlerboe.org', athletic_conference = 'North Jersey Interscholastic Conference',
   twitter_handle = '@bhsbulldogsnj'
 WHERE display_name = 'Butler';
+
+-- ROLLBACK:
+-- -- Column drops (only needed once — all batches share these columns):
+-- ALTER TABLE schools DROP COLUMN IF EXISTS tertiary_color;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS nickname;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS town;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS county;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS founded_year;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS website_url;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS athletic_conference;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS twitter_handle;
+-- -- NOTE: All school profile data from all 14 batches will be lost.

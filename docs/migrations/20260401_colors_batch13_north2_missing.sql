@@ -1,6 +1,7 @@
 -- Batch 13: North II missing schools — verified via Wikipedia, MaxPreps, athletics sites
 
 -- 1. Hasbrouck Heights — MaxPreps
+-- APPLIED: 2026-04-01
 UPDATE schools SET
   mascot = 'Aviators', primary_color = '#CC4E10', secondary_color = '#222222', tertiary_color = NULL,
   nickname = NULL, town = 'Hasbrouck Heights', county = 'Bergen', founded_year = NULL,
@@ -71,3 +72,15 @@ UPDATE schools SET
   website_url = 'https://www.whippanypark.org', athletic_conference = 'Northwest Jersey Athletic Conference',
   twitter_handle = '@wpwildcats1'
 WHERE display_name ILIKE 'Whippany Park%';
+
+-- ROLLBACK:
+-- -- Column drops (only needed once — all batches share these columns):
+-- ALTER TABLE schools DROP COLUMN IF EXISTS tertiary_color;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS nickname;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS town;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS county;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS founded_year;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS website_url;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS athletic_conference;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS twitter_handle;
+-- -- NOTE: All school profile data from all 14 batches will be lost.

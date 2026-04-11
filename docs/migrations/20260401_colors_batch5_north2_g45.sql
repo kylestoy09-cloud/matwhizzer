@@ -5,6 +5,7 @@
 -- ============================================================
 
 -- 1. Barringer — Sources: Wikipedia, athletics site config
+-- APPLIED: 2026-04-01
 UPDATE schools SET
   mascot = 'Blue Bears', primary_color = '#0000FF', secondary_color = '#FFFFFF', tertiary_color = '#EE0700',
   nickname = NULL, town = 'Newark', county = 'Essex', founded_year = 1838,
@@ -232,3 +233,15 @@ UPDATE schools SET
   website_url = 'https://www.lodinjschools.org', athletic_conference = 'North Jersey Interscholastic Conference',
   twitter_handle = '@LodiHS_NJ'
 WHERE display_name = 'Lodi';
+
+-- ROLLBACK:
+-- -- Column drops (only needed once — all batches share these columns):
+-- ALTER TABLE schools DROP COLUMN IF EXISTS tertiary_color;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS nickname;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS town;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS county;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS founded_year;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS website_url;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS athletic_conference;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS twitter_handle;
+-- -- NOTE: All school profile data from all 14 batches will be lost.

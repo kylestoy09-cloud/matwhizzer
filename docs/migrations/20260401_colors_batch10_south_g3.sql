@@ -1,6 +1,7 @@
 -- South Group 3 school profiles — verified via Wikipedia, MaxPreps, athletics sites
 
 -- 1. Absegami — Sources: Wikipedia, athletics site CSS
+-- APPLIED: 2026-04-01
 UPDATE schools SET
   mascot = 'Braves', primary_color = '#583925', secondary_color = '#F5BE49', tertiary_color = NULL,
   nickname = 'Gami', town = 'Galloway', county = 'Atlantic', founded_year = 1982,
@@ -119,3 +120,15 @@ UPDATE schools SET
   website_url = 'https://tchs.bhprsd.org', athletic_conference = 'Tri-County Conference',
   twitter_handle = '@TCreekSports'
 WHERE display_name = 'Timber Creek';
+
+-- ROLLBACK:
+-- -- Column drops (only needed once — all batches share these columns):
+-- ALTER TABLE schools DROP COLUMN IF EXISTS tertiary_color;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS nickname;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS town;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS county;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS founded_year;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS website_url;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS athletic_conference;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS twitter_handle;
+-- -- NOTE: All school profile data from all 14 batches will be lost.

@@ -1,6 +1,7 @@
 -- school_aliases: maps alternate names to canonical school_ids
 -- Used by conference standings parser, logo pipeline, and future search/matching
 
+-- APPLIED: NOT APPLIED TO PRODUCTION (see ROLLBACK note)
 CREATE TABLE school_aliases (
   id         bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   alias      text   NOT NULL,
@@ -63,3 +64,9 @@ INSERT INTO school_aliases (alias, school_id, source) VALUES
   -- Union County
   ('Gov. Livingston',      102, 'conference_standings')   -- Governor Livingston
 ;
+
+-- ROLLBACK:
+-- DROP TABLE IF EXISTS school_aliases;
+-- -- NOTE: This migration was NEVER APPLIED to production.
+-- --       The prod school_aliases table uses the original schema.sql schema
+-- --       (columns: alias_type, notes — not source, created_at).

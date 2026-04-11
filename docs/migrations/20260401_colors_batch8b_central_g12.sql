@@ -5,6 +5,7 @@
 -- ============================================================
 
 -- 1. Arthur L. Johnson — Sources: Wikipedia, MaxPreps
+-- APPLIED: 2026-04-01
 UPDATE schools SET
   mascot = 'Crusaders', primary_color = '#034CB2', secondary_color = '#FFFFFF', tertiary_color = NULL,
   nickname = 'ALJ', town = 'Clark', county = 'Union', founded_year = 1956,
@@ -223,3 +224,15 @@ UPDATE schools SET
   website_url = 'https://hs.srivernj.org', athletic_conference = 'Greater Middlesex Conference',
   twitter_handle = '@SR_RamsSports'
 WHERE display_name = 'South River';
+
+-- ROLLBACK:
+-- -- Column drops (only needed once — all batches share these columns):
+-- ALTER TABLE schools DROP COLUMN IF EXISTS tertiary_color;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS nickname;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS town;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS county;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS founded_year;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS website_url;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS athletic_conference;
+-- ALTER TABLE schools DROP COLUMN IF EXISTS twitter_handle;
+-- -- NOTE: All school profile data from all 14 batches will be lost.
