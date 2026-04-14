@@ -4,7 +4,7 @@ export const revalidate = 0
 import { supabase } from '@/lib/supabase'
 import Image from 'next/image'
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
 import { conferenceToSlug } from '@/lib/conferences'
 import { sectionToSlug, groupToSlug } from '@/lib/sections'
@@ -248,6 +248,13 @@ export default async function SchoolProfilePage({
         <p className="text-xs text-slate-400 mt-1">School: {schoolParam}, Gender: {gender}, Season: {season}</p>
       </div>
     )
+  }
+
+  // If boys was the default (no explicit genderParam) and returned no data,
+  // redirect to girls before 404-ing. Handles girls-only schools and co-ops
+  // where school_coops rows haven't been seeded yet.
+  if (!genderParam && gender === 'boys' && rows.length === 0 && bdRows.length === 0 && !activeCoop && coopMembers.length === 0) {
+    redirect(`/schools/${schoolParam}?gender=girls`)
   }
 
   // Don't 404 if this school is a co-op member (data lives on the co-op's ID)
