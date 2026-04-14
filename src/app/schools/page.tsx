@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
@@ -141,6 +142,7 @@ export default async function SchoolsPage({
                     <td className="px-4 py-2.5">
                       <Link
                         href={`/schools/${s.id}?gender=${gender}`}
+                        prefetch={false}
                         className={`font-medium text-slate-800 hover:underline ${isGirls ? 'hover:text-rose-700' : 'hover:text-slate-600'}`}
                       >
                         {s.display_name}
