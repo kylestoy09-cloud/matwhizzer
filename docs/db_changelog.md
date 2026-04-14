@@ -5,6 +5,176 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-04-14 — school_coops RLS + helper RPCs ✓ APPLIED
+
+**Migration file:** `docs/migrations/20260414_school_coops_rls_and_rpcs.sql`
+
+**Tables/functions affected:** `school_coops` (ALTER + POLICY + GRANT), `get_coop_membership` (CREATE FUNCTION), `get_coop_members` (CREATE FUNCTION)
+
+**What changed:**
+
+Enables RLS on the `school_coops` table (created without policies in `20260414_create_school_coops.sql`) and adds a public SELECT policy + GRANT so the anon/authenticated Supabase clients can read it. Creates two SECURITY DEFINER helper functions:
+- `get_coop_membership(p_school_id int)` — returns all co-op programs a school belongs to as a member (coop_school_id, coop_name, season, gender, is_primary)
+- `get_coop_members(p_coop_school_id int)` — returns all member schools for a co-op school (member_school_id, member_name, is_primary, season, gender)
+
+Used by the frontend co-op school page feature (feature/school-coops branch).
+
+**Reversible?** Yes — see ROLLBACK section (drop functions, revoke grant, drop policy, disable RLS)
+**Verified?** Yes — applied 2026-04-14; smoke tests confirmed correct results for school 55 → coop 379, and coop 379 → [Lodi, Saddle Brook]
+
+---
+
+## 2026-04-14 — Create school_coops table ✓ APPLIED
+
+**Migration file:** `docs/migrations/20260414_create_school_coops.sql`
+
+**Tables affected:** `school_coops` (CREATE + INSERT ×10)
+
+**What changed (pending — not yet run):**
+
+Creates `school_coops` table to formally record co-op program membership. Each row links a co-op school record (`coop_school_id`) to an individual member school (`member_school_id`) with season, gender (`M`/`F`/`B`), and an `is_primary` flag marking the host school.
+
+Seeded with 10 rows covering 5 co-ops:
+- 365 Cliffside Park/Ridgefield Memorial → 364 Cliffside Park (primary), 357 Ridgefield Memorial — season 1, both
+- 372 Jefferson-Sparta → 4 Jefferson (primary), 26 Sparta — season 2, girls
+- 379 Lodi/Saddle Brook → 55 Lodi (primary), 59 Saddle Brook — season 2, both
+- 385 Morris Hills-Morris Knolls → 76 Morris Hills (primary), 77 Morris Knolls — season 2, girls
+- 392 Ramsey/Northern Highlands → 18 Ramsey (primary), 35 Northern Highlands — season 2, girls
+
+**Reversible?** Yes — `DROP TABLE school_coops`
+**Verified?** Yes — applied 2026-04-14
+
+---
+
+## 2026-04-14 — Consolidate school 373 → 191 (Keansburg) (PENDING REVIEW)
+
+**Migration file:** `docs/migrations/20260414_consolidate_school_373_to_191.sql`
+
+**Tables affected:** `tournament_entries` (UPDATE ×17), `precomputed_team_scores` (UPDATE ×3), `schools` (DELETE ×1)
+
+**What changed (pending — not yet run):**
+
+School 373 (`'Keansburg/Henry Hudson'`) has 17 tournament entries and 3 precomputed_team_scores rows; no aliases, districts, regions, or names. Re-points all rows to school 191 (`'Keansburg'`) and deletes school 373.
+
+**Reversible?** Yes — see ROLLBACK section (scope rollback UPDATEs by season_id = 2 to avoid touching pre-existing school 191 rows)
+**Verified?** No — pending Paul's review before execution
+
+---
+
+## 2026-04-14 — Consolidate schools 362 → 237 and 298 → 369 (PENDING REVIEW)
+
+**Migration files:**
+1. `docs/migrations/20260414_consolidate_school_362_to_237.sql`
+2. `docs/migrations/20260414_consolidate_school_298_to_369.sql`
+
+**Tables affected:** `tournament_entries` (UPDATE), `precomputed_team_scores` (UPDATE), `school_aliases` (UPDATE), `school_districts` (INSERT ON CONFLICT + DELETE), `school_regions` (INSERT ON CONFLICT + DELETE), `school_names` (UPDATE), `schools` (DELETE ×2)
+
+**What changed (pending — not yet run):**
+
+1. **consolidate_school_362_to_237** — Re-points 5 `tournament_entries` and 1 `precomputed_team_scores` row from school 362 (Camden/Camden Eastside) to school 237 (Camden). School 362 has no aliases, districts, regions, or names. Deletes school 362.
+
+2. **consolidate_school_298_to_369** — Re-points 38 `tournament_entries`, 5 `precomputed_team_scores`, 3 `school_aliases`, 1 `school_districts`, 1 `school_regions`, and 1 `school_names` row from school 298 (Highland Regional/Triton) to school 369 (Highland). Uses INSERT ON CONFLICT DO NOTHING for districts/regions composite PKs. Deletes school 298.
+
+**Reversible?** Yes — see ROLLBACK sections (districts/regions rollback requires looking up IDs before running; precomputed rollback for 298 requires scoping by tournament_type to avoid overwriting 369's pre-existing row)
+**Verified?** No — pending Paul's review before execution
+
+---
+
+## 2026-04-14 — Consolidate school 326 into 259 (Gloucester) ✓ APPLIED
+
+**Migration file:** `docs/migrations/20260414_consolidate_school_326_to_259.sql`
+
+**Tables affected:** `conference_standings` (UPDATE ×1), `school_aliases` (UPDATE ×1), `school_regions` (INSERT ON CONFLICT + DELETE), `precomputed_team_scores` (DELETE ×1), `schools` (UPDATE display_name, DELETE ×1)
+
+**What changed (pending — not yet run):**
+
+School 326 (`'Gloucester'`) had 0 tournament entries and data in 4 dependent tables (conference_standings ×1, school_aliases ×1, school_regions ×1, precomputed_team_scores ×1). School 259 (`'Gloucester City JR/SR'`) had 72 tournament entries. Same school under two name variants. Re-points all 4 dependent rows to 259, renames 259's display_name to `'Gloucester'`, and deletes school 326. precomputed_team_scores row for 326 is deleted (not re-pointed) and will be recomputed.
+
+**Reversible?** Partial — see ROLLBACK section; precomputed_team_scores row for 326 is not recoverable (acceptable)
+**Verified?** Yes — applied 2026-04-14
+
+---
+
+## 2026-04-13 — Delete forfeit placeholder schools 367 and 399 ✓ APPLIED
+
+**Migration file:** `docs/migrations/20260413_delete_schools_367_399.sql`
+
+**Tables affected:** `matches` (DELETE), `tournament_entries` (DELETE ×11), `precomputed_team_scores` (DELETE), `schools` (DELETE ×2)
+
+**What changed:**
+
+Deleted synthetic forfeit placeholder schools and all dependent rows:
+- School 367 (`'Forfeit'`): 7 `tournament_entries` — wrestlers A/B/C/D/E/F/G Forfeit in tournament 101 (Boy's Districts D9, season 1)
+- School 399 (`'Team Forfeit'`): 4 `tournament_entries` — wrestler I Forfeit in tournament 193 (Girl's Districts D8, season 2)
+- `matches` rows referencing any of the 11 forfeit entries (deleted first to satisfy FK constraints)
+- `precomputed_team_scores` rows for school_ids 367 and 399
+- School records 367 and 399
+
+No real athletes affected. `matches` and `precomputed_team_scores` for these schools are not recoverable but acceptable — forfeit placeholders carry no meaningful bout or team data.
+
+**Reversible?** Partial — `tournament_entries` and `schools` rows can be restored via ROLLBACK section; `matches` and `precomputed_team_scores` rows are not recoverable
+**Verified?** Yes — applied 2026-04-14
+
+---
+
+## 2026-04-13 — School ID deduplication audit — 5 migrations ✓ APPLIED
+
+**Migration files (apply in this order):**
+1. `docs/migrations/20260413_backfill_school_404_entries.sql`
+2. `docs/migrations/20260413_delete_school_398.sql`
+3. `docs/migrations/20260413_consolidate_school_69_to_393.sql`
+4. `docs/migrations/20260413_consolidate_school_380_to_379.sql`
+5. `docs/migrations/20260413_consolidate_duplicate_schools.sql`
+
+**Tables affected:** `tournament_entries` (UPDATE/DELETE), `school_aliases` (UPDATE), `school_names` (UPDATE), `school_districts` (INSERT ON CONFLICT + DELETE), `school_regions` (INSERT ON CONFLICT + DELETE), `precomputed_team_scores` (DELETE), `schools` (UPDATE/DELETE)
+
+**What changed:**
+
+1. **backfill_school_404_entries** — Re-points 6 `tournament_entries` from catch-all school_id 404 (JFK/Woodbridge/Colonia) to correct individual school IDs resolved by wrestler name from source data: Evangelia Kotsonis → 150 (Iselin Kennedy), Isabella McGarry / Montedoc Hidalgo / Zoe Poznanski (×2) → 149 (Colonia), Genesis Cruz → 187 (Woodbridge). School 404 record is left in place pending verification that all entries are cleared.
+
+2. **delete_school_398** — Deletes 2 `tournament_entries` for the synthetic "I Forfeit" placeholder wrestler (UUIDs `067a31e2`, `294ea214`) and then deletes school_id 398 (display_name `'-'`), a data import artifact with no real athletes.
+
+3. **consolidate_school_69_to_393** — Merges school_id 69 (Bogota/Ridgefield Park, season 1) into school_id 393 (same co-op under a flipped name + trailing space, season 2). Re-points 18 season-1 `tournament_entries` (tournaments 100, 126, 133, 135). Fixes display_name: `'Ridgefield Park/ Bogota'` → `'Ridgefield Park/Bogota'`. Deletes school 69.
+
+4. **consolidate_school_380_to_379** — Merges school_id 380 (Lodi/Saddle Brook High School — boys import) into school_id 379 (Lodi/Saddle Brook — girls import). Same co-op split across two IDs due to PDF name variation. Re-points 14 boys `tournament_entries` (tournaments 146, 173). School 379 display_name already correct. Deletes school 380.
+
+5. **consolidate_duplicate_schools** — Single transaction consolidating 26 duplicate school ID pairs identified in the full deduplication audit. Each block re-points `tournament_entries`, migrates `school_aliases` and `school_names`, copies `school_districts` and `school_regions` (INSERT ON CONFLICT DO NOTHING + DELETE loser), deletes `precomputed_team_scores` for loser (scores will be recomputed), and deletes the loser school record. Loser → winner pairs:
+   - 90 → 321 (Becton), 368 → 102 (Governor Livingston), 396 → 118 (St. Benedict's), 137 → 397 (Summit)
+   - 140 → 322 (Bound Brook), 142 → 383 (Middlesex/Dunellen), 161 → 384 (Monmouth Regional)
+   - 202 → 370 (Jackson Memorial), 212 → 388 (Northern Burlington), 323 → 227 (Bordentown — delete only, no entries)
+   - 337 → 162 (North Brunswick), 339 → 35 (Northern Highlands), 366 → 158 (East Brunswick)
+   - 375 → 315 (Kittatinny), 376 → 5 (Lakeland), 377 → 62 (Lenape Valley), 386 → 56 (Mt. Olive)
+   - 387 → 115 (Newark Academy), 389 → 299 (Overbrook), 390 → 78 (Parsippany Hills co-op)
+   - 47 → 394 (St Joseph Montvale), 400 → 78 (Parsippany Hills HS), 401 → 75 (Montville)
+   - 403 → 183 (Piscataway), 405 → 369 (Highland), 406 → 265 (Willingboro)
+
+**Reversible?** Yes — all five files include ROLLBACK sections with exact INSERT/UPDATE statements to restore prior state
+**Verified?** Yes — applied 2026-04-14
+
+---
+
+## 2026-04-10 — Suppress shell schools + load missing conference standings (PENDING REVIEW)
+
+**Migration files:**
+- `docs/migrations/20260410_load_missing_conference_scores.sql`
+- `docs/migrations/20260410_suppress_shell_schools.sql`
+- `docs/migrations/20260410_audit_entry_schools_no_scores.sql`
+
+**Tables affected:** `conference_standings` (INSERT), `schools` (ALTER + UPDATE)
+
+**What changed (pending — not yet run):**
+
+1. **load_missing_conference_scores** — Inserts 9 rows into `conference_standings` for schools that appear in the 2025-26 standings source file but have no DB records: Becton, Bound Brook, High Point, Keyport, Lakeland, Monmouth, Northern Highlands, Paterson Kennedy, Roselle. Source of truth: `Conference Standings 2025-26.txt`.
+
+2. **suppress_shell_schools** — Adds `is_active boolean NOT NULL DEFAULT true` column to `schools`, then sets `is_active = false` for 7 complete shells (zero tournament entries, zero precomputed scores, zero conference standings): IDs 332, 23, 336, 407, 65, 344, 348. The 6 schools with conference standings data (Becton, Bound Brook, High Point, Keyport, Lakeland, Roselle) were excluded and remain active. School profile pages should be updated to call `notFound()` when `is_active = false`.
+
+3. **audit_entry_schools_no_scores** — Read-only diagnostic queries only. Investigates why Monmouth (384), Ridgefield Memorial (357), Northern Highlands (35), and Paterson Kennedy (331) have tournament entries but zero precomputed scores. No data modifications.
+
+**Reversible?** Yes — see ROLLBACK sections in each file
+**Verified?** No — pending Paul's review before execution
+
+---
+
 ## 2026-04-10 — Data Health admin page (read-only queries, no schema changes)
 
 **Tables affected:** `schools`, `wrestlers`, `tournament_entries`, `weight_classes`, `conference_standings`, `precomputed_team_scores`, `placements`

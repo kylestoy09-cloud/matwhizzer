@@ -15,6 +15,22 @@ import { WrestlerAvatar } from '@/components/WrestlerAvatar'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
+type CoopMembership = {
+  coop_school_id: number
+  coop_name: string
+  season: number
+  gender: string
+  is_primary: boolean
+}
+
+type CoopMember = {
+  member_school_id: number
+  member_name: string
+  is_primary: boolean
+  season: number
+  gender: string
+}
+
 type SchoolProfile = {
   id: number
   display_name: string
@@ -138,6 +154,32 @@ export default async function SchoolProfilePage({
   const pc = profile.primary_color ?? '#1a1a2e'
   const sc = profile.secondary_color ?? '#FFD700'
 
+  // ── Co-op data ──────────────────────────────────────────────────────────────
+  // Runs in parallel: check if this school is a member of a co-op, and whether
+  // it has co-op members of its own (i.e. it IS the co-op school).
+  const [{ data: coopMemberships }, { data: coopMemberData }] = await Promise.all([
+    supabase.rpc('get_coop_membership', { p_school_id: schoolId }),
+    supabase.rpc('get_coop_members', { p_coop_school_id: schoolId }),
+  ])
+
+  const memberships = (coopMemberships ?? []) as CoopMembership[]
+  const coopMembers = (coopMemberData ?? []) as CoopMember[]
+
+  // Find the active co-op for the current season + gender view.
+  // gender 'B' (both) matches either boys or girls views.
+  const activeCoop = memberships.find(
+    r => r.season === season && (r.gender === genderCode || r.gender === 'B')
+  )
+
+  // When this school is a member, fetch all wrestling data from the co-op
+  // school's ID instead — the data lives there, not on the member school.
+  const dataSchoolId = activeCoop ? activeCoop.coop_school_id : schoolId
+
+  const seasonLabel = season === 1 ? '2024–25' : '2025–26'
+  const coopGenderLabel =
+    activeCoop?.gender === 'M' ? 'Boys' :
+    activeCoop?.gender === 'F' ? 'Girls' : 'Boys & Girls'
+
   // Step 3: Fetch wrestling data
   let rows: WrestlerRow[] = []
   let bdRows: BreakdownRow[] = []
@@ -146,20 +188,19 @@ export default async function SchoolProfilePage({
 
   try {
     const wrestlersPromise = gender === 'girls'
-      ? supabase.rpc('girls_school_wrestlers', { p_school_id: profile.id, p_season: season })
-      : supabase.rpc('school_wrestlers', { p_school_id: profile.id, p_gender: genderCode, p_season: season })
+      ? supabase.rpc('girls_school_wrestlers', { p_school_id: dataSchoolId, p_season: season })
+      : supabase.rpc('school_wrestlers', { p_school_id: dataSchoolId, p_gender: genderCode, p_season: season })
 
-    // Query precomputed_team_scores by school_id (reliable) with school_name fallback
-    const tsPromise = profile.id > 0
-      ? supabase.from('precomputed_team_scores').select('tournament_type, total_points')
-          .eq('school_id', profile.id).eq('season_id', season)
-      : supabase.from('precomputed_team_scores').select('tournament_type, total_points')
-          .eq('school_name', profile.display_name).eq('season_id', season)
+    // Query precomputed_team_scores by school_id.
+    // When viewing via a co-op membership, dataSchoolId is the co-op's ID.
+    const tsPromise = supabase.from('precomputed_team_scores')
+      .select('tournament_type, total_points')
+      .eq('school_id', dataSchoolId).eq('season_id', season)
 
     const [bdResult, wrResult, ldResult, tsResult] = await Promise.all([
-      supabase.rpc('school_points_breakdown', { p_school_id: profile.id, p_gender: genderCode, p_season: season }),
+      supabase.rpc('school_points_breakdown', { p_school_id: dataSchoolId, p_gender: genderCode, p_season: season }),
       wrestlersPromise,
-      supabase.rpc('school_leaderboard', { p_school_id: profile.id, p_gender: genderCode, p_season: season }),
+      supabase.rpc('school_leaderboard', { p_school_id: dataSchoolId, p_gender: genderCode, p_season: season }),
       tsPromise,
     ])
 
@@ -172,8 +213,9 @@ export default async function SchoolProfilePage({
     leaderRows = (ldResult.data ?? []) as LeaderRow[]
     teamScoreRows = (tsResult.data ?? []) as { tournament_type: string; total_points: number }[]
 
-    // Fallback: if school_id query returned nothing, try by name
-    if (teamScoreRows.length === 0 && profile.id > 0) {
+    // Fallback: if school_id query returned nothing and we're not using co-op data, try by name.
+    // Skip fallback when activeCoop is set — data lives on the co-op school_id, not by name.
+    if (teamScoreRows.length === 0 && !activeCoop) {
       const altNames = [profile.display_name, schoolAbbrev, schoolName]
       for (const altName of new Set(altNames)) {
         const { data: tsRetry } = await supabase
@@ -198,7 +240,9 @@ export default async function SchoolProfilePage({
     )
   }
 
-  if (rows.length === 0 && bdRows.length === 0) notFound()
+  // Don't 404 if this school is a co-op member (data lives on the co-op's ID)
+  // or if it IS a co-op school with registered members.
+  if (rows.length === 0 && bdRows.length === 0 && !activeCoop && coopMembers.length === 0) notFound()
 
   // Build team score from precomputed rows, filtered by gender
   const boysTypes = ['boys_districts', 'regions', 'boys_state']
@@ -441,6 +485,65 @@ export default async function SchoolProfilePage({
           </div>
         </div>
       </div>
+
+      {/* ── CO-OP MEMBER BANNER ─────────────────────────────────────────────────
+           Shown on member school pages (e.g. Lodi) when the school participated
+           in a co-op for the current season + gender. Data is mirrored from the
+           co-op school record — nothing is duplicated in the DB.              */}
+      {activeCoop && (
+        <div className="mb-6 border border-amber-300 bg-amber-50 rounded-none px-4 py-3 flex items-start justify-between gap-4">
+          <div>
+            <p className="text-sm font-semibold text-amber-900">
+              {seasonLabel} {coopGenderLabel}: Competed as{' '}
+              <Link href={`/schools/${activeCoop.coop_school_id}?gender=${gender}`} className="underline hover:text-amber-700">
+                {activeCoop.coop_name}
+              </Link>
+            </p>
+            <p className="text-xs text-amber-700 mt-0.5">
+              Results below reflect the combined co-op program.
+            </p>
+          </div>
+          <Link
+            href={`/schools/${activeCoop.coop_school_id}?gender=${gender}`}
+            className="shrink-0 text-xs font-medium text-amber-800 border border-amber-300 bg-white px-3 py-1.5 hover:bg-amber-100 transition-colors whitespace-nowrap"
+          >
+            Co-op page →
+          </Link>
+        </div>
+      )}
+
+      {/* ── CO-OP MEMBERS PANEL ──────────────────────────────────────────────────
+           Shown on co-op school pages (e.g. Lodi/Saddle Brook) listing the
+           individual member schools with links to their profiles.             */}
+      {coopMembers.length > 0 && (
+        <div className="mb-6 border border-black rounded-none bg-white overflow-hidden">
+          <div className="px-4 py-2 bg-slate-50 border-b border-slate-200 flex items-center gap-2">
+            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Co-op Program</span>
+            <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-slate-200 text-slate-500">
+              {seasonLabel}
+            </span>
+          </div>
+          <div className="divide-y divide-slate-100">
+            {coopMembers.map(m => (
+              <Link
+                key={m.member_school_id}
+                href={`/schools/${m.member_school_id}?gender=${gender}`}
+                className="flex items-center justify-between px-4 py-2.5 hover:bg-slate-50 transition-colors group"
+              >
+                <span className="text-sm font-medium text-slate-800 group-hover:underline">{m.member_name}</span>
+                <div className="flex items-center gap-2">
+                  {m.is_primary && (
+                    <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-600 font-medium">Primary</span>
+                  )}
+                  <svg className="w-3.5 h-3.5 text-slate-300 group-hover:text-slate-500 transition-colors" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                  </svg>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* ── TABS ── */}
       <SchoolTabs
