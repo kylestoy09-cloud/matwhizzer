@@ -115,8 +115,8 @@ export default async function SchoolProfilePage({
 
   const { gender: genderParam, tab: tabParam } = await searchParams
 
-  const gender = genderParam === 'girls' ? 'girls' : 'boys'
-  const genderCode = gender === 'girls' ? 'F' : 'M'
+  let gender = genderParam === 'girls' ? 'girls' : 'boys'
+  let genderCode = gender === 'girls' ? 'F' : 'M'
   const activeTab = tabParam ?? 'overview'
   const schoolAbbrev = schoolParam
 
@@ -127,8 +127,6 @@ export default async function SchoolProfilePage({
     console.error('[SchoolProfile] getActiveSeason failed:', e)
     season = 2
   }
-
-  const TOURNEY_LABEL = gender === 'girls' ? TOURNEY_LABEL_F : TOURNEY_LABEL_M
 
   const { data: profileData, error: profileError } = await supabase
     .from('schools')
@@ -164,6 +162,18 @@ export default async function SchoolProfilePage({
 
   const memberships = (coopMemberships ?? []) as CoopMembership[]
   const coopMembers = (coopMemberData ?? []) as CoopMember[]
+
+  // If no explicit gender param and this school is a co-op with only girls data,
+  // default to girls view instead of boys to avoid empty/broken page.
+  if (!genderParam && coopMembers.length > 0) {
+    const hasBoysData = coopMembers.some(m => m.gender === 'M' || m.gender === 'B')
+    if (!hasBoysData) {
+      gender = 'girls'
+      genderCode = 'F'
+    }
+  }
+
+  const TOURNEY_LABEL = gender === 'girls' ? TOURNEY_LABEL_F : TOURNEY_LABEL_M
 
   // Find the active co-op for the current season + gender view.
   // gender 'B' (both) matches either boys or girls views.

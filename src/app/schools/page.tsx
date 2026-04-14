@@ -51,11 +51,12 @@ export default async function SchoolsPage({
   const allSchools = (schoolsResult.data ?? []) as SchoolRow[]
 
   // Build set of co-op member school IDs for current season+gender
+  // Track coop_school_id and the co-op's gender so badge links use the right gender param.
   const coopMemberIds = new Set<number>()
-  const coopSchoolMap = new Map<number, number>() // member_id → coop_school_id
+  const coopSchoolMap = new Map<number, { coopId: number; coopGender: string }>()
   for (const row of (coopsResult.data ?? []) as { member_school_id: number; coop_school_id: number; gender: string }[]) {
     coopMemberIds.add(row.member_school_id)
-    coopSchoolMap.set(row.member_school_id, row.coop_school_id)
+    coopSchoolMap.set(row.member_school_id, { coopId: row.coop_school_id, coopGender: row.gender })
   }
 
   // Sum postseason points per school for the selected gender
@@ -152,6 +153,9 @@ export default async function SchoolsPage({
                 const sectionGroup = s.section && s.classification
                   ? `${s.section} G${s.classification}`
                   : s.section ?? null
+                const coopInfo = coopSchoolMap.get(s.id)
+                // Girls-only co-ops should always link with ?gender=girls regardless of current view
+                const coopLinkGender = coopInfo?.coopGender === 'F' ? 'girls' : gender
                 return (
                   <tr key={s.id} className="hover:bg-slate-50">
                     <td className="px-4 py-2.5">
@@ -163,9 +167,9 @@ export default async function SchoolsPage({
                         >
                           {s.display_name}
                         </Link>
-                        {coopMemberIds.has(s.id) && (
+                        {coopInfo && (
                           <Link
-                            href={`/schools/${coopSchoolMap.get(s.id)}?gender=${gender}`}
+                            href={`/schools/${coopInfo.coopId}?gender=${coopLinkGender}`}
                             prefetch={false}
                             className="text-xs px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 hover:bg-amber-200 font-medium whitespace-nowrap"
                           >
