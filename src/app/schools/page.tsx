@@ -29,7 +29,9 @@ export default async function SchoolsPage({
 
   const season = await getActiveSeason()
 
-  const [schoolsResult, scoresResult] = await Promise.all([
+  const coopGenders = gender === 'girls' ? ['F', 'B'] : ['M', 'B']
+
+  const [schoolsResult, scoresResult, coopsResult] = await Promise.all([
     supabase
       .from('schools')
       .select('id, display_name, section, classification')
@@ -39,9 +41,22 @@ export default async function SchoolsPage({
       .select('school_id, tournament_type, total_points')
       .eq('season_id', season)
       .in('tournament_type', relevantTypes),
+    supabase
+      .from('school_coops')
+      .select('member_school_id, coop_school_id, gender')
+      .eq('season', season)
+      .in('gender', coopGenders),
   ])
 
   const allSchools = (schoolsResult.data ?? []) as SchoolRow[]
+
+  // Build set of co-op member school IDs for current season+gender
+  const coopMemberIds = new Set<number>()
+  const coopSchoolMap = new Map<number, number>() // member_id → coop_school_id
+  for (const row of (coopsResult.data ?? []) as { member_school_id: number; coop_school_id: number; gender: string }[]) {
+    coopMemberIds.add(row.member_school_id)
+    coopSchoolMap.set(row.member_school_id, row.coop_school_id)
+  }
 
   // Sum postseason points per school for the selected gender
   const pointsMap = new Map<number, number>()
@@ -140,13 +155,24 @@ export default async function SchoolsPage({
                 return (
                   <tr key={s.id} className="hover:bg-slate-50">
                     <td className="px-4 py-2.5">
-                      <Link
-                        href={`/schools/${s.id}?gender=${gender}`}
-                        prefetch={false}
-                        className={`font-medium text-slate-800 hover:underline ${isGirls ? 'hover:text-rose-700' : 'hover:text-slate-600'}`}
-                      >
-                        {s.display_name}
-                      </Link>
+                      <div className="flex items-center gap-2">
+                        <Link
+                          href={`/schools/${s.id}?gender=${gender}`}
+                          prefetch={false}
+                          className={`font-medium text-slate-800 hover:underline ${isGirls ? 'hover:text-rose-700' : 'hover:text-slate-600'}`}
+                        >
+                          {s.display_name}
+                        </Link>
+                        {coopMemberIds.has(s.id) && (
+                          <Link
+                            href={`/schools/${coopSchoolMap.get(s.id)}?gender=${gender}`}
+                            prefetch={false}
+                            className="text-xs px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 hover:bg-amber-200 font-medium whitespace-nowrap"
+                          >
+                            Co-op
+                          </Link>
+                        )}
+                      </div>
                     </td>
                     <td className="px-4 py-2.5 text-slate-500 hidden sm:table-cell">
                       {sectionGroup ?? '—'}
