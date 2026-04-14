@@ -101,6 +101,9 @@ If the migration was never applied (e.g. it was superseded or failed), note that
 | `20260404_conference_standings.sql` | 2026-04-04 | `conferences` + `conference_standings` tables |
 | `20260404_school_aliases.sql` | **NOT APPLIED** | school_aliases v2 schema (superseded by original) |
 | `20260405_districts_regions_tables.sql` | 2026-04-05 | districts/regions grants + seed rows |
+| `20260410_load_missing_conference_scores.sql` | **NOT APPLIED** | INSERT conference W/L records for 9 schools missing from `conference_standings` |
+| `20260410_suppress_shell_schools.sql` | **NOT APPLIED** | ADD `schools.is_active` column; SET false for 13 zero-entry shell schools |
+| `20260410_audit_entry_schools_no_scores.sql` | **NOT APPLIED** | Read-only diagnostic: why do Monmouth/Ridgefield/N.Highlands/P.Kennedy have entries but no scores? |
 
 ---
 
