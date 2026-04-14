@@ -6,12 +6,11 @@ import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { PageHeader } from '@/components/PageHeader'
 
-type SchoolDirRow = {
-  school: string
-  school_name: string
-  school_id: number | null
-  total_points: number
-  wrestler_count: number
+type SchoolRow = {
+  id: number
+  display_name: string
+  section: string | null
+  classification: string | null
 }
 
 export default async function SchoolsPage({
@@ -22,24 +21,40 @@ export default async function SchoolsPage({
   const { q: raw, gender: genderParam } = await searchParams
   const q = raw?.trim().toLowerCase() ?? ''
   const gender = genderParam === 'girls' ? 'girls' : 'boys'
-  const genderCode = gender === 'girls' ? 'F' : 'M'
+
+  const boysTypes = ['boys_districts', 'regions', 'boys_state']
+  const girlsTypes = ['girls_districts', 'girls_regions', 'girls_state']
+  const relevantTypes = gender === 'girls' ? girlsTypes : boysTypes
 
   const season = await getActiveSeason()
 
-  const { data } = await supabase.rpc('school_directory', { p_gender: genderCode, p_season: season })
-  const all = (data ?? []) as SchoolDirRow[]
+  const [schoolsResult, scoresResult] = await Promise.all([
+    supabase
+      .from('schools')
+      .select('id, display_name, section, classification')
+      .order('display_name'),
+    supabase
+      .from('precomputed_team_scores')
+      .select('school_id, tournament_type, total_points')
+      .eq('season_id', season)
+      .in('tournament_type', relevantTypes),
+  ])
 
-  const rows = q
-    ? all.filter(r =>
-        r.school_name.toLowerCase().includes(q) ||
-        r.school.toLowerCase().includes(q)
-      )
-    : all
+  const allSchools = (schoolsResult.data ?? []) as SchoolRow[]
+
+  // Sum postseason points per school for the selected gender
+  const pointsMap = new Map<number, number>()
+  for (const row of (scoresResult.data ?? []) as { school_id: number; tournament_type: string; total_points: number }[]) {
+    pointsMap.set(row.school_id, (pointsMap.get(row.school_id) ?? 0) + Number(row.total_points))
+  }
+
+  const filtered = q
+    ? allSchools.filter(s => s.display_name.toLowerCase().includes(q))
+    : allSchools
 
   const isGirls = gender === 'girls'
   const accentSearch = isGirls ? 'focus:ring-rose-500' : 'focus:ring-slate-500'
   const accentBtn    = isGirls ? 'bg-rose-800 hover:bg-rose-700' : 'bg-slate-800 hover:bg-slate-700'
-  const accentHover  = isGirls ? 'hover:text-rose-700' : 'hover:text-slate-600'
   const clearHref    = `/schools${isGirls ? '?gender=girls' : ''}`
   const seasonLabel  = season === 1 ? '2024–25' : '2025–26'
 
@@ -48,7 +63,7 @@ export default async function SchoolsPage({
       <div className="mb-6 text-center">
         <PageHeader title="NJ Wrestling Schools" />
         <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
-          <span>{all.length} schools · NJSIAA</span>
+          <span>{allSchools.length} schools · NJSIAA</span>
           <InlineSeasonPicker activeSeason={season} />
           <span>{isGirls ? 'girls' : 'boys'} postseason</span>
         </div>
@@ -101,7 +116,7 @@ export default async function SchoolsPage({
         </div>
       </form>
 
-      {rows.length === 0 ? (
+      {filtered.length === 0 ? (
         <p className="text-slate-500 text-sm">No schools match &ldquo;{raw}&rdquo;.</p>
       ) : (
         <div className="border border-black rounded-none overflow-x-auto shadow-none bg-white">
@@ -109,31 +124,37 @@ export default async function SchoolsPage({
             <thead className="bg-slate-50 border-b border-slate-200">
               <tr>
                 <th className="text-left px-4 py-2.5 font-medium text-slate-500">School</th>
+                <th className="text-left px-4 py-2.5 font-medium text-slate-500 hidden sm:table-cell">Section / Group</th>
                 <th className="text-right px-4 py-2.5 font-medium text-slate-500 whitespace-nowrap">
-                  {seasonLabel} Points
+                  {seasonLabel} Pts
                 </th>
-                <th className="text-right px-4 py-2.5 font-medium text-slate-500">Wrestlers</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
-              {rows.map(r => (
-                <tr key={`${r.school_id ?? r.school}-${gender}`} className="hover:bg-slate-50">
-                  <td className="px-4 py-2.5">
-                    <Link
-                      href={r.school_id ? `/schools/${r.school_id}?gender=${gender}` : '#'}
-                      className={`font-medium text-slate-800 hover:underline ${accentHover}`}
-                    >
-                      {r.school_name}
-                    </Link>
-                  </td>
-                  <td className="px-4 py-2.5 text-right tabular-nums text-slate-700">
-                    {r.total_points > 0 ? r.total_points : '—'}
-                  </td>
-                  <td className="px-4 py-2.5 text-right tabular-nums text-slate-500">
-                    {r.wrestler_count}
-                  </td>
-                </tr>
-              ))}
+              {filtered.map(s => {
+                const pts = pointsMap.get(s.id)
+                const sectionGroup = s.section && s.classification
+                  ? `${s.section} G${s.classification}`
+                  : s.section ?? null
+                return (
+                  <tr key={s.id} className="hover:bg-slate-50">
+                    <td className="px-4 py-2.5">
+                      <Link
+                        href={`/schools/${s.id}?gender=${gender}`}
+                        className={`font-medium text-slate-800 hover:underline ${isGirls ? 'hover:text-rose-700' : 'hover:text-slate-600'}`}
+                      >
+                        {s.display_name}
+                      </Link>
+                    </td>
+                    <td className="px-4 py-2.5 text-slate-500 hidden sm:table-cell">
+                      {sectionGroup ?? '—'}
+                    </td>
+                    <td className="px-4 py-2.5 text-right tabular-nums text-slate-700">
+                      {pts ? pts.toFixed(1).replace(/\.0$/, '') : '—'}
+                    </td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         </div>
