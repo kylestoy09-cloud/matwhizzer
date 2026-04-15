@@ -338,7 +338,7 @@ export default async function SchoolProfilePage({
     <div className="max-w-4xl mx-auto px-4 py-10">
       {/* Back link */}
       <Link
-        href={`/${gender}/schools`}
+        href={`/schools?gender=${gender}`}
         className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 mb-6 transition-colors"
       >
         ← School Directory
