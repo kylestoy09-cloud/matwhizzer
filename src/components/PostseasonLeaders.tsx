@@ -17,10 +17,12 @@ export function PostseasonLeaders({
   rows,
   schoolBase,
   accentColor = 'slate',
+  gender = 'boys',
 }: {
   rows: TeamScoreRow[]
   schoolBase: string
   accentColor?: 'slate' | 'rose'
+  gender?: 'boys' | 'girls'
 }) {
   const [visible, setVisible] = useState(10)
   const shown = rows.slice(0, visible)
@@ -48,9 +50,13 @@ export function PostseasonLeaders({
               <tr key={r.school} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
                 <td className="px-3 py-2 text-xs text-slate-400">{i + 1}</td>
                 <td className="px-3 py-2">
-                  <Link href={r.school_id ? `/schools/${r.school_id}` : '#'} className="font-medium text-slate-800 hover:underline">
-                    {r.school_name || r.school}
-                  </Link>
+                  {r.school_id ? (
+                    <Link href={`/schools/${r.school_id}?gender=${gender}`} className="font-medium text-slate-800 hover:underline">
+                      {r.school_name || r.school}
+                    </Link>
+                  ) : (
+                    <span className="font-medium text-slate-800">{r.school_name || r.school}</span>
+                  )}
                 </td>
                 <td className="px-3 py-2 text-right text-slate-500">{r.district_points}</td>
                 <td className="px-3 py-2 text-right text-slate-500">{r.region_points}</td>

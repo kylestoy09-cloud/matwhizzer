@@ -203,17 +203,28 @@ export default async function RootPage({
             <ul className="mt-3 divide-y divide-slate-200 border border-black rounded-none overflow-hidden shadow-none bg-white">
               {schools.map(s => (
                 <li key={`${s.gender}-${s.school}`}>
-                  <Link
-                    href={s.school_id ? `/schools/${s.school_id}?gender=${s.gender === 'M' ? 'boys' : 'girls'}` : '#'}
-                    className="flex items-center justify-between px-4 py-3 hover:bg-slate-50 transition-colors"
-                  >
-                    <span className="font-medium text-slate-800">{s.school_name}</span>
-                    <span className={`text-xs font-medium px-2 py-0.5 rounded-full ml-3 shrink-0 ${
-                      s.gender === 'F' ? 'bg-pink-100 text-pink-700' : 'bg-blue-100 text-blue-700'
-                    }`}>
-                      {s.gender === 'F' ? 'Girls' : 'Boys'}
-                    </span>
-                  </Link>
+                  {s.school_id ? (
+                    <Link
+                      href={`/schools/${s.school_id}?gender=${s.gender === 'M' ? 'boys' : 'girls'}`}
+                      className="flex items-center justify-between px-4 py-3 hover:bg-slate-50 transition-colors"
+                    >
+                      <span className="font-medium text-slate-800">{s.school_name}</span>
+                      <span className={`text-xs font-medium px-2 py-0.5 rounded-full ml-3 shrink-0 ${
+                        s.gender === 'F' ? 'bg-pink-100 text-pink-700' : 'bg-blue-100 text-blue-700'
+                      }`}>
+                        {s.gender === 'F' ? 'Girls' : 'Boys'}
+                      </span>
+                    </Link>
+                  ) : (
+                    <div className="flex items-center justify-between px-4 py-3">
+                      <span className="font-medium text-slate-800">{s.school_name}</span>
+                      <span className={`text-xs font-medium px-2 py-0.5 rounded-full ml-3 shrink-0 ${
+                        s.gender === 'F' ? 'bg-pink-100 text-pink-700' : 'bg-blue-100 text-blue-700'
+                      }`}>
+                        {s.gender === 'F' ? 'Girls' : 'Boys'}
+                      </span>
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>

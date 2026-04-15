@@ -12,8 +12,10 @@ type TeamScoreRow = {
 
 export function TeamScoreCard({
   rows,
+  gender = 'boys',
 }: {
   rows: TeamScoreRow[]
+  gender?: 'boys' | 'girls'
 }) {
   const [visibleCount, setVisibleCount] = useState(10)
   const visible = rows.slice(0, visibleCount)
@@ -32,12 +34,16 @@ export function TeamScoreCard({
           <div key={r.school} className="flex items-center gap-2 px-4 py-2.5">
             <span className="text-xs text-slate-400 w-4 shrink-0 text-right">{i + 1}</span>
             <div className="flex-1 min-w-0">
-              <Link
-                href={r.school_id ? `/schools/${r.school_id}` : '#'}
-                className="text-sm font-medium text-slate-800 hover:underline truncate block"
-              >
-                {r.school_name || r.school}
-              </Link>
+              {r.school_id ? (
+                <Link
+                  href={`/schools/${r.school_id}?gender=${gender}`}
+                  className="text-sm font-medium text-slate-800 hover:underline truncate block"
+                >
+                  {r.school_name || r.school}
+                </Link>
+              ) : (
+                <span className="text-sm font-medium text-slate-800 truncate block">{r.school_name || r.school}</span>
+              )}
             </div>
             <span className="text-sm font-semibold text-slate-700 shrink-0">{r.total_points} pts</span>
           </div>

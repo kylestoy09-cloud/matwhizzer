@@ -422,7 +422,7 @@ export default async function RegionSummaryPage({
             value={r => String(r.dominance_score)}
           />
 
-          <TeamScoreCard rows={teamScore} />
+          <TeamScoreCard rows={teamScore} gender="boys" />
 
         </div>
       </section>
@@ -457,14 +457,18 @@ export default async function RegionSummaryPage({
                   Dist.&nbsp;{districtNum}
                 </span>
                 <div className="flex flex-wrap gap-2">
-                  {schools.map(s => (
+                  {schools.map(s => s.school_id ? (
                     <Link
                       key={s.school}
-                      href={s.school_id ? `/schools/${s.school_id}` : '#'}
+                      href={`/schools/${s.school_id}?gender=boys`}
                       className="px-3 py-1.5 text-sm font-medium bg-white border border-slate-200 rounded-full hover:border-slate-400 hover:bg-slate-50 transition-colors shadow-none"
                     >
                       {s.school_name || s.school}
                     </Link>
+                  ) : (
+                    <span key={s.school} className="px-3 py-1.5 text-sm font-medium bg-white border border-slate-200 rounded-full text-slate-500">
+                      {s.school_name || s.school}
+                    </span>
                   ))}
                 </div>
               </div>

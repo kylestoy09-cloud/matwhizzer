@@ -284,7 +284,7 @@ export default async function GirlsDistrictSummaryPage({
       <section className="mb-10">
         <h2 className="text-base font-semibold text-slate-800 mb-3">Team Results</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <TeamScoreCard rows={teamScore} />
+          <TeamScoreCard rows={teamScore} gender="girls" />
 
           <IndividualTeamPoints rows={teamPts} />
         </div>
@@ -434,14 +434,18 @@ export default async function GirlsDistrictSummaryPage({
         <section className="mt-10">
           <h2 className="text-base font-semibold text-slate-800 mb-3">Schools</h2>
           <div className="flex flex-wrap gap-2">
-            {schools.map(s => (
+            {schools.map(s => s.school_id ? (
               <Link
                 key={s.school}
-                href={s.school_id ? `/schools/${s.school_id}` : '#'}
+                href={`/schools/${s.school_id}?gender=girls`}
                 className="px-3 py-1.5 text-sm font-medium bg-white border border-rose-200 rounded-full hover:border-rose-400 hover:bg-rose-50 transition-colors shadow-none"
               >
                 {s.school_name || s.school}
               </Link>
+            ) : (
+              <span key={s.school} className="px-3 py-1.5 text-sm font-medium bg-white border border-rose-200 rounded-full text-slate-500">
+                {s.school_name || s.school}
+              </span>
             ))}
           </div>
         </section>
