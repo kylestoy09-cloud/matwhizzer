@@ -103,7 +103,7 @@ export function HeaderNav() {
         {/* Logo */}
         <Link href={homeHref} className="flex items-center hover:opacity-90 transition-opacity">
           <Image
-            src="/images/mat-whizzer2.png"
+            src="/images/Logo Tuesday.png"
             alt="Mat Whizzer"
             width={3229}
             height={323}
