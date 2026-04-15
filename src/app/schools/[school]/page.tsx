@@ -216,7 +216,8 @@ export default async function SchoolProfilePage({
 
     if (bdResult.error) console.error('[SchoolProfile] breakdown RPC error:', bdResult.error)
     if (wrResult.error) console.error('[SchoolProfile] wrestlers RPC error:', wrResult.error)
-    if (ldResult.error) console.error('[SchoolProfile] team scores query error:', ldResult.error)
+    if (ldResult.error) console.error('[SchoolProfile] leaderboard RPC error:', ldResult.error)
+    if (tsResult.error) console.error('[SchoolProfile] team scores query error:', tsResult.error)
 
     rows = (wrResult.data ?? []) as WrestlerRow[]
     bdRows = (bdResult.data ?? []) as BreakdownRow[]
@@ -257,9 +258,9 @@ export default async function SchoolProfilePage({
     redirect(`/schools/${schoolParam}?gender=girls`)
   }
 
-  // Don't 404 if this school is a co-op member (data lives on the co-op's ID)
-  // or if it IS a co-op school with registered members.
-  if (rows.length === 0 && bdRows.length === 0 && !activeCoop && coopMembers.length === 0) notFound()
+  // School existence is already validated above (line 147). Do not 404 here
+  // just because the selected gender has no wrestling data — render empty state
+  // instead so boys-only schools with ?gender=girls don't produce error pages.
 
   // Build team score from precomputed rows, filtered by gender
   const boysTypes = ['boys_districts', 'regions', 'boys_state']
