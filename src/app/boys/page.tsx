@@ -163,10 +163,17 @@ export default async function BoysPage({
               <ul className="mt-3 divide-y divide-slate-200 border border-black rounded-none shadow-none bg-white overflow-hidden">
                 {schools.map(s => (
                   <li key={s.school}>
-                    <Link href={s.school_id ? `/schools/${s.school_id}?gender=boys` : '#'} className="flex items-center justify-between px-4 py-3 hover:bg-slate-50 transition-colors">
-                      <span className="font-medium text-slate-800">{s.school_name}</span>
-                      <span className="text-xs text-slate-400 ml-3 shrink-0">{s.school}</span>
-                    </Link>
+                    {s.school_id ? (
+                      <Link href={`/schools/${s.school_id}?gender=boys`} className="flex items-center justify-between px-4 py-3 hover:bg-slate-50 transition-colors">
+                        <span className="font-medium text-slate-800">{s.school_name}</span>
+                        <span className="text-xs text-slate-400 ml-3 shrink-0">{s.school}</span>
+                      </Link>
+                    ) : (
+                      <div className="flex items-center justify-between px-4 py-3">
+                        <span className="font-medium text-slate-800">{s.school_name}</span>
+                        <span className="text-xs text-slate-400 ml-3 shrink-0">{s.school}</span>
+                      </div>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -214,7 +221,7 @@ export default async function BoysPage({
           )}
 
           {topTeamScores.length > 0 && (
-            <PostseasonLeaders rows={topTeamScores} schoolBase="/schools" />
+            <PostseasonLeaders rows={topTeamScores} schoolBase="/schools" gender="boys" />
           )}
 
           {topDominance.length > 0 && (

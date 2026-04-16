@@ -18,13 +18,32 @@ function genderHref(pathname: string, target: 'boys' | 'girls'): string {
   return `/${target}`
 }
 
+type WrestlerResult = {
+  id: string
+  first_name: string
+  last_name: string
+  schools: { display_name: string }[] | null
+}
+
+type SchoolResult = {
+  id: number
+  display_name: string
+}
+
 export function HeaderNav() {
   const pathname  = usePathname()
   const router    = useRouter()
   const userMenuRef = useRef<HTMLDivElement>(null)
+  const searchRef   = useRef<HTMLDivElement>(null)
   const [userOpen, setUserOpen] = useState(false)
   const [user, setUser]         = useState<User | null>(null)
   const [username, setUsername] = useState<string | null>(null)
+
+  // ── Search state ─────────────────────────────────────────────────────────
+  const [searchQuery, setSearchQuery] = useState('')
+  const [wrestlers,   setWrestlers]   = useState<WrestlerResult[]>([])
+  const [schools,     setSchools]     = useState<SchoolResult[]>([])
+  const [searchOpen,  setSearchOpen]  = useState(false)
 
   const isBoys = !pathname.startsWith('/girls')
 
@@ -82,6 +101,7 @@ export function HeaderNav() {
     router.refresh()
   }
 
+  // ── Close user menu on outside click ─────────────────────────────────────
   useEffect(() => {
     if (!userOpen) return
     function onMouseDown(e: MouseEvent) {
@@ -92,7 +112,77 @@ export function HeaderNav() {
     return () => document.removeEventListener('mousedown', onMouseDown)
   }, [userOpen])
 
-  useEffect(() => { setUserOpen(false) }, [pathname])
+  // ── Close everything on route change ─────────────────────────────────────
+  useEffect(() => {
+    setUserOpen(false)
+    setSearchOpen(false)
+    setSearchQuery('')
+  }, [pathname])
+
+  // ── Search: debounced parallel fetch ─────────────────────────────────────
+  useEffect(() => {
+    const q = searchQuery.trim()
+    if (q.length < 2) {
+      setWrestlers([])
+      setSchools([])
+      setSearchOpen(false)
+      return
+    }
+
+    const timer = setTimeout(async () => {
+      const supabase = createSupabaseBrowser()
+      const parts = q.split(/\s+/)
+
+      let wrestlerQuery = supabase
+        .from('wrestlers')
+        .select('id, first_name, last_name, schools(display_name)')
+        .limit(5)
+
+      if (parts.length >= 2) {
+        wrestlerQuery = wrestlerQuery
+          .ilike('first_name', `%${parts[0]}%`)
+          .ilike('last_name', `%${parts[parts.length - 1]}%`)
+      } else {
+        wrestlerQuery = wrestlerQuery
+          .or(`first_name.ilike.%${q}%,last_name.ilike.%${q}%`)
+      }
+
+      const schoolQuery = supabase
+        .from('schools')
+        .select('id, display_name')
+        .eq('is_active', true)
+        .ilike('display_name', `%${q}%`)
+        .limit(5)
+
+      const [wrestlerRes, schoolRes] = await Promise.all([wrestlerQuery, schoolQuery])
+
+      setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
+      setSchools((schoolRes.data ?? []) as SchoolResult[])
+      setSearchOpen(true)
+    }, 300)
+
+    return () => clearTimeout(timer)
+  }, [searchQuery])
+
+  // ── Close search dropdown on outside click ────────────────────────────────
+  useEffect(() => {
+    if (!searchOpen) return
+    function onMouseDown(e: MouseEvent) {
+      if (searchRef.current && !searchRef.current.contains(e.target as Node))
+        setSearchOpen(false)
+    }
+    document.addEventListener('mousedown', onMouseDown)
+    return () => document.removeEventListener('mousedown', onMouseDown)
+  }, [searchOpen])
+
+  function handleResultClick() {
+    setSearchOpen(false)
+    setSearchQuery('')
+  }
+
+  const genderParam    = isBoys ? 'boys' : 'girls'
+  const hasWrestlers   = wrestlers.length > 0
+  const hasSchools     = schools.length > 0
 
   return (
     <header className={`${rowOneBg} sticky top-0 z-40 shadow-none`}>
@@ -103,7 +193,7 @@ export function HeaderNav() {
         {/* Logo */}
         <Link href={homeHref} className="flex items-center hover:opacity-90 transition-opacity">
           <Image
-            src="/images/mat-whizzer2.png"
+            src="/images/Logo Tuesday.png"
             alt="Mat Whizzer"
             width={3229}
             height={323}
@@ -203,6 +293,76 @@ export function HeaderNav() {
               </Link>
             )
           })}
+        </div>
+      </div>
+
+      {/* ── Row 3 — combined search ───────────────────────────────────────── */}
+      <div className={`${rowTwoBg} border-b border-black/60`}>
+        <div className="px-4 py-2 flex justify-center">
+          <div ref={searchRef} className="relative w-full max-w-lg">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              onKeyDown={e => {
+                if (e.key === 'Escape') { setSearchOpen(false); setSearchQuery('') }
+              }}
+              placeholder="Search wrestlers or schools…"
+              autoComplete="off"
+              className="w-full border border-slate-300 rounded-none px-4 py-2.5 text-base shadow-none focus:outline-none focus:ring-2 focus:ring-slate-500 bg-white text-slate-900 placeholder-slate-400"
+            />
+
+            {searchOpen && (
+              <div className={`absolute left-0 right-0 top-full z-50 border border-black overflow-hidden ${dropdownBg}`}>
+                {!hasWrestlers && !hasSchools ? (
+                  <div className="px-4 py-3 text-sm text-white/50">
+                    No results found
+                  </div>
+                ) : (
+                  <>
+                    {hasWrestlers && (
+                      <div>
+                        <div className="px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white/40 border-b border-white/10">
+                          Wrestlers
+                        </div>
+                        {wrestlers.map(w => (
+                          <Link
+                            key={w.id}
+                            href={`/wrestlers/${w.id}`}
+                            onClick={handleResultClick}
+                            className={`flex items-baseline gap-2 px-4 py-2.5 text-sm text-white ${dropdownHov} transition-colors`}
+                          >
+                            <span className="font-medium">{w.first_name} {w.last_name}</span>
+                            {w.schools?.[0]?.display_name && (
+                              <span className="text-white/50 text-xs truncate">{w.schools[0].display_name}</span>
+                            )}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+
+                    {hasSchools && (
+                      <div className={hasWrestlers ? 'border-t border-white/10' : ''}>
+                        <div className="px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white/40 border-b border-white/10">
+                          Schools
+                        </div>
+                        {schools.map(s => (
+                          <Link
+                            key={s.id}
+                            href={`/schools/${s.id}?gender=${genderParam}`}
+                            onClick={handleResultClick}
+                            className={`block px-4 py-2.5 text-sm text-white ${dropdownHov} transition-colors`}
+                          >
+                            {s.display_name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

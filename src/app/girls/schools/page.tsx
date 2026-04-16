@@ -96,12 +96,16 @@ export default async function GirlsSchoolsPage({
               {rows.map(r => (
                 <tr key={r.school} className="hover:bg-slate-50">
                   <td className="px-4 py-2.5">
-                    <Link
-                      href={r.school_id ? `/schools/${r.school_id}` : '#'}
-                      className="font-medium text-slate-800 hover:text-rose-700 hover:underline"
-                    >
-                      {r.school_name}
-                    </Link>
+                    {r.school_id ? (
+                      <Link
+                        href={`/schools/${r.school_id}?gender=girls`}
+                        className="font-medium text-slate-800 hover:text-rose-700 hover:underline"
+                      >
+                        {r.school_name}
+                      </Link>
+                    ) : (
+                      <span className="font-medium text-slate-800">{r.school_name}</span>
+                    )}
                     <span className="ml-2 text-slate-400 text-xs">{r.school}</span>
                   </td>
                   <td className="px-4 py-2.5 text-right tabular-nums text-slate-700">
