@@ -22,7 +22,6 @@ type WrestlerResult = {
   id: string
   first_name: string
   last_name: string
-  schools: { display_name: string }[] | null
 }
 
 type SchoolResult = {
@@ -135,7 +134,7 @@ export function HeaderNav() {
 
       let wrestlerQuery = supabase
         .from('wrestlers')
-        .select('id, first_name, last_name, schools(display_name)')
+        .select('id, first_name, last_name')
         .limit(5)
 
       if (parts.length >= 2) {
@@ -150,13 +149,12 @@ export function HeaderNav() {
       const schoolQuery = supabase
         .from('schools')
         .select('id, display_name')
-        .eq('is_active', true)
         .ilike('display_name', `%${q}%`)
         .limit(5)
 
       const [wrestlerRes, schoolRes] = await Promise.all([wrestlerQuery, schoolQuery])
 
-      setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
+setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
       setSchools((schoolRes.data ?? []) as SchoolResult[])
       setSearchOpen(true)
     }, 300)
@@ -330,12 +328,9 @@ export function HeaderNav() {
                             key={w.id}
                             href={`/wrestlers/${w.id}`}
                             onClick={handleResultClick}
-                            className={`flex items-baseline gap-2 px-4 py-2.5 text-sm text-white ${dropdownHov} transition-colors`}
+                            className={`block px-4 py-2.5 text-sm text-white ${dropdownHov} transition-colors`}
                           >
                             <span className="font-medium">{w.first_name} {w.last_name}</span>
-                            {w.schools?.[0]?.display_name && (
-                              <span className="text-white/50 text-xs truncate">{w.schools[0].display_name}</span>
-                            )}
                           </Link>
                         ))}
                       </div>
