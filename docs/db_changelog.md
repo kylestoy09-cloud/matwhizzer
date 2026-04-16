@@ -5,6 +5,68 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-04-15 — Consolidate Camden duplicate (362 → 237), Highland duplicate (298 → 369), Keansburg duplicate (373 → 191) ✓ APPLIED
+
+**Migration files:**
+- `docs/migrations/20260414_consolidate_school_362_to_237.sql`
+- `docs/migrations/20260414_consolidate_school_298_to_369.sql`
+- `docs/migrations/20260414_consolidate_school_373_to_191.sql`
+
+**What changed:**
+
+Three school consolidations applied in sequence:
+
+| Deleted | Canonical | Entries moved | Precomputed moved | Other |
+|---------|-----------|---------------|-------------------|-------|
+| 362 Camden/Camden Eastside | 237 Camden | 5 | 1 | — |
+| 298 Highland Regional/Triton | 369 Highland | 38 | 5 | 3 aliases, 1 district, 1 region, 1 name re-pointed |
+| 373 Keansburg/Henry Hudson | 191 Keansburg | 17 | 3 | — |
+
+All three executed with safety DELETE steps for `school_regions` and `school_districts` (no-ops for 362 and 373; data migration for 298). Confirmed via `remaining_school = 0` after each.
+
+**Verified?** ✓ Applied 2026-04-15 — all three school IDs confirmed deleted.
+
+---
+
+## 2026-04-15 — Merge duplicate St. Peter's Prep school 395 into 167 ✓ APPLIED
+
+**Migration file:** `docs/migrations/20260415_merge_school_395_into_167.sql`
+
+**Tables affected:** `tournament_entries`, `precomputed_team_scores`, `school_aliases`, `school_names`, `school_regions`, `school_districts`, `schools`
+
+**What changed:**
+
+Consolidated duplicate St. Peter's Prep record (school_id 395, "St Peters Preparatory School") into canonical school_id 167 ("St. Peter's Prep"):
+- 37 tournament_entries (tournaments 180, 152, 175) re-pointed to 167
+- 3 precomputed_team_scores rows (boys season 2) re-pointed to 167
+- school_names and school_aliases re-pointed to 167 (0 aliases rows affected)
+- school_regions and school_districts rows deleted
+- School 395 deleted
+
+Note: `school_regions`, `school_districts`, and `school_names` were discovered as additional FK tables at execution time.
+
+**Verified?** ✓ Applied 2026-04-15 — remaining_schools = 0 confirmed.
+
+---
+
+## 2026-04-15 — Merge duplicate JFK Paterson schools 331 + 402 into 74 ✓ APPLIED
+
+**Migration file:** `docs/migrations/20260415_merge_schools_331_402_into_74.sql`
+
+**Tables affected:** `tournament_entries`, `precomputed_team_scores`, `conference_standings`, `school_aliases`, `school_names`, `school_regions`, `schools`
+
+**What changed:**
+
+Consolidated two duplicate Paterson JFK records into canonical school_id 74 (John F. Kennedy):
+- School 331 ("Paterson Kennedy"): 1 tournament_entry, 1 conference_standings row, 1 school_alias, 1 school_names row re-pointed to 74; 1 school_regions row deleted; school deleted
+- School 402 ("John F. Kennedy Patterson"): 2 tournament_entries, 3 precomputed_team_scores re-pointed to 74; school deleted
+
+Note: `school_regions` and `school_names` were discovered as additional FK tables at execution time (not in original migration file). The school_regions row was deleted (school 74 has its own region mapping); the school_names row ("JFK Paterson" / "JFKP") was re-pointed to 74.
+
+**Verified?** ✓ Applied 2026-04-15 — remaining_schools = 0 confirmed.
+
+---
+
 ## 2026-04-14 — school_coops RLS + helper RPCs ✓ APPLIED
 
 **Migration file:** `docs/migrations/20260414_school_coops_rls_and_rpcs.sql`

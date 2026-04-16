@@ -1,0 +1,401 @@
+school_id,name,wrestler_count
+1,Cresskill,10
+2,Dumont,20
+3,Emerson Boro,19
+4,Jefferson,21
+5,Lakeland,0
+6,Old Tappan,32
+7,Phillipsburg,32
+8,River Dell,23
+9,Waldwick,17
+10,Westwood,23
+11,Don Bosco Prep,22
+12,Glen Rock,20
+13,Indian Hills,19
+14,Mahwah,23
+15,Pascack Hills,23
+16,Pascack Valley,21
+17,Ramapo,21
+18,Ramsey,26
+19,Ridgewood,22
+20,Saddle River Day,2
+21,Bergen Catholic,19
+22,Depaul Catholic,18
+23,Kittatinny Regional Jr/Sr High School,0
+24,Newton,20
+25,North Warren,12
+26,Sparta,21
+27,Vernon,32
+28,Wallkill Valley,28
+29,West Milford,28
+30,Butler,20
+31,Hawthorne,18
+32,High Point,32
+33,Kinnelon,15
+34,New Milford,21
+35,Northern Highlands,2
+36,Pequannock,11
+37,Pompton Lakes,20
+38,Wayne Hills,23
+39,West Essex,21
+40,Bergenfield,23
+41,Dwight Morrow,24
+42,Fort Lee,18
+43,Hackensack,19
+44,Leonia,26
+45,Manchester Regional,26
+46,Passaic Valley,21
+47,St Joseph Regional,14
+48,Teaneck,21
+49,Tenafly,14
+50,Clifton,29
+51,Elmwood Park,20
+52,Fair Lawn,36
+53,Garfield,26
+54,Hasbrouck Heights,19
+55,Lodi,6
+56,Mt. Olive,27
+57,Paramus,25
+58,Passaic,29
+59,Saddle Brook,7
+60,Cedar Grove,18
+61,Dover,31
+62,Lenape Valley,18
+63,Mountain Lakes,17
+64,Parsippany,15
+65,Passaic County Technical-Vocational,0
+66,Roxbury,19
+67,Warren Hills,36
+68,Wayne Valley,25
+69,Bogota/Ridgefield Park,16
+70,Boonton,29
+71,College Achieve Paterson,8
+72,Paterson Eastside,13
+73,Immaculata,24
+74,John F. Kennedy,15
+75,Montville,22
+76,Morris Hills,29
+77,Morris Knolls,21
+78,Parsippany Hills,23
+79,Pioneer Academy,7
+80,Barringer,13
+81,Bloomfield,33
+82,Delbarton School,19
+83,Lyndhurst,18
+84,Madison,21
+85,Newark Collegiate,21
+86,Orange,18
+87,Randolph,20
+88,St. Mary High School (Rutherford),12
+89,Mendham,18
+90,Becton,23
+91,Caldwell,19
+92,Cliffside Park/Ridgefield Park,0
+93,Cranford,21
+94,Hoboken High School,12
+95,North Bergen,16
+96,Rutherford,14
+97,Secaucus,10
+98,Union City,28
+99,Weehawken High School,3
+100,Belleville,29
+101,Glen Ridge,18
+102,Governor Livingston,14
+103,Kearny,30
+104,Livingston,20
+105,Montclair,25
+106,Nutley,28
+107,Verona,17
+108,West Morris,17
+109,West Orange,33
+110,Belvidere,23
+111,East Orange,16
+112,Hackettstown,15
+113,Hanover Park,24
+114,Morristown,32
+115,Newark Academy,9
+116,North Star Academy,22
+117,Pope John XXIII,21
+118,St. Benedicts Prep School,16
+119,Whippany Park,14
+120,Bayonne,35
+121,Columbia,27
+122,Newark East Side,20
+123,Elizabeth,37
+124,Hillside High School,7
+125,Roselle Park,27
+126,Scotch Plains-Fanwood,35
+127,Seton Hall Prep,18
+128,Westfield,23
+129,Johnson,19
+130,Brearley,20
+131,Bridgewater-Raritan,28
+132,Irvington,23
+133,Millburn,17
+134,New Providence,16
+135,North Hunterdon,39
+136,South Hunterdon,9
+137,Summit,16
+138,Union,24
+139,Bernards,20
+140,Bound Brook HS,21
+141,Delaware Valley,28
+142,Middlesex/Dunellen,21
+143,North Plainfield,33
+144,Pingry,13
+145,Somerville,31
+146,Voorhees,17
+147,Watchung Hills,34
+148,Carteret,24
+149,Colonia,22
+150,Iselin Kennedy,15
+151,John P. Stevens,25
+152,Linden,33
+153,Paramus Catholic,27
+154,Plainfield,31
+155,Rahway,33
+156,Ridge,20
+157,South Plainfield,21
+158,East Brunswick,12
+159,Middletown North,25
+160,Middletown South,31
+161,Monmouth Regional,12
+162,North Brunswick,13
+163,Old Bridge,34
+164,South Brunswick,24
+165,South River,15
+166,Spotswood,21
+167,St. Peter's Prep,14
+168,Central Jersey College Prep,7
+169,Franklin,20
+170,Hopewell Valley,28
+171,Manville,25
+172,Monroe,25
+173,Montgomery,29
+174,Princeton,30
+175,Rumson-Fair Haven,17
+176,West Windsor-Plainsboro North,27
+177,West Windsor-Plainsboro South,20
+178,Edison,21
+179,Highland Park,18
+180,Metuchen,22
+181,New Brunswick,30
+182,Perth Amboy,30
+183,Piscataway,29
+184,Raritan,37
+185,Sayreville War Memorial,25
+186,St. Joseph Metuchen,20
+187,Woodbridge,23
+188,Hillsborough,30
+189,Holmdel,24
+190,Hunterdon Central,31
+191,Keansburg,12
+192,Keyport,0
+193,Marlboro,33
+194,Matawan Regional,0
+195,Red Bank Regional,27
+196,Rutgers Prep,19
+197,Christian Brothers,20
+198,Colts Neck,23
+199,Freehold Borough,32
+200,Freehold Township,25
+201,Holy Cross,16
+202,Jackson Memorial Hs,24
+203,Lakewood,31
+204,Manalapan,34
+205,New Egypt,22
+206,Ranney,1
+207,Brick Memorial,24
+208,Steinert,31
+209,Nottingham,25
+210,Lawrence,32
+211,Long Branch,29
+212,Northern Burlington County Regional,0
+213,Notre Dame,30
+214,Riverside,20
+215,Robbinsville,26
+216,Trenton,35
+217,Asbury Park,18
+218,Brick Township,32
+219,Jackson Liberty,14
+220,Manasquan,24
+221,Neptune,21
+222,Ocean Township,25
+223,Point Pleasant Beach,24
+224,Point Pleasant Boro,29
+225,Shore,16
+226,Allentown,22
+227,Bordentown Regional/Florence,31
+228,Burlington City,18
+229,Burlington Township,21
+230,Ewing,27
+231,Hamilton West,32
+232,Hightstown,27
+233,Howell,34
+234,Saint Thomas Aquinas,27
+235,Wall,23
+236,Audubon,25
+237,Camden,5
+238,Collingswood,30
+239,Haddon Heights,19
+240,Haddon Township,25
+241,Paul VI,18
+242,Pennsauken,35
+243,Saint John Vianney,20
+244,Sterling,25
+245,West Deptford,30
+246,Barnegat,22
+247,Central Regional,34
+248,Donovan Catholic,4
+249,Lacey,21
+250,Manchester Township,29
+251,Pinelands Regional,20
+252,Southern Regional,36
+253,Toms River East,23
+254,Toms River North,16
+255,Toms River South,19
+256,Westampton Tech,28
+257,Cinnaminson,32
+258,Delran,36
+259,Gloucester City JR/SR,32
+260,Kingsway,42
+261,Moorestown,21
+262,Palmyra,12
+263,Rancocas Valley,37
+264,Red Bank Catholic,21
+265,Willingboro,23
+266,Cherokee,27
+267,Cherry Hill East,24
+268,Cherry Hill West,22
+269,Gloucester Catholic,5
+270,Haddonfield,17
+271,Lenape,37
+272,Maple Shade,19
+273,Pemberton,33
+274,Seneca,25
+275,Shawnee,24
+276,Absegami,22
+277,Atlantic City,15
+278,Camden Catholic,16
+279,Egg Harbor,27
+280,Holy Spirit,10
+281,Lower Cape May,17
+282,Mainland,22
+283,Middle Township,24
+284,Oakcrest,15
+285,Ocean City,27
+286,Schalick,26
+287,Buena,18
+288,Cedar Creek,22
+289,Cumberland,23
+290,Delsea,34
+291,Gateway Reg/ Woodbury,30
+292,Millville,21
+293,Pennsville,30
+294,Vineland,17
+295,Woodstown,18
+296,Eastern,39
+297,Hammonton,26
+298,Highland Regional/Triton,22
+299,Overbrook,0
+300,Saint Joseph's Academy,8
+301,Timber Creek,15
+302,Washington Township,25
+303,Williamstown,32
+304,Winslow,25
+305,Clayton,25
+306,Clearview,22
+307,Deptford,22
+308,Lindenwold,24
+309,Paulsboro,29
+310,Penns Grove,14
+311,Pitman,18
+312,Salem,9
+313,St. Augustine,20
+314,Demarest,24
+315,Kittatinny,14
+320,Bogota/Bergenfield/Hasbrouck Heights,0
+321,Becton,0
+322,Bound Brook,0
+323,Bordentown/Florence,0
+324,Burlington/Eastern,0
+325,Cedar Run/Shawnee,0
+326,Gloucester,0
+327,Greater Brunswick Charter,0
+328,Hasbrouck/Palisades/Hackensack,0
+329,Hopewell/Hightstown,0
+330,High Point,0
+331,Paterson Kennedy,1
+332,Jackson Memorial,0
+333,Johnson/Wayne/Clifton,0
+334,Morris Hills/Chatham,0
+335,Middletown/Old Bridge,0
+336,Montville Township,0
+337,North Brunswick Township,31
+339,Northern Highlands Regional,18
+342,Ocean/Toms River,0
+343,Ocean/Rancocas South,0
+344,Pennsville/Eastern,0
+345,Point Pleasant/Wall,0
+346,Somerville/Bound Brook,0
+347,Trenton/Ewing/Hamilton,0
+348,Wall Township,0
+349,Westfield/Boonton,0
+350,Wildwood/Holly/Rio,0
+351,Washington Township/Eastern,0
+352,West Windsor-Plainsboro,0
+353,Arlington/Joanna Perrin,0
+354,DeSales Catholic,0
+355,Shrewsbury,0
+356,St. Joseph's (Hammonton),2
+357,Ridgefield Memorial,10
+358,Roselle,0
+359,Bergen Charter,1
+360,Buena Regional/Vineland,10
+361,CJ) Palmisano (Whippany Park,0
+362,Camden/Camden Eastside,5
+363,Cherry Hill East/Cherry Hill West,9
+364,Cliffside Park,18
+365,Cliffside Park/Ridgefield Memorial,15
+366,East Brunswick H.S.,27
+367,Forfeit,7
+368,Governor Livingston Regional Hs,12
+369,Highland,5
+370,Jackson Township,24
+371,James) Fearon (Hunterdon Central Reg,0
+372,Jefferson-Sparta,12
+373,Keansburg/Henry Hudson,12
+374,Keyport,17
+375,Kittatinny Regional Jr/Sr,23
+376,Lakeland Reg,28
+377,Lenape Valley,16
+378,Liam) McSorley (Shawnee,0
+379,Lodi/Saddle Brook,8
+380,Lodi/Saddle Brook High School,13
+381,Mary Help of Christians Academy,1
+382,Matawan,18
+383,Middlesex,8
+384,Monmouth,14
+385,Morris Hills-Morris Knolls,11
+386,Mt. Olive,11
+387,Newark Academy/Morris Catholic,6
+388,Northern Burlington,26
+389,Overbrook Reg Senior,22
+390,Parsippany Hills/Parsippany,11
+391,Passaic Tech,35
+392,Ramsey/Northern Highlands,10
+393,Ridgefield Park/ Bogota,20
+394,St Joseph (Montvale) HS,14
+395,St Peters Preparatory School,14
+396,St. Benedict`s Prep,13
+397,Summit,2
+398,-,1
+399,Team Forfeit,1
+400,Parsippany Hills High School,7
+401,Montville Township High School,4
+402,John F. Kennedy Patterson,1
+403,Piscataway High School,2
+404,JFK/Woodbridge/Colonia,5
+405,Highland Regional High School,2
+406,Willingboro High School,2
+407,Palisades Park,0
