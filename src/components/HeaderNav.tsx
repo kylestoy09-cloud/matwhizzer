@@ -326,7 +326,7 @@ setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
                         {wrestlers.map(w => (
                           <Link
                             key={w.id}
-                            href={`/wrestlers/${w.id}`}
+                            href={`/wrestler/${w.id}`}
                             onClick={handleResultClick}
                             className={`block px-4 py-2.5 text-sm text-white ${dropdownHov} transition-colors`}
                           >
