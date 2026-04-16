@@ -435,7 +435,7 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
               {
                 label: 'School', align: 'left',
                 render: r => (
-                  {r.school_id ? (
+                  <>{r.school_id ? (
                     <Link
                       href={`/schools/${r.school_id}?gender=boys`}
                       className="font-medium text-slate-800 hover:text-slate-600 hover:underline"
@@ -444,7 +444,7 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
                     </Link>
                   ) : (
                     <span className="font-medium text-slate-800">{r.school_name || r.school}</span>
-                  )}
+                  )}</>
                 ),
               },
               {
