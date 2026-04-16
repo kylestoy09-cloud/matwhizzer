@@ -1,0 +1,327 @@
+school_id,display_name,mascot_name,color1,color1_name,color2,color2_name,color3,color3_name,mascot_file_name
+276,Absegami,Braves,#583925,Brown,#C5B358,Vegas Gold,#FFFFFF,White,Indian_4.svg
+226,Allentown,Redbirds,#CC0022,Scarlet Red,#222222,Black,#FFFFFF,White,Hawk 1.svg
+217,Asbury Park,Blue Bishops,#92CCFE,Light Blue,#000000,Black,#FFFFFF,White,Bishop.svg
+277,Atlantic City,Vikings,#022C66,Navy,#FFFFFF,White,#000000,Black,Viking 3.svg
+236,Audubon,Green Wave,#00824B,Kelly Green,#C8880A,Gold,#FFFFFF,White,Wave.svg
+246,Barnegat,Bengals,#222222,Black,#CC4E10,Orange,#FFFFFF,White,Tiger.svg
+80,Barringer,Blue Bears,#0000FF,Blue,#FFFFFF,White,#000000,Black,Bear.svg
+120,Bayonne,Bees,#9A2A2A,Maroon,#FFFFFF,White,#000000,Black,Hornet 1.svg
+321,Becton,Wildcats,#8F0018,Maroon,#FFFFFF,White,#000000,Black,Wildcat.svg
+100,Belleville,Buccaneers,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Pirate 1.svg
+110,Belvidere,County Seaters,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Racoon 1.svg
+21,Bergen Catholic,Crusaders,#CC0022,Scarlet Red,#C8880A,Gold,#FFFFFF,White,Crusader 2.svg
+359,Bergen Charter,Yellow Jackets,#FFD700,Gold,#000000,Black,#FFFFFF,White,Hornet 2.svg
+40,Bergenfield,Bears,#CC0022,Scarlet Red,#222222,Black,#FFFFFF,White,Bear 1.svg
+139,Bernards,Mountaineers,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Mountaineer_2.svg
+81,Bloomfield,Bengals,#CC0022,Scarlet Red,#454444,Gray,#FFFFFF,White,Tiger 1.svg
+70,Boonton,Bombers,#222222,Black,#CC0022,Scarlet Red,#FFFFFF,White,Bomber.svg
+227,Bordentown Regional/Florence,Scotties,#1a1a2e,Navy,#FFD700,Gold,#FFFFFF,White,Terrier.svg
+322,Bound Brook,Crusaders,#BB271A,Red,#000000,Black,#FFFFFF,White,Crusader 4.svg
+130,Brearley,Bears,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Bear 4.svg
+207,Brick Memorial,Mustangs,#00341E,Dark Green,#C8880A,Gold,#FFFFFF,White,Horse 1.svg
+218,Brick Township,Green Dragons,#00824B,Kelly Green,#FFFFFF,White,#000000,Black,Dragon 1.svg
+131,Bridgewater-Raritan,Panthers,#000000,Black,#FFFFFF,White,#C0C0C0,Silver,Cougar 1.svg
+287,Buena,Chiefs,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Indian 2.svg
+360,Buena Regional/Vineland,Fighting Chiefs,#034CB2,Royal Blue,#CC0022,Scarlet Red,#FFFFFF,White,chief rooster.svg
+228,Burlington City,Blue Devils,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Devil.svg
+229,Burlington Township,Falcons,#000000,Black,#C8880A,Gold,#FFFFFF,White,Falcon.svg
+30,Butler,Bulldogs,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Bulldog 2.svg
+91,Caldwell,Chiefs,#0039A6,Blue,#FFFFFF,White,#000000,Black,Indian_3.svg
+237,Camden,Panthers,#754ACC,Purple,#C8880A,Gold,#FFFFFF,White,Panther_3.svg
+278,Camden Catholic,Fighting Irish,#00824B,Kelly Green,#FFFFFF,White,#000000,Black,Fighting Irish.svg
+148,Carteret,Ramblers,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Rambler.svg
+288,Cedar Creek,Pirates,#602121,Maroon,#234C28,Forest Green,#FFFDD0,Cream,Pirate.svg
+60,Cedar Grove,Panthers,#222222,Black,#C8880A,Gold,#FFFFFF,White,Panther.svg
+168,Central Jersey College Prep,Cougars,#1a1a2e,Navy,#FFD700,Gold,#FFFFFF,White,Cougar 1.svg
+247,Central Regional,Golden Eagles,#8F0018,Maroon,#C8880A,Gold,#FFFFFF,White,Eagle 2.svg
+266,Cherokee,Chiefs,#503604,Dark Brown,#CC4E10,Orange,#FFFFFF,White,Indian_4.svg
+267,Cherry Hill East,Cougars,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Cougar 1.svg
+363,Cherry Hill East/Cherry Hill West,Cougar Lions,#CC0022,Scarlet Red,#754ACC,Purple,#FFFFFF,White,Cougar Lion.svg
+268,Cherry Hill West,Lions,#754ACC,Purple,#FFFFFF,White,#000000,Black,Lion_2.svg
+197,Christian Brothers,Colts,#0C2340,Navy,#FFFFFF,White,#000000,Black,Horse 1.svg
+257,Cinnaminson,Pirates,#222222,Black,#CC0022,Scarlet Red,#FFFFFF,White,Pirate 1.svg
+305,Clayton,Clippers,#192F59,Navy,#ECDF43,Yellow,#FFFFFF,White,Clipper.svg
+306,Clearview,Pioneers,#006D3B,Green,#FFFFFF,White,#000000,Black,Mountaineer_2.svg
+364,Cliffside Park,Red Raiders,#FF0000,Red,#000000,Black,#FFFFFF,White,Lancer.svg
+365,Cliffside Park/Ridgefield Memorial,Royal Raiders,#FF0000,Red,#4169E1,Royal Blue,#FFFFFF,White,Royal Raider.svg
+50,Clifton,Mustangs,#8F0018,Maroon,#454444,Gray,#FFFFFF,White,Horse 1.svg
+71,College Achieve Paterson,Pheonix,#1a1a2e,Navy,#FFD700,Gold,#FFFFFF,White,Phoenix.svg
+238,Collingswood,Panthers,#0000FF,Blue,#FFD700,Gold,#FFFFFF,White,Panther.svg
+149,Colonia,Patriots,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Patriot_2.svg
+198,Colts Neck,Cougars,#0f6c0f,Green,#FFFFFF,White,#000000,Black,Cougar.svg
+121,Columbia,Cougars,#BA2400,Red,#000000,Black,#FFFFFF,White,Cougar 2.svg
+93,Cranford,Cougars,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Cougar 2.svg
+1,Cresskill,Cougars,#222222,Black,#C8880A,Gold,#FFFFFF,White,Cougar 1.svg
+289,Cumberland,Clippers,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Admiral.svg
+141,Delaware Valley,Terriers,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Terrier.svg
+82,Delbarton School,Green Wave,#00824B,Kelly Green,#FFFFFF,White,#000000,Black,Wave 1.svg
+258,Delran,Bears,#503604,Dark Brown,#C8880A,Gold,#FFFFFF,White,Bear 3.svg
+290,Delsea,Crusaders,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Crusader.svg
+314,Demarest,Norsemen,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Viking.svg
+22,Depaul Catholic,Spartans,#025B40,Dark Green,#FFFFFF,White,#000000,Black,Spartan 5.svg
+307,Deptford,Spartans,#000000,Black,#AE8524,Gold,#FFFFFF,White,Spartan 4.svg
+11,Don Bosco Prep,Ironmen,#8F0018,Maroon,#FFFFFF,White,#000000,Black,Ironman.svg
+248,Donovan Catholic,Griffins,#003087,Navy,#FFD700,Gold,#FFFFFF,White,Griffin.svg
+61,Dover,Tigers,#222222,Black,#CC4E10,Orange,#FFFFFF,White,Tiger 2.svg
+2,Dumont,Huskies,#503604,Dark Brown,#CC4E10,Orange,#FFFFFF,White,Huskie.svg
+41,Dwight Morrow,Raiders,#8F0018,Maroon,#FFFFFF,White,#000000,Black,Eagle 1.svg
+158,East Brunswick,Bears,#00824B,Kelly Green,#FFFFFF,White,#000000,Black,Bear.svg
+111,East Orange,Jaguars,#CC0022,Scarlet Red,#034CB2,Royal Blue,#FFFFFF,White,Jaguar.svg
+296,Eastern,Vikings,#034CB2,Royal Blue,#CC0022,Scarlet Red,#FFFFFF,White,Viking.svg
+178,Edison,Eagles,#CC0022,Scarlet Red,#C8880A,Gold,#FFFFFF,White,Eagle 1.svg
+279,Egg Harbor,Eagles,#222222,Black,#737272,Gray,#FFFFFF,White,Eagle.svg
+123,Elizabeth,Minutemen,#ff1120,Red,#000000,Black,#FFFFFF,White,Minuteman.svg
+51,Elmwood Park,Crusaders,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Crusader 3.svg
+3,Emerson Boro,Cabos,#003087,Navy,#C8880A,Gold,#FFFFFF,White,Cavalier.svg
+230,Ewing,Blue Devils,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Devil 1.svg
+52,Fair Lawn,Cutters,#52000E,Burgundy,#454444,Gray,#FFFFFF,White,Pirate 1.svg
+42,Fort Lee,Bridgemen,#222222,Black,#CC4E10,Orange,#FFFFFF,White,Bridgeman.svg
+169,Franklin,Warriors,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Spartan 7.svg
+199,Freehold Borough,Colonials,#001b64,Navy,#e8b827,Gold,#FFFFFF,White,Patriot_3.svg
+200,Freehold Township,Patriots,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Patriot.svg
+53,Garfield,Boilermakers,#754ACC,Purple,#C8880A,Gold,#FFFFFF,White,Boilermaker.svg
+291,Gateway Reg/ Woodbury,Gators,#006400,Dark Green,#C8880A,Gold,#FFFFFF,White,Gator.svg
+101,Glen Ridge,Ridgers,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Zebra.svg
+12,Glen Rock,Panthers,#222222,Black,#CC0022,Scarlet Red,#FFFFFF,White,Panther.svg
+269,Gloucester Catholic,Rams,#8F0018,Maroon,#C8880A,Gold,#FFFFFF,White,Ram_3.svg
+259,Gloucester City JR/SR,Lions,#00274C,Navy,#FFCB05,Gold,#FFFFFF,White,Lion_2.svg
+102,Governor Livingston,Highlanders,#034CB2,Royal Blue,#CC0022,Scarlet Red,#FFFFFF,White,Tartan_2.svg
+43,Hackensack,Comets,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Comet.svg
+112,Hackettstown,Tigers,#222222,Black,#CC4E10,Orange,#FFFFFF,White,Tiger 2.svg
+239,Haddon Heights,Garnets,#CC0022,Scarlet Red,#C8880A,Gold,#FFFFFF,White,Garnet.svg
+240,Haddon Township,Hawks,#CC0022,Scarlet Red,#454444,Gray,#FFFFFF,White,Hawk 2.svg
+270,Haddonfield,Bulldogs,#000000,Black,#C5B358,Gold,#FFFFFF,White,Bulldog 2.svg
+231,Hamilton West,Hornets,#fe7722,Orange,#000000,Black,#FFFFFF,White,Hornet 2.svg
+297,Hammonton,Blue Devils,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Devil 2.svg
+113,Hanover Park,Hornets,#222222,Black,#C8880A,Gold,#FFFFFF,White,Hornet 3.svg
+54,Hasbrouck Heights,Aviators,#CC4E10,Orange,#222222,Black,#FFFFFF,White,Aviator.svg
+31,Hawthorne,Bears,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Bear 4.svg
+32,High Point,Wildcats,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Wildcat.svg
+369,Highland,Tartans,#034CB2,Royal Blue,#000000,Black,#FFFFFF,White,Tartan_2.svg
+179,Highland Park,Owls,#8C2526,Maroon,#FFFFFF,White,#000000,Black,Owl.svg
+232,Hightstown,Rams,#13275d,Navy,#FFFFFF,White,#000000,Black,Ram_2.svg
+188,Hillsborough,Raiders,#CC0022,Scarlet Red,#C8880A,Gold,#FFFFFF,White,Patriot_3.svg
+124,Hillside High School,Comets,#8F0018,Maroon,#454444,Gray,#FFFFFF,White,Comet.svg
+94,Hoboken High School,Redwings,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Redwing.svg
+189,Holmdel,Hornets,#034CB2,Royal Blue,#454444,Gray,#FFFFFF,White,Hornet.svg
+201,Holy Cross,Lancers,#8F0018,Maroon,#454444,Gray,#FFFFFF,White,Knight_2.svg
+280,Holy Spirit,Spartans,#000080,Navy,#C5B358,Gold,#FFFFFF,White,Spartan 7.svg
+170,Hopewell Valley,Bulldogs,#080206,Black,#FAD703,Gold,#FFFFFF,White,Bulldog 2.svg
+233,Howell,Rebels,#034CB2,Royal Blue,#737272,Gray,#FFFFFF,White,Pirate.svg
+190,Hunterdon Central,Red Devils,#222222,Black,#CC0022,Scarlet Red,#FFFFFF,White,Devil 4.svg
+73,Immaculata,Spartans,#002856,Navy,#FFFFFF,White,#000000,Black,Spartan 3.svg
+13,Indian Hills,Braves,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Indian_2.svg
+132,Irvington,Blue Knights,#090580,Navy,#FFFFFF,White,#000000,Black,Knight.svg
+150,Iselin Kennedy,Mustangs,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Horse 1.svg
+219,Jackson Liberty,Lions,#1a1a2e,Navy,#FFD700,Gold,#FFFFFF,White,Lion.svg
+370,Jackson Township,Jaguars,#222222,Black,#CC0022,Scarlet Red,#FFFFFF,White,Jaguar.svg
+4,Jefferson,Falcons,#002E62,Navy,#FFDF00,Yellow,#FFFFFF,White,Falcon 2.svg
+372,Jefferson-Sparta,Spartan Falcons,#002E62,Navy,#7AABDE,Light Blue,#FFFFFF,White,spartan falcon.svg
+74,John F. Kennedy,Knights,#CC0022,Scarlet Red,#222222,Black,#FFFFFF,White,Knight.svg
+151,John P. Stevens,Hawks,#00824B,Kelly Green,#C8880A,Gold,#FFFFFF,White,Hawk.svg
+129,Johnson,Crusaders,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Crusader 4.svg
+191,Keansburg,Titans,#034CB2,Royal Blue,#FF6600,Orange,#FFFFFF,White,Spartan 2.svg
+103,Kearny,Kardinals,#CC0022,Scarlet Red,#222222,Black,#FFFFFF,White,Cardinal 2.svg
+374,Keyport,Raiders,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Indian_2.svg
+260,Kingsway,Dragons,#222222,Black,#CC0022,Scarlet Red,#FFFFFF,White,Dragon.svg
+33,Kinnelon,Colts,#00824B,Kelly Green,#C8880A,Gold,#FFFFFF,White,Horse.svg
+315,Kittatinny,Cougars,#4169E1,Royal Blue,#FFFFFF,White,#000000,Black,Cougar.svg
+249,Lacey,Lions,#8A2432,Cardinal Red,#0A2240,Navy,#737272,Gray,Lion_3.svg
+5,Lakeland,Lancers,#CC0022,Scarlet Red,#454444,Gray,#FFFFFF,White,Lancer.svg
+203,Lakewood,Piners,#003e7e,Navy,#FFFFFF,White,#000000,Black,Piner.svg
+210,Lawrence,Cardinals,#BF0000,Red,#FFFFFF,White,#000000,Black,Cardinal.svg
+271,Lenape,Indians,#CA0814,Red,#333333,Black,#FFFFFF,White,Indian_5.svg
+62,Lenape Valley,Patriots,#034CB2,Royal Blue,#CC0022,Scarlet Red,#FFFFFF,White,Patriot_3.svg
+44,Leonia,Lions,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Lion_3.svg
+152,Linden,Tigers,#222222,Black,#CC4E10,Orange,#FFFFFF,White,Tiger 1.svg
+308,Lindenwold,Lions,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Lion.svg
+104,Livingston,Lancers,#1F331F,Dark Green,#FFFFFF,White,#000000,Black,Lancer.svg
+55,Lodi,Rams,#034CB2,Royal Blue,#CC4E10,Orange,#FFFFFF,White,Ram_3.svg
+379,Lodi/Saddle Brook,Ram Falcons,#1a1a2e,Navy,#006400,Dark Green,#FFFFFF,White,Ram Falcon.svg
+211,Long Branch,Green Wave,#00824B,Kelly Green,#FFFFFF,White,#000000,Black,Wave 2.svg
+281,Lower Cape May,Caper Tigers,#9ACEEB,Columbia Blue,#000000,Black,#FCFC75,Yellow,Caper Tiger.svg
+83,Lyndhurst,Bears,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Bear 3.svg
+84,Madison,Dodgers,#8F0018,Maroon,#FFFFFF,White,#000000,Black,German Shepherd.svg
+14,Mahwah,Thunderbirds,#91BCD4,Light Blue,#000000,Black,#FFFFFF,White,Thunderbird.svg
+282,Mainland,Mustangs,#00824B,Kelly Green,#FFFFFF,White,#000000,Black,Horse 2.svg
+204,Manalapan,Braves,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Indian_5.svg
+220,Manasquan,Warriors,#0D2C89,Navy,#FFFFFF,White,#000000,Black,Indian.svg
+45,Manchester Regional,Falcons,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Falcon 2.svg
+250,Manchester Township,Hawks,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Hawk 2.svg
+171,Manville,Mustangs,#0A1A79,Navy,#F3A707,Gold,#FFFFFF,White,Horse 2.svg
+272,Maple Shade,Wildcats,#014488,Blue,#FCAE04,Gold,#FFFFFF,White,Wildcat.svg
+193,Marlboro,Mustangs,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Horse.svg
+381,Mary Help of Christians Academy,Blue Jays,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Bluejay.svg
+382,Matawan,Huskies,#580615,Maroon,#818181,Gray,#FFFFFF,White,Huskie.svg
+89,Mendham,Minutemen,#AD0B0E,Maroon,#023051,Navy,#FFFFFF,White,Minuteman.svg
+180,Metuchen,Bulldogs,#4169E1,Royal Blue,#FFFFFF,White,#000000,Black,Bulldog 1.svg
+283,Middle Township,Panthers,#222222,Black,#CC4E10,Orange,#FFFFFF,White,Panther_2.svg
+383,Middlesex,Blue Jays,#0605B3,Blue,#FFFFFF,White,#000000,Black,Bluejay.svg
+159,Middletown North,Lions,#FC7701,Orange,#000000,Black,#FFFFFF,White,Lion_3.svg
+160,Middletown South,Eagles,#034CB2,Royal Blue,#737272,Gray,#FFFFFF,White,Eagle.svg
+133,Millburn,Millers,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Miller.svg
+292,Millville,Thunderbolts,#034CB2,Royal Blue,#CC4E10,Orange,#FFFFFF,White,Horse 4.svg
+384,Monmouth,Falcons,#222222,Black,#C8880A,Gold,#FFFFFF,White,Raven 2.svg
+172,Monroe,Falcons,#754ACC,Purple,#C8880A,Gold,#FFFFFF,White,Falcon.svg
+105,Montclair,Mounties,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Mountie.svg
+173,Montgomery,Cougars,#00824B,Kelly Green,#C8880A,Gold,#FFFFFF,White,Cougar 2.svg
+75,Montville,Mustangs,#00824B,Kelly Green,#FFFFFF,White,#000000,Black,Horse 3.svg
+261,Moorestown,Quakers,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Quaker.svg
+76,Morris Hills,Scarlet Knights,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Knight_2.svg
+385,Morris Hills-Morris Knolls,Eagle Knights,#CC0022,Scarlet Red,#FFD700,Gold,#FFFFFF,White,Eagle knight.svg
+77,Morris Knolls,Golden Eagles,#006400,Dark Green,#FFD700,Gold,#FFFFFF,White,Eagle.svg
+114,Morristown,Colonials,#8F0018,Maroon,#FFFFFF,White,#000000,Black,Patriot 4.svg
+63,Mountain Lakes,Lakers,#0000FF,Blue,#FFA500,Orange,#FFFFFF,White,Laker.svg
+56,Mt. Olive,Marauders,#CC0022,Scarlet Red,#FFD700,Gold,#FFFFFF,White,Marauder.svg
+221,Neptune,Scarlet Fliers,#D90000,Red,#000000,Black,#FFFFFF,White,Flier.svg
+181,New Brunswick,Zebras,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Zebra.svg
+205,New Egypt,Warriors,#222245,Navy,#DBB235,Gold,#FFFFFF,White,Spartan 5.svg
+34,New Milford,Knights,#00824B,Kelly Green,#FFFFFF,White,#000000,Black,Knight_2.svg
+134,New Providence,Pioneers,#006325,Green,#FFDD00,Yellow,#FFFFFF,White,Mountaineer_2.svg
+115,Newark Academy,Minutemen,#003087,Navy,#FFFFFF,White,#000000,Black,Patriot_2.svg
+85,Newark Collegiate,Knights,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Knight_2.svg
+122,Newark East Side,Raiders,#BA1B26,Crimson,#1F1C1E,Black,#FFFFFF,White,Indian_5.svg
+24,Newton,Braves,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Indian_3.svg
+95,North Bergen,Bruins,#CC0022,Scarlet Red,#C8880A,Gold,#FFFFFF,White,Bear 4.svg
+162,North Brunswick,Raiders,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Eagle 1.svg
+135,North Hunterdon,Lions,#00824B,Kelly Green,#C8880A,Gold,#FFFFFF,White,Lion.svg
+143,North Plainfield,Canucks,#8F0018,Maroon,#FFFFFF,White,#000000,Black,Canuck.svg
+116,North Star Academy,Stars,#003087,Navy,#FFD700,Gold,#FFFFFF,White,Star.svg
+25,North Warren,Patriots,#034CB2,Royal Blue,#CC0022,Scarlet Red,#FFFFFF,White,Patriot.svg
+388,Northern Burlington,Greyhounds,#034CB2,Royal Blue,#454444,Gray,#FFFFFF,White,Greyhound.svg
+35,Northern Highlands,Highlanders,#CC0022,Scarlet Red,#222222,Black,#FFFFFF,White,Tartan_2.svg
+213,Notre Dame,Irish,#4169E1,Royal Blue,#000080,Navy,#FFFFFF,White,Fighting Irish.svg
+209,Nottingham,Patriots,#222222,Black,#C8880A,Gold,#FFFFFF,White,Patriot 4.svg
+106,Nutley,Raiders,#8F0018,Maroon,#454444,Gray,#FFFFFF,White,Patriot.svg
+284,Oakcrest,Falcons,#034CB2,Royal Blue,#454444,Gray,#FFFFFF,White,Falcon.svg
+285,Ocean City,Raiders,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Hawk.svg
+222,Ocean Township,Spartans,#034CB2,Royal Blue,#CC0022,Scarlet Red,#FFFFFF,White,Spartan 1.svg
+163,Old Bridge,Knights,#754ACC,Purple,#222222,Black,#FFFFFF,White,Knight.svg
+6,Old Tappan,Golden Knights,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Knight_3.svg
+86,Orange,Tornadoes,#CC4E10,Orange,#222222,Black,#FFFFFF,White,Tornado.svg
+299,Overbrook,Rams,#034CB2,Royal Blue,#CC4E10,Orange,#FFFFFF,White,Ram_3.svg
+262,Palmyra,Panthers,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Panther.svg
+57,Paramus,Spartans,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Spartan 2.svg
+153,Paramus Catholic,Paladins,#000000,Black,#C5B358,Gold,#FFFFFF,White,Spartan.svg
+64,Parsippany,Red Hawks,#CC0022,Scarlet Red,#454444,Gray,#FFFFFF,White,Hawk 1.svg
+78,Parsippany Hills,Vikings,#034CB2,Royal Blue,#000000,Black,#FFFFFF,White,Viking 2.svg
+15,Pascack Hills,Broncos,#503604,Dark Brown,#FFFFFF,White,#000000,Black,Horse 2.svg
+16,Pascack Valley,Panthers,#00824B,Kelly Green,#FFFFFF,White,#000000,Black,Panther_3.svg
+58,Passaic,Indians,#CC0022,Scarlet Red,#034CB2,Royal Blue,#FFFFFF,White,Indian.svg
+391,Passaic Tech,Bulldogs,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Bulldog.svg
+46,Passaic Valley,Hornets,#00824B,Kelly Green,#FFFFFF,White,#000000,Black,Hornet 2.svg
+72,Paterson Eastside,Ghosts,#034CB2,Royal Blue,#CC4E10,Orange,#FFFFFF,White,Ghost.svg
+241,Paul VI,Eagles,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Eagle 1.svg
+309,Paulsboro,Raiders,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Indian 1.svg
+273,Pemberton,Hornets,#00824B,Kelly Green,#FFFFFF,White,#000000,Black,Hornet 3.svg
+310,Penns Grove,Red Devils,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Devil 2.svg
+242,Pennsauken,Indians,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Indian_3.svg
+293,Pennsville,Eagles,#006400,Dark Green,#C8880A,Gold,#FFFFFF,White,Eagle.svg
+36,Pequannock,Golden Panthers,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Panther_2.svg
+182,Perth Amboy,Panthers,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Panther_3.svg
+7,Phillipsburg,Stateliners,#52000E,Burgundy,#454444,Gray,#FFFFFF,White,Stateliner.svg
+251,Pinelands Regional,Wildcats,#00824B,Kelly Green,#C8880A,Gold,#FFFFFF,White,Wildcat.svg
+144,Pingry,Big Blue,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Bear 4.svg
+79,Pioneer Academy,Eagles,#1a1a2e,Navy,#FFD700,Gold,#FFFFFF,White,Eagle.svg
+183,Piscataway,Chiefs,#222222,Black,#C8880A,Gold,#FFFFFF,White,Indian_3.svg
+311,Pitman,Panthers,#CC4E10,Orange,#222222,Black,#FFFFFF,White,Panther_2.svg
+154,Plainfield,Cardinals,#034CB2,Royal Blue,#CC0022,Scarlet Red,#FFFFFF,White,Cardinal 2.svg
+223,Point Pleasant Beach,Garnet Gulls,#AC1E2C,Crimson,#FFFFFF,White,#000000,Black,Gull.svg
+224,Point Pleasant Boro,Panthers,#000000,Black,#FFD700,Gold,#FFFFFF,White,Panther.svg
+37,Pompton Lakes,Cardinals,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Cardinal 2.svg
+117,Pope John XXIII,Lions,#000080,Navy,#FFFFFF,White,#000000,Black,Lion_3.svg
+174,Princeton,Little Tigers,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Tiger.svg
+155,Rahway,Indians,#222222,Black,#CC0022,Scarlet Red,#FFFFFF,White,Indian 2.svg
+17,Ramapo,Raiders,#00824B,Kelly Green,#FFFFFF,White,#000000,Black,Panther_3.svg
+18,Ramsey,Rams,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Ram_3.svg
+392,Ramsey/Northern Highlands,Highlander Rams,#034CB2,Royal Blue,#CC0022,Scarlet Red,#FFFFFF,White,highlander ram.svg
+263,Rancocas Valley,Red Devils,#DD1931,Red,#FFFFFF,White,#000000,Black,Devil 3.svg
+87,Randolph,Rams,#022D58,Navy,#FFFFFF,White,#000000,Black,Ram.svg
+206,Ranney,Panthers,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Panther_3.svg
+184,Raritan,Rockets,#00824B,Kelly Green,#454444,Gray,#FFFFFF,White,Rocket.svg
+264,Red Bank Catholic,Caseys,#228B22,Green,#C8880A,Gold,#FFFFFF,White,Casey.svg
+195,Red Bank Regional,Bucs,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Pirate 2.svg
+156,Ridge,Red Devils,#00824B,Kelly Green,#FFFFFF,White,#000000,Black,Devil.svg
+357,Ridgefield Memorial,Royals,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Royal.svg
+393,Ridgefield Park/Bogota,Scarlets,#CC0000,Red,#000000,Black,#FFFFFF,White,Cardinal 1.svg
+19,Ridgewood,Maroons,#76232F,Maroon,#FFFFFF,White,#000000,Black,Maroon.svg
+8,River Dell,Golden Hawks,#222222,Black,#C8880A,Gold,#FFFFFF,White,Hawk 1.svg
+214,Riverside,Rams,#8F0018,Maroon,#FFFFFF,White,#000000,Black,Ram_2.svg
+215,Robbinsville,Ravens,#A7192E,Crimson,#030303,Black,#FFFFFF,White,Raven 1.svg
+358,Roselle,Rams,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Ram.svg
+125,Roselle Park,Panthers,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Panther_2.svg
+66,Roxbury,Gaels,#00205C,Navy,#D7B882,Gold,#FFFFFF,White,Viking.svg
+175,Rumson-Fair Haven,Bulldogs,#5C3068,Purple,#FFFFFF,White,#000000,Black,Bulldog 1.svg
+196,Rutgers Prep,Argonauts,#8F0018,Maroon,#FFFFFF,White,#000000,Black,Argonaut.svg
+96,Rutherford,Bulldogs,#004679,Navy,#FFFFFF,White,#000000,Black,Bulldog.svg
+59,Saddle Brook,Falcons,#006400,Dark Green,#FFFFFF,White,#000000,Black,Falcon.svg
+20,Saddle River Day,Rebels,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Cavalier.svg
+243,Saint John Vianney,Lancers,#222222,Black,#C8880A,Gold,#FFFFFF,White,Lancer.svg
+300,Saint Joseph's Academy,Wildcats,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Wildcat.svg
+234,Saint Thomas Aquinas,Trojans,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Spartan 5.svg
+312,Salem,Rams,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Ram_3.svg
+185,Sayreville War Memorial,Bombers,#034CB2,Royal Blue,#454444,Gray,#FFFFFF,White,Bomber 2.svg
+286,Schalick,Cougars,#195821,Green,#FEC000,Gold,#FFFFFF,White,Cougar 1.svg
+126,Scotch Plains-Fanwood,Raiders,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Knight.svg
+97,Secaucus,Patriots,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Patriot_2.svg
+274,Seneca,Golden Eagles,#00341E,Dark Green,#C8880A,Gold,#FFFFFF,White,Eagle 1.svg
+127,Seton Hall Prep,Pirates,#4169E1,Royal Blue,#FFFFFF,White,#000000,Black,Pirate 2.svg
+275,Shawnee,Renegades,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Indian_2.svg
+225,Shore,Blue Devils,#1B5997,Blue,#FFFFFF,White,#000000,Black,Devil 5.svg
+145,Somerville,Pioneers,#000000,Black,#FFA500,Orange,#FFFFFF,White,Mountaineer_2.svg
+164,South Brunswick,Vikings,#222222,Black,#C8880A,Gold,#FFFFFF,White,Viking 4.svg
+136,South Hunterdon,Eagles,#07073D,Navy,#6F777B,Gray,#FFFFFF,White,Eagle.svg
+157,South Plainfield,Tigers,#00824B,Kelly Green,#FFFFFF,White,#000000,Black,Tiger.svg
+165,South River,Rams,#5C0006,Maroon,#FFFFFF,White,#000000,Black,Ram.svg
+252,Southern Regional,Rams,#000000,Black,#C8880A,Gold,#FFFFFF,White,Ram.svg
+26,Sparta,Spartans,#0F3063,Navy,#7AABDE,Light Blue,#FFFFFF,White,Spartan 6.svg
+166,Spotswood,Chargers,#0250AB,Blue,#FCE300,Yellow,#FFFFFF,White,Horse 4.svg
+394,St Joseph (Montvale) HS,Green Knights,#013220,Dark Green,#CFB53B,Gold,#FFFFFF,White,Knight_3.svg
+313,St. Augustine,Hermits,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Hermit.svg
+118,St. Benedicts Prep School,Gray Bees,#752828,Maroon,#7F8588,Gray,#FFFFFF,White,Hornet 1.svg
+186,St. Joseph Metuchen,Falcons,#008000,Green,#FFFFFF,White,#000000,Black,Falcon 2.svg
+356,St. Joseph's (Hammonton),Wildcats,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Wildcat.svg
+88,St. Mary High School (Rutherford),Gaels,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Viking 5.svg
+167,St. Peter's Prep,Marauders,#840029,Maroon,#737272,Gray,#FFFFFF,White,Marauder.svg
+208,Steinert,Spartans,#006000,Dark Green,#FFFFFF,White,#000000,Black,Spartan.svg
+244,Sterling,Silver Knights,#034CB2,Royal Blue,#737272,Gray,#FFFFFF,White,Knight_3.svg
+397,Summit,Hilltoppers,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Hilltopper.svg
+48,Teaneck,Highwaymen,#0000AE,Blue,#FFFFFF,White,#000000,Black,Highwayman.svg
+49,Tenafly,Tigers,#222222,Black,#CC4E10,Orange,#FFFFFF,White,Tiger 1.svg
+301,Timber Creek,Chargers,#022C66,Navy,#454444,Gray,#FFFFFF,White,Horse 4.svg
+253,Toms River East,Raiders,#CC0022,Scarlet Red,#000000,Black,#FFFFFF,White,Pirate 1.svg
+254,Toms River North,Mariners,#0D2C89,Navy,#FFFFFF,White,#000000,Black,Mariner.svg
+255,Toms River South,Indians,#8F0018,Maroon,#FFFFFF,White,#000000,Black,Indian 2.svg
+216,Trenton,Tornadoes,#222222,Black,#CC0022,Scarlet Red,#FFFFFF,White,Tornado.svg
+138,Union,Farmers,#8F0018,Maroon,#FFFFFF,White,#000000,Black,Farmer.svg
+98,Union City,Soaring Eagles,#000080,Navy,#C0C0C0,Silver,#FFFFFF,White,Eagle 1.svg
+27,Vernon,Vikings,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Viking 1.svg
+107,Verona,Hillbillies,#8F0018,Maroon,#FFFFFF,White,#000000,Black,Hillbilly.svg
+294,Vineland,Fighting Clan,#CC0022,Scarlet Red,#454444,Gray,#FFFFFF,White,Rooster.svg
+146,Voorhees,Mustangs,#00824B,Kelly Green,#FFFFFF,White,#000000,Black,Horse 2.svg
+9,Waldwick,Warriors,#034CB2,Royal Blue,#C8880A,Gold,#FFFFFF,White,Warrior.svg
+235,Wall,Crimson Knights,#C61330,Crimson,#FFFFFF,White,#000000,Black,Knight_2.svg
+28,Wallkill Valley,Rangers,#222222,Black,#737272,Gray,#FFFFFF,White,Ranger.svg
+67,Warren Hills,Blue Streaks,#4169E1,Royal Blue,#FFFFFF,White,#000000,Black,Blue Streak.svg
+302,Washington Township,Minutemen,#0D2C89,Navy,#CF0A2C,Red,#FFFFFF,White,Patriot.svg
+147,Watchung Hills,Warriors,#503604,Dark Brown,#C8880A,Gold,#FFFFFF,White,Indian 2.svg
+38,Wayne Hills,Patriots,#8F0018,Maroon,#FFFFFF,White,#000000,Black,Patriot.svg
+68,Wayne Valley,Indians,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Indian 1.svg
+99,Weehawken High School,Indians,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Indian 1.svg
+245,West Deptford,Eagles,#00824B,Kelly Green,#FFFFFF,White,#000000,Black,Eagle 1.svg
+39,West Essex,Knights,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Knight.svg
+29,West Milford,Highlanders,#231F20,Black,#FED604,Yellow,#FFFFFF,White,Tartan_2.svg
+108,West Morris,Wolfpack,#9ACEEB,Columbia Blue,#000080,Navy,#808080,Gray,Minuteman.svg
+109,West Orange,Mountaineers,#8F0018,Maroon,#FFFFFF,White,#000000,Black,Mountaineer_2.svg
+176,West Windsor-Plainsboro North,Knights,#022C66,Navy,#737272,Gray,#FFFFFF,White,Knight.svg
+177,West Windsor-Plainsboro South,Pirates,#00824B,Kelly Green,#C8880A,Gold,#FFFFFF,White,Pirate 2.svg
+256,Westampton Tech,Panthers,#022C66,Navy,#454444,Gray,#FFFFFF,White,Panther_3.svg
+128,Westfield,Blue Devils,#0504C3,Blue,#FFFFFF,White,#000000,Black,Devil 1.svg
+10,Westwood,Cardinals,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Cardinal 1.svg
+119,Whippany Park,Wildcats,#CC0022,Scarlet Red,#FFFFFF,White,#000000,Black,Wildcat.svg
+303,Williamstown,Braves,#034CB2,Royal Blue,#FFFFFF,White,#000000,Black,Indian.svg
+265,Willingboro,Chimeras,#034CB2,Royal Blue,#CC0022,Scarlet Red,#FFFFFF,White,Chimera.svg
+304,Winslow,Eagles,#00824B,Kelly Green,#FFFFFF,White,#000000,Black,Eagle 2.svg
+187,Woodbridge,Barrons,#222222,Black,#CC0022,Scarlet Red,#FFFFFF,White,Barron.svg
+295,Woodstown,Wolverines,#1328A4,Blue,#F09817,Orange,#FFFFFF,White,Wolverine.svg

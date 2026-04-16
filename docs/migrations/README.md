@@ -104,6 +104,50 @@ If the migration was never applied (e.g. it was superseded or failed), note that
 | `20260410_load_missing_conference_scores.sql` | **NOT APPLIED** | INSERT conference W/L records for 9 schools missing from `conference_standings` |
 | `20260410_suppress_shell_schools.sql` | **NOT APPLIED** | ADD `schools.is_active` column; SET false for 13 zero-entry shell schools |
 | `20260410_audit_entry_schools_no_scores.sql` | **NOT APPLIED** | Read-only diagnostic: why do Monmouth/Ridgefield/N.Highlands/P.Kennedy have entries but no scores? |
+| `20260414_consolidate_school_362_to_237.sql` | **NOT APPLIED** | Merge Camden/Camden Eastside (362) into Camden (237) |
+| `20260414_consolidate_school_298_to_369.sql` | **NOT APPLIED** | School consolidation |
+| `20260414_consolidate_school_373_to_191.sql` | **NOT APPLIED** | School consolidation |
+| `20260414_create_school_coops.sql` | 2026-04-14 | `school_coops` table for co-op school programs |
+| `20260414_school_coops_rls_and_rpcs.sql` | 2026-04-14 | RLS + `get_coop_membership` / `get_coop_members` RPCs |
+| `20260415_merge_schools_331_402_into_74.sql` | 2026-04-15 | Merge Paterson Kennedy (331) + John F. Kennedy Patterson (402) into John F. Kennedy (74) |
+| `20260415_merge_school_395_into_167.sql` | 2026-04-15 | Merge St Peters Preparatory School (395) into St. Peter's Prep (167) |
+
+---
+
+## School merge / delete checklist
+
+When deleting a school record (consolidating duplicates), the `schools` table has FK
+references in **7 tables**. All must be handled before the DELETE or it will fail with
+a FK violation. In order:
+
+| Table | Action | Notes |
+|-------|--------|-------|
+| `tournament_entries` | UPDATE school_id → canonical | re-point |
+| `precomputed_team_scores` | UPDATE school_id → canonical | re-point |
+| `conference_standings` | UPDATE school_id → canonical | re-point |
+| `school_aliases` | UPDATE school_id → canonical | re-point |
+| `school_names` | UPDATE school_id → canonical | re-point; preserves alternate names |
+| `school_regions` | DELETE rows | canonical school has its own region mapping |
+| `school_districts` | DELETE rows | canonical school has its own district mapping |
+| `schools` | DELETE row | only once all above are clear |
+
+Also check (typically empty for shell/duplicate schools, but verify):
+- `school_coops` (coop_school_id and member_school_id columns)
+- `app_users` (school_id)
+- `users` (primary_school_id)
+- `confirmed_schools` (school_id)
+
+**Discovery query** — run this before writing the migration to catch any new FK tables:
+
+```sql
+SELECT tc.table_name AS fk_table, kcu.column_name AS fk_column
+FROM information_schema.table_constraints tc
+JOIN information_schema.key_column_usage kcu ON tc.constraint_name = kcu.constraint_name
+JOIN information_schema.referential_constraints rc ON tc.constraint_name = rc.constraint_name
+JOIN information_schema.key_column_usage ccu ON rc.unique_constraint_name = ccu.constraint_name
+WHERE tc.constraint_type = 'FOREIGN KEY' AND ccu.table_name = 'schools'
+ORDER BY tc.table_name;
+```
 
 ---
 

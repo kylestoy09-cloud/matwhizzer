@@ -1,0 +1,17 @@
+{
+  "name": "profile_generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@fontsource/bebas-neue": "^5.2.7",
+    "@fontsource/stardos-stencil": "^5.2.7"
+  }
+}
