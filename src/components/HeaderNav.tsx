@@ -298,7 +298,7 @@ export function HeaderNav() {
 
       {/* ── Row 3 — combined search ───────────────────────────────────────── */}
       <div className={`${rowTwoBg} border-b border-black/60`}>
-        <div className="px-4 py-2 flex justify-center">
+        <div className="px-4 py-2">
           <div ref={searchRef} className="relative w-full max-w-lg">
             <input
               type="text"
