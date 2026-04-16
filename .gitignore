@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Profile generator
+profile_generator/exports/
+profile_generator/node_modules/
+profile_generator/fonts/
