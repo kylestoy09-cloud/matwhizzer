@@ -2,16 +2,13 @@ export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 import { supabase } from '@/lib/supabase'
-import Image from 'next/image'
 import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
 import { conferenceToSlug } from '@/lib/conferences'
 import { sectionToSlug, groupToSlug } from '@/lib/sections'
-import { InlineSeasonPicker } from '@/components/SeasonPicker'
-import { FollowSchoolButton } from '@/components/FollowSchoolButton'
 import { SchoolTabs } from './SchoolTabs'
-import { WrestlerAvatar } from '@/components/WrestlerAvatar'
+import { SchoolHeader } from '@/components/SchoolHeader'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -40,6 +37,10 @@ type SchoolProfile = {
   primary_color: string | null
   secondary_color: string | null
   tertiary_color: string | null
+  color_primary: string | null
+  color_secondary: string | null
+  color_tertiary: string | null
+  header_background: string | null
   town: string | null
   county: string | null
   section: string | null
@@ -130,7 +131,7 @@ export default async function SchoolProfilePage({
 
   const { data: profileData, error: profileError } = await supabase
     .from('schools')
-    .select('id, display_name, short_name, mascot, nickname, primary_color, secondary_color, tertiary_color, town, county, section, classification, founded_year, website_url, twitter_handle, athletic_conference, logo_url')
+    .select('id, display_name, short_name, mascot, nickname, primary_color, secondary_color, tertiary_color, color_primary, color_secondary, color_tertiary, header_background, town, county, section, classification, founded_year, website_url, twitter_handle, athletic_conference, logo_url')
     .eq('id', schoolId)
     .maybeSingle()
 
@@ -336,254 +337,121 @@ export default async function SchoolProfilePage({
   const stateMedalists = rows.filter(w => w.state_placement && medalPlaces.has(w.state_placement)).length
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10">
-      {/* Back link */}
-      <Link
-        href={`/schools?gender=${gender}`}
-        className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 mb-6 transition-colors"
-      >
-        ← School Directory
-      </Link>
+    <>
+      {/* SchoolHeader is full-width — outside the max-w-4xl container */}
+      <SchoolHeader
+        schoolId={profile.id}
+        schoolParam={schoolParam}
+        schoolName={profile.display_name}
+        mascot={profile.mascot}
+        nickname={profile.nickname}
+        colorPrimary={profile.color_primary}
+        colorSecondary={profile.color_secondary}
+        colorTertiary={profile.color_tertiary}
+        headerBackground={profile.header_background}
+        gender={gender as 'boys' | 'girls'}
+        activeTab={activeTab}
+        activeSeason={season}
+        tags={tags}
+        districtLabel={districtLabel}
+        districtNum={districtNum}
+        regionLabel={regionLabel}
+        regionNum={regionNum}
+        classLabel={classLabel}
+        secSlug={secSlug}
+        grpSlug={grpSlug}
+        conferenceSlug={conferenceSlug}
+        athleticConference={profile.athletic_conference}
+      />
 
-      {/* ── HEADER ── */}
+      <div className="max-w-4xl mx-auto px-4 py-6">
+        {/* Back link */}
+        <Link
+          href={`/schools?gender=${gender}`}
+          className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 mb-6 transition-colors"
+        >
+          ← School Directory
+        </Link>
 
-      {/* Mobile: logo banner + sticky info bar */}
-      <div className="md:hidden sticky top-0 z-20">
-        {/* Logo banner */}
-        {profile.logo_url ? (
-          <Image
-            src={profile.logo_url}
-            alt={profile.display_name}
-            width={1079}
-            height={647}
-            className="w-full h-auto"
-          />
-        ) : (
-          <div
-            className="w-full aspect-video flex items-center justify-center text-6xl font-bold"
-            style={{ backgroundColor: pc, color: sc }}
-          >
-            {schoolInitials(profile)}
+        {/* ── CO-OP MEMBER BANNER ───────────────────────────────────────────────
+             Shown on member school pages (e.g. Lodi) when the school participated
+             in a co-op for the current season + gender.                        */}
+        {activeCoop && (
+          <div className="mb-6 border border-amber-300 bg-amber-50 rounded-none px-4 py-3 flex items-start justify-between gap-4">
+            <div>
+              <p className="text-sm font-semibold text-amber-900">
+                {seasonLabel} {coopGenderLabel}: Competed as{' '}
+                <Link href={`/schools/${activeCoop.coop_school_id}?gender=${gender}`} className="underline hover:text-amber-700">
+                  {activeCoop.coop_name}
+                </Link>
+              </p>
+              <p className="text-xs text-amber-700 mt-0.5">
+                Results below reflect the combined co-op program.
+              </p>
+            </div>
+            <Link
+              href={`/schools/${activeCoop.coop_school_id}?gender=${gender}`}
+              className="shrink-0 text-xs font-medium text-amber-800 border border-amber-300 bg-white px-3 py-1.5 hover:bg-amber-100 transition-colors whitespace-nowrap"
+            >
+              Co-op page →
+            </Link>
           </div>
         )}
 
-        {/* Info bar */}
-        <div className="bg-white border-b border-black shadow-none px-4 py-3" style={{ borderTop: `3px solid ${pc}` }}>
-          <div className="flex items-center justify-between gap-3">
-            <div className="min-w-0">
-              <h1 className="text-lg font-bold text-slate-900 truncate">{profile.display_name}</h1>
-              {profile.mascot && <p className="text-xs text-slate-500 truncate">{profile.mascot}</p>}
+        {/* ── CO-OP MEMBERS PANEL ───────────────────────────────────────────────
+             Shown on co-op school pages listing individual member schools.    */}
+        {coopMembers.length > 0 && (
+          <div className="mb-6 border border-black rounded-none bg-white overflow-hidden">
+            <div className="px-4 py-2 bg-slate-50 border-b border-slate-200 flex items-center gap-2">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Co-op Program</span>
+              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-slate-200 text-slate-500">
+                {seasonLabel}
+              </span>
             </div>
-            <div className="flex items-center gap-2 shrink-0">
-              <div className="flex rounded-none border border-slate-200 overflow-hidden text-xs">
-                <Link href={`/schools/${schoolId}?gender=boys${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
-                  className={`px-2.5 py-1 font-medium ${gender === 'boys' ? 'bg-slate-900 text-white' : 'bg-white text-slate-500'}`}>B</Link>
-                <Link href={`/schools/${schoolId}?gender=girls${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
-                  className={`px-2.5 py-1 font-medium ${gender === 'girls' ? 'bg-rose-700 text-white' : 'bg-white text-slate-500'}`}>G</Link>
-              </div>
-              <FollowSchoolButton schoolId={profile.id} />
-            </div>
-          </div>
-          {(tags.length > 0 || classLabel || conferenceSlug || profile.athletic_conference === 'Independent') && (
-            <div className="flex flex-wrap gap-1 mt-2">
-              {tags.map(tag => (
-                <span key={tag} className="text-[10px] px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-500">{tag}</span>
-              ))}
-              {districtLabel && districtNum && (
-                <Link href={`${genderBase}/districts/${districtNum}`} className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-600">{districtLabel}</Link>
-              )}
-              {regionLabel && regionNum && (
-                <Link href={`${genderBase}/regions/${regionNum}`} className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-600">{regionLabel}</Link>
-              )}
-              {classLabel && secSlug && grpSlug && (
-                <Link href={`/sections/${secSlug}/${grpSlug}?gender=${gender}`} className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-600">{classLabel}</Link>
-              )}
-              {profile.athletic_conference && conferenceSlug && (
-                <Link href={`/conferences/${conferenceSlug}?gender=${gender}`} className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-600">{profile.athletic_conference}</Link>
-              )}
-              {profile.athletic_conference === 'Independent' && (
-                <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-600">Independent</span>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Desktop: sticky header with logo left + info right */}
-      <div className="hidden md:block sticky top-0 z-20 bg-white border border-black rounded-none shadow-none mb-8" style={{ borderTop: `3px solid ${pc}` }}>
-        <div className="flex items-center gap-5 p-4">
-          {/* Logo left */}
-          <div className="shrink-0">
-            {profile.logo_url ? (
-              <Image
-                src={profile.logo_url}
-                alt={profile.display_name}
-                width={1079}
-                height={647}
-                className="w-[240px] h-auto rounded-none"
-              />
-            ) : (
-              <div
-                className="w-[160px] h-[96px] rounded-none flex items-center justify-center text-4xl font-bold"
-                style={{ backgroundColor: pc, color: sc }}
-              >
-                {schoolInitials(profile)}
-              </div>
-            )}
-          </div>
-
-          {/* Info right */}
-          <div className="flex-1 min-w-0">
-            <div className="flex items-start justify-between gap-4">
-              <div className="min-w-0">
-                <h1 className="text-2xl font-bold text-slate-900 truncate">{profile.display_name}</h1>
-                {(profile.mascot || profile.nickname) && (
-                  <p className="text-sm text-slate-500 mt-0.5">
-                    {[profile.mascot, profile.nickname ? `"${profile.nickname}"` : null].filter(Boolean).join(' · ')}
-                  </p>
-                )}
-                {(tags.length > 0 || classLabel || conferenceSlug || profile.athletic_conference === 'Independent') && (
-                  <div className="flex flex-wrap gap-1.5 mt-2">
-                    {tags.map(tag => (
-                      <span key={tag} className="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">{tag}</span>
-                    ))}
-                    {districtLabel && districtNum && (
-                      <Link href={`${genderBase}/districts/${districtNum}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
-                        {districtLabel}
-                      </Link>
+            <div className="divide-y divide-slate-100">
+              {coopMembers.map(m => (
+                <Link
+                  key={m.member_school_id}
+                  href={`/schools/${m.member_school_id}?gender=${gender}`}
+                  className="flex items-center justify-between px-4 py-2.5 hover:bg-slate-50 transition-colors group"
+                >
+                  <span className="text-sm font-medium text-slate-800 group-hover:underline">{m.member_name}</span>
+                  <div className="flex items-center gap-2">
+                    {m.is_primary && (
+                      <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-600 font-medium">Primary</span>
                     )}
-                    {regionLabel && regionNum && (
-                      <Link href={`${genderBase}/regions/${regionNum}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
-                        {regionLabel}
-                      </Link>
-                    )}
-                    {classLabel && secSlug && grpSlug && (
-                      <Link href={`/sections/${secSlug}/${grpSlug}?gender=${gender}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
-                        {classLabel}
-                      </Link>
-                    )}
-                    {profile.athletic_conference && conferenceSlug && (
-                      <Link href={`/conferences/${conferenceSlug}?gender=${gender}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
-                        {profile.athletic_conference}
-                      </Link>
-                    )}
-                    {profile.athletic_conference === 'Independent' && (
-                      <span className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600">Independent</span>
-                    )}
+                    <svg className="w-3.5 h-3.5 text-slate-300 group-hover:text-slate-500 transition-colors" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                    </svg>
                   </div>
-                )}
-                <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-slate-400">
-                  {profile.founded_year && <span>Est. {profile.founded_year}</span>}
-                  {profile.website_url && (
-                    <a href={profile.website_url} target="_blank" rel="noopener noreferrer" className="hover:text-slate-600 inline-flex items-center gap-0.5">
-                      Website <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-4.5-6H21m0 0v7.5m0-7.5l-9 9" /></svg>
-                    </a>
-                  )}
-                  {profile.twitter_handle && (
-                    <a href={`https://x.com/${profile.twitter_handle.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="hover:text-slate-600">
-                      {profile.twitter_handle}
-                    </a>
-                  )}
-                </div>
-              </div>
-
-              <div className="flex flex-col items-end gap-2 shrink-0">
-                <div className="flex rounded-none border border-slate-200 overflow-hidden text-sm">
-                  <Link href={`/schools/${schoolId}?gender=boys${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
-                    className={`px-3 py-1.5 font-medium transition-colors ${gender === 'boys' ? 'bg-slate-900 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}>Boys</Link>
-                  <Link href={`/schools/${schoolId}?gender=girls${activeTab !== 'overview' ? `&tab=${activeTab}` : ''}`}
-                    className={`px-3 py-1.5 font-medium transition-colors ${gender === 'girls' ? 'bg-rose-700 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}>Girls</Link>
-                </div>
-                <FollowSchoolButton schoolId={profile.id} />
-                <div className="flex items-center text-xs text-slate-400">
-                  <InlineSeasonPicker activeSeason={season} />
-                </div>
-              </div>
+                </Link>
+              ))}
             </div>
           </div>
-        </div>
+        )}
+
+        {/* ── TABS ── */}
+        <SchoolTabs
+          school={schoolParam}
+          gender={gender}
+          activeTab={activeTab}
+          primaryColor={pc}
+          schoolData={{
+            display_name: profile.display_name,
+            primary_color: profile.primary_color,
+            secondary_color: profile.secondary_color,
+            logo_url: profile.logo_url,
+          }}
+          wrestlers={rows}
+          breakdown={bdRows}
+          leaders={leaderRows}
+          teamScore={teamScore}
+          totalPts={totalPts}
+          totalWins={totalWins}
+          stateMedalists={stateMedalists}
+          tourneyLabel={TOURNEY_LABEL}
+        />
       </div>
-
-      {/* ── CO-OP MEMBER BANNER ─────────────────────────────────────────────────
-           Shown on member school pages (e.g. Lodi) when the school participated
-           in a co-op for the current season + gender. Data is mirrored from the
-           co-op school record — nothing is duplicated in the DB.              */}
-      {activeCoop && (
-        <div className="mb-6 border border-amber-300 bg-amber-50 rounded-none px-4 py-3 flex items-start justify-between gap-4">
-          <div>
-            <p className="text-sm font-semibold text-amber-900">
-              {seasonLabel} {coopGenderLabel}: Competed as{' '}
-              <Link href={`/schools/${activeCoop.coop_school_id}?gender=${gender}`} className="underline hover:text-amber-700">
-                {activeCoop.coop_name}
-              </Link>
-            </p>
-            <p className="text-xs text-amber-700 mt-0.5">
-              Results below reflect the combined co-op program.
-            </p>
-          </div>
-          <Link
-            href={`/schools/${activeCoop.coop_school_id}?gender=${gender}`}
-            className="shrink-0 text-xs font-medium text-amber-800 border border-amber-300 bg-white px-3 py-1.5 hover:bg-amber-100 transition-colors whitespace-nowrap"
-          >
-            Co-op page →
-          </Link>
-        </div>
-      )}
-
-      {/* ── CO-OP MEMBERS PANEL ──────────────────────────────────────────────────
-           Shown on co-op school pages (e.g. Lodi/Saddle Brook) listing the
-           individual member schools with links to their profiles.             */}
-      {coopMembers.length > 0 && (
-        <div className="mb-6 border border-black rounded-none bg-white overflow-hidden">
-          <div className="px-4 py-2 bg-slate-50 border-b border-slate-200 flex items-center gap-2">
-            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Co-op Program</span>
-            <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-slate-200 text-slate-500">
-              {seasonLabel}
-            </span>
-          </div>
-          <div className="divide-y divide-slate-100">
-            {coopMembers.map(m => (
-              <Link
-                key={m.member_school_id}
-                href={`/schools/${m.member_school_id}?gender=${gender}`}
-                className="flex items-center justify-between px-4 py-2.5 hover:bg-slate-50 transition-colors group"
-              >
-                <span className="text-sm font-medium text-slate-800 group-hover:underline">{m.member_name}</span>
-                <div className="flex items-center gap-2">
-                  {m.is_primary && (
-                    <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-600 font-medium">Primary</span>
-                  )}
-                  <svg className="w-3.5 h-3.5 text-slate-300 group-hover:text-slate-500 transition-colors" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                  </svg>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* ── TABS ── */}
-      <SchoolTabs
-        school={schoolParam}
-        gender={gender}
-        activeTab={activeTab}
-        primaryColor={pc}
-        schoolData={{
-          display_name: profile.display_name,
-          primary_color: profile.primary_color,
-          secondary_color: profile.secondary_color,
-          logo_url: profile.logo_url,
-        }}
-        wrestlers={rows}
-        breakdown={bdRows}
-        leaders={leaderRows}
-        teamScore={teamScore}
-        totalPts={totalPts}
-        totalWins={totalWins}
-        stateMedalists={stateMedalists}
-        tourneyLabel={TOURNEY_LABEL}
-      />
-    </div>
+    </>
   )
 }
