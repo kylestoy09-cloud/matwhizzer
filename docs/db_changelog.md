@@ -5,6 +5,36 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-04-20 — School color reseed from updated CSV ✓ APPLIED
+
+**Migration file:** `docs/migrations/20260420_school_colors_reseed.sql`
+
+**What changed:**
+Pure UPDATE (no schema change — columns already exist from `20260420_school_color_columns.sql`). Reseeds `color_primary`, `color_secondary`, `color_tertiary`, `header_background` for all 326 schools from the corrected School Master List CSV.
+
+Key corrections vs initial seed:
+- School 289 (Cumberland): `color_primary` `#034CB2` → `#DB5B2A`, `color_secondary` → `#443029`
+- ~20 schools that had NULL `header_background` now populated (e.g. 360, 265, 286, 93, 168, 173, 305, 129, 322, 363, etc.)
+
+**Rollback:** Re-run `docs/migrations/20260420_school_color_columns.sql` to restore prior values.
+
+**Verified?** ✓ Applied 2026-04-20 — Cumberland row confirmed `#DB5B2A`/`#443029`; 324 schools with non-null `color_primary`.
+
+---
+
+## 2026-04-20 — Add school color columns and initial seed ✓ APPLIED
+
+**Migration file:** `docs/migrations/20260420_school_color_columns.sql`
+
+**What changed:**
+Added 4 nullable text columns to `schools` table: `color_primary`, `color_secondary`, `color_tertiary`, `header_background`. Seeded initial values for all 326 schools from School Master List CSV (colors normalized from named colors and bare hex to `#RRGGBB`).
+
+**Rollback:** `DROP COLUMN IF EXISTS` all four columns.
+
+**Verified?** ✓ Applied 2026-04-20 — superseded by reseed migration same day.
+
+---
+
 ## 2026-04-20 — School dedup final batch: 1 merge, 1 delete, 3 renames ✓ APPLIED
 
 **Migration file:** `docs/migrations/20260420_school_dedup_final.sql`
