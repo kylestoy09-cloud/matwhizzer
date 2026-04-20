@@ -191,7 +191,7 @@ setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
         {/* Logo */}
         <Link href={homeHref} className="flex items-center hover:opacity-90 transition-opacity">
           <Image
-            src="/images/Logo Tuesday.png"
+            src="/images/Mat Whizzer Header Logo.png"
             alt="Mat Whizzer"
             width={3229}
             height={323}

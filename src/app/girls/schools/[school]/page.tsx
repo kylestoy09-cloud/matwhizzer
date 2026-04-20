@@ -111,11 +111,34 @@ export default async function GirlsSchoolProfilePage({
     supabase.rpc('school_leaderboard',      { p_school_id: schoolId, p_gender: 'F', p_season: season }),
   ])
 
-  const rows      = (wrestlers ?? []) as WrestlerRow[]
-  const bdRows    = (breakdown  ?? []) as BreakdownRow[]
-  const leaderRows = (leaders   ?? []) as LeaderRow[]
+  const rows       = (wrestlers ?? []) as WrestlerRow[]
+  const bdRows     = (breakdown  ?? []) as BreakdownRow[]
+  const leaderRows = (leaders    ?? []) as LeaderRow[]
 
-  if (rows.length === 0) notFound()
+  if (rows.length === 0) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 py-10">
+        <Link
+          href="/girls/schools"
+          className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 mb-6 transition-colors"
+        >
+          ← School Directory
+        </Link>
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-rose-900">{schoolName}</h2>
+        </div>
+        <div className="border border-slate-200 rounded-none bg-white px-6 py-12 text-center">
+          <p className="text-slate-500 text-sm">No girls wrestling program at this school.</p>
+          <Link
+            href={`/boys/schools/${schoolParam}`}
+            className="mt-4 inline-block text-sm text-slate-600 underline hover:text-slate-900"
+          >
+            View boys program →
+          </Link>
+        </div>
+      </div>
+    )
+  }
 
   const totalPts  = bdRows.reduce((sum, r) => sum + Number(r.total_points), 0)
   const totalWins = bdRows.reduce((sum, r) => sum + Number(r.win_count), 0)

@@ -5,6 +5,69 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-04-20 — School dedup final batch: 1 merge, 1 delete, 3 renames ✓ APPLIED
+
+**Migration file:** `docs/migrations/20260420_school_dedup_final.sql`
+
+**What changed:**
+
+| Change | School | Details |
+|--------|--------|---------|
+| Merge 300 → 356 | Saint Joseph's Academy → St. Joseph's (Hammonton) | 8 `tournament_entries`, 1 `school_aliases`, 1 `school_names` re-pointed to 356. `school_regions` (Region 8) dropped — confirmed import artifact; 356 stays on Region 7. `precomputed_team_scores` row deleted. |
+| Delete 358 | Roselle | Zero tournament entries. 1 `conference_standings` row, 1 `school_districts` row deleted first. Real profile data lost (Rams, `#CC0022`, North II Group 2) — confirmed orphan. |
+| Rename 94 | Hoboken High School → Hoboken | HS-suffix cleanup, no data moved |
+| Rename 99 | Weehawken High School → Weehawken | HS-suffix cleanup, no data moved |
+| Rename 124 | Hillside High School → Hillside | HS-suffix cleanup, no data moved |
+
+**Post-migration:** Cleared 7 stale `precomputed_team_scores` rows for tournament 123 (Boy_s Districts District 31, season 1) — deleted when school 300 was merged. `district_team_score` RPC for District 31 now computes live from `tournament_entries`. St. Joseph's (Hammonton) entries in tournament 123 contributed 0 net team points (first-round exits, no bonus); confirmed correct.
+
+**`update_team_scoring.py` note:** This script only recreates RPCs — it does not write to `precomputed_team_scores`. There is no standalone script to repopulate that table; clearing rows forces live RPC fallback.
+
+**Verified?** ✓ Applied 2026-04-20 — schools 300 and 358 deleted, all 8 entries on school_id=356, display names on 94/99/124 correct.
+
+---
+
+## 2026-04-20 — Add missing Matawan conference_standings alias ✓ APPLIED
+
+**Migration file:** `docs/migrations/20260420_school_aliases_seed.sql`
+
+**What changed:**
+
+Added 1 missing row to `school_aliases`. `20260404_school_aliases.sql` was never applied to production — of its 21 aliases, 20 were already present (19 correct, 2 with post-consolidation IDs that are intentionally different from the original file). Only `Matawan` was genuinely absent.
+
+Two ID corrections surfaced during pre-flight:
+- Original file said `Matawan → 194` — school 194 no longer exists; canonical record is 382.
+- `ON CONFLICT (alias)` syntax removed — `school_aliases` has no unique constraint on `alias`; used `WHERE NOT EXISTS` guard instead.
+
+**Row count:** 681 → 682
+
+**Verified?** ✓ Applied 2026-04-20 — `SELECT * FROM school_aliases WHERE alias = 'Matawan'` returns `(1666, 382, 'Matawan', 'conference_standings', NULL)`.
+
+---
+
+## 2026-04-20 — Fix lb_district_strength girls score lookup bug ✓ APPLIED
+
+**Migration file:** `docs/migrations/20260420_lb_district_strength_fix.sql`
+
+**What changed:**
+
+RPC `lb_district_strength` had two bugs introduced via `update_rpcs.py` that broke girls postseason score data:
+
+1. **Wrong tournament type for girls** — a `base_tt` CTE routed `p_gender = 'F'` to `tournament_type = 'girls_regions'` instead of `'districts'`. Girls district wrestlers returned zero rows.
+2. **Missing girls_regions in adv_types** — the advancers check for girls only included `['girls_state']`, omitting `['girls_regions']`. Girls wrestlers who advanced to regions were not counted as advancers.
+
+Fix removes the `base_tt` CASE WHEN routing and filters directly on `tournament_type = 'districts' AND t.gender = p_gender`, consistent with all other district-aware RPCs. `adv_types` for girls updated to `['girls_regions','girls_state']`.
+
+`update_rpcs.py` updated to match — running that script will no longer overwrite the fix.
+
+**No schema changes.** No enum changes. No data changes. RPC-only fix.
+
+**Partial fix note:** Full `girls_districts` enum rename (making districts consistent with regions/state gender split) is still outstanding. See migration file header for full scope.
+
+**Verified?** ✓ Applied 2026-04-20 — live DB was already patched; migration documents and re-anchors the correct state.
+
+---
+
 ## 2026-04-15 — Consolidate Camden duplicate (362 → 237), Highland duplicate (298 → 369), Keansburg duplicate (373 → 191) ✓ APPLIED
 
 **Migration files:**
