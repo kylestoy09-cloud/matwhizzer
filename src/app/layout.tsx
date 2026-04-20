@@ -56,7 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div
           className="fixed inset-0 pointer-events-none z-0"
           style={{
-            backgroundImage: 'url(/hat_logo_update.jpg)',
+            backgroundImage: 'url(/images/Mat Whizzer Logo Navy - No Outline.png)',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center center',
             backgroundSize: '1050px',
@@ -70,7 +70,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Logo in white section above footer */}
         <div className="bg-white flex justify-center py-6 mt-8">
           <Image
-            src="/mwl-hat.png"
+            src="/images/Mat Whizzer Logo Navy - No Outline.png"
             alt="Mat Whizzer"
             width={48}
             height={48}

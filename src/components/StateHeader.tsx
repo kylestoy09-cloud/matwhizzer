@@ -10,7 +10,7 @@ export function StateHeader({ gender }: StateHeaderProps) {
   return (
     <div className="flex flex-col items-center select-none">
       <Image
-        src="/mwl-hat.png"
+        src="/images/Mat Whizzer Logo Navy - No Outline.png"
         alt=""
         width={100}
         height={100}

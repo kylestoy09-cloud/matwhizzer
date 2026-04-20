@@ -11,7 +11,7 @@ export function PageHeader({ title, showLogo = true, goldTrim = false }: PageHea
     <div className="flex flex-col items-center select-none">
       {showLogo && (
         <Image
-          src="/mwl-hat.png"
+          src="/images/Mat Whizzer Logo Navy - No Outline.png"
           alt=""
           width={80}
           height={80}
