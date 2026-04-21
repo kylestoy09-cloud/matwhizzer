@@ -320,7 +320,7 @@ setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
 
       {/* ── Row 3 — combined search ───────────────────────────────────────── */}
       <div className={`${rowTwoBg} border-b border-black/60`}>
-        <div className="px-4 py-2">
+        <div className="px-4 py-1">
           <div ref={searchRef} className="relative w-full max-w-lg">
             <input
               type="text"
@@ -331,7 +331,7 @@ setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
               }}
               placeholder="Search wrestlers or schools…"
               autoComplete="off"
-              className="w-full border border-slate-300 rounded-none px-4 py-2.5 text-base shadow-none focus:outline-none focus:ring-2 focus:ring-slate-500 bg-white text-slate-900 placeholder-slate-400"
+              className="w-full border border-slate-300 rounded-none px-4 py-1.5 text-sm shadow-none focus:outline-none focus:ring-2 focus:ring-slate-500 bg-white text-slate-900 placeholder-slate-400"
             />
 
             {searchOpen && (
