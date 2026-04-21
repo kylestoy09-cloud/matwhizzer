@@ -5,6 +5,22 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-04-20 — Add school_id to lb_gp_team_points RPC ✓ APPLIED
+
+**Migration file:** `docs/migrations/20260420_lb_gp_team_points_school_id.sql`
+
+**What changed:**
+- Dropped old `lb_gp_team_points(p_pool text)` 1-arg function
+- Replaced with `lb_gp_team_points(p_pool text, p_season integer DEFAULT NULL)` returning `school_id integer` in addition to existing columns
+- `school_id` resolved via `LEFT JOIN schools ON display_name` match against resolved school name
+- Enables school SVG avatar display and school profile links in the girls leaderboard Team Points table
+
+**Rollback:** Recreate prior version from `fix_lb_gp_rpcs.py` `LB_GP_TEAM_POINTS` definition (no school_id column, 1-arg signature)
+
+**Verified?** ✓ Applied 2026-04-20 — sanity check confirmed school_id populating for known schools (e.g. Pennsauken=242, Howell=233)
+
+---
+
 ## 2026-04-20 — Fix Buena Regional/Vineland display name ✓ APPLIED
 
 **Migration file:** `docs/migrations/20260420_buena_display_name_fix.sql`

@@ -11,6 +11,7 @@ import {
 } from '@/components/leaderboard-ui'
 import { BracketBuster } from '@/components/BracketBuster'
 import { TechnicalMasters } from '@/components/TechnicalMasters'
+import mascotIndex from '@/data/mascot-index.json'
 
 // ── Pool-specific types ───────────────────────────────────────────────────────
 
@@ -435,16 +436,26 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
               {
                 label: 'School', align: 'left',
                 render: r => (
-                  <>{r.school_id ? (
-                    <Link
-                      href={`/schools/${r.school_id}?gender=boys`}
-                      className="font-medium text-slate-800 hover:text-slate-600 hover:underline"
-                    >
-                      {r.school_name || r.school}
-                    </Link>
-                  ) : (
-                    <span className="font-medium text-slate-800">{r.school_name || r.school}</span>
-                  )}</>
+                  <div className="flex items-center gap-1.5">
+                    {r.school_id && (mascotIndex[String(r.school_id)] ?? null) && (
+                      <img
+                        src={`/mascots/${encodeURIComponent(mascotIndex[String(r.school_id)] as string)}`}
+                        className="h-5 w-auto flex-shrink-0"
+                        alt=""
+                        aria-hidden="true"
+                      />
+                    )}
+                    {r.school_id ? (
+                      <Link
+                        href={`/schools/${r.school_id}?gender=boys`}
+                        className="font-medium text-slate-800 hover:text-slate-600 hover:underline"
+                      >
+                        {r.school_name || r.school}
+                      </Link>
+                    ) : (
+                      <span className="font-medium text-slate-800">{r.school_name || r.school}</span>
+                    )}
+                  </div>
                 ),
               },
               {
