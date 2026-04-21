@@ -5,6 +5,18 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-04-20 — Fix Buena Regional/Vineland display name ✓ APPLIED
+
+**Migration file:** `docs/migrations/20260420_buena_display_name_fix.sql`
+
+**What changed:** `UPDATE schools SET display_name = 'Buena/Vineland' WHERE id = 360`
+
+**Rollback:** `UPDATE schools SET display_name = 'Buena Regional/Vineland' WHERE id = 360`
+
+**Verified?** ✓ Applied 2026-04-20 — 1 row updated.
+
+---
+
 ## 2026-04-20 — Mascot name audit and fix (19 schools) ✓ APPLIED
 
 **Migration file:** `docs/migrations/20260420_mascot_name_fix.sql`
