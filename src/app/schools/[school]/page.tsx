@@ -362,6 +362,8 @@ export default async function SchoolProfilePage({
         grpSlug={grpSlug}
         conferenceSlug={conferenceSlug}
         athleticConference={profile.athletic_conference}
+        websiteUrl={profile.website_url}
+        twitterHandle={profile.twitter_handle}
       />
 
       <div className="max-w-4xl mx-auto px-4 py-6">

@@ -86,6 +86,8 @@ export interface SchoolHeaderProps {
   grpSlug: string | null
   conferenceSlug: string | null
   athleticConference: string | null
+  websiteUrl: string | null
+  twitterHandle: string | null
 }
 
 // ── Component ─────────────────────────────────────────────────────────────────
@@ -116,6 +118,8 @@ export function SchoolHeader({
   grpSlug,
   conferenceSlug,
   athleticConference,
+  websiteUrl,
+  twitterHandle,
 }: SchoolHeaderProps) {
   const bgColor   = headerBackground ?? colorSecondary ?? '#1a1a2e'
   const textColor = pickTextColor(bgColor, [colorPrimary, colorSecondary, colorTertiary])
@@ -246,6 +250,32 @@ export function SchoolHeader({
           >
             {athleticConference}
           </Link>
+        )}
+
+        {/* Website */}
+        {websiteUrl && (
+          <a
+            href={websiteUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[11px] px-2 py-0.5 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
+            style={{ color: textColor }}
+          >
+            Website ↗
+          </a>
+        )}
+
+        {/* Twitter / X */}
+        {twitterHandle && (
+          <a
+            href={`https://x.com/${twitterHandle.replace('@', '')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[11px] px-2 py-0.5 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
+            style={{ color: textColor }}
+          >
+            {twitterHandle.startsWith('@') ? twitterHandle : `@${twitterHandle}`}
+          </a>
         )}
       </div>
 
