@@ -1,6 +1,5 @@
-import fs from 'fs'
-import path from 'path'
 import Link from 'next/link'
+import mascotIndex from '@/data/mascot-index.json'
 import { Stardos_Stencil } from 'next/font/google'
 import { FollowSchoolButton } from '@/components/FollowSchoolButton'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
@@ -54,18 +53,12 @@ function pickTextColor(bg: string, candidates: (string | null | undefined)[]): s
 }
 
 // ── SVG mascot lookup ─────────────────────────────────────────────────────────
-// Files are named "{schoolId} - {name}.svg" or "{schoolId} {name}.svg".
-// Match by ID prefix only; ignore the name portion.
+// mascot-index.json is generated at build time by scripts/generate-mascot-index.mjs
+// and maps school ID strings to their SVG filename in public/mascots/.
 
 function findMascotSvg(schoolId: number): string | null {
-  try {
-    const dir = path.join(process.cwd(), 'public', 'mascots')
-    const files = fs.readdirSync(dir)
-    const match = files.find(f => f.startsWith(`${schoolId} `))
-    return match ? `/mascots/${encodeURIComponent(match)}` : null
-  } catch {
-    return null
-  }
+  const file = mascotIndex[String(schoolId) as keyof typeof mascotIndex] ?? null
+  return file ? `/mascots/${encodeURIComponent(file)}` : null
 }
 
 // ── Props ──────────────────────────────────────────────────────────────────────
