@@ -437,9 +437,9 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
                 label: 'School', align: 'left',
                 render: r => (
                   <div className="flex items-center gap-1.5">
-                    {r.school_id && (mascotIndex[String(r.school_id)] ?? null) && (
+                    {r.school_id && ((mascotIndex as Record<string, string>)[String(r.school_id)] ?? null) && (
                       <img
-                        src={`/mascots/${encodeURIComponent(mascotIndex[String(r.school_id)] as string)}`}
+                        src={`/mascots/${encodeURIComponent((mascotIndex as Record<string, string>)[String(r.school_id)])}`}
                         className="h-5 w-auto flex-shrink-0"
                         alt=""
                         aria-hidden="true"
