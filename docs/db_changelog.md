@@ -5,6 +5,19 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-04-20 — Fix Cumberland header_background (#FFFFFF → #DB5B2A) ✓ APPLIED
+
+**Migration file:** `docs/migrations/20260420_cumberland_header_bg.sql`
+
+**What changed:**
+Single-row fix: `UPDATE schools SET header_background = '#DB5B2A' WHERE id = 289`. The reseed migration seeded `#FFFFFF` from the CSV "Background: White" column, causing the school header to render white-on-white (invisible). `#DB5B2A` (Cumberland's orange primary) is the correct background.
+
+**Rollback:** `UPDATE schools SET header_background = '#FFFFFF' WHERE id = 289`
+
+**Verified?** ✓ Applied 2026-04-20 — 1 row updated.
+
+---
+
 ## 2026-04-20 — School color reseed from updated CSV ✓ APPLIED
 
 **Migration file:** `docs/migrations/20260420_school_colors_reseed.sql`

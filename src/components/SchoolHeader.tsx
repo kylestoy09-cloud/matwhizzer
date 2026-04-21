@@ -137,23 +137,23 @@ export function SchoolHeader({
         </h1>
 
         {(mascotLine || svgPath) && (
-          <div className="flex items-end justify-between mt-1 min-h-[2.5rem]">
-            {mascotLine && (
-              <p
-                className="pl-4 text-sm sm:text-base font-medium"
-                style={{ color: textColor, opacity: 0.82 }}
-              >
-                {mascotLine}
-              </p>
-            )}
+          <div className="flex items-end gap-3 mt-1 min-h-[2.5rem]">
             {svgPath && (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={svgPath}
                 alt=""
                 aria-hidden="true"
-                className="h-16 w-auto shrink-0 ml-4"
+                className="h-16 w-auto shrink-0"
               />
+            )}
+            {mascotLine && (
+              <p
+                className="text-sm sm:text-base font-medium"
+                style={{ color: textColor, opacity: 0.82 }}
+              >
+                {mascotLine}
+              </p>
             )}
           </div>
         )}
