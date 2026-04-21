@@ -148,7 +148,7 @@ export function SchoolHeader({
             </h1>
             {mascotLine && (
               <p
-                className={`${stardos.className} text-xl sm:text-2xl text-right`}
+                className={`${stardos.className} text-2xl sm:text-3xl text-right`}
                 style={{ color: textColor, opacity: 0.82 }}
               >
                 {mascotLine}
