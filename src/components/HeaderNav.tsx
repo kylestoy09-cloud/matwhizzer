@@ -201,7 +201,8 @@ setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
         </Link>
 
         {/* Auth */}
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col items-end gap-1">
+          <div className="flex items-center gap-3">
           {user ? (
             <div ref={userMenuRef} className="relative">
               <button
@@ -243,15 +244,10 @@ setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
               Sign In
             </Link>
           )}
-        </div>
-      </div>
+          </div>
 
-      {/* ── Row 2 — sub-nav ──────────────────────────────────────────────── */}
-      <div className={`${rowTwoBg} border-b border-black overflow-x-auto`}>
-        <div className="flex items-center gap-0.5 px-3 py-1.5 whitespace-nowrap min-w-max">
-
-          {/* Boys / Girls segmented toggle */}
-          <div className="flex border border-white/30 mr-4 flex-shrink-0">
+          {/* Boys / Girls toggle — desktop only, right-aligned under Sign In */}
+          <div className="hidden sm:flex border border-white/30 flex-shrink-0">
             <button
               onClick={() => router.push(genderHref(pathname, 'boys'))}
               className={`px-4 py-1 text-xs font-bold tracking-wide transition-colors ${
@@ -273,6 +269,12 @@ setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
               Girls
             </button>
           </div>
+        </div>
+      </div>
+
+      {/* ── Row 2 — sub-nav ──────────────────────────────────────────────── */}
+      <div className={`${rowTwoBg} border-b border-black overflow-x-auto`}>
+        <div className="flex items-center gap-0.5 px-3 py-1.5 whitespace-nowrap min-w-max">
 
           {/* Nav links */}
           {navItems.map(item => {
@@ -291,6 +293,30 @@ setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
               </Link>
             )
           })}
+
+          {/* Boys / Girls toggle — mobile only, after Feedback */}
+          <div className="sm:hidden flex border border-white/30 ml-4 flex-shrink-0">
+            <button
+              onClick={() => router.push(genderHref(pathname, 'boys'))}
+              className={`px-4 py-1 text-xs font-bold tracking-wide transition-colors ${
+                isBoys
+                  ? 'bg-white text-slate-900'
+                  : 'text-white/60 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              Boys
+            </button>
+            <button
+              onClick={() => router.push(genderHref(pathname, 'girls'))}
+              className={`px-4 py-1 text-xs font-bold tracking-wide transition-colors border-l border-white/30 ${
+                !isBoys
+                  ? 'bg-rose-200 text-rose-900'
+                  : 'text-white/60 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              Girls
+            </button>
+          </div>
         </div>
       </div>
 
