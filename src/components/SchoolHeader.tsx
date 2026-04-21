@@ -129,34 +129,33 @@ export function SchoolHeader({
 
       {/* ── Name + mascot + logo ─────────────────────────────────────────────── */}
       <div className="px-4 pt-6 pb-4">
-        <h1
-          className={`${stardos.className} text-4xl sm:text-6xl leading-none tracking-wide`}
-          style={{ color: textColor }}
-        >
-          {schoolName}
-        </h1>
-
-        {(mascotLine || svgPath) && (
-          <div className="flex items-center gap-4 mt-4">
-            {svgPath && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={svgPath}
-                alt=""
-                aria-hidden="true"
-                className="h-32 w-auto shrink-0"
-              />
-            )}
+        <div className="flex items-center gap-4">
+          {svgPath && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={svgPath}
+              alt=""
+              aria-hidden="true"
+              className="h-32 w-auto shrink-0"
+            />
+          )}
+          <div className="flex flex-col min-w-0">
+            <h1
+              className={`${stardos.className} text-4xl sm:text-6xl leading-none tracking-wide`}
+              style={{ color: textColor }}
+            >
+              {schoolName}
+            </h1>
             {mascotLine && (
               <p
-                className="text-xl sm:text-2xl font-medium"
+                className={`${stardos.className} text-xl sm:text-2xl text-right`}
                 style={{ color: textColor, opacity: 0.82 }}
               >
                 {mascotLine}
               </p>
             )}
           </div>
-        )}
+        </div>
       </div>
 
       {/* ── Boys / Girls toggle + info pills ─────────────────────────────────── */}
