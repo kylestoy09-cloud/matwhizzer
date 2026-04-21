@@ -5,6 +5,24 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-04-20 — Mascot name audit and fix (19 schools) ✓ APPLIED
+
+**Migration file:** `docs/migrations/20260420_mascot_name_fix.sql`
+
+**What changed:**
+19 `UPDATE schools SET mascot` rows in two categories:
+
+- **16 NULL → value**: Saddle River Day (Rebels), College Achieve Paterson (Phoenix), Pioneer Academy (Eagles), Newark Collegiate (Knights), Central Jersey College Prep (Cougars), Ranney (Panthers), Bordentown Regional/Florence (Scotties), Kittatinny (Cougars), Becton (Wildcats), Cherry Hill East/West (Cougar Lions), Cliffside Park/Ridgefield Memorial (Royal Raiders), Jefferson-Sparta (Spartan Falcons), Lodi/Saddle Brook (Ram Falcons), Mary Help of Christians Academy (Blue Jays), Morris Hills-Morris Knolls (Eagle Knights), Ramsey/Northern Highlands (Highlander Rams)
+- **3 wrong → correct**: Emerson Boro (Cavaliers→Cabos), Nottingham (Northstars→Patriots), Buena Regional/Vineland (Wildcats→Fighting Chiefs)
+
+Kept DB values for: Voorhees (Vikings), Haddonfield (Bulldawgs), Red Bank Regional (Buccaneers), and the more-specific group (Green Raiders, Maroon Raiders, etc.)
+
+**Rollback:** Commented out at bottom of migration file.
+
+**Verified?** ✓ Applied 2026-04-20 — Emerson/Nottingham/Buena spot-checked correct.
+
+---
+
 ## 2026-04-20 — Fix Cumberland header_background (#FFFFFF → #DB5B2A) ✓ APPLIED
 
 **Migration file:** `docs/migrations/20260420_cumberland_header_bg.sql`
