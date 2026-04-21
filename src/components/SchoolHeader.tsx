@@ -139,9 +139,9 @@ export function SchoolHeader({
               className="h-32 w-auto shrink-0"
             />
           )}
-          <div className="flex flex-col min-w-0">
+          <div className="flex flex-col min-w-0 items-end sm:items-start">
             <h1
-              className={`${stardos.className} text-4xl sm:text-6xl leading-none tracking-wide`}
+              className={`${stardos.className} text-4xl sm:text-6xl leading-none tracking-wide text-right sm:text-left`}
               style={{ color: textColor }}
             >
               {schoolName}
