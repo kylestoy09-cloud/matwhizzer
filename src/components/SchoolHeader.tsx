@@ -120,7 +120,7 @@ export function SchoolHeader({
   const bgColor   = headerBackground ?? colorSecondary ?? '#1a1a2e'
   const textColor = pickTextColor(bgColor, [colorPrimary, colorSecondary, colorTertiary])
   const svgPath   = findMascotSvg(schoolId)
-  const mascotLine = [mascot, nickname ? `"${nickname}"` : null].filter(Boolean).join(' · ')
+  const mascotLine = mascot ?? null
   const genderBase = gender === 'girls' ? '/girls' : '/boys'
   const tabSuffix  = activeTab !== 'overview' ? `&tab=${activeTab}` : ''
 
