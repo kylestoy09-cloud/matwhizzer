@@ -128,28 +128,28 @@ export function SchoolHeader({
     <div className="sticky top-0 z-20 w-full shadow-md" style={{ backgroundColor: bgColor }}>
 
       {/* ── Name + mascot + logo ─────────────────────────────────────────────── */}
-      <div className="px-4 pt-4 pb-2">
+      <div className="px-4 pt-6 pb-4">
         <h1
-          className={`${stardos.className} text-4xl sm:text-5xl leading-none tracking-wide`}
+          className={`${stardos.className} text-4xl sm:text-6xl leading-none tracking-wide`}
           style={{ color: textColor }}
         >
           {schoolName}
         </h1>
 
         {(mascotLine || svgPath) && (
-          <div className="flex items-end gap-3 mt-1 min-h-[2.5rem]">
+          <div className="flex items-center gap-4 mt-4">
             {svgPath && (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={svgPath}
                 alt=""
                 aria-hidden="true"
-                className="h-16 w-auto shrink-0"
+                className="h-32 w-auto shrink-0"
               />
             )}
             {mascotLine && (
               <p
-                className="text-sm sm:text-base font-medium"
+                className="text-xl sm:text-2xl font-medium"
                 style={{ color: textColor, opacity: 0.82 }}
               >
                 {mascotLine}
