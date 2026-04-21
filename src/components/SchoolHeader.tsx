@@ -252,6 +252,11 @@ export function SchoolHeader({
           </Link>
         )}
 
+        {/* DEBUG — remove before ship */}
+        <pre className="w-full text-[10px] bg-black/50 text-green-400 px-2 py-1 rounded mt-1">
+          {JSON.stringify({ websiteUrl, twitterHandle }, null, 2)}
+        </pre>
+
         {/* Website */}
         {websiteUrl && (
           <a
