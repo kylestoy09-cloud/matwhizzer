@@ -189,6 +189,12 @@ function isFormatA(chunk: string): boolean {
   return lineStartRe.test(chunk)
 }
 
+function isFormatC(chunk: string): boolean {
+  // Format C has weight classes alone on their own lines (one field per line).
+  const re = new RegExp(`^(${WEIGHT_ALT})$`, 'm')
+  return re.test(chunk)
+}
+
 // ── Format A parser ────────────────────────────────────────────────────────────
 
 function parseMatchLine(line: string): { weight: number; summary: string; t1: number; t2: number } | null {
@@ -265,6 +271,42 @@ function parseFormatB(chunk: string): ParsedMatch[] {
   return matches
 }
 
+// ── Format C parser ────────────────────────────────────────────────────────────
+// One field per line, blank lines between match blocks:
+//   Line 1: weight class alone  ("106")
+//   Line 2: summary text        ("Name (School) over Name (School) (Result)")
+//   Line 3: team1 points
+//   Line 4: team2 points
+//   (one or more blank lines, then next block)
+//
+// This is what browsers produce when copy-pasting from TrackWrestling tables —
+// each cell lands on its own line instead of being tab-separated.
+
+function parseFormatC(chunk: string): ParsedMatch[] {
+  const lines    = chunk.split('\n').map(l => l.trim())
+  const weightSet = new Set<number>(WEIGHT_LIST as unknown as number[])
+  const matches: ParsedMatch[] = []
+
+  let i = 0
+  while (i < lines.length) {
+    if (!lines[i]) { i++; continue }   // skip blank lines between blocks
+
+    const weight = parseInt(lines[i])
+    if (!weightSet.has(weight)) { i++; continue }  // not a weight class line
+
+    const summary = lines[i + 1] ?? ''
+    const t1      = parseInt(lines[i + 2] ?? '')
+    const t2      = parseInt(lines[i + 3] ?? '')
+
+    if (!summary || isNaN(t1) || isNaN(t2)) { i++; continue }
+
+    matches.push(parseMatchSummary(summary, t1, t2, weight))
+    i += 4
+  }
+
+  return matches
+}
+
 // ── Public API ─────────────────────────────────────────────────────────────────
 
 export function parseDualMeetText(raw: string): ParsedMeet[] {
@@ -279,7 +321,9 @@ export function parseDualMeetText(raw: string): ParsedMeet[] {
     if (!header) continue
 
     const score   = parseTeamScore(chunk)
-    const matches = isFormatA(chunk) ? parseFormatA(chunk) : parseFormatB(chunk)
+    const matches = isFormatA(chunk) ? parseFormatA(chunk)
+                  : isFormatC(chunk) ? parseFormatC(chunk)
+                  : parseFormatB(chunk)
 
     const key         = `${header.team1}|${header.team2}|${header.date}`
     const isDuplicate = seen.has(key)

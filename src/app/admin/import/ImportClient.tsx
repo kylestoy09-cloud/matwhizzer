@@ -81,13 +81,6 @@ export function ImportClient() {
     // Step 1: parse (synchronous)
     const parsed = parseDualMeetText(text)
 
-    // DEBUG — remove before ship
-    console.log('[ImportClient] parse debug:', {
-      rawLength:      text.length,
-      rawFirst200:    JSON.stringify(text.slice(0, 200)),
-      meetsFound:     parsed.length,
-      firstMeetMatches: parsed[0]?.matches?.length ?? 'n/a',
-    })
 
     if (parsed.length === 0) {
       setError('No meets found. Make sure the text includes a "Team A vs. Team B (MM/DD/YYYY)" header.')

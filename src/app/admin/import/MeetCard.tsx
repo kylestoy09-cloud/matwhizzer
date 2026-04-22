@@ -99,16 +99,6 @@ export function MeetCard({
 }: Props) {
   const [expanded, setExpanded] = useState(!meet.isDuplicate)
 
-  // DEBUG — remove before ship
-  console.log('[MeetCard] meet prop:', {
-    team1Name:   meet.team1Name,
-    team2Name:   meet.team2Name,
-    date:        meet.date,
-    matchCount:  meet.matches?.length,
-    matches:     meet.matches,
-    isDuplicate: meet.isDuplicate,
-    rawTextSnip: meet.rawText?.slice(0, 120),
-  })
 
   const s1 = resolveSchool(meet.team1Name, schoolResolutions, schoolOverrides)
   const s2 = resolveSchool(meet.team2Name, schoolResolutions, schoolOverrides)
