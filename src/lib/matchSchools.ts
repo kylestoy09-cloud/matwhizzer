@@ -21,6 +21,7 @@ export type SchoolMatch = {
   displayName: string | null
   confidence: 'exact' | 'high' | 'low' | 'none'
   alternates: { schoolId: number; displayName: string; score: number }[]
+  canCreateOutOfState?: boolean   // true when confidence is 'none' — no NJ school record found
 }
 
 type SchoolRow = { id: number; display_name: string }
@@ -179,10 +180,11 @@ export async function matchSchoolNames(rawName: string): Promise<SchoolMatch> {
   if (!best || best.score < 0.6) {
     return {
       rawName,
-      schoolId:    null,
-      displayName: null,
-      confidence:  'none',
-      alternates:  candidates,
+      schoolId:            null,
+      displayName:         null,
+      confidence:          'none',
+      alternates:          candidates,
+      canCreateOutOfState: true,
     }
   }
 

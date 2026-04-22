@@ -5,6 +5,21 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-04-22 — Add is_nj column to schools table ✓ APPLIED
+
+**Migration file:** `docs/migrations/20260422_schools_is_nj.sql`
+
+**What changed:**
+- `ALTER TABLE schools ADD COLUMN IF NOT EXISTS is_nj boolean DEFAULT true`
+- All existing rows default to `true` (every school currently in the DB is a NJ school)
+- Out-of-state schools imported via the dual-meet tool will be inserted with `is_nj = false`
+
+**Rollback:** `ALTER TABLE schools DROP COLUMN IF EXISTS is_nj`
+
+**Verified?** ✓ Applied 2026-04-22 — column present with `boolean DEFAULT true`
+
+---
+
 ## 2026-04-20 — Add school_id to lb_gp_team_points RPC ✓ APPLIED
 
 **Migration file:** `docs/migrations/20260420_lb_gp_team_points_school_id.sql`

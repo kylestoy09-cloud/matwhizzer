@@ -10,8 +10,9 @@ export type { SchoolMatch, WrestlerMatch }
 // ── Manual override types ──────────────────────────────────────────────────────
 
 export type SchoolOverride = {
-  schoolId:    number
-  displayName: string
+  schoolId:     number | null
+  displayName:  string
+  isOutOfState?: boolean
 }
 
 export type WrestlerOverride = {

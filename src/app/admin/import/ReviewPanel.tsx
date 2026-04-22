@@ -109,7 +109,29 @@ function SchoolReviewItem({
         </button>
       </div>
 
-      {override && (
+      {/* Out-of-state option — only shown for 'none' confidence matches */}
+      {match.confidence === 'none' && !override?.isOutOfState && (
+        <button
+          onClick={() => onOverride(rawName, { schoolId: null, displayName: rawName, isOutOfState: true })}
+          className="mt-2 w-full text-xs px-3 py-1.5 border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-600 text-left"
+        >
+          Mark as Out-of-State — skip, no NJ school record needed
+        </button>
+      )}
+
+      {override?.isOutOfState && (
+        <div className="mt-2 flex items-center justify-between">
+          <span className="text-xs text-slate-500 italic">Marked as out-of-state</span>
+          <button
+            onClick={() => onOverride(rawName, null)}
+            className="text-[11px] text-slate-400 hover:text-slate-700 underline"
+          >
+            Undo
+          </button>
+        </div>
+      )}
+
+      {override && !override.isOutOfState && (
         <button
           onClick={() => onOverride(rawName, null)}
           className="mt-2 text-[11px] text-slate-400 hover:text-slate-700 underline"
