@@ -5,6 +5,30 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-04-22 — School header_background updates and format normalisation ✓ APPLIED
+
+**Migration file:** `docs/migrations/20260422_school_colors_update.sql`
+
+**What changed:**
+- Set `header_background` for 32 schools that previously had NULL, sourced from
+  the 2026-04-22 mascot CSV ("School Master List.csv"), all values stored as
+  canonical `#RRGGBB` hex. Schools include new SVG additions (Jefferson, Dwight
+  Morrow, Manchester Regional, Westfield, South Hunterdon, Ridge, Middletown
+  South, North Brunswick, Monroe, Edison, St. Joseph Metuchen, Hunterdon
+  Central, Brick Township, Shore, Burlington City, Burlington Township, Ewing,
+  Paul VI, West Deptford, Central Regional, Kingsway, Rancocas Valley, Seneca,
+  Egg Harbor, Pennsville, Hammonton, Winslow, Penns Grove, Morris Knolls,
+  Pioneer Academy, Union City, Morris Hills-Morris Knolls)
+- Global Part 2 normalisation pass (name strings → hex, bare hex → `#` prefix)
+  was a no-op — DB was already clean
+- ID 289 (Cumberland, `#DB5B2A`) explicitly excluded
+
+**Rollback:** Set the 32 IDs back to NULL (see migration file ROLLBACK block)
+
+**Verified?** ✓ Applied 2026-04-22 — spot-checked IDs 4, 41, 77, 136, 263, 289, 385
+
+---
+
 ## 2026-04-22 — Add is_nj column to schools table ✓ APPLIED
 
 **Migration file:** `docs/migrations/20260422_schools_is_nj.sql`
