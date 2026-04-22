@@ -53,7 +53,8 @@ function getClient() {
 
 // ── In-memory cache ────────────────────────────────────────────────────────────
 
-let cacheReady = false
+let cacheReady   = false
+let cachePromise: Promise<void> | null = null  // singleton — prevents concurrent loads
 
 // school_id → wrestlers at that school (keyed by wrestlerId for fast lookup)
 const schoolIndex = new Map<number, Map<string, WrestlerRecord>>()
@@ -86,7 +87,12 @@ async function fetchAll<T>(
 
 async function ensureCache(): Promise<void> {
   if (cacheReady) return
+  // All concurrent callers share the same in-flight promise — only one load runs.
+  if (!cachePromise) cachePromise = loadCache()
+  return cachePromise
+}
 
+async function loadCache(): Promise<void> {
   const supabase = getClient()
 
   // Load weight_classes (small, no pagination needed)
@@ -94,11 +100,9 @@ async function ensureCache(): Promise<void> {
   if (wcRes.error) throw new Error(`matchWrestlers: failed to load weight_classes — ${wcRes.error.message}`)
   const weightClasses = (wcRes.data ?? []) as WeightClassRow[]
 
-  // Paginate wrestlers and tournament_entries
-  const [wrestlers, entries] = await Promise.all([
-    fetchAll<WrestlerRow>(supabase, 'wrestlers', 'id, first_name, last_name, suffix'),
-    fetchAll<EntryRow>(supabase, 'tournament_entries', 'wrestler_id, school_id, weight_class_id'),
-  ])
+  // Paginate wrestlers then entries serially to avoid connection pool exhaustion
+  const wrestlers = await fetchAll<WrestlerRow>(supabase, 'wrestlers', 'id, first_name, last_name, suffix')
+  const entries   = await fetchAll<EntryRow>(supabase, 'tournament_entries', 'wrestler_id, school_id, weight_class_id')
 
   // Build fast lookup maps
   const wrestlerMap = new Map<string, WrestlerRow>()
@@ -250,7 +254,8 @@ export async function matchWrestler(
 
 /** Clears the in-memory cache — useful in tests or after DB updates. */
 export function clearWrestlerCache(): void {
-  cacheReady = false
+  cacheReady   = false
+  cachePromise = null
   schoolIndex.clear()
   allWrestlers.length = 0
 }
