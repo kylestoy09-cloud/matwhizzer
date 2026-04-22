@@ -59,9 +59,6 @@ let cachePromise: Promise<void> | null = null  // singleton — prevents concurr
 // school_id → wrestlers at that school (keyed by wrestlerId for fast lookup)
 const schoolIndex = new Map<number, Map<string, WrestlerRecord>>()
 
-// Deduplicated list of all wrestlers (one entry per wrestlerId) for cross-school search
-const allWrestlers: { wrestlerId: string; displayName: string }[] = []
-
 /** Fetches all rows from a Supabase table, paginating in PAGE_SIZE chunks. */
 async function fetchAll<T>(
   supabase: ReturnType<typeof getClient>,
@@ -142,15 +139,6 @@ async function loadCache(): Promise<void> {
     schoolIndex.get(rec.schoolId)!.set(rec.wrestlerId, rec)
   }
 
-  // Build flat deduplicated wrestler list (by wrestlerId) for cross-school search
-  const seen = new Set<string>()
-  for (const w of wrestlers) {
-    if (!seen.has(w.id)) {
-      seen.add(w.id)
-      allWrestlers.push({ wrestlerId: w.id, displayName: buildName(w) })
-    }
-  }
-
   cacheReady = true
 }
 
@@ -217,26 +205,15 @@ export async function matchWrestler(
 
   const best = schoolScored[0]
 
-  // ── 4. Cross-school alternates ────────────────────────────────────────────────
-  // Included when no exact/exact-weight match was found, as additional signal.
-  const schoolIds = new Set(atSchool.map(r => r.wrestlerId))
-  const crossAlts = allWrestlers
-    .filter(w => !schoolIds.has(w.wrestlerId))
-    .map(w  => ({ wrestlerId: w.wrestlerId, displayName: w.displayName, score: trigramSimilarity(raw, w.displayName) }))
-    .sort((a, b) => b.score - a.score)
-    .filter(w => w.score > 0.5)
-    .slice(0, 3)
-
-  const allAlts = dedupeAlts([...schoolScored, ...crossAlts])
-
+  // ── 4. No match — school-only alternates for review UI ───────────────────────
   if (best && best.score >= 0.85) {
     const rec = schoolIndex.get(schoolId)!.get(best.wrestlerId)!
-    return match(raw, schoolId, weightClass, rec, 'high', allAlts)
+    return match(raw, schoolId, weightClass, rec, 'high', schoolScored)
   }
 
   if (best && best.score >= 0.6) {
     const rec = schoolIndex.get(schoolId)!.get(best.wrestlerId)!
-    return match(raw, schoolId, weightClass, rec, 'low', allAlts)
+    return match(raw, schoolId, weightClass, rec, 'low', schoolScored)
   }
 
   // ── 5. No match ───────────────────────────────────────────────────────────────
@@ -248,7 +225,7 @@ export async function matchWrestler(
     displayName: null,
     confidence:  'none',
     isNew:       true,
-    alternates:  allAlts,
+    alternates:  [],
   }
 }
 
@@ -257,7 +234,6 @@ export function clearWrestlerCache(): void {
   cacheReady   = false
   cachePromise = null
   schoolIndex.clear()
-  allWrestlers.length = 0
 }
 
 // ── Internal helpers ───────────────────────────────────────────────────────────
@@ -280,15 +256,4 @@ function match(
     isNew:       false,
     alternates,
   }
-}
-
-function dedupeAlts(
-  alts: { wrestlerId: string; displayName: string; score: number }[],
-): { wrestlerId: string; displayName: string; score: number }[] {
-  const seen = new Set<string>()
-  return alts.filter(a => {
-    if (seen.has(a.wrestlerId)) return false
-    seen.add(a.wrestlerId)
-    return true
-  })
 }
