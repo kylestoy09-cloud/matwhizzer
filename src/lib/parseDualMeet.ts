@@ -321,6 +321,13 @@ export function parseDualMeetText(raw: string): ParsedMeet[] {
     if (!header) continue
 
     const score   = parseTeamScore(chunk)
+    // DEBUG — remove before ship
+    if (results.length === 0) console.log('[parseDualMeet] chunk[0] detection:', {
+      isFormatA: isFormatA(chunk),
+      isFormatC: isFormatC(chunk),
+      chunkFirst300: JSON.stringify(chunk.slice(0, 300)),
+    })
+
     const matches = isFormatA(chunk) ? parseFormatA(chunk)
                   : isFormatC(chunk) ? parseFormatC(chunk)
                   : parseFormatB(chunk)
