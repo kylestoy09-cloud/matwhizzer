@@ -17,7 +17,15 @@ import { ReviewPanel } from './ReviewPanel'
 
 // ── Phase ──────────────────────────────────────────────────────────────────────
 
-type Phase = 'idle' | 'loading_schools' | 'loading_wrestlers' | 'review'
+type Phase = 'idle' | 'loading_schools' | 'loading_wrestlers' | 'review' | 'importing' | 'done'
+
+type ImportResult = {
+  ok:               boolean
+  meetsImported:    number
+  matchesImported:  number
+  wrestlersCreated: number
+  errors:           string[]
+}
 
 // ── ImportClient ───────────────────────────────────────────────────────────────
 
@@ -31,12 +39,7 @@ export function ImportClient() {
   const [wrestlerOverrides,  setWrestlerOverrides]  = useState<Record<string, WrestlerOverride>>({})
   const [skipped,            setSkipped]            = useState<Set<number>>(new Set())
   const [error,              setError]              = useState<string | null>(null)
-  const [toast,              setToast]              = useState<string | null>(null)
-
-  function showToast(msg: string) {
-    setToast(msg)
-    setTimeout(() => setToast(null), 4000)
-  }
+  const [importResult,       setImportResult]       = useState<ImportResult | null>(null)
 
   // ── School override handler ──────────────────────────────────────────────────
 
@@ -94,6 +97,7 @@ export function ImportClient() {
     setSkipped(initSkipped)
     setSchoolOverrides({})
     setWrestlerOverrides({})
+    setImportResult(null)
 
     // Step 2: collect unique school names from headers + match rows
     const allSchoolNames = new Set<string>()
@@ -171,6 +175,34 @@ export function ImportClient() {
     }
 
     setPhase('review')
+  }
+
+  // ── Import handler ───────────────────────────────────────────────────────────
+
+  async function handleImport() {
+    setError(null)
+    setPhase('importing')
+    try {
+      const resp = await fetch('/api/admin/import-meets', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({
+          meets,
+          skipped:             [...skipped],
+          schoolResolutions,
+          schoolOverrides,
+          wrestlerResolutions,
+          wrestlerOverrides,
+        }),
+      })
+      const json = await resp.json()
+      if (!resp.ok) throw new Error(json.error ?? `HTTP ${resp.status}`)
+      setImportResult(json as ImportResult)
+      setPhase('done')
+    } catch (e) {
+      setError(String(e))
+      setPhase('review')
+    }
   }
 
   // ── Import button readiness ──────────────────────────────────────────────────
@@ -269,6 +301,45 @@ export function ImportClient() {
         </div>
       )}
 
+      {/* ── Importing ───────────────────────────────────────────────────────── */}
+      {phase === 'importing' && (
+        <div className="border border-black bg-white px-6 py-10 text-center">
+          <div className="text-2xl mb-2">⏳</div>
+          <p className="text-sm font-semibold text-slate-700">Writing to database…</p>
+          <p className="text-xs text-slate-400 mt-1">Creating meets, matches, and new wrestlers.</p>
+        </div>
+      )}
+
+      {/* ── Done ────────────────────────────────────────────────────────────── */}
+      {phase === 'done' && importResult && (
+        <div className="border border-black bg-white px-6 py-8 space-y-4">
+          <h2 className="text-base font-semibold text-slate-900">
+            {importResult.ok ? 'Import complete' : 'Import finished with errors'}
+          </h2>
+          <ul className="text-sm text-slate-700 space-y-1">
+            <li><span className="text-green-700 font-medium">{importResult.meetsImported}</span> meets imported</li>
+            <li><span className="text-green-700 font-medium">{importResult.matchesImported}</span> matches written</li>
+            {importResult.wrestlersCreated > 0 && (
+              <li><span className="text-blue-700 font-medium">{importResult.wrestlersCreated}</span> new wrestlers created</li>
+            )}
+          </ul>
+          {importResult.errors.length > 0 && (
+            <div className="border border-red-300 bg-red-50 px-3 py-2 space-y-1">
+              <p className="text-xs font-semibold text-red-700">Errors:</p>
+              {importResult.errors.map((e, i) => (
+                <p key={i} className="text-xs text-red-600">{e}</p>
+              ))}
+            </div>
+          )}
+          <button
+            onClick={() => { setPhase('idle'); setMeets([]); setError(null); setImportResult(null) }}
+            className="px-4 py-2 bg-black text-white text-sm font-semibold hover:bg-slate-800"
+          >
+            Import more
+          </button>
+        </div>
+      )}
+
       {/* ── Step 2+3: Review ────────────────────────────────────────────────── */}
       {phase === 'review' && (
         <div className="space-y-4">
@@ -335,7 +406,7 @@ export function ImportClient() {
             </div>
 
             <button
-              onClick={() => showToast('Import logic coming in next stage — review looks good!')}
+              onClick={handleImport}
               disabled={blockingSchools > 0}
               className="px-5 py-2 bg-black text-white text-sm font-semibold hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
             >
@@ -343,12 +414,6 @@ export function ImportClient() {
             </button>
           </div>
 
-          {/* Toast */}
-          {toast && (
-            <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-sm px-5 py-3 shadow-lg z-50">
-              {toast}
-            </div>
-          )}
         </div>
       )}
     </div>

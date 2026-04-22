@@ -5,6 +5,23 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-04-22 — Create dual_meets and dual_meet_matches tables ✓ APPLIED
+
+**Migration file:** `docs/migrations/20260422_dual_meets_schema.sql`
+
+**What changed:**
+- Created `dual_meets` table: one row per dual meet event, with `season_id`, `team1_school_id`, `team2_school_id`, `meet_date`, `team1_score`, `team2_score`, `gender` (default 'M'), `status` (default 'final')
+- Created `dual_meet_matches` table: one row per weight class bout, with `dual_meet_id` FK (CASCADE DELETE), `weight_class`, `wrestler_a_id`, `wrestler_b_id`, `school_a_id`, `school_b_id`, `winner_id`, `result_type`, `result_detail`, `fall_time_seconds`, `team1_points`, `team2_points`, `is_double_forfeit`, `is_forfeit_win`, `validated`
+- Added index `idx_dual_meets_teams_date` on `(team1_school_id, team2_school_id, meet_date)` for duplicate detection
+- Added index `idx_dual_meet_matches_dual_meet_id` on `dual_meet_id` for fast per-meet lookups
+- These tables are separate from the tournament-bracket `matches` table (different schema, different use case)
+
+**Rollback:** `DROP TABLE IF EXISTS dual_meet_matches; DROP TABLE IF EXISTS dual_meets;`
+
+**Verified?** ✓ Applied 2026-04-22 — both tables and both indexes confirmed via information_schema
+
+---
+
 ## 2026-04-22 — School header_background updates and format normalisation ✓ APPLIED
 
 **Migration file:** `docs/migrations/20260422_school_colors_update.sql`
