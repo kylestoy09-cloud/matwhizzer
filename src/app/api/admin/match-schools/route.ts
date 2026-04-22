@@ -23,6 +23,12 @@ export async function POST(req: NextRequest) {
       .filter(Boolean)
   )]
 
-  const results = await Promise.all(unique.map(name => matchSchoolNames(name)))
-  return NextResponse.json({ results })
+  try {
+    const results = await Promise.all(unique.map(name => matchSchoolNames(name)))
+    return NextResponse.json({ results })
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err)
+    console.error('[match-schools]', message)
+    return NextResponse.json({ error: message }, { status: 500 })
+  }
 }

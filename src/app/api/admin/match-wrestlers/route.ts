@@ -34,14 +34,19 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ results: [] })
   }
 
-  const results: WrestlerMatch[] = await Promise.all(
-    wrestlers.map((w: WrestlerRequest) => {
-      const name        = String(w.name ?? '').trim()
-      const weightClass = Number(w.weightClass) || 0
-      if (!name || w.schoolId === null) return NULL_MATCH(name, weightClass)
-      return matchWrestler(name, w.schoolId, weightClass, 'M')
-    })
-  )
-
-  return NextResponse.json({ results })
+  try {
+    const results: WrestlerMatch[] = await Promise.all(
+      wrestlers.map((w: WrestlerRequest) => {
+        const name        = String(w.name ?? '').trim()
+        const weightClass = Number(w.weightClass) || 0
+        if (!name || w.schoolId === null) return NULL_MATCH(name, weightClass)
+        return matchWrestler(name, w.schoolId, weightClass, 'M')
+      })
+    )
+    return NextResponse.json({ results })
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err)
+    console.error('[match-wrestlers]', message)
+    return NextResponse.json({ error: message }, { status: 500 })
+  }
 }
