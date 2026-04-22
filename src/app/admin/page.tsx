@@ -42,6 +42,13 @@ export default async function AdminDashboard() {
 
       <div className="grid grid-cols-2 gap-4">
         <Link
+          href="/admin/import"
+          className="bg-white rounded-none border border-black shadow-none p-6 transition-shadow"
+        >
+          <h2 className="text-sm font-semibold text-slate-900 mb-1">Dual Meet Import</h2>
+          <p className="text-xs text-slate-500">Paste TrackWrestling results and import dual meet data</p>
+        </Link>
+        <Link
           href="/admin/bracket"
           className="bg-white rounded-none border border-black shadow-none p-6 transition-shadow"
         >
