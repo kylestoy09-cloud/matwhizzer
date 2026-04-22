@@ -303,20 +303,9 @@ function parseFormatC(chunk: string): ParsedMatch[] {
 
     if (!summary || isNaN(t1) || isNaN(t2)) { i++; continue }
 
-    // DEBUG — log raw lines for first 3 blocks
-    if (matches.length < 3) {
-      console.log(`[parseFormatC] block ${matches.length}: lines[${i}..${i+3}] =`, JSON.stringify([lines[i], lines[i+1], lines[i+2], lines[i+3]]))
-    }
     matches.push(parseMatchSummary(summary, t1, t2, weight))
     i += 4
   }
-
-  // DEBUG — remove before ship
-  console.log('[parseFormatC] total parsed:', matches.length, '| first 3:', matches.slice(0, 3).map(m => ({
-    weightClass:  m.weightClass,
-    resultType:   m.resultType,
-    resultDetail: m.resultDetail,
-  })))
 
   return matches
 }
