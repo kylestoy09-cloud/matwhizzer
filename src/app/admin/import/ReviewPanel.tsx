@@ -1,16 +1,11 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState } from 'react'
 import type { ParsedMeet } from '@/lib/parseDualMeet'
 import type { SchoolMatch } from '@/lib/matchSchools'
-import type { WrestlerMatch } from '@/lib/matchWrestlers'
 import {
   type SchoolOverride,
-  type WrestlerOverride,
-  type WrestlerKey,
-  makeWrestlerKey,
   resolveSchool,
-  resolveWrestler,
 } from './types'
 
 // ── School review item ─────────────────────────────────────────────────────────
@@ -143,98 +138,13 @@ function SchoolReviewItem({
   )
 }
 
-// ── Wrestler review item ───────────────────────────────────────────────────────
-
-function WrestlerReviewItem({
-  wKey,
-  match,
-  override,
-  onOverride,
-}: {
-  wKey:       WrestlerKey
-  match:      WrestlerMatch
-  override:   WrestlerOverride | undefined
-  onOverride: (key: WrestlerKey, o: WrestlerOverride | null) => void
-}) {
-  const isConfirmedNew = override?.confirmedNew === true
-  const selectedId     = override ? override.wrestlerId : match.wrestlerId
-
-  const candidates = [
-    ...(match.wrestlerId && match.displayName
-      ? [{ wrestlerId: match.wrestlerId, displayName: match.displayName, score: 1, label: `${match.displayName} (${match.confidence})` }]
-      : []),
-    ...match.alternates.map(a => ({
-      wrestlerId:  a.wrestlerId,
-      displayName: a.displayName,
-      score:       a.score,
-      label:       `${a.displayName} (${(a.score * 100).toFixed(0)}%)`,
-    })),
-  ].filter((a, i, arr) => arr.findIndex(b => b.wrestlerId === a.wrestlerId) === i)
-
-  return (
-    <div className="border border-black/20 bg-white p-3">
-      <div className="text-xs font-semibold text-slate-700 mb-1">
-        <span className="font-mono text-slate-900">"{match.rawName}"</span>
-        <span className="ml-2 text-slate-400 font-normal font-mono">{match.weightClass}lb</span>
-        <span className="ml-2 text-orange-600 font-normal">({match.confidence})</span>
-      </div>
-
-      {candidates.length > 0 ? (
-        <div className="space-y-1 mb-2">
-          {candidates.map(c => (
-            <label key={c.wrestlerId} className={`flex items-center gap-2 cursor-pointer ${isConfirmedNew ? 'opacity-40' : ''}`}>
-              <input
-                type="radio"
-                name={`wrestler-${wKey}`}
-                checked={!isConfirmedNew && selectedId === c.wrestlerId}
-                onChange={() => onOverride(wKey, { wrestlerId: c.wrestlerId, displayName: c.displayName, confirmedNew: false })}
-                className="accent-black"
-                disabled={isConfirmedNew}
-              />
-              <span className="text-xs text-slate-800">{c.label}</span>
-            </label>
-          ))}
-        </div>
-      ) : null}
-
-      <div className="flex items-center gap-3 mt-2">
-        <label className="flex items-center gap-1.5 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={isConfirmedNew}
-            onChange={e =>
-              onOverride(wKey, e.target.checked
-                ? { wrestlerId: null, displayName: null, confirmedNew: true }
-                : null
-              )
-            }
-            className="accent-black w-3.5 h-3.5"
-          />
-          <span className="text-xs text-slate-600">Confirm as new wrestler</span>
-        </label>
-        {override && (
-          <button
-            onClick={() => onOverride(wKey, null)}
-            className="text-[11px] text-slate-400 hover:text-slate-700 underline"
-          >
-            Clear
-          </button>
-        )}
-      </div>
-    </div>
-  )
-}
-
 // ── Props ──────────────────────────────────────────────────────────────────────
 
 type Props = {
-  meets:                ParsedMeet[]
-  schoolResolutions:    Record<string, SchoolMatch>
-  schoolOverrides:      Record<string, SchoolOverride>
-  wrestlerResolutions:  Record<string, WrestlerMatch>
-  wrestlerOverrides:    Record<string, WrestlerOverride>
-  onSchoolOverride:     (rawName: string, o: SchoolOverride | null) => void
-  onWrestlerOverride:   (key: WrestlerKey, o: WrestlerOverride | null) => void
+  meets:             ParsedMeet[]
+  schoolResolutions: Record<string, SchoolMatch>
+  schoolOverrides:   Record<string, SchoolOverride>
+  onSchoolOverride:  (rawName: string, o: SchoolOverride | null) => void
 }
 
 // ── ReviewPanel ────────────────────────────────────────────────────────────────
@@ -243,10 +153,7 @@ export function ReviewPanel({
   meets,
   schoolResolutions,
   schoolOverrides,
-  wrestlerResolutions,
-  wrestlerOverrides,
   onSchoolOverride,
-  onWrestlerOverride,
 }: Props) {
   const [open, setOpen] = useState(true)
 
@@ -277,35 +184,7 @@ export function ReviewPanel({
     }
   }
 
-  // Collect wrestlers needing review (low confidence or none with alternates, no resolved override)
-  const wrestlerItems: { wKey: WrestlerKey; match: WrestlerMatch }[] = []
-  const seenWrestlers = new Set<WrestlerKey>()
-  for (const meet of meets) {
-    for (const m of meet.matches) {
-      if (m.isDoubleForfeit) continue
-      const pairs: [string | null, string | null][] = [
-        [m.winnerName, m.winnerSchoolRaw],
-        ...(!m.isForfeitWin ? [[m.loserName, m.loserSchoolRaw] as [string | null, string | null]] : []),
-      ]
-      for (const [name, schoolRaw] of pairs) {
-        if (!name) continue
-        const schoolId = resolveSchool(schoolRaw ?? '', schoolResolutions, schoolOverrides).schoolId
-        const key      = makeWrestlerKey(name, schoolId, m.weightClass)
-        if (seenWrestlers.has(key)) continue
-        seenWrestlers.add(key)
-        const resolved = resolveWrestler(key, wrestlerResolutions, wrestlerOverrides)
-        const wMatch   = wrestlerResolutions[key]
-        if (!wMatch) continue
-        // Show if low confidence, or none with alternates (ambiguous new vs existing)
-        const needsReview = resolved.confidence === 'low'
-          || (resolved.confidence === 'none' && wMatch.alternates.length > 0 && !wrestlerOverrides[key]?.confirmedNew)
-        if (needsReview) wrestlerItems.push({ wKey: key, match: wMatch })
-      }
-    }
-  }
-
-  const total = schoolItems.length + wrestlerItems.length
-  if (total === 0) return null
+  if (schoolItems.length === 0) return null
 
   return (
     <div className="border border-black bg-white mt-6">
@@ -314,55 +193,24 @@ export function ReviewPanel({
         className="w-full flex items-center justify-between px-4 py-3 bg-amber-50 border-b border-black hover:bg-amber-100 transition-colors"
       >
         <span className="text-sm font-semibold text-amber-900">
-          Needs Review — {total} item{total !== 1 ? 's' : ''}
-          {schoolItems.length > 0 && ` (${schoolItems.length} school${schoolItems.length !== 1 ? 's' : ''})`}
-          {wrestlerItems.length > 0 && ` (${wrestlerItems.length} wrestler${wrestlerItems.length !== 1 ? 's' : ''})`}
+          Schools — {schoolItems.length} unresolved
         </span>
         <span className="text-amber-700 text-xs">{open ? '▲ Collapse' : '▼ Expand'}</span>
       </button>
 
       {open && (
-        <div className="p-4 space-y-6">
-
-          {/* Schools */}
-          {schoolItems.length > 0 && (
-            <div>
-              <h3 className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-3">
-                School Matches — {schoolItems.length} unresolved
-              </h3>
-              <div className="space-y-2">
-                {schoolItems.map(({ rawName, match }) => (
-                  <SchoolReviewItem
-                    key={rawName}
-                    rawName={rawName}
-                    match={match}
-                    override={schoolOverrides[rawName]}
-                    onOverride={onSchoolOverride}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Wrestlers */}
-          {wrestlerItems.length > 0 && (
-            <div>
-              <h3 className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-3">
-                Wrestler Matches — {wrestlerItems.length} need attention
-              </h3>
-              <div className="space-y-2">
-                {wrestlerItems.map(({ wKey, match }) => (
-                  <WrestlerReviewItem
-                    key={wKey}
-                    wKey={wKey}
-                    match={match}
-                    override={wrestlerOverrides[wKey]}
-                    onOverride={onWrestlerOverride}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
+        <div className="p-4">
+          <div className="space-y-2">
+            {schoolItems.map(({ rawName, match }) => (
+              <SchoolReviewItem
+                key={rawName}
+                rawName={rawName}
+                match={match}
+                override={schoolOverrides[rawName]}
+                onOverride={onSchoolOverride}
+              />
+            ))}
+          </div>
         </div>
       )}
     </div>

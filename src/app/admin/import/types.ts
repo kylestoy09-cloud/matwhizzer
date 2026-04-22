@@ -80,7 +80,7 @@ export function resolveWrestler(
     return {
       wrestlerId:  override.wrestlerId,
       displayName: override.displayName,
-      confidence:  override.confirmedNew ? 'none' : 'exact',
+      confidence:  'exact',
       isNew:       override.confirmedNew,
     }
   }

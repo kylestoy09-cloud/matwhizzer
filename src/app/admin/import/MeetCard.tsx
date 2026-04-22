@@ -1,12 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import type { ParsedMeet, ParsedMatch } from '@/lib/parseDualMeet'
 import type { SchoolMatch } from '@/lib/matchSchools'
 import type { WrestlerMatch } from '@/lib/matchWrestlers'
 import {
   type SchoolOverride,
   type WrestlerOverride,
+  type WrestlerKey,
   makeWrestlerKey,
   resolveSchool,
   resolveWrestler,
@@ -38,18 +39,21 @@ function WrestlerCell({
   wKey,
   resolutions,
   overrides,
+  onClick,
 }: {
   name:        string | null
   schoolRaw:   string | null
   wKey:        string
   resolutions: Record<string, WrestlerMatch>
   overrides:   Record<string, WrestlerOverride>
+  onClick?:    () => void
 }) {
   if (!name) return <span className="text-slate-400 text-xs">—</span>
 
-  const resolved = resolveWrestler(wKey, resolutions, overrides)
+  const resolved    = resolveWrestler(wKey, resolutions, overrides)
+  const isClickable = !!onClick && (resolved.confidence === 'low' || resolved.confidence === 'none')
 
-  return (
+  const inner = (
     <div className="flex items-center gap-1.5 flex-wrap min-w-0">
       <ConfidenceDot confidence={resolved.confidence} title={`Wrestler: ${resolved.confidence}`} />
       <span className="text-xs text-slate-800 truncate">{name}</span>
@@ -63,6 +67,15 @@ function WrestlerCell({
       )}
     </div>
   )
+
+  if (isClickable) {
+    return (
+      <button onClick={onClick} className="text-left w-full hover:bg-amber-50 -mx-1 px-1 rounded">
+        {inner}
+      </button>
+    )
+  }
+  return inner
 }
 
 // ── Result cell ────────────────────────────────────────────────────────────────
@@ -84,6 +97,7 @@ type Props = {
   wrestlerOverrides:    Record<string, WrestlerOverride>
   skip:                 boolean
   onSkipChange:         (skip: boolean) => void
+  onWrestlerOverride:   (key: WrestlerKey, o: WrestlerOverride | null) => void
 }
 
 // ── MeetCard ───────────────────────────────────────────────────────────────────
@@ -96,9 +110,10 @@ export function MeetCard({
   wrestlerOverrides,
   skip,
   onSkipChange,
+  onWrestlerOverride,
 }: Props) {
-  const [expanded, setExpanded] = useState(!meet.isDuplicate)
-
+  const [expanded,          setExpanded]          = useState(!meet.isDuplicate)
+  const [activeWrestlerKey, setActiveWrestlerKey] = useState<string | null>(null)
 
   const s1 = resolveSchool(meet.team1Name, schoolResolutions, schoolOverrides)
   const s2 = resolveSchool(meet.team2Name, schoolResolutions, schoolOverrides)
@@ -115,10 +130,14 @@ export function MeetCard({
       const schoolId = resolveSchool(schoolRaw ?? '', schoolResolutions, schoolOverrides).schoolId
       const key = makeWrestlerKey(name, schoolId, m.weightClass)
       const resolved = resolveWrestler(key, wrestlerResolutions, wrestlerOverrides)
-      if (resolved.isNew)                    newW++
+      if (resolved.isNew)                       newW++
       else if (resolved.confidence === 'exact') exact++
       else if (resolved.confidence === 'low')   review++
     }
+  }
+
+  function toggleWrestler(key: string) {
+    setActiveWrestlerKey(prev => prev === key ? null : key)
   }
 
   return (
@@ -211,48 +230,141 @@ export function MeetCard({
                   ? makeWrestlerKey(m.loserName, loserSchoolId, m.weightClass)
                   : ''
 
+                // Which wrestler key (if any) has its panel open for this row?
+                const panelKey = activeWrestlerKey === wKey && wKey ? wKey
+                               : activeWrestlerKey === lKey && lKey ? lKey
+                               : null
+
                 return (
-                  <tr
-                    key={i}
-                    className="border-b border-slate-100 last:border-0 hover:bg-slate-50/50"
-                  >
-                    <td className="px-3 py-2 text-xs font-mono text-slate-600">{m.weightClass}</td>
+                  <Fragment key={i}>
+                    <tr className="border-b border-slate-100 last:border-0 hover:bg-slate-50/50">
+                      <td className="px-3 py-2 text-xs font-mono text-slate-600">{m.weightClass}</td>
 
-                    <td className="px-3 py-2">
-                      {m.isDoubleForfeit
-                        ? <span className="text-xs text-slate-400 italic col-span-2">Double Forfeit</span>
-                        : <WrestlerCell
-                            name={m.winnerName}
-                            schoolRaw={m.winnerSchoolRaw}
-                            wKey={wKey}
-                            resolutions={wrestlerResolutions}
-                            overrides={wrestlerOverrides}
-                          />
-                      }
-                    </td>
-
-                    <td className="px-3 py-2">
-                      {!m.isDoubleForfeit && (
-                        m.isForfeitWin
-                          ? <span className="text-xs text-slate-400 italic">Forfeit</span>
+                      <td className="px-3 py-2">
+                        {m.isDoubleForfeit
+                          ? <span className="text-xs text-slate-400 italic">Double Forfeit</span>
                           : <WrestlerCell
-                              name={m.loserName}
-                              schoolRaw={m.loserSchoolRaw}
-                              wKey={lKey}
+                              name={m.winnerName}
+                              schoolRaw={m.winnerSchoolRaw}
+                              wKey={wKey}
                               resolutions={wrestlerResolutions}
                               overrides={wrestlerOverrides}
+                              onClick={wKey ? () => toggleWrestler(wKey) : undefined}
                             />
-                      )}
-                    </td>
+                        }
+                      </td>
 
-                    <td className="px-3 py-2">
-                      <ResultCell m={m} />
-                    </td>
+                      <td className="px-3 py-2">
+                        {!m.isDoubleForfeit && (
+                          m.isForfeitWin
+                            ? <span className="text-xs text-slate-400 italic">Forfeit</span>
+                            : <WrestlerCell
+                                name={m.loserName}
+                                schoolRaw={m.loserSchoolRaw}
+                                wKey={lKey}
+                                resolutions={wrestlerResolutions}
+                                overrides={wrestlerOverrides}
+                                onClick={lKey ? () => toggleWrestler(lKey) : undefined}
+                              />
+                        )}
+                      </td>
 
-                    <td className="px-3 py-2 text-xs text-center text-slate-500 font-mono">
-                      {m.team1Points}–{m.team2Points}
-                    </td>
-                  </tr>
+                      <td className="px-3 py-2">
+                        <ResultCell m={m} />
+                      </td>
+
+                      <td className="px-3 py-2 text-xs text-center text-slate-500 font-mono">
+                        {m.team1Points}–{m.team2Points}
+                      </td>
+                    </tr>
+
+                    {panelKey && (() => {
+                      const isWinner   = panelKey === wKey
+                      const rawName    = isWinner ? m.winnerName    : m.loserName
+                      const rawSchool  = isWinner ? m.winnerSchoolRaw : m.loserSchoolRaw
+                      const wMatch     = wrestlerResolutions[panelKey]
+                      const override   = wrestlerOverrides[panelKey]
+                      const alternates = wMatch?.alternates ?? []
+
+                      return (
+                        <tr>
+                          <td colSpan={5} className="p-0 border-b border-slate-100">
+                            <div className="border-t border-amber-200 bg-amber-50 px-4 py-3">
+
+                              {/* Header + close */}
+                              <div className="flex items-start justify-between mb-3">
+                                <div className="text-xs font-semibold text-slate-700">
+                                  <span className="font-mono">{rawName}</span>
+                                  {rawSchool && (
+                                    <span className="text-slate-400 font-normal ml-1">({rawSchool})</span>
+                                  )}
+                                  <span className="text-slate-400 font-normal ml-2">{m.weightClass}lb</span>
+                                </div>
+                                <button
+                                  onClick={() => setActiveWrestlerKey(null)}
+                                  className="text-slate-400 hover:text-slate-700 text-sm leading-none ml-4 shrink-0"
+                                  aria-label="Close"
+                                >×</button>
+                              </div>
+
+                              {/* Alternates */}
+                              {alternates.length > 0 ? (
+                                <div className="space-y-1.5 mb-3">
+                                  {alternates.map(alt => (
+                                    <label key={alt.wrestlerId} className="flex items-center gap-2 cursor-pointer">
+                                      <input
+                                        type="radio"
+                                        name={`wrestler-inline-${panelKey}`}
+                                        checked={!override?.confirmedNew && override?.wrestlerId === alt.wrestlerId}
+                                        onChange={() => onWrestlerOverride(panelKey as WrestlerKey, {
+                                          wrestlerId:   alt.wrestlerId,
+                                          displayName:  alt.displayName,
+                                          confirmedNew: false,
+                                        })}
+                                        className="accent-black"
+                                      />
+                                      <span className="text-xs text-slate-800">{alt.displayName}</span>
+                                      <span className="text-xs text-slate-400">{(alt.score * 100).toFixed(0)}%</span>
+                                    </label>
+                                  ))}
+                                </div>
+                              ) : (
+                                <p className="text-xs text-slate-400 italic mb-3">No candidates found in DB.</p>
+                              )}
+
+                              {/* Actions */}
+                              <div className="flex items-center gap-3">
+                                <button
+                                  onClick={() => onWrestlerOverride(
+                                    panelKey as WrestlerKey,
+                                    override?.confirmedNew
+                                      ? null
+                                      : { wrestlerId: null, displayName: null, confirmedNew: true },
+                                  )}
+                                  className={`text-xs px-3 py-1 border ${
+                                    override?.confirmedNew
+                                      ? 'border-slate-300 bg-slate-100 text-slate-500'
+                                      : 'border-black bg-white hover:bg-slate-50 text-slate-800'
+                                  }`}
+                                >
+                                  {override?.confirmedNew ? '✓ New wrestler — Undo' : 'Confirm as New Wrestler'}
+                                </button>
+                                {override && !override.confirmedNew && (
+                                  <button
+                                    onClick={() => onWrestlerOverride(panelKey as WrestlerKey, null)}
+                                    className="text-[11px] text-slate-400 hover:text-slate-700 underline"
+                                  >
+                                    Clear
+                                  </button>
+                                )}
+                              </div>
+
+                            </div>
+                          </td>
+                        </tr>
+                      )
+                    })()}
+                  </Fragment>
                 )
               })}
             </tbody>
@@ -264,7 +376,7 @@ export function MeetCard({
       <div className="px-4 py-2 bg-slate-50 border-t border-black/10 flex flex-wrap gap-x-4 gap-y-1">
         <span className="text-[11px] text-slate-500">{meet.matches.length} matches</span>
         <span className="text-[11px] text-green-700">{exact} exact</span>
-        {newW > 0  && <span className="text-[11px] text-red-600">{newW} new wrestlers</span>}
+        {newW > 0   && <span className="text-[11px] text-red-600">{newW} new wrestlers</span>}
         {review > 0 && <span className="text-[11px] text-orange-600">{review} need review</span>}
         {meet.isDuplicate && <span className="text-[11px] font-semibold text-red-600">DUPLICATE</span>}
       </div>

@@ -306,6 +306,7 @@ export function ImportClient() {
                 wrestlerOverrides={wrestlerOverrides}
                 skip={skipped.has(i)}
                 onSkipChange={skip => handleSkip(i, skip)}
+                onWrestlerOverride={handleWrestlerOverride}
               />
             ))}
           </div>
@@ -315,10 +316,7 @@ export function ImportClient() {
             meets={meets}
             schoolResolutions={schoolResolutions}
             schoolOverrides={schoolOverrides}
-            wrestlerResolutions={wrestlerResolutions}
-            wrestlerOverrides={wrestlerOverrides}
             onSchoolOverride={handleSchoolOverride}
-            onWrestlerOverride={handleWrestlerOverride}
           />
 
           {/* Controls */}
