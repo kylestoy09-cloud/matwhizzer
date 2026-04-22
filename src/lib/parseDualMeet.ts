@@ -183,9 +183,12 @@ function parseMatchSummary(summary: string, t1Pts: number, t2Pts: number, weight
 // ── Format detection ───────────────────────────────────────────────────────────
 
 function isFormatA(chunk: string): boolean {
-  // Format A has at least one line that starts (after whitespace) with a
-  // weight-class number followed by more content on the same line.
-  const lineStartRe = new RegExp(`^\\s*(${WEIGHT_ALT})\\s+\\S`, 'm')
+  // Format A has at least one line where a weight class and its summary are
+  // on the same line, separated by non-newline whitespace (tabs or spaces).
+  // Using [^\S\n]+ instead of \s+ so we don't cross line boundaries —
+  // \s matches \n, which would falsely match Format C where the weight class
+  // and the next line's content are adjacent in the string.
+  const lineStartRe = new RegExp(`^[^\\S\\n]*(${WEIGHT_ALT})[^\\S\\n]+\\S`, 'm')
   return lineStartRe.test(chunk)
 }
 
@@ -321,13 +324,6 @@ export function parseDualMeetText(raw: string): ParsedMeet[] {
     if (!header) continue
 
     const score   = parseTeamScore(chunk)
-    // DEBUG — remove before ship
-    if (results.length === 0) console.log('[parseDualMeet] chunk[0] detection:', {
-      isFormatA: isFormatA(chunk),
-      isFormatC: isFormatC(chunk),
-      chunkFirst300: JSON.stringify(chunk.slice(0, 300)),
-    })
-
     const matches = isFormatA(chunk) ? parseFormatA(chunk)
                   : isFormatC(chunk) ? parseFormatC(chunk)
                   : parseFormatB(chunk)
