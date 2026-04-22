@@ -114,6 +114,19 @@ function parseMatchSummary(summary: string, t1Pts: number, t2Pts: number, weight
 
   const overIdx = s.indexOf(' over ')
   if (overIdx === -1) {
+    // DEBUG — log char codes around where ' over ' should be
+    const overAlt = s.search(/\sover\s/i)  // try case-insensitive, any whitespace
+    const midpoint = Math.floor(s.length / 2)
+    const windowStart = Math.max(0, midpoint - 10)
+    const windowEnd   = Math.min(s.length, midpoint + 10)
+    const windowCodes = Array.from(s.slice(windowStart, windowEnd)).map(c => c.charCodeAt(0))
+    console.log('[parseMatchSummary] no " over " found', {
+      weight,
+      summary: JSON.stringify(s),
+      altOverIdx: overAlt,
+      midWindow: `chars ${windowStart}-${windowEnd}`,
+      charCodes: windowCodes,
+    })
     // Unparseable — store raw text as winnerName for debugging
     return {
       weightClass: weight,
