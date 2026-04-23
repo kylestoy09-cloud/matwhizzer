@@ -5,6 +5,21 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-04-22 — School colors update 2: new SVG schools + Gateway/Pennsville corrections ✓ APPLIED
+
+**Migration file:** `docs/migrations/20260422_school_colors_update2.sql`
+
+**What changed:**
+- Part 1: Set `header_background` for 13 schools that had NULL (12 new SVG additions + Oakcrest which already had an SVG): Saddle Brook (#006400), Paterson Eastside (#CC4E10), Madison (#8F0018), Union (#8F0018), Notre Dame (#4169E1), Neptune (#000000), Point Pleasant Beach (#FFFFFF), Haddon Heights (#CC0022), Donovan Catholic (#003087), Camden Catholic (#00824B), Oakcrest (#034CB2), Gateway Reg/Woodbury (#034CB2), Northern Burlington (#454444). Only fires when `header_background IS NULL`.
+- Part 2: Corrected wrong color columns — Gateway (291) had green/gold in DB but is royal blue/white/black; Pennsville (293) had green/gold but is navy/yellow (#263586/#FCE80B). Header_background for Pennsville was already correct from the prior migration.
+- ID 289 (Cumberland) excluded throughout.
+
+**Rollback:** Set 13 IDs back to NULL; restore Gateway/Pennsville to prior (incorrect) color values (see migration file ROLLBACK block)
+
+**Verified?** ✓ Applied 2026-04-22 — spot-checked all 14 affected rows via psycopg2 query
+
+---
+
 ## 2026-04-22 — Create dual_meets and dual_meet_matches tables ✓ APPLIED
 
 **Migration file:** `docs/migrations/20260422_dual_meets_schema.sql`
