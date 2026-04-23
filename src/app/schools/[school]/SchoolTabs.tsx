@@ -1,8 +1,12 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { WrestlerAvatar } from '@/components/WrestlerAvatar'
+import { supabase } from '@/lib/supabase'
+import { SEASONS } from '@/lib/seasons'
+import { SeasonSelector } from '@/components/SeasonSelector'
 
 type WrestlerRow = {
   wrestler_id: string
@@ -22,6 +26,18 @@ type LeaderRow = {
   win_count: number; fall_count: number; fastest_fall_sec: number | null
   bonus_pct: number; district_points: number; region_points: number
   state_points: number; total_points: number
+}
+
+type DualMeet = {
+  id: string
+  team1_school_id: number
+  team2_school_id: number
+  meet_date: string
+  team1_score: number | null
+  team2_score: number | null
+  status: string
+  team1: { display_name: string } | null
+  team2: { display_name: string } | null
 }
 
 function placeBadgeClass(p: string | null): string {
@@ -98,6 +114,40 @@ export function SchoolTabs({
     byWeight.get(wt)!.push(w)
   }
   const weights = [...byWeight.keys()].sort((a, b) => a - b)
+
+  // ── Schedule tab state ──────────────────────────────────────────────────────
+  const schoolIdNum = parseInt(school, 10)
+  const genderCode = gender === 'girls' ? 'F' : 'M'
+  const defaultSeason = Number(
+    Object.entries(SEASONS).find(([, v]) => v.isCurrent)?.[0] ?? 2
+  )
+  const [scheduleSeason, setScheduleSeason] = useState(defaultSeason)
+  const [meets, setMeets] = useState<DualMeet[]>([])
+  const [meetsLoading, setMeetsLoading] = useState(false)
+
+  useEffect(() => {
+    if (activeTab !== 'schedule') return
+    let cancelled = false
+    setMeetsLoading(true)
+    supabase
+      .from('dual_meets')
+      .select(`
+        id, team1_school_id, team2_school_id, meet_date,
+        team1_score, team2_score, status,
+        team1:schools!team1_school_id(display_name),
+        team2:schools!team2_school_id(display_name)
+      `)
+      .or(`team1_school_id.eq.${schoolIdNum},team2_school_id.eq.${schoolIdNum}`)
+      .eq('season_id', scheduleSeason)
+      .eq('gender', genderCode)
+      .order('meet_date', { ascending: true })
+      .then(({ data, error }) => {
+        if (cancelled) return
+        if (!error) setMeets((data ?? []) as unknown as DualMeet[])
+        setMeetsLoading(false)
+      })
+    return () => { cancelled = true }
+  }, [activeTab, scheduleSeason, schoolIdNum, genderCode])
 
   return (
     <>
@@ -435,14 +485,106 @@ export function SchoolTabs({
 
       {/* ── Tab: Schedule ── */}
       {activeTab === 'schedule' && (
-        <div className="bg-white border border-black rounded-none shadow-none p-8 text-center">
-          <div className="w-12 h-12 rounded-full mx-auto mb-3 flex items-center justify-center" style={{ backgroundColor: primaryColor + '15' }}>
-            <svg className="w-6 h-6" style={{ color: primaryColor }} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
-            </svg>
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-slate-800">Dual Meet Schedule</h3>
+            <SeasonSelector
+              seasons={Object.keys(SEASONS).map(Number)}
+              currentSeasonId={scheduleSeason}
+              onChange={setScheduleSeason}
+            />
           </div>
-          <p className="text-sm font-medium text-slate-700">Live match scoring coming in a future update</p>
-          <p className="text-xs text-slate-400 mt-1">Dual meet schedules and results will appear here</p>
+
+          {meetsLoading ? (
+            <div className="bg-white border border-black rounded-none p-8 text-center">
+              <p className="text-sm text-slate-400">Loading...</p>
+            </div>
+          ) : meets.length === 0 ? (
+            <div className="bg-white border border-black rounded-none p-8 text-center">
+              <p className="text-sm text-slate-500">No dual meet results for this season.</p>
+            </div>
+          ) : (
+            <div className="bg-white border border-black rounded-none overflow-hidden">
+              <table className="w-full text-sm">
+                <thead className="bg-slate-50 border-b border-slate-200">
+                  <tr>
+                    <th className="text-left px-4 py-2 font-medium text-slate-500 w-24">Date</th>
+                    <th className="text-left px-4 py-2 font-medium text-slate-500 w-10">H/A</th>
+                    <th className="text-left px-4 py-2 font-medium text-slate-500">Opponent</th>
+                    <th className="text-right px-4 py-2 font-medium text-slate-500 w-24">Score</th>
+                    <th className="text-center px-4 py-2 font-medium text-slate-500 w-16">Result</th>
+                    <th className="w-16 px-4 py-2"></th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {meets.map(meet => {
+                    const isHome = meet.team1_school_id === schoolIdNum
+                    const opponentId = isHome ? meet.team2_school_id : meet.team1_school_id
+                    const opponentName = isHome
+                      ? meet.team2?.display_name
+                      : meet.team1?.display_name
+                    const myScore = isHome ? meet.team1_score : meet.team2_score
+                    const theirScore = isHome ? meet.team2_score : meet.team1_score
+                    const hasScore = myScore !== null && theirScore !== null
+                    const result = hasScore
+                      ? myScore > theirScore ? 'W'
+                        : myScore < theirScore ? 'L'
+                        : 'T'
+                      : null
+                    const dateStr = new Date(meet.meet_date + 'T12:00:00').toLocaleDateString('en-US', {
+                      month: 'short', day: 'numeric',
+                    })
+                    return (
+                      <tr key={meet.id} className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-2.5 text-slate-600 whitespace-nowrap">{dateStr}</td>
+                        <td className="px-4 py-2.5">
+                          <span className={`text-xs font-medium px-1.5 py-0.5 rounded ${
+                            isHome
+                              ? 'bg-blue-50 text-blue-700'
+                              : 'bg-slate-100 text-slate-500'
+                          }`}>
+                            {isHome ? 'H' : 'A'}
+                          </span>
+                        </td>
+                        <td className="px-4 py-2.5">
+                          <Link
+                            href={`/schools/${opponentId}`}
+                            className="font-medium text-slate-800 hover:underline"
+                          >
+                            {opponentName ?? '—'}
+                          </Link>
+                        </td>
+                        <td className="px-4 py-2.5 text-right tabular-nums text-slate-700">
+                          {hasScore ? `${myScore}–${theirScore}` : '—'}
+                        </td>
+                        <td className="px-4 py-2.5 text-center">
+                          {result ? (
+                            <span className={`inline-block text-xs font-bold px-2 py-0.5 rounded-full ${
+                              result === 'W' ? 'bg-emerald-100 text-emerald-800'
+                                : result === 'L' ? 'bg-red-100 text-red-700'
+                                : 'bg-slate-100 text-slate-600'
+                            }`}>
+                              {result}
+                            </span>
+                          ) : (
+                            <span className="text-slate-300 text-xs">—</span>
+                          )}
+                        </td>
+                        <td className="px-4 py-2.5 text-right">
+                          <Link
+                            href={`/meets/${meet.id}`}
+                            className="text-xs text-slate-400 hover:text-slate-700 hover:underline whitespace-nowrap"
+                          >
+                            Details →
+                          </Link>
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       )}
     </>

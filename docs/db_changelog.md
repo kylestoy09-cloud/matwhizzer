@@ -20,6 +20,20 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-04-23 — RLS policies for dual_meets and dual_meet_matches ✓ APPLIED
+
+**Migration file:** `docs/migrations/20260423_dual_meets_rls.sql`
+
+**What changed:**
+- Enabled Row Level Security on `dual_meets` and `dual_meet_matches`
+- Added `"public read"` SELECT policy (`USING (true)`) on both tables so the anon key used by browser clients can query them; write access remains service-role only
+
+**Rollback:** Drop both `"public read"` policies and disable RLS on both tables (see migration file ROLLBACK block)
+
+**Verified?** ✓ Applied 2026-04-23 manually via Supabase SQL editor
+
+---
+
 ## 2026-04-22 — Create dual_meets and dual_meet_matches tables ✓ APPLIED
 
 **Migration file:** `docs/migrations/20260422_dual_meets_schema.sql`
