@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import type { ParsedMeet, ParsedMatch } from '@/lib/parseDualMeet'
 import type { SchoolMatch } from '@/lib/matchSchools'
 import type { WrestlerMatch } from '@/lib/matchWrestlers'
@@ -12,6 +12,94 @@ import {
   resolveSchool,
   resolveWrestler,
 } from './types'
+
+// ── School roster type (mirrors API response) ──────────────────────────────────
+
+type SchoolWrestler = {
+  wrestlerId:  string
+  displayName: string
+  weights:     number[]
+}
+
+// ── School roster dropdown ─────────────────────────────────────────────────────
+// Shown when confidence is 'none' and no fuzzy alternates exist.
+// Fetches all wrestlers on file for the school and lets the user pick one.
+
+function SchoolRosterDropdown({
+  schoolId,
+  panelKey,
+  override,
+  onSelect,
+}: {
+  schoolId: number | null
+  panelKey: WrestlerKey
+  override: WrestlerOverride | undefined
+  onSelect: (wrestlerId: string, displayName: string) => void
+}) {
+  const [query,   setQuery]   = useState('')
+  const [roster,  setRoster]  = useState<SchoolWrestler[]>([])
+  const [loading, setLoading] = useState(false)
+  const [err,     setErr]     = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!schoolId) return
+    setLoading(true)
+    setErr(null)
+    fetch(`/api/admin/school-wrestlers?schoolId=${schoolId}`)
+      .then(r => r.json())
+      .then(j => setRoster(j.wrestlers ?? []))
+      .catch(e => setErr(String(e)))
+      .finally(() => setLoading(false))
+  }, [schoolId])
+
+  if (!schoolId) {
+    return <p className="text-xs text-slate-400 italic mb-3">No school resolved — can&apos;t search roster.</p>
+  }
+  if (loading) {
+    return <p className="text-xs text-slate-400 italic mb-3">Loading school roster…</p>
+  }
+  if (err) {
+    return <p className="text-xs text-red-500 italic mb-3">Failed to load roster.</p>
+  }
+
+  const filtered = query.trim()
+    ? roster.filter(w => w.displayName.toLowerCase().includes(query.toLowerCase()))
+    : roster
+
+  return (
+    <div className="mb-3">
+      <input
+        type="text"
+        value={query}
+        onChange={e => setQuery(e.target.value)}
+        placeholder="Search by name…"
+        autoFocus
+        className="w-full text-xs border border-black/30 px-2 py-1 outline-none focus:border-black mb-2"
+      />
+      <div className="max-h-44 overflow-y-auto space-y-1">
+        {filtered.length === 0 ? (
+          <p className="text-xs text-slate-400 italic">
+            {roster.length === 0 ? 'No wrestlers on file for this school.' : 'No matches for your search.'}
+          </p>
+        ) : (
+          filtered.map(w => (
+            <label key={w.wrestlerId} className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="radio"
+                name={`wrestler-roster-${panelKey}`}
+                checked={!override?.confirmedNew && override?.wrestlerId === w.wrestlerId}
+                onChange={() => onSelect(w.wrestlerId, w.displayName)}
+                className="accent-black"
+              />
+              <span className="text-xs text-slate-800">{w.displayName}</span>
+              <span className="text-xs text-slate-400">{w.weights.join(', ')}</span>
+            </label>
+          ))
+        )}
+      </div>
+    </div>
+  )
+}
 
 // ── Confidence dot ─────────────────────────────────────────────────────────────
 
@@ -279,12 +367,13 @@ export function MeetCard({
                     </tr>
 
                     {panelKey && (() => {
-                      const isWinner   = panelKey === wKey
-                      const rawName    = isWinner ? m.winnerName    : m.loserName
-                      const rawSchool  = isWinner ? m.winnerSchoolRaw : m.loserSchoolRaw
-                      const wMatch     = wrestlerResolutions[panelKey]
-                      const override   = wrestlerOverrides[panelKey]
-                      const alternates = wMatch?.alternates ?? []
+                      const isWinner      = panelKey === wKey
+                      const rawName       = isWinner ? m.winnerName      : m.loserName
+                      const rawSchool     = isWinner ? m.winnerSchoolRaw  : m.loserSchoolRaw
+                      const activeSchoolId = isWinner ? winnerSchoolId   : loserSchoolId
+                      const wMatch        = wrestlerResolutions[panelKey]
+                      const override      = wrestlerOverrides[panelKey]
+                      const alternates    = wMatch?.alternates ?? []
 
                       return (
                         <tr>
@@ -307,7 +396,7 @@ export function MeetCard({
                                 >×</button>
                               </div>
 
-                              {/* Alternates */}
+                              {/* Alternates or full school roster */}
                               {alternates.length > 0 ? (
                                 <div className="space-y-1.5 mb-3">
                                   {alternates.map(alt => (
@@ -329,7 +418,18 @@ export function MeetCard({
                                   ))}
                                 </div>
                               ) : (
-                                <p className="text-xs text-slate-400 italic mb-3">No candidates found in DB.</p>
+                                <SchoolRosterDropdown
+                                  schoolId={activeSchoolId}
+                                  panelKey={panelKey as WrestlerKey}
+                                  override={override}
+                                  onSelect={(wrestlerId, displayName) =>
+                                    onWrestlerOverride(panelKey as WrestlerKey, {
+                                      wrestlerId,
+                                      displayName,
+                                      confirmedNew: false,
+                                    })
+                                  }
+                                />
                               )}
 
                               {/* Actions */}
