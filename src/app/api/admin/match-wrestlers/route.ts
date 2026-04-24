@@ -23,8 +23,16 @@ const NULL_MATCH = (name: string, weightClass: number): WrestlerMatch => ({
 })
 
 export async function POST(req: NextRequest) {
-  const userSupabase = await createSupabaseServer()
-  const { data: { user } } = await userSupabase.auth.getUser()
+  let user
+  try {
+    const userSupabase = await createSupabaseServer()
+    const { data } = await userSupabase.auth.getUser()
+    user = data.user
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err)
+    console.error('[match-wrestlers] auth error:', message)
+    return NextResponse.json({ error: `Auth error: ${message}` }, { status: 500 })
+  }
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body = await req.json().catch(() => ({}))
