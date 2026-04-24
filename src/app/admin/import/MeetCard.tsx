@@ -101,21 +101,30 @@ function SchoolRosterDropdown({
   )
 }
 
-// ── Confidence dot ─────────────────────────────────────────────────────────────
+// ── Confidence badge ───────────────────────────────────────────────────────────
 
-const DOT_COLOR: Record<string, string> = {
-  exact: 'bg-green-500',
-  high:  'bg-yellow-400',
-  low:   'bg-orange-400',
-  none:  'bg-red-500',
+const BADGE_STYLE: Record<string, string> = {
+  exact: 'bg-green-100  text-green-800',
+  high:  'bg-yellow-100 text-yellow-800',
+  low:   'bg-orange-100 text-orange-800',
+  none:  'bg-red-100    text-red-700',
+}
+
+const BADGE_LABEL: Record<string, string> = {
+  exact: '✓ Exact',
+  high:  '~ High',
+  low:   '? Low',
+  none:  '? None',
 }
 
 function ConfidenceDot({ confidence, title }: { confidence: string; title?: string }) {
   return (
     <span
-      className={`inline-block w-2 h-2 rounded-full shrink-0 ${DOT_COLOR[confidence] ?? 'bg-slate-400'}`}
+      className={`inline-flex items-center shrink-0 rounded px-1 py-px text-[10px] font-semibold leading-none ${BADGE_STYLE[confidence] ?? 'bg-slate-100 text-slate-600'}`}
       title={title ?? confidence}
-    />
+    >
+      {BADGE_LABEL[confidence] ?? confidence}
+    </span>
   )
 }
 
@@ -143,7 +152,9 @@ function WrestlerCell({
 
   const inner = (
     <div className="flex items-center gap-1.5 flex-wrap min-w-0">
-      <ConfidenceDot confidence={resolved.confidence} title={`Wrestler: ${resolved.confidence}`} />
+      {!resolved.isNew && (
+        <ConfidenceDot confidence={resolved.confidence} title={`Wrestler: ${resolved.confidence}`} />
+      )}
       <span className="text-xs text-slate-800 truncate">{name}</span>
       {schoolRaw && (
         <span className="text-[11px] text-slate-400 shrink-0">({schoolRaw})</span>
