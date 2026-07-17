@@ -14,8 +14,7 @@ type StandingsRow = {
 }
 
 function smallLogo(url: string | null): string | null {
-  if (!url) return null
-  return url.replace('/512/', '/64/')
+  return url ?? null
 }
 
 export function StandingsTable({

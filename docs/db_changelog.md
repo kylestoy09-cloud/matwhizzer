@@ -5,6 +5,113 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-07-16 — Logo upload + header_background update, all 325 schools ⚠️ PENDING REVIEW
+
+**Migration file:** `docs/migrations/20260716_logo_upload_all_325.sql`
+
+**What changed:**
+
+Data migration (no DDL). Sets `logo_url` and `header_background` on all 325 active schools.
+Unconditional overwrite — every image manually confirmed correct before upload.
+
+- **Images:** 325/325 logos processed (crop 7% symmetric, pad 8% L/R with corner fill, 512×512 PNG) and uploaded to Supabase Storage at `school-logos/colored/512/{school_id}.png`
+- **`logo_url`:** Set to `https://vhffduvgcljvhtlyqgcd.supabase.co/storage/v1/object/public/school-logos/colored/512/{school_id}.png` for all 325 schools
+- **`header_background`:** Set from `school_text_colors.csv` (all values validated as `#RRGGBB` hex)
+- Special cases confirmed in place: Holmdel 189 → `#454444`, Warren Hills 67 → `#808080`, Garfield 53 → `#000000`, Red Bank Catholic 264 → `#000000`, South Hunterdon 136 → `#6F777B`, St. Augustine 313 → `#9CBEE1`
+- School 358 (Roselle) UPDATE is included but is a no-op until `20260716_restore_roselle_358.sql` runs first
+
+**Prior state (for context):** 171/325 schools had NULL `logo_url`; 218/325 had NULL `header_background`. Rollback block in migration file restores exact prior values per school.
+
+**Rollback:** See commented block at bottom of migration file — paste into Supabase SQL editor.
+
+**Verified?** No — pending review before execution
+
+---
+
+## 2026-07-16 — Restore school 358 (Roselle / Abraham Clark HS) ⚠️ PENDING APPROVAL
+
+**Migration file:** `docs/migrations/20260716_restore_roselle_358.sql`
+
+**What changed:**
+
+Reverses the school 358 portion of `20260420_school_dedup_final.sql`, which incorrectly deleted Roselle on the sole basis of having zero postseason tournament entries.
+
+| Step | Table | Action |
+|---|---|---|
+| 1 | `schools` | INSERT id=358 — Roselle, Rams, #CC0022, North II Group 2, Union County |
+| 2 | `school_districts` | INSERT school_id=358, district_id=16 |
+| 3 | `conference_standings` | INSERT id=895 — UCIAC Mountain division, season 2, 3W–14L (0–7 div), 349 PF / 930 PA |
+
+**Why the April 20 deletion was wrong:**
+
+`20260410_suppress_shell_schools.sql` had explicitly listed school 358 among the schools to *keep active*, noting it had real conference W/L data. That decision was overridden ten days later by the dedup migration without re-examining it. School 358 had zero postseason tournament entries but a real regular-season record.
+
+**Policy established:** "Zero postseason tournament entries" alone is not sufficient grounds for deletion. A school with conference standings data or dual-meet records is not an orphan. The correct disposition is `is_active = true` with an empty postseason record.
+
+**Rollback:** `DELETE FROM conference_standings WHERE id = 895; DELETE FROM school_districts WHERE school_id = 358; DELETE FROM schools WHERE id = 358;`
+
+**Post-run:** Upload logo via pipeline (file `358 - Roselle.svg` already in mascot library). Verify UCIAC conference standings page shows Roselle.
+
+**Verified?** No — pending approval before execution
+
+---
+
+## 2026-06-09 — dual_meets + dual_meet_matches: missing grants patch
+
+**Migration file:** `docs/migrations/20260609_dual_meets_grants.sql`
+
+**What changed:**
+- The original `20260422_dual_meets_schema.sql` and `20260423_dual_meets_rls.sql` omitted explicit `GRANT` statements. Supabase did not auto-apply default privileges, so `service_role` received PG error 42501 when the batch import script attempted `SELECT`/`INSERT` on `dual_meets`.
+- Added: `GRANT ALL ON TABLE dual_meets TO service_role` and same for `dual_meet_matches` so the import script can INSERT.
+- Added: `GRANT SELECT ON TABLE dual_meets TO anon, authenticated` and same for `dual_meet_matches` for public-facing schedule pages.
+
+**Rollback:** `REVOKE ALL ON TABLE public.dual_meets FROM service_role, anon, authenticated; REVOKE ALL ON TABLE public.dual_meet_matches FROM service_role, anon, authenticated;`
+
+**Verified?** ✓ APPLIED — 2026-06-09; confirmed 385 meets and 5,390 match rows inserted with 0 errors
+
+---
+
+## 2026-06-08 — tournament_bouts tables: missing grants patch
+
+**Migration file:** `docs/migrations/20260608_tournament_tables_grants.sql`
+
+**What changed:**
+- The original schema migration omitted explicit `GRANT` statements. Supabase did not auto-apply default privileges, so `service_role` received PG error 42501 (permission denied) even for SELECT.
+- Added: `GRANT ALL ON TABLE in_season_tournaments TO service_role` and `GRANT ALL ON TABLE tournament_bouts TO service_role` so the import script can INSERT.
+- Added: `GRANT SELECT ON TABLE in_season_tournaments TO anon, authenticated` and same for `tournament_bouts` so the public-facing tournament pages can read data.
+- Also patched `20260608_tournament_bouts_schema.sql` in-place so a fresh apply from that file is now complete.
+
+**Rollback:** `REVOKE ALL ON TABLE in_season_tournaments FROM service_role, anon, authenticated; REVOKE ALL ON TABLE tournament_bouts FROM service_role, anon, authenticated;`
+
+**Verified?** ✓ APPLIED — 2026-06-08; confirmed 5,172 bouts inserted across 25 tournaments with 0 errors
+
+---
+
+## 2026-06-08 — in_season_tournaments + tournament_bouts tables ✓ APPLIED
+
+**Migration file:** `docs/migrations/20260608_tournament_bouts_schema.sql`
+
+**What changed:**
+- The existing `tournaments` table (postseason, integer PK) is **not touched**.
+- Created `in_season_tournaments`: uuid PK, `name text NOT NULL`, `start_date date NOT NULL`, `end_date date`, `location text`, `season text NOT NULL` (e.g. "2025-26"), `created_at`. Unique index on `(name, season)` to prevent duplicate imports.
+- Created `tournament_bouts`: one row per individual bout in an in-season tournament. Separate from the postseason `matches` table.
+  - `in_season_tournament_id uuid` FK → `in_season_tournaments(id)` ON DELETE CASCADE
+  - `weight_class integer`, `round text`
+  - `nj_wrestler1_id / nj_wrestler2_id` — nullable FKs → `wrestlers(id)` for NJ athletes
+  - `wrestler1_name_raw / wrestler2_name_raw` — always populated (not null)
+  - `wrestler1_school_id / wrestler2_school_id` — nullable FKs → `schools(id)`; OOS schools use is_nj=false rows or NULL
+  - `wrestler1_school_raw / wrestler2_school_raw` — always populated (not null)
+  - `winner smallint CHECK (winner IN (1, 2))` — 1 = wrestler1, 2 = wrestler2, NULL = DFF/no result
+  - `result_type`, `result_detail`, `fall_time_seconds`
+- Indexes: `idx_in_season_tournaments_name_season` (unique), `idx_tournament_bouts_tournament_id`, `idx_tournament_bouts_wrestler1_school`, `idx_tournament_bouts_wrestler2_school`, `idx_tournament_bouts_nj_wrestler1`, `idx_tournament_bouts_nj_wrestler2`
+- RLS: enabled on both tables with `"public read"` policy; writes require service role.
+
+**Rollback:** `DROP TABLE tournament_bouts; DROP TABLE in_season_tournaments;`
+
+**Verified?** ✓ APPLIED — 2026-06-08; tables created successfully, grants applied via patch migration above
+
+---
+
 ## 2026-04-22 — School colors update 2: new SVG schools + Gateway/Pennsville corrections ✓ APPLIED
 
 **Migration file:** `docs/migrations/20260422_school_colors_update2.sql`

@@ -349,6 +349,7 @@ export default async function SchoolProfilePage({
         colorSecondary={profile.color_secondary}
         colorTertiary={profile.color_tertiary}
         headerBackground={profile.header_background}
+        logoUrl={profile.logo_url}
         gender={gender as 'boys' | 'girls'}
         activeTab={activeTab}
         activeSeason={season}

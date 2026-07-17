@@ -73,6 +73,7 @@ export interface SchoolHeaderProps {
   colorSecondary: string | null
   colorTertiary: string | null
   headerBackground: string | null
+  logoUrl: string | null
   gender: 'boys' | 'girls'
   activeTab: string
   activeSeason: number
@@ -105,6 +106,7 @@ export function SchoolHeader({
   colorSecondary,
   colorTertiary,
   headerBackground,
+  logoUrl,
   gender,
   activeTab,
   activeSeason,
@@ -124,6 +126,7 @@ export function SchoolHeader({
   const bgColor   = headerBackground ?? colorSecondary ?? '#1a1a2e'
   const textColor = pickTextColor(bgColor, [colorPrimary, colorSecondary, colorTertiary])
   const svgPath   = findMascotSvg(schoolId)
+  const logoSrc   = logoUrl ?? svgPath
   const mascotLine = mascot ?? null
   const genderBase = gender === 'girls' ? '/girls' : '/boys'
   const tabSuffix  = activeTab !== 'overview' ? `&tab=${activeTab}` : ''
@@ -134,10 +137,10 @@ export function SchoolHeader({
       {/* ── Name + mascot + logo ─────────────────────────────────────────────── */}
       <div className="px-4 pt-6 pb-4">
         <div className="flex items-center gap-4">
-          {svgPath && (
+          {logoSrc && (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={svgPath}
+              src={logoSrc}
               alt=""
               aria-hidden="true"
               className="h-32 w-auto shrink-0"
