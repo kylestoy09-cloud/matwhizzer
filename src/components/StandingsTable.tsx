@@ -50,7 +50,7 @@ export function StandingsTable({
                       className="flex items-center gap-3 group"
                     >
                       {logo ? (
-                        <Image src={logo} alt={s.display_name} width={32} height={32} className="w-8 h-8 rounded object-cover shrink-0" />
+                        <Image src={logo} alt={s.display_name} width={32} height={32} className="w-8 h-8 rounded object-contain shrink-0" />
                       ) : s.primary_color ? (
                         <div className="w-8 h-8 rounded flex items-center justify-center shrink-0 text-[10px] font-bold text-white" style={{ backgroundColor: s.primary_color }}>
                           {s.display_name.slice(0, 2).toUpperCase()}
