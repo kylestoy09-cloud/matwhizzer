@@ -52,7 +52,8 @@ export default async function SchoolsPage({
       .select('school_id, tournaments!inner(tournament_type, gender)')
       .eq('tournaments.tournament_type', 'districts')
       .eq('tournaments.gender', districtGender)
-      .not('school_id', 'is', null),
+      .not('school_id', 'is', null)
+      .limit(50000),
   ])
 
   const allSchools = (schoolsResult.data ?? []) as SchoolRow[]
