@@ -30,7 +30,7 @@ export default async function SchoolsPage({
   const season = await getActiveSeason()
 
   const coopGenders = gender === 'girls' ? ['F', 'B'] : ['M', 'B']
-  const districtType = gender === 'girls' ? 'girls_districts' : 'boys_districts'
+  const districtGender = gender === 'girls' ? 'F' : 'M'
 
   const [schoolsResult, scoresResult, coopsResult, entriesResult] = await Promise.all([
     supabase
@@ -49,8 +49,9 @@ export default async function SchoolsPage({
       .in('gender', coopGenders),
     supabase
       .from('tournament_entries')
-      .select('school_id, tournaments!inner(tournament_type)')
-      .eq('tournaments.tournament_type', districtType)
+      .select('school_id, tournaments!inner(tournament_type, gender)')
+      .eq('tournaments.tournament_type', 'districts')
+      .eq('tournaments.gender', districtGender)
       .not('school_id', 'is', null),
   ])
 
