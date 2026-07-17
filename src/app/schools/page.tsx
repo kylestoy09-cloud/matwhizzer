@@ -30,8 +30,9 @@ export default async function SchoolsPage({
   const season = await getActiveSeason()
 
   const coopGenders = gender === 'girls' ? ['F', 'B'] : ['M', 'B']
+  const districtType = gender === 'girls' ? 'girls_districts' : 'boys_districts'
 
-  const [schoolsResult, scoresResult, coopsResult] = await Promise.all([
+  const [schoolsResult, scoresResult, coopsResult, entriesResult] = await Promise.all([
     supabase
       .from('schools')
       .select('id, display_name, section, classification')
@@ -46,9 +47,21 @@ export default async function SchoolsPage({
       .select('member_school_id, coop_school_id, gender')
       .eq('season', season)
       .in('gender', coopGenders),
+    supabase
+      .from('tournament_entries')
+      .select('school_id, tournaments!inner(tournament_type)')
+      .eq('tournaments.tournament_type', districtType)
+      .not('school_id', 'is', null),
   ])
 
   const allSchools = (schoolsResult.data ?? []) as SchoolRow[]
+
+  // Schools with at least one wrestler entered in a district tournament for this gender
+  const activeSchoolIds = new Set<number>(
+    (entriesResult.data ?? [])
+      .map((e: { school_id: number | null }) => e.school_id)
+      .filter((id): id is number => id !== null)
+  )
 
   // Build set of co-op member school IDs for current season+gender
   // Track coop_school_id and the co-op's gender so badge links use the right gender param.
@@ -65,9 +78,11 @@ export default async function SchoolsPage({
     pointsMap.set(row.school_id, (pointsMap.get(row.school_id) ?? 0) + Number(row.total_points))
   }
 
+  const eligible = allSchools.filter(s => activeSchoolIds.has(s.id))
+
   const filtered = q
-    ? allSchools.filter(s => s.display_name.toLowerCase().includes(q))
-    : allSchools
+    ? eligible.filter(s => s.display_name.toLowerCase().includes(q))
+    : eligible
 
   const isGirls = gender === 'girls'
   const accentSearch = isGirls ? 'focus:ring-rose-500' : 'focus:ring-slate-500'
@@ -80,7 +95,7 @@ export default async function SchoolsPage({
       <div className="mb-6 text-center">
         <PageHeader title="NJ Wrestling Schools" />
         <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
-          <span>{allSchools.length} schools · NJSIAA</span>
+          <span>{eligible.length} schools · NJSIAA</span>
           <InlineSeasonPicker activeSeason={season} />
           <span>{isGirls ? 'girls' : 'boys'} postseason</span>
         </div>
