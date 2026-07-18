@@ -298,7 +298,7 @@ export function PersonalizedHome() {
     return (
       <div className="mb-8 bg-white border border-black rounded-none shadow-none px-5 py-6 text-center">
         <p className="text-sm text-slate-600 mb-2">Follow some schools to personalize your feed</p>
-        <Link href="/schools" className="text-sm font-medium text-blue-600 hover:underline">
+        <Link href="/boys/schools" className="text-sm font-medium text-blue-600 hover:underline">
           Browse schools →
         </Link>
       </div>

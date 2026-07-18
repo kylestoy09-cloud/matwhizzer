@@ -60,7 +60,7 @@ export function HeaderNav() {
     { href: isBoys ? '/boys/districts'    : '/girls/districts',    label: 'Districts'    },
     { href: '/conferences',                                         label: 'Conferences'  },
     { href: isBoys ? '/boys/leaderboards' : '/girls/leaderboards', label: 'Leaderboards' },
-    { href: '/schools',                                             label: 'Schools'      },
+    { href: isBoys ? '/boys/schools' : '/girls/schools',            label: 'Schools'      },
     { href: '/feedback',                                            label: 'Feedback'     },
   ]
 

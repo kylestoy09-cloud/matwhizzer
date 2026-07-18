@@ -370,7 +370,7 @@ export default async function SchoolProfilePage({
       <div className="max-w-4xl mx-auto px-4 py-6">
         {/* Back link */}
         <Link
-          href={`/schools?gender=${gender}`}
+          href={gender === 'girls' ? '/girls/schools' : '/boys/schools'}
           className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 mb-6 transition-colors"
         >
           ← School Directory
