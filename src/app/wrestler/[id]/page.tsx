@@ -259,8 +259,8 @@ export default async function WrestlerPage({
           result_type, result_detail, fall_time_seconds,
           nj_wrestler1_id, wrestler1_name_raw, wrestler1_school_raw,
           nj_wrestler2_id, wrestler2_name_raw, wrestler2_school_raw,
-          wrestler1_school:schools!wrestler1_school_id(display_name, is_nj),
-          wrestler2_school:schools!wrestler2_school_id(display_name, is_nj),
+          wrestler1_school:schools!wrestler1_school_id(id, display_name, is_nj),
+          wrestler2_school:schools!wrestler2_school_id(id, display_name, is_nj),
           event:in_season_tournaments!in_season_tournament_id(id, name, start_date)
         `)
         .or(`nj_wrestler1_id.eq.${id},nj_wrestler2_id.eq.${id}`),
@@ -281,11 +281,24 @@ export default async function WrestlerPage({
     ])
   const displaySchool = (schoolNameRow as { school_name: string } | null)?.school_name ?? primarySchool
 
+  // Extract school ID directly from tournament bouts (FK join to schools, always correct)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const boutSchoolId = (() => {
+    if (!boutData || boutData.length === 0) return null
+    for (const bout of boutData as any[]) {
+      if (String(bout.nj_wrestler1_id) === id) return (bout.wrestler1_school as any)?.id ?? null
+      if (String(bout.nj_wrestler2_id) === id) return (bout.wrestler2_school as any)?.id ?? null
+    }
+    return null
+  })()
+
   // Fetch school profile (colors, logo, section, conference) and wrestler's weight
+  const schoolSelect = 'id, display_name, primary_color, secondary_color, logo_url, section, classification, athletic_conference, mascot, header_background'
   const [{ data: schoolProfileData }, { data: weightData }] = await Promise.all([
-    displaySchool
-      ? supabase.from('schools').select('id, display_name, primary_color, secondary_color, logo_url, section, classification, athletic_conference, mascot, header_background')
-          .eq('display_name', displaySchool).maybeSingle()
+    boutSchoolId
+      ? supabase.from('schools').select(schoolSelect).eq('id', boutSchoolId).maybeSingle()
+      : displaySchool
+      ? supabase.from('schools').select(schoolSelect).eq('display_name', displaySchool).maybeSingle()
       : Promise.resolve({ data: null }),
     supabase.from('tournament_entries')
       .select('weight_class:weight_classes(weight), tournament:tournaments(tournament_type, season_id)')
