@@ -310,9 +310,8 @@ export function SchoolTabs({
             byWeight.get(wt)!.map((w, i) => ({
               wt: i === 0 ? String(wt) : '',
               name: (
-                <Link href={`/wrestler/${w.wrestler_id}`} className="flex items-center gap-2.5 group">
-                  <WrestlerAvatar school={schoolData} weight={w.primary_weight} size="sm" />
-                  <span className="group-hover:underline">{w.wrestler_name}</span>
+                <Link href={`/wrestler/${w.wrestler_id}`} className="hover:underline">
+                  {w.wrestler_name}
                 </Link>
               ),
               districts: <PlaceBadge placement={w.districts_placement} short={w.districts_short} />,
