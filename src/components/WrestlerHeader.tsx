@@ -47,11 +47,25 @@ function pickTextColor(bg: string, candidates: (string | null | undefined)[]): s
   return wc >= bc ? '#FFFFFF' : '#000000'
 }
 
+// ── Grade label expansion ─────────────────────────────────────────────────────
+
+function expandGrade(g: string | null): string | null {
+  if (!g) return null
+  switch (g.trim()) {
+    case 'Fr': return 'Freshman'
+    case 'So': return 'Sophomore'
+    case 'Jr': return 'Junior'
+    case 'Sr': return 'Senior'
+    default:   return g
+  }
+}
+
 // ── Props ──────────────────────────────────────────────────────────────────────
 
 export type WrestlerHeaderProps = {
   schoolName: string | null
   mascotName: string | null
+  logoUrl: string | null
   primaryColor: string | null
   secondaryColor: string | null
   headerBackground: string | null
@@ -66,6 +80,7 @@ export type WrestlerHeaderProps = {
 export function WrestlerHeader({
   schoolName,
   mascotName,
+  logoUrl,
   primaryColor,
   secondaryColor,
   headerBackground,
@@ -89,8 +104,15 @@ export function WrestlerHeader({
     return () => ro.disconnect()
   }, [])
 
-  const schoolNameEl = (
+  const schoolInner = (
     <div className="flex items-center gap-2 min-w-0">
+      {/* School logo — circle, slightly larger than the text line-height */}
+      {logoUrl && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center shrink-0 p-0.5">
+          <img src={logoUrl} alt="" aria-hidden className="w-full h-full object-contain" />
+        </div>
+      )}
       <span
         className={`${stardos.className} text-base uppercase tracking-tight leading-none truncate`}
         style={{ color: textColor }}
@@ -105,9 +127,11 @@ export function WrestlerHeader({
     </div>
   )
 
+  const fullGrade = expandGrade(grade)
+
   return (
     <>
-      {/* ── STICKY 1: school name + mascot — compact bar ──────────────────────── */}
+      {/* ── STICKY 1: school logo + name + mascot — compact bar ──────────────── */}
       <div
         data-wrestler-school-bar
         className="sticky z-20 w-full border-b"
@@ -116,10 +140,10 @@ export function WrestlerHeader({
         <div className="px-4 sm:px-6 py-2.5 flex items-center">
           {schoolLink ? (
             <Link href={schoolLink} className="hover:opacity-80 transition-opacity min-w-0">
-              {schoolNameEl}
+              {schoolInner}
             </Link>
           ) : (
-            schoolNameEl
+            schoolInner
           )}
         </div>
       </div>
@@ -147,9 +171,9 @@ export function WrestlerHeader({
             >
               {wrestlerName}
             </h1>
-            {grade && (
+            {fullGrade && (
               <p className="text-sm mt-0.5" style={{ color: textColor, opacity: 0.8 }}>
-                {grade}
+                {fullGrade}
               </p>
             )}
           </div>

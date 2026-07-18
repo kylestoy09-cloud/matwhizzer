@@ -882,6 +882,7 @@ export default async function WrestlerPage({
       <WrestlerHeader
         schoolName={displaySchool}
         mascotName={mascotName}
+        logoUrl={schoolProfile.logo_url as string | null}
         primaryColor={schoolProfile.primary_color as string | null}
         secondaryColor={schoolProfile.secondary_color as string | null}
         headerBackground={headerBackground}
@@ -895,6 +896,46 @@ export default async function WrestlerPage({
       <BackLink gender={wrestler.gender} />
 
       {/* ── Trophy Case ── */}
+
+      {/* Placements + special awards */}
+      {(placements.length > 0 || awards.length > 0) && (
+        <div className="mb-5 flex flex-wrap gap-1.5">
+          {[...placements]
+            .sort((a, b) =>
+              b.seasonId - a.seasonId ||
+              (TOURNAMENT_TYPE_ORDER[a.tournamentType] ?? 9) - (TOURNAMENT_TYPE_ORDER[b.tournamentType] ?? 9) ||
+              a.place - b.place
+            )
+            .map((p, i) => {
+              const short = placementShortLabel(p.tournament, p.tournamentType)
+              const yr = SEASON_SHORT[p.seasonId] ?? ''
+              const medal = p.place === 1 ? '\u{1F947}' : p.place === 2 ? '\u{1F948}' : p.place === 3 ? '\u{1F949}' : null
+              return (
+                <span key={i} className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800">
+                  {medal ? <span>{medal}</span> : <span className="opacity-75">{p.place}th</span>}
+                  <span>{short}</span>
+                  {yr && <span className="opacity-60">{yr}</span>}
+                </span>
+              )
+            })}
+          {[...awards]
+            .sort((a, b) =>
+              b.seasonId - a.seasonId ||
+              (a.type === 'hammer' ? 0 : 1) - (b.type === 'hammer' ? 0 : 1)
+            )
+            .map((a, i) => {
+              const yr = SEASON_SHORT[a.seasonId] ?? ''
+              const icon = a.type === 'hammer' ? '\u{1F528}' : '\u{26A1}'
+              return (
+                <span key={`award-${i}`} className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 border border-slate-300 text-slate-700">
+                  <span>{icon}</span>
+                  <span>{a.label}</span>
+                  {yr && <span className="opacity-60">{yr}</span>}
+                </span>
+              )
+            })}
+        </div>
+      )}
 
       {/* Ghost Champion badge */}
       {ghostChampionships.length > 0 && (
