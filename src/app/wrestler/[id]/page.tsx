@@ -1,16 +1,12 @@
 import { supabase, ROUND_ORDER, ROUND_LABEL, TOURNAMENT_TYPE_LABEL } from '@/lib/supabase'
 import Link from 'next/link'
-import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import { WrestlerAvatar } from '@/components/WrestlerAvatar'
+import { WrestlerHeader } from '@/components/WrestlerHeader'
+import { StatsTable } from '@/components/StatsTable'
 import { conferenceToSlug } from '@/lib/conferences'
 import { sectionToSlug, groupToSlug } from '@/lib/sections'
 
 export const dynamic = 'force-dynamic'
-
-const WRESTLER_PHOTOS: Record<string, string> = {
-  'bb3ebca6-4993-4cd4-87a0-fbcd3b1c12c8': '/wrestlers/zachary-akers.png',
-}
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -240,6 +236,7 @@ export default async function WrestlerPage({
     : null
 
   // 3. Matches as winner + matches as loser (parallel), plus school name lookup
+  //    Also fetch in-season tournament bouts for this wrestler
   const selectFields = `
     id, round, bracket_side, win_type,
     winner_score, loser_score, fall_time_seconds,
@@ -248,19 +245,46 @@ export default async function WrestlerPage({
     weight_class:weight_classes(weight)
   `
 
-  const [{ data: winMatches }, { data: lossMatches }, { data: schoolNameRow }] = await Promise.all([
-    supabase.from('matches').select(selectFields).in('winner_entry_id', entryIds),
-    supabase.from('matches').select(selectFields).in('loser_entry_id', entryIds),
-    primarySchool
-      ? supabase.from('school_names').select('school_name').eq('abbreviation', primarySchool).maybeSingle()
-      : Promise.resolve({ data: null }),
-  ])
+  const [{ data: winMatches }, { data: lossMatches }, { data: schoolNameRow }, { data: boutData }, { data: dualMatchData }] =
+    await Promise.all([
+      supabase.from('matches').select(selectFields).in('winner_entry_id', entryIds),
+      supabase.from('matches').select(selectFields).in('loser_entry_id', entryIds),
+      primarySchool
+        ? supabase.from('school_names').select('school_name').eq('abbreviation', primarySchool).maybeSingle()
+        : Promise.resolve({ data: null }),
+      supabase
+        .from('tournament_bouts')
+        .select(`
+          id, weight_class, round, winner,
+          result_type, result_detail, fall_time_seconds,
+          nj_wrestler1_id, wrestler1_name_raw, wrestler1_school_raw,
+          nj_wrestler2_id, wrestler2_name_raw, wrestler2_school_raw,
+          wrestler1_school:schools!wrestler1_school_id(display_name, is_nj),
+          wrestler2_school:schools!wrestler2_school_id(display_name, is_nj),
+          event:in_season_tournaments!in_season_tournament_id(id, name, start_date)
+        `)
+        .or(`nj_wrestler1_id.eq.${id},nj_wrestler2_id.eq.${id}`),
+      supabase
+        .from('dual_meet_matches')
+        .select(`
+          id, weight_class, result_type, result_detail, fall_time_seconds,
+          is_double_forfeit, is_forfeit_win, wrestler_a_id, wrestler_b_id, winner_id,
+          wrestler_a:wrestlers!wrestler_a_id(id, first_name, last_name),
+          wrestler_b:wrestlers!wrestler_b_id(id, first_name, last_name),
+          meet:dual_meets(
+            id, meet_date, team1_score, team2_score, season_id,
+            school_a:schools!team1_school_id(id, display_name),
+            school_b:schools!team2_school_id(id, display_name)
+          )
+        `)
+        .or(`wrestler_a_id.eq.${id},wrestler_b_id.eq.${id}`),
+    ])
   const displaySchool = (schoolNameRow as { school_name: string } | null)?.school_name ?? primarySchool
 
   // Fetch school profile (colors, logo, section, conference) and wrestler's weight
   const [{ data: schoolProfileData }, { data: weightData }] = await Promise.all([
     displaySchool
-      ? supabase.from('schools').select('id, display_name, primary_color, secondary_color, logo_url, section, classification, athletic_conference')
+      ? supabase.from('schools').select('id, display_name, primary_color, secondary_color, logo_url, section, classification, athletic_conference, mascot, header_background')
           .eq('display_name', displaySchool).maybeSingle()
       : Promise.resolve({ data: null }),
     supabase.from('tournament_entries')
@@ -488,6 +512,152 @@ export default async function WrestlerPage({
     }
   }
 
+  // ── In-season tournament bouts ────────────────────────────────────────────────
+  type TournBout = {
+    id: string
+    weight_class: number
+    round: string
+    winner: 1 | 2 | null
+    result_type: string | null
+    result_detail: string | null
+    fall_time_seconds: number | null
+    nj_wrestler1_id: string | null
+    wrestler1_name_raw: string
+    wrestler1_school_raw: string
+    wrestler1_school: { display_name: string; is_nj: boolean } | null
+    nj_wrestler2_id: string | null
+    wrestler2_name_raw: string
+    wrestler2_school_raw: string
+    wrestler2_school: { display_name: string; is_nj: boolean } | null
+    event: { id: string; name: string; start_date: string | null } | null
+  }
+  const allBouts = (boutData ?? []) as unknown as TournBout[]
+  // Group bouts by tournament, sorted by start_date desc
+  const boutsByTournament = new Map<string, TournBout[]>()
+  for (const b of allBouts) {
+    const tid = b.event?.id ?? ''
+    if (!boutsByTournament.has(tid)) boutsByTournament.set(tid, [])
+    boutsByTournament.get(tid)!.push(b)
+  }
+  const boutTournaments = [...boutsByTournament.entries()]
+    .map(([tid, bouts]) => ({ tid, name: bouts[0]?.event?.name ?? '—', startDate: bouts[0]?.event?.start_date ?? null, bouts }))
+    .sort((a, b) => (b.startDate ?? '').localeCompare(a.startDate ?? ''))
+
+  // ── Dual meet match history ───────────────────────────────────────────────────
+  type DualMeetMatchRow = {
+    id: string
+    weight_class: number
+    result_type: string | null
+    result_detail: string | null
+    fall_time_seconds: number | null
+    is_double_forfeit: boolean
+    is_forfeit_win: boolean
+    wrestler_a_id: string | null
+    wrestler_b_id: string | null
+    winner_id: string | null
+    wrestler_a: { id: string; first_name: string; last_name: string } | { id: string; first_name: string; last_name: string }[] | null
+    wrestler_b: { id: string; first_name: string; last_name: string } | { id: string; first_name: string; last_name: string }[] | null
+    meet: {
+      id: string
+      meet_date: string
+      team1_score: number | null
+      team2_score: number | null
+      season_id: number
+      school_a: { id: number; display_name: string } | null
+      school_b: { id: number; display_name: string } | null
+    } | null
+  }
+
+  type DualMeetGroup = {
+    meetId: string
+    meetDate: string
+    oppSchoolName: string
+    myTeamScore: number | null
+    oppTeamScore: number | null
+    matches: {
+      id: string
+      weightClass: number
+      result: 'W' | 'L' | null
+      oppName: string
+      oppId: string | null
+      resultStr: string
+    }[]
+  }
+
+  const allDualMatches = (dualMatchData ?? []) as unknown as DualMeetMatchRow[]
+  const dualMeetMap = new Map<string, DualMeetGroup>()
+
+  for (const row of allDualMatches) {
+    const meet = row.meet
+    if (!meet) continue
+    const meetId = meet.id
+    const isWrestlerA = row.wrestler_a_id === id
+
+    if (!dualMeetMap.has(meetId)) {
+      const oppSchool = isWrestlerA ? meet.school_b : meet.school_a
+      const myScore   = isWrestlerA ? meet.team1_score : meet.team2_score
+      const oppScore  = isWrestlerA ? meet.team2_score : meet.team1_score
+      dualMeetMap.set(meetId, {
+        meetId,
+        meetDate: meet.meet_date,
+        oppSchoolName: oppSchool?.display_name ?? '—',
+        myTeamScore: myScore,
+        oppTeamScore: oppScore,
+        matches: [],
+      })
+    }
+
+    const result: 'W' | 'L' | null = row.is_double_forfeit
+      ? null
+      : row.winner_id === id ? 'W' : 'L'
+
+    type WrestlerRef = { id: string; first_name: string; last_name: string }
+    const oppWrestlerRaw = (isWrestlerA
+      ? unwrap(row.wrestler_b as WrestlerRef | WrestlerRef[] | null)
+      : unwrap(row.wrestler_a as WrestlerRef | WrestlerRef[] | null)) as WrestlerRef | null
+    const oppName = oppWrestlerRaw
+      ? `${oppWrestlerRaw.first_name} ${oppWrestlerRaw.last_name}`
+      : row.is_forfeit_win ? 'Forfeit' : row.is_double_forfeit ? 'Double Forfeit' : '—'
+    const oppId: string | null = oppWrestlerRaw?.id ?? null
+
+    const rt = row.result_type
+    let resultStr = '—'
+    if (row.is_double_forfeit) {
+      resultStr = 'Double Forfeit'
+    } else if (row.is_forfeit_win) {
+      resultStr = 'Forfeit'
+    } else if (rt) {
+      const rtLow = rt.toLowerCase()
+      if (rtLow === 'fall') {
+        if (row.fall_time_seconds) {
+          const min = Math.floor(row.fall_time_seconds / 60)
+          const sec = String(row.fall_time_seconds % 60).padStart(2, '0')
+          resultStr = `Fall ${min}:${sec}`
+        } else {
+          resultStr = 'Fall'
+        }
+      } else {
+        resultStr = row.result_detail ? `${rt} ${row.result_detail}` : rt
+      }
+    }
+
+    dualMeetMap.get(meetId)!.matches.push({
+      id: row.id,
+      weightClass: row.weight_class,
+      result,
+      oppName,
+      oppId,
+      resultStr,
+    })
+  }
+
+  // Sort meets by date descending; sort matches within each meet by weight ascending
+  const dualMeetGroups = [...dualMeetMap.values()]
+    .sort((a, b) => b.meetDate.localeCompare(a.meetDate))
+  for (const g of dualMeetGroups) {
+    g.matches.sort((a, b) => a.weightClass - b.weightClass)
+  }
+
   // Current-season stats for the profile header
   const currentGroups = bySeason.get(currentSeason) ?? []
   const currentAnnotated = annotated.filter(
@@ -702,171 +872,29 @@ export default async function WrestlerPage({
   const districtNum = districtLabel?.match(/\d+/)?.[0] ?? null
   const regionNum = regionLabel?.match(/\d+/)?.[0] ?? null
 
-  // Season record
-  const recordStr = seasonRecord ? `${seasonRecord.wins}-${seasonRecord.losses}` : null
+  // Mascot name (strip "Wrestling" suffix, same transform as SchoolHeader)
+  const mascotName = (schoolProfile.mascot as string | null)?.replace(/\s*Wrestling\.?\s*$/i, '').trim() || null
+  const headerBackground = (schoolProfile.header_background as string | null) ?? null
+  const schoolLink = schoolProfile.id > 0 ? `/schools/${schoolProfile.id}?gender=${gender}` : null
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-10">
+    <>
+      <WrestlerHeader
+        schoolName={displaySchool}
+        mascotName={mascotName}
+        primaryColor={schoolProfile.primary_color as string | null}
+        secondaryColor={schoolProfile.secondary_color as string | null}
+        headerBackground={headerBackground}
+        wrestlerName={baseName}
+        grade={primaryGrade}
+        primaryWeight={bestWeight}
+        schoolLink={schoolLink}
+      />
+
+      <div className="max-w-3xl mx-auto px-4 py-6">
       <BackLink gender={wrestler.gender} />
 
-      {/* ── HEADER ── */}
-
-      {/* Mobile: full width logo, edge to edge */}
-      <div className="md:hidden sticky top-0 z-20">
-        <div className="w-full relative">
-          {WRESTLER_PHOTOS[wrestler.id] ? (
-            <Image src={WRESTLER_PHOTOS[wrestler.id]} alt={displayName}
-              width={1079} height={647} className="w-full h-auto" />
-          ) : (
-            <WrestlerAvatar school={schoolProfile} weight={bestWeight} size="lg" />
-          )}
-        </div>
-        <div className="bg-white border-b border-black shadow-none px-4 py-3" style={{ borderTop: `3px solid ${pc}` }}>
-          <div className="flex items-center justify-between gap-3">
-            <div className="min-w-0">
-              <h1 className="text-lg font-bold text-slate-900 truncate">{displayName}</h1>
-              <div className="flex items-center gap-2 text-xs text-slate-500">
-                {displaySchool && schoolProfile.id > 0 && <Link href={`/schools/${schoolProfile.id}?gender=${gender}`} className="hover:underline truncate">{displaySchool}</Link>}
-                {displaySchool && !(schoolProfile.id > 0) && <span className="truncate">{displaySchool}</span>}
-                {bestWeight && <span>· {bestWeight} lbs</span>}
-                {recordStr && <span>· {recordStr}</span>}
-              </div>
-            </div>
-            <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full shrink-0 ${
-              wrestler.gender === 'F' ? 'bg-pink-100 text-pink-700' : 'bg-blue-100 text-blue-700'
-            }`}>
-              {wrestler.gender === 'F' ? 'Girls' : 'Boys'}
-            </span>
-          </div>
-          {/* Mobile compact postseason placements */}
-          {placements.length > 0 && (
-            <div className="flex flex-wrap items-center gap-x-2.5 gap-y-0.5 mt-1.5 text-[10px] text-slate-600">
-              {placements
-                .sort((a, b) => b.seasonId - a.seasonId || (TOURNAMENT_TYPE_ORDER[a.tournamentType] ?? 9) - (TOURNAMENT_TYPE_ORDER[b.tournamentType] ?? 9) || a.place - b.place)
-                .map((p, i) => {
-                  const short = placementShortLabel(p.tournament, p.tournamentType)
-                  const yr = SEASON_SHORT[p.seasonId] ?? ''
-                  const medal = p.place === 1 ? '\u{1F947}' : p.place === 2 ? '\u{1F948}' : p.place === 3 ? '\u{1F949}' : null
-                  return (
-                    <span key={i} className="inline-flex items-center gap-0.5 font-medium">
-                      {medal ? <span>{medal}</span> : <span className="text-slate-400">{p.place}th</span>}
-                      <span>{short}</span>
-                      <span className="text-slate-400">{yr}</span>
-                    </span>
-                  )
-                })}
-            </div>
-          )}
-          {/* Mobile Hammer & Terminator awards */}
-          {awards.length > 0 && (
-            <div className="flex flex-wrap items-center gap-x-2.5 gap-y-0.5 mt-1 text-[10px] text-slate-600">
-              {awards
-                .sort((a, b) => b.seasonId - a.seasonId || (a.type === 'hammer' ? 0 : 1) - (b.type === 'hammer' ? 0 : 1))
-                .map((a, i) => {
-                  const yr = SEASON_SHORT[a.seasonId] ?? ''
-                  const icon = a.type === 'hammer' ? '\u{1F528}' : '\u{26A1}'
-                  return (
-                    <span key={i} className="inline-flex items-center gap-0.5 font-medium">
-                      <span>{icon}</span>
-                      <span>{a.label}</span>
-                      <span className="text-slate-400">{yr}</span>
-                    </span>
-                  )
-                })}
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Desktop: centered vertical layout */}
-      <div className="hidden md:block sticky top-0 z-20 bg-white border border-black rounded-none shadow-none mb-6" style={{ borderTop: `3px solid ${pc}` }}>
-        <div className="flex flex-col items-center p-5 gap-3">
-          {/* Name + record + grade */}
-          <div className="flex items-baseline gap-3">
-            <h1 className="text-2xl font-bold text-slate-900">{displayName}</h1>
-            {recordStr && <span className="text-sm text-slate-500">{recordStr}</span>}
-          </div>
-
-          {/* School logo — clickable */}
-          {displaySchool && schoolProfile.id > 0 ? (
-            <Link href={`/schools/${schoolProfile.id}?gender=${gender}`} className="block" style={{ width: 240 }}>
-              {WRESTLER_PHOTOS[wrestler.id] ? (
-                <Image src={WRESTLER_PHOTOS[wrestler.id]} alt={displayName} width={200} height={200} className="object-contain w-full h-auto" />
-              ) : (
-                <WrestlerAvatar school={schoolProfile} weight={bestWeight} size="lg" />
-              )}
-            </Link>
-          ) : (
-            <div style={{ width: 240 }}>
-              {WRESTLER_PHOTOS[wrestler.id] ? (
-                <Image src={WRESTLER_PHOTOS[wrestler.id]} alt={displayName} width={200} height={200} className="object-contain w-full h-auto" />
-              ) : (
-                <WrestlerAvatar school={schoolProfile} weight={bestWeight} size="lg" />
-              )}
-            </div>
-          )}
-
-          {/* Info pills */}
-          <div className="flex flex-wrap justify-center gap-1.5">
-            <span className={`text-[11px] font-medium px-2 py-0.5 rounded-full ${
-              wrestler.gender === 'F' ? 'bg-pink-100 text-pink-700' : 'bg-blue-100 text-blue-700'
-            }`}>
-              {wrestler.gender === 'F' ? 'Girls' : 'Boys'}
-            </span>
-            {districtLabel && districtNum && (
-              <Link href={`${genderBase}/districts/${districtNum}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">{districtLabel}</Link>
-            )}
-            {regionLabel && regionNum && (
-              <Link href={`${genderBase}/regions/${regionNum}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">{regionLabel}</Link>
-            )}
-            {classLabel && secSlug && grpSlug && (
-              <Link href={`/sections/${secSlug}/${grpSlug}?gender=${gender}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">{classLabel}</Link>
-            )}
-            {schoolProfile.athletic_conference && confSlug && (
-              <Link href={`/conferences/${confSlug}?gender=${gender}`} className="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">{schoolProfile.athletic_conference}</Link>
-            )}
-          </div>
-
-          {/* Compact postseason placements */}
-          {placements.length > 0 && (
-            <div className="flex flex-wrap justify-center items-center gap-x-3 gap-y-1 text-xs text-slate-600">
-              {placements
-                .sort((a, b) => b.seasonId - a.seasonId || (TOURNAMENT_TYPE_ORDER[a.tournamentType] ?? 9) - (TOURNAMENT_TYPE_ORDER[b.tournamentType] ?? 9) || a.place - b.place)
-                .map((p, i) => {
-                  const short = placementShortLabel(p.tournament, p.tournamentType)
-                  const yr = SEASON_SHORT[p.seasonId] ?? ''
-                  const medal = p.place === 1 ? '\u{1F947}' : p.place === 2 ? '\u{1F948}' : p.place === 3 ? '\u{1F949}' : null
-                  return (
-                    <span key={i} className="inline-flex items-center gap-0.5 font-medium">
-                      {medal ? <span>{medal}</span> : <span className="text-slate-400">{p.place}th</span>}
-                      <span>{short}</span>
-                      <span className="text-slate-400">{yr}</span>
-                    </span>
-                  )
-                })}
-            </div>
-          )}
-
-          {/* Hammer & Terminator awards */}
-          {awards.length > 0 && (
-            <div className="flex flex-wrap justify-center items-center gap-x-3 gap-y-1 text-xs text-slate-600">
-              {awards
-                .sort((a, b) => b.seasonId - a.seasonId || (a.type === 'hammer' ? 0 : 1) - (b.type === 'hammer' ? 0 : 1))
-                .map((a, i) => {
-                  const yr = SEASON_SHORT[a.seasonId] ?? ''
-                  const icon = a.type === 'hammer' ? '\u{1F528}' : '\u{26A1}'
-                  return (
-                    <span key={i} className="inline-flex items-center gap-0.5 font-medium">
-                      <span>{icon}</span>
-                      <span>{a.label}</span>
-                      <span className="text-slate-400">{yr}</span>
-                    </span>
-                  )
-                })}
-            </div>
-          )}
-        </div>
-      </div>
+      {/* ── Trophy Case ── */}
 
       {/* Ghost Champion badge */}
       {ghostChampionships.length > 0 && (
@@ -903,55 +931,45 @@ export default async function WrestlerPage({
       )}
 
 
-      {/* Career Stats Table */}
+      {/* Career Stats */}
       {seasonStats.length > 0 && (
         <div className="mb-8">
           <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">Career Stats</h3>
-          <div className="border border-black rounded-none overflow-hidden shadow-none bg-white overflow-x-auto">
-            <table className="min-w-[700px] w-full text-sm">
-              <thead className="bg-slate-50 border-b border-slate-200">
-                <tr>
-                  <th className="text-left px-3 py-2 font-medium text-slate-500">Season</th>
-                  <th className="text-center px-3 py-2 font-medium text-slate-500">W-L</th>
-                  <th className="text-center px-3 py-2 font-medium text-slate-500">Pins</th>
-                  <th className="text-center px-3 py-2 font-medium text-slate-500">TFs</th>
-                  <th className="text-center px-3 py-2 font-medium text-slate-500">Bonus%</th>
-                  <th className="text-center px-3 py-2 font-medium text-slate-500">Hammer</th>
-                  <th className="text-center px-3 py-2 font-medium text-slate-500">Best Pin</th>
-                  <th className="text-center px-3 py-2 font-medium text-slate-500">Mat Time</th>
-                  <th className="text-center px-3 py-2 font-medium text-slate-500">Consol. W</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {seasonStats.map(s => (
-                  <tr key={s.seasonId} className="hover:bg-slate-50">
-                    <td className="px-3 py-2 font-medium text-slate-700">{SEASON_LABELS[s.seasonId] ?? `S${s.seasonId}`}</td>
-                    <td className="px-3 py-2 text-center font-semibold text-slate-800">{s.wins}-{s.losses}</td>
-                    <td className="px-3 py-2 text-center text-slate-600">{s.pins}</td>
-                    <td className="px-3 py-2 text-center text-slate-600">{s.tfs}</td>
-                    <td className="px-3 py-2 text-center text-slate-600">{s.bonusPct}%</td>
-                    <td className="px-3 py-2 text-center text-slate-600">{s.hammerRating.toFixed(2)}</td>
-                    <td className="px-3 py-2 text-center text-slate-600 font-mono text-xs">{s.bestPin !== null ? formatPinTimeStat(s.bestPin) : '\u2014'}</td>
-                    <td className="px-3 py-2 text-center text-slate-600">{formatMatTime(s.matTime)}</td>
-                    <td className="px-3 py-2 text-center text-slate-600">{s.consolationWins}</td>
-                  </tr>
-                ))}
-                {seasonStats.length > 1 && (
-                  <tr className="bg-slate-50 font-semibold">
-                    <td className="px-3 py-2 text-slate-700">Career</td>
-                    <td className="px-3 py-2 text-center text-slate-800">{careerTotals.wins}-{careerTotals.losses}</td>
-                    <td className="px-3 py-2 text-center text-slate-700">{careerTotals.pins}</td>
-                    <td className="px-3 py-2 text-center text-slate-700">{careerTotals.tfs}</td>
-                    <td className="px-3 py-2 text-center text-slate-700">{careerTotals.bonusPct}%</td>
-                    <td className="px-3 py-2 text-center text-slate-700">{careerTotals.hammerRating.toFixed(2)}</td>
-                    <td className="px-3 py-2 text-center text-slate-700 font-mono text-xs">{careerTotals.bestPin !== null ? formatPinTimeStat(careerTotals.bestPin) : '\u2014'}</td>
-                    <td className="px-3 py-2 text-center text-slate-700">{formatMatTime(careerTotals.matTime)}</td>
-                    <td className="px-3 py-2 text-center text-slate-700">{careerTotals.consolationWins}</td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+          <StatsTable
+            columns={[
+              { key: 'season',    label: 'Season',   align: 'left',   numeric: false },
+              { key: 'wl',        label: 'W-L',      align: 'center', numeric: false },
+              { key: 'pins',      label: 'Pins',     align: 'center' },
+              { key: 'tfs',       label: 'TFs',      align: 'center' },
+              { key: 'bonus',     label: 'Bonus%',   align: 'center', numeric: false },
+              { key: 'hammer',    label: 'Hammer',   align: 'center', numeric: false },
+              { key: 'bestPin',   label: 'Best Pin', align: 'center', numeric: false },
+              { key: 'matTime',   label: 'Mat Time', align: 'center', numeric: false },
+              { key: 'consolWins', label: 'Consol.W', align: 'center' },
+            ]}
+            rows={seasonStats.map(s => ({
+              season:    SEASON_LABELS[s.seasonId] ?? `S${s.seasonId}`,
+              wl:        `${s.wins}-${s.losses}`,
+              pins:      s.pins,
+              tfs:       s.tfs,
+              bonus:     `${s.bonusPct}%`,
+              hammer:    s.hammerRating.toFixed(2),
+              bestPin:   s.bestPin !== null ? formatPinTimeStat(s.bestPin) : '\u2014',
+              matTime:   formatMatTime(s.matTime),
+              consolWins: s.consolationWins,
+            }))}
+            footer={seasonStats.length > 1 ? {
+              season:    'Career',
+              wl:        `${careerTotals.wins}-${careerTotals.losses}`,
+              pins:      careerTotals.pins,
+              tfs:       careerTotals.tfs,
+              bonus:     `${careerTotals.bonusPct}%`,
+              hammer:    careerTotals.hammerRating.toFixed(2),
+              bestPin:   careerTotals.bestPin !== null ? formatPinTimeStat(careerTotals.bestPin) : '\u2014',
+              matTime:   formatMatTime(careerTotals.matTime),
+              consolWins: careerTotals.consolationWins,
+            } : undefined}
+          />
         </div>
       )}
 
@@ -1005,29 +1023,29 @@ export default async function WrestlerPage({
             const seasonWins   = allSeasonMatches.filter(m => m.result === 'W').length
             const seasonLosses = allSeasonMatches.filter(m => m.result === 'L').length
             return (
-              <div key={seasonId} className="border border-black rounded-none overflow-hidden shadow-none bg-white">
+              <div key={seasonId} className="rounded-lg border border-slate-200 overflow-hidden">
                 {/* Season header */}
                 <div className="px-4 py-2 bg-slate-50 border-b border-slate-200 flex items-center gap-2">
-                  <span className="text-xs font-semibold text-slate-500 uppercase tracking-widest">{label}</span>
+                  <span className="text-xs font-semibold text-slate-700 uppercase tracking-widest">{label}</span>
                   {schoolBySeason.get(seasonId) && (
                     <span className="text-xs text-slate-400 font-medium">— {schoolBySeason.get(seasonId)}</span>
                   )}
                 </div>
                 <div className="overflow-x-auto">
                   <table className="min-w-[480px] w-full text-sm">
-                    <thead className="bg-slate-50 border-b border-slate-200">
-                      <tr>
-                        <th className="text-left px-4 py-2 font-medium text-slate-500 w-28">Round</th>
-                        <th className="text-left px-4 py-2 font-medium text-slate-500 w-10">Result</th>
-                        <th className="text-left px-4 py-2 font-medium text-slate-500">Opponent</th>
-                        <th className="text-right px-4 py-2 font-medium text-slate-500 w-32">Score</th>
+                    <thead>
+                      <tr className="bg-slate-900 text-white">
+                        <th className="text-left px-3 py-2 text-xs font-bold uppercase tracking-wide whitespace-nowrap w-28">Round</th>
+                        <th className="text-center px-3 py-2 text-xs font-bold uppercase tracking-wide whitespace-nowrap w-12">Result</th>
+                        <th className="text-left px-3 py-2 text-xs font-bold uppercase tracking-wide whitespace-nowrap">Opponent</th>
+                        <th className="text-right px-3 py-2 text-xs font-bold uppercase tracking-wide whitespace-nowrap w-32">Score</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100">
+                    <tbody>
                       {seasonGroups.flatMap(g => [
                         // Tournament subheader row
-                        <tr key={`h||${g.season_id}||${g.tournament_name}||${g.weight}`} className="bg-slate-50 border-t border-slate-200">
-                          <td colSpan={4} className="px-4 py-1.5">
+                        <tr key={`h||${g.season_id}||${g.tournament_name}||${g.weight}`} className="bg-slate-100 border-t border-slate-200">
+                          <td colSpan={4} className="px-3 py-1.5">
                             <span className="inline-flex items-center gap-1.5">
                               <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full ${tournamentTypeColor(g.tournament_type)}`}>
                                 {TOURNAMENT_TYPE_LABEL[g.tournament_type] ?? g.tournament_type}
@@ -1038,12 +1056,12 @@ export default async function WrestlerPage({
                             </span>
                           </td>
                         </tr>,
-                        // Match rows
-                        ...g.matches.map(m => {
+                        // Match rows — alternate bg for zebra
+                        ...g.matches.map((m, mi) => {
                           const mIsBye = m.opponent === 'Bye'
                           return (
-                            <tr key={m.id} className={mIsBye ? 'opacity-50' : 'hover:bg-slate-50'}>
-                              <td className="px-4 py-2.5 text-slate-500">
+                            <tr key={m.id} className={`border-t border-slate-100 ${mIsBye ? 'opacity-50' : ''} ${mi % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
+                              <td className="px-3 py-2 text-slate-500 text-sm">
                                 {m.round === 'F' && m.bracket_side === 'championship' && m.result === 'W' && (
                                   <span className="mr-1">{'\u{1F451}'}</span>
                                 )}
@@ -1052,16 +1070,16 @@ export default async function WrestlerPage({
                                 )}
                                 {ROUND_LABEL[m.round ?? ''] ?? m.round ?? '—'}
                               </td>
-                              <td className="px-4 py-2.5">
+                              <td className="px-3 py-2 text-center">
                                 {mIsBye ? (
-                                  <span className="text-sm text-slate-400 italic">Bye</span>
+                                  <span className="text-xs text-slate-400 italic">Bye</span>
                                 ) : (
                                   <span className={`font-bold text-sm ${m.result === 'W' ? 'text-emerald-600' : 'text-red-500'}`}>
                                     {m.result}
                                   </span>
                                 )}
                               </td>
-                              <td className="px-4 py-2.5 text-slate-800 font-medium">
+                              <td className="px-3 py-2 text-slate-800 font-medium text-sm">
                                 {m.opponentId ? (
                                   <Link href={`/wrestler/${m.opponentId}`} className="hover:text-blue-600 transition-colors">
                                     {m.opponent}
@@ -1071,18 +1089,18 @@ export default async function WrestlerPage({
                                   <span className="ml-1.5 text-slate-400 font-normal text-xs">{m.opponentSchool}</span>
                                 )}
                               </td>
-                              <td className="px-4 py-2.5 text-right text-slate-500 font-mono text-xs">
+                              <td className="px-3 py-2 text-right text-slate-500 font-mono text-xs tabular-nums">
                                 {mIsBye ? '' : (m.win_type ? formatScore(m, m.result === 'W') : '—')}
                               </td>
                             </tr>
                           )
                         }),
                       ])}
-                      {/* Season totals row */}
+                      {/* Season totals footer */}
                       {allSeasonMatches.length > 0 && (
-                        <tr className="border-t-2 border-slate-300 bg-slate-50">
-                          <td colSpan={4} className="px-4 py-2 text-xs text-slate-500 font-medium">
-                            Season Total: <span className="font-bold text-slate-800">{seasonWins}-{seasonLosses}</span>
+                        <tr className="border-t-2 border-slate-300 bg-slate-100 font-bold">
+                          <td colSpan={4} className="px-3 py-2 text-xs text-slate-700">
+                            Season Total: <span className="text-slate-900">{seasonWins}-{seasonLosses}</span>
                           </td>
                         </tr>
                       )}
@@ -1094,7 +1112,167 @@ export default async function WrestlerPage({
           })}
         </div>
       )}
-    </div>
+
+      {/* ── Dual Meet History ── */}
+      {dualMeetGroups.length > 0 && (
+        <div className="mt-8 space-y-4">
+          <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-widest">
+            Dual Meets
+          </h2>
+          {dualMeetGroups.map(({ meetId, meetDate, oppSchoolName, myTeamScore, oppTeamScore, matches }) => {
+            const dateStr = new Date(meetDate + 'T12:00:00').toLocaleDateString('en-US', {
+              month: 'short', day: 'numeric', year: 'numeric',
+            })
+            const meetWins   = matches.filter(m => m.result === 'W').length
+            const meetLosses = matches.filter(m => m.result === 'L').length
+            return (
+              <div key={meetId} className="border border-black rounded-none overflow-hidden bg-white">
+                <div className="px-4 py-2.5 bg-slate-50 border-b border-slate-200 flex items-baseline gap-2">
+                  <span className="text-sm font-semibold text-slate-800">vs. {oppSchoolName}</span>
+                  <span className="text-xs text-slate-400">{dateStr}</span>
+                  {myTeamScore !== null && oppTeamScore !== null && (
+                    <span className="ml-auto text-xs text-slate-500 font-medium">
+                      Team {myTeamScore}–{oppTeamScore}
+                    </span>
+                  )}
+                </div>
+                <table className="w-full text-sm">
+                  <tbody className="divide-y divide-slate-100">
+                    {matches.map(m => (
+                      <tr key={m.id} className="hover:bg-slate-50">
+                        <td className="px-4 py-2.5 text-slate-400 font-mono text-xs w-16 tabular-nums">
+                          {m.weightClass}
+                        </td>
+                        <td className="px-4 py-2.5">
+                          {m.result !== null && (
+                            <span className={`inline-block text-xs font-bold px-2 py-0.5 rounded-full mr-2 ${
+                              m.result === 'W' ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-700'
+                            }`}>
+                              {m.result}
+                            </span>
+                          )}
+                          {m.oppId ? (
+                            <Link href={`/wrestler/${m.oppId}`} className="font-medium text-slate-800 hover:underline">
+                              {m.oppName}
+                            </Link>
+                          ) : (
+                            <span className="font-medium text-slate-800">{m.oppName}</span>
+                          )}
+                        </td>
+                        <td className="px-4 py-2.5 text-right text-slate-500 text-xs">
+                          {m.resultStr}
+                        </td>
+                      </tr>
+                    ))}
+                    <tr className="border-t border-slate-200 bg-slate-50">
+                      <td colSpan={3} className="px-4 py-1.5 text-xs text-slate-500">
+                        {meetWins}W–{meetLosses}L at this meet
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            )
+          })}
+        </div>
+      )}
+
+      {/* ── In-Season Tournament Bouts ── */}
+      {boutTournaments.length > 0 && (
+        <div className="mt-8 space-y-4">
+          <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-widest">
+            In-Season Tournaments
+          </h2>
+          {boutTournaments.map(({ tid, name, startDate, bouts: tBouts }) => {
+            const dateStr = startDate
+              ? new Date(startDate + 'T12:00:00').toLocaleDateString('en-US', {
+                  month: 'short', day: 'numeric', year: 'numeric',
+                })
+              : null
+            return (
+              <div key={tid} className="border border-black rounded-none overflow-hidden bg-white">
+                <div className="px-4 py-2.5 bg-slate-50 border-b border-slate-200 flex items-baseline gap-2">
+                  <Link
+                    href={`/tournaments/${tid}`}
+                    className="text-sm font-semibold text-slate-800 hover:underline"
+                  >
+                    {name}
+                  </Link>
+                  {dateStr && <span className="text-xs text-slate-400">{dateStr}</span>}
+                </div>
+                <table className="w-full text-sm">
+                  <tbody className="divide-y divide-slate-100">
+                    {tBouts.map(bout => {
+                      const isW1 = bout.nj_wrestler1_id === id
+                      const result: 'W' | 'L' | null = bout.winner === null
+                        ? null
+                        : (isW1 && bout.winner === 1) || (!isW1 && bout.winner === 2) ? 'W' : 'L'
+                      const oppName = isW1 ? bout.wrestler2_name_raw : bout.wrestler1_name_raw
+                      const oppId = isW1 ? bout.nj_wrestler2_id : bout.nj_wrestler1_id
+                      const oppSchoolJoin = isW1 ? bout.wrestler2_school : bout.wrestler1_school
+                      const oppSchoolRaw = isW1 ? bout.wrestler2_school_raw : bout.wrestler1_school_raw
+                      const oppSchool = oppSchoolJoin?.display_name ?? oppSchoolRaw
+                      const oppIsNJ = oppSchoolJoin?.is_nj ?? false
+
+                      // Format result string
+                      const rt = bout.result_type?.toUpperCase() ?? null
+                      let resultStr = '—'
+                      if (rt === 'FALL') {
+                        if (bout.fall_time_seconds) {
+                          const min = Math.floor(bout.fall_time_seconds / 60)
+                          const sec = String(bout.fall_time_seconds % 60).padStart(2, '0')
+                          resultStr = `Fall ${min}:${sec}`
+                        } else { resultStr = 'Fall' }
+                      } else if (rt === 'FOR' || rt === 'FORF') {
+                        resultStr = 'Forfeit'
+                      } else if (bout.result_type) {
+                        resultStr = bout.result_detail
+                          ? `${bout.result_type} ${bout.result_detail}`
+                          : bout.result_type
+                      }
+
+                      return (
+                        <tr key={bout.id} className="hover:bg-slate-50">
+                          <td className="px-4 py-2.5 text-slate-500 font-mono text-xs w-20 tabular-nums">
+                            {bout.weight_class} lb
+                          </td>
+                          <td className="px-4 py-2.5 text-slate-500 text-xs w-24">
+                            {ROUND_LABEL[bout.round] ?? bout.round}
+                          </td>
+                          <td className="px-4 py-2.5">
+                            {result !== null ? (
+                              <span className={`inline-block text-xs font-bold px-2 py-0.5 rounded-full mr-2 ${
+                                result === 'W' ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-700'
+                              }`}>
+                                {result}
+                              </span>
+                            ) : null}
+                            {oppId && oppIsNJ ? (
+                              <Link href={`/wrestler/${oppId}`} className="font-medium text-slate-800 hover:underline">
+                                {oppName}
+                              </Link>
+                            ) : (
+                              <span className="font-medium text-slate-800">{oppName}</span>
+                            )}
+                            {oppSchool && (
+                              <span className="ml-1.5 text-slate-400 text-xs">{oppSchool}</span>
+                            )}
+                          </td>
+                          <td className="px-4 py-2.5 text-right text-slate-500 text-xs">
+                            {resultStr}
+                          </td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )
+          })}
+        </div>
+      )}
+      </div>
+    </>
   )
 }
 
