@@ -131,7 +131,7 @@ export function SchoolHeader({
       {/* ── STICKY: logo + name + mascot + gender/season controls ─────────────
            Rendered as a direct sibling of page content so sticky positioning
            is constrained to <main> (full page height) not a short wrapper. */}
-      <div className="sticky top-0 z-20 w-full shadow-md" style={{ backgroundColor: bgColor }}>
+      <div className="sticky z-20 w-full shadow-md" style={{ top: '139px', backgroundColor: bgColor }}>
 
         {/* Logo + school name + mascot */}
         <div className="px-4 sm:px-6 py-3 sm:py-4 flex items-center gap-4">
