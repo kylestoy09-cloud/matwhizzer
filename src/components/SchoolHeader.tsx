@@ -120,69 +120,18 @@ export function SchoolHeader({
   const genderBase = gender === 'girls' ? '/girls' : '/boys'
   const tabSuffix  = activeTab !== 'overview' ? `&tab=${activeTab}` : ''
 
-  // Shared pill style — used for both classification links AND action buttons
+  // Shared pill sizing — used for classification links AND action buttons
   const pillClass = 'text-xs font-semibold px-3 py-1 rounded-full bg-white/15 hover:bg-white/25 transition-colors whitespace-nowrap'
 
+  // The fragment lets the sticky bar and the scrollable pills row be siblings
+  // inside <main>, so the sticky element's containing block spans the full
+  // page height rather than being capped by a short wrapper div.
   return (
-    <div className="w-full" style={{ backgroundColor: bgColor }}>
-
-      {/* ── Pills + actions row — scrolls away with the page ─────────────── */}
-      <div className="px-4 sm:px-6 py-2.5 flex flex-wrap items-center gap-2">
-
-        {/* Classification / location pills */}
-        <div className="flex flex-wrap gap-1.5 flex-1">
-          {districtLabel && districtNum && (
-            <Link href={`${genderBase}/districts/${districtNum}`} className={pillClass} style={{ color: textColor }}>
-              {districtLabel}
-            </Link>
-          )}
-          {regionLabel && regionNum && (
-            <Link href={`${genderBase}/regions/${regionNum}`} className={pillClass} style={{ color: textColor }}>
-              {regionLabel}
-            </Link>
-          )}
-          {classLabel && secSlug && grpSlug && (
-            <Link href={`/sections/${secSlug}/${grpSlug}?gender=${gender}`} className={pillClass} style={{ color: textColor }}>
-              {classLabel}
-            </Link>
-          )}
-          {athleticConference && conferenceSlug && (
-            <Link href={`/conferences/${conferenceSlug}?gender=${gender}`} className={pillClass} style={{ color: textColor }}>
-              {athleticConference}
-            </Link>
-          )}
-        </div>
-
-        {/* Action buttons — same pill sizing */}
-        <div className="flex flex-wrap gap-1.5">
-          <FollowSchoolButton schoolId={schoolId} compact />
-          {websiteUrl && (
-            <a
-              href={websiteUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={pillClass}
-              style={{ color: textColor }}
-            >
-              Website ↗
-            </a>
-          )}
-          {twitterHandle && (
-            <a
-              href={`https://x.com/${twitterHandle.replace('@', '')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={pillClass}
-              style={{ color: textColor }}
-            >
-              {twitterHandle.startsWith('@') ? twitterHandle : `@${twitterHandle}`}
-            </a>
-          )}
-        </div>
-      </div>
-
-      {/* ── Sticky: logo + name + controls ───────────────────────────────── */}
-      <div className="sticky top-0 z-20 shadow-md" style={{ backgroundColor: bgColor }}>
+    <>
+      {/* ── STICKY: logo + name + mascot + gender/season controls ─────────────
+           Rendered as a direct sibling of page content so sticky positioning
+           is constrained to <main> (full page height) not a short wrapper. */}
+      <div className="sticky top-0 z-20 w-full shadow-md" style={{ backgroundColor: bgColor }}>
 
         {/* Logo + school name + mascot */}
         <div className="px-4 sm:px-6 py-3 sm:py-4 flex items-center gap-4">
@@ -210,12 +159,11 @@ export function SchoolHeader({
           </div>
         </div>
 
-        {/* Gender toggle + season picker + location tags */}
+        {/* Boys/Girls toggle + season picker + location tags */}
         <div
           className="px-4 py-2 flex flex-wrap items-center gap-1.5 border-t"
           style={{ borderColor: `${textColor}30` }}
         >
-          {/* Boys / Girls toggle */}
           <div className="flex border border-white/30 overflow-hidden text-xs mr-2 shrink-0">
             <Link
               href={`/schools/${schoolParam}?gender=boys${tabSuffix}`}
@@ -243,7 +191,6 @@ export function SchoolHeader({
             <InlineSeasonPicker activeSeason={activeSeason} />
           </div>
 
-          {/* Location tags */}
           {tags.map(tag => (
             <span
               key={tag}
@@ -254,8 +201,64 @@ export function SchoolHeader({
             </span>
           ))}
         </div>
-
       </div>
-    </div>
+
+      {/* ── SCROLLS AWAY: classification pills + action buttons ───────────────
+           Sibling of the sticky bar — scrolls off the top as the user scrolls
+           down into roster/stats content. */}
+      <div className="w-full px-4 sm:px-6 py-2.5 flex flex-wrap items-center gap-2" style={{ backgroundColor: bgColor }}>
+
+        {/* Classification / location pills */}
+        <div className="flex flex-wrap gap-1.5 flex-1 min-w-0">
+          {districtLabel && districtNum && (
+            <Link href={`${genderBase}/districts/${districtNum}`} className={pillClass} style={{ color: textColor }}>
+              {districtLabel}
+            </Link>
+          )}
+          {regionLabel && regionNum && (
+            <Link href={`${genderBase}/regions/${regionNum}`} className={pillClass} style={{ color: textColor }}>
+              {regionLabel}
+            </Link>
+          )}
+          {classLabel && secSlug && grpSlug && (
+            <Link href={`/sections/${secSlug}/${grpSlug}?gender=${gender}`} className={pillClass} style={{ color: textColor }}>
+              {classLabel}
+            </Link>
+          )}
+          {athleticConference && conferenceSlug && (
+            <Link href={`/conferences/${conferenceSlug}?gender=${gender}`} className={pillClass} style={{ color: textColor }}>
+              {athleticConference}
+            </Link>
+          )}
+        </div>
+
+        {/* Action buttons — same pill sizing */}
+        <div className="flex flex-wrap gap-1.5 shrink-0">
+          <FollowSchoolButton schoolId={schoolId} compact />
+          {websiteUrl && (
+            <a
+              href={websiteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={pillClass}
+              style={{ color: textColor }}
+            >
+              Website ↗
+            </a>
+          )}
+          {twitterHandle && (
+            <a
+              href={`https://x.com/${twitterHandle.replace('@', '')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={pillClass}
+              style={{ color: textColor }}
+            >
+              {twitterHandle.startsWith('@') ? twitterHandle : `@${twitterHandle}`}
+            </a>
+          )}
+        </div>
+      </div>
+    </>
   )
 }
