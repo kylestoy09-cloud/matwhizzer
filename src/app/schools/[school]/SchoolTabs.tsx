@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { WrestlerAvatar } from '@/components/WrestlerAvatar'
+import { StatsTable } from '@/components/StatsTable'
 import { supabase } from '@/lib/supabase'
 import { SEASONS } from '@/lib/seasons'
 import { SeasonSelector } from '@/components/SeasonSelector'
@@ -38,6 +39,13 @@ type DualMeet = {
   status: string
   team1: { display_name: string } | null
   team2: { display_name: string } | null
+}
+
+type TournamentEvent = {
+  id: number
+  name: string
+  start_date: string
+  end_date: string | null
 }
 
 function placeBadgeClass(p: string | null): string {
@@ -101,12 +109,10 @@ export function SchoolTabs({
     return `/schools/${school}${qs ? `?${qs}` : ''}`
   }
 
-  // Champions
-  const stateChamps = wrestlers.filter(r => r.state_placement === '1st').sort((a, b) => a.primary_weight - b.primary_weight)
-  const regionChamps = wrestlers.filter(r => r.regions_placement === '1st').sort((a, b) => a.primary_weight - b.primary_weight)
+  const stateChamps    = wrestlers.filter(r => r.state_placement === '1st').sort((a, b) => a.primary_weight - b.primary_weight)
+  const regionChamps   = wrestlers.filter(r => r.regions_placement === '1st').sort((a, b) => a.primary_weight - b.primary_weight)
   const districtChamps = wrestlers.filter(r => r.districts_placement === '1st').sort((a, b) => a.primary_weight - b.primary_weight)
 
-  // Group wrestlers by weight for roster
   const byWeight = new Map<number, WrestlerRow[]>()
   for (const w of wrestlers) {
     const wt = w.primary_weight ?? 0
@@ -117,35 +123,59 @@ export function SchoolTabs({
 
   // ── Schedule tab state ──────────────────────────────────────────────────────
   const schoolIdNum = parseInt(school, 10)
-  const genderCode = gender === 'girls' ? 'F' : 'M'
+  const genderCode  = gender === 'girls' ? 'F' : 'M'
   const defaultSeason = Number(
     Object.entries(SEASONS).find(([, v]) => v.isCurrent)?.[0] ?? 2
   )
   const [scheduleSeason, setScheduleSeason] = useState(defaultSeason)
-  const [meets, setMeets] = useState<DualMeet[]>([])
-  const [meetsLoading, setMeetsLoading] = useState(false)
+  const [meets,          setMeets]          = useState<DualMeet[]>([])
+  const [tourEvents,     setTourEvents]     = useState<TournamentEvent[]>([])
+  const [meetsLoading,   setMeetsLoading]   = useState(false)
 
   useEffect(() => {
     if (activeTab !== 'schedule') return
     let cancelled = false
     setMeetsLoading(true)
-    supabase
-      .from('dual_meets')
-      .select(`
-        id, team1_school_id, team2_school_id, meet_date,
-        team1_score, team2_score, status,
-        team1:schools!team1_school_id(display_name),
-        team2:schools!team2_school_id(display_name)
-      `)
-      .or(`team1_school_id.eq.${schoolIdNum},team2_school_id.eq.${schoolIdNum}`)
-      .eq('season_id', scheduleSeason)
-      .eq('gender', genderCode)
-      .order('meet_date', { ascending: true })
-      .then(({ data, error }) => {
-        if (cancelled) return
-        if (!error) setMeets((data ?? []) as unknown as DualMeet[])
-        setMeetsLoading(false)
-      })
+    ;(async () => {
+      const [meetsRes, boutsRes] = await Promise.all([
+        supabase
+          .from('dual_meets')
+          .select(`
+            id, team1_school_id, team2_school_id, meet_date,
+            team1_score, team2_score, status,
+            team1:schools!team1_school_id(display_name),
+            team2:schools!team2_school_id(display_name)
+          `)
+          .or(`team1_school_id.eq.${schoolIdNum},team2_school_id.eq.${schoolIdNum}`)
+          .eq('season_id', scheduleSeason)
+          .eq('gender', genderCode)
+          .order('meet_date', { ascending: true }),
+        supabase
+          .from('tournament_bouts')
+          .select('in_season_tournament_id')
+          .or(`wrestler1_school_id.eq.${schoolIdNum},wrestler2_school_id.eq.${schoolIdNum}`),
+      ])
+
+      if (cancelled) return
+      if (!meetsRes.error) setMeets((meetsRes.data ?? []) as unknown as DualMeet[])
+
+      const tidSet = new Set(
+        (boutsRes.data ?? []).map((b: { in_season_tournament_id: string }) => b.in_season_tournament_id),
+      )
+      if (tidSet.size > 0) {
+        const seasonLabel = SEASONS[scheduleSeason]?.label ?? ''
+        const { data: tours } = await supabase
+          .from('in_season_tournaments')
+          .select('id, name, start_date, end_date')
+          .in('id', [...tidSet])
+          .eq('season', seasonLabel)
+        if (!cancelled) setTourEvents((tours ?? []) as TournamentEvent[])
+      } else {
+        if (!cancelled) setTourEvents([])
+      }
+
+      if (!cancelled) setMeetsLoading(false)
+    })()
     return () => { cancelled = true }
   }, [activeTab, scheduleSeason, schoolIdNum, genderCode])
 
@@ -172,6 +202,7 @@ export function SchoolTabs({
       {/* ── Tab: Overview ── */}
       {activeTab === 'overview' && (
         <div className="space-y-8">
+
           {/* Quick stats */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="bg-white border border-black rounded-none p-4 text-center">
@@ -192,41 +223,27 @@ export function SchoolTabs({
             </div>
           </div>
 
-          {/* Points breakdown — use precomputed team scores */}
+          {/* Points breakdown */}
           {teamScore && (
             <section>
               <h3 className="text-sm font-semibold text-slate-800 mb-2">Points Breakdown</h3>
-              <div className="inline-block border border-black rounded-none overflow-hidden shadow-none bg-white">
-                <table className="text-sm">
-                  <thead className="bg-slate-50 border-b border-slate-200">
-                    <tr>
-                      <th className="text-left px-5 py-2 font-medium text-slate-500 w-36">Tournament</th>
-                      <th className="text-right px-5 py-2 font-medium text-slate-500 w-24">Points</th>
-                      <th className="text-right px-5 py-2 font-medium text-slate-500 w-20">Wins</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100">
-                    {[
-                      { label: 'Districts', pts: teamScore.district_points, type: gender === 'girls' ? 'girls_districts' : 'boys_districts' },
-                      { label: 'Regions', pts: teamScore.region_points, type: gender === 'girls' ? 'girls_regions' : 'regions' },
-                      { label: 'State', pts: teamScore.state_points, type: gender === 'girls' ? 'girls_state' : 'boys_state' },
-                    ].filter(r => r.pts > 0).map(r => (
-                      <tr key={r.label}>
-                        <td className="px-5 py-2 text-slate-700">{r.label}</td>
-                        <td className="px-5 py-2 text-right tabular-nums font-semibold text-slate-800">{r.pts}</td>
-                        <td className="px-5 py-2 text-right tabular-nums text-slate-500">
-                          {breakdown.find(b => b.tournament_type === r.type)?.win_count ?? '—'}
-                        </td>
-                      </tr>
-                    ))}
-                    <tr className="bg-slate-50 border-t-2 border-slate-200">
-                      <td className="px-5 py-2 font-bold text-slate-800">Total</td>
-                      <td className="px-5 py-2 text-right tabular-nums font-bold text-slate-900">{teamScore.total_points}</td>
-                      <td className="px-5 py-2 text-right tabular-nums font-semibold text-slate-600">{totalWins}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <StatsTable
+                columns={[
+                  { key: 'tournament', label: 'Tournament', numeric: false },
+                  { key: 'pts',        label: 'Points',     align: 'right' },
+                  { key: 'wins',       label: 'Wins',       align: 'right' },
+                ]}
+                rows={[
+                  { label: 'Districts', pts: teamScore.district_points, type: gender === 'girls' ? 'girls_districts' : 'boys_districts' },
+                  { label: 'Regions',   pts: teamScore.region_points,   type: gender === 'girls' ? 'girls_regions'   : 'regions'        },
+                  { label: 'State',     pts: teamScore.state_points,    type: gender === 'girls' ? 'girls_state'     : 'boys_state'     },
+                ].filter(r => r.pts > 0).map(r => ({
+                  tournament: r.label,
+                  pts:  r.pts,
+                  wins: breakdown.find(b => b.tournament_type === r.type)?.win_count ?? '—',
+                }))}
+                footer={{ tournament: 'Total', pts: teamScore.total_points, wins: totalWins }}
+              />
             </section>
           )}
 
@@ -236,8 +253,8 @@ export function SchoolTabs({
               <h3 className="text-sm font-semibold text-slate-800 mb-2">Champions</h3>
               <div className="border border-black rounded-none overflow-hidden shadow-none bg-white">
                 {[
-                  { label: 'State', list: stateChamps },
-                  { label: 'Region', list: regionChamps },
+                  { label: 'State',    list: stateChamps    },
+                  { label: 'Region',   list: regionChamps   },
                   { label: 'District', list: districtChamps },
                 ].filter(s => s.list.length > 0).map((sec, i) => (
                   <div key={sec.label} className={i > 0 ? 'border-t border-slate-200' : ''}>
@@ -281,37 +298,29 @@ export function SchoolTabs({
 
       {/* ── Tab: Roster ── */}
       {activeTab === 'roster' && (
-        <div className="border border-black rounded-none overflow-x-auto shadow-none bg-white">
-          <table className="w-full text-sm">
-            <thead className="bg-slate-50 border-b border-slate-200">
-              <tr>
-                <th className="text-right px-4 py-2.5 font-medium text-slate-500 w-16">Wt</th>
-                <th className="text-left px-4 py-2.5 font-medium text-slate-500">Wrestler</th>
-                <th className="text-left px-4 py-2.5 font-medium text-slate-500 hidden sm:table-cell">Districts</th>
-                <th className="text-left px-4 py-2.5 font-medium text-slate-500 hidden sm:table-cell">Regions</th>
-                <th className="text-left px-4 py-2.5 font-medium text-slate-500">State</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {weights.map(wt =>
-                byWeight.get(wt)!.map((w, i) => (
-                  <tr key={w.wrestler_id} className="hover:bg-slate-50">
-                    <td className="px-4 py-2.5 text-right tabular-nums text-slate-500 font-mono text-xs">{i === 0 ? `${wt} lb` : ''}</td>
-                    <td className="px-4 py-2.5">
-                      <Link href={`/wrestler/${w.wrestler_id}`} className="flex items-center gap-2.5 group">
-                        <WrestlerAvatar school={schoolData} weight={w.primary_weight} size="sm" />
-                        <span className="font-medium text-slate-800 group-hover:underline">{w.wrestler_name}</span>
-                      </Link>
-                    </td>
-                    <td className="px-4 py-2.5 hidden sm:table-cell"><PlaceBadge placement={w.districts_placement} short={w.districts_short} /></td>
-                    <td className="px-4 py-2.5 hidden sm:table-cell"><PlaceBadge placement={w.regions_placement} short={w.regions_short} /></td>
-                    <td className="px-4 py-2.5"><PlaceBadge placement={w.state_placement} /></td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+        <StatsTable
+          columns={[
+            { key: 'wt',        label: 'Wt',       align: 'right', numeric: false },
+            { key: 'name',      label: 'Wrestler',                  numeric: false },
+            { key: 'districts', label: 'Districts',                 numeric: false, className: 'hidden sm:table-cell' },
+            { key: 'regions',   label: 'Regions',                   numeric: false, className: 'hidden sm:table-cell' },
+            { key: 'state',     label: 'State',                     numeric: false },
+          ]}
+          rows={weights.flatMap(wt =>
+            byWeight.get(wt)!.map((w, i) => ({
+              wt: i === 0 ? String(wt) : '',
+              name: (
+                <Link href={`/wrestler/${w.wrestler_id}`} className="flex items-center gap-2.5 group">
+                  <WrestlerAvatar school={schoolData} weight={w.primary_weight} size="sm" />
+                  <span className="group-hover:underline">{w.wrestler_name}</span>
+                </Link>
+              ),
+              districts: <PlaceBadge placement={w.districts_placement} short={w.districts_short} />,
+              regions:   <PlaceBadge placement={w.regions_placement}   short={w.regions_short}   />,
+              state:     <PlaceBadge placement={w.state_placement} />,
+            }))
+          )}
+        />
       )}
 
       {/* ── Tab: Postseason ── */}
@@ -322,7 +331,7 @@ export function SchoolTabs({
           ) : (
             ['State', 'Regions', 'Districts'].map(level => {
               const filtered = wrestlers.filter(w => {
-                if (level === 'State') return w.state_placement
+                if (level === 'State')   return w.state_placement
                 if (level === 'Regions') return w.regions_placement
                 return w.districts_placement
               }).sort((a, b) => {
@@ -354,61 +363,58 @@ export function SchoolTabs({
 
       {/* ── Tab: Leaders ── */}
       {activeTab === 'leaders' && (
-        <div className="border border-black rounded-none overflow-x-auto shadow-none bg-white">
-          {leaders.length === 0 ? (
-            <p className="text-sm text-slate-500 p-4">No leaderboard data available.</p>
-          ) : (
-            <table className="w-full text-sm min-w-[640px]">
-              <thead className="bg-slate-50 border-b border-slate-200">
-                <tr>
-                  <th className="text-right px-4 py-2.5 font-medium text-slate-500 w-14">Wt</th>
-                  <th className="text-left px-4 py-2.5 font-medium text-slate-500">Wrestler</th>
-                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-14">Wins</th>
-                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-14">Falls</th>
-                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-20">Fast Pin</th>
-                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-16">Bonus%</th>
-                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-14">Dist</th>
-                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-14">Reg</th>
-                  <th className="text-right px-3 py-2.5 font-medium text-slate-500 w-14">State</th>
-                  <th className="text-right px-4 py-2.5 font-medium text-slate-500 w-14">Total</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {leaders.map((r, i) => {
-                  const fastPin = r.fastest_fall_sec != null
-                    ? `${Math.floor(r.fastest_fall_sec / 60)}:${String(r.fastest_fall_sec % 60).padStart(2, '0')}`
-                    : '—'
-                  return (
-                    <tr key={r.wrestler_id} className="hover:bg-slate-50">
-                      <td className="px-4 py-2.5 text-right tabular-nums text-slate-400 text-xs">{r.primary_weight}</td>
-                      <td className="px-4 py-2.5">
-                        <div className="flex items-center gap-2">
-                          <span className="text-[11px] text-slate-300 w-4 text-right shrink-0">{i + 1}</span>
-                          <Link href={`/wrestler/${r.wrestler_id}`} className="font-medium text-slate-800 hover:underline truncate">{r.wrestler_name}</Link>
-                        </div>
-                      </td>
-                      <td className="px-3 py-2.5 text-right tabular-nums text-slate-700">{r.win_count}</td>
-                      <td className="px-3 py-2.5 text-right tabular-nums text-slate-700">{r.fall_count}</td>
-                      <td className="px-3 py-2.5 text-right tabular-nums text-slate-500">{fastPin}</td>
-                      <td className="px-3 py-2.5 text-right tabular-nums text-slate-500">{r.bonus_pct}%</td>
-                      <td className="px-3 py-2.5 text-right tabular-nums text-slate-500">{r.district_points || '—'}</td>
-                      <td className="px-3 py-2.5 text-right tabular-nums text-slate-500">{r.region_points || '—'}</td>
-                      <td className="px-3 py-2.5 text-right tabular-nums text-slate-500">{r.state_points || '—'}</td>
-                      <td className="px-4 py-2.5 text-right tabular-nums font-semibold text-slate-800">{r.total_points}</td>
-                    </tr>
-                  )
-                })}
-                <tr className="bg-slate-50 border-t-2 border-slate-200">
-                  <td className="px-4 py-2.5" colSpan={6}></td>
-                  <td className="px-3 py-2.5 text-right tabular-nums font-bold text-slate-800">{leaders.reduce((s, r) => s + Number(r.district_points), 0) || '—'}</td>
-                  <td className="px-3 py-2.5 text-right tabular-nums font-bold text-slate-800">{leaders.reduce((s, r) => s + Number(r.region_points), 0) || '—'}</td>
-                  <td className="px-3 py-2.5 text-right tabular-nums font-bold text-slate-800">{leaders.reduce((s, r) => s + Number(r.state_points), 0) || '—'}</td>
-                  <td className="px-4 py-2.5 text-right tabular-nums font-bold text-slate-900">{leaders.reduce((s, r) => s + Number(r.total_points), 0)}</td>
-                </tr>
-              </tbody>
-            </table>
-          )}
-        </div>
+        leaders.length === 0 ? (
+          <p className="text-sm text-slate-500 p-4">No leaderboard data available.</p>
+        ) : (
+          <StatsTable
+            columns={[
+              { key: 'wt',       label: 'Wt',       align: 'right' },
+              { key: 'name',     label: 'Wrestler',              numeric: false },
+              { key: 'wins',     label: 'Wins'     },
+              { key: 'falls',    label: 'Falls'    },
+              { key: 'fastPin',  label: 'Fast Pin' },
+              { key: 'bonusPct', label: 'Bonus%',               numeric: false },
+              { key: 'dist',     label: 'Dist'     },
+              { key: 'reg',      label: 'Reg'      },
+              { key: 'state',    label: 'State'    },
+              { key: 'total',    label: 'Total'    },
+            ]}
+            rows={leaders.map((r, i) => {
+              const fastPin = r.fastest_fall_sec != null
+                ? `${Math.floor(r.fastest_fall_sec / 60)}:${String(r.fastest_fall_sec % 60).padStart(2, '0')}`
+                : '—'
+              return {
+                wt:       r.primary_weight,
+                name: (
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] text-slate-300 w-4 text-right shrink-0">{i + 1}</span>
+                    <Link href={`/wrestler/${r.wrestler_id}`} className="hover:underline truncate">{r.wrestler_name}</Link>
+                  </div>
+                ),
+                wins:     r.win_count,
+                falls:    r.fall_count,
+                fastPin,
+                bonusPct: `${r.bonus_pct}%`,
+                dist:     r.district_points || '—',
+                reg:      r.region_points   || '—',
+                state:    r.state_points    || '—',
+                total:    r.total_points,
+              }
+            })}
+            footer={{
+              wt:       '',
+              name:     '',
+              wins:     '',
+              falls:    '',
+              fastPin:  '',
+              bonusPct: '',
+              dist:     leaders.reduce((s, r) => s + Number(r.district_points), 0) || '—',
+              reg:      leaders.reduce((s, r) => s + Number(r.region_points),   0) || '—',
+              state:    leaders.reduce((s, r) => s + Number(r.state_points),    0) || '—',
+              total:    leaders.reduce((s, r) => s + Number(r.total_points),    0),
+            }}
+          />
+        )
       )}
 
       {/* ── Tab: Team Scores ── */}
@@ -418,64 +424,35 @@ export function SchoolTabs({
             <p className="text-sm text-slate-500">No team score data available.</p>
           ) : (
             <div className="space-y-6">
-              {/* Authoritative team scores from top_postseason_team_scores */}
               {teamScore && (
-                <div className="inline-block border border-black rounded-none overflow-hidden shadow-none bg-white">
-                  <table className="text-sm">
-                    <thead className="bg-slate-50 border-b border-slate-200">
-                      <tr>
-                        <th className="text-left px-5 py-2.5 font-medium text-slate-500 w-36">Tournament</th>
-                        <th className="text-right px-5 py-2.5 font-medium text-slate-500 w-24">Points</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100">
-                      <tr className="hover:bg-slate-50">
-                        <td className="px-5 py-2.5 text-slate-700 font-medium">Districts</td>
-                        <td className="px-5 py-2.5 text-right tabular-nums font-semibold text-slate-800">{teamScore.district_points}</td>
-                      </tr>
-                      <tr className="hover:bg-slate-50">
-                        <td className="px-5 py-2.5 text-slate-700 font-medium">Regions</td>
-                        <td className="px-5 py-2.5 text-right tabular-nums font-semibold text-slate-800">{teamScore.region_points}</td>
-                      </tr>
-                      <tr className="hover:bg-slate-50">
-                        <td className="px-5 py-2.5 text-slate-700 font-medium">State</td>
-                        <td className="px-5 py-2.5 text-right tabular-nums font-semibold text-slate-800">{teamScore.state_points}</td>
-                      </tr>
-                      <tr className="bg-slate-50 border-t-2 border-slate-200">
-                        <td className="px-5 py-2.5 font-bold text-slate-800">Total</td>
-                        <td className="px-5 py-2.5 text-right tabular-nums font-bold text-slate-900">{teamScore.total_points}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                <StatsTable
+                  columns={[
+                    { key: 'tournament', label: 'Tournament', numeric: false },
+                    { key: 'pts',        label: 'Points',     align: 'right' },
+                  ]}
+                  rows={[
+                    { tournament: 'Districts', pts: teamScore.district_points },
+                    { tournament: 'Regions',   pts: teamScore.region_points   },
+                    { tournament: 'State',     pts: teamScore.state_points    },
+                  ]}
+                  footer={{ tournament: 'Total', pts: teamScore.total_points }}
+                />
               )}
 
-              {/* Win breakdown from school_points_breakdown */}
               {breakdown.length > 0 && (
                 <div>
                   <h3 className="text-sm font-semibold text-slate-800 mb-2">Win Breakdown</h3>
-                  <div className="inline-block border border-black rounded-none overflow-hidden shadow-none bg-white">
-                    <table className="text-sm">
-                      <thead className="bg-slate-50 border-b border-slate-200">
-                        <tr>
-                          <th className="text-left px-5 py-2.5 font-medium text-slate-500 w-36">Tournament</th>
-                          <th className="text-right px-5 py-2.5 font-medium text-slate-500 w-20">Wins</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-slate-100">
-                        {breakdown.map(r => (
-                          <tr key={r.tournament_type} className="hover:bg-slate-50">
-                            <td className="px-5 py-2.5 text-slate-700 font-medium">{tourneyLabel[r.tournament_type] ?? r.tournament_type}</td>
-                            <td className="px-5 py-2.5 text-right tabular-nums text-slate-700">{r.win_count}</td>
-                          </tr>
-                        ))}
-                        <tr className="bg-slate-50 border-t-2 border-slate-200">
-                          <td className="px-5 py-2.5 font-bold text-slate-800">Total</td>
-                          <td className="px-5 py-2.5 text-right tabular-nums font-bold text-slate-900">{totalWins}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                  <StatsTable
+                    columns={[
+                      { key: 'tournament', label: 'Tournament', numeric: false },
+                      { key: 'wins',       label: 'Wins',       align: 'right' },
+                    ]}
+                    rows={breakdown.map(r => ({
+                      tournament: tourneyLabel[r.tournament_type] ?? r.tournament_type,
+                      wins:       r.win_count,
+                    }))}
+                    footer={{ tournament: 'Total', wins: totalWins }}
+                  />
                 </div>
               )}
             </div>
@@ -487,7 +464,7 @@ export function SchoolTabs({
       {activeTab === 'schedule' && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-slate-800">Dual Meet Schedule</h3>
+            <h3 className="text-sm font-semibold text-slate-800">Schedule</h3>
             <SeasonSelector
               seasons={Object.keys(SEASONS).map(Number)}
               currentSeasonId={scheduleSeason}
@@ -499,92 +476,107 @@ export function SchoolTabs({
             <div className="bg-white border border-black rounded-none p-8 text-center">
               <p className="text-sm text-slate-400">Loading...</p>
             </div>
-          ) : meets.length === 0 ? (
+          ) : meets.length === 0 && tourEvents.length === 0 ? (
             <div className="bg-white border border-black rounded-none p-8 text-center">
-              <p className="text-sm text-slate-500">No dual meet results for this season.</p>
+              <p className="text-sm text-slate-500">No schedule results for this season.</p>
             </div>
-          ) : (
-            <div className="bg-white border border-black rounded-none overflow-hidden">
-              <table className="w-full text-sm">
-                <thead className="bg-slate-50 border-b border-slate-200">
-                  <tr>
-                    <th className="text-left px-4 py-2 font-medium text-slate-500 w-24">Date</th>
-                    <th className="text-left px-4 py-2 font-medium text-slate-500 w-10">H/A</th>
-                    <th className="text-left px-4 py-2 font-medium text-slate-500">Opponent</th>
-                    <th className="text-right px-4 py-2 font-medium text-slate-500 w-24">Score</th>
-                    <th className="text-center px-4 py-2 font-medium text-slate-500 w-16">Result</th>
-                    <th className="w-16 px-4 py-2"></th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100">
-                  {meets.map(meet => {
-                    const isHome = meet.team1_school_id === schoolIdNum
-                    const opponentId = isHome ? meet.team2_school_id : meet.team1_school_id
-                    const opponentName = isHome
-                      ? meet.team2?.display_name
-                      : meet.team1?.display_name
-                    const myScore = isHome ? meet.team1_score : meet.team2_score
-                    const theirScore = isHome ? meet.team2_score : meet.team1_score
-                    const hasScore = myScore !== null && theirScore !== null
-                    const result = hasScore
-                      ? myScore > theirScore ? 'W'
-                        : myScore < theirScore ? 'L'
-                        : 'T'
-                      : null
-                    const dateStr = new Date(meet.meet_date + 'T12:00:00').toLocaleDateString('en-US', {
+          ) : (() => {
+            type ScheduleItem =
+              | { kind: 'meet';       date: string; meet:  DualMeet       }
+              | { kind: 'tournament'; date: string; event: TournamentEvent }
+
+            const items: ScheduleItem[] = [
+              ...meets.map(m      => ({ kind: 'meet'       as const, date: m.meet_date,   meet:  m })),
+              ...tourEvents.map(t => ({ kind: 'tournament' as const, date: t.start_date,  event: t })),
+            ].sort((a, b) => a.date.localeCompare(b.date))
+
+            return (
+              <StatsTable
+                columns={[
+                  { key: 'date',     label: 'Date',             numeric: false },
+                  { key: 'ha',       label: 'H/A',              numeric: false },
+                  { key: 'opponent', label: 'Opponent / Event', numeric: false },
+                  { key: 'score',    label: 'Score',  align: 'right', numeric: false },
+                  { key: 'result',   label: 'Result',            numeric: false },
+                  { key: 'link',     label: '',       align: 'right', numeric: false },
+                ]}
+                rows={items.map(item => {
+                  if (item.kind === 'tournament') {
+                    const dateStr = new Date(item.date + 'T12:00:00').toLocaleDateString('en-US', {
                       month: 'short', day: 'numeric',
                     })
-                    return (
-                      <tr key={meet.id} className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-2.5 text-slate-600 whitespace-nowrap">{dateStr}</td>
-                        <td className="px-4 py-2.5">
-                          <span className={`text-xs font-medium px-1.5 py-0.5 rounded ${
-                            isHome
-                              ? 'bg-blue-50 text-blue-700'
-                              : 'bg-slate-100 text-slate-500'
-                          }`}>
-                            {isHome ? 'H' : 'A'}
-                          </span>
-                        </td>
-                        <td className="px-4 py-2.5">
-                          <Link
-                            href={`/schools/${opponentId}`}
-                            className="font-medium text-slate-800 hover:underline"
-                          >
-                            {opponentName ?? '—'}
-                          </Link>
-                        </td>
-                        <td className="px-4 py-2.5 text-right tabular-nums text-slate-700">
-                          {hasScore ? `${myScore}–${theirScore}` : '—'}
-                        </td>
-                        <td className="px-4 py-2.5 text-center">
-                          {result ? (
-                            <span className={`inline-block text-xs font-bold px-2 py-0.5 rounded-full ${
-                              result === 'W' ? 'bg-emerald-100 text-emerald-800'
-                                : result === 'L' ? 'bg-red-100 text-red-700'
-                                : 'bg-slate-100 text-slate-600'
-                            }`}>
-                              {result}
-                            </span>
-                          ) : (
-                            <span className="text-slate-300 text-xs">—</span>
-                          )}
-                        </td>
-                        <td className="px-4 py-2.5 text-right">
-                          <Link
-                            href={`/meets/${meet.id}`}
-                            className="text-xs text-slate-400 hover:text-slate-700 hover:underline whitespace-nowrap"
-                          >
-                            Details →
-                          </Link>
-                        </td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-            </div>
-          )}
+                    return {
+                      date:     dateStr,
+                      ha:       null,
+                      opponent: (
+                        <Link href={`/tournaments/${item.event.id}`} className="font-medium hover:underline">
+                          {item.event.name}
+                        </Link>
+                      ),
+                      score:  '—',
+                      result: (
+                        <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">
+                          Tournament
+                        </span>
+                      ),
+                      link: (
+                        <Link href={`/tournaments/${item.event.id}`} className="text-xs text-slate-400 hover:text-slate-700 hover:underline whitespace-nowrap">
+                          Results →
+                        </Link>
+                      ),
+                    }
+                  }
+
+                  const meet         = item.meet
+                  const isHome       = meet.team1_school_id === schoolIdNum
+                  const opponentId   = isHome ? meet.team2_school_id : meet.team1_school_id
+                  const opponentName = isHome ? meet.team2?.display_name : meet.team1?.display_name
+                  const myScore      = isHome ? meet.team1_score : meet.team2_score
+                  const theirScore   = isHome ? meet.team2_score : meet.team1_score
+                  const hasScore     = myScore !== null && theirScore !== null
+                  const result       = hasScore
+                    ? myScore! > theirScore! ? 'W' : myScore! < theirScore! ? 'L' : 'T'
+                    : null
+                  const dateStr = new Date(meet.meet_date + 'T12:00:00').toLocaleDateString('en-US', {
+                    month: 'short', day: 'numeric',
+                  })
+
+                  return {
+                    date: dateStr,
+                    ha: (
+                      <span className={`text-xs font-medium px-1.5 py-0.5 rounded ${
+                        isHome ? 'bg-blue-50 text-blue-700' : 'bg-slate-100 text-slate-500'
+                      }`}>
+                        {isHome ? 'H' : 'A'}
+                      </span>
+                    ),
+                    opponent: (
+                      <Link href={`/schools/${opponentId}`} className="font-medium hover:underline">
+                        {opponentName ?? '—'}
+                      </Link>
+                    ),
+                    score: hasScore ? `${myScore}–${theirScore}` : '—',
+                    result: result ? (
+                      <span className={`inline-block text-xs font-bold px-2 py-0.5 rounded-full ${
+                        result === 'W' ? 'bg-emerald-100 text-emerald-800'
+                          : result === 'L' ? 'bg-red-100 text-red-700'
+                          : 'bg-slate-100 text-slate-600'
+                      }`}>
+                        {result}
+                      </span>
+                    ) : (
+                      <span className="text-slate-300 text-xs">—</span>
+                    ),
+                    link: (
+                      <Link href={`/meets/${meet.id}`} className="text-xs text-slate-400 hover:text-slate-700 hover:underline whitespace-nowrap">
+                        Details →
+                      </Link>
+                    ),
+                  }
+                })}
+              />
+            )
+          })()}
         </div>
       )}
     </>

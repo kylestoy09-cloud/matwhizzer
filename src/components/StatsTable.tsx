@@ -3,15 +3,24 @@ import type { ReactNode } from 'react'
 export type StatsColumn = {
   key: string
   label: string
+  align?: 'left' | 'center' | 'right'
+  numeric?: boolean
+  className?: string
 }
 
 export type StatsTableProps = {
   columns: StatsColumn[]
   rows: Record<string, ReactNode>[]
   highlightCondition?: (row: Record<string, ReactNode>) => boolean
+  footer?: Record<string, ReactNode>
 }
 
-export function StatsTable({ columns, rows, highlightCondition }: StatsTableProps) {
+function colAlignClass(col: StatsColumn, isFirst: boolean): string {
+  const align = col.align ?? (isFirst ? 'left' : 'center')
+  return align === 'left' ? 'text-left' : align === 'right' ? 'text-right' : 'text-center'
+}
+
+export function StatsTable({ columns, rows, highlightCondition, footer }: StatsTableProps) {
   return (
     <div className="rounded-lg border border-slate-200 overflow-hidden">
       <div className="overflow-x-auto">
@@ -21,9 +30,7 @@ export function StatsTable({ columns, rows, highlightCondition }: StatsTableProp
               {columns.map((col, i) => (
                 <th
                   key={col.key}
-                  className={`px-3 py-2 text-xs font-bold uppercase tracking-wide whitespace-nowrap ${
-                    i === 0 ? 'text-left' : 'text-center'
-                  }`}
+                  className={`px-3 py-2 text-xs font-bold uppercase tracking-wide whitespace-nowrap ${colAlignClass(col, i === 0)} ${col.className ?? ''}`}
                 >
                   {col.label}
                 </th>
@@ -34,22 +41,20 @@ export function StatsTable({ columns, rows, highlightCondition }: StatsTableProp
             {rows.map((row, i) => {
               const highlight = highlightCondition?.(row) ?? false
               return (
-                <tr
-                  key={i}
-                  className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}
-                >
-                  {columns.map((col, j) => (
-                    <td
-                      key={col.key}
-                      className={`px-3 py-2 border-t border-slate-100 ${
-                        j === 0
-                          ? 'text-left font-medium text-slate-800'
-                          : 'text-center text-slate-700 tabular-nums'
-                      } ${highlight ? 'font-bold' : ''}`}
-                    >
-                      {row[col.key] ?? '—'}
-                    </td>
-                  ))}
+                <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
+                  {columns.map((col, j) => {
+                    const isNumeric = col.numeric ?? j > 0
+                    return (
+                      <td
+                        key={col.key}
+                        className={`px-3 py-2 border-t border-slate-100 ${colAlignClass(col, j === 0)} ${
+                          j === 0 ? 'font-medium text-slate-800' : 'text-slate-700'
+                        } ${isNumeric ? 'tabular-nums' : ''} ${highlight ? 'font-bold' : ''} ${col.className ?? ''}`}
+                      >
+                        {row[col.key] ?? '—'}
+                      </td>
+                    )
+                  })}
                 </tr>
               )
             })}
@@ -64,6 +69,23 @@ export function StatsTable({ columns, rows, highlightCondition }: StatsTableProp
               </tr>
             )}
           </tbody>
+          {footer && (
+            <tfoot>
+              <tr className="bg-slate-100 font-bold">
+                {columns.map((col, j) => {
+                  const isNumeric = col.numeric ?? j > 0
+                  return (
+                    <td
+                      key={col.key}
+                      className={`px-3 py-2 border-t-2 border-slate-300 ${colAlignClass(col, j === 0)} ${isNumeric ? 'tabular-nums' : ''} text-slate-800 font-bold ${col.className ?? ''}`}
+                    >
+                      {footer[col.key] ?? ''}
+                    </td>
+                  )
+                })}
+              </tr>
+            </tfoot>
+          )}
         </table>
       </div>
     </div>
