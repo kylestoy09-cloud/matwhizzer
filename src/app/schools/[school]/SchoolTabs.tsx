@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { WrestlerAvatar } from '@/components/WrestlerAvatar'
 import { StatsTable } from '@/components/StatsTable'
 import { supabase } from '@/lib/supabase'
 import { SEASONS } from '@/lib/seasons'
@@ -218,25 +217,25 @@ export function SchoolTabs({
       {activeTab === 'overview' && (
         <div className="space-y-8">
 
-          {/* Quick stats */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div className="bg-white border border-black rounded-none p-4 text-center">
-              <p className="text-2xl font-bold text-slate-900 tabular-nums">{Math.round(totalPts * 10) / 10}</p>
-              <p className="text-xs text-slate-500 mt-0.5">Team Points</p>
-            </div>
-            <div className="bg-white border border-black rounded-none p-4 text-center">
-              <p className="text-2xl font-bold text-slate-900 tabular-nums">{totalWins}</p>
-              <p className="text-xs text-slate-500 mt-0.5">Total Wins</p>
-            </div>
-            <div className="bg-white border border-black rounded-none p-4 text-center">
-              <p className="text-2xl font-bold text-slate-900 tabular-nums">{stateMedalists}</p>
-              <p className="text-xs text-slate-500 mt-0.5">State Medalists</p>
-            </div>
-            <div className="bg-white border border-black rounded-none p-4 text-center">
-              <p className="text-2xl font-bold text-slate-900 tabular-nums">{wrestlers.length}</p>
-              <p className="text-xs text-slate-500 mt-0.5">Wrestlers</p>
-            </div>
-          </div>
+          {/* Quick stats — single summary row */}
+          <StatsTable
+            columns={[
+              { key: 'wrestlers',    label: 'Wrestlers',      align: 'center' },
+              { key: 'wins',         label: 'Wins',           align: 'center' },
+              { key: 'points',       label: 'Points',         align: 'center' },
+              { key: 'distChamps',   label: 'Dist. Champs',   align: 'center' },
+              { key: 'regionChamps', label: 'Region Champs',  align: 'center' },
+              { key: 'stateMeds',    label: 'State Medalists', align: 'center' },
+            ]}
+            rows={[{
+              wrestlers:    wrestlers.length,
+              wins:         totalWins,
+              points:       Math.round(totalPts * 10) / 10,
+              distChamps:   districtChamps.length,
+              regionChamps: regionChamps.length,
+              stateMeds:    stateMedalists,
+            }]}
+          />
 
           {/* Points breakdown */}
           {teamScore && (
@@ -286,26 +285,40 @@ export function SchoolTabs({
             </section>
           )}
 
-          {/* Top wrestlers preview */}
-          {wrestlers.length > 0 && (
+          {/* Top wrestlers — sorted by postseason finish, best to worst */}
+          {wrestlers.some(w => w.state_placement || w.regions_placement || w.districts_placement) && (
             <section>
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-sm font-semibold text-slate-800">Top Wrestlers</h3>
                 <button onClick={() => router.push(tabUrl('roster'), { scroll: false })} className="text-xs text-blue-600 hover:underline">View full roster →</button>
               </div>
-              <div className="bg-white border border-black rounded-none shadow-none overflow-hidden divide-y divide-slate-50">
-                {wrestlers.filter(w => w.state_placement || w.regions_placement || w.districts_placement).slice(0, 10).map(w => (
-                  <div key={w.wrestler_id} className="flex items-center gap-3 px-4 py-2">
-                    <WrestlerAvatar school={schoolData} weight={w.primary_weight} size="sm" />
-                    <Link href={`/wrestler/${w.wrestler_id}`} className="text-sm font-medium text-slate-800 hover:underline truncate flex-1">{w.wrestler_name}</Link>
-                    <div className="flex items-center gap-1 shrink-0">
-                      {w.state_placement && <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full ${placeBadgeClass(w.state_placement)}`}>{w.state_placement}</span>}
-                      {!w.state_placement && w.regions_placement && <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full ${placeBadgeClass(w.regions_placement)}`}>{w.regions_placement}</span>}
-                      {!w.state_placement && !w.regions_placement && w.districts_placement && <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full ${placeBadgeClass(w.districts_placement)}`}>{w.districts_placement}</span>}
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <StatsTable
+                columns={[
+                  { key: 'wt',        label: 'Wt',        align: 'right',  numeric: false },
+                  { key: 'name',      label: 'Wrestler',                   numeric: false },
+                  { key: 'districts', label: 'Districts',                  numeric: false, className: 'hidden sm:table-cell' },
+                  { key: 'regions',   label: 'Regions',                    numeric: false, className: 'hidden sm:table-cell' },
+                  { key: 'state',     label: 'State',                      numeric: false },
+                ]}
+                rows={[...wrestlers]
+                  .filter(w => w.state_placement || w.regions_placement || w.districts_placement)
+                  .sort((a, b) => {
+                    const lvA = a.state_placement ? 3 : a.regions_placement ? 2 : a.districts_placement ? 1 : 0
+                    const lvB = b.state_placement ? 3 : b.regions_placement ? 2 : b.districts_placement ? 1 : 0
+                    if (lvA !== lvB) return lvB - lvA
+                    const pA = lvA === 3 ? a.state_placement : lvA === 2 ? a.regions_placement : a.districts_placement
+                    const pB = lvB === 3 ? b.state_placement : lvB === 2 ? b.regions_placement : b.districts_placement
+                    const numOf = (s: string | null) => { const m = s?.match(/\d+/); return m ? parseInt(m[0], 10) : 999 }
+                    return numOf(pA) - numOf(pB)
+                  })
+                  .map(w => ({
+                    wt:        w.primary_weight,
+                    name:      <Link href={`/wrestler/${w.wrestler_id}`} className="hover:underline">{w.wrestler_name}</Link>,
+                    districts: <PlaceBadge placement={w.districts_placement} short={w.districts_short} />,
+                    regions:   <PlaceBadge placement={w.regions_placement}   short={w.regions_short}   />,
+                    state:     <PlaceBadge placement={w.state_placement} />,
+                  }))}
+              />
             </section>
           )}
         </div>
