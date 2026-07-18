@@ -1,7 +1,10 @@
 import Link from 'next/link'
 import mascotIndex from '@/data/mascot-index.json'
+import { Stardos_Stencil } from 'next/font/google'
 import { FollowSchoolButton } from '@/components/FollowSchoolButton'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
+
+const stardos = Stardos_Stencil({ weight: '700', subsets: ['latin'] })
 
 // ── WCAG contrast helpers ─────────────────────────────────────────────────────
 
@@ -136,14 +139,14 @@ export function SchoolHeader({
           </div>
           <div>
             <h1
-              className="text-3xl md:text-4xl font-extrabold uppercase tracking-tight leading-none"
+              className={`${stardos.className} text-3xl md:text-4xl uppercase tracking-tight leading-none`}
               style={{ color: textColor }}
             >
               {schoolName}
             </h1>
             {mascotLine && (
               <p
-                className="text-lg md:text-xl font-medium mt-1"
+                className={`${stardos.className} text-lg md:text-xl mt-1`}
                 style={{ color: textColor, opacity: 0.9 }}
               >
                 {mascotLine}
