@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { createSupabaseBrowser } from '@/lib/supabase/client'
 
-export function FollowSchoolButton({ schoolId: sid }: { schoolId: number }) {
+export function FollowSchoolButton({ schoolId: sid, compact = false }: { schoolId: number; compact?: boolean }) {
   const [schoolId] = useState<number>(sid)
   const [userId, setUserId] = useState<string | null>(null)
   const [following, setFollowing] = useState(false)
@@ -79,7 +79,7 @@ export function FollowSchoolButton({ schoolId: sid }: { schoolId: number }) {
       <div className="inline-flex items-center gap-2">
         <Link
           href="/signin"
-          className="text-xs px-3 py-1.5 rounded-full font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+          className={`text-xs px-3 rounded-full font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors ${compact ? 'py-1' : 'py-1.5'}`}
         >
           Sign in to follow
         </Link>
@@ -97,7 +97,7 @@ export function FollowSchoolButton({ schoolId: sid }: { schoolId: number }) {
       <button
         onClick={handleToggle}
         disabled={loading}
-        className={`text-xs px-3 py-1.5 rounded-full font-medium transition-colors ${
+        className={`text-xs px-3 rounded-full font-medium transition-colors ${compact ? 'py-1' : 'py-1.5'} ${
           following
             ? 'bg-slate-100 text-slate-600 hover:bg-red-50 hover:text-red-600'
             : 'bg-blue-600 text-white hover:bg-blue-700'
