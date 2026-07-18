@@ -1086,20 +1086,20 @@ export default async function WrestlerPage({
                   )}
                 </div>
                 <div className="overflow-x-auto">
-                  <table className="min-w-[480px] w-full text-sm">
+                  <table className="min-w-[420px] w-full text-[13px]">
                     <thead>
                       <tr className="bg-slate-900 text-white">
-                        <th className="text-left px-3 py-2 text-xs font-bold uppercase tracking-wide whitespace-nowrap w-28">Round</th>
-                        <th className="text-center px-3 py-2 text-xs font-bold uppercase tracking-wide whitespace-nowrap w-12">Result</th>
-                        <th className="text-left px-3 py-2 text-xs font-bold uppercase tracking-wide whitespace-nowrap">Opponent</th>
-                        <th className="text-right px-3 py-2 text-xs font-bold uppercase tracking-wide whitespace-nowrap w-32">Score</th>
+                        <th className="text-left px-2 py-1 text-xs font-bold uppercase tracking-wide whitespace-nowrap w-24">Round</th>
+                        <th className="text-center px-2 py-1 text-xs font-bold uppercase tracking-wide whitespace-nowrap w-10">Res</th>
+                        <th className="text-left px-2 py-1 text-xs font-bold uppercase tracking-wide whitespace-nowrap">Opponent</th>
+                        <th className="text-right px-2 py-1 text-xs font-bold uppercase tracking-wide whitespace-nowrap w-28">Score</th>
                       </tr>
                     </thead>
                     <tbody>
                       {seasonGroups.flatMap(g => [
                         // Tournament subheader row
                         <tr key={`h||${g.season_id}||${g.tournament_name}||${g.weight}`} className="bg-slate-100 border-t border-slate-200">
-                          <td colSpan={4} className="px-3 py-1.5">
+                          <td colSpan={4} className="px-2 py-1">
                             <span className="inline-flex items-center gap-1.5">
                               <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full ${tournamentTypeColor(g.tournament_type)}`}>
                                 {TOURNAMENT_TYPE_LABEL[g.tournament_type] ?? g.tournament_type}
@@ -1115,7 +1115,7 @@ export default async function WrestlerPage({
                           const mIsBye = m.opponent === 'Bye'
                           return (
                             <tr key={m.id} className={`border-t border-slate-100 ${mIsBye ? 'opacity-50' : ''} ${mi % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
-                              <td className="px-3 py-2 text-slate-500 text-sm">
+                              <td className="px-2 py-1 text-slate-500 text-xs">
                                 {m.round === 'F' && m.bracket_side === 'championship' && m.result === 'W' && (
                                   <span className="mr-1">{'\u{1F451}'}</span>
                                 )}
@@ -1124,16 +1124,16 @@ export default async function WrestlerPage({
                                 )}
                                 {ROUND_LABEL[m.round ?? ''] ?? m.round ?? '—'}
                               </td>
-                              <td className="px-3 py-2 text-center">
+                              <td className="px-2 py-1 text-center">
                                 {mIsBye ? (
                                   <span className="text-xs text-slate-400 italic">Bye</span>
                                 ) : (
-                                  <span className={`font-bold text-sm ${m.result === 'W' ? 'text-emerald-600' : 'text-red-500'}`}>
+                                  <span className={`font-bold text-xs ${m.result === 'W' ? 'text-emerald-600' : 'text-red-500'}`}>
                                     {m.result}
                                   </span>
                                 )}
                               </td>
-                              <td className="px-3 py-2 text-slate-800 font-medium text-sm">
+                              <td className="px-2 py-1 text-slate-800 font-medium text-xs">
                                 {m.opponentId ? (
                                   <Link href={`/wrestler/${m.opponentId}`} className="hover:text-blue-600 transition-colors">
                                     {m.opponent}
@@ -1143,7 +1143,7 @@ export default async function WrestlerPage({
                                   <span className="ml-1.5 text-slate-400 font-normal text-xs">{m.opponentSchool}</span>
                                 )}
                               </td>
-                              <td className="px-3 py-2 text-right text-slate-500 font-mono text-xs tabular-nums">
+                              <td className="px-2 py-1 text-right text-slate-500 font-mono text-xs tabular-nums">
                                 {mIsBye ? '' : (m.win_type ? formatScore(m, m.result === 'W') : '—')}
                               </td>
                             </tr>
@@ -1153,7 +1153,7 @@ export default async function WrestlerPage({
                       {/* Season totals footer */}
                       {allSeasonMatches.length > 0 && (
                         <tr className="border-t-2 border-slate-300 bg-slate-100 font-bold">
-                          <td colSpan={4} className="px-3 py-2 text-xs text-slate-700">
+                          <td colSpan={4} className="px-2 py-1 text-xs text-slate-700">
                             Season Total: <span className="text-slate-900">{seasonWins}-{seasonLosses}</span>
                           </td>
                         </tr>

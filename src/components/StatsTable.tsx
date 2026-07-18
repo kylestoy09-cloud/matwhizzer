@@ -24,13 +24,13 @@ export function StatsTable({ columns, rows, highlightCondition, footer }: StatsT
   return (
     <div className="rounded-lg border border-slate-200 overflow-hidden">
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+        <table className="w-full text-[13px]">
           <thead>
             <tr className="bg-slate-900 text-white">
               {columns.map((col, i) => (
                 <th
                   key={col.key}
-                  className={`px-3 py-2 text-xs font-bold uppercase tracking-wide whitespace-nowrap ${colAlignClass(col, i === 0)} ${col.className ?? ''}`}
+                  className={`px-2 py-1 text-xs font-bold uppercase tracking-wide whitespace-nowrap ${colAlignClass(col, i === 0)} ${col.className ?? ''}`}
                 >
                   {col.label}
                 </th>
@@ -47,7 +47,7 @@ export function StatsTable({ columns, rows, highlightCondition, footer }: StatsT
                     return (
                       <td
                         key={col.key}
-                        className={`px-3 py-2 border-t border-slate-100 ${colAlignClass(col, j === 0)} ${
+                        className={`px-2 py-1 border-t border-slate-100 ${colAlignClass(col, j === 0)} ${
                           j === 0 ? 'font-medium text-slate-800' : 'text-slate-700'
                         } ${isNumeric ? 'tabular-nums' : ''} ${highlight ? 'font-bold' : ''} ${col.className ?? ''}`}
                       >
@@ -62,7 +62,7 @@ export function StatsTable({ columns, rows, highlightCondition, footer }: StatsT
               <tr>
                 <td
                   colSpan={columns.length}
-                  className="px-3 py-6 text-center text-sm text-slate-400 border-t border-slate-100"
+                  className="px-2 py-5 text-center text-xs text-slate-400 border-t border-slate-100"
                 >
                   No data available.
                 </td>
@@ -77,7 +77,7 @@ export function StatsTable({ columns, rows, highlightCondition, footer }: StatsT
                   return (
                     <td
                       key={col.key}
-                      className={`px-3 py-2 border-t-2 border-slate-300 ${colAlignClass(col, j === 0)} ${isNumeric ? 'tabular-nums' : ''} text-slate-800 font-bold ${col.className ?? ''}`}
+                      className={`px-2 py-1 border-t-2 border-slate-300 ${colAlignClass(col, j === 0)} ${isNumeric ? 'tabular-nums' : ''} text-slate-800 font-bold ${col.className ?? ''}`}
                     >
                       {footer[col.key] ?? ''}
                     </td>
