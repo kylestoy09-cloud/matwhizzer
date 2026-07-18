@@ -132,6 +132,18 @@ export function SchoolTabs({
   const [tourEvents,     setTourEvents]     = useState<TournamentEvent[]>([])
   const [meetsLoading,   setMeetsLoading]   = useState(false)
 
+  // Sticky tab bar — pins below the sticky school logo bar (measured via data-school-bar)
+  const [tabStickyTop, setTabStickyTop] = useState(219) // 139 nav + ~80 logo bar
+  useEffect(() => {
+    const bar = document.querySelector('[data-school-bar]')
+    if (!bar) return
+    const compute = () => setTabStickyTop(139 + (bar as HTMLElement).offsetHeight)
+    compute()
+    const ro = new ResizeObserver(compute)
+    ro.observe(bar)
+    return () => ro.disconnect()
+  }, [])
+
   useEffect(() => {
     if (activeTab !== 'schedule') return
     let cancelled = false
@@ -181,8 +193,11 @@ export function SchoolTabs({
 
   return (
     <>
-      {/* Tab nav */}
-      <div className="flex gap-1 border-b border-slate-200 mb-6 overflow-x-auto">
+      {/* Tab nav — sticky, pins below the school logo bar */}
+      <div
+        className="flex gap-1 border-b border-slate-200 mb-6 overflow-x-auto sticky z-10 bg-white"
+        style={{ top: tabStickyTop }}
+      >
         {TABS.map(t => (
           <button
             key={t.id}

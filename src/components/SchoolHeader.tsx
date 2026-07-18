@@ -128,12 +128,8 @@ export function SchoolHeader({
   // page height rather than being capped by a short wrapper div.
   return (
     <>
-      {/* ── STICKY: logo + name + mascot + gender/season controls ─────────────
-           Rendered as a direct sibling of page content so sticky positioning
-           is constrained to <main> (full page height) not a short wrapper. */}
-      <div className="sticky z-20 w-full shadow-md" style={{ top: '139px', backgroundColor: bgColor }}>
-
-        {/* Logo + school name + mascot */}
+      {/* ── STICKY: logo + name + mascot only ────────────────────────────────── */}
+      <div data-school-bar className="sticky z-20 w-full shadow-md" style={{ top: '139px', backgroundColor: bgColor }}>
         <div className="px-4 sm:px-6 py-3 sm:py-4 flex items-center gap-4">
           <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white/10 flex items-center justify-center shrink-0 p-1.5">
             {logoSrc ? (
@@ -158,106 +154,96 @@ export function SchoolHeader({
             )}
           </div>
         </div>
-
-        {/* Boys/Girls toggle + season picker + location tags */}
-        <div
-          className="px-4 py-2 flex flex-wrap items-center gap-1.5 border-t"
-          style={{ borderColor: `${textColor}30` }}
-        >
-          <div className="flex border border-white/30 overflow-hidden text-xs mr-2 shrink-0">
-            <Link
-              href={`/schools/${schoolParam}?gender=boys${tabSuffix}`}
-              className={`px-3 py-1.5 font-bold transition-colors ${
-                gender === 'boys'
-                  ? 'bg-white text-slate-900'
-                  : 'text-white/70 hover:text-white hover:bg-white/10'
-              }`}
-            >
-              Boys
-            </Link>
-            <Link
-              href={`/schools/${schoolParam}?gender=girls${tabSuffix}`}
-              className={`px-3 py-1.5 font-bold transition-colors border-l border-white/30 ${
-                gender === 'girls'
-                  ? 'bg-rose-200 text-rose-900'
-                  : 'text-white/70 hover:text-white hover:bg-white/10'
-              }`}
-            >
-              Girls
-            </Link>
-          </div>
-
-          <div className="text-xs" style={{ color: `${textColor}99` }}>
-            <InlineSeasonPicker activeSeason={activeSeason} />
-          </div>
-
-          {tags.map(tag => (
-            <span
-              key={tag}
-              className="text-[11px] px-2 py-0.5 rounded-full bg-white/10"
-              style={{ color: textColor, opacity: 0.75 }}
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
       </div>
 
-      {/* ── SCROLLS AWAY: classification pills + action buttons ───────────────
-           Sibling of the sticky bar — scrolls off the top as the user scrolls
-           down into roster/stats content. */}
-      <div className="w-full px-4 sm:px-6 py-2.5 flex flex-wrap items-center gap-2" style={{ backgroundColor: bgColor }}>
-
-        {/* Classification / location pills */}
-        <div className="flex flex-wrap gap-1.5 flex-1 min-w-0">
-          {districtLabel && districtNum && (
-            <Link href={`${genderBase}/districts/${districtNum}`} className={pillClass} style={{ color: textColor }}>
-              {districtLabel}
-            </Link>
-          )}
-          {regionLabel && regionNum && (
-            <Link href={`${genderBase}/regions/${regionNum}`} className={pillClass} style={{ color: textColor }}>
-              {regionLabel}
-            </Link>
-          )}
-          {classLabel && secSlug && grpSlug && (
-            <Link href={`/sections/${secSlug}/${grpSlug}?gender=${gender}`} className={pillClass} style={{ color: textColor }}>
-              {classLabel}
-            </Link>
-          )}
-          {athleticConference && conferenceSlug && (
-            <Link href={`/conferences/${conferenceSlug}?gender=${gender}`} className={pillClass} style={{ color: textColor }}>
-              {athleticConference}
-            </Link>
-          )}
+      {/* ── SCROLLS AWAY: Boys/Girls toggle + season + location tags ─────────── */}
+      <div
+        className="px-4 py-2 flex flex-wrap items-center gap-1.5 border-t"
+        style={{ borderColor: `${textColor}30`, backgroundColor: bgColor }}
+      >
+        <div className="flex border border-white/30 overflow-hidden text-xs mr-2 shrink-0">
+          <Link
+            href={`/schools/${schoolParam}?gender=boys${tabSuffix}`}
+            className={`px-3 py-1.5 font-bold transition-colors ${
+              gender === 'boys'
+                ? 'bg-white text-slate-900'
+                : 'text-white/70 hover:text-white hover:bg-white/10'
+            }`}
+          >
+            Boys
+          </Link>
+          <Link
+            href={`/schools/${schoolParam}?gender=girls${tabSuffix}`}
+            className={`px-3 py-1.5 font-bold transition-colors border-l border-white/30 ${
+              gender === 'girls'
+                ? 'bg-rose-200 text-rose-900'
+                : 'text-white/70 hover:text-white hover:bg-white/10'
+            }`}
+          >
+            Girls
+          </Link>
         </div>
 
-        {/* Action buttons — same pill sizing */}
-        <div className="flex flex-wrap gap-1.5 shrink-0">
-          <FollowSchoolButton schoolId={schoolId} compact />
-          {websiteUrl && (
-            <a
-              href={websiteUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={pillClass}
-              style={{ color: textColor }}
-            >
-              Website ↗
-            </a>
-          )}
-          {twitterHandle && (
-            <a
-              href={`https://x.com/${twitterHandle.replace('@', '')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={pillClass}
-              style={{ color: textColor }}
-            >
-              {twitterHandle.startsWith('@') ? twitterHandle : `@${twitterHandle}`}
-            </a>
-          )}
+        <div className="text-xs" style={{ color: `${textColor}99` }}>
+          <InlineSeasonPicker activeSeason={activeSeason} />
         </div>
+
+        {tags.map(tag => (
+          <span
+            key={tag}
+            className="text-[11px] px-2 py-0.5 rounded-full bg-white/10"
+            style={{ color: textColor, opacity: 0.75 }}
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+
+      {/* ── SCROLLS AWAY: classification pills + action buttons (single wrap row) */}
+      <div className="w-full px-4 sm:px-6 py-2.5 flex flex-wrap items-center gap-1.5" style={{ backgroundColor: bgColor }}>
+        {districtLabel && districtNum && (
+          <Link href={`${genderBase}/districts/${districtNum}`} className={pillClass} style={{ color: textColor }}>
+            {districtLabel}
+          </Link>
+        )}
+        {regionLabel && regionNum && (
+          <Link href={`${genderBase}/regions/${regionNum}`} className={pillClass} style={{ color: textColor }}>
+            {regionLabel}
+          </Link>
+        )}
+        {classLabel && secSlug && grpSlug && (
+          <Link href={`/sections/${secSlug}/${grpSlug}?gender=${gender}`} className={pillClass} style={{ color: textColor }}>
+            {classLabel}
+          </Link>
+        )}
+        {athleticConference && conferenceSlug && (
+          <Link href={`/conferences/${conferenceSlug}?gender=${gender}`} className={pillClass} style={{ color: textColor }}>
+            {athleticConference}
+          </Link>
+        )}
+        <FollowSchoolButton schoolId={schoolId} compact />
+        {websiteUrl && (
+          <a
+            href={websiteUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={pillClass}
+            style={{ color: textColor }}
+          >
+            Website ↗
+          </a>
+        )}
+        {twitterHandle && (
+          <a
+            href={`https://x.com/${twitterHandle.replace('@', '')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={pillClass}
+            style={{ color: textColor }}
+          >
+            {twitterHandle.startsWith('@') ? twitterHandle : `@${twitterHandle}`}
+          </a>
+        )}
       </div>
     </>
   )
