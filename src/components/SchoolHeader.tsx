@@ -1,10 +1,7 @@
 import Link from 'next/link'
 import mascotIndex from '@/data/mascot-index.json'
-import { Stardos_Stencil } from 'next/font/google'
 import { FollowSchoolButton } from '@/components/FollowSchoolButton'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
-
-const stardos = Stardos_Stencil({ weight: '700', subsets: ['latin'] })
 
 // ── WCAG contrast helpers ─────────────────────────────────────────────────────
 
@@ -34,11 +31,6 @@ function contrastRatio(hex1: string, hex2: string): number {
   return (lighter + 0.05) / (darker + 0.05)
 }
 
-/**
- * Returns the candidate color with the highest WCAG contrast ratio against bg.
- * Skips any candidate that is identical to bg (avoid same-color-on-same-color).
- * If no candidate reaches 4.5:1, falls back to white or black, whichever wins.
- */
 function pickTextColor(bg: string, candidates: (string | null | undefined)[]): string {
   const valid = candidates.filter((c): c is string => !!c && c.toLowerCase() !== bg.toLowerCase())
   let best = { color: '#FFFFFF', ratio: 0 }
@@ -53,8 +45,6 @@ function pickTextColor(bg: string, candidates: (string | null | undefined)[]): s
 }
 
 // ── SVG mascot lookup ─────────────────────────────────────────────────────────
-// mascot-index.json is generated at build time by scripts/generate-mascot-index.mjs
-// and maps school ID strings to their SVG filename in public/mascots/.
 
 function findMascotSvg(schoolId: number): string | null {
   const file = mascotIndex[String(schoolId) as keyof typeof mascotIndex] ?? null
@@ -65,7 +55,7 @@ function findMascotSvg(schoolId: number): string | null {
 
 export interface SchoolHeaderProps {
   schoolId: number
-  schoolParam: string        // URL segment (the [school] param, used in href construction)
+  schoolParam: string
   schoolName: string
   mascot: string | null
   nickname: string | null
@@ -77,7 +67,7 @@ export interface SchoolHeaderProps {
   gender: 'boys' | 'girls'
   activeTab: string
   activeSeason: number
-  tags: string[]             // pre-built location strings, e.g. ['Hoboken', 'Hudson County']
+  tags: string[]
   districtLabel: string | null
   districtNum: string | null
   regionLabel: string | null
@@ -92,16 +82,12 @@ export interface SchoolHeaderProps {
 }
 
 // ── Component ─────────────────────────────────────────────────────────────────
-// Server component — reads filesystem at render time for SVG lookup.
-// NOTE: intended to be placed *outside* the max-w-4xl container in page.tsx
-// so the background spans full viewport width.
 
 export function SchoolHeader({
   schoolId,
   schoolParam,
   schoolName,
   mascot,
-  nickname,
   colorPrimary,
   colorSecondary,
   colorTertiary,
@@ -123,49 +109,122 @@ export function SchoolHeader({
   websiteUrl,
   twitterHandle,
 }: SchoolHeaderProps) {
-  const bgColor   = headerBackground ?? colorSecondary ?? '#1a1a2e'
-  const textColor = pickTextColor(bgColor, [colorPrimary, colorSecondary, colorTertiary])
-  const svgPath   = findMascotSvg(schoolId)
-  const logoSrc   = logoUrl ?? svgPath
-  const mascotLine = mascot ?? null
+  const bgColor    = headerBackground ?? colorSecondary ?? '#1a1a2e'
+  const textColor  = pickTextColor(bgColor, [colorPrimary, colorSecondary, colorTertiary])
+  const svgPath    = findMascotSvg(schoolId)
+  const logoSrc    = logoUrl ?? svgPath
+  const mascotLine = mascot?.replace(/\s*Wrestling\.?\s*$/i, '').trim() || null
   const genderBase = gender === 'girls' ? '/girls' : '/boys'
   const tabSuffix  = activeTab !== 'overview' ? `&tab=${activeTab}` : ''
+
+  const pillClass = 'text-xs font-semibold px-3 py-1 rounded-full bg-white/15 hover:bg-white/25 transition-colors whitespace-nowrap'
+  const btnClass  = 'text-sm font-semibold px-3 py-1.5 rounded-full border hover:bg-white/10 transition-colors whitespace-nowrap'
 
   return (
     <div className="sticky top-0 z-20 w-full shadow-md" style={{ backgroundColor: bgColor }}>
 
-      {/* ── Name + mascot + logo ─────────────────────────────────────────────── */}
-      <div className="px-4 pt-6 pb-4">
+      {/* ── Main banner row ───────────────────────────────────────────────────── */}
+      <div className="px-4 sm:px-6 py-4 sm:py-5 flex items-center justify-between flex-wrap gap-4">
+
+        {/* Left: logo badge + school name + mascot */}
         <div className="flex items-center gap-4">
-          {logoSrc && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={logoSrc}
-              alt=""
-              aria-hidden="true"
-              className="h-32 w-auto shrink-0"
-            />
-          )}
-          <div className="inline-flex flex-col">
+          <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/10 flex items-center justify-center shrink-0 p-2">
+            {logoSrc ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={logoSrc} alt="" aria-hidden="true" className="w-full h-full object-contain" />
+            ) : null}
+          </div>
+          <div>
             <h1
-              className={`${stardos.className} text-4xl sm:text-6xl leading-none tracking-wide text-right sm:text-left`}
+              className="text-3xl md:text-4xl font-extrabold uppercase tracking-tight leading-none"
               style={{ color: textColor }}
             >
               {schoolName}
             </h1>
             {mascotLine && (
               <p
-                className={`${stardos.className} text-2xl sm:text-3xl text-right sm:self-end`}
-                style={{ color: textColor, opacity: 0.82 }}
+                className="text-lg md:text-xl font-medium mt-1"
+                style={{ color: textColor, opacity: 0.9 }}
               >
                 {mascotLine}
               </p>
             )}
           </div>
         </div>
+
+        {/* Right: pills (top) + actions (bottom) — side-by-side desktop, stacked mobile */}
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-3">
+
+          {/* Classification / location pills */}
+          <div className="flex flex-wrap gap-1.5">
+            {districtLabel && districtNum && (
+              <Link
+                href={`${genderBase}/districts/${districtNum}`}
+                className={pillClass}
+                style={{ color: textColor }}
+              >
+                {districtLabel}
+              </Link>
+            )}
+            {regionLabel && regionNum && (
+              <Link
+                href={`${genderBase}/regions/${regionNum}`}
+                className={pillClass}
+                style={{ color: textColor }}
+              >
+                {regionLabel}
+              </Link>
+            )}
+            {classLabel && secSlug && grpSlug && (
+              <Link
+                href={`/sections/${secSlug}/${grpSlug}?gender=${gender}`}
+                className={pillClass}
+                style={{ color: textColor }}
+              >
+                {classLabel}
+              </Link>
+            )}
+            {athleticConference && conferenceSlug && (
+              <Link
+                href={`/conferences/${conferenceSlug}?gender=${gender}`}
+                className={pillClass}
+                style={{ color: textColor }}
+              >
+                {athleticConference}
+              </Link>
+            )}
+          </div>
+
+          {/* Action buttons */}
+          <div className="flex gap-2">
+            <FollowSchoolButton schoolId={schoolId} />
+            {websiteUrl && (
+              <a
+                href={websiteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={btnClass}
+                style={{ color: textColor, borderColor: `${textColor}55` }}
+              >
+                Website ↗
+              </a>
+            )}
+            {twitterHandle && (
+              <a
+                href={`https://x.com/${twitterHandle.replace('@', '')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={btnClass}
+                style={{ color: textColor, borderColor: `${textColor}55` }}
+              >
+                {twitterHandle.startsWith('@') ? twitterHandle : `@${twitterHandle}`}
+              </a>
+            )}
+          </div>
+        </div>
       </div>
 
-      {/* ── Boys / Girls toggle + info pills ─────────────────────────────────── */}
+      {/* ── Bottom row: gender toggle + season picker + location tags ─────────── */}
       <div
         className="px-4 py-2 flex flex-wrap items-center gap-1.5 border-t"
         style={{ borderColor: `${textColor}30` }}
@@ -194,8 +253,6 @@ export function SchoolHeader({
           </Link>
         </div>
 
-        <FollowSchoolButton schoolId={schoolId} />
-
         <div className="text-xs" style={{ color: `${textColor}99` }}>
           <InlineSeasonPicker activeSeason={activeSeason} />
         </div>
@@ -210,76 +267,6 @@ export function SchoolHeader({
             {tag}
           </span>
         ))}
-
-        {/* District */}
-        {districtLabel && districtNum && (
-          <Link
-            href={`${genderBase}/districts/${districtNum}`}
-            className="text-[11px] px-2 py-0.5 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
-            style={{ color: textColor }}
-          >
-            {districtLabel}
-          </Link>
-        )}
-
-        {/* Region */}
-        {regionLabel && regionNum && (
-          <Link
-            href={`${genderBase}/regions/${regionNum}`}
-            className="text-[11px] px-2 py-0.5 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
-            style={{ color: textColor }}
-          >
-            {regionLabel}
-          </Link>
-        )}
-
-        {/* Section / Group classification */}
-        {classLabel && secSlug && grpSlug && (
-          <Link
-            href={`/sections/${secSlug}/${grpSlug}?gender=${gender}`}
-            className="text-[11px] px-2 py-0.5 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
-            style={{ color: textColor }}
-          >
-            {classLabel}
-          </Link>
-        )}
-
-        {/* Conference */}
-        {athleticConference && conferenceSlug && (
-          <Link
-            href={`/conferences/${conferenceSlug}?gender=${gender}`}
-            className="text-[11px] px-2 py-0.5 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
-            style={{ color: textColor }}
-          >
-            {athleticConference}
-          </Link>
-        )}
-
-        {/* Website */}
-        {websiteUrl && (
-          <a
-            href={websiteUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[11px] px-2 py-0.5 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
-            style={{ color: textColor }}
-          >
-            Website ↗
-          </a>
-        )}
-
-        {/* Twitter / X */}
-        {twitterHandle && (
-          <a
-            href={`https://x.com/${twitterHandle.replace('@', '')}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[11px] px-2 py-0.5 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
-            style={{ color: textColor }}
-          >
-            {twitterHandle.startsWith('@') ? twitterHandle : `@${twitterHandle}`}
-          </a>
-        )}
       </div>
 
     </div>
