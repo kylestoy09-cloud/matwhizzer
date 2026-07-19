@@ -1,20 +1,17 @@
-import Image from 'next/image'
 import Link from 'next/link'
+import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 
 type StandingsRow = {
   id?: number
   display_name: string
   mascot: string | null
   primary_color: string | null
+  header_background: string | null
   logo_url: string | null
   district_points: number
   region_points: number
   state_points: number
   total_points: number
-}
-
-function smallLogo(url: string | null): string | null {
-  return url ?? null
 }
 
 export function StandingsTable({
@@ -39,36 +36,40 @@ export function StandingsTable({
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {standings.map((s, i) => {
-              const logo = smallLogo(s.logo_url)
-              return (
-                <tr key={s.display_name} className="hover:bg-slate-50">
-                  <td className="text-center px-3 py-3 text-slate-400 tabular-nums">{i + 1}</td>
-                  <td className="px-4 py-3">
-                    <Link
-                      href={`/schools/${s.id}?gender=${gender}`}
-                      className="flex items-center gap-3 group"
-                    >
-                      {logo ? (
-                        <Image src={logo} alt={s.display_name} width={32} height={32} className="w-8 h-8 rounded object-contain shrink-0" />
-                      ) : s.primary_color ? (
-                        <div className="w-8 h-8 rounded flex items-center justify-center shrink-0 text-[10px] font-bold text-white" style={{ backgroundColor: s.primary_color }}>
-                          {s.display_name.slice(0, 2).toUpperCase()}
-                        </div>
-                      ) : null}
-                      <div>
-                        <span className="font-medium text-slate-800 group-hover:underline">{s.display_name}</span>
-                        {s.mascot && <span className="text-xs text-slate-400 ml-1.5">{s.mascot}</span>}
+            {standings.map((s, i) => (
+              <tr key={s.display_name} className="hover:bg-slate-50">
+                <td className="text-center px-3 py-3 text-slate-400 tabular-nums">{i + 1}</td>
+                <td className="px-4 py-3">
+                  <Link
+                    href={`/schools/${s.id}?gender=${gender}`}
+                    className="flex items-center gap-3 group"
+                  >
+                    {s.logo_url ? (
+                      <SchoolLogoBadge
+                        logoUrl={s.logo_url}
+                        bgColor={s.header_background ?? s.primary_color}
+                        large
+                      />
+                    ) : s.primary_color ? (
+                      <div
+                        className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center shrink-0 text-[10px] font-bold text-white"
+                        style={{ backgroundColor: s.header_background ?? s.primary_color }}
+                      >
+                        {s.display_name.slice(0, 2).toUpperCase()}
                       </div>
-                    </Link>
-                  </td>
-                  <td className="text-right px-4 py-3 tabular-nums text-slate-700">{s.district_points || '—'}</td>
-                  <td className="text-right px-4 py-3 tabular-nums text-slate-700">{s.region_points || '—'}</td>
-                  <td className="text-right px-4 py-3 tabular-nums text-slate-700">{s.state_points || '—'}</td>
-                  <td className="text-right px-4 py-3 tabular-nums font-semibold text-slate-900">{s.total_points || '—'}</td>
-                </tr>
-              )
-            })}
+                    ) : null}
+                    <div>
+                      <span className="font-medium text-slate-800 group-hover:underline">{s.display_name}</span>
+                      {s.mascot && <span className="text-xs text-slate-400 ml-1.5">{s.mascot}</span>}
+                    </div>
+                  </Link>
+                </td>
+                <td className="text-right px-4 py-3 tabular-nums text-slate-700">{s.district_points || '—'}</td>
+                <td className="text-right px-4 py-3 tabular-nums text-slate-700">{s.region_points || '—'}</td>
+                <td className="text-right px-4 py-3 tabular-nums text-slate-700">{s.state_points || '—'}</td>
+                <td className="text-right px-4 py-3 tabular-nums font-semibold text-slate-900">{s.total_points || '—'}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

@@ -13,6 +13,7 @@ type TeamScoreRow = {
   state_points: number
   total_points: number
   logo_url?: string | null
+  bg_color?: string | null
 }
 
 export function PostseasonLeaders({
@@ -53,7 +54,7 @@ export function PostseasonLeaders({
                 <td className="px-3 py-2 text-xs text-slate-400">{i + 1}</td>
                 <td className="px-3 py-2">
                   <div className="flex items-center gap-1.5">
-                    <SchoolLogoBadge logoUrl={r.logo_url} />
+                    <SchoolLogoBadge logoUrl={r.logo_url} bgColor={r.bg_color} />
                     {r.school_id ? (
                       <Link href={`/schools/${r.school_id}?gender=${gender}`} className="font-medium text-slate-800 hover:underline">
                         {r.school_name || r.school}

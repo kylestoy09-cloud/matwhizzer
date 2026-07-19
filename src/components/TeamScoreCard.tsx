@@ -10,6 +10,7 @@ type TeamScoreRow = {
   school_id: number | null
   total_points: number
   logo_url?: string | null
+  bg_color?: string | null
 }
 
 export function TeamScoreCard({
@@ -35,7 +36,7 @@ export function TeamScoreCard({
         {visible.map((r, i) => (
           <div key={r.school} className="flex items-center gap-2 px-4 py-2.5">
             <span className="text-xs text-slate-400 w-4 shrink-0 text-right">{i + 1}</span>
-            <SchoolLogoBadge logoUrl={r.logo_url} />
+            <SchoolLogoBadge logoUrl={r.logo_url} bgColor={r.bg_color} />
             <div className="flex-1 min-w-0">
               {r.school_id ? (
                 <Link

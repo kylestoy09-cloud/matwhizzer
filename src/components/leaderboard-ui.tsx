@@ -111,10 +111,10 @@ export function LeaderTable<T extends object>({
   )
 }
 
-export function WrestlerCell({ id, name, school, logoUrl }: { id: string; name: string; school: string | null; logoUrl?: string | null }) {
+export function WrestlerCell({ id, name, school, logoUrl, bgColor }: { id: string; name: string; school: string | null; logoUrl?: string | null; bgColor?: string | null }) {
   return (
     <span className="flex items-center gap-1.5 min-w-0">
-      <SchoolLogoBadge logoUrl={logoUrl} />
+      <SchoolLogoBadge logoUrl={logoUrl} bgColor={bgColor} />
       <Link
         href={`/wrestler/${id}`}
         className="font-medium text-slate-800 hover:text-blue-600 transition-colors truncate"

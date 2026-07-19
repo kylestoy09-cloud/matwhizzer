@@ -92,7 +92,7 @@ export default async function GhostChampionsPage() {
                   <span className="text-2xl font-black text-amber-500 w-10 text-center shrink-0">
                     {g.seed}
                   </span>
-                  <SchoolLogoBadge logoUrl={logos.byName.get(g.school) ?? null} />
+                  <SchoolLogoBadge {...logos.badge(g.school)} />
                   <div className="flex-1 min-w-0">
                     <Link
                       href={`/wrestler/${g.wrestler_id}`}

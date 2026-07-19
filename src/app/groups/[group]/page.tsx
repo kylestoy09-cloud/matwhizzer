@@ -26,12 +26,12 @@ export default async function GroupPage({
 
   const { data: schoolsData } = await supabase
     .from('schools')
-    .select('id, display_name, mascot, primary_color, logo_url, section')
+    .select('id, display_name, mascot, primary_color, logo_url, header_background, section')
     .eq('classification', groupName)
     .eq('is_combined', false)
     .order('display_name')
 
-  const schools = (schoolsData ?? []) as { display_name: string; mascot: string | null; primary_color: string | null; logo_url: string | null; section: string | null }[]
+  const schools = (schoolsData ?? []) as { display_name: string; mascot: string | null; primary_color: string | null; logo_url: string | null; header_background: string | null; section: string | null }[]
   if (schools.length === 0) notFound()
 
   const standings = await buildStandings(schools, gender, season)

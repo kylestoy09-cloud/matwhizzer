@@ -365,7 +365,7 @@ function EntryRoster({ roster, logos }: { roster: RosterEntry[]; logos: LogoMap 
                 <td className="px-3 py-1.5 text-slate-400 text-xs tabular-nums">{r.seed ?? ''}</td>
                 <td className="px-3 py-1.5">
                   <div className="flex items-center gap-1.5">
-                    <SchoolLogoBadge logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />
+                    <SchoolLogoBadge {...logos.badge(r.school_name || r.school)} />
                     <Link href={`/wrestler/${r.wrestler_id}`} className="font-medium text-slate-700 hover:underline">
                       {r.name}
                     </Link>

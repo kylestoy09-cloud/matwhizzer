@@ -107,7 +107,7 @@ export async function BracketBuster({
                 </td>
                 <td className="px-3 py-2">
                   <div className="flex items-center gap-1">
-                    <SchoolLogoBadge logoUrl={logos.byName.get(r.winner_school_name || r.winner_school || '') ?? null} />
+                    <SchoolLogoBadge {...logos.badge(r.winner_school_name || r.winner_school)} />
                     <div>
                       <Link href={`/wrestler/${r.winner_id}`} className="font-medium text-slate-800 hover:underline text-sm truncate block max-w-[130px]">
                         {r.winner_name}
@@ -119,7 +119,7 @@ export async function BracketBuster({
                 <td className="px-2 py-2 text-center text-xs font-bold text-slate-700 tabular-nums">#{r.winner_seed}</td>
                 <td className="px-3 py-2">
                   <div className="flex items-center gap-1">
-                    <SchoolLogoBadge logoUrl={logos.byName.get(r.loser_school_name || r.loser_school || '') ?? null} />
+                    <SchoolLogoBadge {...logos.badge(r.loser_school_name || r.loser_school)} />
                     <div>
                       <Link href={`/wrestler/${r.loser_id}`} className="text-slate-500 hover:underline text-sm truncate block max-w-[130px]">
                         {r.loser_name}

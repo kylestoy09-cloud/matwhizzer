@@ -31,6 +31,7 @@ export default async function GirlsSchoolsPage({
   const all = ((data ?? []) as SchoolDirRow[]).map(r => ({
     ...r,
     logo_url: r.school_id ? logos.byId.get(r.school_id) ?? null : logos.byName.get(r.school_name) ?? null,
+    bg_color: r.school_id ? logos.bgById.get(r.school_id) ?? null : logos.bgByName.get(r.school_name) ?? null,
   }))
 
   const rows = q
@@ -105,7 +106,7 @@ export default async function GirlsSchoolsPage({
                 <tr key={r.school} className="hover:bg-slate-50">
                   <td className="px-4 py-2.5">
                     <div className="flex items-center gap-1.5">
-                      <SchoolLogoBadge logoUrl={r.logo_url} />
+                      <SchoolLogoBadge logoUrl={r.logo_url} bgColor={r.bg_color} />
                       {r.school_id ? (
                         <Link
                           href={`/schools/${r.school_id}?gender=girls`}

@@ -62,7 +62,7 @@ export default async function GirlsPage({
   let topTeamScores: TeamScoreRow[] = []
   let topDominance: DominanceRow[] = []
   let podiumSchools: { school_name: string; count: number }[] = []
-  let stateChampions: { weight: number; wrestler_id: string; wrestler_name: string; school: string; dominance_score: number; seed: number | null; logo_url?: string | null }[] = []
+  let stateChampions: { weight: number; wrestler_id: string; wrestler_name: string; school: string; dominance_score: number; seed: number | null; logo_url?: string | null; bg_color?: string | null }[] = []
 
   if (showLeaderboards) {
     const [dominanceRes, teamScoreRes, placementsRes, championsRes, logos] = await Promise.all([
@@ -73,13 +73,18 @@ export default async function GirlsPage({
       getSchoolLogos(),
     ])
     topDominance = (dominanceRes.data ?? []).slice(0, 8) as DominanceRow[]
-    topTeamScores = (teamScoreRes.data ?? []) as TeamScoreRow[]
+    topTeamScores = ((teamScoreRes.data ?? []) as TeamScoreRow[]).map(r => ({
+      ...r,
+      logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null,
+      bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null,
+    }))
     // byName is safe here: state_champions RPC already returns display_name-compatible
     // school strings (not raw abbreviations). If this RPC is ever modified to return
     // school_id, switch this to logos.byId.get(r.school_id) instead.
     stateChampions = ((championsRes.data ?? []) as typeof stateChampions).map(r => ({
       ...r,
       logo_url: logos.byName.get(r.school) ?? null,
+      bg_color: logos.bgByName.get(r.school) ?? null,
     }))
 
     const schoolCounts = new Map<string, number>()

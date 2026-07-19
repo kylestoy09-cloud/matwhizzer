@@ -9,6 +9,7 @@ import { SEASONS } from '@/lib/seasons'
 import { PostseasonLeaders } from '@/components/PostseasonLeaders'
 import { PageHeader } from '@/components/PageHeader'
 import { PersonalizedHome } from '@/components/PersonalizedHome'
+import { getSchoolLogos } from '@/lib/school-logos'
 
 type ChampionRow = { weight: number; wrestler_id: string; wrestler_name: string; school: string; dominance_score: number; seed: number | null }
 
@@ -84,16 +85,21 @@ export default async function RootPage({
   let girlsChampions: ChampionRow[] = []
 
   if (showLeaderboards) {
-    const [dominanceRes, teamScoreRes, boysPlacementsRes, girlsPlacementsRes, boysChampRes, girlsChampRes] = await Promise.all([
+    const [dominanceRes, teamScoreRes, boysPlacementsRes, girlsPlacementsRes, boysChampRes, girlsChampRes, logos] = await Promise.all([
       supabase.rpc('lb_dominance', { p_gender: 'M', p_season: season }),
       supabase.rpc('top_postseason_team_scores', { p_gender: 'M', p_season: season, p_limit: 25 }),
       supabase.rpc('state_placements', { p_gender: 'M', p_season: season }),
       supabase.rpc('state_placements', { p_gender: 'F', p_season: season }),
       supabase.rpc('state_champions', { p_tournament_id: season === 2 ? 180 : 133 }),
       supabase.rpc('state_champions', { p_tournament_id: season === 2 ? 185 : null }),
+      getSchoolLogos(),
     ])
     topDominance = (dominanceRes.data ?? []).slice(0, 8) as DominanceRow[]
-    topTeamScores = (teamScoreRes.data ?? []) as TeamScoreRow[]
+    topTeamScores = ((teamScoreRes.data ?? []) as TeamScoreRow[]).map(r => ({
+      ...r,
+      logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null,
+      bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null,
+    }))
     boysChampions = (boysChampRes.data ?? []) as ChampionRow[]
     girlsChampions = (girlsChampRes.data ?? []) as ChampionRow[]
 

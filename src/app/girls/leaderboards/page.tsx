@@ -268,10 +268,10 @@ function PoolNav({ active, tab }: { active: string; tab: string }) {
 
 type LogoMap = Awaited<ReturnType<typeof getSchoolLogos>>
 
-function PWCell({ id, name, school, logoUrl }: { id: string; name: string; school: string | null; logoUrl?: string | null }) {
+function PWCell({ id, name, school, logoUrl, bgColor }: { id: string; name: string; school: string | null; logoUrl?: string | null; bgColor?: string | null }) {
   return (
     <span className="flex items-center gap-1.5 min-w-0">
-      <SchoolLogoBadge logoUrl={logoUrl} />
+      <SchoolLogoBadge logoUrl={logoUrl} bgColor={bgColor} />
       <Link
         href={`/wrestler/${id}`}
         className="font-medium text-slate-800 hover:text-blue-600 transition-colors truncate"
@@ -353,7 +353,7 @@ function WrestlerTab({ d, poolLabel, logos }: { d: PoolData; poolLabel: string; 
             cols={[
               {
                 label: 'Wrestler', align: 'left',
-                render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />,
+                render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} {...logos.badge(r.school_name || r.school)} />,
               },
               {
                 label: 'Wt', align: 'right',
@@ -381,7 +381,7 @@ function WrestlerTab({ d, poolLabel, logos }: { d: PoolData; poolLabel: string; 
             cols={[
               {
                 label: 'Wrestler', align: 'left',
-                render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />,
+                render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} {...logos.badge(r.school_name || r.school)} />,
               },
               {
                 label: 'Wt', align: 'right',
@@ -421,7 +421,7 @@ function WrestlerTab({ d, poolLabel, logos }: { d: PoolData; poolLabel: string; 
             cols={[
               {
                 label: 'Wrestler', align: 'left',
-                render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />,
+                render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} {...logos.badge(r.school_name || r.school)} />,
               },
               {
                 label: 'Wins', align: 'right',
@@ -486,7 +486,7 @@ function WrestlerTab({ d, poolLabel, logos }: { d: PoolData; poolLabel: string; 
               cols={[
                 {
                   label: 'Wrestler', align: 'left',
-                  render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />,
+                  render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} {...logos.badge(r.school_name || r.school)} />,
                 },
                 {
                   label: 'Pins', align: 'right',
@@ -506,7 +506,7 @@ function WrestlerTab({ d, poolLabel, logos }: { d: PoolData; poolLabel: string; 
               cols={[
                 {
                   label: 'Wrestler', align: 'left',
-                  render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />,
+                  render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} {...logos.badge(r.school_name || r.school)} />,
                 },
                 {
                   label: 'TFs', align: 'right',
@@ -526,7 +526,7 @@ function WrestlerTab({ d, poolLabel, logos }: { d: PoolData; poolLabel: string; 
               cols={[
                 {
                   label: 'Wrestler', align: 'left',
-                  render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />,
+                  render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} {...logos.badge(r.school_name || r.school)} />,
                 },
                 {
                   label: 'Pct', align: 'right',
@@ -546,7 +546,7 @@ function WrestlerTab({ d, poolLabel, logos }: { d: PoolData; poolLabel: string; 
               cols={[
                 {
                   label: 'Wrestler', align: 'left',
-                  render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />,
+                  render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} {...logos.badge(r.school_name || r.school)} />,
                 },
                 {
                   label: 'Wins', align: 'right',
@@ -569,7 +569,7 @@ function WrestlerTab({ d, poolLabel, logos }: { d: PoolData; poolLabel: string; 
             cols={[
               {
                 label: 'Wrestler', align: 'left',
-                render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />,
+                render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} {...logos.badge(r.school_name || r.school)} />,
               },
               {
                 label: 'Wins', align: 'right',
@@ -608,7 +608,7 @@ function AnalyticsTab({ d, season, logos }: { d: AnalyticsData; season: number; 
         cols={[
           {
             label: 'Wrestler', align: 'left',
-            render: r => <WrestlerCell id={r.wrestler_id} name={r.name} school={r.school} logoUrl={logos.byName.get(r.school || '') ?? null} />,
+            render: r => <WrestlerCell id={r.wrestler_id} name={r.name} school={r.school} {...logos.badge(r.school)} />,
           },
           {
             label: 'Wins', align: 'right',
@@ -628,7 +628,7 @@ function AnalyticsTab({ d, season, logos }: { d: AnalyticsData; season: number; 
         cols={[
           {
             label: 'Wrestler', align: 'left',
-            render: r => <WrestlerCell id={r.wrestler_id} name={r.name} school={r.school_name || r.school} logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />,
+            render: r => <WrestlerCell id={r.wrestler_id} name={r.name} school={r.school_name || r.school} {...logos.badge(r.school_name || r.school)} />,
           },
           {
             label: 'Cons. Wins', align: 'right',
@@ -652,7 +652,7 @@ function AnalyticsTab({ d, season, logos }: { d: AnalyticsData; season: number; 
         cols={[
           {
             label: 'Winner', align: 'left',
-            render: r => <WrestlerCell id={r.winner_id} name={r.winner_name} school={r.winner_school} logoUrl={logos.byName.get(r.winner_school || '') ?? null} />,
+            render: r => <WrestlerCell id={r.winner_id} name={r.winner_name} school={r.winner_school} {...logos.badge(r.winner_school)} />,
           },
           {
             label: 'Seed', align: 'right',
@@ -694,7 +694,7 @@ function AnalyticsTab({ d, season, logos }: { d: AnalyticsData; season: number; 
           cols={[
             {
               label: 'Champion', align: 'left',
-              render: r => <WrestlerCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />,
+              render: r => <WrestlerCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} {...logos.badge(r.school_name || r.school)} />,
             },
             {
               label: 'Wt', align: 'right',
@@ -718,7 +718,7 @@ function AnalyticsTab({ d, season, logos }: { d: AnalyticsData; season: number; 
           cols={[
             {
               label: 'Avenger', align: 'left',
-              render: r => <WrestlerCell id={r.avenger_id} name={r.avenger_name} school={r.avenger_school_name || r.avenger_school} logoUrl={logos.byName.get(r.avenger_school_name || r.avenger_school || '') ?? null} />,
+              render: r => <WrestlerCell id={r.avenger_id} name={r.avenger_name} school={r.avenger_school_name || r.avenger_school} {...logos.badge(r.avenger_school_name || r.avenger_school)} />,
             },
             {
               label: 'Over', align: 'left',

@@ -94,7 +94,7 @@ function StateQualifiers({ entries, logos }: { entries: (BracketEntry & { tourna
                   const regionNum = e.seed != null ? ((e.seed - 1) % 4) + 1 : null
                   return (
                     <div key={e.entry_id} className="flex items-center gap-2 px-3 py-1.5">
-                      <SchoolLogoBadge logoUrl={logos.byName.get(e.school_name || e.school || '') ?? null} />
+                      <SchoolLogoBadge {...logos.badge(e.school_name || e.school)} />
                       <Link
                         href={`/wrestler/${e.wrestler_id}`}
                         className="text-[13px] font-medium text-slate-800 hover:underline truncate flex-1"
@@ -356,7 +356,7 @@ function Podium({ matches, ghostIds, seedMap, logos }: { matches: MatchRow[]; gh
               }`}>
                 {p.place}{PLACE_SUFFIX[p.place] ?? 'th'}
               </span>
-              <SchoolLogoBadge logoUrl={logos.byName.get(p.school ?? '') ?? null} />
+              <SchoolLogoBadge {...logos.badge(p.school)} />
               <span className="flex-1 min-w-0 flex items-center gap-1">
                 {p.wrestlerId ? (
                   <Link href={`/wrestler/${p.wrestlerId}`} className={`text-sm hover:underline truncate ${p.place === 1 ? 'font-bold text-slate-900' : 'font-medium text-slate-700'}`}>
@@ -491,7 +491,7 @@ function RosterTable({ roster, logos }: { roster: RosterItem[]; logos: LogoMap }
                 <td className="px-3 py-1.5 text-slate-400 text-xs tabular-nums">{r.seed ?? ''}</td>
                 <td className="px-3 py-1.5">
                   <div className="flex items-center gap-1.5">
-                    <SchoolLogoBadge logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />
+                    <SchoolLogoBadge {...logos.badge(r.school_name || r.school)} />
                     <Link href={`/wrestler/${r.wrestler_id}`} className="font-medium text-slate-700 hover:underline">
                       {r.name}
                     </Link>

@@ -11,6 +11,7 @@ type ChampionRow = {
   dominance_score: number
   seed: number | null
   logo_url?: string | null
+  bg_color?: string | null
 }
 
 export function StateChampions({
@@ -45,7 +46,7 @@ export function StateChampions({
                   <td className="px-3 py-2 text-slate-500 font-medium">{r.weight}</td>
                   <td className="px-3 py-2">
                     <div className="flex items-center gap-1.5">
-                      <SchoolLogoBadge logoUrl={r.logo_url} />
+                      <SchoolLogoBadge logoUrl={r.logo_url} bgColor={r.bg_color} />
                       <div>
                         <Link
                           href={`/wrestler/${r.wrestler_id}`}

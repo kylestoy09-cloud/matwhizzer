@@ -100,7 +100,7 @@ function fmtTime(secs: number): string {
 // ── Sub-components ───────────────────────────────────────────────────────────
 
 /** Generic card for wrestler-keyed stats */
-function StatCard<T extends { wrestler_id: string; wrestler_name: string; school: string | null; school_name: string | null; logo_url?: string | null }>({
+function StatCard<T extends { wrestler_id: string; wrestler_name: string; school: string | null; school_name: string | null; logo_url?: string | null; bg_color?: string | null }>({
   title,
   rows,
   subtitle,
@@ -126,7 +126,7 @@ function StatCard<T extends { wrestler_id: string; wrestler_name: string; school
         {rows.map((r, i) => (
           <div key={`${r.wrestler_id}-${i}`} className="flex items-center gap-2 px-4 py-2.5">
             <span className="text-xs text-slate-400 w-4 shrink-0 text-right">{i + 1}</span>
-            <SchoolLogoBadge logoUrl={r.logo_url} />
+            <SchoolLogoBadge logoUrl={r.logo_url} bgColor={r.bg_color} />
             <div className="flex-1 min-w-0">
               <Link
                 href={`/wrestler/${r.wrestler_id}`}
@@ -186,13 +186,13 @@ export default async function DistrictSummaryPage({
     ])
 
   const placements = (placementsRes.data ?? []) as PlacementRow[]
-  const matTime    = ((matTimeRes.data   ?? []) as MatTimeRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null }))
-  const fastPin    = ((fastPinRes.data   ?? []) as FastestPinRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null }))
-  const fastTf     = ((fastTfRes.data    ?? []) as FastestTfRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null }))
-  const dominance  = ((bonusPctRes.data  ?? []) as DominanceRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null }))
+  const matTime    = ((matTimeRes.data   ?? []) as MatTimeRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
+  const fastPin    = ((fastPinRes.data   ?? []) as FastestPinRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
+  const fastTf     = ((fastTfRes.data    ?? []) as FastestTfRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
+  const dominance  = ((bonusPctRes.data  ?? []) as DominanceRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
   const schools    = (schoolsRes.data    ?? []) as SchoolRow[]
-  const teamScore  = ((teamScoreRes.data ?? []) as TeamScoreRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null }))
-  const teamPts    = ((teamPtsRes.data   ?? []) as TeamPtsRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null }))
+  const teamScore  = ((teamScoreRes.data ?? []) as TeamScoreRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
+  const teamPts    = ((teamPtsRes.data   ?? []) as TeamPtsRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
   const stateQualIds = new Set(
     ((stateEntRes.data ?? []) as { wrestler_id: string }[]).map(e => e.wrestler_id)
   )

@@ -14,6 +14,7 @@ type TeamPtsRow = {
   district_pts?: number
   region_pts?: number
   logo_url?: string | null
+  bg_color?: string | null
 }
 
 export function IndividualTeamPoints({
@@ -55,7 +56,7 @@ export function IndividualTeamPoints({
                   <td className="px-3 py-2 text-slate-400 text-xs">{i + 1}</td>
                   <td className="px-3 py-2">
                     <div className="flex items-center gap-1.5">
-                      <SchoolLogoBadge logoUrl={r.logo_url} />
+                      <SchoolLogoBadge logoUrl={r.logo_url} bgColor={r.bg_color} />
                       <div>
                         <Link
                           href={`/wrestler/${r.wrestler_id}`}
@@ -86,7 +87,7 @@ export function IndividualTeamPoints({
           {visible.map((r, i) => (
             <div key={`${r.wrestler_id}-${i}`} className="flex items-center gap-2 px-4 py-2.5">
               <span className="text-xs text-slate-400 w-4 shrink-0 text-right">{i + 1}</span>
-              <SchoolLogoBadge logoUrl={r.logo_url} />
+              <SchoolLogoBadge logoUrl={r.logo_url} bgColor={r.bg_color} />
               <div className="flex-1 min-w-0">
                 <Link
                   href={`/wrestler/${r.wrestler_id}`}

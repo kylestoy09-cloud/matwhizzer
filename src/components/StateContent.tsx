@@ -47,7 +47,7 @@ function fmtTime(secs: number): string {
 
 // ── Sub-components ────────────────────────────────────────────────────────────
 
-function StatCard<T extends { wrestler_id: string; wrestler_name: string; school: string | null; school_name: string | null; logo_url?: string | null }>({
+function StatCard<T extends { wrestler_id: string; wrestler_name: string; school: string | null; school_name: string | null; logo_url?: string | null; bg_color?: string | null }>({
   title, rows, subtitle, value, note,
 }: {
   title: string; rows: T[]
@@ -64,7 +64,7 @@ function StatCard<T extends { wrestler_id: string; wrestler_name: string; school
         {rows.map((r, i) => (
           <div key={`${r.wrestler_id}-${i}`} className="flex items-center gap-2 px-4 py-2.5">
             <span className="text-xs text-slate-400 w-4 shrink-0 text-right">{i + 1}</span>
-            <SchoolLogoBadge logoUrl={r.logo_url} />
+            <SchoolLogoBadge logoUrl={r.logo_url} bgColor={r.bg_color} />
             <div className="flex-1 min-w-0">
               <Link href={`/wrestler/${r.wrestler_id}`} className="text-sm font-medium text-slate-800 hover:underline truncate block">
                 {r.wrestler_name}
@@ -132,13 +132,13 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
     ])
 
   const placements     = (placementsRes.data     ?? []) as PlacementRow[]
-  const matTime        = ((matTimeRes.data ?? []) as MatTimeRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null }))
-  const fastPin        = ((fastPinRes.data ?? []) as FastestPinRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null }))
-  const fastTf         = ((fastTfRes.data ?? []) as FastestTfRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null }))
-  const dominance      = ((dominanceRes.data ?? []) as DominanceRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null }))
-  const teamScore      = ((teamScoreRes.data ?? []) as TeamScoreRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null }))
+  const matTime        = ((matTimeRes.data ?? []) as MatTimeRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
+  const fastPin        = ((fastPinRes.data ?? []) as FastestPinRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
+  const fastTf         = ((fastTfRes.data ?? []) as FastestTfRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
+  const dominance      = ((dominanceRes.data ?? []) as DominanceRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
+  const teamScore      = ((teamScoreRes.data ?? []) as TeamScoreRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
   const teamPts        = ((teamPtsRes.data ?? []) as { wrestler_id: string; wrestler_name: string; school: string | null; school_name: string | null; total_points: number; win_count: number }[])
-    .map(r => ({ wrestler_id: r.wrestler_id, wrestler_name: r.wrestler_name, school: r.school, school_name: r.school_name, weight: 0, team_points: Number(r.total_points), logo_url: logos.byName.get(r.school_name || r.school || '') ?? null })) as TeamPtsRow[]
+    .map(r => ({ wrestler_id: r.wrestler_id, wrestler_name: r.wrestler_name, school: r.school, school_name: r.school_name, weight: 0, team_points: Number(r.total_points), logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null })) as TeamPtsRow[]
   const distStrength   = ((distStrengthRes.data   ?? []) as { district_name: string; wrestlers_advancing: number; state_qualifiers: number }[])
     .sort((a, b) => b.state_qualifiers - a.state_qualifiers)
   const podiumDist     = ((podiumDistRes.data ?? []) as { district_id: number; district_name: string; podium_count: number }[])
@@ -386,7 +386,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
                   <span className="text-2xl font-black text-amber-500 w-10 text-center shrink-0">
                     {gc.seed}
                   </span>
-                  <SchoolLogoBadge logoUrl={logos.byName.get(gc.school) ?? null} />
+                  <SchoolLogoBadge {...logos.badge(gc.school)} />
                   <div className="flex-1 min-w-0">
                     <Link
                       href={`/wrestler/${gc.wrestler_id}`}

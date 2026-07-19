@@ -16,6 +16,7 @@ type TechMasterRow = {
   avg_tf_time_display: string | null
   fastest_tf_display: string | null
   logo_url?: string | null
+  bg_color?: string | null
 }
 
 function timeColor(seconds: number | null): string {
@@ -62,7 +63,7 @@ export function TechnicalMasters({
                 <td className="px-3 py-2 text-slate-400 text-xs">{i + 1}</td>
                 <td className="px-3 py-2">
                   <div className="flex items-center gap-1.5">
-                    <SchoolLogoBadge logoUrl={r.logo_url} />
+                    <SchoolLogoBadge logoUrl={r.logo_url} bgColor={r.bg_color} />
                     <div>
                       <Link
                         href={`/wrestler/${r.wrestler_id}`}

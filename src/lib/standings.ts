@@ -6,6 +6,7 @@ type SchoolRow = {
   mascot: string | null
   primary_color: string | null
   logo_url: string | null
+  header_background: string | null
 }
 
 export type StandingsRow = SchoolRow & {
