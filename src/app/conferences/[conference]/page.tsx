@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation'
 import { conferenceFromSlug } from '@/lib/conferences'
 import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
+import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 
 export const dynamic = 'force-dynamic'
 
@@ -21,7 +22,7 @@ type StandingRow = {
   div_losses: number
   pf: number
   pa: number
-  school: { id: number; display_name: string; logo_url: string | null } | null
+  school: { id: number; display_name: string; logo_url: string | null; header_background: string | null } | null
 }
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
@@ -69,7 +70,7 @@ export default async function ConferencePage({
   // Fetch division standings — join schools for display_name and logo_url
   const { data: standingsData } = await supabase
     .from('conference_standings')
-    .select('id,division,school_id,school_name,overall_wins,overall_losses,div_wins,div_losses,pf,pa,school:schools(id,display_name,logo_url)')
+    .select('id,division,school_id,school_name,overall_wins,overall_losses,div_wins,div_losses,pf,pa,school:schools(id,display_name,logo_url,header_background)')
     .eq('conference_slug', slug)
     .eq('season_id', season ?? 2)
     .order('division')
@@ -229,15 +230,10 @@ export default async function ConferencePage({
                             </td>
                             <td className="px-3 py-2.5 font-medium text-slate-800">
                               <div className="flex items-center gap-2">
-                                {logoUrl && (
-                                  <Image
-                                    src={logoUrl}
-                                    alt={displayName}
-                                    width={1022}
-                                    height={505}
-                                    className="w-6 h-auto shrink-0"
-                                  />
-                                )}
+                                <SchoolLogoBadge
+                                  logoUrl={logoUrl}
+                                  bgColor={row.school?.header_background ?? null}
+                                />
                                 {schoolId ? (
                                   <Link
                                     href={`/schools/${schoolId}?gender=${gender}`}

@@ -5,13 +5,14 @@ import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import Image from 'next/image'
 import { getActiveSeason } from '@/lib/get-season'
+import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 
 const SLUG = 'independent'
 const NAME = 'Independent'
 const ACCENT = '#0f172a'
 
-type SchoolRow = { id: number; display_name: string; section: string | null; classification: string | null; logo_url: string | null }
+type SchoolRow = { id: number; display_name: string; section: string | null; classification: string | null; logo_url: string | null; header_background: string | null }
 
 function classLabel(s: SchoolRow) {
   if (!s.section || !s.classification) return null
@@ -40,7 +41,7 @@ export default async function IndependentConferencePage({
   // Directly fetch schools marked as Independent
   const { data: indData } = await supabase
     .from('schools')
-    .select('id, display_name, section, classification, logo_url')
+    .select('id, display_name, section, classification, logo_url, header_background')
     .eq('athletic_conference', 'Independent')
     .order('display_name')
   const independentSchools = (indData ?? []) as SchoolRow[]
@@ -139,17 +140,7 @@ export default async function IndependentConferencePage({
                   className="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 transition-colors"
                 >
                   <span className="text-xs text-slate-400 w-6 shrink-0 text-right tabular-nums">{i + 1}</span>
-                  {s.logo_url ? (
-                    <Image
-                      src={s.logo_url}
-                      alt={s.display_name}
-                      width={1022}
-                      height={505}
-                      className="w-7 h-auto shrink-0"
-                    />
-                  ) : (
-                    <div className="w-7 h-7 shrink-0 bg-slate-100 border border-slate-200 rounded-none" />
-                  )}
+                  <SchoolLogoBadge logoUrl={s.logo_url} bgColor={s.header_background} />
                   <span className="flex-1 text-sm font-medium text-slate-800">{s.display_name}</span>
                   {label && (
                     <span className="text-[10px] text-slate-400 shrink-0">{label}</span>
