@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { PageHeader } from '@/components/PageHeader'
+import { getSchoolLogos } from '@/lib/school-logos'
+import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 
 type SchoolDirRow = {
   school: string
@@ -22,8 +24,14 @@ export default async function GirlsSchoolsPage({
 
   const season = await getActiveSeason()
 
-  const { data } = await supabase.rpc('school_directory', { p_gender: 'F', p_season: season })
-  const all = (data ?? []) as SchoolDirRow[]
+  const [{ data }, logos] = await Promise.all([
+    supabase.rpc('school_directory', { p_gender: 'F', p_season: season }),
+    getSchoolLogos(),
+  ])
+  const all = ((data ?? []) as SchoolDirRow[]).map(r => ({
+    ...r,
+    logo_url: r.school_id ? logos.byId.get(r.school_id) ?? null : logos.byName.get(r.school_name) ?? null,
+  }))
 
   const rows = q
     ? all.filter(r =>
@@ -96,17 +104,20 @@ export default async function GirlsSchoolsPage({
               {rows.map(r => (
                 <tr key={r.school} className="hover:bg-slate-50">
                   <td className="px-4 py-2.5">
-                    {r.school_id ? (
-                      <Link
-                        href={`/schools/${r.school_id}?gender=girls`}
-                        className="font-medium text-slate-800 hover:text-rose-700 hover:underline"
-                      >
-                        {r.school_name}
-                      </Link>
-                    ) : (
-                      <span className="font-medium text-slate-800">{r.school_name}</span>
-                    )}
-                    <span className="ml-2 text-slate-400 text-xs">{r.school}</span>
+                    <div className="flex items-center gap-1.5">
+                      <SchoolLogoBadge logoUrl={r.logo_url} />
+                      {r.school_id ? (
+                        <Link
+                          href={`/schools/${r.school_id}?gender=girls`}
+                          className="font-medium text-slate-800 hover:text-rose-700 hover:underline"
+                        >
+                          {r.school_name}
+                        </Link>
+                      ) : (
+                        <span className="font-medium text-slate-800">{r.school_name}</span>
+                      )}
+                      <span className="ml-2 text-slate-400 text-xs">{r.school}</span>
+                    </div>
                   </td>
                   <td className="px-4 py-2.5 text-right tabular-nums text-slate-700">
                     {r.total_points > 0 ? r.total_points : '—'}

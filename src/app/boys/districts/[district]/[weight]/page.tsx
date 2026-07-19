@@ -1,4 +1,8 @@
 import { supabase } from '@/lib/supabase'
+import { getSchoolLogos } from '@/lib/school-logos'
+import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
+
+type LogoMap = Awaited<ReturnType<typeof getSchoolLogos>>
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
@@ -354,7 +358,7 @@ function buildRoster(matches: MatchRow[]): RosterEntry[] {
   return roster
 }
 
-function EntryRoster({ roster }: { roster: RosterEntry[] }) {
+function EntryRoster({ roster, logos }: { roster: RosterEntry[]; logos: LogoMap }) {
   if (roster.length === 0) return null
   return (
     <section className="mt-10">
@@ -376,9 +380,12 @@ function EntryRoster({ roster }: { roster: RosterEntry[] }) {
               <tr key={r.wrestler_id} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
                 <td className="px-3 py-1.5 text-slate-400 text-xs tabular-nums">{r.seed ?? ''}</td>
                 <td className="px-3 py-1.5">
-                  <Link href={`/wrestler/${r.wrestler_id}`} className="font-medium text-slate-700 hover:underline">
-                    {r.name}
-                  </Link>
+                  <div className="flex items-center gap-1.5">
+                    <SchoolLogoBadge logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />
+                    <Link href={`/wrestler/${r.wrestler_id}`} className="font-medium text-slate-700 hover:underline">
+                      {r.name}
+                    </Link>
+                  </div>
                 </td>
                 <td className="px-3 py-1.5 text-slate-500 text-xs">{r.school_name || r.school || '—'}</td>
                 <td className="px-3 py-1.5 text-slate-400 text-xs">{r.grade ?? ''}</td>
@@ -434,12 +441,15 @@ export default async function DistrictBracketPage({
 
   const season = await getActiveSeason()
 
-  const { data } = await supabase.rpc('district_bracket', {
-    p_district: district,
-    p_weight: weight,
-    p_gender: 'M',
-    p_season: season,
-  })
+  const [{ data }, logos] = await Promise.all([
+    supabase.rpc('district_bracket', {
+      p_district: district,
+      p_weight: weight,
+      p_gender: 'M',
+      p_season: season,
+    }),
+    getSchoolLogos(),
+  ])
 
   const matches = (data ?? []) as MatchRow[]
   if (matches.length === 0) notFound()
@@ -585,7 +595,7 @@ export default async function DistrictBracketPage({
         </div>
       </div>
 
-      <EntryRoster roster={buildRoster(matches)} />
+      <EntryRoster roster={buildRoster(matches)} logos={logos} />
       <WeightNav weights={WEIGHTS} current={weight} base={`/boys/districts/${district}`} />
     </div>
   )

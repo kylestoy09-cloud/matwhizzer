@@ -13,6 +13,7 @@ type SchoolInfo = {
   primary_color: string | null
   secondary_color: string | null
   short_name: string | null
+  logo_url: string | null
   isPrimary: boolean
 }
 
@@ -156,7 +157,7 @@ export function PersonalizedHome() {
       // Fetch school data from schools table (has id, display_name, section, classification)
       const { data: schoolsData } = await supabase
         .from('schools')
-        .select('id, display_name, section, classification, mascot, primary_color, secondary_color, short_name')
+        .select('id, display_name, section, classification, mascot, primary_color, secondary_color, short_name, logo_url')
         .in('id', allSchoolIds)
 
       if (!schoolsData || schoolsData.length === 0) { setLoaded(true); return }
@@ -171,6 +172,7 @@ export function PersonalizedHome() {
         primary_color: s.primary_color,
         secondary_color: s.secondary_color,
         short_name: s.short_name,
+        logo_url: s.logo_url ?? null,
         isPrimary: s.id === p.primary_school_id,
       }))
 
@@ -341,10 +343,12 @@ export function PersonalizedHome() {
               >
                 <div className="flex items-center gap-3 px-4 py-3" style={{ borderLeft: `4px solid ${pc}` }}>
                   <div
-                    className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 text-xs font-bold"
+                    className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 text-xs font-bold overflow-hidden"
                     style={{ backgroundColor: pc, color: sc }}
                   >
-                    {schoolInitials(s)}
+                    {s.logo_url
+                      ? <img src={s.logo_url} alt="" aria-hidden className="w-full h-full object-contain p-0.5" />
+                      : schoolInitials(s)}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
@@ -372,10 +376,12 @@ export function PersonalizedHome() {
           <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between" style={{ borderTop: `3px solid ${primarySchool.primary_color ?? '#1a1a2e'}` }}>
             <div className="flex items-center gap-3">
               <div
-                className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-sm font-bold"
+                className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-sm font-bold overflow-hidden"
                 style={{ backgroundColor: primarySchool.primary_color ?? '#1a1a2e', color: primarySchool.secondary_color ?? '#FFD700' }}
               >
-                {schoolInitials(primarySchool)}
+                {primarySchool.logo_url
+                  ? <img src={primarySchool.logo_url} alt="" aria-hidden className="w-full h-full object-contain p-0.5" />
+                  : schoolInitials(primarySchool)}
               </div>
               <div>
                 <Link
@@ -497,10 +503,12 @@ export function PersonalizedHome() {
                 <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
                     <div
-                      className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold"
+                      className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold overflow-hidden"
                       style={{ backgroundColor: s.primary_color ?? '#1a1a2e', color: s.secondary_color ?? '#FFD700' }}
                     >
-                      {schoolInitials(s)}
+                      {s.logo_url
+                        ? <img src={s.logo_url} alt="" aria-hidden className="w-full h-full object-contain p-0.5" />
+                        : schoolInitials(s)}
                     </div>
                     <div>
                       <Link

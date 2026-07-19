@@ -146,27 +146,42 @@ function parseMatchSummary(summary: string, t1Pts: number, t2Pts: number, weight
     }
   }
 
-  // Normal match: "Loser Name (School) (Result)"
-  // The result is always the last (...) group.
-  const lastOpen  = afterOver.lastIndexOf('(')
-  const lastClose = afterOver.lastIndexOf(')')
+  // Normal match — two formats exist:
+  //   Single-group: "Loser Name (School) (Dec 9-7)"
+  //   Two-group:    "Loser Name (School) (SV-1) (4-1)"   ← TrackWrestling SV-1 / UTB
+  //
+  // For two-group, detect by checking whether the penultimate (...) is a known
+  // result-type keyword. Without this, lastIndexOf treats "(4-1)" as the result
+  // and "(SV-1)" bleeds into the school name.
+  const SPLIT_RESULT_RE = /^(sv-?1|utb|mffl)/i
+  const twoGroupM = afterOver.match(/^(.+?)\s+\(([^)]+)\)\s+\(([^)]+)\)\s*$/)
 
-  if (lastOpen === -1 || lastClose === -1 || lastClose < lastOpen) {
-    return {
-      weightClass: weight,
-      winnerName, winnerSchoolRaw,
-      loserName: afterOver || null, loserSchoolRaw: null,
-      resultType: 'Unknown', resultDetail: null,
-      team1Points: t1Pts, team2Points: t2Pts,
-      isDoubleForfeit: false, isForfeitWin: false,
+  let resultStr: string
+  let loserAndSchool: string
+
+  if (twoGroupM && SPLIT_RESULT_RE.test(twoGroupM[2])) {
+    loserAndSchool = twoGroupM[1].trim()
+    resultStr      = `${twoGroupM[2]} ${twoGroupM[3]}`
+  } else {
+    const lastOpen  = afterOver.lastIndexOf('(')
+    const lastClose = afterOver.lastIndexOf(')')
+
+    if (lastOpen === -1 || lastClose === -1 || lastClose < lastOpen) {
+      return {
+        weightClass: weight,
+        winnerName, winnerSchoolRaw,
+        loserName: afterOver || null, loserSchoolRaw: null,
+        resultType: 'Unknown', resultDetail: null,
+        team1Points: t1Pts, team2Points: t2Pts,
+        isDoubleForfeit: false, isForfeitWin: false,
+      }
     }
+
+    resultStr      = afterOver.slice(lastOpen + 1, lastClose)
+    loserAndSchool = afterOver.slice(0, lastOpen).trim()
   }
 
-  const resultStr = afterOver.slice(lastOpen + 1, lastClose)
   const { resultType, resultDetail } = parseResult(resultStr)
-
-  // Everything before the result group is "Loser Name (School)"
-  const loserAndSchool = afterOver.slice(0, lastOpen).trim()
   const loserM = loserAndSchool.match(/^(.+?)\s+\(([^)]+)\)$/)
   const loserName      = loserM ? loserM[1].trim() : (loserAndSchool || null)
   const loserSchoolRaw = loserM ? loserM[2].trim() : null

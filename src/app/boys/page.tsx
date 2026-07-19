@@ -5,6 +5,7 @@ import { getActiveSeason } from '@/lib/get-season'
 import { PostseasonLeaders } from '@/components/PostseasonLeaders'
 import { StateChampions } from '@/components/StateChampions'
 import { PageHeader } from '@/components/PageHeader'
+import { getSchoolLogos } from '@/lib/school-logos'
 
 type WrestlerRow = { id: string; first_name: string; last_name: string }
 type SchoolRow   = { school: string; school_name: string; school_id: number | null; total_points: number; wrestler_count: number }
@@ -61,18 +62,25 @@ export default async function BoysPage({
   let topTeamScores: TeamScoreRow[] = []
   let topDominance: DominanceRow[] = []
   let podiumSchools: { school_name: string; count: number }[] = []
-  let stateChampions: { weight: number; wrestler_id: string; wrestler_name: string; school: string; dominance_score: number; seed: number | null }[] = []
+  let stateChampions: { weight: number; wrestler_id: string; wrestler_name: string; school: string; dominance_score: number; seed: number | null; logo_url?: string | null }[] = []
 
   if (showLeaderboards) {
-    const [dominanceRes, teamScoreRes, placementsRes, championsRes] = await Promise.all([
+    const [dominanceRes, teamScoreRes, placementsRes, championsRes, logos] = await Promise.all([
       supabase.rpc('lb_dominance', { p_gender: 'M', p_season: season }),
       supabase.rpc('top_postseason_team_scores', { p_gender: 'M', p_season: season, p_limit: 25 }),
       supabase.rpc('state_placements', { p_gender: 'M', p_season: season }),
       supabase.rpc('state_champions', { p_tournament_id: season === 2 ? 180 : 133 }),
+      getSchoolLogos(),
     ])
     topDominance = (dominanceRes.data ?? []).slice(0, 8) as DominanceRow[]
     topTeamScores = (teamScoreRes.data ?? []) as TeamScoreRow[]
-    stateChampions = (championsRes.data ?? []) as typeof stateChampions
+    // byName is safe here: state_champions RPC already returns display_name-compatible
+    // school strings (not raw abbreviations). If this RPC is ever modified to return
+    // school_id, switch this to logos.byId.get(r.school_id) instead.
+    stateChampions = ((championsRes.data ?? []) as typeof stateChampions).map(r => ({
+      ...r,
+      logo_url: logos.byName.get(r.school) ?? null,
+    }))
 
     const schoolCounts = new Map<string, number>()
     for (const p of ((placementsRes.data ?? []) as { school_name: string; school: string }[])) {

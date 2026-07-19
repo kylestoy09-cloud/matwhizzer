@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 
 type TeamPtsRow = {
   wrestler_id: string
@@ -12,6 +13,7 @@ type TeamPtsRow = {
   team_points: number
   district_pts?: number
   region_pts?: number
+  logo_url?: string | null
 }
 
 export function IndividualTeamPoints({
@@ -52,15 +54,20 @@ export function IndividualTeamPoints({
                 <tr key={`${r.wrestler_id}-${i}`} className="hover:bg-slate-50/60">
                   <td className="px-3 py-2 text-slate-400 text-xs">{i + 1}</td>
                   <td className="px-3 py-2">
-                    <Link
-                      href={`/wrestler/${r.wrestler_id}`}
-                      className="font-medium text-slate-800 hover:underline"
-                    >
-                      {r.wrestler_name}
-                    </Link>
-                    <span className="ml-1.5 text-[10px] text-slate-400">
-                      {r.school_name || r.school}
-                    </span>
+                    <div className="flex items-center gap-1.5">
+                      <SchoolLogoBadge logoUrl={r.logo_url} />
+                      <div>
+                        <Link
+                          href={`/wrestler/${r.wrestler_id}`}
+                          className="font-medium text-slate-800 hover:underline"
+                        >
+                          {r.wrestler_name}
+                        </Link>
+                        <span className="ml-1.5 text-[10px] text-slate-400">
+                          {r.school_name || r.school}
+                        </span>
+                      </div>
+                    </div>
                   </td>
                   <td className="px-3 py-2 text-right text-slate-500 tabular-nums">{r.weight}</td>
                   <td className="px-3 py-2 text-right text-slate-500 tabular-nums">{r.district_pts}</td>
@@ -79,6 +86,7 @@ export function IndividualTeamPoints({
           {visible.map((r, i) => (
             <div key={`${r.wrestler_id}-${i}`} className="flex items-center gap-2 px-4 py-2.5">
               <span className="text-xs text-slate-400 w-4 shrink-0 text-right">{i + 1}</span>
+              <SchoolLogoBadge logoUrl={r.logo_url} />
               <div className="flex-1 min-w-0">
                 <Link
                   href={`/wrestler/${r.wrestler_id}`}

@@ -6,6 +6,10 @@ import { SEASONS } from '@/lib/seasons'
 import { BracketPoll, type BracketEntry } from '@/components/BracketPoll'
 import { PageHeader } from '@/components/PageHeader'
 import { orderChampMatchesBySeed } from '@/lib/bracketOrder'
+import { getSchoolLogos } from '@/lib/school-logos'
+import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
+
+type LogoMap = Awaited<ReturnType<typeof getSchoolLogos>>
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -284,7 +288,7 @@ function derivePlacements(matches: MatchRow[]): PlaceWinner[] {
 
 const PLACE_SUFFIX: Record<number, string> = { 1: 'st', 2: 'nd', 3: 'rd' }
 
-function Podium({ matches, ghostIds, seedMap }: { matches: MatchRow[]; ghostIds: Set<string>; seedMap: Map<string, number> }) {
+function Podium({ matches, ghostIds, seedMap, logos }: { matches: MatchRow[]; ghostIds: Set<string>; seedMap: Map<string, number>; logos: LogoMap }) {
   const placements = derivePlacements(matches)
   if (placements.length === 0) return null
 
@@ -302,6 +306,7 @@ function Podium({ matches, ghostIds, seedMap }: { matches: MatchRow[]; ghostIds:
               }`}>
                 {p.place}{PLACE_SUFFIX[p.place] ?? 'th'}
               </span>
+              <SchoolLogoBadge logoUrl={logos.byName.get(p.school ?? '') ?? null} />
               <span className="flex-1 min-w-0 flex items-center gap-1">
                 {p.wrestlerId ? (
                   <Link href={`/wrestler/${p.wrestlerId}`} className={`text-sm hover:underline truncate ${p.place === 1 ? 'font-bold text-slate-900' : 'font-medium text-slate-700'}`}>
@@ -413,7 +418,7 @@ function buildRosterFromMatches(matches: MatchRow[]): RosterItem[] {
   return roster
 }
 
-function RosterTable({ roster }: { roster: RosterItem[] }) {
+function RosterTable({ roster, logos }: { roster: RosterItem[]; logos: LogoMap }) {
   if (roster.length === 0) return null
   return (
     <section className="mt-10">
@@ -435,9 +440,12 @@ function RosterTable({ roster }: { roster: RosterItem[] }) {
               <tr key={r.wrestler_id} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
                 <td className="px-3 py-1.5 text-slate-400 text-xs tabular-nums">{r.seed ?? ''}</td>
                 <td className="px-3 py-1.5">
-                  <Link href={`/wrestler/${r.wrestler_id}`} className="font-medium text-slate-700 hover:underline">
-                    {r.name}
-                  </Link>
+                  <div className="flex items-center gap-1.5">
+                    <SchoolLogoBadge logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />
+                    <Link href={`/wrestler/${r.wrestler_id}`} className="font-medium text-slate-700 hover:underline">
+                      {r.name}
+                    </Link>
+                  </div>
                 </td>
                 <td className="px-3 py-1.5 text-slate-500 text-xs">{r.school_name || r.school || '—'}</td>
                 <td className="px-3 py-1.5 text-slate-400 text-xs">{r.grade ?? ''}</td>
@@ -459,7 +467,7 @@ const PLACE_GROUP_LABEL: Record<string, string> = {
   fourth: '4th Place',
 }
 
-function StateQualifiers({ entries }: { entries: (BracketEntry & { tournament_id: number; weight_class_id: number })[] }) {
+function StateQualifiers({ entries, logos }: { entries: (BracketEntry & { tournament_id: number; weight_class_id: number })[]; logos: LogoMap }) {
   if (entries.length === 0) return null
   const groups = [
     { key: 'champ', seeds: [1, 8], label: 'Region Champions' },
@@ -487,6 +495,7 @@ function StateQualifiers({ entries }: { entries: (BracketEntry & { tournament_id
                   const regionNum = e.seed != null ? ((e.seed - 1) % 8) + 1 : null
                   return (
                     <div key={e.entry_id} className="flex items-center gap-2 px-3 py-1.5">
+                      <SchoolLogoBadge logoUrl={logos.byName.get(e.school_name || e.school || '') ?? null} />
                       <Link
                         href={`/wrestler/${e.wrestler_id}`}
                         className="text-[13px] font-medium text-slate-800 hover:underline truncate flex-1"
@@ -550,7 +559,7 @@ export default async function StateBracketPage({
 
   const season = await getActiveSeason()
 
-  const [{ data }, { data: entryData }, { data: ghostData }] = await Promise.all([
+  const [{ data }, { data: entryData }, { data: ghostData }, logos] = await Promise.all([
     supabase.rpc('state_bracket', {
       p_weight: weight,
       p_gender: 'M',
@@ -562,6 +571,7 @@ export default async function StateBracketPage({
       p_season: season,
     }),
     supabase.rpc('ghost_champions', { p_season: season }),
+    getSchoolLogos(),
   ])
 
   const matches = (data ?? []) as MatchRow[]
@@ -622,7 +632,7 @@ export default async function StateBracketPage({
       {matches.length === 0 ? null : (<>
 
       {/* ── PODIUM ── */}
-      <Podium matches={matches} ghostIds={ghostIds} seedMap={seedMap} />
+      <Podium matches={matches} ghostIds={ghostIds} seedMap={seedMap} logos={logos} />
 
       {/* ── DESKTOP bracket (lg+) ── */}
       <div className="overflow-x-auto space-y-0" style={{ WebkitOverflowScrolling: 'touch' }}>
@@ -669,7 +679,7 @@ export default async function StateBracketPage({
         />
       )}
 
-      {entries.length > 0 && <StateQualifiers entries={entries} />}
+      {entries.length > 0 && <StateQualifiers entries={entries} logos={logos} />}
 
       <WeightNav weights={WEIGHTS} current={weight} base="/boys/state" />
     </div>

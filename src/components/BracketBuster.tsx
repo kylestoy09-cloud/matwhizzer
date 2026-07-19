@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
+import { getSchoolLogos } from '@/lib/school-logos'
+import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 
 type UpsetRow = {
   winner_id: string
@@ -62,7 +64,10 @@ export async function BracketBuster({
   if (region != null) params.p_region = region
   if (district != null) params.p_district = district
 
-  const { data } = await supabase.rpc('bracket_buster_detail', params)
+  const [{ data }, logos] = await Promise.all([
+    supabase.rpc('bracket_buster_detail', params),
+    getSchoolLogos(),
+  ])
   const rows = (data ?? []) as UpsetRow[]
 
   if (rows.length === 0) return null
@@ -101,17 +106,27 @@ export async function BracketBuster({
                   </span>
                 </td>
                 <td className="px-3 py-2">
-                  <Link href={`/wrestler/${r.winner_id}`} className="font-medium text-slate-800 hover:underline text-sm truncate block max-w-[140px]">
-                    {r.winner_name}
-                  </Link>
-                  <span className="text-[10px] text-slate-400 truncate block max-w-[140px]">{r.winner_school_name || r.winner_school}</span>
+                  <div className="flex items-center gap-1">
+                    <SchoolLogoBadge logoUrl={logos.byName.get(r.winner_school_name || r.winner_school || '') ?? null} />
+                    <div>
+                      <Link href={`/wrestler/${r.winner_id}`} className="font-medium text-slate-800 hover:underline text-sm truncate block max-w-[130px]">
+                        {r.winner_name}
+                      </Link>
+                      <span className="text-[10px] text-slate-400 truncate block max-w-[130px]">{r.winner_school_name || r.winner_school}</span>
+                    </div>
+                  </div>
                 </td>
                 <td className="px-2 py-2 text-center text-xs font-bold text-slate-700 tabular-nums">#{r.winner_seed}</td>
                 <td className="px-3 py-2">
-                  <Link href={`/wrestler/${r.loser_id}`} className="text-slate-500 hover:underline text-sm truncate block max-w-[140px]">
-                    {r.loser_name}
-                  </Link>
-                  <span className="text-[10px] text-slate-400 truncate block max-w-[140px]">{r.loser_school_name || r.loser_school}</span>
+                  <div className="flex items-center gap-1">
+                    <SchoolLogoBadge logoUrl={logos.byName.get(r.loser_school_name || r.loser_school || '') ?? null} />
+                    <div>
+                      <Link href={`/wrestler/${r.loser_id}`} className="text-slate-500 hover:underline text-sm truncate block max-w-[130px]">
+                        {r.loser_name}
+                      </Link>
+                      <span className="text-[10px] text-slate-400 truncate block max-w-[130px]">{r.loser_school_name || r.loser_school}</span>
+                    </div>
+                  </div>
                 </td>
                 <td className="px-2 py-2 text-center text-xs font-medium text-slate-500 tabular-nums">#{r.loser_seed}</td>
                 <td className="px-2 py-2 text-center text-xs text-slate-600 tabular-nums">{r.weight}</td>

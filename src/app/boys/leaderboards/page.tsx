@@ -12,6 +12,8 @@ import {
 import { BracketBuster } from '@/components/BracketBuster'
 import { TechnicalMasters } from '@/components/TechnicalMasters'
 import mascotIndex from '@/data/mascot-index.json'
+import { getSchoolLogos } from '@/lib/school-logos'
+import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 
 // ── Pool-specific types ───────────────────────────────────────────────────────
 
@@ -265,9 +267,10 @@ function PoolNav({ active, tab }: { active: string; tab: string }) {
 
 // ── Pool-aware wrestler cell ───────────────────────────────────────────────────
 
-function PWCell({ id, name, school }: { id: string; name: string; school: string | null }) {
+function PWCell({ id, name, school, logoUrl }: { id: string; name: string; school: string | null; logoUrl?: string | null }) {
   return (
-    <span className="flex items-baseline gap-2 min-w-0">
+    <span className="flex items-center gap-1.5 min-w-0">
+      <SchoolLogoBadge logoUrl={logoUrl} />
       <Link
         href={`/wrestler/${id}`}
         className="font-medium text-slate-800 hover:text-slate-600 transition-colors truncate"
@@ -296,7 +299,10 @@ export default async function BoysLeaderboardsPage({
 
   const season = await getActiveSeason()
 
-  const data = isAnalytics ? await fetchAnalytics(season) : await fetchPoolStats(activePool, season)
+  const [data, logos] = await Promise.all([
+    isAnalytics ? fetchAnalytics(season) : fetchPoolStats(activePool, season),
+    getSchoolLogos(),
+  ])
 
   const poolLabel = POOL_OPTIONS.find(p => p.key === activePool)?.desc ?? ''
 
@@ -316,10 +322,10 @@ export default async function BoysLeaderboardsPage({
       {!isAnalytics ? (
         <>
           <PoolNav active={activePool} tab={tab} />
-          <WrestlerTab d={data as PoolData} poolLabel={poolLabel} />
+          <WrestlerTab d={data as PoolData} poolLabel={poolLabel} logos={logos} />
         </>
       ) : (
-        <AnalyticsTab d={data as AnalyticsData} season={season} />
+        <AnalyticsTab d={data as AnalyticsData} season={season} logos={logos} />
       )}
     </div>
   )
@@ -327,7 +333,9 @@ export default async function BoysLeaderboardsPage({
 
 // ── Wrestler tab ──────────────────────────────────────────────────────────────
 
-function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
+type LogoMap = Awaited<ReturnType<typeof getSchoolLogos>>
+
+function WrestlerTab({ d, poolLabel, logos }: { d: PoolData; poolLabel: string; logos: LogoMap }) {
   return (
     <div className="space-y-12">
 
@@ -346,7 +354,7 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
             cols={[
               {
                 label: 'Wrestler', align: 'left',
-                render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} />,
+                render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />,
               },
               {
                 label: 'Wt', align: 'right',
@@ -374,7 +382,7 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
             cols={[
               {
                 label: 'Wrestler', align: 'left',
-                render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} />,
+                render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />,
               },
               {
                 label: 'Wt', align: 'right',
@@ -414,7 +422,7 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
             cols={[
               {
                 label: 'Wrestler', align: 'left',
-                render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} />,
+                render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />,
               },
               {
                 label: 'Wins', align: 'right',
@@ -479,7 +487,7 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
               cols={[
                 {
                   label: 'Wrestler', align: 'left',
-                  render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} />,
+                  render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />,
                 },
                 {
                   label: 'Pins', align: 'right',
@@ -499,7 +507,7 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
               cols={[
                 {
                   label: 'Wrestler', align: 'left',
-                  render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} />,
+                  render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />,
                 },
                 {
                   label: 'TFs', align: 'right',
@@ -519,7 +527,7 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
               cols={[
                 {
                   label: 'Wrestler', align: 'left',
-                  render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} />,
+                  render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />,
                 },
                 {
                   label: 'Pct', align: 'right',
@@ -539,7 +547,7 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
               cols={[
                 {
                   label: 'Wrestler', align: 'left',
-                  render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} />,
+                  render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />,
                 },
                 {
                   label: 'Wins', align: 'right',
@@ -562,7 +570,7 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
             cols={[
               {
                 label: 'Wrestler', align: 'left',
-                render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} />,
+                render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />,
               },
               {
                 label: 'Wins', align: 'right',
@@ -588,7 +596,7 @@ function WrestlerTab({ d, poolLabel }: { d: PoolData; poolLabel: string }) {
 
 // ── Analytics tab (unchanged) ─────────────────────────────────────────────────
 
-function AnalyticsTab({ d, season }: { d: AnalyticsData; season: number }) {
+function AnalyticsTab({ d, season, logos }: { d: AnalyticsData; season: number; logos: LogoMap }) {
   const weights = [...d.weights].sort((a, b) => Number(a.avg_margin) - Number(b.avg_margin))
 
   return (
@@ -601,7 +609,7 @@ function AnalyticsTab({ d, season }: { d: AnalyticsData; season: number }) {
         cols={[
           {
             label: 'Wrestler', align: 'left',
-            render: r => <WrestlerCell id={r.wrestler_id} name={r.name} school={r.school} />,
+            render: r => <WrestlerCell id={r.wrestler_id} name={r.name} school={r.school} logoUrl={logos.byName.get(r.school || '') ?? null} />,
           },
           {
             label: 'Wins', align: 'right',
@@ -621,7 +629,7 @@ function AnalyticsTab({ d, season }: { d: AnalyticsData; season: number }) {
         cols={[
           {
             label: 'Wrestler', align: 'left',
-            render: r => <WrestlerCell id={r.wrestler_id} name={r.name} school={r.school_name || r.school} />,
+            render: r => <WrestlerCell id={r.wrestler_id} name={r.name} school={r.school_name || r.school} logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />,
           },
           {
             label: 'Cons. Wins', align: 'right',
@@ -645,7 +653,7 @@ function AnalyticsTab({ d, season }: { d: AnalyticsData; season: number }) {
         cols={[
           {
             label: 'Winner', align: 'left',
-            render: r => <WrestlerCell id={r.winner_id} name={r.winner_name} school={r.winner_school} />,
+            render: r => <WrestlerCell id={r.winner_id} name={r.winner_name} school={r.winner_school} logoUrl={logos.byName.get(r.winner_school || '') ?? null} />,
           },
           {
             label: 'Seed', align: 'right',
@@ -685,7 +693,7 @@ function AnalyticsTab({ d, season }: { d: AnalyticsData; season: number }) {
           cols={[
             {
               label: 'Champion', align: 'left',
-              render: r => <WrestlerCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} />,
+              render: r => <WrestlerCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />,
             },
             {
               label: 'Wt', align: 'right',
@@ -709,7 +717,7 @@ function AnalyticsTab({ d, season }: { d: AnalyticsData; season: number }) {
           cols={[
             {
               label: 'Avenger', align: 'left',
-              render: r => <WrestlerCell id={r.avenger_id} name={r.avenger_name} school={r.avenger_school_name || r.avenger_school} />,
+              render: r => <WrestlerCell id={r.avenger_id} name={r.avenger_name} school={r.avenger_school_name || r.avenger_school} logoUrl={logos.byName.get(r.avenger_school_name || r.avenger_school || '') ?? null} />,
             },
             {
               label: 'Over', align: 'left',

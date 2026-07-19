@@ -6,6 +6,10 @@ import { SEASONS } from '@/lib/seasons'
 import { BracketPoll, type BracketEntry, type DistrictChamp } from '@/components/BracketPoll'
 import { PageHeader } from '@/components/PageHeader'
 import { orderChampMatchesBySeed } from '@/lib/bracketOrder'
+import { getSchoolLogos } from '@/lib/school-logos'
+import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
+
+type LogoMap = Awaited<ReturnType<typeof getSchoolLogos>>
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -431,7 +435,7 @@ function buildRosterFromEntries(entries: EntryRow[]): RosterItem[] {
   })
 }
 
-function RosterTable({ roster }: { roster: RosterItem[] }) {
+function RosterTable({ roster, logos }: { roster: RosterItem[]; logos: LogoMap }) {
   if (roster.length === 0) return null
   return (
     <section className="mt-10">
@@ -453,9 +457,12 @@ function RosterTable({ roster }: { roster: RosterItem[] }) {
               <tr key={r.wrestler_id} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
                 <td className="px-3 py-1.5 text-slate-400 text-xs tabular-nums">{r.seed ?? ''}</td>
                 <td className="px-3 py-1.5">
-                  <Link href={`/wrestler/${r.wrestler_id}`} className="font-medium text-slate-700 hover:underline">
-                    {r.name}
-                  </Link>
+                  <div className="flex items-center gap-1.5">
+                    <SchoolLogoBadge logoUrl={logos.byName.get(r.school_name || r.school || '') ?? null} />
+                    <Link href={`/wrestler/${r.wrestler_id}`} className="font-medium text-slate-700 hover:underline">
+                      {r.name}
+                    </Link>
+                  </div>
                 </td>
                 <td className="px-3 py-1.5 text-slate-500 text-xs">{r.school_name || r.school || '—'}</td>
                 <td className="px-3 py-1.5 text-slate-400 text-xs">{r.grade ?? ''}</td>
@@ -547,7 +554,7 @@ export default async function RegionBracketPage({
 
   const season = await getActiveSeason()
 
-  const [{ data: matchData }, { data: entryData }, { data: champData }] = await Promise.all([
+  const [{ data: matchData }, { data: entryData }, { data: champData }, logos] = await Promise.all([
     supabase.rpc('region_bracket', {
       p_region: region,
       p_weight: weight,
@@ -566,6 +573,7 @@ export default async function RegionBracketPage({
       p_gender: 'M',
       p_season: season,
     }),
+    getSchoolLogos(),
   ])
 
   const matches = (matchData ?? []) as MatchRow[]
@@ -746,7 +754,7 @@ export default async function RegionBracketPage({
       )}
 
       </>)}
-      <RosterTable roster={matches.length > 0 ? buildRosterFromMatches(matches) : buildRosterFromEntries(entries as EntryRow[])} />
+      <RosterTable roster={matches.length > 0 ? buildRosterFromMatches(matches) : buildRosterFromEntries(entries as EntryRow[])} logos={logos} />
       {/* Poll results below entries */}
       {matches.length > 0 && entries.length > 0 && (
         <BracketPoll

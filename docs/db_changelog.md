@@ -5,6 +5,36 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-07-17 — Rewrite 8 scoring RPCs to use school_id ⚠️ PENDING REVIEW
+
+**Migration file:** `docs/migrations/20260717_rewrite_scoring_rpcs_use_school_id.sql`
+
+**What changed:**
+
+Rewrites 8 multi-param scoring RPC overloads (the ones with `p_season smallint`, created by `update_team_scoring.py`) to aggregate by `tournament_entries.school_id` instead of `school_context_raw` + `school_names` name matching. Also repopulates `precomputed_team_scores` from the corrected RPC output.
+
+Functions rewritten:
+- `district_team_score(integer, gender_type, smallint)`
+- `region_team_score(integer, gender_type, smallint)`
+- `girls_region_team_score(text, smallint)`
+- `state_team_score(gender_type, smallint)`
+- `district_team_pts(integer, gender_type, smallint)`
+- `region_team_pts(integer, gender_type, smallint)`
+- `girls_region_team_pts(text, smallint)`
+- `state_team_pts(gender_type, smallint)`
+
+Single-param overloads of these functions (from `create_girls_rpcs.py` / `fix_state_rpcs.py`) are NOT touched.
+
+Output shape: adds `school_id integer` to all 8 function return types (was always null before; app's TypeScript types already declared it). `school text` now returns `school_id::text` instead of the `school_context_raw` abbreviation string.
+
+Root cause fixed: the old pipeline grouped by `school_context_raw` → joined `school_names` by abbreviation → got a text display name → `precomputed_team_scores` backfilled school_id by matching that text to `schools.display_name`. Two name-matching hops caused school 363 (Cherry Hill combined co-op) to accumulate boys district points that belong to school 268 (Cherry Hill West).
+
+**Rollback:** Re-run `update_team_scoring.py` to restore old function bodies; restore `precomputed_team_scores` from backup or re-run old pipeline.
+
+**Verified?** No — run verification query in migration file first
+
+---
+
 ## 2026-07-16 — Logo upload + header_background update, all 325 schools ⚠️ PENDING REVIEW
 
 **Migration file:** `docs/migrations/20260716_logo_upload_all_325.sql`

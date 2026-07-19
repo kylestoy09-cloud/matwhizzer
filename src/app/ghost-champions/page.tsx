@@ -2,6 +2,8 @@ import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { getActiveSeason } from '@/lib/get-season'
 import { PageHeader } from '@/components/PageHeader'
+import { getSchoolLogos } from '@/lib/school-logos'
+import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 
 type WinOnPath = {
   round: string
@@ -39,7 +41,10 @@ function formatTournament(name: string, type: string): string {
 
 export default async function GhostChampionsPage() {
   const season = await getActiveSeason()
-  const { data } = await supabase.rpc('ghost_champions', { p_season: season })
+  const [{ data }, logos] = await Promise.all([
+    supabase.rpc('ghost_champions', { p_season: season }),
+    getSchoolLogos(),
+  ])
   const ghosts = (data ?? []) as GhostChamp[]
 
   // Group by tournament
@@ -87,6 +92,7 @@ export default async function GhostChampionsPage() {
                   <span className="text-2xl font-black text-amber-500 w-10 text-center shrink-0">
                     {g.seed}
                   </span>
+                  <SchoolLogoBadge logoUrl={logos.byName.get(g.school) ?? null} />
                   <div className="flex-1 min-w-0">
                     <Link
                       href={`/wrestler/${g.wrestler_id}`}

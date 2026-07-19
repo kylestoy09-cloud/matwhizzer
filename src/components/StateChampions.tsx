@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 
 type ChampionRow = {
   weight: number
@@ -9,6 +10,7 @@ type ChampionRow = {
   school: string
   dominance_score: number
   seed: number | null
+  logo_url?: string | null
 }
 
 export function StateChampions({
@@ -42,16 +44,21 @@ export function StateChampions({
                 <tr key={r.weight} className="hover:bg-slate-50">
                   <td className="px-3 py-2 text-slate-500 font-medium">{r.weight}</td>
                   <td className="px-3 py-2">
-                    <Link
-                      href={`/wrestler/${r.wrestler_id}`}
-                      className="font-medium text-slate-800 hover:underline"
-                    >
-                      {r.wrestler_name}
-                    </Link>
-                    {isGhost && <span className="ml-1" title={`#${r.seed} seed — Ghost Champion`}>👻</span>}
-                    <span className="sm:hidden text-xs text-slate-400 ml-1">
-                      {r.school}
-                    </span>
+                    <div className="flex items-center gap-1.5">
+                      <SchoolLogoBadge logoUrl={r.logo_url} />
+                      <div>
+                        <Link
+                          href={`/wrestler/${r.wrestler_id}`}
+                          className="font-medium text-slate-800 hover:underline"
+                        >
+                          {r.wrestler_name}
+                        </Link>
+                        {isGhost && <span className="ml-1" title={`#${r.seed} seed — Ghost Champion`}>👻</span>}
+                        <span className="sm:hidden text-xs text-slate-400 block">
+                          {r.school}
+                        </span>
+                      </div>
+                    </div>
                   </td>
                   <td className="px-3 py-2 text-slate-500 hidden sm:table-cell">{r.school}</td>
                   <td className="px-3 py-2 text-right font-semibold text-amber-600">

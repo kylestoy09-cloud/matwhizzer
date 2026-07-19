@@ -6,7 +6,8 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { SEASONS } from '@/lib/seasons'
 
-type School = { id: number; display_name: string }
+/* eslint-disable @next/next/no-img-element */
+type School = { id: number; display_name: string; logo_url: string | null }
 
 type DualMeet = {
   id: string
@@ -31,8 +32,8 @@ export default async function DualMeetPage({
     .from('dual_meets')
     .select(`
       id, season_id, meet_date, team1_score, team2_score, gender, status,
-      team1:schools!team1_school_id(id, display_name),
-      team2:schools!team2_school_id(id, display_name)
+      team1:schools!team1_school_id(id, display_name, logo_url),
+      team2:schools!team2_school_id(id, display_name, logo_url)
     `)
     .eq('id', id)
     .maybeSingle()
@@ -77,6 +78,9 @@ export default async function DualMeetPage({
         <div className="grid grid-cols-3 items-center gap-4">
           {/* Team 1 */}
           <div className="text-center">
+            {team1?.logo_url && (
+              <img src={team1.logo_url} alt="" aria-hidden className="w-12 h-12 object-contain mx-auto mb-2" />
+            )}
             {team1 ? (
               <Link
                 href={`/schools/${team1.id}`}
@@ -107,6 +111,9 @@ export default async function DualMeetPage({
 
           {/* Team 2 */}
           <div className="text-center">
+            {team2?.logo_url && (
+              <img src={team2.logo_url} alt="" aria-hidden className="w-12 h-12 object-contain mx-auto mb-2" />
+            )}
             {team2 ? (
               <Link
                 href={`/schools/${team2.id}`}

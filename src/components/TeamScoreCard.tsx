@@ -2,12 +2,14 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 
 type TeamScoreRow = {
   school: string
   school_name: string | null
   school_id: number | null
   total_points: number
+  logo_url?: string | null
 }
 
 export function TeamScoreCard({
@@ -33,6 +35,7 @@ export function TeamScoreCard({
         {visible.map((r, i) => (
           <div key={r.school} className="flex items-center gap-2 px-4 py-2.5">
             <span className="text-xs text-slate-400 w-4 shrink-0 text-right">{i + 1}</span>
+            <SchoolLogoBadge logoUrl={r.logo_url} />
             <div className="flex-1 min-w-0">
               {r.school_id ? (
                 <Link

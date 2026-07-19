@@ -8,6 +8,8 @@ import { BracketBuster } from '@/components/BracketBuster'
 import { TeamScoreCard } from '@/components/TeamScoreCard'
 import { IndividualTeamPoints } from '@/components/IndividualTeamPoints'
 import RegionVideo from '@/components/RegionVideo'
+import { getSchoolLogos } from '@/lib/school-logos'
+import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 
 const WEIGHTS = [106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285]
 
@@ -101,7 +103,7 @@ function fmtTime(secs: number): string {
 
 // ── Sub-components ───────────────────────────────────────────────────────────
 
-function StatCard<T extends { wrestler_id: string; wrestler_name: string; school: string | null; school_name: string | null }>({
+function StatCard<T extends { wrestler_id: string; wrestler_name: string; school: string | null; school_name: string | null; logo_url?: string | null }>({
   title,
   rows,
   subtitle,
@@ -127,6 +129,7 @@ function StatCard<T extends { wrestler_id: string; wrestler_name: string; school
         {rows.map((r, i) => (
           <div key={`${r.wrestler_id}-${i}`} className="flex items-center gap-2 px-4 py-2.5">
             <span className="text-xs text-slate-400 w-4 shrink-0 text-right">{i + 1}</span>
+            <SchoolLogoBadge logoUrl={r.logo_url} />
             <div className="flex-1 min-w-0">
               <Link
                 href={`/wrestler/${r.wrestler_id}`}
@@ -157,7 +160,7 @@ export default async function RegionSummaryPage({
 
   const season = await getActiveSeason()
 
-  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, teamPtsRes, regionSchoolsRes, videoRes, ghostRes, regionEntriesRes, statePlacementsRes] =
+  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, teamPtsRes, regionSchoolsRes, videoRes, ghostRes, regionEntriesRes, statePlacementsRes, logos] =
     await Promise.all([
       supabase.rpc('region_placements',  { p_region: r, p_gender: 'M', p_season: season }),
       supabase.rpc('region_mat_time',    { p_region: r, p_gender: 'M', p_season: season }),
@@ -176,15 +179,16 @@ export default async function RegionSummaryPage({
         .eq('tournaments.tournament_type', 'regions')
         .like('tournaments.name', `%r${r}%`),
       supabase.rpc('state_placements', { p_gender: 'M', p_season: season }),
+      getSchoolLogos(),
     ])
 
   const placements    = (placementsRes.data    ?? []) as PlacementRow[]
-  const matTime       = (matTimeRes.data       ?? []) as MatTimeRow[]
-  const fastPin       = (fastPinRes.data       ?? []) as FastestPinRow[]
-  const fastTf        = (fastTfRes.data        ?? []) as FastestTfRow[]
-  const dominance     = (dominanceRes.data     ?? []) as DominanceRow[]
-  const teamScore     = (teamScoreRes.data     ?? []) as TeamScoreRow[]
-  const teamPts       = (teamPtsRes.data       ?? []) as TeamPtsRow[]
+  const matTime       = ((matTimeRes.data   ?? []) as MatTimeRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null }))
+  const fastPin       = ((fastPinRes.data   ?? []) as FastestPinRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null }))
+  const fastTf        = ((fastTfRes.data    ?? []) as FastestTfRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null }))
+  const dominance     = ((dominanceRes.data ?? []) as DominanceRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null }))
+  const teamScore     = ((teamScoreRes.data ?? []) as TeamScoreRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null }))
+  const teamPts       = ((teamPtsRes.data   ?? []) as TeamPtsRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null }))
   const regionSchools = (regionSchoolsRes.data ?? []) as RegionSchoolRow[]
   const youtubeUrl = (videoRes.data?.youtube_url as string | null) ?? null
 

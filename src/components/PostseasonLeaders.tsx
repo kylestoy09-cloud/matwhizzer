@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 
 type TeamScoreRow = {
   school: string
@@ -11,6 +12,7 @@ type TeamScoreRow = {
   region_points: number
   state_points: number
   total_points: number
+  logo_url?: string | null
 }
 
 export function PostseasonLeaders({
@@ -50,13 +52,16 @@ export function PostseasonLeaders({
               <tr key={r.school} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
                 <td className="px-3 py-2 text-xs text-slate-400">{i + 1}</td>
                 <td className="px-3 py-2">
-                  {r.school_id ? (
-                    <Link href={`/schools/${r.school_id}?gender=${gender}`} className="font-medium text-slate-800 hover:underline">
-                      {r.school_name || r.school}
-                    </Link>
-                  ) : (
-                    <span className="font-medium text-slate-800">{r.school_name || r.school}</span>
-                  )}
+                  <div className="flex items-center gap-1.5">
+                    <SchoolLogoBadge logoUrl={r.logo_url} />
+                    {r.school_id ? (
+                      <Link href={`/schools/${r.school_id}?gender=${gender}`} className="font-medium text-slate-800 hover:underline">
+                        {r.school_name || r.school}
+                      </Link>
+                    ) : (
+                      <span className="font-medium text-slate-800">{r.school_name || r.school}</span>
+                    )}
+                  </div>
                 </td>
                 <td className="px-3 py-2 text-right text-slate-500">{r.district_points}</td>
                 <td className="px-3 py-2 text-right text-slate-500">{r.region_points}</td>

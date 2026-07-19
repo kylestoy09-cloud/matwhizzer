@@ -27,6 +27,7 @@ type WrestlerResult = {
 type SchoolResult = {
   id: number
   display_name: string
+  logo_url: string | null
 }
 
 export function HeaderNav() {
@@ -148,7 +149,7 @@ export function HeaderNav() {
 
       const schoolQuery = supabase
         .from('schools')
-        .select('id, display_name')
+        .select('id, display_name, logo_url')
         .ilike('display_name', `%${q}%`)
         .limit(5)
 
@@ -370,8 +371,14 @@ setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
                             key={s.id}
                             href={`/schools/${s.id}?gender=${genderParam}`}
                             onClick={handleResultClick}
-                            className={`block px-4 py-2.5 text-sm text-white ${dropdownHov} transition-colors`}
+                            className={`flex items-center gap-2 px-4 py-2.5 text-sm text-white ${dropdownHov} transition-colors`}
                           >
+                            {s.logo_url && (
+                              <div className="w-5 h-5 rounded-full bg-white/10 p-0.5 shrink-0 flex items-center justify-center">
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img src={s.logo_url} alt="" aria-hidden className="w-full h-full object-contain" />
+                              </div>
+                            )}
                             {s.display_name}
                           </Link>
                         ))}
