@@ -12,8 +12,9 @@ import {
   makeWrestlerKey,
   resolveSchool,
 } from './types'
-import { MeetCard }    from './MeetCard'
-import { ReviewPanel } from './ReviewPanel'
+import { MeetCard }             from './MeetCard'
+import { ReviewPanel }          from './ReviewPanel'
+import { WrestlerReviewPanel }  from './WrestlerReviewPanel'
 
 // ── Phase ──────────────────────────────────────────────────────────────────────
 
@@ -382,12 +383,22 @@ export function ImportClient() {
             ))}
           </div>
 
-          {/* Step 3: Review panel */}
+          {/* Step 3: School review panel */}
           <ReviewPanel
             meets={meets}
             schoolResolutions={schoolResolutions}
             schoolOverrides={schoolOverrides}
             onSchoolOverride={handleSchoolOverride}
+          />
+
+          {/* Step 4: Wrestler review panel */}
+          <WrestlerReviewPanel
+            meets={meets}
+            schoolResolutions={schoolResolutions}
+            schoolOverrides={schoolOverrides}
+            wrestlerResolutions={wrestlerResolutions}
+            wrestlerOverrides={wrestlerOverrides}
+            onWrestlerOverride={handleWrestlerOverride}
           />
 
           {/* Controls */}

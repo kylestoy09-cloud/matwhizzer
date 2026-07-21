@@ -13,4 +13,4 @@ If a change was made in the dashboard with no migration file, create the equival
 
 **No DB change ships without both a migration file and a changelog entry.**
 
-To refresh `precomputed_team_scores` after a school merge or data change, delete the stale rows — the RPC recomputes live. `update_team_scoring.py` only recreates RPC functions, it does not repopulate the table.
+**`precomputed_team_scores` does NOT auto-recompute.** `top_postseason_team_scores` reads ONLY from this cache table — deleting rows removes schools from the leaderboard permanently until rows are re-inserted. To refresh after a school merge or data change: delete the stale rows, then re-insert by calling the scoring RPCs (`district_team_score`, `girls_region_team_score`, `state_team_score`) for the affected season/gender and inserting results. See `20260720_rescue_girls_precomputed_team_scores.sql` for a template. `update_team_scoring.py` only recreates RPC functions; it does not repopulate the table.

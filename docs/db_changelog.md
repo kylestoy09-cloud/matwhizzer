@@ -5,6 +5,92 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-07-20 — Add tw_id to wrestlers, source_format to tournament_bouts ⚠️ APPLY BEFORE pipe CSV import
+
+**Migration files (apply in this order):**
+1. `docs/migrations/20260720_add_tw_id_to_wrestlers.sql`
+2. `docs/migrations/20260720_add_source_format_to_tournament_bouts.sql`
+
+**What changed:**
+
+**1. wrestlers.tw_id (bigint, nullable)**
+
+Adds a `tw_id` column (TrackWrestling profile ID) to the `wrestlers` table and a partial unique index (`wrestlers_tw_id_idx`) that enforces no two wrestlers share a tw_id while allowing NULL. Used as the primary deduplication key for pipe-format CSV imports: when a CSV row carries a non-null `tw_id_winner`/`tw_id_loser`, the script resolves the wrestler by tw_id before falling back to name+school trigram matching. NULL for all pre-existing wrestlers (added via RTF/PDF imports before this column existed).
+
+**2. tournament_bouts.source_format (text, nullable → backfilled)**
+
+Adds a `source_format` column to `tournament_bouts` to record which import pipeline produced each row: `'pipe'` (pipe-delimited CSV), `'rtf'` (RTF bracket file), `'pdf'` (bracket PDF reconstruction), `'bullet'` (bullet-format CSV). Back-fills all existing rows with `'rtf'` since every pre-migration bout came from the RTF import pipeline.
+
+**Why:**
+- tw_id enables reliable cross-season wrestler identity without depending on exact name matching
+- source_format enables querying bracket fidelity (PDF = full bracket vs. pipe = results-only)
+
+**Rollback:**
+```sql
+-- migration 2: remove source_format
+ALTER TABLE tournament_bouts DROP COLUMN IF EXISTS source_format;
+-- migration 1: remove tw_id
+DROP INDEX IF EXISTS wrestlers_tw_id_idx;
+ALTER TABLE wrestlers DROP COLUMN IF EXISTS tw_id;
+```
+
+**Verified?** No — apply via Supabase SQL editor before running `scripts/import_pipe_csv.py`
+
+---
+
+## 2026-07-20 — Emergency rescue: girls precomputed_team_scores (8 schools) ⚠️ APPLY IMMEDIATELY
+
+**Migration file:** `docs/migrations/20260720_rescue_girls_precomputed_team_scores.sql`
+
+**What changed:**
+
+Data-only migration (no DDL). Re-inserts `precomputed_team_scores` rows for 8 girls schools that were deleted by Step 2 of `20260719_girls_tournament_entries_school_id.sql`.
+
+Root cause of deletion: Step 2 correctly removed stale rows keyed by raw `school_context_raw` strings (e.g. `'Jackson Township H.S.'`) with `school_id = NULL`. However, `top_postseason_team_scores` reads **only** from `precomputed_team_scores` with no live fallback — the CLAUDE.md note "the RPC recomputes live" is incorrect for this case. All 8 schools disappeared from the girls Postseason Point Leaders immediately after Step 2 ran.
+
+Step 1 of the prior migration had already set correct `tournament_entries.school_id` for all 8 schools, so the scoring RPCs (`district_team_score`, `girls_region_team_score`, `state_team_score`) now return them with proper `school_id` and `display_name`. This migration loops all girls season-2 tournaments and re-INSERTs rows for only the 8 target school_ids.
+
+Schools restored:
+- 370 Jackson Township, 32 High Point, 260 Kingsway, 263 Rancocas Valley
+- 190 Hunterdon Central, 216 Trenton, 391 Passaic Tech, 259 Gloucester
+
+Tournament types: `girls_districts`, `girls_regions`, `girls_state` (matching existing data convention).
+
+**Rollback:** `DELETE FROM precomputed_team_scores WHERE school_id = ANY(ARRAY[370,32,260,263,190,216,391,259]) AND season_id = 2;`
+
+**Verified?** No — run verify query in migration file after applying
+
+---
+
+## 2026-07-19 — Girls tournament_entries school_id fix (8 schools)
+
+**Migration file:** `docs/migrations/20260719_girls_tournament_entries_school_id.sql`
+
+**What changed:**
+
+Step 1 (APPLIED): `UPDATE tournament_entries SET school_id = X` for 8 girls schools whose `school_context_raw` names didn't match `schools.display_name` during import, leaving `school_id = NULL`. Scope: `season_id = 2, gender = 'F'`.
+
+Step 2 (APPLIED — caused live breakage, see 20260720 rescue above): `DELETE FROM precomputed_team_scores WHERE school_name IN (raw_names) AND season_id = 2`. Removed stale rows with incorrect `school_id = NULL` and raw-name keys.
+
+**Rollback:** See rollback block at bottom of migration file (reverses Step 1 only).
+
+---
+
+## 2026-07-19 — Waldwick (school 9): logo URL + header_background
+
+**Migration file:** `docs/migrations/20260719_waldwick_school9_update.sql`
+
+**What changed:**
+
+- `logo_url` → `.svg` path (`9.svg`, new file uploaded to Supabase Storage)
+- `header_background` → `#6A7CB5` (Light Blue)
+
+**Rollback:** See rollback block at bottom of migration file.
+
+**Verified?** Applied 2026-07-19.
+
+---
+
 ## 2026-07-17 — Rewrite 8 scoring RPCs to use school_id ⚠️ PENDING REVIEW
 
 **Migration file:** `docs/migrations/20260717_rewrite_scoring_rpcs_use_school_id.sql`
