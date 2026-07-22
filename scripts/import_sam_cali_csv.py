@@ -121,7 +121,7 @@ _TEAM_TO_SCHOOL: dict[str, Optional[int]] = {
     "SBW":      164,
     "SHP":      225,
     "SPAR":     26,
-    "SPP":      157,
+    "SPP":      167,    # St. Peter's Prep (not South Plainfield=157)
     "TNCK":     48,
     "TRE":      216,
     "WALL":     235,

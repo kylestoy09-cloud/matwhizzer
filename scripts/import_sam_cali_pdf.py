@@ -122,7 +122,7 @@ _TEAM_TO_SCHOOL: dict[str, Optional[int]] = {
     "SBW":     164,   # South Brunswick  [REVIEW]
     "SHP":     225,   # Shore Regional
     "SPAR":    26,    # Sparta
-    "SPP":     157,   # South Plainfield  [REVIEW: might be St. Peter's Prep=167]
+    "SPP":     167,   # St. Peter's Prep (confirmed; South Plainfield=157 was wrong)
     "TNCK":    48,    # Teaneck
     "TRE":     216,   # Trenton
     "WALL":    235,   # Wall
