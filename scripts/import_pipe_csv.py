@@ -5,11 +5,12 @@ scripts/import_pipe_csv.py
 Import tournament bouts from the pipe-delimited CSV exports into MatWhizzer.
 
 Usage:
-  python scripts/import_pipe_csv.py [--dry-run] [--season-id N] <csv_file>
+  python scripts/import_pipe_csv.py [--dry-run] [--json-out FILE] <csv_file>
 
 Options:
-  --dry-run       Show what would be imported; make no DB writes.
-  --season-id N   Season label (default: "2025-26").
+  --dry-run         Show what would be imported; make no DB writes.
+  --json-out FILE   Write parsed+matched data to FILE (no DB writes).
+                    Upload the resulting JSON at /admin/import-tournament.
 
 PREREQUISITES (apply migrations before first live run):
   docs/migrations/20260720_add_source_format_to_tournament_bouts.sql
@@ -363,6 +364,104 @@ def has_existing_bouts(tournament_id: str, client: Client) -> bool:
     return (res.count or 0) > 0
 
 
+# ── JSON output ────────────────────────────────────────────────────────────────
+
+def _emit_json(
+    args,
+    all_tourney_names:    list[str],
+    bout_batches:         dict[str, list[dict]],
+    bout_batches_meta:    dict[str, list[dict]],
+    school_cache:         dict[str, dict],
+    wrestler_resolutions: dict[str, dict],
+    skip_set:             set[str],
+    total_bouts:          int,
+    client:               Client,
+) -> None:
+    """Serialize parsed + matched data to a JSON file (no DB writes)."""
+    import json
+    from datetime import datetime, timezone
+
+    # Look up which tournaments already exist in the DB
+    existing_ids: dict[str, Optional[str]] = {}
+    for tname in all_tourney_names:
+        res = client.from_("in_season_tournaments") \
+            .select("id").eq("name", tname).eq("season", SEASON).execute()
+        existing_ids[tname] = res.data[0]["id"] if res.data else None
+
+    flagged_school_count   = sum(1 for s in school_cache.values() if s["confidence"] in ("low", "none"))
+    flagged_wrestler_count = sum(
+        1 for w in wrestler_resolutions.values()
+        if w["confidence"] in ("low", "none") and not w.get("is_new", False)
+    )
+    new_wrestler_count = sum(1 for w in wrestler_resolutions.values() if w.get("is_new", False))
+
+    tournaments_out = []
+    for tname in all_tourney_names:
+        meta   = _TOURNAMENT_META.get(tname, {})
+        bouts  = bout_batches.get(tname, [])
+        metas  = bout_batches_meta.get(tname, [])
+        bout_list = [
+            {
+                "weight":            b["weight_class"],
+                "round":             b["round"],
+                "winner_name":       b["wrestler1_name_raw"],
+                "winner_school_raw": m["winner_school_raw"],
+                "winner_key":        m["winner_key"],
+                "loser_name":        b["wrestler2_name_raw"],
+                "loser_school_raw":  m["loser_school_raw"],
+                "loser_key":         m["loser_key"],
+                "result_type":       b["result_type"],
+                "result_detail":     b["result_detail"],
+                "fall_time_seconds": b["fall_time_seconds"],
+                "flagged":           m["flagged"],
+                "flag_reasons":      m["flag_reasons"],
+            }
+            for b, m in zip(bouts, metas)
+        ]
+        tournaments_out.append({
+            "name":        tname,
+            "existing_id": existing_ids.get(tname),
+            "start_date":  meta.get("start"),
+            "end_date":    meta.get("end"),
+            "skipped":     tname in skip_set,
+            "bouts":       bout_list,
+        })
+
+    output = {
+        "schema_version": 1,
+        "source_format":  SOURCE_FORMAT,
+        "generated_at":   datetime.now(timezone.utc).isoformat(),
+        "csv_file":       os.path.basename(args.file),
+        "summary": {
+            "total_bouts":            total_bouts,
+            "total_tournaments":      len(all_tourney_names),
+            "skipped_tournaments":    sorted(skip_set),
+            "flagged_school_count":   flagged_school_count,
+            "flagged_wrestler_count": flagged_wrestler_count,
+            "new_wrestler_count":     new_wrestler_count,
+        },
+        "schools":     {
+            raw: {
+                "school_id":    s["school_id"],
+                "display_name": s["display_name"],
+                "confidence":   s["confidence"],
+                "alternates":   s.get("alternates", []),
+            }
+            for raw, s in school_cache.items()
+        },
+        "wrestlers":   wrestler_resolutions,
+        "tournaments": tournaments_out,
+    }
+
+    with open(args.json_out, "w", encoding="utf-8") as f:
+        json.dump(output, f, indent=2, ensure_ascii=False)
+
+    print(f"\nJSON written to: {args.json_out!r}")
+    print(f"  {total_bouts} bouts across {len(all_tourney_names)} tournaments")
+    print(f"  {flagged_school_count} flagged schools  |  {flagged_wrestler_count} flagged wrestlers  |  {new_wrestler_count} new wrestlers")
+    print(f"  Upload at: /admin/import-tournament")
+
+
 # ── Main ───────────────────────────────────────────────────────────────────────
 
 def main() -> None:
@@ -372,6 +471,8 @@ def main() -> None:
     ap.add_argument("--season",      default=SEASON)
     ap.add_argument("--force-tournaments", nargs="*", metavar="TOURNAMENT",
                     help="Override _SKIP_BOUT_IMPORT for specific tournament names")
+    ap.add_argument("--json-out", metavar="FILE",
+                    help="Write parsed+matched data to JSON file (no DB writes). Upload to /admin/import-tournament.")
     args = ap.parse_args()
 
     script_dir   = os.path.dirname(os.path.abspath(__file__))
@@ -428,8 +529,10 @@ def main() -> None:
 
     # We build bout_batches: {tournament_name → list[bout_dict]}
     # New wrestlers are collected first (dry run prints them; live run creates them).
-    bout_batches: dict[str, list[dict]] = {}
-    tourney_ids:  dict[str, str]        = {}   # name → uuid (populated in live run)
+    bout_batches:         dict[str, list[dict]] = {}
+    bout_batches_meta:    dict[str, list[dict]] = {}  # parallel to bout_batches, for --json-out
+    tourney_ids:          dict[str, str]        = {}  # name → uuid (populated in live run)
+    wrestler_resolutions: dict[str, dict]       = {}  # "name|school_id|weight" → match dict
 
     sep = "─" * 72
 
@@ -456,8 +559,9 @@ def main() -> None:
             continue
 
         # Build bout rows for this tournament
-        bouts: list[dict]         = []
-        new_this_t: set[tuple]    = set()   # (name, school_id) newly pending this tournament
+        bouts:      list[dict]      = []
+        bouts_meta: list[dict]      = []
+        new_this_t: set[tuple]      = set()   # (name, school_id) newly pending this tournament
 
         # Deduplicate within tournament: (weight, frozenset({winner, loser}))
         seen_pairs: set[tuple] = set()
@@ -526,7 +630,45 @@ def main() -> None:
                 "source_format":        SOURCE_FORMAT,
             })
 
-        bout_batches[tname] = bouts
+            # Track resolution data for --json-out
+            w_key = f"{row.winner}|{s_w['school_id'] or 'null'}|{row.weight}"
+            l_key = f"{row.loser}|{s_l['school_id'] or 'null'}|{row.weight}"
+            if s_w["school_id"] is not None and w_key not in wrestler_resolutions:
+                wrestler_resolutions[w_key] = {
+                    "wrestler_id":  wm_winner.get("wrestler_id"),
+                    "display_name": wm_winner.get("display_name"),
+                    "confidence":   wm_winner.get("confidence", "none"),
+                    "is_new":       wm_winner.get("is_new", False),
+                    "alternates":   wm_winner.get("alternates", []),
+                }
+            if s_l["school_id"] is not None and l_key not in wrestler_resolutions:
+                wrestler_resolutions[l_key] = {
+                    "wrestler_id":  wm_loser.get("wrestler_id"),
+                    "display_name": wm_loser.get("display_name"),
+                    "confidence":   wm_loser.get("confidence", "none"),
+                    "is_new":       wm_loser.get("is_new", False),
+                    "alternates":   wm_loser.get("alternates", []),
+                }
+            flag_reasons: list[str] = []
+            if s_w["confidence"] in ("low", "none"):
+                flag_reasons.append(f"winner_school_{s_w['confidence']}")
+            if s_l["confidence"] in ("low", "none"):
+                flag_reasons.append(f"loser_school_{s_l['confidence']}")
+            if s_w["school_id"] is not None and wm_winner.get("confidence") in ("low", "none"):
+                flag_reasons.append(f"winner_wrestler_{wm_winner['confidence']}")
+            if s_l["school_id"] is not None and wm_loser.get("confidence") in ("low", "none"):
+                flag_reasons.append(f"loser_wrestler_{wm_loser['confidence']}")
+            bouts_meta.append({
+                "winner_school_raw": row.winner_school,
+                "loser_school_raw":  row.loser_school,
+                "winner_key": w_key if s_w["school_id"] is not None else None,
+                "loser_key":  l_key if s_l["school_id"] is not None else None,
+                "flagged":      bool(flag_reasons),
+                "flag_reasons": flag_reasons,
+            })
+
+        bout_batches[tname]      = bouts
+        bout_batches_meta[tname] = bouts_meta
         print(f"  {len(bouts)} bouts queued  ({len(new_this_t)} new wrestlers to create)")
 
     # ── Totals ────────────────────────────────────────────────────────────────
@@ -558,6 +700,13 @@ def main() -> None:
             new_flag = " [NEW]" if item.confidence == "none" else ""
             print(f"    {item.weight:3d}lb {item.round:8s}  {item.name!r} ({item.school})"
                   f"  [{item.confidence}]{new_flag}  alts: {alts}")
+
+    if args.json_out:
+        _emit_json(
+            args, all_tourney_names, bout_batches, bout_batches_meta,
+            school_cache, wrestler_resolutions, skip_set, total_bouts, client,
+        )
+        return
 
     if args.dry_run:
         print()

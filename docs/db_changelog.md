@@ -5,6 +5,31 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-07-21 — Unique constraint on school_aliases.alias
+
+**Migration file:** `docs/migrations/20260721_school_aliases_unique_constraint.sql`
+
+**What changed:**
+
+Adds `UNIQUE(alias)` constraint to `public.school_aliases` via `school_aliases_alias_unique`.
+The migration first removes the duplicate SPP row (two rows pointing to school_id 167 were
+created when the SPP alias was inserted before the constraint existed).
+
+**Why UNIQUE(alias) and not UNIQUE(school_id, alias):**
+The SPP incident (South Plainfield vs. St. Peter's Prep both using "SPP") showed that
+allowing the same alias string for two schools produces silent non-deterministic bugs in
+`matchSchools.ts`, which uses `.find()` on the alias array. The right answer is a more
+specific alias for the less common usage, not tolerance of duplicates at the DB level.
+
+**Rollback:**
+```sql
+ALTER TABLE public.school_aliases DROP CONSTRAINT IF EXISTS school_aliases_alias_unique;
+```
+
+**Verified?** No — apply via Supabase SQL editor.
+
+---
+
 ## 2026-07-20 — Add tw_id to wrestlers, source_format to tournament_bouts ⚠️ APPLY BEFORE pipe CSV import
 
 **Migration files (apply in this order):**
