@@ -4,10 +4,15 @@ import { AdminBackButton } from '../AdminBackButton'
 
 export const dynamic = 'force-dynamic'
 
-export default async function BracketPage() {
+export default async function BracketPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ mode?: string; tid?: string; boutId?: string }>
+}) {
+  const { mode, tid, boutId } = await searchParams
   const supabase = await createSupabaseServer()
 
-  const [tournamentsRes, weightClassesRes] = await Promise.all([
+  const [tournamentsRes, weightClassesRes, inSeasonRes] = await Promise.all([
     supabase
       .from('tournaments')
       .select('id, name, tournament_type, gender, season_id')
@@ -18,7 +23,15 @@ export default async function BracketPage() {
       .from('weight_classes')
       .select('id, weight, gender')
       .order('weight'),
+    supabase
+      .from('in_season_tournaments')
+      .select('id, name, season, start_date')
+      .order('start_date', { ascending: false }),
   ])
+
+  const inSeasonTournaments = (inSeasonRes.data ?? []).sort((a, b) =>
+    a.name.localeCompare(b.name)
+  )
 
   return (
     <>
@@ -28,6 +41,10 @@ export default async function BracketPage() {
       <BracketEditor
         tournaments={tournamentsRes.data ?? []}
         weightClasses={weightClassesRes.data ?? []}
+        inSeasonTournaments={inSeasonTournaments}
+        defaultMode={mode === 'in-season' ? 'in-season' : 'postseason'}
+        defaultTid={tid}
+        defaultBoutId={boutId}
       />
     </>
   )

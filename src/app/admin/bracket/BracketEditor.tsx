@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { createSupabaseBrowser } from '@/lib/supabase/client'
 import type {
   Tournament, WeightClass, EntryRecord, MatchRecord, BracketSlot,
+  InSeasonTournament, TournamentBoutRecord,
 } from './types'
 import {
   CHAMPIONSHIP_ROUNDS,
@@ -19,17 +20,237 @@ import {
   getTheoreticalSeeds,
 } from './bracketRouting'
 import { EditPanel } from './EditPanel'
+import { InSeasonEditPanel } from './InSeasonEditPanel'
 
 // ─── Props ─────────────────────────────────────────────────────────
 
 interface BracketEditorProps {
   tournaments: Tournament[]
   weightClasses: WeightClass[]
+  inSeasonTournaments: InSeasonTournament[]
+  defaultMode?: 'postseason' | 'in-season'
+  defaultTid?: string
+  defaultBoutId?: string
+}
+
+// ─── In-Season Mode ────────────────────────────────────────────────
+
+function InSeasonEditor({
+  inSeasonTournaments,
+  defaultTid,
+  defaultBoutId,
+}: {
+  inSeasonTournaments: InSeasonTournament[]
+  defaultTid?: string
+  defaultBoutId?: string
+}) {
+  const [tid, setTid]               = useState(defaultTid ?? inSeasonTournaments[0]?.id ?? '')
+  const [weights, setWeights]       = useState<number[]>([])
+  const [selectedWeight, setSelectedWeight] = useState<number | null>(null)
+  const [bouts, setBouts]           = useState<TournamentBoutRecord[]>([])
+  const [loadingBouts, setLoadingBouts] = useState(false)
+  const [selectedBout, setSelectedBout] = useState<TournamentBoutRecord | null>(null)
+  const [toast, setToast]           = useState<{ message: string; type: 'success' | 'error' } | null>(null)
+
+  // Fetch available weight classes for selected tournament
+  useEffect(() => {
+    if (!tid) return
+    const supabase = createSupabaseBrowser()
+    supabase
+      .from('tournament_bouts')
+      .select('weight_class')
+      .eq('in_season_tournament_id', tid)
+      .then(({ data }) => {
+        const ws = [...new Set((data ?? []).map(r => r.weight_class))].sort((a, b) => a - b)
+        setWeights(ws)
+        setSelectedWeight(prev => {
+          if (prev && ws.includes(prev)) return prev
+          return ws[0] ?? null
+        })
+      })
+  }, [tid])
+
+  // Fetch bouts for selected tournament + weight
+  useEffect(() => {
+    if (!tid || !selectedWeight) return
+    setLoadingBouts(true)
+    const supabase = createSupabaseBrowser()
+    void supabase
+      .from('tournament_bouts')
+      .select('*')
+      .eq('in_season_tournament_id', tid)
+      .eq('weight_class', selectedWeight)
+      .then(({ data }) => {
+        const rows = (data ?? []) as TournamentBoutRecord[]
+        setBouts(rows)
+        if (defaultBoutId) {
+          setSelectedBout(rows.find(b => b.id === defaultBoutId) ?? null)
+        } else {
+          setSelectedBout(null)
+        }
+        setLoadingBouts(false)
+      })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tid, selectedWeight])
+
+  function showToast(msg: string, type: 'success' | 'error') {
+    setToast({ message: msg, type })
+    setTimeout(() => setToast(null), 3000)
+  }
+
+  function handleSaved(updated: TournamentBoutRecord) {
+    setBouts(prev => prev.map(b => b.id === updated.id ? updated : b))
+    setSelectedBout(updated)
+    showToast('Bout saved', 'success')
+  }
+
+  // Group bouts by round (simple insertion order, use a round-priority sort)
+  const ROUND_ORDER: Record<string, number> = {
+    R1: 1, R2: 2, R3: 3, QF: 4, SF: 5, F: 6,
+    C1: 11, C2: 12, C3: 13, C4: 14, CSF: 15, C3rd: 16,
+    '3rd_Place': 20, '5th_Place': 21, '7th_Place': 22,
+    PL: 30, 'Cons. Semis': 15,
+  }
+  const boutsByRound = useMemo(() => {
+    const map = new Map<string, TournamentBoutRecord[]>()
+    for (const b of bouts) {
+      if (!map.has(b.round)) map.set(b.round, [])
+      map.get(b.round)!.push(b)
+    }
+    const sorted = [...map.entries()].sort(
+      ([a], [b]) => (ROUND_ORDER[a] ?? 99) - (ROUND_ORDER[b] ?? 99)
+    )
+    return new Map(sorted)
+  }, [bouts])
+
+  return (
+    <div className="flex h-[calc(100vh-4rem)]">
+      {/* Left: bout list */}
+      <div className="flex-1 overflow-auto p-4 space-y-4">
+        {/* Tournament selector */}
+        <div className="flex flex-wrap gap-3 items-end">
+          <div>
+            <label className="block text-xs font-medium text-slate-600 mb-1">Tournament</label>
+            <select
+              value={tid}
+              onChange={e => setTid(e.target.value)}
+              className="rounded border border-slate-300 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+            >
+              {inSeasonTournaments.map(t => (
+                <option key={t.id} value={t.id}>{t.name}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Weight class pills */}
+        {weights.length > 0 && (
+          <div className="flex flex-wrap gap-1.5">
+            {weights.map(w => (
+              <button
+                key={w}
+                onClick={() => setSelectedWeight(w)}
+                className={`px-3 py-1 text-sm font-medium border border-black rounded-none transition-colors ${
+                  w === selectedWeight ? 'bg-black text-white' : 'bg-white text-slate-700 hover:bg-slate-50'
+                }`}
+              >
+                {w}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Bouts table */}
+        {loadingBouts ? (
+          <p className="text-sm text-slate-400 py-8 text-center">Loading…</p>
+        ) : bouts.length === 0 ? (
+          <p className="text-sm text-slate-400 py-8 text-center">No bouts for this weight class</p>
+        ) : (
+          <div className="space-y-4">
+            {[...boutsByRound.entries()].map(([round, roundBouts]) => (
+              <div key={round}>
+                <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide mb-1">{round}</p>
+                <div className="border border-slate-200 rounded overflow-hidden divide-y divide-slate-100 bg-white">
+                  {roundBouts.map(bout => {
+                    const isSelected = selectedBout?.id === bout.id
+                    return (
+                      <button
+                        key={bout.id}
+                        onClick={() => setSelectedBout(isSelected ? null : bout)}
+                        className={`w-full text-left px-4 py-2.5 text-sm hover:bg-blue-50 transition-colors ${
+                          isSelected ? 'bg-blue-50 border-l-4 border-l-blue-500' : 'border-l-4 border-l-transparent'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <span className={`font-medium ${bout.winner === 1 ? 'text-slate-900' : bout.winner ? 'text-slate-400' : 'text-slate-700'}`}>
+                              {bout.wrestler1_name_raw}
+                              <span className="text-slate-400 text-xs ml-1">({bout.wrestler1_school_raw})</span>
+                            </span>
+                            <span className="text-xs text-slate-400">vs</span>
+                            <span className={`font-medium ${bout.winner === 2 ? 'text-slate-900' : bout.winner ? 'text-slate-400' : 'text-slate-700'}`}>
+                              {bout.wrestler2_name_raw}
+                              <span className="text-slate-400 text-xs ml-1">({bout.wrestler2_school_raw})</span>
+                            </span>
+                          </div>
+                          <span className="text-xs text-slate-400 shrink-0 ml-4">
+                            {bout.result_type ?? '—'}
+                            {bout.result_detail ? ` ${bout.result_detail}` : ''}
+                          </span>
+                        </div>
+                        {/* Data quality flags */}
+                        <div className="flex gap-2 mt-0.5">
+                          {!bout.wrestler1_school_id && (
+                            <span className="text-[10px] text-orange-500">W1 school unlinked</span>
+                          )}
+                          {!bout.nj_wrestler1_id && bout.wrestler1_school_id && (
+                            <span className="text-[10px] text-yellow-600">W1 wrestler unlinked</span>
+                          )}
+                          {!bout.wrestler2_school_id && (
+                            <span className="text-[10px] text-orange-500">W2 school unlinked</span>
+                          )}
+                          {!bout.nj_wrestler2_id && bout.wrestler2_school_id && (
+                            <span className="text-[10px] text-yellow-600">W2 wrestler unlinked</span>
+                          )}
+                        </div>
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Right: edit panel */}
+      <div className="w-[380px] flex-shrink-0 border-l border-slate-200 overflow-auto bg-slate-50">
+        <InSeasonEditPanel
+          bout={selectedBout}
+          onSaved={handleSaved}
+          onCancel={() => setSelectedBout(null)}
+        />
+      </div>
+
+      {toast && (
+        <div className={`fixed bottom-6 right-6 z-50 px-4 py-2 rounded-none shadow-none text-sm font-medium ${
+          toast.type === 'success' ? 'bg-green-600 text-white' : 'bg-red-600 text-white'
+        }`}>
+          {toast.message}
+        </div>
+      )}
+    </div>
+  )
 }
 
 // ─── Main Component ────────────────────────────────────────────────
 
-export function BracketEditor({ tournaments, weightClasses }: BracketEditorProps) {
+export function BracketEditor({
+  tournaments, weightClasses, inSeasonTournaments,
+  defaultMode, defaultTid, defaultBoutId,
+}: BracketEditorProps) {
+  const [mode, setMode] = useState<'postseason' | 'in-season'>(defaultMode ?? 'postseason')
+
   const defaultTournament = tournaments.find(t => t.gender === 'M') ?? tournaments[0]
 
   const [tournamentId, setTournamentId] = useState<number>(defaultTournament?.id ?? 0)
@@ -176,8 +397,25 @@ export function BracketEditor({ tournaments, weightClasses }: BracketEditorProps
 
   // ── Render ─────────────────────────────────────────────────────
 
+  if (mode === 'in-season') {
+    return (
+      <div className="flex flex-col h-[calc(100vh-4rem)]">
+        <ModeBar mode={mode} onSwitch={setMode} />
+        <div className="flex-1 overflow-hidden">
+          <InSeasonEditor
+            inSeasonTournaments={inSeasonTournaments}
+            defaultTid={defaultTid}
+            defaultBoutId={defaultBoutId}
+          />
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="flex h-[calc(100vh-4rem)]">
+    <div className="flex flex-col h-[calc(100vh-4rem)]">
+      <ModeBar mode={mode} onSwitch={setMode} />
+      <div className="flex flex-1 overflow-hidden">
       {/* Left: Bracket Display */}
       <div className="flex-1 overflow-auto p-4 space-y-4">
         {/* Breadcrumb */}
@@ -342,6 +580,35 @@ export function BracketEditor({ tournaments, weightClasses }: BracketEditorProps
           {toast.message}
         </div>
       )}
+      </div>
+    </div>
+  )
+}
+
+// ─── Mode bar ──────────────────────────────────────────────────────
+
+function ModeBar({
+  mode,
+  onSwitch,
+}: {
+  mode: 'postseason' | 'in-season'
+  onSwitch: (m: 'postseason' | 'in-season') => void
+}) {
+  return (
+    <div className="flex items-center gap-1 px-4 py-2 border-b border-slate-200 bg-white shrink-0">
+      {(['postseason', 'in-season'] as const).map(m => (
+        <button
+          key={m}
+          onClick={() => onSwitch(m)}
+          className={`px-3 py-1 text-xs rounded font-medium transition-colors ${
+            mode === m
+              ? 'bg-slate-900 text-white'
+              : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100'
+          }`}
+        >
+          {m === 'postseason' ? 'Postseason Brackets' : 'In-Season Tournaments'}
+        </button>
+      ))}
     </div>
   )
 }

@@ -45,3 +45,29 @@ export interface BracketSlot {
   match: MatchRecord | null
   status: MatchStatus
 }
+
+export interface InSeasonTournament {
+  id: string
+  name: string
+  season: string
+  start_date: string
+}
+
+export interface TournamentBoutRecord {
+  id: string
+  in_season_tournament_id: string
+  weight_class: number
+  round: string
+  nj_wrestler1_id: string | null
+  wrestler1_name_raw: string
+  wrestler1_school_id: number | null
+  wrestler1_school_raw: string
+  nj_wrestler2_id: string | null
+  wrestler2_name_raw: string
+  wrestler2_school_id: number | null
+  wrestler2_school_raw: string
+  winner: 1 | 2 | null
+  result_type: string | null
+  result_detail: string | null
+  fall_time_seconds: number | null
+}

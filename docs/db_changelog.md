@@ -5,6 +5,26 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-07-22 — Patch Steven Vidal Sam Cali school (HTWN → Hackettstown) + alias
+
+**Migration file:** `docs/migrations/20260722_patch_vidal_sam_cali_school.sql`
+
+**What changed:**
+
+4 tournament_bouts rows in Sam Cali Battle for The Belt updated:
+`wrestler_school_id` changed from 240 (Haddon Township) → 112 (Hackettstown)
+for wrestler Steven Vidal (`ccd2a21c-ac71-41bf-aaf3-db101f1a70ea`), rounds R2, QF, SF, 3rd_Place.
+
+Root cause: "HTWN" (Hackettstown abbreviation used in Sam Cali CSV) had no alias
+entry. Importer's trigram fuzzy matcher resolved it to "Haddon Twp Hgh School"
+(school 240). Fix: added `HTWN → school 112` to school_aliases (id 1669).
+
+Note: user said "3 bouts" but there were 4. All 4 patched.
+
+**Applied:** 2026-07-22 via service_role PATCH + INSERT.
+
+---
+
 ## 2026-07-22 — school_aliases OOS support (nullable school_id, partial indexes, confirmed_at)
 
 **Migration file:** `docs/migrations/20260722_school_aliases_oos_support.sql`

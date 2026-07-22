@@ -1,4 +1,5 @@
 import { supabase, ROUND_LABEL, ROUND_ORDER } from '@/lib/supabase'
+import { createSupabaseServer } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
@@ -78,6 +79,10 @@ export default async function TournamentDetailPage({
 }) {
   const { id } = await params
   const { w } = await searchParams
+
+  const authClient = await createSupabaseServer()
+  const { data: { user } } = await authClient.auth.getUser()
+  const isAdmin = !!user
 
   const [{ data: tournData }, { data: weightsData }] = await Promise.all([
     supabase
@@ -191,9 +196,10 @@ export default async function TournamentDetailPage({
                           bout.result_detail,
                           bout.fall_time_seconds,
                         )
+                        const editHref = `/admin/bracket?mode=in-season&tid=${id}&boutId=${bout.id}&w=${selectedWeight}`
 
                         return (
-                          <tr key={bout.id} className="hover:bg-slate-50">
+                          <tr key={bout.id} className="hover:bg-slate-50 group">
                             {/* Wrestler 1 */}
                             <td className="px-4 py-2.5 w-[38%]">
                               <div
@@ -251,6 +257,19 @@ export default async function TournamentDetailPage({
                               </div>
                               <div className="text-xs text-slate-400 mt-0.5">{school2}</div>
                             </td>
+
+                            {/* Admin edit link — only visible when logged in */}
+                            {isAdmin && (
+                              <td className="pr-3 py-2.5 w-8 text-right">
+                                <Link
+                                  href={editHref}
+                                  title="Edit this bout"
+                                  className="opacity-0 group-hover:opacity-100 transition-opacity text-slate-400 hover:text-blue-600 text-xs"
+                                >
+                                  ✎
+                                </Link>
+                              </td>
+                            )}
                           </tr>
                         )
                       })}
