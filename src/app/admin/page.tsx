@@ -76,6 +76,13 @@ export default async function AdminDashboard() {
           <h2 className="text-sm font-semibold text-slate-900 mb-1">Data Health</h2>
           <p className="text-xs text-slate-500">Database integrity and site availability monitoring</p>
         </Link>
+        <Link
+          href="/admin/import-tournament"
+          className="bg-white rounded-none border border-black shadow-none p-6 transition-shadow"
+        >
+          <h2 className="text-sm font-semibold text-slate-900 mb-1">Tournament Import</h2>
+          <p className="text-xs text-slate-500">Upload pipe-CSV JSON to review and import tournament bouts</p>
+        </Link>
       </div>
     </div>
   )
