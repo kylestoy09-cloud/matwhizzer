@@ -676,7 +676,7 @@ class WrestlerMatcher:
                 offset += PAGE
             return rows
 
-        wrestlers = paginate("wrestlers", "id, first_name, last_name, suffix")
+        wrestlers = paginate("wrestlers", "id, first_name, last_name, suffix, gender")
         wc_res = self._client.from_("weight_classes").select("id, weight").execute()
         entries = paginate("tournament_entries", "wrestler_id, school_id, weight_class_id")
 
@@ -700,6 +700,7 @@ class WrestlerMatcher:
                     "wrestler_id": e["wrestler_id"],
                     "display_name": f"{w['first_name']} {w['last_name']}{suffix}".strip(),
                     "school_id": e["school_id"],
+                    "gender": w.get("gender"),
                     "weights": [],
                 }
             if weight not in record_map[key]["weights"]:
@@ -710,12 +711,17 @@ class WrestlerMatcher:
             sid = rec["school_id"]
             self._index.setdefault(sid, []).append(rec)
 
-    def match(self, name: str, school_id: int, weight_class: int) -> dict:
-        """Return {wrestler_id, display_name, confidence, is_new, alternates}."""
+    def match(self, name: str, school_id: int, weight_class: int, gender: Optional[str] = None) -> dict:
+        """Return {wrestler_id, display_name, confidence, is_new, alternates}.
+
+        gender: if provided, only candidates matching that gender are considered.
+        """
         self._load()
         raw = name.strip()
         lower = raw.lower()
         at_school = (self._index or {}).get(school_id, [])
+        if gender:
+            at_school = [r for r in at_school if r.get("gender") == gender]
 
         for rec in at_school:
             if rec["display_name"].lower() == lower and weight_class in rec["weights"]:

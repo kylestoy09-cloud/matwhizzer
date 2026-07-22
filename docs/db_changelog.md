@@ -5,6 +5,31 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-07-22 — Patch 40 tournament_bouts rows: UNK → CSF
+
+**Migration file:** `docs/migrations/20260722_patch_unk_csf_rounds.sql`
+
+**What changed:**
+
+40 `tournament_bouts` rows across 5 tournaments (Bethlehem 4, King of the Castle 5,
+Linn Crawn 8, Palmyra 23, Elmwood Park 0) had `round = 'UNK'` due to a parser bug:
+when the pipe CSV `round` field was empty and the round was embedded as a name prefix
+(`"Cons. Semis - William Shallop"`), `import_pipe_csv.py` stripped the prefix but
+discarded it rather than using it to populate the round column. All 40 were consolation
+semifinals and have been corrected to `CSF`. 6 bouts remain `UNK` (Linn Crawn 5,
+Elmwood Park 1) — their round is genuinely absent from the source data.
+
+**ALREADY APPLIED** 2026-07-22 via service_role API. Migration file documents what ran.
+
+**Rollback:**
+```sql
+-- Only needed if the patch introduced wrong data; these 40 rows were all
+-- confirmed CSF by matching against the original CSV source.
+-- No automated rollback — would require re-checking each bout individually.
+```
+
+---
+
 ## 2026-07-21 — Unique constraint on school_aliases.alias
 
 **Migration file:** `docs/migrations/20260721_school_aliases_unique_constraint.sql`

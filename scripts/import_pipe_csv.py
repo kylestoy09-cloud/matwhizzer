@@ -128,6 +128,13 @@ _NAME_ROUND_PREFIX = re.compile(
     re.IGNORECASE,
 )
 
+# Matches the CSF prefix specifically so we can recover the round when the round
+# field itself is empty.  "Varsity - " may optionally precede it.
+_CSF_NAME_PREFIX = re.compile(
+    r"^(?:Varsity\s*-\s*)?Cons\.?\s+Semis?\s*-\s*",
+    re.IGNORECASE,
+)
+
 
 # ── Data classes ───────────────────────────────────────────────────────────────
 
@@ -172,12 +179,18 @@ def load_csv(path: str) -> list[CsvRow]:
                 weight = int(r["weight"])
             except ValueError:
                 continue
-            winner = _NAME_ROUND_PREFIX.sub("", r["winner"].strip())
+            winner_raw = r["winner"].strip()
+            winner = _NAME_ROUND_PREFIX.sub("", winner_raw)
             loser  = _NAME_ROUND_PREFIX.sub("", r["loser"].strip())
+            # When the round field is empty the round is sometimes encoded as a
+            # prefix in the winner name.  Recover it rather than silently dropping it.
+            raw_round = r["round"].strip()
+            if not raw_round and _CSF_NAME_PREFIX.match(winner_raw):
+                raw_round = "Cons. Semis"
             rows.append(CsvRow(
                 tournament    = r["tournament"].strip(),
                 weight        = weight,
-                round         = r["round"].strip(),
+                round         = raw_round,
                 winner        = winner,
                 winner_school = r["winner_school"].strip(),
                 tw_id_winner  = w_id,
@@ -247,6 +260,7 @@ def resolve_wrestler(
     tw_id:          Optional[int],
     tw_lookup:      Optional[dict[int, str]],
     name_matcher:   WrestlerMatcher,
+    gender:         Optional[str] = None,
 ) -> dict:
     """Return {wrestler_id, confidence, is_new}.  Only resolves for NJ schools."""
     if school_id is None:
@@ -258,8 +272,8 @@ def resolve_wrestler(
         if wid:
             return {"wrestler_id": wid, "confidence": "exact", "is_new": False}
 
-    # Name fuzzy matching
-    return name_matcher.match(name, school_id, weight)
+    # Name fuzzy matching — pass gender so alternates stay same-gender
+    return name_matcher.match(name, school_id, weight, gender=gender)
 
 
 # ── New wrestler creation ──────────────────────────────────────────────────────
@@ -575,12 +589,12 @@ def main() -> None:
                 continue
             seen_pairs.add(pair_key)
 
-            # Resolve wrestlers
+            # Resolve wrestlers — gender='M' filters alternates to male candidates only
             wm_winner = resolve_wrestler(
-                row.winner, s_w["school_id"], row.weight, row.tw_id_winner, tw_lookup, name_matcher
+                row.winner, s_w["school_id"], row.weight, row.tw_id_winner, tw_lookup, name_matcher, gender="M"
             )
             wm_loser  = resolve_wrestler(
-                row.loser,  s_l["school_id"], row.weight, row.tw_id_loser,  tw_lookup, name_matcher
+                row.loser,  s_l["school_id"], row.weight, row.tw_id_loser,  tw_lookup, name_matcher, gender="M"
             )
 
             # Flag low/none confidence NJ wrestlers for review
