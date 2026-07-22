@@ -391,11 +391,13 @@ export function TournamentImportClient() {
   // ── Review phase ────────────────────────────────────────────────────────────
   if (!importData) return null
 
+  // Only show schools with genuine NJ ambiguity ('low' = fuzzy match, user must confirm).
+  // 'none' confidence schools are OOS and correctly get null school_id — no action needed.
   const flaggedSchools = Object.entries(importData.schools).filter(
-    ([raw, s]) => s.confidence !== 'exact' && !schoolOverrides[raw]
+    ([raw, s]) => s.confidence === 'low' && !schoolOverrides[raw]
   )
   const resolvedSchoolCount = Object.entries(importData.schools).filter(
-    ([raw, s]) => s.confidence !== 'exact' && schoolOverrides[raw]
+    ([raw, s]) => s.confidence === 'low' && schoolOverrides[raw]
   ).length
   const totalFlaggedSchools = flaggedSchools.length + resolvedSchoolCount
 
@@ -403,8 +405,9 @@ export function TournamentImportClient() {
     ([key, w]) => {
       if (wrestlerOverrides[key]) return false
       const schoolIdStr = key.split('|')[1]
-      if (schoolIdStr === 'null') return false  // OOS, skip
-      return w.confidence !== 'exact' || w.is_new
+      if (schoolIdStr === 'null') return false  // OOS wrestler, skip
+      // 'high' confidence: matcher is confident, don't require manual review
+      return w.confidence === 'low' || w.is_new
     }
   )
   const resolvedWrestlerCount = Object.entries(importData.wrestlers).filter(
@@ -503,7 +506,7 @@ export function TournamentImportClient() {
               .filter(([key, w]) => {
                 const schoolIdStr = key.split('|')[1]
                 if (schoolIdStr === 'null') return false
-                return w.confidence !== 'exact' || w.is_new
+                return w.confidence === 'low' || w.is_new
               })
               .map(([key, resolution]) => (
                 <WrestlerFlag
