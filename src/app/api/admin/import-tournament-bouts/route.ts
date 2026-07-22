@@ -106,8 +106,11 @@ export async function POST(req: NextRequest) {
           (!override && resolution?.is_new)
 
         if (isNew && !toCreateKeys.has(keyField)) {
+          const schoolRaw = bout.winner_key === keyField ? bout.winner_school_raw : bout.loser_school_raw
+          const schoolOv = schoolOverrides[schoolRaw]
           const effectiveSchoolId =
-            (schoolOverrides[bout.winner_key === keyField ? bout.winner_school_raw : bout.loser_school_raw]?.school_id) ??
+            (schoolOv?.type === 'nj' ? schoolOv.school_id : null) ??
+            importData.schools[schoolRaw]?.school_id ??
             Number(schoolIdStr)
           toCreate.push({ name: nameRaw, school_id: effectiveSchoolId })
           toCreateKeys.add(keyField)
@@ -169,7 +172,10 @@ export async function POST(req: NextRequest) {
   }
 
   function resolveSchoolId(rawName: string): number | null {
-    return schoolOverrides[rawName]?.school_id ?? importData.schools[rawName]?.school_id ?? null
+    const ov = schoolOverrides[rawName]
+    if (ov?.type === 'nj') return ov.school_id
+    if (ov?.type === 'oos') return null
+    return importData.schools[rawName]?.school_id ?? null
   }
 
   // ── Process each tournament ─────────────────────────────────────────────────

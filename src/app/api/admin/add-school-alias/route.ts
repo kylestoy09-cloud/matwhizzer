@@ -11,14 +11,19 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json()
   const { school_id, alias, alias_type, notes } = body as {
-    school_id: number
+    school_id: number | null
     alias: string
     alias_type?: string
     notes?: string
   }
 
-  if (!school_id || !alias?.trim()) {
-    return NextResponse.json({ error: 'school_id and alias are required' }, { status: 400 })
+  // OOS confirmations have school_id = null; NJ aliases require school_id.
+  const isOOS = alias_type === 'oos'
+  if (!isOOS && !school_id) {
+    return NextResponse.json({ error: 'school_id is required for non-OOS aliases' }, { status: 400 })
+  }
+  if (!alias?.trim()) {
+    return NextResponse.json({ error: 'alias is required' }, { status: 400 })
   }
 
   const supabase = createClient(

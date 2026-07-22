@@ -1,4 +1,4 @@
-export type Confidence = 'exact' | 'high' | 'low' | 'none'
+export type Confidence = 'exact' | 'high' | 'low' | 'none' | 'oos'
 
 export type SchoolResolution = {
   school_id: number | null
@@ -58,10 +58,9 @@ export type PipeImportJSON = {
   tournaments: TournamentBlock[]
 }
 
-export type SchoolOverride = {
-  school_id: number
-  display_name: string
-}
+export type SchoolOverride =
+  | { type: 'nj'; school_id: number; display_name: string }
+  | { type: 'oos' }
 
 export type WrestlerOverride =
   | { type: 'existing'; wrestler_id: string; display_name: string }

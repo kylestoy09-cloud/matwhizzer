@@ -605,11 +605,25 @@ class SchoolMatcher:
         schools_res = self._client.from_("schools").select("id, display_name, is_nj").execute()
         self._schools = [s for s in (schools_res.data or []) if s.get("is_nj", True)]
         nj_ids = {s["id"] for s in self._schools}
-        aliases_res = self._client.from_("school_aliases").select("school_id, alias").execute()
-        self._aliases = [a for a in (aliases_res.data or []) if a["school_id"] in nj_ids]
+        # Fetch all aliases — NJ aliases (school_id IS NOT NULL) and OOS aliases
+        # (school_id IS NULL, alias_type = 'oos').  NJ aliases are filtered to
+        # NJ school IDs; OOS aliases are kept separately so the lookup can check
+        # them after NJ matches (NJ wins if both exist for the same string).
+        aliases_res = self._client.from_("school_aliases").select("school_id, alias, alias_type").execute()
+        all_aliases = aliases_res.data or []
+        self._aliases     = [a for a in all_aliases if a.get("school_id") in nj_ids]
+        self._oos_aliases = {a["alias"].lower() for a in all_aliases if a.get("alias_type") == "oos"}
 
     def match(self, raw: str) -> dict:
-        """Return {school_id, display_name, confidence, alternates}."""
+        """Return {school_id, display_name, confidence, alternates}.
+
+        confidence values:
+          'exact' — matched NJ school by display name or alias
+          'high'  — fuzzy match ≥ 0.85
+          'low'   — fuzzy match 0.60–0.84
+          'oos'   — confirmed out-of-state via school_aliases (alias_type='oos')
+          'none'  — no match; unreviewed, needs a decision
+        """
         self._load()
         name = raw.strip()
         lower = name.lower()
@@ -634,6 +648,13 @@ class SchoolMatcher:
                 if a["alias"].lower() == stripped.lower():
                     school = next((s for s in schools if s["id"] == a["school_id"]), None)
                     return {"school_id": a["school_id"], "display_name": school["display_name"] if school else None, "confidence": "exact", "alternates": []}
+
+        # Check confirmed-OOS aliases before falling through to fuzzy matching.
+        # Checked after NJ aliases so an NJ match always wins if both exist.
+        if lower in (self._oos_aliases or set()):
+            return {"school_id": None, "display_name": raw, "confidence": "oos", "alternates": []}
+        if stripped and stripped.lower() in (self._oos_aliases or set()):
+            return {"school_id": None, "display_name": raw, "confidence": "oos", "alternates": []}
 
         query = stripped if (stripped and stripped != name) else name
         scored = sorted(

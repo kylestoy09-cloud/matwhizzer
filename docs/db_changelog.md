@@ -5,6 +5,38 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-07-22 — school_aliases OOS support (nullable school_id, partial indexes, confirmed_at)
+
+**Migration file:** `docs/migrations/20260722_school_aliases_oos_support.sql`
+
+**What changed:**
+
+1. `school_id` made nullable. OOS confirmation rows store `school_id = NULL`,
+   `alias_type = 'oos'`. The FK to `schools(id)` remains; NULLs bypass it.
+
+2. `school_aliases_alias_unique` (full UNIQUE on alias) dropped. Replaced by:
+   - `school_aliases_nj_alias_unique`: UNIQUE(alias) WHERE school_id IS NOT NULL
+     — preserves SPP-fix protection for NJ aliases
+   - `school_aliases_oos_alias_unique`: UNIQUE(alias) WHERE alias_type = 'oos'
+     — prevents duplicate OOS confirmations per raw string
+
+3. `confirmed_at TIMESTAMPTZ DEFAULT now()` added. Auto-set on insert.
+   Existing rows get NULL (predates the column).
+
+**Why UNIQUE(alias) was too strict for OOS:**
+"CBA" can legitimately be both NJ's Christian Brothers Academy (school_id = X)
+and an OOS school at a PA tournament. A global unique constraint made confirming
+one permanently block the other. The two partial indexes preserve NJ-to-NJ
+disambiguation while allowing same-string NJ + OOS coexistence.
+
+**Lookup policy:** NJ alias rows are checked before OOS rows. If "CBA" → school
+42 (NJ) and "CBA" → OOS both exist, the NJ match wins.
+
+**Verified?** No — apply via Supabase SQL editor before using the OOS confirmation
+UI in /admin/import-tournament.
+
+---
+
 ## 2026-07-22 — Patch 40 tournament_bouts rows: UNK → CSF
 
 **Migration file:** `docs/migrations/20260722_patch_unk_csf_rounds.sql`
