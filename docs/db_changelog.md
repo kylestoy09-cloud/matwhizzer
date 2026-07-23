@@ -5,6 +5,18 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-07-23 — Sam Cali stub wrestler first_name records
+
+**Migration file:** `docs/migrations/20260723_sam_cali_stub_wrestler_records.sql`
+
+**Status:** PENDING — apply FIRST within the Sam Cali patch session (before the two bout name_raw patches).
+
+**What changed:**
+
+Fixes wrestler records where `first_name` was stored as a stub initial (e.g. `'C.'`) because the name wasn't in `_FULL_NAME_LOOKUP` at import time. `get_or_create_wrestler` fell back to `_parse_abbreviated_name`, which splits on the first space and stores the initial as `first_name`. Eight NJ wrestlers affected (GFA and CHAM are OOS — their bouts have `nj_wrestler1_id = NULL`, no wrestler record created). For uncommon last names (Adell, D'Arcy, Landell, O'Leary, D'Arco), direct first_name/last_name filter used. For common last names (O'Connor × 2, Washington), bout-subquery-scoped UPDATEs used to avoid touching other wrestlers with the same stub form. All UPDATEs are guarded by `AND first_name = 'X.'` so they are no-ops if `match_wrestler` matched an existing full-name record instead of creating a stub.
+
+---
+
 ## 2026-07-23 — Sam Cali stub name fix (10 remaining abbreviated names)
 
 **Migration file:** `docs/migrations/20260723_sam_cali_stub_name_fix.sql`
