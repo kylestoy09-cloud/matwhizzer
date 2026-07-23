@@ -144,15 +144,10 @@ _TEAM_TO_SCHOOL: dict[str, Optional[int]] = {
 # Key: (weight_int, abbreviated_name_as_it_appears_in_bracket_csv)
 # Value: (first_name, last_name) — used instead of "C." stub when creating wrestlers.
 #
-# Unresolved (not found in pipe CSV, will remain abbreviated stubs):
-#   106lb: J. Barron (SPP), J. Rowinski (HTWN)
-#   113lb: D. Adell (B-R) [pipe has Andrew Adell — initial mismatch, verify before merging]
-#          D. D'Arcy (SBP)
-#   120lb: J. Sgrulletta (GFA)
-#   126lb: C. O'Connor (DPLC), N. O'Sullivan (CHAM), O. O'Leary (RHS), S. D'Arco (PJ23)
-#   132lb: K. Landell (CHER) [pipe has Trenton Landell — initial mismatch]
-#   165lb: T. O'Connor (MTWN)
-#   190lb: B. Washington (DEMA) [pipe has Navell Washington — initial mismatch]
+# All abbreviated stubs now resolved. See docs/migrations/20260722_sam_cali_name_fix.sql
+# (358-entry primary patch) and 20260723_sam_cali_stub_name_fix.sql (10-entry stub patch).
+# Note: 106lb J. Barron (SPP) and J. Rowinski (HTWN) were deleted as duplicates; they are
+# NOT in the DB — this comment previously listed them in error.
 _FULL_NAME_LOOKUP: dict[tuple[int, str], tuple[str, str]] = {
     # 106lb
     (106, 'A. Dyki'):          ('Alexander',  'Dyki'),
@@ -198,6 +193,8 @@ _FULL_NAME_LOOKUP: dict[tuple[int, str], tuple[str, str]] = {
     (113, 'D. Litterio'):      ('Dominic',    'Litterio'),
     (113, 'D. Petulla'):       ('Dominic',    'Petulla'),
     (113, 'D. Sierra'):        ('Dylan',      'Sierra'),
+    (113, 'D. Adell'):         ('Andrew',     'Adell'),
+    (113, "D. D'Arcy"):        ('Danny',      "D'Arcy"),
     (113, 'D. Torsone'):       ('DJ',         'Torsone'),
     (113, 'J. Cambell'):       ('Jacob',      'Campbell'),
     (113, 'J. Feliciano'):     ('Julius',     'Feliciano'),
@@ -231,6 +228,7 @@ _FULL_NAME_LOOKUP: dict[tuple[int, str], tuple[str, str]] = {
     (120, 'J. Leneus'):        ('Jayden',     'Leneus'),
     (120, 'J. Polanco'):       ('Julian',     'Polanco'),
     (120, 'J. Rowinski'):      ('Joseph',     'Rowinski'),
+    (120, 'J. Sgrulletta'):    ('Jaxson',     'Sgurletta'),
     (120, 'L. Pelc'):          ('Lucas',      'Pelc'),
     (120, 'L. Perez'):         ('Lucas',      'Perez'),
     (120, 'L. Perillo'):       ('Luca',       'Perillo'),
@@ -269,6 +267,10 @@ _FULL_NAME_LOOKUP: dict[tuple[int, str], tuple[str, str]] = {
     (126, 'R. Hubert'):        ('Rohi',       'Hubert'),
     (126, 'R. Spinelli'):      ('Ryan',       'Spinelli'),
     (126, 'V. DeSomma'):       ('Vincent',    'DeSomma'),
+    (126, "C. O'Connor"):      ('Collin',     "O'Connor"),
+    (126, "N. O'Sullivan"):    ('Nate',       "O'Sullivan"),
+    (126, "O. O'Leary"):       ('Owen',       "O'Leary"),
+    (126, "S. D'Arco"):        ('Sal',        "D'Arco"),
     # 132lb
     (132, 'A. Cedeno'):        ('Adan',       'Cedeno'),
     (132, 'A. Morero'):        ('Andre',      'Morero'),
@@ -292,6 +294,7 @@ _FULL_NAME_LOOKUP: dict[tuple[int, str], tuple[str, str]] = {
     (132, 'R. Dyki'):          ('Ryan',       'Dyki'),
     (132, 'R. Fontanelli'):    ('Rocco',      'Fontanelli'),
     (132, 'R. Hibler'):        ('River',      'Hibler'),
+    (132, 'K. Landell'):       ('Trenton',    'Landell'),
     (132, 'R. Mohammed'):      ('Rayan',      'Mohammad'),
     # 138lb
     (138, 'A. Vann'):          ('Amari',      'Vann'),
@@ -426,6 +429,7 @@ _FULL_NAME_LOOKUP: dict[tuple[int, str], tuple[str, str]] = {
     (165, 'S. Coppolo'):       ('Scott',      'Coppolo'),
     (165, 'S. Mello'):         ('Sincere',    'Mello'),
     (165, 'T. McNamara'):      ('Timothy',    'McNamara'),
+    (165, "T. O'Connor"):      ('Tommy',      "O'Connor"),
     (165, 'W. Tarna'):         ('Will',       'Tarna'),
     # 175lb
     (175, 'A. Helphingsti…'):  ('Alex',       'Helphingstine'),
@@ -478,6 +482,7 @@ _FULL_NAME_LOOKUP: dict[tuple[int, str], tuple[str, str]] = {
     (190, 'M. Sutton'):        ('Matthew',    'Sutton'),
     (190, 'N. Mattessich'):    ('Nevin',      'Mattessich'),
     (190, 'R. Penny'):         ('Rocky',      'Penny'),
+    (190, 'B. Washington'):    ('Navell',     'Washington'),
     (190, 'T. Neiva'):         ('Tyler',      'Neiva'),
     # 215lb
     (215, 'A. Arguello'):      ('Ashton',     'Arguello'),

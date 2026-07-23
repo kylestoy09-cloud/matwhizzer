@@ -5,6 +5,22 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-07-23 — Sam Cali stub name fix (10 remaining abbreviated names)
+
+**Migration file:** `docs/migrations/20260723_sam_cali_stub_name_fix.sql`
+
+**Status:** PENDING — apply after `20260722_sam_cali_name_fix.sql`.
+
+**What changed:**
+
+Resolves the 10 abbreviated name stubs that couldn't be derived from the pipe CSV cross-reference: D. Adell (Andrew), D. D'Arcy (Danny), J. Sgrulletta (Jaxson Sgurletta — single r per original tournament document), C. O'Connor (Collin), N. O'Sullivan (Nate), O. O'Leary (Owen), S. D'Arco (Sal), K. Landell (Trenton), T. O'Connor (Tommy), B. Washington (Navell). Three were OCR initial errors confirmed against the pipe CSV; seven came from the original tournament team-page export. Also adds all 10 to `_FULL_NAME_LOOKUP` in `scripts/import_sam_cali_csv.py` for documentation.
+
+After both Sam Cali name patches apply, the VERIFY query (commented at the bottom of this migration file) should return 0 rows — no abbreviated stubs remaining in any Sam Cali bout.
+
+Note: J. Sgrulletta (GFA, OOS) — wrestler record was created with stub first_name "J." at import time. The wrestler table entry may also need a manual update.
+
+---
+
 ## 2026-07-22 — Fix Sam Cali abbreviated wrestler name_raw fields
 
 **Migration file:** `docs/migrations/20260722_sam_cali_name_fix.sql`
