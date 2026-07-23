@@ -5,6 +5,211 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-07-22 — Fix Sam Cali abbreviated wrestler name_raw fields
+
+**Migration file:** `docs/migrations/20260722_sam_cali_name_fix.sql`
+
+**Status:** PENDING — do not apply until all 12 unresolved stubs are answered (see migration file footer for the list).
+
+**What changed:**
+
+Backfill `wrestler1_name_raw` and `wrestler2_name_raw` for all 386 Sam Cali bouts (`source_format='pdf'`, tournament `bcfb7e9a-eb02-48c4-9d4a-d7776ec87e56`). The original importer stored the raw bracket abbreviation ("J. Barron") in these fields while resolving the full name ("John Barron") only for the wrestler record link. 358 (weight, abbreviated_name) pairs are resolved via the pipe-CSV cross-reference encoded in `scripts/import_sam_cali_csv.py`. 12 stubs remain pending user clarification (3 initial-mismatch cases, 9 genuinely unknown first names).
+
+---
+
+## 2026-07-22 — Rewrite top_postseason_team_scores to key on school_id
+
+**Migration file:** `docs/migrations/20260722_rewrite_top_postseason_team_scores.sql`
+
+**Status:** PENDING — apply AFTER `20260722_patch_precomputed_team_scores_districts.sql`.
+
+**What changed:**
+
+Rewrote `top_postseason_team_scores` to GROUP BY `pts.school_id` in all three CTEs (district/region/state) and INNER JOIN `schools ON sch.id = c.school_id` in the final SELECT. The old version grouped by `pts.school_name` and derived school_id only at the end via `LEFT JOIN schools ON sch.display_name = c.school` — returning NULL school_id for any name mismatch, which silently dropped logos. The column patches to `precomputed_team_scores.school_id` were correct but irrelevant; this function never read that column.
+
+This file also captures `top_postseason_team_scores` into source control for the first time. It previously existed only in the Supabase dashboard.
+
+Return signature is unchanged — no page code updates needed.
+
+**Precondition:** `SELECT * FROM precomputed_team_scores WHERE school_id IS NULL` must return 0 rows before applying (districts patch applied first).
+
+---
+
+## 2026-07-22 — Patch precomputed_team_scores school_id: district-level rows
+
+**Migration file:** `docs/migrations/20260722_patch_precomputed_team_scores_districts.sql`
+
+**Status:** PENDING — awaiting manual apply.
+
+**What changed:**
+
+Patches 4 boys_districts rows left with `school_id IS NULL` after the first round of fixes (`20260722_patch_precomputed_team_scores_school_id.sql`). These were missed because the original diagnostic sampled from the `top_postseason_team_scores` RPC (top 30 only); these schools rank below that cut. Full table audit (`SELECT * FROM precomputed_team_scores WHERE school_id IS NULL`) is the correct method.
+
+| school_name in cache | school_id | display_name |
+|---|---|---|
+| West Windsor-Plainsboro South | 177 | West Windsor-Plainsboro South |
+| West Windsor-Plainsboro North | 176 | West Windsor-Plainsboro North |
+| Haddon Township | 240 | Haddon Township |
+| St Joseph (Hammonton) | 356 | St. Joseph's (Hammonton) |
+
+After applying: `SELECT * FROM precomputed_team_scores WHERE school_id IS NULL` returns 0 rows.
+
+---
+
+## 2026-07-22 — Add staged_imports + staged_decisions for persistent review workflow
+
+**Migration file:** `docs/migrations/20260722_staged_imports.sql`
+
+**Status:** PENDING — awaiting manual apply.
+
+**What changed:**
+
+Two new tables:
+
+- `staged_imports` — one row per uploaded JSON file. Holds `filename`, `source_format`, `status` (`in_review` / `submitted` / `abandoned`), `payload jsonb` (the full PipeImportJSON, write-once), and `total_bouts` / `total_flags` counters for the list view. Auth: `authenticated` + `service_role` only; `anon` has no access.
+
+- `staged_decisions` — one row per school or wrestler decision. Keyed by `(import_id, key_type, key_value)` with `UNIQUE` constraint so upserts are safe. `decision jsonb` stores the override (`{type:'nj', school_id: X}` / `{type:'oos'}` / `{type:'existing', wrestler_id: X}` / `{type:'new'}`). `ON DELETE CASCADE` from `staged_imports` — abandoning an import deletes all its decisions.
+
+**Why JSONB payload + decisions rows (not staged_bouts rows):**
+The review operates at the entity level (one school decision resolves all N bouts for that raw name), not the bout level. Per-bout rows would force N-row updates per school decision and require reconstructing the grouped view on resume. JSONB payload is write-once (never modified after upload), so no blob-rewrite cost per decision. Only `staged_decisions` rows change — one small row per click.
+
+---
+
+## 2026-07-22 — Backfill school_id on precomputed_team_scores (logo fix)
+
+**Migration file:** `docs/migrations/20260722_patch_precomputed_team_scores_school_id.sql`
+
+**Status:** PENDING — awaiting manual apply.
+
+**What changed:**
+
+`UPDATE precomputed_team_scores SET school_id = X WHERE school_name = 'Y' AND school_id IS NULL` for 11 rows across 9 boys schools and 2 girls schools.
+
+| school_name in cache | correct school_id | display_name in schools |
+|---|---|---|
+| Christian Brothers Academy | 197 | Christian Brothers |
+| St Peters Preparatory School | 167 | St. Peter's Prep |
+| Don Bosco Prep School | 11 | Don Bosco Prep |
+| St. Augustine Prep | 313 | St. Augustine |
+| Rumson-Fair Haven Regional | 175 | Rumson-Fair Haven |
+| Lower Cape May Regional | 281 | Lower Cape May |
+| Pascack Valley School | 16 | Pascack Valley |
+| Delaware Valley Regional | 141 | Delaware Valley |
+| West Morris Central | 108 | West Morris |
+| Newton/Kittatinny (girls co-op) | 315 | Kittatinny |
+| Lawrence Senior (girls) | 210 | Lawrence |
+
+**Root cause:** `20260402_add_school_id_to_precomputed.sql` backfilled `school_id` using exact `school_name = display_name` matching. Where `precomputed_team_scores.school_name` used a slightly different format (suffixes like "Regional", "School", "Prep School"; punctuation differences; abbreviation differences), the match failed and `school_id` remained NULL. NULL `school_id` silently drops the school logo on the Postseason Point Leaders list on `/`, `/boys`, `/girls` — data shows but logo badge is blank.
+
+**Pre-existing:** Not caused by today's changes. Present since April 2026 backfill.
+
+**Affected pages:** `/` (root home), `/boys`, `/girls` — all three render `PostseasonLeaders` which resolves logos via `logos.byId.get(r.school_id)`.
+
+**Comprehensive fix:** `20260717_rewrite_scoring_rpcs_use_school_id.sql` (pending) will replace all `precomputed_team_scores` rows with school_id-keyed data once applied. This patch is a safe interim fix — it does not conflict with the comprehensive migration.
+
+---
+
+## 2026-07-22 — Cleanup duplicate school_aliases + resume OOS support migration
+
+**Migration file:** `docs/migrations/20260722_cleanup_and_reapply.sql`
+
+**Status:** PENDING — awaiting manual apply. Run BEFORE the Sam Cali abbreviation patch.
+
+**What changed:**
+
+Step 1: Deletes 40 duplicate rows from `school_aliases` that block `CREATE UNIQUE INDEX school_aliases_nj_alias_unique`.
+- 5 Category A rows (same school_id, safe to drop extras): KIRE×1, SPP×1, 'Haddon Twp Hgh School'×2, 'Passaic Co Tech-Voc'×1
+- 4 Category B rows (clearly wrong school): HACK→del Hackettstown (keep Hackensack), HAHE→del Haddon Heights (keep Hasbrouck Heights), MAHS→del Manville (keep Mahwah), WHS→del Weehawken (keep Wayne Hills)
+- 31 Category C rows (genuinely ambiguous, delete all): HILL, LAKE, LIND, MANA, MARE, MILL, MONT, MORR, PETO, PISC, PVS, RIDG, WEST, WILL, WOOD — Sam Cali patch will re-add HILL→188, LAKE→5, MANA→220, PISC→183 with correct school_ids.
+
+Step 2: Runs the 3 OOS support statements that did not execute on first attempt (statements 3-5 of `20260722_school_aliases_oos_support.sql`):
+- `CREATE UNIQUE INDEX school_aliases_nj_alias_unique`
+- `CREATE UNIQUE INDEX school_aliases_oos_alias_unique`
+- `ALTER TABLE school_aliases ADD COLUMN confirmed_at TIMESTAMPTZ`
+
+**Why this is needed:**
+`20260722_school_aliases_oos_support.sql` partially applied: statements 1-2 auto-committed (school_id is now nullable, global unique constraint dropped), but statement 3 failed on a KIRE duplicate, leaving statements 3-5 unapplied. This cleanup clears all duplicates first, then runs the remaining statements.
+
+---
+
+## 2026-07-22 — Patch Sam Cali school abbreviation mismatches (16 abbreviations, 206 positions)
+
+**Migration file:** `docs/migrations/20260722_patch_sam_cali_school_abbreviations.sql`
+
+**Status:** PENDING — awaiting manual apply.
+
+**What changed:**
+
+206 wrestler-position rows in Sam Cali Battle for The Belt 2025
+(`bcfb7e9a-eb02-48c4-9d4a-d7776ec87e56`) corrected across 16 abbreviations:
+
+| Abbr | Was | Correct | Positions |
+|------|-----|---------|-----------|
+| B-R | 321 Becton | 131 Bridgewater-Raritan | 17 |
+| BBRK | 207 Brick Memorial | 322 Bound Brook | 8 |
+| CHAM | 397 Summit | NULL (OOS — Chaminade, NY) | 18 |
+| DEL | 141 Delaware Valley | 82 Delbarton (28) / 290 Delsea (15) | 43 |
+| HTWN | 240 Haddon Twp | 112 Hackettstown | 11 (4 already fixed) |
+| MANA | 204 Manalapan | 220 Manasquan | 6 |
+| MDTWP | 159 Middletown North | 283 Middle Township | 14 |
+| MO | 172 Monroe | 56 Mt. Olive | 20 |
+| MS | NULL | 160 Middletown South | 8 |
+| MTWN | 114 Morristown | 261 Moorestown | 11 |
+| RP | 196 Rutgers Prep | 125 Roselle Park | 5 |
+| SBW | 164 South Brunswick | 379 Lodi/Saddle Brook | 1 (thin evidence) |
+| SHP | 225 Shore | 127 Seton Hall Prep | 28 |
+| TRE | 216 Trenton | 253 Toms River East | 9 |
+| W/MP | NULL | 9 Waldwick (co-op) | 1 |
+| WHLS | 119 Whippany Park | 147 Watchung Hills | 6 |
+
+DEL resolved per-position (name+weight matched against pipe CSV): 28 Delbarton, 15 Delsea,
+0 unresolvable. ID lists embedded in migration file.
+
+Migration also inserts all 60 Sam Cali bracket abbreviations into `school_aliases`
+(plus 5 OOS aliases: GFA, MSCA, PNGT, CHAM, PEDD) so future imports use the alias
+path instead of fuzzy matching.
+
+**Root cause: abbreviation-driven entity resolution without a lookup table.**
+The bracket PDF source uses 3-5 letter abbreviations. `SchoolMatcher` trigram-fuzzy-
+matched them because they lacked alias entries. Trigram similarity is meaningless at
+2-5 characters — abbreviations share no meaningful n-grams with the full names they
+represent. This is the **3rd abbreviation collision** in this single tournament
+(after SPP and HTWN); all three produced wrong NJ school assignments that persisted
+in production until manual correction.
+
+**Why this wasn't caught at import time:**
+No alert fires when `confidence='high'` is returned — the importer trusts scores
+≥ 0.85 silently. A 3-letter input can score ≥ 0.85 against a wrong 10-character
+school name purely by accident. The fix (see SchoolMatcher short-string guard in
+`import_tournament.py`) refuses fuzzy matching for inputs < 6 characters, returning
+`confidence='none'` and surfacing them for review instead.
+
+---
+
+## 2026-07-22 — Patch bullet CSV school mismatches (Bart Payne + Parsippany Hills)
+
+**Migration file:** `docs/migrations/20260722_patch_bullet_csv_school_mismatches.sql`
+
+**Status:** PENDING — awaiting manual apply.
+
+**What changed:**
+
+54 tournament_bouts rows patched across two bullet CSV tournaments:
+
+- **Bart Payne HT Holiday Tournament** (26 bouts): `wrestler_school_id` 230 (Ewing) → 240 (Haddon Township)
+  for all bouts where `school_raw = 'Haddon Twp Hgh School'`.
+- **Parsippany Hills Holiday Tournament** (28 bouts): `wrestler_school_id` 243 (Saint John Vianney) → 391 (Passaic Tech)
+  for all bouts where `school_raw = 'Passaic Co Tech-Voc'`.
+
+Root cause: `import_bullet_csv.py` `_NJ_SCHOOL_OVERRIDES` had two wrong entries:
+- `"Haddon Twp Hgh School": 230` (should be 240)
+- `"Passaic Co Tech-Voc": 243` (should be 391)
+
+Both entries corrected in source. Two school aliases also inserted to prevent recurrence
+via SchoolMatcher fuzzy path on future importers that don't use `_NJ_SCHOOL_OVERRIDES`.
+
+---
+
 ## 2026-07-22 — Patch Steven Vidal Sam Cali school (HTWN → Hackettstown) + alias
 
 **Migration file:** `docs/migrations/20260722_patch_vidal_sam_cali_school.sql`

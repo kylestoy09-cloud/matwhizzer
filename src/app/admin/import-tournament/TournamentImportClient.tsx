@@ -15,6 +15,7 @@ import type {
 function ConfidenceBadge({ confidence }: { confidence: string }) {
   const cls =
     confidence === 'exact' ? 'bg-green-100 text-green-800' :
+    confidence === 'alias' ? 'bg-teal-100 text-teal-800' :
     confidence === 'high'  ? 'bg-blue-100 text-blue-800' :
     confidence === 'low'   ? 'bg-yellow-100 text-yellow-800' :
     confidence === 'oos'   ? 'bg-purple-100 text-purple-800' :
@@ -154,11 +155,21 @@ function SchoolFlag({
       </div>
 
       <div className="flex gap-2 flex-wrap">
+        {(resolution.confidence === 'high' || resolution.confidence === 'low')
+          && resolution.school_id != null && resolution.display_name && (
+          <button
+            onClick={() => pickNJ({ id: resolution.school_id!, display_name: resolution.display_name! })}
+            disabled={status === 'saving'}
+            className="text-xs px-3 py-1.5 border border-teal-300 text-teal-700 rounded hover:bg-teal-50 transition-colors disabled:opacity-50"
+          >
+            Confirm: {resolution.display_name}
+          </button>
+        )}
         <button
           onClick={() => setShowSearch(s => !s)}
           className="text-xs px-3 py-1.5 border border-blue-300 text-blue-700 rounded hover:bg-blue-50 transition-colors"
         >
-          Map to NJ school
+          {(resolution.confidence === 'high' || resolution.confidence === 'low') ? 'Use different school' : 'Map to NJ school'}
         </button>
         <button
           onClick={confirmOOS}
@@ -302,6 +313,15 @@ function WrestlerFlag({
 
       {!override && schoolId !== null && (
         <>
+          {(resolution.confidence === 'high' || resolution.confidence === 'low')
+            && resolution.wrestler_id && resolution.display_name && (
+            <button
+              onClick={() => onOverride(wrestlerKey, { type: 'existing', wrestler_id: resolution.wrestler_id!, display_name: resolution.display_name! })}
+              className="mt-2 text-xs px-3 py-1.5 border border-teal-300 text-teal-700 rounded hover:bg-teal-50 transition-colors"
+            >
+              Confirm: {resolution.display_name}
+            </button>
+          )}
           <RosterSearch
             schoolId={schoolId}
             onSelect={w => onOverride(wrestlerKey, { type: 'existing', wrestler_id: w.id, display_name: w.display_name })}
@@ -348,9 +368,11 @@ function TournamentRow({ t }: { t: TournamentBlock }) {
 
 export function TournamentImportClient() {
   const [importData, setImportData]           = useState<PipeImportJSON | null>(null)
+  const [importId, setImportId]               = useState<string | null>(null)
   const [schoolOverrides, setSchoolOverrides] = useState<Record<string, SchoolOverride>>({})
   const [wrestlerOverrides, setWrestlerOverrides] = useState<Record<string, WrestlerOverride>>({})
   const [phase, setPhase]             = useState<'upload' | 'review' | 'submitting' | 'done'>('upload')
+  const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'error'>('idle')
   const [submitResult, setSubmitResult] = useState<{ inserted: number; created: number } | null>(null)
   const [submitError, setSubmitError]   = useState<string | null>(null)
 
@@ -372,18 +394,34 @@ export function TournamentImportClient() {
     const file = e.target.files?.[0]
     if (!file) return
     const reader = new FileReader()
-    reader.onload = ev => {
+    reader.onload = async (ev) => {
       try {
         const data = JSON.parse(ev.target?.result as string) as PipeImportJSON
-        if (data.schema_version !== 1 || data.source_format !== 'pipe') {
+        if (!data.schema_version || data.schema_version < 1 || !data.source_format) {
           alert('Unrecognised JSON format. Make sure you used --json-out from import_pipe_csv.py.')
           return
         }
+        setUploadStatus('uploading')
+        const res = await fetch('/api/admin/stage-import', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ payload: data, filename: file.name }),
+        })
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({ error: 'Upload failed' }))
+          throw new Error(err.error ?? 'Upload failed')
+        }
+        const { import_id } = await res.json()
+        setImportId(import_id)
         setImportData(data)
         setSchoolOverrides({})
         setWrestlerOverrides({})
         setPhase('review')
-      } catch { alert('Could not parse JSON file.') }
+        setUploadStatus('idle')
+      } catch (err) {
+        setUploadStatus('error')
+        alert(err instanceof Error ? err.message : 'Upload failed')
+      }
     }
     reader.readAsText(file)
   }, [])
@@ -424,13 +462,20 @@ export function TournamentImportClient() {
         <code className="block text-xs bg-slate-100 rounded px-4 py-2 mb-6 text-slate-700 font-mono">
           python3 scripts/import_pipe_csv.py --json-out out.json pipe_format_tournaments_dec2025.csv
         </code>
-        <label className="cursor-pointer inline-flex items-center gap-2 bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-          </svg>
-          Upload JSON file
-          <input type="file" accept=".json" className="sr-only" onChange={handleFile} />
-        </label>
+        {uploadStatus === 'uploading' ? (
+          <p className="text-sm text-slate-500">Saving to database…</p>
+        ) : (
+          <label className="cursor-pointer inline-flex items-center gap-2 bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+            </svg>
+            Upload JSON file
+            <input type="file" accept=".json" className="sr-only" onChange={handleFile} />
+          </label>
+        )}
+        {uploadStatus === 'error' && (
+          <p className="text-sm text-red-600 mt-3">Upload failed — check console for details.</p>
+        )}
       </div>
     )
   }
@@ -444,7 +489,7 @@ export function TournamentImportClient() {
           {submitResult.inserted} bouts inserted · {submitResult.created} wrestlers created
         </p>
         <button
-          onClick={() => { setPhase('upload'); setImportData(null) }}
+          onClick={() => { setPhase('upload'); setImportData(null); setImportId(null); setUploadStatus('idle') }}
           className="mt-4 text-sm text-green-700 underline hover:text-green-900"
         >
           Import another file
@@ -456,22 +501,22 @@ export function TournamentImportClient() {
   // ── Review phase ────────────────────────────────────────────────────────────
   if (!importData) return null
 
-  // Schools needing a decision: confidence 'none' (unreviewed) or 'low' (NJ-ambiguous).
-  // 'oos' = already confirmed OOS by a previous import; 'exact'/'high' = matched.
+  // Schools needing a decision: anything that isn't an exact/alias/oos match.
+  // 'high' = fuzzy strong match (confirm required); 'low' = weak guess; 'none' = no match.
   const needsDecision = Object.entries(importData.schools).filter(
-    ([raw, s]) => (s.confidence === 'none' || s.confidence === 'low') && !schoolOverrides[raw]
+    ([raw, s]) => (s.confidence === 'none' || s.confidence === 'low' || s.confidence === 'high') && !schoolOverrides[raw]
   )
   const decidedCount = Object.entries(importData.schools).filter(
-    ([raw, s]) => (s.confidence === 'none' || s.confidence === 'low') && schoolOverrides[raw]
+    ([raw, s]) => (s.confidence === 'none' || s.confidence === 'low' || s.confidence === 'high') && schoolOverrides[raw]
   ).length
   const totalSchoolDecisions = needsDecision.length + decidedCount
 
-  // Wrestlers needing attention: low confidence or new, for NJ schools only.
+  // Wrestlers needing attention: high/low confidence or new, for NJ schools only.
   const flaggedWrestlers = Object.entries(importData.wrestlers).filter(
     ([key, w]) => {
       if (wrestlerOverrides[key]) return false
       if (key.split('|')[1] === 'null') return false
-      return w.confidence === 'low' || w.is_new
+      return w.confidence === 'high' || w.confidence === 'low' || w.is_new
     }
   )
   const resolvedWrestlerCount = Object.entries(importData.wrestlers).filter(
@@ -485,7 +530,7 @@ export function TournamentImportClient() {
   const sortedSchoolDecisions = [
     ...needsDecision,
     ...Object.entries(importData.schools).filter(
-      ([raw, s]) => (s.confidence === 'none' || s.confidence === 'low') && schoolOverrides[raw]
+      ([raw, s]) => (s.confidence === 'none' || s.confidence === 'low' || s.confidence === 'high') && schoolOverrides[raw]
     ),
   ].sort(([a], [b]) => (boutCountBySchool[b] ?? 0) - (boutCountBySchool[a] ?? 0))
 
@@ -541,9 +586,8 @@ export function TournamentImportClient() {
             </span>
           </h2>
           <p className="text-xs text-slate-400 mb-3">
-            Every unmatched school requires an explicit decision — map to an NJ school
-            (writes a permanent alias) or confirm as out-of-state (remembered for future imports).
-            Sorted by bout count.
+            Every unresolved school requires a decision. Fuzzy matches show a suggested name —
+            confirm it to write a permanent alias, or pick a different school. Sorted by bout count.
           </p>
           <div className="space-y-3">
             {sortedSchoolDecisions.map(([rawName, resolution]) => (
