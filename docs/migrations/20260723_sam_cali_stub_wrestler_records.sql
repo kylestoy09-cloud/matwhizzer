@@ -59,11 +59,13 @@ WHERE first_name = 'C.'
   AND id IN (
     SELECT nj_wrestler1_id FROM tournament_bouts
     WHERE in_season_tournament_id = 'bcfb7e9a-eb02-48c4-9d4a-d7776ec87e56'
+      AND weight_class = 126
       AND wrestler1_name_raw = 'C. O''Connor'
       AND nj_wrestler1_id IS NOT NULL
     UNION
     SELECT nj_wrestler2_id FROM tournament_bouts
     WHERE in_season_tournament_id = 'bcfb7e9a-eb02-48c4-9d4a-d7776ec87e56'
+      AND weight_class = 126
       AND wrestler2_name_raw = 'C. O''Connor'
       AND nj_wrestler2_id IS NOT NULL
   );
@@ -74,11 +76,13 @@ WHERE first_name = 'T.'
   AND id IN (
     SELECT nj_wrestler1_id FROM tournament_bouts
     WHERE in_season_tournament_id = 'bcfb7e9a-eb02-48c4-9d4a-d7776ec87e56'
+      AND weight_class = 165
       AND wrestler1_name_raw = 'T. O''Connor'
       AND nj_wrestler1_id IS NOT NULL
     UNION
     SELECT nj_wrestler2_id FROM tournament_bouts
     WHERE in_season_tournament_id = 'bcfb7e9a-eb02-48c4-9d4a-d7776ec87e56'
+      AND weight_class = 165
       AND wrestler2_name_raw = 'T. O''Connor'
       AND nj_wrestler2_id IS NOT NULL
   );
@@ -89,11 +93,13 @@ WHERE first_name = 'B.'
   AND id IN (
     SELECT nj_wrestler1_id FROM tournament_bouts
     WHERE in_season_tournament_id = 'bcfb7e9a-eb02-48c4-9d4a-d7776ec87e56'
+      AND weight_class = 190
       AND wrestler1_name_raw = 'B. Washington'
       AND nj_wrestler1_id IS NOT NULL
     UNION
     SELECT nj_wrestler2_id FROM tournament_bouts
     WHERE in_season_tournament_id = 'bcfb7e9a-eb02-48c4-9d4a-d7776ec87e56'
+      AND weight_class = 190
       AND wrestler2_name_raw = 'B. Washington'
       AND nj_wrestler2_id IS NOT NULL
   );
