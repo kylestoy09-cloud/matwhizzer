@@ -6,7 +6,7 @@
  *
  * Reads: ~/Desktop/Mascot Library/animation/Whizzer/  (1.png–97.png, 86 absent = 96 frames)
  * Writes:
- *   public/flipbook.avif     — 10×10 grid sprite (6000×6000 px, 96 frames, AVIF q60)
+ *   public/flipbook.avif     — 10×10 grid sprite (6000×6000 px, 100 frames, AVIF q60)
  *   public/logo-final.webp  — final frame alone  (97.png, 800×800 px, WebP q82)
  */
 
@@ -24,11 +24,12 @@ const OUTPUT_DIR = join(ROOT, 'public')
 
 const COLS              = 10
 const ROWS              = 10
+const GRID_FRAMES       = COLS * ROWS    // 100 — padded frame count
 const CELL_PX           = 600
 const LOGO_PX           = 800
 const SPRITE_QUALITY    = 60
 const LOGO_QUALITY      = 82
-const EXPECTED_FRAMES   = 96
+const SOURCE_FRAMES     = 96            // real source PNGs (86.png absent → 1-97, 96 files)
 const MAX_DIM           = 16383          // AVIF/HEIF hard limit
 const MAX_SPRITE_BYTES  = 1.6 * 1024 * 1024   // 1.6 MB — fail loudly if exceeded
 
@@ -51,36 +52,53 @@ const pngFiles = allFiles
   .filter(f => /^\d+\.png$/.test(f))
   .sort((a, b) => parseInt(a, 10) - parseInt(b, 10))
 
-if (pngFiles.length !== EXPECTED_FRAMES) {
-  console.error(`❌  Expected ${EXPECTED_FRAMES} .png files, found ${pngFiles.length}.`)
+if (pngFiles.length !== SOURCE_FRAMES) {
+  console.error(`❌  Expected ${SOURCE_FRAMES} .png files, found ${pngFiles.length}.`)
   console.error(`    Files: ${pngFiles.join(', ')}`)
   process.exit(1)
 }
 
 console.log(`✓  Found ${pngFiles.length} frames: ${pngFiles[0]} … ${pngFiles[pngFiles.length - 1]}`)
 
+// Pad to GRID_FRAMES by repeating the final source frame (97.png).
+// These 4 padding copies fill cols 6–9 of row 9 and are visually identical
+// to the real last frame, so the hold reads as a natural beat, not a glitch.
+const paddedFiles = [
+  ...pngFiles,
+  ...Array(GRID_FRAMES - pngFiles.length).fill(pngFiles[pngFiles.length - 1]),
+]
+console.log(`✓  Padded to ${paddedFiles.length} frames (${GRID_FRAMES - pngFiles.length} copies of ${pngFiles[pngFiles.length - 1]})`)
+
 // ── 2. Resize all frames to CELL_PX × CELL_PX ─────────────────────────────
+// Resize only the unique SOURCE_FRAMES files; the 4 padding entries are
+// copies of the same path, so we deduplicate before encoding.
 
-console.log(`\nResizing ${pngFiles.length} frames at ${CELL_PX}×${CELL_PX}…`)
+console.log(`\nResizing ${paddedFiles.length} frames at ${CELL_PX}×${CELL_PX}…`)
 
-const frameBuffers = await Promise.all(
-  pngFiles.map(async (file, i) => {
-    const buf = await sharp(join(FRAMES_DIR, file))
+// Build a map of path → resized buffer so the final frame is only encoded once.
+const uniquePaths = [...new Set(paddedFiles.map(f => join(FRAMES_DIR, f)))]
+const bufferByPath = new Map()
+await Promise.all(
+  uniquePaths.map(async (path, i) => {
+    const buf = await sharp(path)
       .resize(CELL_PX, CELL_PX, { fit: 'cover', position: 'centre' })
       .png()
       .toBuffer()
-    if (i === 0 || i === pngFiles.length - 1 || (i + 1) % 10 === 0) {
-      console.log(`  [${String(i + 1).padStart(2)}/${pngFiles.length}] ${file}`)
+    const name = path.split('/').pop()
+    if (i === 0 || i === uniquePaths.length - 1 || (i + 1) % 10 === 0) {
+      console.log(`  [${String(i + 1).padStart(2)}/${uniquePaths.length}] ${name}`)
     }
-    return buf
+    bufferByPath.set(path, buf)
   })
 )
 
+const frameBuffers = paddedFiles.map(f => bufferByPath.get(join(FRAMES_DIR, f)))
+
 // ── 3. Composite into 10×10 grid sprite ───────────────────────────────────
 // Frame i → col = i % COLS, row = floor(i / COLS).
-// 4 trailing cells (indices 96–99) are left transparent.
+// All 100 cells are filled: indices 96–99 hold padding copies of 97.png.
 
-console.log(`\nCompositing grid sprite (${CANVAS_W}×${CANVAS_H})…`)
+console.log(`\nCompositing grid sprite (${CANVAS_W}×${CANVAS_H}, ${frameBuffers.length} frames)…`)
 
 const composites = frameBuffers.map((input, i) => ({
   input,
