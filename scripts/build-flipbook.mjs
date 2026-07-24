@@ -4,10 +4,10 @@
  * Build-time script — run manually via `npm run build:flipbook`.
  * NOT wired into the Vercel build pipeline.
  *
- * Reads: public/updated/1.svg … 34.svg
+ * Reads: ~/Desktop/Mascot Library/animation/Whizzer/  (1.png–97.png, 86 absent = 96 frames)
  * Writes:
- *   public/flipbook.webp      — vertical sprite sheet (800 × 27200)
- *   public/logo-final.webp   — frame 34 alone (fallback / reduced-motion / preload poster)
+ *   public/flipbook.avif     — 10×10 grid sprite (6000×6000 px, 96 frames, AVIF q60)
+ *   public/logo-final.webp  — final frame alone  (97.png, 800×800 px, WebP q82)
  */
 
 import sharp from 'sharp'
@@ -15,100 +15,121 @@ import { readdir, stat } from 'fs/promises'
 import { join, resolve } from 'path'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
+import { homedir } from 'os'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT       = resolve(__dirname, '..')
-const FRAMES_DIR = join(ROOT, 'public', 'updated')
+const FRAMES_DIR = join(homedir(), 'Desktop', 'Mascot Library', 'animation', 'Whizzer')
 const OUTPUT_DIR = join(ROOT, 'public')
 
-// WebP hard cap: 16383 × 16383. 34 × 800 = 27200 > 16383 — exceeds the limit.
-// 34 × 400 = 13600 < 16383 — fits. Sprite uses 400px frames; logo-final uses 800px.
-const SPRITE_PX = 400   // per-frame pixels in the sprite sheet
-const LOGO_PX   = 800   // pixel size for the standalone logo-final.webp
-const QUALITY   = 82
+const COLS              = 10
+const ROWS              = 10
+const CELL_PX           = 600
+const LOGO_PX           = 800
+const SPRITE_QUALITY    = 60
+const LOGO_QUALITY      = 82
+const EXPECTED_FRAMES   = 96
+const MAX_DIM           = 16383          // AVIF/HEIF hard limit
+const MAX_SPRITE_BYTES  = 1.6 * 1024 * 1024   // 1.6 MB — fail loudly if exceeded
+
+const CANVAS_W = COLS * CELL_PX  // 6000
+const CANVAS_H = ROWS * CELL_PX  // 6000
+
+// ── 0. Dimension guard ─────────────────────────────────────────────────────
+if (CANVAS_W > MAX_DIM || CANVAS_H > MAX_DIM) {
+  console.error(`❌  Canvas ${CANVAS_W}×${CANVAS_H} exceeds AVIF limit of ${MAX_DIM}px.`)
+  process.exit(1)
+}
+console.log(`✓  Canvas ${CANVAS_W}×${CANVAS_H} — within AVIF limits.`)
 
 // ── 1. Collect and sort frames numerically ─────────────────────────────────
 // Default string sort yields 1, 10, 11, 2 … — must use explicit numeric sort.
+// Source: 1.png–97.png with 86 absent → exactly 96 PNGs.
 
 const allFiles = await readdir(FRAMES_DIR)
-const svgFiles = allFiles
-  .filter(f => /^\d+\.svg$/.test(f))
+const pngFiles = allFiles
+  .filter(f => /^\d+\.png$/.test(f))
   .sort((a, b) => parseInt(a, 10) - parseInt(b, 10))
 
-if (svgFiles.length !== 34) {
-  console.error(`❌  Expected 34 .svg files, found ${svgFiles.length}.`)
-  console.error(`    Files found: ${svgFiles.join(', ')}`)
+if (pngFiles.length !== EXPECTED_FRAMES) {
+  console.error(`❌  Expected ${EXPECTED_FRAMES} .png files, found ${pngFiles.length}.`)
+  console.error(`    Files: ${pngFiles.join(', ')}`)
   process.exit(1)
 }
 
-console.log(`✓  Found ${svgFiles.length} frames in numeric order: ${svgFiles[0]} … ${svgFiles[svgFiles.length - 1]}`)
+console.log(`✓  Found ${pngFiles.length} frames: ${pngFiles[0]} … ${pngFiles[pngFiles.length - 1]}`)
 
-// ── 2. Rasterize all frames to 800 × 800 PNG buffers ──────────────────────
-// fit:'cover' + position:'centre' guarantees exactly FRAME_PX × FRAME_PX output.
-// The 1px width difference (1729 vs 1728 viewBox) is negligible at this output
-// size — cover crops from centre, effectively invisible.
+// ── 2. Resize all frames to CELL_PX × CELL_PX ─────────────────────────────
 
-console.log(`\nRasterizing ${svgFiles.length} frames at ${SPRITE_PX}×${SPRITE_PX} for sprite…`)
+console.log(`\nResizing ${pngFiles.length} frames at ${CELL_PX}×${CELL_PX}…`)
 
 const frameBuffers = await Promise.all(
-  svgFiles.map(async (file, i) => {
+  pngFiles.map(async (file, i) => {
     const buf = await sharp(join(FRAMES_DIR, file))
-      .resize(SPRITE_PX, SPRITE_PX, { fit: 'cover', position: 'centre' })
+      .resize(CELL_PX, CELL_PX, { fit: 'cover', position: 'centre' })
       .png()
       .toBuffer()
-    if (i === 0 || i === svgFiles.length - 1 || (i + 1) % 5 === 0) {
-      console.log(`  [${String(i + 1).padStart(2)}/${svgFiles.length}] ${file}`)
+    if (i === 0 || i === pngFiles.length - 1 || (i + 1) % 10 === 0) {
+      console.log(`  [${String(i + 1).padStart(2)}/${pngFiles.length}] ${file}`)
     }
     return buf
   })
 )
 
-// ── 3. Composite into vertical sprite (800 wide × 27200 tall) ─────────────
+// ── 3. Composite into 10×10 grid sprite ───────────────────────────────────
+// Frame i → col = i % COLS, row = floor(i / COLS).
+// 4 trailing cells (indices 96–99) are left transparent.
 
-const SPRITE_H = SPRITE_PX * svgFiles.length  // 400 × 34 = 13600
-
-console.log(`\nCompositing sprite sheet (${SPRITE_PX} × ${SPRITE_H})…`)
+console.log(`\nCompositing grid sprite (${CANVAS_W}×${CANVAS_H})…`)
 
 const composites = frameBuffers.map((input, i) => ({
   input,
-  top:  i * SPRITE_PX,
-  left: 0,
+  left: (i % COLS) * CELL_PX,
+  top:  Math.floor(i / COLS) * CELL_PX,
 }))
 
-const spriteWebpBuffer = await sharp({
+const spriteAvifBuffer = await sharp({
   create: {
-    width:      SPRITE_PX,
-    height:     SPRITE_H,
+    width:      CANVAS_W,
+    height:     CANVAS_H,
     channels:   4,
     background: { r: 0, g: 0, b: 0, alpha: 0 },
   },
 })
   .composite(composites)
-  .webp({ quality: QUALITY })
+  .avif({ quality: SPRITE_QUALITY })
   .toBuffer()
 
-const spritePath = join(OUTPUT_DIR, 'flipbook.webp')
-await sharp(spriteWebpBuffer).toFile(spritePath)
+const spritePath  = join(OUTPUT_DIR, 'flipbook.avif')
+await sharp(spriteAvifBuffer).toFile(spritePath)
 
-const spriteKB = Math.round((await stat(spritePath)).size / 1024)
-const flagStr  = spriteKB > 800 ? ' ⚠️  EXCEEDS 800 KB — consider lowering quality' : ' ✓'
+const spriteBytes = (await stat(spritePath)).size
+const spriteKB    = Math.round(spriteBytes / 1024)
+const spriteMB    = (spriteBytes / (1024 * 1024)).toFixed(2)
+
 console.log(`\nSprite → ${spritePath}`)
-console.log(`  Dimensions : ${SPRITE_PX} × ${SPRITE_H} px`)
-console.log(`  File size  : ${spriteKB} KB${flagStr}`)
+console.log(`  Dimensions : ${CANVAS_W}×${CANVAS_H} px`)
+console.log(`  File size  : ${spriteKB} KB (${spriteMB} MB)`)
 
-// ── 4. Export frame 34 alone at 2× resolution (fallback / reduced-motion) ─
-// Re-rasterize at LOGO_PX (800) for a crisp static image on high-DPI displays.
+if (spriteBytes > MAX_SPRITE_BYTES) {
+  console.error(`\n❌  Sprite exceeds ${(MAX_SPRITE_BYTES / 1024 / 1024).toFixed(1)} MB (${spriteMB} MB). STOPPING.`)
+  console.error('    Re-export source frames or lower SPRITE_QUALITY before proceeding to Step 2.')
+  process.exit(1)
+}
 
-const finalPath = join(OUTPUT_DIR, 'logo-final.webp')
-const logoBuffer = await sharp(join(FRAMES_DIR, svgFiles[33]))
+// ── 4. Export final frame (97.png) as logo-final.webp (WebP, not AVIF) ───
+
+const finalPath  = join(OUTPUT_DIR, 'logo-final.webp')
+const logoBuffer = await sharp(join(FRAMES_DIR, pngFiles[pngFiles.length - 1]))
   .resize(LOGO_PX, LOGO_PX, { fit: 'cover', position: 'centre' })
-  .webp({ quality: QUALITY })
+  .webp({ quality: LOGO_QUALITY })
   .toBuffer()
 await sharp(logoBuffer).toFile(finalPath)
 
-const finalKB  = Math.round((await stat(finalPath)).size / 1024)
+const finalKB = Math.round((await stat(finalPath)).size / 1024)
 console.log(`\nLogo final → ${finalPath}`)
-console.log(`  Dimensions : ${LOGO_PX} × ${LOGO_PX} px`)
+console.log(`  Source     : ${pngFiles[pngFiles.length - 1]}`)
+console.log(`  Dimensions : ${LOGO_PX}×${LOGO_PX} px`)
 console.log(`  File size  : ${finalKB} KB`)
 
 console.log('\nDone.')
