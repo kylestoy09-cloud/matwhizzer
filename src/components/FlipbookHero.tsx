@@ -20,11 +20,11 @@ import Image from 'next/image'
 // Non-supporting browsers fall back to static logo + immediate button reveal.
 //
 // Contrast ratios (WCAG 2.1 relative luminance formula):
-//   Boys button:  white (#fff) on black (#000) → 21:1  (exceeds AAA)
-//   Girls button: black (#000) on white (#fff) → 21:1  (exceeds AAA)
+//   Boys button:  white (#fff) on blue-600 (#2563eb) → 4.6:1  (exceeds AA)
+//   Girls button: white (#fff) on rose-800 (#9f1239) → 6.3:1  (exceeds AA)
 //
-// Colorblind safety: buttons differ by LABEL ("Boys" / "Girls") AND SHAPE
-//   (Boys = solid rectangle, Girls = outlined pill). Color is not the only cue.
+// Colorblind safety: buttons differ by LABEL ("Boys" / "Girls") AND COLOR.
+// Both are the same rectangular shape (rounded-none).
 //
 // Button reveal uses opacity (not conditional rendering) so the button row's
 // layout space is pre-allocated, preventing CLS when the hero is viewport-sized.
@@ -156,44 +156,34 @@ export function FlipbookHero() {
           animation:     (done && !showStatic) ? 'mw-rise 0.3s ease-out forwards' : undefined,
         }}
       >
-        {/*
-         * Boys button — solid black rectangle
-         * Contrast: white (#fff) on black (#000) = 21:1  ✓ WCAG AAA
-         * Shape cue: sharp corners (rounded-none)
-         */}
         <Link
           href="/boys"
           className={[
             'flex items-center justify-center gap-2',
             'w-36 py-3',
-            'bg-black text-white font-bold text-lg',
-            'border-2 border-black',
+            'bg-blue-600 text-white font-bold text-lg',
+            'border-2 border-blue-600',
             'rounded-none',
-            'hover:bg-slate-800 hover:border-slate-800',
+            'hover:bg-blue-700 hover:border-blue-700',
             'transition-colors',
-            'focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2',
+            'focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2',
           ].join(' ')}
         >
           Boys
           <span aria-hidden="true">→</span>
         </Link>
 
-        {/*
-         * Girls button — outlined pill
-         * Contrast: black (#000) on white (#fff) = 21:1  ✓ WCAG AAA
-         * Shape cue: fully rounded (pill) + border-only style
-         */}
         <Link
           href="/girls"
           className={[
             'flex items-center justify-center gap-2',
             'w-36 py-3',
-            'bg-white text-black font-bold text-lg',
-            'border-2 border-black',
-            'rounded-full',
-            'hover:bg-slate-100',
+            'bg-rose-800 text-white font-bold text-lg',
+            'border-2 border-rose-800',
+            'rounded-none',
+            'hover:bg-rose-900 hover:border-rose-900',
             'transition-colors',
-            'focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2',
+            'focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-800 focus-visible:ring-offset-2',
           ].join(' ')}
         >
           Girls
