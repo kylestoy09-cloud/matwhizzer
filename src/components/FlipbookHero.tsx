@@ -31,7 +31,7 @@ import Image from 'next/image'
 
 const DISPLAY_PX = 400
 const COLS       = 10
-const FRAME_MS   = 30                         // ms per frame (33 fps)
+const FRAME_MS   = 25                         // ms per frame (40 fps)
 const X_DUR_MS   = FRAME_MS * COLS            // 400 ms per column cycle
 const Y_DUR_MS   = FRAME_MS * COLS * COLS     // 4 000 ms total
 
