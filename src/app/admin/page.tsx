@@ -90,6 +90,13 @@ export default async function AdminDashboard() {
           <h2 className="text-sm font-semibold text-slate-900 mb-1">Bout Audit</h2>
           <p className="text-xs text-slate-500">Browse live tournament bouts, surface flagged data, fix in place</p>
         </Link>
+        <Link
+          href="/admin/dual-audit"
+          className="bg-white rounded-none border border-black shadow-none p-6 transition-shadow"
+        >
+          <h2 className="text-sm font-semibold text-slate-900 mb-1">Dual Meet Audit</h2>
+          <p className="text-xs text-slate-500">Browse live dual meet matches, surface flagged data, fix in place</p>
+        </Link>
       </div>
     </div>
   )

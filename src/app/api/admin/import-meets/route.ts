@@ -301,34 +301,44 @@ export async function POST(req: NextRequest) {
 
       let wrestlerAId: string | null
       let wrestlerBId: string | null
+      let wrestlerANameRaw: string | null
+      let wrestlerBNameRaw: string | null
 
       if (match.isDoubleForfeit) {
         wrestlerAId = null
         wrestlerBId = null
+        wrestlerANameRaw = null
+        wrestlerBNameRaw = null
       } else if (match.isForfeitWin) {
-        wrestlerAId = winnerIsTeam1 ? winnerWrestlerId : null
-        wrestlerBId = winnerIsTeam1 ? null : winnerWrestlerId
+        wrestlerAId      = winnerIsTeam1 ? winnerWrestlerId   : null
+        wrestlerBId      = winnerIsTeam1 ? null               : winnerWrestlerId
+        wrestlerANameRaw = winnerIsTeam1 ? match.winnerName   : null
+        wrestlerBNameRaw = winnerIsTeam1 ? null               : match.winnerName
       } else {
-        wrestlerAId = winnerIsTeam1 ? winnerWrestlerId : loserWrestlerId
-        wrestlerBId = winnerIsTeam1 ? loserWrestlerId  : winnerWrestlerId
+        wrestlerAId      = winnerIsTeam1 ? winnerWrestlerId   : loserWrestlerId
+        wrestlerBId      = winnerIsTeam1 ? loserWrestlerId    : winnerWrestlerId
+        wrestlerANameRaw = winnerIsTeam1 ? match.winnerName   : match.loserName
+        wrestlerBNameRaw = winnerIsTeam1 ? match.loserName    : match.winnerName
       }
 
       matchRows.push({
-        dual_meet_id:      dualMeetId,
-        weight_class:      match.weightClass,
-        wrestler_a_id:     wrestlerAId,
-        wrestler_b_id:     wrestlerBId,
-        school_a_id:       team1SchoolId,
-        school_b_id:       team2SchoolId,
-        winner_id:         winnerWrestlerId,
-        result_type:       match.resultType,
-        result_detail:     match.resultDetail,
-        fall_time_seconds: match.resultType === 'Fall' ? parseFallTime(match.resultDetail) : null,
-        team1_points:      match.team1Points,
-        team2_points:      match.team2Points,
-        is_double_forfeit: match.isDoubleForfeit,
-        is_forfeit_win:    match.isForfeitWin,
-        validated:         false,
+        dual_meet_id:         dualMeetId,
+        weight_class:         match.weightClass,
+        wrestler_a_id:        wrestlerAId,
+        wrestler_b_id:        wrestlerBId,
+        wrestler_a_name_raw:  wrestlerANameRaw,
+        wrestler_b_name_raw:  wrestlerBNameRaw,
+        school_a_id:          team1SchoolId,
+        school_b_id:          team2SchoolId,
+        winner_id:            winnerWrestlerId,
+        result_type:          match.resultType,
+        result_detail:        match.resultDetail,
+        fall_time_seconds:    match.resultType === 'Fall' ? parseFallTime(match.resultDetail) : null,
+        team1_points:         match.team1Points,
+        team2_points:         match.team2Points,
+        is_double_forfeit:    match.isDoubleForfeit,
+        is_forfeit_win:       match.isForfeitWin,
+        validated:            false,
       })
     }
 
