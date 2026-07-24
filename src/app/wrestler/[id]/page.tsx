@@ -269,12 +269,12 @@ export default async function WrestlerPage({
         .select(`
           id, weight_class, result_type, result_detail, fall_time_seconds,
           is_double_forfeit, is_forfeit_win, wrestler_a_id, wrestler_b_id, winner_id,
-          wrestler_a:wrestlers!wrestler_a_id(id, first_name, last_name),
-          wrestler_b:wrestlers!wrestler_b_id(id, first_name, last_name),
+          wrestler_a:wrestlers!wrestler_a_id(id, first_name, last_name, is_stub),
+          wrestler_b:wrestlers!wrestler_b_id(id, first_name, last_name, is_stub),
           meet:dual_meets(
             id, meet_date, team1_score, team2_score, season_id,
-            school_a:schools!team1_school_id(id, display_name),
-            school_b:schools!team2_school_id(id, display_name)
+            school_a:schools!team1_school_id(id, display_name, is_nj),
+            school_b:schools!team2_school_id(id, display_name, is_nj)
           )
         `)
         .or(`wrestler_a_id.eq.${id},wrestler_b_id.eq.${id}`),
@@ -568,16 +568,16 @@ export default async function WrestlerPage({
     wrestler_a_id: string | null
     wrestler_b_id: string | null
     winner_id: string | null
-    wrestler_a: { id: string; first_name: string; last_name: string } | { id: string; first_name: string; last_name: string }[] | null
-    wrestler_b: { id: string; first_name: string; last_name: string } | { id: string; first_name: string; last_name: string }[] | null
+    wrestler_a: { id: string; first_name: string; last_name: string; is_stub: boolean } | { id: string; first_name: string; last_name: string; is_stub: boolean }[] | null
+    wrestler_b: { id: string; first_name: string; last_name: string; is_stub: boolean } | { id: string; first_name: string; last_name: string; is_stub: boolean }[] | null
     meet: {
       id: string
       meet_date: string
       team1_score: number | null
       team2_score: number | null
       season_id: number
-      school_a: { id: number; display_name: string } | null
-      school_b: { id: number; display_name: string } | null
+      school_a: { id: number; display_name: string; is_nj: boolean } | null
+      school_b: { id: number; display_name: string; is_nj: boolean } | null
     } | null
   }
 
@@ -593,6 +593,7 @@ export default async function WrestlerPage({
       result: 'W' | 'L' | null
       oppName: string
       oppId: string | null
+      oppIsStub: boolean
       resultStr: string
     }[]
   }
@@ -624,7 +625,7 @@ export default async function WrestlerPage({
       ? null
       : row.winner_id === id ? 'W' : 'L'
 
-    type WrestlerRef = { id: string; first_name: string; last_name: string }
+    type WrestlerRef = { id: string; first_name: string; last_name: string; is_stub: boolean }
     const oppWrestlerRaw = (isWrestlerA
       ? unwrap(row.wrestler_b as WrestlerRef | WrestlerRef[] | null)
       : unwrap(row.wrestler_a as WrestlerRef | WrestlerRef[] | null)) as WrestlerRef | null
@@ -632,6 +633,7 @@ export default async function WrestlerPage({
       ? `${oppWrestlerRaw.first_name} ${oppWrestlerRaw.last_name}`
       : row.is_forfeit_win ? 'Forfeit' : row.is_double_forfeit ? 'Double Forfeit' : '—'
     const oppId: string | null = oppWrestlerRaw?.id ?? null
+    const oppIsStub: boolean = oppWrestlerRaw?.is_stub ?? false
 
     const rt = row.result_type
     let resultStr = '—'
@@ -660,6 +662,7 @@ export default async function WrestlerPage({
       result,
       oppName,
       oppId,
+      oppIsStub,
       resultStr,
     })
   }
@@ -1205,7 +1208,7 @@ export default async function WrestlerPage({
                               {m.result}
                             </span>
                           )}
-                          {m.oppId ? (
+                          {m.oppId && !m.oppIsStub ? (
                             <Link href={`/wrestler/${m.oppId}`} className="font-medium text-slate-800 hover:underline">
                               {m.oppName}
                             </Link>

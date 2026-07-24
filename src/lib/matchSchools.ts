@@ -47,6 +47,7 @@ async function loadSchools(): Promise<SchoolRow[]> {
   const { data, error } = await getClient()
     .from('schools')
     .select('id, display_name')
+    .eq('is_nj', true)   // exclude OOS stubs so they never match as NJ schools
     .order('id')
   if (error) throw new Error(`matchSchools: failed to load schools — ${error.message}`)
   schoolCache = (data ?? []) as SchoolRow[]

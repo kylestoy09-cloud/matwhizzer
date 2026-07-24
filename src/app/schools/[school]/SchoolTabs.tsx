@@ -36,8 +36,8 @@ type DualMeet = {
   team1_score: number | null
   team2_score: number | null
   status: string
-  team1: { display_name: string } | null
-  team2: { display_name: string } | null
+  team1: { display_name: string; is_nj: boolean } | null
+  team2: { display_name: string; is_nj: boolean } | null
 }
 
 type TournamentEvent = {
@@ -154,8 +154,8 @@ export function SchoolTabs({
           .select(`
             id, team1_school_id, team2_school_id, meet_date,
             team1_score, team2_score, status,
-            team1:schools!team1_school_id(display_name),
-            team2:schools!team2_school_id(display_name)
+            team1:schools!team1_school_id(display_name, is_nj),
+            team2:schools!team2_school_id(display_name, is_nj)
           `)
           .or(`team1_school_id.eq.${schoolIdNum},team2_school_id.eq.${schoolIdNum}`)
           .eq('season_id', scheduleSeason)
@@ -554,10 +554,12 @@ export function SchoolTabs({
                     }
                   }
 
-                  const meet         = item.meet
-                  const isHome       = meet.team1_school_id === schoolIdNum
-                  const opponentId   = isHome ? meet.team2_school_id : meet.team1_school_id
-                  const opponentName = isHome ? meet.team2?.display_name : meet.team1?.display_name
+                  const meet           = item.meet
+                  const isHome         = meet.team1_school_id === schoolIdNum
+                  const opponentId     = isHome ? meet.team2_school_id : meet.team1_school_id
+                  const opponentTeam   = isHome ? meet.team2 : meet.team1
+                  const opponentName   = opponentTeam?.display_name
+                  const opponentIsNJ   = opponentTeam?.is_nj ?? true
                   const myScore      = isHome ? meet.team1_score : meet.team2_score
                   const theirScore   = isHome ? meet.team2_score : meet.team1_score
                   const hasScore     = myScore !== null && theirScore !== null
@@ -577,10 +579,12 @@ export function SchoolTabs({
                         {isHome ? 'H' : 'A'}
                       </span>
                     ),
-                    opponent: (
+                    opponent: opponentIsNJ ? (
                       <Link href={`/schools/${opponentId}`} className="font-medium hover:underline">
                         {opponentName ?? '—'}
                       </Link>
+                    ) : (
+                      <span className="font-medium text-slate-700">{opponentName ?? '—'}</span>
                     ),
                     score: hasScore ? `${myScore}–${theirScore}` : '—',
                     result: result ? (

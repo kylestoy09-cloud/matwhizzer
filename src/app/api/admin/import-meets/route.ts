@@ -89,6 +89,22 @@ function resolveSchoolId(
   return resMap[rawName]?.schoolId ?? null
 }
 
+/**
+ * Like resolveSchoolId but falls back to the OOS stub school map.
+ * Returns { schoolId, isOos } — isOos=true when the school has no NJ record.
+ */
+function resolveSchoolFull(
+  rawName:   string,
+  resMap:    Record<string, SchoolMatch>,
+  overrides: Record<string, SchoolOverride>,
+  oosMap:    Map<string, number>,
+): { schoolId: number | null; isOos: boolean } {
+  const njId = resolveSchoolId(rawName, resMap, overrides)
+  if (njId !== null) return { schoolId: njId, isOos: false }
+  const oosId = oosMap.get(rawName) ?? null
+  return { schoolId: oosId, isOos: true }
+}
+
 function resolveWrestlerId(
   key:         WrestlerKey,
   resMap:      Record<string, WrestlerMatch>,
@@ -126,11 +142,72 @@ export async function POST(req: NextRequest) {
     process.env.SUPABASE_SERVICE_ROLE_KEY ?? '',
   )
 
+  // ── Phase 0: Pre-create OOS stub schools ──────────────────────────────────────
+  // School names that don't resolve to an NJ school ID get a stub row in the
+  // schools table (is_nj=false).  This gives them a real FK-safe integer ID so
+  // dual_meets and dual_meet_matches can store it rather than NULL, enabling
+  // schedule display, wrestler match history, and the future common-opponent
+  // feature to work across state lines without full school profiles.
+
+  const oosSchoolMap = new Map<string, number>()  // raw display name → stub id
+
+  {
+    const unresolvedNames = new Set<string>()
+    for (let i = 0; i < meets.length; i++) {
+      if (skippedSet.has(i)) continue
+      const meet = meets[i]
+      for (const rawName of [meet.team1Name, meet.team2Name]) {
+        if (rawName && resolveSchoolId(rawName, schoolResolutions, schoolOverrides) === null) {
+          unresolvedNames.add(rawName)
+        }
+      }
+      for (const match of meet.matches) {
+        for (const raw of [match.winnerSchoolRaw, match.loserSchoolRaw]) {
+          if (raw && resolveSchoolId(raw, schoolResolutions, schoolOverrides) === null) {
+            unresolvedNames.add(raw)
+          }
+        }
+      }
+    }
+
+    if (unresolvedNames.size > 0) {
+      // Fetch existing OOS stubs by display_name
+      const { data: existingOos } = await supabase
+        .from('schools')
+        .select('id, display_name')
+        .in('display_name', [...unresolvedNames])
+        .eq('is_nj', false)
+
+      for (const s of existingOos ?? []) {
+        oosSchoolMap.set(s.display_name, s.id as number)
+      }
+
+      // Create any that don't exist yet
+      const toCreate = [...unresolvedNames].filter(n => !oosSchoolMap.has(n))
+      if (toCreate.length > 0) {
+        const { data: created, error: oosErr } = await supabase
+          .from('schools')
+          .insert(toCreate.map(name => ({ display_name: name, is_nj: false })))
+          .select('id, display_name')
+
+        if (oosErr) {
+          return NextResponse.json(
+            { error: `Failed to create OOS school stubs: ${oosErr.message}` },
+            { status: 500 },
+          )
+        }
+        for (const s of created ?? []) {
+          oosSchoolMap.set(s.display_name, s.id as number)
+        }
+      }
+    }
+  }
+
   // ── Step 1: Collect new wrestlers needed across all meets ─────────────────────
   // key → { first_name, last_name, suffix, gender }
   const newWrestlerMeta = new Map<
     WrestlerKey,
-    { first_name: string; last_name: string; suffix: string | null; gender: string }
+    { first_name: string; last_name: string; suffix: string | null; gender: string; is_stub: boolean }
   >()
 
   for (let i = 0; i < meets.length; i++) {
@@ -149,12 +226,12 @@ export async function POST(req: NextRequest) {
 
       for (const [name, schoolRaw] of candidates) {
         if (!name) continue
-        const schoolId = resolveSchoolId(schoolRaw ?? '', schoolResolutions, schoolOverrides)
-        const key      = makeWrestlerKey(name, schoolId, match.weightClass)
+        const { schoolId, isOos } = resolveSchoolFull(schoolRaw ?? '', schoolResolutions, schoolOverrides, oosSchoolMap)
+        const key = makeWrestlerKey(name, schoolId, match.weightClass)
         const { isNew, wrestlerId } = resolveWrestlerId(key, wrestlerResolutions, wrestlerOverrides)
 
         if (isNew && !wrestlerId) {
-          newWrestlerMeta.set(key, { ...parseName(name), gender: 'M' })
+          newWrestlerMeta.set(key, { ...parseName(name), gender: 'M', is_stub: isOos })
         }
       }
     }
@@ -175,7 +252,7 @@ export async function POST(req: NextRequest) {
       ]
       for (const [name, schoolRaw] of pairs) {
         if (!name) continue
-        const schoolId = resolveSchoolId(schoolRaw ?? '', schoolResolutions, schoolOverrides)
+        const { schoolId } = resolveSchoolFull(schoolRaw ?? '', schoolResolutions, schoolOverrides, oosSchoolMap)
         const key = makeWrestlerKey(name, schoolId, match.weightClass)
         const { wrestlerId } = resolveWrestlerId(key, wrestlerResolutions, wrestlerOverrides)
         if (wrestlerId) wrestlerIdMap.set(key, wrestlerId)
@@ -212,7 +289,13 @@ export async function POST(req: NextRequest) {
     if (trulyNew.length > 0) {
       const { data: created, error: createErr } = await supabase
         .from('wrestlers')
-        .insert(trulyNew)
+        .insert(trulyNew.map(w => ({
+          first_name: w.first_name,
+          last_name:  w.last_name,
+          suffix:     w.suffix,
+          gender:     w.gender,
+          is_stub:    w.is_stub,
+        })))
         .select('id, first_name, last_name, gender')
 
       if (createErr) {
@@ -244,21 +327,23 @@ export async function POST(req: NextRequest) {
     if (skippedSet.has(i)) continue
     const meet = meets[i]
 
-    const team1SchoolId = resolveSchoolId(meet.team1Name, schoolResolutions, schoolOverrides)
-    const team2SchoolId = resolveSchoolId(meet.team2Name, schoolResolutions, schoolOverrides)
+    const { schoolId: team1SchoolId } = resolveSchoolFull(meet.team1Name, schoolResolutions, schoolOverrides, oosSchoolMap)
+    const { schoolId: team2SchoolId } = resolveSchoolFull(meet.team2Name, schoolResolutions, schoolOverrides, oosSchoolMap)
 
     // Insert dual_meets row
     const { data: meetRow, error: meetErr } = await supabase
       .from('dual_meets')
       .insert({
-        season_id:       SEASON_ID,
-        team1_school_id: team1SchoolId,
-        team2_school_id: team2SchoolId,
-        meet_date:       toISODate(meet.date),
-        team1_score:     meet.team1Score || null,
-        team2_score:     meet.team2Score || null,
-        gender:          'M',
-        status:          'final',
+        season_id:              SEASON_ID,
+        team1_school_id:        team1SchoolId,
+        team2_school_id:        team2SchoolId,
+        team1_school_name_raw:  meet.team1Name,
+        team2_school_name_raw:  meet.team2Name,
+        meet_date:              toISODate(meet.date),
+        team1_score:            meet.team1Score || null,
+        team2_score:            meet.team2Score || null,
+        gender:                 'M',
+        status:                 'final',
       })
       .select('id')
       .single()
@@ -276,9 +361,9 @@ export async function POST(req: NextRequest) {
     // Build match rows
     const matchRows = []
     for (const match of meet.matches) {
-      // Resolve each side's school
-      const winnerSchoolId = resolveSchoolId(match.winnerSchoolRaw ?? '', schoolResolutions, schoolOverrides)
-      const loserSchoolId  = resolveSchoolId(match.loserSchoolRaw  ?? '', schoolResolutions, schoolOverrides)
+      // Resolve each side's school (NJ or OOS stub)
+      const { schoolId: winnerSchoolId } = resolveSchoolFull(match.winnerSchoolRaw ?? '', schoolResolutions, schoolOverrides, oosSchoolMap)
+      const { schoolId: loserSchoolId  } = resolveSchoolFull(match.loserSchoolRaw  ?? '', schoolResolutions, schoolOverrides, oosSchoolMap)
 
       // Resolve wrestler IDs
       let winnerWrestlerId: string | null = null
@@ -295,7 +380,6 @@ export async function POST(req: NextRequest) {
 
       // Assign team A (= team1) vs team B (= team2) slots.
       // If winner's school matches team1's school, winner is A; otherwise winner is B.
-      // Fallback: winner → A if we can't determine from school IDs.
       const winnerIsTeam1 =
         team1SchoolId !== null && winnerSchoolId === team1SchoolId
 
