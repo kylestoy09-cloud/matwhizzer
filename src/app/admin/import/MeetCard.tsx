@@ -355,16 +355,14 @@ export function MeetCard({
 
                       <td className="px-3 py-2">
                         {!m.isDoubleForfeit && (
-                          m.isForfeitWin
-                            ? <span className="text-xs text-slate-400 italic">Forfeit</span>
-                            : <WrestlerCell
-                                name={m.loserName}
-                                schoolRaw={m.loserSchoolRaw}
-                                wKey={lKey}
-                                resolutions={wrestlerResolutions}
-                                overrides={wrestlerOverrides}
-                                onClick={lKey ? () => toggleWrestler(lKey) : undefined}
-                              />
+                          <WrestlerCell
+                            name={m.loserName}
+                            schoolRaw={m.loserSchoolRaw}
+                            wKey={lKey}
+                            resolutions={wrestlerResolutions}
+                            overrides={wrestlerOverrides}
+                            onClick={lKey ? () => toggleWrestler(lKey) : undefined}
+                          />
                         )}
                       </td>
 

@@ -5,6 +5,18 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-07-25 — Fix is_forfeit_win flag on 15 matches
+
+**Migration file:** `docs/migrations/20260725_fix_forfeit_win_flag.sql`
+
+**Status:** APPLIED
+
+**What changed:**
+
+Data fix: 15 `dual_meet_matches` rows had `result_type = 'For'` but `is_forfeit_win = false`. Root cause was a parser bug where the TrackWrestling format `Unknown (School) (For.)` wasn't caught by the forfeit detection regex. All affected rows had null wrestler/winner IDs so no wrestler records needed cleanup — only the flag required updating.
+
+---
+
 ## 2026-07-24 — Dual import draft saves
 
 **Migration file:** `docs/migrations/20260724_dual_import_drafts.sql`

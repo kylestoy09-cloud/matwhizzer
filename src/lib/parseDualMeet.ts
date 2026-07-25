@@ -183,16 +183,21 @@ function parseMatchSummary(summary: string, t1Pts: number, t2Pts: number, weight
 
   const { resultType, resultDetail } = parseResult(resultStr)
   const loserM = loserAndSchool.match(/^(.+?)\s+\(([^)]+)\)$/)
-  const loserName      = loserM ? loserM[1].trim() : (loserAndSchool || null)
+  const loserNameRaw   = loserM ? loserM[1].trim() : (loserAndSchool || null)
   const loserSchoolRaw = loserM ? loserM[2].trim() : null
+
+  // Treat any 'For' result as a forfeit win regardless of what TW put in the
+  // loser slot (e.g. "Unknown (For.)" vs "Unknown (School) (For.)").
+  const isForfeitWin = resultType === 'For'
 
   return {
     weightClass: weight,
     winnerName, winnerSchoolRaw,
-    loserName, loserSchoolRaw,
+    loserName:      isForfeitWin ? null : loserNameRaw,
+    loserSchoolRaw: isForfeitWin ? null : loserSchoolRaw,
     resultType, resultDetail,
     team1Points: t1Pts, team2Points: t2Pts,
-    isDoubleForfeit: false, isForfeitWin: false,
+    isDoubleForfeit: false, isForfeitWin,
   }
 }
 
