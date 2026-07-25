@@ -1,4 +1,4 @@
-export type Confidence = 'exact' | 'high' | 'low' | 'none' | 'oos'
+export type Confidence = 'exact' | 'alias' | 'high' | 'low' | 'none' | 'oos'
 
 export type SchoolResolution = {
   school_id: number | null
@@ -50,7 +50,9 @@ export type PipeImportJSON = {
     total_tournaments: number
     skipped_tournaments: string[]
     flagged_school_count: number
+    fuzzy_school_count?: number
     flagged_wrestler_count: number
+    fuzzy_wrestler_count?: number
     new_wrestler_count: number
   }
   schools: Record<string, SchoolResolution>

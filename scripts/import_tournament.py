@@ -618,9 +618,10 @@ class SchoolMatcher:
         """Return {school_id, display_name, confidence, alternates}.
 
         confidence values:
-          'exact' — matched NJ school by display name or alias
-          'high'  — fuzzy match ≥ 0.85
-          'low'   — fuzzy match 0.60–0.84
+          'exact' — matched NJ school by display_name (no ambiguity, no review needed)
+          'alias' — matched NJ school via school_aliases table (trusted, optional review)
+          'high'  — fuzzy match ≥ 0.85 (deserves a glance — see B-R→Becton class of errors)
+          'low'   — fuzzy match 0.60–0.84 (requires explicit decision)
           'oos'   — confirmed out-of-state via school_aliases (alias_type='oos')
           'none'  — no match; unreviewed, needs a decision
         """
@@ -637,7 +638,7 @@ class SchoolMatcher:
         for a in aliases:
             if a["alias"].lower() == lower:
                 school = next((s for s in schools if s["id"] == a["school_id"]), None)
-                return {"school_id": a["school_id"], "display_name": school["display_name"] if school else None, "confidence": "exact", "alternates": []}
+                return {"school_id": a["school_id"], "display_name": school["display_name"] if school else None, "confidence": "alias", "alternates": []}
 
         stripped = _strip_suffixes(name)
         if stripped and stripped != name:
@@ -647,7 +648,7 @@ class SchoolMatcher:
             for a in aliases:
                 if a["alias"].lower() == stripped.lower():
                     school = next((s for s in schools if s["id"] == a["school_id"]), None)
-                    return {"school_id": a["school_id"], "display_name": school["display_name"] if school else None, "confidence": "exact", "alternates": []}
+                    return {"school_id": a["school_id"], "display_name": school["display_name"] if school else None, "confidence": "alias", "alternates": []}
 
         # Check confirmed-OOS aliases before falling through to fuzzy matching.
         # Checked after NJ aliases so an NJ match always wins if both exist.
@@ -657,6 +658,18 @@ class SchoolMatcher:
             return {"school_id": None, "display_name": raw, "confidence": "oos", "alternates": []}
 
         query = stripped if (stripped and stripped != name) else name
+
+        # Refuse fuzzy matching for short strings (< 6 chars).  Abbreviations like
+        # "B-R", "MO", "SHP" have no meaningful trigram overlap with school display
+        # names — they score ≥ 0.85 against wrong schools by accident.  Strings this
+        # short that survived exact + alias + OOS checks above are almost certainly
+        # unrecognised abbreviations; surface them for manual review instead of
+        # silently assigning the wrong school.
+        # Short *display names* ("Wall", "Ridge") are caught by exact match in step 1
+        # and never reach here, so this guard does not affect them.
+        if len(query) < 6:
+            return {"school_id": None, "display_name": None, "confidence": "none", "alternates": []}
+
         scored = sorted(
             [{"school_id": s["id"], "display_name": s["display_name"], "score": trigram_similarity(query, s["display_name"])} for s in schools],
             key=lambda x: x["score"],

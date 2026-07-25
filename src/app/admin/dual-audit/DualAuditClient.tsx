@@ -24,14 +24,32 @@ export type AugmentedMatch = {
   wrestler_a_name_raw: string | null
   wrestler_b_name_raw: string | null
   // Augmented by API
-  wrestler_a_name: string | null
-  wrestler_a_stub: boolean
-  wrestler_b_name: string | null
-  wrestler_b_stub: boolean
-  school_a_name:   string | null
-  school_b_name:   string | null
+  wrestler_a_name:  string | null
+  wrestler_a_stub:  boolean
+  wrestler_b_name:  string | null
+  wrestler_b_stub:  boolean
+  school_a_name:    string | null
+  school_a_is_nj:   boolean
+  school_b_name:    string | null
+  school_b_is_nj:   boolean
   wa_registered_school_id: number | null
   wb_registered_school_id: number | null
+}
+
+type UnlinkedSlot = {
+  matchId:     string
+  meetId:      string
+  meetLabel:   string
+  weightClass: number
+  slot:        'a' | 'b'
+  nameRaw:     string | null
+}
+
+type UnlinkedGroup = {
+  schoolId:   number
+  schoolName: string
+  isNj:       boolean
+  slots:      UnlinkedSlot[]
 }
 
 type FilterKey = 'all' | 'no_link' | 'school_mismatch' | 'stub_name'
@@ -90,6 +108,7 @@ function meetLabel(m: DualMeetOption): string {
 // ── Main component ────────────────────────────────────────────────────────────
 
 export function DualAuditClient({ meets }: { meets: DualMeetOption[] }) {
+  const [mode, setMode]                     = useState<'meet' | 'queue'>('meet')
   const [mid, setMid]                       = useState(meets[0]?.id ?? '')
   const [matches, setMatches]               = useState<AugmentedMatch[]>([])
   const [loading, setLoading]               = useState(false)
@@ -97,6 +116,11 @@ export function DualAuditClient({ meets }: { meets: DualMeetOption[] }) {
   const [filter, setFilter]                 = useState<FilterKey>('all')
   const [selectedMatch, setSelectedMatch]   = useState<AugmentedMatch | null>(null)
   const [toast, setToast]                   = useState<{ msg: string; ok: boolean } | null>(null)
+  // Work queue state
+  const [queueGroups, setQueueGroups]       = useState<UnlinkedGroup[]>([])
+  const [queueLoading, setQueueLoading]     = useState(false)
+  const [queueError, setQueueError]         = useState('')
+  const [openSchools, setOpenSchools]       = useState<Set<number>>(new Set())
 
   useEffect(() => {
     if (!mid) return
@@ -152,31 +176,146 @@ export function DualAuditClient({ meets }: { meets: DualMeetOption[] }) {
   return (
     <div className="flex h-screen flex-col bg-white">
       {/* Header */}
-      <div className="flex items-center gap-4 px-4 py-3 border-b border-slate-200 shrink-0">
-        <Link
-          href="/admin"
-          className="text-xs text-slate-400 hover:text-slate-600 transition-colors"
-        >
+      <div className="flex items-center gap-3 px-4 py-3 border-b border-slate-200 shrink-0 flex-wrap">
+        <Link href="/admin" className="text-xs text-slate-400 hover:text-slate-600 transition-colors">
           ← Admin
         </Link>
         <h1 className="text-sm font-semibold text-slate-900">Dual Meet Audit</h1>
+
+        {/* Mode toggle */}
+        <div className="flex rounded border border-slate-300 overflow-hidden text-xs">
+          <button
+            onClick={() => setMode('meet')}
+            className={`px-3 py-1.5 ${mode === 'meet' ? 'bg-slate-900 text-white' : 'bg-white text-slate-600 hover:bg-slate-50'}`}
+          >
+            By Meet
+          </button>
+          <button
+            onClick={() => {
+              setMode('queue')
+              if (queueGroups.length === 0 && !queueLoading) {
+                setQueueLoading(true)
+                setQueueError('')
+                fetch('/api/admin/dual-audit?view=unlinked')
+                  .then(r => r.json())
+                  .then(d => { if (d.error) setQueueError(d.error); else setQueueGroups(d.groups ?? []) })
+                  .catch(e => setQueueError(String(e)))
+                  .finally(() => setQueueLoading(false))
+              }
+            }}
+            className={`px-3 py-1.5 border-l border-slate-300 ${mode === 'queue' ? 'bg-slate-900 text-white' : 'bg-white text-slate-600 hover:bg-slate-50'}`}
+          >
+            Work Queue
+            {queueGroups.length > 0 && (
+              <span className="ml-1.5 text-[10px]">
+                {queueGroups.reduce((s, g) => s + g.slots.length, 0)}
+              </span>
+            )}
+          </button>
+        </div>
+
         <div className="flex-1" />
-        <select
-          value={mid}
-          onChange={e => { setMid(e.target.value); setFilter('all') }}
-          className="rounded border border-slate-300 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 max-w-xs"
-        >
-          {meets.length === 0 && <option value="">No dual meets found</option>}
-          {meets.map(m => (
-            <option key={m.id} value={m.id}>{meetLabel(m)}</option>
-          ))}
-        </select>
+
+        {mode === 'meet' && (
+          <select
+            value={mid}
+            onChange={e => { setMid(e.target.value); setFilter('all') }}
+            className="rounded border border-slate-300 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 max-w-xs"
+          >
+            {meets.length === 0 && <option value="">No dual meets found</option>}
+            {meets.map(m => (
+              <option key={m.id} value={m.id}>{meetLabel(m)}</option>
+            ))}
+          </select>
+        )}
+        {mode === 'queue' && (
+          <button
+            onClick={() => {
+              setQueueGroups([])
+              setQueueLoading(true)
+              setQueueError('')
+              fetch('/api/admin/dual-audit?view=unlinked')
+                .then(r => r.json())
+                .then(d => { if (d.error) setQueueError(d.error); else setQueueGroups(d.groups ?? []) })
+                .catch(e => setQueueError(String(e)))
+                .finally(() => setQueueLoading(false))
+            }}
+            className="text-xs text-slate-400 hover:text-slate-700 underline"
+          >
+            Refresh
+          </button>
+        )}
       </div>
 
       {/* Body */}
       <div className="flex flex-1 overflow-hidden">
-        {/* ── Left: filter tabs + match list ───────────────────────────────── */}
+        {/* ── Left: filter tabs + match list / work queue ──────────────────── */}
         <div className="flex flex-col flex-1 overflow-hidden border-r border-slate-200">
+          {/* ── Work Queue panel ─────────────────────────────────────────────── */}
+          {mode === 'queue' && (
+            <div className="flex-1 overflow-auto">
+              {queueLoading && (
+                <p className="text-sm text-slate-400 text-center py-16">Loading unlinked matches…</p>
+              )}
+              {!queueLoading && queueError && (
+                <p className="text-sm text-red-500 text-center py-16">{queueError}</p>
+              )}
+              {!queueLoading && !queueError && queueGroups.length === 0 && (
+                <p className="text-sm text-slate-400 text-center py-16">No unlinked wrestlers — all matches are linked ✓</p>
+              )}
+              {!queueLoading && !queueError && queueGroups.map(group => {
+                const isOpen = openSchools.has(group.schoolId)
+                return (
+                  <div key={group.schoolId} className="border-b border-slate-200">
+                    <button
+                      onClick={() => setOpenSchools(prev => {
+                        const next = new Set(prev)
+                        isOpen ? next.delete(group.schoolId) : next.add(group.schoolId)
+                        return next
+                      })}
+                      className="w-full flex items-center justify-between px-4 py-2.5 bg-slate-50 hover:bg-slate-100 text-left transition-colors"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-semibold text-slate-800">{group.schoolName}</span>
+                        {!group.isNj && (
+                          <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-purple-100 text-purple-700">OOS</span>
+                        )}
+                      </div>
+                      <span className="text-xs text-slate-400">
+                        {group.slots.length} unlinked {isOpen ? '▲' : '▼'}
+                      </span>
+                    </button>
+                    {isOpen && (
+                      <div className="divide-y divide-slate-100">
+                        {group.slots.map(slot => (
+                          <button
+                            key={`${slot.matchId}-${slot.slot}`}
+                            onClick={() => {
+                              // Load the full match for editing — switch to meet view for this match
+                              setMid(slot.meetId)
+                              setMode('meet')
+                            }}
+                            className="w-full text-left px-4 py-2 hover:bg-amber-50 transition-colors"
+                          >
+                            <div className="flex items-center gap-3">
+                              <span className="text-[11px] font-mono text-slate-400 w-8 shrink-0">{slot.weightClass}</span>
+                              <span className="text-xs text-slate-800 flex-1">
+                                {slot.nameRaw ?? <span className="italic text-slate-400">no name</span>}
+                              </span>
+                              <span className="text-[10px] text-slate-400 shrink-0">{slot.meetLabel}</span>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          )}
+
+          {/* ── By-Meet panel ─────────────────────────────────────────────────── */}
+          {mode === 'meet' && <>
           {/* Filter tabs */}
           <div className="flex gap-1.5 px-4 py-2.5 border-b border-slate-100 bg-slate-50 shrink-0 flex-wrap">
             {(Object.keys(FILTER_LABELS) as FilterKey[]).map(f => (
@@ -257,6 +396,7 @@ export function DualAuditClient({ meets }: { meets: DualMeetOption[] }) {
                         hasLink={!!match.wrestler_a_id}
                         isStub={match.wrestler_a_stub}
                         isWinner={winnerSlot === 'a'}
+                        isOos={!match.school_a_is_nj}
                       />
                       {/* Slot B */}
                       <MatchSlotLine
@@ -266,6 +406,7 @@ export function DualAuditClient({ meets }: { meets: DualMeetOption[] }) {
                         hasLink={!!match.wrestler_b_id}
                         isStub={match.wrestler_b_stub}
                         isWinner={winnerSlot === 'b'}
+                        isOos={!match.school_b_is_nj}
                       />
                     </div>
 
@@ -295,6 +436,7 @@ export function DualAuditClient({ meets }: { meets: DualMeetOption[] }) {
               )
             })}
           </div>
+          </>}
         </div>
 
         {/* ── Right: edit panel ─────────────────────────────────────────────── */}
@@ -319,6 +461,7 @@ function MatchSlotLine({
   hasLink,
   isStub,
   isWinner,
+  isOos,
 }: {
   name:     string | null
   nameRaw:  string | null
@@ -326,6 +469,7 @@ function MatchSlotLine({
   hasLink:  boolean
   isStub:   boolean
   isWinner: boolean
+  isOos?:   boolean
 }) {
   // Resolved name from wrestler record takes priority.
   // If unlinked but raw name is present, show raw in muted style.
@@ -340,6 +484,9 @@ function MatchSlotLine({
       </span>
       {school && (
         <span className="text-slate-400 font-normal text-[10px] shrink-0">({school})</span>
+      )}
+      {isOos && (
+        <span className="shrink-0 text-[9px] font-bold px-1 py-0.5 rounded-full bg-purple-100 text-purple-700">OOS</span>
       )}
       {!hasLink && school && (
         <span className="shrink-0 text-[9px] font-semibold text-amber-600">NO LINK</span>

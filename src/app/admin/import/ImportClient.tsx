@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useEffect } from 'react'
 import { parseDualMeetText } from '@/lib/parseDualMeet'
 import type { ParsedMeet } from '@/lib/parseDualMeet'
 import type { SchoolMatch } from '@/lib/matchSchools'
@@ -28,6 +28,13 @@ type ImportResult = {
   errors:           string[]
 }
 
+type DraftSummary = {
+  id:         string
+  label:      string
+  meet_count: number
+  updated_at: string
+}
+
 // ── ImportClient ───────────────────────────────────────────────────────────────
 
 export function ImportClient() {
@@ -41,6 +48,26 @@ export function ImportClient() {
   const [skipped,            setSkipped]            = useState<Set<number>>(new Set())
   const [error,              setError]              = useState<string | null>(null)
   const [importResult,       setImportResult]       = useState<ImportResult | null>(null)
+
+  // Draft state
+  const [draftId,     setDraftId]     = useState<string | null>(null)
+  const [draftLabel,  setDraftLabel]  = useState('')
+  const [drafts,      setDrafts]      = useState<DraftSummary[]>([])
+  const [draftSaving, setDraftSaving] = useState(false)
+  const [draftError,  setDraftError]  = useState<string | null>(null)
+
+  // ── Load drafts on mount ─────────────────────────────────────────────────────
+
+  const loadDrafts = useCallback(async () => {
+    try {
+      const resp = await fetch('/api/admin/dual-import-draft')
+      if (!resp.ok) return
+      const json = await resp.json()
+      setDrafts(json.drafts ?? [])
+    } catch {}
+  }, [])
+
+  useEffect(() => { loadDrafts() }, [loadDrafts])
 
   // ── School override handler ──────────────────────────────────────────────────
 
@@ -77,27 +104,33 @@ export function ImportClient() {
 
   // ── Main process function ────────────────────────────────────────────────────
 
-  async function handleProcess() {
+  async function handleProcess(
+    textOverride?: string,
+    initialOverrides?: {
+      schoolOverrides:   Record<string, SchoolOverride>
+      wrestlerOverrides: Record<string, WrestlerOverride>
+    }
+  ) {
     setError(null)
-    const text = rawText.trim()
+    const text = (textOverride ?? rawText).trim()
     if (!text) return
+    if (textOverride) setRawText(textOverride)
 
     // Step 1: parse (synchronous)
     const parsed = parseDualMeetText(text)
-
 
     if (parsed.length === 0) {
       setError('No meets found. Make sure the text includes a "Team A vs. Team B (MM/DD/YYYY)" header.')
       return
     }
 
-    // Pre-check skip set — pre-check duplicates
+    // Pre-check duplicates
     const initSkipped = new Set<number>()
     parsed.forEach((m, i) => { if (m.isDuplicate) initSkipped.add(i) })
     setMeets(parsed)
     setSkipped(initSkipped)
-    setSchoolOverrides({})
-    setWrestlerOverrides({})
+    setSchoolOverrides(initialOverrides?.schoolOverrides   ?? {})
+    setWrestlerOverrides(initialOverrides?.wrestlerOverrides ?? {})
     setImportResult(null)
 
     // Step 2: collect unique school names from headers + match rows
@@ -178,6 +211,62 @@ export function ImportClient() {
     setPhase('review')
   }
 
+  // ── Draft: save current progress ─────────────────────────────────────────────
+
+  async function handleSaveDraft() {
+    setDraftSaving(true)
+    setDraftError(null)
+    try {
+      const resp = await fetch('/api/admin/dual-import-draft', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({
+          id:                 draftId ?? undefined,
+          label:              draftLabel,
+          raw_text:           rawText,
+          school_overrides:   schoolOverrides,
+          wrestler_overrides: wrestlerOverrides,
+          meet_count:         meets.length,
+        }),
+      })
+      if (!resp.ok) throw new Error(`Save failed: ${resp.status}`)
+      const { draft } = await resp.json()
+      if (!draftId) setDraftId(draft.id)
+    } catch (e) {
+      setDraftError(String(e))
+    } finally {
+      setDraftSaving(false)
+    }
+  }
+
+  // ── Draft: resume a saved draft ───────────────────────────────────────────────
+
+  async function handleResumeDraft(id: string) {
+    setError(null)
+    try {
+      const resp = await fetch(`/api/admin/dual-import-draft?id=${id}`)
+      if (!resp.ok) throw new Error(`Load failed: ${resp.status}`)
+      const { draft } = await resp.json()
+      setDraftId(draft.id)
+      setDraftLabel(draft.label ?? '')
+      await handleProcess(draft.raw_text, {
+        schoolOverrides:   draft.school_overrides   ?? {},
+        wrestlerOverrides: draft.wrestler_overrides ?? {},
+      })
+    } catch (e) {
+      setError(String(e))
+    }
+  }
+
+  // ── Draft: delete ─────────────────────────────────────────────────────────────
+
+  async function handleDeleteDraft(id: string) {
+    try {
+      await fetch(`/api/admin/dual-import-draft?id=${id}`, { method: 'DELETE' })
+      setDrafts(prev => prev.filter(d => d.id !== id))
+    } catch {}
+  }
+
   // ── Import handler ───────────────────────────────────────────────────────────
 
   async function handleImport() {
@@ -200,6 +289,17 @@ export function ImportClient() {
       if (!resp.ok) throw new Error(json.error ?? `HTTP ${resp.status}`)
       setImportResult(json as ImportResult)
       setPhase('done')
+
+      // Mark draft as imported so it no longer appears in the list
+      if (draftId) {
+        await fetch('/api/admin/dual-import-draft', {
+          method:  'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ id: draftId }),
+        })
+        setDraftId(null)
+        loadDrafts()
+      }
     } catch (e) {
       setError(String(e))
       setPhase('review')
@@ -252,6 +352,12 @@ export function ImportClient() {
     }
   }, [meets, skipped, schoolResolutions, schoolOverrides, wrestlerResolutions, wrestlerOverrides])
 
+  // ── Helpers ──────────────────────────────────────────────────────────────────
+
+  function formatDraftDate(iso: string) {
+    return new Date(iso).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: '2-digit', hour: 'numeric', minute: '2-digit' })
+  }
+
   // ── Render ───────────────────────────────────────────────────────────────────
 
   return (
@@ -259,6 +365,40 @@ export function ImportClient() {
       {/* ── Step 1: Paste area ─────────────────────────────────────────────── */}
       {phase === 'idle' && (
         <div className="space-y-4">
+
+          {/* Saved drafts */}
+          {drafts.length > 0 && (
+            <div className="border border-slate-200 bg-slate-50 px-4 py-3 space-y-2">
+              <p className="text-xs font-semibold text-slate-600 mb-1">Saved drafts</p>
+              {drafts.map(d => (
+                <div key={d.id} className="flex items-center justify-between text-xs gap-3">
+                  <div className="min-w-0">
+                    <span className="font-medium text-slate-800 truncate">
+                      {d.label || 'Untitled'}
+                    </span>
+                    <span className="text-slate-400 ml-2">
+                      {d.meet_count} meet{d.meet_count !== 1 ? 's' : ''} · {formatDraftDate(d.updated_at)}
+                    </span>
+                  </div>
+                  <div className="flex gap-3 shrink-0">
+                    <button
+                      onClick={() => handleResumeDraft(d.id)}
+                      className="text-blue-700 font-medium hover:underline"
+                    >
+                      Resume
+                    </button>
+                    <button
+                      onClick={() => handleDeleteDraft(d.id)}
+                      className="text-slate-400 hover:text-red-600"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
           <div>
             <label className="block text-sm font-semibold text-slate-700 mb-2">
               Step 1 — Paste dual meet results
@@ -280,7 +420,7 @@ export function ImportClient() {
             <p className="text-sm text-red-600 border border-red-300 bg-red-50 px-3 py-2">{error}</p>
           )}
           <button
-            onClick={handleProcess}
+            onClick={() => handleProcess()}
             disabled={!rawText.trim()}
             className="px-5 py-2 bg-black text-white text-sm font-semibold hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed"
           >
@@ -333,7 +473,7 @@ export function ImportClient() {
             </div>
           )}
           <button
-            onClick={() => { setPhase('idle'); setMeets([]); setError(null); setImportResult(null) }}
+            onClick={() => { setPhase('idle'); setMeets([]); setError(null); setImportResult(null); loadDrafts() }}
             className="px-4 py-2 bg-black text-white text-sm font-semibold hover:bg-slate-800"
           >
             Import more
@@ -353,13 +493,16 @@ export function ImportClient() {
                 <span className="ml-2 text-sm font-normal text-slate-500">
                   {meets.length} meet{meets.length !== 1 ? 's' : ''} found
                 </span>
+                {draftId && (
+                  <span className="ml-2 text-xs font-normal text-slate-400">(draft)</span>
+                )}
               </h2>
               <p className="text-xs text-slate-500 mt-0.5">
                 Green = exact · Yellow = high · Orange = low · Red = none/new
               </p>
             </div>
             <button
-              onClick={() => { setPhase('idle'); setMeets([]); setError(null) }}
+              onClick={() => { setPhase('idle'); setMeets([]); setError(null); setDraftId(null); setDraftLabel('') }}
               className="text-xs text-slate-400 hover:text-slate-700 underline"
             >
               ← Start over
@@ -402,27 +545,49 @@ export function ImportClient() {
           />
 
           {/* Controls */}
-          <div className="border border-black bg-white px-4 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mt-2">
-            <div className="text-xs text-slate-600 space-x-4">
-              <span className="text-green-700 font-medium">{readyCount} meets ready</span>
-              {skippedCount > 0 && <span className="text-slate-400">{skippedCount} skipped</span>}
-              {newWrestlerCount > 0 && (
-                <span className="text-red-600">{newWrestlerCount} wrestlers to create</span>
-              )}
-              {blockingSchools > 0 && (
-                <span className="text-red-700 font-semibold">
-                  {blockingSchools} unresolved school{blockingSchools !== 1 ? 's' : ''} blocking import
-                </span>
-              )}
+          <div className="border border-black bg-white px-4 py-4 space-y-3 mt-2">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div className="text-xs text-slate-600 space-x-4">
+                <span className="text-green-700 font-medium">{readyCount} meets ready</span>
+                {skippedCount > 0 && <span className="text-slate-400">{skippedCount} skipped</span>}
+                {newWrestlerCount > 0 && (
+                  <span className="text-red-600">{newWrestlerCount} wrestlers to create</span>
+                )}
+                {blockingSchools > 0 && (
+                  <span className="text-red-700 font-semibold">
+                    {blockingSchools} unresolved school{blockingSchools !== 1 ? 's' : ''} blocking import
+                  </span>
+                )}
+              </div>
+
+              <button
+                onClick={handleImport}
+                disabled={blockingSchools > 0}
+                className="px-5 py-2 bg-black text-white text-sm font-semibold hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
+              >
+                Import All
+              </button>
             </div>
 
-            <button
-              onClick={handleImport}
-              disabled={blockingSchools > 0}
-              className="px-5 py-2 bg-black text-white text-sm font-semibold hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
-            >
-              Import All
-            </button>
+            {/* Save draft row */}
+            <div className="flex items-center gap-2 pt-1 border-t border-slate-100">
+              <input
+                value={draftLabel}
+                onChange={e => setDraftLabel(e.target.value)}
+                placeholder="Draft label (optional)"
+                className="flex-1 text-xs border border-slate-300 px-2 py-1.5 outline-none focus:ring-1 focus:ring-black bg-white"
+              />
+              <button
+                onClick={handleSaveDraft}
+                disabled={draftSaving}
+                className="px-3 py-1.5 border border-black text-xs font-semibold hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
+              >
+                {draftSaving ? 'Saving…' : draftId ? 'Update draft' : 'Save draft'}
+              </button>
+            </div>
+            {draftError && (
+              <p className="text-xs text-red-600">{draftError}</p>
+            )}
           </div>
 
         </div>

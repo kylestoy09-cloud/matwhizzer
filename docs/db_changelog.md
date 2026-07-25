@@ -5,15 +5,79 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
-## 2026-07-23 — Sam Cali stub wrestler first_name records
+## 2026-07-24 — Dual import draft saves
 
-**Migration file:** `docs/migrations/20260723_sam_cali_stub_wrestler_records.sql`
+**Migration file:** `docs/migrations/20260724_dual_import_drafts.sql`
 
-**Status:** PENDING — apply FIRST within the Sam Cali patch session (before the two bout name_raw patches).
+**Status:** PENDING — apply in Supabase SQL editor before using the Save Draft button.
 
 **What changed:**
 
-Fixes wrestler records where `first_name` was stored as a stub initial (e.g. `'C.'`) because the name wasn't in `_FULL_NAME_LOOKUP` at import time. `get_or_create_wrestler` fell back to `_parse_abbreviated_name`, which splits on the first space and stores the initial as `first_name`. Eight NJ wrestlers affected (GFA and CHAM are OOS — their bouts have `nj_wrestler1_id = NULL`, no wrestler record created). For uncommon last names (Adell, D'Arcy, Landell, O'Leary, D'Arco), direct first_name/last_name filter used. For common last names (O'Connor × 2, Washington), bout-subquery-scoped UPDATEs used to avoid touching other wrestlers with the same stub form. All UPDATEs are guarded by `AND first_name = 'X.'` so they are no-ops if `match_wrestler` matched an existing full-name record instead of creating a stub.
+New table `dual_import_drafts` stores in-progress import sessions (raw pasted text + school/wrestler override decisions). Rows are user-scoped via RLS. Resuming a draft re-runs school and wrestler matching on the saved text, then re-applies the saved overrides so decisions carry over.
+
+---
+
+## 2026-07-24 — Roselle Park alias, mascot, and logo
+
+**Migration file:** `docs/migrations/20260724_roselle_park_alias_mascot_logo.sql`
+
+**Status:** PENDING — apply in Supabase SQL editor after uploading logo to storage.
+
+**What changed:**
+
+- Added `school_aliases` row: school_id=358, alias=`Abraham Clark`, alias_type=`school_name`. Roselle Park HS appears under this name in dual meet schedule data; without the alias the importer falls back to fuzzy match and may mismatch.
+- `schools` row 358: `mascot` updated to `Rams`, `logo_url` set to `https://vhffduvgcljvhtlyqgcd.supabase.co/storage/v1/object/public/school-logos/colored/512/358.png`.
+- Logo source: `Mascot Library/Clean SVG/125 - Roselle Park.svg` → converted to 512×512 PNG via `scripts/upload-roselle-logo.mjs`.
+
+---
+
+## 2026-07-23 — Add wrestler_a_name_raw / wrestler_b_name_raw to dual_meet_matches
+
+**Migration file:** `docs/migrations/20260723_dual_meet_matches_name_raw.sql`
+
+**Status:** PENDING — apply before running any new dual meet imports.
+
+**What changed:**
+
+Adds two nullable `text` columns to `dual_meet_matches` mirroring the `wrestler1_name_raw` / `wrestler2_name_raw` pattern already in `tournament_bouts`. The dual meet import route (`api/admin/import-meets/route.ts`) previously discarded the parsed wrestler name whenever it couldn't resolve to a UUID — only the null FK was written. Going forward, the raw name from the TW source text is written to these columns regardless of whether the UUID resolves. Resolved matches get both; failed matches get the raw name instead of nothing.
+
+**Historical gap:** 259 non-forfeit wrestler slots imported before this change have NULL in both the id and name_raw columns. Those names were not retained at import time and cannot be recovered from the DB. They remain as "—" in the audit tool permanently unless sourced externally.
+
+**Code changes (no migration required):**
+- `src/app/api/admin/import-meets/route.ts` — derives `wrestlerANameRaw`/`wrestlerBNameRaw` using the same winner/loser→A/B slot logic as the ID assignment, writes both to each match row
+- `src/app/admin/dual-audit/DualAuditClient.tsx` — list rows show raw name in muted italic when slot is unlinked but raw is present; edit panel shows "Raw: {name}" hint above the wrestler picker for unlinked slots
+
+---
+
+## 2026-07-23 — Sam Cali stub wrestler fix (followup): 3 remaining records fixed by ID
+
+**Migration file:** `docs/migrations/20260723_sam_cali_wrestler_stub_fix2.sql`
+
+**Status:** APPLIED 2026-07-23 via REST API PATCH. Migration file documents what was executed.
+
+**What changed:**
+
+Three wrestler records still had stub `first_name` values after `20260723_sam_cali_stub_wrestler_records.sql` was applied. Root causes: (1) C. O'Connor and B. Washington used subqueries keyed on `wrestler_name_raw` values, but those values had already been updated by the bout name_raw patches — subqueries returned 0 rows. (2) N. O'Sullivan was excluded from the first file on the incorrect assumption that CHAM is OOS (`_TEAM_TO_SCHOOL["CHAM"] = 397`, not None); a stub wrestler record was created at import time.
+
+Fixed by direct ID-based UPDATE. Confirmed via REST API SELECT: 0 stub `first_name` values (matching `^[A-Z]\.$`) remain anywhere in the wrestlers table, and no Sgrulletta/Sgurletta wrestler record exists (GFA correctly had no record created).
+
+| Wrestler ID | old first_name | new first_name | last_name |
+|---|---|---|---|
+| `bf9f6d2e-...` | `C.` | `Collin` | O'Connor |
+| `9f684e87-...` | `B.` | `Navell` | Washington |
+| `e2fdda6f-...-73808e` | `N.` | `Nate` | O'Sullivan |
+
+---
+
+## 2026-07-23 — Sam Cali stub wrestler first_name records (partial apply)
+
+**Migration file:** `docs/migrations/20260723_sam_cali_stub_wrestler_records.sql`
+
+**Status:** PARTIALLY APPLIED — 5 of 8 wrestlers fixed (Adell, D'Arcy, Landell, O'Leary, D'Arco). 3 no-ops (O'Connor ×2, Washington) due to apply-order bug. See followup file above.
+
+**What changed:**
+
+Fixes wrestler records where `first_name` was stored as a stub initial (e.g. `'C.'`) because the name wasn't in `_FULL_NAME_LOOKUP` at import time. `get_or_create_wrestler` fell back to `_parse_abbreviated_name`, which splits on the first space and stores the initial as `first_name`. For uncommon last names (Adell, D'Arcy, Landell, O'Leary, D'Arco), direct first_name/last_name filter used — these applied correctly. For common last names (O'Connor × 2, Washington), bout-subquery-scoped UPDATEs were used but became no-ops because the bout patches had already updated the `wrestler_name_raw` values they were keyed on. Those 3 were completed by `20260723_sam_cali_wrestler_stub_fix2.sql`.
 
 ---
 

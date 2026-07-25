@@ -5,7 +5,8 @@ scripts/import_bullet_csv.py
 Import tournament bouts from bullet-format CSV exports into MatWhizzer.
 
 Usage:
-  python scripts/import_bullet_csv.py [--dry-run] <csv_file>
+  python scripts/import_bullet_csv.py --json-out FILE <csv_file>
+  python scripts/import_bullet_csv.py --dry-run <csv_file>
 
 Bullet format columns:
   tournament, weight, round, winner, winner_school, winner_record,
@@ -16,6 +17,17 @@ Key differences from pipe_csv format:
 - method is split: method_phrase (human phrase) + method_detail (parseable)
 - Bye rows have method_phrase='received a bye' and loser='' — skipped
 - winner_record / loser_record columns present but not stored
+
+Options:
+  --json-out FILE       Write parsed+matched data to FILE (no DB writes).
+                        Upload the resulting JSON at /admin/import-tournament.
+                        This is the preferred path — use it.
+  --dry-run             Show what would be imported; make no DB writes.
+  --allow-direct-write  Bypass review and write directly to the DB.
+                        Only use if the review UI is genuinely unavailable.
+                        The review path exists to catch school mismatches like
+                        Haddon Twp Hgh School → Ewing (Bart Payne 2025, 22 bouts);
+                        use it.
 
 Tournaments already in the DB (from RTF imports) are skipped for bouts —
 their tournament rows are still confirmed/created.
@@ -93,9 +105,9 @@ _NJ_SCHOOL_OVERRIDES: dict[str, int] = {
     "Elmwood Park":                 51,
     "East Side":                    122,
     # Bullet-format-specific variations
-    "Haddon Twp Hgh School":        230,   # Haddon Township
+    "Haddon Twp Hgh School":        240,   # Haddon Township
     "Gateway Reg/ Woodbury":        291,   # Gateway Regional/Woodbury
-    "Passaic Co Tech-Voc":          243,   # Passaic County Tech
+    "Passaic Co Tech-Voc":          391,   # Passaic Tech
     "Jackson Township H.S.":        201,   # Jackson Township
     "St. Joseph (Hammonton)":       356,   # St. Joseph's (Hammonton)
 }
@@ -278,12 +290,117 @@ def create_wrestlers(
 
 # ── Main ───────────────────────────────────────────────────────────────────────
 
+def _emit_json(
+    args,
+    all_tourney_names:    list[str],
+    bout_batches:         dict[str, list[dict]],
+    bout_batches_meta:    dict[str, list[dict]],
+    school_cache:         dict[str, dict],
+    wrestler_resolutions: dict[str, dict],
+    skip_set:             set[str],
+    total_bouts:          int,
+    client:               Client,
+) -> None:
+    import json
+    from datetime import datetime, timezone
+
+    existing_ids: dict[str, Optional[str]] = {}
+    for tname in all_tourney_names:
+        res = client.from_("in_season_tournaments") \
+            .select("id").eq("name", tname).eq("season", SEASON).execute()
+        existing_ids[tname] = res.data[0]["id"] if res.data else None
+
+    flagged_school_count   = sum(1 for s in school_cache.values() if s["confidence"] in ("low", "none"))
+    fuzzy_school_count     = sum(1 for s in school_cache.values() if s["confidence"] == "high")
+    flagged_wrestler_count = sum(
+        1 for w in wrestler_resolutions.values()
+        if w["confidence"] in ("low", "none") and not w.get("is_new", False)
+    )
+    fuzzy_wrestler_count   = sum(
+        1 for w in wrestler_resolutions.values()
+        if w["confidence"] == "high" and not w.get("is_new", False)
+    )
+    new_wrestler_count = sum(1 for w in wrestler_resolutions.values() if w.get("is_new", False))
+
+    tournaments_out = []
+    for tname in all_tourney_names:
+        meta  = _TOURNAMENT_META.get(tname, {})
+        bouts = bout_batches.get(tname, [])
+        metas = bout_batches_meta.get(tname, [])
+        bout_list = [
+            {
+                "weight":            b["weight_class"],
+                "round":             b["round"],
+                "winner_name":       b["wrestler1_name_raw"],
+                "winner_school_raw": m["winner_school_raw"],
+                "winner_key":        m["winner_key"],
+                "loser_name":        b["wrestler2_name_raw"],
+                "loser_school_raw":  m["loser_school_raw"],
+                "loser_key":         m["loser_key"],
+                "result_type":       b["result_type"],
+                "result_detail":     b["result_detail"],
+                "fall_time_seconds": b["fall_time_seconds"],
+                "flagged":           m["flagged"],
+                "flag_reasons":      m["flag_reasons"],
+            }
+            for b, m in zip(bouts, metas)
+        ]
+        tournaments_out.append({
+            "name":        tname,
+            "existing_id": existing_ids.get(tname),
+            "start_date":  meta.get("start"),
+            "end_date":    meta.get("end"),
+            "skipped":     tname in skip_set,
+            "bouts":       bout_list,
+        })
+
+    output = {
+        "schema_version": 2,
+        "source_format":  SOURCE_FORMAT,
+        "generated_at":   datetime.now(timezone.utc).isoformat(),
+        "csv_file":       os.path.basename(args.file),
+        "summary": {
+            "total_bouts":             total_bouts,
+            "total_tournaments":       len(all_tourney_names),
+            "skipped_tournaments":     sorted(skip_set),
+            "flagged_school_count":    flagged_school_count,
+            "fuzzy_school_count":      fuzzy_school_count,
+            "flagged_wrestler_count":  flagged_wrestler_count,
+            "fuzzy_wrestler_count":    fuzzy_wrestler_count,
+            "new_wrestler_count":      new_wrestler_count,
+        },
+        "schools": {
+            raw: {
+                "school_id":    s["school_id"],
+                "display_name": s["display_name"],
+                "confidence":   s["confidence"],
+                "alternates":   s.get("alternates", []),
+            }
+            for raw, s in school_cache.items()
+        },
+        "wrestlers":   wrestler_resolutions,
+        "tournaments": tournaments_out,
+    }
+
+    with open(args.json_out, "w", encoding="utf-8") as f:
+        json.dump(output, f, indent=2, ensure_ascii=False)
+
+    print(f"\nJSON written to: {args.json_out!r}")
+    print(f"  {total_bouts} bouts across {len(all_tourney_names)} tournaments")
+    print(f"  {flagged_school_count} flagged schools  |  {fuzzy_school_count} fuzzy-high schools  |  {flagged_wrestler_count} flagged wrestlers  |  {fuzzy_wrestler_count} fuzzy-high wrestlers  |  {new_wrestler_count} new wrestlers")
+    print(f"  Upload at: /admin/import-tournament")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="Import bullet-format CSV tournament bouts.")
     ap.add_argument("file",      help="Path to bullet_format CSV file")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--force-tournaments", nargs="*", metavar="TOURNAMENT",
                     help="Override _SKIP_BOUT_IMPORT for specific tournament names")
+    ap.add_argument("--json-out", metavar="FILE",
+                    help="Write parsed+matched data to JSON file (no DB writes). Upload to /admin/import-tournament.")
+    ap.add_argument("--allow-direct-write", action="store_true",
+                    help="Bypass review UI and write directly to DB. Use --json-out instead.")
     args = ap.parse_args()
 
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -322,10 +439,12 @@ def main() -> None:
     for row in all_rows:
         by_tourney[row.tournament].append(row)
 
-    review_items:    list[ReviewItem]         = []
-    pending_new:     list[dict]               = []
-    pending_new_set: set[tuple[str, int]]     = set()
-    bout_batches:    dict[str, list[dict]]    = {}
+    review_items:         list[ReviewItem]      = []
+    pending_new:          list[dict]            = []
+    pending_new_set:      set[tuple[str, int]]  = set()
+    bout_batches:         dict[str, list[dict]] = {}
+    bout_batches_meta:    dict[str, list[dict]] = {}
+    wrestler_resolutions: dict[str, dict]       = {}
 
     SEP = "─" * 72
     print()
@@ -352,6 +471,7 @@ def main() -> None:
             continue
 
         bouts:      list[dict]      = []
+        bouts_meta: list[dict]      = []
         new_this_t: set[tuple]      = set()
         seen_pairs: set[tuple]      = set()
 
@@ -412,7 +532,44 @@ def main() -> None:
                 "source_format":        SOURCE_FORMAT,
             })
 
-        bout_batches[tname] = bouts
+            w_key = f"{row.winner}|{s_w['school_id'] or 'null'}|{row.weight}"
+            l_key = f"{row.loser}|{s_l['school_id'] or 'null'}|{row.weight}"
+            if s_w["school_id"] is not None and w_key not in wrestler_resolutions:
+                wrestler_resolutions[w_key] = {
+                    "wrestler_id":  wm_winner.get("wrestler_id"),
+                    "display_name": wm_winner.get("display_name"),
+                    "confidence":   wm_winner.get("confidence", "none"),
+                    "is_new":       wm_winner.get("is_new", False),
+                    "alternates":   wm_winner.get("alternates", []),
+                }
+            if s_l["school_id"] is not None and l_key not in wrestler_resolutions:
+                wrestler_resolutions[l_key] = {
+                    "wrestler_id":  wm_loser.get("wrestler_id"),
+                    "display_name": wm_loser.get("display_name"),
+                    "confidence":   wm_loser.get("confidence", "none"),
+                    "is_new":       wm_loser.get("is_new", False),
+                    "alternates":   wm_loser.get("alternates", []),
+                }
+            flag_reasons: list[str] = []
+            if s_w["confidence"] in ("low", "none"):
+                flag_reasons.append(f"winner_school_{s_w['confidence']}")
+            if s_l["confidence"] in ("low", "none"):
+                flag_reasons.append(f"loser_school_{s_l['confidence']}")
+            if s_w["school_id"] is not None and wm_winner.get("confidence") in ("low", "none"):
+                flag_reasons.append(f"winner_wrestler_{wm_winner['confidence']}")
+            if s_l["school_id"] is not None and wm_loser.get("confidence") in ("low", "none"):
+                flag_reasons.append(f"loser_wrestler_{wm_loser['confidence']}")
+            bouts_meta.append({
+                "winner_school_raw": row.winner_school,
+                "loser_school_raw":  row.loser_school,
+                "winner_key": w_key if s_w["school_id"] is not None else None,
+                "loser_key":  l_key if s_l["school_id"] is not None else None,
+                "flagged":      bool(flag_reasons),
+                "flag_reasons": flag_reasons,
+            })
+
+        bout_batches[tname]      = bouts
+        bout_batches_meta[tname] = bouts_meta
         print(f"  {len(bouts)} bouts queued  ({len(new_this_t)} new wrestlers to create)")
 
     total_bouts = sum(len(b) for b in bout_batches.values())
@@ -442,6 +599,13 @@ def main() -> None:
             print(f"    {item.weight:3d}lb {item.round:10s}  {item.name!r} ({item.school})"
                   f"  [{item.confidence}]{new_flag}  alts: {alts}")
 
+    if args.json_out:
+        _emit_json(
+            args, all_tourney_names, bout_batches, bout_batches_meta,
+            school_cache, wrestler_resolutions, skip_set, total_bouts, client,
+        )
+        return
+
     if args.dry_run:
         print()
         print(SEP)
@@ -452,6 +616,23 @@ def main() -> None:
         print(f"    • Insert {total_bouts} tournament bouts (source_format='bullet')")
         print(SEP)
         return
+
+    if not args.allow_direct_write:
+        print()
+        print(SEP)
+        print("  BLOCKED — direct DB write requires --allow-direct-write.")
+        print()
+        print("  The recommended path is:")
+        print(f"    python scripts/import_bullet_csv.py --json-out out.json {args.file!r}")
+        print("    Then upload out.json at /admin/import-tournament for review.")
+        print()
+        print("  This gate exists because fuzzy school matching has produced wrong")
+        print("  records in production (e.g., Bart Payne 2025: 22 bouts written to")
+        print("  Ewing/St John Vianney instead of Haddon Township/Passaic Tech).")
+        print()
+        print("  If the review UI is genuinely unavailable, pass --allow-direct-write.")
+        print(SEP)
+        sys.exit(1)
 
     # ── Live run ──────────────────────────────────────────────────────────────
 

@@ -12,6 +12,9 @@ type LogoMap = {
   // Spread onto <SchoolLogoBadge> or <PWCell> directly — avoids repeating the key expression
   badge: (name: string | null | undefined) => BadgeProps
   badgeById: (id: number | null | undefined) => BadgeProps
+  // Prefer school_id when available; fall back to display_name lookup. Use this on
+  // pages where RPCs return school_id alongside school_name — avoids name-mismatch misses.
+  badgeByIdOrName: (id: number | null | undefined, name: string | null | undefined) => BadgeProps
 }
 
 // React.cache() deduplicates per request — one DB round-trip no matter how many
@@ -32,5 +35,9 @@ export const getSchoolLogos = cache(async (): Promise<LogoMap> => {
     byId, byName, bgById, bgByName,
     badge:     (name) => name   ? { logoUrl: byName.get(name) ?? null, bgColor: bgByName.get(name) ?? null } : NULL_BADGE,
     badgeById: (id)   => id != null ? { logoUrl: byId.get(id)   ?? null, bgColor: bgById.get(id)   ?? null } : NULL_BADGE,
+    badgeByIdOrName: (id, name) => {
+      if (id != null) return { logoUrl: byId.get(id) ?? null, bgColor: bgById.get(id) ?? null }
+      return name ? { logoUrl: byName.get(name) ?? null, bgColor: bgByName.get(name) ?? null } : NULL_BADGE
+    },
   }
 })

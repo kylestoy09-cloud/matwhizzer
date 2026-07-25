@@ -5,12 +5,19 @@ scripts/import_pipe_csv.py
 Import tournament bouts from the pipe-delimited CSV exports into MatWhizzer.
 
 Usage:
-  python scripts/import_pipe_csv.py [--dry-run] [--json-out FILE] <csv_file>
+  python scripts/import_pipe_csv.py --json-out FILE <csv_file>
+  python scripts/import_pipe_csv.py --dry-run <csv_file>
 
 Options:
-  --dry-run         Show what would be imported; make no DB writes.
-  --json-out FILE   Write parsed+matched data to FILE (no DB writes).
-                    Upload the resulting JSON at /admin/import-tournament.
+  --json-out FILE       Write parsed+matched data to FILE (no DB writes).
+                        Upload the resulting JSON at /admin/import-tournament.
+                        This is the preferred path — use it.
+  --dry-run             Show what would be imported; make no DB writes.
+  --allow-direct-write  Bypass review and write directly to the DB.
+                        Only use if you have a specific reason the review UI
+                        cannot be used (e.g., the UI is broken or unavailable).
+                        The review path exists to catch school mismatches like
+                        Haddon Twp → Ewing (Bart Payne 2025); use it.
 
 PREREQUISITES (apply migrations before first live run):
   docs/migrations/20260720_add_source_format_to_tournament_bouts.sql
@@ -403,9 +410,14 @@ def _emit_json(
         existing_ids[tname] = res.data[0]["id"] if res.data else None
 
     flagged_school_count   = sum(1 for s in school_cache.values() if s["confidence"] in ("low", "none"))
+    fuzzy_school_count     = sum(1 for s in school_cache.values() if s["confidence"] == "high")
     flagged_wrestler_count = sum(
         1 for w in wrestler_resolutions.values()
         if w["confidence"] in ("low", "none") and not w.get("is_new", False)
+    )
+    fuzzy_wrestler_count   = sum(
+        1 for w in wrestler_resolutions.values()
+        if w["confidence"] == "high" and not w.get("is_new", False)
     )
     new_wrestler_count = sum(1 for w in wrestler_resolutions.values() if w.get("is_new", False))
 
@@ -442,17 +454,19 @@ def _emit_json(
         })
 
     output = {
-        "schema_version": 1,
+        "schema_version": 2,
         "source_format":  SOURCE_FORMAT,
         "generated_at":   datetime.now(timezone.utc).isoformat(),
         "csv_file":       os.path.basename(args.file),
         "summary": {
-            "total_bouts":            total_bouts,
-            "total_tournaments":      len(all_tourney_names),
-            "skipped_tournaments":    sorted(skip_set),
-            "flagged_school_count":   flagged_school_count,
-            "flagged_wrestler_count": flagged_wrestler_count,
-            "new_wrestler_count":     new_wrestler_count,
+            "total_bouts":             total_bouts,
+            "total_tournaments":       len(all_tourney_names),
+            "skipped_tournaments":     sorted(skip_set),
+            "flagged_school_count":    flagged_school_count,
+            "fuzzy_school_count":      fuzzy_school_count,
+            "flagged_wrestler_count":  flagged_wrestler_count,
+            "fuzzy_wrestler_count":    fuzzy_wrestler_count,
+            "new_wrestler_count":      new_wrestler_count,
         },
         "schools":     {
             raw: {
@@ -472,7 +486,7 @@ def _emit_json(
 
     print(f"\nJSON written to: {args.json_out!r}")
     print(f"  {total_bouts} bouts across {len(all_tourney_names)} tournaments")
-    print(f"  {flagged_school_count} flagged schools  |  {flagged_wrestler_count} flagged wrestlers  |  {new_wrestler_count} new wrestlers")
+    print(f"  {flagged_school_count} flagged schools  |  {fuzzy_school_count} fuzzy-high schools  |  {flagged_wrestler_count} flagged wrestlers  |  {fuzzy_wrestler_count} fuzzy-high wrestlers  |  {new_wrestler_count} new wrestlers")
     print(f"  Upload at: /admin/import-tournament")
 
 
@@ -487,6 +501,8 @@ def main() -> None:
                     help="Override _SKIP_BOUT_IMPORT for specific tournament names")
     ap.add_argument("--json-out", metavar="FILE",
                     help="Write parsed+matched data to JSON file (no DB writes). Upload to /admin/import-tournament.")
+    ap.add_argument("--allow-direct-write", action="store_true",
+                    help="Bypass review UI and write directly to DB. Use --json-out instead.")
     args = ap.parse_args()
 
     script_dir   = os.path.dirname(os.path.abspath(__file__))
@@ -732,6 +748,23 @@ def main() -> None:
         print(f"    • Insert {total_bouts} tournament bouts (source_format='pipe')")
         print(sep)
         return
+
+    if not args.allow_direct_write:
+        print()
+        print(sep)
+        print("  BLOCKED — direct DB write requires --allow-direct-write.")
+        print()
+        print("  The recommended path is:")
+        print(f"    python scripts/import_pipe_csv.py --json-out out.json {args.file!r}")
+        print("    Then upload out.json at /admin/import-tournament for review.")
+        print()
+        print("  This gate exists because fuzzy school matching has produced wrong")
+        print("  records in production (e.g., Bart Payne 2025: 10 wrestlers written")
+        print("  to Ewing instead of Haddon Township). The review UI catches these.")
+        print()
+        print("  If the review UI is genuinely unavailable, pass --allow-direct-write.")
+        print(sep)
+        sys.exit(1)
 
     # ── Live run ──────────────────────────────────────────────────────────────
 

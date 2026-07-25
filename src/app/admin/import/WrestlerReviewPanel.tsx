@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment, useState, useEffect, useMemo } from 'react'
+import { Fragment, useState, useEffect, useMemo, useCallback } from 'react'
 import type { ParsedMeet } from '@/lib/parseDualMeet'
 import type { WrestlerMatch } from '@/lib/matchWrestlers'
 import {
@@ -249,6 +249,9 @@ export function WrestlerReviewPanel({
 
           const resolved = resolveWrestler(key, wrestlerResolutions, wrestlerOverrides)
           const rawMatch = wrestlerResolutions[key]
+          // Classify by the PRE-OVERRIDE match state so that an accidentally-linked
+          // "new" wrestler stays visible in the new section and can be undone.
+          const originallyNew = !rawMatch || rawMatch.isNew
           const item: WrestlerItem = {
             key,
             rawName:       name,
@@ -259,9 +262,9 @@ export function WrestlerReviewPanel({
             match:         rawMatch,
           }
 
-          if (resolved.confidence === 'low') {
+          if (resolved.confidence === 'low' && !originallyNew) {
             low.push(item)
-          } else if (resolved.isNew) {
+          } else if (originallyNew) {
             newW.push(item)
           }
         }
@@ -270,25 +273,74 @@ export function WrestlerReviewPanel({
 
     // Sort low-conf by school then name
     low.sort((a, b) => a.schoolDisplay.localeCompare(b.schoolDisplay) || a.rawName.localeCompare(b.rawName))
-    // Sort new by school then weight
-    newW.sort((a, b) => a.schoolDisplay.localeCompare(b.schoolDisplay) || a.weightClass - b.weightClass)
+    // Sort new by school then name then weight
+    newW.sort((a, b) =>
+      a.schoolDisplay.localeCompare(b.schoolDisplay) ||
+      a.rawName.localeCompare(b.rawName) ||
+      a.weightClass - b.weightClass
+    )
 
     return { lowItems: low, newItems: newW }
   }, [meets, schoolResolutions, schoolOverrides, wrestlerResolutions, wrestlerOverrides])
 
-  // ── Group new wrestlers by school ──────────────────────────────────────────
+  // ── Group new wrestlers by school, then merge same name into a single row ──
+  // Same wrestler at different weight classes = one display row with all weights.
+
+  type NewGroup = {
+    groupKey: string        // `${rawName}|${schoolId ?? 'null'}`
+    rawName: string
+    schoolRaw: string | null
+    schoolId: number | null
+    schoolDisplay: string
+    keys: WrestlerKey[]     // one key per weight class occurrence
+    weights: number[]       // sorted weight classes
+    primaryMatch: WrestlerMatch | undefined
+  }
 
   const newBySchool = useMemo(() => {
-    const map = new Map<string, WrestlerItem[]>()
+    const map = new Map<string, NewGroup[]>()
     const filter = newFilter.toLowerCase().trim()
     for (const item of newItems) {
       if (filter && !item.rawName.toLowerCase().includes(filter) && !item.schoolDisplay.toLowerCase().includes(filter)) continue
-      const bucket = map.get(item.schoolDisplay) ?? []
-      bucket.push(item)
-      map.set(item.schoolDisplay, bucket)
+      const groupKey = `${item.rawName}|${item.schoolId ?? 'null'}`
+      const schoolGroups = map.get(item.schoolDisplay) ?? []
+      const existing = schoolGroups.find(g => g.groupKey === groupKey)
+      if (existing) {
+        existing.keys.push(item.key)
+        existing.weights.push(item.weightClass)
+        existing.weights.sort((a, b) => a - b)
+      } else {
+        schoolGroups.push({
+          groupKey,
+          rawName:       item.rawName,
+          schoolRaw:     item.schoolRaw,
+          schoolId:      item.schoolId,
+          schoolDisplay: item.schoolDisplay,
+          keys:          [item.key],
+          weights:       [item.weightClass],
+          primaryMatch:  item.match,
+        })
+        map.set(item.schoolDisplay, schoolGroups)
+      }
     }
     return map
   }, [newItems, newFilter])
+
+  // Apply an override to every key in a group (same name+school, different weights)
+  const handleGroupOverride = useCallback((group: NewGroup, override: WrestlerOverride | null) => {
+    for (const k of group.keys) {
+      onWrestlerOverride(k, override)
+    }
+  }, [onWrestlerOverride])
+
+  // Batch-confirm all unresolved new wrestlers as new
+  const handleConfirmAllNew = useCallback(() => {
+    for (const item of newItems) {
+      if (!wrestlerOverrides[item.key]) {
+        onWrestlerOverride(item.key, { wrestlerId: null, displayName: null, confirmedNew: true })
+      }
+    }
+  }, [newItems, wrestlerOverrides, onWrestlerOverride])
 
   const totalLowPending = lowItems.filter(i => !wrestlerOverrides[i.key]).length
 
@@ -379,14 +431,23 @@ export function WrestlerReviewPanel({
                 </p>
               </div>
 
-              {/* Filter */}
-              <input
-                type="text"
-                value={newFilter}
-                onChange={e => setNewFilter(e.target.value)}
-                placeholder="Filter by name or school…"
-                className="w-full text-xs border border-black/20 px-2 py-1.5 outline-none focus:border-black mb-4 bg-white"
-              />
+              {/* Filter + batch confirm */}
+              <div className="flex gap-2 mb-4">
+                <input
+                  type="text"
+                  value={newFilter}
+                  onChange={e => setNewFilter(e.target.value)}
+                  placeholder="Filter by name or school…"
+                  className="flex-1 text-xs border border-black/20 px-2 py-1.5 outline-none focus:border-black bg-white"
+                />
+                <button
+                  onClick={handleConfirmAllNew}
+                  className="shrink-0 text-[11px] font-semibold px-3 py-1.5 border border-black bg-white hover:bg-slate-50 text-slate-800"
+                  title="Mark every un-reviewed wrestler as a new person to create"
+                >
+                  Confirm all as new
+                </button>
+              </div>
 
               {/* Expand / collapse all */}
               <div className="flex gap-3 mb-3">
@@ -406,7 +467,7 @@ export function WrestlerReviewPanel({
 
               {/* By-school groups */}
               <div className="space-y-2">
-                {[...newBySchool.entries()].map(([school, items]) => {
+                {[...newBySchool.entries()].map(([school, groups]) => {
                   const isOpen = openSchools.has(school)
 
                   return (
@@ -421,33 +482,35 @@ export function WrestlerReviewPanel({
                       >
                         <span className="text-xs font-semibold text-slate-800">{school}</span>
                         <span className="text-xs text-slate-400">
-                          {items.length} wrestler{items.length !== 1 ? 's' : ''}
+                          {groups.length} wrestler{groups.length !== 1 ? 's' : ''}
                           {' '}{isOpen ? '▲' : '▼'}
                         </span>
                       </button>
 
                       {isOpen && (
                         <div className="border-t border-black/10">
-                          {items.map(item => {
-                            const override    = wrestlerOverrides[item.key]
-                            const isActive    = activeKey === item.key
-                            const isFixed     = !!override
+                          {groups.map(group => {
+                            // Group is "fixed" if every key has an override
+                            const overrides = group.keys.map(k => wrestlerOverrides[k])
+                            const primaryOverride = overrides[0]
+                            const isFixed   = overrides.every(Boolean)
+                            const isActive  = activeKey === group.groupKey
 
                             return (
-                              <Fragment key={item.key}>
+                              <Fragment key={group.groupKey}>
                                 <div
                                   className={`flex items-center gap-3 px-3 py-1.5 cursor-pointer border-b border-black/5 last:border-0 ${
                                     isFixed ? 'bg-green-50' : 'hover:bg-amber-50'
                                   }`}
-                                  onClick={() => setActiveKey(prev => prev === item.key ? null : item.key)}
+                                  onClick={() => setActiveKey(prev => prev === group.groupKey ? null : group.groupKey)}
                                 >
-                                  <span className="text-[11px] font-mono text-slate-400 w-8 shrink-0">
-                                    {item.weightClass}
+                                  <span className="text-[11px] font-mono text-slate-400 w-10 shrink-0">
+                                    {group.weights.join('/')}
                                   </span>
-                                  <span className="text-xs text-slate-800 flex-1">{item.rawName}</span>
-                                  {isFixed && (
+                                  <span className="text-xs text-slate-800 flex-1">{group.rawName}</span>
+                                  {isFixed && primaryOverride && (
                                     <span className="text-[10px] font-bold px-1 py-0.5 bg-green-100 text-green-700 border border-green-300 shrink-0">
-                                      {override.confirmedNew ? '✓ new' : `→ ${override.displayName}`}
+                                      {primaryOverride.confirmedNew ? '✓ new' : `→ ${primaryOverride.displayName}`}
                                     </span>
                                   )}
                                   {!isFixed && (
@@ -457,14 +520,14 @@ export function WrestlerReviewPanel({
 
                                 {isActive && (
                                   <WrestlerCard
-                                    wKey={item.key}
-                                    rawName={item.rawName}
-                                    schoolRaw={item.schoolRaw}
-                                    schoolId={item.schoolId}
-                                    weightClass={item.weightClass}
-                                    match={item.match}
-                                    override={override}
-                                    onOverride={onWrestlerOverride}
+                                    wKey={group.keys[0]}
+                                    rawName={group.rawName}
+                                    schoolRaw={group.schoolRaw}
+                                    schoolId={group.schoolId}
+                                    weightClass={group.weights[0]}
+                                    match={group.primaryMatch}
+                                    override={primaryOverride}
+                                    onOverride={(_, o) => handleGroupOverride(group, o)}
                                     onClose={() => setActiveKey(null)}
                                   />
                                 )}
