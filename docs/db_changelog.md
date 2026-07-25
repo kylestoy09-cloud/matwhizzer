@@ -5,6 +5,18 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-07-25 — Merge school 358 (Roselle duplicate) into school 125
+
+**Migration file:** `docs/migrations/20260725_merge_roselle_schools.sql`
+
+**Status:** PENDING
+
+**What changed:**
+
+School 358 ("Roselle", "Rams") was incorrectly created as a duplicate when a request to rename school 125 ("Roselle Park", "Panthers") was mishandled. Confirmed zero FK references for school 358 across all tables. Migration copies display_name, mascot, and logo_url from 358 onto 125, then deletes 358. School 125 becomes "Roselle Rams" with the correct logo; all wrestlers and meets already linked to 125 reflect the update automatically.
+
+---
+
 ## 2026-07-25 — Backfill wrestler_name_aliases from existing dual_meet_matches
 
 **Migration file:** `docs/migrations/20260725_backfill_wrestler_name_aliases.sql`
