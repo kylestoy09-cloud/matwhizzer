@@ -30,7 +30,9 @@ export async function GET(req: NextRequest) {
         is_double_forfeit, is_forfeit_win, validated
       `)
       .or(
-        'and(wrestler_a_id.is.null,school_a_id.not.is.null,is_double_forfeit.eq.false),' +
+        // Exclude forfeit wins from both slots: forfeiting side has no wrestler to link;
+        // winning side is lower priority and handled in By-Meet view.
+        'and(wrestler_a_id.is.null,school_a_id.not.is.null,is_double_forfeit.eq.false,is_forfeit_win.eq.false),' +
         'and(wrestler_b_id.is.null,school_b_id.not.is.null,is_forfeit_win.eq.false,is_double_forfeit.eq.false)'
       )
       .order('weight_class')
@@ -51,7 +53,7 @@ export async function GET(req: NextRequest) {
       supabase.from('schools').select('id, display_name, is_nj').in('id', [...ulSchoolIds]),
       supabase
         .from('dual_meets')
-        .select('id, meet_date, gender, team1_school_name_raw, team2_school_name_raw, team1:schools!team1_school_id(display_name), team2:schools!team2_school_id(display_name)')
+        .select('id, meet_date, gender, team1:schools!team1_school_id(display_name), team2:schools!team2_school_id(display_name)')
         .in('id', [...ulMeetIds]),
     ])
 
@@ -60,8 +62,8 @@ export async function GET(req: NextRequest) {
 
     const ulMeetMap = new Map<string, { label: string }>()
     for (const dm of (ulMeets ?? []) as any[]) {
-      const t1 = dm.team1?.display_name ?? dm.team1_school_name_raw ?? '?'
-      const t2 = dm.team2?.display_name ?? dm.team2_school_name_raw ?? '?'
+      const t1 = dm.team1?.display_name ?? '?'
+      const t2 = dm.team2?.display_name ?? '?'
       const date = new Date(dm.meet_date + 'T12:00:00').toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: '2-digit' })
       const g = dm.gender === 'F' ? ' · Girls' : ''
       ulMeetMap.set(dm.id, { label: `${t1} vs ${t2} · ${date}${g}` })
@@ -78,6 +80,8 @@ export async function GET(req: NextRequest) {
         if (!schoolId) return
         const school = ulSchoolMap.get(schoolId)
         if (!school) return
+        // OOS schools can't be linked to NJ wrestler records — skip them
+        if (!school.isNj) return
         if (!bySchool.has(schoolId)) {
           bySchool.set(schoolId, { schoolId, schoolName: school.name, isNj: school.isNj, slots: [] })
         }
