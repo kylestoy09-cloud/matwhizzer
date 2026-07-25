@@ -137,6 +137,7 @@ function WrestlerCell({
   resolutions,
   overrides,
   onClick,
+  isOos,
 }: {
   name:        string | null
   schoolRaw:   string | null
@@ -144,8 +145,19 @@ function WrestlerCell({
   resolutions: Record<string, WrestlerMatch>
   overrides:   Record<string, WrestlerOverride>
   onClick?:    () => void
+  isOos?:      boolean
 }) {
   if (!name) return <span className="text-slate-400 text-xs">—</span>
+
+  if (isOos) {
+    return (
+      <div className="flex items-center gap-1.5 flex-wrap min-w-0">
+        <span className="text-xs text-slate-800 truncate">{name}</span>
+        {schoolRaw && <span className="text-[11px] text-slate-400 shrink-0">({schoolRaw})</span>}
+        <span className="inline-flex items-center rounded px-1 py-px text-[10px] font-semibold leading-none bg-blue-50 text-blue-600 border border-blue-200 shrink-0">OOS</span>
+      </div>
+    )
+  }
 
   const resolved    = resolveWrestler(wKey, resolutions, overrides)
   const isClickable = !!onClick && (resolved.confidence === 'low' || resolved.confidence === 'none')
@@ -217,7 +229,7 @@ export function MeetCard({
   const s1 = resolveSchool(meet.team1Name, schoolResolutions, schoolOverrides)
   const s2 = resolveSchool(meet.team2Name, schoolResolutions, schoolOverrides)
 
-  // Per-match stats
+  // Per-match stats (OOS wrestlers excluded — they're not linked to NJ records)
   const matchRows = meet.matches.filter(m => !m.isDoubleForfeit)
   let exact = 0, newW = 0, review = 0
   for (const m of matchRows) {
@@ -226,8 +238,9 @@ export function MeetCard({
       ...(!m.isForfeitWin ? [[m.loserName, m.loserSchoolRaw] as const] : []),
     ]) {
       if (!name) continue
-      const schoolId = resolveSchool(schoolRaw ?? '', schoolResolutions, schoolOverrides).schoolId
-      const key = makeWrestlerKey(name, schoolId, m.weightClass)
+      const schoolRes = resolveSchool(schoolRaw ?? '', schoolResolutions, schoolOverrides)
+      if (schoolRes.isOutOfState) continue
+      const key = makeWrestlerKey(name, schoolRes.schoolId, m.weightClass)
       const resolved = resolveWrestler(key, wrestlerResolutions, wrestlerOverrides)
       if (resolved.isNew)                       newW++
       else if (resolved.confidence === 'exact') exact++
@@ -264,6 +277,9 @@ export function MeetCard({
             <span className="font-semibold text-sm text-slate-900">
               {s1.displayName ?? meet.team1Name}
             </span>
+            {s1.isOutOfState && (
+              <span className="inline-flex items-center rounded px-1 py-px text-[10px] font-semibold leading-none bg-blue-50 text-blue-600 border border-blue-200">OOS</span>
+            )}
           </div>
           <span className="text-slate-400 text-sm shrink-0">vs.</span>
           {/* School 2 */}
@@ -272,6 +288,9 @@ export function MeetCard({
             <span className="font-semibold text-sm text-slate-900">
               {s2.displayName ?? meet.team2Name}
             </span>
+            {s2.isOutOfState && (
+              <span className="inline-flex items-center rounded px-1 py-px text-[10px] font-semibold leading-none bg-blue-50 text-blue-600 border border-blue-200">OOS</span>
+            )}
           </div>
           <span className="text-slate-400 text-sm shrink-0 ml-1">({meet.date})</span>
           <span className="text-slate-500 text-sm ml-2 shrink-0">
@@ -316,16 +335,17 @@ export function MeetCard({
             </thead>
             <tbody>
               {meet.matches.map((m, i) => {
-                const winnerSchoolId = resolveSchool(
-                  m.winnerSchoolRaw ?? '', schoolResolutions, schoolOverrides
-                ).schoolId
-                const loserSchoolId = resolveSchool(
-                  m.loserSchoolRaw ?? '', schoolResolutions, schoolOverrides
-                ).schoolId
-                const wKey = m.winnerName
+                const winnerSchoolRes = resolveSchool(m.winnerSchoolRaw ?? '', schoolResolutions, schoolOverrides)
+                const loserSchoolRes  = resolveSchool(m.loserSchoolRaw  ?? '', schoolResolutions, schoolOverrides)
+                const winnerSchoolId  = winnerSchoolRes.schoolId
+                const loserSchoolId   = loserSchoolRes.schoolId
+                const winnerIsOos     = winnerSchoolRes.isOutOfState
+                const loserIsOos      = loserSchoolRes.isOutOfState
+                // OOS wrestlers get empty keys — no panel needed for them
+                const wKey = m.winnerName && !winnerIsOos
                   ? makeWrestlerKey(m.winnerName, winnerSchoolId, m.weightClass)
                   : ''
-                const lKey = m.loserName && !m.isForfeitWin && !m.isDoubleForfeit
+                const lKey = m.loserName && !m.isForfeitWin && !m.isDoubleForfeit && !loserIsOos
                   ? makeWrestlerKey(m.loserName, loserSchoolId, m.weightClass)
                   : ''
 
@@ -348,6 +368,7 @@ export function MeetCard({
                               wKey={wKey}
                               resolutions={wrestlerResolutions}
                               overrides={wrestlerOverrides}
+                              isOos={winnerIsOos}
                               onClick={wKey ? () => toggleWrestler(wKey) : undefined}
                             />
                         }
@@ -361,6 +382,7 @@ export function MeetCard({
                             wKey={lKey}
                             resolutions={wrestlerResolutions}
                             overrides={wrestlerOverrides}
+                            isOos={loserIsOos}
                             onClick={lKey ? () => toggleWrestler(lKey) : undefined}
                           />
                         )}

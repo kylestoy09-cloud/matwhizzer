@@ -333,8 +333,9 @@ export function ImportClient() {
             [m.loserName,  m.loserSchoolRaw]  as const,
           ]) {
             if (!name) continue
-            const schoolId = resolveSchool(schoolRaw ?? '', schoolResolutions, schoolOverrides).schoolId
-            const key = makeWrestlerKey(name, schoolId, m.weightClass)
+            const schoolRes = resolveSchool(schoolRaw ?? '', schoolResolutions, schoolOverrides)
+            if (schoolRes.isOutOfState) continue
+            const key = makeWrestlerKey(name, schoolRes.schoolId, m.weightClass)
             const res = wrestlerResolutions[key]
             const ovr = wrestlerOverrides[key]
             const isNew = ovr ? ovr.confirmedNew : (res?.isNew ?? true)

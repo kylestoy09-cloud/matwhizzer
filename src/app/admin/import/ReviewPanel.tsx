@@ -57,7 +57,7 @@ function SchoolReviewItem({
     }
   }
 
-  const selected = override?.schoolId ?? match.schoolId
+  const selected = override?.schoolId ?? null
 
   return (
     <div className="border border-black/20 bg-white p-3">

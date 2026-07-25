@@ -38,9 +38,10 @@ export function makeWrestlerKey(
 // ── Resolved types (after applying overrides on top of API results) ────────────
 
 export type ResolvedSchool = {
-  schoolId:    number | null
-  displayName: string | null
-  confidence:  'exact' | 'high' | 'low' | 'none'
+  schoolId:     number | null
+  displayName:  string | null
+  confidence:   'exact' | 'high' | 'low' | 'none'
+  isOutOfState: boolean
 }
 
 export type ResolvedWrestler = {
@@ -59,14 +60,20 @@ export function resolveSchool(
 ): ResolvedSchool {
   const override = overrides[rawName]
   if (override) {
-    return { schoolId: override.schoolId, displayName: override.displayName, confidence: 'exact' }
+    return {
+      schoolId:     override.schoolId,
+      displayName:  override.displayName,
+      confidence:   'exact',
+      isOutOfState: override.isOutOfState ?? false,
+    }
   }
   const match = resolutions[rawName]
-  if (!match) return { schoolId: null, displayName: rawName, confidence: 'none' }
+  if (!match) return { schoolId: null, displayName: rawName, confidence: 'none', isOutOfState: false }
   return {
-    schoolId:    match.schoolId,
-    displayName: match.displayName ?? rawName,
-    confidence:  match.confidence,
+    schoolId:     match.schoolId,
+    displayName:  match.displayName ?? rawName,
+    confidence:   match.confidence,
+    isOutOfState: false,
   }
 }
 

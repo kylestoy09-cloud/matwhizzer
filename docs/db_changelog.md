@@ -5,6 +5,18 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-07-25 — Delete 60 null-school dual meets (Dec 9–20 2025)
+
+**Migration file:** `docs/migrations/20260725_delete_null_school_meets.sql`
+
+**Status:** PENDING — run before re-importing those meets from TW raw text.
+
+**What changed:**
+
+Data cleanup: 60 `dual_meets` rows spanning Dec 9–20 2025 had `team1_school_id IS NULL` or `team2_school_id IS NULL` because `build_from_gt.py` built them from GT data — it knew one NJ team's wrestler UUIDs but couldn't identify the OOS opponent. Displays as "— vs School" in the audit tool with dashes on the opponent side and no OOS info. All associated `dual_meet_matches` rows deleted first (FK order). These meets will be re-imported from TrackWrestling raw text which captures both teams correctly and creates OOS school stubs with `is_nj = false`.
+
+---
+
 ## 2026-07-25 — Fix is_forfeit_win flag on 15 matches
 
 **Migration file:** `docs/migrations/20260725_fix_forfeit_win_flag.sql`

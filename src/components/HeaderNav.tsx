@@ -7,14 +7,11 @@ import Image from 'next/image'
 import { createSupabaseBrowser } from '@/lib/supabase/client'
 import type { User } from '@supabase/supabase-js'
 
-// Swap /boys ↔ /girls in the current path, falling back to the gender root.
+// Swap /boys ↔ /girls anywhere in the current path, falling back to the gender root.
 function genderHref(pathname: string, target: 'boys' | 'girls'): string {
   const from = target === 'girls' ? '/boys' : '/girls'
   const to   = target === 'girls' ? '/girls' : '/boys'
-  if (pathname.startsWith(from)) {
-    const rest = pathname.slice(from.length)
-    return rest ? to + rest : to
-  }
+  if (pathname.includes(from)) return pathname.replace(from, to)
   return `/${target}`
 }
 
@@ -45,7 +42,7 @@ export function HeaderNav() {
   const [schools,     setSchools]     = useState<SchoolResult[]>([])
   const [searchOpen,  setSearchOpen]  = useState(false)
 
-  const isBoys = !pathname.startsWith('/girls')
+  const isBoys = !pathname.includes('/girls')
 
   // ── Colour tokens ────────────────────────────────────────────────────────
   const rowOneBg    = isBoys ? 'bg-slate-900'  : 'bg-rose-900'
@@ -54,15 +51,14 @@ export function HeaderNav() {
   const dropdownHov = isBoys ? 'hover:bg-slate-700' : 'hover:bg-rose-700'
 
   // ── Nav links (gender-aware) ─────────────────────────────────────────────
-  const homeHref = isBoys ? '/boys' : '/girls'
+  const homeHref = isBoys ? '/postseason/individual/boys' : '/postseason/individual/girls'
   const navItems = [
-    { href: isBoys ? '/boys/state'        : '/girls/state',        label: 'State'        },
-    { href: isBoys ? '/boys/regions'      : '/girls/regions',      label: 'Regions'      },
-    { href: isBoys ? '/boys/districts'    : '/girls/districts',    label: 'Districts'    },
-    { href: '/conferences',                                         label: 'Conferences'  },
-    { href: isBoys ? '/boys/leaderboards' : '/girls/leaderboards', label: 'Leaderboards' },
-    { href: isBoys ? '/boys/schools' : '/girls/schools',            label: 'Schools'      },
-    { href: '/feedback',                                            label: 'Feedback'     },
+    { href: '/schedule',                                                          label: 'Schedule'     },
+    { href: '/conferences',                                                       label: 'Standings'    },
+    { href: isBoys ? '/boys/leaderboards' : '/girls/leaderboards',               label: 'Leaderboards' },
+    { href: isBoys ? '/boys/schools'      : '/girls/schools',                    label: 'Schools'      },
+    { href: '/postseason',                                                        label: 'Post Season'  },
+    { href: '/feedback',                                                          label: 'Feedback'     },
   ]
 
   // ── Auth ─────────────────────────────────────────────────────────────────

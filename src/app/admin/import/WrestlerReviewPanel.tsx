@@ -242,6 +242,7 @@ export function WrestlerReviewPanel({
         for (const [name, schoolRaw] of pairs) {
           if (!name) continue
           const schoolRes = resolveSchool(schoolRaw ?? '', schoolResolutions, schoolOverrides)
+          if (schoolRes.isOutOfState) continue
           const schoolId  = schoolRes.schoolId
           const key       = makeWrestlerKey(name, schoolId, m.weightClass)
           if (seen.has(key)) continue
