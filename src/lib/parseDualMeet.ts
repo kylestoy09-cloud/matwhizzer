@@ -107,9 +107,12 @@ function normalizeName(name: string): string {
 //      "Jane Roe (Garfield) over Unknown (For.)"
 //      "Double Forfeit"
 
-function parseMatchSummary(summary: string, t1Pts: number, t2Pts: number, weight: number): ParsedMatch {
+function parseMatchSummary(summary: string, t1Pts: number, t2Pts: number, weight: number): ParsedMatch | null {
   // Normalize non-breaking spaces (TrackWrestling uses \u00a0 around "over")
   const s = summary.replace(/\u00a0/g, ' ').trim()
+
+  // Skip exhibition bouts \u2014 TW labels them "Extra ..." and they don't count toward score
+  if (/^extra\b/i.test(s)) return null
 
   // Double forfeit
   if (/^double\s+forfeit/i.test(s)) {
@@ -256,6 +259,7 @@ function parseFormatA(chunk: string): ParsedMatch[] {
     .map(parseMatchLine)
     .filter((x): x is NonNullable<typeof x> => x !== null)
     .map(({ weight, summary, t1, t2 }) => parseMatchSummary(summary, t1, t2, weight))
+    .filter((x): x is ParsedMatch => x !== null)
 }
 
 // ── Format B parser ────────────────────────────────────────────────────────────
@@ -300,7 +304,8 @@ function parseFormatB(chunk: string): ParsedMatch[] {
     const summary = m[2].trim()
     const t1      = parseInt(m[3])
     const t2      = parseInt(m[4])
-    matches.push(parseMatchSummary(summary, t1, t2, weight))
+    const pm = parseMatchSummary(summary, t1, t2, weight)
+    if (pm) matches.push(pm)
   }
   return matches
 }
@@ -334,7 +339,8 @@ function parseFormatC(chunk: string): ParsedMatch[] {
 
     if (!summary || isNaN(t1) || isNaN(t2)) { i++; continue }
 
-    matches.push(parseMatchSummary(summary, t1, t2, weight))
+    const pm = parseMatchSummary(summary, t1, t2, weight)
+    if (pm) matches.push(pm)
     i += 4
   }
 
