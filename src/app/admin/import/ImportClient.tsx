@@ -18,7 +18,7 @@ import { WrestlerReviewPanel }  from './WrestlerReviewPanel'
 
 // ── Phase ──────────────────────────────────────────────────────────────────────
 
-type Phase = 'idle' | 'loading_schools' | 'loading_wrestlers' | 'review' | 'importing' | 'done'
+type Phase = 'idle' | 'loading_schools' | 'school_review' | 'loading_wrestlers' | 'review' | 'importing' | 'done'
 
 type ImportResult = {
   ok:               boolean
@@ -163,11 +163,21 @@ export function ImportClient() {
       return
     }
 
-    // Step 3: collect unique wrestler requests
+    // Step 3: wait for school review before matching wrestlers
+    setPhase('school_review')
+  }
+
+  // ── Match wrestlers (called after school review is confirmed) ────────────────
+
+  async function handleMatchWrestlers() {
+    setError(null)
     setPhase('loading_wrestlers')
+
+    // Use current schoolOverrides so corrected schools feed into wrestler matching
+    const currentOverrides = schoolOverrides
     const wrestlerMap = new Map<WrestlerKey, { name: string; schoolId: number | null; weightClass: number }>()
 
-    for (const meet of parsed) {
+    for (const meet of meets) {
       for (const m of meet.matches) {
         if (m.isDoubleForfeit) continue
 
@@ -178,7 +188,9 @@ export function ImportClient() {
 
         for (const [name, schoolRaw] of pairs) {
           if (!name) continue
-          const schoolId = resolveSchool(schoolRaw ?? '', schoolRes, {}).schoolId
+          const schoolResolved = resolveSchool(schoolRaw ?? '', schoolResolutions, currentOverrides)
+          if (schoolResolved.isOutOfState) continue
+          const schoolId = schoolResolved.schoolId
           const key = makeWrestlerKey(name, schoolId, m.weightClass)
           if (!wrestlerMap.has(key)) {
             wrestlerMap.set(key, { name, schoolId, weightClass: m.weightClass })
@@ -197,14 +209,13 @@ export function ImportClient() {
       const json = await resp.json()
       const results: WrestlerMatch[] = json.results ?? []
 
-      // Re-index results by key (same order as the map iteration)
       const keys = [...wrestlerMap.keys()]
       const wRes: Record<string, WrestlerMatch> = {}
       results.forEach((r, i) => { wRes[keys[i]] = r })
       setWrestlerResolutions(wRes)
     } catch (e) {
       setError(String(e))
-      setPhase('idle')
+      setPhase('school_review')
       return
     }
 
@@ -443,6 +454,49 @@ export function ImportClient() {
         </div>
       )}
 
+      {/* ── School review (step 2) ───────────────────────────────────────────── */}
+      {phase === 'school_review' && (
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-base font-semibold text-slate-900">
+                Step 2 — Confirm schools
+                <span className="ml-2 text-sm font-normal text-slate-500">
+                  {meets.length} meet{meets.length !== 1 ? 's' : ''}
+                </span>
+              </h2>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Resolve all school names before wrestler matching — correct schools narrow the wrestler candidate list.
+              </p>
+            </div>
+            <button
+              onClick={() => { setPhase('idle'); setMeets([]); setError(null); setDraftId(null); setDraftLabel('') }}
+              className="text-xs text-slate-400 hover:text-slate-700 underline"
+            >
+              ← Start over
+            </button>
+          </div>
+
+          <ReviewPanel
+            meets={meets}
+            schoolResolutions={schoolResolutions}
+            schoolOverrides={schoolOverrides}
+            onSchoolOverride={handleSchoolOverride}
+          />
+
+          {error && (
+            <p className="text-sm text-red-600 border border-red-300 bg-red-50 px-3 py-2">{error}</p>
+          )}
+
+          <button
+            onClick={handleMatchWrestlers}
+            className="px-5 py-2 bg-black text-white text-sm font-semibold hover:bg-slate-800"
+          >
+            Schools confirmed — Match Wrestlers →
+          </button>
+        </div>
+      )}
+
       {/* ── Importing ───────────────────────────────────────────────────────── */}
       {phase === 'importing' && (
         <div className="border border-black bg-white px-6 py-10 text-center">
@@ -486,11 +540,11 @@ export function ImportClient() {
       {phase === 'review' && (
         <div className="space-y-4">
 
-          {/* Step 2 header */}
+          {/* Step 3 header */}
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-base font-semibold text-slate-900">
-                Step 2 — Review meets
+                Step 3 — Review meets
                 <span className="ml-2 text-sm font-normal text-slate-500">
                   {meets.length} meet{meets.length !== 1 ? 's' : ''} found
                 </span>
@@ -502,12 +556,21 @@ export function ImportClient() {
                 Green = exact · Yellow = high · Orange = low · Red = none/new
               </p>
             </div>
-            <button
-              onClick={() => { setPhase('idle'); setMeets([]); setError(null); setDraftId(null); setDraftLabel('') }}
-              className="text-xs text-slate-400 hover:text-slate-700 underline"
-            >
-              ← Start over
-            </button>
+            <div className="flex items-center gap-4">
+              <button
+                onClick={handleMatchWrestlers}
+                className="text-xs text-blue-600 hover:text-blue-800 underline"
+                title="Re-run wrestler matching after changing school overrides"
+              >
+                Re-match wrestlers
+              </button>
+              <button
+                onClick={() => { setPhase('idle'); setMeets([]); setError(null); setDraftId(null); setDraftLabel('') }}
+                className="text-xs text-slate-400 hover:text-slate-700 underline"
+              >
+                ← Start over
+              </button>
+            </div>
           </div>
 
           {/* Meet cards */}
