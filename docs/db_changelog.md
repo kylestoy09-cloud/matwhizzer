@@ -5,6 +5,18 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-07-25 — Backfill wrestler_name_aliases from existing dual_meet_matches
+
+**Migration file:** `docs/migrations/20260725_backfill_wrestler_name_aliases.sql`
+
+**Status:** PENDING — run after `20260725_wrestler_name_aliases.sql`.
+
+**What changed:**
+
+One-time backfill: pulls every `(wrestler_a_name_raw, school_a_id, wrestler_a_id)` and `(wrestler_b_name_raw, school_b_id, wrestler_b_id)` triple from `dual_meet_matches` into `wrestler_name_aliases`, skipping OOS stubs (`is_nj = false`) and null values. Ensures all previously confirmed matches from completed imports are recognized as `exact` confidence on future imports without re-submitting any data.
+
+---
+
 ## 2026-07-25 — Add wrestler_name_aliases table
 
 **Migration file:** `docs/migrations/20260725_wrestler_name_aliases.sql`
