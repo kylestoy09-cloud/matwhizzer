@@ -92,19 +92,21 @@ function WrestlerCard({
   match,
   override,
   gender,
+  sameSchoolNew,
   onOverride,
   onClose,
 }: {
-  wKey:        WrestlerKey
-  rawName:     string
-  schoolRaw:   string | null
-  schoolId:    number | null
-  weightClass: number
-  match:       WrestlerMatch | undefined
-  override:    WrestlerOverride | undefined
-  gender:      'M' | 'F'
-  onOverride:  (key: WrestlerKey, o: WrestlerOverride | null) => void
-  onClose?:    () => void
+  wKey:          WrestlerKey
+  rawName:       string
+  schoolRaw:     string | null
+  schoolId:      number | null
+  weightClass:   number
+  match:         WrestlerMatch | undefined
+  override:      WrestlerOverride | undefined
+  gender:        'M' | 'F'
+  sameSchoolNew: { key: WrestlerKey; rawName: string; weights: number[] }[]
+  onOverride:    (key: WrestlerKey, o: WrestlerOverride | null) => void
+  onClose?:      () => void
 }) {
   const alternates = match?.alternates ?? []
   const isConfirmedNew = override?.confirmedNew === true
@@ -177,7 +179,7 @@ function WrestlerCard({
         >
           {isConfirmedNew ? '✓ Confirmed new — undo' : 'Confirm as New Wrestler'}
         </button>
-        {override && !isConfirmedNew && (
+        {override && !isConfirmedNew && !override.linkedToKey && (
           <button
             onClick={() => onOverride(wKey, null)}
             className="text-[11px] text-slate-400 hover:text-slate-700 underline"
@@ -186,6 +188,41 @@ function WrestlerCard({
           </button>
         )}
       </div>
+
+      {/* Link to another name in this import */}
+      {sameSchoolNew.length > 0 && (
+        <div className="mt-3 pt-3 border-t border-amber-200">
+          <p className="text-[11px] text-slate-500 mb-2 font-medium">
+            Same person as another name in this import:
+          </p>
+          <div className="space-y-1">
+            {sameSchoolNew.map(other => (
+              <label key={other.key} className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name={`link-${wKey}`}
+                  checked={override?.linkedToKey === other.key}
+                  onChange={() => onOverride(wKey, {
+                    wrestlerId: null, displayName: null, confirmedNew: false,
+                    linkedToKey: other.key,
+                  })}
+                  className="accent-black"
+                />
+                <span className="text-xs text-slate-800">{other.rawName}</span>
+                <span className="text-xs text-slate-400">{other.weights.join('/')}</span>
+              </label>
+            ))}
+          </div>
+          {override?.linkedToKey && (
+            <button
+              onClick={() => onOverride(wKey, null)}
+              className="text-[11px] text-slate-400 hover:text-slate-700 underline mt-1"
+            >
+              Clear
+            </button>
+          )}
+        </div>
+      )}
     </div>
   )
 }
@@ -417,6 +454,7 @@ export function WrestlerReviewPanel({
                           match={item.match}
                           override={override}
                           gender={gender}
+                          sameSchoolNew={[]}
                           onOverride={onWrestlerOverride}
                           onClose={() => setActiveKey(null)}
                         />
@@ -505,6 +543,17 @@ export function WrestlerReviewPanel({
                             const isFixed   = overrides.every(Boolean)
                             const isActive  = activeKey === group.groupKey
 
+                            // Sibling groups for "same person as" linking
+                            const siblings = groups
+                              .filter(g => g.groupKey !== group.groupKey)
+                              .map(g => ({ key: g.keys[0], rawName: g.rawName, weights: g.weights }))
+
+                            // Resolve linked display name
+                            const linkedRawName = primaryOverride?.linkedToKey
+                              ? groups.find(g => g.keys[0] === primaryOverride.linkedToKey)?.rawName
+                                ?? primaryOverride.linkedToKey.split('|')[0]
+                              : null
+
                             return (
                               <Fragment key={group.groupKey}>
                                 <div
@@ -519,7 +568,11 @@ export function WrestlerReviewPanel({
                                   <span className="text-xs text-slate-800 flex-1">{group.rawName}</span>
                                   {isFixed && primaryOverride && (
                                     <span className="text-[10px] font-bold px-1 py-0.5 bg-green-100 text-green-700 border border-green-300 shrink-0">
-                                      {primaryOverride.confirmedNew ? '✓ new' : `→ ${primaryOverride.displayName}`}
+                                      {primaryOverride.confirmedNew
+                                        ? '✓ new'
+                                        : linkedRawName
+                                          ? `→ same as ${linkedRawName}`
+                                          : `→ ${primaryOverride.displayName}`}
                                     </span>
                                   )}
                                   {!isFixed && (
@@ -537,6 +590,7 @@ export function WrestlerReviewPanel({
                                     match={group.primaryMatch}
                                     override={primaryOverride}
                                     gender={gender}
+                                    sameSchoolNew={siblings}
                                     onOverride={(_, o) => handleGroupOverride(group, o)}
                                     onClose={() => setActiveKey(null)}
                                   />

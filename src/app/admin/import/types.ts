@@ -19,6 +19,7 @@ export type WrestlerOverride = {
   wrestlerId:   string | null  // null = confirmed as new
   displayName:  string | null
   confirmedNew: boolean
+  linkedToKey?: WrestlerKey    // same person as another entry in this import batch
 }
 
 // ── Wrestler key ───────────────────────────────────────────────────────────────

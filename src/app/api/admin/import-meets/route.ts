@@ -231,7 +231,8 @@ export async function POST(req: NextRequest) {
         const key = makeWrestlerKey(name, schoolId, match.weightClass)
         const { isNew, wrestlerId } = resolveWrestlerId(key, wrestlerResolutions, wrestlerOverrides)
 
-        if (isNew && !wrestlerId) {
+        const isLinked = !!wrestlerOverrides[key]?.linkedToKey
+        if (isNew && !wrestlerId && !isLinked) {
           newWrestlerMeta.set(key, { ...parseName(name), gender: 'M', is_stub: isOos })
         }
       }
@@ -316,6 +317,14 @@ export async function POST(req: NextRequest) {
     for (const [key, v] of newWrestlerMeta.entries()) {
       const id = existingMap.get(`${v.first_name}|${v.last_name}|${v.gender}`)
       if (id) wrestlerIdMap.set(key, id)
+    }
+  }
+
+  // ── Step 2b: Resolve linked entries (same-person-as-another-name-in-batch) ────
+  for (const [keyStr, ovr] of Object.entries(wrestlerOverrides)) {
+    if (ovr.linkedToKey) {
+      const targetId = wrestlerIdMap.get(ovr.linkedToKey as WrestlerKey)
+      if (targetId) wrestlerIdMap.set(keyStr as WrestlerKey, targetId)
     }
   }
 
