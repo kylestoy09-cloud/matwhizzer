@@ -91,6 +91,16 @@ function parseResult(s: string): { resultType: string; resultDetail: string | nu
   return { resultType: s, resultDetail: null }
 }
 
+// ── Name normalizer ────────────────────────────────────────────────────────────
+// TrackWrestling sometimes prepends words like "Varsity" to wrestler names.
+// Strip them before storing so they don't break matching.
+
+const NAME_PREFIX_RE = /^(varsity)\s+/i
+
+function normalizeName(name: string): string {
+  return name.replace(NAME_PREFIX_RE, '').trim()
+}
+
 // ── Match summary parser ───────────────────────────────────────────────────────
 // summary: everything between the weight class and the trailing team points.
 // e.g. "Joe Smith (Garfield) over John Doe (Clifton) (Dec 9-7)"
@@ -131,7 +141,7 @@ function parseMatchSummary(summary: string, t1Pts: number, t2Pts: number, weight
 
   // Parse winner "First Last (School)"
   const winnerM = winnerPart.match(/^(.+?)\s+\(([^)]+)\)$/)
-  const winnerName      = winnerM ? winnerM[1].trim() : winnerPart
+  const winnerName      = normalizeName(winnerM ? winnerM[1].trim() : winnerPart)
   const winnerSchoolRaw = winnerM ? winnerM[2].trim() : null
 
   // Forfeit win: afterOver is exactly "Unknown (For.)"
@@ -183,7 +193,7 @@ function parseMatchSummary(summary: string, t1Pts: number, t2Pts: number, weight
 
   const { resultType, resultDetail } = parseResult(resultStr)
   const loserM = loserAndSchool.match(/^(.+?)\s+\(([^)]+)\)$/)
-  const loserNameRaw   = loserM ? loserM[1].trim() : (loserAndSchool || null)
+  const loserNameRaw   = loserM ? normalizeName(loserM[1].trim()) : (loserAndSchool ? normalizeName(loserAndSchool) : null)
   const loserSchoolRaw = loserM ? loserM[2].trim() : null
 
   // Treat any 'For' result as a forfeit win regardless of what TW put in the

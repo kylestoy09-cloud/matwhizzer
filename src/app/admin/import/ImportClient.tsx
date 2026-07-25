@@ -494,7 +494,7 @@ export function ImportClient() {
               <input
                 value={draftLabel}
                 onChange={e => setDraftLabel(e.target.value)}
-                placeholder="Draft label (optional, e.g. "Dec duals week 1")"
+                placeholder="Draft label (optional, e.g. Dec duals week 1)"
                 className="flex-1 text-xs border border-slate-300 px-2 py-1.5 outline-none focus:ring-1 focus:ring-black bg-white"
               />
               <button
