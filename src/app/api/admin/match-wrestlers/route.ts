@@ -37,6 +37,7 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json().catch(() => ({}))
   const wrestlers: unknown = body?.wrestlers
+  const gender: 'M' | 'F' = body?.gender === 'F' ? 'F' : 'M'
 
   if (!Array.isArray(wrestlers) || wrestlers.length === 0) {
     return NextResponse.json({ results: [] })
@@ -48,7 +49,7 @@ export async function POST(req: NextRequest) {
         const name        = String(w.name ?? '').trim()
         const weightClass = Number(w.weightClass) || 0
         if (!name || w.schoolId === null) return NULL_MATCH(name, weightClass)
-        return matchWrestler(name, w.schoolId, weightClass, 'M')
+        return matchWrestler(name, w.schoolId, weightClass, gender)
       })
     )
     return NextResponse.json({ results })

@@ -30,7 +30,7 @@ export type WrestlerMatch = {
   alternates: { wrestlerId: string; displayName: string; score: number }[]
 }
 
-type WrestlerRow  = { id: string; first_name: string; last_name: string; suffix: string | null }
+type WrestlerRow  = { id: string; first_name: string; last_name: string; suffix: string | null; gender: string | null }
 type WeightClassRow = { id: number; weight: number }
 type EntryRow     = { wrestler_id: string; school_id: number | null; weight_class_id: number }
 
@@ -39,6 +39,7 @@ type WrestlerRecord = {
   wrestlerId: string
   displayName: string
   schoolId: number
+  gender: string | null
   weights: number[]   // all weights this wrestler has entries for at this school
 }
 
@@ -98,7 +99,7 @@ async function loadCache(): Promise<void> {
   const weightClasses = (wcRes.data ?? []) as WeightClassRow[]
 
   // Paginate wrestlers then entries serially to avoid connection pool exhaustion
-  const wrestlers = await fetchAll<WrestlerRow>(supabase, 'wrestlers', 'id, first_name, last_name, suffix')
+  const wrestlers = await fetchAll<WrestlerRow>(supabase, 'wrestlers', 'id, first_name, last_name, suffix, gender')
   const entries   = await fetchAll<EntryRow>(supabase, 'tournament_entries', 'wrestler_id, school_id, weight_class_id')
 
   // Build fast lookup maps
@@ -128,6 +129,7 @@ async function loadCache(): Promise<void> {
         wrestlerId:  entry.wrestler_id,
         displayName: buildName(wrestler),
         schoolId:    entry.school_id,
+        gender:      wrestler.gender,
         weights:     [weight],
       })
     }
@@ -181,7 +183,7 @@ export async function matchWrestler(
   const raw       = name.trim()
   const nameLower = raw.toLowerCase()
 
-  const atSchool = [...(schoolIndex.get(schoolId)?.values() ?? [])]
+  const atSchool = [...(schoolIndex.get(schoolId)?.values() ?? [])].filter(r => r.gender === gender)
 
   // ── 1. Exact name + exact weight ─────────────────────────────────────────────
   for (const rec of atSchool) {

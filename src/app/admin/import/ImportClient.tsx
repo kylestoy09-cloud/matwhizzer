@@ -39,6 +39,7 @@ type DraftSummary = {
 
 export function ImportClient() {
   const [phase,              setPhase]              = useState<Phase>('idle')
+  const [gender,             setGender]             = useState<'M' | 'F'>('M')
   const [rawText,            setRawText]            = useState('')
   const [meets,              setMeets]              = useState<ParsedMeet[]>([])
   const [schoolResolutions,  setSchoolResolutions]  = useState<Record<string, SchoolMatch>>({})
@@ -203,7 +204,7 @@ export function ImportClient() {
       const resp = await fetch('/api/admin/match-wrestlers', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ wrestlers: [...wrestlerMap.values()] }),
+        body:    JSON.stringify({ wrestlers: [...wrestlerMap.values()], gender }),
       })
       if (!resp.ok) throw new Error(`Wrestler matching failed: ${resp.status}`)
       const json = await resp.json()
@@ -415,10 +416,27 @@ export function ImportClient() {
             <label className="block text-sm font-semibold text-slate-700 mb-2">
               Step 1 — Paste dual meet results
             </label>
-            <p className="text-xs text-slate-500 mb-3">
+            <p className="text-xs text-slate-500 mb-2">
               Copy and paste from TrackWrestling. Supports Format A (tab-separated) and
               Format B (jammed text). Multiple meets can be pasted at once.
             </p>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-xs text-slate-500">Gender:</span>
+              <div className="flex border border-black">
+                <button
+                  onClick={() => setGender('M')}
+                  className={`px-4 py-1 text-xs font-bold transition-colors ${gender === 'M' ? 'bg-black text-white' : 'bg-white text-slate-600 hover:bg-slate-50'}`}
+                >
+                  Boys
+                </button>
+                <button
+                  onClick={() => setGender('F')}
+                  className={`px-4 py-1 text-xs font-bold transition-colors border-l border-black ${gender === 'F' ? 'bg-rose-700 text-white' : 'bg-white text-slate-600 hover:bg-slate-50'}`}
+                >
+                  Girls
+                </button>
+              </div>
+            </div>
             <textarea
               value={rawText}
               onChange={e => setRawText(e.target.value)}
@@ -629,6 +647,7 @@ export function ImportClient() {
             wrestlerResolutions={wrestlerResolutions}
             wrestlerOverrides={wrestlerOverrides}
             onWrestlerOverride={handleWrestlerOverride}
+            gender={gender}
           />
 
           {/* Controls */}

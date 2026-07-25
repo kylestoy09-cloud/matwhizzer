@@ -15,7 +15,7 @@ export const dynamic = 'force-dynamic'
 
 type EntryRow = {
   wrestler_id:   string
-  wrestlers:     { id: string; first_name: string; last_name: string; suffix: string | null } | null
+  wrestlers:     { id: string; first_name: string; last_name: string; suffix: string | null; gender: string | null } | null
   weight_classes: { weight: number } | null
 }
 
@@ -39,6 +39,7 @@ export async function GET(req: NextRequest) {
   if (isNaN(schoolId)) {
     return NextResponse.json({ error: 'Invalid schoolId' }, { status: 400 })
   }
+  const gender: 'M' | 'F' = req.nextUrl.searchParams.get('gender') === 'F' ? 'F' : 'M'
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL  ?? '',
@@ -47,7 +48,7 @@ export async function GET(req: NextRequest) {
 
   const { data, error } = await supabase
     .from('tournament_entries')
-    .select('wrestler_id, wrestlers(id, first_name, last_name, suffix), weight_classes(weight)')
+    .select('wrestler_id, wrestlers(id, first_name, last_name, suffix, gender), weight_classes(weight)')
     .eq('school_id', schoolId)
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
@@ -57,6 +58,7 @@ export async function GET(req: NextRequest) {
   for (const row of (data ?? []) as unknown as EntryRow[]) {
     const w = row.wrestlers
     if (!w) continue
+    if (w.gender !== gender) continue
     const weight = row.weight_classes?.weight
     if (weight === undefined) continue
 

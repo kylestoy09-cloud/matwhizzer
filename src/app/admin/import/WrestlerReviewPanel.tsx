@@ -19,11 +19,13 @@ function RosterSearch({
   schoolId,
   panelKey,
   override,
+  gender,
   onSelect,
 }: {
   schoolId:   number | null
   panelKey:   WrestlerKey
   override:   WrestlerOverride | undefined
+  gender:     'M' | 'F'
   onSelect:   (wrestlerId: string, displayName: string) => void
 }) {
   const [query,   setQuery]   = useState('')
@@ -33,7 +35,7 @@ function RosterSearch({
   useEffect(() => {
     if (!schoolId) return
     setLoading(true)
-    fetch(`/api/admin/school-wrestlers?schoolId=${schoolId}`)
+    fetch(`/api/admin/school-wrestlers?schoolId=${schoolId}&gender=${gender}`)
       .then(r => r.json())
       .then(j => setRoster(j.wrestlers ?? []))
       .finally(() => setLoading(false))
@@ -89,6 +91,7 @@ function WrestlerCard({
   weightClass,
   match,
   override,
+  gender,
   onOverride,
   onClose,
 }: {
@@ -99,6 +102,7 @@ function WrestlerCard({
   weightClass: number
   match:       WrestlerMatch | undefined
   override:    WrestlerOverride | undefined
+  gender:      'M' | 'F'
   onOverride:  (key: WrestlerKey, o: WrestlerOverride | null) => void
   onClose?:    () => void
 }) {
@@ -149,6 +153,7 @@ function WrestlerCard({
             schoolId={schoolId}
             panelKey={wKey}
             override={override}
+            gender={gender}
             onSelect={(wrestlerId, displayName) =>
               onOverride(wKey, { wrestlerId, displayName, confirmedNew: false })
             }
@@ -206,6 +211,7 @@ type Props = {
   wrestlerResolutions: Record<string, WrestlerMatch>
   wrestlerOverrides:   Record<string, WrestlerOverride>
   onWrestlerOverride:  (key: WrestlerKey, o: WrestlerOverride | null) => void
+  gender:              'M' | 'F'
 }
 
 // ── WrestlerReviewPanel ────────────────────────────────────────────────────────
@@ -217,6 +223,7 @@ export function WrestlerReviewPanel({
   wrestlerResolutions,
   wrestlerOverrides,
   onWrestlerOverride,
+  gender,
 }: Props) {
   const [open,          setOpen]          = useState(true)
   const [activeKey,     setActiveKey]     = useState<WrestlerKey | null>(null)
@@ -409,6 +416,7 @@ export function WrestlerReviewPanel({
                           weightClass={item.weightClass}
                           match={item.match}
                           override={override}
+                          gender={gender}
                           onOverride={onWrestlerOverride}
                           onClose={() => setActiveKey(null)}
                         />
@@ -528,6 +536,7 @@ export function WrestlerReviewPanel({
                                     weightClass={group.weights[0]}
                                     match={group.primaryMatch}
                                     override={primaryOverride}
+                                    gender={gender}
                                     onOverride={(_, o) => handleGroupOverride(group, o)}
                                     onClose={() => setActiveKey(null)}
                                   />
