@@ -17,6 +17,7 @@ import { createSupabaseServer } from '@/lib/supabase/server'
 import type { ParsedMeet } from '@/lib/parseDualMeet'
 import type { SchoolMatch } from '@/lib/matchSchools'
 import type { WrestlerMatch } from '@/lib/matchWrestlers'
+import { clearWrestlerCache } from '@/lib/matchWrestlers'
 import {
   type SchoolOverride,
   type WrestlerOverride,
@@ -323,6 +324,9 @@ export async function POST(req: NextRequest) {
   let matchesImported = 0
   const errors: string[] = []
 
+  // Collect raw_name → wrestler_id aliases for NJ wrestlers across all meets
+  const aliasMap = new Map<string, { raw_name: string; school_id: number; wrestler_id: string }>()
+
   for (let i = 0; i < meets.length; i++) {
     if (skippedSet.has(i)) continue
     const meet = meets[i]
@@ -372,10 +376,24 @@ export async function POST(req: NextRequest) {
       if (!match.isDoubleForfeit && match.winnerName) {
         const key = makeWrestlerKey(match.winnerName, winnerSchoolId, match.weightClass)
         winnerWrestlerId = wrestlerIdMap.get(key) ?? null
+        // Save alias for NJ wrestlers
+        const { isOos: winnerOos } = resolveSchoolFull(match.winnerSchoolRaw ?? '', schoolResolutions, schoolOverrides, oosSchoolMap)
+        if (!winnerOos && winnerSchoolId && winnerWrestlerId) {
+          aliasMap.set(`${match.winnerName}|${winnerSchoolId}`, {
+            raw_name: match.winnerName, school_id: winnerSchoolId, wrestler_id: winnerWrestlerId,
+          })
+        }
       }
       if (!match.isDoubleForfeit && !match.isForfeitWin && match.loserName) {
         const key = makeWrestlerKey(match.loserName, loserSchoolId, match.weightClass)
         loserWrestlerId = wrestlerIdMap.get(key) ?? null
+        // Save alias for NJ wrestlers
+        const { isOos: loserOos } = resolveSchoolFull(match.loserSchoolRaw ?? '', schoolResolutions, schoolOverrides, oosSchoolMap)
+        if (!loserOos && loserSchoolId && loserWrestlerId) {
+          aliasMap.set(`${match.loserName}|${loserSchoolId}`, {
+            raw_name: match.loserName, school_id: loserSchoolId, wrestler_id: loserWrestlerId,
+          })
+        }
       }
 
       // Assign team A (= team1) vs team B (= team2) slots.
@@ -437,6 +455,15 @@ export async function POST(req: NextRequest) {
         matchesImported += matchRows.length
       }
     }
+  }
+
+  // ── Step 4: Persist name aliases for future imports ──────────────────────────
+  if (aliasMap.size > 0) {
+    await supabase
+      .from('wrestler_name_aliases')
+      .upsert([...aliasMap.values()], { onConflict: 'raw_name,school_id' })
+    // Invalidate the in-process cache so next match-wrestlers call picks up new aliases
+    clearWrestlerCache()
   }
 
   return NextResponse.json({

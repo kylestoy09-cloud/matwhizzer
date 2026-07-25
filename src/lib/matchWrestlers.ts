@@ -60,6 +60,9 @@ let cachePromise: Promise<void> | null = null  // singleton — prevents concurr
 // school_id → wrestlers at that school (keyed by wrestlerId for fast lookup)
 const schoolIndex = new Map<number, Map<string, WrestlerRecord>>()
 
+// "rawName|schoolId" → { wrestlerId, displayName } — loaded from wrestler_name_aliases
+const aliasIndex  = new Map<string, { wrestlerId: string; displayName: string }>()
+
 /** Fetches all rows from a Supabase table, paginating in PAGE_SIZE chunks. */
 async function fetchAll<T>(
   supabase: ReturnType<typeof getClient>,
@@ -141,12 +144,31 @@ async function loadCache(): Promise<void> {
     schoolIndex.get(rec.schoolId)!.set(rec.wrestlerId, rec)
   }
 
+  // Load confirmed name aliases — checked before fuzzy matching
+  type AliasRow = {
+    raw_name:    string
+    school_id:   number
+    wrestler_id: string
+    wrestlers:   { first_name: string; last_name: string; suffix: string | null } | null
+  }
+  const { data: aliasRows } = await supabase
+    .from('wrestler_name_aliases')
+    .select('raw_name, school_id, wrestler_id, wrestlers(first_name, last_name, suffix)')
+
+  for (const a of (aliasRows ?? []) as unknown as AliasRow[]) {
+    if (!a.wrestlers) continue
+    aliasIndex.set(`${a.raw_name}|${a.school_id}`, {
+      wrestlerId:  a.wrestler_id,
+      displayName: buildName(a.wrestlers),
+    })
+  }
+
   cacheReady = true
 }
 
 // ── Name helpers ───────────────────────────────────────────────────────────────
 
-function buildName(w: WrestlerRow): string {
+function buildName(w: Pick<WrestlerRow, 'first_name' | 'last_name' | 'suffix'>): string {
   const base = `${w.first_name} ${w.last_name}`
   return w.suffix ? `${base} ${w.suffix}` : base
 }
@@ -182,6 +204,21 @@ export async function matchWrestler(
 
   const raw       = name.trim()
   const nameLower = raw.toLowerCase()
+
+  // ── 0. Alias index — confirmed matches from previous imports ─────────────────
+  const alias = aliasIndex.get(`${raw}|${schoolId}`)
+  if (alias) {
+    return {
+      rawName:     raw,
+      schoolId,
+      weightClass,
+      wrestlerId:  alias.wrestlerId,
+      displayName: alias.displayName,
+      confidence:  'exact',
+      isNew:       false,
+      alternates:  [],
+    }
+  }
 
   const atSchool = [...(schoolIndex.get(schoolId)?.values() ?? [])].filter(r => r.gender === gender)
 
@@ -236,6 +273,7 @@ export function clearWrestlerCache(): void {
   cacheReady   = false
   cachePromise = null
   schoolIndex.clear()
+  aliasIndex.clear()
 }
 
 // ── Internal helpers ───────────────────────────────────────────────────────────

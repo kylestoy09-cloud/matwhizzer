@@ -5,6 +5,18 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-07-25 — Add wrestler_name_aliases table
+
+**Migration file:** `docs/migrations/20260725_wrestler_name_aliases.sql`
+
+**Status:** PENDING — run before next import session.
+
+**What changed:**
+
+New table `wrestler_name_aliases (raw_name text, school_id int, wrestler_id uuid, UNIQUE(raw_name, school_id))`. Populated automatically by the import-meets route after each successful import. The `matchWrestlers` cache loads aliases on startup and checks them before fuzzy matching — returning `exact` confidence so confirmed names never show as low-confidence again. Also catches dual-meet-only wrestlers who have no `tournament_entries` and therefore don't appear in the existing school index.
+
+---
+
 ## 2026-07-25 — Delete 60 null-school dual meets (Dec 9–20 2025)
 
 **Migration file:** `docs/migrations/20260725_delete_null_school_meets.sql`
