@@ -488,6 +488,29 @@ export function ImportClient() {
             <p className="text-sm text-red-600 border border-red-300 bg-red-50 px-3 py-2">{error}</p>
           )}
 
+          {/* Save draft before touching anything */}
+          <div className="border border-black bg-white px-4 py-3">
+            <div className="flex items-center gap-2">
+              <input
+                value={draftLabel}
+                onChange={e => setDraftLabel(e.target.value)}
+                placeholder="Draft label (optional, e.g. "Dec duals week 1")"
+                className="flex-1 text-xs border border-slate-300 px-2 py-1.5 outline-none focus:ring-1 focus:ring-black bg-white"
+              />
+              <button
+                onClick={handleSaveDraft}
+                disabled={draftSaving}
+                className="px-3 py-1.5 border border-black text-xs font-semibold hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
+              >
+                {draftSaving ? 'Saving…' : draftId ? 'Update draft' : 'Save draft'}
+              </button>
+            </div>
+            {draftError && <p className="text-xs text-red-600 mt-1">{draftError}</p>}
+            <p className="text-[11px] text-slate-400 mt-1.5">
+              Save now to resume from this point later — school corrections and wrestler overrides are preserved.
+            </p>
+          </div>
+
           <button
             onClick={handleMatchWrestlers}
             className="px-5 py-2 bg-black text-white text-sm font-semibold hover:bg-slate-800"
