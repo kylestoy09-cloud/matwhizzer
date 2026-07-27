@@ -34,8 +34,8 @@ export function WrestlerFlagCard({ flag, override, onOverride }: Props) {
   const [firstName, setFirstName] = useState(defaultNames.first_name)
   const [lastName, setLastName] = useState(defaultNames.last_name)
   const [query, setQuery] = useState('')
-  const [results, setResults] = useState<SearchResult[]>([])
-  const [searching, setSearching] = useState(false)
+  const [roster, setRoster] = useState<SearchResult[]>([])
+  const [rosterLoading, setRosterLoading] = useState(false)
 
   // Emit create override whenever name fields change (new wrestler mode)
   useEffect(() => {
@@ -44,21 +44,30 @@ export function WrestlerFlagCard({ flag, override, onOverride }: Props) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firstName, lastName, mode])
 
-  const search = useCallback(async (q: string) => {
-    if (!q.trim()) { setResults([]); return }
-    setSearching(true)
+  // Pre-load roster when entering search mode
+  const loadRoster = useCallback(async () => {
+    if (roster.length > 0) return  // already loaded
+    setRosterLoading(true)
     try {
-      const res = await fetch(`/api/admin/search-wrestlers?q=${encodeURIComponent(q)}&school_id=${flag.school_id}`)
+      const res = await fetch(`/api/admin/search-wrestlers?school_id=${flag.school_id}&gender=M`)
       const data = await res.json()
-      setResults(data.wrestlers ?? [])
-    } catch { setResults([]) }
-    finally { setSearching(false) }
-  }, [flag.school_id])
+      setRoster(data.wrestlers ?? [])
+    } catch { setRoster([]) }
+    finally { setRosterLoading(false) }
+  }, [flag.school_id, roster.length])
+
+  useEffect(() => {
+    if (mode === 'search') loadRoster()
+  }, [mode, loadRoster])
+
+  // Filter roster locally as user types
+  const filteredRoster = query.trim()
+    ? roster.filter(w => w.display_name.toLowerCase().includes(query.toLowerCase()))
+    : roster
 
   function pickExisting(w: SearchResult) {
     onOverride(flag.key, { type: 'existing', wrestler_id: w.id, display_name: w.display_name })
     setQuery('')
-    setResults([])
     setMode('default')
   }
 
@@ -68,7 +77,6 @@ export function WrestlerFlagCard({ flag, override, onOverride }: Props) {
     setFirstName(defaultNames.first_name)
     setLastName(defaultNames.last_name)
     setQuery('')
-    setResults([])
   }
 
   function confirmCreate() {
@@ -211,24 +219,27 @@ export function WrestlerFlagCard({ flag, override, onOverride }: Props) {
             </div>
           )}
 
-          {/* Search mode */}
+          {/* Search mode — pre-loaded roster with local filter */}
           {mode === 'search' && (
             <div className="px-3 pb-3 space-y-1.5">
               <div className="flex items-center gap-2">
                 <input
                   type="text"
                   value={query}
-                  onChange={e => { setQuery(e.target.value); search(e.target.value) }}
-                  placeholder="Search by name…"
+                  onChange={e => setQuery(e.target.value)}
+                  placeholder="Filter by name…"
                   className="border border-slate-300 px-2 py-0.5 text-xs focus:outline-none focus:ring-1 focus:ring-black w-56"
                   autoFocus
                 />
-                {searching && <Spinner />}
-                <button onClick={() => setMode(flag.is_new ? 'edit' : 'default')} className="text-slate-400 hover:text-slate-600">cancel</button>
+                {rosterLoading && <Spinner />}
+                <button onClick={() => { setMode(flag.is_new ? 'edit' : 'default'); setQuery('') }} className="text-slate-400 hover:text-slate-600">cancel</button>
               </div>
-              {results.length > 0 && (
-                <div className="border border-slate-200 bg-white shadow-sm max-h-40 overflow-y-auto">
-                  {results.map(w => (
+              {!rosterLoading && roster.length === 0 && (
+                <p className="text-slate-400">No wrestlers on file for this school</p>
+              )}
+              {!rosterLoading && roster.length > 0 && (
+                <div className="border border-slate-200 bg-white shadow-sm max-h-48 overflow-y-auto">
+                  {filteredRoster.length > 0 ? filteredRoster.map(w => (
                     <button
                       key={w.id}
                       onClick={() => pickExisting(w)}
@@ -236,11 +247,10 @@ export function WrestlerFlagCard({ flag, override, onOverride }: Props) {
                     >
                       {w.display_name}
                     </button>
-                  ))}
+                  )) : (
+                    <p className="px-3 py-2 text-slate-400">No matches for &ldquo;{query}&rdquo;</p>
+                  )}
                 </div>
-              )}
-              {query && !searching && results.length === 0 && (
-                <p className="text-slate-400">No wrestlers found at this school</p>
               )}
             </div>
           )}
