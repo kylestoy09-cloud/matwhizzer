@@ -133,6 +133,11 @@ function normalizeSchool(raw: string): string {
   return raw.replace(/\s+/g, ' ').trim().replace(/\s*-\s*$/, '').trim()
 }
 
+function looksLikeBye(name: string, school: string): boolean {
+  const combined = `${name} ${school}`.toLowerCase()
+  return /\bbye\b/.test(combined) || /^\s*\)\s*\(/.test(name)
+}
+
 function parseResult(raw: string): [string, string | null] {
   const r = raw.trim()
   if (!r || r.toLowerCase() === 'bye') return ['BYE', null]
@@ -216,6 +221,9 @@ function parseBoutA(line: string): Omit<ParsedBout, 'weight_class'> | null {
 
   const [name1, school1] = extractNameSchool(rest2.slice(0, trans.index))
   const [name2, school2] = extractNameSchool(rest2.slice(trans.index! + trans[0].length))
+  if (looksLikeBye(name2, school2)) {
+    return { round: roundLabel, wrestler1_name: name1, wrestler1_school: school1, wrestler2_name: '', wrestler2_school: '', winner: null, result_type: 'BYE', result_detail: null }
+  }
   const [rt, rd] = parseResult(resultRaw)
 
   return { round: roundLabel, wrestler1_name: name1, wrestler1_school: school1, wrestler2_name: name2, wrestler2_school: school2, winner: 1, result_type: rt, result_detail: rd }
@@ -283,6 +291,9 @@ function parseBoutB(line: string): Omit<ParsedBout, 'weight_class'> | null {
 
   const [name1, school1] = extractNameSchool(rest2.slice(0, overIdx))
   const [name2, school2] = extractNameSchool(rest2.slice(overIdx + 6))
+  if (looksLikeBye(name2, school2)) {
+    return { round: roundLabel, wrestler1_name: name1, wrestler1_school: school1, wrestler2_name: '', wrestler2_school: '', winner: null, result_type: 'BYE', result_detail: null }
+  }
   const [rt, rd] = parseResult(resultRaw)
 
   return { round: roundLabel, wrestler1_name: name1, wrestler1_school: school1, wrestler2_name: name2, wrestler2_school: school2, winner: 1, result_type: rt, result_detail: rd }
