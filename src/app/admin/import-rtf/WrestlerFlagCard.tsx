@@ -28,11 +28,17 @@ type Props = {
 
 export function WrestlerFlagCard({ flag, override, onOverride }: Props) {
   const defaultNames = splitName(flag.raw_name)
-  const [mode, setMode] = useState<'default' | 'edit' | 'confirmed' | 'search'>(
-    flag.is_new ? 'edit' : 'default',
+  const [mode, setMode] = useState<'default' | 'edit' | 'confirmed' | 'search'>(() => {
+    if (override?.type === 'create') return 'confirmed'
+    if (override?.type === 'skip' || override?.type === 'existing' || override?.type === 'accept') return 'default'
+    return flag.is_new ? 'edit' : 'default'
+  })
+  const [firstName, setFirstName] = useState(
+    override?.type === 'create' ? override.first_name : defaultNames.first_name,
   )
-  const [firstName, setFirstName] = useState(defaultNames.first_name)
-  const [lastName, setLastName] = useState(defaultNames.last_name)
+  const [lastName, setLastName] = useState(
+    override?.type === 'create' ? override.last_name : defaultNames.last_name,
+  )
   const [query, setQuery] = useState('')
   const [roster, setRoster] = useState<SearchResult[]>([])
   const [rosterLoading, setRosterLoading] = useState(false)
