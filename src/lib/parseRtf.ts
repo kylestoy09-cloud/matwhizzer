@@ -151,18 +151,40 @@ function parseResult(raw: string): [string, string | null] {
   if (['dff', 'double forfeit'].includes(r.toLowerCase())) {
     return ['DFF', null]
   }
+  // "TF-1.5 3:15 (17-1)" or "TF 5:00 19-3" → Technical Fall
+  if (/^tf/i.test(r)) return ['TF', null]
   const parts = r.split(/\s+/, 2)
   return [parts[0], parts[1] ?? null]
 }
 
+// Finds the outermost trailing (...) at the end of a string, handling one level
+// of nesting — e.g. "(TF-1.5 3:15 (17-1))" or "(Fall 0:55)".
+function extractTrailingResult(rest: string): { resultRaw: string; rest2: string } | null {
+  if (!rest.endsWith(')')) return null
+  let depth = 0
+  for (let i = rest.length - 1; i >= 0; i--) {
+    if (rest[i] === ')') depth++
+    else if (rest[i] === '(') {
+      depth--
+      if (depth === 0) {
+        return {
+          resultRaw: rest.slice(i + 1, rest.length - 1),
+          rest2:     rest.slice(0, i).trim(),
+        }
+      }
+    }
+  }
+  return null
+}
+
 function extractNameSchool(s: string): [string, string] {
   s = s.trim()
-  const m = s.match(/^(.+?) \((.+)\)(?:\s+\d+-\d+)?$/)
-  if (m) return [stripWl(m[1]), normalizeSchool(m[2])]
-  const pend = s.lastIndexOf(')')
-  if (pend >= 0) {
-    const pstart = s.lastIndexOf('(', pend)
-    if (pstart >= 0) return [stripWl(s.slice(0, pstart).trim()), normalizeSchool(s.slice(pstart + 1, pend))]
+  // Use first (...) pair — school names never contain parens.
+  // Anything after the closing paren (record "X-Y", result, etc.) is ignored.
+  const pstart = s.indexOf('(')
+  if (pstart >= 0) {
+    const pend = s.indexOf(')', pstart)
+    if (pend >= 0) return [stripWl(s.slice(0, pstart).trim()), normalizeSchool(s.slice(pstart + 1, pend))]
   }
   return [stripWl(s), '']
 }
@@ -211,10 +233,9 @@ function parseBoutA(line: string): Omit<ParsedBout, 'weight_class'> | null {
 
   if (!/\bover\b/i.test(rest)) return null
 
-  const resultM = rest.match(/\(([^)]+)\)$/)
-  if (!resultM) return null
-  const resultRaw = resultM[1]
-  const rest2 = rest.slice(0, resultM.index).trim()
+  const extracted = extractTrailingResult(rest)
+  if (!extracted) return null
+  const { resultRaw, rest2 } = extracted
 
   const trans = rest2.match(/\bwon (?:by|in) .+? over\b/i)
   if (!trans) return null
@@ -282,9 +303,9 @@ function parseBoutB(line: string): Omit<ParsedBout, 'weight_class'> | null {
 
   if (!/\bover\b/i.test(rest)) return null
 
-  const resultM = rest.match(/\(([^)]+)\)$/)
-  const resultRaw = resultM ? resultM[1] : ''
-  const rest2 = resultM ? rest.slice(0, resultM.index).trim() : rest
+  const extracted = extractTrailingResult(rest)
+  const resultRaw = extracted ? extracted.resultRaw : ''
+  const rest2     = extracted ? extracted.rest2     : rest
 
   const overIdx = rest2.toLowerCase().lastIndexOf(' over ')
   if (overIdx < 0) return null
@@ -303,9 +324,9 @@ function parseBoutBNoRound(line: string): Omit<ParsedBout, 'weight_class'> | nul
   if (!/\bover\b/i.test(line) || / - /.test(line)) return null
   if (!line.includes('(') || !line.includes(')')) return null
 
-  const resultM = line.match(/\(([^)]+)\)$/)
-  const resultRaw = resultM ? resultM[1] : ''
-  const rest = resultM ? line.slice(0, resultM.index).trim() : line
+  const extracted = extractTrailingResult(line)
+  const resultRaw = extracted ? extracted.resultRaw : ''
+  const rest      = extracted ? extracted.rest2     : line
 
   const overIdx = rest.toLowerCase().lastIndexOf(' over ')
   if (overIdx < 0) return null
