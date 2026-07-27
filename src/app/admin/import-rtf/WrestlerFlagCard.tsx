@@ -71,25 +71,45 @@ export function WrestlerFlagCard({ flag, override, onOverride }: Props) {
     setResults([])
   }
 
+  const isSkipped = override?.type === 'skip'
   const isResolved = override?.type === 'existing' || override?.type === 'accept'
+  const borderColor = isSkipped
+    ? 'border-slate-300 bg-slate-100'
+    : isResolved
+    ? 'border-green-300 bg-green-50'
+    : flag.is_new
+    ? 'border-blue-200 bg-blue-50'
+    : 'border-amber-200 bg-amber-50'
 
   return (
-    <div className={`border text-xs ${isResolved ? 'border-green-300 bg-green-50' : flag.is_new ? 'border-blue-200 bg-blue-50' : 'border-amber-200 bg-amber-50'}`}>
+    <div className={`border text-xs ${borderColor}`}>
       {/* Header row */}
       <div className="flex items-center justify-between px-3 py-2 gap-2 flex-wrap">
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className={`flex items-center gap-2 flex-wrap ${isSkipped ? 'opacity-40 line-through' : ''}`}>
           <span className="font-semibold text-slate-800">{flag.raw_name}</span>
           <span className="text-slate-400">{flag.school_raw}</span>
           <span className="text-slate-400">{flag.weight_class} lb</span>
         </div>
         <div className="flex items-center gap-1.5">
-          {override?.type === 'existing' && (
-            <span className="text-green-700 font-medium">→ {override.display_name}</span>
+          {isSkipped && (
+            <>
+              <span className="text-slate-500">OOS — will not be imported</span>
+              <button onClick={clearOverride} className="text-slate-400 hover:text-red-500 ml-1">✕</button>
+            </>
           )}
-          {override?.type === 'accept' && (
-            <span className="text-green-700 font-medium">✓ accepted — {flag.display_name}</span>
+          {!isSkipped && override?.type === 'existing' && (
+            <>
+              <span className="text-green-700 font-medium">→ {override.display_name}</span>
+              <button onClick={clearOverride} className="text-slate-400 hover:text-red-500 ml-1">✕</button>
+            </>
           )}
-          {override?.type === 'create' && (
+          {!isSkipped && override?.type === 'accept' && (
+            <>
+              <span className="text-green-700 font-medium">✓ accepted — {flag.display_name}</span>
+              <button onClick={clearOverride} className="text-slate-400 hover:text-red-500 ml-1">✕</button>
+            </>
+          )}
+          {!isSkipped && override?.type === 'create' && (
             <span className="text-blue-700 font-medium">
               new: {override.first_name} {override.last_name}
             </span>
@@ -100,102 +120,114 @@ export function WrestlerFlagCard({ flag, override, onOverride }: Props) {
           {!override && !flag.is_new && (
             <span className="text-amber-700">⚠ low — {flag.display_name ?? '—'}</span>
           )}
-          {(override?.type === 'existing' || override?.type === 'accept') && (
-            <button onClick={clearOverride} className="text-slate-400 hover:text-red-500 ml-1">✕</button>
+          {/* Skip / OOS button — always available unless already skipped */}
+          {!isSkipped && (
+            <button
+              onClick={() => { onOverride(flag.key, { type: 'skip' }); setMode('default') }}
+              className="ml-2 px-2 py-0.5 border border-slate-300 text-slate-500 hover:border-red-400 hover:text-red-600 transition-colors"
+              title="Mark as out-of-state — will not be imported"
+            >
+              OOS
+            </button>
           )}
         </div>
       </div>
 
-      {/* Low-confidence action bar (shown when no override set yet) */}
-      {!flag.is_new && !override && mode === 'default' && (
-        <div className="flex items-center gap-2 px-3 pb-2">
-          <button
-            onClick={() => onOverride(flag.key, { type: 'accept' })}
-            className="px-2 py-0.5 border border-green-400 text-green-700 hover:bg-green-100 transition-colors"
-          >
-            ✓ Accept match
-          </button>
-          <button
-            onClick={() => setMode('search')}
-            className="px-2 py-0.5 border border-slate-300 text-slate-600 hover:border-black transition-colors"
-          >
-            Link different
-          </button>
-          <button
-            onClick={() => { setMode('edit'); setFirstName(defaultNames.first_name); setLastName(defaultNames.last_name) }}
-            className="px-2 py-0.5 border border-slate-300 text-slate-600 hover:border-black transition-colors"
-          >
-            Create new
-          </button>
-        </div>
-      )}
-
-      {/* Edit mode — create wrestler with custom first/last name */}
-      {mode === 'edit' && override?.type !== 'existing' && (
-        <div className="px-3 pb-3 space-y-2">
-          <div className="flex items-center gap-2 flex-wrap">
-            <label className="text-slate-500 w-10 shrink-0">First</label>
-            <input
-              type="text"
-              value={firstName}
-              onChange={e => setFirstName(e.target.value)}
-              className="border border-slate-300 px-2 py-0.5 text-xs focus:outline-none focus:ring-1 focus:ring-black w-36"
-            />
-            <label className="text-slate-500 w-8 shrink-0">Last</label>
-            <input
-              type="text"
-              value={lastName}
-              onChange={e => setLastName(e.target.value)}
-              className="border border-slate-300 px-2 py-0.5 text-xs focus:outline-none focus:ring-1 focus:ring-black w-36"
-            />
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-slate-400">or</span>
-            <button
-              onClick={() => setMode('search')}
-              className="text-blue-600 hover:underline"
-            >
-              link to existing wrestler →
-            </button>
-            {!flag.is_new && (
-              <button onClick={clearOverride} className="text-slate-400 hover:text-red-500 ml-2">cancel</button>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Search mode — find existing wrestler */}
-      {mode === 'search' && (
-        <div className="px-3 pb-3 space-y-1.5">
-          <div className="flex items-center gap-2">
-            <input
-              type="text"
-              value={query}
-              onChange={e => { setQuery(e.target.value); search(e.target.value) }}
-              placeholder="Search by name…"
-              className="border border-slate-300 px-2 py-0.5 text-xs focus:outline-none focus:ring-1 focus:ring-black w-56"
-              autoFocus
-            />
-            {searching && <Spinner />}
-            <button onClick={() => setMode(flag.is_new ? 'edit' : 'default')} className="text-slate-400 hover:text-slate-600">cancel</button>
-          </div>
-          {results.length > 0 && (
-            <div className="border border-slate-200 bg-white shadow-sm max-h-40 overflow-y-auto">
-              {results.map(w => (
-                <button
-                  key={w.id}
-                  onClick={() => pickExisting(w)}
-                  className="w-full text-left px-3 py-1.5 hover:bg-blue-50 transition-colors border-b border-slate-100 last:border-0"
-                >
-                  {w.display_name}
-                </button>
-              ))}
+      {/* Body — hidden when skipped */}
+      {!isSkipped && (
+        <>
+          {/* Low-confidence action bar */}
+          {!flag.is_new && !override && mode === 'default' && (
+            <div className="flex items-center gap-2 px-3 pb-2">
+              <button
+                onClick={() => onOverride(flag.key, { type: 'accept' })}
+                className="px-2 py-0.5 border border-green-400 text-green-700 hover:bg-green-100 transition-colors"
+              >
+                ✓ Accept match
+              </button>
+              <button
+                onClick={() => setMode('search')}
+                className="px-2 py-0.5 border border-slate-300 text-slate-600 hover:border-black transition-colors"
+              >
+                Link different
+              </button>
+              <button
+                onClick={() => { setMode('edit'); setFirstName(defaultNames.first_name); setLastName(defaultNames.last_name) }}
+                className="px-2 py-0.5 border border-slate-300 text-slate-600 hover:border-black transition-colors"
+              >
+                Create new
+              </button>
             </div>
           )}
-          {query && !searching && results.length === 0 && (
-            <p className="text-slate-400">No wrestlers found at this school</p>
+
+          {/* Edit mode */}
+          {mode === 'edit' && override?.type !== 'existing' && (
+            <div className="px-3 pb-3 space-y-2">
+              <div className="flex items-center gap-2 flex-wrap">
+                <label className="text-slate-500 w-10 shrink-0">First</label>
+                <input
+                  type="text"
+                  value={firstName}
+                  onChange={e => setFirstName(e.target.value)}
+                  className="border border-slate-300 px-2 py-0.5 text-xs focus:outline-none focus:ring-1 focus:ring-black w-36"
+                />
+                <label className="text-slate-500 w-8 shrink-0">Last</label>
+                <input
+                  type="text"
+                  value={lastName}
+                  onChange={e => setLastName(e.target.value)}
+                  className="border border-slate-300 px-2 py-0.5 text-xs focus:outline-none focus:ring-1 focus:ring-black w-36"
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-slate-400">or</span>
+                <button
+                  onClick={() => setMode('search')}
+                  className="text-blue-600 hover:underline"
+                >
+                  link to existing wrestler →
+                </button>
+                {!flag.is_new && (
+                  <button onClick={clearOverride} className="text-slate-400 hover:text-red-500 ml-2">cancel</button>
+                )}
+              </div>
+            </div>
           )}
-        </div>
+
+          {/* Search mode */}
+          {mode === 'search' && (
+            <div className="px-3 pb-3 space-y-1.5">
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  value={query}
+                  onChange={e => { setQuery(e.target.value); search(e.target.value) }}
+                  placeholder="Search by name…"
+                  className="border border-slate-300 px-2 py-0.5 text-xs focus:outline-none focus:ring-1 focus:ring-black w-56"
+                  autoFocus
+                />
+                {searching && <Spinner />}
+                <button onClick={() => setMode(flag.is_new ? 'edit' : 'default')} className="text-slate-400 hover:text-slate-600">cancel</button>
+              </div>
+              {results.length > 0 && (
+                <div className="border border-slate-200 bg-white shadow-sm max-h-40 overflow-y-auto">
+                  {results.map(w => (
+                    <button
+                      key={w.id}
+                      onClick={() => pickExisting(w)}
+                      className="w-full text-left px-3 py-1.5 hover:bg-blue-50 transition-colors border-b border-slate-100 last:border-0"
+                    >
+                      {w.display_name}
+                    </button>
+                  ))}
+                </div>
+              )}
+              {query && !searching && results.length === 0 && (
+                <p className="text-slate-400">No wrestlers found at this school</p>
+              )}
+            </div>
+          )}
+        </>
       )}
     </div>
   )

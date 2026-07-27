@@ -253,7 +253,8 @@ export function RtfImportClient() {
     (n, t) => n + t.wrestler_flags.filter(f => {
       if (schoolOverrides[f.school_raw]?.type === 'oos') return false
       const o = wrestlerOverrides[f.key]
-      return !o || o.type === 'create'  // unresolved or still needs name confirmation
+      if (o?.type === 'skip' || o?.type === 'existing' || o?.type === 'accept') return false
+      return true  // create (needs name confirmation) or unresolved
     }).length, 0,
   )
 

@@ -172,7 +172,9 @@ export async function POST(req: NextRequest) {
           const flagKey = `${name}|${s.school_id}|${b.weight_class}`
           const ov = wrestlerOverrides[flagKey]
 
-          if (ov?.type === 'existing') {
+          if (ov?.type === 'skip') {
+            overrideExistingMap.set(nkey, '__skip__')
+          } else if (ov?.type === 'existing') {
             overrideExistingMap.set(nkey, ov.wrestler_id)
           } else if (ov?.type === 'create') {
             seenNew.add(nkey)
@@ -208,8 +210,11 @@ export async function POST(req: NextRequest) {
           const nkey = `${name}|${school_id}`
           const flagKey = `${name}|${school_id}|${wc}`
           const ov = wrestlerOverrides[flagKey]
+          if (ov?.type === 'skip') return null
           if (ov?.type === 'existing') return ov.wrestler_id
-          if (overrideExistingMap.has(nkey)) return overrideExistingMap.get(nkey)!
+          const cached = overrideExistingMap.get(nkey)
+          if (cached === '__skip__') return null
+          if (cached) return cached
           if (newWrestlerMap.has(nkey)) return newWrestlerMap.get(nkey)!
           const wm = await matchWrestler(name, school_id, wc, 'M')
           return wm.wrestlerId ?? null

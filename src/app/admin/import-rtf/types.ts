@@ -27,6 +27,7 @@ export type WrestlerOverride =
   | { type: 'create'; first_name: string; last_name: string }
   | { type: 'existing'; wrestler_id: string; display_name: string }
   | { type: 'accept' }
+  | { type: 'skip' }
 
 export type TournamentSummary = {
   name: string
