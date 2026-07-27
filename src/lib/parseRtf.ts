@@ -179,14 +179,20 @@ function extractTrailingResult(rest: string): { resultRaw: string; rest2: string
 
 function extractNameSchool(s: string): [string, string] {
   s = s.trim()
-  // Use first (...) pair — school names never contain parens.
-  // Anything after the closing paren (record "X-Y", result, etc.) is ignored.
-  const pstart = s.indexOf('(')
+  // Strip trailing W-L record first so it doesn't interfere with paren search.
+  s = s.replace(WL_SUFFIX_RE, '').trim()
+  // Use LAST (...) pair as the school — handles nicknames like "Charles (CJ) Palmisano (Whippany Park)".
+  // extractTrailingResult has already stripped the result parens before this is called, so this is safe.
+  const pstart = s.lastIndexOf('(')
   if (pstart >= 0) {
     const pend = s.indexOf(')', pstart)
-    if (pend >= 0) return [stripWl(s.slice(0, pstart).trim()), normalizeSchool(s.slice(pstart + 1, pend))]
+    if (pend >= 0) {
+      // Strip any remaining nickname parens from the name portion, e.g. "Charles (CJ) Palmisano" → "Charles Palmisano"
+      const namePart = s.slice(0, pstart).trim().replace(/\s*\([^)]*\)\s*/g, ' ').replace(/\s+/g, ' ').trim()
+      return [namePart, normalizeSchool(s.slice(pstart + 1, pend))]
+    }
   }
-  return [stripWl(s), '']
+  return [s, '']
 }
 
 function looksLikeSchool(line: string): boolean {
