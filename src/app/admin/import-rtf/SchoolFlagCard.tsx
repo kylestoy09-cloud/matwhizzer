@@ -1,0 +1,124 @@
+'use client'
+
+import { useState, useCallback } from 'react'
+import type { SchoolFlag, SchoolOverride } from './types'
+
+function Spinner() {
+  return (
+    <svg className="animate-spin h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24">
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+    </svg>
+  )
+}
+
+function ConfBadge({ c }: { c: string }) {
+  const cls =
+    c === 'exact' ? 'bg-green-100 text-green-800' :
+    c === 'alias' ? 'bg-teal-100 text-teal-800' :
+    c === 'high'  ? 'bg-blue-100 text-blue-800' :
+    c === 'low'   ? 'bg-yellow-100 text-yellow-800' :
+                    'bg-red-100 text-red-800'
+  return <span className={`inline-block text-xs font-medium px-1.5 py-0.5 rounded ${cls}`}>{c}</span>
+}
+
+export function SchoolFlagCard({
+  flag,
+  override,
+  onOverride,
+}: {
+  flag: SchoolFlag
+  override: SchoolOverride | undefined
+  onOverride: (raw: string, o: SchoolOverride | undefined) => void
+}) {
+  const [query, setQuery] = useState('')
+  const [results, setResults] = useState<{ id: number; display_name: string }[]>([])
+  const [searching, setSearching] = useState(false)
+
+  const search = useCallback((q: string) => {
+    setQuery(q)
+    if (!q.trim()) { setResults([]); return }
+    const timer = setTimeout(async () => {
+      setSearching(true)
+      try {
+        const res = await fetch(`/api/admin/search-schools?q=${encodeURIComponent(q)}`)
+        const data = await res.json()
+        setResults(data.schools ?? [])
+      } finally { setSearching(false) }
+    }, 250)
+    return () => clearTimeout(timer)
+  }, [])
+
+  const resolved = override?.type === 'nj'
+    ? `→ ${override.display_name}`
+    : override?.type === 'oos'
+    ? '→ Out-of-state (skip)'
+    : null
+
+  return (
+    <div className="border border-slate-200 rounded p-3 text-sm bg-white">
+      <div className="flex items-start justify-between gap-2 mb-2">
+        <div>
+          <span className="font-medium text-slate-800">{flag.raw}</span>
+          <span className="text-slate-400 ml-2 text-xs">{flag.bout_count} bout{flag.bout_count !== 1 ? 's' : ''}</span>
+        </div>
+        <ConfBadge c={flag.confidence} />
+      </div>
+
+      {flag.alternates.length > 0 && (
+        <div className="mb-2 flex flex-wrap gap-1.5">
+          {flag.alternates.map(a => (
+            <button
+              key={a.school_id}
+              onClick={() => onOverride(flag.raw, { type: 'nj', school_id: a.school_id, display_name: a.display_name })}
+              className="text-xs px-2 py-0.5 border border-slate-300 hover:border-black hover:bg-slate-50 transition-colors"
+            >
+              {a.display_name} <span className="text-slate-400">({(a.score * 100).toFixed(0)}%)</span>
+            </button>
+          ))}
+        </div>
+      )}
+
+      {!resolved && (
+        <div className="flex gap-2">
+          <div className="relative flex-1">
+            <input
+              type="text"
+              placeholder="Search NJ schools…"
+              value={query}
+              onChange={e => search(e.target.value)}
+              className="w-full text-xs border border-slate-300 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-black"
+            />
+            {searching && <span className="absolute right-2 top-1.5"><Spinner /></span>}
+            {results.length > 0 && (
+              <div className="absolute left-0 right-0 top-full z-10 border border-slate-300 bg-white shadow-sm">
+                {results.map(s => (
+                  <button
+                    key={s.id}
+                    onClick={() => { onOverride(flag.raw, { type: 'nj', school_id: s.id, display_name: s.display_name }); setResults([]) }}
+                    className="block w-full text-left px-3 py-1.5 text-xs hover:bg-slate-50"
+                  >
+                    {s.display_name}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+          <button
+            onClick={() => onOverride(flag.raw, { type: 'oos' })}
+            className="text-xs px-2 py-1 border border-slate-300 hover:border-black text-slate-600 hover:text-black transition-colors whitespace-nowrap"
+          >
+            Out-of-state
+          </button>
+        </div>
+      )}
+
+      {resolved && (
+        <div className="flex items-center justify-between">
+          <span className="text-xs text-green-700 font-medium">{resolved}</span>
+          <button onClick={() => onOverride(flag.raw, undefined)} className="text-xs text-slate-400 hover:text-slate-700 ml-2">undo</button>
+        </div>
+      )}
+    </div>
+  )
+}

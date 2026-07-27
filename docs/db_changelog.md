@@ -5,6 +5,42 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-07-27 — RTF import drafts table
+
+**Migration file:** `docs/migrations/20260727_rtf_import_drafts.sql`
+
+**Status:** APPLIED
+
+**What changed:**
+
+New table `rtf_import_drafts` stores in-progress RTF tournament import sessions so the admin can close the browser and resume without re-running the 30–40 s school/wrestler matching step. Columns: `id uuid`, `user_id uuid` (FK → auth.users, CASCADE DELETE), `label text`, `text text` (raw pasted RTF content), `year int`, `selected jsonb` (array of tournament names), `school_overrides jsonb`, `dates jsonb`, `reviewed jsonb` (full ReviewedTournament array), `step text`, `tournament_count int`, `status text` (draft/imported), `created_at`, `updated_at`. RLS policy: owner-only via `user_id = auth.uid()`. `GRANT ALL TO service_role`.
+
+---
+
+## 2026-07-26 — Add tournament_placements table and source_format column
+
+**Migration file:** `docs/migrations/20260726_tournament_placements.sql`
+
+**Status:** PENDING — run in Supabase SQL editor (No limit mode).
+
+**What changed:**
+
+Added `source_format text CHECK (source_format IN ('full_bracket', 'school_tracking'))` to `in_season_tournaments`. Created `tournament_placements` table: one row per place winner per weight per tournament, with columns for `weight_class`, `place` (1–8), `wrestler_name_raw`, `school_name_raw`, `school_id` (FK nullable), and `nj_wrestler_id` (FK nullable). Indexed on tournament, school, and wrestler. Drives the new tournament detail page: full_bracket tournaments show a champions grid; school_tracking tournaments show NJ wrestlers on the podium.
+
+---
+
+## 2026-07-26 — Delete contaminated bouts from Bethlehem Holiday Wrestling Classic
+
+**Migration file:** `docs/migrations/20260726_delete_bethlehem_contaminated_bouts.sql`
+
+**Status:** APPLIED
+
+**What changed:**
+
+Deleted 120 bouts from the Bethlehem Holiday Wrestling Classic (`in_season_tournament_id = 0adf0e3e-0c8f-4462-a355-f23cfb32250b`) where either school was not in the verified 35-school team list. Root cause: `pipe_format_tournaments_dec2025.csv` was generated from the RTF without filtering by the TW Event Yes/No flag, so unverified No/No bouts from a different tournament (CBA, St. Joseph Montvale, and national schools) were incorrectly imported as Bethlehem data. The other 4 pipe-CSV-imported tournaments (Elmwood Park, King of the Castle, Linn Crawn, Palmyra) were audited and confirmed clean.
+
+---
+
 ## 2026-07-25 — Merge school 358 (Roselle duplicate) into school 125
 
 **Migration file:** `docs/migrations/20260725_merge_roselle_schools.sql`

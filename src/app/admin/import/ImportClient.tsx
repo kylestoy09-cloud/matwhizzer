@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useMemo, useEffect } from 'react'
+import { useState, useCallback, useMemo, useEffect, useRef } from 'react'
 import { parseDualMeetText } from '@/lib/parseDualMeet'
 import type { ParsedMeet } from '@/lib/parseDualMeet'
 import type { SchoolMatch } from '@/lib/matchSchools'
@@ -51,11 +51,15 @@ export function ImportClient() {
   const [importResult,       setImportResult]       = useState<ImportResult | null>(null)
 
   // Draft state
-  const [draftId,     setDraftId]     = useState<string | null>(null)
-  const [draftLabel,  setDraftLabel]  = useState('')
-  const [drafts,      setDrafts]      = useState<DraftSummary[]>([])
-  const [draftSaving, setDraftSaving] = useState(false)
-  const [draftError,  setDraftError]  = useState<string | null>(null)
+  const [draftId,       setDraftId]       = useState<string | null>(null)
+  const [draftLabel,    setDraftLabel]    = useState('')
+  const [drafts,        setDrafts]        = useState<DraftSummary[]>([])
+  const [draftSaving,   setDraftSaving]   = useState(false)
+  const [draftError,    setDraftError]    = useState<string | null>(null)
+  const [autoSaveState, setAutoSaveState] = useState<'pending' | 'saved' | null>(null)
+  const autoSaveTimer   = useRef<ReturnType<typeof setTimeout> | null>(null)
+  // Ref keeps latest values available inside the setTimeout callback without stale closures
+  const autoSaveDataRef = useRef({ rawText, draftId, draftLabel, meets, phase, schoolOverrides, wrestlerOverrides })
 
   // ── Load drafts on mount ─────────────────────────────────────────────────────
 
@@ -69,6 +73,59 @@ export function ImportClient() {
   }, [])
 
   useEffect(() => { loadDrafts() }, [loadDrafts])
+
+  // Keep ref in sync every render so auto-save callback always reads fresh values
+  autoSaveDataRef.current = { rawText, draftId, draftLabel, meets, phase, schoolOverrides, wrestlerOverrides }
+
+  // ── Auto-save core ────────────────────────────────────────────────────────────
+  const performAutoSave = useCallback(async () => {
+    const { rawText: rt, draftId: did, draftLabel: dl, meets: ms, schoolOverrides: so, wrestlerOverrides: wo } = autoSaveDataRef.current
+    if (ms.length === 0) return
+    try {
+      const resp = await fetch('/api/admin/dual-import-draft', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({
+          id:                 did ?? undefined,
+          label:              dl,
+          raw_text:           rt,
+          school_overrides:   so,
+          wrestler_overrides: wo,
+          meet_count:         ms.length,
+        }),
+      })
+      if (!resp.ok) { setAutoSaveState(null); return }
+      const { draft } = await resp.json()
+      setDraftId(prev => prev ?? draft.id)
+      setAutoSaveState('saved')
+    } catch {
+      setAutoSaveState(null)
+    }
+  }, [])
+
+  // Save immediately when entering a review phase
+  useEffect(() => {
+    if (phase !== 'school_review' && phase !== 'review') return
+    if (meets.length === 0) return
+    setAutoSaveState('pending')
+    performAutoSave()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase])
+
+  // Debounce-save when overrides change (while in a review phase)
+  useEffect(() => {
+    const { phase: p, meets: m } = autoSaveDataRef.current
+    if (p !== 'school_review' && p !== 'review') return
+    if (m.length === 0) return
+
+    setAutoSaveState('pending')
+    if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current)
+
+    autoSaveTimer.current = setTimeout(() => { performAutoSave() }, 2000)
+
+    return () => { if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current) }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [schoolOverrides, wrestlerOverrides])
 
   // ── School override handler ──────────────────────────────────────────────────
 
@@ -488,7 +545,11 @@ export function ImportClient() {
               </p>
             </div>
             <button
-              onClick={() => { setPhase('idle'); setMeets([]); setError(null); setDraftId(null); setDraftLabel('') }}
+              onClick={() => {
+                if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current)
+                setAutoSaveState(null)
+                setPhase('idle'); setMeets([]); setError(null); setDraftId(null); setDraftLabel('')
+              }}
               className="text-xs text-slate-400 hover:text-slate-700 underline"
             >
               ← Start over
@@ -524,9 +585,17 @@ export function ImportClient() {
               </button>
             </div>
             {draftError && <p className="text-xs text-red-600 mt-1">{draftError}</p>}
-            <p className="text-[11px] text-slate-400 mt-1.5">
-              Save now to resume from this point later — school corrections and wrestler overrides are preserved.
-            </p>
+            <div className="flex items-center justify-between mt-1.5">
+              <p className="text-[11px] text-slate-400">
+                Progress auto-saves 3s after each change.
+              </p>
+              {autoSaveState === 'pending' && (
+                <span className="text-[11px] text-slate-400">Saving…</span>
+              )}
+              {autoSaveState === 'saved' && (
+                <span className="text-[11px] text-green-600">Auto-saved</span>
+              )}
+            </div>
           </div>
 
           <button
@@ -569,7 +638,11 @@ export function ImportClient() {
             </div>
           )}
           <button
-            onClick={() => { setPhase('idle'); setMeets([]); setError(null); setImportResult(null); loadDrafts() }}
+            onClick={() => {
+              if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current)
+              setAutoSaveState(null)
+              setPhase('idle'); setMeets([]); setError(null); setImportResult(null); loadDrafts()
+            }}
             className="px-4 py-2 bg-black text-white text-sm font-semibold hover:bg-slate-800"
           >
             Import more
@@ -606,7 +679,11 @@ export function ImportClient() {
                 Re-match wrestlers
               </button>
               <button
-                onClick={() => { setPhase('idle'); setMeets([]); setError(null); setDraftId(null); setDraftLabel('') }}
+                onClick={() => {
+                  if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current)
+                  setAutoSaveState(null)
+                  setPhase('idle'); setMeets([]); setError(null); setDraftId(null); setDraftLabel('')
+                }}
                 className="text-xs text-slate-400 hover:text-slate-700 underline"
               >
                 ← Start over
@@ -676,24 +753,32 @@ export function ImportClient() {
             </div>
 
             {/* Save draft row */}
-            <div className="flex items-center gap-2 pt-1 border-t border-slate-100">
-              <input
-                value={draftLabel}
-                onChange={e => setDraftLabel(e.target.value)}
-                placeholder="Draft label (optional)"
-                className="flex-1 text-xs border border-slate-300 px-2 py-1.5 outline-none focus:ring-1 focus:ring-black bg-white"
-              />
-              <button
-                onClick={handleSaveDraft}
-                disabled={draftSaving}
-                className="px-3 py-1.5 border border-black text-xs font-semibold hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
-              >
-                {draftSaving ? 'Saving…' : draftId ? 'Update draft' : 'Save draft'}
-              </button>
+            <div className="pt-1 border-t border-slate-100 space-y-1">
+              <div className="flex items-center gap-2">
+                <input
+                  value={draftLabel}
+                  onChange={e => setDraftLabel(e.target.value)}
+                  placeholder="Draft label (optional)"
+                  className="flex-1 text-xs border border-slate-300 px-2 py-1.5 outline-none focus:ring-1 focus:ring-black bg-white"
+                />
+                <button
+                  onClick={handleSaveDraft}
+                  disabled={draftSaving}
+                  className="px-3 py-1.5 border border-black text-xs font-semibold hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
+                >
+                  {draftSaving ? 'Saving…' : draftId ? 'Update draft' : 'Save draft'}
+                </button>
+              </div>
+              {draftError && <p className="text-xs text-red-600">{draftError}</p>}
+              <div className="flex justify-end">
+                {autoSaveState === 'pending' && (
+                  <span className="text-[11px] text-slate-400">Saving…</span>
+                )}
+                {autoSaveState === 'saved' && (
+                  <span className="text-[11px] text-green-600">Auto-saved</span>
+                )}
+              </div>
             </div>
-            {draftError && (
-              <p className="text-xs text-red-600">{draftError}</p>
-            )}
           </div>
 
         </div>

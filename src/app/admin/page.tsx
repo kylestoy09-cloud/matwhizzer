@@ -80,8 +80,15 @@ export default async function AdminDashboard() {
           href="/admin/import-tournament"
           className="bg-white rounded-none border border-black shadow-none p-6 transition-shadow"
         >
-          <h2 className="text-sm font-semibold text-slate-900 mb-1">Tournament Import</h2>
+          <h2 className="text-sm font-semibold text-slate-900 mb-1">Tournament Import (CSV)</h2>
           <p className="text-xs text-slate-500">Upload pipe-CSV JSON to review and import tournament bouts</p>
+        </Link>
+        <Link
+          href="/admin/import-rtf"
+          className="bg-white rounded-none border border-black shadow-none p-6 transition-shadow"
+        >
+          <h2 className="text-sm font-semibold text-slate-900 mb-1">Tournament Import (RTF)</h2>
+          <p className="text-xs text-slate-500">Paste RTF tournament text, review matches, import bouts and placements</p>
         </Link>
         <Link
           href="/admin/bout-audit"
