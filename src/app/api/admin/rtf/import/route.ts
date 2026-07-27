@@ -194,9 +194,44 @@ export async function POST(req: NextRequest) {
       }
 
       const newWrestlerMap = new Map<string, string>()
+      const aliasRows: Array<{ raw_name: string; school_id: number; wrestler_id: string }> = []
+
       for (const w of newWrestlers) {
         const ins = await client.from('wrestlers').insert({ first_name: w.first_name, last_name: w.last_name, gender: 'M' }).select('id').single()
-        if (!ins.error && ins.data) newWrestlerMap.set(`${w.name}|${w.school_id}`, ins.data.id)
+        if (!ins.error && ins.data) {
+          newWrestlerMap.set(`${w.name}|${w.school_id}`, ins.data.id)
+          aliasRows.push({ raw_name: w.name, school_id: w.school_id, wrestler_id: ins.data.id })
+        }
+      }
+
+      // Also alias confirmed existing/accept overrides so they resolve instantly next time
+      for (const b of dedupedBouts) {
+        const { db_type, winner } = boutResultToDb(b.result_type, b.result_detail)
+        if (db_type === null && winner === null) continue
+        for (const [name, school_raw] of [[b.wrestler1_name, b.wrestler1_school], [b.wrestler2_name, b.wrestler2_school]] as [string, string][]) {
+          const s = schoolCache.get(school_raw)
+          if (!s?.school_id) continue
+          const flagKey = `${name}|${s.school_id}|${b.weight_class}`
+          const ov = wrestlerOverrides[flagKey]
+          if (ov?.type === 'existing') {
+            aliasRows.push({ raw_name: name, school_id: s.school_id, wrestler_id: ov.wrestler_id })
+          } else if (ov?.type === 'accept' && b.result_type !== 'BYE') {
+            const wm = await matchWrestler(name, s.school_id, b.weight_class, 'M')
+            if (wm.wrestlerId) aliasRows.push({ raw_name: name, school_id: s.school_id, wrestler_id: wm.wrestlerId })
+          }
+        }
+      }
+
+      // Deduplicate and upsert aliases
+      const seenAlias = new Set<string>()
+      const uniqueAliases = aliasRows.filter(a => {
+        const k = `${a.raw_name}|${a.school_id}`
+        if (seenAlias.has(k)) return false
+        seenAlias.add(k); return true
+      })
+      if (uniqueAliases.length > 0) {
+        await client.from('wrestler_name_aliases')
+          .upsert(uniqueAliases, { onConflict: 'raw_name,school_id' })
       }
 
       const boutRows = []
