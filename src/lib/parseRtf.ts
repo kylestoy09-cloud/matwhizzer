@@ -313,6 +313,9 @@ function parseBoutBNoRound(line: string): Omit<ParsedBout, 'weight_class'> | nul
   const [name1, school1] = extractNameSchool(rest.slice(0, overIdx))
   const [name2, school2] = extractNameSchool(rest.slice(overIdx + 6))
   if (!name1 || !name2) return null
+  if (looksLikeBye(name2, school2)) {
+    return { round: 'Unknown', wrestler1_name: name1, wrestler1_school: school1, wrestler2_name: '', wrestler2_school: '', winner: null, result_type: 'BYE', result_detail: null }
+  }
   const [rt, rd] = parseResult(resultRaw)
 
   return { round: 'Unknown', wrestler1_name: name1, wrestler1_school: school1, wrestler2_name: name2, wrestler2_school: school2, winner: 1, result_type: rt, result_detail: rd }

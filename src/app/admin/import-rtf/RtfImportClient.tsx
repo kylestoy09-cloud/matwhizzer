@@ -200,6 +200,23 @@ export function RtfImportClient() {
     })
   }
 
+  // ── Re-match wrestlers only (keeps school flags + dates + all overrides) ─
+
+  function handleRematchWrestlers() {
+    setMatchError(null)
+    startTransition(async () => {
+      const data = await apiPost<{ reviewed: ReviewedTournament[] }>(
+        '/api/admin/rtf/match', { text, year, selected: [...selected], schoolOverrides },
+      )
+      if (data.error) { setMatchError(data.error); return }
+      // Only take wrestler_flags from the fresh response — everything else stays
+      setReviewed(prev => prev.map(t => {
+        const fresh = data.reviewed.find(r => r.name === t.name)
+        return fresh ? { ...t, wrestler_flags: fresh.wrestler_flags } : t
+      }))
+    })
+  }
+
   // ── Step 3 → 4: import ──────────────────────────────────────────────────
 
   function handleImport() {
@@ -423,6 +440,13 @@ export function RtfImportClient() {
             {totalWrestlerFlags > 0
               ? <span className="text-blue-700">{totalWrestlerFlags} wrestler flag{totalWrestlerFlags !== 1 ? 's' : ''}</span>
               : <span className="text-green-700">✓ No wrestler flags</span>}
+            <button
+              onClick={handleRematchWrestlers}
+              disabled={isPending}
+              className="ml-auto px-3 py-1 border border-slate-300 text-slate-600 hover:border-black disabled:opacity-40 transition-colors flex items-center gap-1.5"
+            >
+              {isPending ? <><Spinner /> Re-matching…</> : '↺ Re-match wrestlers'}
+            </button>
           </div>
 
           {reviewed.map(t => {
@@ -526,8 +550,15 @@ export function RtfImportClient() {
                 {totalSchoolFlags} school{totalSchoolFlags !== 1 ? 's' : ''} still unresolved — those wrestlers will import without a school link.
               </p>
             )}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-wrap">
               <button onClick={() => setStep('select')} className="px-3 py-1.5 text-sm border border-slate-300 hover:border-black transition-colors">← Back</button>
+              <button
+                onClick={handleRematchWrestlers}
+                disabled={isPending}
+                className="px-3 py-1.5 text-sm border border-slate-300 text-slate-600 hover:border-black disabled:opacity-40 transition-colors flex items-center gap-2"
+              >
+                {isPending ? <><Spinner /> Re-matching…</> : '↺ Re-match wrestlers'}
+              </button>
               <button
                 onClick={handleImport}
                 disabled={isPending}

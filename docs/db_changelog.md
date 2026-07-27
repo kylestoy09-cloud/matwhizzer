@@ -5,6 +5,38 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-07-27 — Rewrite school_wrestlers RPC to include in-season wrestlers
+
+**Migration file:** `docs/migrations/20260727_school_wrestlers_include_inseason.sql`
+
+**Status:** PENDING — run in Supabase SQL editor.
+
+**What changed:**
+
+`school_wrestlers(p_school_id, p_gender, p_season)` now UNIONs three data sources instead of only querying `tournament_entries`:
+
+1. **`tournament_entries`** (postseason) — unchanged; includes full districts/regions/state placement data
+2. **`tournament_bouts`** (RTF in-season) — wrestlers who appear in at least one bout for the school in the given season, joined via `in_season_tournaments.season` text label
+3. **`dual_meet_matches`** (dual meets) — wrestlers who appear in at least one match for the school in the given season (non-double-forfeit), joined via `dual_meets.season_id`
+
+Wrestlers who appear in postseason (source 1) retain their placement data. Wrestlers only seen in in-season sources (sources 2–3) appear with NULL placement columns. Deduplication prevents double-rows when a wrestler competes in both in-season tournaments and postseason. `primary_weight` for in-season-only wrestlers is the minimum weight they appear at.
+
+This makes newly created wrestlers (from RTF import or dual import) immediately visible on the school roster page without waiting for them to be entered in a postseason tournament.
+
+---
+
+## 2026-07-27 — Add wrestler_overrides column to rtf_import_drafts
+
+**Migration file:** `docs/migrations/20260727_rtf_import_drafts_wrestler_overrides.sql`
+
+**Status:** PENDING — run in Supabase SQL editor.
+
+**What changed:**
+
+Added `wrestler_overrides JSONB NOT NULL DEFAULT '{}'` to `rtf_import_drafts`. Stores the user's wrestler review decisions (create/existing/accept/skip per wrestler flag) so they survive a page reload and the draft can be fully resumed from step 3.
+
+---
+
 ## 2026-07-27 — RTF import drafts table
 
 **Migration file:** `docs/migrations/20260727_rtf_import_drafts.sql`

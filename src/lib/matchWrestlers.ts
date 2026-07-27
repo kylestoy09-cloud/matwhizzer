@@ -33,6 +33,8 @@ export type WrestlerMatch = {
 type WrestlerRow  = { id: string; first_name: string; last_name: string; suffix: string | null; gender: string | null }
 type WeightClassRow = { id: number; weight: number }
 type EntryRow     = { wrestler_id: string; school_id: number | null; weight_class_id: number }
+type BoutRow      = { nj_wrestler1_id: string | null; wrestler1_school_id: number | null; nj_wrestler2_id: string | null; wrestler2_school_id: number | null }
+type DualMatchRow = { wrestler_a_id: string | null; school_a_id: number | null; wrestler_b_id: string | null; school_b_id: number | null }
 
 // Denormalized record joining wrestler + school + weights
 type WrestlerRecord = {
@@ -101,9 +103,11 @@ async function loadCache(): Promise<void> {
   if (wcRes.error) throw new Error(`matchWrestlers: failed to load weight_classes — ${wcRes.error.message}`)
   const weightClasses = (wcRes.data ?? []) as WeightClassRow[]
 
-  // Paginate wrestlers then entries serially to avoid connection pool exhaustion
+  // Paginate all tables serially to avoid connection pool exhaustion
   const wrestlers = await fetchAll<WrestlerRow>(supabase, 'wrestlers', 'id, first_name, last_name, suffix, gender')
   const entries   = await fetchAll<EntryRow>(supabase, 'tournament_entries', 'wrestler_id, school_id, weight_class_id')
+  const bouts     = await fetchAll<BoutRow>(supabase, 'tournament_bouts', 'nj_wrestler1_id, wrestler1_school_id, nj_wrestler2_id, wrestler2_school_id')
+  const duals     = await fetchAll<DualMatchRow>(supabase, 'dual_meet_matches', 'wrestler_a_id, school_a_id, wrestler_b_id, school_b_id')
 
   // Build fast lookup maps
   const wrestlerMap = new Map<string, WrestlerRow>()
@@ -138,10 +142,41 @@ async function loadCache(): Promise<void> {
     }
   }
 
-  // Populate school index
+  // Seed school index from tournament_entries (with weight data)
   for (const rec of recordMap.values()) {
     if (!schoolIndex.has(rec.schoolId)) schoolIndex.set(rec.schoolId, new Map())
     schoolIndex.get(rec.schoolId)!.set(rec.wrestlerId, rec)
+  }
+
+  // Helper: add a (wrestler_id, school_id) pair to the index if not already present.
+  // Used for in-season sources where we have no weight data.
+  function addToIndex(wrestlerId: string, schoolId: number) {
+    const recKey = `${wrestlerId}:${schoolId}`
+    if (recordMap.has(recKey)) return
+    const wr = wrestlerMap.get(wrestlerId)
+    if (!wr) return
+    const rec: WrestlerRecord = {
+      wrestlerId,
+      displayName: buildName(wr),
+      schoolId,
+      gender:      wr.gender,
+      weights:     [],
+    }
+    recordMap.set(recKey, rec)
+    if (!schoolIndex.has(schoolId)) schoolIndex.set(schoolId, new Map())
+    schoolIndex.get(schoolId)!.set(wrestlerId, rec)
+  }
+
+  // Seed from tournament_bouts (RTF in-season imports)
+  for (const b of bouts) {
+    if (b.nj_wrestler1_id && b.wrestler1_school_id) addToIndex(b.nj_wrestler1_id, b.wrestler1_school_id)
+    if (b.nj_wrestler2_id && b.wrestler2_school_id) addToIndex(b.nj_wrestler2_id, b.wrestler2_school_id)
+  }
+
+  // Seed from dual_meet_matches
+  for (const d of duals) {
+    if (d.wrestler_a_id && d.school_a_id) addToIndex(d.wrestler_a_id, d.school_a_id)
+    if (d.wrestler_b_id && d.school_b_id) addToIndex(d.wrestler_b_id, d.school_b_id)
   }
 
   // Load confirmed name aliases — checked before fuzzy matching
@@ -161,6 +196,7 @@ async function loadCache(): Promise<void> {
       wrestlerId:  a.wrestler_id,
       displayName: buildName(a.wrestlers),
     })
+
   }
 
   cacheReady = true
@@ -171,6 +207,13 @@ async function loadCache(): Promise<void> {
 function buildName(w: Pick<WrestlerRow, 'first_name' | 'last_name' | 'suffix'>): string {
   const base = `${w.first_name} ${w.last_name}`
   return w.suffix ? `${base} ${w.suffix}` : base
+}
+
+// ── Name normalization ─────────────────────────────────────────────────────────
+
+// "J.D. Smith" → "JD Smith"  /  "A.J. Caso" → "AJ Caso"
+function normalizeInitials(s: string): string {
+  return s.replace(/\b([A-Za-z])\./g, '$1').replace(/\s+/g, ' ').trim()
 }
 
 // ── Trigram similarity ─────────────────────────────────────────────────────────
@@ -203,7 +246,9 @@ export async function matchWrestler(
   await ensureCache()
 
   const raw       = name.trim()
+  const rawNorm   = normalizeInitials(raw)
   const nameLower = raw.toLowerCase()
+  const normLower = rawNorm.toLowerCase()
 
   // ── 0. Alias index — confirmed matches from previous imports ─────────────────
   const alias = aliasIndex.get(`${raw}|${schoolId}`)
@@ -224,27 +269,35 @@ export async function matchWrestler(
 
   // ── 1. Exact name + exact weight ─────────────────────────────────────────────
   for (const rec of atSchool) {
-    if (rec.displayName.toLowerCase() === nameLower && rec.weights.includes(weightClass)) {
+    const recNorm = normalizeInitials(rec.displayName).toLowerCase()
+    if ((rec.displayName.toLowerCase() === nameLower || recNorm === normLower) && rec.weights.includes(weightClass)) {
       return match(raw, schoolId, weightClass, rec, 'exact', [])
     }
   }
 
   // ── 2. Exact name, any weight at same school ──────────────────────────────────
   for (const rec of atSchool) {
-    if (rec.displayName.toLowerCase() === nameLower) {
+    const recNorm = normalizeInitials(rec.displayName).toLowerCase()
+    if (rec.displayName.toLowerCase() === nameLower || recNorm === normLower) {
       return match(raw, schoolId, weightClass, rec, 'high', [])
     }
   }
 
-  // ── 3. Fuzzy name within school ───────────────────────────────────────────────
+  // ── 3. Fuzzy name within school — score both raw and normalized, take the max ─
   const schoolScored = atSchool
-    .map(rec => ({ wrestlerId: rec.wrestlerId, displayName: rec.displayName, score: trigramSimilarity(raw, rec.displayName) }))
+    .map(rec => {
+      const recNorm = normalizeInitials(rec.displayName)
+      const score = Math.max(
+        trigramSimilarity(raw, rec.displayName),
+        trigramSimilarity(rawNorm, recNorm),
+      )
+      return { wrestlerId: rec.wrestlerId, displayName: rec.displayName, score }
+    })
     .sort((a, b) => b.score - a.score)
     .slice(0, 3)
 
   const best = schoolScored[0]
 
-  // ── 4. No match — school-only alternates for review UI ───────────────────────
   if (best && best.score >= 0.85) {
     const rec = schoolIndex.get(schoolId)!.get(best.wrestlerId)!
     return match(raw, schoolId, weightClass, rec, 'high', schoolScored)
@@ -253,6 +306,25 @@ export async function matchWrestler(
   if (best && best.score >= 0.6) {
     const rec = schoolIndex.get(schoolId)!.get(best.wrestlerId)!
     return match(raw, schoolId, weightClass, rec, 'low', schoolScored)
+  }
+
+  // ── 4. Same-last-name fallback ────────────────────────────────────────────────
+  // Catches "JD Smith" → "Jake Smith" and brothers/cousins — shown as low confidence.
+  const rawLast = rawNorm.trim().split(/\s+/).pop()!.toLowerCase()
+  if (rawLast.length >= 2) {
+    const sameLastName = atSchool
+      .filter(rec => normalizeInitials(rec.displayName).trim().split(/\s+/).pop()?.toLowerCase() === rawLast)
+      .map(rec => ({
+        wrestlerId:  rec.wrestlerId,
+        displayName: rec.displayName,
+        score:       trigramSimilarity(rawNorm, normalizeInitials(rec.displayName)),
+      }))
+      .sort((a, b) => b.score - a.score)
+
+    if (sameLastName.length > 0) {
+      const rec = schoolIndex.get(schoolId)!.get(sameLastName[0].wrestlerId)!
+      return match(raw, schoolId, weightClass, rec, 'low', sameLastName.slice(0, 3))
+    }
   }
 
   // ── 5. No match ───────────────────────────────────────────────────────────────
