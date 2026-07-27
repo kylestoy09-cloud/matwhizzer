@@ -28,7 +28,7 @@ type Props = {
 
 export function WrestlerFlagCard({ flag, override, onOverride }: Props) {
   const defaultNames = splitName(flag.raw_name)
-  const [mode, setMode] = useState<'default' | 'edit' | 'search'>(
+  const [mode, setMode] = useState<'default' | 'edit' | 'confirmed' | 'search'>(
     flag.is_new ? 'edit' : 'default',
   )
   const [firstName, setFirstName] = useState(defaultNames.first_name)
@@ -71,8 +71,14 @@ export function WrestlerFlagCard({ flag, override, onOverride }: Props) {
     setResults([])
   }
 
+  function confirmCreate() {
+    onOverride(flag.key, { type: 'create', first_name: firstName, last_name: lastName })
+    setMode('confirmed')
+  }
+
   const isSkipped = override?.type === 'skip'
-  const isResolved = override?.type === 'existing' || override?.type === 'accept'
+  const isConfirmedCreate = override?.type === 'create' && mode === 'confirmed'
+  const isResolved = override?.type === 'existing' || override?.type === 'accept' || isConfirmedCreate
   const borderColor = isSkipped
     ? 'border-slate-300 bg-slate-100'
     : isResolved
@@ -109,10 +115,14 @@ export function WrestlerFlagCard({ flag, override, onOverride }: Props) {
               <button onClick={clearOverride} className="text-slate-400 hover:text-red-500 ml-1">✕</button>
             </>
           )}
-          {!isSkipped && override?.type === 'create' && (
-            <span className="text-blue-700 font-medium">
-              new: {override.first_name} {override.last_name}
-            </span>
+          {!isSkipped && isConfirmedCreate && override?.type === 'create' && (
+            <>
+              <span className="text-green-700 font-medium">✓ new — {override.first_name} {override.last_name}</span>
+              <button onClick={() => setMode('edit')} className="text-slate-400 hover:text-slate-600 ml-1 text-xs">edit</button>
+            </>
+          )}
+          {!isSkipped && override?.type === 'create' && mode !== 'confirmed' && (
+            <span className="text-blue-600">● new — needs confirmation</span>
           )}
           {!override && flag.is_new && (
             <span className="text-blue-600">● new</span>
@@ -178,6 +188,13 @@ export function WrestlerFlagCard({ flag, override, onOverride }: Props) {
                   onChange={e => setLastName(e.target.value)}
                   className="border border-slate-300 px-2 py-0.5 text-xs focus:outline-none focus:ring-1 focus:ring-black w-36"
                 />
+                <button
+                  onClick={confirmCreate}
+                  disabled={!firstName.trim() && !lastName.trim()}
+                  className="px-3 py-0.5 bg-black text-white hover:bg-slate-800 transition-colors disabled:opacity-40"
+                >
+                  ✓ Confirm
+                </button>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-slate-400">or</span>
