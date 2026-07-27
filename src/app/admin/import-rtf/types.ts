@@ -11,6 +11,7 @@ export type SchoolFlag = {
 }
 
 export type WrestlerFlag = {
+  key: string  // `${raw_name}|${school_id}|${weight_class}`
   raw_name: string
   school_raw: string
   school_id: number
@@ -21,6 +22,11 @@ export type WrestlerFlag = {
   display_name: string | null
   alternates: { wrestler_id: string; display_name: string; score: number }[]
 }
+
+export type WrestlerOverride =
+  | { type: 'create'; first_name: string; last_name: string }
+  | { type: 'existing'; wrestler_id: string; display_name: string }
+  | { type: 'accept' }
 
 export type TournamentSummary = {
   name: string

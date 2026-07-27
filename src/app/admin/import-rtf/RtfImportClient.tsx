@@ -5,9 +5,11 @@ import type {
   TournamentSummary,
   ReviewedTournament,
   SchoolOverride,
+  WrestlerOverride,
   ImportResult,
 } from './types'
 import { SchoolFlagCard } from './SchoolFlagCard'
+import { WrestlerFlagCard } from './WrestlerFlagCard'
 
 function Spinner() {
   return (
@@ -49,6 +51,7 @@ export function RtfImportClient() {
 
   const [reviewed, setReviewed] = useState<ReviewedTournament[]>([])
   const [schoolOverrides, setSchoolOverrides] = useState<Record<string, SchoolOverride>>({})
+  const [wrestlerOverrides, setWrestlerOverrides] = useState<Record<string, WrestlerOverride>>({})
   const [dates, setDates] = useState<Record<string, { start_date: string; end_date: string | null }>>({})
   const [expandedTournament, setExpandedTournament] = useState<string | null>(null)
   const [matchError, setMatchError] = useState<string | null>(null)
@@ -63,8 +66,8 @@ export function RtfImportClient() {
   const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
 
   // Keep a ref of current state for auto-save without stale closures
-  const stateRef = useRef({ text, year, selected, schoolOverrides, dates, reviewed, step, draftId, draftLabel })
-  stateRef.current = { text, year, selected, schoolOverrides, dates, reviewed, step, draftId, draftLabel }
+  const stateRef = useRef({ text, year, selected, schoolOverrides, wrestlerOverrides, dates, reviewed, step, draftId, draftLabel })
+  stateRef.current = { text, year, selected, schoolOverrides, wrestlerOverrides, dates, reviewed, step, draftId, draftLabel }
 
   // Load draft list on mount
   useEffect(() => {
@@ -77,7 +80,7 @@ export function RtfImportClient() {
   // ── Save draft ────────────────────────────────────────────────────────────
 
   const saveDraft = useCallback(async (auto = false) => {
-    const { text: t, year: y, selected: sel, schoolOverrides: so, dates: dt, reviewed: rev, step: st, draftId: did, draftLabel: dl } = stateRef.current
+    const { text: t, year: y, selected: sel, schoolOverrides: so, wrestlerOverrides: wo, dates: dt, reviewed: rev, step: st, draftId: did, draftLabel: dl } = stateRef.current
     if (!t.trim()) return
     if (!auto) setSaveState('saving')
     try {
@@ -91,6 +94,7 @@ export function RtfImportClient() {
           year: y,
           selected: [...sel],
           school_overrides: so,
+          wrestler_overrides: wo,
           dates: dt,
           reviewed: rev,
           step: st,
@@ -118,7 +122,7 @@ export function RtfImportClient() {
     if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current)
     autoSaveTimer.current = setTimeout(() => saveDraft(true), 2000)
     return () => { if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current) }
-  }, [schoolOverrides, dates, step, saveDraft])
+  }, [schoolOverrides, wrestlerOverrides, dates, step, saveDraft])
 
   // Reset save state badge after 3 s
   useEffect(() => {
@@ -137,6 +141,7 @@ export function RtfImportClient() {
     setYear(draft.year)
     setSelected(new Set(draft.selected ?? []))
     setSchoolOverrides(draft.school_overrides ?? {})
+    setWrestlerOverrides(draft.wrestler_overrides ?? {})
     setDates(draft.dates ?? {})
     setReviewed(draft.reviewed ?? [])
     setDraftId(draft.id)
@@ -200,7 +205,7 @@ export function RtfImportClient() {
   function handleImport() {
     startTransition(async () => {
       const data = await apiPost<{ results: ImportResult[] }>(
-        '/api/admin/rtf/import', { text, year, selected: [...selected], schoolOverrides, tournamentDates: dates, force },
+        '/api/admin/rtf/import', { text, year, selected: [...selected], schoolOverrides, wrestlerOverrides, tournamentDates: dates, force },
       )
       if (data.error) { setMatchError(data.error); return }
       // Mark draft as imported
@@ -225,9 +230,18 @@ export function RtfImportClient() {
     })
   }
 
+  function handleWrestlerOverride(key: string, o: WrestlerOverride | undefined) {
+    setWrestlerOverrides(prev => {
+      const next = { ...prev }
+      if (o === undefined) delete next[key]
+      else next[key] = o
+      return next
+    })
+  }
+
   function resetAll() {
     setText(''); setSummaries([]); setSelected(new Set())
-    setReviewed([]); setSchoolOverrides({}); setDates({})
+    setReviewed([]); setSchoolOverrides({}); setWrestlerOverrides({}); setDates({})
     setImportResults([]); setDraftId(null); setDraftLabel('')
     setSaveState('idle'); setStep('input')
   }
@@ -236,7 +250,11 @@ export function RtfImportClient() {
     (n, t) => n + t.school_flags.filter(f => !schoolOverrides[f.raw]).length, 0,
   )
   const totalWrestlerFlags = reviewed.reduce(
-    (n, t) => n + t.wrestler_flags.filter(f => f.confidence === 'low' || f.is_new).length, 0,
+    (n, t) => n + t.wrestler_flags.filter(f => {
+      if (schoolOverrides[f.school_raw]?.type === 'oos') return false
+      const o = wrestlerOverrides[f.key]
+      return !o || o.type === 'create'  // unresolved or still needs name confirmation
+    }).length, 0,
   )
 
   const saveBar = (
@@ -471,33 +489,15 @@ export function RtfImportClient() {
                             {oosHidden > 0 && <span className="text-slate-300 font-normal ml-2">({oosHidden} hidden — school marked OOS)</span>}
                           </p>
                           {visibleFlags.length > 0 ? (
-                            <div className="border border-slate-200 bg-white overflow-hidden">
-                              <table className="w-full text-xs">
-                                <thead className="bg-slate-50 border-b border-slate-200">
-                                  <tr>
-                                    <th className="text-left px-3 py-1.5 font-medium text-slate-500">Wrestler</th>
-                                    <th className="text-left px-3 py-1.5 font-medium text-slate-500">School</th>
-                                    <th className="text-right px-3 py-1.5 font-medium text-slate-500">Wt</th>
-                                    <th className="px-3 py-1.5 font-medium text-slate-500">Status</th>
-                                    <th className="px-3 py-1.5 font-medium text-slate-500">Alternates</th>
-                                  </tr>
-                                </thead>
-                                <tbody className="divide-y divide-slate-100">
-                                  {visibleFlags.map((f, i) => (
-                                    <tr key={i} className="hover:bg-slate-50">
-                                      <td className="px-3 py-1.5 font-medium text-slate-800">{f.raw_name}</td>
-                                      <td className="px-3 py-1.5 text-slate-500">{f.school_raw}</td>
-                                      <td className="px-3 py-1.5 text-right text-slate-500">{f.weight_class}</td>
-                                      <td className="px-3 py-1.5">
-                                        {f.is_new
-                                          ? <span className="text-green-700 font-medium">new — will be created</span>
-                                          : <span className="text-amber-700">low match — {f.display_name ?? '—'}</span>}
-                                      </td>
-                                      <td className="px-3 py-1.5 text-slate-400">{f.alternates.slice(0, 2).map(a => a.display_name).join(', ') || '—'}</td>
-                                    </tr>
-                                  ))}
-                                </tbody>
-                              </table>
+                            <div className="space-y-1.5">
+                              {visibleFlags.map(f => (
+                                <WrestlerFlagCard
+                                  key={f.key}
+                                  flag={f}
+                                  override={wrestlerOverrides[f.key]}
+                                  onOverride={handleWrestlerOverride}
+                                />
+                              ))}
                             </div>
                           ) : (
                             <p className="text-xs text-slate-400">All wrestler flags resolved via school overrides.</p>

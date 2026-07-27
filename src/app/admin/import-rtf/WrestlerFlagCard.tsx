@@ -1,0 +1,202 @@
+'use client'
+
+import { useState, useCallback, useEffect } from 'react'
+import type { WrestlerFlag, WrestlerOverride } from './types'
+
+function splitName(raw: string): { first_name: string; last_name: string } {
+  const parts = raw.trim().split(/\s+/)
+  if (parts.length === 1) return { first_name: raw, last_name: '' }
+  return { first_name: parts.slice(0, -1).join(' '), last_name: parts[parts.length - 1] }
+}
+
+function Spinner() {
+  return (
+    <svg className="animate-spin h-3.5 w-3.5 text-slate-400" fill="none" viewBox="0 0 24 24">
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+    </svg>
+  )
+}
+
+type SearchResult = { id: string; display_name: string }
+
+type Props = {
+  flag: WrestlerFlag
+  override: WrestlerOverride | undefined
+  onOverride: (key: string, o: WrestlerOverride | undefined) => void
+}
+
+export function WrestlerFlagCard({ flag, override, onOverride }: Props) {
+  const defaultNames = splitName(flag.raw_name)
+  const [mode, setMode] = useState<'default' | 'edit' | 'search'>(
+    flag.is_new ? 'edit' : 'default',
+  )
+  const [firstName, setFirstName] = useState(defaultNames.first_name)
+  const [lastName, setLastName] = useState(defaultNames.last_name)
+  const [query, setQuery] = useState('')
+  const [results, setResults] = useState<SearchResult[]>([])
+  const [searching, setSearching] = useState(false)
+
+  // Emit create override whenever name fields change (new wrestler mode)
+  useEffect(() => {
+    if (mode !== 'edit') return
+    onOverride(flag.key, { type: 'create', first_name: firstName, last_name: lastName })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [firstName, lastName, mode])
+
+  const search = useCallback(async (q: string) => {
+    if (!q.trim()) { setResults([]); return }
+    setSearching(true)
+    try {
+      const res = await fetch(`/api/admin/search-wrestlers?q=${encodeURIComponent(q)}&school_id=${flag.school_id}`)
+      const data = await res.json()
+      setResults(data.wrestlers ?? [])
+    } catch { setResults([]) }
+    finally { setSearching(false) }
+  }, [flag.school_id])
+
+  function pickExisting(w: SearchResult) {
+    onOverride(flag.key, { type: 'existing', wrestler_id: w.id, display_name: w.display_name })
+    setQuery('')
+    setResults([])
+    setMode('default')
+  }
+
+  function clearOverride() {
+    onOverride(flag.key, undefined)
+    setMode(flag.is_new ? 'edit' : 'default')
+    setFirstName(defaultNames.first_name)
+    setLastName(defaultNames.last_name)
+    setQuery('')
+    setResults([])
+  }
+
+  const isResolved = override?.type === 'existing' || override?.type === 'accept'
+
+  return (
+    <div className={`border text-xs ${isResolved ? 'border-green-300 bg-green-50' : flag.is_new ? 'border-blue-200 bg-blue-50' : 'border-amber-200 bg-amber-50'}`}>
+      {/* Header row */}
+      <div className="flex items-center justify-between px-3 py-2 gap-2 flex-wrap">
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="font-semibold text-slate-800">{flag.raw_name}</span>
+          <span className="text-slate-400">{flag.school_raw}</span>
+          <span className="text-slate-400">{flag.weight_class} lb</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          {override?.type === 'existing' && (
+            <span className="text-green-700 font-medium">→ {override.display_name}</span>
+          )}
+          {override?.type === 'accept' && (
+            <span className="text-green-700 font-medium">✓ accepted — {flag.display_name}</span>
+          )}
+          {override?.type === 'create' && (
+            <span className="text-blue-700 font-medium">
+              new: {override.first_name} {override.last_name}
+            </span>
+          )}
+          {!override && flag.is_new && (
+            <span className="text-blue-600">● new</span>
+          )}
+          {!override && !flag.is_new && (
+            <span className="text-amber-700">⚠ low — {flag.display_name ?? '—'}</span>
+          )}
+          {(override?.type === 'existing' || override?.type === 'accept') && (
+            <button onClick={clearOverride} className="text-slate-400 hover:text-red-500 ml-1">✕</button>
+          )}
+        </div>
+      </div>
+
+      {/* Low-confidence action bar (shown when no override set yet) */}
+      {!flag.is_new && !override && mode === 'default' && (
+        <div className="flex items-center gap-2 px-3 pb-2">
+          <button
+            onClick={() => onOverride(flag.key, { type: 'accept' })}
+            className="px-2 py-0.5 border border-green-400 text-green-700 hover:bg-green-100 transition-colors"
+          >
+            ✓ Accept match
+          </button>
+          <button
+            onClick={() => setMode('search')}
+            className="px-2 py-0.5 border border-slate-300 text-slate-600 hover:border-black transition-colors"
+          >
+            Link different
+          </button>
+          <button
+            onClick={() => { setMode('edit'); setFirstName(defaultNames.first_name); setLastName(defaultNames.last_name) }}
+            className="px-2 py-0.5 border border-slate-300 text-slate-600 hover:border-black transition-colors"
+          >
+            Create new
+          </button>
+        </div>
+      )}
+
+      {/* Edit mode — create wrestler with custom first/last name */}
+      {mode === 'edit' && override?.type !== 'existing' && (
+        <div className="px-3 pb-3 space-y-2">
+          <div className="flex items-center gap-2 flex-wrap">
+            <label className="text-slate-500 w-10 shrink-0">First</label>
+            <input
+              type="text"
+              value={firstName}
+              onChange={e => setFirstName(e.target.value)}
+              className="border border-slate-300 px-2 py-0.5 text-xs focus:outline-none focus:ring-1 focus:ring-black w-36"
+            />
+            <label className="text-slate-500 w-8 shrink-0">Last</label>
+            <input
+              type="text"
+              value={lastName}
+              onChange={e => setLastName(e.target.value)}
+              className="border border-slate-300 px-2 py-0.5 text-xs focus:outline-none focus:ring-1 focus:ring-black w-36"
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-slate-400">or</span>
+            <button
+              onClick={() => setMode('search')}
+              className="text-blue-600 hover:underline"
+            >
+              link to existing wrestler →
+            </button>
+            {!flag.is_new && (
+              <button onClick={clearOverride} className="text-slate-400 hover:text-red-500 ml-2">cancel</button>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Search mode — find existing wrestler */}
+      {mode === 'search' && (
+        <div className="px-3 pb-3 space-y-1.5">
+          <div className="flex items-center gap-2">
+            <input
+              type="text"
+              value={query}
+              onChange={e => { setQuery(e.target.value); search(e.target.value) }}
+              placeholder="Search by name…"
+              className="border border-slate-300 px-2 py-0.5 text-xs focus:outline-none focus:ring-1 focus:ring-black w-56"
+              autoFocus
+            />
+            {searching && <Spinner />}
+            <button onClick={() => setMode(flag.is_new ? 'edit' : 'default')} className="text-slate-400 hover:text-slate-600">cancel</button>
+          </div>
+          {results.length > 0 && (
+            <div className="border border-slate-200 bg-white shadow-sm max-h-40 overflow-y-auto">
+              {results.map(w => (
+                <button
+                  key={w.id}
+                  onClick={() => pickExisting(w)}
+                  className="w-full text-left px-3 py-1.5 hover:bg-blue-50 transition-colors border-b border-slate-100 last:border-0"
+                >
+                  {w.display_name}
+                </button>
+              ))}
+            </div>
+          )}
+          {query && !searching && results.length === 0 && (
+            <p className="text-slate-400">No wrestlers found at this school</p>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}

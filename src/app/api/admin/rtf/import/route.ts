@@ -4,7 +4,7 @@ import { createSupabaseServer } from '@/lib/supabase/server'
 import { parseRtfText, parseDateRange, boutResultToDb, normalizeRound } from '@/lib/parseRtf'
 import { matchSchoolNames } from '@/lib/matchSchools'
 import { matchWrestler, clearWrestlerCache } from '@/lib/matchWrestlers'
-import type { SchoolFlag, ImportResult, SchoolOverride } from '@/app/admin/import-rtf/types'
+import type { SchoolFlag, ImportResult, SchoolOverride, WrestlerOverride } from '@/app/admin/import-rtf/types'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
@@ -58,6 +58,7 @@ export async function POST(req: NextRequest) {
 
   let text: string, year: number, selected: string[]
   let schoolOverrides: Record<string, SchoolOverride>
+  let wrestlerOverrides: Record<string, WrestlerOverride>
   let tournamentDates: Record<string, { start_date: string; end_date: string | null }>
   let force: boolean
   try {
@@ -66,6 +67,7 @@ export async function POST(req: NextRequest) {
     year = body.year ?? new Date().getFullYear()
     selected = body.selected ?? []
     schoolOverrides = body.schoolOverrides ?? {}
+    wrestlerOverrides = body.wrestlerOverrides ?? {}
     tournamentDates = body.tournamentDates ?? {}
     force = body.force ?? false
   } catch {
@@ -151,8 +153,13 @@ export async function POST(req: NextRequest) {
         seen.add(key); return true
       })
 
-      const newWrestlers: Array<{ name: string; school_id: number }> = []
+      // Collect new wrestlers, respecting overrides
+      type NewWrestler = { name: string; school_id: number; first_name: string; last_name: string }
+      const newWrestlers: NewWrestler[] = []
       const seenNew = new Set<string>()
+      // Cache of override-existing wrestler ids: key → wrestler_id
+      const overrideExistingMap = new Map<string, string>()
+
       for (const b of dedupedBouts) {
         const { db_type, winner } = boutResultToDb(b.result_type, b.result_detail)
         if (db_type === null && winner === null) continue
@@ -160,18 +167,33 @@ export async function POST(req: NextRequest) {
           const s = schoolCache.get(school_raw)
           if (!s?.school_id) continue
           const nkey = `${name}|${s.school_id}`
-          if (seenNew.has(nkey)) continue
-          const wm = await matchWrestler(name, s.school_id, b.weight_class, 'M')
-          if (wm.isNew) { seenNew.add(nkey); newWrestlers.push({ name, school_id: s.school_id }) }
+          if (seenNew.has(nkey) || overrideExistingMap.has(nkey)) continue
+
+          const flagKey = `${name}|${s.school_id}|${b.weight_class}`
+          const ov = wrestlerOverrides[flagKey]
+
+          if (ov?.type === 'existing') {
+            overrideExistingMap.set(nkey, ov.wrestler_id)
+          } else if (ov?.type === 'create') {
+            seenNew.add(nkey)
+            newWrestlers.push({ name, school_id: s.school_id, first_name: ov.first_name, last_name: ov.last_name })
+          } else {
+            // accept or no override — run matcher
+            const wm = await matchWrestler(name, s.school_id, b.weight_class, 'M')
+            if (wm.isNew) {
+              seenNew.add(nkey)
+              const parts = name.trim().split(/\s+/)
+              const last = parts.length > 1 ? parts[parts.length - 1] : ''
+              const first = parts.length > 1 ? parts.slice(0, -1).join(' ') : name
+              newWrestlers.push({ name, school_id: s.school_id, first_name: first, last_name: last })
+            }
+          }
         }
       }
 
       const newWrestlerMap = new Map<string, string>()
       for (const w of newWrestlers) {
-        const parts = w.name.trim().split(/\s+/)
-        const last = parts.length > 1 ? parts[parts.length - 1] : ''
-        const first = parts.length > 1 ? parts.slice(0, -1).join(' ') : w.name
-        const ins = await client.from('wrestlers').insert({ first_name: first, last_name: last, gender: 'M' }).select('id').single()
+        const ins = await client.from('wrestlers').insert({ first_name: w.first_name, last_name: w.last_name, gender: 'M' }).select('id').single()
         if (!ins.error && ins.data) newWrestlerMap.set(`${w.name}|${w.school_id}`, ins.data.id)
       }
 
@@ -181,8 +203,19 @@ export async function POST(req: NextRequest) {
         if (db_type === null && winner === null) continue
         const s1 = schoolCache.get(b.wrestler1_school)
         const s2 = schoolCache.get(b.wrestler2_school)
-        const wm1 = s1?.school_id ? await matchWrestler(b.wrestler1_name, s1.school_id, b.weight_class, 'M') : null
-        const wm2 = s2?.school_id ? await matchWrestler(b.wrestler2_name, s2.school_id, b.weight_class, 'M') : null
+        const resolveId = async (name: string, school_id: number | null | undefined, wc: number) => {
+          if (!school_id) return null
+          const nkey = `${name}|${school_id}`
+          const flagKey = `${name}|${school_id}|${wc}`
+          const ov = wrestlerOverrides[flagKey]
+          if (ov?.type === 'existing') return ov.wrestler_id
+          if (overrideExistingMap.has(nkey)) return overrideExistingMap.get(nkey)!
+          if (newWrestlerMap.has(nkey)) return newWrestlerMap.get(nkey)!
+          const wm = await matchWrestler(name, school_id, wc, 'M')
+          return wm.wrestlerId ?? null
+        }
+        const nj1 = await resolveId(b.wrestler1_name, s1?.school_id, b.weight_class)
+        const nj2 = await resolveId(b.wrestler2_name, s2?.school_id, b.weight_class)
         boutRows.push({
           in_season_tournament_id: tid,
           weight_class: b.weight_class,
@@ -190,11 +223,11 @@ export async function POST(req: NextRequest) {
           wrestler1_name_raw: b.wrestler1_name,
           wrestler1_school_raw: s1?.display_name ?? b.wrestler1_school,
           wrestler1_school_id: s1?.school_id ?? null,
-          nj_wrestler1_id: wm1?.wrestlerId ?? newWrestlerMap.get(`${b.wrestler1_name}|${s1?.school_id}`) ?? null,
+          nj_wrestler1_id: nj1,
           wrestler2_name_raw: b.wrestler2_name,
           wrestler2_school_raw: s2?.display_name ?? b.wrestler2_school,
           wrestler2_school_id: s2?.school_id ?? null,
-          nj_wrestler2_id: wm2?.wrestlerId ?? newWrestlerMap.get(`${b.wrestler2_name}|${s2?.school_id}`) ?? null,
+          nj_wrestler2_id: nj2,
           winner,
           result_type: db_type,
           result_detail: db_detail,

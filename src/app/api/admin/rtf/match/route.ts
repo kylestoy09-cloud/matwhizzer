@@ -141,6 +141,7 @@ export async function POST(req: NextRequest) {
         const wm = await matchWrestler(name, s.school_id, b.weight_class, 'M')
         if (wm.confidence === 'low' || wm.confidence === 'none') {
           wrestlerFlagMap.set(fkey, {
+            key: fkey,
             raw_name: name,
             school_raw,
             school_id: s.school_id,
