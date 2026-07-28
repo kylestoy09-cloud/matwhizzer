@@ -27,10 +27,11 @@ type ResolvedSchool = {
 
 async function findOrCreateOosSchool(client: ReturnType<typeof createClient>, raw: string): Promise<number> {
   const existing = await client.from('schools').select('id').eq('display_name', raw).eq('is_nj', false).maybeSingle()
-  if (existing.data?.id) return existing.data.id
+  const existingRow = existing.data as { id: number } | null
+  if (existingRow?.id) return existingRow.id
   const ins = await client.from('schools').insert({ display_name: raw, is_nj: false }).select('id').single()
   if (ins.error) throw new Error(`OOS school insert failed for "${raw}": ${ins.error.message}`)
-  return ins.data.id
+  return (ins.data as { id: number }).id
 }
 
 async function buildSchoolCache(
