@@ -479,6 +479,32 @@ function parseFormatB(lines: string[]): [ParsedBout[], ParsedPlacement[]] {
     }
   }
 
+  // Direct extraction from explicitly-labeled placement bouts (handles data with no school headers).
+  // Bouts in Format B are duplicated (one per school section), so deduplicate by (weight_class, place).
+  const directPlacements: ParsedPlacement[] = []
+  const directSeen = new Set<string>()
+  for (const b of bouts) {
+    const rn = b.round.toLowerCase().trim()
+    if (!(rn in PLACE_ROUNDS)) continue
+    const [w1, w2] = PLACE_ROUNDS[rn]
+    const k1 = `${b.weight_class}|${w1}`
+    if (b.winner === 1 && b.wrestler1_name && !directSeen.has(k1)) {
+      directSeen.add(k1)
+      directPlacements.push({ weight_class: b.weight_class, place: w1, wrestler_name: b.wrestler1_name, school_name: b.wrestler1_school })
+    }
+    const k2 = `${b.weight_class}|${w2}`
+    if (b.wrestler2_name && b.wrestler2_name.toLowerCase() !== 'unknown' && !directSeen.has(k2)) {
+      directSeen.add(k2)
+      directPlacements.push({ weight_class: b.weight_class, place: w2, wrestler_name: b.wrestler2_name, school_name: b.wrestler2_school })
+    }
+  }
+
+  // Merge: school-tracking inferences take priority; direct fills any gaps
+  const allSeen = new Set(placements.map(p => `${p.weight_class}|${p.place}`))
+  for (const p of directPlacements) {
+    if (!allSeen.has(`${p.weight_class}|${p.place}`)) placements.push(p)
+  }
+
   return [bouts, placements]
 }
 
