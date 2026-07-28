@@ -17,19 +17,23 @@ function WeightSection({
   rounds: Record<string, string>
   duplicates: Record<string, boolean>
   onRoundChange: (key: string, round: string) => void
-  onDuplicateToggle: (key: string) => void
+  onDuplicateToggle: (uid: string) => void
 }) {
   const [open, setOpen] = useState(false)
 
-  const primaries = bouts.filter(b => !b.is_duplicate)
+  // Resolve per-entry duplicate status using uid (not key) to avoid collision between
+  // primary and duplicate entries that share the same dedup key
+  const isDupEntry = (b: BoutForReview) => duplicates[String(b.uid)] ?? b.is_duplicate
+
+  const primaries = bouts.filter(b => !isDupEntry(b))
   const weakCount = primaries.filter(b => !b.is_bye && b.inference_confidence === 'weak').length
-  const dupCount = bouts.filter(b => duplicates[b.key] ?? b.is_duplicate).length
+  const dupCount = bouts.filter(b => isDupEntry(b)).length
   const bracketSize = bouts[0]?.bracket_size ?? 0
 
   // Collect wrestlers in first-encounter order (primary, non-bye bouts only)
   const wrestlerMap = new Map<string, string>() // key → "Name (School)"
   for (const b of bouts) {
-    if (b.is_duplicate || b.is_bye) continue
+    if (isDupEntry(b) || b.is_bye) continue
     if (b.wrestler1_name) {
       const k = `${b.wrestler1_name}|${b.wrestler1_school}`
       if (!wrestlerMap.has(k)) wrestlerMap.set(k, `${b.wrestler1_name} (${b.wrestler1_school})`)
@@ -90,14 +94,14 @@ function WeightSection({
               </tr>
             </thead>
             <tbody>
-              {bouts.map((bout, i) => (
+              {bouts.map(bout => (
                 <BoutRow
-                  key={`${bout.key}-${i}`}
+                  key={bout.uid}
                   bout={bout}
                   round={rounds[bout.key] ?? bout.inferred_round}
-                  isDuplicate={duplicates[bout.key] ?? bout.is_duplicate}
+                  isDuplicate={isDupEntry(bout)}
                   onRoundChange={r => onRoundChange(bout.key, r)}
-                  onDuplicateToggle={() => onDuplicateToggle(bout.key)}
+                  onDuplicateToggle={() => onDuplicateToggle(String(bout.uid))}
                 />
               ))}
             </tbody>
@@ -120,7 +124,7 @@ export function BoutReviewPanel({
   rounds: Record<string, string>
   duplicates: Record<string, boolean>
   onRoundChange: (key: string, round: string) => void
-  onDuplicateToggle: (key: string) => void
+  onDuplicateToggle: (uid: string) => void
 }) {
   const byWeight = new Map<number, BoutForReview[]>()
   for (const b of bouts) {

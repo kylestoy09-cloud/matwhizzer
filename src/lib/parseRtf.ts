@@ -12,7 +12,8 @@
 export type InferenceConfidence = 'explicit' | 'inferred' | 'weak'
 
 export type BoutForReview = {
-  key: string
+  uid: number   // unique per entry in the master list — use this for duplicate state, not key
+  key: string   // dedup key — shared between primary and all duplicates of the same bout
   weight_class: number
   wrestler1_name: string
   wrestler1_school: string
@@ -623,7 +624,7 @@ export function extractBoutsForReview(rawWithWeight: RawEntry[]): BoutForReview[
     if (!primaryByKey.has(key)) {
       primaryByKey.set(key, master.length)
       master.push({
-        key, weight_class: wc,
+        uid: master.length, key, weight_class: wc,
         wrestler1_name: bout.wrestler1_name, wrestler1_school: bout.wrestler1_school,
         wrestler2_name: bout.wrestler2_name, wrestler2_school: bout.wrestler2_school,
         result_type: bout.result_type, result_detail: bout.result_detail,
@@ -635,7 +636,7 @@ export function extractBoutsForReview(rawWithWeight: RawEntry[]): BoutForReview[
       const primary = master[primaryByKey.get(key)!]
       if (!primary.tw_label && twLabel) primary.tw_label = twLabel
       master.push({
-        key, weight_class: wc,
+        uid: master.length, key, weight_class: wc,
         wrestler1_name: bout.wrestler1_name, wrestler1_school: bout.wrestler1_school,
         wrestler2_name: bout.wrestler2_name, wrestler2_school: bout.wrestler2_school,
         result_type: bout.result_type, result_detail: bout.result_detail,

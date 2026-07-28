@@ -212,7 +212,7 @@ export function RtfImportClient() {
         bd[k] = {}
         for (const b of t.bouts_for_review ?? []) {
           br[k][b.key] = b.inferred_round
-          if (b.is_duplicate) bd[k][b.key] = true
+          if (b.is_duplicate) bd[k][String(b.uid)] = true
         }
       }
       setDates(d)
@@ -251,15 +251,11 @@ export function RtfImportClient() {
   function handleImport() {
     startTransition(async () => {
       const toImport = [...selected].filter(tkey => !deferredTournaments.has(tkey))
-      // Build boutReview: per-tournament map of boutKey → confirmed round (exclude duplicates)
+      // Build boutReview: per-tournament map of boutKey → confirmed round
+      // Import route handles its own dedup; just send all confirmed rounds
       const boutReview: Record<string, Record<string, string>> = {}
       for (const tkey of toImport) {
-        const tRounds = boutRounds[tkey] ?? {}
-        const tDups = boutDuplicates[tkey] ?? {}
-        boutReview[tkey] = {}
-        for (const [key, round] of Object.entries(tRounds)) {
-          if (!tDups[key]) boutReview[tkey][key] = round
-        }
+        boutReview[tkey] = { ...(boutRounds[tkey] ?? {}) }
       }
       const data = await apiPost<{ results: ImportResult[] }>(
         '/api/admin/rtf/import', { text, year, selected: toImport, schoolOverrides, wrestlerOverrides, tournamentDates: dates, tournamentTypes, boutReview, force },
@@ -607,7 +603,7 @@ export function RtfImportClient() {
                     {t.source_format === 'school_tracking' && t.bouts_for_review.length > 0 && (
                       <div>
                         <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">
-                          Bout rounds — {t.bouts_for_review.filter(b => !b.is_duplicate).length} unique · {t.bouts_for_review.filter(b => b.is_duplicate || (boutDuplicates[tkey]?.[b.key])).length} duplicate
+                          Bout rounds — {t.bouts_for_review.filter(b => !b.is_duplicate).length} unique · {t.bouts_for_review.filter(b => b.is_duplicate).length} duplicate
                         </p>
                         <BoutReviewPanel
                           bouts={t.bouts_for_review}
@@ -617,9 +613,9 @@ export function RtfImportClient() {
                             ...prev,
                             [tkey]: { ...(prev[tkey] ?? {}), [key]: round },
                           }))}
-                          onDuplicateToggle={key => setBoutDuplicates(prev => {
+                          onDuplicateToggle={uid => setBoutDuplicates(prev => {
                             const cur = { ...(prev[tkey] ?? {}) }
-                            cur[key] = !cur[key]
+                            cur[uid] = !cur[uid]
                             return { ...prev, [tkey]: cur }
                           })}
                         />
