@@ -26,12 +26,13 @@ type ResolvedSchool = {
 }
 
 async function findOrCreateOosSchool(client: ReturnType<typeof createClient>, raw: string): Promise<number> {
-  const existing = await client.from('schools').select('id').eq('display_name', raw).eq('is_nj', false).maybeSingle()
-  const existingRow = existing.data as { id: number } | null
-  if (existingRow?.id) return existingRow.id
-  const ins = await client.from('schools').insert({ display_name: raw, is_nj: false }).select('id').single()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const c = client as any
+  const existing = await c.from('schools').select('id').eq('display_name', raw).eq('is_nj', false).maybeSingle()
+  if (existing.data?.id) return existing.data.id
+  const ins = await c.from('schools').insert({ display_name: raw, is_nj: false }).select('id').single()
   if (ins.error) throw new Error(`OOS school insert failed for "${raw}": ${ins.error.message}`)
-  return (ins.data as { id: number }).id
+  return ins.data.id
 }
 
 async function buildSchoolCache(
@@ -94,7 +95,8 @@ export async function POST(req: NextRequest) {
   }
 
   const client = serviceClient()
-  const schoolCache = await buildSchoolCache([...allSchoolRaws], schoolOverrides, client)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const schoolCache = await buildSchoolCache([...allSchoolRaws], schoolOverrides, client as any)
   const reviewed: ReviewedTournament[] = []
 
   for (const t of parsed) {
@@ -175,6 +177,7 @@ export async function POST(req: NextRequest) {
       start_date,
       end_date,
       source_format: t.source_format,
+      tournament_type: 'inside',
       bout_count: dedupedBouts.length,
       placement_count: t.placements.length,
       existing_id: existing.data?.id ?? null,

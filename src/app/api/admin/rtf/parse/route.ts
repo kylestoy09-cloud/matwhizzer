@@ -68,6 +68,7 @@ export async function POST(req: NextRequest) {
       start_date,
       end_date,
       source_format: t.source_format,
+      tournament_type: 'inside',
       bout_count: t.bout_count,
       placement_count: t.placement_count,
       existing_id: existing.data?.id ?? null,
