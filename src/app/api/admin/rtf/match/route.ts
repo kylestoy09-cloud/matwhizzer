@@ -92,8 +92,8 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  const schoolCache = await buildSchoolCache([...allSchoolRaws], schoolOverrides, client)
   const client = serviceClient()
+  const schoolCache = await buildSchoolCache([...allSchoolRaws], schoolOverrides, client)
   const reviewed: ReviewedTournament[] = []
 
   for (const t of parsed) {
