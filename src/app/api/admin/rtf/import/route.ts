@@ -96,7 +96,7 @@ export async function POST(req: NextRequest) {
 
   const allSchoolRaws = new Set<string>()
   for (const t of parsed) {
-    if (!selectedSet.has(t.name)) continue
+    if (!selectedSet.has(`${t.name}|${t.date_raw}`)) continue
     for (const b of t.bouts) {
       if (b.wrestler1_school) allSchoolRaws.add(b.wrestler1_school)
       if (b.wrestler2_school) allSchoolRaws.add(b.wrestler2_school)
@@ -112,10 +112,11 @@ export async function POST(req: NextRequest) {
   const results: ImportResult[] = []
 
   for (const t of parsed) {
-    if (!selectedSet.has(t.name)) continue
+    if (!selectedSet.has(`${t.name}|${t.date_raw}`)) continue
 
     try {
-      const dates = tournamentDates[t.name] ?? {
+      const tkey = `${t.name}|${t.date_raw}`
+      const dates = tournamentDates[tkey] ?? {
         start_date: parseDateRange(t.date_raw, year)[0],
         end_date: parseDateRange(t.date_raw, year)[1],
       }
@@ -123,7 +124,7 @@ export async function POST(req: NextRequest) {
       const existing = await client.from('in_season_tournaments').select('id, source_format').eq('name', t.name).eq('season', SEASON).maybeSingle()
       let tid: string
 
-      const tournamentType = tournamentTypes[t.name] ?? 'inside'
+      const tournamentType = tournamentTypes[tkey] ?? 'inside'
 
       if (existing.data) {
         tid = existing.data.id

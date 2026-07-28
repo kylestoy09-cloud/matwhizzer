@@ -153,9 +153,11 @@ export function RtfImportClient() {
     setStep(s)
     if (s === 'review') {
       const rev: ReviewedTournament[] = draft.reviewed ?? []
+      const firstFlagR = rev.find((t: ReviewedTournament) => t.school_flags.length > 0 || t.wrestler_flags.length > 0)
+      const firstAnyR = rev[0]
       setExpandedTournament(
-        rev.find((t: ReviewedTournament) => t.school_flags.length > 0 || t.wrestler_flags.length > 0)?.name
-        ?? rev[0]?.name ?? null,
+        firstFlagR ? `${firstFlagR.name}|${firstFlagR.date_raw}` :
+        firstAnyR  ? `${firstAnyR.name}|${firstAnyR.date_raw}` : null,
       )
     }
   }
@@ -177,7 +179,7 @@ export function RtfImportClient() {
       )
       if (data.error) { setParseError(data.error); return }
       setSummaries(data.tournaments)
-      setSelected(new Set(data.tournaments.filter(t => !t.has_existing_bouts).map(t => t.name)))
+      setSelected(new Set(data.tournaments.filter(t => !t.has_existing_bouts).map(t => `${t.name}|${t.date_raw}`)))
       setStep('select')
     })
   }
@@ -195,14 +197,17 @@ export function RtfImportClient() {
       const d: Record<string, { start_date: string; end_date: string | null }> = {}
       const tt: Record<string, TournamentType> = {}
       for (const t of data.reviewed) {
-        d[t.name] = { start_date: t.start_date, end_date: t.end_date }
-        tt[t.name] = t.tournament_type ?? 'inside'
+        const k = `${t.name}|${t.date_raw}`
+        d[k] = { start_date: t.start_date, end_date: t.end_date }
+        tt[k] = t.tournament_type ?? 'inside'
       }
       setDates(d)
       setTournamentTypes(prev => ({ ...tt, ...prev }))
+      const firstFlag = data.reviewed.find(t => t.school_flags.length > 0 || t.wrestler_flags.length > 0)
+      const firstAny = data.reviewed[0]
       setExpandedTournament(
-        data.reviewed.find(t => t.school_flags.length > 0 || t.wrestler_flags.length > 0)?.name
-        ?? data.reviewed[0]?.name ?? null,
+        firstFlag ? `${firstFlag.name}|${firstFlag.date_raw}` :
+        firstAny  ? `${firstAny.name}|${firstAny.date_raw}` : null,
       )
       setStep('review')
     })
@@ -219,7 +224,7 @@ export function RtfImportClient() {
       if (data.error) { setMatchError(data.error); return }
       // Only take wrestler_flags from the fresh response — everything else stays
       setReviewed(prev => prev.map(t => {
-        const fresh = data.reviewed.find(r => r.name === t.name)
+        const fresh = data.reviewed.find(r => r.name === t.name && r.date_raw === t.date_raw)
         return fresh ? { ...t, wrestler_flags: fresh.wrestler_flags } : t
       }))
     })
@@ -229,7 +234,7 @@ export function RtfImportClient() {
 
   function handleImport() {
     startTransition(async () => {
-      const toImport = [...selected].filter(name => !deferredTournaments.has(name))
+      const toImport = [...selected].filter(tkey => !deferredTournaments.has(tkey))
       const data = await apiPost<{ results: ImportResult[] }>(
         '/api/admin/rtf/import', { text, year, selected: toImport, schoolOverrides, wrestlerOverrides, tournamentDates: dates, tournamentTypes, force },
       )
@@ -366,7 +371,7 @@ export function RtfImportClient() {
           <div className="flex items-center justify-between">
             <h2 className="text-base font-semibold text-slate-800">{summaries.length} tournaments detected</h2>
             <div className="flex gap-2 text-xs">
-              <button onClick={() => setSelected(new Set(summaries.map(t => t.name)))} className="text-slate-500 hover:text-black">Select all</button>
+              <button onClick={() => setSelected(new Set(summaries.map(t => `${t.name}|${t.date_raw}`)))} className="text-slate-500 hover:text-black">Select all</button>
               <span className="text-slate-300">|</span>
               <button onClick={() => setSelected(new Set())} className="text-slate-500 hover:text-black">None</button>
             </div>
@@ -387,12 +392,13 @@ export function RtfImportClient() {
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {summaries.map(t => {
-                  const on = selected.has(t.name)
+                  const tkey = `${t.name}|${t.date_raw}`
+                  const on = selected.has(tkey)
                   return (
                     <tr
-                      key={t.name}
+                      key={tkey}
                       onClick={() => setSelected(prev => {
-                        const n = new Set(prev); on ? n.delete(t.name) : n.add(t.name); return n
+                        const n = new Set(prev); on ? n.delete(tkey) : n.add(tkey); return n
                       })}
                       className={`cursor-pointer ${on ? 'bg-white' : 'bg-slate-50 opacity-60'} hover:bg-blue-50 transition-colors`}
                     >
@@ -459,13 +465,14 @@ export function RtfImportClient() {
           </div>
 
           {reviewed.map(t => {
-            const open = expandedTournament === t.name
+            const tkey = `${t.name}|${t.date_raw}`
+            const open = expandedTournament === tkey
             const unresolvedSchools = t.school_flags.filter(f => !schoolOverrides[f.raw])
-            const td = dates[t.name] ?? { start_date: t.start_date, end_date: t.end_date }
-            const deferred = deferredTournaments.has(t.name)
+            const td = dates[tkey] ?? { start_date: t.start_date, end_date: t.end_date }
+            const deferred = deferredTournaments.has(tkey)
 
             return (
-              <div key={t.name} className={`border bg-white ${deferred ? 'border-slate-300 opacity-60' : 'border-black'}`}>
+              <div key={tkey} className={`border bg-white ${deferred ? 'border-slate-300 opacity-60' : 'border-black'}`}>
                 <div className="w-full flex items-center justify-between px-4 py-3 text-left">
                   <label className="flex items-center gap-2 cursor-pointer shrink-0" onClick={e => e.stopPropagation()}>
                     <input
@@ -473,15 +480,15 @@ export function RtfImportClient() {
                       checked={!deferred}
                       onChange={e => setDeferredTournaments(prev => {
                         const next = new Set(prev)
-                        if (e.target.checked) next.delete(t.name)
-                        else next.add(t.name)
+                        if (e.target.checked) next.delete(tkey)
+                        else next.add(tkey)
                         return next
                       })}
                       className="accent-black"
                     />
                   </label>
                   <button
-                    onClick={() => setExpandedTournament(open ? null : t.name)}
+                    onClick={() => setExpandedTournament(open ? null : tkey)}
                     className="flex-1 flex items-center justify-between hover:bg-slate-50 transition-colors text-left min-w-0"
                   >
                   <div className="flex items-center gap-3 flex-wrap">
@@ -507,16 +514,16 @@ export function RtfImportClient() {
                     <div className="flex items-center gap-4 text-sm flex-wrap">
                       <label className="text-slate-500 text-xs">Start</label>
                       <input type="date" value={td.start_date}
-                        onChange={e => setDates(prev => ({ ...prev, [t.name]: { ...td, start_date: e.target.value } }))}
+                        onChange={e => setDates(prev => ({ ...prev, [tkey]: { ...td, start_date: e.target.value } }))}
                         className="border border-slate-300 px-2 py-0.5 text-sm focus:outline-none focus:ring-1 focus:ring-black" />
                       <label className="text-slate-500 text-xs">End</label>
                       <input type="date" value={td.end_date ?? ''}
-                        onChange={e => setDates(prev => ({ ...prev, [t.name]: { ...td, end_date: e.target.value || null } }))}
+                        onChange={e => setDates(prev => ({ ...prev, [tkey]: { ...td, end_date: e.target.value || null } }))}
                         className="border border-slate-300 px-2 py-0.5 text-sm focus:outline-none focus:ring-1 focus:ring-black" />
                       <label className="text-slate-500 text-xs">Type</label>
                       <select
-                        value={tournamentTypes[t.name] ?? 'inside'}
-                        onChange={e => setTournamentTypes(prev => ({ ...prev, [t.name]: e.target.value as TournamentType }))}
+                        value={tournamentTypes[tkey] ?? 'inside'}
+                        onChange={e => setTournamentTypes(prev => ({ ...prev, [tkey]: e.target.value as TournamentType }))}
                         className="border border-slate-300 px-2 py-0.5 text-sm focus:outline-none focus:ring-1 focus:ring-black"
                       >
                         <option value="inside">Inside (NJ only)</option>

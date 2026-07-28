@@ -86,7 +86,7 @@ export async function POST(req: NextRequest) {
 
   const allSchoolRaws = new Set<string>()
   for (const t of parsed) {
-    if (!selectedSet.has(t.name)) continue
+    if (!selectedSet.has(`${t.name}|${t.date_raw}`)) continue
     for (const b of t.bouts) {
       if (b.wrestler1_school) allSchoolRaws.add(b.wrestler1_school)
       if (b.wrestler2_school) allSchoolRaws.add(b.wrestler2_school)
@@ -102,7 +102,7 @@ export async function POST(req: NextRequest) {
   const reviewed: ReviewedTournament[] = []
 
   for (const t of parsed) {
-    if (!selectedSet.has(t.name)) continue
+    if (!selectedSet.has(`${t.name}|${t.date_raw}`)) continue
 
     const [start_date, end_date] = parseDateRange(t.date_raw, year)
     const existing = await client.from('in_season_tournaments').select('id').eq('name', t.name).eq('season', SEASON).maybeSingle()
