@@ -25,11 +25,22 @@ function WeightSection({
   const weakCount = primaries.filter(b => !b.is_bye && b.inference_confidence === 'weak').length
   const dupCount = bouts.filter(b => duplicates[b.key] ?? b.is_duplicate).length
   const bracketSize = bouts[0]?.bracket_size ?? 0
-  const entrants = bouts.filter(b => !b.is_duplicate && !b.is_bye).reduce((s, b) => {
-    s.add(`${b.wrestler1_name}|${b.wrestler1_school}`)
-    s.add(`${b.wrestler2_name}|${b.wrestler2_school}`)
-    return s
-  }, new Set<string>()).size
+
+  // Collect wrestlers in first-encounter order (primary, non-bye bouts only)
+  const wrestlerMap = new Map<string, string>() // key → "Name (School)"
+  for (const b of bouts) {
+    if (b.is_duplicate || b.is_bye) continue
+    if (b.wrestler1_name) {
+      const k = `${b.wrestler1_name}|${b.wrestler1_school}`
+      if (!wrestlerMap.has(k)) wrestlerMap.set(k, `${b.wrestler1_name} (${b.wrestler1_school})`)
+    }
+    if (b.wrestler2_name) {
+      const k = `${b.wrestler2_name}|${b.wrestler2_school}`
+      if (!wrestlerMap.has(k)) wrestlerMap.set(k, `${b.wrestler2_name} (${b.wrestler2_school})`)
+    }
+  }
+  const wrestlers = [...wrestlerMap.values()]
+  const entrants = wrestlers.length
 
   return (
     <div className="border border-slate-200 bg-white">
@@ -54,7 +65,21 @@ function WeightSection({
       </button>
 
       {open && (
-        <div className="border-t border-slate-100 overflow-x-auto">
+        <div className="border-t border-slate-100">
+          {/* Numbered wrestler list */}
+          <div className="px-3 py-2 bg-slate-50 border-b border-slate-100">
+            <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide mb-1">
+              Entrants ({wrestlers.length}) → {bracketSize}-bracket
+            </p>
+            <ol className="text-xs text-slate-600 columns-2 gap-x-6 list-none">
+              {wrestlers.map((w, i) => (
+                <li key={i} className="leading-5">
+                  <span className="text-slate-400 mr-1 select-none">{i + 1}.</span>{w}
+                </li>
+              ))}
+            </ol>
+          </div>
+          <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="text-[10px] font-medium text-slate-400 uppercase tracking-wide border-b border-slate-100">
@@ -77,6 +102,7 @@ function WeightSection({
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       )}
     </div>

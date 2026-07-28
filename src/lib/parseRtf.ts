@@ -330,10 +330,15 @@ function parseBoutB(line: string): Omit<ParsedBout, 'weight_class'> | null {
   let rest = line.slice(dash + 3).trim()
 
   // "Varsity - Quarterfinals - Wrestler..." — strip division prefix, use inner round label.
-  if (/^varsity$/i.test(roundLabel) && rest.includes(' - ')) {
-    const inner = rest.indexOf(' - ')
-    roundLabel = rest.slice(0, inner).trim()
-    rest = rest.slice(inner + 3).trim()
+  // "Varsity - Wrestler..." (no inner qualifier) — treat as unlabeled.
+  if (/^varsity$/i.test(roundLabel)) {
+    if (rest.includes(' - ')) {
+      const inner = rest.indexOf(' - ')
+      roundLabel = rest.slice(0, inner).trim()
+      rest = rest.slice(inner + 3).trim()
+    } else {
+      roundLabel = 'Unknown'
+    }
   }
 
   if (/received a bye/i.test(rest)) {
@@ -611,7 +616,8 @@ export function extractBoutsForReview(rawWithWeight: RawEntry[]): BoutForReview[
     const key = boutReviewKey(wc, bout)
     const isBye = bout.result_type === 'BYE'
     const rawLabel = bout.round?.trim()
-    const hasLabel = !!rawLabel && rawLabel.toLowerCase() !== 'unknown'
+    const lowerLabel = rawLabel?.toLowerCase() ?? ''
+    const hasLabel = !!rawLabel && lowerLabel !== 'unknown' && lowerLabel !== 'varsity'
     const twLabel = hasLabel ? rawLabel : null
 
     if (!primaryByKey.has(key)) {
