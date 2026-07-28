@@ -298,8 +298,15 @@ function parseFormatA(lines: string[]): [ParsedBout[], ParsedPlacement[]] {
 function parseBoutB(line: string): Omit<ParsedBout, 'weight_class'> | null {
   const dash = line.indexOf(' - ')
   if (dash < 0) return null
-  const roundLabel = line.slice(0, dash).trim()
-  const rest = line.slice(dash + 3).trim()
+  let roundLabel = line.slice(0, dash).trim()
+  let rest = line.slice(dash + 3).trim()
+
+  // "Varsity - Quarterfinals - Wrestler..." — strip division prefix, use inner round label.
+  if (/^varsity$/i.test(roundLabel) && rest.includes(' - ')) {
+    const inner = rest.indexOf(' - ')
+    roundLabel = rest.slice(0, inner).trim()
+    rest = rest.slice(inner + 3).trim()
+  }
 
   if (/received a bye/i.test(rest)) {
     const m = rest.match(/^(.+?) \((.+?)\)/)
