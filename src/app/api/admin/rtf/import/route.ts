@@ -75,6 +75,7 @@ export async function POST(req: NextRequest) {
   let wrestlerOverrides: Record<string, WrestlerOverride>
   let tournamentDates: Record<string, { start_date: string; end_date: string | null }>
   let tournamentTypes: Record<string, string>
+  let boutReview: Record<string, Record<string, string>>
   let force: boolean
   try {
     const body = await req.json()
@@ -85,9 +86,22 @@ export async function POST(req: NextRequest) {
     wrestlerOverrides = body.wrestlerOverrides ?? {}
     tournamentDates = body.tournamentDates ?? {}
     tournamentTypes = body.tournamentTypes ?? {}
+    boutReview = body.boutReview ?? {}
     force = body.force ?? false
   } catch {
     return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
+  }
+
+  function confirmedRoundToDb(label: string): string {
+    const map: Record<string, string> = {
+      'Finals': 'F', 'Semifinals': 'SF', 'Quarterfinals': 'QF',
+      '1st Round': 'R1', '2nd Round': 'R2', '3rd Round': 'R3', '4th Round': 'R4',
+      '3rd Place': '3rd_Place', '5th Place': '5th_Place', '7th Place': '7th_Place',
+    }
+    if (label in map) return map[label]
+    const m = label.match(/^Consolation (\d+)$/)
+    if (m) return `C${m[1]}`
+    return label
   }
 
   const parsed = parseRtfText(text)
@@ -259,6 +273,8 @@ export async function POST(req: NextRequest) {
           .upsert(uniqueAliases, { onConflict: 'raw_name,school_id' })
       }
 
+      const tBoutReview = boutReview[tkey] ?? {}
+
       const boutRows = []
       for (const b of dedupedBouts) {
         const { db_type, db_detail, fall_time_seconds, winner } = boutResultToDb(b.result_type, b.result_detail)
@@ -283,10 +299,16 @@ export async function POST(req: NextRequest) {
         }
         const w1 = await resolveId(b.wrestler1_name, s1?.school_id, b.weight_class, s1?.confidence === 'oos')
         const w2 = await resolveId(b.wrestler2_name, s2?.school_id, b.weight_class, s2?.confidence === 'oos')
+        const bkey = b.result_type === 'BYE'
+          ? `${b.weight_class}|bye|${b.wrestler1_name}|${b.wrestler1_school}`
+          : `${b.weight_class}|${[`${b.wrestler1_name}|${b.wrestler1_school}`, `${b.wrestler2_name}|${b.wrestler2_school}`].sort().join('|')}`
+        const confirmedRound = tBoutReview[bkey]
+        const roundForDb = confirmedRound ? confirmedRoundToDb(confirmedRound) : normalizeRound(b.round)
+
         boutRows.push({
           in_season_tournament_id: tid,
           weight_class: b.weight_class,
-          round: normalizeRound(b.round),
+          round: roundForDb,
           wrestler1_name_raw: b.wrestler1_name,
           wrestler1_school_raw: s1?.display_name ?? b.wrestler1_school,
           wrestler1_school_id: s1?.school_id ?? null,

@@ -1,6 +1,15 @@
 // Shared types for the RTF import pipeline.
 // No 'use server' or 'use client' — safe to import from both sides.
 
+import type { BoutForReview, InferenceConfidence } from '@/lib/parseRtf'
+export type { BoutForReview, InferenceConfidence }
+
+export type BoutReviewConfirmation = {
+  key: string
+  round: string
+  isDuplicate: boolean
+}
+
 export type SchoolFlag = {
   raw: string
   confidence: 'exact' | 'alias' | 'high' | 'low' | 'none'
@@ -47,6 +56,7 @@ export type TournamentSummary = {
 export type ReviewedTournament = TournamentSummary & {
   school_flags: SchoolFlag[]
   wrestler_flags: WrestlerFlag[]
+  bouts_for_review: BoutForReview[]
 }
 
 export type SchoolOverride =

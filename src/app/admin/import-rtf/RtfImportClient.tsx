@@ -11,6 +11,7 @@ import type {
 } from './types'
 import { SchoolFlagCard } from './SchoolFlagCard'
 import { WrestlerFlagCard } from './WrestlerFlagCard'
+import { BoutReviewPanel } from './BoutReviewPanel'
 
 function Spinner() {
   return (
@@ -61,6 +62,11 @@ export function RtfImportClient() {
   const [force, setForce] = useState(false)
   const [deferredTournaments, setDeferredTournaments] = useState<Set<string>>(new Set())
   const [tournamentTypes, setTournamentTypes] = useState<Record<string, TournamentType>>({})
+
+  // Bout review state: tkey → boutKey → confirmed round
+  const [boutRounds, setBoutRounds] = useState<Record<string, Record<string, string>>>({})
+  // tkey → boutKey → isDuplicate override (true/false)
+  const [boutDuplicates, setBoutDuplicates] = useState<Record<string, Record<string, boolean>>>({})
 
   // ── Draft state ───────────────────────────────────────────────────────────
   const [draftId, setDraftId] = useState<string | null>(null)
@@ -196,13 +202,23 @@ export function RtfImportClient() {
       setReviewed(data.reviewed)
       const d: Record<string, { start_date: string; end_date: string | null }> = {}
       const tt: Record<string, TournamentType> = {}
+      const br: Record<string, Record<string, string>> = {}
+      const bd: Record<string, Record<string, boolean>> = {}
       for (const t of data.reviewed) {
         const k = `${t.name}|${t.date_raw}`
         d[k] = { start_date: t.start_date, end_date: t.end_date }
         tt[k] = t.tournament_type ?? 'inside'
+        br[k] = {}
+        bd[k] = {}
+        for (const b of t.bouts_for_review ?? []) {
+          br[k][b.key] = b.inferred_round
+          if (b.is_duplicate) bd[k][b.key] = true
+        }
       }
       setDates(d)
       setTournamentTypes(prev => ({ ...tt, ...prev }))
+      setBoutRounds(br)
+      setBoutDuplicates(bd)
       const firstFlag = data.reviewed.find(t => t.school_flags.length > 0 || t.wrestler_flags.length > 0)
       const firstAny = data.reviewed[0]
       setExpandedTournament(
@@ -235,8 +251,18 @@ export function RtfImportClient() {
   function handleImport() {
     startTransition(async () => {
       const toImport = [...selected].filter(tkey => !deferredTournaments.has(tkey))
+      // Build boutReview: per-tournament map of boutKey → confirmed round (exclude duplicates)
+      const boutReview: Record<string, Record<string, string>> = {}
+      for (const tkey of toImport) {
+        const tRounds = boutRounds[tkey] ?? {}
+        const tDups = boutDuplicates[tkey] ?? {}
+        boutReview[tkey] = {}
+        for (const [key, round] of Object.entries(tRounds)) {
+          if (!tDups[key]) boutReview[tkey][key] = round
+        }
+      }
       const data = await apiPost<{ results: ImportResult[] }>(
-        '/api/admin/rtf/import', { text, year, selected: toImport, schoolOverrides, wrestlerOverrides, tournamentDates: dates, tournamentTypes, force },
+        '/api/admin/rtf/import', { text, year, selected: toImport, schoolOverrides, wrestlerOverrides, tournamentDates: dates, tournamentTypes, boutReview, force },
       )
       if (data.error) { setMatchError(data.error); return }
       // Only mark draft as fully imported if no tournaments were deferred
@@ -273,6 +299,7 @@ export function RtfImportClient() {
   function resetAll() {
     setText(''); setSummaries([]); setSelected(new Set())
     setReviewed([]); setSchoolOverrides({}); setWrestlerOverrides({}); setDates({}); setTournamentTypes({})
+    setBoutRounds({}); setBoutDuplicates({})
     setImportResults([]); setDraftId(null); setDraftLabel('')
     setSaveState('idle'); setStep('input')
   }
@@ -575,6 +602,28 @@ export function RtfImportClient() {
 
                     {t.school_flags.length === 0 && t.wrestler_flags.length === 0 && (
                       <p className="text-sm text-slate-400">No flags — all schools and wrestlers matched cleanly.</p>
+                    )}
+
+                    {t.source_format === 'school_tracking' && t.bouts_for_review.length > 0 && (
+                      <div>
+                        <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">
+                          Bout rounds — {t.bouts_for_review.filter(b => !b.is_duplicate).length} unique · {t.bouts_for_review.filter(b => b.is_duplicate || (boutDuplicates[tkey]?.[b.key])).length} duplicate
+                        </p>
+                        <BoutReviewPanel
+                          bouts={t.bouts_for_review}
+                          rounds={boutRounds[tkey] ?? {}}
+                          duplicates={boutDuplicates[tkey] ?? {}}
+                          onRoundChange={(key, round) => setBoutRounds(prev => ({
+                            ...prev,
+                            [tkey]: { ...(prev[tkey] ?? {}), [key]: round },
+                          }))}
+                          onDuplicateToggle={key => setBoutDuplicates(prev => {
+                            const cur = { ...(prev[tkey] ?? {}) }
+                            cur[key] = !cur[key]
+                            return { ...prev, [tkey]: cur }
+                          })}
+                        />
+                      </div>
                     )}
                   </div>
                 )}

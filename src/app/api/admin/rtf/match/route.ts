@@ -186,6 +186,7 @@ export async function POST(req: NextRequest) {
       has_existing_bouts: has_bouts,
       school_flags: [...schoolFlagMap.values()],
       wrestler_flags: [...wrestlerFlagMap.values()],
+      bouts_for_review: t.bouts_for_review ?? [],
     })
   }
 

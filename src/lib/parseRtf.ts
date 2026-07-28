@@ -7,6 +7,32 @@
  *   school_tracking — Format B: by school → weight → bout + Yes/No flags; TW export.
  */
 
+// ── Bout-review types (school_tracking only) ─────────────────────────────────
+
+export type InferenceConfidence = 'explicit' | 'inferred' | 'weak'
+
+export type BoutForReview = {
+  key: string
+  weight_class: number
+  wrestler1_name: string
+  wrestler1_school: string
+  wrestler2_name: string
+  wrestler2_school: string
+  result_type: string
+  result_detail: string | null
+  is_bye: boolean
+  section_school: string
+  tw_label: string | null
+  inferred_round: string
+  inference_confidence: InferenceConfidence
+  inference_note: string | null
+  is_duplicate: boolean
+  bracket_size: number
+}
+
+// Raw entry type used internally by parseFormatB and extractBoutsForReview
+type RawEntry = [Omit<ParsedBout, 'weight_class'>, number | null, string | null, string | null]
+
 // ── Place/round constants ─────────────────────────────────────────────────────
 
 const PLACE_ROUNDS: Record<string, [number, number]> = {
@@ -111,6 +137,7 @@ export type ParsedTournament = {
   placement_count: number
   bouts: ParsedBout[]
   placements: ParsedPlacement[]
+  bouts_for_review?: BoutForReview[]
 }
 
 // ── Shared helpers ────────────────────────────────────────────────────────────
@@ -373,9 +400,9 @@ function readFlags(cleaned: string[], idx: number): [string | null, string | nul
   return [flag1, flag2, idx]
 }
 
-function parseFormatB(lines: string[]): [ParsedBout[], ParsedPlacement[]] {
+function parseFormatB(lines: string[]): [ParsedBout[], ParsedPlacement[], RawEntry[]] {
   const cleaned = lines.map(cleanLine)
-  const rawWithWeight: Array<[Omit<ParsedBout, 'weight_class'>, number | null, string | null, string | null]> = []
+  const rawWithWeight: RawEntry[] = []
   let currentWeight: number | null = null
   let currentSchool: string | null = null
 
@@ -508,7 +535,258 @@ function parseFormatB(lines: string[]): [ParsedBout[], ParsedPlacement[]] {
     if (!allSeen.has(`${p.weight_class}|${p.place}`)) placements.push(p)
   }
 
-  return [bouts, placements]
+  return [bouts, placements, rawWithWeight]
+}
+
+// ── Bout-review inference ─────────────────────────────────────────────────────
+
+function nextPow2(n: number): number {
+  if (n <= 2) return 2
+  let p = 2
+  while (p < n) p *= 2
+  return p
+}
+
+function champRoundNames(bracketSize: number): string[] {
+  const n = Math.log2(bracketSize)
+  const ordinals = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th']
+  const earlyCount = Math.max(0, n - 3)
+  const named: string[] = []
+  for (let i = 0; i < earlyCount; i++) named.push(`${ordinals[i] ?? (i + 1) + 'th'} Round`)
+  if (n >= 3) named.push('Quarterfinals')
+  if (n >= 2) named.push('Semifinals')
+  named.push('Finals')
+  return named
+}
+
+function consRoundCount(bracketSize: number): number {
+  return Math.max(0, 2 * (Math.log2(bracketSize) - 2))
+}
+
+export function getRoundOptions(bracketSize: number): string[] {
+  const champ = champRoundNames(bracketSize)
+  const consCount = consRoundCount(bracketSize)
+  const cons = Array.from({ length: consCount }, (_, i) => `Consolation ${i + 1}`)
+  return [...champ, ...cons, '3rd Place', '5th Place', '7th Place']
+}
+
+function normalizeTwLabelToVocab(raw: string): string {
+  const lower = raw.toLowerCase().trim()
+  if (lower.includes('quarterfinal')) return 'Quarterfinals'
+  if (lower.includes('semifinal')) return 'Semifinals'
+  if (['1st place match', 'finals', 'final', 'first place'].includes(lower)) return 'Finals'
+  if (['3rd place match', 'third place', '3rd place'].includes(lower)) return '3rd Place'
+  if (['5th place match', 'fifth place', '5th place'].includes(lower)) return '5th Place'
+  if (['7th place match', 'seventh place', '7th place'].includes(lower)) return '7th Place'
+  let m = lower.match(/^champ\.\s*round\s*(\d+)$/)
+  if (m) {
+    const ordinals = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th']
+    const n = parseInt(m[1], 10)
+    return `${ordinals[n - 1] ?? (n + 'th')} Round`
+  }
+  m = lower.match(/^cons\.\s*round\s*(\d+)$/)
+  if (m) return `Consolation ${m[1]}`
+  m = lower.match(/^consolation\s*(\d+)$/)
+  if (m) return `Consolation ${m[1]}`
+  return raw.trim()
+}
+
+const PLACEMENT_VOCAB_LOWER = new Set(['1st place match', '3rd place match', '5th place match', '7th place match', 'first place', 'third place', 'fifth place', 'seventh place'])
+
+function isPlacementLabel(label: string | null): boolean {
+  return !!label && PLACEMENT_VOCAB_LOWER.has(label.toLowerCase().trim())
+}
+
+function boutReviewKey(wc: number, bout: Omit<ParsedBout, 'weight_class'>): string {
+  if (bout.result_type === 'BYE') return `${wc}|bye|${bout.wrestler1_name}|${bout.wrestler1_school}`
+  return `${wc}|${[`${bout.wrestler1_name}|${bout.wrestler1_school}`, `${bout.wrestler2_name}|${bout.wrestler2_school}`].sort().join('|')}`
+}
+
+export function extractBoutsForReview(rawWithWeight: RawEntry[]): BoutForReview[] {
+  const master: BoutForReview[] = []
+  const primaryByKey = new Map<string, number>()
+
+  for (const [bout, wc, , school] of rawWithWeight) {
+    if (wc === null) continue
+    const key = boutReviewKey(wc, bout)
+    const isBye = bout.result_type === 'BYE'
+    const rawLabel = bout.round?.trim()
+    const hasLabel = !!rawLabel && rawLabel.toLowerCase() !== 'unknown'
+    const twLabel = hasLabel ? rawLabel : null
+
+    if (!primaryByKey.has(key)) {
+      primaryByKey.set(key, master.length)
+      master.push({
+        key, weight_class: wc,
+        wrestler1_name: bout.wrestler1_name, wrestler1_school: bout.wrestler1_school,
+        wrestler2_name: bout.wrestler2_name, wrestler2_school: bout.wrestler2_school,
+        result_type: bout.result_type, result_detail: bout.result_detail,
+        is_bye: isBye, section_school: school ?? '',
+        tw_label: twLabel, inferred_round: '', inference_confidence: 'weak',
+        inference_note: null, is_duplicate: false, bracket_size: 8,
+      })
+    } else {
+      const primary = master[primaryByKey.get(key)!]
+      if (!primary.tw_label && twLabel) primary.tw_label = twLabel
+      master.push({
+        key, weight_class: wc,
+        wrestler1_name: bout.wrestler1_name, wrestler1_school: bout.wrestler1_school,
+        wrestler2_name: bout.wrestler2_name, wrestler2_school: bout.wrestler2_school,
+        result_type: bout.result_type, result_detail: bout.result_detail,
+        is_bye: isBye, section_school: school ?? '',
+        tw_label: twLabel, inferred_round: '', inference_confidence: 'weak',
+        inference_note: null, is_duplicate: true, bracket_size: 8,
+      })
+    }
+  }
+
+  inferRoundsForReview(master)
+  return master
+}
+
+function inferRoundsForReview(master: BoutForReview[]): void {
+  const weightGroups = new Map<number, BoutForReview[]>()
+  for (const b of master) {
+    if (!weightGroups.has(b.weight_class)) weightGroups.set(b.weight_class, [])
+    weightGroups.get(b.weight_class)!.push(b)
+  }
+
+  for (const [, weightBouts] of weightGroups) {
+    const wrestlers = new Set<string>()
+    for (const b of weightBouts) {
+      if (b.is_duplicate || b.is_bye) continue
+      if (b.wrestler1_name) wrestlers.add(`${b.wrestler1_name}|${b.wrestler1_school}`)
+      if (b.wrestler2_name) wrestlers.add(`${b.wrestler2_name}|${b.wrestler2_school}`)
+    }
+    const bracketSize = nextPow2(Math.max(wrestlers.size, 2))
+    const champSeq = champRoundNames(bracketSize)
+
+    for (const b of weightBouts) b.bracket_size = bracketSize
+
+    const hasAnyLabel = weightBouts.some(b => !b.is_duplicate && b.tw_label !== null)
+
+    // Phase 1: resolve explicit TW labels
+    for (const b of weightBouts) {
+      if (b.is_duplicate || !b.tw_label) continue
+      b.inferred_round = normalizeTwLabelToVocab(b.tw_label)
+      b.inference_confidence = 'explicit'
+      b.inference_note = null
+    }
+
+    // Phase 2: per-section position inference
+    const sections = new Map<string, BoutForReview[]>()
+    for (const b of weightBouts) {
+      if (b.is_duplicate) continue
+      if (!sections.has(b.section_school)) sections.set(b.section_school, [])
+      sections.get(b.section_school)!.push(b)
+    }
+
+    for (const sectionBouts of sections.values()) {
+      const mainBouts = sectionBouts.filter(b => !isPlacementLabel(b.tw_label))
+      const nonBye = mainBouts.filter(b => !b.is_bye)
+
+      if (nonBye.length === 0) {
+        for (const b of mainBouts) {
+          if (b.is_bye && !b.inferred_round) {
+            b.inferred_round = champSeq[0] ?? 'Quarterfinals'
+            b.inference_confidence = 'weak'
+            b.inference_note = 'Bye with no other bouts in section; assuming earliest round'
+          }
+        }
+        continue
+      }
+
+      // Find champ anchors: explicit bouts whose round is in the championship sequence
+      const champAnchors = nonBye.filter(b => b.inference_confidence === 'explicit' && champSeq.includes(b.inferred_round))
+
+      if (champAnchors.length > 0) {
+        for (let pos = 0; pos < nonBye.length; pos++) {
+          const b = nonBye[pos]
+          if (b.inference_confidence === 'explicit') continue
+          let bestDist = Infinity
+          let bestRound = ''
+          let bestNote = ''
+          for (let apos = 0; apos < nonBye.length; apos++) {
+            const anchor = nonBye[apos]
+            if (anchor.inference_confidence !== 'explicit') continue
+            const anchorIdx = champSeq.indexOf(anchor.inferred_round)
+            if (anchorIdx < 0) continue
+            // pos < apos → pos is listed before anchor (more recent) → higher champ index
+            const targetIdx = anchorIdx + (apos - pos)
+            const dist = Math.abs(apos - pos)
+            if (targetIdx >= 0 && targetIdx < champSeq.length && dist < bestDist) {
+              bestDist = dist
+              bestRound = champSeq[targetIdx]
+              const rel = pos < apos ? 'more recent than' : 'earlier than'
+              bestNote = `${dist} position${dist !== 1 ? 's' : ''} ${rel} labeled "${anchor.inferred_round}"`
+            }
+          }
+          if (bestRound) {
+            b.inferred_round = bestRound
+            b.inference_confidence = bestDist <= 2 ? 'inferred' : 'weak'
+            b.inference_note = bestNote
+          } else {
+            b.inferred_round = hasAnyLabel ? 'Consolation 1' : champSeq[0]
+            b.inference_confidence = 'weak'
+            b.inference_note = 'No championship anchor found; may be a consolation bout'
+          }
+        }
+      } else {
+        // No anchor — bracket-position guess
+        const deepestIdx = Math.min(nonBye.length - 1, champSeq.length - 1)
+        for (let pos = 0; pos < nonBye.length; pos++) {
+          const b = nonBye[pos]
+          if (b.inference_confidence === 'explicit') continue
+          const targetIdx = deepestIdx - pos
+          b.inferred_round = targetIdx >= 0
+            ? champSeq[targetIdx]
+            : `Consolation ${-targetIdx}`
+          b.inference_confidence = 'weak'
+          b.inference_note = hasAnyLabel
+            ? 'No labeled bouts in this section; position-based guess only'
+            : 'No round labels found at this weight; position-based guess only'
+        }
+      }
+
+      // Byes: assign earliest champ round
+      for (const b of mainBouts) {
+        if (!b.is_bye || b.inferred_round) continue
+        b.inferred_round = champSeq[0] ?? 'Quarterfinals'
+        b.inference_confidence = hasAnyLabel ? 'inferred' : 'weak'
+        b.inference_note = 'Bye; assumed earliest championship round'
+      }
+
+      // Unlabeled placement bouts
+      for (const b of sectionBouts.filter(x => isPlacementLabel(x.tw_label))) {
+        if (b.inference_confidence === 'explicit') continue
+        b.inferred_round = '3rd Place'
+        b.inference_confidence = 'weak'
+        b.inference_note = 'Placement match without round label; defaulting to 3rd Place'
+      }
+    }
+
+    // Phase 3: copy inferred round from primary to duplicates
+    const primaryMap = new Map<string, BoutForReview>()
+    for (const b of weightBouts) if (!b.is_duplicate) primaryMap.set(b.key, b)
+    for (const b of weightBouts) {
+      if (!b.is_duplicate) continue
+      const primary = primaryMap.get(b.key)
+      if (primary) {
+        b.inferred_round = primary.inferred_round
+        b.inference_confidence = primary.inference_confidence
+        b.inference_note = primary.inference_note
+      }
+    }
+
+    // Phase 4: fallback
+    for (const b of weightBouts) {
+      if (!b.inferred_round) {
+        b.inferred_round = champSeq[0] ?? 'Quarterfinals'
+        b.inference_confidence = 'weak'
+        b.inference_note = 'Could not determine round'
+      }
+    }
+  }
 }
 
 // ── Top-level ─────────────────────────────────────────────────────────────────
@@ -559,7 +837,14 @@ export function parseRtfText(text: string, only?: string): ParsedTournament[] {
     const nextStart = idx + 1 < starts.length ? starts[idx + 1][0] : lines.length
     const section = lines.slice(lineIdx + 1, nextStart)
     const fmt = detectFormat(section)
-    const [bouts, placements] = fmt === 'full_bracket' ? parseFormatA(section) : parseFormatB(section)
+    let bouts: ParsedBout[], placements: ParsedPlacement[], boutsForReview: BoutForReview[] | undefined
+    if (fmt === 'full_bracket') {
+      ;[bouts, placements] = parseFormatA(section)
+    } else {
+      const [b, p, raw] = parseFormatB(section)
+      bouts = b; placements = p
+      boutsForReview = extractBoutsForReview(raw)
+    }
 
     results.push({
       name,
@@ -569,6 +854,7 @@ export function parseRtfText(text: string, only?: string): ParsedTournament[] {
       placement_count: placements.length,
       bouts,
       placements,
+      bouts_for_review: boutsForReview,
     })
   }
   return results
