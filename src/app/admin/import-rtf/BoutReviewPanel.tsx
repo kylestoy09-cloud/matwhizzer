@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import type { BoutForReview } from './types'
+import type { BoutForReview, SchoolOverride } from './types'
 import { BoutRow } from './BoutRow'
 
 function WeightSection({
@@ -9,6 +9,7 @@ function WeightSection({
   bouts,
   rounds,
   duplicates,
+  schoolOverrides,
   onRoundChange,
   onDuplicateToggle,
 }: {
@@ -16,6 +17,7 @@ function WeightSection({
   bouts: BoutForReview[]
   rounds: Record<string, string>
   duplicates: Record<string, boolean>
+  schoolOverrides: Record<string, SchoolOverride>
   onRoundChange: (key: string, round: string) => void
   onDuplicateToggle: (uid: string) => void
 }) {
@@ -25,26 +27,37 @@ function WeightSection({
   // primary and duplicate entries that share the same dedup key
   const isDupEntry = (b: BoutForReview) => duplicates[String(b.uid)] ?? b.is_duplicate
 
+  // Use resolved school_id as the dedup key so two raw names mapping to the same
+  // school (e.g. "S. Plainfield" and "South Plainfield") count as one entrant
+  const resolveSchoolKey = (raw: string) => {
+    const o = schoolOverrides[raw]
+    return o?.type === 'nj' ? `id:${o.school_id}` : raw
+  }
+  const resolveSchoolDisplay = (raw: string) => {
+    const o = schoolOverrides[raw]
+    return o?.type === 'nj' ? o.display_name : raw
+  }
+
   const primaries = bouts.filter(b => !isDupEntry(b))
   const weakCount = primaries.filter(b => !b.is_bye && b.inference_confidence === 'weak').length
   const dupCount = bouts.filter(b => isDupEntry(b)).length
   const bracketSize = bouts[0]?.bracket_size ?? 0
 
-  // Collect wrestlers in first-encounter order (primary, non-bye bouts only)
-  const wrestlerMap = new Map<string, string>() // key → "Name (School)"
+  // Collect wrestlers in first-encounter order (primary, non-bye bouts only),
+  // deduplicating by resolved school_id so school name variants don't inflate the count
+  const wrestlerMap = new Map<string, string>() // resolvedKey → "Name (Display School)"
   for (const b of bouts) {
     if (isDupEntry(b) || b.is_bye) continue
     if (b.wrestler1_name) {
-      const k = `${b.wrestler1_name}|${b.wrestler1_school}`
-      if (!wrestlerMap.has(k)) wrestlerMap.set(k, `${b.wrestler1_name} (${b.wrestler1_school})`)
+      const k = `${b.wrestler1_name}|${resolveSchoolKey(b.wrestler1_school)}`
+      if (!wrestlerMap.has(k)) wrestlerMap.set(k, `${b.wrestler1_name} (${resolveSchoolDisplay(b.wrestler1_school)})`)
     }
     if (b.wrestler2_name) {
-      const k = `${b.wrestler2_name}|${b.wrestler2_school}`
-      if (!wrestlerMap.has(k)) wrestlerMap.set(k, `${b.wrestler2_name} (${b.wrestler2_school})`)
+      const k = `${b.wrestler2_name}|${resolveSchoolKey(b.wrestler2_school)}`
+      if (!wrestlerMap.has(k)) wrestlerMap.set(k, `${b.wrestler2_name} (${resolveSchoolDisplay(b.wrestler2_school)})`)
     }
   }
   const wrestlers = [...wrestlerMap.values()].sort((a, b) => a.localeCompare(b))
-  const entrants = wrestlers.length
 
   return (
     <div className="border border-slate-200 bg-white">
@@ -54,7 +67,7 @@ function WeightSection({
       >
         <div className="flex items-center gap-3">
           <span className="font-semibold text-slate-800 text-sm">{weight}</span>
-          <span className="text-xs text-slate-400">{entrants} wrestlers · {bracketSize}-bracket</span>
+          <span className="text-xs text-slate-400">{wrestlers.length} wrestlers · {bracketSize}-bracket</span>
           <span className="text-xs text-slate-400">{primaries.length} bouts</span>
           {dupCount > 0 && <span className="text-xs text-slate-400">{dupCount} dup{dupCount !== 1 ? 's' : ''}</span>}
         </div>
@@ -117,12 +130,14 @@ export function BoutReviewPanel({
   bouts,
   rounds,
   duplicates,
+  schoolOverrides,
   onRoundChange,
   onDuplicateToggle,
 }: {
   bouts: BoutForReview[]
   rounds: Record<string, string>
   duplicates: Record<string, boolean>
+  schoolOverrides: Record<string, SchoolOverride>
   onRoundChange: (key: string, round: string) => void
   onDuplicateToggle: (uid: string) => void
 }) {
@@ -150,6 +165,7 @@ export function BoutReviewPanel({
           bouts={byWeight.get(wc)!}
           rounds={rounds}
           duplicates={duplicates}
+          schoolOverrides={schoolOverrides}
           onRoundChange={onRoundChange}
           onDuplicateToggle={onDuplicateToggle}
         />

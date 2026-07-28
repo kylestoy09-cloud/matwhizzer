@@ -600,27 +600,45 @@ export function RtfImportClient() {
                       <p className="text-sm text-slate-400">No flags — all schools and wrestlers matched cleanly.</p>
                     )}
 
-                    {t.source_format === 'school_tracking' && t.bouts_for_review.length > 0 && (
-                      <div>
-                        <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">
-                          Bout rounds — {t.bouts_for_review.filter(b => !b.is_duplicate).length} unique · {t.bouts_for_review.filter(b => b.is_duplicate).length} duplicate
-                        </p>
-                        <BoutReviewPanel
-                          bouts={t.bouts_for_review}
-                          rounds={boutRounds[tkey] ?? {}}
-                          duplicates={boutDuplicates[tkey] ?? {}}
-                          onRoundChange={(key, round) => setBoutRounds(prev => ({
-                            ...prev,
-                            [tkey]: { ...(prev[tkey] ?? {}), [key]: round },
-                          }))}
-                          onDuplicateToggle={uid => setBoutDuplicates(prev => {
-                            const cur = { ...(prev[tkey] ?? {}) }
-                            cur[uid] = !cur[uid]
-                            return { ...prev, [tkey]: cur }
-                          })}
-                        />
-                      </div>
-                    )}
+                    {t.source_format === 'school_tracking' && t.bouts_for_review.length > 0 && (() => {
+                      const schoolsOk = unresolvedSchools.length === 0
+                      const wrestlersOk = t.wrestler_flags.filter(f => {
+                        if (schoolOverrides[f.school_raw]?.type === 'oos') return false
+                        const o = wrestlerOverrides[f.key]
+                        return !(o?.type === 'skip' || o?.type === 'existing' || o?.type === 'accept')
+                      }).length === 0
+                      const ready = schoolsOk && wrestlersOk
+                      return (
+                        <div>
+                          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">
+                            Bout rounds — {t.bouts_for_review.filter(b => !b.is_duplicate).length} unique · {t.bouts_for_review.filter(b => b.is_duplicate).length} duplicate
+                          </p>
+                          {!ready ? (
+                            <p className="text-xs text-slate-400 bg-slate-50 border border-slate-200 px-3 py-2">
+                              {!schoolsOk
+                                ? 'Resolve all school flags above before reviewing bout rounds.'
+                                : 'Confirm all wrestler profiles above before reviewing bout rounds.'}
+                            </p>
+                          ) : (
+                            <BoutReviewPanel
+                              bouts={t.bouts_for_review}
+                              rounds={boutRounds[tkey] ?? {}}
+                              duplicates={boutDuplicates[tkey] ?? {}}
+                              schoolOverrides={schoolOverrides}
+                              onRoundChange={(key, round) => setBoutRounds(prev => ({
+                                ...prev,
+                                [tkey]: { ...(prev[tkey] ?? {}), [key]: round },
+                              }))}
+                              onDuplicateToggle={uid => setBoutDuplicates(prev => {
+                                const cur = { ...(prev[tkey] ?? {}) }
+                                cur[uid] = !cur[uid]
+                                return { ...prev, [tkey]: cur }
+                              })}
+                            />
+                          )}
+                        </div>
+                      )
+                    })()}
                   </div>
                 )}
               </div>
