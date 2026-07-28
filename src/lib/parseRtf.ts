@@ -480,22 +480,25 @@ function parseFormatB(lines: string[]): [ParsedBout[], ParsedPlacement[]] {
   }
 
   // Direct extraction from explicitly-labeled placement bouts (handles data with no school headers).
-  // Bouts in Format B are duplicated (one per school section), so deduplicate by (weight_class, place).
+  // Scans rawWithWeight (all bouts, not Stats-filtered) because TW frequently marks placement
+  // matches Stats=No even though they are unique events. Deduplicates by (weight_class, place)
+  // since the same bout appears once per school section.
   const directPlacements: ParsedPlacement[] = []
   const directSeen = new Set<string>()
-  for (const b of bouts) {
-    const rn = b.round.toLowerCase().trim()
+  for (const [bout, wc, ,] of rawWithWeight) {
+    if (!wc) continue
+    const rn = bout.round.toLowerCase().trim()
     if (!(rn in PLACE_ROUNDS)) continue
     const [w1, w2] = PLACE_ROUNDS[rn]
-    const k1 = `${b.weight_class}|${w1}`
-    if (b.winner === 1 && b.wrestler1_name && !directSeen.has(k1)) {
+    const k1 = `${wc}|${w1}`
+    if (bout.winner === 1 && bout.wrestler1_name && !directSeen.has(k1)) {
       directSeen.add(k1)
-      directPlacements.push({ weight_class: b.weight_class, place: w1, wrestler_name: b.wrestler1_name, school_name: b.wrestler1_school })
+      directPlacements.push({ weight_class: wc, place: w1, wrestler_name: bout.wrestler1_name, school_name: bout.wrestler1_school })
     }
-    const k2 = `${b.weight_class}|${w2}`
-    if (b.wrestler2_name && b.wrestler2_name.toLowerCase() !== 'unknown' && !directSeen.has(k2)) {
+    const k2 = `${wc}|${w2}`
+    if (bout.wrestler2_name && bout.wrestler2_name.toLowerCase() !== 'unknown' && !directSeen.has(k2)) {
       directSeen.add(k2)
-      directPlacements.push({ weight_class: b.weight_class, place: w2, wrestler_name: b.wrestler2_name, school_name: b.wrestler2_school })
+      directPlacements.push({ weight_class: wc, place: w2, wrestler_name: bout.wrestler2_name, school_name: bout.wrestler2_school })
     }
   }
 
