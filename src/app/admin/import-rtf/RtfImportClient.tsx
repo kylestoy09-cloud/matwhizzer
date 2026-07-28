@@ -605,7 +605,9 @@ export function RtfImportClient() {
                       const wrestlersOk = t.wrestler_flags.filter(f => {
                         if (schoolOverrides[f.school_raw]?.type === 'oos') return false
                         const o = wrestlerOverrides[f.key]
-                        return !(o?.type === 'skip' || o?.type === 'existing' || o?.type === 'accept')
+                        if (o?.type === 'skip' || o?.type === 'existing' || o?.type === 'accept') return false
+                        if (o?.type === 'create' && o.first_name.trim() && o.last_name.trim()) return false
+                        return true
                       }).length === 0
                       const ready = schoolsOk && wrestlersOk
                       return (
