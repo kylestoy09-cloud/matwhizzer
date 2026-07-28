@@ -420,13 +420,47 @@ function parseFormatB(lines: string[]): [ParsedBout[], ParsedPlacement[]] {
     }
   }
 
-  // Infer placements from last round reached per school per weight
+  // Infer placements from last round reached per school per weight.
+  //
+  // The section header name (e.g. "Christian Brother Academy") may not exactly
+  // match the school name in the bout lines ("Christian Brothers Academy") or
+  // the header may be a short abbreviation ("Delbarton" vs "Delbarton School").
+  // Exact comparison against the header fails, causing trackedSide to default
+  // to wrestler1 (the winner), so OOS champions get credited.
+  //
+  // Fix: identify the tracked school by frequency. The NJ school appears in
+  // every bout in the section; each opponent appears only once.
   const placements: ParsedPlacement[] = []
   for (const [school, weightMap] of schoolWeightBouts) {
+    // Count every school name that appears across all bouts in this section.
+    const freq = new Map<string, number>()
+    for (const wbouts of weightMap.values()) {
+      for (const b of wbouts) {
+        const inc = (n: string) => { if (n) freq.set(n, (freq.get(n) ?? 0) + 1) }
+        inc(normalizeSchool(b.wrestler1_school))
+        inc(normalizeSchool(b.wrestler2_school))
+      }
+    }
+    // Most-frequent normalized name = the tracked school.
+    const trackedNorm = freq.size > 0
+      ? [...freq.entries()].sort((a, b) => b[1] - a[1])[0][0]
+      : normalizeSchool(school)
+
+    // Recover the original (non-normalized) spelling for the placement record.
+    let trackedRaw = school
+    for (const wbouts of weightMap.values()) {
+      let found = false
+      for (const b of wbouts) {
+        if (normalizeSchool(b.wrestler1_school) === trackedNorm) { trackedRaw = b.wrestler1_school; found = true; break }
+        if (normalizeSchool(b.wrestler2_school) === trackedNorm) { trackedRaw = b.wrestler2_school; found = true; break }
+      }
+      if (found) break
+    }
+
     for (const [weight, wbouts] of weightMap) {
       if (!wbouts.length) continue
-      const s_w1 = wbouts.filter(b => normalizeSchool(b.wrestler1_school).toLowerCase() === school.toLowerCase()).length
-      const s_w2 = wbouts.filter(b => normalizeSchool(b.wrestler2_school).toLowerCase() === school.toLowerCase()).length
+      const s_w1 = wbouts.filter(b => normalizeSchool(b.wrestler1_school) === trackedNorm).length
+      const s_w2 = wbouts.filter(b => normalizeSchool(b.wrestler2_school) === trackedNorm).length
       const trackedSide = s_w1 >= s_w2 ? 1 : 2
 
       const best = wbouts.reduce((a, b) =>
@@ -437,9 +471,9 @@ function parseFormatB(lines: string[]): [ParsedBout[], ParsedPlacement[]] {
       const name = trackedSide === 1 ? best.wrestler1_name : best.wrestler2_name
 
       if (rn in PLACE_FROM_WIN && won) {
-        placements.push({ weight_class: weight, place: PLACE_FROM_WIN[rn], wrestler_name: name, school_name: school })
+        placements.push({ weight_class: weight, place: PLACE_FROM_WIN[rn], wrestler_name: name, school_name: trackedRaw })
       } else if (rn in PLACE_FROM_LOSS && !won) {
-        placements.push({ weight_class: weight, place: PLACE_FROM_LOSS[rn], wrestler_name: name, school_name: school })
+        placements.push({ weight_class: weight, place: PLACE_FROM_LOSS[rn], wrestler_name: name, school_name: trackedRaw })
       }
     }
   }
