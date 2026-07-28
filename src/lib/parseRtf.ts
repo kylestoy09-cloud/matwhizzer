@@ -680,45 +680,40 @@ function inferRoundsForReview(master: BoutForReview[]): void {
       b.inference_note = null
     }
 
-    // Phase 2: per-section position inference
-    const sections = new Map<string, BoutForReview[]>()
+    // Phase 2: per-wrestler position inference
+    // The home wrestler for a primary bout is the one from section_school.
+    // Within each school's section TW lists bouts most-recent-first, so index 0 in
+    // a wrestler's home-section sequence = their most recent match.
+    const homeSeq = new Map<string, BoutForReview[]>()
     for (const b of weightBouts) {
-      if (b.is_duplicate) continue
-      if (!sections.has(b.section_school)) sections.set(b.section_school, [])
-      sections.get(b.section_school)!.push(b)
+      if (b.is_duplicate || b.is_bye || isPlacementLabel(b.tw_label)) continue
+      const homeWrestlerName =
+        b.wrestler1_school === b.section_school ? b.wrestler1_name :
+        b.wrestler2_school === b.section_school ? b.wrestler2_name : null
+      if (!homeWrestlerName) continue
+      const hk = `${b.section_school}|${homeWrestlerName}`
+      if (!homeSeq.has(hk)) homeSeq.set(hk, [])
+      homeSeq.get(hk)!.push(b)
     }
 
-    for (const sectionBouts of sections.values()) {
-      const mainBouts = sectionBouts.filter(b => !isPlacementLabel(b.tw_label))
-      const nonBye = mainBouts.filter(b => !b.is_bye)
-
-      if (nonBye.length === 0) {
-        for (const b of mainBouts) {
-          if (b.is_bye && !b.inferred_round) {
-            b.inferred_round = champSeq[0] ?? 'Quarterfinals'
-            b.inference_confidence = 'weak'
-            b.inference_note = 'Bye with no other bouts in section; assuming earliest round'
-          }
-        }
-        continue
-      }
-
-      // Find champ anchors: explicit bouts whose round is in the championship sequence
-      const champAnchors = nonBye.filter(b => b.inference_confidence === 'explicit' && champSeq.includes(b.inferred_round))
+    for (const [, wbouts] of homeSeq) {
+      // wbouts[0] = most recent match; wbouts[n-1] = first match
+      const champAnchors = wbouts.filter(
+        b => b.inference_confidence === 'explicit' && champSeq.includes(b.inferred_round),
+      )
+      const n = wbouts.length
 
       if (champAnchors.length > 0) {
-        for (let pos = 0; pos < nonBye.length; pos++) {
-          const b = nonBye[pos]
+        for (let pos = 0; pos < n; pos++) {
+          const b = wbouts[pos]
           if (b.inference_confidence === 'explicit') continue
-          let bestDist = Infinity
-          let bestRound = ''
-          let bestNote = ''
-          for (let apos = 0; apos < nonBye.length; apos++) {
-            const anchor = nonBye[apos]
+          let bestDist = Infinity, bestRound = '', bestNote = ''
+          for (let apos = 0; apos < n; apos++) {
+            const anchor = wbouts[apos]
             if (anchor.inference_confidence !== 'explicit') continue
             const anchorIdx = champSeq.indexOf(anchor.inferred_round)
             if (anchorIdx < 0) continue
-            // pos < apos → pos is listed before anchor (more recent) → higher champ index
+            // pos < apos → more recent than anchor → higher champ index
             const targetIdx = anchorIdx + (apos - pos)
             const dist = Math.abs(apos - pos)
             if (targetIdx >= 0 && targetIdx < champSeq.length && dist < bestDist) {
@@ -735,41 +730,39 @@ function inferRoundsForReview(master: BoutForReview[]): void {
           } else {
             b.inferred_round = hasAnyLabel ? 'Consolation 1' : champSeq[0]
             b.inference_confidence = 'weak'
-            b.inference_note = 'No championship anchor found; may be a consolation bout'
+            b.inference_note = 'No championship anchor reachable; may be a consolation bout'
           }
         }
       } else {
-        // No anchor — bracket-position guess
-        const deepestIdx = Math.min(nonBye.length - 1, champSeq.length - 1)
-        for (let pos = 0; pos < nonBye.length; pos++) {
-          const b = nonBye[pos]
+        // No anchors: assign rounds by position — most recent (pos 0) = latest round reached
+        const deepestIdx = Math.min(n - 1, champSeq.length - 1)
+        for (let pos = 0; pos < n; pos++) {
+          const b = wbouts[pos]
           if (b.inference_confidence === 'explicit') continue
           const targetIdx = deepestIdx - pos
-          b.inferred_round = targetIdx >= 0
-            ? champSeq[targetIdx]
-            : `Consolation ${-targetIdx}`
+          b.inferred_round = targetIdx >= 0 ? champSeq[targetIdx] : `Consolation ${-targetIdx}`
           b.inference_confidence = 'weak'
           b.inference_note = hasAnyLabel
-            ? 'No labeled bouts in this section; position-based guess only'
-            : 'No round labels found at this weight; position-based guess only'
+            ? "No labeled bouts in this wrestler's section; position-based guess"
+            : 'No round labels at this weight; position-based guess'
         }
       }
+    }
 
-      // Byes: assign earliest champ round
-      for (const b of mainBouts) {
-        if (!b.is_bye || b.inferred_round) continue
-        b.inferred_round = champSeq[0] ?? 'Quarterfinals'
-        b.inference_confidence = hasAnyLabel ? 'inferred' : 'weak'
-        b.inference_note = 'Bye; assumed earliest championship round'
-      }
+    // Byes: assign earliest championship round
+    for (const b of weightBouts) {
+      if (b.is_duplicate || !b.is_bye || b.inferred_round) continue
+      b.inferred_round = champSeq[0] ?? 'Quarterfinals'
+      b.inference_confidence = hasAnyLabel ? 'inferred' : 'weak'
+      b.inference_note = 'Bye; assumed earliest championship round'
+    }
 
-      // Unlabeled placement bouts
-      for (const b of sectionBouts.filter(x => isPlacementLabel(x.tw_label))) {
-        if (b.inference_confidence === 'explicit') continue
-        b.inferred_round = '3rd Place'
-        b.inference_confidence = 'weak'
-        b.inference_note = 'Placement match without round label; defaulting to 3rd Place'
-      }
+    // Unlabeled placement bouts
+    for (const b of weightBouts) {
+      if (b.is_duplicate || !isPlacementLabel(b.tw_label) || b.inference_confidence === 'explicit') continue
+      b.inferred_round = '3rd Place'
+      b.inference_confidence = 'weak'
+      b.inference_note = 'Placement match without round label; defaulting to 3rd Place'
     }
 
     // Phase 3: copy inferred round from primary to duplicates

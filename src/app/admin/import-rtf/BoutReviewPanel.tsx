@@ -22,16 +22,17 @@ function WeightSection({
   onDuplicateToggle: (uid: string) => void
 }) {
   const [open, setOpen] = useState(false)
+  const [showDuplicates, setShowDuplicates] = useState(false)
 
-  // Resolve per-entry duplicate status using uid (not key) to avoid collision between
-  // primary and duplicate entries that share the same dedup key
+  // Per-entry duplicate status keyed by uid, not shared dedup key
   const isDupEntry = (b: BoutForReview) => duplicates[String(b.uid)] ?? b.is_duplicate
 
   // Use resolved school_id as the dedup key so two raw names mapping to the same
-  // school (e.g. "S. Plainfield" and "South Plainfield") count as one entrant
+  // school count as one entrant. Fall back to lowercase raw for unresolved schools
+  // so casing variants (e.g. "Pope John Xxiii" vs "Pope John XXIII") also merge.
   const resolveSchoolKey = (raw: string) => {
     const o = schoolOverrides[raw]
-    return o?.type === 'nj' ? `id:${o.school_id}` : raw
+    return o?.type === 'nj' ? `id:${o.school_id}` : raw.toLowerCase()
   }
   const resolveSchoolDisplay = (raw: string) => {
     const o = schoolOverrides[raw]
@@ -39,13 +40,12 @@ function WeightSection({
   }
 
   const primaries = bouts.filter(b => !isDupEntry(b))
-  const weakCount = primaries.filter(b => !b.is_bye && b.inference_confidence === 'weak').length
   const dupCount = bouts.filter(b => isDupEntry(b)).length
+  const weakCount = primaries.filter(b => !b.is_bye && b.inference_confidence === 'weak').length
   const bracketSize = bouts[0]?.bracket_size ?? 0
 
-  // Collect wrestlers in first-encounter order (primary, non-bye bouts only),
-  // deduplicating by resolved school_id so school name variants don't inflate the count
-  const wrestlerMap = new Map<string, string>() // resolvedKey → "Name (Display School)"
+  // Collect entrants using resolved school key to deduplicate across name variants
+  const wrestlerMap = new Map<string, string>()
   for (const b of bouts) {
     if (isDupEntry(b) || b.is_bye) continue
     if (b.wrestler1_name) {
@@ -59,6 +59,9 @@ function WeightSection({
   }
   const wrestlers = [...wrestlerMap.values()].sort((a, b) => a.localeCompare(b))
 
+  // Only show primary rows by default; duplicates hidden unless toggled
+  const displayBouts = showDuplicates ? bouts : primaries
+
   return (
     <div className="border border-slate-200 bg-white">
       <button
@@ -69,7 +72,7 @@ function WeightSection({
           <span className="font-semibold text-slate-800 text-sm">{weight}</span>
           <span className="text-xs text-slate-400">{wrestlers.length} wrestlers · {bracketSize}-bracket</span>
           <span className="text-xs text-slate-400">{primaries.length} bouts</span>
-          {dupCount > 0 && <span className="text-xs text-slate-400">{dupCount} dup{dupCount !== 1 ? 's' : ''}</span>}
+          {dupCount > 0 && <span className="text-xs text-slate-400">{dupCount} dup{dupCount !== 1 ? 's' : ''} hidden</span>}
         </div>
         <div className="flex items-center gap-2">
           {weakCount > 0 && (
@@ -97,29 +100,39 @@ function WeightSection({
             </ol>
           </div>
           <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="text-[10px] font-medium text-slate-400 uppercase tracking-wide border-b border-slate-100">
-                <th className="px-2 py-1.5 text-left">Section</th>
-                <th className="px-2 py-1.5 text-left">Bout</th>
-                <th className="px-2 py-1.5 text-left">Round</th>
-                <th className="px-2 py-1.5 text-left" />
-              </tr>
-            </thead>
-            <tbody>
-              {bouts.map(bout => (
-                <BoutRow
-                  key={bout.uid}
-                  bout={bout}
-                  round={rounds[bout.key] ?? bout.inferred_round}
-                  isDuplicate={isDupEntry(bout)}
-                  onRoundChange={r => onRoundChange(bout.key, r)}
-                  onDuplicateToggle={() => onDuplicateToggle(String(bout.uid))}
-                />
-              ))}
-            </tbody>
-          </table>
+            <table className="w-full">
+              <thead>
+                <tr className="text-[10px] font-medium text-slate-400 uppercase tracking-wide border-b border-slate-100">
+                  <th className="px-2 py-1.5 text-left">Section</th>
+                  <th className="px-2 py-1.5 text-left">Bout</th>
+                  <th className="px-2 py-1.5 text-left">Round</th>
+                  <th className="px-2 py-1.5 text-left" />
+                </tr>
+              </thead>
+              <tbody>
+                {displayBouts.map(bout => (
+                  <BoutRow
+                    key={bout.uid}
+                    bout={bout}
+                    round={rounds[bout.key] ?? bout.inferred_round}
+                    isDuplicate={isDupEntry(bout)}
+                    onRoundChange={r => onRoundChange(bout.key, r)}
+                    onDuplicateToggle={() => onDuplicateToggle(String(bout.uid))}
+                  />
+                ))}
+              </tbody>
+            </table>
           </div>
+          {dupCount > 0 && (
+            <div className="px-3 py-2 border-t border-slate-100">
+              <button
+                onClick={() => setShowDuplicates(s => !s)}
+                className="text-xs text-slate-400 hover:text-slate-700 transition-colors"
+              >
+                {showDuplicates ? `Hide ${dupCount} duplicate${dupCount !== 1 ? 's' : ''}` : `Show ${dupCount} duplicate${dupCount !== 1 ? 's' : ''}`}
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>
