@@ -573,7 +573,7 @@ export function getRoundOptions(bracketSize: number): string[] {
   const champ = champRoundNames(bracketSize)
   const consCount = consRoundCount(bracketSize)
   const cons = Array.from({ length: consCount }, (_, i) => `Consolation ${i + 1}`)
-  return [...champ, ...cons, '3rd Place', '5th Place', '7th Place']
+  return [...champ, ...cons, '3rd Place', '5th Place', '7th Place', 'Exhibition']
 }
 
 function normalizeTwLabelToVocab(raw: string): string {

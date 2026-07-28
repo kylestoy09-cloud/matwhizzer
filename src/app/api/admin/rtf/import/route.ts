@@ -97,6 +97,7 @@ export async function POST(req: NextRequest) {
       'Finals': 'F', 'Semifinals': 'SF', 'Quarterfinals': 'QF',
       '1st Round': 'R1', '2nd Round': 'R2', '3rd Round': 'R3', '4th Round': 'R4',
       '3rd Place': '3rd_Place', '5th Place': '5th_Place', '7th Place': '7th_Place',
+      'Exhibition': 'Exhibition',
     }
     if (label in map) return map[label]
     const m = label.match(/^Consolation (\d+)$/)
