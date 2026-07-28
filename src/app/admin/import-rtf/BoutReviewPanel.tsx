@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import type { BoutForReview, SchoolOverride } from './types'
 import { BoutRow } from './BoutRow'
+import { inferRoundsFromSeeds } from '@/lib/parseRtf'
 
 function WeightSection({
   weight,
@@ -74,6 +75,18 @@ function WeightSection({
 
   const displayBouts = showDuplicates ? bouts : primaries
 
+  const seededCount = wrestlers.filter(w => seeds[seedKey(w.rawName, w.rawSchool)] !== undefined).length
+
+  function applySeeds() {
+    const entrants = wrestlers
+      .map(w => ({ name: w.rawName, school: w.rawSchool, seed: seeds[seedKey(w.rawName, w.rawSchool)] }))
+      .filter((e): e is { name: string; school: string; seed: number } => e.seed !== undefined)
+    const assignments = inferRoundsFromSeeds(weight, entrants, primaries)
+    for (const [boutKey, round] of Object.entries(assignments)) {
+      onRoundChange(boutKey, round)
+    }
+  }
+
   return (
     <div className="border border-slate-200 bg-white">
       <button
@@ -125,6 +138,21 @@ function WeightSection({
               })}
             </div>
           </div>
+
+          {seededCount > 0 && (
+            <div className="px-3 py-2 border-b border-slate-100 flex items-center gap-3">
+              <button
+                onClick={applySeeds}
+                className="text-xs px-2 py-1 bg-black text-white hover:bg-slate-800 transition-colors"
+              >
+                Apply seeds → auto-assign rounds
+              </button>
+              <span className="text-xs text-slate-400">
+                {seededCount} of {wrestlers.length} seeded
+                {seededCount < wrestlers.length && ' — unseeded positions treated as byes'}
+              </span>
+            </div>
+          )}
 
           <div className="overflow-x-auto">
             <table className="w-full">

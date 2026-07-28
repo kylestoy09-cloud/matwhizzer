@@ -569,6 +569,125 @@ function consRoundCount(bracketSize: number): number {
   return Math.max(0, 2 * (Math.log2(bracketSize) - 2))
 }
 
+// Standard bracket seeding: seed S at position i is paired with (bracketSize + 1 - S).
+// Recursively built so that adjacent pairs represent first-round matchups and the
+// structure propagates correctly into consolation.
+function buildBracketSlots(n: number): number[] {
+  if (n <= 1) return [1]
+  if (n === 2) return [1, 2]
+  const half = buildBracketSlots(n / 2)
+  const result: number[] = []
+  for (const s of half) { result.push(s); result.push(n + 1 - s) }
+  return result
+}
+
+// Simulate a full bracket from seeds and actual bout results.
+// Returns a map of boutKey → round name for every bout the simulation can identify.
+// Championship path is exact; consolation follows standard alternating structure
+// (odd rounds pair within the consolation pool; even rounds absorb the next wave of
+// championship losers and interleave with the current consolation pool).
+export function inferRoundsFromSeeds(
+  weightClass: number,
+  entrants: { name: string; school: string; seed: number }[],
+  primaryBouts: BoutForReview[],
+): Record<string, string> {
+  if (entrants.length < 2) return {}
+
+  type W = { name: string; school: string }
+  const bracketSize = nextPow2(entrants.length)
+  const champSeq = champRoundNames(bracketSize)
+  const consCount = consRoundCount(bracketSize)
+
+  const seedToW = new Map<number, W>(entrants.map(e => [e.seed, { name: e.name, school: e.school }]))
+  const slots = buildBracketSlots(bracketSize)
+  let champPool: (W | null)[] = slots.map(s => seedToW.get(s) ?? null)
+
+  const boutLookup = new Map<string, BoutForReview>()
+  for (const b of primaryBouts) boutLookup.set(b.key, b)
+
+  function lookupBout(w1: W, w2: W): BoutForReview | null {
+    const k = `${weightClass}|${[`${w1.name}|${w1.school}`, `${w2.name}|${w2.school}`].sort().join('|')}`
+    return boutLookup.get(k) ?? null
+  }
+  function boutWinner(b: BoutForReview, w1: W, w2: W): W {
+    return b.wrestler1_name === w1.name && b.wrestler1_school === w1.school ? w1 : w2
+  }
+
+  const result: Record<string, string> = {}
+  const champLosers: W[][] = []
+
+  // Championship bracket: walk round by round, track winners and losers
+  for (let ri = 0; ri < champSeq.length; ri++) {
+    const roundName = champSeq[ri]
+    const isLast = ri === champSeq.length - 1
+    const nextPool: (W | null)[] = []
+    const losers: W[] = []
+
+    for (let i = 0; i < champPool.length; i += 2) {
+      const w1 = champPool[i] ?? null
+      const w2 = champPool[i + 1] ?? null
+      if (!w1 && !w2) { nextPool.push(null); continue }
+      if (!w1 || !w2) { nextPool.push(w1 ?? w2); continue }  // bye
+      const b = lookupBout(w1, w2)
+      if (b) {
+        result[b.key] = roundName
+        const win = boutWinner(b, w1, w2)
+        nextPool.push(win)
+        if (!isLast) losers.push(win === w1 ? w2 : w1)
+      } else {
+        nextPool.push(null)
+      }
+    }
+
+    champPool = nextPool
+    if (!isLast) champLosers.push(losers)
+  }
+
+  // Consolation bracket:
+  // - Odd rounds  (ci=0,2,4…): pair current consolation pool within itself
+  // - Even rounds (ci=1,3,5…): interleave consolation pool with next wave of champ losers
+  // champLosers[0]=R1 losers, [1]=R2 losers, ..., [k-2]=SF losers
+  let consPool: W[] = champLosers[0] ?? []
+  let champLoserIdx = 1
+
+  for (let ci = 0; ci < consCount; ci++) {
+    const consName = `Consolation ${ci + 1}`
+
+    if (ci % 2 === 1) {
+      const newLosers = champLosers[champLoserIdx++] ?? []
+      const combined: W[] = []
+      const len = Math.max(consPool.length, newLosers.length)
+      for (let i = 0; i < len; i++) {
+        if (consPool[i]) combined.push(consPool[i])
+        if (newLosers[i]) combined.push(newLosers[i])
+      }
+      consPool = combined
+    }
+
+    const nextCons: W[] = []
+    for (let i = 0; i < consPool.length; i += 2) {
+      const w1 = consPool[i]
+      const w2 = consPool[i + 1]
+      if (!w1 && !w2) continue
+      if (!w1 || !w2) { nextCons.push(w1 ?? w2); continue }
+      const b = lookupBout(w1, w2)
+      if (b) {
+        result[b.key] = consName
+        nextCons.push(boutWinner(b, w1, w2))
+      }
+    }
+    consPool = nextCons
+  }
+
+  // 3rd place
+  if (consPool.length >= 2) {
+    const b = lookupBout(consPool[0], consPool[1])
+    if (b) result[b.key] = '3rd Place'
+  }
+
+  return result
+}
+
 export function getRoundOptions(bracketSize: number): string[] {
   const champ = champRoundNames(bracketSize)
   const consCount = consRoundCount(bracketSize)
