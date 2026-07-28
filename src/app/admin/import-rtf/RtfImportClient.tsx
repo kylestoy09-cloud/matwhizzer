@@ -58,6 +58,7 @@ export function RtfImportClient() {
 
   const [importResults, setImportResults] = useState<ImportResult[]>([])
   const [force, setForce] = useState(false)
+  const [deferredTournaments, setDeferredTournaments] = useState<Set<string>>(new Set())
 
   // ── Draft state ───────────────────────────────────────────────────────────
   const [draftId, setDraftId] = useState<string | null>(null)
@@ -221,12 +222,13 @@ export function RtfImportClient() {
 
   function handleImport() {
     startTransition(async () => {
+      const toImport = [...selected].filter(name => !deferredTournaments.has(name))
       const data = await apiPost<{ results: ImportResult[] }>(
-        '/api/admin/rtf/import', { text, year, selected: [...selected], schoolOverrides, wrestlerOverrides, tournamentDates: dates, force },
+        '/api/admin/rtf/import', { text, year, selected: toImport, schoolOverrides, wrestlerOverrides, tournamentDates: dates, force },
       )
       if (data.error) { setMatchError(data.error); return }
-      // Mark draft as imported
-      if (draftId) {
+      // Only mark draft as fully imported if no tournaments were deferred
+      if (draftId && deferredTournaments.size === 0) {
         fetch('/api/admin/rtf-import-draft', {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
@@ -453,13 +455,28 @@ export function RtfImportClient() {
             const open = expandedTournament === t.name
             const unresolvedSchools = t.school_flags.filter(f => !schoolOverrides[f.raw])
             const td = dates[t.name] ?? { start_date: t.start_date, end_date: t.end_date }
+            const deferred = deferredTournaments.has(t.name)
 
             return (
-              <div key={t.name} className="border border-black bg-white">
-                <button
-                  onClick={() => setExpandedTournament(open ? null : t.name)}
-                  className="w-full flex items-center justify-between px-4 py-3 hover:bg-slate-50 transition-colors text-left"
-                >
+              <div key={t.name} className={`border bg-white ${deferred ? 'border-slate-300 opacity-60' : 'border-black'}`}>
+                <div className="w-full flex items-center justify-between px-4 py-3 text-left">
+                  <label className="flex items-center gap-2 cursor-pointer shrink-0" onClick={e => e.stopPropagation()}>
+                    <input
+                      type="checkbox"
+                      checked={!deferred}
+                      onChange={e => setDeferredTournaments(prev => {
+                        const next = new Set(prev)
+                        if (e.target.checked) next.delete(t.name)
+                        else next.add(t.name)
+                        return next
+                      })}
+                      className="accent-black"
+                    />
+                  </label>
+                  <button
+                    onClick={() => setExpandedTournament(open ? null : t.name)}
+                    className="flex-1 flex items-center justify-between hover:bg-slate-50 transition-colors text-left min-w-0"
+                  >
                   <div className="flex items-center gap-3 flex-wrap">
                     <span className="font-semibold text-slate-900">{t.name}</span>
                     <span className="text-xs text-slate-400">{td.start_date}</span>
@@ -475,7 +492,8 @@ export function RtfImportClient() {
                     {t.wrestler_flags.length > 0 && <span className="text-blue-700">{t.wrestler_flags.length} wrestlers</span>}
                     <span>{open ? '▲' : '▼'}</span>
                   </div>
-                </button>
+                  </button>
+                </div>
 
                 {open && (
                   <div className="border-t border-slate-200 p-4 space-y-5">
@@ -550,6 +568,11 @@ export function RtfImportClient() {
                 {totalSchoolFlags} school{totalSchoolFlags !== 1 ? 's' : ''} still unresolved — those wrestlers will import without a school link.
               </p>
             )}
+            {deferredTournaments.size > 0 && (
+              <p className="text-sm text-slate-500">
+                {deferredTournaments.size} tournament{deferredTournaments.size !== 1 ? 's' : ''} unchecked — will be skipped and remain in the draft.
+              </p>
+            )}
             <div className="flex items-center gap-3 flex-wrap">
               <button onClick={() => setStep('select')} className="px-3 py-1.5 text-sm border border-slate-300 hover:border-black transition-colors">← Back</button>
               <button
@@ -561,10 +584,10 @@ export function RtfImportClient() {
               </button>
               <button
                 onClick={handleImport}
-                disabled={isPending}
+                disabled={isPending || deferredTournaments.size === reviewed.length}
                 className="px-4 py-2 bg-black text-white text-sm font-medium disabled:opacity-40 hover:bg-slate-800 transition-colors flex items-center gap-2"
               >
-                {isPending ? <><Spinner /> Importing…</> : `Import ${reviewed.length} Tournament${reviewed.length !== 1 ? 's' : ''}`}
+                {isPending ? <><Spinner /> Importing…</> : `Import ${reviewed.length - deferredTournaments.size} Tournament${reviewed.length - deferredTournaments.size !== 1 ? 's' : ''}`}
               </button>
               {isPending && <p className="text-xs text-slate-400">Writing to database…</p>}
             </div>
