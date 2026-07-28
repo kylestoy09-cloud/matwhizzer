@@ -52,6 +52,7 @@ export type ReviewedTournament = TournamentSummary & {
 export type SchoolOverride =
   | { type: 'nj'; school_id: number; display_name: string }
   | { type: 'oos' }
+  | { type: 'skip' }
 
 export type ImportResult = {
   tournament: string

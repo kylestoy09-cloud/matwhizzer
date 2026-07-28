@@ -52,7 +52,9 @@ export function SchoolFlagCard({
   const resolved = override?.type === 'nj'
     ? `→ ${override.display_name}`
     : override?.type === 'oos'
-    ? '→ Out-of-state (skip)'
+    ? '→ Out-of-state'
+    : override?.type === 'skip'
+    ? '→ Not a school (skipped)'
     : null
 
   return (
@@ -109,6 +111,13 @@ export function SchoolFlagCard({
             className="text-xs px-2 py-1 border border-slate-300 hover:border-black text-slate-600 hover:text-black transition-colors whitespace-nowrap"
           >
             Out-of-state
+          </button>
+          <button
+            onClick={() => onOverride(flag.raw, { type: 'skip' })}
+            className="text-xs px-2 py-1 border border-slate-300 hover:border-black text-slate-500 hover:text-black transition-colors whitespace-nowrap"
+            title="Mark as a nickname or non-school value — bouts involving this entry will import without a school link"
+          >
+            Not a school
           </button>
         </div>
       )}

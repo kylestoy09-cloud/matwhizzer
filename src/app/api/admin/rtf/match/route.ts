@@ -44,7 +44,9 @@ async function buildSchoolCache(
   for (const raw of rawNames) {
     if (cache.has(raw)) continue
     const override = overrides[raw]
-    if (override?.type === 'oos') {
+    if (override?.type === 'skip') {
+      cache.set(raw, { school_id: null, display_name: null, confidence: 'skip', alternates: [] })
+    } else if (override?.type === 'oos') {
       const school_id = await findOrCreateOosSchool(client, raw)
       cache.set(raw, { school_id, display_name: raw, confidence: 'oos', alternates: [] })
     } else if (override?.type === 'nj') {
@@ -122,7 +124,7 @@ export async function POST(req: NextRequest) {
       for (const raw of [b.wrestler1_school, b.wrestler2_school]) {
         if (!raw || schoolFlagMap.has(raw)) continue
         const r = schoolCache.get(raw)!
-        if (r.confidence === 'none' || r.confidence === 'low') {
+        if (r.confidence !== 'skip' && (r.confidence === 'none' || r.confidence === 'low')) {
           schoolFlagMap.set(raw, {
             raw,
             confidence: r.confidence as SchoolFlag['confidence'],
