@@ -43,7 +43,7 @@ function WeightSection({
       if (!wrestlerMap.has(k)) wrestlerMap.set(k, `${b.wrestler2_name} (${b.wrestler2_school})`)
     }
   }
-  const wrestlers = [...wrestlerMap.values()]
+  const wrestlers = [...wrestlerMap.values()].sort((a, b) => a.localeCompare(b))
   const entrants = wrestlers.length
 
   return (
