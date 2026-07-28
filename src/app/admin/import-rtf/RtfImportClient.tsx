@@ -65,8 +65,10 @@ export function RtfImportClient() {
 
   // Bout review state: tkey → boutKey → confirmed round
   const [boutRounds, setBoutRounds] = useState<Record<string, Record<string, string>>>({})
-  // tkey → boutKey → isDuplicate override (true/false)
+  // tkey → uid → isDuplicate override
   const [boutDuplicates, setBoutDuplicates] = useState<Record<string, Record<string, boolean>>>({})
+  // tkey → seedKey → seed number
+  const [boutSeeds, setBoutSeeds] = useState<Record<string, Record<string, number>>>({})
 
   // ── Draft state ───────────────────────────────────────────────────────────
   const [draftId, setDraftId] = useState<string | null>(null)
@@ -295,7 +297,7 @@ export function RtfImportClient() {
   function resetAll() {
     setText(''); setSummaries([]); setSelected(new Set())
     setReviewed([]); setSchoolOverrides({}); setWrestlerOverrides({}); setDates({}); setTournamentTypes({})
-    setBoutRounds({}); setBoutDuplicates({})
+    setBoutRounds({}); setBoutDuplicates({}); setBoutSeeds({})
     setImportResults([]); setDraftId(null); setDraftLabel('')
     setSaveState('idle'); setStep('input')
   }
@@ -627,6 +629,7 @@ export function RtfImportClient() {
                               rounds={boutRounds[tkey] ?? {}}
                               duplicates={boutDuplicates[tkey] ?? {}}
                               schoolOverrides={schoolOverrides}
+                              seeds={boutSeeds[tkey] ?? {}}
                               onRoundChange={(key, round) => setBoutRounds(prev => ({
                                 ...prev,
                                 [tkey]: { ...(prev[tkey] ?? {}), [key]: round },
@@ -634,6 +637,12 @@ export function RtfImportClient() {
                               onDuplicateToggle={uid => setBoutDuplicates(prev => {
                                 const cur = { ...(prev[tkey] ?? {}) }
                                 cur[uid] = !cur[uid]
+                                return { ...prev, [tkey]: cur }
+                              })}
+                              onSeedChange={(seedKey, seed) => setBoutSeeds(prev => {
+                                const cur = { ...(prev[tkey] ?? {}) }
+                                if (seed === undefined) delete cur[seedKey]
+                                else cur[seedKey] = seed
                                 return { ...prev, [tkey]: cur }
                               })}
                             />

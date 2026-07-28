@@ -29,12 +29,16 @@ export function BoutRow({
   bout,
   round,
   isDuplicate,
+  seed1,
+  seed2,
   onRoundChange,
   onDuplicateToggle,
 }: {
   bout: BoutForReview
   round: string
   isDuplicate: boolean
+  seed1?: number
+  seed2?: number
   onRoundChange: (round: string) => void
   onDuplicateToggle: () => void
 }) {
@@ -56,11 +60,13 @@ export function BoutRow({
 
       {/* Match */}
       <td className="px-2 py-1.5 text-slate-700">
+        {seed1 && <span className="text-slate-400 mr-0.5">#{seed1}</span>}
         <span className="font-medium">{bout.wrestler1_name}</span>
         <span className="text-slate-400 mx-1">({bout.wrestler1_school})</span>
         {!bout.is_bye && (
           <>
             <span className="text-slate-400">over </span>
+            {seed2 && <span className="text-slate-400 mr-0.5">#{seed2}</span>}
             <span className="font-medium">{bout.wrestler2_name}</span>
             <span className="text-slate-400 mx-1">({bout.wrestler2_school})</span>
           </>
