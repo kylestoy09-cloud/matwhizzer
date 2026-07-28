@@ -123,6 +123,7 @@ function cleanLine(raw: string): string {
     .replace(/\u2028/g, ' ')  // line separator
     .replace(/\u2029/g, ' ')  // paragraph separator
     .trim()
+    .replace(/^[\u2022\u25aa\u25e6\u25e6\u2023]\s*/, '')  // strip leading bullet chars
 }
 
 function stripWl(s: string): string {
