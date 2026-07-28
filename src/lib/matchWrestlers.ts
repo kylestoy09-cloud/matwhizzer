@@ -33,7 +33,7 @@ export type WrestlerMatch = {
 type WrestlerRow  = { id: string; first_name: string; last_name: string; suffix: string | null; gender: string | null }
 type WeightClassRow = { id: number; weight: number }
 type EntryRow     = { wrestler_id: string; school_id: number | null; weight_class_id: number }
-type BoutRow      = { nj_wrestler1_id: string | null; wrestler1_school_id: number | null; nj_wrestler2_id: string | null; wrestler2_school_id: number | null }
+type BoutRow      = { wrestler1_id: string | null; wrestler1_school_id: number | null; wrestler2_id: string | null; wrestler2_school_id: number | null }
 type DualMatchRow = { wrestler_a_id: string | null; school_a_id: number | null; wrestler_b_id: string | null; school_b_id: number | null }
 
 // Denormalized record joining wrestler + school + weights
@@ -106,7 +106,7 @@ async function loadCache(): Promise<void> {
   // Paginate all tables serially to avoid connection pool exhaustion
   const wrestlers = await fetchAll<WrestlerRow>(supabase, 'wrestlers', 'id, first_name, last_name, suffix, gender')
   const entries   = await fetchAll<EntryRow>(supabase, 'tournament_entries', 'wrestler_id, school_id, weight_class_id')
-  const bouts     = await fetchAll<BoutRow>(supabase, 'tournament_bouts', 'nj_wrestler1_id, wrestler1_school_id, nj_wrestler2_id, wrestler2_school_id')
+  const bouts     = await fetchAll<BoutRow>(supabase, 'tournament_bouts', 'wrestler1_id, wrestler1_school_id, wrestler2_id, wrestler2_school_id')
   const duals     = await fetchAll<DualMatchRow>(supabase, 'dual_meet_matches', 'wrestler_a_id, school_a_id, wrestler_b_id, school_b_id')
 
   // Build fast lookup maps
@@ -169,8 +169,8 @@ async function loadCache(): Promise<void> {
 
   // Seed from tournament_bouts (RTF in-season imports)
   for (const b of bouts) {
-    if (b.nj_wrestler1_id && b.wrestler1_school_id) addToIndex(b.nj_wrestler1_id, b.wrestler1_school_id)
-    if (b.nj_wrestler2_id && b.wrestler2_school_id) addToIndex(b.nj_wrestler2_id, b.wrestler2_school_id)
+    if (b.wrestler1_id && b.wrestler1_school_id) addToIndex(b.wrestler1_id, b.wrestler1_school_id)
+    if (b.wrestler2_id && b.wrestler2_school_id) addToIndex(b.wrestler2_id, b.wrestler2_school_id)
   }
 
   // Seed from dual_meet_matches

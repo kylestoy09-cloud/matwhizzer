@@ -487,23 +487,35 @@ export function parseRtfText(text: string, only?: string): ParsedTournament[] {
   const lines = text.split('\n')
   const cleaned = lines.map(cleanLine)
   const starts: Array<[number, string, string]> = []
+  const seenNames = new Set<string>()
 
   for (let i = 0; i < cleaned.length; i++) {
     const line = cleaned[i]
 
     // Explicit "Name - Date" header
     const m = line.match(TOURNEY_HEADER_RE)
-    if (m) { starts.push([i, m[1].trim(), m[2].trim()]); continue }
+    if (m) {
+      const name = m[1].trim()
+      starts.push([i, name, m[2].trim()])
+      seenNames.add(name.toLowerCase())
+      continue
+    }
 
     // Plain name header: no date, but immediately followed by TW navigation block.
     // Handles TrackWrestling copy-paste where the title line has no " - date" suffix.
+    // seenNames prevents firing on Format B repetitions where the tournament name
+    // appears before every school's data block (each followed by a TW nav line).
     if (line && line.length >= 5 && line.length <= 120 &&
+        !seenNames.has(line.toLowerCase()) &&
         !TW_META_RE.test(line) && !WEIGHT_RE.test(line) &&
         !line.includes('(') && !/\bover\b/i.test(line)) {
       for (let j = i + 1; j < Math.min(i + 5, cleaned.length); j++) {
         const next = cleaned[j]
         if (!next) continue
-        if (TW_META_RE.test(next)) starts.push([i, line, ''])
+        if (TW_META_RE.test(next)) {
+          starts.push([i, line, ''])
+          seenNames.add(line.toLowerCase())
+        }
         break
       }
     }

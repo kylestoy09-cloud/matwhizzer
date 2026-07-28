@@ -42,8 +42,8 @@ function getBoutFlags(b: AugmentedBout): FilterKey[] {
 
   // NJ school matched but no wrestler link — should have resolved
   if (
-    (b.nj_wrestler1_id === null && b.wrestler1_school_id !== null) ||
-    (b.nj_wrestler2_id === null && b.wrestler2_school_id !== null)
+    (b.wrestler1_id === null && b.wrestler1_school_id !== null) ||
+    (b.wrestler2_id === null && b.wrestler2_school_id !== null)
   ) flags.push('no_nj_id')
 
   // Linked wrestler's registered school differs from bout's recorded school
@@ -293,14 +293,14 @@ export function BoutAuditClient({
                                 <WrestlerLine
                                   name={bout.wrestler1_name_raw}
                                   school={bout.wrestler1_school_raw}
-                                  hasLink={!!bout.nj_wrestler1_id}
+                                  hasLink={!!bout.wrestler1_id}
                                   hasSchool={bout.wrestler1_school_id !== null}
                                   isWinner={bout.winner === 1}
                                 />
                                 <WrestlerLine
                                   name={bout.wrestler2_name_raw}
                                   school={bout.wrestler2_school_raw}
-                                  hasLink={!!bout.nj_wrestler2_id}
+                                  hasLink={!!bout.wrestler2_id}
                                   hasSchool={bout.wrestler2_school_id !== null}
                                   isWinner={bout.winner === 2}
                                 />

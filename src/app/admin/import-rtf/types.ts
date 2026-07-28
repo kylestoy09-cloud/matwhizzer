@@ -29,12 +29,15 @@ export type WrestlerOverride =
   | { type: 'accept' }
   | { type: 'skip' }
 
+export type TournamentType = 'outside' | 'inside_outside' | 'inside'
+
 export type TournamentSummary = {
   name: string
   date_raw: string
   start_date: string
   end_date: string | null
   source_format: 'full_bracket' | 'school_tracking'
+  tournament_type: TournamentType
   bout_count: number
   placement_count: number
   existing_id: string | null

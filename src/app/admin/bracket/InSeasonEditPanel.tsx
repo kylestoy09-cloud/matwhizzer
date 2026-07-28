@@ -212,10 +212,10 @@ export function InSeasonEditPanel({ bout, onSaved, onCancel }: InSeasonEditPanel
     if (!bout) return
     setSchool1Id(bout.wrestler1_school_id)
     setSchool1Raw(bout.wrestler1_school_raw)
-    setWrestler1Id(bout.nj_wrestler1_id)
+    setWrestler1Id(bout.wrestler1_id)
     setSchool2Id(bout.wrestler2_school_id)
     setSchool2Raw(bout.wrestler2_school_raw)
-    setWrestler2Id(bout.nj_wrestler2_id)
+    setWrestler2Id(bout.wrestler2_id)
     setWinner(bout.winner)
     setResultType(bout.result_type ?? '')
     setResultDetail(bout.result_detail ?? '')
@@ -256,10 +256,10 @@ export function InSeasonEditPanel({ bout, onSaved, onCancel }: InSeasonEditPanel
       round:                round,
       wrestler1_school_id:  school1Id,
       wrestler1_school_raw: school1Raw,
-      nj_wrestler1_id:      wrestler1Id,
+      wrestler1_id:         wrestler1Id,
       wrestler2_school_id:  school2Id,
       wrestler2_school_raw: school2Raw,
-      nj_wrestler2_id:      wrestler2Id,
+      wrestler2_id:         wrestler2Id,
       winner:               winner,
       result_type:          resultType || null,
       result_detail:        resultDetail || null,

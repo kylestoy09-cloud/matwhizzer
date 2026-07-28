@@ -3,6 +3,7 @@
 import { useState, useTransition, useEffect, useRef, useCallback } from 'react'
 import type {
   TournamentSummary,
+  TournamentType,
   ReviewedTournament,
   SchoolOverride,
   WrestlerOverride,
@@ -59,6 +60,7 @@ export function RtfImportClient() {
   const [importResults, setImportResults] = useState<ImportResult[]>([])
   const [force, setForce] = useState(false)
   const [deferredTournaments, setDeferredTournaments] = useState<Set<string>>(new Set())
+  const [tournamentTypes, setTournamentTypes] = useState<Record<string, TournamentType>>({})
 
   // ── Draft state ───────────────────────────────────────────────────────────
   const [draftId, setDraftId] = useState<string | null>(null)
@@ -67,8 +69,8 @@ export function RtfImportClient() {
   const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
 
   // Keep a ref of current state for auto-save without stale closures
-  const stateRef = useRef({ text, year, selected, schoolOverrides, wrestlerOverrides, dates, reviewed, step, draftId, draftLabel })
-  stateRef.current = { text, year, selected, schoolOverrides, wrestlerOverrides, dates, reviewed, step, draftId, draftLabel }
+  const stateRef = useRef({ text, year, selected, schoolOverrides, wrestlerOverrides, dates, tournamentTypes, reviewed, step, draftId, draftLabel })
+  stateRef.current = { text, year, selected, schoolOverrides, wrestlerOverrides, dates, tournamentTypes, reviewed, step, draftId, draftLabel }
 
   // Load draft list on mount
   useEffect(() => {
@@ -191,8 +193,13 @@ export function RtfImportClient() {
       if (data.error) { setMatchError(data.error); return }
       setReviewed(data.reviewed)
       const d: Record<string, { start_date: string; end_date: string | null }> = {}
-      for (const t of data.reviewed) d[t.name] = { start_date: t.start_date, end_date: t.end_date }
+      const tt: Record<string, TournamentType> = {}
+      for (const t of data.reviewed) {
+        d[t.name] = { start_date: t.start_date, end_date: t.end_date }
+        tt[t.name] = t.tournament_type ?? 'inside'
+      }
       setDates(d)
+      setTournamentTypes(prev => ({ ...tt, ...prev }))
       setExpandedTournament(
         data.reviewed.find(t => t.school_flags.length > 0 || t.wrestler_flags.length > 0)?.name
         ?? data.reviewed[0]?.name ?? null,
@@ -224,7 +231,7 @@ export function RtfImportClient() {
     startTransition(async () => {
       const toImport = [...selected].filter(name => !deferredTournaments.has(name))
       const data = await apiPost<{ results: ImportResult[] }>(
-        '/api/admin/rtf/import', { text, year, selected: toImport, schoolOverrides, wrestlerOverrides, tournamentDates: dates, force },
+        '/api/admin/rtf/import', { text, year, selected: toImport, schoolOverrides, wrestlerOverrides, tournamentDates: dates, tournamentTypes, force },
       )
       if (data.error) { setMatchError(data.error); return }
       // Only mark draft as fully imported if no tournaments were deferred
@@ -260,7 +267,7 @@ export function RtfImportClient() {
 
   function resetAll() {
     setText(''); setSummaries([]); setSelected(new Set())
-    setReviewed([]); setSchoolOverrides({}); setWrestlerOverrides({}); setDates({})
+    setReviewed([]); setSchoolOverrides({}); setWrestlerOverrides({}); setDates({}); setTournamentTypes({})
     setImportResults([]); setDraftId(null); setDraftLabel('')
     setSaveState('idle'); setStep('input')
   }
@@ -506,6 +513,16 @@ export function RtfImportClient() {
                       <input type="date" value={td.end_date ?? ''}
                         onChange={e => setDates(prev => ({ ...prev, [t.name]: { ...td, end_date: e.target.value || null } }))}
                         className="border border-slate-300 px-2 py-0.5 text-sm focus:outline-none focus:ring-1 focus:ring-black" />
+                      <label className="text-slate-500 text-xs">Type</label>
+                      <select
+                        value={tournamentTypes[t.name] ?? 'inside'}
+                        onChange={e => setTournamentTypes(prev => ({ ...prev, [t.name]: e.target.value as TournamentType }))}
+                        className="border border-slate-300 px-2 py-0.5 text-sm focus:outline-none focus:ring-1 focus:ring-black"
+                      >
+                        <option value="inside">Inside (NJ only)</option>
+                        <option value="inside_outside">Inside/Outside (NJ host + OOS)</option>
+                        <option value="outside">Outside (NJ teams travel out of state)</option>
+                      </select>
                     </div>
 
                     {t.school_flags.length > 0 && (

@@ -26,16 +26,26 @@ type ResolvedSchool = {
   alternates: SchoolFlag['alternates']
 }
 
+async function findOrCreateOosSchool(client: ReturnType<typeof createClient>, raw: string): Promise<number> {
+  const existing = await client.from('schools').select('id').eq('display_name', raw).eq('is_nj', false).maybeSingle()
+  if (existing.data?.id) return existing.data.id
+  const ins = await client.from('schools').insert({ display_name: raw, is_nj: false }).select('id').single()
+  if (ins.error) throw new Error(`OOS school insert failed for "${raw}": ${ins.error.message}`)
+  return ins.data.id
+}
+
 async function buildSchoolCache(
   rawNames: string[],
   overrides: Record<string, SchoolOverride>,
+  client: ReturnType<typeof createClient>,
 ): Promise<Map<string, ResolvedSchool>> {
   const cache = new Map<string, ResolvedSchool>()
   for (const raw of rawNames) {
     if (cache.has(raw)) continue
     const override = overrides[raw]
     if (override?.type === 'oos') {
-      cache.set(raw, { school_id: null, display_name: raw, confidence: 'none', alternates: [] })
+      const school_id = await findOrCreateOosSchool(client, raw)
+      cache.set(raw, { school_id, display_name: raw, confidence: 'oos', alternates: [] })
     } else if (override?.type === 'nj') {
       cache.set(raw, { school_id: override.school_id, display_name: override.display_name, confidence: 'exact', alternates: [] })
     } else {
@@ -60,6 +70,7 @@ export async function POST(req: NextRequest) {
   let schoolOverrides: Record<string, SchoolOverride>
   let wrestlerOverrides: Record<string, WrestlerOverride>
   let tournamentDates: Record<string, { start_date: string; end_date: string | null }>
+  let tournamentTypes: Record<string, string>
   let force: boolean
   try {
     const body = await req.json()
@@ -69,6 +80,7 @@ export async function POST(req: NextRequest) {
     schoolOverrides = body.schoolOverrides ?? {}
     wrestlerOverrides = body.wrestlerOverrides ?? {}
     tournamentDates = body.tournamentDates ?? {}
+    tournamentTypes = body.tournamentTypes ?? {}
     force = body.force ?? false
   } catch {
     return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
@@ -90,7 +102,7 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  const schoolCache = await buildSchoolCache([...allSchoolRaws], schoolOverrides)
+  const schoolCache = await buildSchoolCache([...allSchoolRaws], schoolOverrides, client)
   const client = serviceClient()
   const results: ImportResult[] = []
 
@@ -106,10 +118,15 @@ export async function POST(req: NextRequest) {
       const existing = await client.from('in_season_tournaments').select('id, source_format').eq('name', t.name).eq('season', SEASON).maybeSingle()
       let tid: string
 
+      const tournamentType = tournamentTypes[t.name] ?? 'inside'
+
       if (existing.data) {
         tid = existing.data.id
-        if (!existing.data.source_format) {
-          await client.from('in_season_tournaments').update({ source_format: t.source_format }).eq('id', tid)
+        const updates: Record<string, string> = {}
+        if (!existing.data.source_format) updates.source_format = t.source_format
+        if (tournamentType) updates.tournament_type = tournamentType
+        if (Object.keys(updates).length) {
+          await client.from('in_season_tournaments').update(updates).eq('id', tid)
         }
       } else {
         const ins = await client.from('in_season_tournaments').insert({
@@ -118,6 +135,7 @@ export async function POST(req: NextRequest) {
           start_date: dates.start_date,
           end_date: dates.end_date ?? undefined,
           source_format: t.source_format,
+          tournament_type: tournamentType,
         }).select('id').single()
         if (ins.error) throw new Error(ins.error.message)
         tid = ins.data.id
@@ -129,7 +147,7 @@ export async function POST(req: NextRequest) {
       if (hasBouts && !force) {
         const plRows = t.placements.map(p => {
           const ps = schoolCache.get(p.school_name)
-          return { in_season_tournament_id: tid, weight_class: p.weight_class, place: p.place, wrestler_name_raw: p.wrestler_name, school_name_raw: p.school_name, school_id: ps?.school_id ?? null, nj_wrestler_id: null }
+          return { in_season_tournament_id: tid, weight_class: p.weight_class, place: p.place, wrestler_name_raw: p.wrestler_name, school_name_raw: p.school_name, school_id: ps?.school_id ?? null, wrestler_id: null }
         })
         let pl_count = 0
         if (plRows.length) {
@@ -154,7 +172,7 @@ export async function POST(req: NextRequest) {
       })
 
       // Collect new wrestlers, respecting overrides
-      type NewWrestler = { name: string; school_id: number; first_name: string; last_name: string }
+      type NewWrestler = { name: string; school_id: number; first_name: string; last_name: string; is_oos: boolean }
       const newWrestlers: NewWrestler[] = []
       const seenNew = new Set<string>()
       // Cache of override-existing wrestler ids: key → wrestler_id
@@ -171,6 +189,7 @@ export async function POST(req: NextRequest) {
 
           const flagKey = `${name}|${s.school_id}|${b.weight_class}`
           const ov = wrestlerOverrides[flagKey]
+          const isOos = s.confidence === 'oos'
 
           if (ov?.type === 'skip') {
             overrideExistingMap.set(nkey, '__skip__')
@@ -178,16 +197,16 @@ export async function POST(req: NextRequest) {
             overrideExistingMap.set(nkey, ov.wrestler_id)
           } else if (ov?.type === 'create') {
             seenNew.add(nkey)
-            newWrestlers.push({ name, school_id: s.school_id, first_name: ov.first_name, last_name: ov.last_name })
+            newWrestlers.push({ name, school_id: s.school_id, first_name: ov.first_name, last_name: ov.last_name, is_oos: isOos })
           } else {
-            // accept or no override — run matcher
-            const wm = await matchWrestler(name, s.school_id, b.weight_class, 'M')
+            // accept or no override — run matcher (OOS wrestlers always isNew since they're not in tournament_entries)
+            const wm = isOos ? { isNew: true, wrestlerId: null } : await matchWrestler(name, s.school_id, b.weight_class, 'M')
             if (wm.isNew) {
               seenNew.add(nkey)
               const parts = name.trim().split(/\s+/)
               const last = parts.length > 1 ? parts[parts.length - 1] : ''
               const first = parts.length > 1 ? parts.slice(0, -1).join(' ') : name
-              newWrestlers.push({ name, school_id: s.school_id, first_name: first, last_name: last })
+              newWrestlers.push({ name, school_id: s.school_id, first_name: first, last_name: last, is_oos: isOos })
             }
           }
         }
@@ -197,7 +216,7 @@ export async function POST(req: NextRequest) {
       const aliasRows: Array<{ raw_name: string; school_id: number; wrestler_id: string }> = []
 
       for (const w of newWrestlers) {
-        const ins = await client.from('wrestlers').insert({ first_name: w.first_name, last_name: w.last_name, gender: 'M' }).select('id').single()
+        const ins = await client.from('wrestlers').insert({ first_name: w.first_name, last_name: w.last_name, gender: 'M', is_oos: w.is_oos }).select('id').single()
         if (!ins.error && ins.data) {
           newWrestlerMap.set(`${w.name}|${w.school_id}`, ins.data.id)
           aliasRows.push({ raw_name: w.name, school_id: w.school_id, wrestler_id: ins.data.id })
@@ -240,7 +259,7 @@ export async function POST(req: NextRequest) {
         if (db_type === null && winner === null) continue
         const s1 = schoolCache.get(b.wrestler1_school)
         const s2 = schoolCache.get(b.wrestler2_school)
-        const resolveId = async (name: string, school_id: number | null | undefined, wc: number) => {
+        const resolveId = async (name: string, school_id: number | null | undefined, wc: number, isOos: boolean) => {
           if (!school_id) return null
           const nkey = `${name}|${school_id}`
           const flagKey = `${name}|${school_id}|${wc}`
@@ -251,11 +270,13 @@ export async function POST(req: NextRequest) {
           if (cached === '__skip__') return null
           if (cached) return cached
           if (newWrestlerMap.has(nkey)) return newWrestlerMap.get(nkey)!
+          // OOS wrestlers: only check alias (no tournament_entries to match against)
+          if (isOos) return null
           const wm = await matchWrestler(name, school_id, wc, 'M')
           return wm.wrestlerId ?? null
         }
-        const nj1 = await resolveId(b.wrestler1_name, s1?.school_id, b.weight_class)
-        const nj2 = await resolveId(b.wrestler2_name, s2?.school_id, b.weight_class)
+        const w1 = await resolveId(b.wrestler1_name, s1?.school_id, b.weight_class, s1?.confidence === 'oos')
+        const w2 = await resolveId(b.wrestler2_name, s2?.school_id, b.weight_class, s2?.confidence === 'oos')
         boutRows.push({
           in_season_tournament_id: tid,
           weight_class: b.weight_class,
@@ -263,11 +284,11 @@ export async function POST(req: NextRequest) {
           wrestler1_name_raw: b.wrestler1_name,
           wrestler1_school_raw: s1?.display_name ?? b.wrestler1_school,
           wrestler1_school_id: s1?.school_id ?? null,
-          nj_wrestler1_id: nj1,
+          wrestler1_id: w1,
           wrestler2_name_raw: b.wrestler2_name,
           wrestler2_school_raw: s2?.display_name ?? b.wrestler2_school,
           wrestler2_school_id: s2?.school_id ?? null,
-          nj_wrestler2_id: nj2,
+          wrestler2_id: w2,
           winner,
           result_type: db_type,
           result_detail: db_detail,
@@ -291,7 +312,7 @@ export async function POST(req: NextRequest) {
           const pm = await matchWrestler(p.wrestler_name, ps.school_id, p.weight_class, 'M')
           if (pm.confidence === 'exact' || pm.confidence === 'high') nj_wid = pm.wrestlerId
         }
-        plRows.push({ in_season_tournament_id: tid, weight_class: p.weight_class, place: p.place, wrestler_name_raw: p.wrestler_name, school_name_raw: p.school_name, school_id: ps?.school_id ?? null, nj_wrestler_id: nj_wid })
+        plRows.push({ in_season_tournament_id: tid, weight_class: p.weight_class, place: p.place, wrestler_name_raw: p.wrestler_name, school_name_raw: p.school_name, school_id: ps?.school_id ?? null, wrestler_id: nj_wid })
       }
       let pl_count = 0
       if (plRows.length) {

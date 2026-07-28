@@ -257,13 +257,13 @@ export default async function WrestlerPage({
         .select(`
           id, weight_class, round, winner,
           result_type, result_detail, fall_time_seconds,
-          nj_wrestler1_id, wrestler1_name_raw, wrestler1_school_raw,
-          nj_wrestler2_id, wrestler2_name_raw, wrestler2_school_raw,
+          wrestler1_id, wrestler1_name_raw, wrestler1_school_raw,
+          wrestler2_id, wrestler2_name_raw, wrestler2_school_raw,
           wrestler1_school:schools!wrestler1_school_id(id, display_name, is_nj),
           wrestler2_school:schools!wrestler2_school_id(id, display_name, is_nj),
           event:in_season_tournaments!in_season_tournament_id(id, name, start_date)
         `)
-        .or(`nj_wrestler1_id.eq.${id},nj_wrestler2_id.eq.${id}`),
+        .or(`wrestler1_id.eq.${id},wrestler2_id.eq.${id}`),
       supabase
         .from('dual_meet_matches')
         .select(`
@@ -286,8 +286,8 @@ export default async function WrestlerPage({
   const boutSchoolId = (() => {
     if (!boutData || boutData.length === 0) return null
     for (const bout of boutData as any[]) {
-      if (String(bout.nj_wrestler1_id) === id) return (bout.wrestler1_school as any)?.id ?? null
-      if (String(bout.nj_wrestler2_id) === id) return (bout.wrestler2_school as any)?.id ?? null
+      if (String(bout.wrestler1_id) === id) return (bout.wrestler1_school as any)?.id ?? null
+      if (String(bout.wrestler2_id) === id) return (bout.wrestler2_school as any)?.id ?? null
     }
     return null
   })()
@@ -534,11 +534,11 @@ export default async function WrestlerPage({
     result_type: string | null
     result_detail: string | null
     fall_time_seconds: number | null
-    nj_wrestler1_id: string | null
+    wrestler1_id: string | null
     wrestler1_name_raw: string
     wrestler1_school_raw: string
     wrestler1_school: { display_name: string; is_nj: boolean } | null
-    nj_wrestler2_id: string | null
+    wrestler2_id: string | null
     wrestler2_name_raw: string
     wrestler2_school_raw: string
     wrestler2_school: { display_name: string; is_nj: boolean } | null
@@ -1260,12 +1260,12 @@ export default async function WrestlerPage({
                 <table className="w-full text-sm">
                   <tbody className="divide-y divide-slate-100">
                     {tBouts.map(bout => {
-                      const isW1 = bout.nj_wrestler1_id === id
+                      const isW1 = bout.wrestler1_id === id
                       const result: 'W' | 'L' | null = bout.winner === null
                         ? null
                         : (isW1 && bout.winner === 1) || (!isW1 && bout.winner === 2) ? 'W' : 'L'
                       const oppName = isW1 ? bout.wrestler2_name_raw : bout.wrestler1_name_raw
-                      const oppId = isW1 ? bout.nj_wrestler2_id : bout.nj_wrestler1_id
+                      const oppId = isW1 ? bout.wrestler2_id : bout.wrestler1_id
                       const oppSchoolJoin = isW1 ? bout.wrestler2_school : bout.wrestler1_school
                       const oppSchoolRaw = isW1 ? bout.wrestler2_school_raw : bout.wrestler1_school_raw
                       const oppSchool = oppSchoolJoin?.display_name ?? oppSchoolRaw

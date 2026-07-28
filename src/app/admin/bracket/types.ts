@@ -58,11 +58,11 @@ export interface TournamentBoutRecord {
   in_season_tournament_id: string
   weight_class: number
   round: string
-  nj_wrestler1_id: string | null
+  wrestler1_id: string | null
   wrestler1_name_raw: string
   wrestler1_school_id: number | null
   wrestler1_school_raw: string
-  nj_wrestler2_id: string | null
+  wrestler2_id: string | null
   wrestler2_name_raw: string
   wrestler2_school_id: number | null
   wrestler2_school_raw: string

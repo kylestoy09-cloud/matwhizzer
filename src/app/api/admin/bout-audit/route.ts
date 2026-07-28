@@ -29,8 +29,8 @@ export async function GET(req: NextRequest) {
   // Collect all linked wrestler IDs for the cross-check join
   const wrestlerIds = new Set<string>()
   for (const b of bouts) {
-    if (b.nj_wrestler1_id) wrestlerIds.add(b.nj_wrestler1_id)
-    if (b.nj_wrestler2_id) wrestlerIds.add(b.nj_wrestler2_id)
+    if (b.wrestler1_id) wrestlerIds.add(b.wrestler1_id)
+    if (b.wrestler2_id) wrestlerIds.add(b.wrestler2_id)
   }
 
   // wrestler_id → registered school_id from tournament_entries.
@@ -58,11 +58,11 @@ export async function GET(req: NextRequest) {
 
   const augmented = bouts.map(b => ({
     ...b,
-    w1_registered_school_id: b.nj_wrestler1_id
-      ? (wrestlerSchools.get(b.nj_wrestler1_id) ?? null)
+    w1_registered_school_id: b.wrestler1_id
+      ? (wrestlerSchools.get(b.wrestler1_id) ?? null)
       : null,
-    w2_registered_school_id: b.nj_wrestler2_id
-      ? (wrestlerSchools.get(b.nj_wrestler2_id) ?? null)
+    w2_registered_school_id: b.wrestler2_id
+      ? (wrestlerSchools.get(b.wrestler2_id) ?? null)
       : null,
   }))
 

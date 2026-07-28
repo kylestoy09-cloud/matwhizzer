@@ -13,10 +13,10 @@ export async function PATCH(req: NextRequest) {
     id: string
     wrestler1_school_id?: number | null
     wrestler1_school_raw?: string
-    nj_wrestler1_id?: string | null
+    wrestler1_id?: string | null
     wrestler2_school_id?: number | null
     wrestler2_school_raw?: string
-    nj_wrestler2_id?: string | null
+    wrestler2_id?: string | null
     winner?: 1 | 2 | null
     result_type?: string | null
     result_detail?: string | null

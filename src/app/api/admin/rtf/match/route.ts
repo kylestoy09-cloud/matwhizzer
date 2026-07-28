@@ -25,16 +25,26 @@ type ResolvedSchool = {
   alternates: SchoolFlag['alternates']
 }
 
+async function findOrCreateOosSchool(client: ReturnType<typeof createClient>, raw: string): Promise<number> {
+  const existing = await client.from('schools').select('id').eq('display_name', raw).eq('is_nj', false).maybeSingle()
+  if (existing.data?.id) return existing.data.id
+  const ins = await client.from('schools').insert({ display_name: raw, is_nj: false }).select('id').single()
+  if (ins.error) throw new Error(`OOS school insert failed for "${raw}": ${ins.error.message}`)
+  return ins.data.id
+}
+
 async function buildSchoolCache(
   rawNames: string[],
   overrides: Record<string, SchoolOverride>,
+  client: ReturnType<typeof createClient>,
 ): Promise<Map<string, ResolvedSchool>> {
   const cache = new Map<string, ResolvedSchool>()
   for (const raw of rawNames) {
     if (cache.has(raw)) continue
     const override = overrides[raw]
     if (override?.type === 'oos') {
-      cache.set(raw, { school_id: null, display_name: raw, confidence: 'none', alternates: [] })
+      const school_id = await findOrCreateOosSchool(client, raw)
+      cache.set(raw, { school_id, display_name: raw, confidence: 'oos', alternates: [] })
     } else if (override?.type === 'nj') {
       cache.set(raw, { school_id: override.school_id, display_name: override.display_name, confidence: 'exact', alternates: [] })
     } else {
@@ -82,7 +92,7 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  const schoolCache = await buildSchoolCache([...allSchoolRaws], schoolOverrides)
+  const schoolCache = await buildSchoolCache([...allSchoolRaws], schoolOverrides, client)
   const client = serviceClient()
   const reviewed: ReviewedTournament[] = []
 
@@ -133,8 +143,10 @@ export async function POST(req: NextRequest) {
       if (db_type === null && winner === null) continue
       for (const [name, school_raw] of [[b.wrestler1_name, b.wrestler1_school], [b.wrestler2_name, b.wrestler2_school]] as [string, string][]) {
         const s = schoolCache.get(school_raw)
-        // Skip wrestlers at OOS schools or schools with uncertain NJ match — resolve school flags first
+        // Skip wrestlers at unknown schools or uncertain NJ matches — resolve school flags first
+        // OOS schools (confidence='oos') are skipped too — their wrestlers auto-create, no review needed
         if (!s?.school_id) continue
+        if (s.confidence === 'oos') continue
         if (s.confidence !== 'exact' && s.confidence !== 'alias' && s.confidence !== 'high') continue
         const fkey = `${name}|${s.school_id}|${b.weight_class}`
         if (wrestlerFlagMap.has(fkey)) continue

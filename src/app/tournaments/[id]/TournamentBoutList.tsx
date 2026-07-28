@@ -14,11 +14,11 @@ type Bout = {
   result_type: string | null
   result_detail: string | null
   fall_time_seconds: number | null
-  nj_wrestler1_id: string | null
+  wrestler1_id: string | null
   wrestler1_name_raw: string
   wrestler1_school_raw: string
   wrestler1_school: SchoolJoin
-  nj_wrestler2_id: string | null
+  wrestler2_id: string | null
   wrestler2_name_raw: string
   wrestler2_school_raw: string
   wrestler2_school: SchoolJoin
@@ -156,8 +156,8 @@ export function TournamentBoutList({
                         <tr key={bout.id} className="hover:bg-slate-50 group">
                           <td className="px-4 py-2.5 w-[38%]">
                             <div className={`font-medium ${bout.winner !== null ? won1 ? 'text-slate-900' : 'text-slate-400' : 'text-slate-800'}`}>
-                              {bout.nj_wrestler1_id && s1?.is_nj ? (
-                                <Link href={`/wrestler/${bout.nj_wrestler1_id}`} className="hover:underline">
+                              {bout.wrestler1_id && s1?.is_nj ? (
+                                <Link href={`/wrestler/${bout.wrestler1_id}`} className="hover:underline">
                                   {bout.wrestler1_name_raw}
                                 </Link>
                               ) : bout.wrestler1_name_raw}
@@ -178,8 +178,8 @@ export function TournamentBoutList({
 
                           <td className="px-4 py-2.5 w-[38%] text-right">
                             <div className={`font-medium ${bout.winner !== null ? won2 ? 'text-slate-900' : 'text-slate-400' : 'text-slate-800'}`}>
-                              {bout.nj_wrestler2_id && s2?.is_nj ? (
-                                <Link href={`/wrestler/${bout.nj_wrestler2_id}`} className="hover:underline">
+                              {bout.wrestler2_id && s2?.is_nj ? (
+                                <Link href={`/wrestler/${bout.wrestler2_id}`} className="hover:underline">
                                   {bout.wrestler2_name_raw}
                                 </Link>
                               ) : bout.wrestler2_name_raw}

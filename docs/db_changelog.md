@@ -5,6 +5,26 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-07-28 — Tournament type classification + OOS wrestler/school support
+
+**Migration file:** `docs/migrations/20260728_tournament_type_and_oos_wrestlers.sql`
+
+**Status:** PENDING — run in Supabase SQL editor.
+
+**What changed:**
+
+1. **`in_season_tournaments.tournament_type`** — new text column, values: `'outside'` (NJ teams travel OOS), `'inside_outside'` (NJ host + OOS teams), `'inside'` (NJ host, all NJ). Set per tournament in the import UI review step.
+
+2. **`tournament_bouts`: `nj_wrestler1_id` → `wrestler1_id`, `nj_wrestler2_id` → `wrestler2_id`** — these columns now hold IDs for ALL wrestlers (NJ and OOS), not just NJ. Tables were empty so rename is safe.
+
+3. **`tournament_placements`: `nj_wrestler_id` → `wrestler_id`** — same reason.
+
+4. **`wrestlers.is_oos boolean DEFAULT false`** — flags out-of-state athletes created from tournament imports. OOS wrestlers get real rows in `wrestlers` and `schools` (with `is_nj = false`) so they resolve for common-opponent queries and match history.
+
+**Code impact:** All TypeScript references updated across 13 files. Import route now find-or-creates OOS school rows and creates OOS wrestler rows automatically on import. Match route skips wrestler-flag review for OOS (they auto-create). Import UI adds tournament type dropdown per tournament in the review step.
+
+---
+
 ## 2026-07-27 — Rewrite school_wrestlers RPC to include in-season wrestlers
 
 **Migration file:** `docs/migrations/20260727_school_wrestlers_include_inseason.sql`

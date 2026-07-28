@@ -23,9 +23,9 @@ type Placement = {
   wrestler_name_raw: string
   school_name_raw: string
   school_id: number | null
-  nj_wrestler_id: string | null
+  wrestler_id: string | null
   school: { display_name: string; is_nj: boolean } | null
-  nj_wrestler: { id: string } | null
+  wrestler: { id: string } | null
 }
 
 type School = { id: number; display_name: string; is_nj: boolean }
@@ -39,11 +39,11 @@ type Bout = {
   result_type: string | null
   result_detail: string | null
   fall_time_seconds: number | null
-  nj_wrestler1_id: string | null
+  wrestler1_id: string | null
   wrestler1_name_raw: string
   wrestler1_school_raw: string
   wrestler1_school: SchoolJoin
-  nj_wrestler2_id: string | null
+  wrestler2_id: string | null
   wrestler2_name_raw: string
   wrestler2_school_raw: string
   wrestler2_school: SchoolJoin
@@ -101,7 +101,7 @@ export default async function TournamentDetailPage({
     supabase
       .from('tournament_placements')
       .select(`
-        weight_class, place, wrestler_name_raw, school_name_raw, school_id, nj_wrestler_id,
+        weight_class, place, wrestler_name_raw, school_name_raw, school_id, wrestler_id,
         school:schools!school_id(display_name, is_nj)
       `)
       .eq('in_season_tournament_id', id)
@@ -130,8 +130,8 @@ export default async function TournamentDetailPage({
         .select(`
           id, weight_class, round, winner,
           result_type, result_detail, fall_time_seconds,
-          nj_wrestler1_id, wrestler1_name_raw, wrestler1_school_raw,
-          nj_wrestler2_id, wrestler2_name_raw, wrestler2_school_raw,
+          wrestler1_id, wrestler1_name_raw, wrestler1_school_raw,
+          wrestler2_id, wrestler2_name_raw, wrestler2_school_raw,
           wrestler1_school:schools!wrestler1_school_id(id, display_name, is_nj),
           wrestler2_school:schools!wrestler2_school_id(id, display_name, is_nj)
         `)
@@ -249,9 +249,9 @@ export default async function TournamentDetailPage({
                           {weight}
                         </td>
                         <td className="px-4 py-2">
-                          {p.nj_wrestler_id ? (
+                          {p.wrestler_id ? (
                             <Link
-                              href={`/wrestler/${p.nj_wrestler_id}`}
+                              href={`/wrestler/${p.wrestler_id}`}
                               className="font-medium text-slate-900 hover:underline"
                             >
                               {name}
@@ -289,9 +289,9 @@ export default async function TournamentDetailPage({
                           {p.weight_class}
                         </td>
                         <td className="px-4 py-2">
-                          {p.nj_wrestler_id ? (
+                          {p.wrestler_id ? (
                             <Link
-                              href={`/wrestler/${p.nj_wrestler_id}`}
+                              href={`/wrestler/${p.wrestler_id}`}
                               className="font-medium text-slate-900 hover:underline"
                             >
                               {p.wrestler_name_raw}

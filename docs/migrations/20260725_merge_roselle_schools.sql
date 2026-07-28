@@ -22,5 +22,13 @@ FROM (
 ) AS src
 WHERE public.schools.id = 125;
 
--- Step 2: Delete the duplicate. Safe because all FK counts for school 358 = 0.
+-- Step 2: Clear FK references that block the delete.
+-- school_aliases: one row (Abraham Clark alias) — moved to 125 in earlier run; delete any remainder.
+DELETE FROM public.school_aliases WHERE school_id = 358;
+-- conference_standings: one row (no real data, school 358 was a duplicate created in error).
+DELETE FROM public.conference_standings WHERE school_id = 358;
+-- school_districts: one row (125 already has its correct district assignment).
+DELETE FROM public.school_districts WHERE school_id = 358;
+
+-- Step 3: Delete the duplicate school record.
 DELETE FROM public.schools WHERE id = 358;

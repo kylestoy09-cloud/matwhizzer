@@ -203,13 +203,13 @@ function InSeasonEditor({
                           {!bout.wrestler1_school_id && (
                             <span className="text-[10px] text-orange-500">W1 school unlinked</span>
                           )}
-                          {!bout.nj_wrestler1_id && bout.wrestler1_school_id && (
+                          {!bout.wrestler1_id && bout.wrestler1_school_id && (
                             <span className="text-[10px] text-yellow-600">W1 wrestler unlinked</span>
                           )}
                           {!bout.wrestler2_school_id && (
                             <span className="text-[10px] text-orange-500">W2 school unlinked</span>
                           )}
-                          {!bout.nj_wrestler2_id && bout.wrestler2_school_id && (
+                          {!bout.wrestler2_id && bout.wrestler2_school_id && (
                             <span className="text-[10px] text-yellow-600">W2 wrestler unlinked</span>
                           )}
                         </div>
