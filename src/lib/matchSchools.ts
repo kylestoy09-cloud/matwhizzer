@@ -199,6 +199,28 @@ export async function matchSchoolNames(rawName: string): Promise<SchoolMatch> {
   const exactOos = oosSchools.find(s => s.display_name.toLowerCase() === raw.toLowerCase())
   if (exactOos) return oosExactResult(raw, exactOos)
 
+  // ── 4b. Nested-paren extraction — handles TW "City (School)" or "School (City)" ──
+  // TW exports school names like "Wilmette (Loyola Academy)" or "Rockton (Hononegah)"
+  // where either the outer or inner part is the canonical school name in our DB.
+  // Try exact OOS match and alias lookup against both parts (inner first, then outer).
+  const parenM = raw.match(/^(.+?)\s*\((.+)\)$/)
+  if (parenM) {
+    const outer = parenM[1].trim()
+    const inner = parenM[2].trim()
+    for (const part of [inner, outer]) {
+      const partLower = part.toLowerCase()
+      const partAlias = aliases.find(a => a.alias.toLowerCase() === partLower)
+      if (partAlias) return aliasResult(raw, partAlias, njSchools, oosSchools)
+      const partOos = oosSchools.find(s => s.display_name.toLowerCase() === partLower)
+      if (partOos) return oosExactResult(raw, partOos)
+      const strippedPart = stripSuffixes(part)
+      if (strippedPart !== part) {
+        const strippedPartOos = oosSchools.find(s => s.display_name.toLowerCase() === strippedPart.toLowerCase())
+        if (strippedPartOos) return oosExactResult(raw, strippedPartOos)
+      }
+    }
+  }
+
   // ── 5. Suffix-stripped exact OOS ─────────────────────────────────────────────
   // 5a. Strip raw → match against OOS names
   if (stripped !== raw && stripped.length > 0) {
