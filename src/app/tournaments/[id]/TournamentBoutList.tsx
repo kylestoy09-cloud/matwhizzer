@@ -48,16 +48,18 @@ const ROUND_LABEL: Record<string, string> = {
   V: 'Varsity', UNK: 'Unknown',
 }
 
-function formatResult(type: string | null, detail: string | null, secs: number | null): string {
+function formatResult(type: string | null, detail: string | null, secs: number | null, estimated = false): string {
   if (!type) return '—'
   const up = type.toUpperCase()
+  const fmtTime = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`
   if (up === 'FALL') {
-    if (secs) {
-      const m = Math.floor(secs / 60)
-      const s = String(secs % 60).padStart(2, '0')
-      return `Fall ${m}:${s}`
-    }
+    if (secs && !estimated) return `Fall ${fmtTime(secs)}`
     return detail ? `Fall ${detail}` : 'Fall'
+  }
+  if (up === 'TF') {
+    const score = detail ?? ''
+    if (secs && !estimated) return `TF ${score} ${fmtTime(secs)}`.trim()
+    return score ? `TF ${score}` : 'TF'
   }
   if (up === 'FOR' || up === 'FORF' || up === 'FORFEIT') return 'Forfeit'
   if (up === 'DFF' || up === 'DOUBLE FORFEIT') return 'Double Forfeit'
@@ -110,7 +112,7 @@ export function TournamentBoutList({
                   const school2 = s2?.display_name ?? bout.wrestler2_school_raw
                   const won1 = bout.winner === 1
                   const won2 = bout.winner === 2
-                  const resultStr = formatResult(bout.result_type, bout.result_detail, bout.fall_time_seconds)
+                  const resultStr = formatResult(bout.result_type, bout.result_detail, bout.fall_time_seconds, bout.result_time_estimated)
                   const editHref = `/admin/bracket?mode=in-season&tid=${tournamentId}&boutId=${bout.id}&w=${selectedWeight}`
 
                   return (
