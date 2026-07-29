@@ -5,6 +5,25 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-07-29 — Cleanup bad wrestler records from parser bug
+
+**Migration file:** `docs/migrations/20260729_cleanup_bad_wrestler_names.sql`
+
+**Status:** PENDING — run STEP 1 (diagnostic) first, then force-reimport affected tournaments, then STEP 2 (delete).
+
+**What changed:**
+
+Data-only cleanup — no DDL. Deletes wrestler rows where `first_name` or `last_name` contains `(` or `)`, created when `extractNameSchool` in `parseRtf.ts` returned the full string including the school fragment (e.g. "Ryan Mitchell (St Joseph" → first_name="Ryan Mitchell (St", last_name="Joseph") when a bout line had an unclosed parenthesis.
+
+Parser was fixed 2026-07-29. After force-reimporting each affected tournament, the bad wrestlers become orphaned (no bout references) and can be safely deleted. Aliases cascade.
+
+**Why:** Re-importing each tournament (force mode) deletes and recreates bouts with clean wrestler names. The old bad wrestler rows then have no referencing bouts and can be dropped.
+
+**Reversible?** No — but bad wrestlers have no legitimate bout data attached after force-reimport.
+**Verified?** No — run STEP 1 diagnostic first to confirm scope.
+
+---
+
 ## 2026-07-28 — dual_meet_matches: backfill scores and times
 
 **Migration file:** `docs/migrations/20260728_dual_meet_matches_backfill_scores.sql`
