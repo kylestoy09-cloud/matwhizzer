@@ -1050,7 +1050,7 @@ export function boutResultToDb(resultType: string, resultDetail: string | null):
   }
   if (rt.toUpperCase() === 'TF') {
     const detail = (resultDetail ?? '').trim()
-    const timeMatch = detail.match(/^(\d+:\d{2})/)
+    const timeMatch = detail.match(/(\d+:\d{2})/)
     const scoreMatch = detail.match(/(\d+-\d+)/)
     const timeSecs = timeMatch ? parseTime(timeMatch[1]) : null
     const estimated = !timeSecs
