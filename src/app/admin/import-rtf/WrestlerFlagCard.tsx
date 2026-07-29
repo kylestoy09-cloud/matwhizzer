@@ -144,8 +144,8 @@ export function WrestlerFlagCard({ flag, override, onOverride }: Props) {
           {!override && !flag.is_new && (
             <span className="text-amber-700">⚠ low — {flag.display_name ?? '—'}</span>
           )}
-          {/* Skip / OOS button — always available unless already skipped */}
-          {!isSkipped && (
+          {/* Skip/OOS button — hidden for OOS school wrestlers (they're already OOS) */}
+          {!isSkipped && !flag.is_oos && (
             <button
               onClick={() => { onOverride(flag.key, { type: 'skip' }); setMode('default') }}
               className="ml-2 px-2 py-0.5 border border-slate-300 text-slate-500 hover:border-red-400 hover:text-red-600 transition-colors"

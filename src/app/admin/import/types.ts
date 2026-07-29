@@ -41,7 +41,7 @@ export function makeWrestlerKey(
 export type ResolvedSchool = {
   schoolId:     number | null
   displayName:  string | null
-  confidence:   'exact' | 'high' | 'low' | 'none'
+  confidence:   'exact' | 'high' | 'low' | 'none' | 'oos'
   isOutOfState: boolean
 }
 

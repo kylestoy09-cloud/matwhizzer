@@ -19,13 +19,13 @@ export type SchoolMatch = {
   rawName: string
   schoolId: number | null
   displayName: string | null
-  confidence: 'exact' | 'high' | 'low' | 'none'
+  confidence: 'exact' | 'high' | 'low' | 'none' | 'oos'
   alternates: { schoolId: number; displayName: string; score: number }[]
   canCreateOutOfState?: boolean   // true when confidence is 'none' — no NJ school record found
 }
 
 type SchoolRow = { id: number; display_name: string }
-type AliasRow  = { school_id: number; alias: string }
+type AliasRow  = { school_id: number | null; alias: string; alias_type: string | null }
 
 // ── Supabase client ────────────────────────────────────────────────────────────
 // Service role — bypasses RLS, safe for server-only lib.
@@ -39,8 +39,10 @@ function getClient() {
 
 // ── In-memory cache (module-level, survives across calls in same server process) ─
 
-let schoolCache: SchoolRow[] | null = null
-let aliasCache:  AliasRow[]  | null = null
+let schoolCache:   SchoolRow[] | null = null
+let aliasCache:    AliasRow[]  | null = null
+// OOS school display_name (lowercased) → { id, display_name }
+let oosSchoolCache: Map<string, { id: number; display_name: string }> | null = null
 
 async function loadSchools(): Promise<SchoolRow[]> {
   if (schoolCache) return schoolCache
@@ -58,10 +60,24 @@ async function loadAliases(): Promise<AliasRow[]> {
   if (aliasCache) return aliasCache
   const { data, error } = await getClient()
     .from('school_aliases')
-    .select('school_id, alias')
+    .select('school_id, alias, alias_type')
   if (error) throw new Error(`matchSchools: failed to load aliases — ${error.message}`)
   aliasCache = (data ?? []) as AliasRow[]
   return aliasCache
+}
+
+async function loadOosSchools(): Promise<Map<string, { id: number; display_name: string }>> {
+  if (oosSchoolCache) return oosSchoolCache
+  const { data, error } = await getClient()
+    .from('schools')
+    .select('id, display_name')
+    .eq('is_nj', false)
+  if (error) throw new Error(`matchSchools: failed to load OOS schools — ${error.message}`)
+  oosSchoolCache = new Map()
+  for (const s of (data ?? []) as SchoolRow[]) {
+    oosSchoolCache.set(s.display_name.toLowerCase(), { id: s.id, display_name: s.display_name })
+  }
+  return oosSchoolCache
 }
 
 // ── Trigram similarity (JS implementation — pg_trgm not installed) ─────────────
@@ -128,7 +144,19 @@ function aliasResult(
   rawName: string,
   aliasHit: AliasRow,
   schools: SchoolRow[],
+  oosSchools: Map<string, { id: number; display_name: string }>,
 ): SchoolMatch {
+  if (aliasHit.alias_type === 'oos') {
+    // OOS aliases have school_id = null; look up by display_name match
+    const oosSchool = oosSchools.get(aliasHit.alias.toLowerCase())
+    return {
+      rawName,
+      schoolId:    oosSchool?.id ?? null,
+      displayName: oosSchool?.display_name ?? aliasHit.alias,
+      confidence:  'oos',
+      alternates:  [],
+    }
+  }
   const school = schools.find(s => s.id === aliasHit.school_id) ?? null
   return {
     rawName,
@@ -144,7 +172,7 @@ function aliasResult(
 export async function matchSchoolNames(rawName: string): Promise<SchoolMatch> {
   const raw = rawName.trim()
 
-  const [schools, aliases] = await Promise.all([loadSchools(), loadAliases()])
+  const [schools, aliases, oosSchools] = await Promise.all([loadSchools(), loadAliases(), loadOosSchools()])
 
   // ── 1. Exact display_name match ──────────────────────────────────────────────
   const exactSchool = schools.find(s => s.display_name.toLowerCase() === raw.toLowerCase())
@@ -152,7 +180,7 @@ export async function matchSchoolNames(rawName: string): Promise<SchoolMatch> {
 
   // ── 2. Alias exact match ─────────────────────────────────────────────────────
   const aliasHit = aliases.find(a => a.alias.toLowerCase() === raw.toLowerCase())
-  if (aliasHit) return aliasResult(raw, aliasHit, schools)
+  if (aliasHit) return aliasResult(raw, aliasHit, schools, oosSchools)
 
   // ── 3. Suffix-stripped exact + alias retry ───────────────────────────────────
   const stripped = stripSuffixes(raw)
@@ -161,7 +189,7 @@ export async function matchSchoolNames(rawName: string): Promise<SchoolMatch> {
     if (strippedSchool) return exactResult(raw, strippedSchool)
 
     const strippedAlias = aliases.find(a => a.alias.toLowerCase() === stripped.toLowerCase())
-    if (strippedAlias) return aliasResult(raw, strippedAlias, schools)
+    if (strippedAlias) return aliasResult(raw, strippedAlias, schools, oosSchools)
   }
 
   // ── 4. Fuzzy trigram match ───────────────────────────────────────────────────
@@ -201,6 +229,7 @@ export async function matchSchoolNames(rawName: string): Promise<SchoolMatch> {
 
 /** Clears the in-memory cache — useful in tests or after DB updates. */
 export function clearSchoolCache(): void {
-  schoolCache = null
-  aliasCache  = null
+  schoolCache    = null
+  aliasCache     = null
+  oosSchoolCache = null
 }

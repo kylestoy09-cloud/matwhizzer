@@ -149,10 +149,8 @@ export async function POST(req: NextRequest) {
       for (const [name, school_raw] of [[b.wrestler1_name, b.wrestler1_school], [b.wrestler2_name, b.wrestler2_school]] as [string, string][]) {
         const s = schoolCache.get(school_raw)
         // Skip wrestlers at unknown schools or uncertain NJ matches — resolve school flags first
-        // OOS schools (confidence='oos') are skipped too — their wrestlers auto-create, no review needed
         if (!s?.school_id) continue
-        if (s.confidence === 'oos') continue
-        if (s.confidence !== 'exact' && s.confidence !== 'alias' && s.confidence !== 'high') continue
+        if (s.confidence !== 'exact' && s.confidence !== 'alias' && s.confidence !== 'high' && s.confidence !== 'oos') continue
         const fkey = `${name}|${s.school_id}|${b.weight_class}`
         if (wrestlerFlagMap.has(fkey)) continue
         const wm = await matchWrestler(name, s.school_id, b.weight_class, 'M')
@@ -165,6 +163,7 @@ export async function POST(req: NextRequest) {
             weight_class: b.weight_class,
             confidence: wm.confidence,
             is_new: wm.isNew,
+            is_oos: s.confidence === 'oos',
             wrestler_id: wm.wrestlerId,
             display_name: wm.displayName,
             alternates: wm.alternates.map(a => ({ wrestler_id: a.wrestlerId, display_name: a.displayName, score: a.score })),

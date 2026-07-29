@@ -50,6 +50,11 @@ async function buildSchoolCache(
     } else if (override?.type === 'oos') {
       const school_id = await findOrCreateOosSchool(client, raw)
       cache.set(raw, { school_id, display_name: raw, confidence: 'oos', alternates: [] })
+      // Persist alias so future imports recognize this raw name as OOS without re-prompting.
+      // school_id = null follows the OOS alias convention (school_aliases_oos_alias_unique index).
+      await (client as any).from('school_aliases')
+        .insert({ school_id: null, alias: raw, alias_type: 'oos' })
+        .then(() => {}).catch((e: { code?: string }) => { if (e?.code !== '23505') throw e })
     } else if (override?.type === 'nj') {
       cache.set(raw, { school_id: override.school_id, display_name: override.display_name, confidence: 'exact', alternates: [] })
     } else {
@@ -220,8 +225,8 @@ export async function POST(req: NextRequest) {
             seenNew.add(nkey)
             newWrestlers.push({ name, school_id: s.school_id, first_name: ov.first_name, last_name: ov.last_name, is_oos: isOos })
           } else {
-            // accept or no override — run matcher (OOS wrestlers always isNew since they're not in tournament_entries)
-            const wm = isOos ? { isNew: true, wrestlerId: null } : await matchWrestler(name, s.school_id, b.weight_class, 'M')
+            // accept or no override — run matcher
+            const wm = await matchWrestler(name, s.school_id, b.weight_class, 'M')
             if (wm.isNew) {
               seenNew.add(nkey)
               const parts = name.trim().split(/\s+/)
@@ -282,7 +287,7 @@ export async function POST(req: NextRequest) {
         if (db_type === null && winner === null) continue
         const s1 = schoolCache.get(b.wrestler1_school)
         const s2 = schoolCache.get(b.wrestler2_school)
-        const resolveId = async (name: string, school_id: number | null | undefined, wc: number, isOos: boolean) => {
+        const resolveId = async (name: string, school_id: number | null | undefined, wc: number) => {
           if (!school_id) return null
           const nkey = `${name}|${school_id}`
           const flagKey = `${name}|${school_id}|${wc}`
@@ -293,13 +298,11 @@ export async function POST(req: NextRequest) {
           if (cached === '__skip__') return null
           if (cached) return cached
           if (newWrestlerMap.has(nkey)) return newWrestlerMap.get(nkey)!
-          // OOS wrestlers: only check alias (no tournament_entries to match against)
-          if (isOos) return null
           const wm = await matchWrestler(name, school_id, wc, 'M')
           return wm.wrestlerId ?? null
         }
-        const w1 = await resolveId(b.wrestler1_name, s1?.school_id, b.weight_class, s1?.confidence === 'oos')
-        const w2 = await resolveId(b.wrestler2_name, s2?.school_id, b.weight_class, s2?.confidence === 'oos')
+        const w1 = await resolveId(b.wrestler1_name, s1?.school_id, b.weight_class)
+        const w2 = await resolveId(b.wrestler2_name, s2?.school_id, b.weight_class)
         const bkey = b.result_type === 'BYE'
           ? `${b.weight_class}|bye|${b.wrestler1_name}|${b.wrestler1_school}`
           : `${b.weight_class}|${[`${b.wrestler1_name}|${b.wrestler1_school}`, `${b.wrestler2_name}|${b.wrestler2_school}`].sort().join('|')}`

@@ -27,6 +27,7 @@ export type WrestlerFlag = {
   weight_class: number
   confidence: 'exact' | 'high' | 'low' | 'none'
   is_new: boolean
+  is_oos?: boolean
   wrestler_id: string | null
   display_name: string | null
   alternates: { wrestler_id: string; display_name: string; score: number }[]

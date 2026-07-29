@@ -27,7 +27,18 @@ export async function GET(req: NextRequest) {
       .eq('school_id', Number(school_id))
       .limit(2000)
 
-    const ids = [...new Set((entries ?? []).map((e: { wrestler_id: string }) => e.wrestler_id).filter(Boolean))]
+    let ids = [...new Set((entries ?? []).map((e: { wrestler_id: string }) => e.wrestler_id).filter(Boolean))]
+
+    // OOS schools have no tournament_entries — fall back to wrestler_name_aliases
+    if (ids.length === 0) {
+      const { data: aliases } = await supabase
+        .from('wrestler_name_aliases')
+        .select('wrestler_id')
+        .eq('school_id', Number(school_id))
+        .limit(2000)
+      ids = [...new Set((aliases ?? []).map((a: { wrestler_id: string }) => a.wrestler_id).filter(Boolean))]
+    }
+
     if (ids.length === 0) return NextResponse.json({ wrestlers: [] })
 
     const { data, error } = await supabase
