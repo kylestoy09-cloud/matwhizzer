@@ -1,10 +1,8 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
 
 type School = { id: number; display_name: string; is_nj: boolean }
-type SchoolJoin = School | null
 
 type Bout = {
   id: string
@@ -14,14 +12,17 @@ type Bout = {
   result_type: string | null
   result_detail: string | null
   fall_time_seconds: number | null
+  result_time_estimated: boolean
+  winner_score: number | null
+  loser_score: number | null
   wrestler1_id: string | null
   wrestler1_name_raw: string
   wrestler1_school_raw: string
-  wrestler1_school: SchoolJoin
+  wrestler1_school: School | null
   wrestler2_id: string | null
   wrestler2_name_raw: string
   wrestler2_school_raw: string
-  wrestler2_school: SchoolJoin
+  wrestler2_school: School | null
 }
 
 type RoundEntry = { label: string; bouts: Bout[] }
@@ -77,137 +78,95 @@ function groupByRound(bouts: Bout[]): RoundEntry[] {
 
 export function TournamentBoutList({
   bouts,
-  schools,
   tournamentId,
   selectedWeight,
   isAdmin,
 }: {
   bouts: Bout[]
-  schools: School[]
   tournamentId: string
   selectedWeight: number
   isAdmin: boolean
 }) {
-  const [teamFilter, setTeamFilter] = useState<number | null>(null)
+  const rounds = groupByRound(bouts)
 
-  const filtered = teamFilter === null
-    ? bouts
-    : bouts.filter(
-        b =>
-          b.wrestler1_school?.id === teamFilter ||
-          b.wrestler2_school?.id === teamFilter,
-      )
-
-  const rounds = groupByRound(filtered)
+  if (rounds.length === 0) {
+    return <p className="text-sm text-slate-400">No bouts at this weight.</p>
+  }
 
   return (
-    <div>
-      {/* Team filter */}
-      {schools.length > 1 && (
-        <div className="flex items-center gap-2 mb-4">
-          <span className="text-xs text-slate-500 font-medium">Filter by team:</span>
-          <select
-            value={teamFilter ?? ''}
-            onChange={e => setTeamFilter(e.target.value ? Number(e.target.value) : null)}
-            className="text-sm border border-slate-300 rounded-none px-2 py-1 bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-black"
-          >
-            <option value="">All teams</option>
-            {schools.map(s => (
-              <option key={s.id} value={s.id}>{s.display_name}</option>
-            ))}
-          </select>
-          {teamFilter !== null && (
-            <button
-              onClick={() => setTeamFilter(null)}
-              className="text-xs text-slate-400 hover:text-slate-700"
-            >
-              ✕ Clear
-            </button>
-          )}
+    <div className="space-y-5">
+      {rounds.map(({ label, bouts: rb }) => (
+        <div key={label}>
+          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1.5">
+            {label}
+          </p>
+          <div className="border border-black overflow-hidden bg-white">
+            <table className="w-full text-sm">
+              <tbody className="divide-y divide-slate-100">
+                {rb.map(bout => {
+                  const s1 = bout.wrestler1_school
+                  const s2 = bout.wrestler2_school
+                  const school1 = s1?.display_name ?? bout.wrestler1_school_raw
+                  const school2 = s2?.display_name ?? bout.wrestler2_school_raw
+                  const won1 = bout.winner === 1
+                  const won2 = bout.winner === 2
+                  const resultStr = formatResult(bout.result_type, bout.result_detail, bout.fall_time_seconds)
+                  const editHref = `/admin/bracket?mode=in-season&tid=${tournamentId}&boutId=${bout.id}&w=${selectedWeight}`
+
+                  return (
+                    <tr key={bout.id} className="hover:bg-slate-50 group">
+                      <td className="px-4 py-2.5 w-[38%]">
+                        <div className={`font-medium ${bout.winner !== null ? won1 ? 'text-slate-900' : 'text-slate-400' : 'text-slate-800'}`}>
+                          {bout.wrestler1_id && s1?.is_nj ? (
+                            <Link href={`/wrestler/${bout.wrestler1_id}`} className="hover:underline">
+                              {bout.wrestler1_name_raw}
+                            </Link>
+                          ) : bout.wrestler1_name_raw}
+                        </div>
+                        <div className="text-xs text-slate-400 mt-0.5">{school1}</div>
+                      </td>
+
+                      <td className="px-2 py-2.5 text-center w-[24%]">
+                        {bout.winner !== null ? (
+                          <span className="text-xs text-slate-500">
+                            {won1 ? 'def.' : 'lost to'}{' '}
+                            <span className="font-medium">{resultStr}</span>
+                          </span>
+                        ) : (
+                          <span className="text-slate-300 text-xs">vs</span>
+                        )}
+                      </td>
+
+                      <td className="px-4 py-2.5 w-[38%] text-right">
+                        <div className={`font-medium ${bout.winner !== null ? won2 ? 'text-slate-900' : 'text-slate-400' : 'text-slate-800'}`}>
+                          {bout.wrestler2_id && s2?.is_nj ? (
+                            <Link href={`/wrestler/${bout.wrestler2_id}`} className="hover:underline">
+                              {bout.wrestler2_name_raw}
+                            </Link>
+                          ) : bout.wrestler2_name_raw}
+                        </div>
+                        <div className="text-xs text-slate-400 mt-0.5">{school2}</div>
+                      </td>
+
+                      {isAdmin && (
+                        <td className="pr-3 py-2.5 w-8 text-right">
+                          <Link
+                            href={editHref}
+                            title="Edit"
+                            className="opacity-0 group-hover:opacity-100 transition-opacity text-slate-400 hover:text-blue-600 text-xs"
+                          >
+                            ✎
+                          </Link>
+                        </td>
+                      )}
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
-      )}
-
-      {/* Bouts grouped by round */}
-      {rounds.length === 0 ? (
-        <p className="text-sm text-slate-400">No bouts match the current filter.</p>
-      ) : (
-        <div className="space-y-5">
-          {rounds.map(({ label, bouts: rb }) => (
-            <div key={label}>
-              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1.5">
-                {label}
-              </p>
-              <div className="border border-black rounded-none overflow-hidden bg-white">
-                <table className="w-full text-sm">
-                  <tbody className="divide-y divide-slate-100">
-                    {rb.map(bout => {
-                      const s1 = bout.wrestler1_school
-                      const s2 = bout.wrestler2_school
-                      const school1 = s1?.display_name ?? bout.wrestler1_school_raw
-                      const school2 = s2?.display_name ?? bout.wrestler2_school_raw
-                      const won1 = bout.winner === 1
-                      const won2 = bout.winner === 2
-                      const resultStr = formatResult(
-                        bout.result_type, bout.result_detail, bout.fall_time_seconds,
-                      )
-                      const editHref = `/admin/bracket?mode=in-season&tid=${tournamentId}&boutId=${bout.id}&w=${selectedWeight}`
-
-                      return (
-                        <tr key={bout.id} className="hover:bg-slate-50 group">
-                          <td className="px-4 py-2.5 w-[38%]">
-                            <div className={`font-medium ${bout.winner !== null ? won1 ? 'text-slate-900' : 'text-slate-400' : 'text-slate-800'}`}>
-                              {bout.wrestler1_id && s1?.is_nj ? (
-                                <Link href={`/wrestler/${bout.wrestler1_id}`} className="hover:underline">
-                                  {bout.wrestler1_name_raw}
-                                </Link>
-                              ) : bout.wrestler1_name_raw}
-                            </div>
-                            <div className="text-xs text-slate-400 mt-0.5">{school1}</div>
-                          </td>
-
-                          <td className="px-2 py-2.5 text-center w-[24%]">
-                            {bout.winner !== null ? (
-                              <span className="text-xs text-slate-500">
-                                {won1 ? 'def.' : 'lost to'}{' '}
-                                <span className="font-medium">{resultStr}</span>
-                              </span>
-                            ) : (
-                              <span className="text-slate-300 text-xs">vs</span>
-                            )}
-                          </td>
-
-                          <td className="px-4 py-2.5 w-[38%] text-right">
-                            <div className={`font-medium ${bout.winner !== null ? won2 ? 'text-slate-900' : 'text-slate-400' : 'text-slate-800'}`}>
-                              {bout.wrestler2_id && s2?.is_nj ? (
-                                <Link href={`/wrestler/${bout.wrestler2_id}`} className="hover:underline">
-                                  {bout.wrestler2_name_raw}
-                                </Link>
-                              ) : bout.wrestler2_name_raw}
-                            </div>
-                            <div className="text-xs text-slate-400 mt-0.5">{school2}</div>
-                          </td>
-
-                          {isAdmin && (
-                            <td className="pr-3 py-2.5 w-8 text-right">
-                              <Link
-                                href={editHref}
-                                title="Edit"
-                                className="opacity-0 group-hover:opacity-100 transition-opacity text-slate-400 hover:text-blue-600 text-xs"
-                              >
-                                ✎
-                              </Link>
-                            </td>
-                          )}
-                        </tr>
-                      )
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+      ))}
     </div>
   )
 }

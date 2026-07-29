@@ -180,8 +180,11 @@ function parseResult(raw: string): [string, string | null] {
   if (['dff', 'double forfeit'].includes(r.toLowerCase())) {
     return ['DFF', null]
   }
-  // "TF-1.5 3:15 (17-1)" or "TF 5:00 19-3" → Technical Fall
-  if (/^tf/i.test(r)) return ['TF', null]
+  // "TF-1.5 3:15 (17-1)" or "TF 5:00 19-3" → Technical Fall; capture time + score
+  if (/^tf/i.test(r)) {
+    const tfMatch = r.match(/^tf(?:-[\d.]+)?\s+(.+)/i)
+    return ['TF', tfMatch ? tfMatch[1].trim() : null]
+  }
   const parts = r.split(/\s+/, 2)
   return [parts[0], parts[1] ?? null]
 }
@@ -685,6 +688,18 @@ export function inferRoundsFromSeeds(
     if (b) result[b.key] = '3rd Place'
   }
 
+  // Any bout where both wrestlers are seeded but no bracket path connects them = Exhibition
+  const seededKeys = new Set<string>(entrants.map(e => `${e.name}|${e.school.toLowerCase()}`))
+  for (const b of primaryBouts) {
+    if (b.key in result || b.is_bye) continue
+    if (
+      seededKeys.has(`${b.wrestler1_name}|${b.wrestler1_school.toLowerCase()}`) &&
+      seededKeys.has(`${b.wrestler2_name}|${b.wrestler2_school.toLowerCase()}`)
+    ) {
+      result[b.key] = 'Exhibition'
+    }
+  }
+
   return result
 }
 
@@ -997,18 +1012,47 @@ export function parseTime(s: string): number | null {
   return m ? parseInt(m[1], 10) * 60 + parseInt(m[2], 10) : null
 }
 
+function parseScore(scoreStr: string | null): [number | null, number | null] {
+  if (!scoreStr) return [null, null]
+  const m = scoreStr.match(/^(\d+)-(\d+)$/)
+  return m ? [parseInt(m[1], 10), parseInt(m[2], 10)] : [null, null]
+}
+
 export function boutResultToDb(resultType: string, resultDetail: string | null): {
   db_type: string | null
   db_detail: string | null
   fall_time_seconds: number | null
+  result_time_estimated: boolean
+  winner_score: number | null
+  loser_score: number | null
   winner: 1 | null
 } {
   const rt = (resultType ?? '').trim()
-  if (!rt || rt.toUpperCase() === 'BYE') return { db_type: null, db_detail: null, fall_time_seconds: null, winner: null }
-  if (rt.toUpperCase() === 'DFF') return { db_type: 'DFF', db_detail: null, fall_time_seconds: null, winner: null }
-  if (rt.toLowerCase() === 'fall' && resultDetail) {
-    const secs = parseTime(resultDetail)
-    return { db_type: 'Fall', db_detail: null, fall_time_seconds: secs, winner: 1 }
+  if (!rt || rt.toUpperCase() === 'BYE') return { db_type: null, db_detail: null, fall_time_seconds: null, result_time_estimated: false, winner_score: null, loser_score: null, winner: null }
+  if (rt.toUpperCase() === 'DFF') return { db_type: 'DFF', db_detail: null, fall_time_seconds: null, result_time_estimated: false, winner_score: null, loser_score: null, winner: null }
+  if (rt.toLowerCase() === 'fall') {
+    const timeSecs = resultDetail ? parseTime(resultDetail) : null
+    const estimated = !timeSecs
+    return { db_type: 'Fall', db_detail: null, fall_time_seconds: estimated ? 360 : timeSecs, result_time_estimated: estimated, winner_score: null, loser_score: null, winner: 1 }
   }
-  return { db_type: rt, db_detail: resultDetail, fall_time_seconds: null, winner: 1 }
+  if (rt.toUpperCase() === 'TF') {
+    const detail = (resultDetail ?? '').trim()
+    const timeMatch = detail.match(/^(\d+:\d{2})/)
+    const scoreMatch = detail.match(/(\d+-\d+)/)
+    const timeSecs = timeMatch ? parseTime(timeMatch[1]) : null
+    const estimated = !timeSecs
+    const [ws, ls] = parseScore(scoreMatch?.[1] ?? null)
+    return {
+      db_type: 'TF',
+      db_detail: scoreMatch ? scoreMatch[1] : null,
+      fall_time_seconds: estimated ? 360 : timeSecs,
+      result_time_estimated: estimated,
+      winner_score: ws,
+      loser_score: ls,
+      winner: 1,
+    }
+  }
+  // Dec, MD, and any other scored result — result_detail is the score string e.g. "5-2"
+  const [ws, ls] = parseScore(resultDetail)
+  return { db_type: rt, db_detail: resultDetail, fall_time_seconds: null, result_time_estimated: false, winner_score: ws, loser_score: ls, winner: 1 }
 }

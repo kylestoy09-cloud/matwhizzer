@@ -278,7 +278,7 @@ export async function POST(req: NextRequest) {
 
       const boutRows = []
       for (const b of dedupedBouts) {
-        const { db_type, db_detail, fall_time_seconds, winner } = boutResultToDb(b.result_type, b.result_detail)
+        const { db_type, db_detail, fall_time_seconds, result_time_estimated, winner_score, loser_score, winner } = boutResultToDb(b.result_type, b.result_detail)
         if (db_type === null && winner === null) continue
         const s1 = schoolCache.get(b.wrestler1_school)
         const s2 = schoolCache.get(b.wrestler2_school)
@@ -322,6 +322,9 @@ export async function POST(req: NextRequest) {
           result_type: db_type,
           result_detail: db_detail,
           fall_time_seconds,
+          result_time_estimated,
+          winner_score,
+          loser_score,
           source_format: 'rtf',
         })
       }

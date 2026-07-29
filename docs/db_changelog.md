@@ -5,6 +5,97 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-07-28 — dual_meet_matches: backfill scores and times
+
+**Migration file:** `docs/migrations/20260728_dual_meet_matches_backfill_scores.sql`
+
+**Status:** PENDING — run in Supabase SQL editor AFTER `20260728_dual_meet_matches_scores.sql`.
+
+**What changed:**
+
+Data-only backfill — no DDL. Parses existing `result_detail` strings to populate the new columns for all rows already in `dual_meet_matches`:
+- Dec/MD: "9-7" → `winner_score=9`, `loser_score=7`
+- TF with valid time: "3:15 17-1" → `fall_time_seconds=195`, `winner_score=17`, `loser_score=1`, `result_time_estimated=false`
+- TF with 0:00 or no time: → `fall_time_seconds=360`, estimated scores where extractable, `result_time_estimated=true`
+- Fall with 0 or NULL time: → `fall_time_seconds=360`, `result_time_estimated=true`
+
+**Why:** Re-importing dual meets would create duplicate records (no force/dedup mode). SQL backfill from existing `result_detail` values is the safe path.
+
+---
+
+## 2026-07-28 — dual_meet_matches: result_time_estimated, winner_score, loser_score
+
+**Migration file:** `docs/migrations/20260728_dual_meet_matches_scores.sql`
+
+**Status:** PENDING — run in Supabase SQL editor.
+
+**What changed:**
+
+Added the same stat columns to `dual_meet_matches` that were added to `tournament_bouts`:
+- `result_time_estimated boolean DEFAULT false` — true when `fall_time_seconds` is a 6:00 default
+- `winner_score smallint` — winner's point total parsed from score string
+- `loser_score smallint` — loser's point total parsed from score string
+
+**Code impact:** Dual meet import route (`import-meets/route.ts`) now calls `boutResultToDb` from `parseRtf.ts` instead of its own local `parseFallTime`. All result parsing (Fall time, TF time + score, Dec/MD scores, estimated flag) is now centralized in one function for both import paths.
+
+**Re-import needed:** All dual meet matches imported before this change have these columns at their DEFAULT values. Re-import affected meets to backfill correct values.
+
+---
+
+## 2026-07-28 — tournament_bouts: backfill scores and times
+
+**Migration file:** `docs/migrations/20260728_tournament_bouts_backfill_scores.sql`
+
+**Status:** PENDING — run in Supabase SQL editor AFTER `20260728_tf_time_tracking.sql` and `20260728_bout_scores.sql`.
+
+**What changed:**
+
+Partial SQL backfill for existing `tournament_bouts` rows:
+- Dec/MD: `result_detail` "5-2" → `winner_score=5`, `loser_score=2` ✓ recoverable
+- Fall (valid time): `fall_time_seconds` already correct → sets `result_time_estimated=false` ✓
+- Fall (0 or NULL time): → `fall_time_seconds=360`, `result_time_estimated=true` ✓
+- **TF: unrecoverable** — old `parseResult` bug dropped the detail string before insert; `result_detail=NULL` for all existing TF rows. Sets `fall_time_seconds=360`, `result_time_estimated=true` as a placeholder. Re-import with `force=true` to recover actual scores/times from the RTF.
+
+---
+
+## 2026-07-28 — Bout score columns: winner_score, loser_score
+
+**Migration file:** `docs/migrations/20260728_bout_scores.sql`
+
+**Status:** PENDING — run in Supabase SQL editor.
+
+**What changed:**
+
+**`tournament_bouts.winner_score smallint`** and **`tournament_bouts.loser_score smallint`** — parsed from the score string in the source data. Populated for Dec, MD, and TF results (e.g. "5-2" → `winner_score=5`, `loser_score=2`). NULL for Fall (score irrelevant; time is the stat), Forfeit, DFF, and BYE.
+
+**Why:** Storing scores as raw strings ("5-2") requires splitting at query time on every stat query. Separate integer columns allow direct SQL ranking by margin (`winner_score - loser_score`), total points, average margin, etc.
+
+**Code impact:** `boutResultToDb` in `parseRtf.ts` now returns `winner_score` and `loser_score`. Import route includes both fields in every bout row insert.
+
+**Re-import needed:** All bouts imported before this change have `winner_score=null` / `loser_score=null`. Re-import with `force=true` to backfill.
+
+---
+
+## 2026-07-28 — TF time tracking: result_time_estimated column
+
+**Migration file:** `docs/migrations/20260728_tf_time_tracking.sql`
+
+**Status:** PENDING — run in Supabase SQL editor.
+
+**What changed:**
+
+**`tournament_bouts.result_time_estimated boolean DEFAULT false`** — flags rows where `fall_time_seconds` is a default/estimated value rather than an actual captured time. Set to `true` when:
+- A Technical Fall has no time in the source data, or time is 0:00 (physically impossible for a TF)
+- In those cases `fall_time_seconds` is stored as 360 (6:00) as a conservative default
+
+**Why:** TF mat time is a real stat — used for rankings (total mat time as a tiebreaker for tech fall counts). Times showing 0:00 in the RTF source indicate missing data; 6:00 (max match time) is the safe default. The estimated flag lets queries exclude or caveat those rows in time-based rankings.
+
+**Code impact:** `boutResultToDb` in `parseRtf.ts` now returns `result_time_estimated`. TF results now parse the time into `fall_time_seconds` and the score into `result_detail` (e.g., `fall_time_seconds=195`, `result_detail="17-1"`). The import route includes the new field in every bout row insert.
+
+**Re-import needed:** All TF bouts imported before this change have `result_detail=null` and `fall_time_seconds=null`. Re-import affected tournaments with `force=true` to backfill correct values.
+
+---
+
 ## 2026-07-28 — Tournament type classification + OOS wrestler/school support
 
 **Migration file:** `docs/migrations/20260728_tournament_type_and_oos_wrestlers.sql`

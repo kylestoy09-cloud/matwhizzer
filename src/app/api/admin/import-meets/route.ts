@@ -18,6 +18,7 @@ import type { ParsedMeet } from '@/lib/parseDualMeet'
 import type { SchoolMatch } from '@/lib/matchSchools'
 import type { WrestlerMatch } from '@/lib/matchWrestlers'
 import { clearWrestlerCache } from '@/lib/matchWrestlers'
+import { boutResultToDb } from '@/lib/parseRtf'
 import {
   type SchoolOverride,
   type WrestlerOverride,
@@ -48,13 +49,6 @@ function toISODate(d: string): string {
   return `${yyyy}-${mm}-${dd}`
 }
 
-/** 'M:SS' or 'MM:SS' → total seconds, or null */
-function parseFallTime(detail: string | null): number | null {
-  if (!detail) return null
-  const m = detail.match(/^(\d+):(\d{2})$/)
-  if (!m) return null
-  return parseInt(m[1]) * 60 + parseInt(m[2])
-}
 
 const SUFFIXES = new Set(['jr', 'sr', 'ii', 'iii', 'iv', 'v'])
 
@@ -432,24 +426,30 @@ export async function POST(req: NextRequest) {
         wrestlerBNameRaw = winnerIsTeam1 ? match.loserName    : match.winnerName
       }
 
+      const { db_type, db_detail, fall_time_seconds, result_time_estimated, winner_score, loser_score } =
+        boutResultToDb(match.resultType, match.resultDetail)
+
       matchRows.push({
-        dual_meet_id:         dualMeetId,
-        weight_class:         match.weightClass,
-        wrestler_a_id:        wrestlerAId,
-        wrestler_b_id:        wrestlerBId,
-        wrestler_a_name_raw:  wrestlerANameRaw,
-        wrestler_b_name_raw:  wrestlerBNameRaw,
-        school_a_id:          team1SchoolId,
-        school_b_id:          team2SchoolId,
-        winner_id:            winnerWrestlerId,
-        result_type:          match.resultType,
-        result_detail:        match.resultDetail,
-        fall_time_seconds:    match.resultType === 'Fall' ? parseFallTime(match.resultDetail) : null,
-        team1_points:         match.team1Points,
-        team2_points:         match.team2Points,
-        is_double_forfeit:    match.isDoubleForfeit,
-        is_forfeit_win:       match.isForfeitWin,
-        validated:            false,
+        dual_meet_id:           dualMeetId,
+        weight_class:           match.weightClass,
+        wrestler_a_id:          wrestlerAId,
+        wrestler_b_id:          wrestlerBId,
+        wrestler_a_name_raw:    wrestlerANameRaw,
+        wrestler_b_name_raw:    wrestlerBNameRaw,
+        school_a_id:            team1SchoolId,
+        school_b_id:            team2SchoolId,
+        winner_id:              winnerWrestlerId,
+        result_type:            db_type ?? match.resultType,
+        result_detail:          db_detail,
+        fall_time_seconds,
+        result_time_estimated,
+        winner_score,
+        loser_score,
+        team1_points:           match.team1Points,
+        team2_points:           match.team2Points,
+        is_double_forfeit:      match.isDoubleForfeit,
+        is_forfeit_win:         match.isForfeitWin,
+        validated:              false,
       })
     }
 
