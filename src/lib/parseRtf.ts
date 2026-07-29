@@ -223,6 +223,8 @@ function extractNameSchool(s: string): [string, string] {
       const namePart = s.slice(0, pstart).trim().replace(/\s*\([^)]*\)\s*/g, ' ').replace(/\s+/g, ' ').trim()
       return [namePart, normalizeSchool(s.slice(pstart + 1, pend))]
     }
+    // Unclosed paren — strip everything from '(' onward so "(Wilmette" doesn't bleed into the name
+    return [s.slice(0, pstart).trim(), '']
   }
   return [s, '']
 }
