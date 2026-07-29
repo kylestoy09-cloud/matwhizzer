@@ -26,13 +26,23 @@ type ResolvedSchool = {
   alternates: SchoolFlag['alternates']
 }
 
+function normalizeOosSchoolName(raw: string): string {
+  // TW sometimes exports school names in ALL CAPS (e.g. "COWETA", "EDMOND NORTH").
+  // If the entire string is uppercase, convert to title case.
+  if (raw === raw.toUpperCase() && /[A-Z]{2}/.test(raw)) {
+    return raw.toLowerCase().replace(/\b\w/g, c => c.toUpperCase())
+  }
+  return raw
+}
+
 async function findOrCreateOosSchool(client: ReturnType<typeof createClient>, raw: string): Promise<number> {
+  const name = normalizeOosSchoolName(raw)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const c = client as any
-  const existing = await c.from('schools').select('id').eq('display_name', raw).eq('is_nj', false).maybeSingle()
+  const existing = await c.from('schools').select('id').eq('display_name', name).eq('is_nj', false).maybeSingle()
   if (existing.data?.id) return existing.data.id
-  const ins = await c.from('schools').insert({ display_name: raw, is_nj: false }).select('id').single()
-  if (ins.error) throw new Error(`OOS school insert failed for "${raw}": ${ins.error.message}`)
+  const ins = await c.from('schools').insert({ display_name: name, is_nj: false }).select('id').single()
+  if (ins.error) throw new Error(`OOS school insert failed for "${name}": ${ins.error.message}`)
   return ins.data.id
 }
 
