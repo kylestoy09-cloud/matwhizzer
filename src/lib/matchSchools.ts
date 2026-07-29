@@ -85,6 +85,31 @@ function trigramSimilarity(a: string, b: string): number {
   return union === 0 ? 0 : intersection / union
 }
 
+// ── Token overlap ──────────────────────────────────────────────────────────────
+// Fraction of `query` word-tokens (len > 2) that appear in `target`.
+// Handles containment cases: "Notre Dame" scores 1.0 against
+// "Notre Dame HS - Green Pond" where trigram similarity is only ~0.35.
+
+function tokenOverlap(query: string, target: string): number {
+  const qToks = query.toLowerCase().split(/\W+/).filter(t => t.length > 2)
+  if (qToks.length === 0) return 0
+  const tToks = new Set(target.toLowerCase().split(/\W+/).filter(t => t.length > 2))
+  return qToks.filter(t => tToks.has(t)).length / qToks.length
+}
+
+// Combined OOS score: max of trigram (raw and stripped OOS name) plus token overlap.
+// Scaled so a full token-overlap match (~0.9) auto-resolves while a partial one
+// shows as a high-confidence alternate.
+function oosScore(query: string, oos: OosSchoolRow): number {
+  const strippedName = stripSuffixes(oos.display_name)
+  const trig = Math.max(
+    trigramSimilarity(query, oos.display_name),
+    trigramSimilarity(query, strippedName),
+  )
+  const overlap = tokenOverlap(query, oos.display_name)
+  return Math.max(trig, overlap * 0.9)
+}
+
 // ── Suffix stripping ───────────────────────────────────────────────────────────
 
 const STRIP_SUFFIXES = [
@@ -174,48 +199,63 @@ export async function matchSchoolNames(rawName: string): Promise<SchoolMatch> {
   const exactOos = oosSchools.find(s => s.display_name.toLowerCase() === raw.toLowerCase())
   if (exactOos) return oosExactResult(raw, exactOos)
 
-  // ── 5. Suffix-stripped OOS display_name ──────────────────────────────────────
+  // ── 5. Suffix-stripped exact OOS ─────────────────────────────────────────────
+  // 5a. Strip raw → match against OOS names
   if (stripped !== raw && stripped.length > 0) {
     const strippedOos = oosSchools.find(s => s.display_name.toLowerCase() === stripped.toLowerCase())
     if (strippedOos) return oosExactResult(raw, strippedOos)
   }
+  // 5b. Strip OOS name → match against raw and stripped raw
+  for (const oos of oosSchools) {
+    const sOos = stripSuffixes(oos.display_name).toLowerCase()
+    if (sOos === raw.toLowerCase() || (stripped.length > 0 && sOos === stripped.toLowerCase())) {
+      return oosExactResult(raw, oos)
+    }
+  }
 
-  // ── 6. Fuzzy trigram over NJ + OOS ───────────────────────────────────────────
+  // ── 6. Fuzzy: NJ (trigram) and OOS (trigram + token overlap) separately ──────
   const queryName = (stripped !== raw && stripped.length > 0) ? stripped : raw
 
-  const njCandidates = njSchools.map(s => ({
-    schoolId:    s.id,
-    displayName: s.display_name,
-    score:       trigramSimilarity(queryName, s.display_name),
-    isOos:       false as const,
-  }))
-  const oosCandidates = oosSchools.map(s => ({
-    schoolId:    s.id,
-    displayName: s.display_name,
-    score:       trigramSimilarity(queryName, s.display_name),
-    isOos:       true as const,
-  }))
-
-  const candidates = [...njCandidates, ...oosCandidates]
+  // NJ: trigram only — 400+ schools, token overlap would produce too many false positives
+  const njCandidates = njSchools
+    .map(s => ({ schoolId: s.id, displayName: s.display_name, score: trigramSimilarity(queryName, s.display_name), isOos: false as const }))
     .sort((a, b) => b.score - a.score)
-    .slice(0, 5)
+    .slice(0, 4)
 
-  const best = candidates[0]
+  // OOS: combined score so "Notre Dame" → "Notre Dame HS - Green Pond" gets ~0.9
+  const oosCandidates = oosSchools
+    .map(s => ({ schoolId: s.id, displayName: s.display_name, score: oosScore(queryName, s), isOos: true as const }))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3)
 
-  if (!best || best.score < 0.6) {
-    return { rawName, schoolId: null, displayName: null, confidence: 'none', alternates: candidates, canCreateOutOfState: true }
+  const bestNj  = njCandidates[0]
+  const bestOos = oosCandidates[0]
+
+  // High-confidence NJ (≥0.85) wins over everything
+  if (bestNj && bestNj.score >= 0.85) {
+    const alternates = [...njCandidates, ...oosCandidates.filter(o => o.score >= 0.4)]
+      .sort((a, b) => b.score - a.score)
+    return { rawName, schoolId: bestNj.schoolId, displayName: bestNj.displayName, confidence: 'high', alternates }
   }
 
-  if (best.isOos) {
-    // High-confidence OOS fuzzy match: auto-recognize as OOS
-    if (best.score >= 0.85) return oosExactResult(raw, { id: best.schoolId, display_name: best.displayName })
-    // Low-confidence: flag with OOS in alternates for user to pick
-    return { rawName, schoolId: null, displayName: null, confidence: 'none', alternates: candidates, canCreateOutOfState: true }
+  // OOS auto-resolve: combined score ≥0.75 and beats any NJ candidate
+  // Lower threshold than NJ because the OOS pool is small and user-curated
+  if (bestOos && bestOos.score >= 0.75 && (!bestNj || bestOos.score > bestNj.score)) {
+    return oosExactResult(raw, { id: bestOos.schoolId, display_name: bestOos.displayName })
   }
 
-  // NJ fuzzy match
-  const confidence: SchoolMatch['confidence'] = best.score >= 0.85 ? 'high' : 'low'
-  return { rawName, schoolId: best.schoolId, displayName: best.displayName, confidence, alternates: candidates }
+  // Build merged alternates — always include top OOS so they're visible even when
+  // NJ schools rank higher (OOS don't compete for the same 5 slots)
+  const allAlternates = [...njCandidates, ...oosCandidates.filter(o => o.score >= 0.35)]
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 6)
+
+  if (!bestNj || bestNj.score < 0.6) {
+    return { rawName, schoolId: null, displayName: null, confidence: 'none', alternates: allAlternates, canCreateOutOfState: true }
+  }
+
+  const confidence: SchoolMatch['confidence'] = bestNj.score >= 0.85 ? 'high' : 'low'
+  return { rawName, schoolId: bestNj.schoolId, displayName: bestNj.displayName, confidence, alternates: allAlternates }
 }
 
 export function clearSchoolCache(): void {
