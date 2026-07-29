@@ -39,49 +39,47 @@ WHERE w.first_name LIKE '%(%' OR w.first_name LIKE '%)%'
 ORDER BY w.created_at DESC;
 
 
--- ── STEP 2: Fix + delete in a single transaction ─────────────────────────────
+-- ── STEP 2: Fix + delete in a single CTE statement ───────────────────────────
 -- Run AFTER force-reimporting all affected tournaments.
+-- Paste the entire block below into Supabase SQL editor and run it as one query.
 --
--- Phase A: collect bad IDs into a temp table BEFORE touching any names.
--- Phase B: UPDATE every bad wrestler's name (strip the "(School" fragment).
---          This fixes names even for wrestlers referenced in tournament_entries.
--- Phase C: DELETE the ones with no remaining references anywhere.
---          Because we use the temp table (pre-captured IDs), not the LIKE
---          pattern, this works even though Phase B already cleaned their names.
---
--- wrestler_name_aliases rows cascade-delete automatically with the wrestler.
+-- bad_ids:  identifies wrestlers with '(' in their names (original snapshot)
+-- fixed:    UPDATE strips the "(School" fragment from every bad wrestler's name
+-- The final DELETE removes bad wrestlers that have no references in any table.
+-- PostgreSQL data-modifying CTEs see the same pre-modification snapshot, so
+-- bad_ids is stable for both the UPDATE and the DELETE.
+-- wrestler_name_aliases cascade-deletes automatically with the wrestler row.
 
-BEGIN;
-
-CREATE TEMP TABLE _bad_wrestler_ids AS
-SELECT id FROM wrestlers
-WHERE first_name LIKE '%(%' OR first_name LIKE '%)%'
-   OR last_name  LIKE '%(%' OR last_name  LIKE '%)%';
-
--- Phase B: fix names (strip everything from '(' onward, re-split on last space)
-WITH cleaned AS (
+WITH bad_ids AS (
+  SELECT id
+  FROM wrestlers
+  WHERE first_name LIKE '%(%' OR first_name LIKE '%)%'
+     OR last_name  LIKE '%(%' OR last_name  LIKE '%)%'
+),
+cleaned AS (
   SELECT
     w.id,
     trim(regexp_replace(w.first_name || ' ' || w.last_name, '\s*\(.*$', '')) AS clean_name
   FROM wrestlers w
-  JOIN _bad_wrestler_ids b ON b.id = w.id
+  JOIN bad_ids b ON b.id = w.id
+),
+fixed AS (
+  UPDATE wrestlers w
+  SET
+    first_name = CASE
+      WHEN c.clean_name LIKE '% %' THEN regexp_replace(c.clean_name, '\s+\S+$', '')
+      ELSE c.clean_name
+    END,
+    last_name = CASE
+      WHEN c.clean_name LIKE '% %' THEN regexp_replace(c.clean_name, '^.*\s+', '')
+      ELSE ''
+    END
+  FROM cleaned c
+  WHERE w.id = c.id
+  RETURNING w.id
 )
-UPDATE wrestlers w
-SET
-  first_name = CASE
-    WHEN c.clean_name LIKE '% %' THEN regexp_replace(c.clean_name, '\s+\S+$', '')
-    ELSE c.clean_name
-  END,
-  last_name = CASE
-    WHEN c.clean_name LIKE '% %' THEN regexp_replace(c.clean_name, '^.*\s+', '')
-    ELSE ''
-  END
-FROM cleaned c
-WHERE w.id = c.id;
-
--- Phase C: delete the fully orphaned ones
 DELETE FROM wrestlers
-WHERE id IN (SELECT id FROM _bad_wrestler_ids)
+WHERE id IN (SELECT id FROM bad_ids)
   AND id NOT IN (
     SELECT wrestler1_id FROM tournament_bouts      WHERE wrestler1_id IS NOT NULL
     UNION
@@ -91,7 +89,3 @@ WHERE id IN (SELECT id FROM _bad_wrestler_ids)
     UNION
     SELECT wrestler_id  FROM tournament_entries    WHERE wrestler_id  IS NOT NULL
   );
-
-DROP TABLE _bad_wrestler_ids;
-
-COMMIT;
