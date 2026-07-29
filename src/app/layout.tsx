@@ -5,7 +5,6 @@ import Image from 'next/image'
 import './globals.css'
 import { HeaderNav } from '@/components/HeaderNav'
 import { Footer } from '@/components/Footer'
-import { DataDisclosure } from '@/components/DataDisclosure'
 import { StagingBanner } from '@/components/StagingBanner'
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
@@ -71,7 +70,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <StagingBanner />
         <HeaderNav />
         <main className="flex-1 relative z-10">{children}</main>
-        <DataDisclosure />
         {/* Logo in white section above footer */}
         <div className="bg-white flex justify-center py-6 mt-8">
           <Image
