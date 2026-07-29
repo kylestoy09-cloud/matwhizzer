@@ -340,6 +340,16 @@ export async function matchWrestler(
   }
 }
 
+/**
+ * Returns true if the OOS school already has wrestlers in the index.
+ * Used by the match route to decide whether to flag new-looking OOS wrestlers
+ * (returning wrestler with a different name) vs. silently auto-create (first import).
+ */
+export async function oosSchoolHasPrior(schoolId: number): Promise<boolean> {
+  await ensureCache()
+  return (schoolIndex.get(schoolId)?.size ?? 0) > 0
+}
+
 /** Clears the in-memory cache — useful in tests or after DB updates. */
 export function clearWrestlerCache(): void {
   cacheReady   = false

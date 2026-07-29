@@ -80,6 +80,7 @@ export function RtfImportClient() {
   const stateRef = useRef({ text, year, selected, schoolOverrides, wrestlerOverrides, dates, tournamentTypes, reviewed, step, draftId, draftLabel })
   stateRef.current = { text, year, selected, schoolOverrides, wrestlerOverrides, dates, tournamentTypes, reviewed, step, draftId, draftLabel }
 
+
   // Load draft list on mount
   useEffect(() => {
     fetch('/api/admin/rtf-import-draft')
@@ -91,7 +92,7 @@ export function RtfImportClient() {
   // ── Save draft ────────────────────────────────────────────────────────────
 
   const saveDraft = useCallback(async (auto = false) => {
-    const { text: t, year: y, selected: sel, schoolOverrides: so, wrestlerOverrides: wo, dates: dt, reviewed: rev, step: st, draftId: did, draftLabel: dl } = stateRef.current
+    const { text: t, year: y, selected: sel, schoolOverrides: so, wrestlerOverrides: wo, dates: dt, tournamentTypes: tt, reviewed: rev, step: st, draftId: did, draftLabel: dl } = stateRef.current
     if (!t.trim()) return
     if (!auto) setSaveState('saving')
     try {
@@ -107,6 +108,7 @@ export function RtfImportClient() {
           school_overrides: so,
           wrestler_overrides: wo,
           dates: dt,
+          tournament_types: tt,
           reviewed: rev,
           step: st,
         }),
@@ -133,7 +135,7 @@ export function RtfImportClient() {
     if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current)
     autoSaveTimer.current = setTimeout(() => saveDraft(true), 2000)
     return () => { if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current) }
-  }, [schoolOverrides, wrestlerOverrides, dates, step, saveDraft])
+  }, [schoolOverrides, wrestlerOverrides, dates, tournamentTypes, step, saveDraft])
 
   // Reset save state badge after 3 s
   useEffect(() => {
@@ -154,6 +156,7 @@ export function RtfImportClient() {
     setSchoolOverrides(draft.school_overrides ?? {})
     setWrestlerOverrides(draft.wrestler_overrides ?? {})
     setDates(draft.dates ?? {})
+    setTournamentTypes(draft.tournament_types ?? {})
     setReviewed(draft.reviewed ?? [])
     setDraftId(draft.id)
     setDraftLabel(draft.label ?? '')

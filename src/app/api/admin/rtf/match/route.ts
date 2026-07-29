@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { parseRtfText, parseDateRange, boutResultToDb } from '@/lib/parseRtf'
 import { matchSchoolNames } from '@/lib/matchSchools'
-import { matchWrestler, clearWrestlerCache } from '@/lib/matchWrestlers'
+import { matchWrestler, oosSchoolHasPrior, clearWrestlerCache } from '@/lib/matchWrestlers'
 import type { SchoolFlag, WrestlerFlag, ReviewedTournament, SchoolOverride } from '@/app/admin/import-rtf/types'
 
 export const dynamic = 'force-dynamic'
@@ -158,10 +158,14 @@ export async function POST(req: NextRequest) {
         if (wrestlerFlagMap.has(fkey)) continue
         const isOos = s.confidence === 'oos'
         const wm = await matchWrestler(name, s.school_id, b.weight_class, 'M')
-        // OOS wrestlers: only flag low-confidence matches (possible dup with existing record).
-        // New OOS wrestlers (isNew) auto-create silently — no need for the user to review 150 names.
+        // OOS wrestlers: flag low-confidence (possible dup) OR new-looking at a school that already
+        // has prior wrestlers (returning wrestler whose name changed enough to miss all matchers).
+        // First-import OOS schools (no prior wrestlers) auto-create silently — no review needed.
         // NJ wrestlers: flag both new and low-confidence as before.
-        const shouldFlag = isOos ? wm.confidence === 'low' : (wm.confidence === 'low' || wm.confidence === 'none')
+        const oosNewAtKnownSchool = isOos && wm.isNew && await oosSchoolHasPrior(s.school_id)
+        const shouldFlag = isOos
+          ? (wm.confidence === 'low' || oosNewAtKnownSchool)
+          : (wm.confidence === 'low' || wm.confidence === 'none')
         if (shouldFlag) {
           wrestlerFlagMap.set(fkey, {
             key: fkey,

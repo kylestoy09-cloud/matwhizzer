@@ -50,23 +50,24 @@ export async function POST(req: NextRequest) {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body = await req.json()
-  const { id, label, text, year, selected, school_overrides, wrestler_overrides, dates, reviewed, step } = body
+  const { id, label, text, year, selected, school_overrides, wrestler_overrides, dates, tournament_types, reviewed, step } = body
 
   if (!text) return NextResponse.json({ error: 'text required' }, { status: 400 })
 
   const supabase = serviceClient()
   const payload = {
-    label:             label ?? '',
+    label:              label ?? '',
     text,
-    year:              year ?? new Date().getFullYear(),
-    selected:          selected ?? [],
-    school_overrides:  school_overrides ?? {},
+    year:               year ?? new Date().getFullYear(),
+    selected:           selected ?? [],
+    school_overrides:   school_overrides ?? {},
     wrestler_overrides: wrestler_overrides ?? {},
-    dates:             dates ?? {},
-    reviewed:          reviewed ?? [],
-    step:              step ?? 'input',
-    tournament_count:  Array.isArray(selected) ? selected.length : 0,
-    updated_at:        new Date().toISOString(),
+    dates:              dates ?? {},
+    tournament_types:   tournament_types ?? {},
+    reviewed:           reviewed ?? [],
+    step:               step ?? 'input',
+    tournament_count:   Array.isArray(selected) ? selected.length : 0,
+    updated_at:         new Date().toISOString(),
   }
 
   if (id) {

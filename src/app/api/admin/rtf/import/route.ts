@@ -129,8 +129,13 @@ export async function POST(req: NextRequest) {
   }
 
   const client = serviceClient()
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const schoolCache = await buildSchoolCache([...allSchoolRaws], schoolOverrides, client as any)
+  let schoolCache: Map<string, ResolvedSchool>
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    schoolCache = await buildSchoolCache([...allSchoolRaws], schoolOverrides, client as any)
+  } catch (err) {
+    return NextResponse.json({ error: `School setup failed: ${String(err)}` }, { status: 500 })
+  }
   const results: ImportResult[] = []
 
   for (const t of parsed) {
