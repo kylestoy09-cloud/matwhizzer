@@ -60,7 +60,7 @@ async function buildSchoolCache(
     } else if (override?.type === 'oos') {
       const school_id = override.school_id != null
         ? override.school_id
-        : await findOrCreateOosSchool(client, raw)
+        : await findOrCreateOosSchool(client, override.display_name ?? raw)
       const display_name = override.display_name ?? raw
       cache.set(raw, { school_id, display_name, confidence: 'oos', alternates: [] })
       // Persist alias: school_id stored in notes to avoid conflict with nj_alias_unique partial index.

@@ -3,6 +3,13 @@
 import { useState, useCallback } from 'react'
 import type { SchoolFlag, SchoolOverride } from './types'
 
+function normalizeForDisplay(raw: string): string {
+  if (raw === raw.toUpperCase() && /[A-Z]{2}/.test(raw)) {
+    return raw.toLowerCase().replace(/\b\w/g, c => c.toUpperCase())
+  }
+  return raw
+}
+
 function Spinner() {
   return (
     <svg className="animate-spin h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24">
@@ -38,6 +45,9 @@ export function SchoolFlagCard({
   const [oosQuery, setOosQuery] = useState('')
   const [oosResults, setOosResults] = useState<{ id: number; display_name: string }[]>([])
   const [oosSearching, setOosSearching] = useState(false)
+
+  const [editingNewOos, setEditingNewOos] = useState(false)
+  const [newOosName, setNewOosName] = useState('')
 
   const search = useCallback((q: string) => {
     setQuery(q)
@@ -180,12 +190,44 @@ export function SchoolFlagCard({
               )}
             </div>
             <button
-              onClick={() => onOverride(flag.raw, { type: 'oos' })}
+              onClick={() => { setNewOosName(normalizeForDisplay(flag.raw)); setEditingNewOos(true) }}
               className="text-xs px-2 py-1 border border-amber-300 text-amber-700 hover:border-amber-500 hover:bg-amber-50 transition-colors whitespace-nowrap"
             >
               New OOS school
             </button>
           </div>
+
+          {/* Inline name editor for new OOS school */}
+          {editingNewOos && (
+            <div className="flex gap-2 items-center mt-1">
+              <input
+                type="text"
+                value={newOosName}
+                onChange={e => setNewOosName(e.target.value)}
+                autoFocus
+                placeholder="Display name…"
+                className="flex-1 text-xs border border-amber-400 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-amber-500"
+              />
+              <button
+                onClick={() => {
+                  const name = newOosName.trim()
+                  if (!name) return
+                  onOverride(flag.raw, { type: 'oos', display_name: name })
+                  setEditingNewOos(false)
+                }}
+                disabled={!newOosName.trim()}
+                className="text-xs px-2 py-1 bg-amber-600 text-white hover:bg-amber-700 disabled:opacity-40 transition-colors whitespace-nowrap"
+              >
+                Create
+              </button>
+              <button
+                onClick={() => setEditingNewOos(false)}
+                className="text-xs text-slate-400 hover:text-slate-700"
+              >
+                cancel
+              </button>
+            </div>
+          )}
         </div>
       )}
 
