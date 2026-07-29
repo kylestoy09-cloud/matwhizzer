@@ -5,6 +5,30 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-07-29 — Delete all OOS tournament data for clean reimport
+
+**Migration file:** `docs/migrations/20260729_delete_oos_tournament_data.sql`
+
+**Status:** PENDING — run steps 1-9 in order in Supabase SQL editor.
+
+**What changed:**
+
+Data-only wipe — no DDL. Deletes all rows related to out-of-state tournaments so they can be reimported cleanly with the fixed parser:
+- `tournament_bouts` for `tournament_type = 'outside'` tournaments
+- `tournament_placements` for those tournaments
+- `in_season_tournaments` rows with `tournament_type = 'outside'`
+- `wrestler_name_aliases` for OOS schools (cascade prep)
+- `school_aliases` where `alias_type = 'oos'`
+- `schools` where `is_nj = false`
+- `wrestlers` where `is_oos = true`
+
+**Why:** The old parser had multiple bugs (unclosed parens, nested-paren school names, ALL CAPS names, bad OOS school fuzzy auto-matching) that created incorrect school and wrestler records. Rather than patching the bad data, wiping and reimporting with the fixed code produces a correct result.
+
+**Reversible?** No — reimport from the original RTF files is the path forward.
+**Verified?** No — run STEP 1 diagnostic first.
+
+---
+
 ## 2026-07-29 — Cleanup bad wrestler records from parser bug
 
 **Migration file:** `docs/migrations/20260729_cleanup_bad_wrestler_names.sql`
