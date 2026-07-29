@@ -44,3 +44,8 @@ next-env.d.ts
 profile_generator/exports/
 profile_generator/node_modules/
 profile_generator/fonts/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
