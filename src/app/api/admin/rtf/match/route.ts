@@ -100,20 +100,29 @@ export async function POST(req: NextRequest) {
   }
 
   const client = serviceClient()
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const schoolCache = await buildSchoolCache([...allSchoolRaws], schoolOverrides, client as any)
+  let schoolCache: Map<string, ResolvedSchool>
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    schoolCache = await buildSchoolCache([...allSchoolRaws], schoolOverrides, client as any)
+  } catch (err) {
+    return NextResponse.json({ error: `School matching failed: ${String(err)}` }, { status: 500 })
+  }
   const reviewed: ReviewedTournament[] = []
 
   for (const t of parsed) {
     if (!selectedSet.has(`${t.name}|${t.date_raw}`)) continue
 
     const [start_date, end_date] = parseDateRange(t.date_raw, year)
-    const existing = await client.from('in_season_tournaments').select('id').eq('name', t.name).eq('season', SEASON).maybeSingle()
+    let existing: { data: { id: string } | null } = { data: null }
     let has_bouts = false
-    if (existing.data?.id) {
-      const bq = await client.from('tournament_bouts').select('id', { count: 'exact', head: true }).eq('in_season_tournament_id', existing.data.id)
-      has_bouts = (bq.count ?? 0) > 0
-    }
+    try {
+      const eq = await client.from('in_season_tournaments').select('id').eq('name', t.name).eq('season', SEASON).maybeSingle()
+      existing = eq
+      if (existing.data?.id) {
+        const bq = await client.from('tournament_bouts').select('id', { count: 'exact', head: true }).eq('in_season_tournament_id', existing.data.id)
+        has_bouts = (bq.count ?? 0) > 0
+      }
+    } catch { /* non-fatal — existing_id will be null */ }
 
     const seen = new Set<string>()
     const dedupedBouts = t.bouts.filter(b => {
@@ -146,42 +155,46 @@ export async function POST(req: NextRequest) {
     }
 
     const wrestlerFlagMap = new Map<string, WrestlerFlag>()
-    for (const b of dedupedBouts) {
-      const { db_type, winner } = boutResultToDb(b.result_type, b.result_detail)
-      if (db_type === null && winner === null) continue
-      for (const [name, school_raw] of [[b.wrestler1_name, b.wrestler1_school], [b.wrestler2_name, b.wrestler2_school]] as [string, string][]) {
-        const s = schoolCache.get(school_raw)
-        // Skip wrestlers at unknown schools or uncertain NJ matches — resolve school flags first
-        if (!s?.school_id) continue
-        if (s.confidence !== 'exact' && s.confidence !== 'alias' && s.confidence !== 'high' && s.confidence !== 'oos') continue
-        const fkey = `${name}|${s.school_id}|${b.weight_class}`
-        if (wrestlerFlagMap.has(fkey)) continue
-        const isOos = s.confidence === 'oos'
-        const wm = await matchWrestler(name, s.school_id, b.weight_class, 'M')
-        // OOS wrestlers: flag low-confidence (possible dup) OR new-looking at a school that already
-        // has prior wrestlers (returning wrestler whose name changed enough to miss all matchers).
-        // First-import OOS schools (no prior wrestlers) auto-create silently — no review needed.
-        // NJ wrestlers: flag both new and low-confidence as before.
-        const oosNewAtKnownSchool = isOos && wm.isNew && await oosSchoolHasPrior(s.school_id)
-        const shouldFlag = isOos
-          ? (wm.confidence === 'low' || oosNewAtKnownSchool)
-          : (wm.confidence === 'low' || wm.confidence === 'none')
-        if (shouldFlag) {
-          wrestlerFlagMap.set(fkey, {
-            key: fkey,
-            raw_name: name,
-            school_raw,
-            school_id: s.school_id,
-            weight_class: b.weight_class,
-            confidence: wm.confidence,
-            is_new: wm.isNew,
-            is_oos: isOos,
-            wrestler_id: wm.wrestlerId,
-            display_name: wm.displayName,
-            alternates: wm.alternates.map(a => ({ wrestler_id: a.wrestlerId, display_name: a.displayName, score: a.score })),
-          })
+    try {
+      for (const b of dedupedBouts) {
+        const { db_type, winner } = boutResultToDb(b.result_type, b.result_detail)
+        if (db_type === null && winner === null) continue
+        for (const [name, school_raw] of [[b.wrestler1_name, b.wrestler1_school], [b.wrestler2_name, b.wrestler2_school]] as [string, string][]) {
+          const s = schoolCache.get(school_raw)
+          // Skip wrestlers at unknown schools or uncertain NJ matches — resolve school flags first
+          if (!s?.school_id) continue
+          if (s.confidence !== 'exact' && s.confidence !== 'alias' && s.confidence !== 'high' && s.confidence !== 'oos') continue
+          const fkey = `${name}|${s.school_id}|${b.weight_class}`
+          if (wrestlerFlagMap.has(fkey)) continue
+          const isOos = s.confidence === 'oos'
+          const wm = await matchWrestler(name, s.school_id, b.weight_class, 'M')
+          // OOS wrestlers: flag low-confidence (possible dup) OR new-looking at a school that already
+          // has prior wrestlers (returning wrestler whose name changed enough to miss all matchers).
+          // First-import OOS schools (no prior wrestlers) auto-create silently — no review needed.
+          // NJ wrestlers: flag both new and low-confidence as before.
+          const oosNewAtKnownSchool = isOos && wm.isNew && await oosSchoolHasPrior(s.school_id)
+          const shouldFlag = isOos
+            ? (wm.confidence === 'low' || oosNewAtKnownSchool)
+            : (wm.confidence === 'low' || wm.confidence === 'none')
+          if (shouldFlag) {
+            wrestlerFlagMap.set(fkey, {
+              key: fkey,
+              raw_name: name,
+              school_raw,
+              school_id: s.school_id,
+              weight_class: b.weight_class,
+              confidence: wm.confidence,
+              is_new: wm.isNew,
+              is_oos: isOos,
+              wrestler_id: wm.wrestlerId,
+              display_name: wm.displayName,
+              alternates: wm.alternates.map(a => ({ wrestler_id: a.wrestlerId, display_name: a.displayName, score: a.score })),
+            })
+          }
         }
       }
+    } catch (err) {
+      return NextResponse.json({ error: `Wrestler matching failed for "${t.name}": ${String(err)}` }, { status: 500 })
     }
 
     reviewed.push({
