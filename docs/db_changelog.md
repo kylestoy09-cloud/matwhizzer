@@ -5,6 +5,24 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-07-29 — Fix school_wrestlers RPC: stale column names after rename
+
+**Migration file:** `docs/migrations/20260729_fix_school_wrestlers_rpc_column_names.sql`
+
+**Status:** PENDING — run in Supabase SQL editor.
+
+**What changed:**
+
+RPC-only update — no DDL. The `school_wrestlers` function referenced `tb.nj_wrestler1_id` and `tb.nj_wrestler2_id` in the `rtf_wrestlers` CTE. These columns were renamed to `tb.wrestler1_id` and `tb.wrestler2_id` by migration `20260728_tournament_type_and_oos_wrestlers.sql`, but the RPC was never updated. This caused the RTF in-season branch to return 0 results, making NJ school roster pages empty for wrestlers who only appeared in in-season tournaments.
+
+Also adds `AND wr.is_oos = false` to the final `inseason_only` SELECT to guard against OOS wrestlers accidentally appearing on NJ school rosters.
+
+**Why:** Column rename in a prior migration left the RPC using stale names. NJ school rosters were visibly empty for in-season tournament wrestlers.
+
+**Reversible?** Yes — re-run `20260727_school_wrestlers_include_inseason.sql` to restore the broken version.
+
+---
+
 ## 2026-07-29 — Delete all OOS tournament data for clean reimport
 
 **Migration file:** `docs/migrations/20260729_delete_oos_tournament_data.sql`

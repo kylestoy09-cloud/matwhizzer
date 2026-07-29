@@ -25,57 +25,70 @@ type Bout = {
   wrestler2_school: School | null
 }
 
-type RoundEntry = { label: string; bouts: Bout[] }
-
 const ROUND_ORDER: Record<string, number> = {
-  PL: -1,
-  R1: 0, R2: 1, R3: 2, R4: 3, R5: 4,
-  QF: 5, SF: 6, F: 7,
-  C1: 10, C2: 11, C3: 12, C4: 13, C5: 14, C6: 15, C7: 16,
-  CQF: 17, CSF: 18, CF: 19,
-  '3rd_Place': 20, '5th_Place': 21, '7th_Place': 22,
-  V: 23, UNK: 99,
+  // Championship bracket (early → late)
+  'PL': 1, 'R1': 2, 'R2': 3, 'R3': 4, 'R4': 5,
+  'QF': 6, 'SF': 7, 'F': 8,
+  // Place matches
+  '3rd_Place': 9, '5th_Place': 10, '7th_Place': 11,
+  // Consolation bracket (latest → earliest)
+  'CF': 12, 'CSF': 13, 'CQF': 14,
+  'C8': 15, 'C7': 16, 'C6': 17, 'C5': 18,
+  'C4': 19, 'C3': 20, 'C2': 21, 'C1': 22,
+  'Exhibition': 30,
+  'UNK': 98, 'V': 99,
 }
 
 const ROUND_LABEL: Record<string, string> = {
-  PL: 'Prelim',
-  R1: 'Round 1', R2: 'Round 2', R3: 'Round 3', R4: 'Round 4', R5: 'Round 5',
-  QF: 'Quarterfinal', SF: 'Semifinal', F: 'Final',
-  C1: 'Cons. R1', C2: 'Cons. R2', C3: 'Cons. R3', C4: 'Cons. R4',
-  C5: 'Cons. R5', C6: 'Cons. R6', C7: 'Cons. R7',
-  CQF: 'Cons. Quarters', CSF: 'Cons. Semis', CF: 'Cons. Final',
-  '3rd_Place': '3rd Place', '5th_Place': '5th Place', '7th_Place': '7th Place',
-  V: 'Varsity', UNK: 'Unknown',
+  'R1': 'Round 1',     'R2': 'Round 2',     'R3': 'Round 3',     'R4': 'Round 4',
+  'C1': 'Cons. R1',   'C2': 'Cons. R2',   'C3': 'Cons. R3',   'C4': 'Cons. R4',
+  'C5': 'Cons. R5',   'C6': 'Cons. R6',   'C7': 'Cons. R7',   'C8': 'Cons. R8',
+  'QF': 'Quarters',   'CQF': 'Cons. QF',
+  'SF': 'Semis',      'CSF': 'Cons. SF',   'CF': 'Cons. Finals',
+  '7th_Place': '7th', '5th_Place': '5th',  '3rd_Place': '3rd',
+  'F': 'Finals',
+  'Exhibition': 'Exhibition',
+  'PL': 'Prelim',
+  'UNK': '—',         'V': 'Varsity',
 }
 
-function formatResult(type: string | null, detail: string | null, secs: number | null, estimated = false): string {
-  if (!type) return '—'
-  const up = type.toUpperCase()
-  const fmtTime = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`
-  if (up === 'FALL') {
-    if (secs && !estimated) return `Fall ${fmtTime(secs)}`
-    return detail ? `Fall ${detail}` : 'Fall'
-  }
-  if (up === 'TF') {
-    const score = detail ?? ''
-    if (secs && !estimated) return `TF ${score} ${fmtTime(secs)}`.trim()
-    return score ? `TF ${score}` : 'TF'
-  }
-  if (up === 'FOR' || up === 'FORF' || up === 'FORFEIT') return 'Forfeit'
-  if (up === 'DFF' || up === 'DOUBLE FORFEIT') return 'Double Forfeit'
-  if (detail) return `${type} ${detail}`
-  return type
+function fmtTime(secs: number): string {
+  return `${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, '0')}`
 }
 
-function groupByRound(bouts: Bout[]): RoundEntry[] {
-  const map = new Map<string, Bout[]>()
-  for (const b of bouts) {
-    if (!map.has(b.round)) map.set(b.round, [])
-    map.get(b.round)!.push(b)
-  }
-  return [...map.entries()]
-    .sort(([a], [b]) => (ROUND_ORDER[a] ?? 99) - (ROUND_ORDER[b] ?? 99))
-    .map(([round, bouts]) => ({ label: ROUND_LABEL[round] ?? round, bouts }))
+function getResultLabel(rt: string | null): string {
+  if (!rt) return '—'
+  const up = rt.toUpperCase()
+  if (up === 'FALL') return 'Fall'
+  if (up === 'TF')   return 'TF'
+  if (up === 'MD')   return 'MD'
+  if (up === 'DFF')  return 'DFF'
+  if (up === 'FOR' || up === 'FORF' || up === 'FORFEIT') return 'For.'
+  if (up === 'BYE')  return 'Bye'
+  return rt
+}
+
+function getScore(rt: string | null, detail: string | null): string {
+  if (!rt) return ''
+  const up = rt.toUpperCase()
+  if (up === 'FALL' || up === 'DFF' || up === 'BYE') return ''
+  if (up === 'FOR' || up === 'FORF' || up === 'FORFEIT') return ''
+  return detail ?? ''
+}
+
+function getTime(rt: string | null, secs: number | null, estimated: boolean): string {
+  if (!rt || estimated || !secs) return ''
+  const up = rt.toUpperCase()
+  if (up === 'FALL' || up === 'TF') return fmtTime(secs)
+  return ''
+}
+
+function resultColor(rt: string | null): string {
+  const up = (rt ?? '').toUpperCase()
+  if (up === 'FALL')  return 'text-purple-700'
+  if (up === 'TF')    return 'text-blue-700'
+  if (up === 'MD')    return 'text-teal-700'
+  return 'text-slate-600'
 }
 
 export function TournamentBoutList({
@@ -89,86 +102,141 @@ export function TournamentBoutList({
   selectedWeight: number
   isAdmin: boolean
 }) {
-  const rounds = groupByRound(bouts)
+  const sorted = [...bouts].sort((a, b) => {
+    const ao = ROUND_ORDER[a.round] ?? 50
+    const bo = ROUND_ORDER[b.round] ?? 50
+    return ao - bo
+  })
 
-  if (rounds.length === 0) {
-    return <p className="text-sm text-slate-400">No bouts at this weight.</p>
+  if (sorted.length === 0) {
+    return (
+      <div className="border border-black bg-white p-6 text-center text-sm text-slate-400">
+        No bouts recorded for this weight.
+      </div>
+    )
   }
 
   return (
-    <div className="space-y-5">
-      {rounds.map(({ label, bouts: rb }) => (
-        <div key={label}>
-          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1.5">
-            {label}
-          </p>
-          <div className="border border-black overflow-hidden bg-white">
-            <table className="w-full text-sm">
-              <tbody className="divide-y divide-slate-100">
-                {rb.map(bout => {
-                  const s1 = bout.wrestler1_school
-                  const s2 = bout.wrestler2_school
-                  const school1 = s1?.display_name ?? bout.wrestler1_school_raw
-                  const school2 = s2?.display_name ?? bout.wrestler2_school_raw
-                  const won1 = bout.winner === 1
-                  const won2 = bout.winner === 2
-                  const resultStr = formatResult(bout.result_type, bout.result_detail, bout.fall_time_seconds, bout.result_time_estimated)
-                  const editHref = `/admin/bracket?mode=in-season&tid=${tournamentId}&boutId=${bout.id}&w=${selectedWeight}`
+    <div className="overflow-x-auto">
+      <table className="min-w-[640px] w-full text-[13px]">
+        <thead>
+          <tr className="bg-slate-900 text-white">
+            <th className="text-left px-2 py-1.5 text-xs font-bold uppercase tracking-wide whitespace-nowrap w-20">Round</th>
+            <th className="text-left px-2 py-1.5 text-xs font-bold uppercase tracking-wide whitespace-nowrap">Winner</th>
+            <th className="text-left px-2 py-1.5 text-xs font-bold uppercase tracking-wide whitespace-nowrap">School</th>
+            <th className="text-left px-2 py-1.5 text-xs font-bold uppercase tracking-wide whitespace-nowrap w-14">Result</th>
+            <th className="text-right px-2 py-1.5 text-xs font-bold uppercase tracking-wide whitespace-nowrap w-16">Score</th>
+            <th className="text-right px-2 py-1.5 text-xs font-bold uppercase tracking-wide whitespace-nowrap w-14">Time</th>
+            <th className="text-left px-2 py-1.5 text-xs font-bold uppercase tracking-wide whitespace-nowrap">Loser</th>
+            {isAdmin && <th className="w-6" />}
+          </tr>
+        </thead>
+        <tbody>
+          {sorted.map((b, i) => {
+            const isBye = (b.result_type ?? '').toUpperCase() === 'BYE'
+            const isDff = (b.result_type ?? '').toUpperCase() === 'DFF'
 
-                  return (
-                    <tr key={bout.id} className="hover:bg-slate-50 group">
-                      <td className="px-4 py-2.5 w-[38%]">
-                        <div className={`font-medium ${bout.winner !== null ? won1 ? 'text-slate-900' : 'text-slate-400' : 'text-slate-800'}`}>
-                          {bout.wrestler1_id && s1?.is_nj ? (
-                            <Link href={`/wrestler/${bout.wrestler1_id}`} className="hover:underline">
-                              {bout.wrestler1_name_raw}
-                            </Link>
-                          ) : bout.wrestler1_name_raw}
-                        </div>
-                        <div className="text-xs text-slate-400 mt-0.5">{school1}</div>
-                      </td>
+            const winnerName   = b.winner === 1 ? b.wrestler1_name_raw : b.winner === 2 ? b.wrestler2_name_raw : null
+            const winnerId     = b.winner === 1 ? b.wrestler1_id        : b.winner === 2 ? b.wrestler2_id        : null
+            const winnerSchool = b.winner === 1
+              ? (b.wrestler1_school?.display_name ?? b.wrestler1_school_raw)
+              : b.winner === 2
+              ? (b.wrestler2_school?.display_name ?? b.wrestler2_school_raw)
+              : null
+            const loserName    = b.winner === 1 ? b.wrestler2_name_raw : b.winner === 2 ? b.wrestler1_name_raw : null
+            const loserId      = b.winner === 1 ? b.wrestler2_id        : b.winner === 2 ? b.wrestler1_id        : null
+            const loserSchool  = b.winner === 1
+              ? (b.wrestler2_school?.display_name ?? b.wrestler2_school_raw)
+              : b.winner === 2
+              ? (b.wrestler1_school?.display_name ?? b.wrestler1_school_raw)
+              : null
 
-                      <td className="px-2 py-2.5 text-center w-[24%]">
-                        {bout.winner !== null ? (
-                          <span className="text-xs text-slate-500">
-                            {won1 ? 'def.' : 'lost to'}{' '}
-                            <span className="font-medium">{resultStr}</span>
-                          </span>
-                        ) : (
-                          <span className="text-slate-300 text-xs">vs</span>
-                        )}
-                      </td>
+            return (
+              <tr key={b.id} className={`border-t border-slate-100 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
+                {/* Round */}
+                <td className="px-2 py-1.5 text-slate-500 text-xs whitespace-nowrap">
+                  {ROUND_LABEL[b.round] ?? b.round}
+                </td>
 
-                      <td className="px-4 py-2.5 w-[38%] text-right">
-                        <div className={`font-medium ${bout.winner !== null ? won2 ? 'text-slate-900' : 'text-slate-400' : 'text-slate-800'}`}>
-                          {bout.wrestler2_id && s2?.is_nj ? (
-                            <Link href={`/wrestler/${bout.wrestler2_id}`} className="hover:underline">
-                              {bout.wrestler2_name_raw}
-                            </Link>
-                          ) : bout.wrestler2_name_raw}
-                        </div>
-                        <div className="text-xs text-slate-400 mt-0.5">{school2}</div>
-                      </td>
+                {/* Winner */}
+                <td className="px-2 py-1.5 text-xs font-medium">
+                  {isBye ? (
+                    b.wrestler1_id
+                      ? <Link href={`/wrestler/${b.wrestler1_id}`} className="text-slate-800 hover:underline">{b.wrestler1_name_raw}</Link>
+                      : <span className="text-slate-800">{b.wrestler1_name_raw}</span>
+                  ) : isDff || !winnerName ? (
+                    <span className="text-slate-300">—</span>
+                  ) : winnerId ? (
+                    <Link href={`/wrestler/${winnerId}`} className="text-slate-800 hover:underline">{winnerName}</Link>
+                  ) : (
+                    <span className="text-slate-800">{winnerName}</span>
+                  )}
+                </td>
 
-                      {isAdmin && (
-                        <td className="pr-3 py-2.5 w-8 text-right">
-                          <Link
-                            href={editHref}
-                            title="Edit"
-                            className="opacity-0 group-hover:opacity-100 transition-opacity text-slate-400 hover:text-blue-600 text-xs"
-                          >
-                            ✎
-                          </Link>
-                        </td>
-                      )}
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      ))}
+                {/* Winner school */}
+                <td className="px-2 py-1.5 text-slate-400 text-xs">
+                  {isBye
+                    ? (b.wrestler1_school?.display_name ?? b.wrestler1_school_raw)
+                    : isDff ? '—' : (winnerSchool ?? '—')}
+                </td>
+
+                {/* Result */}
+                <td className="px-2 py-1.5 text-xs">
+                  <span className={`font-medium ${resultColor(b.result_type)}`}>
+                    {getResultLabel(b.result_type)}
+                  </span>
+                </td>
+
+                {/* Score */}
+                <td className="px-2 py-1.5 text-right font-mono text-xs tabular-nums text-slate-500">
+                  {getScore(b.result_type, b.result_detail) || <span className="text-slate-300">—</span>}
+                </td>
+
+                {/* Time */}
+                <td className="px-2 py-1.5 text-right font-mono text-xs tabular-nums text-slate-500">
+                  {getTime(b.result_type, b.fall_time_seconds, b.result_time_estimated) || <span className="text-slate-300">—</span>}
+                </td>
+
+                {/* Loser */}
+                <td className="px-2 py-1.5 text-xs">
+                  {isBye ? (
+                    <span className="text-slate-300 italic">bye</span>
+                  ) : isDff ? (
+                    <span className="text-slate-400 text-xs">
+                      {b.wrestler1_name_raw}
+                      {b.wrestler1_school && <span className="ml-1 text-slate-300">{b.wrestler1_school.display_name}</span>}
+                      <span className="mx-1 text-slate-300">/</span>
+                      {b.wrestler2_name_raw}
+                      {b.wrestler2_school && <span className="ml-1 text-slate-300">{b.wrestler2_school.display_name}</span>}
+                    </span>
+                  ) : loserName ? (
+                    <span>
+                      {loserId
+                        ? <Link href={`/wrestler/${loserId}`} className="text-slate-700 hover:underline">{loserName}</Link>
+                        : <span className="text-slate-700">{loserName}</span>}
+                      {loserSchool && <span className="ml-1.5 text-slate-400">{loserSchool}</span>}
+                    </span>
+                  ) : (
+                    <span className="text-slate-300">—</span>
+                  )}
+                </td>
+
+                {/* Admin edit */}
+                {isAdmin && (
+                  <td className="px-1 py-1.5 text-right">
+                    <Link
+                      href={`/admin/bracket?mode=in-season&tid=${tournamentId}&boutId=${b.id}&w=${selectedWeight}`}
+                      className="text-slate-300 hover:text-slate-600 text-xs"
+                    >
+                      ✎
+                    </Link>
+                  </td>
+                )}
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
     </div>
   )
 }
