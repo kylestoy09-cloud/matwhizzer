@@ -307,7 +307,8 @@ export function RtfImportClient() {
   )
   const totalWrestlerFlags = reviewed.reduce(
     (n, t) => n + t.wrestler_flags.filter(f => {
-      if (schoolOverrides[f.school_raw]?.type === 'oos') return false
+      // Hide NJ wrestler flags where user re-tagged their school as OOS (not is_oos — those need review)
+      if (!f.is_oos && schoolOverrides[f.school_raw]?.type === 'oos') return false
       const o = wrestlerOverrides[f.key]
       if (o?.type === 'skip' || o?.type === 'existing' || o?.type === 'accept') return false
       return true  // create (needs name confirmation) or unresolved
@@ -570,7 +571,8 @@ export function RtfImportClient() {
 
                     {(() => {
                       const visibleFlags = t.wrestler_flags.filter(
-                        f => schoolOverrides[f.school_raw]?.type !== 'oos',
+                        // Keep OOS wrestler flags (dedup review); hide NJ flags for OOS-tagged schools
+                        f => f.is_oos || schoolOverrides[f.school_raw]?.type !== 'oos',
                       )
                       const oosHidden = t.wrestler_flags.length - visibleFlags.length
                       if (t.wrestler_flags.length === 0) return null

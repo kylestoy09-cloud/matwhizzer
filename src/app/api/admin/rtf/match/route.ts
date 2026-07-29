@@ -153,8 +153,13 @@ export async function POST(req: NextRequest) {
         if (s.confidence !== 'exact' && s.confidence !== 'alias' && s.confidence !== 'high' && s.confidence !== 'oos') continue
         const fkey = `${name}|${s.school_id}|${b.weight_class}`
         if (wrestlerFlagMap.has(fkey)) continue
+        const isOos = s.confidence === 'oos'
         const wm = await matchWrestler(name, s.school_id, b.weight_class, 'M')
-        if (wm.confidence === 'low' || wm.confidence === 'none') {
+        // OOS wrestlers: only flag low-confidence matches (possible dup with existing record).
+        // New OOS wrestlers (isNew) auto-create silently — no need for the user to review 150 names.
+        // NJ wrestlers: flag both new and low-confidence as before.
+        const shouldFlag = isOos ? wm.confidence === 'low' : (wm.confidence === 'low' || wm.confidence === 'none')
+        if (shouldFlag) {
           wrestlerFlagMap.set(fkey, {
             key: fkey,
             raw_name: name,
@@ -163,7 +168,7 @@ export async function POST(req: NextRequest) {
             weight_class: b.weight_class,
             confidence: wm.confidence,
             is_new: wm.isNew,
-            is_oos: s.confidence === 'oos',
+            is_oos: isOos,
             wrestler_id: wm.wrestlerId,
             display_name: wm.displayName,
             alternates: wm.alternates.map(a => ({ wrestler_id: a.wrestlerId, display_name: a.displayName, score: a.score })),
