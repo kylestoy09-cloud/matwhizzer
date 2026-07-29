@@ -18,7 +18,7 @@
 
 -- ── STEP 1: Diagnostic — see bad wrestler records ────────────────────────────
 -- Run this first. Shows every wrestler with '(' or ')' in their name fields.
--- The "refs" column shows which tables still reference them.
+-- The ref columns show which tables still reference them.
 
 SELECT
   w.id,
@@ -39,21 +39,32 @@ WHERE w.first_name LIKE '%(%' OR w.first_name LIKE '%)%'
 ORDER BY w.created_at DESC;
 
 
--- ── STEP 2a: Fix names — wrestlers that are still referenced anywhere ─────────
+-- ── STEP 2: Fix + delete in a single transaction ─────────────────────────────
 -- Run AFTER force-reimporting all affected tournaments.
--- For any bad wrestler that still has tournament_entries (postseason) or other
--- references, strip the school fragment from their name instead of deleting.
 --
--- Logic: concatenate first_name + last_name, strip everything from '(' onward,
--- then re-split on the last space to get first_name and last_name.
+-- Phase A: collect bad IDs into a temp table BEFORE touching any names.
+-- Phase B: UPDATE every bad wrestler's name (strip the "(School" fragment).
+--          This fixes names even for wrestlers referenced in tournament_entries.
+-- Phase C: DELETE the ones with no remaining references anywhere.
+--          Because we use the temp table (pre-captured IDs), not the LIKE
+--          pattern, this works even though Phase B already cleaned their names.
+--
+-- wrestler_name_aliases rows cascade-delete automatically with the wrestler.
 
+BEGIN;
+
+CREATE TEMP TABLE _bad_wrestler_ids AS
+SELECT id FROM wrestlers
+WHERE first_name LIKE '%(%' OR first_name LIKE '%)%'
+   OR last_name  LIKE '%(%' OR last_name  LIKE '%)%';
+
+-- Phase B: fix names (strip everything from '(' onward, re-split on last space)
 WITH cleaned AS (
   SELECT
-    id,
-    trim(regexp_replace(first_name || ' ' || last_name, '\s*\(.*$', '')) AS clean_name
-  FROM wrestlers
-  WHERE first_name LIKE '%(%' OR first_name LIKE '%)%'
-     OR last_name  LIKE '%(%' OR last_name  LIKE '%)%'
+    w.id,
+    trim(regexp_replace(w.first_name || ' ' || w.last_name, '\s*\(.*$', '')) AS clean_name
+  FROM wrestlers w
+  JOIN _bad_wrestler_ids b ON b.id = w.id
 )
 UPDATE wrestlers w
 SET
@@ -66,23 +77,11 @@ SET
     ELSE ''
   END
 FROM cleaned c
-WHERE w.id = c.id
-  AND (
-    w.id IN (SELECT wrestler1_id FROM tournament_bouts      WHERE wrestler1_id IS NOT NULL)
-    OR w.id IN (SELECT wrestler2_id FROM tournament_bouts   WHERE wrestler2_id IS NOT NULL)
-    OR w.id IN (SELECT wrestler_id  FROM tournament_placements WHERE wrestler_id IS NOT NULL)
-    OR w.id IN (SELECT wrestler_id  FROM tournament_entries    WHERE wrestler_id IS NOT NULL)
-  );
+WHERE w.id = c.id;
 
-
--- ── STEP 2b: Delete — wrestlers with no remaining references at all ───────────
--- Deletes wrestler rows that still have paren junk (not fixed by 2a because
--- they have no references) and have nothing pointing at them.
--- Aliases cascade automatically.
-
+-- Phase C: delete the fully orphaned ones
 DELETE FROM wrestlers
-WHERE (first_name LIKE '%(%' OR first_name LIKE '%)%'
-    OR last_name  LIKE '%(%' OR last_name  LIKE '%)%')
+WHERE id IN (SELECT id FROM _bad_wrestler_ids)
   AND id NOT IN (
     SELECT wrestler1_id FROM tournament_bouts      WHERE wrestler1_id IS NOT NULL
     UNION
@@ -92,3 +91,7 @@ WHERE (first_name LIKE '%(%' OR first_name LIKE '%)%'
     UNION
     SELECT wrestler_id  FROM tournament_entries    WHERE wrestler_id  IS NOT NULL
   );
+
+DROP TABLE _bad_wrestler_ids;
+
+COMMIT;
