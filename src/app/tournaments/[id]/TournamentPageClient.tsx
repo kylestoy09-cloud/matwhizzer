@@ -297,8 +297,25 @@ export function TournamentPageClient({
   const isFullBracket = tournament.source_format === 'full_bracket' || tournament.source_format === null
   const isOutside     = tournament.tournament_type === 'outside'
 
-  // Placements for display: top 3 only
-  const njPodium = useMemo(() => placements.filter(p => p.place <= 3 && p.school?.is_nj), [placements])
+  // NJ wrestler names from bouts — used to guard against placements that have a wrong NJ school_id
+  // (e.g. OOS wrestlers whose placement school_id was incorrectly set to the tracked NJ school).
+  const njWrestlerNames = useMemo(() => {
+    const s = new Set<string>()
+    for (const b of allBouts) {
+      if (b.wrestler1_school?.is_nj && b.wrestler1_name_raw) s.add(b.wrestler1_name_raw.trim().toLowerCase())
+      if (b.wrestler2_school?.is_nj && b.wrestler2_name_raw) s.add(b.wrestler2_name_raw.trim().toLowerCase())
+    }
+    return s
+  }, [allBouts])
+
+  // Placements for display: top 3 NJ wrestlers only.
+  // Cross-check wrestler_name_raw against names seen in bouts as NJ wrestlers so that
+  // OOS wrestlers whose placement row has a bad NJ school_id are excluded.
+  const njPodium = useMemo(() => placements.filter(p =>
+    p.place <= 3 &&
+    p.school?.is_nj &&
+    njWrestlerNames.has((p.wrestler_name_raw ?? '').trim().toLowerCase())
+  ), [placements, njWrestlerNames])
   const top3ByWeight = useMemo(() => {
     const map = new Map<number, Placement[]>()
     for (const p of placements) {
