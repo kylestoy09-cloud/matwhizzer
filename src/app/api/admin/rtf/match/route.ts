@@ -47,8 +47,11 @@ async function buildSchoolCache(
     if (override?.type === 'skip') {
       cache.set(raw, { school_id: null, display_name: null, confidence: 'skip', alternates: [] })
     } else if (override?.type === 'oos') {
-      const school_id = await findOrCreateOosSchool(client, raw)
-      cache.set(raw, { school_id, display_name: raw, confidence: 'oos', alternates: [] })
+      const school_id = override.school_id != null
+        ? override.school_id
+        : await findOrCreateOosSchool(client, raw)
+      const display_name = override.display_name ?? raw
+      cache.set(raw, { school_id, display_name, confidence: 'oos', alternates: [] })
     } else if (override?.type === 'nj') {
       cache.set(raw, { school_id: override.school_id, display_name: override.display_name, confidence: 'exact', alternates: [] })
     } else {
@@ -57,7 +60,7 @@ async function buildSchoolCache(
         school_id: m.schoolId,
         display_name: m.displayName,
         confidence: m.confidence,
-        alternates: m.alternates.map(a => ({ school_id: a.schoolId, display_name: a.displayName, score: a.score })),
+        alternates: m.alternates.map(a => ({ school_id: a.schoolId, display_name: a.displayName, score: a.score, is_oos: a.isOos })),
       })
     }
   }

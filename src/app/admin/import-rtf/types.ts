@@ -15,7 +15,7 @@ export type SchoolFlag = {
   confidence: 'exact' | 'alias' | 'high' | 'low' | 'none'
   school_id: number | null
   display_name: string | null
-  alternates: { school_id: number; display_name: string; score: number }[]
+  alternates: { school_id: number; display_name: string; score: number; is_oos?: boolean }[]
   bout_count: number
 }
 
@@ -62,7 +62,7 @@ export type ReviewedTournament = TournamentSummary & {
 
 export type SchoolOverride =
   | { type: 'nj'; school_id: number; display_name: string }
-  | { type: 'oos' }
+  | { type: 'oos'; school_id?: number; display_name?: string }  // school_id present = link to existing OOS school
   | { type: 'skip' }
 
 export type ImportResult = {

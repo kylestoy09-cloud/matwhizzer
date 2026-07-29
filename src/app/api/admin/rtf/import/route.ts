@@ -48,12 +48,14 @@ async function buildSchoolCache(
     if (override?.type === 'skip') {
       cache.set(raw, { school_id: null, display_name: null, confidence: 'skip', alternates: [] })
     } else if (override?.type === 'oos') {
-      const school_id = await findOrCreateOosSchool(client, raw)
-      cache.set(raw, { school_id, display_name: raw, confidence: 'oos', alternates: [] })
-      // Persist alias so future imports recognize this raw name as OOS without re-prompting.
-      // school_id = null follows the OOS alias convention (school_aliases_oos_alias_unique index).
+      const school_id = override.school_id != null
+        ? override.school_id
+        : await findOrCreateOosSchool(client, raw)
+      const display_name = override.display_name ?? raw
+      cache.set(raw, { school_id, display_name, confidence: 'oos', alternates: [] })
+      // Persist alias: school_id stored in notes to avoid conflict with nj_alias_unique partial index.
       await (client as any).from('school_aliases')
-        .insert({ school_id: null, alias: raw, alias_type: 'oos' })
+        .insert({ school_id: null, alias: raw, alias_type: 'oos', notes: String(school_id) })
         .then(() => {}).catch((e: { code?: string }) => { if (e?.code !== '23505') throw e })
     } else if (override?.type === 'nj') {
       cache.set(raw, { school_id: override.school_id, display_name: override.display_name, confidence: 'exact', alternates: [] })
@@ -63,7 +65,7 @@ async function buildSchoolCache(
         school_id: m.schoolId,
         display_name: m.displayName,
         confidence: m.confidence,
-        alternates: m.alternates.map(a => ({ school_id: a.schoolId, display_name: a.displayName, score: a.score })),
+        alternates: m.alternates.map(a => ({ school_id: a.schoolId, display_name: a.displayName, score: a.score, is_oos: a.isOos })),
       })
     }
   }

@@ -49,13 +49,14 @@ export function SchoolFlagCard({
     return () => clearTimeout(timer)
   }, [])
 
-  const resolved = override?.type === 'nj'
-    ? `→ ${override.display_name}`
-    : override?.type === 'oos'
-    ? '→ Out-of-state'
-    : override?.type === 'skip'
-    ? '→ Not a school (skipped)'
-    : null
+  const njAlts  = flag.alternates.filter(a => !a.is_oos)
+  const oosAlts = flag.alternates.filter(a => a.is_oos)
+
+  const resolved =
+    override?.type === 'nj'  ? `→ ${override.display_name}` :
+    override?.type === 'oos' ? (override.display_name ? `→ OOS: ${override.display_name}` : '→ New OOS school') :
+    override?.type === 'skip' ? '→ Not a school (skipped)' :
+    null
 
   return (
     <div className="border border-slate-200 rounded p-3 text-sm bg-white">
@@ -67,9 +68,10 @@ export function SchoolFlagCard({
         <ConfBadge c={flag.confidence} />
       </div>
 
-      {flag.alternates.length > 0 && (
+      {/* NJ alternates */}
+      {njAlts.length > 0 && (
         <div className="mb-2 flex flex-wrap gap-1.5">
-          {flag.alternates.map(a => (
+          {njAlts.map(a => (
             <button
               key={a.school_id}
               onClick={() => onOverride(flag.raw, { type: 'nj', school_id: a.school_id, display_name: a.display_name })}
@@ -81,9 +83,28 @@ export function SchoolFlagCard({
         </div>
       )}
 
+      {/* OOS alternates — existing OOS schools to link to */}
+      {oosAlts.length > 0 && (
+        <div className="mb-2">
+          <p className="text-xs text-slate-400 mb-1">Existing OOS schools:</p>
+          <div className="flex flex-wrap gap-1.5">
+            {oosAlts.map(a => (
+              <button
+                key={a.school_id}
+                onClick={() => onOverride(flag.raw, { type: 'oos', school_id: a.school_id, display_name: a.display_name })}
+                className="text-xs px-2 py-0.5 border border-amber-300 text-amber-800 hover:border-amber-500 hover:bg-amber-50 transition-colors"
+              >
+                OOS: {a.display_name} <span className="text-amber-500">({(a.score * 100).toFixed(0)}%)</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       {!resolved && (
-        <div className="flex gap-2">
-          <div className="relative flex-1">
+        <div className="flex gap-2 flex-wrap">
+          {/* NJ school search */}
+          <div className="relative flex-1 min-w-32">
             <input
               type="text"
               placeholder="Search NJ schools…"
@@ -108,9 +129,9 @@ export function SchoolFlagCard({
           </div>
           <button
             onClick={() => onOverride(flag.raw, { type: 'oos' })}
-            className="text-xs px-2 py-1 border border-slate-300 hover:border-black text-slate-600 hover:text-black transition-colors whitespace-nowrap"
+            className="text-xs px-2 py-1 border border-amber-300 text-amber-700 hover:border-amber-500 hover:bg-amber-50 transition-colors whitespace-nowrap"
           >
-            Out-of-state
+            New OOS school
           </button>
           <button
             onClick={() => onOverride(flag.raw, { type: 'skip' })}
@@ -124,7 +145,9 @@ export function SchoolFlagCard({
 
       {resolved && (
         <div className="flex items-center justify-between">
-          <span className="text-xs text-green-700 font-medium">{resolved}</span>
+          <span className={`text-xs font-medium ${override?.type === 'oos' ? 'text-amber-700' : 'text-green-700'}`}>
+            {resolved}
+          </span>
           <button onClick={() => onOverride(flag.raw, undefined)} className="text-xs text-slate-400 hover:text-slate-700 ml-2">undo</button>
         </div>
       )}
