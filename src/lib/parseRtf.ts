@@ -213,19 +213,30 @@ function extractNameSchool(s: string): [string, string] {
   s = s.trim()
   // Strip trailing W-L record first so it doesn't interfere with paren search.
   s = s.replace(WL_SUFFIX_RE, '').trim()
-  // Use LAST (...) pair as the school — handles nicknames like "Charles (CJ) Palmisano (Whippany Park)".
-  // extractTrailingResult has already stripped the result parens before this is called, so this is safe.
-  const pstart = s.lastIndexOf('(')
-  if (pstart >= 0) {
-    const pend = s.indexOf(')', pstart)
-    if (pend >= 0) {
-      // Strip any remaining nickname parens from the name portion, e.g. "Charles (CJ) Palmisano" → "Charles Palmisano"
-      const namePart = s.slice(0, pstart).trim().replace(/\s*\([^)]*\)\s*/g, ' ').replace(/\s+/g, ' ').trim()
-      return [namePart, normalizeSchool(s.slice(pstart + 1, pend))]
+
+  // Find the last BALANCED (...) group — this is the school block.
+  // Walk leftward from the rightmost ')' counting depth to find its true matching '('.
+  // This correctly handles nested school names like "Wilmette (Loyola Academy)"
+  // where lastIndexOf('(') would wrongly grab the inner '('.
+  const rpos = s.lastIndexOf(')')
+  if (rpos >= 0) {
+    let depth = 0
+    let lpos = -1
+    for (let i = rpos; i >= 0; i--) {
+      if (s[i] === ')') depth++
+      else if (s[i] === '(') { depth--; if (depth === 0) { lpos = i; break } }
     }
-    // Unclosed paren — strip everything from '(' onward so "(Wilmette" doesn't bleed into the name
-    return [s.slice(0, pstart).trim(), '']
+    if (lpos >= 0) {
+      // Strip nickname parens from name portion, e.g. "Charles (CJ) Palmisano" → "Charles Palmisano"
+      const namePart = s.slice(0, lpos).trim().replace(/\s*\([^)]*\)\s*/g, ' ').replace(/\s+/g, ' ').trim()
+      return [namePart, normalizeSchool(s.slice(lpos + 1, rpos))]
+    }
   }
+
+  // No closing ')' found — if there's an unclosed '(' strip from it onward
+  const pstart = s.lastIndexOf('(')
+  if (pstart >= 0) return [s.slice(0, pstart).trim(), '']
+
   return [s, '']
 }
 
