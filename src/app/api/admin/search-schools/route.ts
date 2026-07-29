@@ -9,7 +9,9 @@ export async function GET(req: NextRequest) {
   const { data: { user } } = await auth.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const q = new URL(req.url).searchParams.get('q')?.trim() ?? ''
+  const params = new URL(req.url).searchParams
+  const q = params.get('q')?.trim() ?? ''
+  const oos = params.get('oos') === 'true'
   if (!q) return NextResponse.json({ schools: [] })
 
   const supabase = createClient(
@@ -21,7 +23,7 @@ export async function GET(req: NextRequest) {
     .from('schools')
     .select('id, display_name')
     .ilike('display_name', `%${q}%`)
-    .eq('is_nj', true)
+    .eq('is_nj', !oos)
     .order('display_name')
     .limit(12)
 

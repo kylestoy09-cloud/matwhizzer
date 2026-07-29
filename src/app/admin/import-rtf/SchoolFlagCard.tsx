@@ -35,6 +35,10 @@ export function SchoolFlagCard({
   const [results, setResults] = useState<{ id: number; display_name: string }[]>([])
   const [searching, setSearching] = useState(false)
 
+  const [oosQuery, setOosQuery] = useState('')
+  const [oosResults, setOosResults] = useState<{ id: number; display_name: string }[]>([])
+  const [oosSearching, setOosSearching] = useState(false)
+
   const search = useCallback((q: string) => {
     setQuery(q)
     if (!q.trim()) { setResults([]); return }
@@ -45,6 +49,20 @@ export function SchoolFlagCard({
         const data = await res.json()
         setResults(data.schools ?? [])
       } finally { setSearching(false) }
+    }, 250)
+    return () => clearTimeout(timer)
+  }, [])
+
+  const searchOos = useCallback((q: string) => {
+    setOosQuery(q)
+    if (!q.trim()) { setOosResults([]); return }
+    const timer = setTimeout(async () => {
+      setOosSearching(true)
+      try {
+        const res = await fetch(`/api/admin/search-schools?q=${encodeURIComponent(q)}&oos=true`)
+        const data = await res.json()
+        setOosResults(data.schools ?? [])
+      } finally { setOosSearching(false) }
     }, 250)
     return () => clearTimeout(timer)
   }, [])
@@ -102,44 +120,72 @@ export function SchoolFlagCard({
       )}
 
       {!resolved && (
-        <div className="flex gap-2 flex-wrap">
-          {/* NJ school search */}
-          <div className="relative flex-1 min-w-32">
-            <input
-              type="text"
-              placeholder="Search NJ schools…"
-              value={query}
-              onChange={e => search(e.target.value)}
-              className="w-full text-xs border border-slate-300 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-black"
-            />
-            {searching && <span className="absolute right-2 top-1.5"><Spinner /></span>}
-            {results.length > 0 && (
-              <div className="absolute left-0 right-0 top-full z-10 border border-slate-300 bg-white shadow-sm">
-                {results.map(s => (
-                  <button
-                    key={s.id}
-                    onClick={() => { onOverride(flag.raw, { type: 'nj', school_id: s.id, display_name: s.display_name }); setResults([]) }}
-                    className="block w-full text-left px-3 py-1.5 text-xs hover:bg-slate-50"
-                  >
-                    {s.display_name}
-                  </button>
-                ))}
-              </div>
-            )}
+        <div className="space-y-1.5">
+          {/* NJ search row */}
+          <div className="flex gap-2">
+            <div className="relative flex-1 min-w-32">
+              <input
+                type="text"
+                placeholder="Search NJ schools…"
+                value={query}
+                onChange={e => search(e.target.value)}
+                className="w-full text-xs border border-slate-300 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-black"
+              />
+              {searching && <span className="absolute right-2 top-1.5"><Spinner /></span>}
+              {results.length > 0 && (
+                <div className="absolute left-0 right-0 top-full z-10 border border-slate-300 bg-white shadow-sm">
+                  {results.map(s => (
+                    <button
+                      key={s.id}
+                      onClick={() => { onOverride(flag.raw, { type: 'nj', school_id: s.id, display_name: s.display_name }); setResults([]) }}
+                      className="block w-full text-left px-3 py-1.5 text-xs hover:bg-slate-50"
+                    >
+                      {s.display_name}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            <button
+              onClick={() => onOverride(flag.raw, { type: 'skip' })}
+              className="text-xs px-2 py-1 border border-slate-300 hover:border-black text-slate-500 hover:text-black transition-colors whitespace-nowrap"
+              title="Mark as a nickname or non-school value — bouts involving this entry will import without a school link"
+            >
+              Not a school
+            </button>
           </div>
-          <button
-            onClick={() => onOverride(flag.raw, { type: 'oos' })}
-            className="text-xs px-2 py-1 border border-amber-300 text-amber-700 hover:border-amber-500 hover:bg-amber-50 transition-colors whitespace-nowrap"
-          >
-            New OOS school
-          </button>
-          <button
-            onClick={() => onOverride(flag.raw, { type: 'skip' })}
-            className="text-xs px-2 py-1 border border-slate-300 hover:border-black text-slate-500 hover:text-black transition-colors whitespace-nowrap"
-            title="Mark as a nickname or non-school value — bouts involving this entry will import without a school link"
-          >
-            Not a school
-          </button>
+          {/* OOS search row */}
+          <div className="flex gap-2">
+            <div className="relative flex-1 min-w-32">
+              <input
+                type="text"
+                placeholder="Search existing OOS schools…"
+                value={oosQuery}
+                onChange={e => searchOos(e.target.value)}
+                className="w-full text-xs border border-amber-200 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-amber-400"
+              />
+              {oosSearching && <span className="absolute right-2 top-1.5"><Spinner /></span>}
+              {oosResults.length > 0 && (
+                <div className="absolute left-0 right-0 top-full z-10 border border-amber-200 bg-white shadow-sm">
+                  {oosResults.map(s => (
+                    <button
+                      key={s.id}
+                      onClick={() => { onOverride(flag.raw, { type: 'oos', school_id: s.id, display_name: s.display_name }); setOosResults([]) }}
+                      className="block w-full text-left px-3 py-1.5 text-xs hover:bg-amber-50 text-amber-800"
+                    >
+                      {s.display_name}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            <button
+              onClick={() => onOverride(flag.raw, { type: 'oos' })}
+              className="text-xs px-2 py-1 border border-amber-300 text-amber-700 hover:border-amber-500 hover:bg-amber-50 transition-colors whitespace-nowrap"
+            >
+              New OOS school
+            </button>
+          </div>
         </div>
       )}
 
