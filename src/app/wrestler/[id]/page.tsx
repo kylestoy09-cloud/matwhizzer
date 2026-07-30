@@ -174,7 +174,7 @@ function formatPinTimeStat(seconds: number): string {
 
 function computeMatchMatTime(winType: string | null, fallTime: number | null, isLoss: boolean = false): number {
   if (!winType || winType === 'BYE') return 0
-  if (['FORF', 'INJ', 'DQ', 'FF', 'DEF', 'MFF'].includes(winType)) return 0
+  if (['FORF', 'FOR', 'INJ', 'DQ', 'FF', 'DEF', 'MFF'].includes(winType)) return 0
   // Loss by fall = full 6:00 period regardless of when the pin occurred
   if (isLoss && winType === 'FALL') return 360
   if (['FALL', 'TF', 'TF-1.5'].includes(winType) && fallTime && fallTime > 0) return fallTime
@@ -1214,7 +1214,6 @@ export default async function WrestlerPage({
               { key: 'hammer',    label: 'Hammer',   align: 'center', numeric: false },
               { key: 'bestPin',   label: 'Best Pin', align: 'center', numeric: false },
               { key: 'matTime',   label: 'Mat Time', align: 'center', numeric: false },
-              { key: 'consolWins', label: 'Consol.W', align: 'center' },
             ]}
             rows={seasonStats.map(s => ({
               season:    SEASON_LABELS[s.seasonId] ?? `S${s.seasonId}`,
@@ -1225,7 +1224,6 @@ export default async function WrestlerPage({
               hammer:    s.hammerRating.toFixed(2),
               bestPin:   s.bestPin !== null ? formatPinTimeStat(s.bestPin) : '—',
               matTime:   formatMatTime(s.matTime),
-              consolWins: s.consolationWins,
             }))}
             footer={seasonStats.length > 1 ? {
               season:    'Career',
@@ -1236,7 +1234,6 @@ export default async function WrestlerPage({
               hammer:    careerTotals.hammerRating.toFixed(2),
               bestPin:   careerTotals.bestPin !== null ? formatPinTimeStat(careerTotals.bestPin) : '—',
               matTime:   formatMatTime(careerTotals.matTime),
-              consolWins: careerTotals.consolationWins,
             } : undefined}
           />
         </div>
