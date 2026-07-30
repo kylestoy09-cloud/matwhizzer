@@ -47,7 +47,7 @@ const SEASON_LABELS: Record<number, string> = {
   2: '2025–26',
 }
 
-const SEASON_SHORT: Record<number, string> = { 1: "\u201925", 2: "\u201926" }
+const SEASON_SHORT: Record<number, string> = { 1: "’25", 2: "’26" }
 
 function placementShortLabel(tournamentName: string, tournamentType: string): string {
   const clean = cleanTournamentName(tournamentName)
@@ -97,6 +97,16 @@ function formatScore(m: Match, isWinner: boolean): string {
       : `${m.loser_score}-${m.winner_score}`
   }
   return m.win_type ?? ''
+}
+
+function postseasonDateLabel(tournamentType: string, seasonId: number): string | null {
+  if (seasonId !== 2) return null
+  switch (tournamentType) {
+    case 'districts':                  return 'Feb 28, 2026'
+    case 'regions': case 'girls_regions': return 'Mar 6–7, 2026'
+    case 'boys_state': case 'girls_state': return 'Mar 12–14, 2026'
+    default: return null
+  }
 }
 
 function tournamentTypeColor(tt: string): string {
@@ -963,7 +973,7 @@ export default async function WrestlerPage({
                 <span className="font-bold text-sm uppercase tracking-wide">Ghost Champion</span>
                 <span className="text-xs text-slate-400">
                   #{gc.seed} seed &middot; {cleanTournamentName(gc.tournament_name)} &middot; {gc.weight}lb
-                  {seasonIds.length > 1 && ` \u00B7 ${SEASON_LABELS[gc.season_id as number] ?? ''}`}
+                  {seasonIds.length > 1 && ` · ${SEASON_LABELS[gc.season_id as number] ?? ''}`}
                 </span>
               </div>
               {gc.wins_on_path && gc.wins_on_path.length > 0 && (
@@ -1011,7 +1021,7 @@ export default async function WrestlerPage({
               tfs:       s.tfs,
               bonus:     `${s.bonusPct}%`,
               hammer:    s.hammerRating.toFixed(2),
-              bestPin:   s.bestPin !== null ? formatPinTimeStat(s.bestPin) : '\u2014',
+              bestPin:   s.bestPin !== null ? formatPinTimeStat(s.bestPin) : '—',
               matTime:   formatMatTime(s.matTime),
               consolWins: s.consolationWins,
             }))}
@@ -1022,7 +1032,7 @@ export default async function WrestlerPage({
               tfs:       careerTotals.tfs,
               bonus:     `${careerTotals.bonusPct}%`,
               hammer:    careerTotals.hammerRating.toFixed(2),
-              bestPin:   careerTotals.bestPin !== null ? formatPinTimeStat(careerTotals.bestPin) : '\u2014',
+              bestPin:   careerTotals.bestPin !== null ? formatPinTimeStat(careerTotals.bestPin) : '—',
               matTime:   formatMatTime(careerTotals.matTime),
               consolWins: careerTotals.consolationWins,
             } : undefined}
@@ -1110,6 +1120,9 @@ export default async function WrestlerPage({
                               <span className="text-xs font-semibold text-slate-700">
                                 {cleanTournamentName(g.tournament_name)} &middot; {g.weight} lbs
                               </span>
+                              {postseasonDateLabel(g.tournament_type, g.season_id) && (
+                                <span className="text-[11px] text-slate-400">{postseasonDateLabel(g.tournament_type, g.season_id)}</span>
+                              )}
                             </span>
                           </td>
                         </tr>,

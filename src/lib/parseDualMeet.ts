@@ -95,7 +95,7 @@ function parseResult(s: string): { resultType: string; resultDetail: string | nu
 // TrackWrestling sometimes prepends words like "Varsity" to wrestler names.
 // Strip them before storing so they don't break matching.
 
-const NAME_PREFIX_RE = /^(varsity)\s+/i
+const NAME_PREFIX_RE = /^(?:varsity|jv|junior varsity|freshman)\s*-?\s*/i
 
 function normalizeName(name: string): string {
   return name.replace(NAME_PREFIX_RE, '').trim()

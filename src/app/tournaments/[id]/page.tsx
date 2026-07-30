@@ -36,7 +36,8 @@ export default async function TournamentDetailPage({
       `)
       .eq('in_season_tournament_id', id)
       .order('weight_class')
-      .order('round'),
+      .order('round')
+      .limit(10000),
     supabase
       .from('tournament_placements')
       .select(`

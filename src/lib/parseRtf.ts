@@ -384,6 +384,8 @@ function parseBoutB(line: string): Omit<ParsedBout, 'weight_class'> | null {
 }
 
 function parseBoutBNoRound(line: string): Omit<ParsedBout, 'weight_class'> | null {
+  // Strip division label prefixes that appear without a dash separator (e.g. "Varsity Antar Russell...")
+  line = line.replace(/^(?:Varsity|JV|Junior Varsity|Freshman)\s+/i, '').trim()
   if (!/\bover\b/i.test(line) || / - /.test(line)) return null
   if (!line.includes('(') || !line.includes(')')) return null
 
@@ -618,15 +620,39 @@ export function inferRoundsFromSeeds(
   const slots = buildBracketSlots(bracketSize)
   let champPool: (W | null)[] = slots.map(s => seedToW.get(s) ?? null)
 
+  // Strips common school name suffixes so "Pennsauken" matches "Pennsauken Sr High", etc.
+  function normSchool(s: string): string {
+    return s.toLowerCase().replace(/\s*(high school|sr\.?\s*high|hs)\s*$/i, '').trim()
+  }
+
   const boutLookup = new Map<string, BoutForReview>()
   for (const b of primaryBouts) boutLookup.set(b.key, b)
 
+  // Secondary lookup with normalized school names (handles seedings vs parsed RTF mismatches)
+  const boutLookupNorm = new Map<string, BoutForReview>()
+  for (const b of primaryBouts) {
+    const nk = `${weightClass}|${[`${b.wrestler1_name}|${normSchool(b.wrestler1_school)}`, `${b.wrestler2_name}|${normSchool(b.wrestler2_school)}`].sort().join('|')}`
+    boutLookupNorm.set(nk, b)
+  }
+
+  // Name-only fallback (school names too divergent) — scoped to weight class so collisions are rare
+  const boutLookupNames = new Map<string, BoutForReview>()
+  for (const b of primaryBouts) {
+    boutLookupNames.set(`${weightClass}|${[b.wrestler1_name, b.wrestler2_name].sort().join('|')}`, b)
+  }
+
   function lookupBout(w1: W, w2: W): BoutForReview | null {
     const k = `${weightClass}|${[`${w1.name}|${w1.school}`, `${w2.name}|${w2.school}`].sort().join('|')}`
-    return boutLookup.get(k) ?? null
+    let found = boutLookup.get(k)
+    if (found) return found
+    const nk = `${weightClass}|${[`${w1.name}|${normSchool(w1.school)}`, `${w2.name}|${normSchool(w2.school)}`].sort().join('|')}`
+    found = boutLookupNorm.get(nk)
+    if (found) return found
+    return boutLookupNames.get(`${weightClass}|${[w1.name, w2.name].sort().join('|')}`) ?? null
   }
   function boutWinner(b: BoutForReview, w1: W, w2: W): W {
-    return b.wrestler1_name === w1.name && b.wrestler1_school === w1.school ? w1 : w2
+    // Use name-only: school comparison is unreliable across seedings vs parsed bout data
+    return b.wrestler1_name === w1.name ? w1 : w2
   }
 
   const result: Record<string, string> = {}
@@ -702,12 +728,13 @@ export function inferRoundsFromSeeds(
   }
 
   // Any bout where both wrestlers are seeded but no bracket path connects them = Exhibition
-  const seededKeys = new Set<string>(entrants.map(e => `${e.name}|${e.school.toLowerCase()}`))
+  // Use name-only set since school names may differ between seedings and parsed bout data
+  const seededNames = new Set<string>(entrants.map(e => e.name))
   for (const b of primaryBouts) {
     if (b.key in result || b.is_bye) continue
     if (
-      seededKeys.has(`${b.wrestler1_name}|${b.wrestler1_school.toLowerCase()}`) &&
-      seededKeys.has(`${b.wrestler2_name}|${b.wrestler2_school.toLowerCase()}`)
+      seededNames.has(b.wrestler1_name) &&
+      seededNames.has(b.wrestler2_name)
     ) {
       result[b.key] = 'Exhibition'
     }
@@ -717,10 +744,16 @@ export function inferRoundsFromSeeds(
 }
 
 export function getRoundOptions(bracketSize: number): string[] {
-  const champ = champRoundNames(bracketSize)
   const consCount = consRoundCount(bracketSize)
   const cons = Array.from({ length: consCount }, (_, i) => `Consolation ${i + 1}`)
-  return [...champ, ...cons, '3rd Place', '5th Place', '7th Place', 'Exhibition']
+  return [
+    '1st Round', '2nd Round', '3rd Round', '4th Round',
+    'Quarterfinals', 'Semifinals', 'Finals',
+    '3rd Place', '5th Place', '7th Place',
+    ...cons,
+    'Consolation Quarterfinals', 'Consolation Semifinals', 'Consolation Finals',
+    'Exhibition',
+  ]
 }
 
 function normalizeTwLabelToVocab(raw: string): string {

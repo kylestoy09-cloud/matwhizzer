@@ -5,6 +5,145 @@ import type { BoutForReview, SchoolOverride } from './types'
 import { BoutRow } from './BoutRow'
 import { inferRoundsFromSeeds } from '@/lib/parseRtf'
 
+// ── Bracket preview ───────────────────────────────────────────────────────────
+
+const CHAMP_ROUND_NAMES = ['1st Round', '2nd Round', '3rd Round', '4th Round', 'Quarterfinals', 'Semifinals', 'Finals']
+const PLACE_ROUND_NAMES = ['3rd Place', '5th Place', '7th Place']
+
+function roundSortKey(r: string): number {
+  const ci = CHAMP_ROUND_NAMES.indexOf(r)
+  if (ci >= 0) return ci
+  const pi = PLACE_ROUND_NAMES.indexOf(r)
+  if (pi >= 0) return 100 + pi
+  const cm = r.match(/^Consolation (\d+)$/)
+  if (cm) return 200 + Number(cm[1])
+  if (r === 'Exhibition') return 500
+  return 999
+}
+
+function BracketPreview({
+  weight,
+  bouts,
+  roundAssignments,
+  seeds,
+  seedKeyFn,
+  onConfirm,
+  onDismiss,
+}: {
+  weight: number
+  bouts: BoutForReview[]
+  roundAssignments: Record<string, string>
+  seeds: Record<string, number>
+  seedKeyFn: (name: string, school: string) => string
+  onConfirm: () => void
+  onDismiss: () => void
+}) {
+  const boutByKey = new Map(bouts.map(b => [b.key, b]))
+
+  // Group assigned bouts by round
+  const byRound = new Map<string, BoutForReview[]>()
+  for (const [key, round] of Object.entries(roundAssignments)) {
+    const b = boutByKey.get(key)
+    if (!b || b.is_bye) continue
+    if (!byRound.has(round)) byRound.set(round, [])
+    byRound.get(round)!.push(b)
+  }
+
+  // Unassigned non-bye bouts (simulation couldn't place them)
+  const assignedKeys = new Set(Object.keys(roundAssignments))
+  const unassigned = bouts.filter(b => !b.is_bye && !assignedKeys.has(b.key))
+
+  const sortedRounds = [...byRound.keys()].sort((a, b) => roundSortKey(a) - roundSortKey(b))
+  const hasExhibition = byRound.has('Exhibition')
+  const hasProblem = hasExhibition || unassigned.length > 0
+
+  return (
+    <div className="border border-slate-300 bg-white m-3">
+      <div className="flex items-center justify-between px-3 py-2 bg-slate-50 border-b border-slate-200">
+        <span className="text-xs font-semibold text-slate-700 uppercase tracking-wide">Bracket Preview — {weight}lb</span>
+        <div className="flex items-center gap-2">
+          {hasProblem && (
+            <span className="text-xs text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5">
+              ⚠ {hasExhibition ? 'Exhibition bouts found' : ''}{hasExhibition && unassigned.length > 0 ? ' · ' : ''}{unassigned.length > 0 ? `${unassigned.length} unassigned` : ''}
+            </span>
+          )}
+          {!hasProblem && (
+            <span className="text-xs text-green-700 bg-green-50 border border-green-200 px-2 py-0.5">✓ All bouts placed</span>
+          )}
+        </div>
+      </div>
+
+      <div className="divide-y divide-slate-100">
+        {sortedRounds.map(round => {
+          const roundBouts = byRound.get(round)!
+          const isExhibition = round === 'Exhibition'
+          return (
+            <div key={round} className={`px-3 py-2 ${isExhibition ? 'bg-amber-50' : ''}`}>
+              <p className={`text-[10px] font-bold uppercase tracking-wide mb-1.5 ${isExhibition ? 'text-amber-700' : 'text-slate-400'}`}>
+                {round}
+              </p>
+              <div className="space-y-0.5">
+                {roundBouts.map(b => {
+                  const s1 = seeds[seedKeyFn(b.wrestler1_name, b.wrestler1_school)]
+                  const s2 = b.is_bye ? undefined : seeds[seedKeyFn(b.wrestler2_name, b.wrestler2_school)]
+                  const isDff = b.result_type?.toUpperCase() === 'DFF'
+                  return (
+                    <div key={b.uid} className="text-xs text-slate-700 flex items-baseline gap-1 flex-wrap">
+                      <span className={!isDff ? 'font-semibold' : 'text-slate-400'}>
+                        {s1 != null ? `[${s1}] ` : ''}{b.wrestler1_name}
+                      </span>
+                      <span className="text-slate-300">vs</span>
+                      <span className="text-slate-400">
+                        {s2 != null ? `[${s2}] ` : ''}{b.wrestler2_name}
+                      </span>
+                      {b.result_type && (
+                        <span className="text-slate-400 ml-1">
+                          — {b.result_type}{b.result_detail ? ` ${b.result_detail}` : ''}
+                        </span>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )
+        })}
+
+        {unassigned.length > 0 && (
+          <div className="px-3 py-2 bg-red-50">
+            <p className="text-[10px] font-bold uppercase tracking-wide mb-1.5 text-red-600">Unassigned (simulation couldn&apos;t place)</p>
+            <div className="space-y-0.5">
+              {unassigned.map(b => (
+                <div key={b.uid} className="text-xs text-red-700 flex items-baseline gap-1 flex-wrap">
+                  <span>{b.wrestler1_name}</span>
+                  <span className="text-red-300">vs</span>
+                  <span>{b.wrestler2_name}</span>
+                  {b.result_type && <span className="text-red-400 ml-1">— {b.result_type}</span>}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="flex items-center gap-2 px-3 py-2 border-t border-slate-200 bg-slate-50">
+        <button
+          onClick={onConfirm}
+          className="text-xs px-3 py-1 bg-black text-white hover:bg-slate-800 transition-colors"
+        >
+          Confirm &amp; apply rounds
+        </button>
+        <button
+          onClick={onDismiss}
+          className="text-xs px-3 py-1 border border-slate-300 text-slate-600 hover:bg-slate-100 transition-colors"
+        >
+          Dismiss
+        </button>
+      </div>
+    </div>
+  )
+}
+
 function WeightSection({
   weight,
   bouts,
@@ -28,6 +167,7 @@ function WeightSection({
 }) {
   const [open, setOpen] = useState(false)
   const [showDuplicates, setShowDuplicates] = useState(false)
+  const [previewRounds, setPreviewRounds] = useState<Record<string, string> | null>(null)
 
   const isDupEntry = (b: BoutForReview) => duplicates[String(b.uid)] ?? b.is_duplicate
 
@@ -77,11 +217,19 @@ function WeightSection({
 
   const seededCount = wrestlers.filter(w => seeds[seedKey(w.rawName, w.rawSchool)] !== undefined).length
 
-  function applySeeds() {
-    const entrants = wrestlers
+  function buildEntrants() {
+    return wrestlers
       .map(w => ({ name: w.rawName, school: w.rawSchool, seed: seeds[seedKey(w.rawName, w.rawSchool)] }))
       .filter((e): e is { name: string; school: string; seed: number } => e.seed !== undefined)
-    const assignments = inferRoundsFromSeeds(weight, entrants, primaries)
+  }
+
+  function previewBracket() {
+    const assignments = inferRoundsFromSeeds(weight, buildEntrants(), primaries)
+    setPreviewRounds(assignments)
+  }
+
+  function applySeeds() {
+    const assignments = inferRoundsFromSeeds(weight, buildEntrants(), primaries)
     for (const [boutKey, round] of Object.entries(assignments)) {
       onRoundChange(boutKey, round)
     }
@@ -140,18 +288,41 @@ function WeightSection({
           </div>
 
           {seededCount > 0 && (
-            <div className="px-3 py-2 border-b border-slate-100 flex items-center gap-3">
+            <div className="px-3 py-2 border-b border-slate-100 flex items-center gap-3 flex-wrap">
+              <button
+                onClick={previewBracket}
+                className="text-xs px-2 py-1 bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+              >
+                Preview bracket
+              </button>
               <button
                 onClick={applySeeds}
-                className="text-xs px-2 py-1 bg-black text-white hover:bg-slate-800 transition-colors"
+                className="text-xs px-2 py-1 border border-slate-300 text-slate-600 hover:bg-slate-50 transition-colors"
               >
-                Apply seeds → auto-assign rounds
+                Apply without preview
               </button>
               <span className="text-xs text-slate-400">
                 {seededCount} of {wrestlers.length} seeded
                 {seededCount < wrestlers.length && ' — unseeded positions treated as byes'}
               </span>
             </div>
+          )}
+
+          {previewRounds && (
+            <BracketPreview
+              weight={weight}
+              bouts={primaries}
+              roundAssignments={previewRounds}
+              seeds={seeds}
+              seedKeyFn={seedKey}
+              onConfirm={() => {
+                for (const [boutKey, round] of Object.entries(previewRounds)) {
+                  onRoundChange(boutKey, round)
+                }
+                setPreviewRounds(null)
+              }}
+              onDismiss={() => setPreviewRounds(null)}
+            />
           )}
 
           <div className="overflow-x-auto">

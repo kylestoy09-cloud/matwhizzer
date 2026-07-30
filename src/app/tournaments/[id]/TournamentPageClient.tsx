@@ -132,7 +132,7 @@ function computeTeamStats(bouts: Bout[]): Map<number, TeamStat> {
   }
 
   for (const st of stats.values()) {
-    st.bonusPct = st.wins > 0 ? ((st.pins + st.techs + st.majors) / st.wins) * 100 : 0
+    st.bonusPct = (st.wins + st.losses) > 0 ? ((st.pins + st.techs + st.majors) / (st.wins + st.losses)) * 100 : 0
   }
 
   return stats
@@ -450,40 +450,43 @@ export function TournamentPageClient({
           {hasPlacementData && (
             <div className="mb-8">
               <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-3">
-                {isFullBracket ? 'Top 3' : 'NJ on the Podium'}
+                {hasOosTeams ? 'Top 3' : 'NJSIAA on the Podium'}
               </p>
 
               {isFullBracket && top3ByWeight.size > 0 && (
-                <div className="border border-black bg-white overflow-hidden">
-                  <table className="w-full text-sm">
-                    <thead className="bg-slate-50 border-b border-slate-200">
-                      <tr>
-                        <th className="text-left px-4 py-2 font-medium text-slate-500 w-16">Wt</th>
-                        <th className="text-left px-4 py-2 font-medium text-slate-500">1st</th>
-                        <th className="text-left px-4 py-2 font-medium text-slate-500">2nd</th>
-                        <th className="text-left px-4 py-2 font-medium text-slate-500">3rd</th>
+                <div className="overflow-x-auto">
+                  <table className="min-w-[420px] w-full text-[13px]">
+                    <thead>
+                      <tr className="bg-slate-900 text-white">
+                        <th className="text-left px-2 py-1.5 text-xs font-bold uppercase tracking-wide whitespace-nowrap w-14">Wt</th>
+                        <th className="text-left px-2 py-1.5 text-xs font-bold uppercase tracking-wide whitespace-nowrap">1st</th>
+                        <th className="text-left px-2 py-1.5 text-xs font-bold uppercase tracking-wide whitespace-nowrap">2nd</th>
+                        <th className="text-left px-2 py-1.5 text-xs font-bold uppercase tracking-wide whitespace-nowrap">3rd</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100">
-                      {[...top3ByWeight.entries()].sort(([a], [b]) => a - b).map(([wt, places]) => {
+                    <tbody>
+                      {[...top3ByWeight.entries()].sort(([a], [b]) => a - b).map(([wt, places], i) => {
                         const first  = places.find(p => p.place === 1)
                         const second = places.find(p => p.place === 2)
                         const third  = places.find(p => p.place === 3)
                         const cell = (p: Placement | undefined) => p ? (
-                          p.wrestler_id ? (
-                            <Link href={`/wrestler/${p.wrestler_id}`} className="hover:underline text-slate-900 font-medium">
-                              {p.wrestler_name_raw}
-                            </Link>
-                          ) : (
-                            <span className="text-slate-900 font-medium">{p.wrestler_name_raw}</span>
-                          )
+                          <span>
+                            {p.wrestler_id ? (
+                              <Link href={`/wrestler/${p.wrestler_id}`} className="font-medium text-slate-800 hover:underline">
+                                {p.wrestler_name_raw}
+                              </Link>
+                            ) : (
+                              <span className="font-medium text-slate-800">{p.wrestler_name_raw}</span>
+                            )}
+                            <span className="ml-1 text-slate-400">{p.school?.display_name ?? p.school_name_raw}</span>
+                          </span>
                         ) : <span className="text-slate-300">—</span>
                         return (
-                          <tr key={wt} className="hover:bg-slate-50">
-                            <td className="px-4 py-2 text-xs font-semibold text-slate-400">{wt}</td>
-                            <td className="px-4 py-2 text-sm">{cell(first)}{first && <span className="text-xs text-slate-400 ml-1">({first.school?.display_name ?? first.school_name_raw})</span>}</td>
-                            <td className="px-4 py-2 text-sm">{cell(second)}{second && <span className="text-xs text-slate-400 ml-1">({second.school?.display_name ?? second.school_name_raw})</span>}</td>
-                            <td className="px-4 py-2 text-sm">{cell(third)}{third && <span className="text-xs text-slate-400 ml-1">({third.school?.display_name ?? third.school_name_raw})</span>}</td>
+                          <tr key={wt} className={`border-t border-slate-100 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
+                            <td className="px-2 py-1.5 text-xs font-semibold text-slate-400">{wt}</td>
+                            <td className="px-2 py-1.5 text-xs">{cell(first)}</td>
+                            <td className="px-2 py-1.5 text-xs">{cell(second)}</td>
+                            <td className="px-2 py-1.5 text-xs">{cell(third)}</td>
                           </tr>
                         )
                       })}
