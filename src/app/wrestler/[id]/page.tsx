@@ -99,13 +99,39 @@ function formatScore(m: Match, isWinner: boolean): string {
   return m.win_type ?? ''
 }
 
+// Maps season text ("2025-26") → integer id
+function seasonToId(season: string | null): number {
+  if (!season) return 1
+  const year = parseInt(season.split('-')[0])
+  if (year === 2024) return 1
+  if (year === 2025) return 2
+  return 1
+}
+
+const POSTSEASON_DATES: Record<string, Record<number, { display: string; sort: string }>> = {
+  districts:     { 1: { display: 'Feb 8, 2025',     sort: '2025-02-08' }, 2: { display: 'Feb 28, 2026',    sort: '2026-02-28' } },
+  regions:       { 1: { display: 'Feb 15, 2025',    sort: '2025-02-15' }, 2: { display: 'Mar 6–7, 2026',   sort: '2026-03-06' } },
+  girls_regions: { 1: { display: 'Feb 15, 2025',    sort: '2025-02-15' }, 2: { display: 'Mar 6–7, 2026',   sort: '2026-03-06' } },
+  boys_state:    { 1: { display: 'Feb 28, 2025',    sort: '2025-02-28' }, 2: { display: 'Mar 12–14, 2026', sort: '2026-03-12' } },
+  girls_state:   { 1: { display: 'Feb 28, 2025',    sort: '2025-02-28' }, 2: { display: 'Mar 12–14, 2026', sort: '2026-03-12' } },
+}
+
 function postseasonDateLabel(tournamentType: string, seasonId: number): string | null {
-  if (seasonId !== 2) return null
-  switch (tournamentType) {
-    case 'districts':                  return 'Feb 28, 2026'
-    case 'regions': case 'girls_regions': return 'Mar 6–7, 2026'
-    case 'boys_state': case 'girls_state': return 'Mar 12–14, 2026'
-    default: return null
+  return POSTSEASON_DATES[tournamentType]?.[seasonId]?.display ?? null
+}
+
+function postseasonSortDate(tournamentType: string, seasonId: number): string {
+  return POSTSEASON_DATES[tournamentType]?.[seasonId]?.sort ?? '1900-01-01'
+}
+
+function matchTypeColor(type: string): string {
+  switch (type) {
+    case 'Dual':       return 'bg-slate-100 text-slate-700'
+    case 'Tournament': return 'bg-indigo-100 text-indigo-800'
+    case 'Districts':  return 'bg-amber-100 text-amber-800'
+    case 'Regions':    return 'bg-emerald-100 text-emerald-800'
+    case 'State':      return 'bg-blue-100 text-blue-800'
+    default:           return 'bg-slate-100 text-slate-700'
   }
 }
 
@@ -271,7 +297,7 @@ export default async function WrestlerPage({
           wrestler2_id, wrestler2_name_raw, wrestler2_school_raw,
           wrestler1_school:schools!wrestler1_school_id(id, display_name, is_nj),
           wrestler2_school:schools!wrestler2_school_id(id, display_name, is_nj),
-          event:in_season_tournaments!in_season_tournament_id(id, name, start_date)
+          event:in_season_tournaments!in_season_tournament_id(id, name, start_date, season)
         `)
         .or(`wrestler1_id.eq.${id},wrestler2_id.eq.${id}`),
       supabase
@@ -552,7 +578,7 @@ export default async function WrestlerPage({
     wrestler2_name_raw: string
     wrestler2_school_raw: string
     wrestler2_school: { display_name: string; is_nj: boolean } | null
-    event: { id: string; name: string; start_date: string | null } | null
+    event: { id: string; name: string; start_date: string | null; season: string | null } | null
   }
   const allBouts = (boutData ?? []) as unknown as TournBout[]
   // Group bouts by tournament, sorted by start_date desc
@@ -594,6 +620,7 @@ export default async function WrestlerPage({
   type DualMeetGroup = {
     meetId: string
     meetDate: string
+    seasonId: number
     oppSchoolName: string
     myTeamScore: number | null
     oppTeamScore: number | null
@@ -624,6 +651,7 @@ export default async function WrestlerPage({
       dualMeetMap.set(meetId, {
         meetId,
         meetDate: meet.meet_date,
+        seasonId: meet.season_id,
         oppSchoolName: oppSchool?.display_name ?? '—',
         myTeamScore: myScore,
         oppTeamScore: oppScore,
@@ -684,6 +712,111 @@ export default async function WrestlerPage({
     g.matches.sort((a, b) => a.weightClass - b.weightClass)
   }
 
+  // ── Unified match history ─────────────────────────────────────────────────────
+  type UnifiedRow = {
+    id: string; matchType: string; weight: number; round: string | null
+    result: 'W' | 'L' | null; opponentName: string; opponentSchool: string | null
+    opponentId: string | null; score: string; isBye: boolean
+  }
+  type UnifiedEvent = {
+    key: string; eventName: string; eventDateDisplay: string | null
+    sortDate: string; seasonId: number; rows: UnifiedRow[]
+  }
+  const unifiedEvents: UnifiedEvent[] = []
+
+  // 1. Postseason — one UnifiedEvent per tournament+weight group
+  for (const [key, g] of groups) {
+    const tt = g.tournament_type
+    let matchType = 'Tournament'
+    if (tt === 'districts') matchType = 'Districts'
+    else if (tt === 'regions' || tt === 'girls_regions') matchType = 'Regions'
+    else if (tt === 'boys_state' || tt === 'girls_state') matchType = 'State'
+    unifiedEvents.push({
+      key,
+      eventName: cleanTournamentName(g.tournament_name),
+      eventDateDisplay: postseasonDateLabel(tt, g.season_id),
+      sortDate: postseasonSortDate(tt, g.season_id),
+      seasonId: g.season_id,
+      rows: g.matches.map(m => ({
+        id: m.id, matchType, weight: g.weight, round: m.round,
+        result: m.opponent === 'Bye' ? null : m.result,
+        opponentName: m.opponent, opponentSchool: m.opponentSchool, opponentId: m.opponentId,
+        score: m.opponent === 'Bye' ? '' : (m.win_type ? formatScore(m, m.result === 'W') : '—'),
+        isBye: m.opponent === 'Bye',
+      })),
+    })
+  }
+
+  // 2. In-season tournament bouts — one UnifiedEvent per tournament+weight
+  for (const { tid, name, startDate, bouts: tBouts } of boutTournaments) {
+    const eventSeasonId = seasonToId(tBouts[0]?.event?.season ?? null)
+    const eventDateDisplay = startDate
+      ? new Date(startDate + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+      : null
+    const byWeight = new Map<number, TournBout[]>()
+    for (const b of tBouts) {
+      if (!byWeight.has(b.weight_class)) byWeight.set(b.weight_class, [])
+      byWeight.get(b.weight_class)!.push(b)
+    }
+    for (const [weight, wBouts] of byWeight) {
+      const rows: UnifiedRow[] = wBouts.map(bout => {
+        const isW1 = bout.wrestler1_id === id
+        const result: 'W' | 'L' | null = bout.winner === null ? null
+          : (isW1 && bout.winner === 1) || (!isW1 && bout.winner === 2) ? 'W' : 'L'
+        const oppName = isW1 ? bout.wrestler2_name_raw : bout.wrestler1_name_raw
+        const oppId = isW1 ? bout.wrestler2_id : bout.wrestler1_id
+        const oppSchoolJoin = isW1 ? bout.wrestler2_school : bout.wrestler1_school
+        const oppSchoolRaw = isW1 ? bout.wrestler2_school_raw : bout.wrestler1_school_raw
+        const oppIsNJ = oppSchoolJoin?.is_nj ?? false
+        const oppSchoolName = oppSchoolJoin?.display_name ?? oppSchoolRaw ?? null
+        const rt = bout.result_type?.toUpperCase() ?? null
+        let scoreStr = '—'
+        if (rt === 'FALL') {
+          scoreStr = bout.fall_time_seconds
+            ? `Fall ${Math.floor(bout.fall_time_seconds / 60)}:${String(bout.fall_time_seconds % 60).padStart(2, '0')}`
+            : 'Fall'
+        } else if (rt === 'FOR' || rt === 'FORF') {
+          scoreStr = 'Forfeit'
+        } else if (bout.result_type) {
+          scoreStr = bout.result_detail ? `${bout.result_type} ${bout.result_detail}` : bout.result_type
+        }
+        return {
+          id: `bout-${bout.id}`, matchType: 'Tournament', weight, round: bout.round, result,
+          opponentName: oppName, opponentSchool: oppSchoolName,
+          opponentId: (oppId && oppIsNJ) ? oppId : null, score: scoreStr, isBye: false,
+        }
+      })
+      unifiedEvents.push({
+        key: `tourney-${tid}-${weight}`, eventName: name, eventDateDisplay,
+        sortDate: startDate ?? '1900-01-01', seasonId: eventSeasonId, rows,
+      })
+    }
+  }
+
+  // 3. Dual meets — one UnifiedEvent per meet
+  for (const dg of dualMeetGroups) {
+    const dateDisplay = new Date(dg.meetDate + 'T12:00:00').toLocaleDateString('en-US', {
+      month: 'short', day: 'numeric', year: 'numeric',
+    })
+    unifiedEvents.push({
+      key: `dual-${dg.meetId}`, eventName: `vs. ${dg.oppSchoolName}`,
+      eventDateDisplay: dateDisplay, sortDate: dg.meetDate, seasonId: dg.seasonId,
+      rows: dg.matches.map(m => ({
+        id: `dual-${m.id}`, matchType: 'Dual', weight: m.weightClass, round: null,
+        result: m.result, opponentName: m.oppName, opponentSchool: null,
+        opponentId: (m.oppId && !m.oppIsStub) ? m.oppId : null, score: m.resultStr, isBye: false,
+      })),
+    })
+  }
+
+  unifiedEvents.sort((a, b) => b.sortDate.localeCompare(a.sortDate))
+  const unifiedBySeason = new Map<number, UnifiedEvent[]>()
+  for (const ev of unifiedEvents) {
+    if (!unifiedBySeason.has(ev.seasonId)) unifiedBySeason.set(ev.seasonId, [])
+    unifiedBySeason.get(ev.seasonId)!.push(ev)
+  }
+  const unifiedSeasonIds = [...unifiedBySeason.keys()].sort((a, b) => b - a)
+
   // Current-season stats for the profile header
   const currentGroups = bySeason.get(currentSeason) ?? []
   const currentAnnotated = annotated.filter(
@@ -726,13 +859,69 @@ export default async function WrestlerPage({
       s.losses++
     }
   }
+  // Add in-season bout stats
+  for (const bout of allBouts) {
+    const isW1 = bout.wrestler1_id === id
+    const boutResult: 'W' | 'L' | null = bout.winner === null ? null
+      : (isW1 && bout.winner === 1) || (!isW1 && bout.winner === 2) ? 'W' : 'L'
+    if (boutResult === null) continue
+    const sid = seasonToId(bout.event?.season ?? null)
+    if (!seasonStatsMap.has(sid)) {
+      seasonStatsMap.set(sid, { seasonId: sid, wins: 0, losses: 0, pins: 0, tfs: 0, mds: 0, bonusPct: 0, hammerRating: 0, bestPin: null, matTime: 0, consolationWins: 0 })
+    }
+    const s = seasonStatsMap.get(sid)!
+    const rt = bout.result_type?.toUpperCase() ?? ''
+    s.matTime += computeMatchMatTime(rt, bout.fall_time_seconds, boutResult === 'L')
+    if (boutResult === 'W') {
+      s.wins++
+      if (rt === 'FALL') { s.pins++; if (bout.fall_time_seconds && (s.bestPin === null || bout.fall_time_seconds < s.bestPin)) s.bestPin = bout.fall_time_seconds }
+      if (rt === 'TF' || rt === 'TF-1.5') s.tfs++
+      if (rt === 'MD') s.mds++
+    } else { s.losses++ }
+  }
+
+  // Add dual meet stats
+  for (const row of allDualMatches) {
+    if (!row.meet || row.is_double_forfeit) continue
+    const sid = row.meet.season_id
+    if (!seasonStatsMap.has(sid)) {
+      seasonStatsMap.set(sid, { seasonId: sid, wins: 0, losses: 0, pins: 0, tfs: 0, mds: 0, bonusPct: 0, hammerRating: 0, bestPin: null, matTime: 0, consolationWins: 0 })
+    }
+    const s = seasonStatsMap.get(sid)!
+    const dualResult: 'W' | 'L' = row.winner_id === id ? 'W' : 'L'
+    const rt = (row.result_type ?? '').toUpperCase()
+    s.matTime += computeMatchMatTime(rt, row.fall_time_seconds, dualResult === 'L')
+    if (dualResult === 'W') {
+      s.wins++
+      if (rt === 'FALL') { s.pins++; if (row.fall_time_seconds && (s.bestPin === null || row.fall_time_seconds < s.bestPin)) s.bestPin = row.fall_time_seconds }
+      if (rt === 'TF' || rt === 'TF-1.5') s.tfs++
+      if (rt === 'MD') s.mds++
+    } else { s.losses++ }
+  }
+
   for (const s of seasonStatsMap.values()) {
     s.bonusPct = s.wins > 0 ? Math.round(((s.pins + s.tfs + s.mds) / s.wins) * 100) : 0
-    const seasonMatches = annotated.filter(m => m.opponent !== 'Bye' && (unwrap(m.tournament)?.season_id ?? 1) === s.seasonId)
-    const domScores = seasonMatches.map(m => {
-      const score = computeDomMatchScore(m.win_type, m.fall_time_seconds)
-      return m.result === 'W' ? score : -score
-    })
+    // Postseason dom scores
+    const domScores: number[] = annotated
+      .filter(m => m.opponent !== 'Bye' && (unwrap(m.tournament)?.season_id ?? 1) === s.seasonId)
+      .map(m => { const sc = computeDomMatchScore(m.win_type, m.fall_time_seconds); return m.result === 'W' ? sc : -sc })
+    // In-season bout dom scores
+    for (const bout of allBouts) {
+      if (seasonToId(bout.event?.season ?? null) !== s.seasonId) continue
+      const isW1 = bout.wrestler1_id === id
+      const r: 'W' | 'L' | null = bout.winner === null ? null
+        : (isW1 && bout.winner === 1) || (!isW1 && bout.winner === 2) ? 'W' : 'L'
+      if (r === null) continue
+      const sc = computeDomMatchScore(bout.result_type?.toUpperCase() ?? '', bout.fall_time_seconds)
+      domScores.push(r === 'W' ? sc : -sc)
+    }
+    // Dual meet dom scores
+    for (const row of allDualMatches) {
+      if (!row.meet || row.is_double_forfeit || row.meet.season_id !== s.seasonId) continue
+      const r: 'W' | 'L' = row.winner_id === id ? 'W' : 'L'
+      const sc = computeDomMatchScore((row.result_type ?? '').toUpperCase(), row.fall_time_seconds)
+      domScores.push(r === 'W' ? sc : -sc)
+    }
     s.hammerRating = domScores.length > 0 ? domScores.reduce((a, b) => a + b, 0) / domScores.length : 0
   }
   const seasonStats = [...seasonStatsMap.values()].sort((a, b) => b.seasonId - a.seasonId)
@@ -744,10 +933,23 @@ export default async function WrestlerPage({
     matTime: acc.matTime + s.matTime, consolationWins: acc.consolationWins + s.consolationWins,
   }), { wins: 0, losses: 0, pins: 0, tfs: 0, mds: 0, bonusPct: 0, hammerRating: 0, bestPin: null as number | null, matTime: 0, consolationWins: 0 })
   careerTotals.bonusPct = careerTotals.wins > 0 ? Math.round(((careerTotals.pins + careerTotals.tfs + careerTotals.mds) / careerTotals.wins) * 100) : 0
-  const allDomScores = annotated.filter(m => m.opponent !== 'Bye').map(m => {
-    const score = computeDomMatchScore(m.win_type, m.fall_time_seconds)
-    return m.result === 'W' ? score : -score
-  })
+  // Career dom scores across all match types
+  const allDomScores: number[] = [
+    ...annotated.filter(m => m.opponent !== 'Bye').map(m => { const sc = computeDomMatchScore(m.win_type, m.fall_time_seconds); return m.result === 'W' ? sc : -sc }),
+    ...allBouts.flatMap(bout => {
+      const isW1 = bout.wrestler1_id === id
+      const r: 'W' | 'L' | null = bout.winner === null ? null
+        : (isW1 && bout.winner === 1) || (!isW1 && bout.winner === 2) ? 'W' : 'L'
+      if (r === null) return []
+      const sc = computeDomMatchScore(bout.result_type?.toUpperCase() ?? '', bout.fall_time_seconds)
+      return [r === 'W' ? sc : -sc]
+    }),
+    ...allDualMatches.filter(row => row.meet && !row.is_double_forfeit).map(row => {
+      const r: 'W' | 'L' = row.winner_id === id ? 'W' : 'L'
+      const sc = computeDomMatchScore((row.result_type ?? '').toUpperCase(), row.fall_time_seconds)
+      return r === 'W' ? sc : -sc
+    }),
+  ]
   careerTotals.hammerRating = allDomScores.length > 0 ? allDomScores.reduce((a, b) => a + b, 0) / allDomScores.length : 0
 
   // Detect placements (champion = won Finals on championship side)
@@ -1080,262 +1282,86 @@ export default async function WrestlerPage({
         </div>
       )}
 
-      {/* Match history — one card per season */}
-      {seasonIds.length > 0 && (
+      {/* Match history — unified per-season tables */}
+      {unifiedSeasonIds.length > 0 && (
         <div className="space-y-8">
-          {seasonIds.map(seasonId => {
-            const seasonGroups = bySeason.get(seasonId) ?? []
+          {unifiedSeasonIds.map(seasonId => {
+            const seasonEvents = unifiedBySeason.get(seasonId) ?? []
             const label = SEASON_LABELS[seasonId] ?? `Season ${seasonId}`
-            const allSeasonMatches = seasonGroups.flatMap(g => g.matches).filter(m => m.opponent !== 'Bye')
-            const seasonWins   = allSeasonMatches.filter(m => m.result === 'W').length
-            const seasonLosses = allSeasonMatches.filter(m => m.result === 'L').length
+            const seasonWins   = seasonEvents.flatMap(e => e.rows).filter(r => !r.isBye && r.result === 'W').length
+            const seasonLosses = seasonEvents.flatMap(e => e.rows).filter(r => !r.isBye && r.result === 'L').length
             return (
               <div key={seasonId} className="rounded-lg border border-slate-200 overflow-hidden">
-                {/* Season header */}
                 <div className="px-4 py-2 bg-slate-50 border-b border-slate-200 flex items-center gap-2">
                   <span className="text-xs font-semibold text-slate-700 uppercase tracking-widest">{label}</span>
                   {schoolBySeason.get(seasonId) && (
                     <span className="text-xs text-slate-400 font-medium">— {schoolBySeason.get(seasonId)}</span>
                   )}
+                  <span className="ml-auto text-xs text-slate-500 font-medium">{seasonWins}W – {seasonLosses}L</span>
                 </div>
                 <div className="overflow-x-auto">
-                  <table className="min-w-[420px] w-full text-[13px]">
+                  <table className="min-w-[560px] w-full text-[13px]">
                     <thead>
                       <tr className="bg-slate-900 text-white">
-                        <th className="text-left px-2 py-1 text-xs font-bold uppercase tracking-wide whitespace-nowrap w-24">Round</th>
+                        <th className="text-left px-2 py-1 text-xs font-bold uppercase tracking-wide whitespace-nowrap w-24">Type</th>
+                        <th className="text-center px-2 py-1 text-xs font-bold uppercase tracking-wide whitespace-nowrap w-14">Wt</th>
+                        <th className="text-left px-2 py-1 text-xs font-bold uppercase tracking-wide whitespace-nowrap w-28">Round</th>
                         <th className="text-center px-2 py-1 text-xs font-bold uppercase tracking-wide whitespace-nowrap w-10">Res</th>
                         <th className="text-left px-2 py-1 text-xs font-bold uppercase tracking-wide whitespace-nowrap">Opponent</th>
                         <th className="text-right px-2 py-1 text-xs font-bold uppercase tracking-wide whitespace-nowrap w-28">Score</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {seasonGroups.flatMap(g => [
-                        // Tournament subheader row
-                        <tr key={`h||${g.season_id}||${g.tournament_name}||${g.weight}`} className="bg-slate-100 border-t border-slate-200">
-                          <td colSpan={4} className="px-2 py-1">
-                            <span className="inline-flex items-center gap-1.5">
-                              <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full ${tournamentTypeColor(g.tournament_type)}`}>
-                                {TOURNAMENT_TYPE_LABEL[g.tournament_type] ?? g.tournament_type}
-                              </span>
-                              <span className="text-xs font-semibold text-slate-700">
-                                {cleanTournamentName(g.tournament_name)} &middot; {g.weight} lbs
-                              </span>
-                              {postseasonDateLabel(g.tournament_type, g.season_id) && (
-                                <span className="text-[11px] text-slate-400">{postseasonDateLabel(g.tournament_type, g.season_id)}</span>
-                              )}
-                            </span>
+                      {seasonEvents.flatMap(ev => [
+                        <tr key={`ev-${ev.key}`} className="bg-slate-100 border-t border-slate-200">
+                          <td colSpan={6} className="px-2 py-1">
+                            <span className="text-xs font-semibold text-slate-700">{ev.eventName}</span>
+                            {ev.eventDateDisplay && (
+                              <span className="ml-2 text-[11px] text-slate-400">{ev.eventDateDisplay}</span>
+                            )}
                           </td>
                         </tr>,
-                        // Match rows — alternate bg for zebra
-                        ...g.matches.map((m, mi) => {
-                          const mIsBye = m.opponent === 'Bye'
-                          return (
-                            <tr key={m.id} className={`border-t border-slate-100 ${mIsBye ? 'opacity-50' : ''} ${mi % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
-                              <td className="px-2 py-1 text-slate-500 text-xs">
-                                {m.round === 'F' && m.bracket_side === 'championship' && m.result === 'W' && (
-                                  <span className="mr-1">{'\u{1F451}'}</span>
-                                )}
-                                {m.round === 'F' && m.bracket_side === 'championship' && m.result === 'L' && (
-                                  <span className="mr-1">{'\u{1F948}'}</span>
-                                )}
-                                {ROUND_LABEL[m.round ?? ''] ?? m.round ?? '—'}
-                              </td>
-                              <td className="px-2 py-1 text-center">
-                                {mIsBye ? (
-                                  <span className="text-xs text-slate-400 italic">Bye</span>
-                                ) : (
-                                  <span className={`font-bold text-xs ${m.result === 'W' ? 'text-emerald-600' : 'text-red-500'}`}>
-                                    {m.result}
-                                  </span>
-                                )}
-                              </td>
-                              <td className="px-2 py-1 text-slate-800 font-medium text-xs">
-                                {m.opponentId ? (
-                                  <Link href={`/wrestler/${m.opponentId}`} className="hover:text-blue-600 transition-colors">
-                                    {m.opponent}
-                                  </Link>
-                                ) : m.opponent}
-                                {m.opponentSchool && (
-                                  <span className="ml-1.5 text-slate-400 font-normal text-xs">{m.opponentSchool}</span>
-                                )}
-                              </td>
-                              <td className="px-2 py-1 text-right text-slate-500 font-mono text-xs tabular-nums">
-                                {mIsBye ? '' : (m.win_type ? formatScore(m, m.result === 'W') : '—')}
-                              </td>
-                            </tr>
-                          )
-                        }),
+                        ...ev.rows.map((r, ri) => (
+                          <tr key={r.id} className={`border-t border-slate-100 ${r.isBye ? 'opacity-40' : ''} ${ri % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
+                            <td className="px-2 py-1">
+                              <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full ${matchTypeColor(r.matchType)}`}>
+                                {r.matchType}
+                              </span>
+                            </td>
+                            <td className="px-2 py-1 text-center text-slate-500 font-mono text-xs tabular-nums">
+                              {r.weight > 0 ? r.weight : '—'}
+                            </td>
+                            <td className="px-2 py-1 text-slate-500 text-xs">
+                              {r.round ? (ROUND_LABEL[r.round] ?? r.round) : '—'}
+                            </td>
+                            <td className="px-2 py-1 text-center">
+                              {r.isBye ? (
+                                <span className="text-xs text-slate-400 italic">Bye</span>
+                              ) : r.result !== null ? (
+                                <span className={`font-bold text-xs ${r.result === 'W' ? 'text-emerald-600' : 'text-red-500'}`}>
+                                  {r.result}
+                                </span>
+                              ) : <span className="text-xs text-slate-400">—</span>}
+                            </td>
+                            <td className="px-2 py-1 text-slate-800 font-medium text-xs">
+                              {r.opponentId ? (
+                                <Link href={`/wrestler/${r.opponentId}`} className="hover:text-blue-600 transition-colors">
+                                  {r.opponentName}
+                                </Link>
+                              ) : r.opponentName}
+                              {r.opponentSchool && (
+                                <span className="ml-1.5 text-slate-400 font-normal text-xs">{r.opponentSchool}</span>
+                              )}
+                            </td>
+                            <td className="px-2 py-1 text-right text-slate-500 font-mono text-xs tabular-nums">
+                              {r.score}
+                            </td>
+                          </tr>
+                        )),
                       ])}
-                      {/* Season totals footer */}
-                      {allSeasonMatches.length > 0 && (
-                        <tr className="border-t-2 border-slate-300 bg-slate-100 font-bold">
-                          <td colSpan={4} className="px-2 py-1 text-xs text-slate-700">
-                            Season Total: <span className="text-slate-900">{seasonWins}-{seasonLosses}</span>
-                          </td>
-                        </tr>
-                      )}
                     </tbody>
                   </table>
                 </div>
-              </div>
-            )
-          })}
-        </div>
-      )}
-
-      {/* ── Dual Meet History ── */}
-      {dualMeetGroups.length > 0 && (
-        <div className="mt-8 space-y-4">
-          <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-widest">
-            Dual Meets
-          </h2>
-          {dualMeetGroups.map(({ meetId, meetDate, oppSchoolName, myTeamScore, oppTeamScore, matches }) => {
-            const dateStr = new Date(meetDate + 'T12:00:00').toLocaleDateString('en-US', {
-              month: 'short', day: 'numeric', year: 'numeric',
-            })
-            const meetWins   = matches.filter(m => m.result === 'W').length
-            const meetLosses = matches.filter(m => m.result === 'L').length
-            return (
-              <div key={meetId} className="border border-black rounded-none overflow-hidden bg-white">
-                <div className="px-4 py-2.5 bg-slate-50 border-b border-slate-200 flex items-baseline gap-2">
-                  <span className="text-sm font-semibold text-slate-800">vs. {oppSchoolName}</span>
-                  <span className="text-xs text-slate-400">{dateStr}</span>
-                  {myTeamScore !== null && oppTeamScore !== null && (
-                    <span className="ml-auto text-xs text-slate-500 font-medium">
-                      Team {myTeamScore}–{oppTeamScore}
-                    </span>
-                  )}
-                </div>
-                <table className="w-full text-sm">
-                  <tbody className="divide-y divide-slate-100">
-                    {matches.map(m => (
-                      <tr key={m.id} className="hover:bg-slate-50">
-                        <td className="px-4 py-2.5 text-slate-400 font-mono text-xs w-16 tabular-nums">
-                          {m.weightClass}
-                        </td>
-                        <td className="px-4 py-2.5">
-                          {m.result !== null && (
-                            <span className={`inline-block text-xs font-bold px-2 py-0.5 rounded-full mr-2 ${
-                              m.result === 'W' ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-700'
-                            }`}>
-                              {m.result}
-                            </span>
-                          )}
-                          {m.oppId && !m.oppIsStub ? (
-                            <Link href={`/wrestler/${m.oppId}`} className="font-medium text-slate-800 hover:underline">
-                              {m.oppName}
-                            </Link>
-                          ) : (
-                            <span className="font-medium text-slate-800">{m.oppName}</span>
-                          )}
-                        </td>
-                        <td className="px-4 py-2.5 text-right text-slate-500 text-xs">
-                          {m.resultStr}
-                        </td>
-                      </tr>
-                    ))}
-                    <tr className="border-t border-slate-200 bg-slate-50">
-                      <td colSpan={3} className="px-4 py-1.5 text-xs text-slate-500">
-                        {meetWins}W–{meetLosses}L at this meet
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            )
-          })}
-        </div>
-      )}
-
-      {/* ── In-Season Tournament Bouts ── */}
-      {boutTournaments.length > 0 && (
-        <div className="mt-8 space-y-4">
-          <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-widest">
-            In-Season Tournaments
-          </h2>
-          {boutTournaments.map(({ tid, name, startDate, bouts: tBouts }) => {
-            const dateStr = startDate
-              ? new Date(startDate + 'T12:00:00').toLocaleDateString('en-US', {
-                  month: 'short', day: 'numeric', year: 'numeric',
-                })
-              : null
-            return (
-              <div key={tid} className="border border-black rounded-none overflow-hidden bg-white">
-                <div className="px-4 py-2.5 bg-slate-50 border-b border-slate-200 flex items-baseline gap-2">
-                  <Link
-                    href={`/tournaments/${tid}`}
-                    className="text-sm font-semibold text-slate-800 hover:underline"
-                  >
-                    {name}
-                  </Link>
-                  {dateStr && <span className="text-xs text-slate-400">{dateStr}</span>}
-                </div>
-                <table className="w-full text-sm">
-                  <tbody className="divide-y divide-slate-100">
-                    {tBouts.map(bout => {
-                      const isW1 = bout.wrestler1_id === id
-                      const result: 'W' | 'L' | null = bout.winner === null
-                        ? null
-                        : (isW1 && bout.winner === 1) || (!isW1 && bout.winner === 2) ? 'W' : 'L'
-                      const oppName = isW1 ? bout.wrestler2_name_raw : bout.wrestler1_name_raw
-                      const oppId = isW1 ? bout.wrestler2_id : bout.wrestler1_id
-                      const oppSchoolJoin = isW1 ? bout.wrestler2_school : bout.wrestler1_school
-                      const oppSchoolRaw = isW1 ? bout.wrestler2_school_raw : bout.wrestler1_school_raw
-                      const oppSchool = oppSchoolJoin?.display_name ?? oppSchoolRaw
-                      const oppIsNJ = oppSchoolJoin?.is_nj ?? false
-
-                      // Format result string
-                      const rt = bout.result_type?.toUpperCase() ?? null
-                      let resultStr = '—'
-                      if (rt === 'FALL') {
-                        if (bout.fall_time_seconds) {
-                          const min = Math.floor(bout.fall_time_seconds / 60)
-                          const sec = String(bout.fall_time_seconds % 60).padStart(2, '0')
-                          resultStr = `Fall ${min}:${sec}`
-                        } else { resultStr = 'Fall' }
-                      } else if (rt === 'FOR' || rt === 'FORF') {
-                        resultStr = 'Forfeit'
-                      } else if (bout.result_type) {
-                        resultStr = bout.result_detail
-                          ? `${bout.result_type} ${bout.result_detail}`
-                          : bout.result_type
-                      }
-
-                      return (
-                        <tr key={bout.id} className="hover:bg-slate-50">
-                          <td className="px-4 py-2.5 text-slate-500 font-mono text-xs w-20 tabular-nums">
-                            {bout.weight_class} lb
-                          </td>
-                          <td className="px-4 py-2.5 text-slate-500 text-xs w-24">
-                            {ROUND_LABEL[bout.round] ?? bout.round}
-                          </td>
-                          <td className="px-4 py-2.5">
-                            {result !== null ? (
-                              <span className={`inline-block text-xs font-bold px-2 py-0.5 rounded-full mr-2 ${
-                                result === 'W' ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-700'
-                              }`}>
-                                {result}
-                              </span>
-                            ) : null}
-                            {oppId && oppIsNJ ? (
-                              <Link href={`/wrestler/${oppId}`} className="font-medium text-slate-800 hover:underline">
-                                {oppName}
-                              </Link>
-                            ) : (
-                              <span className="font-medium text-slate-800">{oppName}</span>
-                            )}
-                            {oppSchool && (
-                              <span className="ml-1.5 text-slate-400 text-xs">{oppSchool}</span>
-                            )}
-                          </td>
-                          <td className="px-4 py-2.5 text-right text-slate-500 text-xs">
-                            {resultStr}
-                          </td>
-                        </tr>
-                      )
-                    })}
-                  </tbody>
-                </table>
               </div>
             )
           })}
