@@ -16,13 +16,8 @@ type ProfileData = {
   wrestling_preference: string | null
 }
 
-type SchoolInfo = {
-  id: number
-  abbreviation: string
-  school_name: string
-}
-
-type SchoolOption = { id: number; display_name: string }
+type SchoolInfo = { id: number; display_name: string }
+type SchoolOption = SchoolInfo
 
 type WrestlerInfo = {
   id: string
@@ -205,8 +200,8 @@ export default function SettingsPage() {
       ]
       if (allSchoolIds.length > 0) {
         const { data: schools } = await supabase
-          .from('school_names')
-          .select('id, abbreviation, school_name')
+          .from('schools')
+          .select('id, display_name')
           .in('id', allSchoolIds)
         const schoolMap = new Map((schools as SchoolInfo[] ?? []).map(s => [s.id, s]))
         if (p?.primary_school_id && schoolMap.has(p.primary_school_id)) {
@@ -268,9 +263,7 @@ export default function SettingsPage() {
       return
     }
 
-    const { data: info } = await supabase
-      .from('school_names').select('id, abbreviation, school_name').eq('id', school.id).maybeSingle()
-    if (info) setPrimarySchool(info as SchoolInfo)
+    setPrimarySchool(school)
     setProfile({ ...profile, primary_school_id: school.id })
     setSaving(false)
   }
@@ -297,9 +290,7 @@ export default function SettingsPage() {
     const { error: dbErr } = await supabase.from('users').update({ followed_school_ids: updated }).eq('id', user.id)
     if (dbErr) { setError(`Failed to save school: ${dbErr.message}`); setSaving(false); return }
 
-    const { data: info } = await supabase
-      .from('school_names').select('id, abbreviation, school_name').eq('id', school.id).maybeSingle()
-    if (info) setFollowedSchools([...followedSchools, info as SchoolInfo])
+    setFollowedSchools([...followedSchools, school])
     setProfile({ ...profile, followed_school_ids: updated })
     setSaving(false)
   }
@@ -420,7 +411,7 @@ export default function SettingsPage() {
           {primarySchool ? (
             <div className="flex items-center justify-between border border-blue-200 bg-blue-50 rounded-none px-3 py-2.5">
               <Link href={schoolHref(primarySchool.id)} className="text-sm font-medium text-blue-800 hover:underline">
-                {primarySchool.school_name}
+                {primarySchool.display_name}
               </Link>
               <button onClick={handleClearPrimary} className="text-xs text-slate-400 hover:text-red-500">change</button>
             </div>
@@ -428,7 +419,7 @@ export default function SettingsPage() {
             <SchoolSearch onSelect={handleSetPrimary} />
           )}
           {totalSchools === 1 && primarySchool && (
-            <p className="text-[11px] text-blue-500 mt-1">Your homepage will feature {primarySchool.school_name}</p>
+            <p className="text-[11px] text-blue-500 mt-1">Your homepage will feature {primarySchool.display_name}</p>
           )}
         </div>
 
@@ -440,7 +431,7 @@ export default function SettingsPage() {
               {followedSchools.map(s => (
                 <div key={s.id} className="flex items-center justify-between border border-slate-200 rounded-none px-3 py-2">
                   <Link href={schoolHref(s.id)} className="text-sm font-medium text-slate-800 hover:text-blue-600 hover:underline">
-                    {s.school_name}
+                    {s.display_name}
                   </Link>
                   <button onClick={() => handleRemoveSchool(s.id)} className="text-xs text-slate-400 hover:text-red-500">remove</button>
                 </div>

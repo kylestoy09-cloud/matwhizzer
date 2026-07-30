@@ -142,8 +142,9 @@ function parseMatchSummary(summary: string, t1Pts: number, t2Pts: number, weight
   const winnerPart = s.slice(0, overIdx).trim()
   const afterOver  = s.slice(overIdx + 6).trim()
 
-  // Parse winner "First Last (School)"
-  const winnerM = winnerPart.match(/^(.+?)\s+\(([^)]+)\)$/)
+  // Parse winner "First Last (School)" — use .+ (not [^)]+) so school names
+  // containing parentheses like "Northern Burlington ( Columbus)" parse correctly.
+  const winnerM = winnerPart.match(/^(.+?)\s+\((.+)\)$/)
   const winnerName      = normalizeName(winnerM ? winnerM[1].trim() : winnerPart)
   const winnerSchoolRaw = winnerM ? winnerM[2].trim() : null
 
@@ -195,7 +196,7 @@ function parseMatchSummary(summary: string, t1Pts: number, t2Pts: number, weight
   }
 
   const { resultType, resultDetail } = parseResult(resultStr)
-  const loserM = loserAndSchool.match(/^(.+?)\s+\(([^)]+)\)$/)
+  const loserM = loserAndSchool.match(/^(.+?)\s+\((.+)\)$/)
   const loserNameRaw   = loserM ? normalizeName(loserM[1].trim()) : (loserAndSchool ? normalizeName(loserAndSchool) : null)
   const loserSchoolRaw = loserM ? loserM[2].trim() : null
 

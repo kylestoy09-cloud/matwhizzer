@@ -216,7 +216,7 @@ export default async function WrestlerPage({
   // 2. All entries for this wrestler (include school, grade, season record, and season via tournament join)
   const { data: entries } = await supabase
     .from('tournament_entries')
-    .select('id, school_context_raw, grade_label, wins, losses, tournament:tournaments(season_id, tournament_type)')
+    .select('id, school_id, school:schools(id, display_name), school_context_raw, grade_label, wins, losses, tournament:tournaments(season_id, tournament_type)')
     .eq('wrestler_id', id)
 
   const entryIds = (entries ?? []).map((e: { id: string }) => e.id)
@@ -236,6 +236,8 @@ export default async function WrestlerPage({
   // Determine the current (latest) season this wrestler has entries in
   type EntryRow = {
     id: string
+    school_id: number | null
+    school: { id: number; display_name: string } | null
     school_context_raw: string | null
     grade_label: string | null
     wins: number | null
@@ -252,9 +254,10 @@ export default async function WrestlerPage({
   const currentEntries = typedEntries.filter(
     e => ((unwrap(e.tournament) as { season_id: number } | null)?.season_id ?? 0) === currentSeason
   )
-  const primarySchool =
-    currentEntries.find(e => e.school_context_raw)?.school_context_raw ??
-    typedEntries.find(e => e.school_context_raw)?.school_context_raw ?? null
+  const primarySchoolEntry =
+    currentEntries.find(e => e.school_id) ?? typedEntries.find(e => e.school_id) ?? null
+  const primarySchool = primarySchoolEntry?.school?.display_name ?? null
+  const primarySchoolId = primarySchoolEntry?.school_id ?? null
   const primaryGrade =
     currentEntries.find(e => e.grade_label)?.grade_label ??
     typedEntries.find(e => e.grade_label)?.grade_label ?? null
@@ -281,13 +284,10 @@ export default async function WrestlerPage({
     weight_class:weight_classes(weight)
   `
 
-  const [{ data: winMatches }, { data: lossMatches }, { data: schoolNameRow }, { data: boutData }, { data: dualMatchData }] =
+  const [{ data: winMatches }, { data: lossMatches }, { data: boutData }, { data: dualMatchData }] =
     await Promise.all([
       supabase.from('matches').select(selectFields).in('winner_entry_id', entryIds),
       supabase.from('matches').select(selectFields).in('loser_entry_id', entryIds),
-      primarySchool
-        ? supabase.from('school_names').select('school_name').eq('abbreviation', primarySchool).maybeSingle()
-        : Promise.resolve({ data: null }),
       supabase
         .from('tournament_bouts')
         .select(`
@@ -315,8 +315,6 @@ export default async function WrestlerPage({
         `)
         .or(`wrestler_a_id.eq.${id},wrestler_b_id.eq.${id}`),
     ])
-  const displaySchool = (schoolNameRow as { school_name: string } | null)?.school_name ?? primarySchool
-
   // Extract school ID directly from tournament bouts (FK join to schools, always correct)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const boutSchoolId = (() => {
@@ -331,10 +329,8 @@ export default async function WrestlerPage({
   // Fetch school profile (colors, logo, section, conference) and wrestler's weight
   const schoolSelect = 'id, display_name, primary_color, secondary_color, logo_url, section, classification, athletic_conference, mascot, header_background'
   const [{ data: schoolProfileData }, { data: weightData }] = await Promise.all([
-    boutSchoolId
-      ? supabase.from('schools').select(schoolSelect).eq('id', boutSchoolId).maybeSingle()
-      : displaySchool
-      ? supabase.from('schools').select(schoolSelect).eq('display_name', displaySchool).maybeSingle()
+    (primarySchoolId ?? boutSchoolId)
+      ? supabase.from('schools').select(schoolSelect).eq('id', primarySchoolId ?? boutSchoolId).maybeSingle()
       : Promise.resolve({ data: null }),
     supabase.from('tournament_entries')
       .select('weight_class:weight_classes(weight), tournament:tournaments(tournament_type, season_id)')
@@ -345,7 +341,7 @@ export default async function WrestlerPage({
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const schoolProfile = schoolProfileData as any ?? {
-    id: 0, display_name: displaySchool ?? '', primary_color: null, secondary_color: null,
+    id: 0, display_name: primarySchool ?? '', primary_color: null, secondary_color: null,
     logo_url: null, section: null, classification: null, athletic_conference: null,
   }
 
@@ -415,45 +411,27 @@ export default async function WrestlerPage({
   if (opponentEntryIds.length > 0) {
     const { data: oppEntries } = await supabase
       .from('tournament_entries')
-      .select('id, school_context_raw, wrestler:wrestlers(id, first_name, last_name)')
+      .select('id, school_id, school:schools(display_name), wrestler:wrestlers(id, first_name, last_name)')
       .in('id', opponentEntryIds)
 
-    type OppEntry = { id: string; school_context_raw: string | null; wrestler: { id: string; first_name: string; last_name: string } | { id: string; first_name: string; last_name: string }[] | null }
+    type OppEntry = { id: string; school_id: number | null; school: { display_name: string } | null; wrestler: { id: string; first_name: string; last_name: string } | { id: string; first_name: string; last_name: string }[] | null }
     const typedOppEntries = (oppEntries ?? []) as unknown as OppEntry[]
 
-    // State entries have null school — find their school from other entries (district/region)
+    // State entries have null school_id — find their school from other entries (district/region)
     const noSchoolWrestlerIds = typedOppEntries
-      .filter(e => !e.school_context_raw)
+      .filter(e => !e.school_id)
       .map(e => unwrap(e.wrestler)?.id)
       .filter((wid): wid is string => wid != null)
 
-    const fallbackSchoolMap: Record<string, string> = {}  // wrestler_id → school_abbr
+    const fallbackSchoolMap: Record<string, string> = {}  // wrestler_id → display_name
     if (noSchoolWrestlerIds.length > 0) {
       const { data: altEntries } = await supabase
         .from('tournament_entries')
-        .select('wrestler_id, school_context_raw')
+        .select('wrestler_id, school_id, school:schools(display_name)')
         .in('wrestler_id', noSchoolWrestlerIds)
-        .not('school_context_raw', 'is', null)
-      for (const e of (altEntries ?? []) as { wrestler_id: string; school_context_raw: string }[]) {
-        if (!fallbackSchoolMap[e.wrestler_id]) fallbackSchoolMap[e.wrestler_id] = e.school_context_raw
-      }
-    }
-
-    // Batch-lookup full school names for all collected abbreviations
-    const oppSchoolAbbrs = new Set<string>()
-    for (const e of typedOppEntries) {
-      if (e.school_context_raw) oppSchoolAbbrs.add(e.school_context_raw)
-    }
-    for (const abbr of Object.values(fallbackSchoolMap)) oppSchoolAbbrs.add(abbr)
-
-    const schoolNameMap: Record<string, string> = {}
-    if (oppSchoolAbbrs.size > 0) {
-      const { data: schoolRows } = await supabase
-        .from('school_names')
-        .select('abbreviation, school_name')
-        .in('abbreviation', [...oppSchoolAbbrs])
-      for (const row of (schoolRows ?? []) as { abbreviation: string; school_name: string }[]) {
-        schoolNameMap[row.abbreviation] = row.school_name
+        .not('school_id', 'is', null)
+      for (const e of (altEntries ?? []) as unknown as { wrestler_id: string; school_id: number | null; school: { display_name: string } | null }[]) {
+        if (!fallbackSchoolMap[e.wrestler_id]) fallbackSchoolMap[e.wrestler_id] = e.school?.display_name ?? ''
       }
     }
 
@@ -478,8 +456,8 @@ export default async function WrestlerPage({
       const w = unwrap(e.wrestler)
       const grade = w?.id ? oppGradeMap[w.id] : null
       const name = w ? `${w.first_name} ${w.last_name}${grade ? `, ${grade}` : ''}`.trim() : '—'
-      const abbr = e.school_context_raw ?? (w?.id ? fallbackSchoolMap[w.id] : null)
-      opponentMap[e.id] = { name, school: abbr ? (schoolNameMap[abbr] ?? abbr) : null, wrestlerId: w?.id ?? null }
+      const oppSchool = e.school?.display_name ?? (w?.id ? fallbackSchoolMap[w.id] : null) ?? null
+      opponentMap[e.id] = { name, school: oppSchool, wrestlerId: w?.id ?? null }
     }
   }
 
@@ -538,26 +516,13 @@ export default async function WrestlerPage({
     bySeason.get(g.season_id)!.push(g)
   }
 
-  // Build school name per season from entries
+  // Build school name per season from entries — use school_id → schools.display_name directly
   const schoolBySeason = new Map<number, string>()
-  const allSchoolAbbrs = new Set<string>()
-  for (const e of typedEntries) {
-    if (e.school_context_raw) allSchoolAbbrs.add(e.school_context_raw)
-  }
-  const schoolNameLookup: Record<string, string> = {}
-  if (allSchoolAbbrs.size > 0) {
-    const { data: snRows } = await supabase
-      .from('school_names')
-      .select('abbreviation, school_name')
-      .in('abbreviation', [...allSchoolAbbrs])
-    for (const row of (snRows ?? []) as { abbreviation: string; school_name: string }[]) {
-      schoolNameLookup[row.abbreviation] = row.school_name
-    }
-  }
   for (const e of typedEntries) {
     const sid = (unwrap(e.tournament) as { season_id: number } | null)?.season_id ?? 0
-    if (sid && e.school_context_raw && !schoolBySeason.has(sid)) {
-      schoolBySeason.set(sid, schoolNameLookup[e.school_context_raw] ?? e.school_context_raw)
+    const displayName = e.school?.display_name ?? null
+    if (sid && displayName && !schoolBySeason.has(sid)) {
+      schoolBySeason.set(sid, displayName)
     }
   }
 
@@ -1108,7 +1073,7 @@ export default async function WrestlerPage({
   return (
     <>
       <WrestlerHeader
-        schoolName={displaySchool}
+        schoolName={primarySchool}
         mascotName={mascotName}
         logoUrl={schoolProfile.logo_url as string | null}
         primaryColor={schoolProfile.primary_color as string | null}

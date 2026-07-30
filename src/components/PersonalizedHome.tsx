@@ -63,12 +63,10 @@ type MatchRow = {
   fall_time_seconds: number | null
   winner_entry: {
     wrestler: { first_name: string; last_name: string } | null
-    school_context_raw: string | null
     weight_class: { weight: number } | null
   } | null
   loser_entry: {
     wrestler: { first_name: string; last_name: string } | null
-    school_context_raw: string | null
     weight_class: { weight: number } | null
   } | null
   tournament: { name: string } | null
@@ -233,12 +231,10 @@ export function PersonalizedHome() {
                 id, win_type, winner_score, loser_score, round, fall_time_seconds,
                 winner_entry:tournament_entries!winner_entry_id(
                   wrestler:wrestlers(first_name, last_name),
-                  school_context_raw,
                   weight_class:weight_classes(weight)
                 ),
                 loser_entry:tournament_entries!loser_entry_id(
                   wrestler:wrestlers(first_name, last_name),
-                  school_context_raw,
                   weight_class:weight_classes(weight)
                 ),
                 tournament:tournaments(name)

@@ -5,6 +5,20 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 ---
 
+## 2026-07-30 — Drop school_names table
+
+**Migration file:** `docs/migrations/20260730_drop_school_names.sql`
+
+**Status:** PENDING — run in Supabase SQL editor.
+
+**What changed:**
+- Dropped `school_names` table entirely.
+
+**Why:**
+`school_names` was an abbreviation → display_name lookup table from the early import pipeline, predating reliable `tournament_entries.school_id` population. All downstream code had been (incorrectly) using it instead of `schools.display_name` via `school_id`. Fixed in this session: wrestler profiles, settings page, and PersonalizedHome all now query `schools` directly. Zero references remain in `src/`. Deleting the table prevents future accidental use.
+
+---
+
 ## 2026-07-29 — Fix school_wrestlers RPC: stale column names after rename
 
 **Migration file:** `docs/migrations/20260729_fix_school_wrestlers_rpc_column_names.sql`
