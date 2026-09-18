@@ -11,6 +11,7 @@ import {
   makeWrestlerKey,
   resolveSchool,
   resolveWrestler,
+  isPlaceholderName,
 } from './types'
 
 // ── School roster search ───────────────────────────────────────────────────────
@@ -35,13 +36,14 @@ function RosterSearch({
   useEffect(() => {
     if (!schoolId) return
     setLoading(true)
+    setRoster([])
     fetch(`/api/admin/school-wrestlers?schoolId=${schoolId}&gender=${gender}`)
       .then(r => r.json())
       .then(j => setRoster(j.wrestlers ?? []))
       .finally(() => setLoading(false))
-  }, [schoolId])
+  }, [schoolId, gender])
 
-  if (!schoolId) return <p className="text-xs text-slate-400 italic">No school resolved.</p>
+  if (!schoolId) return <p className="text-xs text-slate-400 italic">Pick a school above to search roster.</p>
   if (loading)   return <p className="text-xs text-slate-400 italic">Loading roster…</p>
 
   const filtered = query.trim()
@@ -81,7 +83,6 @@ function RosterSearch({
 }
 
 // ── Wrestler resolution card ───────────────────────────────────────────────────
-// Used for both low-confidence items and new wrestlers that the user clicks into.
 
 function WrestlerCard({
   wKey,
@@ -93,6 +94,7 @@ function WrestlerCard({
   override,
   gender,
   sameSchoolNew,
+  teamSchools,
   onOverride,
   onClose,
 }: {
@@ -105,11 +107,20 @@ function WrestlerCard({
   override:      WrestlerOverride | undefined
   gender:        'M' | 'F'
   sameSchoolNew: { key: WrestlerKey; rawName: string; weights: number[] }[]
+  teamSchools?:  { id: number; name: string }[]
   onOverride:    (key: WrestlerKey, o: WrestlerOverride | null) => void
   onClose?:      () => void
 }) {
-  const alternates = match?.alternates ?? []
-  const isConfirmedNew = override?.confirmedNew === true
+  // Local school state — used when the parsed school is null (parser error cases).
+  // Lets the user pick one of the two meet teams without changing the override key.
+  const [localSchoolId, setLocalSchoolId] = useState<number | null>(schoolId)
+
+  const effectiveSchoolId = localSchoolId
+  const alternates        = match?.alternates ?? []
+  const isConfirmedNew    = override?.confirmedNew === true
+
+  // Show team picker when school is unresolved and we know the two meet teams
+  const showTeamPicker = schoolId === null && (teamSchools?.length ?? 0) > 0
 
   return (
     <div className="border-t border-amber-200 bg-amber-50 px-4 py-3">
@@ -126,6 +137,30 @@ function WrestlerCard({
           >×</button>
         )}
       </div>
+
+      {/* Team school picker — only shown when school could not be parsed */}
+      {showTeamPicker && (
+        <div className="mb-3">
+          <p className="text-[11px] text-slate-500 mb-1.5 font-medium">
+            Which team does this wrestler belong to?
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {teamSchools!.map(t => (
+              <button
+                key={t.id}
+                onClick={() => setLocalSchoolId(t.id)}
+                className={`text-xs px-2 py-1 border transition-colors ${
+                  localSchoolId === t.id
+                    ? 'border-black bg-black text-white'
+                    : 'border-slate-300 hover:border-black hover:bg-slate-50 text-slate-700'
+                }`}
+              >
+                {t.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {alternates.length > 0 && (
         <div className="space-y-1.5 mb-3">
@@ -149,10 +184,11 @@ function WrestlerCard({
         </div>
       )}
 
-      {alternates.length === 0 && (
+      {/* Roster search: show when school is resolved (either originally or via team picker) */}
+      {alternates.length === 0 && (!showTeamPicker || localSchoolId !== null) && (
         <div className="mb-3">
           <RosterSearch
-            schoolId={schoolId}
+            schoolId={effectiveSchoolId}
             panelKey={wKey}
             override={override}
             gender={gender}
@@ -164,21 +200,26 @@ function WrestlerCard({
       )}
 
       <div className="flex items-center gap-3">
-        <button
-          onClick={() => onOverride(
-            wKey,
-            isConfirmedNew
-              ? null
-              : { wrestlerId: null, displayName: null, confirmedNew: true },
-          )}
-          className={`text-xs px-3 py-1 border ${
-            isConfirmedNew
-              ? 'border-slate-300 bg-slate-100 text-slate-500'
-              : 'border-black bg-white hover:bg-slate-50 text-slate-800'
-          }`}
-        >
-          {isConfirmedNew ? '✓ Confirmed new — undo' : 'Confirm as New Wrestler'}
-        </button>
+        {/* Block "Confirm as New" when school is still unknown — would create a profileless stub */}
+        {!showTeamPicker || localSchoolId !== null ? (
+          <button
+            onClick={() => onOverride(
+              wKey,
+              isConfirmedNew
+                ? null
+                : { wrestlerId: null, displayName: null, confirmedNew: true },
+            )}
+            className={`text-xs px-3 py-1 border ${
+              isConfirmedNew
+                ? 'border-slate-300 bg-slate-100 text-slate-500'
+                : 'border-black bg-white hover:bg-slate-50 text-slate-800'
+            }`}
+          >
+            {isConfirmedNew ? '✓ Confirmed new — undo' : 'Confirm as New Wrestler'}
+          </button>
+        ) : (
+          <p className="text-[11px] text-slate-400 italic">Pick a school above before confirming.</p>
+        )}
         {override && !isConfirmedNew && !override.linkedToKey && (
           <button
             onClick={() => onOverride(wKey, null)}
@@ -237,6 +278,7 @@ type WrestlerItem = {
   schoolDisplay:    string
   weightClass:      number
   match:            WrestlerMatch | undefined
+  teamSchools:      { id: number; name: string }[]
 }
 
 // ── Props ──────────────────────────────────────────────────────────────────────
@@ -262,19 +304,29 @@ export function WrestlerReviewPanel({
   onWrestlerOverride,
   gender,
 }: Props) {
-  const [open,          setOpen]          = useState(true)
+  const [open,          setOpen]          = useState(false)
   const [activeKey,     setActiveKey]     = useState<WrestlerKey | null>(null)
   const [openSchools,   setOpenSchools]   = useState<Set<string>>(new Set())
   const [newFilter,     setNewFilter]     = useState('')
 
   // ── Collect and categorise wrestler items ──────────────────────────────────
 
-  const { lowItems, newItems } = useMemo(() => {
+  const { errorItems, lowItems, newItems } = useMemo(() => {
     const seen = new Set<WrestlerKey>()
+    const err: WrestlerItem[]  = []
     const low: WrestlerItem[]  = []
     const newW: WrestlerItem[] = []
 
     for (const meet of meets) {
+      // Resolve the two team schools so the card can offer a team picker when
+      // the wrestler's school couldn't be parsed from the match line.
+      const team1Res = resolveSchool(meet.team1Name ?? '', schoolResolutions, schoolOverrides)
+      const team2Res = resolveSchool(meet.team2Name ?? '', schoolResolutions, schoolOverrides)
+      const teamSchools = [
+        team1Res.schoolId ? { id: team1Res.schoolId, name: team1Res.displayName ?? meet.team1Name ?? '' } : null,
+        team2Res.schoolId ? { id: team2Res.schoolId, name: team2Res.displayName ?? meet.team2Name ?? '' } : null,
+      ].filter(Boolean) as { id: number; name: string }[]
+
       for (const m of meet.matches) {
         if (m.isDoubleForfeit) continue
 
@@ -284,7 +336,7 @@ export function WrestlerReviewPanel({
         ]
 
         for (const [name, schoolRaw] of pairs) {
-          if (!name) continue
+          if (!name || isPlaceholderName(name)) continue
           const schoolRes = resolveSchool(schoolRaw ?? '', schoolResolutions, schoolOverrides)
           if (schoolRes.isOutOfState) continue
           const schoolId  = schoolRes.schoolId
@@ -292,10 +344,8 @@ export function WrestlerReviewPanel({
           if (seen.has(key)) continue
           seen.add(key)
 
-          const resolved = resolveWrestler(key, wrestlerResolutions, wrestlerOverrides)
-          const rawMatch = wrestlerResolutions[key]
-          // Classify by the PRE-OVERRIDE match state so that an accidentally-linked
-          // "new" wrestler stays visible in the new section and can be undone.
+          const resolved  = resolveWrestler(key, wrestlerResolutions, wrestlerOverrides)
+          const rawMatch  = wrestlerResolutions[key]
           const originallyNew = !rawMatch || rawMatch.isNew
           const item: WrestlerItem = {
             key,
@@ -305,9 +355,14 @@ export function WrestlerReviewPanel({
             schoolDisplay: schoolRes.displayName ?? schoolRaw ?? '(unknown)',
             weightClass:   m.weightClass,
             match:         rawMatch,
+            teamSchools,
           }
 
-          if (resolved.confidence === 'low' && !originallyNew) {
+          // Wrestlers whose school couldn't be resolved go to the error bucket —
+          // they must NOT be silently created as "new" with a null school.
+          if (schoolId === null) {
+            err.push(item)
+          } else if (resolved.confidence === 'low' && !originallyNew) {
             low.push(item)
           } else if (originallyNew) {
             newW.push(item)
@@ -316,30 +371,28 @@ export function WrestlerReviewPanel({
       }
     }
 
-    // Sort low-conf by school then name
     low.sort((a, b) => a.schoolDisplay.localeCompare(b.schoolDisplay) || a.rawName.localeCompare(b.rawName))
-    // Sort new by school then name then weight
     newW.sort((a, b) =>
       a.schoolDisplay.localeCompare(b.schoolDisplay) ||
       a.rawName.localeCompare(b.rawName) ||
       a.weightClass - b.weightClass
     )
 
-    return { lowItems: low, newItems: newW }
+    return { errorItems: err, lowItems: low, newItems: newW }
   }, [meets, schoolResolutions, schoolOverrides, wrestlerResolutions, wrestlerOverrides])
 
-  // ── Group new wrestlers by school, then merge same name into a single row ──
-  // Same wrestler at different weight classes = one display row with all weights.
+  // ── Group new wrestlers by school ──────────────────────────────────────────
 
   type NewGroup = {
-    groupKey: string        // `${rawName}|${schoolId ?? 'null'}`
+    groupKey: string
     rawName: string
     schoolRaw: string | null
     schoolId: number | null
     schoolDisplay: string
-    keys: WrestlerKey[]     // one key per weight class occurrence
-    weights: number[]       // sorted weight classes
+    keys: WrestlerKey[]
+    weights: number[]
     primaryMatch: WrestlerMatch | undefined
+    teamSchools: { id: number; name: string }[]
   }
 
   const newBySchool = useMemo(() => {
@@ -364,6 +417,7 @@ export function WrestlerReviewPanel({
           keys:          [item.key],
           weights:       [item.weightClass],
           primaryMatch:  item.match,
+          teamSchools:   item.teamSchools,
         })
         map.set(item.schoolDisplay, schoolGroups)
       }
@@ -371,14 +425,17 @@ export function WrestlerReviewPanel({
     return map
   }, [newItems, newFilter])
 
-  // Apply an override to every key in a group (same name+school, different weights)
-  const handleGroupOverride = useCallback((group: NewGroup, override: WrestlerOverride | null) => {
-    for (const k of group.keys) {
-      onWrestlerOverride(k, override)
+  // Auto-expand school rows when there are few new wrestlers (so names are visible without extra clicks)
+  useEffect(() => {
+    if (open && openSchools.size === 0 && newItems.length > 0 && newItems.length <= 30) {
+      setOpenSchools(new Set(newBySchool.keys()))
     }
+  }, [open, openSchools.size, newItems.length, newBySchool])
+
+  const handleGroupOverride = useCallback((group: NewGroup, override: WrestlerOverride | null) => {
+    for (const k of group.keys) onWrestlerOverride(k, override)
   }, [onWrestlerOverride])
 
-  // Batch-confirm all unresolved new wrestlers as new
   const handleConfirmAllNew = useCallback(() => {
     for (const item of newItems) {
       if (!wrestlerOverrides[item.key]) {
@@ -389,11 +446,12 @@ export function WrestlerReviewPanel({
 
   const totalLowPending = lowItems.filter(i => !wrestlerOverrides[i.key]).length
 
-  if (lowItems.length === 0 && newItems.length === 0) return null
+  if (errorItems.length === 0 && lowItems.length === 0 && newItems.length === 0) return null
 
   const summaryLabel = [
-    totalLowPending > 0 ? `${totalLowPending} need review` : null,
-    newItems.length  > 0 ? `${newItems.length} new to create` : null,
+    errorItems.length > 0 ? `${errorItems.length} school unclear` : null,
+    totalLowPending  > 0 ? `${totalLowPending} need review`       : null,
+    newItems.length  > 0 ? `${newItems.length} new to create`     : null,
   ].filter(Boolean).join(' · ')
 
   return (
@@ -412,6 +470,63 @@ export function WrestlerReviewPanel({
 
       {open && (
         <div className="divide-y divide-black/10">
+
+          {/* ── SCHOOL UNCLEAR (parser error) ────────────────────────────────── */}
+          {errorItems.length > 0 && (
+            <div className="p-4">
+              <h3 className="text-xs font-semibold text-red-700 uppercase tracking-wide mb-1">
+                School unclear — parser error ({errorItems.length})
+              </h3>
+              <p className="text-[11px] text-slate-500 mb-3">
+                These wrestlers will not be created until you pick a school. In a dual meet the school must be one of the two teams.
+              </p>
+              <div className="space-y-2">
+                {errorItems.map(item => {
+                  const override   = wrestlerOverrides[item.key]
+                  const isResolved = !!override
+                  return (
+                    <div key={item.key} className="border border-red-300 bg-white">
+                      <div
+                        className="flex items-center justify-between px-3 py-2 cursor-pointer hover:bg-red-50"
+                        onClick={() => setActiveKey(prev => prev === item.key ? null : item.key)}
+                      >
+                        <div className="flex items-center gap-2 min-w-0">
+                          {isResolved
+                            ? <span className="text-[10px] font-bold px-1 py-0.5 bg-green-100 text-green-700 border border-green-300 shrink-0">✓</span>
+                            : <span className="text-[10px] font-bold px-1 py-0.5 bg-red-100 text-red-700 border border-red-300 shrink-0">!</span>
+                          }
+                          <span className="text-xs font-semibold text-slate-800 truncate">{item.rawName}</span>
+                          {item.schoolRaw && (
+                            <span className="text-xs text-red-400 shrink-0 truncate">(parsed school: {item.schoolRaw})</span>
+                          )}
+                          <span className="text-xs text-slate-400 shrink-0">{item.weightClass}lb</span>
+                        </div>
+                        <span className="text-xs text-slate-400 shrink-0 ml-2">
+                          {activeKey === item.key ? '▲' : '▼'}
+                        </span>
+                      </div>
+                      {activeKey === item.key && (
+                        <WrestlerCard
+                          wKey={item.key}
+                          rawName={item.rawName}
+                          schoolRaw={item.schoolRaw}
+                          schoolId={null}
+                          weightClass={item.weightClass}
+                          match={item.match}
+                          override={override}
+                          gender={gender}
+                          sameSchoolNew={[]}
+                          teamSchools={item.teamSchools}
+                          onOverride={onWrestlerOverride}
+                          onClose={() => setActiveKey(null)}
+                        />
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )}
 
           {/* ── LOW CONFIDENCE ──────────────────────────────────────────────── */}
           {lowItems.length > 0 && (
@@ -455,6 +570,7 @@ export function WrestlerReviewPanel({
                           override={override}
                           gender={gender}
                           sameSchoolNew={[]}
+                          teamSchools={item.teamSchools}
                           onOverride={onWrestlerOverride}
                           onClose={() => setActiveKey(null)}
                         />
@@ -478,7 +594,6 @@ export function WrestlerReviewPanel({
                 </p>
               </div>
 
-              {/* Filter + batch confirm */}
               <div className="flex gap-2 mb-4">
                 <input
                   type="text"
@@ -496,7 +611,6 @@ export function WrestlerReviewPanel({
                 </button>
               </div>
 
-              {/* Expand / collapse all */}
               <div className="flex gap-3 mb-3">
                 <button
                   onClick={() => setOpenSchools(new Set(newBySchool.keys()))}
@@ -512,7 +626,6 @@ export function WrestlerReviewPanel({
                 </button>
               </div>
 
-              {/* By-school groups */}
               <div className="space-y-2">
                 {[...newBySchool.entries()].map(([school, groups]) => {
                   const isOpen = openSchools.has(school)
@@ -537,18 +650,15 @@ export function WrestlerReviewPanel({
                       {isOpen && (
                         <div className="border-t border-black/10">
                           {groups.map(group => {
-                            // Group is "fixed" if every key has an override
-                            const overrides = group.keys.map(k => wrestlerOverrides[k])
+                            const overrides      = group.keys.map(k => wrestlerOverrides[k])
                             const primaryOverride = overrides[0]
-                            const isFixed   = overrides.every(Boolean)
-                            const isActive  = activeKey === group.groupKey
+                            const isFixed        = overrides.every(Boolean)
+                            const isActive       = activeKey === group.groupKey
 
-                            // Sibling groups for "same person as" linking
                             const siblings = groups
                               .filter(g => g.groupKey !== group.groupKey)
                               .map(g => ({ key: g.keys[0], rawName: g.rawName, weights: g.weights }))
 
-                            // Resolve linked display name
                             const linkedRawName = primaryOverride?.linkedToKey
                               ? groups.find(g => g.keys[0] === primaryOverride.linkedToKey)?.rawName
                                 ?? primaryOverride.linkedToKey.split('|')[0]
@@ -591,6 +701,7 @@ export function WrestlerReviewPanel({
                                     override={primaryOverride}
                                     gender={gender}
                                     sameSchoolNew={siblings}
+                                    teamSchools={group.teamSchools}
                                     onOverride={(_, o) => handleGroupOverride(group, o)}
                                     onClose={() => setActiveKey(null)}
                                   />

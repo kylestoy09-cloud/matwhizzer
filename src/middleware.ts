@@ -14,26 +14,17 @@ export async function middleware(request: NextRequest) {
 
   // Only protect /admin routes (except the login page itself)
   if (!pathname.startsWith('/admin')) return NextResponse.next()
-  if (pathname === '/admin/login') return handleSessionRefresh(request)
+  if (pathname === '/admin/login') return NextResponse.redirect(new URL('/signin', request.url))
 
   // --- Auth gate for /admin/* ---
+  // Only check session here — role check happens inside each page/API route.
+  // Doing a DB lookup in Edge Middleware exceeds the 1s timeout.
   const { response, supabase } = createSupabaseMiddlewareClient(request)
 
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {
-    return NextResponse.redirect(new URL('/admin/login', request.url))
-  }
-
-  // Check admin role in app_users
-  const { data: appUser } = await supabase
-    .from('app_users')
-    .select('role')
-    .eq('id', user.id)
-    .single()
-
-  if (!appUser || appUser.role !== 'admin') {
-    return NextResponse.redirect(new URL('/admin/login', request.url))
+    return NextResponse.redirect(new URL('/signin', request.url))
   }
 
   return response

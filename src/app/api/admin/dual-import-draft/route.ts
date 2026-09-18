@@ -34,7 +34,7 @@ export async function GET(req: NextRequest) {
 
   const { data, error } = await supabase
     .from('dual_import_drafts')
-    .select('id, label, meet_count, status, created_at, updated_at')
+    .select('id, label, meet_count, gender, status, created_at, updated_at')
     .eq('user_id', user.id)
     .eq('status', 'draft')
     .order('updated_at', { ascending: false })
@@ -44,7 +44,7 @@ export async function GET(req: NextRequest) {
 }
 
 // POST /api/admin/dual-import-draft — create or update a draft
-// Body: { id?, label, raw_text, school_overrides, wrestler_overrides, meet_count }
+// Body: { id?, label, raw_text, school_overrides, wrestler_overrides, meet_count, gender }
 export async function POST(req: NextRequest) {
   const auth = await createSupabaseServer()
   const { data: { user } } = await auth.auth.getUser()
@@ -52,6 +52,7 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json()
   const { id, label, raw_text, school_overrides, wrestler_overrides, meet_count } = body
+  const gender: 'M' | 'F' = body.gender === 'F' ? 'F' : 'M'
 
   if (!raw_text) return NextResponse.json({ error: 'raw_text required' }, { status: 400 })
 
@@ -64,6 +65,7 @@ export async function POST(req: NextRequest) {
       .update({
         label:              label ?? '',
         raw_text,
+        gender,
         school_overrides:   school_overrides  ?? {},
         wrestler_overrides: wrestler_overrides ?? {},
         meet_count:         meet_count ?? 0,
@@ -85,6 +87,7 @@ export async function POST(req: NextRequest) {
       user_id:            user.id,
       label:              label ?? '',
       raw_text,
+      gender,
       school_overrides:   school_overrides  ?? {},
       wrestler_overrides: wrestler_overrides ?? {},
       meet_count:         meet_count ?? 0,

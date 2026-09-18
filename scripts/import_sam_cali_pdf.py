@@ -588,11 +588,11 @@ def main() -> None:
         bouts.append({
             "weight_class":         match["weight"],
             "round":                match["round"],
-            "nj_wrestler1_id":      wid_winner,
+            "wrestler1_id":      wid_winner,
             "wrestler1_name_raw":   winner["name"],
             "wrestler1_school_id":  sid_w,
             "wrestler1_school_raw": winner["team"],
-            "nj_wrestler2_id":      wid_loser,
+            "wrestler2_id":      wid_loser,
             "wrestler2_name_raw":   loser["name"],
             "wrestler2_school_id":  sid_l,
             "wrestler2_school_raw": loser["team"],
@@ -604,8 +604,8 @@ def main() -> None:
         })
 
     # ── Summary ────────────────────────────────────────────────────────────────
-    matched    = sum(1 for b in bouts if b["nj_wrestler1_id"] is not None)
-    unmatched1 = sum(1 for b in bouts if b["nj_wrestler1_id"] is None and b["wrestler1_school_id"] is not None)
+    matched    = sum(1 for b in bouts if b["wrestler1_id"] is not None)
+    unmatched1 = sum(1 for b in bouts if b["wrestler1_id"] is None and b["wrestler1_school_id"] is not None)
     new_w      = sum(1 for v in new_wrestler_cache.values() if v is None)  # dry-run placeholder
 
     print(f"\n  Bouts to insert:              {len(bouts)}")
@@ -635,7 +635,7 @@ def main() -> None:
     # ── Sample of unresolved winners ───────────────────────────────────────────
     unresolved = [
         b for b in bouts
-        if b["nj_wrestler1_id"] is None and b["wrestler1_school_id"] is not None
+        if b["wrestler1_id"] is None and b["wrestler1_school_id"] is not None
     ]
     if unresolved:
         print()
@@ -676,11 +676,11 @@ def main() -> None:
     # Back-fill wrestler IDs into bout rows
     for bout in bouts:
         for side in ("1", "2"):
-            if bout[f"nj_wrestler{side}_id"] is None:
+            if bout[f"wrestler{side}_id"] is None:
                 sid = bout[f"wrestler{side}_school_id"]
                 raw = bout[f"wrestler{side}_name_raw"]
                 if sid is not None:
-                    bout[f"nj_wrestler{side}_id"] = new_wrestler_cache.get((raw, sid))
+                    bout[f"wrestler{side}_id"] = new_wrestler_cache.get((raw, sid))
 
     print(f"  Created {new_created} stub wrestlers.")
 
@@ -693,7 +693,11 @@ def main() -> None:
     errors: list[str] = []
     for i in range(0, len(bouts), CHUNK):
         try:
-            res = client.from_("tournament_bouts").insert(bouts[i:i + CHUNK]).execute()
+            res = client.from_("tournament_bouts").upsert(
+                bouts[i:i + CHUNK],
+                on_conflict="in_season_tournament_id,weight_class,round,wrestler1_id,wrestler2_id,winner_score,loser_score",
+                ignore_duplicates=True,
+            ).execute()
             total_inserted += len(res.data or [])
         except Exception as e:
             errors.append(str(e))

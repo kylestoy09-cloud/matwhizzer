@@ -123,12 +123,14 @@ function WrestlerPicker({
   schoolId,
   currentId,
   currentNameRaw,
+  gender,
   onSelect,
 }: {
   label: string
   schoolId: number | null
   currentId: string | null
   currentNameRaw: string
+  gender: 'M' | 'F'
   onSelect: (w: WrestlerOption | null) => void
 }) {
   const [roster, setRoster] = useState<WrestlerOption[]>([])
@@ -139,11 +141,11 @@ function WrestlerPicker({
     if (!schoolId || schoolId === loadedFor.current) return
     loadedFor.current = schoolId
     setLoading(true)
-    fetch(`/api/admin/school-wrestlers?schoolId=${schoolId}`)
+    fetch(`/api/admin/school-wrestlers?schoolId=${schoolId}&gender=${gender}`)
       .then(r => r.json())
       .then(d => setRoster(d.wrestlers ?? []))
       .finally(() => setLoading(false))
-  }, [schoolId])
+  }, [schoolId, gender])
 
   const currentName = roster.find(w => w.wrestlerId === currentId)?.displayName ?? currentNameRaw
 
@@ -189,9 +191,10 @@ interface InSeasonEditPanelProps {
   bout: TournamentBoutRecord | null
   onSaved: (b: TournamentBoutRecord) => void
   onCancel: () => void
+  gender?: 'M' | 'F'
 }
 
-export function InSeasonEditPanel({ bout, onSaved, onCancel }: InSeasonEditPanelProps) {
+export function InSeasonEditPanel({ bout, onSaved, onCancel, gender = 'M' }: InSeasonEditPanelProps) {
   const [school1Id, setSchool1Id]   = useState<number | null>(null)
   const [school1Raw, setSchool1Raw] = useState('')
   const [wrestler1Id, setWrestler1Id] = useState<string | null>(null)
@@ -252,6 +255,7 @@ export function InSeasonEditPanel({ bout, onSaved, onCancel }: InSeasonEditPanel
     const fallSec = resultType === 'Fall' && fallTimeStr ? parseTime(fallTimeStr) : null
     const payload = {
       id: bout.id,
+      gender,
       weight_class:         weightClass,
       round:                round,
       wrestler1_school_id:  school1Id,
@@ -339,6 +343,7 @@ export function InSeasonEditPanel({ bout, onSaved, onCancel }: InSeasonEditPanel
           schoolId={school1Id}
           currentId={wrestler1Id}
           currentNameRaw={bout.wrestler1_name_raw}
+          gender={gender}
           onSelect={handleWrestler1}
         />
       </div>
@@ -359,6 +364,7 @@ export function InSeasonEditPanel({ bout, onSaved, onCancel }: InSeasonEditPanel
           schoolId={school2Id}
           currentId={wrestler2Id}
           currentNameRaw={bout.wrestler2_name_raw}
+          gender={gender}
           onSelect={handleWrestler2}
         />
       </div>

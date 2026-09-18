@@ -41,6 +41,29 @@ export async function POST(req: NextRequest) {
   if (error) {
     // Treat duplicate alias as success — alias already exists pointing to some school
     if (error.code === '23505') return NextResponse.json({ ok: true, skipped: true })
+
+    // school_id NOT NULL violation — DB migration to make school_id nullable may not
+    // have fully applied. Retry with the OOS school_id stored in notes (if numeric).
+    if (error.code === '23502' && school_id === null) {
+      const oosId = notes && /^\d+$/.test(notes.trim()) ? parseInt(notes.trim(), 10) : null
+      if (oosId) {
+        const { error: retryError } = await supabase.from('school_aliases').insert({
+          school_id: oosId,
+          alias: alias.trim(),
+          alias_type: alias_type ?? 'abbreviation',
+          notes,
+        })
+        if (!retryError || retryError.code === '23505') return NextResponse.json({ ok: true })
+        console.error('[add-school-alias] retry error:', retryError.code, retryError.message)
+        return NextResponse.json({ error: retryError.message }, { status: 500 })
+      }
+      // No numeric school_id in notes (e.g. "Not a school" confirmation) — treat as success
+      // since there's nothing to link; the override lives in UI state for this session only.
+      console.warn('[add-school-alias] school_id NOT NULL constraint hit on generic OOS alias; skipping DB save')
+      return NextResponse.json({ ok: true, skipped: true })
+    }
+
+    console.error('[add-school-alias] DB error:', error.code, error.message)
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
 

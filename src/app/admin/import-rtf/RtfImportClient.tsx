@@ -7,11 +7,14 @@ import type {
   ReviewedTournament,
   SchoolOverride,
   WrestlerOverride,
+  TournamentOverride,
+  MsProfileLink,
   ImportResult,
 } from './types'
 import { SchoolFlagCard } from './SchoolFlagCard'
 import { WrestlerFlagCard } from './WrestlerFlagCard'
 import { BoutReviewPanel } from './BoutReviewPanel'
+import { useAdminGender } from '@/components/admin/AdminGenderContext'
 
 function Spinner() {
   return (
@@ -38,12 +41,173 @@ async function apiPost<T>(path: string, body: unknown): Promise<T & { error?: st
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   })
-  return res.json()
+  try {
+    return await res.json()
+  } catch {
+    return { error: `Server error (${res.status})` } as T & { error?: string }
+  }
+}
+
+function getSessionData(type: 'dual' | 'tournament'): { text: string; gender: 'M' | 'F'; tournament_id?: string; tournament_name?: string; registry_id?: string } {
+  if (typeof window === 'undefined') return { text: '', gender: 'M' }
+  try {
+    const raw = sessionStorage.getItem('mw_pending_import')
+    if (!raw) return { text: '', gender: 'M' }
+    const parsed = JSON.parse(raw)
+    const gender: 'M' | 'F' = parsed.gender === 'F' ? 'F' : 'M'
+    if (parsed.type === type && parsed.text) {
+      sessionStorage.removeItem('mw_pending_import')
+      return {
+        text: parsed.text as string,
+        gender,
+        tournament_id:   parsed.tournament_id as string | undefined,
+        tournament_name: parsed.tournament_name as string | undefined,
+        registry_id:     parsed.registry_id as string | undefined,
+      }
+    }
+    return { text: '', gender }
+  } catch { return { text: '', gender: 'M' } }
+}
+
+type TSearchResult = { id: string; name: string; start_date: string | null; season: string }
+
+function TournamentDbMatchCell({
+  tkey, autoMatch, alternates, tov, gender,
+  onChange,
+}: {
+  tkey: string
+  autoMatch: { tournament_id: string; tournament_name: string; confidence: string } | null
+  alternates: { tournament_id: string; tournament_name: string; confidence: string }[]
+  tov: TournamentOverride | undefined
+  gender: 'M' | 'F'
+  onChange: (ov: TournamentOverride | null) => void
+}) {
+  const [searchMode, setSearchMode] = useState(false)
+  const [query, setQuery] = useState('')
+  const [results, setResults] = useState<TSearchResult[]>([])
+  const [searching, setSearching] = useState(false)
+
+  useEffect(() => {
+    if (!searchMode || query.length < 2) { setResults([]); return }
+    const ctrl = new AbortController()
+    setSearching(true)
+    fetch(`/api/admin/search-tournaments?q=${encodeURIComponent(query)}&gender=${gender}`, { signal: ctrl.signal })
+      .then(r => r.json())
+      .then(d => { setResults(d.tournaments ?? []); setSearching(false) })
+      .catch(() => setSearching(false))
+    return () => ctrl.abort()
+  }, [query, searchMode, gender])
+
+  function select(id: string, name: string) {
+    onChange({ type: 'existing', tournament_id: id, tournament_name: name })
+    setSearchMode(false)
+    setQuery('')
+    setResults([])
+  }
+
+  const confColor = (c: string) =>
+    c === 'exact' ? 'text-green-700 bg-green-50' :
+    c === 'high'  ? 'text-blue-700 bg-blue-50' :
+    c === 'low'   ? 'text-amber-700 bg-amber-50' :
+    'text-slate-500 bg-slate-100'
+
+  // Any confirmed existing override — locked green badge
+  if (tov?.type === 'existing' && !searchMode) {
+    return (
+      <div className="space-y-1 min-w-[180px]">
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <span className="text-xs px-1.5 py-0.5 rounded text-emerald-700 bg-emerald-50 font-medium">
+            ⟵ {tov.tournament_name}
+          </span>
+          <button onClick={() => setSearchMode(true)} className="text-[10px] text-slate-400 hover:text-slate-700 underline">change</button>
+        </div>
+      </div>
+    )
+  }
+
+  // "Create new" override
+  if (tov?.type === 'new' && !searchMode) {
+    return (
+      <div className="flex items-center gap-1.5 min-w-[180px]">
+        <span className="text-xs px-1.5 py-0.5 rounded text-slate-700 bg-slate-100">Creating new</span>
+        <button onClick={() => { onChange(null); setSearchMode(false) }} className="text-[10px] text-slate-400 hover:text-red-600">×</button>
+      </div>
+    )
+  }
+
+  // Auto-match suggestion (no override yet, not in search mode)
+  if (autoMatch && !searchMode) {
+    return (
+      <div className="space-y-1.5 min-w-[180px]">
+        <div className="flex items-center gap-1 flex-wrap">
+          <span className={`text-xs px-1.5 py-0.5 rounded ${confColor(autoMatch.confidence)}`}>
+            {autoMatch.tournament_name}
+          </span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <button
+            onClick={() => select(autoMatch.tournament_id, autoMatch.tournament_name)}
+            className="text-[11px] px-1.5 py-0.5 bg-black text-white hover:bg-slate-700"
+          >✓ Use</button>
+          <button
+            onClick={() => setSearchMode(true)}
+            className="text-[11px] px-1.5 py-0.5 border border-slate-300 hover:border-black text-slate-600"
+          >Search</button>
+          {alternates.map(a => (
+            <button
+              key={a.tournament_id}
+              onClick={() => select(a.tournament_id, a.tournament_name)}
+              className={`text-[10px] px-1 py-0.5 rounded ${confColor(a.confidence)}`}
+            >{a.tournament_name}</button>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  // Search mode (no override, no auto-match, or "change" clicked)
+  return (
+    <div className="space-y-1 min-w-[200px]">
+      <div className="flex items-center gap-1">
+        <input
+          autoFocus
+          value={query}
+          onChange={e => setQuery(e.target.value)}
+          placeholder="Search tournament…"
+          className="text-xs border border-slate-300 px-1.5 py-1 focus:outline-none focus:border-black w-full max-w-[180px]"
+        />
+        {searching && <span className="text-[10px] text-slate-400">…</span>}
+        {(autoMatch || tov) && (
+          <button onClick={() => setSearchMode(false)} className="text-[10px] text-slate-400 hover:text-slate-700">↩</button>
+        )}
+      </div>
+      {results.length > 0 && (
+        <div className="border border-slate-200 bg-white shadow-sm max-h-40 overflow-y-auto">
+          {results.map(r => (
+            <button
+              key={r.id}
+              onClick={() => select(r.id, r.name)}
+              className="w-full text-left text-xs px-2 py-1 hover:bg-slate-50 border-b border-slate-100 last:border-0"
+            >
+              <span className="font-medium">{r.name}</span>
+              {r.start_date && <span className="text-slate-400 ml-1">{r.start_date.slice(0, 7)}</span>}
+            </button>
+          ))}
+        </div>
+      )}
+      <button
+        onClick={() => { onChange({ type: 'new' }); setSearchMode(false) }}
+        className="text-[10px] text-slate-400 hover:text-slate-700 underline"
+      >Create new record</button>
+    </div>
+  )
 }
 
 export function RtfImportClient() {
+  const { gender } = useAdminGender()
   const [step, setStep] = useState<Step>('input')
-  const [text, setText] = useState('')
+  const [sessionData]   = useState(() => getSessionData('tournament'))
+  const [text, setText] = useState(sessionData.text)
   const [year, setYear] = useState(new Date().getFullYear())
   const [isPending, startTransition] = useTransition()
 
@@ -62,6 +226,10 @@ export function RtfImportClient() {
   const [force, setForce] = useState(false)
   const [deferredTournaments, setDeferredTournaments] = useState<Set<string>>(new Set())
   const [tournamentTypes, setTournamentTypes] = useState<Record<string, TournamentType>>({})
+  const [venues, setVenues] = useState<Record<string, { venue_name: string; venue_address: string }>>({})
+  const [tournamentOverrides, setTournamentOverrides] = useState<Record<string, TournamentOverride>>({})
+  const [hubPinnedTkey, setHubPinnedTkey] = useState<string | null>(null)
+  const [msProfileLinks, setMsProfileLinks] = useState<Record<string, MsProfileLink>>({})
 
   // Bout review state: tkey → boutKey → confirmed round
   const [boutRounds, setBoutRounds] = useState<Record<string, Record<string, string>>>({})
@@ -87,6 +255,50 @@ export function RtfImportClient() {
       .then(r => r.json())
       .then(d => setDrafts(d.drafts ?? []))
       .catch(() => {})
+  }, [])
+
+  // Auto-detect when arriving from the tournament hub row
+  useEffect(() => {
+    if (!sessionData.text.trim()) return
+    startTransition(async () => {
+      try {
+        const data = await apiPost<{ tournaments: TournamentSummary[] }>(
+          '/api/admin/rtf/parse', { text: sessionData.text, year },
+        )
+        if (data.error || !data.tournaments) return
+        setSummaries(data.tournaments)
+        setSelected(new Set(data.tournaments.filter(t => !t.has_existing_bouts).map(t => `${t.name}|${t.date_raw}`)))
+        // Pre-pin to the hub tournament — hub rows always contain a single tournament's data.
+        // Try sources in priority order until one works:
+        //   1. Explicit tournament_id passed from hub (hub row was already linked)
+        //   2. Exact name match found in DB (existing_id from parse route)
+        //   3. High/exact fuzzy match (tournament_match from parse route)
+        //   4. Direct name search against the hub row's tournament_name (most reliable fallback)
+        if (sessionData.tournament_name && data.tournaments.length > 0) {
+          const first = data.tournaments[0]
+          const tkey = `${first.name}|${first.date_raw}`
+          setHubPinnedTkey(tkey)
+          let pinOv: TournamentOverride | undefined
+          if (sessionData.tournament_id) {
+            pinOv = { type: 'existing', tournament_id: sessionData.tournament_id, tournament_name: sessionData.tournament_name }
+          } else if (first.existing_id) {
+            pinOv = { type: 'existing', tournament_id: first.existing_id, tournament_name: first.name }
+          } else if (first.tournament_match && (first.tournament_match.confidence === 'exact' || first.tournament_match.confidence === 'high')) {
+            pinOv = { type: 'existing', tournament_id: first.tournament_match.tournament_id, tournament_name: first.tournament_match.tournament_name }
+          } else {
+            // Fallback: search registry by hub row name + gender
+            const sr = await fetch(`/api/admin/search-tournaments?q=${encodeURIComponent(sessionData.tournament_name)}&gender=${sessionData.gender}`)
+            const sd = await sr.json()
+            if (sd.tournaments?.length >= 1) {
+              pinOv = { type: 'existing', tournament_id: sd.tournaments[0].id, tournament_name: sd.tournaments[0].name }
+            }
+          }
+          if (pinOv) setTournamentOverrides({ [tkey]: pinOv })
+        }
+        setStep('select')
+      } catch { /* fall through to manual input */ }
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // ── Save draft ────────────────────────────────────────────────────────────
@@ -164,7 +376,7 @@ export function RtfImportClient() {
     setStep(s)
     if (s === 'review') {
       const rev: ReviewedTournament[] = draft.reviewed ?? []
-      const firstFlagR = rev.find((t: ReviewedTournament) => t.school_flags.length > 0 || t.wrestler_flags.length > 0)
+      const firstFlagR = rev.find((t: ReviewedTournament) => t.school_flags.length > 0 || (t.team_score_flags ?? []).length > 0 || t.wrestler_flags.length > 0)
       const firstAnyR = rev[0]
       setExpandedTournament(
         firstFlagR ? `${firstFlagR.name}|${firstFlagR.date_raw}` :
@@ -185,13 +397,17 @@ export function RtfImportClient() {
     if (!text.trim()) return
     setParseError(null)
     startTransition(async () => {
-      const data = await apiPost<{ tournaments: TournamentSummary[] }>(
-        '/api/admin/rtf/parse', { text, year },
-      )
-      if (data.error) { setParseError(data.error); return }
-      setSummaries(data.tournaments)
-      setSelected(new Set(data.tournaments.filter(t => !t.has_existing_bouts).map(t => `${t.name}|${t.date_raw}`)))
-      setStep('select')
+      try {
+        const data = await apiPost<{ tournaments: TournamentSummary[] }>(
+          '/api/admin/rtf/parse', { text, year },
+        )
+        if (data.error) { setParseError(data.error); return }
+        setSummaries(data.tournaments)
+        setSelected(new Set(data.tournaments.filter(t => !t.has_existing_bouts).map(t => `${t.name}|${t.date_raw}`)))
+        setStep('select')
+      } catch (e) {
+        setParseError(e instanceof Error ? e.message : 'Unexpected error — try again')
+      }
     })
   }
 
@@ -200,19 +416,22 @@ export function RtfImportClient() {
   function handleMatch() {
     setMatchError(null)
     startTransition(async () => {
+      try {
       const data = await apiPost<{ reviewed: ReviewedTournament[] }>(
-        '/api/admin/rtf/match', { text, year, selected: [...selected], schoolOverrides },
+        '/api/admin/rtf/match', { text, year, selected: [...selected], schoolOverrides, gender },
       )
       if (data.error) { setMatchError(data.error); return }
       setReviewed(data.reviewed)
       const d: Record<string, { start_date: string; end_date: string | null }> = {}
       const tt: Record<string, TournamentType> = {}
+      const vv: Record<string, { venue_name: string; venue_address: string }> = {}
       const br: Record<string, Record<string, string>> = {}
       const bd: Record<string, Record<string, boolean>> = {}
       for (const t of data.reviewed) {
         const k = `${t.name}|${t.date_raw}`
         d[k] = { start_date: t.start_date, end_date: t.end_date }
         tt[k] = t.tournament_type ?? 'inside'
+        vv[k] = { venue_name: t.venue_name ?? '', venue_address: t.venue_address ?? '' }
         br[k] = {}
         bd[k] = {}
         for (const b of t.bouts_for_review ?? []) {
@@ -222,15 +441,19 @@ export function RtfImportClient() {
       }
       setDates(d)
       setTournamentTypes(prev => ({ ...tt, ...prev }))
+      setVenues(prev => ({ ...vv, ...prev }))
       setBoutRounds(br)
       setBoutDuplicates(bd)
-      const firstFlag = data.reviewed.find(t => t.school_flags.length > 0 || t.wrestler_flags.length > 0)
+      const firstFlag = data.reviewed.find(t => t.school_flags.length > 0 || (t.team_score_flags ?? []).length > 0 || t.wrestler_flags.length > 0)
       const firstAny = data.reviewed[0]
       setExpandedTournament(
         firstFlag ? `${firstFlag.name}|${firstFlag.date_raw}` :
         firstAny  ? `${firstAny.name}|${firstAny.date_raw}` : null,
       )
       setStep('review')
+      } catch (e) {
+        setMatchError(e instanceof Error ? e.message : 'Unexpected error — try again')
+      }
     })
   }
 
@@ -239,15 +462,19 @@ export function RtfImportClient() {
   function handleRematchWrestlers() {
     setMatchError(null)
     startTransition(async () => {
-      const data = await apiPost<{ reviewed: ReviewedTournament[] }>(
-        '/api/admin/rtf/match', { text, year, selected: [...selected], schoolOverrides },
-      )
-      if (data.error) { setMatchError(data.error); return }
-      // Only take wrestler_flags from the fresh response — everything else stays
-      setReviewed(prev => prev.map(t => {
-        const fresh = data.reviewed.find(r => r.name === t.name && r.date_raw === t.date_raw)
-        return fresh ? { ...t, wrestler_flags: fresh.wrestler_flags } : t
-      }))
+      try {
+        const data = await apiPost<{ reviewed: ReviewedTournament[] }>(
+          '/api/admin/rtf/match', { text, year, selected: [...selected], schoolOverrides, gender },
+        )
+        if (data.error) { setMatchError(data.error); return }
+        // Only take wrestler_flags from the fresh response — everything else stays
+        setReviewed(prev => prev.map(t => {
+          const fresh = data.reviewed.find(r => r.name === t.name && r.date_raw === t.date_raw)
+          return fresh ? { ...t, wrestler_flags: fresh.wrestler_flags } : t
+        }))
+      } catch (e) {
+        setMatchError(e instanceof Error ? e.message : 'Unexpected error — try again')
+      }
     })
   }
 
@@ -255,27 +482,28 @@ export function RtfImportClient() {
 
   function handleImport() {
     startTransition(async () => {
-      const toImport = [...selected].filter(tkey => !deferredTournaments.has(tkey))
-      // Build boutReview: per-tournament map of boutKey → confirmed round
-      // Import route handles its own dedup; just send all confirmed rounds
-      const boutReview: Record<string, Record<string, string>> = {}
-      for (const tkey of toImport) {
-        boutReview[tkey] = { ...(boutRounds[tkey] ?? {}) }
+      try {
+        const toImport = [...selected].filter(tkey => !deferredTournaments.has(tkey))
+        const boutReview: Record<string, Record<string, string>> = {}
+        for (const tkey of toImport) {
+          boutReview[tkey] = { ...(boutRounds[tkey] ?? {}) }
+        }
+        const data = await apiPost<{ results: ImportResult[] }>(
+          '/api/admin/rtf/import', { text, year, selected: toImport, schoolOverrides, wrestlerOverrides, tournamentDates: dates, tournamentTypes, tournamentVenues: venues, tournamentOverrides, msProfileLinks, boutReview, force, gender, registry_id: sessionData.registry_id },
+        )
+        if (data.error) { setMatchError(data.error); return }
+        if (draftId && deferredTournaments.size === 0) {
+          fetch('/api/admin/rtf-import-draft', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: draftId }),
+          }).catch(() => {})
+        }
+        setImportResults(data.results)
+        setStep('done')
+      } catch (e) {
+        setMatchError(e instanceof Error ? e.message : 'Unexpected error — try again')
       }
-      const data = await apiPost<{ results: ImportResult[] }>(
-        '/api/admin/rtf/import', { text, year, selected: toImport, schoolOverrides, wrestlerOverrides, tournamentDates: dates, tournamentTypes, boutReview, force },
-      )
-      if (data.error) { setMatchError(data.error); return }
-      // Only mark draft as fully imported if no tournaments were deferred
-      if (draftId && deferredTournaments.size === 0) {
-        fetch('/api/admin/rtf-import-draft', {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id: draftId }),
-        }).catch(() => {})
-      }
-      setImportResults(data.results)
-      setStep('done')
     })
   }
 
@@ -297,16 +525,30 @@ export function RtfImportClient() {
     })
   }
 
+  function handleMsLink(key: string, link: MsProfileLink | undefined) {
+    setMsProfileLinks(prev => {
+      const next = { ...prev }
+      if (link === undefined) delete next[key]
+      else next[key] = link
+      return next
+    })
+  }
+
   function resetAll() {
     setText(''); setSummaries([]); setSelected(new Set())
     setReviewed([]); setSchoolOverrides({}); setWrestlerOverrides({}); setDates({}); setTournamentTypes({})
+    setTournamentOverrides({}); setHubPinnedTkey(null); setMsProfileLinks({})
     setBoutRounds({}); setBoutDuplicates({}); setBoutSeeds({})
     setImportResults([]); setDraftId(null); setDraftLabel('')
     setSaveState('idle'); setStep('input')
   }
 
   const totalSchoolFlags = reviewed.reduce(
-    (n, t) => n + t.school_flags.filter(f => !schoolOverrides[f.raw]).length, 0,
+    (n, t) =>
+      n +
+      t.school_flags.filter(f => !schoolOverrides[f.raw]).length +
+      (t.team_score_flags ?? []).filter(f => !schoolOverrides[f.raw]).length,
+    0,
   )
   const totalWrestlerFlags = reviewed.reduce(
     (n, t) => n + t.wrestler_flags.filter(f => {
@@ -314,7 +556,9 @@ export function RtfImportClient() {
       if (!f.is_oos && schoolOverrides[f.school_raw]?.type === 'oos') return false
       const o = wrestlerOverrides[f.key]
       if (o?.type === 'skip' || o?.type === 'existing' || o?.type === 'accept') return false
-      return true  // create (needs name confirmation) or unresolved
+      // Full name creates (2+ letter first name, not "C." format) are auto-confirmed from RTF
+      if (o?.type === 'create' && o.first_name.trim().length >= 2 && !/^[A-Za-z]\.?$/.test(o.first_name.trim())) return false
+      return true  // initial-format OOS name or no action taken yet
     }).length, 0,
   )
 
@@ -367,15 +611,17 @@ export function RtfImportClient() {
             </div>
           )}
 
-          <div className="flex items-center gap-4">
-            <label className="text-sm font-medium text-slate-700">Calendar year</label>
-            <select
-              value={year}
-              onChange={e => setYear(Number(e.target.value))}
-              className="text-sm border border-slate-300 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-black"
-            >
-              {[2025, 2026, 2027].map(y => <option key={y} value={y}>{y}</option>)}
-            </select>
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4">
+              <label className="text-sm font-medium text-slate-700">Calendar year</label>
+              <select
+                value={year}
+                onChange={e => setYear(Number(e.target.value))}
+                className="text-sm border border-slate-300 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-black"
+              >
+                {[2025, 2026, 2027].map(y => <option key={y} value={y}>{y}</option>)}
+              </select>
+            </div>
           </div>
           <textarea
             className="w-full h-80 text-xs font-mono border border-slate-300 p-3 focus:outline-none focus:ring-1 focus:ring-black resize-y placeholder-slate-300"
@@ -398,11 +644,22 @@ export function RtfImportClient() {
       {step === 'select' && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-base font-semibold text-slate-800">{summaries.length} tournaments detected</h2>
-            <div className="flex gap-2 text-xs">
-              <button onClick={() => setSelected(new Set(summaries.map(t => `${t.name}|${t.date_raw}`)))} className="text-slate-500 hover:text-black">Select all</button>
-              <span className="text-slate-300">|</span>
-              <button onClick={() => setSelected(new Set())} className="text-slate-500 hover:text-black">None</button>
+            <h2 className="text-base font-semibold text-slate-800">{summaries.length} tournament{summaries.length !== 1 ? 's' : ''} detected</h2>
+            <div className="flex items-center gap-3">
+              <label className="flex items-center gap-1.5 text-xs text-slate-600">
+                Year
+                <input
+                  type="number"
+                  value={year}
+                  onChange={e => setYear(Number(e.target.value))}
+                  className="w-16 border border-slate-300 px-1.5 py-0.5 text-xs focus:outline-none focus:border-black"
+                />
+              </label>
+              <div className="flex gap-2 text-xs">
+                <button onClick={() => setSelected(new Set(summaries.map(t => `${t.name}|${t.date_raw}`)))} className="text-slate-500 hover:text-black">Select all</button>
+                <span className="text-slate-300">|</span>
+                <button onClick={() => setSelected(new Set())} className="text-slate-500 hover:text-black">None</button>
+              </div>
             </div>
           </div>
 
@@ -416,7 +673,9 @@ export function RtfImportClient() {
                   <th className="text-left px-3 py-2 font-medium text-slate-500">Format</th>
                   <th className="text-right px-3 py-2 font-medium text-slate-500">Bouts</th>
                   <th className="text-right px-3 py-2 font-medium text-slate-500">Places</th>
+                  <th className="text-right px-3 py-2 font-medium text-slate-500">Scores</th>
                   <th className="px-3 py-2 font-medium text-slate-500">Status</th>
+                  <th className="px-3 py-2 font-medium text-slate-500">DB Match</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
@@ -441,12 +700,27 @@ export function RtfImportClient() {
                       </td>
                       <td className="px-3 py-2 text-right text-slate-600">{t.bout_count}</td>
                       <td className="px-3 py-2 text-right text-slate-600">{t.placement_count}</td>
+                      <td className="px-3 py-2 text-right text-slate-600">{t.team_score_count > 0 ? t.team_score_count : '—'}</td>
                       <td className="px-3 py-2">
                         {t.has_existing_bouts
                           ? <span className="text-xs text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded">in DB</span>
                           : t.existing_id
                           ? <span className="text-xs text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded">row exists</span>
                           : <span className="text-xs text-green-700 bg-green-50 px-1.5 py-0.5 rounded">new</span>}
+                      </td>
+                      <td className="px-3 py-2" onClick={e => e.stopPropagation()}>
+                        <TournamentDbMatchCell
+                          tkey={tkey}
+                          autoMatch={t.tournament_match ?? null}
+                          alternates={t.tournament_alternates ?? []}
+                          tov={tournamentOverrides[tkey]}
+                          gender={gender}
+                          onChange={ov => setTournamentOverrides(prev => {
+                            const n = { ...prev }
+                            if (ov) n[tkey] = ov; else delete n[tkey]
+                            return n
+                          })}
+                        />
                       </td>
                     </tr>
                   )
@@ -497,6 +771,7 @@ export function RtfImportClient() {
             const tkey = `${t.name}|${t.date_raw}`
             const open = expandedTournament === tkey
             const unresolvedSchools = t.school_flags.filter(f => !schoolOverrides[f.raw])
+            const unresolvedTsSchools = (t.team_score_flags ?? []).filter(f => !schoolOverrides[f.raw])
             const td = dates[tkey] ?? { start_date: t.start_date, end_date: t.end_date }
             const deferred = deferredTournaments.has(tkey)
 
@@ -531,7 +806,7 @@ export function RtfImportClient() {
                   <div className="flex items-center gap-3 text-xs text-slate-500 shrink-0">
                     <span>{t.bout_count} bouts</span>
                     {t.placement_count > 0 && <span>{t.placement_count} places</span>}
-                    {unresolvedSchools.length > 0 && <span className="text-amber-700 font-medium">⚠ {unresolvedSchools.length}</span>}
+                    {(unresolvedSchools.length + unresolvedTsSchools.length) > 0 && <span className="text-amber-700 font-medium">⚠ {unresolvedSchools.length + unresolvedTsSchools.length}</span>}
                     {t.wrestler_flags.length > 0 && <span className="text-blue-700">{t.wrestler_flags.length} wrestlers</span>}
                     <span>{open ? '▲' : '▼'}</span>
                   </div>
@@ -561,12 +836,53 @@ export function RtfImportClient() {
                       </select>
                     </div>
 
+                    {/* Venue */}
+                    {(() => {
+                      const vd = venues[tkey] ?? { venue_name: '', venue_address: '' }
+                      return (
+                        <div className="flex items-start gap-4 text-sm flex-wrap">
+                          <label className="text-slate-500 text-xs pt-1 shrink-0">Venue</label>
+                          <input
+                            type="text"
+                            placeholder="Venue name"
+                            value={vd.venue_name}
+                            onChange={e => setVenues(prev => ({ ...prev, [tkey]: { ...vd, venue_name: e.target.value } }))}
+                            className="border border-slate-300 px-2 py-0.5 text-sm focus:outline-none focus:ring-1 focus:ring-black min-w-[220px] flex-1"
+                          />
+                          <input
+                            type="text"
+                            placeholder="Address"
+                            value={vd.venue_address}
+                            onChange={e => setVenues(prev => ({ ...prev, [tkey]: { ...vd, venue_address: e.target.value } }))}
+                            className="border border-slate-300 px-2 py-0.5 text-sm focus:outline-none focus:ring-1 focus:ring-black min-w-[260px] flex-1"
+                          />
+                        </div>
+                      )
+                    })()}
+
                     {t.school_flags.length > 0 && (
                       <div>
                         <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">School flags ({t.school_flags.length})</p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                           {t.school_flags.map(flag => (
                             <SchoolFlagCard key={flag.raw} flag={flag} override={schoolOverrides[flag.raw]} onOverride={handleOverride} />
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {(t.team_score_flags ?? []).length > 0 && (
+                      <div>
+                        <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">Team score schools ({(t.team_score_flags ?? []).length})</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          {(t.team_score_flags ?? []).map(flag => (
+                            <SchoolFlagCard
+                              key={flag.raw}
+                              flag={flag}
+                              override={schoolOverrides[flag.raw]}
+                              onOverride={handleOverride}
+                              countLabel={`Place ${flag.bout_count}`}
+                            />
                           ))}
                         </div>
                       </div>
@@ -593,6 +909,9 @@ export function RtfImportClient() {
                                   flag={f}
                                   override={wrestlerOverrides[f.key]}
                                   onOverride={handleWrestlerOverride}
+                                  gender={gender}
+                                  msProfileLink={msProfileLinks[f.key]}
+                                  onMsLink={handleMsLink}
                                 />
                               ))}
                             </div>
@@ -603,7 +922,7 @@ export function RtfImportClient() {
                       )
                     })()}
 
-                    {t.school_flags.length === 0 && t.wrestler_flags.length === 0 && (
+                    {t.school_flags.length === 0 && (t.team_score_flags ?? []).length === 0 && t.wrestler_flags.length === 0 && (
                       <p className="text-sm text-slate-400">No flags — all schools and wrestlers matched cleanly.</p>
                     )}
 
@@ -667,8 +986,13 @@ export function RtfImportClient() {
               Force re-import tournaments already in DB (overwrites existing bouts)
             </label>
             {totalSchoolFlags > 0 && (
-              <p className="text-sm text-amber-700">
-                {totalSchoolFlags} school{totalSchoolFlags !== 1 ? 's' : ''} still unresolved — those wrestlers will import without a school link.
+              <p className="text-sm text-red-600">
+                {totalSchoolFlags} school{totalSchoolFlags !== 1 ? 's' : ''} unresolved — resolve before importing.
+              </p>
+            )}
+            {totalWrestlerFlags > 0 && (
+              <p className="text-sm text-red-600">
+                {totalWrestlerFlags} wrestler{totalWrestlerFlags !== 1 ? 's' : ''} unresolved — every bout needs both wrestler IDs before import.
               </p>
             )}
             {deferredTournaments.size > 0 && (
@@ -687,7 +1011,7 @@ export function RtfImportClient() {
               </button>
               <button
                 onClick={handleImport}
-                disabled={isPending || deferredTournaments.size === reviewed.length}
+                disabled={isPending || deferredTournaments.size === reviewed.length || totalWrestlerFlags > 0 || totalSchoolFlags > 0}
                 className="px-4 py-2 bg-black text-white text-sm font-medium disabled:opacity-40 hover:bg-slate-800 transition-colors flex items-center gap-2"
               >
                 {isPending ? <><Spinner /> Importing…</> : `Import ${reviewed.length - deferredTournaments.size} Tournament${reviewed.length - deferredTournaments.size !== 1 ? 's' : ''}`}
@@ -710,6 +1034,7 @@ export function RtfImportClient() {
                   <th className="text-left px-4 py-2 font-medium text-slate-500">Tournament</th>
                   <th className="text-right px-4 py-2 font-medium text-slate-500">Bouts</th>
                   <th className="text-right px-4 py-2 font-medium text-slate-500">Placements</th>
+                  <th className="text-right px-4 py-2 font-medium text-slate-500">Scores</th>
                   <th className="text-right px-4 py-2 font-medium text-slate-500">New wrestlers</th>
                   <th className="px-4 py-2 font-medium text-slate-500">Status</th>
                 </tr>
@@ -719,7 +1044,8 @@ export function RtfImportClient() {
                   <tr key={r.tournament} className={r.error ? 'bg-red-50' : ''}>
                     <td className="px-4 py-2 font-medium text-slate-900">{r.tournament}</td>
                     <td className="px-4 py-2 text-right text-slate-600">{r.bouts_inserted}</td>
-                    <td className="px-4 py-2 text-right text-slate-600">{r.placements_upserted}</td>
+                    <td className="px-4 py-2 text-right text-slate-600">{r.placements_upserted}{r.placements_parsed != null && r.placements_parsed !== r.placements_upserted ? <span className="text-xs text-amber-600 ml-1">(parsed: {r.placements_parsed})</span> : null}</td>
+                    <td className="px-4 py-2 text-right text-slate-600">{r.team_scores_inserted > 0 ? r.team_scores_inserted : '—'}</td>
                     <td className="px-4 py-2 text-right text-slate-600">{r.wrestlers_created}</td>
                     <td className="px-4 py-2">
                       {r.error
@@ -727,6 +1053,8 @@ export function RtfImportClient() {
                         : r.skipped
                         ? <span className="text-xs text-amber-700">skipped (bouts existed)</span>
                         : <span className="text-xs text-green-700 font-medium">✓ imported</span>}
+                      {r.pl_error && <div className="text-xs text-red-600 mt-1">placement error: {r.pl_error}</div>}
+                      {r.ts_error && <div className="text-xs text-red-600 mt-1">team score error: {r.ts_error}</div>}
                     </td>
                   </tr>
                 ))}
@@ -736,6 +1064,7 @@ export function RtfImportClient() {
                   <td className="px-4 py-2 font-semibold text-slate-700">Total</td>
                   <td className="px-4 py-2 text-right font-semibold text-slate-800">{importResults.reduce((n, r) => n + r.bouts_inserted, 0).toLocaleString()}</td>
                   <td className="px-4 py-2 text-right font-semibold text-slate-800">{importResults.reduce((n, r) => n + r.placements_upserted, 0)}</td>
+                  <td className="px-4 py-2 text-right font-semibold text-slate-800">{importResults.reduce((n, r) => n + r.team_scores_inserted, 0) || '—'}</td>
                   <td className="px-4 py-2 text-right font-semibold text-slate-800">{importResults.reduce((n, r) => n + r.wrestlers_created, 0)}</td>
                   <td />
                 </tr>

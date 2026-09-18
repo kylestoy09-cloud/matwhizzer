@@ -645,11 +645,11 @@ def main() -> None:
             bouts.append({
                 "weight_class":         row.weight,
                 "round":                normalize_round(row.round),
-                "nj_wrestler1_id":      wm_winner["wrestler_id"],
+                "wrestler1_id":      wm_winner["wrestler_id"],
                 "wrestler1_name_raw":   row.winner,
                 "wrestler1_school_id":  s_w["school_id"],
                 "wrestler1_school_raw": s_w.get("display_name") or row.winner_school,
-                "nj_wrestler2_id":      wm_loser["wrestler_id"],
+                "wrestler2_id":      wm_loser["wrestler_id"],
                 "wrestler2_name_raw":   row.loser,
                 "wrestler2_school_id":  s_l["school_id"],
                 "wrestler2_school_raw": s_l.get("display_name") or row.loser_school,
@@ -790,10 +790,10 @@ def main() -> None:
             for bout in bouts:
                 for side in ("1", "2"):
                     key = (bout[f"wrestler{side}_name_raw"], bout[f"wrestler{side}_school_id"])
-                    if bout[f"nj_wrestler{side}_id"] is None:
+                    if bout[f"wrestler{side}_id"] is None:
                         wid = new_wrestler_map.get(key)
                         if wid:
-                            bout[f"nj_wrestler{side}_id"] = wid
+                            bout[f"wrestler{side}_id"] = wid
 
     # Step 3: Insert bouts
     print("\nStep 3 — Inserting bouts …")
@@ -820,7 +820,11 @@ def main() -> None:
         CHUNK = 500
         inserted = 0
         for i in range(0, len(bouts), CHUNK):
-            res = client.from_("tournament_bouts").insert(bouts[i:i + CHUNK]).execute()
+            res = client.from_("tournament_bouts").upsert(
+                bouts[i:i + CHUNK],
+                on_conflict="in_season_tournament_id,weight_class,round,wrestler1_id,wrestler2_id,winner_score,loser_score",
+                ignore_duplicates=True,
+            ).execute()
             inserted += len(res.data or [])
 
         total_inserted += inserted

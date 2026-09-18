@@ -332,6 +332,7 @@ function WeightSection({
                   <th className="px-2 py-1.5 text-left">Section</th>
                   <th className="px-2 py-1.5 text-left">Bout</th>
                   <th className="px-2 py-1.5 text-left">Round</th>
+                  <th className="px-2 py-1.5 text-center">Pts</th>
                   <th className="px-2 py-1.5 text-left" />
                 </tr>
               </thead>

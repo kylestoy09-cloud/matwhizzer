@@ -1,23 +1,22 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // import-meets/route.ts
-// Server action for Stage 5: write imported dual meets to the database.
+// Server action for Stage 5: write imported BOYS dual meets to the database.
+//
+// Boys weight classes: 106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285
 //
 // Steps:
 //   1. Collect all isNew wrestlers across all non-skipped meets
 //   2. Check which already exist in wrestlers table; INSERT only truly new ones
 //   3. For each non-skipped meet: INSERT dual_meets row, then INSERT all
 //      dual_meet_matches rows in one batch
-//
-// season_id is hardcoded to 2 (current season). Add UI selector later.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
-import type { ParsedMeet } from '@/lib/parseDualMeet'
-import type { SchoolMatch } from '@/lib/matchSchools'
-import type { WrestlerMatch } from '@/lib/matchWrestlers'
-import { clearWrestlerCache } from '@/lib/matchWrestlers'
+import { parseDualMeetText } from '@/lib/parseDualMeet'
+import { matchSchoolNames } from '@/lib/matchSchools'
+import { matchWrestler, reloadAliases, clearWrestlerCache } from '@/lib/matchWrestlers'
 import { boutResultToDb } from '@/lib/parseRtf'
 import {
   type SchoolOverride,
@@ -32,14 +31,17 @@ const SEASON_ID = 2
 
 // ── Request shape ──────────────────────────────────────────────────────────────
 
+type SlimSchoolMatch  = { rawName: string; schoolId: number | null; confidence: string }
+type SlimWrestlerMatch = { wrestlerId: string | null; isNew: boolean }
+
+// Only a draft ID is sent — meets/resolutions are derived server-side from the saved draft.
+// This keeps the request body tiny regardless of batch size (fixes HTTP 413 on large imports).
 type ImportRequest = {
-  meets:               ParsedMeet[]
-  skipped:             number[]
-  schoolResolutions:   Record<string, SchoolMatch>
-  schoolOverrides:     Record<string, SchoolOverride>
-  wrestlerResolutions: Record<string, WrestlerMatch>
-  wrestlerOverrides:   Record<string, WrestlerOverride>
+  draftId: string
+  skipped: number[]
 }
+
+const GENDER = 'M' as const
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
@@ -76,7 +78,7 @@ function parseName(raw: string): { first_name: string; last_name: string; suffix
 /** Inline resolvers — avoids cross-layer import of UI types.ts helpers. */
 function resolveSchoolId(
   rawName:   string,
-  resMap:    Record<string, SchoolMatch>,
+  resMap:    Record<string, SlimSchoolMatch>,
   overrides: Record<string, SchoolOverride>,
 ): number | null {
   const ovr = overrides[rawName]
@@ -90,7 +92,7 @@ function resolveSchoolId(
  */
 function resolveSchoolFull(
   rawName:   string,
-  resMap:    Record<string, SchoolMatch>,
+  resMap:    Record<string, SlimSchoolMatch>,
   overrides: Record<string, SchoolOverride>,
   oosMap:    Map<string, number>,
 ): { schoolId: number | null; isOos: boolean } {
@@ -102,7 +104,7 @@ function resolveSchoolFull(
 
 function resolveWrestlerId(
   key:         WrestlerKey,
-  resMap:      Record<string, WrestlerMatch>,
+  resMap:      Record<string, SlimWrestlerMatch>,
   overrides:   Record<string, WrestlerOverride>,
 ): { wrestlerId: string | null; isNew: boolean } {
   const ovr = overrides[key]
@@ -121,21 +123,97 @@ export async function POST(req: NextRequest) {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body: ImportRequest = await req.json().catch(() => null)
-  if (!body?.meets) return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
+  if (!body?.draftId) return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
 
-  const {
-    meets, skipped,
-    schoolResolutions, schoolOverrides,
-    wrestlerResolutions, wrestlerOverrides,
-  } = body
-
+  const { draftId, skipped } = body
   const skippedSet = new Set(skipped)
 
-  // Service-role client — required for INSERT
+  // Service-role client — required for INSERT and draft fetch
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL  ?? '',
     process.env.SUPABASE_SERVICE_ROLE_KEY ?? '',
   )
+
+  // ── Fetch draft ───────────────────────────────────────────────────────────────
+  const { data: draft, error: draftErr } = await supabase
+    .from('dual_import_drafts')
+    .select('raw_text, school_overrides, wrestler_overrides, gender')
+    .eq('id', draftId)
+    .eq('user_id', user.id)
+    .single()
+
+  if (draftErr || !draft) {
+    return NextResponse.json({ error: 'Draft not found or access denied' }, { status: 404 })
+  }
+
+  if (draft.gender === 'F') {
+    return NextResponse.json({ error: 'Use /api/admin/import-meets-girls for girls drafts' }, { status: 400 })
+  }
+
+  const schoolOverrides:   Record<string, SchoolOverride>   = (draft.school_overrides   as Record<string, SchoolOverride>)   ?? {}
+  const wrestlerOverrides: Record<string, WrestlerOverride> = (draft.wrestler_overrides as Record<string, WrestlerOverride>) ?? {}
+
+  // ── Re-parse meets from saved raw text ───────────────────────────────────────
+  const meets = parseDualMeetText(draft.raw_text as string)
+  if (meets.length === 0) {
+    return NextResponse.json({ error: 'Draft produced no parseable meets' }, { status: 400 })
+  }
+
+  // ── Match schools server-side ─────────────────────────────────────────────────
+  const allSchoolNames = new Set<string>()
+  for (const meet of meets) {
+    allSchoolNames.add(meet.team1Name)
+    allSchoolNames.add(meet.team2Name)
+    for (const m of meet.matches) {
+      if (m.winnerSchoolRaw) allSchoolNames.add(m.winnerSchoolRaw)
+      if (m.loserSchoolRaw)  allSchoolNames.add(m.loserSchoolRaw)
+    }
+  }
+  const schoolMatchResults = await Promise.all([...allSchoolNames].map(n => matchSchoolNames(n)))
+  const schoolResolutions: Record<string, SlimSchoolMatch> = {}
+  for (const r of schoolMatchResults) {
+    schoolResolutions[r.rawName] = { rawName: r.rawName, schoolId: r.schoolId, confidence: r.confidence }
+  }
+
+  // ── Match wrestlers server-side (NJ schools only) ─────────────────────────────
+  await reloadAliases()
+
+  const wrestlerInputMap = new Map<WrestlerKey, { name: string; schoolId: number | null; weightClass: number }>()
+  for (const meet of meets) {
+    for (const m of meet.matches) {
+      if (m.isDoubleForfeit) continue
+      const pairs: [string | null, string | null][] = [
+        [m.winnerName, m.winnerSchoolRaw],
+        ...(!m.isForfeitWin ? [[m.loserName, m.loserSchoolRaw] as [string | null, string | null]] : []),
+      ]
+      for (const [name, schoolRaw] of pairs) {
+        if (!name) continue
+        const raw = schoolRaw ?? ''
+        const ovr = schoolOverrides[raw]
+        if (ovr?.isOutOfState) continue
+        const res = schoolResolutions[raw]
+        if (res?.confidence === 'oos') continue
+        const schoolId = resolveSchoolId(raw, schoolResolutions, schoolOverrides)
+        const key = makeWrestlerKey(name, schoolId, m.weightClass)
+        if (!wrestlerInputMap.has(key)) {
+          wrestlerInputMap.set(key, { name, schoolId, weightClass: m.weightClass })
+        }
+      }
+    }
+  }
+
+  const wKeys    = [...wrestlerInputMap.keys()]
+  const wValues  = [...wrestlerInputMap.values()]
+  const wResults = await Promise.all(
+    wValues.map(w =>
+      w.schoolId === null
+        ? Promise.resolve<SlimWrestlerMatch>({ wrestlerId: null, isNew: true })
+        : matchWrestler(w.name, w.schoolId, w.weightClass, GENDER)
+            .then(r => ({ wrestlerId: r.wrestlerId, isNew: r.isNew } as SlimWrestlerMatch))
+    )
+  )
+  const wrestlerResolutions: Record<string, SlimWrestlerMatch> = {}
+  wKeys.forEach((k, i) => { wrestlerResolutions[k] = wResults[i] })
 
   // ── Phase 0: Pre-create OOS stub schools ──────────────────────────────────────
   // School names that don't resolve to an NJ school ID get a stub row in the
@@ -227,7 +305,7 @@ export async function POST(req: NextRequest) {
 
         const isLinked = !!wrestlerOverrides[key]?.linkedToKey
         if (isNew && !wrestlerId && !isLinked) {
-          newWrestlerMeta.set(key, { ...parseName(name), gender: 'M', is_stub: isOos })
+          newWrestlerMeta.set(key, { ...parseName(name), gender: GENDER, is_stub: isOos })
         }
       }
     }
@@ -325,6 +403,7 @@ export async function POST(req: NextRequest) {
   // ── Step 3: Import each meet ──────────────────────────────────────────────────
   let meetsImported   = 0
   let matchesImported = 0
+  let meetsSkippedDup = 0
   const errors: string[] = []
 
   // Collect raw_name → wrestler_id aliases for NJ wrestlers across all meets
@@ -336,6 +415,27 @@ export async function POST(req: NextRequest) {
 
     const { schoolId: team1SchoolId } = resolveSchoolFull(meet.team1Name, schoolResolutions, schoolOverrides, oosSchoolMap)
     const { schoolId: team2SchoolId } = resolveSchoolFull(meet.team2Name, schoolResolutions, schoolOverrides, oosSchoolMap)
+    const isoDate = toISODate(meet.date)
+
+    // Duplicate check — skip if a meet between these two schools on this date already exists
+    if (team1SchoolId && team2SchoolId) {
+      const { data: existing } = await supabase
+        .from('dual_meets')
+        .select('id')
+        .eq('season_id', SEASON_ID)
+        .eq('gender', GENDER)
+        .eq('meet_date', isoDate)
+        .or(
+          `and(team1_school_id.eq.${team1SchoolId},team2_school_id.eq.${team2SchoolId}),` +
+          `and(team1_school_id.eq.${team2SchoolId},team2_school_id.eq.${team1SchoolId})`
+        )
+        .limit(1)
+
+      if (existing && existing.length > 0) {
+        meetsSkippedDup++
+        continue
+      }
+    }
 
     // Insert dual_meets row
     const { data: meetRow, error: meetErr } = await supabase
@@ -346,10 +446,10 @@ export async function POST(req: NextRequest) {
         team2_school_id:        team2SchoolId,
         team1_school_name_raw:  meet.team1Name,
         team2_school_name_raw:  meet.team2Name,
-        meet_date:              toISODate(meet.date),
-        team1_score:            meet.team1Score || null,
-        team2_score:            meet.team2Score || null,
-        gender:                 'M',
+        meet_date:              isoDate,
+        team1_score:            meet.team1Score ?? null,
+        team2_score:            meet.team2Score ?? null,
+        gender:                 GENDER,
         status:                 'final',
       })
       .select('id')
@@ -367,7 +467,8 @@ export async function POST(req: NextRequest) {
 
     // Build match rows
     const matchRows = []
-    for (const match of meet.matches) {
+    for (let matchIdx = 0; matchIdx < meet.matches.length; matchIdx++) {
+      const match = meet.matches[matchIdx]
       // Resolve each side's school (NJ or OOS stub)
       const { schoolId: winnerSchoolId } = resolveSchoolFull(match.winnerSchoolRaw ?? '', schoolResolutions, schoolOverrides, oosSchoolMap)
       const { schoolId: loserSchoolId  } = resolveSchoolFull(match.loserSchoolRaw  ?? '', schoolResolutions, schoolOverrides, oosSchoolMap)
@@ -379,9 +480,7 @@ export async function POST(req: NextRequest) {
       if (!match.isDoubleForfeit && match.winnerName) {
         const key = makeWrestlerKey(match.winnerName, winnerSchoolId, match.weightClass)
         winnerWrestlerId = wrestlerIdMap.get(key) ?? null
-        // Save alias for NJ wrestlers
-        const { isOos: winnerOos } = resolveSchoolFull(match.winnerSchoolRaw ?? '', schoolResolutions, schoolOverrides, oosSchoolMap)
-        if (!winnerOos && winnerSchoolId && winnerWrestlerId) {
+        if (winnerSchoolId && winnerWrestlerId) {
           aliasMap.set(`${match.winnerName}|${winnerSchoolId}`, {
             raw_name: match.winnerName, school_id: winnerSchoolId, wrestler_id: winnerWrestlerId,
           })
@@ -390,13 +489,19 @@ export async function POST(req: NextRequest) {
       if (!match.isDoubleForfeit && !match.isForfeitWin && match.loserName) {
         const key = makeWrestlerKey(match.loserName, loserSchoolId, match.weightClass)
         loserWrestlerId = wrestlerIdMap.get(key) ?? null
-        // Save alias for NJ wrestlers
-        const { isOos: loserOos } = resolveSchoolFull(match.loserSchoolRaw ?? '', schoolResolutions, schoolOverrides, oosSchoolMap)
-        if (!loserOos && loserSchoolId && loserWrestlerId) {
+        if (loserSchoolId && loserWrestlerId) {
           aliasMap.set(`${match.loserName}|${loserSchoolId}`, {
             raw_name: match.loserName, school_id: loserSchoolId, wrestler_id: loserWrestlerId,
           })
         }
+      }
+
+      // Safety net: skip match if an NJ wrestler has no resolved ID.
+      // Under normal flow the UI gates on unresolvedWrestlers > 0, so this
+      // only fires when the endpoint is called directly, bypassing the UI.
+      if (!match.isDoubleForfeit) {
+        if (winnerSchoolId && !winnerWrestlerId) continue
+        if (!match.isForfeitWin && loserSchoolId && !loserWrestlerId) continue
       }
 
       // Assign team A (= team1) vs team B (= team2) slots.
@@ -432,6 +537,7 @@ export async function POST(req: NextRequest) {
       matchRows.push({
         dual_meet_id:           dualMeetId,
         weight_class:           match.weightClass,
+        order_index:            matchIdx,
         wrestler_a_id:          wrestlerAId,
         wrestler_b_id:          wrestlerBId,
         wrestler_a_name_raw:    wrestlerANameRaw,
@@ -475,11 +581,41 @@ export async function POST(req: NextRequest) {
     clearWrestlerCache()
   }
 
+  // ── Step 5: Persist school aliases from user overrides ────────────────────────
+  // Aliases are saved here — not during review — so nothing is written to the DB
+  // until the user explicitly clicks Import.
+  for (const [rawName, override] of Object.entries(schoolOverrides)) {
+    if (!rawName.trim()) continue
+    let row: { school_id: number | null; alias: string; alias_type: string; notes: string | null }
+
+    if (!override.isOutOfState && override.schoolId != null) {
+      row = { school_id: override.schoolId, alias: rawName.trim(), alias_type: 'abbreviation', notes: 'Confirmed via dual meet import' }
+    } else if (override.isOutOfState && override.schoolId != null) {
+      row = { school_id: null, alias: rawName.trim(), alias_type: 'oos', notes: String(override.schoolId) }
+    } else if (override.isOutOfState && override.schoolId === null) {
+      row = { school_id: null, alias: rawName.trim(), alias_type: 'oos', notes: 'Confirmed out-of-state via dual meet import' }
+    } else {
+      continue
+    }
+
+    const { error: aliasErr } = await supabase.from('school_aliases').insert(row)
+    if (!aliasErr || aliasErr.code === '23505') continue
+
+    // Fallback: if school_id NOT NULL constraint hasn't been lifted, store OOS
+    // school_id in the school_id column and keep notes for matchSchools fallback.
+    if (aliasErr.code === '23502' && row.school_id === null && row.notes && /^\d+$/.test(row.notes)) {
+      const oosId = parseInt(row.notes, 10)
+      await supabase.from('school_aliases').insert({ ...row, school_id: oosId })
+    }
+    // Other errors are non-fatal — alias will be retried on next import
+  }
+
   return NextResponse.json({
     ok:               errors.length === 0,
     meetsImported,
     matchesImported,
     wrestlersCreated,
+    meetsSkippedDup,
     errors,
   })
 }

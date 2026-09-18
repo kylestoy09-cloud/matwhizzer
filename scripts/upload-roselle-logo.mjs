@@ -26,7 +26,7 @@ try {
 
 const SUPABASE_URL     = process.env.NEXT_PUBLIC_SUPABASE_URL
 const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
-const SCHOOL_ID        = 358
+const SCHOOL_ID        = 125
 const BUCKET           = 'school-logos'
 const STORAGE_PATH     = `colored/512/${SCHOOL_ID}.png`
 

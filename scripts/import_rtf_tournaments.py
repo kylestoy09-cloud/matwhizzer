@@ -125,6 +125,11 @@ def bout_result_to_db(
     if rt.lower() == "fall" and result_detail:
         fall_secs = _parse_time(result_detail)
         return "Fall", None, fall_secs, 1
+    if rt.upper().startswith("TF") and result_detail:
+        tm = re.search(r"(\d+):(\d{2})$", result_detail)
+        fall_secs = (int(tm.group(1)) * 60 + int(tm.group(2))) if tm else None
+        score = re.sub(r"\s*\d+:\d{2}$", "", result_detail).strip() or result_detail
+        return rt, score or None, fall_secs, 1
     return rt, result_detail, None, 1
 
 
@@ -446,11 +451,11 @@ def main() -> None:
             bouts.append({
                 "weight_class":         b["weight_class"],
                 "round":                round_code,
-                "nj_wrestler1_id":      wm1["wrestler_id"],
+                "wrestler1_id":      wm1["wrestler_id"],
                 "wrestler1_name_raw":   b["wrestler1_name"],
                 "wrestler1_school_id":  s1["school_id"],
                 "wrestler1_school_raw": s1.get("display_name") or b["wrestler1_school"],
-                "nj_wrestler2_id":      wm2["wrestler_id"],
+                "wrestler2_id":      wm2["wrestler_id"],
                 "wrestler2_name_raw":   b["wrestler2_name"],
                 "wrestler2_school_id":  s2["school_id"],
                 "wrestler2_school_raw": s2.get("display_name") or b["wrestler2_school"],
@@ -567,8 +572,8 @@ def main() -> None:
             for bout in bouts:
                 for side in ("1", "2"):
                     key = (bout[f"wrestler{side}_name_raw"], bout[f"wrestler{side}_school_id"])
-                    if bout[f"nj_wrestler{side}_id"] is None and key in new_wrestler_map:
-                        bout[f"nj_wrestler{side}_id"] = new_wrestler_map[key]
+                    if bout[f"wrestler{side}_id"] is None and key in new_wrestler_map:
+                        bout[f"wrestler{side}_id"] = new_wrestler_map[key]
 
     # Step 3: Bouts
     print("\nStep 3 — Inserting bouts …")
@@ -592,7 +597,11 @@ def main() -> None:
         CHUNK = 500
         inserted = 0
         for i in range(0, len(bouts), CHUNK):
-            res = client.from_("tournament_bouts").insert(bouts[i : i + CHUNK]).execute()
+            res = client.from_("tournament_bouts").upsert(
+                bouts[i : i + CHUNK],
+                on_conflict="in_season_tournament_id,weight_class,round,wrestler1_id,wrestler2_id,winner_score,loser_score",
+                ignore_duplicates=True,
+            ).execute()
             inserted += len(res.data or [])
         total_inserted += inserted
         print(f"  {inserted:4d} bouts  {tname}")

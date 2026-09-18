@@ -1,110 +1,39 @@
 import { redirect } from 'next/navigation'
-import Link from 'next/link'
 import { createSupabaseServer } from '@/lib/supabase/server'
-import { SignOutButton } from './sign-out-button'
+import { createSupabaseAdmin } from '@/lib/supabase/service'
 
 export const dynamic = 'force-dynamic'
+
+type SeasonConfig = {
+  preseason_start: string
+  season_start: string
+  postseason_start: string
+  season_end: string
+  postseason_end: string
+}
+
+function getDashboard(cfg: SeasonConfig | null): string {
+  if (!cfg) return 'offseason'
+  const today = new Date().toISOString().slice(0, 10)
+
+  if (today >= cfg.postseason_start) return 'postseason'  // postseason takes priority from Jan 25
+  if (today >= cfg.season_start)     return 'season'
+  if (today >= cfg.preseason_start)  return 'preseason'
+  return 'offseason'
+}
 
 export default async function AdminDashboard() {
   const supabase = await createSupabaseServer()
   const { data: { user } } = await supabase.auth.getUser()
-
   if (!user) redirect('/admin/login')
 
-  return (
-    <div className="max-w-3xl mx-auto px-6 py-12">
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-bold text-slate-900">Admin Dashboard</h1>
-        <SignOutButton />
-      </div>
+  const db = createSupabaseAdmin()
+  const { data: seasonCfg } = await db
+    .from('admin_season_config')
+    .select('preseason_start, season_start, postseason_start, season_end, postseason_end')
+    .eq('is_current', true)
+    .maybeSingle()
 
-      <div className="bg-white rounded-none border border-black shadow-none p-6 mb-6">
-        <p className="text-sm text-slate-500 mb-1">Signed in as</p>
-        <p className="text-slate-900 font-medium">{user.email}</p>
-      </div>
-
-      {process.env.NEXT_PUBLIC_STAGING_URL && (
-        <a
-          href={process.env.NEXT_PUBLIC_STAGING_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block bg-orange-50 border border-black rounded-none shadow-none p-4 mb-6 hover:bg-orange-100 transition-colors"
-        >
-          <div className="flex items-center gap-2">
-            <span className="text-orange-500 text-lg">↗</span>
-            <div>
-              <h2 className="text-sm font-semibold text-orange-800">Preview Staging</h2>
-              <p className="text-xs text-orange-600">Review changes before pushing live</p>
-            </div>
-          </div>
-        </a>
-      )}
-
-      <div className="grid grid-cols-2 gap-4">
-        <Link
-          href="/admin/import"
-          className="bg-white rounded-none border border-black shadow-none p-6 transition-shadow"
-        >
-          <h2 className="text-sm font-semibold text-slate-900 mb-1">Dual Meet Import</h2>
-          <p className="text-xs text-slate-500">Paste TrackWrestling results and import dual meet data</p>
-        </Link>
-        <Link
-          href="/admin/bracket"
-          className="bg-white rounded-none border border-black shadow-none p-6 transition-shadow"
-        >
-          <h2 className="text-sm font-semibold text-slate-900 mb-1">Bracket Editor</h2>
-          <p className="text-xs text-slate-500">View and edit state tournament bracket data</p>
-        </Link>
-        <Link
-          href="/admin/schools"
-          className="bg-white rounded-none border border-black shadow-none p-6 transition-shadow"
-        >
-          <h2 className="text-sm font-semibold text-slate-900 mb-1">School Aliases</h2>
-          <p className="text-xs text-slate-500">Resolve unmatched abbreviations and verify mappings</p>
-        </Link>
-        <Link
-          href="/admin/districts"
-          className="bg-white rounded-none border border-black shadow-none p-6 transition-shadow"
-        >
-          <h2 className="text-sm font-semibold text-slate-900 mb-1">District Verify</h2>
-          <p className="text-xs text-slate-500">Add abbreviations for each school by district</p>
-        </Link>
-        <Link
-          href="/admin/data-health"
-          className="bg-white rounded-none border border-black shadow-none p-6 transition-shadow"
-        >
-          <h2 className="text-sm font-semibold text-slate-900 mb-1">Data Health</h2>
-          <p className="text-xs text-slate-500">Database integrity and site availability monitoring</p>
-        </Link>
-        <Link
-          href="/admin/import-tournament"
-          className="bg-white rounded-none border border-black shadow-none p-6 transition-shadow"
-        >
-          <h2 className="text-sm font-semibold text-slate-900 mb-1">Tournament Import (CSV)</h2>
-          <p className="text-xs text-slate-500">Upload pipe-CSV JSON to review and import tournament bouts</p>
-        </Link>
-        <Link
-          href="/admin/import-rtf"
-          className="bg-white rounded-none border border-black shadow-none p-6 transition-shadow"
-        >
-          <h2 className="text-sm font-semibold text-slate-900 mb-1">Tournament Import (RTF)</h2>
-          <p className="text-xs text-slate-500">Paste RTF tournament text, review matches, import bouts and placements</p>
-        </Link>
-        <Link
-          href="/admin/bout-audit"
-          className="bg-white rounded-none border border-black shadow-none p-6 transition-shadow"
-        >
-          <h2 className="text-sm font-semibold text-slate-900 mb-1">Bout Audit</h2>
-          <p className="text-xs text-slate-500">Browse live tournament bouts, surface flagged data, fix in place</p>
-        </Link>
-        <Link
-          href="/admin/dual-audit"
-          className="bg-white rounded-none border border-black shadow-none p-6 transition-shadow"
-        >
-          <h2 className="text-sm font-semibold text-slate-900 mb-1">Dual Meet Audit</h2>
-          <p className="text-xs text-slate-500">Browse live dual meet matches, surface flagged data, fix in place</p>
-        </Link>
-      </div>
-    </div>
-  )
+  const dashboard = getDashboard(seasonCfg as SeasonConfig | null)
+  redirect(`/admin/${dashboard}`)
 }

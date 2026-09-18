@@ -31,6 +31,7 @@ export type WrestlerFlag = {
   wrestler_id: string | null
   display_name: string | null
   alternates: { wrestler_id: string; display_name: string; score: number }[]
+  ms_candidates?: MsProfileCandidate[]
 }
 
 export type WrestlerOverride =
@@ -39,7 +40,42 @@ export type WrestlerOverride =
   | { type: 'accept' }
   | { type: 'skip' }
 
+export type MsPlacementInfo = {
+  id: number
+  tournament_name: string
+  tier_name: string
+  season: string
+  weight_class: number
+  place: number
+  school_name: string | null
+  credit: number | null
+}
+
+export type MsProfileCandidate = {
+  ms_wrestler_id: number
+  primary_name: string
+  score: number
+  placements: MsPlacementInfo[]
+  best_credit: number
+}
+
+export type MsProfileLink =
+  | { type: 'confirm'; ms_wrestler_id: number; canonical_name: string }
+  | { type: 'skip' }
+
 export type TournamentType = 'outside' | 'inside_outside' | 'inside'
+
+export type TournamentMatchInfo = {
+  tournament_id: string
+  tournament_name: string
+  start_date: string | null
+  confidence: 'exact' | 'high' | 'low' | 'none'
+  score: number
+}
+
+export type TournamentOverride =
+  | { type: 'existing'; tournament_id: string; tournament_name: string }
+  | { type: 'new' }
 
 export type TournamentSummary = {
   name: string
@@ -50,12 +86,18 @@ export type TournamentSummary = {
   tournament_type: TournamentType
   bout_count: number
   placement_count: number
+  team_score_count: number
   existing_id: string | null
   has_existing_bouts: boolean
+  venue_name: string | null
+  venue_address: string | null
+  tournament_match: TournamentMatchInfo | null
+  tournament_alternates: TournamentMatchInfo[]
 }
 
 export type ReviewedTournament = TournamentSummary & {
   school_flags: SchoolFlag[]
+  team_score_flags: SchoolFlag[]
   wrestler_flags: WrestlerFlag[]
   bouts_for_review: BoutForReview[]
 }
@@ -69,7 +111,11 @@ export type ImportResult = {
   tournament: string
   bouts_inserted: number
   placements_upserted: number
+  placements_parsed?: number
+  team_scores_inserted: number
   wrestlers_created: number
   skipped: boolean
   error?: string
+  pl_error?: string
+  ts_error?: string
 }

@@ -9,7 +9,8 @@ export async function GET(req: NextRequest) {
   const { data: { user } } = await auth.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const tid = req.nextUrl.searchParams.get('tid')
+  const tid    = req.nextUrl.searchParams.get('tid')
+  const gender = req.nextUrl.searchParams.get('gender') as 'M' | 'F' | null
   if (!tid) return NextResponse.json({ error: 'tid required' }, { status: 400 })
 
   const supabase = createClient(
@@ -17,8 +18,10 @@ export async function GET(req: NextRequest) {
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
   )
 
+  const boutTable = gender === 'F' ? 'tournament_bouts_girls' : 'tournament_bouts'
+
   const { data: bouts, error } = await supabase
-    .from('tournament_bouts')
+    .from(boutTable)
     .select('*')
     .eq('in_season_tournament_id', tid)
     .order('weight_class', { ascending: true })

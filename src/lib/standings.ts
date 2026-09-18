@@ -16,6 +16,62 @@ export type StandingsRow = SchoolRow & {
   total_points: number
 }
 
+export type PPStandingsRow = SchoolRow & {
+  rank: number
+  wins: number
+  losses: number
+  pct: number
+  power_points: number
+}
+
+export async function buildPowerPointStandings(
+  schools: SchoolRow[],
+  gender: string,
+  season: number,
+): Promise<PPStandingsRow[]> {
+  if (schools.length === 0) return []
+
+  const schoolIds = schools.map(s => s.id).filter((id): id is number => id != null && id > 0)
+  if (schoolIds.length === 0) return []
+
+  const dbGender = gender === 'girls' ? 'F' : 'M'
+  const { data } = await supabase
+    .from('power_points')
+    .select('school_id, power_points, frozen_power_points, overall_wins, overall_losses')
+    .in('school_id', schoolIds)
+    .eq('season_id', season)
+    .eq('gender', dbGender)
+    .order('power_points', { ascending: false })
+
+  const ppMap = new Map<number, { wins: number; losses: number; pp: number }>()
+  for (const r of data ?? []) {
+    ppMap.set(r.school_id, {
+      wins: r.overall_wins,
+      losses: r.overall_losses,
+      pp: Number(r.frozen_power_points ?? r.power_points),
+    })
+  }
+
+  const rows: PPStandingsRow[] = schools
+    .filter(s => s.id != null && ppMap.has(s.id!))
+    .map(s => {
+      const entry = ppMap.get(s.id!)!
+      const total = entry.wins + entry.losses
+      return {
+        ...s,
+        rank: 0,
+        wins: entry.wins,
+        losses: entry.losses,
+        pct: total > 0 ? entry.wins / total : 0,
+        power_points: entry.pp,
+      }
+    })
+
+  rows.sort((a, b) => b.power_points - a.power_points)
+  rows.forEach((r, i) => { r.rank = i + 1 })
+  return rows
+}
+
 export async function buildStandings(
   schools: SchoolRow[],
   gender: string,

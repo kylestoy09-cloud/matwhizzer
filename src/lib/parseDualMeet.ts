@@ -101,6 +101,26 @@ function normalizeName(name: string): string {
   return name.replace(NAME_PREFIX_RE, '').trim()
 }
 
+// ── Name + school extractor ────────────────────────────────────────────────────
+// Splits "First (Nickname) Last (School)" → { name: "First (Nickname) Last", school: "School" }
+// Uses backward scan so nicknames in parens don't confuse the school boundary.
+
+function splitNameSchool(s: string): { name: string; school: string | null } {
+  const lastClose = s.lastIndexOf(')')
+  if (lastClose === -1) return { name: s.trim(), school: null }
+  let depth = 0
+  let openIdx = -1
+  for (let i = lastClose; i >= 0; i--) {
+    if (s[i] === ')') depth++
+    else if (s[i] === '(') { depth--; if (depth === 0) { openIdx = i; break } }
+  }
+  if (openIdx <= 0) return { name: s.trim(), school: null }
+  const name   = s.slice(0, openIdx).trim()
+  const school = s.slice(openIdx + 1, lastClose).trim()
+  if (!name) return { name: s.trim(), school: null }
+  return { name, school: school || null }
+}
+
 // ── Match summary parser ───────────────────────────────────────────────────────
 // summary: everything between the weight class and the trailing team points.
 // e.g. "Joe Smith (Garfield) over John Doe (Clifton) (Dec 9-7)"
@@ -128,12 +148,26 @@ function parseMatchSummary(summary: string, t1Pts: number, t2Pts: number, weight
 
   const overIdx = s.indexOf(' over ')
   if (overIdx === -1) {
-    // Unparseable — store raw text as winnerName for debugging
+    // If the summary contains "double forfeit" anywhere (even when formatted as
+    // "Name (School) (Double Forfeit 0-0)" with no "over" keyword), treat it as
+    // a true double forfeit so no wrestler profile is created.
+    if (/double\s+forfeit/i.test(s)) {
+      return {
+        weightClass: weight,
+        winnerName: null, winnerSchoolRaw: null,
+        loserName: null,  loserSchoolRaw: null,
+        resultType: 'Double Forfeit', resultDetail: null,
+        team1Points: t1Pts, team2Points: t2Pts,
+        isDoubleForfeit: true, isForfeitWin: false,
+      }
+    }
+    // Truly unparseable — keep the raw text in resultDetail for display but
+    // null out wrestler names so no stub profiles are created.
     return {
       weightClass: weight,
-      winnerName: s, winnerSchoolRaw: null,
+      winnerName: null, winnerSchoolRaw: null,
       loserName: null, loserSchoolRaw: null,
-      resultType: 'Unknown', resultDetail: null,
+      resultType: 'Unknown', resultDetail: s,
       team1Points: t1Pts, team2Points: t2Pts,
       isDoubleForfeit: false, isForfeitWin: false,
     }
@@ -142,11 +176,20 @@ function parseMatchSummary(summary: string, t1Pts: number, t2Pts: number, weight
   const winnerPart = s.slice(0, overIdx).trim()
   const afterOver  = s.slice(overIdx + 6).trim()
 
-  // Parse winner "First Last (School)" — use .+ (not [^)]+) so school names
-  // containing parentheses like "Northern Burlington ( Columbus)" parse correctly.
-  const winnerM = winnerPart.match(/^(.+?)\s+\((.+)\)$/)
-  const winnerName      = normalizeName(winnerM ? winnerM[1].trim() : winnerPart)
-  const winnerSchoolRaw = winnerM ? winnerM[2].trim() : null
+  const { name: _wName, school: winnerSchoolRaw } = splitNameSchool(winnerPart)
+  const winnerName = normalizeName(_wName)
+
+  // [winner] is a TW placeholder indicating a double forfeit — no real wrestler on either side
+  if (/^\[winner\]$/i.test(winnerName)) {
+    return {
+      weightClass: weight,
+      winnerName: null, winnerSchoolRaw: null,
+      loserName: null,  loserSchoolRaw: null,
+      resultType: 'Double Forfeit', resultDetail: null,
+      team1Points: t1Pts, team2Points: t2Pts,
+      isDoubleForfeit: true, isForfeitWin: false,
+    }
+  }
 
   // Forfeit win: afterOver is exactly "Unknown (For.)"
   if (/^unknown\s+\(for\.\)$/i.test(afterOver)) {
@@ -177,10 +220,20 @@ function parseMatchSummary(summary: string, t1Pts: number, t2Pts: number, weight
     loserAndSchool = twoGroupM[1].trim()
     resultStr      = `${twoGroupM[2]} ${twoGroupM[3]}`
   } else {
-    const lastOpen  = afterOver.lastIndexOf('(')
+    // Scan backward from the last ')' to find its matching '(' so nested-paren
+    // results like "(SV-1 (Fall) 6:30)" are treated as one group instead of
+    // lastIndexOf('(') landing on the inner "(Fall)" and splitting incorrectly.
     const lastClose = afterOver.lastIndexOf(')')
+    let bStart = -1
+    if (lastClose >= 0) {
+      let depth = 0
+      for (let i = lastClose; i >= 0; i--) {
+        if (afterOver[i] === ')') depth++
+        else if (afterOver[i] === '(') { depth--; if (depth === 0) { bStart = i; break } }
+      }
+    }
 
-    if (lastOpen === -1 || lastClose === -1 || lastClose < lastOpen) {
+    if (bStart === -1 || lastClose === -1) {
       return {
         weightClass: weight,
         winnerName, winnerSchoolRaw,
@@ -191,27 +244,37 @@ function parseMatchSummary(summary: string, t1Pts: number, t2Pts: number, weight
       }
     }
 
-    resultStr      = afterOver.slice(lastOpen + 1, lastClose)
-    loserAndSchool = afterOver.slice(0, lastOpen).trim()
+    resultStr      = afterOver.slice(bStart + 1, lastClose)
+    loserAndSchool = afterOver.slice(0, bStart).trim()
   }
 
   const { resultType, resultDetail } = parseResult(resultStr)
-  const loserM = loserAndSchool.match(/^(.+?)\s+\((.+)\)$/)
-  const loserNameRaw   = loserM ? normalizeName(loserM[1].trim()) : (loserAndSchool ? normalizeName(loserAndSchool) : null)
-  const loserSchoolRaw = loserM ? loserM[2].trim() : null
+  const { name: _lName, school: loserSchoolRaw } = splitNameSchool(loserAndSchool)
+  const loserNameRaw = loserAndSchool ? normalizeName(_lName) : null
+
+  // "Unknown" in the loser slot = medical forfeit or similar.
+  // Null it out so no stub wrestler profile is created.
+  const loserIsUnknown = /^unknown$/i.test((loserNameRaw ?? '').trim())
 
   // Treat any 'For' result as a forfeit win regardless of what TW put in the
   // loser slot (e.g. "Unknown (For.)" vs "Unknown (School) (For.)").
   const isForfeitWin = resultType === 'For'
 
+  // When the result is "Double Forfeit" (and we got here via the normal " over "
+  // path), treat it the same as a leading "Double Forfeit" summary — no wrestlers.
+  const isDoubleForfeit = resultType === 'Double Forfeit'
+
   return {
     weightClass: weight,
-    winnerName, winnerSchoolRaw,
-    loserName:      isForfeitWin ? null : loserNameRaw,
-    loserSchoolRaw: isForfeitWin ? null : loserSchoolRaw,
+    winnerName:      isDoubleForfeit ? null : winnerName,
+    winnerSchoolRaw: isDoubleForfeit ? null : winnerSchoolRaw,
+    // Keep 'Unknown' as a string so MeetCard can display it as text.
+    // Null the school so no resolution is attempted for a non-wrestler.
+    loserName:       (isForfeitWin || isDoubleForfeit) ? null : loserNameRaw,
+    loserSchoolRaw:  (isForfeitWin || loserIsUnknown || isDoubleForfeit) ? null : loserSchoolRaw,
     resultType, resultDetail,
     team1Points: t1Pts, team2Points: t2Pts,
-    isDoubleForfeit: false, isForfeitWin,
+    isDoubleForfeit, isForfeitWin,
   }
 }
 
@@ -369,6 +432,22 @@ export function parseDualMeetText(raw: string): ParsedMeet[] {
     const key         = `${header.team1}|${header.team2}|${header.date}`
     const isDuplicate = seen.has(key)
     seen.set(key, true)
+
+    // Backfill null school names by inferring from the meet teams.
+    // When one side's school parsed successfully, the other side must be the opposite team.
+    for (const match of matches) {
+      if (match.isDoubleForfeit || match.isForfeitWin) continue
+      if (!match.loserSchoolRaw && match.loserName && match.winnerSchoolRaw) {
+        match.loserSchoolRaw =
+          match.winnerSchoolRaw === header.team1 ? header.team2 :
+          match.winnerSchoolRaw === header.team2 ? header.team1 : null
+      }
+      if (!match.winnerSchoolRaw && match.winnerName && match.loserSchoolRaw) {
+        match.winnerSchoolRaw =
+          match.loserSchoolRaw === header.team1 ? header.team2 :
+          match.loserSchoolRaw === header.team2 ? header.team1 : null
+      }
+    }
 
     const meet: ParsedMeet = {
       rawText:    chunk,

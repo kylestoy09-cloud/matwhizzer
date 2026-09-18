@@ -11,7 +11,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
-import type { PipeImportJSON, SchoolOverride, WrestlerOverride, BoutRow } from '@/app/admin/import-tournament/types'
+import type { PipeImportJSON, SchoolOverride, WrestlerOverride, BoutRow } from '@/lib/pipeImportTypes'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnySupabase = SupabaseClient<any, any, any>
@@ -36,11 +36,12 @@ async function ensureTournament(
   startDate: string | null,
   endDate: string | null,
   supabase: AnySupabase,
+  table: string,
 ): Promise<string> {
   if (existingId) return existingId
 
   const check = await supabase
-    .from('in_season_tournaments')
+    .from(table)
     .select('id')
     .eq('name', name)
     .eq('season', SEASON)
@@ -56,7 +57,7 @@ async function ensureTournament(
   }
 
   const { data, error } = await supabase
-    .from('in_season_tournaments')
+    .from(table)
     .insert(payload)
     .select('id')
     .single()
@@ -74,8 +75,12 @@ export async function POST(req: NextRequest) {
     importData: PipeImportJSON
     schoolOverrides: Record<string, SchoolOverride>
     wrestlerOverrides: Record<string, WrestlerOverride>
+    gender?: 'M' | 'F'
   }
   const { importData, schoolOverrides, wrestlerOverrides } = body
+  const gender: 'M' | 'F' = body.gender === 'F' ? 'F' : 'M'
+  const istTable  = gender === 'F' ? 'in_season_tournaments_girls' : 'in_season_tournaments'
+  const boutTable = gender === 'F' ? 'tournament_bouts_girls'      : 'tournament_bouts'
 
   const supabase: AnySupabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -128,7 +133,7 @@ export async function POST(req: NextRequest) {
       .from('wrestlers')
       .select('id, first_name, last_name')
       .in('last_name', lastNames)
-      .eq('gender', 'M')
+      .eq('gender', gender)
     const existing = new Map(
       (existingRes.data ?? []).map(r => [`${r.first_name}|${r.last_name}`, r.id])
     )
@@ -143,7 +148,7 @@ export async function POST(req: NextRequest) {
       if (existing.has(existKey)) {
         newWrestlerMap.set(wrestlerKey, existing.get(existKey)!)
       } else {
-        toInsert.push({ ...parsed, gender: 'M' })
+        toInsert.push({ ...parsed, gender })
         insertKeys.push(wrestlerKey)
       }
     }
@@ -187,7 +192,7 @@ export async function POST(req: NextRequest) {
 
     let tid: string
     try {
-      tid = await ensureTournament(t.name, t.existing_id, t.start_date, t.end_date, supabase)
+      tid = await ensureTournament(t.name, t.existing_id, t.start_date, t.end_date, supabase, istTable)
     } catch (err) {
       errors.push(String(err))
       continue
@@ -195,7 +200,7 @@ export async function POST(req: NextRequest) {
 
     // Skip if already has bouts
     const existingBouts = await supabase
-      .from('tournament_bouts')
+      .from(boutTable)
       .select('id', { count: 'exact', head: true })
       .eq('in_season_tournament_id', tid)
     if ((existingBouts.count ?? 0) > 0) {
@@ -203,29 +208,49 @@ export async function POST(req: NextRequest) {
       continue
     }
 
-    const rows = t.bouts.map((bout: BoutRow) => ({
-      in_season_tournament_id: tid,
-      weight_class:            bout.weight,
-      round:                   bout.round,
-      wrestler1_id:         resolveWrestlerId(bout.winner_key, bout.winner_school_raw),
-      wrestler1_name_raw:      bout.winner_name,
-      wrestler1_school_id:     resolveSchoolId(bout.winner_school_raw),
-      wrestler1_school_raw:    importData.schools[bout.winner_school_raw]?.display_name ?? bout.winner_school_raw,
-      wrestler2_id:         resolveWrestlerId(bout.loser_key, bout.loser_school_raw),
-      wrestler2_name_raw:      bout.loser_name,
-      wrestler2_school_id:     resolveSchoolId(bout.loser_school_raw),
-      wrestler2_school_raw:    importData.schools[bout.loser_school_raw]?.display_name ?? bout.loser_school_raw,
-      winner:                  1,
-      result_type:             bout.result_type,
-      result_detail:           bout.result_detail,
-      fall_time_seconds:       bout.fall_time_seconds,
-      source_format:           importData.source_format,
-    }))
+    // Collect all resolved IDs for this tournament so we can look up clean names
+    const tidWrestlerIds = new Set<string>()
+    for (const bout of t.bouts as BoutRow[]) {
+      const w1id = resolveWrestlerId(bout.winner_key, bout.winner_school_raw)
+      const w2id = resolveWrestlerId(bout.loser_key, bout.loser_school_raw)
+      if (w1id) tidWrestlerIds.add(w1id)
+      if (w2id) tidWrestlerIds.add(w2id)
+    }
+    const tidNameMap = new Map<string, string>()
+    if (tidWrestlerIds.size) {
+      const { data: wRows } = await supabase.from('wrestlers').select('id, first_name, last_name').in('id', [...tidWrestlerIds])
+      for (const w of wRows ?? []) {
+        tidNameMap.set((w as { id: string }).id, `${(w as { first_name: string }).first_name} ${(w as { last_name: string }).last_name}`.trim())
+      }
+    }
+
+    const rows = (t.bouts as BoutRow[]).map((bout: BoutRow) => {
+      const w1id = resolveWrestlerId(bout.winner_key, bout.winner_school_raw)
+      const w2id = resolveWrestlerId(bout.loser_key, bout.loser_school_raw)
+      return {
+        in_season_tournament_id: tid,
+        weight_class:            bout.weight,
+        round:                   bout.round,
+        wrestler1_id:            w1id,
+        wrestler1_name_raw:      (w1id && tidNameMap.get(w1id)) || bout.winner_name,
+        wrestler1_school_id:     resolveSchoolId(bout.winner_school_raw),
+        wrestler1_school_raw:    importData.schools[bout.winner_school_raw]?.display_name ?? bout.winner_school_raw,
+        wrestler2_id:            w2id,
+        wrestler2_name_raw:      (w2id && tidNameMap.get(w2id)) || bout.loser_name,
+        wrestler2_school_id:     resolveSchoolId(bout.loser_school_raw),
+        wrestler2_school_raw:    importData.schools[bout.loser_school_raw]?.display_name ?? bout.loser_school_raw,
+        winner:                  1,
+        result_type:             bout.result_type,
+        result_detail:           bout.result_detail,
+        fall_time_seconds:       bout.fall_time_seconds,
+        source_format:           importData.source_format,
+      }
+    })
 
     let inserted = 0
     for (let i = 0; i < rows.length; i += CHUNK) {
       const { data, error } = await supabase
-        .from('tournament_bouts')
+        .from(boutTable)
         .insert(rows.slice(i, i + CHUNK))
         .select('id')
       if (error) { errors.push(`"${t.name}" chunk insert: ${error.message}`); break }

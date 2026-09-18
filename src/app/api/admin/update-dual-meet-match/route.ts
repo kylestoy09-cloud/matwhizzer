@@ -11,6 +11,7 @@ export async function PATCH(req: NextRequest) {
 
   const body = await req.json() as {
     id: string
+    gender?: 'M' | 'F'
     wrestler_a_id?:     string | null
     wrestler_b_id?:     string | null
     winner_id?:         string | null
@@ -23,7 +24,8 @@ export async function PATCH(req: NextRequest) {
 
   if (!body.id) return NextResponse.json({ error: 'id is required' }, { status: 400 })
 
-  const { id, ...fields } = body
+  const matchesTable = body.gender === 'F' ? 'dual_meet_matches_girls' : 'dual_meet_matches'
+  const { id, gender: _g, ...fields } = body
   if (Object.keys(fields).length === 0) {
     return NextResponse.json({ error: 'No fields to update' }, { status: 400 })
   }
@@ -34,7 +36,7 @@ export async function PATCH(req: NextRequest) {
   )
 
   const { data, error } = await supabase
-    .from('dual_meet_matches')
+    .from(matchesTable)
     .update(fields)
     .eq('id', id)
     .select()

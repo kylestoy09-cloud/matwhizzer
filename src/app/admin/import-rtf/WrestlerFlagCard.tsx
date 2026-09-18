@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useCallback, useEffect } from 'react'
-import type { WrestlerFlag, WrestlerOverride } from './types'
+import { useState, useCallback, useEffect, useRef } from 'react'
+import type { WrestlerFlag, WrestlerOverride, MsProfileCandidate, MsProfileLink } from './types'
 
 function splitName(raw: string): { first_name: string; last_name: string } {
   const parts = raw.trim().split(/\s+/)
@@ -20,13 +20,74 @@ function Spinner() {
 
 type SearchResult = { id: string; display_name: string }
 
+function ordinal(n: number): string {
+  const s = ['th', 'st', 'nd', 'rd']
+  const v = n % 100
+  return n + (s[(v - 20) % 10] || s[v] || s[0])
+}
+
+function MsCandidateRow({
+  candidate,
+  isLinked,
+  onConfirm,
+}: {
+  candidate: MsProfileCandidate
+  isLinked: boolean
+  onConfirm: (c: MsProfileCandidate) => void
+}) {
+  const [expanded, setExpanded] = useState(false)
+  const bestCredit = candidate.best_credit
+  return (
+    <div className={`border text-xs ${isLinked ? 'border-indigo-300 bg-indigo-50' : 'border-slate-200 bg-white'}`}>
+      <div className="flex items-center gap-2 px-2 py-1.5 flex-wrap">
+        <span className="font-medium text-slate-800">{candidate.primary_name}</span>
+        <span className="bg-slate-100 text-slate-500 px-1 rounded text-[10px]">{candidate.score}% match</span>
+        <span className="text-slate-400">{candidate.placements.length} placement{candidate.placements.length !== 1 ? 's' : ''}</span>
+        {bestCredit > 0 && (
+          <span className="text-indigo-600 font-medium">up to {bestCredit} credit</span>
+        )}
+        <button onClick={() => setExpanded(v => !v)} className="text-slate-400 hover:text-slate-600 ml-auto">
+          {expanded ? '▲' : '▼'}
+        </button>
+      </div>
+      {expanded && (
+        <div className="px-2 pb-1.5 space-y-0.5">
+          {candidate.placements.map(p => (
+            <div key={p.id} className="flex items-center gap-2 text-[10px] text-slate-600">
+              <span className="text-slate-400">{p.season}</span>
+              <span>{p.tournament_name}</span>
+              <span className="text-slate-400">({p.tier_name})</span>
+              <span>{p.weight_class} lb</span>
+              <span className="font-medium">{ordinal(p.place)}</span>
+              {p.credit != null && <span className="text-indigo-600">+{p.credit} credit</span>}
+            </div>
+          ))}
+        </div>
+      )}
+      {!isLinked && (
+        <div className="flex items-center gap-2 px-2 pb-1.5">
+          <button
+            onClick={() => onConfirm(candidate)}
+            className="px-2 py-0.5 bg-indigo-600 text-white hover:bg-indigo-700 transition-colors text-[10px]"
+          >
+            Confirm link
+          </button>
+        </div>
+      )}
+    </div>
+  )
+}
+
 type Props = {
   flag: WrestlerFlag
   override: WrestlerOverride | undefined
   onOverride: (key: string, o: WrestlerOverride | undefined) => void
+  gender: 'M' | 'F'
+  msProfileLink?: MsProfileLink
+  onMsLink?: (key: string, link: MsProfileLink | undefined) => void
 }
 
-export function WrestlerFlagCard({ flag, override, onOverride }: Props) {
+export function WrestlerFlagCard({ flag, override, onOverride, gender, msProfileLink, onMsLink }: Props) {
   const defaultNames = splitName(flag.raw_name)
   const [mode, setMode] = useState<'default' | 'edit' | 'confirmed' | 'search'>(() => {
     if (override?.type === 'create') return 'confirmed'
@@ -43,19 +104,24 @@ export function WrestlerFlagCard({ flag, override, onOverride }: Props) {
   const [roster, setRoster] = useState<SearchResult[]>([])
   const [rosterLoading, setRosterLoading] = useState(false)
 
-  // Emit create override whenever name fields change (new wrestler mode)
+  // Keep a stable ref to onOverride so we can include it in deps without re-triggering
+  // on every parent render, while still always calling the latest version.
+  const onOverrideRef = useRef(onOverride)
+  onOverrideRef.current = onOverride
+
+  // Emit create override whenever name fields or the flag key changes (new wrestler mode).
+  // flag.key is included so a parent re-render with a new flag doesn't fire against the old key.
   useEffect(() => {
     if (mode !== 'edit') return
-    onOverride(flag.key, { type: 'create', first_name: firstName, last_name: lastName })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstName, lastName, mode])
+    onOverrideRef.current(flag.key, { type: 'create', first_name: firstName, last_name: lastName })
+  }, [flag.key, firstName, lastName, mode])
 
   // Pre-load roster when entering search mode
   const loadRoster = useCallback(async () => {
     if (roster.length > 0) return  // already loaded
     setRosterLoading(true)
     try {
-      const res = await fetch(`/api/admin/search-wrestlers?school_id=${flag.school_id}&gender=M`)
+      const res = await fetch(`/api/admin/search-wrestlers?school_id=${flag.school_id}&gender=${gender}`)
       const data = await res.json()
       setRoster(data.wrestlers ?? [])
     } catch { setRoster([]) }
@@ -256,6 +322,62 @@ export function WrestlerFlagCard({ flag, override, onOverride }: Props) {
                   )) : (
                     <p className="px-3 py-2 text-slate-400">No matches for &ldquo;{query}&rdquo;</p>
                   )}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* MS Prospect section — only for new NJ wrestlers with MS database matches */}
+          {flag.is_new && !flag.is_oos && (flag.ms_candidates?.length ?? 0) > 0 && onMsLink && (
+            <div className="border-t border-indigo-100 bg-indigo-50/40 px-3 py-2 space-y-1.5">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-[10px] font-semibold text-indigo-600 uppercase tracking-wide">MS Record</span>
+                {msProfileLink?.type === 'confirm' && (
+                  <span className="text-[10px] text-indigo-700 font-medium">✓ linked — {msProfileLink.canonical_name}</span>
+                )}
+                {msProfileLink?.type === 'skip' && (
+                  <span className="text-[10px] text-slate-400">skipped</span>
+                )}
+                {msProfileLink && (
+                  <button onClick={() => onMsLink(flag.key, undefined)} className="text-[10px] text-slate-400 hover:text-red-500 ml-auto">clear</button>
+                )}
+              </div>
+              {!msProfileLink && (
+                <>
+                  <div className="space-y-1">
+                    {flag.ms_candidates!.map(c => (
+                      <MsCandidateRow
+                        key={c.ms_wrestler_id}
+                        candidate={c}
+                        isLinked={false}
+                        onConfirm={c2 => onMsLink(flag.key, {
+                          type: 'confirm',
+                          ms_wrestler_id: c2.ms_wrestler_id,
+                          canonical_name: c2.primary_name,
+                        })}
+                      />
+                    ))}
+                  </div>
+                  <button
+                    onClick={() => onMsLink(flag.key, { type: 'skip' })}
+                    className="text-[10px] text-slate-400 hover:text-slate-600 underline"
+                  >
+                    Skip — no MS link
+                  </button>
+                </>
+              )}
+              {msProfileLink?.type === 'confirm' && (
+                <div className="space-y-1">
+                  {flag.ms_candidates!
+                    .filter(c => c.ms_wrestler_id === msProfileLink.ms_wrestler_id)
+                    .map(c => (
+                      <MsCandidateRow
+                        key={c.ms_wrestler_id}
+                        candidate={c}
+                        isLinked={true}
+                        onConfirm={() => {}}
+                      />
+                    ))}
                 </div>
               )}
             </div>

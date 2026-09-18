@@ -164,10 +164,44 @@ def _parse_result(s: str) -> tuple[str, Optional[str]]:
 
 
 _SPLIT_RESULT_RE = re.compile(r"^(sv-?1|utb|mffl)", re.IGNORECASE)
+_NAME_PREFIX_RE  = re.compile(r"^(?:varsity|jv|junior varsity|freshman)\s*-?\s*", re.IGNORECASE)
 
 
-def _parse_match_summary(summary: str, t1_pts: int, t2_pts: int, weight: int) -> ParsedMatch:
+def _normalize_name(name: str) -> str:
+    return _NAME_PREFIX_RE.sub("", name).strip()
+
+
+def _split_name_school(s: str) -> tuple:
+    """Backward-scan to split 'Name (optional nickname) (School)' correctly."""
+    last_close = s.rfind(")")
+    if last_close == -1:
+        return s.strip(), None
+    depth = 0
+    open_idx = -1
+    for i in range(last_close, -1, -1):
+        if s[i] == ")":
+            depth += 1
+        elif s[i] == "(":
+            depth -= 1
+            if depth == 0:
+                open_idx = i
+                break
+    if open_idx <= 0:
+        return s.strip(), None
+    name   = s[:open_idx].strip()
+    school = s[open_idx + 1:last_close].strip()
+    if not name:
+        return s.strip(), None
+    return name, school or None
+
+
+def _parse_match_summary(summary: str, t1_pts: int, t2_pts: int, weight: int):
     s = summary.replace(" ", " ").strip()
+
+    # Skip exhibition bouts — TrackWrestling labels them "Extra ..." and they
+    # don't count toward score or wrestler records.
+    if re.match(r"^extra\b", s, re.IGNORECASE):
+        return None
 
     if re.match(r"^double\s+forfeit", s, re.IGNORECASE):
         return ParsedMatch(
@@ -181,11 +215,20 @@ def _parse_match_summary(summary: str, t1_pts: int, t2_pts: int, weight: int) ->
 
     over_idx = s.find(" over ")
     if over_idx == -1:
+        if re.search(r"double\s+forfeit", s, re.IGNORECASE):
+            return ParsedMatch(
+                weight_class=weight,
+                winner_name=None, winner_school_raw=None,
+                loser_name=None,  loser_school_raw=None,
+                result_type="Double Forfeit", result_detail=None,
+                team1_points=t1_pts, team2_points=t2_pts,
+                is_double_forfeit=True, is_forfeit_win=False,
+            )
         return ParsedMatch(
             weight_class=weight,
-            winner_name=s, winner_school_raw=None,
+            winner_name=None, winner_school_raw=None,
             loser_name=None, loser_school_raw=None,
-            result_type="Unknown", result_detail=None,
+            result_type="Unknown", result_detail=s,
             team1_points=t1_pts, team2_points=t2_pts,
             is_double_forfeit=False, is_forfeit_win=False,
         )
@@ -193,9 +236,18 @@ def _parse_match_summary(summary: str, t1_pts: int, t2_pts: int, weight: int) ->
     winner_part = s[:over_idx].strip()
     after_over  = s[over_idx + 6:].strip()
 
-    winner_m = re.match(r"^(.+?)\s+\(([^)]+)\)$", winner_part)
-    winner_name      = winner_m.group(1).strip() if winner_m else winner_part
-    winner_school_raw = winner_m.group(2).strip() if winner_m else None
+    _wname, winner_school_raw = _split_name_school(winner_part)
+    winner_name = _normalize_name(_wname)
+
+    if re.match(r"^\[winner\]$", winner_name, re.IGNORECASE):
+        return ParsedMatch(
+            weight_class=weight,
+            winner_name=None, winner_school_raw=None,
+            loser_name=None,  loser_school_raw=None,
+            result_type="Double Forfeit", result_detail=None,
+            team1_points=t1_pts, team2_points=t2_pts,
+            is_double_forfeit=True, is_forfeit_win=False,
+        )
 
     if re.match(r"^unknown\s+\(for\.\)$", after_over, re.IGNORECASE):
         return ParsedMatch(
@@ -213,9 +265,20 @@ def _parse_match_summary(summary: str, t1_pts: int, t2_pts: int, weight: int) ->
         loser_and_school = two_group_m.group(1).strip()
         result_str       = f"{two_group_m.group(2)} {two_group_m.group(3)}"
     else:
-        last_open  = after_over.rfind("(")
+        # Backward scan from last ')' to handle nested parens in result strings.
         last_close = after_over.rfind(")")
-        if last_open == -1 or last_close == -1 or last_close < last_open:
+        b_start = -1
+        if last_close >= 0:
+            depth = 0
+            for i in range(last_close, -1, -1):
+                if after_over[i] == ")":
+                    depth += 1
+                elif after_over[i] == "(":
+                    depth -= 1
+                    if depth == 0:
+                        b_start = i
+                        break
+        if b_start == -1 or last_close == -1:
             return ParsedMatch(
                 weight_class=weight,
                 winner_name=winner_name, winner_school_raw=winner_school_raw,
@@ -224,21 +287,26 @@ def _parse_match_summary(summary: str, t1_pts: int, t2_pts: int, weight: int) ->
                 team1_points=t1_pts, team2_points=t2_pts,
                 is_double_forfeit=False, is_forfeit_win=False,
             )
-        result_str       = after_over[last_open + 1:last_close]
-        loser_and_school = after_over[:last_open].strip()
+        result_str       = after_over[b_start + 1:last_close]
+        loser_and_school = after_over[:b_start].strip()
 
     result_type, result_detail = _parse_result(result_str)
-    loser_m      = re.match(r"^(.+?)\s+\(([^)]+)\)$", loser_and_school)
-    loser_name      = loser_m.group(1).strip() if loser_m else (loser_and_school or None)
-    loser_school_raw = loser_m.group(2).strip() if loser_m else None
+    _lname, loser_school_raw = _split_name_school(loser_and_school)
+    loser_name_raw = _normalize_name(_lname) if loser_and_school else None
+
+    loser_is_unknown  = bool(re.match(r"^unknown$", (loser_name_raw or "").strip(), re.IGNORECASE))
+    is_forfeit_win    = result_type == "For"
+    is_double_forfeit = result_type == "Double Forfeit"
 
     return ParsedMatch(
         weight_class=weight,
-        winner_name=winner_name, winner_school_raw=winner_school_raw,
-        loser_name=loser_name,   loser_school_raw=loser_school_raw,
+        winner_name=      None if is_double_forfeit else winner_name,
+        winner_school_raw=None if is_double_forfeit else winner_school_raw,
+        loser_name=       None if (is_forfeit_win or is_double_forfeit) else loser_name_raw,
+        loser_school_raw= None if (is_forfeit_win or loser_is_unknown or is_double_forfeit) else loser_school_raw,
         result_type=result_type, result_detail=result_detail,
         team1_points=t1_pts, team2_points=t2_pts,
-        is_double_forfeit=False, is_forfeit_win=False,
+        is_double_forfeit=is_double_forfeit, is_forfeit_win=is_forfeit_win,
     )
 
 
@@ -266,7 +334,9 @@ def _parse_format_a(chunk: str) -> list[ParsedMatch]:
         if not trail:
             continue
         summary = rest[:trail.start()].strip()
-        matches.append(_parse_match_summary(summary, int(trail.group(1)), int(trail.group(2)), weight))
+        pm = _parse_match_summary(summary, int(trail.group(1)), int(trail.group(2)), weight)
+        if pm is not None:
+            matches.append(pm)
     return matches
 
 
@@ -283,9 +353,9 @@ def _parse_format_b(chunk: str) -> list[ParsedMatch]:
     )
     matches = []
     for m in entry_re.finditer(body):
-        matches.append(_parse_match_summary(
-            m.group(2).strip(), int(m.group(3)), int(m.group(4)), int(m.group(1))
-        ))
+        pm = _parse_match_summary(m.group(2).strip(), int(m.group(3)), int(m.group(4)), int(m.group(1)))
+        if pm is not None:
+            matches.append(pm)
     return matches
 
 
@@ -316,7 +386,9 @@ def _parse_format_c(chunk: str) -> list[ParsedMatch]:
         if not summary:
             i += 1
             continue
-        matches.append(_parse_match_summary(summary, t1, t2, weight))
+        pm = _parse_match_summary(summary, t1, t2, weight)
+        if pm is not None:
+            matches.append(pm)
         i += 4
     return matches
 
@@ -666,8 +738,8 @@ def main() -> None:
         is_rr = _is_round_robin_meet(meet)
         rr_tag = " [ROUND-ROBIN]" if is_rr else ""
 
-        # Insert dual_meets row
-        meet_res = client.from_("dual_meets").insert({
+        # Insert dual_meets row (ON CONFLICT DO NOTHING so re-imports are idempotent)
+        meet_res = client.from_("dual_meets").upsert({
             "season_id":       args.season_id,
             "team1_school_id": team1_school_id,
             "team2_school_id": team2_school_id,
@@ -676,13 +748,24 @@ def main() -> None:
             "team2_score":     meet.team2_score or None,
             "gender":          "M",
             "status":          "final",
-        }).execute()
+        }, on_conflict="season_id,gender,team1_school_id,team2_school_id,meet_date",
+           ignore_duplicates=True).execute()
 
         if not meet_res.data:
-            errors.append(f"Meet insert failed: {meet.team1_name} vs {meet.team2_name} {meet.date}")
-            continue
-
-        dual_meet_id = meet_res.data[0]["id"]
+            # No data returned can mean a race-condition conflict (DO NOTHING) — fetch existing row
+            existing = client.from_("dual_meets").select("id") \
+                .eq("season_id", args.season_id).eq("gender", "M") \
+                .eq("team1_school_id", team1_school_id) \
+                .eq("team2_school_id", team2_school_id) \
+                .eq("meet_date", iso_date).execute()
+            if existing.data:
+                dual_meet_id = existing.data[0]["id"]
+                meets_skipped_dup += 1
+            else:
+                errors.append(f"Meet insert failed: {meet.team1_name} vs {meet.team2_name} {meet.date}")
+                continue
+        else:
+            dual_meet_id = meet_res.data[0]["id"]
         meets_imported += 1
 
         # Build match rows
@@ -715,7 +798,13 @@ def main() -> None:
                 wrestler_a_id = winner_wid if winner_is_team1 else loser_wid
                 wrestler_b_id = loser_wid  if winner_is_team1 else winner_wid
 
-            fall_secs = _parse_fall_time(match.result_detail) if match.result_type == "Fall" else None
+            if match.result_type == "Fall":
+                fall_secs = _parse_fall_time(match.result_detail)
+            elif match.result_type and match.result_type.upper().startswith("TF") and match.result_detail:
+                tm = re.search(r"(\d+):(\d{2})$", match.result_detail)
+                fall_secs = (int(tm.group(1)) * 60 + int(tm.group(2))) if tm else None
+            else:
+                fall_secs = None
 
             match_rows.append({
                 "dual_meet_id":      dual_meet_id,
@@ -738,7 +827,11 @@ def main() -> None:
         if match_rows:
             CHUNK = 500
             for i in range(0, len(match_rows), CHUNK):
-                res = client.from_("dual_meet_matches").insert(match_rows[i:i+CHUNK]).execute()
+                res = client.from_("dual_meet_matches").upsert(
+                    match_rows[i:i+CHUNK],
+                    on_conflict="dual_meet_id,weight_class",
+                    ignore_duplicates=True,
+                ).execute()
                 if not res.data and hasattr(res, "error") and res.error:
                     errors.append(f"Matches insert error ({meet.team1_name} vs {meet.team2_name}): {res.error}")
                 else:

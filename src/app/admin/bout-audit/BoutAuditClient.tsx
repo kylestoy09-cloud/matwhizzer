@@ -78,10 +78,12 @@ const ROUND_ORDER: Record<string, number> = {
 
 export function BoutAuditClient({
   tournaments,
+  defaultTid,
 }: {
   tournaments: InSeasonTournament[]
+  defaultTid?: string
 }) {
-  const [tid, setTid]                         = useState(tournaments[0]?.id ?? '')
+  const [tid, setTid]                         = useState(defaultTid ?? tournaments[0]?.id ?? '')
   const [bouts, setBouts]                     = useState<AugmentedBout[]>([])
   const [loading, setLoading]                 = useState(false)
   const [loadError, setLoadError]             = useState('')
@@ -97,7 +99,8 @@ export function BoutAuditClient({
     setBouts([])
     setSelectedBout(null)
 
-    fetch(`/api/admin/bout-audit?tid=${encodeURIComponent(tid)}`)
+    const selectedGender = tournaments.find(t => t.id === tid)?.gender ?? 'M'
+    fetch(`/api/admin/bout-audit?tid=${encodeURIComponent(tid)}&gender=${selectedGender}`)
       .then(r => r.json())
       .then(d => {
         if (d.error) { setLoadError(d.error); return }

@@ -56,7 +56,7 @@ export function PostseasonLeaders({
                   <div className="flex items-center gap-1.5">
                     <SchoolLogoBadge logoUrl={r.logo_url} bgColor={r.bg_color} />
                     {r.school_id ? (
-                      <Link href={`/schools/${r.school_id}?gender=${gender}`} className="font-medium text-slate-800 hover:underline">
+                      <Link href={`/${gender}/schools/${r.school_id}`} className="font-medium text-slate-800 hover:underline">
                         {r.school_name || r.school}
                       </Link>
                     ) : (

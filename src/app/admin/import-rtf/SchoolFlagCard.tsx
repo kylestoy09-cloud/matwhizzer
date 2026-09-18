@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import type { SchoolFlag, SchoolOverride } from './types'
 
 function normalizeForDisplay(raw: string): string {
@@ -33,10 +33,12 @@ export function SchoolFlagCard({
   flag,
   override,
   onOverride,
+  countLabel,
 }: {
   flag: SchoolFlag
   override: SchoolOverride | undefined
   onOverride: (raw: string, o: SchoolOverride | undefined) => void
+  countLabel?: string
 }) {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<{ id: number; display_name: string }[]>([])
@@ -49,32 +51,39 @@ export function SchoolFlagCard({
   const [editingNewOos, setEditingNewOos] = useState(false)
   const [newOosName, setNewOosName] = useState('')
 
+  const searchTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const oosSearchTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
   const search = useCallback((q: string) => {
     setQuery(q)
+    if (searchTimerRef.current) clearTimeout(searchTimerRef.current)
     if (!q.trim()) { setResults([]); return }
-    const timer = setTimeout(async () => {
+    searchTimerRef.current = setTimeout(async () => {
       setSearching(true)
       try {
         const res = await fetch(`/api/admin/search-schools?q=${encodeURIComponent(q)}`)
+        if (!res.ok) { setResults([]); return }
         const data = await res.json()
         setResults(data.schools ?? [])
-      } finally { setSearching(false) }
+      } catch { setResults([]) }
+      finally { setSearching(false) }
     }, 250)
-    return () => clearTimeout(timer)
   }, [])
 
   const searchOos = useCallback((q: string) => {
     setOosQuery(q)
+    if (oosSearchTimerRef.current) clearTimeout(oosSearchTimerRef.current)
     if (!q.trim()) { setOosResults([]); return }
-    const timer = setTimeout(async () => {
+    oosSearchTimerRef.current = setTimeout(async () => {
       setOosSearching(true)
       try {
         const res = await fetch(`/api/admin/search-schools?q=${encodeURIComponent(q)}&oos=true`)
+        if (!res.ok) { setOosResults([]); return }
         const data = await res.json()
         setOosResults(data.schools ?? [])
-      } finally { setOosSearching(false) }
+      } catch { setOosResults([]) }
+      finally { setOosSearching(false) }
     }, 250)
-    return () => clearTimeout(timer)
   }, [])
 
   const njAlts  = flag.alternates.filter(a => !a.is_oos)
@@ -91,7 +100,7 @@ export function SchoolFlagCard({
       <div className="flex items-start justify-between gap-2 mb-2">
         <div>
           <span className="font-medium text-slate-800">{flag.raw}</span>
-          <span className="text-slate-400 ml-2 text-xs">{flag.bout_count} bout{flag.bout_count !== 1 ? 's' : ''}</span>
+          <span className="text-slate-400 ml-2 text-xs">{countLabel ?? `${flag.bout_count} bout${flag.bout_count !== 1 ? 's' : ''}`}</span>
         </div>
         <ConfBadge c={flag.confidence} />
       </div>

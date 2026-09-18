@@ -32,7 +32,8 @@ export type BoutForReview = {
 }
 
 // Raw entry type used internally by parseFormatB and extractBoutsForReview
-type RawEntry = [Omit<ParsedBout, 'weight_class'>, number | null, string | null, string | null]
+// [bout, weight_class, flag2 (Yes/No), section_school, bracket]
+type RawEntry = [Omit<ParsedBout, 'weight_class'>, number | null, string | null, string | null, string]
 
 // ── Place/round constants ─────────────────────────────────────────────────────
 
@@ -102,6 +103,8 @@ export function normalizeRound(raw: string): string {
   let m: RegExpMatchArray | null
   m = lower.match(/^champ\.\s+round\s+(\d+)$/)
   if (m) return `R${m[1]}`
+  m = lower.match(/^round\s+of\s+(\d+)$/)
+  if (m) return `R${m[1]}`
   m = lower.match(/^round\s+(\d+)$/)
   if (m) return `R${m[1]}`
   m = lower.match(/^cons\.\s+round\s+(\d+)$/)
@@ -128,6 +131,13 @@ export type ParsedPlacement = {
   place: number
   wrestler_name: string
   school_name: string
+  bracket: string  // '' for single-pool weights, 'A'/'B'/etc. for multi-pool (e.g. "Varsity 120A")
+}
+
+export type ParsedTeamScore = {
+  place: number
+  school_name: string
+  score: number
 }
 
 export type ParsedTournament = {
@@ -136,9 +146,13 @@ export type ParsedTournament = {
   source_format: 'full_bracket' | 'school_tracking'
   bout_count: number
   placement_count: number
+  team_score_count: number
   bouts: ParsedBout[]
   placements: ParsedPlacement[]
+  team_scores: ParsedTeamScore[]
   bouts_for_review?: BoutForReview[]
+  venue_name: string | null
+  venue_address: string | null
 }
 
 // ── Shared helpers ────────────────────────────────────────────────────────────
@@ -151,7 +165,7 @@ function cleanLine(raw: string): string {
     .replace(/\u2028/g, ' ')  // line separator
     .replace(/\u2029/g, ' ')  // paragraph separator
     .trim()
-    .replace(/^[\u2022\u25aa\u25e6\u25e6\u2023]\s*/, '')  // strip leading bullet chars
+    .replace(/^[\u2022\u25aa\u25e6\u25e6\u2023\u2043\u2219\u25cf\u25cb]\s*/, '')  // strip leading bullet chars (\u2022\u25aa\u25e6\u2023\u2043\u2219\u25cf\u25cb)
 }
 
 function stripWl(s: string): string {
@@ -220,6 +234,15 @@ function extractNameSchool(s: string): [string, string] {
   // where lastIndexOf('(') would wrongly grab the inner '('.
   const rpos = s.lastIndexOf(')')
   if (rpos >= 0) {
+    // If text follows the last ')' and looks like a name component (letters/hyphens/apostrophes,
+    // no digits or spaces), the paren is a mid-name nickname (e.g. "Niah (Kim) Lopez").
+    // Guard against result strings like "2-1 won by fall" which also follow a school ')'.
+    const afterParen = s.slice(rpos + 1).trim()
+    if (afterParen && /^[A-Za-z'-]+$/.test(afterParen)) {
+      const namePart = s.replace(/\s*\([^)]*\)\s*/g, ' ').replace(/\s+/g, ' ').trim()
+      return [namePart, '']
+    }
+
     let depth = 0
     let lpos = -1
     for (let i = rpos; i >= 0; i--) {
@@ -251,14 +274,26 @@ function looksLikeSchool(line: string): boolean {
 
 // ── Format detection ──────────────────────────────────────────────────────────
 
+const GIRLS_BOYS_WEIGHT_RE = /^(?:Girls|Boys)\s+(\d{2,3})$/i
+// "Varsity 100" / "Varsity 114A" / "Varsity 235B" — TrackWrestling round-results format
+// Group 1 = weight digits, Group 2 = optional pool letter (A/B/etc.)
+const VARSITY_WEIGHT_RE = /^Varsity\s+(\d{2,3})([A-Za-z])?$/i
+const DATE_ONLY_RE = /^\d{1,2}\/\d{1,2}(?:\/\d{2,4})?$/
+
 const ROUND_GROUP_RE = /\(\d+\s*(?:Man|Mats)\)/i
 const TW_META_RE = /Teams.*Divisions.*Weights|Team:.*team|Show:.*of \d+|Event Team|Season Team/i
 const WEIGHT_RE = /^\d{2,3}$/
+// Weight class header formats: plain "106", or "106 - B" / "106 - G" (TrackWrestling CVC/full-bracket format)
+const WEIGHT_WITH_GENDER_RE = /^(\d{2,3})\s*-\s*[BG]$/i
+// Only accept standalone numbers that match real wrestling weight classes (avoids misreading team standings ranks as weights)
+const VALID_WEIGHT_CLASSES = new Set([100, 106, 107, 113, 114, 120, 121, 126, 127, 132, 133, 138, 139, 144, 145, 150, 152, 157, 160, 165, 170, 175, 180, 185, 190, 195, 215, 220, 235, 285])
 const TOURNEY_HEADER_RE = /^(.+?) - (\d{1,2}\/\d{1,2}(?:\/\d{2,4})?(?:\s*-\s*\d{1,2}\/\d{1,2}(?:\/\d{2,4})?)?)$/
+const CLEAN_TEXT_LINE_RE = /^\d{2,3} lbs - (?:Finals|Semifinal|Quarterfinal|Round of \d+)/i
 
-function detectFormat(lines: string[], lookahead = 200): 'full_bracket' | 'school_tracking' {
+function detectFormat(lines: string[], lookahead = 200): 'full_bracket' | 'school_tracking' | 'clean_text' {
   for (const raw of lines.slice(0, lookahead)) {
     const l = cleanLine(raw)
+    if (CLEAN_TEXT_LINE_RE.test(l)) return 'clean_text'
     if (['Yes', 'No', 'Weight', 'Summary', 'Stats', 'TW Event'].includes(l)) return 'school_tracking'
     if (ROUND_GROUP_RE.test(l)) return 'full_bracket'
     if (['consolation semifinals', 'consolation quarterfinals', 'championship semifinals', 'round results'].includes(l.toLowerCase())) {
@@ -277,22 +312,46 @@ function parseBoutA(line: string): Omit<ParsedBout, 'weight_class'> | null {
   const rest = line.slice(dash + 3).trim()
 
   if (/received a bye/i.test(rest)) {
-    const m = rest.match(/^(.+?) \((.+?)\)/)
-    if (!m) return null
-    return { round: roundLabel, wrestler1_name: stripWl(m[1]), wrestler1_school: normalizeSchool(m[2]), wrestler2_name: '', wrestler2_school: '', winner: null, result_type: 'BYE', result_detail: null }
+    const byeIdx = rest.search(/received a bye/i)
+    const beforeBye = rest.slice(0, byeIdx).trim().replace(/\s+\d+-\d+\s*$/, '').trim()
+    const [w1name, w1school] = extractNameSchool(beforeBye)
+    if (!w1name) return null
+    return { round: roundLabel, wrestler1_name: w1name, wrestler1_school: w1school, wrestler2_name: '', wrestler2_school: '', winner: null, result_type: 'BYE', result_detail: null }
   }
 
   if (!/\bover\b/i.test(rest)) return null
 
   const extracted = extractTrailingResult(rest)
-  if (!extracted) return null
-  const { resultRaw, rest2 } = extracted
+  let resultRaw = ''
+  let rest2 = rest
+  if (extracted) {
+    resultRaw = extracted.resultRaw
+    rest2 = extracted.rest2
+  }
 
   const trans = rest2.match(/\bwon (?:by|in) .+? over\b/i)
   if (!trans) return null
 
   const [name1, school1] = extractNameSchool(rest2.slice(0, trans.index))
-  const [name2, school2] = extractNameSchool(rest2.slice(trans.index! + trans[0].length))
+  const loserAndResult = rest2.slice(trans.index! + trans[0].length)
+  let name2: string, school2: string
+
+  // When no trailing-paren result: extract result from text after loser's closing paren,
+  // then pass only the "Name (School)" portion to extractNameSchool so the result tokens
+  // don't corrupt the name/school parse (WL_SUFFIX_RE inside extractNameSchool could
+  // strip digits and leave short tokens that look like name continuations).
+  if (!resultRaw) {
+    const lastClose = loserAndResult.lastIndexOf(')')
+    if (lastClose >= 0) {
+      resultRaw = loserAndResult.slice(lastClose + 1).trim()
+      ;[name2, school2] = extractNameSchool(loserAndResult.slice(0, lastClose + 1))
+    } else {
+      ;[name2, school2] = extractNameSchool(loserAndResult)
+    }
+  } else {
+    ;[name2, school2] = extractNameSchool(loserAndResult)
+  }
+
   if (looksLikeBye(name2, school2)) {
     return { round: roundLabel, wrestler1_name: name1, wrestler1_school: school1, wrestler2_name: '', wrestler2_school: '', winner: null, result_type: 'BYE', result_detail: null }
   }
@@ -305,6 +364,7 @@ function parseFormatA(lines: string[]): [ParsedBout[], ParsedPlacement[]] {
   const bouts: ParsedBout[] = []
   const placements: ParsedPlacement[] = []
   let currentWeight: number | null = null
+  let currentBracket = ''  // '' for single-pool, 'A'/'B'/etc. for multi-pool
 
   const SKIP_LOWER = new Set([
     'consolation semifinals', 'consolation quarterfinals',
@@ -315,7 +375,21 @@ function parseFormatA(lines: string[]): [ParsedBout[], ParsedPlacement[]] {
   for (const raw of lines) {
     const line = cleanLine(raw)
     if (!line) continue
-    if (WEIGHT_RE.test(line)) { currentWeight = parseInt(line, 10); continue }
+    // "106 - B" / "106 - G" format (TrackWrestling CVC-style full-bracket header)
+    const wgm = line.match(WEIGHT_WITH_GENDER_RE)
+    if (wgm) { currentWeight = parseInt(wgm[1], 10); currentBracket = ''; continue }
+    // "Girls 107" / "Boys 107" format (TrackWrestling bracket copy-paste)
+    const gbm = line.match(GIRLS_BOYS_WEIGHT_RE)
+    if (gbm && VALID_WEIGHT_CLASSES.has(parseInt(gbm[1], 10))) { currentWeight = parseInt(gbm[1], 10); currentBracket = ''; continue }
+    // "Varsity 100" / "Varsity 114A" / "Varsity 235B" format (TrackWrestling round-results copy-paste)
+    const vwm = line.match(VARSITY_WEIGHT_RE)
+    if (vwm && VALID_WEIGHT_CLASSES.has(parseInt(vwm[1], 10))) {
+      currentWeight = parseInt(vwm[1], 10)
+      currentBracket = vwm[2] ? vwm[2].toUpperCase() : ''
+      continue
+    }
+    // Plain weight class number — only accept known wrestling weights to avoid misreading team-standings ranks
+    if (WEIGHT_RE.test(line) && VALID_WEIGHT_CLASSES.has(parseInt(line, 10))) { currentWeight = parseInt(line, 10); currentBracket = ''; continue }
     if (currentWeight === null) continue
     if (ROUND_GROUP_RE.test(line) || SKIP_LOWER.has(line.toLowerCase())) continue
 
@@ -328,10 +402,10 @@ function parseFormatA(lines: string[]): [ParsedBout[], ParsedPlacement[]] {
     if (rn in PLACE_ROUNDS) {
       const [w1, w2] = PLACE_ROUNDS[rn]
       if (bout.winner === 1 && bout.wrestler1_name) {
-        placements.push({ weight_class: currentWeight, place: w1, wrestler_name: bout.wrestler1_name, school_name: bout.wrestler1_school })
+        placements.push({ weight_class: currentWeight, place: w1, wrestler_name: bout.wrestler1_name, school_name: bout.wrestler1_school, bracket: currentBracket })
       }
       if (bout.wrestler2_name) {
-        placements.push({ weight_class: currentWeight, place: w2, wrestler_name: bout.wrestler2_name, school_name: bout.wrestler2_school })
+        placements.push({ weight_class: currentWeight, place: w2, wrestler_name: bout.wrestler2_name, school_name: bout.wrestler2_school, bracket: currentBracket })
       }
     }
   }
@@ -359,9 +433,11 @@ function parseBoutB(line: string): Omit<ParsedBout, 'weight_class'> | null {
   }
 
   if (/received a bye/i.test(rest)) {
-    const m = rest.match(/^(.+?) \((.+?)\)/)
-    if (!m) return null
-    return { round: roundLabel, wrestler1_name: m[1].trim(), wrestler1_school: normalizeSchool(m[2]), wrestler2_name: '', wrestler2_school: '', winner: null, result_type: 'BYE', result_detail: null }
+    const byeIdx = rest.search(/received a bye/i)
+    const beforeBye = rest.slice(0, byeIdx).trim().replace(/\s+\d+-\d+\s*$/, '').trim()
+    const [w1name, w1school] = extractNameSchool(beforeBye)
+    if (!w1name) return null
+    return { round: roundLabel, wrestler1_name: w1name, wrestler1_school: w1school, wrestler2_name: '', wrestler2_school: '', winner: null, result_type: 'BYE', result_detail: null }
   }
 
   if (!/\bover\b/i.test(rest)) return null
@@ -428,6 +504,7 @@ function parseFormatB(lines: string[]): [ParsedBout[], ParsedPlacement[], RawEnt
   const cleaned = lines.map(cleanLine)
   const rawWithWeight: RawEntry[] = []
   let currentWeight: number | null = null
+  let currentBracket = ''
   let currentSchool: string | null = null
 
   let i = 0
@@ -436,7 +513,15 @@ function parseFormatB(lines: string[]): [ParsedBout[], ParsedPlacement[], RawEnt
     if (!line) continue
     if (TW_META_RE.test(line)) continue
     if (['Weight', 'Summary', 'Stats', 'TW Event'].includes(line)) continue
-    if (WEIGHT_RE.test(line)) { currentWeight = parseInt(line, 10); continue }
+    const wgmB = line.match(WEIGHT_WITH_GENDER_RE)
+    if (wgmB) { currentWeight = parseInt(wgmB[1], 10); currentBracket = ''; continue }
+    const vwmB = line.match(VARSITY_WEIGHT_RE)
+    if (vwmB && VALID_WEIGHT_CLASSES.has(parseInt(vwmB[1], 10))) {
+      currentWeight = parseInt(vwmB[1], 10)
+      currentBracket = vwmB[2] ? vwmB[2].toUpperCase() : ''
+      continue
+    }
+    if (WEIGHT_RE.test(line) && VALID_WEIGHT_CLASSES.has(parseInt(line, 10))) { currentWeight = parseInt(line, 10); currentBracket = ''; continue }
 
     let bout = parseBoutB(line)
     if (!bout && currentWeight !== null) bout = parseBoutBNoRound(line)
@@ -444,22 +529,23 @@ function parseFormatB(lines: string[]): [ParsedBout[], ParsedPlacement[], RawEnt
     if (!bout) {
       if (looksLikeSchool(line)) {
         currentSchool = normalizeSchool(line)
-        if (currentWeight !== null && !/\bover\b/i.test(line)) currentWeight = null
+        if (currentWeight !== null && !/\bover\b/i.test(line)) { currentWeight = null; currentBracket = '' }
       }
       continue
     }
 
     const [, flag2, newI] = readFlags(cleaned, i)
     i = newI
-    rawWithWeight.push([bout, currentWeight, flag2, currentSchool])
+    rawWithWeight.push([bout, currentWeight, flag2, currentSchool, currentBracket])
   }
 
   const anyYes2 = rawWithWeight.some(([, , f]) => f === 'Yes')
 
   const bouts: ParsedBout[] = []
-  const schoolWeightBouts = new Map<string, Map<number, Omit<ParsedBout, 'weight_class'>[]>>()
+  // Key: school → "${weight}|${bracket}" → bouts
+  const schoolWeightBouts = new Map<string, Map<string, Omit<ParsedBout, 'weight_class'>[]>>()
 
-  for (const [bout, wc, flag2, school] of rawWithWeight) {
+  for (const [bout, wc, flag2, school, bracket] of rawWithWeight) {
     if (anyYes2 && flag2 !== 'Yes') continue
     if (!wc) continue
     const full: ParsedBout = { ...bout, weight_class: wc }
@@ -467,8 +553,9 @@ function parseFormatB(lines: string[]): [ParsedBout[], ParsedPlacement[], RawEnt
     if (school) {
       if (!schoolWeightBouts.has(school)) schoolWeightBouts.set(school, new Map())
       const wmap = schoolWeightBouts.get(school)!
-      if (!wmap.has(wc)) wmap.set(wc, [])
-      wmap.get(wc)!.push(bout)
+      const wkey = `${wc}|${bracket}`
+      if (!wmap.has(wkey)) wmap.set(wkey, [])
+      wmap.get(wkey)!.push(bout)
     }
   }
 
@@ -509,8 +596,12 @@ function parseFormatB(lines: string[]): [ParsedBout[], ParsedPlacement[], RawEnt
       if (found) break
     }
 
-    for (const [weight, wbouts] of weightMap) {
+    for (const [wkey, wbouts] of weightMap) {
       if (!wbouts.length) continue
+      const pipe = wkey.indexOf('|')
+      const weight = parseInt(wkey.slice(0, pipe), 10)
+      const bracket = wkey.slice(pipe + 1)
+
       const s_w1 = wbouts.filter(b => normalizeSchool(b.wrestler1_school) === trackedNorm).length
       const s_w2 = wbouts.filter(b => normalizeSchool(b.wrestler2_school) === trackedNorm).length
       const trackedSide = s_w1 >= s_w2 ? 1 : 2
@@ -523,9 +614,9 @@ function parseFormatB(lines: string[]): [ParsedBout[], ParsedPlacement[], RawEnt
       const name = trackedSide === 1 ? best.wrestler1_name : best.wrestler2_name
 
       if (rn in PLACE_FROM_WIN && won) {
-        placements.push({ weight_class: weight, place: PLACE_FROM_WIN[rn], wrestler_name: name, school_name: trackedRaw })
+        placements.push({ weight_class: weight, place: PLACE_FROM_WIN[rn], wrestler_name: name, school_name: trackedRaw, bracket })
       } else if (rn in PLACE_FROM_LOSS && !won) {
-        placements.push({ weight_class: weight, place: PLACE_FROM_LOSS[rn], wrestler_name: name, school_name: trackedRaw })
+        placements.push({ weight_class: weight, place: PLACE_FROM_LOSS[rn], wrestler_name: name, school_name: trackedRaw, bracket })
       }
     }
   }
@@ -536,27 +627,27 @@ function parseFormatB(lines: string[]): [ParsedBout[], ParsedPlacement[], RawEnt
   // since the same bout appears once per school section.
   const directPlacements: ParsedPlacement[] = []
   const directSeen = new Set<string>()
-  for (const [bout, wc, ,] of rawWithWeight) {
+  for (const [bout, wc, , , bracket] of rawWithWeight) {
     if (!wc) continue
     const rn = bout.round.toLowerCase().trim()
     if (!(rn in PLACE_ROUNDS)) continue
     const [w1, w2] = PLACE_ROUNDS[rn]
-    const k1 = `${wc}|${w1}`
+    const k1 = `${wc}|${w1}|${bracket}`
     if (bout.winner === 1 && bout.wrestler1_name && !directSeen.has(k1)) {
       directSeen.add(k1)
-      directPlacements.push({ weight_class: wc, place: w1, wrestler_name: bout.wrestler1_name, school_name: bout.wrestler1_school })
+      directPlacements.push({ weight_class: wc, place: w1, wrestler_name: bout.wrestler1_name, school_name: bout.wrestler1_school, bracket })
     }
-    const k2 = `${wc}|${w2}`
+    const k2 = `${wc}|${w2}|${bracket}`
     if (bout.wrestler2_name && bout.wrestler2_name.toLowerCase() !== 'unknown' && !directSeen.has(k2)) {
       directSeen.add(k2)
-      directPlacements.push({ weight_class: wc, place: w2, wrestler_name: bout.wrestler2_name, school_name: bout.wrestler2_school })
+      directPlacements.push({ weight_class: wc, place: w2, wrestler_name: bout.wrestler2_name, school_name: bout.wrestler2_school, bracket })
     }
   }
 
   // Merge: school-tracking inferences take priority; direct fills any gaps
-  const allSeen = new Set(placements.map(p => `${p.weight_class}|${p.place}`))
+  const allSeen = new Set(placements.map(p => `${p.weight_class}|${p.place}|${p.bracket}`))
   for (const p of directPlacements) {
-    if (!allSeen.has(`${p.weight_class}|${p.place}`)) placements.push(p)
+    if (!allSeen.has(`${p.weight_class}|${p.place}|${p.bracket}`)) placements.push(p)
   }
 
   return [bouts, placements, rawWithWeight]
@@ -792,7 +883,7 @@ export function extractBoutsForReview(rawWithWeight: RawEntry[]): BoutForReview[
   const master: BoutForReview[] = []
   const primaryByKey = new Map<string, number>()
 
-  for (const [bout, wc, , school] of rawWithWeight) {
+  for (const [bout, wc, , school] of rawWithWeight as [Omit<ParsedBout, 'weight_class'>, number | null, string | null, string | null, string][]) {
     if (wc === null) continue
     const key = boutReviewKey(wc, bout)
     const isBye = bout.result_type === 'BYE'
@@ -969,6 +1060,336 @@ function inferRoundsForReview(master: BoutForReview[]): void {
   }
 }
 
+// ── Format C — clean text (e.g. Doc Buchanan) ────────────────────────────────
+// Line format:
+//   NNN lbs - Finals [#N] NAME (School) over [#N] NAME (School), RESULT
+//   NNN lbs - Semifinal|Quarterfinal|Round of N  NAME, School over NAME, School, RESULT
+//
+// Caller must prepend "Tournament Name - MM/DD/YYYY" so the tournament header
+// detector fires; these lines are then the section body.
+
+function stripSeed(s: string): string {
+  return s.replace(/^#\d+\s+/, '').trim()
+}
+
+function parseCommaNameSchool(raw: string): [string, string] {
+  const s = stripSeed(raw).trim()
+  const comma = s.indexOf(', ')
+  if (comma < 0) return [s, '']
+  return [s.slice(0, comma).trim(), s.slice(comma + 2).trim()]
+}
+
+function splitResultFromEnd(s: string): [string, string] {
+  // Walk backwards through comma-segments to find the one starting with a result token.
+  const RESULT_START = /^(?:DEC|TF|F|MD|DQ|M FOR|FOR)\s/i
+  const segments = s.split(', ')
+  for (let i = segments.length - 1; i >= 1; i--) {
+    if (RESULT_START.test(segments[i]) || /^M FOR -/i.test(segments[i])) {
+      return [segments.slice(0, i).join(', '), segments[i]]
+    }
+  }
+  const last = s.lastIndexOf(', ')
+  if (last >= 0) return [s.slice(0, last), s.slice(last + 2)]
+  return [s, '']
+}
+
+function parseCleanResult(raw: string): { result_type: string; result_detail: string | null } {
+  const r = raw.trim()
+  if (/^M FOR/i.test(r) || /^FOR\b/i.test(r)) {
+    return { result_type: 'Forfeit', result_detail: null }
+  }
+  if (/^DQ\b/i.test(r)) {
+    return { result_type: 'DQ', result_detail: null }
+  }
+  if (/^F\s/i.test(r) || r.toUpperCase() === 'F') {
+    // F [score] [time] — fall_time is the M:SS token; boutResultToDb reads result_detail as the time
+    const rest = r.slice(1).trim()
+    const timeMatch = rest.match(/(\d+:\d{2})/)
+    return { result_type: 'Fall', result_detail: timeMatch ? timeMatch[1] : null }
+  }
+  if (/^TF\s/i.test(r)) {
+    // TF score time — boutResultToDb extracts both from result_detail
+    return { result_type: 'TF', result_detail: r.slice(2).trim() }
+  }
+  if (/^MD\s/i.test(r)) {
+    const scoreMatch = r.slice(2).trim().match(/(\d+-\d+)/)
+    return { result_type: 'MD', result_detail: scoreMatch ? scoreMatch[1] : null }
+  }
+  if (/^DEC\s/i.test(r)) {
+    const rest = r.slice(3).trim()
+    const scoreMatch = rest.match(/(\d+-\d+)/)
+    const detail = scoreMatch ? scoreMatch[1] : null
+    // Preserve overtime variants that the site tracks separately
+    if (/\bSV\b/i.test(rest))  return { result_type: 'SV-1', result_detail: detail }
+    if (/\bUTB\b/i.test(rest)) return { result_type: 'UTB',  result_detail: detail }
+    if (/\bTB2\b/i.test(rest)) return { result_type: 'TB-2', result_detail: detail }
+    if (/\bTB1\b/i.test(rest)) return { result_type: 'TB-1', result_detail: detail }
+    if (/\bOT\b/i.test(rest))  return { result_type: 'SV-1', result_detail: detail }
+    return { result_type: 'Dec', result_detail: detail }
+  }
+  return { result_type: r, result_detail: null }
+}
+
+function parseFormatC(lines: string[]): [ParsedBout[], ParsedPlacement[]] {
+  const bouts: ParsedBout[] = []
+  const placements: ParsedPlacement[] = []
+
+  for (const raw of lines) {
+    const line = cleanLine(raw)
+    const weightMatch = line.match(/^(\d{2,3}) lbs - (.+)$/)
+    if (!weightMatch) continue
+    const weight = parseInt(weightMatch[1], 10)
+    const rest = weightMatch[2].trim()
+
+    const roundMatch = rest.match(/^(Finals|Semifinal|Quarterfinal|Round of \d+)\s+/i)
+    if (!roundMatch) continue
+    const roundRaw = roundMatch[1]
+    const afterRound = rest.slice(roundMatch[0].length).trim()
+
+    const overMatch = /\bover\b/i.exec(afterRound)
+    if (!overMatch) continue
+    const winnerRaw = afterRound.slice(0, overMatch.index!).trim()
+    const loserResultRaw = afterRound.slice(overMatch.index! + overMatch[0].length).trim()
+
+    let w1: string, s1: string, w2: string, s2: string, resultStr: string
+
+    if (roundRaw.toLowerCase() === 'finals') {
+      // NAME (School) format — reuse balanced-paren extractor
+      ;[w1, s1] = extractNameSchool(stripSeed(winnerRaw))
+      const [loserPart, res] = splitResultFromEnd(loserResultRaw)
+      ;[w2, s2] = extractNameSchool(stripSeed(loserPart))
+      resultStr = res
+    } else {
+      // NAME, School format
+      ;[w1, s1] = parseCommaNameSchool(winnerRaw)
+      const [loserPart, res] = splitResultFromEnd(loserResultRaw)
+      ;[w2, s2] = parseCommaNameSchool(loserPart)
+      resultStr = res
+    }
+
+    if (!w1 || !w2) continue
+
+    const { result_type, result_detail } = parseCleanResult(resultStr)
+
+    bouts.push({
+      round: roundRaw,
+      wrestler1_name: w1,
+      wrestler1_school: s1,
+      wrestler2_name: w2,
+      wrestler2_school: s2,
+      winner: 1,
+      result_type,
+      result_detail,
+      weight_class: weight,
+    })
+
+    if (roundRaw.toLowerCase() === 'finals') {
+      if (w1) placements.push({ weight_class: weight, place: 1, wrestler_name: w1, school_name: s1, bracket: '' })
+      if (w2) placements.push({ weight_class: weight, place: 2, wrestler_name: w2, school_name: s2, bracket: '' })
+    }
+  }
+
+  return [bouts, placements]
+}
+
+// ── Team score block parser (standalone, no RTF context needed) ──────────────
+
+export function parseTeamScoreBlock(text: string): ParsedTeamScore[] {
+  const lines = text.split('\n')
+  return parseTeamScores(lines).teamScores
+}
+
+// ── Team scores ───────────────────────────────────────────────────────────────
+// Optional block placed right after the tournament header line (before bout data).
+// Supported formats:
+//   Team Scores:          ← optional header (case-insensitive)
+//   1. West Milford 132.5
+//   2. Delbarton 128
+//   ...
+// Lines matching <1-2 digit place>. <name> <score> are consumed as team scores.
+// Everything after the last matching line is returned as the bout section.
+
+const TEAM_SCORES_HEADER_RE = /^team\s*scores?:?$/i
+const TEAM_SCORE_LINE_RE = /^(\d{1,2})[\.\)]?\s+(.+?)\s+(\d+(?:\.\d+)?)$/
+const PLACE_ONLY_RE = /^(\d{1,2})$/
+const SCORE_ONLY_RE = /^(\d+(?:\.\d+)?)$/
+// Inline format: all entries on one line — "1 School 137.0 2 School 113.0 ..."
+// Lookahead ensures the score is followed by the next place+space or end of string.
+const INLINE_TEAM_SCORE_RE = /(\d{1,2})\s+(.+?)\s+(\d+(?:\.\d+)?)(?=\s+\d{1,2}\s|\s*$)/g
+// Ordinal+em-dash format: "1st: School — 120" or "19th (tie): School — 22"
+// Handles ordinal suffixes (st/nd/rd/th), optional tie notation, em/en dash separator.
+const ORDINAL_EM_DASH_SCORE_RE = /^(\d{1,2})\D{0,20}:\s+(.+?)\s+[—–]\s+(\d+(?:\.\d+)?)\s*$/
+
+// Handles inline format where all entries are on one long line:
+//   1 Bloomfield 137.0 2 Perth Amboy 113.0 3 Vernon 110.0 ...
+function parseTeamScoresInline(line: string): ParsedTeamScore[] | null {
+  const scores: ParsedTeamScore[] = []
+  const re = new RegExp(INLINE_TEAM_SCORE_RE.source, 'g')
+  let m
+  while ((m = re.exec(line)) !== null) {
+    scores.push({ place: parseInt(m[1], 10), school_name: m[2].trim(), score: parseFloat(m[3]) })
+  }
+  return scores.length >= 2 ? scores : null
+}
+
+// Handles textutil-converted RTF where each standings entry splits across 3 lines:
+//   14          ← place
+//   WWP - South ← school name
+//   33.5        ← score
+function parseTeamScoresMultiLine(cleaned: string[]): { teamScores: ParsedTeamScore[]; nextLineIdx: number } | null {
+  const scores: ParsedTeamScore[] = []
+  let i = 0
+  while (i < cleaned.length && !cleaned[i]) i++
+
+  while (i < cleaned.length) {
+    const placeLine = cleaned[i]
+    if (!placeLine) { i++; continue }
+    if (!PLACE_ONLY_RE.test(placeLine)) break
+
+    let j = i + 1
+    while (j < cleaned.length && !cleaned[j]) j++
+    if (j >= cleaned.length || /^\d/.test(cleaned[j])) break
+    const schoolLine = cleaned[j]
+
+    let k = j + 1
+    while (k < cleaned.length && !cleaned[k]) k++
+    if (k >= cleaned.length || !SCORE_ONLY_RE.test(cleaned[k])) break
+    const scoreLine = cleaned[k]
+
+    scores.push({ place: parseInt(placeLine, 10), school_name: schoolLine.trim(), score: parseFloat(scoreLine) })
+    i = k + 1
+  }
+
+  return scores.length >= 2 ? { teamScores: scores, nextLineIdx: i } : null
+}
+
+function parseTeamScores(lines: string[]): { teamScores: ParsedTeamScore[]; boutsSection: string[]; teamScoresStart: number } {
+  const cleaned = lines.map(cleanLine)
+  const teamScores: ParsedTeamScore[] = []
+  let i = 0
+
+  while (i < cleaned.length && !cleaned[i]) i++
+
+  let hasHeader = false
+  const headerStart = i
+  if (i < cleaned.length && TEAM_SCORES_HEADER_RE.test(cleaned[i])) {
+    hasHeader = true
+    i++
+    while (i < cleaned.length && !cleaned[i]) i++
+  }
+
+  if (!hasHeader && (i >= cleaned.length || !TEAM_SCORE_LINE_RE.test(cleaned[i]))) {
+    // Try multi-line format. Scores may be preceded by a venue/address block, so scan
+    // forward to the first place-number line rather than requiring scores to start immediately.
+    let multi: { teamScores: ParsedTeamScore[]; nextLineIdx: number } | null = null
+    let multiStart = i
+    for (let si = i; si < cleaned.length; si++) {
+      if (!cleaned[si] || !PLACE_ONLY_RE.test(cleaned[si])) continue
+      const attempt = parseTeamScoresMultiLine(cleaned.slice(si))
+      if (attempt) { multi = attempt; multiStart = si; break }
+    }
+    if (multi) {
+      return { teamScores: multi.teamScores, boutsSection: lines.slice(multiStart + multi.nextLineIdx), teamScoresStart: multiStart }
+    }
+    // Try inline format: all scores on one long line ("1 School 137.0 2 School 113.0 ...")
+    for (let si = i; si < cleaned.length; si++) {
+      const line = cleaned[si]
+      if (!line) continue
+      const inline = parseTeamScoresInline(line)
+      if (inline) {
+        return { teamScores: inline, boutsSection: lines.slice(si + 1), teamScoresStart: si }
+      }
+    }
+    // Try ordinal+em-dash format: "1st: School — 120" (Sam Cali / TW web export style)
+    for (let si = i; si < cleaned.length; si++) {
+      const line = cleaned[si]
+      if (!line) continue
+      if (!ORDINAL_EM_DASH_SCORE_RE.test(line)) continue
+      const scores: ParsedTeamScore[] = []
+      let j = si
+      let lastJ = si
+      while (j < cleaned.length) {
+        const l = cleaned[j]
+        if (!l) { j++; continue }
+        const om = l.match(ORDINAL_EM_DASH_SCORE_RE)
+        if (!om) break
+        scores.push({ place: parseInt(om[1], 10), school_name: om[2].trim(), score: parseFloat(om[3]) })
+        lastJ = j
+        j++
+      }
+      if (scores.length >= 2) {
+        return { teamScores: scores, boutsSection: lines.slice(lastJ + 1), teamScoresStart: si }
+      }
+      break
+    }
+    // Try single-line format with forward scan: "1 School Name 120" one per line,
+    // preceded by a venue/address block (so the first non-empty line isn't a score line).
+    for (let si = i; si < cleaned.length; si++) {
+      const line = cleaned[si]
+      if (!line) continue
+      if (!TEAM_SCORE_LINE_RE.test(line)) continue
+      // Found first matching line — collect all consecutive matches
+      const scores: ParsedTeamScore[] = []
+      let j = si
+      while (j < cleaned.length) {
+        const l = cleaned[j]
+        if (!l) { j++; continue }
+        const m = l.match(TEAM_SCORE_LINE_RE)
+        if (!m) break
+        scores.push({ place: parseInt(m[1], 10), school_name: m[2].trim(), score: parseFloat(m[3]) })
+        j++
+      }
+      if (scores.length >= 2) {
+        return { teamScores: scores, boutsSection: lines.slice(j), teamScoresStart: si }
+      }
+      break
+    }
+    return { teamScores: [], boutsSection: lines, teamScoresStart: lines.length }
+  }
+
+  const scoresStart = hasHeader ? headerStart : i
+  while (i < cleaned.length) {
+    const line = cleaned[i]
+    if (!line) { i++; continue }
+    const m = line.match(TEAM_SCORE_LINE_RE)
+    if (!m) break
+    teamScores.push({ place: parseInt(m[1], 10), school_name: m[2].trim(), score: parseFloat(m[3]) })
+    i++
+  }
+
+  return { teamScores, boutsSection: lines.slice(i), teamScoresStart: scoresStart }
+}
+
+// ── Venue extraction ──────────────────────────────────────────────────────────
+// Scans the lines between a tournament header and the first weight/round/bout line
+// to find the venue name and address block.
+
+function extractVenueBlock(lines: string[], startIdx: number, endIdx: number): { venue_name: string | null; venue_address: string | null } {
+  const STOP_LOWER = new Set(['round results', 'yes', 'no', 'weight', 'summary', 'stats', 'tw event'])
+  const vLines: string[] = []
+
+  for (let i = startIdx; i < endIdx; i++) {
+    const line = cleanLine(lines[i])
+    if (!line) continue
+    if (STOP_LOWER.has(line.toLowerCase())) break
+    if (DATE_ONLY_RE.test(line)) continue  // skip date lines that bleed in from split headers
+    if (ROUND_GROUP_RE.test(line) || TW_META_RE.test(line)) break
+    if (WEIGHT_RE.test(line) && VALID_WEIGHT_CLASSES.has(parseInt(line, 10))) break
+    const vm = line.match(VARSITY_WEIGHT_RE)
+    if (vm && VALID_WEIGHT_CLASSES.has(parseInt(vm[1], 10))) break
+    const gbm = line.match(GIRLS_BOYS_WEIGHT_RE)
+    if (gbm && VALID_WEIGHT_CLASSES.has(parseInt(gbm[1], 10))) break
+    if (/\bover\b/i.test(line) && line.includes('(')) break
+    vLines.push(line)
+  }
+
+  if (!vLines.length) return { venue_name: null, venue_address: null }
+  return {
+    venue_name: vLines[0],
+    venue_address: vLines.slice(1).join(', ') || null,
+  }
+}
+
 // ── Top-level ─────────────────────────────────────────────────────────────────
 
 export function parseRtfText(text: string, only?: string): ParsedTournament[] {
@@ -976,6 +1397,10 @@ export function parseRtfText(text: string, only?: string): ParsedTournament[] {
   const cleaned = lines.map(cleanLine)
   const starts: Array<[number, string, string]> = []
   const seenNames = new Set<string>()
+  // Per-team TW exports repeat the tournament header once per school section.
+  // Track extra section start indices so we can process each school's section
+  // separately and merge the results instead of collapsing all sections into one.
+  const extraSectionStarts = new Map<string, number[]>()
 
   for (let i = 0; i < cleaned.length; i++) {
     const line = cleaned[i]
@@ -984,9 +1409,33 @@ export function parseRtfText(text: string, only?: string): ParsedTournament[] {
     const m = line.match(TOURNEY_HEADER_RE)
     if (m) {
       const name = m[1].trim()
-      starts.push([i, name, m[2].trim()])
-      seenNames.add(name.toLowerCase())
+      const nameKey = name.toLowerCase()
+      if (!seenNames.has(nameKey)) {
+        starts.push([i, name, m[2].trim()])
+        seenNames.add(nameKey)
+      } else {
+        if (!extraSectionStarts.has(nameKey)) extraSectionStarts.set(nameKey, [])
+        extraSectionStarts.get(nameKey)!.push(i)
+      }
       continue
+    }
+
+    // "Name\nDate" split header: tournament name on one line, date on next non-empty line.
+    // Handles TrackWrestling bracket copy-paste format.
+    if (line && line.length >= 5 && line.length <= 120 &&
+        !seenNames.has(line.toLowerCase()) &&
+        !TW_META_RE.test(line) && !WEIGHT_RE.test(line) &&
+        !line.includes('(') && !/\bover\b/i.test(line)) {
+      const nextNonEmpty = cleaned.slice(i + 1, i + 4).find(l => l)
+      if (nextNonEmpty && DATE_ONLY_RE.test(nextNonEmpty)) {
+        const combined = `${line} - ${nextNonEmpty}`
+        const cm = combined.match(TOURNEY_HEADER_RE)
+        if (cm) {
+          starts.push([i, cm[1].trim(), cm[2].trim()])
+          seenNames.add(cm[1].trim().toLowerCase())
+          continue
+        }
+      }
     }
 
     // Plain name header: no date, but immediately followed by TW navigation block.
@@ -1015,27 +1464,125 @@ export function parseRtfText(text: string, only?: string): ParsedTournament[] {
     if (only && !name.toLowerCase().includes(only.toLowerCase())) continue
 
     const nextStart = idx + 1 < starts.length ? starts[idx + 1][0] : lines.length
-    const section = lines.slice(lineIdx + 1, nextStart)
-    const fmt = detectFormat(section)
-    let bouts: ParsedBout[], placements: ParsedPlacement[], boutsForReview: BoutForReview[] | undefined
-    if (fmt === 'full_bracket') {
-      ;[bouts, placements] = parseFormatA(section)
-    } else {
-      const [b, p, raw] = parseFormatB(section)
-      bouts = b; placements = p
-      boutsForReview = extractBoutsForReview(raw)
-    }
+    const extras = extraSectionStarts.get(name.toLowerCase()) ?? []
 
-    results.push({
-      name,
-      date_raw: dateRaw,
-      source_format: fmt,
-      bout_count: bouts.length,
-      placement_count: placements.length,
-      bouts,
-      placements,
-      bouts_for_review: boutsForReview,
-    })
+    if (extras.length === 0) {
+      // ── Single-section tournament (normal case) ──────────────────────────────
+      const rawSection = lines.slice(lineIdx + 1, nextStart)
+      const { teamScores, boutsSection: section, teamScoresStart } = parseTeamScores(rawSection)
+      const fmt = detectFormat(section)
+      let bouts: ParsedBout[], placements: ParsedPlacement[], boutsForReview: BoutForReview[] | undefined
+      if (fmt === 'clean_text') {
+        ;[bouts, placements] = parseFormatC(section)
+      } else if (fmt === 'full_bracket') {
+        ;[bouts, placements] = parseFormatA(section)
+      } else {
+        const [b, p, raw] = parseFormatB(section)
+        bouts = b; placements = p
+        boutsForReview = extractBoutsForReview(raw)
+      }
+
+      // Venue: scan rawSection from 0 up to where team scores begin (or the full
+      // section when there are no team scores). extractVenueBlock's own break
+      // conditions stop it before the first weight class / bout line.
+      const { venue_name, venue_address } = extractVenueBlock(rawSection, 0, teamScoresStart)
+
+      results.push({
+        name,
+        date_raw: dateRaw,
+        source_format: fmt === 'clean_text' ? 'full_bracket' : fmt,
+        bout_count: bouts.length,
+        placement_count: placements.length,
+        team_score_count: teamScores.length,
+        bouts,
+        placements,
+        team_scores: teamScores,
+        bouts_for_review: boutsForReview,
+        venue_name,
+        venue_address,
+      })
+    } else {
+      // ── Per-team TW export: process each school section independently ─────────
+      // Each section has its own Yes/No tracking flags that only make sense for
+      // that school. Collapsing all sections confuses the anyYes2 filter in
+      // parseFormatB and causes ~half the bouts to be dropped.
+      const allSectionStarts = [lineIdx, ...extras].sort((a, b) => a - b)
+      const allBouts: ParsedBout[] = []
+      const allPlacements: ParsedPlacement[] = []
+      let teamScores: ParsedTeamScore[] = []
+      let resultFmt: 'full_bracket' | 'school_tracking' = 'school_tracking'
+      let venue_name: string | null = null
+      let venue_address: string | null = null
+
+      for (let si = 0; si < allSectionStarts.length; si++) {
+        const sectionStart = allSectionStarts[si]
+        const sectionEnd = si + 1 < allSectionStarts.length ? allSectionStarts[si + 1] : nextStart
+        const sectionLines = lines.slice(sectionStart + 1, sectionEnd)
+        const { teamScores: ts, boutsSection, teamScoresStart } = parseTeamScores(sectionLines)
+
+        if (si === 0) {
+          teamScores = ts
+          const vb = extractVenueBlock(sectionLines, 0, teamScoresStart)
+          venue_name = vb.venue_name
+          venue_address = vb.venue_address
+        }
+
+        const sectionFmt = detectFormat(boutsSection)
+        // Use the first section that is actually a bout section (not the venue/scores preamble)
+        if (resultFmt === 'school_tracking' && sectionFmt !== 'school_tracking') { /* keep */ }
+        else if (sectionFmt !== 'full_bracket' || si === 0) {
+          resultFmt = sectionFmt === 'clean_text' ? 'full_bracket' : sectionFmt
+        }
+
+        let sectionBouts: ParsedBout[], sectionPlacements: ParsedPlacement[]
+        if (sectionFmt === 'clean_text') {
+          ;[sectionBouts, sectionPlacements] = parseFormatC(boutsSection)
+        } else if (sectionFmt === 'full_bracket') {
+          ;[sectionBouts, sectionPlacements] = parseFormatA(boutsSection)
+        } else {
+          const [b, p] = parseFormatB(boutsSection)
+          sectionBouts = b; sectionPlacements = p
+        }
+        allBouts.push(...sectionBouts)
+        allPlacements.push(...sectionPlacements)
+      }
+
+      // Deduplicate bouts: same wrestlers + weight + normalized round + full result fingerprint.
+      // Using normalizeRound prevents "3rd Place Match" vs "Third Place" from producing two DB rows.
+      // Including result_type+detail prevents dropping genuinely different bouts that share the same
+      // wrestlers and round (e.g., same pair meeting twice in a round-robin or data quirk).
+      const boutSeen = new Set<string>()
+      const bouts = allBouts.filter(b => {
+        const key = `${b.weight_class}|${normalizeRound(b.round)}|${b.result_type}|${b.result_detail ?? ''}|${[
+          `${b.wrestler1_name}|${b.wrestler1_school}`,
+          `${b.wrestler2_name}|${b.wrestler2_school}`,
+        ].sort().join('|')}`
+        if (boutSeen.has(key)) return false
+        boutSeen.add(key); return true
+      })
+
+      // Deduplicate placements
+      const placSeen = new Set<string>()
+      const placements = allPlacements.filter(p => {
+        const key = `${p.weight_class}|${p.place}|${p.wrestler_name}|${p.school_name}`
+        if (placSeen.has(key)) return false
+        placSeen.add(key); return true
+      })
+
+      results.push({
+        name,
+        date_raw: dateRaw,
+        source_format: resultFmt,
+        bout_count: bouts.length,
+        placement_count: placements.length,
+        team_score_count: teamScores.length,
+        bouts,
+        placements,
+        team_scores: teamScores,
+        venue_name,
+        venue_address,
+      })
+    }
   }
   return results
 }
@@ -1045,9 +1592,11 @@ export function parseRtfText(text: string, only?: string): ParsedTournament[] {
 export function parseDateRange(dateRaw: string, year: number): [string, string | null] {
   const m = dateRaw.match(/(\d{1,2})\/(\d{1,2})(?:\s*[-–]\s*(\d{1,2})\/(\d{1,2}))?/)
   if (!m) return [`${year}-01-01`, null]
+  const yearOverride = dateRaw.match(/\b(20\d{2})\b/)
+  const y = yearOverride ? parseInt(yearOverride[1], 10) : year
   const [, m1, d1, m2, d2] = m
-  const start = `${year}-${m1.padStart(2, '0')}-${d1.padStart(2, '0')}`
-  const end = m2 ? `${year}-${m2.padStart(2, '0')}-${d2.padStart(2, '0')}` : null
+  const start = `${y}-${m1.padStart(2, '0')}-${d1.padStart(2, '0')}`
+  const end = m2 ? `${y}-${m2.padStart(2, '0')}-${d2.padStart(2, '0')}` : start
   return [start, end]
 }
 

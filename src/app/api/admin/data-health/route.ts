@@ -12,14 +12,19 @@ const VALID_WEIGHTS = new Set([
 
 const GARBAGE_NAMES = new Set(['-', 'Forfeit', 'Team Forfeit'])
 
+// How many days a ready_for_review import can sit before flagging as stale
+const STALE_IMPORT_DAYS = 3
+
 export type CheckResult = {
   id: string
   name: string
-  section: 'schools' | 'wrestlers' | 'entries' | 'standings' | 'leaderboards'
+  section: 'schools' | 'wrestlers' | 'entries' | 'standings' | 'leaderboards' | 'imports'
   count: number
   samples: Record<string, unknown>[]
   error?: string
   checkedAt: string
+  severity?: 'info'   // caps status at yellow even when count > 10
+  linkTo?: string     // optional action link shown in the card
 }
 
 export type DataHealthResponse = {
@@ -46,12 +51,16 @@ export async function GET() {
     confStandingsRes,
     precomputedRes,
     placementsRes,
+    pendingTransfersRes,
+    staleImportsRes,
+    nullWrestlerBoutsRes,
+    nullWrestlerBoutsGirlsRes,
   ] = await Promise.all([
     supabase.from('schools')
       .select('id, display_name, logo_url, athletic_conference')
       .limit(1000),
     supabase.from('wrestlers')
-      .select('id, first_name, last_name, gender, graduation_year')
+      .select('id, first_name, last_name, gender, graduation_year, grade_confirmed_at, projected_weight_class, confirmed_weight_class, is_oos')
       .limit(10000),
     supabase.from('tournament_entries')
       .select('id, wrestler_id, school_id, weight_class_id, tournament_id')
@@ -67,6 +76,27 @@ export async function GET() {
     supabase.from('placements')
       .select('id, entry_id, weight_class_id, place, tournament_id')
       .limit(10000),
+    supabase.from('pending_wrestler_transfers')
+      .select('id, wrestler_id, detected_via, created_at', { count: 'exact' })
+      .eq('status', 'pending')
+      .order('created_at', { ascending: false })
+      .limit(5),
+    supabase.from('import_queue')
+      .select('id, label, admin_email, updated_at', { count: 'exact' })
+      .eq('status', 'ready_for_review')
+      .lt('updated_at', new Date(Date.now() - STALE_IMPORT_DAYS * 86400 * 1000).toISOString())
+      .order('updated_at', { ascending: true })
+      .limit(5),
+    supabase.from('tournament_bouts')
+      .select('id, weight_class, wrestler1_name, wrestler1_school_raw, wrestler2_name, wrestler2_school_raw, result_type', { count: 'exact' })
+      .neq('result_type', 'BYE')
+      .or('wrestler1_id.is.null,wrestler2_id.is.null')
+      .limit(5),
+    (supabase as any).from('tournament_bouts_girls')
+      .select('id, weight_class, wrestler1_name, wrestler1_school_raw, wrestler2_name, wrestler2_school_raw, result_type', { count: 'exact' })
+      .neq('result_type', 'BYE')
+      .or('wrestler1_id.is.null,wrestler2_id.is.null')
+      .limit(0),
   ])
 
   const schools = schoolsRes.data ?? []
@@ -75,7 +105,13 @@ export async function GET() {
   const weightClasses = weightClassesRes.data ?? []
   const confStandings = confStandingsRes.data ?? []
   const precomputed = precomputedRes.data ?? []
+  const nullWrestlerBouts = nullWrestlerBoutsRes.data ?? []
+  const nullWrestlerBoutCount = (nullWrestlerBoutsRes.count ?? nullWrestlerBouts.length) + (nullWrestlerBoutsGirlsRes.count ?? 0)
   const placements = placementsRes.data ?? []
+  const pendingTransfers = pendingTransfersRes.data ?? []
+  const pendingTransferCount = pendingTransfersRes.count ?? pendingTransfers.length
+  const staleImports = staleImportsRes.data ?? []
+  const staleImportCount = staleImportsRes.count ?? staleImports.length
 
   // ── Derived lookups ────────────────────────────────────────────────────────
   const schoolIdSet = new Set(schools.map(s => s.id))
@@ -318,6 +354,101 @@ export async function GET() {
       return { id: r.id, weight_class_id: r.weight_class_id, weight: wcWeightMap.get(r.weight_class_id) ?? 'missing' }
     },
   ))
+
+  // ── ROSTER / ENROLLMENT (informational — expected pre-districts) ───────────
+
+  // NJ wrestlers only; OOS wrestlers never have grade data
+  const njWrestlers = wrestlers.filter(w => !(w as Record<string, unknown>).is_oos)
+
+  const wrestlersNoGrade = njWrestlers.filter(
+    w => !(w as Record<string, unknown>).grade_confirmed_at
+  )
+  checks.push({
+    ...(check(
+      'wrestlers_no_grade', 'NJ wrestlers without confirmed grade', 'wrestlers',
+      wrestlersNoGrade,
+      w => {
+        const r = w as typeof wrestlers[0]
+        return { id: r.id, name: `${r.first_name} ${r.last_name}`, gender: r.gender }
+      },
+    )),
+    severity: 'info',
+  })
+
+  const wrestlersWeightMismatch = njWrestlers.filter(w => {
+    const r = w as Record<string, unknown>
+    return r.projected_weight_class != null && r.confirmed_weight_class == null
+  })
+  checks.push({
+    ...(check(
+      'wrestlers_weight_unconfirmed',
+      'Wrestlers with projected but no confirmed weight class',
+      'wrestlers',
+      wrestlersWeightMismatch,
+      w => {
+        const r = w as typeof wrestlers[0] & { projected_weight_class: number | null }
+        return { id: r.id, name: `${r.first_name} ${r.last_name}`, projected: r.projected_weight_class }
+      },
+    )),
+    severity: 'info',
+  })
+
+  // ── IMPORTS ────────────────────────────────────────────────────────────────
+
+  checks.push({
+    ...(check(
+      'transfers_pending_review',
+      'Pending wrestler transfers awaiting review',
+      'imports',
+      pendingTransfers,
+      t => {
+        const r = t as { id: string; wrestler_id: string; detected_via: string; created_at: string }
+        return { id: r.id, wrestler_id: r.wrestler_id, detected_via: r.detected_via }
+      },
+      pendingTransfersRes.error?.message,
+    )),
+    count: pendingTransferCount,
+    linkTo: '/admin/wrestlers/pending-transfers',
+  })
+
+  checks.push({
+    ...(check(
+      'imports_stale_review',
+      `Imports in ready_for_review for ${STALE_IMPORT_DAYS}+ days`,
+      'imports',
+      staleImports,
+      i => {
+        const r = i as { id: string; label: string; admin_email: string; updated_at: string }
+        return { id: r.id, label: r.label || '(untitled)', admin_email: r.admin_email }
+      },
+      staleImportsRes.error?.message,
+    )),
+    count: staleImportCount,
+    linkTo: '/admin/import-queue',
+  })
+
+  // Bouts with unlinked wrestler IDs — the root cause of 100% bonus % on leaderboard
+  checks.push({
+    ...(check(
+      'bouts_null_wrestler_id',
+      'Bouts with unlinked wrestler IDs',
+      'imports',
+      nullWrestlerBouts,
+      b => {
+        const r = b as { id: string; weight_class: number; wrestler1_name: string | null; wrestler2_name: string | null; result_type: string }
+        return {
+          id: r.id,
+          weight: r.weight_class,
+          winner: r.wrestler1_name ?? '—',
+          loser: r.wrestler2_name ?? '—',
+          result: r.result_type,
+        }
+      },
+      nullWrestlerBoutsRes.error?.message,
+    )),
+    count: nullWrestlerBoutCount,
+    linkTo: '/admin/null-wrestler-bouts',
+  })
 
   // First 5 school IDs for site health school-page checks
   const sampleSchoolIds = schools.slice(0, 5).map(s => s.id)

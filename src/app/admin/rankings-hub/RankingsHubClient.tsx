@@ -1,0 +1,63 @@
+'use client'
+
+import { useState } from 'react'
+import { RankingsClient } from '../rankings/RankingsClient'
+import { HammerScoresPageClient } from '../hammer-scores/HammerScoresPageClient'
+import { IndividualRankingsShell } from '../rankings/individual/IndividualRankingsShell'
+import { TeamRankingsClient } from '../rankings/team/TeamRankingsClient'
+import { ArchiveClient } from '../rankings/archive/ArchiveClient'
+
+type Tool = 'hammer' | 'individual' | 'team' | 'archive'
+
+const TABS: { id: Tool; label: string }[] = [
+  { id: 'hammer',     label: 'Hammer Scores' },
+  { id: 'individual', label: 'Individual Rankings' },
+  { id: 'team',       label: 'Team Rankings' },
+  { id: 'archive',    label: 'Archive' },
+]
+
+export function RankingsHubClient({
+  gender,
+  currentSeason,
+}: {
+  gender: 'M' | 'F'
+  currentSeason: string
+}) {
+  const [tool, setTool] = useState<Tool>('hammer')
+
+  return (
+    <div className="flex flex-col h-full">
+      <div className="flex border-b border-slate-200 overflow-x-auto shrink-0">
+        {TABS.map(t => (
+          <button
+            key={t.id}
+            onClick={() => setTool(t.id)}
+            className={`px-4 py-2.5 text-xs font-semibold whitespace-nowrap -mb-px border-b-2 transition-colors ${
+              tool === t.id
+                ? 'border-slate-900 text-slate-900'
+                : 'border-transparent text-slate-400 hover:text-slate-700'
+            }`}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="flex-1 overflow-y-auto p-6">
+        {tool === 'hammer' && (
+          <div className="space-y-6">
+            <RankingsClient gender={gender} />
+            <HammerScoresPageClient gender={gender} />
+          </div>
+        )}
+        {tool === 'individual' && (
+          <IndividualRankingsShell currentSeason={currentSeason} gender={gender} />
+        )}
+        {tool === 'team' && (
+          <TeamRankingsClient gender={gender} />
+        )}
+        {tool === 'archive' && <ArchiveClient />}
+      </div>
+    </div>
+  )
+}

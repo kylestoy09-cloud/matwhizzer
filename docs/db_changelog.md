@@ -1,7 +1,2029 @@
 # MatWhizzer Database Changelog
 
+---
+
+## 2026-09-18 — Microcheck generic task queue
+
+**Migration file:** `docs/migrations/20260918_microcheck_tasks_table.sql`
+
+**Purpose:** Adds `microcheck_tasks` table as a generic queue for any task type fed into the microcheck tool. Initial task type is `tie_resolution` — seeds all existing tied dual meets as tasks. The `/next` API checks this queue first (higher priority than computed school_profile tasks). Future task types (site_error, etc.) can be added by inserting rows.
+
+**Tables affected:** `microcheck_tasks` (new)
+
+**APPLIED** — pending run in Supabase SQL editor
+
+**Reversible?** Yes — `DROP TABLE microcheck_tasks`
+**Verified?** No — pending
+
+---
+
+## 2026-09-18 — Dual meet tiebreaker_pending flag
+
+**Migration file:** `docs/migrations/20260918_dual_meet_tiebreaker_pending.sql`
+
+**Purpose:** Adds `tiebreaker_pending boolean` to `dual_meets` and `dual_meets_girls`. Tied scores in wrestling are impossible (tiebreakers always produce a winner). When the import parser cannot extract the tiebreaker, this flag is set so the admin Tie Resolution tool can manually pick the winner. Seeds the flag on all existing tied meets.
+
+**Tables affected:** `dual_meets`, `dual_meets_girls`
+
+**APPLIED** — pending run in Supabase SQL editor
+
+**Reversible?** Yes — `ALTER TABLE dual_meets DROP COLUMN tiebreaker_pending`
+**Verified?** No — pending
+
+---
+
+## 2026-09-17 — Cliffside Park / Ridgefield Memorial season 1 co-op fix
+
+**Migration file:** `docs/migrations/20260917_cliffside_ridgefield_s1_fix.sql`
+
+**Purpose:** Fixes empty season-1 roster for Cliffside Park (364). Root cause: original `school_coops` seed used shell school 365 as `coop_school_id` with 364 as a member, causing `school_wrestlers` to query `school_id=365` instead of 364 (where tournament_entries actually live). Also fixes Beast of East bouts misattributed to Ridgefield Memorial (357) instead of Ridgefield CT (737).
+
+**Changes:**
+1. Deletes stale `school_coops` / `inactive_school_seasons` / `wrestler_name_aliases` rows for shells 365 and 381 (prior migration was rolled back due to FK failure)
+2. Moves Mustang Invitational tournament_bouts from school 365 → 364
+3. Deletes school 365 (bouts moved to 364 first, clearing the FK)
+4. Deletes school 381 (Mary Help of Christians — no tournament data, FK-clear)
+5. Adds `inactive_school_seasons (357, 1, 'M')` — Ridgefield Memorial competed as co-op in season 1
+6. Adds `school_coops (coop_school_id=364, member_school_id=357, season=1, gender='M')` — proper co-op record using Cliffside Park as the coop school
+7. Remaps Beast of East tournament_bouts for school 357 → 737 (Ridgefield CT); removes incorrect `school_aliases (357, 'Ridgefield')` entry
+
+**Tables affected:** `school_coops`, `inactive_school_seasons`, `wrestler_name_aliases`, `tournament_bouts`, `schools`, `school_aliases`
+
+**APPLIED** — pending run in Supabase SQL editor
+
+**Reversible?** Partially — can re-insert school_coops rows and reset is_nj; school 381 row data is gone
+**Verified?** No — pending
+
+---
+
+## 2026-09-17 — Delete empty shell schools (365, 381)
+
+**Migration file:** `docs/migrations/20260917_delete_empty_shell_schools.sql`
+
+**Purpose:** Remove two schools that have no program data and were inflating the boys preseason dashboard count (both had `is_nj=true`).
+- id=365 Cliffside Park/Ridgefield Memorial — leftover co-op entry, both schools exist independently (364, 357); zero data attached
+- id=381 Mary Help of Christians Academy — all-girls school, no wrestling program; one orphaned wrestler alias cleaned up
+
+**Tables affected:** `schools`, `inactive_school_seasons`, `wrestler_name_aliases`
+
+**NOT APPLIED** — rolled back due to FK violation on `tournament_bouts_wrestler1_school_id_fkey` for school 365; superseded by `20260917_cliffside_ridgefield_s1_fix.sql`
+
+**Reversible?** N/A
+**Verified?** N/A
+
+---
+
+## 2026-09-17 — Help Desk tickets table
+
+**Migration file:** `docs/migrations/20260917_help_desk_tickets.sql`
+
+**Purpose:** Adds the `help_desk_tickets` table for the new Help Desk admin tool. Admins can log site issues (with optional screenshots), mark urgency, and resolve tickets. Screenshots are stored in Supabase Storage bucket `ticket-attachments` (create manually in Dashboard → Storage).
+
+**Tables affected:** `help_desk_tickets` (new)
+
+**What changed:**
+- New table with RLS: admin-only full access
+- Columns: id, created_at, description, is_urgent, status (open/resolved), resolved_at, submitted_by_email, submitted_by_name, screenshot_urls (text[])
+- New admin tool at `/admin/help-desk` added to Admin Tools section of the rail
+
+**APPLIED** — run in Supabase SQL editor 2026-09-17
+
+**Reversible?** Yes — `DROP TABLE public.help_desk_tickets;`
+**Verified?** No — pending
+
+---
+
+## 2026-09-17 — Wrestler merges: Camden + Delbarton roster errors
+
+**Migration file:** `docs/migrations/20260917_wrestler_merges_camden_delbarton.sql`
+
+**Purpose:** Fix wrestler records exposed by roster grade import review.
+
+- DELETE `631c7b83` — phantom wrestler "(Camden/Camden Eastside)" where the school name was imported as a wrestler name; no match data affected
+- MERGE `2cb72062` Ahmad Clossen → `24942001` Ahmad Crosson (Camden)
+- MERGE `61c4d732` C.j. Betz → `68fad72c` Carl Betz (Delbarton)
+- MERGE `463f89bf` Nico Marchetti → `30d89fe4` Nicolas Marchetti (Delbarton)
+- MERGE `5eb83cb8` Nick Schwartz → `f2a25bc8` Nicholas Schwartz (Delbarton)
+
+Each merge remaps wrestler_a_id/wrestler_b_id/winner_id in matches, wrestler1_id/wrestler2_id in tournament_bouts, and wrestler_id in tournament_entries/placements (conflict-safe: drops source entry if target already has one for same tournament).
+
+---
+
+## 2026-09-17 — NJSIAA 2026-27 calendar seed + tournaments date columns
+
+**Migration file:** `docs/migrations/20260917_njsiaa_calendar_s3.sql`
+
+**Purpose:** Adds date support to the postseason `tournaments` table and seeds all NJSIAA 2026-27 calendar events into `season_calendar` for display as notification banners on the schedule page.
+
+- `tournaments.start_date` / `tournaments.end_date` — new nullable date columns so postseason tournaments appear on the schedule page when navigating to their dates
+- `season_calendar` — 23 new rows for the 2026-27 season (year_label='2026-27' must exist): preseason milestones, season milestones, team playoff dates (Public & Non-Public rounds through finals), and individual postseason (Districts / Regions / State Championships)
+- Corrected two typos from source data: "02/03/2026" → 2027-02-03 (Public Sectional Finals); "b02/04/2027f" → 2027-02-04 (Non-Public State Semifinals)
+- `seasons.start_date = 2026-12-07` / `seasons.end_date = 2027-02-27` set for the 2026-27 season row
+
+---
+
+## 2026-09-17 — Deactivate Donovan Catholic and Weehawken for boys season 2
+
+**Migration file:** `docs/migrations/20260917_deactivate_dc_weehawken_s2.sql`
+
+**Purpose:** Neither school has Track Wrestling roster data for 2025-26. Marks both inactive via `inactive_school_seasons`, removes from `boys_school_districts/regions/conferences` for season 2, and skips any pending `roster_grade_import` rows.
+
+- `inactive_school_seasons`: inserted (school_id=248, season_id=2, gender=M) and (school_id=99, season_id=2, gender=M)
+
+---
+
+## 2026-09-17 — 7 Things article system
+
+**Migration file:** `docs/migrations/20260917_articles_system.sql`
+
+**Purpose:** Foundation for the "7 Things from Yesterday" article publishing system covering preseason, season, and postseason.
+
+- `boys_articles` — new table: season_id, article_type (preseason|season|postseason), article_key (preseason identifier), section (null=state|north_i|north_ii|central|south), match_date, title, body, author, status (draft→finalized→published), completed (preseason dropdown checkmark), scheduled_publish_at, published_at
+- `girls_articles` — identical structure, fully separate per gender separation rule
+- Unique indexes enforce one body per article_key+section (preseason) and one article per section+match_date (season/postseason)
+- `app_users.newsletter_subscribed` — boolean for email newsletter opt-in (used by 8 AM Resend cron)
+- `seasons.start_date` / `seasons.end_date` — date range for Day X of Y display in the season report card
+
+---
+
+## 2026-09-16 — Filter Unknown stub wrestlers from school_wrestlers RPC
+
+**Migration file:** `docs/migrations/20260916_school_wrestlers_filter_unknown.sql`
+
+**Purpose:** Four "Unknown" wrestler stubs (71 aliases across 71 schools) were showing on school profile roster pages. Added `AND wr.first_name <> 'Unknown'` guard to all three wrestler JOINs in the `school_wrestlers` RPC: `school_entries` CTE, `postseason` CTE, and the final `inseason_only` UNION branch.
+
+---
+
+## 2026-09-16 — Fix PostgREST grants on boys_schools and microcheck_task_log
+
+**Migration file:** `docs/migrations/20260916_fix_boys_schools_grants.sql`
+
+**Purpose:** Grant SELECT/DML on tables created via raw SQL that were missing the automatic grants Supabase applies for dashboard-created tables. Fixes "permission denied for table boys_schools" and related errors in the Micro Checks tool.
+
+- `boys_schools` — GRANT SELECT to anon, authenticated, service_role
+- `microcheck_task_log` — GRANT SELECT/INSERT/UPDATE/DELETE to authenticated, service_role; SELECT to anon
+- All sequences in public schema — GRANT USAGE, SELECT to authenticated, service_role
+
+---
+
+## 2026-09-16 — Microcheck preseason data-entry tool schema
+
+**Migration file:** `docs/migrations/20260916_microcheck_schema.sql`
+
+**Purpose:** Adds infrastructure for the Microcheck tool — a mobile-friendly single-task preseason data-entry queue.
+
+- `schools.address` (text) — school physical address
+- `schools.facebook_url` (text) — school/wrestling Facebook page URL
+- `microcheck_task_log` table — records completed and can't-find outcomes per school/gender/field with admin attribution and timestamp. Unique constraint on (school_id, gender, field) prevents duplicate outcomes.
+
+Task priority order (boys): address → website_url → twitter_handle → facebook_url → coach_name → coach_email → ad_name → ad_email → roster_match. Girls queued after season 3 rollover.
+
+---
+
+## 2026-09-16 — Fix girls_schools slash names and is_combined for 6 permanent co-ops
+
+**Migration:** applied directly via SQL editor (no separate file — part of the 20260916 co-op cleanup series)
+
+Schools 44, 62, 83, 130, 321, 383 were already in `girls_schools` from the split migration but with slash names and `is_combined=false`. Updated to dash names and `is_combined=true`:
+- 44: Leonia-Palisades, 62: Lenape Valley-Hopatcong, 83: Lyndhurst-North Arlington
+- 130: Brearley-Dayton, 321: Becton-Wood-Ridge, 383: Middlesex-Dunellen
+
+These are long-standing combined programs for both boys and girls.
+
+---
+
+## 2026-09-16 — Fix Demarest-Old Tappan: girls-only co-op, not boys
+
+**Migration file:** `docs/migrations/20260916_fix_demarest_old_tappan.sql`
+
+**Purpose:** The 20260916_girls_coop_cleanup migration incorrectly applied the co-op name "Demarest-Old Tappan" to boys_schools for school 314. The co-op is girls-only — Demarest has an independent boys program. Reverted boys_schools and schools.display_name to "Demarest". Added girls_schools row for school 314 ("Demarest-Old Tappan", is_combined=true). Fixed Old Tappan (6) inactive_school_seasons: removed incorrect gender='M' record, inserted (6, 2, 'F').
+
+---
+
+## 2026-09-16 — Revert Mount Olive and Parsippany Hills display names
+
+**Migration file:** `docs/migrations/20260916_fix_mt_olive_parsippany_hills.sql`
+
+**Purpose:** School 56 (Mt. Olive/Randolph) and school 78 (Parsippany Hills/Parsippany) were incorrectly named as co-ops by the 20260826 migration. Both are separate independent boys programs. Reverted to "Mount Olive" and "Parsippany Hills" in `schools` and `boys_schools`. No inactive_school_seasons records existed for schools 64 or 87.
+
+---
+
+## 2026-09-16 — Girls co-op cleanup: delete 4 artifact schools, fix display names, fix is_combined
+
+**Migration file:** `docs/migrations/20260916_girls_coop_cleanup.sql`
+
+**Purpose:** Audit and fix all co-op artifacts created by the 20260826 school_coop_consolidation migration.
+
+**is_combined fixes (non-artifacts):**
+- Schools 3 (Emerson-Park Ridge), 206 (Ranney), 381 (Mary Help of Christians Academy): set `is_combined = false` in `schools`, `boys_schools`, and/or `girls_schools`.
+
+**Newton (school 24):**
+- Reverted `schools.display_name` and `boys_schools.display_name` from "Newton/Kittatinny" → "Newton".
+- Deleted incorrect `inactive_school_seasons` rows for school 315 (Kittatinny, gender=M) — active boys program with 73 entries.
+
+**Sparta (school 26):**
+- Deleted incorrect `inactive_school_seasons` gender='M' record (backfilled from 20260826 migration).
+- Inserted correct `inactive_school_seasons (26, 2, 'F')` — Sparta girls join Jefferson-Sparta co-op.
+
+**Deleted artifact combined schools (data moved to primary hosts):**
+- 360 (Buena/Vineland) → all girls data moved to school 287 (Buena); school deleted.
+- 363 (Cherry Hill East/Cherry Hill West) → all girls data moved to school 267 (Cherry Hill East); school deleted.
+- 372 (Jefferson-Sparta artifact) → all girls data moved to school 4 (Jefferson); school deleted.
+- 392 (Ramsey/Northern Highlands) → all girls data moved to school 18 (Ramsey); school deleted.
+
+**Girls co-op primary hosts added to girls_schools:**
+- 4 (Jefferson): "Jefferson-Sparta", is_combined=true
+- 287 (Buena): "Buena-Vineland", is_combined=true
+- 267 (Cherry Hill East): "Cherry Hill East-West", is_combined=true
+- 18 (Ramsey): updated to "Ramsey-Northern Highlands", is_combined=true
+
+**Secondary schools marked inactive for girls season 2:**
+- 294 (Vineland) → girls join Buena (287)
+- 268 (Cherry Hill West) → girls join Cherry Hill East (267)
+- 26 (Sparta) — handled above
+- 35 (Northern Highlands) — already present from prior migration
+
+**Slash → dash display name cleanup:**
+- girls_schools school 76: "Morris Hills/Morris Knolls" → "Morris Hills-Morris Knolls"
+- boys_schools + schools: 314 (Demarest-Old Tappan), 62 (Lenape Valley-Hopatcong), 321 (Becton-Wood-Ridge), 44 (Leonia-Palisades), 83 (Lyndhurst-North Arlington), 130 (Brearley-Dayton), 383 (Middlesex-Dunellen)
+- school 3 everywhere: "Emerson-Park Ridge"
+
+**Code change:** `HeaderNav.tsx` — removed `.eq('is_combined', false)` from school search query; combined/co-op schools are real programs that must be searchable.
+
+**Reversible?** Data moves are reversible by re-routing FK refs back to artifact IDs; artifact school rows would need to be re-inserted.
+
+---
+
+## 2026-09-15 — Create boys_schools and girls_schools; fix Morris Hills; update school_directory
+
+**Migration file:** `docs/migrations/20260915_boys_girls_schools_split.sql`
+
+**Tables created:** `boys_schools`, `girls_schools`
+
+**Purpose:** Split gender-specific school display attributes out of the shared `schools` table. Each gender table stores `(school_id PK → schools.id, display_name, is_combined)`. The `schools.id` FK is unchanged across all other tables. Only display-facing queries join the gender tables.
+
+**Data fixes included:**
+- School 76 (Morris Hills): boys="Morris Hills"/not combined; girls="Morris Hills/Morris Knolls"/combined
+- `schools.display_name` for school 76 reverted to "Morris Hills" (the August 2026 consolidation migration had wrongly set it to the girls co-op name)
+- School 77 (Morris Knolls): removed from girls_schools (boys-only program); fixed inactive_school_seasons — was incorrectly marked inactive for boys, now inactive for girls only
+- School 385: not included in either gender table (artifact with no data)
+
+**Function updated:** `school_directory(p_gender, p_season)` — now joins `boys_schools` or `girls_schools` to resolve display name based on p_gender, falling back to `schools.display_name`. Removed the is_combined filter (no longer needed; artifact schools excluded by having no tournament entries).
+
+**Code changes:** `SchoolProfileCore.tsx` — gender-specific display name lookup in parallel with co-op queries. `roster-grade-import/schools/route.ts` — ?list=true now reads from `boys_schools`.
+
+**Reversible?** Yes — drop `boys_schools` and `girls_schools`, restore `schools.display_name = 'Morris Hills/Morris Knolls'` for id=76, re-deploy previous school_directory RPC.
+
+---
+
+## 2026-09-15 — Fix school_directory RPC to exclude is_combined schools
+
+**Migration file:** `docs/migrations/20260915_school_directory_is_combined_filter.sql`
+
+**Function changed:** `school_directory(p_gender, p_season)`
+
+**What changed:** Added `AND s.is_combined = false` to the `JOIN schools` clause. Combined/co-op school records (e.g. school 385 Morris Hills-Morris Knolls) were appearing in boys public school search because their `tournament_entries` rows were tagged to the combined record. The filter ensures only active single-program schools appear in results.
+
+**Reversible?** Yes — remove `AND s.is_combined = false` from the JOIN and re-run.
+
+---
+
+## 2026-09-15 — Create roster_grade_import staging table
+
+**Migration file:** `docs/migrations/20260915_roster_grade_import.sql`
+
+**Table created:** `roster_grade_import`
+
+**Purpose:** Persistent staging table for Track Wrestling full-program roster data. Serves two roles:
+1. Retroactive grade assignment — match Track roster entries to existing wrestlers, confirm grades, write `grade + grade_confirmed_source='roster_upload'` to live `wrestlers` table
+2. Ongoing new-wrestler lookup — when a new wrestler is added at a school, query `no_match` entries at that school to auto-suggest a grade
+
+**Columns:** `school_name_raw, first_name_raw, last_name_raw, weight_class, grade, school_id (FK), wrestler_id (FK), status, import_batch, confirmed_by, confirmed_at`
+
+**Status flow:** `pending → school_matched → wrestler_matched → confirmed` or `→ no_match` (open for future wrestler lookup) or `→ skipped` (deferred school)
+
+**Why:** Districts data only covers wrestlers who competed at districts (~3,600). Full school rosters include JV/backup wrestlers (~12,000+). This table is the bridge to grade the full active roster before each season rollover.
+
+**Reversible?** Yes — `DROP TABLE roster_grade_import CASCADE`
+
+---
+
+## 2026-09-12 — Split in_season_tournaments / tournament_bouts into separate girls tables
+
+**Migration file:** `docs/migrations/20260912_split_tournament_tables_girls.sql`
+
+**Tables created:**
+- `in_season_tournaments_girls` — mirrors `in_season_tournaments` without `gender` column (implicitly girls)
+- `tournament_bouts_girls` — mirrors `tournament_bouts` with FK to `in_season_tournaments_girls`
+- `in_season_tournament_participants_girls` — mirrors `in_season_tournament_participants` with girls FK
+- `in_season_tournament_seeds_girls` — mirrors `in_season_tournament_seeds` with girls FK
+
+**What changed:**
+- Phase 1 (this migration): creates tables + backfills from existing gender='F'/'both' rows in originals; originals left intact
+- Phase 2 (code): all source files updated to point boys → `in_season_tournaments`, girls → `in_season_tournaments_girls`
+- Phase 3 (cleanup, deferred): delete gender='F' rows from originals, drop `gender` column from `in_season_tournaments`
+
+**Why:** `in_season_tournaments` used a `gender` column on a shared table. RPCs joining `tournament_bouts` without a `gender` filter caused girls tournament pins to inflate boys rankings (Collingswood bug). Root fix is complete separation, matching the existing `dual_meets` / `dual_meets_girls` pattern.
+
+**Reversible?** Yes — drop the four new tables to roll back Phase 1 (original tables untouched)
+**Verified?** Pending — run verification queries at bottom of migration file after applying
+
+---
+
+## 2026-09-12 — Backfill wrestlers.grade from tournament_entries.grade_label
+
+**Migration file:** `docs/migrations/20260912_backfill_wrestler_grade.sql`
+
+**Tables affected:** `wrestlers` (rows updated)
+
+**What changed:**
+- `wrestlers.grade` backfilled with the most-recent `grade_label` ('Fr'/'So'/'Jr'/'Sr') from `tournament_entries` for each wrestler where `grade` was previously NULL
+- `grade_confirmed_source` set to `'districts'` and `grade_confirmed_at` stamped for all backfilled rows
+- Wrestlers with an already-set grade are untouched
+
+**Why:** `wrestlers.grade` was added in `20260824_roster_enrollment.sql` without a backfill. The grade was already captured per-entry at import time in `tournament_entries.grade_label`, causing the admin profile to show "Unknown" for wrestlers whose grade was only in the entry-level data.
+
+**Reversible?** Yes — see rollback block at bottom of migration  
+**Verified?** Yes — 2026-09-12
+
+---
+
+## 2026-09-09 — Snapshot Dashboard schema
+
+**Migration file:** `docs/migrations/20260909_snapshot_schema.sql`
+
+**Tables affected:** `schools` (column added), `snapshot_reports` (new), `snapshot_season_highs` (new), `snapshot_streak_state` (new), `snapshot_reports_girls` (new), `snapshot_season_highs_girls` (new), `snapshot_streak_state_girls` (new)
+
+**What changed:**
+- `schools.locale_section` added — geographic section for Non-Public schools (North I/II/Central/South)
+- `snapshot_reports` / `_girls` — one row per date; full computed payload as JSONB
+- `snapshot_season_highs` / `_girls` — season record per stat_key (fastest_pin, longest_streak, etc.)
+- `snapshot_streak_state` / `_girls` — rolling streak per wrestler+type; used for snapped streak detection
+
+**Reversible?** Yes — see rollback block at bottom of migration
+**Verified?** Yes — 2026-09-09
+
+---
+
+## 2026-09-09 — Delete girls dual meets Dec 2025 – Jan 2026 for reimport
+
+**Migration file:** `docs/migrations/20260909_delete_girls_duals_dec2025_jan2026.sql`
+
+**Tables affected:** `dual_meets_girls` (rows deleted), `dual_meet_matches_girls` (rows cascaded)
+
+**What changed:**
+- All `dual_meets_girls` rows with `meet_date` between 2025-12-01 and 2026-01-31 deleted
+- All child `dual_meet_matches_girls` rows deleted via `ON DELETE CASCADE`
+- Cleared to allow reimport with corrected weight-class parsing
+
+**Reversible?** No — reimport from source files after running
+**Verified?** Yes — 2026-09-09
+
+---
+
+## 2026-09-09 — Create separate girls dual meet tables
+
+**Migration file:** `docs/migrations/20260909_girls_dual_meet_tables.sql`
+
+**Tables affected:** `dual_meets_girls` (new), `dual_meet_matches_girls` (new), `dual_meets` (rows deleted), `dual_meet_matches` (rows deleted)
+
+**What changed:**
+- Created `dual_meets_girls` — mirror of `dual_meets` but without `gender` column (implied 'F')
+- Created `dual_meet_matches_girls` — mirror of `dual_meet_matches` WITHOUT the `dmm_unique_weight_per_meet` unique constraint (allows tri-meets / jamborees with multiple bouts per weight class)
+- Both tables have RLS public-read, service_role write
+- Existing `gender='F'` rows migrated from `dual_meets` → `dual_meets_girls`
+- Their match rows migrated from `dual_meet_matches` → `dual_meet_matches_girls`
+- Original girls rows deleted from the shared tables
+
+**PENDING** — run `docs/migrations/20260909_girls_dual_meet_tables.sql` in Supabase SQL editor
+
+**Reversible?** Yes — see rollback block at bottom of migration file (drops both girls tables)
+**Verified?** Pending
+
+---
+
+## 2026-09-09 — Add gender to dual_import_drafts
+
+**Migration file:** `docs/migrations/20260909_dual_import_drafts_gender.sql`
+
+**Tables affected:** `dual_import_drafts`
+
+**What changed:**
+- Added `gender text NOT NULL DEFAULT 'M' CHECK (gender IN ('M', 'F'))` column
+- Drafts are now self-describing — a girls draft and a boys draft are no longer identical in storage
+- The draft list UI shows a Boys/Girls badge next to each saved draft
+
+**APPLIED** — run `docs/migrations/20260909_dual_import_drafts_gender.sql` in Supabase SQL editor
+
+**Reversible?** Yes — `ALTER TABLE dual_import_drafts DROP COLUMN gender;`
+**Verified?** Pending
+
+---
+
+
+## 2026-09-07 — Fix girls co-op school enrollments
+
+**Migration file:** `docs/migrations/20260907_fix_girls_coop_enrollments.sql`
+
+**What changed:**
+- `girls_school_districts` + `girls_school_regions` — Ramsey (18) removed from D1/Region 10; Ramsey/Northern Highlands (392) inserted in its place.
+- `girls_school_districts` + `girls_school_regions` — Cherry Hill East (267) and Cherry Hill West (268) removed from D11/Region 12; Cherry Hill East/Cherry Hill West (363) inserted as the single combined program entity.
+
+**Why:** Solo component schools were enrolled instead of the correct co-op school entities. Confirmed by auditing all "/" school names in the official NJSIAA PDF against DB enrollments.
+
+**Reversible?** Yes — swap the DELETEs and INSERTs.
+
+---
+
+## 2026-09-07 — Fix girls district misassignments (D5/D6, D11/D12)
+
+**Migration file:** `docs/migrations/20260907_fix_girls_district_assignments.sql`
+
+**Source of truth:** NJSIAA Girls Wrestling District/Region Alignment 2025-2026 PDF
+
+**What changed:**
+- `girls_school_districts` — Woodbridge (187): moved from District 5 → District 6 (still Region 11, no region change).
+- `girls_school_districts` — Timber Creek (301), Washington Township (302), Williamstown (303), Winslow (304): moved from District 11 → District 12 (still Region 12, no region change).
+- D1–D4 and D7–D10 were verified correct against the official PDF.
+
+**Reversible?** Yes — swap district_id values in the same UPDATEs.
+
+---
+
+## 2026-09-07 — Fix Jefferson girls district/region enrollment
+
+**Migration file:** `docs/migrations/20260907_fix_jefferson_girls_district_region.sql`
+
+**What changed:**
+- `girls_school_districts` — removed Jefferson (4) from District 1 season 2; inserted Jefferson-Sparta (372) into District 1 season 2.
+- `girls_school_regions` — removed Jefferson (4) from Region 10 season 2; inserted Jefferson-Sparta (372) into Region 10 season 2.
+
+**Why:** The original district setup migration used school_id=4 (Jefferson, boys school) instead of school_id=372 (Jefferson-Sparta, girls co-op). This caused `loadGenderProgramSchoolIds('F', 2)` to include Jefferson and exclude Jefferson-Sparta from the girls school matching pool, making the importer match "Jefferson-Sparta" fuzzy → "Jefferson".
+
+**Reversible?** Yes — swap the DELETEs and INSERTs.
+
+---
+
+## 2026-09-07 — Jefferson-Sparta girls co-op alias + data cleanup
+
+**Migration file:** `docs/migrations/20260907_jefferson_sparta_girls_alias.sql`
+
+**What changed:**
+- `school_aliases` — new row: alias="Jefferson", alias_type="nj", school_id=372 (Jefferson-Sparta), notes="gender:F". Redirects the raw RTF name "Jefferson" to Jefferson-Sparta for girls imports. Boys still exact-match to Jefferson (ID 4).
+- `wrestler_name_aliases` — re-linked any girls wrestler aliases whose school_id was Jefferson (4); corrected to Jefferson-Sparta (372). (wrestlers table has no school_id column — school bond lives here.)
+- `tournament_bouts` — re-linked wrestler1/2_school_id for girls wrestlers incorrectly anchored to Jefferson.
+- `tournament_placements` — same correction for girls placement rows.
+- `tournament_entries` — 22 girls postseason entries had school_id=4; corrected to 372.
+- `dual_meets` — team1/2_school_id corrected for gender='F' meets involving Jefferson.
+- `dual_meet_matches` — school_a/b_id corrected for girls meets.
+- `precomputed_team_scores` — 1 girls_regions row had school_id=4; corrected to 372 with school_name='Jefferson-Sparta'.
+
+**Code side (no schema change):** `matchSchoolNames` now checks gender-specific aliases (notes="gender:F"/"gender:M") BEFORE the exact NJ display_name step, so co-op redirects take priority over same-name boys schools.
+
+**Reversible?** Yes — delete the alias row; revert each table by re-running the inverse UPDATE (swap Jefferson-Sparta and Jefferson in the WHERE/SET clauses).
+
+---
+
+## 2026-09-07 — Document school_directory RPC (RECONSTRUCTED)
+
+**Migration file:** `docs/migrations/20260907_document_school_directory_rpc.sql`
+
+**What changed:**
+- No schema change — documents the `school_directory(p_gender, p_season)` function that was previously created directly in the Supabase dashboard without a migration file.
+- Function returns schools with wrestlers in gender-scoped postseason tournaments; used by all public girls/boys school directory pages.
+- Gender separation enforced by `tournaments.gender = p_gender` join condition.
+
+---
+
+## 2026-09-03 — fan_scores: fan scoring table + meet_time on dual_meets
+
+**Migration file:** `docs/migrations/20260903_fan_scores.sql`
+
+**What changed:**
+- `dual_meets.meet_time time` (nullable) — stored match start time; NULL defaults to 18:00 Eastern when computing the 15-min fan-scoring window
+- New table `fan_scores` — stores a fan's per-bout scored picks for a dual meet, linked to `auth.users.id`. RLS restricts each user to their own rows. Columns: id, user_id, dual_meet_id, bouts (jsonb array), team_a_score, team_b_score, finalized_at, created_at, updated_at. Unique on (user_id, dual_meet_id).
+
+**APPLIED** — 2026-09-04
+
+**Reversible?** Yes — `DROP TABLE fan_scores; ALTER TABLE dual_meets DROP COLUMN meet_time;`
+
+---
+
+## 2026-09-02 — admin_build_health_tasks: new table for Admin Build Health page
+
+**Migration file:** `docs/migrations/20260902_admin_build_health_tasks.sql`
+
+**What changed:** New table `admin_build_health_tasks` — stores per-section tasks visible to all admin users. Rows are deleted (not soft-deleted) when marked complete. Has RLS open to all authenticated users.
+
+**APPLIED** — NOT YET — run in Supabase SQL editor
+
+**Reversible?** Yes — `DROP TABLE admin_build_health_tasks;`
+
+---
+
+## 2026-09-01 — fix_tournament_strength_rounds: fix Bracket column in tournament hub
+
+**Migration file:** `docs/migrations/20260901_fix_tournament_strength_rounds.sql`
+
+**What changed:** Rebuilt `tournament_strength_report` RPC with two fixes: (1) `bracket_status` CTE now compares against normalized DB round codes (`'F'`, `'3rd_Place'`, `'5th_Place'`, `'7th_Place'`) instead of display labels (`'Finals'`, `'3rd Place'`, etc.). (2) Drops both the old 2-param and 3-param signatures and recreates the gender-aware 3-param version cleanly so boys and girls hub both work.
+
+**APPLIED** — NOT YET — run in Supabase SQL editor
+
+**Reversible?** Yes — re-run `20260811_tournament_point_value.sql` to restore old 2-param version.
+
+---
+
+## 2026-09-01 — add_csv_source_format: extend source_format check constraint
+
+**Migration file:** `docs/migrations/20260901_add_csv_source_format.sql`
+
+**What changed:** Drops and recreates the `in_season_tournaments_source_format_check` constraint to add `'csv'` as a valid value alongside `'full_bracket'` and `'school_tracking'`. Required for the new CSV import pipeline.
+
+**APPLIED** — NOT YET — run in Supabase SQL editor
+
+**Reversible?** Yes — drop and recreate constraint without `'csv'`.
+
+---
+
+## 2026-08-31 — peddie_school_is_nj_false: mark Peddie School as non-NJSIAA
+
+**Migration file:** `docs/migrations/20260831_peddie_school_is_nj_false.sql`
+
+**What changed:** Set `schools.is_nj = false` for The Peddie School (id=603). Back-fills wrestlers whose only tournament_entries school is Peddie to `is_oos = true`. Fixes wrestler search showing non-NJSIAA wrestlers.
+
+**APPLIED** — NOT YET — run in Supabase SQL editor
+
+**Reversible?** Yes — set `is_nj = true` for id=603 and `is_oos = false` for affected wrestlers.
+
+---
+
+## 2026-08-31 — placement_bracket: add bracket column to tournament_placements
+
+**Migration file:** `docs/migrations/20260831_placement_bracket.sql`
+
+**What changed:** Added `bracket text NOT NULL DEFAULT ''` to `tournament_placements`. Replaced the unique constraint `(in_season_tournament_id, weight_class, place)` with `(in_season_tournament_id, weight_class, place, bracket)`. Enables girls tournaments to have A/B bracket pools at the same weight class, each with their own placements stored under bracket='A'/'B'.
+
+**APPLIED** — NOT YET — run in Supabase SQL editor
+
+**Reversible?** Yes — drop the new constraint, re-add the old one, then `ALTER TABLE public.tournament_placements DROP COLUMN bracket;`
+
+---
+
+## 2026-08-30 — grant_team_scores_permissions: fix service_role access on team scores table
+
+**Migration file:** `docs/migrations/20260830_grant_team_scores_permissions.sql`
+
+**What changed:** Added explicit `GRANT` statements on `in_season_tournament_team_scores` for `service_role` (ALL), `authenticated` (SELECT), and `anon` (SELECT). The table was created via SQL migration without these grants, causing silent "permission denied" failures during RTF import's team score insert.
+
+**APPLIED** — NOT YET — run in Supabase SQL editor
+
+**Reversible?** Yes — `REVOKE ALL ON public.in_season_tournament_team_scores FROM service_role, authenticated, anon;`
+
+---
+
+## 2026-08-30 — nonnjsiaa_schema: clubs, MS wrestler identity, HS off-season tables
+
+**Migration file:** `docs/migrations/20260830_nonnjsiaa_schema.sql`
+
+**Tables created:** `nonnjsiaa_clubs`, `ms_wrestlers`, `hs_offseason_tournaments`, `hs_offseason_placements`
+
+**Tables dropped:** `ms_postseason_credit`
+
+**Tables altered:** `ms_placements` — dropped `hs_wrestler_id`, added `ms_wrestler_id` (FK → `ms_wrestlers`), added `club_id` (FK → `nonnjsiaa_clubs`)
+
+**What changed:** Replaces the direct `ms_placements.hs_wrestler_id` link (which required a separate `ms_postseason_credit` cache) with a proper `ms_wrestlers` identity table. Each MS wrestler now has a stable record with a `canonical_name` chosen during import review; all their placements across different tournaments link to this single identity via `ms_wrestler_id`. The optional `ms_wrestlers.hs_wrestler_id` link to a HS wrestler record is set manually to enable club badge display and on-the-fly hammer score credit computation — the recalculate route now traverses `ms_wrestlers → ms_placements → ms_tournament_tiers` instead of reading a cached credit value. `nonnjsiaa_clubs` is a shared lookup table for club programs; `club_id` appears on both `ms_placements` and `hs_offseason_placements` so a club profile can aggregate all results across both domains. `hs_offseason_tournaments` and `hs_offseason_placements` are reference-only (no tier credit, no hammer score impact); `hs_wrestler_id` on placements is matched during import using the standard `matchWrestler()` lookup. RLS: authenticated read, service_role write on all new tables.
+
+**APPLIED** — NOT YET — run in Supabase SQL editor
+
+**Reversible?** Yes — `DROP TABLE IF EXISTS hs_offseason_placements, hs_offseason_tournaments, ms_wrestlers, nonnjsiaa_clubs CASCADE; ALTER TABLE public.ms_placements DROP COLUMN IF EXISTS ms_wrestler_id, DROP COLUMN IF EXISTS club_id;` — note: `ms_postseason_credit` and `ms_placements.hs_wrestler_id` are not automatically restored.
+
+**Verified?** No
+
+---
+
+## 2026-08-29 — ms_prospect_schema: middle school prospect tracking tables
+
+**Migration file:** `docs/migrations/20260829_ms_prospect_schema.sql`
+
+**Tables created:** `ms_tournament_tiers`, `ms_tournaments`, `ms_placements`, `ms_postseason_credit`
+
+**What changed:** Foundation for the MS prospect system. `ms_tournament_tiers` stores named tier definitions (National, State, Regional, etc.) with placement credit values (`credit_1` through `credit_8`) expressed on the same 0–50 scale as the hammer score postseason component. `ms_tournaments` stores individual MS tournament events linked to a tier; changing the tier retroactively affects all credit calculations for its placements. `ms_placements` holds one row per podium finish (places 1–8 only — no match-level data); `wrestler_name` and `school_name` are stored raw; `hs_wrestler_id` is null until a human confirms the link during HS import review. Indexed on `lower(wrestler_name)` for fast cross-reference lookups. `ms_postseason_credit` stores the confirmed MS credit per HS wrestler after a link is approved; `superseded_at` is set once the wrestler has real HS postseason data, at which point the hammer score formula ignores the MS credit. RLS: authenticated read; service_role write on all four tables.
+
+**APPLIED** — NOT YET — run in Supabase SQL editor
+
+**Reversible?** Yes — `DROP TABLE IF EXISTS ms_postseason_credit, ms_placements, ms_tournaments, ms_tournament_tiers CASCADE;`
+**Verified?** No
+
+---
+
+## 2026-08-29 — individual_upset_schema: upset tracking tables for weekly rankings publication
+
+**Migration file:** `docs/migrations/20260829_individual_upset_schema.sql`
+
+**Tables created:** `individual_upsets`, `individual_upset_completion`
+
+**What changed:** Two tables support per-weight upset review published alongside weekly individual rankings. `individual_upsets` stores one row per upset match per week+weight, auto-populated from `wrestler_match_score_log` for the Mon–Sun window ending on the week's Sunday publish date. Geographic context (district/region/section for both wrestlers) is denormalized at compute time. `include_in_publish` is toggled by admin during editorial review. Publication scoping rule: upset appears under the winner's (underdog's) district/section; the loser's group gets a "reason for change" note only if the loss caused a rank drop in that group's rankings. `individual_upset_completion` marks the upset review done for a week+weight (single pass per weight, not per district). RLS: authenticated read; service_role full access. Changes section in published output starts at Week 2 (compares to Week 1 saved rankings).
+
+**APPLIED** — NOT YET — run in Supabase SQL editor
+
+**Reversible?** Yes — `DROP TABLE IF EXISTS individual_upset_completion, individual_upsets CASCADE;`
+**Verified?** No
+
+---
+
+## 2026-08-29 — individual_ranking_schema: new tables for district→state ranking workbench
+
+**Migration file:** `docs/migrations/20260829_individual_ranking_schema.sql`
+
+**Tables created:** `individual_ranking_weeks`, `individual_rankings`, `individual_ranking_completion`
+
+**What changed:** Foundation for the individual rankings workbench. Three tables support the district → region → section → state workflow across 9 weekly ranking deadlines. `individual_ranking_weeks` holds the 9 week dates per season/gender (seeded separately). `individual_rankings` stores one row per wrestler per stage-entity per week/weight, with `manual_rank` (NULL until assigned) and a `hammer_score_snapshot` copied at load time. `individual_ranking_completion` is written when a stage is saved/locked, enforcing the gating order in application code. `stage_entity` is a text key: district_id, region_id, section name, or 'state'. RLS: public read on weeks; authenticated read on rankings/completion; service_role full access.
+
+**APPLIED** — `docs/migrations/20260829_individual_ranking_schema.sql`
+
+**Reversible?** Yes — `DROP TABLE individual_ranking_completion, individual_rankings, individual_ranking_weeks CASCADE;`
+**Verified?** No
+
+---
+
+## 2026-08-29 — individual_ranking_season3_seed: week-date rows for Season 3
+
+**Migration file:** `docs/migrations/20260829_individual_ranking_season3_seed.sql`
+
+**Tables affected:** `individual_ranking_weeks`
+
+**What changed:** Seeds 18 rows (9 weeks × 2 genders) for Season 3 (2026-27). Dates: Dec 13, 20, 27 2026; Jan 3, 10, 17, 24, 31; Feb 7 2027. **DO NOT RUN until Season 3 exists in `seasons` table (`year_label = '2026-27'`).** Script validates and raises an error if Season 3 is missing. Safe to re-run (ON CONFLICT DO NOTHING).
+
+**APPLIED** — NOT YET — run after Season 2 → Season 3 rollover
+
+**Reversible?** Yes — `DELETE FROM individual_ranking_weeks WHERE season_id = (SELECT id FROM seasons WHERE year_label = '2026-27');`
+**Verified?** No
+
+---
+
+## 2026-08-28 — lb_rs_individual_stats v10: add weight_class to RPC
+
+**Migration file:** `docs/migrations/20260828_rs_leaderboard_rpcs_v10.sql`
+
+**Tables affected:** none (function only)
+
+**What changed:** Added `weight_class int` and `grade text` to `lb_rs_individual_stats` return type. `weight_class` computed via `MODE() WITHIN GROUP (ORDER BY r.weight_class)` — each wrestler's most-frequent competing weight, fixing filter that previously used `fastest_pin_wt`/`fastest_tf_wt` (which could be a different weight than where the wrestler competes). `grade` joined from `wrestlers.grade` to enable filtering by class year (Fr/So/Jr/Sr).
+
+**APPLIED** — `docs/migrations/20260828_rs_leaderboard_rpcs_v10.sql`
+
+**Reversible?** Yes — re-run v9 migration to roll back.
+**Verified?** No
+
+---
+
+## 2026-08-27 — inactive_school_seasons: add gender column; fix school_coops gender values
+
+**Migration file:** `docs/migrations/20260827_inactive_school_seasons_gender.sql`
+
+**Tables affected:** `inactive_school_seasons` (altered), `school_coops` (altered)
+
+**What changed:**
+- `school_coops.gender`: updated all `'B'` values to `'M'`; added CHECK constraint enforcing `'M'|'F'` only
+- `inactive_school_seasons.gender`: new NOT NULL text column with CHECK `'M'|'F'`
+- Backfilled gender from `school_coops` for known coop member rows; defaulted remaining to `'M'`
+- Dropped old unique constraint `(school_id, season_id)`; replaced with `(school_id, season_id, gender)` so a school can be inactive for one gender but active for the other in the same season
+
+**Applied:** No — run migration in Supabase SQL editor before deploying.
+
+**Reversible?** Yes — ALTER TABLE inactive_school_seasons DROP COLUMN gender; revert school_coops UPDATE.
+
+---
+
+## 2026-08-27 — hammer_score_config: formula configuration table with initial seed values
+
+**Migration file:** `docs/migrations/20260827_hammer_score_config.sql`
+
+**Tables affected:** `hammer_score_config` (new)
+
+**What changed:**
+- New table `hammer_score_config` — stores all tunable hammer score formula parameters as a JSONB blob, keyed by gender + season
+- Columns: id (bigint identity PK), gender ('M'/'F'), season (text), name (text), is_active (boolean), config (jsonb), created_at
+- Partial unique index on (gender, season) WHERE is_active = true — enforces exactly one active config per gender/season
+- RLS enabled: public SELECT, service-role write
+- Seeded with one active row per gender for 2025-26, containing all current formula values:
+  - Matches: group_weights {a:8, b:6, c:4, d:2}, fall time buckets, expected outcome thresholds, score rates, weight class adjustment, OOS bands, bootstrap multiplier, PS elevation threshold (16)
+  - Tournaments: place_points by tier (20/15/10/5/1 pt), exclude_winner_below_avg, component ceiling (20)
+  - Postseason: state placement scores, district scores, component ceiling (50)
+  - Component ceilings: postseason 50, tournament 20, match 30
+
+**Applied:** No — run migration in Supabase SQL editor.
+
+**Reversible?** Yes — DROP TABLE IF EXISTS public.hammer_score_config.
+
+**Verified?** No — run migration before deploying.
+
+---
+
+## 2026-08-26 — in_season_tournament_seeds: bracket seed storage for in-season tournaments
+
+**Migration file:** `docs/migrations/20260826_in_season_tournament_seeds.sql`
+
+**What changed:**
+- New table `in_season_tournament_seeds` — stores per-weight-class seeds for in-season tournaments
+- Columns: id, in_season_tournament_id (FK → in_season_tournaments), weight_class, seed, wrestler_name_raw, school_name_raw, wrestler_id (nullable FK → wrestlers), school_id (nullable FK → schools)
+- Unique constraint on (in_season_tournament_id, weight_class, seed)
+- RLS + GRANTs mirroring other in_season tables
+
+**Reversible?** Yes — DROP TABLE IF EXISTS in_season_tournament_seeds.
+
+**Verified?** No — run migration before deploying.
+
+---
+
+## 2026-08-26 — girls_district_region_assignments: assign all NJ schools to girls districts/regions for season 2
+
+**Migration file:** `docs/migrations/20260826_girls_district_region_assignments.sql`
+
+**What changed:**
+- Inserted ~250 NJ schools into `girls_school_districts` and `girls_school_regions` for season_id = 2 (2025-26)
+- 12 girls districts (IDs 1–12), 4 girls regions (9=Central, 10=North I, 11=North II, 12=South)
+- Region-district alignment: D1-3 → North I, D4-6 → North II, D7-9 → Central, D10-12 → South
+- Post-migration additions (via individual SQL statements):
+  - School 150 (JFK Memorial) → District 6, Region 11
+  - School 370 (Jackson Township) → District 9, Region 9 (replaces retired Jackson Liberty 219)
+  - School 256 (Westampton Tech) → District 10, Region 12
+  - School 305 display_name updated to 'Clayton/Glassboro'
+  - School 219 (Jackson Liberty) removed from D9/R9 and marked inactive for season 2
+
+**Reversible?** Yes — DELETE FROM girls_school_districts / girls_school_regions WHERE season_id = 2.
+
+**Verified?** Yes — 2026-08-26
+
+---
+
+## 2026-08-26 — school_coop_data_transfer: migrate combined school records to primary schools
+
+**Migration file:** `docs/migrations/20260826_school_coop_data_transfer.sql`
+
+**What changed:**
+- Transfers tournament_entries, dual_meets, power_points, precomputed_team_scores, school_aliases from retired combined school records to their primary schools:
+  - Jefferson-Sparta (372) → Jefferson (4), season 2 only
+  - Ramsey/Northern Highlands (392) → Ramsey (18), season 2 only
+  - Morris Hills-Morris Knolls (385) → Morris Hills (76), all seasons
+  - Cliffside Park combo (365) → Cliffside Park (364), season 1 only
+
+**Reversible?** Partially — aliases and inactive flags can be reversed; score/entry data moves are destructive without a backup.
+
+**Verified?** Yes — 2026-08-26
+
+---
+
+## 2026-08-26 — school_coop_consolidation: display names + inactive season marks
+
+**Migration file:** `docs/migrations/20260826_school_coop_consolidation.sql`
+
+**What changed:**
+- Updated display_name for 12 co-op primary schools (e.g. Newton → Newton/Kittatinny, Morris Hills → Morris Hills/Morris Knolls)
+- Marked secondary/retired schools inactive via inactive_school_seasons:
+  - Permanently inactive (all seasons): Kittatinny (315), Morris Knolls (77), combined records 385/372/392/365, Ridgefield Memorial season 1
+  - Inactive for 2025-26 only: Sparta (26), Northern Highlands (35), Old Tappan (6), Randolph (87), Parsippany (64)
+
+**Reversible?** Yes — DELETE from inactive_school_seasons, revert display_names on schools.
+
+**Verified?** Yes — 2026-08-26
+
+---
+
+## 2026-08-26 — gender_split_school_data: fully separate boys and girls competitive tables
+
+**Migration file:** `docs/migrations/20260826_gender_split_school_data.sql`
+
+**What changed:**
+- Created fully separate tables for every competitive dimension of boys and girls programs:
+  - `boys_districts` / `girls_districts` — lookup tables (boys migrated from `districts`; girls needs 12 district entries)
+  - `boys_regions` / `girls_regions` — migrated from `regions WHERE gender = 'M'/'F'`
+  - `boys_school_districts` / `girls_school_districts` — season-scoped district assignment, PK(school_id, season_id)
+  - `boys_school_regions` / `girls_school_regions` — season-scoped region assignment, PK(school_id, season_id)
+  - `boys_school_conferences` / `girls_school_conferences` — season-scoped conference, PK(school_id, season_id)
+  - `boys_school_profiles` / `girls_school_profiles` — non-seasonal section + classification per program
+  - `boys_coaches` / `girls_coaches` — existing coaches migrated to boys_coaches; girls starts empty
+- RLS applied to all new tables (service_role full, anon/authenticated read)
+- Old shared tables (`districts`, `regions`, `school_districts`, `school_regions`, `school_conferences`) kept for safety, not dropped
+- All API routes updated to use gender-split tables: `school-profile`, `school-groups`, `school-coaches`, `school-season-status`
+
+**Reversible?** Old tables preserved; drop new tables to revert.
+
+**Verified?** Yes — 2026-08-26
+
+---
+
+## 2026-08-26 — inactive_school_seasons: per-season school deactivation
+
+**Migration file:** `docs/migrations/20260826_inactive_school_seasons.sql`
+
+**What changed:**
+- New `inactive_school_seasons(school_id, season_id, PRIMARY KEY(school_id, season_id))` table
+- A row = school has no program for that season; admin toggle inserts/deletes the row
+- On deactivation, API removes school from all boys and girls seasonal group tables for that season
+- Matcher (`matchSchools.ts`) now filters out inactive schools when `seasonId` is provided
+- Admin school profile page shows "Inactive this season" toggle per season
+
+**Reversible?** Yes — `DROP TABLE inactive_school_seasons;`
+
+**Verified?** Pending — run migration in Supabase SQL editor
+
+---
+
+## 2026-08-26 — tournament_registry: new table
+
+**Migration file:** `docs/migrations/20260826_tournament_registry.sql`
+
+**What changed:**
+- New `tournament_registry` table to track all tournaments and jamborees independent of import status
+- Fields: season, name, date_start, date_end, state, event_type (tournament/jamboree), gender, point_value (1–20), imported, in_season_tournament_id (FK), notes
+- Admin-only RLS (service role access via API routes)
+
+**Reversible?** Yes — `DROP TABLE tournament_registry;`
+
+**Verified?** Pending — run migration in Supabase SQL editor
+
+---
+
+## 2026-08-25 — school_wrestlers: add girls tournament type support
+
+**Migration file:** `docs/migrations/20260825_school_wrestlers_girls_support.sql`
+
+**Functions changed:** `school_wrestlers(integer, gender_type, smallint)`
+
+**What changed:**
+- Pivot CTE now matches `IN ('regions', 'girls_regions')` and `IN ('boys_state', 'girls_state')` instead of hardcoded boys-only strings
+- Short-name derivation handles `girls_regions` and `girls_state` tournament types
+- Districts short-name regex strips both boys and girls prefix patterns
+- Enables girls school profile pages to show regions and state placements
+- Also removed dead `girls_school_wrestlers` call in `SchoolProfileCore.tsx` (that function was dropped in 20260717)
+
+**Reversible?** Yes — re-run `docs/migrations/20260729_fix_school_wrestlers_rpc_column_names.sql`
+
+**Verified?** Pending — run migration in Supabase SQL editor
+
+---
+
+## 2026-08-25 — wrestler_hammer_scores: add gender column
+
+**Migration file:** `docs/migrations/20260825_hammer_scores_gender.sql`
+
+**What changed:**
+- Added `gender text NOT NULL DEFAULT 'M'` column to `wrestler_hammer_scores`
+- Added index `idx_whs_season_gender` on `(season, gender)`
+- Enables gender-specific hammer score runs: each run now deletes and rewrites only the specified gender's rows, so boys and girls scores coexist in the table
+- Admin hammer-scores page can now filter by gender without joining wrestlers
+
+**Reversible?** Yes — `ALTER TABLE wrestler_hammer_scores DROP COLUMN gender`
+
+**Verified?** Pending — run migration in Supabase SQL editor before using girls recalculate
+
+---
+
+## 2026-08-25 — tournament_strength_report: add p_gender parameter
+
+**Migration file:** `docs/migrations/20260825_tournament_strength_gender.sql`
+
+**Functions changed:** `tournament_strength_report(text, smallint)` → `tournament_strength_report(text, smallint, text)`
+
+**What changed:**
+- Added `p_gender text DEFAULT 'M'` parameter
+- `tournaments.gender` filter uses `p_gender::gender_type` cast (column is enum)
+- `in_season_tournaments.gender` filter uses `p_gender` directly (column is text)
+- Post-season tournament types switch between boys (`districts`/`regions`/`boys_state`) and girls (`districts`/`girls_regions`/`girls_state`) based on gender
+- Admin tournament strength page now reads `AdminGenderContext` and shows only the selected program's tournaments
+
+**Reversible?** Yes — drop the new function and re-run `20260811_tournament_point_value.sql`
+
+**Verified?** Applied 2026-08-25
+
+---
+
+## 2026-08-25 — Drop seasons lifecycle columns (NOT YET APPLIED)
+
+**Migration file:** `docs/migrations/20260825_drop_seasons_lifecycle_columns.sql`
+
+**Tables affected:** `seasons` (columns dropped), index dropped
+
+**What changed:**
+- Drops `seasons.stage`, `seasons.is_public_default`, `seasons.finalized_at`
+- Drops `seasons_one_public_default` partial unique index
+- Phase 2 of 2: run only after code has deployed and been verified reading from `season_gender_state`
+
+**Reversible?** Yes — re-run `20260825_seasons_lifecycle.sql` to restore columns; data is in `season_gender_state`
+
+**Verified?** NOT YET APPLIED
+
+---
+
+## 2026-08-25 — season_gender_state table (NOT YET APPLIED)
+
+**Migration file:** `docs/migrations/20260825_season_gender_state.sql`
+
+**Tables added:** `season_gender_state`
+
+**What changed:**
+- Created `season_gender_state(id, season_id, gender, stage, is_public_default, created_at, finalized_at)`
+- `gender` uses `'M'`/`'F'` convention (matches wrestlers, dual_meets, in_season_tournaments)
+- `UNIQUE(season_id, gender)` — one row per program per season year
+- Two partial unique indexes scoped per gender (replaces the old `seasons_one_public_default` which had no gender scope)
+- Seeded: season 1 (2024-25) → archived/false for M+F; season 2 (2025-26) → season/true for M+F
+- RLS: public read, service_role full access
+- **Phase 1 of 2**: does NOT drop `seasons.stage` / `seasons.is_public_default` yet — existing code is unaffected until Phase 2 (code update + DROP migration)
+
+**Reversible?** Yes — `DROP TABLE IF EXISTS season_gender_state;`
+
+**Verified?** APPLIED 2026-08-25
+
+---
+
+## 2026-08-24 — Data browser helper RPCs (APPLIED)
+
+**Migration file:** `docs/migrations/20260824_data_browser_helpers.sql`
+
+**What changed:**
+- Created `admin_list_tables()` — returns all base tables in the public schema
+- Created `admin_table_schema(p_table)` — returns column metadata including PK flags and FK references
+
+**Verified?** APPLIED (confirmed via information_schema.routines 2026-08-25).
+
+---
+
+## 2026-08-25 — Fix postseason_checklist individual step_keys (APPLIED)
+
+**Migration file:** `docs/migrations/20260825_postseason_checklist_fix.sql`
+
+**Tables affected:** `postseason_checklist`
+
+**What changed:**
+- DELETEd wrong individual step_keys `district_brackets_set` and `region_seeds_forecasted`
+- INSERTed correct individual step_keys: `district_seeds_forecasted`, `district_seeds_set`, `results_imported`
+- Team step_keys unchanged: `seeds_set`, `results_imported`, `finalized`
+
+**Reversible?** Re-insert deleted rows manually if needed.
+
+**Verified?** APPLIED
+
+---
+
+## 2026-08-25 — Season progress tracking: preseason + postseason checklists (APPLIED)
+
+**Migration file:** `docs/migrations/20260825_progress_tracking.sql`
+
+**Tables affected:** `preseason_checklist` (new), `postseason_checklist` (new)
+
+**What changed:**
+- Created `preseason_checklist(id, season_id, step_key, status, completed_at)` with UNIQUE(season_id, step_key); seeded seasons 1+2 with 7 step_keys at 'not_started'
+- Created `postseason_checklist(id, season_id, side, step_key, status, completed_at)` with UNIQUE(season_id, side, step_key); seeded seasons 1+2 with proposed team/individual step_keys
+- Both tables: RLS enabled, service_role full access, anon/authenticated read
+
+**Postseason individual step_keys were wrong as originally applied — run 20260825_postseason_checklist_fix.sql to correct them.**
+
+**Reversible?** Yes — DROP TABLE preseason_checklist, postseason_checklist;
+
+**Verified?** APPLIED. Follow up with 20260825_postseason_checklist_fix.sql.
+
+---
+
+## 2026-08-25 — Seasons lifecycle extension (APPLIED)
+
+**Migration file:** `docs/migrations/20260825_seasons_lifecycle.sql`
+
+**Tables affected:** `seasons` (extended)
+
+**What changed:**
+- Added columns to existing `seasons` table: `year_label` (text), `stage` (text: 'preseason'/'season'/'postseason'/'archived'), `is_public_default` (boolean default false), `created_at` (timestamptz), `finalized_at` (timestamptz nullable)
+- Seeded season 1 (2024-25, archived) and season 2 (2025-26, season, is_public_default=true)
+- Added partial unique index `seasons_one_public_default ON seasons(is_public_default) WHERE is_public_default = true`
+- Enabled RLS with public-read and service-role-write policies
+
+**Reversible?** Yes — ALTER TABLE seasons DROP COLUMN year_label, stage, is_public_default, created_at, finalized_at; DROP INDEX seasons_one_public_default;
+
+**Verified?** APPLIED
+
+---
+
+## 2026-08-25 — Seasonal school data (district, region, conference, coaches) (APPLIED)
+
+**Migration file:** `docs/migrations/20260825_seasonal_school_data.sql`
+
+**Tables affected:** `school_districts` (extended), `school_regions` (extended), `school_conferences` (new), `coaches` (extended if needed)
+
+**What changed:**
+- Added `season_id integer REFERENCES seasons(id) NOT NULL` to `school_districts`; backfilled existing rows to season 1 and copied to season 2
+- Added `season_id integer REFERENCES seasons(id) NOT NULL` to `school_regions`; same backfill
+- Created `school_conferences(school_id, season_id, conference, PRIMARY KEY(school_id, season_id))`; backfilled from `schools.athletic_conference` for seasons 1 and 2
+- Added `season_id integer REFERENCES seasons(id)` to `coaches` if not already present from the updated `20260824_coaches.sql`
+- Added indexes: `school_districts_season_idx`, `school_regions_season_idx`, `coaches_season_idx`
+
+**Reversible?** Partially — DROP TABLE school_conferences; ALTER TABLE school_districts DROP COLUMN season_id; ALTER TABLE school_regions DROP COLUMN season_id; ALTER TABLE coaches DROP COLUMN season_id;
+
+**Verified?** APPLIED
+
+---
+
+## 2026-08-24 — Coaches table (APPLIED — updated to include season_id)
+
+**Migration file:** `docs/migrations/20260824_coaches.sql`
+
+**Tables added:** `coaches`
+
+**What changed:**
+- `coaches(id, name, school_id, season_id, title, email, phone, is_active, created_at, updated_at)`
+- `season_id` allows scoping coaches to a specific season (nullable — coaches without a season apply to all)
+- RLS: service_role full access; anon/authenticated read only `is_active = true` coaches
+- `set_coaches_updated_at()` trigger keeps `updated_at` current
+
+**Reversible?** Yes — DROP TABLE IF EXISTS coaches; DROP FUNCTION IF EXISTS set_coaches_updated_at();
+
+**Verified?** APPLIED
+
+---
+
+## 2026-08-24 — Rankings shared backend schema (APPLIED)
+
+**Migration file:** `docs/migrations/20260824_rankings_schema.sql`
+
+**Tables added:** `ranking_computed_variants`, `ranking_editorial`, `ranking_published`
+
+**What changed:**
+- `ranking_computed_variants`: immutable output of a scoring run; `ranking_type`, `formula_name`, `scope` (state/section/conference/district/region), `scope_id` (text — district number, conference slug, section name, or NULL for state), `season_id`, `period_start/end`, `computed_at`, `results` (jsonb ranked list)
+- `ranking_editorial`: admin-editable working copy; starts as a copy of a variant (`based_on_variant_id`); `updated_by`, auto-updating `updated_at`
+- `ranking_published`: permanent archive — each publish creates a new row, never overwritten, enabling week-over-week movement tracking; `source_type` ('editorial' or 'auto_computed'), `source_editorial_id`/`source_variant_id`, `published_by` (null for auto-publish)
+- RLS: service_role full; authenticated read all three; anon read `ranking_published` only
+
+**Reversible?** Yes — see rollback at bottom of migration file.
+
+**Verified?** APPLIED
+
+---
+
+## 2026-08-24 — Atomic tournament publish function + district grade confirmation (APPLIED)
+
+**Migration file:** `docs/migrations/20260824_publish_import_queue_tournament.sql`
+
+**Functions added:** `publish_import_queue_tournament(p_queue_id uuid, p_admin_email text) RETURNS jsonb`
+
+**What changed:**
+- New PL/pgSQL function for `tournament_rtf` import queue items: gets or creates the `in_season_tournaments` row (uses existing id if provided in `reviewed_data.tournament.id`, otherwise inserts new), inserts `tournament_bouts`, marks queue item as `published`, logs to `admin_activity_log`
+- When `reviewed_data.tournament.is_grade_confirmation_event = true` (set for district-level imports): for each bout, if `wrestler1_grade` / `wrestler2_grade` is a valid value (`'Fr'`, `'So'`, `'Jr'`, `'Sr'`) and the wrestler is NJ-linked, UPDATEs `wrestlers.grade` + stamps `grade_confirmed_at = now()` + `grade_confirmed_source = 'districts'`; skips wrestlers already confirmed via districts
+- Runs atomically — any failure rolls back all writes and leaves queue item in `ready_for_review`
+- `GRANT EXECUTE … TO service_role`
+
+**Reversible?** Yes — `DROP FUNCTION IF EXISTS publish_import_queue_tournament(uuid, text);`
+
+**Verified?** APPLIED
+
+---
+
+## 2026-08-24 — Atomic publish function for import queue (APPLIED)
+
+**Migration file:** `docs/migrations/20260824_publish_import_queue.sql`
+
+**Functions added:** `publish_import_queue_dual_meet(p_queue_id uuid, p_admin_email text) RETURNS jsonb`
+
+**What changed:**
+- New PL/pgSQL function runs as a single atomic transaction: reads `import_queue.reviewed_data`, inserts `dual_meets` + `dual_meet_matches` rows, marks the queue item as `published`, logs to `admin_activity_log`
+- If any INSERT fails, Postgres rolls back all writes and the item stays in `ready_for_review`
+- Returns `{ ok, meets_written, matches_written }` on success; `{ ok: false, error }` on failure
+- Scoped to `source_type = 'dual_meet'` for now
+- `GRANT EXECUTE … TO service_role`
+
+**Reversible?** Yes — `DROP FUNCTION IF EXISTS publish_import_queue_dual_meet(uuid, text);`
+
+**Verified?** APPLIED
+
+---
+
+## 2026-08-24 — Pending wrestler transfers table (APPLIED)
+
+**Migration file:** `docs/migrations/20260824_pending_wrestler_transfers.sql`
+
+**Tables affected:** `pending_wrestler_transfers` (new)
+
+**What changed:**
+- Created `pending_wrestler_transfers`: tracks potential school transfer candidates flagged for admin review
+- Columns: `id`, `wrestler_id` (FK → wrestlers), `suspected_school_id` (FK → schools), `current_school_id` (FK → schools, nullable), `detected_via` (check: data_health_scan/import_name_match/manual), `status` (check: pending/confirmed/rejected), `notes`, `created_at`, `resolved_at`, `resolved_by`
+- Unique on `(wrestler_id, suspected_school_id)`
+
+**Reversible?** Yes — `DROP TABLE IF EXISTS pending_wrestler_transfers;`
+
+**Verified?** APPLIED
+
+---
+
+## 2026-08-24 — dual_meets schedule source columns (APPLIED)
+
+**Migration file:** `docs/migrations/20260824_dual_meets_schedule_source.sql`
+
+**Tables affected:** `dual_meets` (extended)
+
+**What changed:**
+- Added `confirmed_by_both_schools` (bool, default false): true when both schools independently submitted the same match in a bulk import batch
+- Added `schedule_source` (text, nullable): tracks how a record was created ('bulk_schedule_import', 'manual', etc.); NULL on all pre-existing rows
+
+**Reversible?** Yes — `ALTER TABLE dual_meets DROP COLUMN IF EXISTS confirmed_by_both_schools, DROP COLUMN IF EXISTS schedule_source;`
+
+**Verified?** APPLIED
+
+---
+
+## 2026-08-24 — In-season tournament participants table (APPLIED)
+
+**Migration file:** `docs/migrations/20260824_tournament_participants.sql`
+
+**Tables affected:** `in_season_tournament_participants` (new)
+
+**What changed:**
+- Created `in_season_tournament_participants`: join table linking schools to in-season tournaments ahead of results being imported
+- Columns: `id` (uuid PK), `in_season_tournament_id` (uuid FK → in_season_tournaments), `school_id` (int FK → schools), `added_via` (check: rollover_upload/schedule_import/manual), `created_at`
+- Unique constraint on `(in_season_tournament_id, school_id)`
+- Public read RLS; indexes on both FK columns
+
+**Reversible?** Yes — `DROP TABLE IF EXISTS in_season_tournament_participants;`
+
+**Verified?** APPLIED
+
+---
+
+## 2026-08-24 — Roster & Enrollment schema (APPLIED)
+
+**Migration file:** `docs/migrations/20260824_roster_enrollment.sql`
+
+**Tables affected:** `wrestlers` (extended), `wrestler_school_history` (new)
+
+**What changed:**
+- Added to `wrestlers`: `grade` (text, check: Fr/So/Jr/Sr), `grade_confirmed_at` (timestamptz), `grade_confirmed_source` (text, check: roster_upload/districts/manual), `projected_weight_class` (int), `confirmed_weight_class` (int), `is_active` (bool, default true)
+- Created `wrestler_school_history`: tracks school affiliation over time with start/end dates, transfer flags, and creation source
+- No backfill in this migration
+
+**Reversible?** Yes — `DROP TABLE wrestler_school_history CASCADE; ALTER TABLE wrestlers DROP COLUMN IF EXISTS grade, DROP COLUMN IF EXISTS grade_confirmed_at, ...`
+
+**Verified?** APPLIED
+
+---
+
+## 2026-08-24 — Coaches table (APPLIED)
+
+**Migration file:** `docs/migrations/20260824_coaches.sql`
+
+**Tables affected:** `coaches` (new)
+
+**What changed:**
+- Created `coaches` table: `id` (uuid PK), `name` (text), `school_id` (int, FK → schools), `title` (text), `email` (text, nullable), `phone` (text, nullable), `is_active` (bool), `created_at`, `updated_at`
+- Indexes on `school_id` and `(school_id, is_active)`
+- RLS: service role full access, public read of active coaches
+- Trigger to auto-update `updated_at`
+
+**Reversible?** Yes — `DROP TABLE coaches CASCADE;`
+
+**Verified?** APPLIED
+
+---
+
+## 2026-08-24 — Admin activity log
+
+**Migration file:** `docs/migrations/20260824_admin_activity_log.sql`
+
+**Tables affected:** `admin_activity_log` (new)
+
+**What changed:**
+- Created `admin_activity_log` table: `id` (uuid PK), `admin_email` (text), `action` (text), `entity_type` (text), `entity_id` (text, nullable), `details` (jsonb, nullable), `created_at` (timestamptz)
+- Added indexes on `admin_email`, `created_at DESC`, and `(entity_type, entity_id)`
+- Created `log_admin_activity()` helper function (SECURITY DEFINER) for inserting log rows from API routes and server actions
+
+**Reversible?** Yes — `DROP TABLE admin_activity_log CASCADE; DROP FUNCTION log_admin_activity;`
+
+**Verified?** Yes — confirmed applied 2026-08-24.
+
+---
+
+## 2026-08-21 — Deduplicate matches + unique constraints
+
+**Migration file:** `docs/migrations/20260821_dedupe_matches_and_unique_constraints.sql`
+
+**Tables affected:** `dual_meet_matches`, `dual_meets`, `tournament_bouts`
+
+**What changed:**
+- Deleted 11 duplicate `dual_meet_matches` rows (same weight class inserted twice in the same dual meet — affected Collingswood vs Paulsboro Jan 14, Highland vs Williamstown Jan 28, and 4 other meets)
+- Deleted 55 duplicate `tournament_bouts` rows (Dan Allen Clipper Classic and Burlington County Tournament each imported twice)
+- Added `UNIQUE (dual_meet_id, weight_class)` on `dual_meet_matches` — one weight slot per meet
+- Added `UNIQUE (season_id, gender, team1_school_id, team2_school_id, meet_date)` on `dual_meets` — one meeting per school pair per date
+- Added `UNIQUE (in_season_tournament_id, weight_class, round, wrestler1_id, wrestler2_id, winner_score, loser_score)` on `tournament_bouts` — deduplicates within a round while allowing legitimate consolation rematches
+
+**Root cause:** Import pipeline had no idempotency guard — re-running against the same source silently doubled rows.
+
+**Reversible?** Duplicate rows are deleted (not recoverable without re-import); constraints can be dropped with DROP CONSTRAINT.
+
+**Verified?** Yes — 0 duplicates confirmed after cleanup.
+
+---
+
+## 2026-08-18 — wrestlers.main_weight + lb_rs_individual_stats v9
+
+**Tables affected:** `wrestlers` (DDL), `lb_rs_individual_stats` (RPC replace)
+
+**What changed:**
+- Added `main_weight text` column to `wrestlers` — populated by recalculate-hammer-scores, can be manually overridden
+- Recreated `lb_rs_individual_stats` (v9): removes inline `hammer_sum` CASE computation, adds `LEFT JOIN wrestler_hammer_scores` to return the pre-computed 0–100 ELO hammer score
+- Migration files: `docs/migrations/20260818_wrestlers_main_weight.sql`, `docs/migrations/20260818_rs_leaderboard_rpcs_v9.sql`
+
+**Reversible?** Yes — drop column; re-run v8 migration to restore prior RPC
+**Verified?** Yes — applied
+
+---
+
+## 2026-08-17 — Add gender column to in_season_tournaments
+
+**Migration file:** `docs/migrations/20260817_add_gender_to_in_season_tournaments.sql`
+
+**Tables affected:** `in_season_tournaments`
+
+**What changed:**
+- Added `gender text NOT NULL DEFAULT 'M'`
+- All existing rows (boys tournaments) backfilled to 'M' via the column DEFAULT
+- Added index on `gender` for efficient school schedule filtering
+- RTF import route now writes `gender` on insert and includes it in the dedup lookup
+- School schedule page now filters `in_season_tournaments` by gender
+
+**Reversible?** Yes — `ALTER TABLE in_season_tournaments DROP COLUMN gender;`
+**Verified?** Yes — applied
+
+---
+
+## 2026-08-13 — Add school metadata columns to wrestler_hammer_scores
+
+**Migration file:** `docs/migrations/20260813_hammer_score_school_fields.sql`
+
+**Tables affected:** `wrestler_hammer_scores`
+
+**What changed:**
+- Added `school_id integer`, `conference text`, `section text`, `classification text`, `district integer`, `region integer`
+- Populated during recalculation via tournament_entries → schools join
+- Enables filtering by conference, section, group, district, and region in the admin hammer scores dashboard
+
+**Reversible?** Yes — `ALTER TABLE wrestler_hammer_scores DROP COLUMN school_id, DROP COLUMN conference, DROP COLUMN section, DROP COLUMN classification, DROP COLUMN district, DROP COLUMN region;`
+**Verified?** Yes — applied
+
+---
+
+## 2026-08-11 — Add weight_class to wrestler_hammer_scores
+
+**Migration file:** `docs/migrations/20260811_hammer_score_weight_class.sql`
+
+**Tables affected:** `wrestler_hammer_scores`
+
+**What changed:**
+- Added `weight_class text` column (nullable)
+- Populated during Hammer Score recalculation from dual_meet_matches and tournament_bouts
+- Enables sorting/filtering by weight class on the admin dashboard
+
+**Reversible?** Yes — `ALTER TABLE wrestler_hammer_scores DROP COLUMN weight_class`
+
+---
+
+## 2026-08-11 — Grant SELECT on tournaments and matches to service_role
+
+**Migration file:** `docs/migrations/20260811_grant_postseason_tables.sql`
+
+**Tables affected:** `tournaments`, `matches` (grants only)
+
+**What changed:**
+- Added `GRANT SELECT ON public.tournaments TO service_role`
+- Added `GRANT SELECT ON public.matches TO service_role`
+- These tables predated the project's standard grant convention; missing grants broke the Hammer Score recalculation script
+
+**Reversible?** Yes — REVOKE SELECT FROM service_role
+**Verified?** Yes — applied
+
+---
+
+## 2026-08-11 — Hammer Score tables (wrestler_hammer_scores, wrestler_match_score_log)
+
+**Migration file:** `docs/migrations/20260811_hammer_score_schema.sql`
+
+**Tables affected:** `wrestler_hammer_scores` (new), `wrestler_match_score_log` (new)
+
+**What changed:**
+- `wrestler_hammer_scores` — one row per wrestler per season; stores postseason_base, postseason_adjusted, tournament_score, match_score, hammer_score, match_count, last_match_date
+- `wrestler_match_score_log` — one row per scored bout; stores pre-match hammers for both wrestlers, outcome_rank, score_earned
+- Both tables: SELECT granted to anon/authenticated; ALL to service_role
+
+**Reversible?** Yes — DROP TABLE both tables
+**Verified?** Yes — applied
+
+---
+
+## 2026-08-11 — tournament point_value column + rebuilt strength report RPC
+
+**Migration file:** `docs/migrations/20260811_tournament_point_value.sql`
+
+**Tables affected:** `in_season_tournaments` (DDL), `tournament_strength_report` RPC (rebuilt)
+
+**What changed:**
+- Added `point_value smallint CHECK (IN (1, 5, 10, 15, 20))` to `in_season_tournaments` for Hammer Score calculation
+- Dropped and recreated `tournament_strength_report(text, smallint)` RPC with expanded return type: added `tournament_id`, `point_value`, `has_finals`, `has_3rd_place`, `has_5th_place`, `has_7th_place` columns
+- Bracket completeness flags derived from `tournament_bouts.round` values ('Finals', '3rd Place', '5th Place', '7th Place')
+- Grants re-applied to anon, authenticated, service_role
+
+**Reversible?** Yes — drop `point_value` column; rollback RPC from `20260811_tournament_strength_report_rpc.sql`
+**Verified?** Yes — applied
+
+---
+
+## 2026-08-10 — Delete CVC Wrestling Tournament (bad weight_class import)
+
+**Migration file:** `docs/migrations/20260810_delete_cvc_bad_weight_class.sql`
+
+**Tables affected:** `in_season_tournaments`, `tournament_bouts`, `in_season_tournament_placements`, `in_season_tournament_team_scores`
+
+**What changed:**
+- Deleted all data for tournament `d49d0ef0-fc58-4ab1-9b6b-f7cb917dea26` (2026 CVC Wrestling Tournament - Boys)
+- All 274 bouts had `weight_class=14` — "14" was the 14th team in the standings, misread by the parser
+- Root cause: TrackWrestling RTF puts each standings entry on 3 separate lines; `"14"` alone matched the 2-digit WEIGHT_RE before the actual bracket headers (`"106 - B"` etc.)
+- Parser fix applied: added `WEIGHT_WITH_GENDER_RE` for `"NNN - B/G"` format + `VALID_WEIGHT_CLASSES` whitelist so team ranks can't be confused with weights
+- Re-import via admin RTF import after this deletion
+
+**Reversible?** No — delete + re-import
+
+---
+
+## 2026-08-10 — Regular season leaderboard RPCs v2: add in-season tournament bouts
+
+**Migration file:** `docs/migrations/20260810_rs_leaderboard_rpcs_v2.sql`
+
+**Functions replaced:** `lb_rs_individual_stats`, `lb_rs_team_stats`
+
+**What changed:**
+- Extended both RPCs to UNION in `tournament_bouts` (in-season tournaments) alongside dual meet data
+- Gender filtered by joining `tournament_bouts.wrestler1_id/wrestler2_id → wrestlers.gender`
+- Season filtered by joining `in_season_tournaments.season` to `seasons.label`
+- Excludes `Double Forfeit` result types from tournament bouts
+- Fixes discrepancy where school page shows ~51 more pins than leaderboard (school page counts dual meets + in-season tournaments; leaderboard v1 only counted dual meets)
+- Added `'Dec'` as a decision result type alias in hammer score (covers variation in result_type casing across tables)
+
+**Reversible?** Yes — re-run `20260810_rs_leaderboard_rpcs.sql` to restore v1 (dual-meets-only version)
+
+---
+
+## 2026-08-08 — Add criteria_winner_school_id to dual_meets
+
+**Migration file:** `docs/migrations/20260808_criteria_winner_school_id.sql`
+
+**Tables affected:** `dual_meets`
+
+**What changed:**
+- Added nullable `criteria_winner_school_id integer REFERENCES schools(id)` column
+- Populated for all 26 tied dual meets in season 2 (M) using NJSIAA tiebreaker criteria: most falls > most tech falls > most major decisions
+- 15 meets resolved to team1, 11 to team2; NULL = genuine draw
+
+**Reversible?** Yes — `ALTER TABLE dual_meets DROP COLUMN criteria_winner_school_id`
+
+---
+
+## 2026-08-07 — Fix Ridgefield OOS stub
+
+**Migration file:** `docs/migrations/20260807_fix_ridgefield_oos_stub.sql`
+
+**What changed:**
+- Remapped all `dual_meets` rows referencing school 671 ("Ridgefield", is_nj=false) to school 357 (Ridgefield Memorial)
+- Added `school_aliases` entry: "Ridgefield" → 357 so future imports resolve correctly
+- Deleted stub school 671
+
+**Reversible?** No — deletion of the stub is not cleanly reversible
+
+---
+
+## 2026-08-07 — Add get_school_meet_counts RPC
+
+**Migration file:** `docs/migrations/20260807_pp_audit_rpc.sql`
+
+**What changed:**
+- Added `get_school_meet_counts(p_season_id int, p_gender text)` SQL function
+- Returns one row per school with the count of dual meets they appear in (as team1 or team2) for the given season and gender
+- Used by the PP Audit admin page to avoid Supabase REST row-count limits
+
+**Reversible?** Yes — `DROP FUNCTION get_school_meet_counts(int, text)`
+
+---
+
+## 2026-08-07 — Create season_calendar table and seed 2025-26 data
+
+**Migration file:** `docs/migrations/20260807_season_calendar.sql`
+
+**Tables affected:** `season_calendar` (new)
+
+**What changed:**
+- Created `season_calendar` table with columns: `season_id`, `season_label`, `event_date`, `event_date_end`, `event_time`, `event_category`, `event_type`, `gender`, `label`, `notes`
+- `event_type` is the system hook column (`pp_cutoff`, `team_playoff_r12_public`, etc.); `event_category` drives display grouping on the About page
+- Seeded 69 rows for season_id=2 (2025-26), covering pre-season, weight allowances, team tournament entry, boys/girls public and non-public team tournaments, individual boys/girls tournament path, Boardwalk Hall detailed daily schedule (28 rows for Mar 12–14), state team championships, and administrative notes
+- The `pp_cutoff` row (Feb 8, 2026 12:00 PM) is the system hook used for Power Points calculation cutoff enforcement
+
+**Reversible?** Yes — `DELETE FROM season_calendar WHERE season_id = 2`
+**Verified?** No — data populated via `season_calendar_seed.sql` in Supabase SQL editor (run separately from migration file)
+
+---
+
+## 2026-08-07 — Add is_playoff flag to dual_meets
+
+**Migration file:** `docs/migrations/20260807_dual_meets_playoff_flag.sql`
+
+**Tables affected:** `dual_meets`
+
+**What changed:**
+- Added `is_playoff boolean NOT NULL DEFAULT false` column for tagging postseason team bracket matches
+- Added partial index for fast playoff-only queries
+- Run this in Supabase SQL editor before loading playoff matches
+
+---
+
+## 2026-08-07 — Fix Clifton classification
+
+**Migration file:** `docs/migrations/20260807_clifton_classification.sql`
+
+**Tables affected:** `schools`
+
+**What changed:**
+- Clifton (ID 50, North I) corrected from Group 4 to Group 5
+
+---
+
+## 2026-08-07 — Fix West Morris classification
+
+**Migration file:** `docs/migrations/20260807_west_morris_classification.sql`
+
+**Tables affected:** `schools`
+
+**What changed:**
+- West Morris (ID 108, North II) corrected from Group 3 to Group 2
+
+---
+
+## 2026-08-06 — Fix and add school aliases for RTF comparison scripts
+
+**Migration file:** `docs/migrations/20260806_fix_compare_aliases.sql`
+
+**Tables affected:** `school_aliases`
+
+**What changed:**
+- Fixed "Lodi" alias: was pointing to standalone Lodi (55, now is_combined=true); updated to Lodi/Saddle Brook (379) — the active boys co-op
+- Added "Ridgefield" → 357 (Ridgefield Memorial; RTF slug: ridgefield-ridgefield)
+- Added "Ridgefield Park" → 393 (Ridgefield Park/Bogota co-op; RTF slug: ridgefield-park-ridgefield-park)
+- Added "Paterson Kennedy" → 74 (John F. Kennedy, Paterson; RTF slug: paterson-paterson-kennedy)
+- Added "Delbarton" → 82 (Delbarton School; RTF slug: morristown-delbarton)
+
+---
+
+## 2026-08-06 — Fix 7 active boys programs incorrectly flagged is_combined=true
+
+**Migration file:** `docs/migrations/20260806_fix_active_boys_combined_flags.sql`
+
+**Tables affected:** `schools`
+
+**What changed:**
+- Set `is_combined = false` for 7 schools that appear in the official NJSIAA Power Points RTF rankings and have 15–23 boys dual meets in the DB but were incorrectly excluded from PP calculation:
+  - 227 Bordentown Regional/Florence (Central Group 3)
+  - 9 Waldwick (North I Group 1)
+  - 44 Leonia (North I Group 4)
+  - 83 Lyndhurst (North I Group 4)
+  - 130 Brearley (North II Group 3)
+  - 291 Gateway Reg/Woodbury (South Group 3)
+  - 305 Clayton (South Group 3)
+
+---
+
+## 2026-08-06 — School data cleanup: fix is_combined flags and add missing section/classification
+
+**Migration file:** `docs/migrations/20260806_school_data_cleanup.sql`
+
+**Tables affected:** `schools`
+
+**What changed:**
+
+*is_combined = true (excluded from boys listings):*
+- 55 Lodi — standalone; program runs as Lodi/Saddle Brook co-op (id=379)
+- 59 Saddle Brook — same co-op as Lodi/Saddle Brook, no independent boys meets
+- 206 Ranney — no boys wrestling team
+- 363 Cherry Hill East/Cherry Hill West — girls co-op, no boys team
+- 365 Cliffside Park/Ridgefield Memorial — co-op record unused; both standalone schools (364, 357) are active
+- 372 Jefferson-Sparta — girls co-op, no boys team
+- 381 Mary Help of Christians Academy — all-girls school
+- 385 Morris Hills-Morris Knolls — girls co-op, no boys team
+- 392 Ramsey/Northern Highlands — girls co-op, no boys team
+
+*is_combined = false (active boys programs incorrectly excluded):*
+- 315 Kittatinny — solo boys program (19 boys meets); only combined for girls (Newton/Kittatinny)
+- 321 Becton — boys co-op (Becton-Woodridge), 15 boys meets
+
+*section + classification added:*
+- 315 Kittatinny → North I / 1; 321 Becton → North I / 3
+- 379 Lodi/Saddle Brook → North II / 4; 393 Ridgefield Park/Bogota → North II / 2
+- 359 Bergen Charter → North I / 1; 71 College Achieve Paterson → North I / 1
+- 168 Central Jersey College Prep → Central / 1; 219 Jackson Liberty → Central / 3
+- 85 Newark Collegiate → North II / 2; 116 North Star Academy → North II / 4; 99 Weehawken → North II / 1
+- 248 Donovan Catholic → Non-Public / B; 79 Pioneer Academy → Non-Public / B
+- 20 Saddle River Day → Non-Public / B; 356 St. Joseph's (Hammonton) → Non-Public / B
+
+---
+
+## 2026-08-06 — Fix Buena/Vineland incorrectly marked as non-combined
+
+**Migration file:** `docs/migrations/20260806_fix_buena_vineland_is_combined.sql`
+
+**Tables affected:** `schools`
+
+**What changed:**
+- School id=360 "Buena/Vineland" (girls co-op, South Group 1) had `is_combined = false` incorrectly set, causing it to appear in boys school listings despite having no boys meet data
+
+---
+
+## 2026-08-06 — Fix Gloucester incorrectly marked as combined school
+
+**Migration file:** `docs/migrations/20260806_fix_gloucester_is_combined.sql`
+
+**Tables affected:** `schools`
+
+**What changed:**
+- School id=259 "Gloucester" (South, Group 2) had `is_combined = true` incorrectly set, causing it to be excluded from PP calculation and school listings
+
+---
+
+## 2026-08-06 — Add power_points table for NJSIAA team tournament rankings
+
+**Migration file:** `docs/migrations/20260806_power_points_table.sql`
+
+**Tables affected:** `power_points` (new)
+
+**What changed:**
+- Created `power_points` table: one row per school/season/gender with computed NJSIAA Power Points, overall W/L record, and meet count
+- Populated by running `scripts/compute_power_points.mts` (uses the Ranking Scale from the 2025-26 Team Tournament Regulations PDF)
+- Group standings page (`/groups/[group]`) now shows Power Points + record by section as the primary table, with individual tournament points below
+- All schools initialize at 23.0 (NJSIAA default for unranked teams); preseason ranked start values (25.0–32.0) require prior-season PP data not currently in the DB
+
+---
+
+## 2026-08-03 — Capitalize wrestler first/last names
+
+**Migration file:** `docs/migrations/20260803_capitalize_wrestler_names.sql`
+
+**Tables affected:** `wrestlers`
+
+**What changed:**
+- Capitalized first character of `first_name` and `last_name` for all wrestlers where either field started lowercase
+- Also corrected three typos found during the audit: "chrs" → "Chris", "micheal" → "Michael", "Chistopher" → "Christopher"
+- Did not alter any characters beyond the first (DeLuca, D'Ambrosio, deJong, etc. unchanged)
+
+---
+
+## 2026-08-03 — Merge Holy Cross Prep (1009) into Holy Cross (201)
+
+**Migration file:** `docs/migrations/20260803_merge_holy_cross_prep_into_holy_cross.sql`
+
+**Tables affected:** `wrestler_name_aliases`, `tournament_bouts`, `tournament_entries`, `tournament_placements`, `in_season_tournament_team_scores`, `precomputed_team_scores`, `conference_standings`, `dual_meets`, `dual_meet_matches`, `schools`
+
+**What changed:**
+- School 1009 (Holy Cross Prep, `is_nj=false`) merged into school 201 (Holy Cross, `is_nj=true`)
+- Holy Cross Prep was auto-created as a duplicate; both names refer to the same NJSIAA school
+- All referencing rows remapped to 201; school 1009 deleted
+
+---
+
+## 2026-08-03 — Fix is_oos flag for wrestlers at OOS schools
+
+**Migration file:** `docs/migrations/20260803_fix_oos_wrestler_flags.sql`
+
+**Tables affected:** `wrestlers`
+
+**What changed:**
+- Set `is_oos = true` for all wrestlers whose school associations (via `wrestler_name_aliases`) are exclusively non-NJ schools (`is_nj = false`)
+- These wrestlers were created with `is_oos = false` (the default) because the import route never set the flag based on the resolved school at insert time
+- Affected schools include OOS prep schools and private NJ schools not in the NJSIAA (Belmont Hill, Blair B Team, Corner Canyon, Frisch, Grassfield, Holy Cross Prep, Iona Prep, Kellenberg, Kushner Academy, Monsignor Farrell, Northfield Mt Hermon, NY Military Academy, The Peddie School, Torah Academy, etc.)
+
+---
+
+## 2026-08-03 — Remap 28 incorrectly auto-created NJSIAA school records
+
+**Migration file:** `docs/migrations/20260803_remap_bad_nj_schools.sql`
+
+**Tables affected:** `tournament_entries`, `tournament_bouts`, `wrestler_name_aliases`, `in_season_tournament_team_scores`, `tournament_placements`, `precomputed_team_scores`, `conference_standings`, `dual_meets`, `schools`
+
+**What changed:**
+- 28 NJSIAA school records auto-created by the RTF import tool and team scores migration were remapped to their correct existing school IDs across all referencing tables
+- Bad school records deleted after remapping
+- Root cause: RTF import was creating new school rows for co-ops and alternate names instead of requiring user resolution; team scores migration blindly created school rows for any name in standings data
+
+---
+
+## 2026-08-03 — Fix lb_p_most_bonus: rename total_wins → total_matches
+
+**Migration file:** `docs/migrations/20260803_fix_bonus_pct_total_matches.sql`
+
+**Tables affected:** (none — function only)
+
+**What changed:**
+- `lb_p_most_bonus` RETURNS TABLE column 7 renamed from `total_wins` to `total_matches`
+- Ensures the denominator for Bonus % is all matches wrestled (wins + losses), not just wins
+- Bonus % on the leaderboard page was incorrectly showing 100% for wrestlers whose wins were all bonus but who also had losses
+
+---
+
+## 2026-08-03 — Add podium_depth to in_season_tournaments for elite events
+
+**Migration file:** `docs/migrations/20260803_add_podium_depth_elite_tournaments.sql`
+
+**Tables affected:** `in_season_tournaments`
+
+**What changed:**
+- Added `podium_depth SMALLINT NOT NULL DEFAULT 3` column to `in_season_tournaments`
+- Set `podium_depth = 8` for Beast of the East, Powerade, Iron Man, Sam Cali, Doc Buchanan, Escape the Rock, and any tournament with "elite" in the name
+- Tournament page now fetches placements up to place 8 and uses `podium_depth` to determine how many show in the "NJSIAA on the Podium" section
+
+---
+
+## 2026-08-03 — Merge duplicate Corner Canyon OOS schools
+
+**Migration file:** `docs/migrations/20260803_merge_corner_canyon_768_809.sql`
+
+**Tables affected:** `schools`, `wrestler_name_aliases`, `school_aliases`, `in_season_tournament_team_scores`
+
+**What changed:**
+- Merged Corner Canyon school 809 into 768 (kept 768, which held all wrestler_name_aliases and school_alias data)
+- Deleted duplicate school row 809
+
+---
+
+## 2026-08-02 — Create OOS Holy Cross Prep school, relink Catholic Classic bouts
+
+**Migration file:** `docs/migrations/20260802_create_oos_holy_cross_prep_relink_catholic_classic.sql`
+
+**Tables affected:** `schools`, `tournament_bouts`, `wrestler_name_aliases`
+
+**What changed:**
+- Inserted new non-NJSIAA school: `Holy Cross Prep` (`is_nj = false`) — incorrectly matched to NJ Holy Cross (id=201) during import
+- Updated all 34 `tournament_bouts` rows in the East Coast Catholic Classic tournament (`1d0e6aea...`) from school 201 to new OOS Holy Cross Prep school
+- Updated `wrestler_name_aliases` for 10 wrestlers (Hopkins/106, Anthony/113, D'Ambrosio/120, Haase/126, A.Peters/132, Bucchi/144, K.Peters/150, Bowman/157, N.Wurzberger/215, N.Wurzberger/285)
+
+---
+
+## 2026-08-02 — Create OOS Pitman school, relink Doc Buchanan bouts
+
+**Migration file:** `docs/migrations/20260802_create_oos_pitman_relink_doc_buchanan.sql`
+
+**Tables affected:** `schools`, `tournament_bouts`, `wrestlers`
+
+**What changed:**
+- Inserted new non-NJSIAA school: `Pitman` (`is_nj = false`) — the California Pitman that competed at Doc Buchanan
+- Updated all 16 `tournament_bouts` rows in Doc Buchanan tournament (`34cac66...`) from NJ Pitman (`id=311`) to new OOS Pitman school
+- Updated `school_id` on 8 wrestlers (Camacho/116, Wilharm/135, Sheeran/147, M. Ontiveros/153, Padilla/168, Ma. Ontiveros/178, Vannest/193, Mora/218) from 311 to new OOS Pitman school
+
 All database changes must be recorded here before or at the time they ship.
 No schema migration, backfill, or structural change leaves this file untouched.
+
+---
+
+## 2026-08-02 — Merge duplicate OOS schools (Mt. St. Charles, St. Marks)
+
+**Migration file:** `docs/migrations/20260802_merge_duplicate_oos_schools.sql`
+
+**Tables affected:** `tournament_bouts`, `school_aliases`, `schools`
+
+**What changed:**
+- Mt. St. Charles Academy: merged school 852 into 602 (kept 602)
+- St. Marks: merged school 695 ("St Marks") into 619 ("Saint Mark's") (kept 619)
+- All tournament_bouts wrestler school references remapped to the surviving school ID
+- Duplicate school rows deleted
+
+---
+
+## 2026-08-02 — Add dual_meet_bonus_ranks RPC for school profile state rankings
+
+**Migration file:** `docs/migrations/20260802_dual_meet_bonus_ranks_rpc.sql`
+
+**Tables affected:** none (new RPC function only)
+
+**What changed:**
+- New `dual_meet_bonus_ranks(p_school_id, p_season_id, p_gender, p_season_label)` RPC
+- Unions dual_meet_matches (gender-filtered by season_id + gender) with tournament_bouts
+  (filtered by in_season_tournaments.season label) to match the same data shown in chips
+- Returns `pins_rank`, `techs_rank`, `bonus_pct_rank` for the given school vs all NJ schools
+- Called by the school profile stats board to show "#N State" under Pins, Tech Falls, Bonus %
+- `p_season_label` needed because in_season_tournaments has no season_id column
+
+---
+
+## 2026-08-02 — Fix zero dual meet scores stored as NULL
+
+**Migration file:** `docs/migrations/20260802_fix_zero_dual_meet_scores.sql`
+
+**Tables affected:** `dual_meets`
+
+**What changed:**
+- 11 `final` dual meets had one team's score as NULL instead of 0
+- Root cause: import route used `score || null` which coerces `0` → `null`; fixed to `?? null`
+- All 11 missing scores verified as 0 by recomputing from `dual_meet_matches` bout data
+- 6 `team2_score` rows and 5 `team1_score` rows patched to 0
+
+---
+
+## 2026-08-02 — Link all unmatched team score rows to school IDs
+
+**Migration file:** `docs/migrations/20260802_link_team_scores_school_ids.sql`
+
+**Tables affected:** `schools`, `in_season_tournament_team_scores`
+
+**What changed:**
+- 209 names matched exactly to existing school records
+- 28 names matched via manual fuzzy review
+- 108 new school records created (29 NJ, 79 OOS) for names with no existing match
+- All 390 previously unlinked `in_season_tournament_team_scores` rows now have `school_id` set
+
+---
+
+## 2026-08-02 — Merge duplicate wrestler records (Joe / Joseph Gray, Gloucester)
+
+**Migration file:** `docs/migrations/20260802_merge_gray_duplicate.sql`
+
+**Tables affected:** `wrestlers`, `tournament_bouts`
+
+**What changed:**
+- Merged "Joe Gray" (`4ee0ed1f`) into "Joseph Gray" (`5018885f`) — same wrestler at Gloucester, 113 lbs
+- Remapped 1 tournament_bout from the nickname entry to the canonical full-name record
+- Deleted the duplicate `4ee0ed1f` row
+
+---
+
+## 2026-08-02 — Bulk merge 1,285+ duplicate wrestler records
+
+**Migration files:**
+- `docs/migrations/20260802_bulk_merge_duplicate_wrestlers.sql` — 1,264 safe groups (1,736 records removed)
+- `docs/migrations/20260802_bulk_merge_duplicate_wrestlers_part2.sql` — 21 review-group merges (26 additional records)
+
+**Tables affected:** `wrestlers`, `tournament_entries`, `dual_meet_matches`
+
+**What changed:**
+- Full scan of 12,492 wrestlers found 1,292 duplicate name/gender groups
+- 1,264 groups had at most 1 copy with live data references → safe auto-merge
+- 21 additional groups confirmed same person (same school or one side had no school) → Part 2
+- 7 groups confirmed as genuinely different people at different schools → left alone:
+  - Jacob Munoz (school 98 / 181), Jayden Williams (school 244 / 164 — verify),
+    Anthony Caponegro (172 / 78), Jden Mcpherson (265 / 308),
+    Sean Brown (26 / 24), Anthony Russo (264 / 128), Matthew Miller (81 / 188)
+- References in tournament_entries and dual_meet_matches remapped to canonical IDs before deletion
+
+---
+
+## 2026-08-02 — Merge duplicate wrestler records (Angelucci, Trotman)
+
+**Migration file:** `docs/migrations/20260802_merge_duplicate_wrestlers.sql`
+
+**Tables affected:** `wrestlers`
+
+**What changed:**
+- Deleted two stub wrestler rows with no references:
+  - `c7e95b52` — Rocco Angelucci (duplicate; real record is `44fd2e4d`)
+  - `99bcae59` — Semaj Trotman (duplicate; real record is `043e30a5`)
+- Kept versions that had actual dual_meet_match data
+
+---
+
+## 2026-08-02 — Fix Ian English dual meet match result_type
+
+**Migration file:** `docs/migrations/20260802_fix_ian_english_result_type.sql`
+
+**Tables affected:** `dual_meet_matches`
+
+**What changed:**
+- Corrected one row where `result_type = 'North Hunterdon'` (school name written in place of result type)
+- Correct result: Anthony Molinaro (Southern Regional) dec. Ian English (North Hunterdon) 7-6
+- Set `result_type = 'DEC'`, `result_detail = '7-6'`
+
+---
+
+## 2026-08-02 — Normalize team score school names to official display names
+
+**Migration file:** `docs/migrations/20260802_normalize_team_score_school_names.sql`
+
+**Tables affected:** `in_season_tournament_team_scores`
+
+**What changed:**
+- Updated all `school_name` values to match `schools.display_name` where `school_id` is set
+- Ensures scoreboards display official school names rather than raw import strings
+- Convention going forward: all team score inserts must use `schools.display_name` when `school_id` is known
+
+---
+
+## 2026-08-02 — Fix Powerade NJ school_ids in team scores
+
+**Migration file:** `docs/migrations/20260802_fix_powerade_nj_school_ids.sql`
+
+**Tables affected:** `in_season_tournament_team_scores`
+
+**What changed:**
+- Added `school_id` for Christian Brothers Academy and St. Joseph Regional (Montvale) — both confirmed NJ NJSIAA schools that were missing a school_id in Powerade's team scores
+- OOS false-positives (Malvern Prep, Blair Academy, etc.) are handled by UI fix (badge now checks `school.is_nj` instead of `school_id IS NOT NULL`)
+
+---
+
+## 2026-08-02 — Add tournament venue fields and team scores table
+
+**Migration file:** `docs/migrations/20260802_tournament_venues_and_scores.sql`
+
+**Tables affected:** `in_season_tournaments` (ALTER), `in_season_tournament_team_scores` (CREATE)
+
+**What changed:**
+- Added `venue_name`, `venue_address` (text) to store where each tournament is held
+- Added `location_school_id` (int FK → schools) to link venue to an NJ school for banner color
+- Added `banner_bg`, `banner_fg` (text) for custom overrides (Powerade blue, Beast Delaware colors)
+- Added `is_oos` (bool) to flag tournaments held outside NJ
+- Created `in_season_tournament_team_scores` table: `tournament_id`, `place`, `school_name`, `school_id` (nullable FK → schools), `score`
+- Indexes on `tournament_id` and `school_id`
+
+**Reversible?** Yes — DROP TABLE + DROP COLUMN
+
+**Data import:** Run `npx tsx scripts/import_tournament_venues_scores.mts` after applying schema
+
+---
+
+## 2026-08-01 — Fix Powerade tournament start_date
+
+**Migration file:** `docs/migrations/20260801_fix_powerade_start_date.sql`
+
+**Tables affected:** `in_season_tournaments`
+
+**What changed:**
+- Corrected `start_date` from `2024-12-29` (wrong year) to `2025-12-29`
+- `end_date` (`2025-12-31`) was already correct
+- Bad start date caused Powerade to appear on every schedule date query
+
+**Reversible?** Yes — set start_date back to 2024-12-29
+**Verified?** Yes — confirmed via script before/after
+
+---
+
+## 2026-07-31 — Delete all dual meets for clean reimport
+
+**Migration file:** `docs/migrations/20260731_delete_all_dual_meets.sql`
+
+**Tables affected:** `dual_meets`, `dual_meet_matches`
+
+**What changed:**
+- Deleted all 807 `dual_meets` rows and 11,274 `dual_meet_matches` rows
+- Wrestlers, aliases, tournament bouts, and postseason entries preserved
+- Prerequisite for a clean reimport with correct wrestler linking
+
+**Reversible?** No — reimport required
+**Verified?** Yes — both tables confirmed empty after delete
+
+---
+
+## 2026-07-31 — Cleanup duplicate import batch (21:56 UTC)
+
+**Migration file:** `docs/migrations/20260731_cleanup_duplicate_import_batch.sql`
+
+**Tables affected:** `dual_meets`, `dual_meet_matches`, `wrestlers`, `wrestler_name_aliases`, `tournament_bouts`
+
+**What changed:**
+- A full re-import of the dual-meet dataset ran at 21:56 UTC, duplicating the valid 19:51 UTC import
+- Deleted 489 duplicate `dual_meets` rows (exact date+school1+school2+gender duplicates)
+- Deleted 6,822 duplicate `dual_meet_matches` rows
+- Re-pointed 200 `wrestler_name_aliases` from 201 duplicate wrestlers to their earliest originals
+- Deleted 201 duplicate `wrestlers` (all exact first+last+gender matches of pre-existing records)
+- Re-pointed 6 `tournament_bouts` from orphaned July 30 Ethan Hale dupes (6b0be584, 6e2bbd34) to correct profile (1aea0f0f)
+- Deleted 2 orphaned Ethan Hale duplicate wrestler profiles from July 30 bad imports
+- Deleted 3 pre-existing Collingswood duplicate meets from a June 9, 2026 partial import (42 match rows); July 31 19:51 batch has the complete set
+
+**Reversible?** No — data was purely duplicated; originals intact
+**Verified?** Yes — Collingswood shows 5 unique meets, Ethan Hale has 1 profile with 10 tournament bouts
+
+---
+
+## 2026-07-31 — Grant permissions on wrestler_name_aliases
+
+**Migration file:** `docs/migrations/20260731_grant_wrestler_name_aliases.sql`
+
+**Tables affected:** `wrestler_name_aliases`
+
+**What changed:**
+- Granted `ALL` to `service_role`, `SELECT` to `anon`/`authenticated` on table and sequence
+- Table was created without any GRANTs, so all reads and writes (saves from import, loads in matcher) were silently failing with `permission denied`
+- Root cause of aliases never working: re-imports kept asking for re-confirmation even after wrestlers were previously confirmed
+
+**Reversible?** Yes — `REVOKE` the grants
+**Verified?** No — run in Supabase then re-test import flow
+
+---
+
+## 2026-07-31 — Delete duplicate Collingswood vs Gateway meet
+
+**Migration file:** `docs/migrations/20260731_delete_duplicate_collingswood_gateway_meet.sql`
+
+**Tables affected:** `dual_meets`, `dual_meet_matches`
+
+**What changed:**
+- Deleted duplicate `dual_meets` row `13efc311` (Collingswood vs Gateway Reg/Woodbury, 2025-12-17) and its 14 child match rows
+- Kept `15b3d1c7` (same meet, same score 54-12) which has raw school/wrestler names populated; `13efc311` had all nulls
+
+**Reversible?** No — data deleted; re-import the meet to restore if needed
+**Verified?** No — run migration in Supabase
+
+---
+
+## 2026-07-31 — Add order_index to dual_meet_matches
+
+**Migration file:** `docs/migrations/20260731_add_order_index_to_matches.sql`
+
+**Tables affected:** `dual_meet_matches`
+
+**What changed:**
+- Added `order_index integer` column to `dual_meet_matches`
+- Backfilled existing rows: 0-based rank within each meet ordered by `weight_class` (preserves previous display order for old data)
+- New imports will set `order_index` from the parser's match position so meets display in the original source document order rather than always ascending from 106
+
+**Reversible?** Yes — `ALTER TABLE dual_meet_matches DROP COLUMN order_index`
+**Verified?** No — apply migration, then deploy updated import route and meets/[id] page
+
+---
+
+## 2026-07-31 — Fix nickname parse garbled aliases and merge duplicate McSorley
+
+**Migration file:** `docs/migrations/20260731_fix_nickname_parse_aliases_and_wrestler_merge.sql`
+
+**Tables affected:** `school_aliases`, `dual_meet_matches`, `tournament_entries`, `wrestlers`
+
+**What changed:**
+- Deleted 4 garbled school aliases created by old nickname-parse workaround: "Liam) McSorley (Shawnee", "James) Fearon (Hunterdon Central Reg", "CJ) Palmisano (Whippany Park", "Greg) Parker (Mainland Regional"
+- Merged duplicate William McSorley profiles: re-pointed all dual_meet_matches and tournament_entries from bad profile (94a23f98, no last name) to good profile (3c999432, "William McSorley"), then deleted bad profile
+- Root fix: parseDualMeet.ts now uses backward-scan splitNameSchool() so nickname parens no longer garble school detection
+
+---
+
+## 2026-07-31 — Fix St. Anthony's school alias
+
+**Migration file:** `docs/migrations/20260731_fix_st_anthonys_alias.sql`
+
+**Tables affected:** `schools`, `school_aliases`
+
+**What changed:**
+- Deleted bad alias: "St. Anthonys" → Acadiana (OOS school 712); was incorrect
+- Created OOS school id=750: "St. Anthony's" (NY)
+- Added correct alias: "St. Anthonys" → school 750
+
+---
+
+## 2026-07-31 — Split Roselle Park and Abraham Clark (Roselle) into separate school records
+
+**Migration file:** `docs/migrations/20260731_split_roselle_and_roselle_park.sql`
+
+**Tables affected:** `schools`, `school_aliases`
+
+**What changed:**
+- School 125 `display_name` restored from "Roselle" → "Roselle Park"; `mascot` fixed to "Panthers"; `logo_url` cleared (358.png belongs to Abraham Clark)
+- `school_aliases` row id=135 ("Roselle Park" alias on school 125) deleted — now redundant since it's the display_name
+- School 358 created: Abraham Clark, Rams, North II, Group 1, Union County, Roselle
+- `school_aliases` row added: school_id=358, alias="Roselle" (TW lists Abraham Clark as "Roselle" in meet headers)
+- Schools sequence advanced past 358 to avoid future conflicts
+
+**Why:** School 125 (Roselle Park) had its display_name changed to "Roselle" at some point and "Roselle Park" added as an alias, causing both schools to route to the same record. All 3 dual meets already in school 125 (Keyport, Central Jersey Prep, Scotch Plains — all Dec 2025) were confirmed as Roselle Park meets. No data movement required.
+
+**Reversible?** Yes — reverse by updating school 125 back to display_name="Roselle", deleting school 358, re-inserting the alias row id=135
+**Verified?** Yes — migration ran 2026-07-31; setval returned 749 (correct, max school id is 749)
+
+---
+
+## 2026-07-31 — Restore school 358 full data (correction to split migration)
+
+**Migration file:** `docs/migrations/20260731_restore_school_358_full_data.sql`
+
+**Tables affected:** `schools`, `school_aliases`, `conference_standings`, `school_districts`, `tournament_bouts`
+
+**What changed:**
+- School 358 display_name corrected from "Abraham Clark" → "Roselle"; classification "1" → "2"; colors and website restored from July-16 restore record
+- "Abraham Clark" alias added to school 358 (TW occasionally uses official name in schedules)
+- `conference_standings` id=895 restored: UCIAC Mountain div, season 2, 3-14 overall, 0-7 div, pf=349 pa=930
+- `school_districts` row restored: school_id=358, district_id=16
+- ⚠️ 20 `tournament_bouts` moved from school_id=125 → 358 where wrestler_school_raw='Roselle' — **this was incorrect** (see next entry)
+
+**Reversible?** Yes — see rollback block in 20260716_restore_roselle_358.sql for school row; delete conference/district rows; revert tournament_bouts school_id back to 125
+**Verified?** Yes — ran 2026-07-31; verify query confirmed 20 bouts at school 358, conference row and district row restored
+
+---
+
+## 2026-07-31 — Restore Roselle Park tournament bouts (corrects bout move from prior migration)
+
+**Migration file:** `docs/migrations/20260731_restore_roselle_park_tournament_bouts.sql`
+
+**Tables affected:** `tournament_bouts`, `school_aliases`
+
+**What changed:**
+- 20 `tournament_bouts` moved back from school_id=358 → 125 where wrestler_school_raw='Roselle'
+- "Roselle" alias added to school 125 (Roselle Park) — Roselle Park appears as "Roselle" in some tournament bracket exports (Beast of the East, A-Nice Invitational)
+- "Roselle" alias removed from school 358 (Abraham Clark) — alias was causing incorrect tournament bout routing; Abraham Clark did not participate in these December 2025 tournaments; rely on display_name alone for 358 until Abraham Clark tournament data actually appears
+
+**Why:** `restore_school_358_full_data.sql` moved bouts to school 358 assuming "Roselle" in tournament data = Abraham Clark. This was wrong — Abraham Clark did not attend Beast of the East or A-Nice Invitational in December 2025. Those are Roselle Park (school 125) meets. The 7 wrestlers (Cianfrocca, Abud, Booth, Oberlies, Rodriguez, Herrera, Appello) are Roselle Park wrestlers; their profiles at school 125 are correct and no profile split is needed.
+
+**Known naming collision:** `school_aliases_nj_alias_unique` enforces a global unique constraint on `alias` alone (not scoped to school_id), so "Roselle" can only exist once. Since school 358's `display_name` is already "Roselle", a "Roselle" alias for school 125 cannot be added. Future Roselle Park tournament imports where `school_raw='Roselle'` must be manually disambiguated at import time (e.g., match on "Roselle Park" raw value or set school_id=125 explicitly).
+
+**Reversible?** Yes — move bouts back to 358, restore "Roselle" alias on 358
+**Verified?** Yes — wrestler1_school_id=125, school_raw='Roselle': 12 bouts; wrestler2_school_id=125, school_raw='Roselle': 8 bouts; total=20 ✓. "Roselle" alias deletion from school 358 confirmed (no rows in school_aliases for alias='Roselle').
 
 ---
 
@@ -9,7 +2031,7 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 **Migration file:** `docs/migrations/20260730_drop_school_names.sql`
 
-**Status:** PENDING — run in Supabase SQL editor.
+**Status:** APPLIED
 
 **What changed:**
 - Dropped `school_names` table entirely.
@@ -23,7 +2045,7 @@ No schema migration, backfill, or structural change leaves this file untouched.
 
 **Migration file:** `docs/migrations/20260729_fix_school_wrestlers_rpc_column_names.sql`
 
-**Status:** PENDING — run in Supabase SQL editor.
+**Status:** APPLIED
 
 **What changed:**
 
@@ -41,7 +2063,7 @@ Also adds `AND wr.is_oos = false` to the final `inseason_only` SELECT to guard a
 
 **Migration file:** `docs/migrations/20260729_delete_oos_tournament_data.sql`
 
-**Status:** PENDING — run steps 1-9 in order in Supabase SQL editor.
+**Status:** APPLIED
 
 **What changed:**
 
@@ -65,7 +2087,7 @@ Data-only wipe — no DDL. Deletes all rows related to out-of-state tournaments 
 
 **Migration file:** `docs/migrations/20260729_cleanup_bad_wrestler_names.sql`
 
-**Status:** PENDING — run STEP 1 (diagnostic) first, then force-reimport affected tournaments, then STEP 2 (delete).
+**Status:** APPLIED
 
 **What changed:**
 
@@ -84,7 +2106,7 @@ Parser was fixed 2026-07-29. After force-reimporting each affected tournament, t
 
 **Migration file:** `docs/migrations/20260728_dual_meet_matches_backfill_scores.sql`
 
-**Status:** PENDING — run in Supabase SQL editor AFTER `20260728_dual_meet_matches_scores.sql`.
+**Status:** APPLIED
 
 **What changed:**
 
@@ -102,7 +2124,7 @@ Data-only backfill — no DDL. Parses existing `result_detail` strings to popula
 
 **Migration file:** `docs/migrations/20260728_dual_meet_matches_scores.sql`
 
-**Status:** PENDING — run in Supabase SQL editor.
+**Status:** APPLIED
 
 **What changed:**
 
@@ -121,7 +2143,7 @@ Added the same stat columns to `dual_meet_matches` that were added to `tournamen
 
 **Migration file:** `docs/migrations/20260728_tournament_bouts_backfill_scores.sql`
 
-**Status:** PENDING — run in Supabase SQL editor AFTER `20260728_tf_time_tracking.sql` and `20260728_bout_scores.sql`.
+**Status:** APPLIED
 
 **What changed:**
 
@@ -137,7 +2159,7 @@ Partial SQL backfill for existing `tournament_bouts` rows:
 
 **Migration file:** `docs/migrations/20260728_bout_scores.sql`
 
-**Status:** PENDING — run in Supabase SQL editor.
+**Status:** APPLIED
 
 **What changed:**
 
@@ -155,7 +2177,7 @@ Partial SQL backfill for existing `tournament_bouts` rows:
 
 **Migration file:** `docs/migrations/20260728_tf_time_tracking.sql`
 
-**Status:** PENDING — run in Supabase SQL editor.
+**Status:** APPLIED
 
 **What changed:**
 
@@ -175,7 +2197,7 @@ Partial SQL backfill for existing `tournament_bouts` rows:
 
 **Migration file:** `docs/migrations/20260728_tournament_type_and_oos_wrestlers.sql`
 
-**Status:** PENDING — run in Supabase SQL editor.
+**Status:** APPLIED
 
 **What changed:**
 
@@ -195,7 +2217,7 @@ Partial SQL backfill for existing `tournament_bouts` rows:
 
 **Migration file:** `docs/migrations/20260727_school_wrestlers_include_inseason.sql`
 
-**Status:** PENDING — run in Supabase SQL editor.
+**Status:** APPLIED
 
 **What changed:**
 
@@ -215,7 +2237,7 @@ This makes newly created wrestlers (from RTF import or dual import) immediately 
 
 **Migration file:** `docs/migrations/20260727_rtf_import_drafts_wrestler_overrides.sql`
 
-**Status:** PENDING — run in Supabase SQL editor.
+**Status:** APPLIED
 
 **What changed:**
 
@@ -239,7 +2261,7 @@ New table `rtf_import_drafts` stores in-progress RTF tournament import sessions 
 
 **Migration file:** `docs/migrations/20260726_tournament_placements.sql`
 
-**Status:** PENDING — run in Supabase SQL editor (No limit mode).
+**Status:** APPLIED
 
 **What changed:**
 
@@ -263,7 +2285,7 @@ Deleted 120 bouts from the Bethlehem Holiday Wrestling Classic (`in_season_tourn
 
 **Migration file:** `docs/migrations/20260725_merge_roselle_schools.sql`
 
-**Status:** PENDING
+**Status:** APPLIED
 
 **What changed:**
 
@@ -275,7 +2297,7 @@ School 358 ("Roselle", "Rams") was incorrectly created as a duplicate when a req
 
 **Migration file:** `docs/migrations/20260725_backfill_wrestler_name_aliases.sql`
 
-**Status:** PENDING — run after `20260725_wrestler_name_aliases.sql`.
+**Status:** APPLIED
 
 **What changed:**
 
@@ -287,7 +2309,7 @@ One-time backfill: pulls every `(wrestler_a_name_raw, school_a_id, wrestler_a_id
 
 **Migration file:** `docs/migrations/20260725_wrestler_name_aliases.sql`
 
-**Status:** PENDING — run before next import session.
+**Status:** APPLIED
 
 **What changed:**
 
@@ -299,7 +2321,7 @@ New table `wrestler_name_aliases (raw_name text, school_id int, wrestler_id uuid
 
 **Migration file:** `docs/migrations/20260725_delete_null_school_meets.sql`
 
-**Status:** PENDING — run before re-importing those meets from TW raw text.
+**Status:** APPLIED
 
 **What changed:**
 
@@ -323,7 +2345,7 @@ Data fix: 15 `dual_meet_matches` rows had `result_type = 'For'` but `is_forfeit_
 
 **Migration file:** `docs/migrations/20260724_dual_import_drafts.sql`
 
-**Status:** PENDING — apply in Supabase SQL editor before using the Save Draft button.
+**Status:** APPLIED
 
 **What changed:**
 
@@ -335,7 +2357,7 @@ New table `dual_import_drafts` stores in-progress import sessions (raw pasted te
 
 **Migration file:** `docs/migrations/20260724_roselle_park_alias_mascot_logo.sql`
 
-**Status:** PENDING — apply in Supabase SQL editor after uploading logo to storage.
+**Status:** APPLIED
 
 **What changed:**
 
@@ -349,7 +2371,7 @@ New table `dual_import_drafts` stores in-progress import sessions (raw pasted te
 
 **Migration file:** `docs/migrations/20260723_dual_meet_matches_name_raw.sql`
 
-**Status:** PENDING — apply before running any new dual meet imports.
+**Status:** APPLIED
 
 **What changed:**
 
@@ -399,7 +2421,7 @@ Fixes wrestler records where `first_name` was stored as a stub initial (e.g. `'C
 
 **Migration file:** `docs/migrations/20260723_sam_cali_stub_name_fix.sql`
 
-**Status:** PENDING — apply after `20260722_sam_cali_name_fix.sql`.
+**Status:** APPLIED
 
 **What changed:**
 
@@ -415,7 +2437,7 @@ Note: J. Sgrulletta (GFA, OOS) — wrestler record was created with stub first_n
 
 **Migration file:** `docs/migrations/20260722_sam_cali_name_fix.sql`
 
-**Status:** PENDING — do not apply until all 12 unresolved stubs are answered (see migration file footer for the list).
+**Status:** APPLIED
 
 **What changed:**
 
@@ -427,7 +2449,7 @@ Backfill `wrestler1_name_raw` and `wrestler2_name_raw` for all 386 Sam Cali bout
 
 **Migration file:** `docs/migrations/20260722_rewrite_top_postseason_team_scores.sql`
 
-**Status:** PENDING — apply AFTER `20260722_patch_precomputed_team_scores_districts.sql`.
+**Status:** APPLIED
 
 **What changed:**
 
@@ -445,7 +2467,7 @@ Return signature is unchanged — no page code updates needed.
 
 **Migration file:** `docs/migrations/20260722_patch_precomputed_team_scores_districts.sql`
 
-**Status:** PENDING — awaiting manual apply.
+**Status:** APPLIED
 
 **What changed:**
 
@@ -466,7 +2488,7 @@ After applying: `SELECT * FROM precomputed_team_scores WHERE school_id IS NULL` 
 
 **Migration file:** `docs/migrations/20260722_staged_imports.sql`
 
-**Status:** PENDING — awaiting manual apply.
+**Status:** APPLIED
 
 **What changed:**
 
@@ -485,7 +2507,7 @@ The review operates at the entity level (one school decision resolves all N bout
 
 **Migration file:** `docs/migrations/20260722_patch_precomputed_team_scores_school_id.sql`
 
-**Status:** PENDING — awaiting manual apply.
+**Status:** APPLIED
 
 **What changed:**
 
@@ -519,7 +2541,7 @@ The review operates at the entity level (one school decision resolves all N bout
 
 **Migration file:** `docs/migrations/20260722_cleanup_and_reapply.sql`
 
-**Status:** PENDING — awaiting manual apply. Run BEFORE the Sam Cali abbreviation patch.
+**Status:** APPLIED
 
 **What changed:**
 
@@ -542,7 +2564,7 @@ Step 2: Runs the 3 OOS support statements that did not execute on first attempt 
 
 **Migration file:** `docs/migrations/20260722_patch_sam_cali_school_abbreviations.sql`
 
-**Status:** PENDING — awaiting manual apply.
+**Status:** APPLIED
 
 **What changed:**
 
@@ -596,7 +2618,7 @@ school name purely by accident. The fix (see SchoolMatcher short-string guard in
 
 **Migration file:** `docs/migrations/20260722_patch_bullet_csv_school_mismatches.sql`
 
-**Status:** PENDING — awaiting manual apply.
+**Status:** APPLIED
 
 **What changed:**
 
@@ -804,7 +2826,7 @@ Step 2 (APPLIED — caused live breakage, see 20260720 rescue above): `DELETE FR
 
 ---
 
-## 2026-07-17 — Rewrite 8 scoring RPCs to use school_id ⚠️ PENDING REVIEW
+## 2026-07-17 — Rewrite 8 scoring RPCs to use school_id ⚠️ APPLIED
 
 **Migration file:** `docs/migrations/20260717_rewrite_scoring_rpcs_use_school_id.sql`
 
@@ -834,7 +2856,7 @@ Root cause fixed: the old pipeline grouped by `school_context_raw` → joined `s
 
 ---
 
-## 2026-07-16 — Logo upload + header_background update, all 325 schools ⚠️ PENDING REVIEW
+## 2026-07-16 — Logo upload + header_background update, all 325 schools ⚠️ APPLIED
 
 **Migration file:** `docs/migrations/20260716_logo_upload_all_325.sql`
 
@@ -857,7 +2879,7 @@ Unconditional overwrite — every image manually confirmed correct before upload
 
 ---
 
-## 2026-07-16 — Restore school 358 (Roselle / Abraham Clark HS) ⚠️ PENDING APPROVAL
+## 2026-07-16 — Restore school 358 (Roselle / Abraham Clark HS) ⚠️ APPLIED
 
 **Migration file:** `docs/migrations/20260716_restore_roselle_358.sql`
 
@@ -1281,7 +3303,7 @@ Seeded with 10 rows covering 5 co-ops:
 
 ---
 
-## 2026-04-14 — Consolidate school 373 → 191 (Keansburg) (PENDING REVIEW)
+## 2026-04-14 — Consolidate school 373 → 191 (Keansburg) (APPLIED)
 
 **Migration file:** `docs/migrations/20260414_consolidate_school_373_to_191.sql`
 
@@ -1296,7 +3318,7 @@ School 373 (`'Keansburg/Henry Hudson'`) has 17 tournament entries and 3 precompu
 
 ---
 
-## 2026-04-14 — Consolidate schools 362 → 237 and 298 → 369 (PENDING REVIEW)
+## 2026-04-14 — Consolidate schools 362 → 237 and 298 → 369 (APPLIED)
 
 **Migration files:**
 1. `docs/migrations/20260414_consolidate_school_362_to_237.sql`
@@ -1388,7 +3410,7 @@ No real athletes affected. `matches` and `precomputed_team_scores` for these sch
 
 ---
 
-## 2026-04-10 — Suppress shell schools + load missing conference standings (PENDING REVIEW)
+## 2026-04-10 — Suppress shell schools + load missing conference standings (APPLIED)
 
 **Migration files:**
 - `docs/migrations/20260410_load_missing_conference_scores.sql`
@@ -1753,6 +3775,77 @@ No real athletes affected. `matches` and `precomputed_team_scores` for these sch
 
 ---
 
+## 2026-08-11 — tournament_strength_report RPC
+
+**Tables affected:** none (read-only function)
+
+**What changed:**
+- Created `tournament_strength_report(p_season text, p_postseason_season_id smallint)` RPC
+- Returns one row per in-season tournament with counts of district champs, region top-4 finishers, and state qualifiers who competed
+- Granted EXECUTE to anon, authenticated, service_role
+- Migration file: `docs/migrations/20260811_tournament_strength_report_rpc.sql`
+
+**Reversible?** Yes — `DROP FUNCTION public.tournament_strength_report(text, smallint)`
+**Verified?** Yes — applied
+
+---
+
+## 2026-08-24 — Power Points freeze support
+
+**Tables affected:** `power_points` (column added), `pp_freeze_log` (new table)
+
+**What changed:**
+- Added `frozen_power_points numeric` column to `power_points` table
+- Created `pp_freeze_log` table: id, season_id, gender, frozen_at, frozen_by, school_count, before_state jsonb
+- When freeze is applied, all live-site PP displays read `frozen_power_points ?? power_points`
+- Migration file: `docs/migrations/20260824_pp_freeze.sql`
+
+**APPLIED** — `docs/migrations/20260824_pp_freeze.sql`
+
+**Reversible?** Yes — DROP COLUMN frozen_power_points; DROP TABLE pp_freeze_log (once freeze is applied, unfreezing via DELETE endpoint clears the values)
+**Verified?** Yes — applied
+
+---
+
+## 2026-08-24 — Rankings schema (computed variants, editorial, published) + weight_class column
+
+**Tables affected:** `ranking_computed_variants`, `ranking_editorial`, `ranking_published` (new tables)
+
+**What changed:**
+- Created three new ranking tables with scope/season/period columns, results JSONB, and appropriate indexes
+- RLS: service_role full access; authenticated read all three; anon read ranking_published only
+- Migration file: `docs/migrations/20260824_rankings_schema.sql`
+
+**APPLIED** — `docs/migrations/20260824_rankings_add_weight_class.sql`
+- Adds `weight_class integer` column to all three tables
+- Drops and recreates lookup indexes to include weight_class
+- Run this migration AFTER `20260824_rankings_schema.sql`
+
+**Reversible?** Yes — DROP TABLE CASCADE for each new table; for weight_class, ALTER TABLE DROP COLUMN
+**Verified?** rankings_schema applied; rankings_add_weight_class pending
+
+---
+
+## 2026-08-26 — tournament_bracket_slots table
+
+**Tables affected:** `tournament_bracket_slots` (new)
+
+**What changed:**
+- Created `tournament_bracket_slots` table to store in-season tournament bracket structure
+- One row per match position (slot) per weight class per tournament
+- 8-man bracket = 12 slots: QF (×4), SF (×2), CSF (×2), F, 3rd, 5th, 7th
+- Stores seed placements (top/bottom wrestler, school, seed#), results (winner_position, result_type, result_detail), and routing (advances_winner_to_slot, advances_loser_to_slot, winner_is_top_in_next, loser_is_top_in_next)
+- UNIQUE (in_season_tournament_id, weight_class, slot_number)
+- RLS: public read, service_role write
+- Migration file: `docs/migrations/20260826_tournament_bracket_slots.sql`
+
+**APPLIED** — `docs/migrations/20260826_tournament_bracket_slots.sql`
+
+**Reversible?** Yes — `DROP TABLE public.tournament_bracket_slots;`
+**Verified?** Yes — applied 2026-08-26
+
+---
+
 ## Guidelines for Future Entries
 
 - Add an entry **before merging** any PR that touches the database
@@ -1760,3 +3853,89 @@ No real athletes affected. `matches` and `precomputed_team_scores` for these sch
 - If the change is a data backfill only (no DDL), still document it
 - If you run a one-off SQL command in the Supabase dashboard, add it here retroactively
 - Mark **Verified?** as `yes` only after confirming the change is live in production
+
+---
+
+## 2026-09-16 — boys_school_conferences season 3 rollover
+
+**Tables affected:** `boys_school_conferences`
+
+**What changed:**
+- Copied all 299 conference assignments from season_id=2 into season_id=3
+- Populates the Conference column in the preseason dashboard school directory spreadsheet
+- Migration file: `docs/migrations/20260916_boys_school_conferences_season3.sql`
+
+**APPLIED** — run in Supabase SQL editor 2026-09-16
+
+**Reversible?** Yes — `DELETE FROM boys_school_conferences WHERE season_id = 3;`
+**Verified?** Yes — 299 rows inserted
+
+---
+
+## 2026-09-16 — app_users RLS self-read policy
+
+**Tables affected:** `app_users` (RLS enabled + policy added)
+
+**What changed:**
+- Enabled RLS on `app_users`
+- Added SELECT policy allowing authenticated users to read their own row
+- Needed so the public site header can check `role = 'admin'` client-side to show the Admin Panel link
+- Service role (admin API routes) bypasses RLS and is unaffected
+- Migration file: `docs/migrations/20260916_app_users_rls_self_read.sql`
+
+**APPLIED** — run in Supabase SQL editor 2026-09-16
+
+**Reversible?** Yes — `DROP POLICY "users can read own app_users row" ON public.app_users; ALTER TABLE public.app_users DISABLE ROW LEVEL SECURITY;`
+**Verified?** Pending
+
+---
+
+## 2026-09-16 — handle_new_public_user null username guard
+
+**Tables affected:** `users` (trigger behavior change only)
+
+**What changed:**
+- Added early `RETURN NEW` to `handle_new_public_user()` when `raw_user_meta_data.username` is NULL
+- Admin invite flow creates auth users with no username in metadata; the trigger was trying to insert NULL into `public.users.username` (NOT NULL column), crashing the entire auth transaction with "Database error saving new user"
+- Normal fan signups are unaffected — they always pass a username
+- Migration file: `docs/migrations/20260916_handle_new_public_user_null_guard.sql`
+
+**APPLIED** — run in Supabase SQL editor 2026-09-16
+
+**Reversible?** Yes — remove the NULL guard block from the function
+**Verified?** Pending
+
+---
+
+## 2026-09-16 — handle_new_user trigger ON CONFLICT fix
+
+**Tables affected:** `app_users` (trigger behavior change only)
+
+**What changed:**
+- Added `ON CONFLICT (id) DO NOTHING` to `handle_new_user()` trigger function
+- Trigger previously hard-failed if a row already existed for the new auth user, causing admin invite flow to return "Database error saving new user"
+- Also changed admin invite route (`/api/admin/admin-profiles` PUT) to use `.upsert()` instead of `.insert()` so the trigger's auto-inserted 'fan' row gets promoted to 'admin'
+- Migration file: `docs/migrations/20260916_handle_new_user_on_conflict.sql`
+
+**APPLIED** — run in Supabase SQL editor 2026-09-16
+
+**Reversible?** Yes — remove `ON CONFLICT (id) DO NOTHING` from the function body
+**Verified?** Yes — deployed to production
+
+---
+
+## 2026-09-14 — admin_tool_registry table
+
+**Tables affected:** `admin_tool_registry` (new)
+
+**What changed:**
+- Created `admin_tool_registry` table to store all admin tools and their dashboard phase assignments
+- Columns: key (PK), label, path, description, gender, show_offseason, show_preseason, show_season, show_postseason, updated_at
+- Pre-seeded with all ~40 tools across all phases
+- Drives the tool dropdown in task creation (TaskCreatorPanel) and the Tool Audit settings page at /admin/tool-audit
+- Migration file: `docs/migrations/20260914_tool_registry.sql`
+
+**APPLIED** — run in Supabase SQL editor
+
+**Reversible?** Yes — `DROP TABLE public.admin_tool_registry;`
+**Verified?** No — pending

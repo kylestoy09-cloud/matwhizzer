@@ -82,6 +82,8 @@ export interface SchoolHeaderProps {
   athleticConference: string | null
   websiteUrl: string | null
   twitterHandle: string | null
+  headCoach?: string | null
+  otherGenderHasProgram?: boolean
 }
 
 // ── Component ─────────────────────────────────────────────────────────────────
@@ -111,6 +113,8 @@ export function SchoolHeader({
   athleticConference,
   websiteUrl,
   twitterHandle,
+  headCoach,
+  otherGenderHasProgram = true,
 }: SchoolHeaderProps) {
   const bgColor    = headerBackground ?? colorSecondary ?? '#1a1a2e'
   const textColor  = pickTextColor(bgColor, [colorPrimary, colorSecondary, colorTertiary])
@@ -156,33 +160,20 @@ export function SchoolHeader({
         </div>
       </div>
 
-      {/* ── SCROLLS AWAY: Boys/Girls toggle + season + location tags ─────────── */}
+      {/* ── SCROLLS AWAY: cross-program link + season + location tags ───────── */}
       <div
         className="px-4 py-2 flex flex-wrap items-center gap-1.5 border-t"
         style={{ borderColor: `${textColor}30`, backgroundColor: bgColor }}
       >
-        <div className="flex border border-white/30 overflow-hidden text-xs mr-2 shrink-0">
+        {otherGenderHasProgram && (
           <Link
-            href={`/schools/${schoolParam}?gender=boys${tabSuffix}`}
-            className={`px-3 py-1.5 font-bold transition-colors ${
-              gender === 'boys'
-                ? 'bg-white text-slate-900'
-                : 'text-white/70 hover:text-white hover:bg-white/10'
-            }`}
+            href={gender === 'boys' ? `/girls/schools/${schoolParam}` : `/boys/schools/${schoolParam}`}
+            className="text-xs font-semibold px-3 py-1 border border-white/30 hover:bg-white/10 transition-colors mr-2 shrink-0"
+            style={{ color: textColor }}
           >
-            Boys
+            {gender === 'boys' ? 'View Girls Program →' : 'View Boys Program →'}
           </Link>
-          <Link
-            href={`/schools/${schoolParam}?gender=girls${tabSuffix}`}
-            className={`px-3 py-1.5 font-bold transition-colors border-l border-white/30 ${
-              gender === 'girls'
-                ? 'bg-rose-200 text-rose-900'
-                : 'text-white/70 hover:text-white hover:bg-white/10'
-            }`}
-          >
-            Girls
-          </Link>
-        </div>
+        )}
 
         <div className="text-xs" style={{ color: `${textColor}99` }}>
           <InlineSeasonPicker activeSeason={activeSeason} />
@@ -198,6 +189,16 @@ export function SchoolHeader({
           </span>
         ))}
       </div>
+
+      {/* ── SCROLLS AWAY: head coach line ────────────────────────────────────── */}
+      {headCoach && (
+        <div
+          className="px-4 py-1.5 text-xs border-t"
+          style={{ borderColor: `${textColor}20`, backgroundColor: bgColor, color: `${textColor}99` }}
+        >
+          Head Coach: <span style={{ color: textColor }} className="font-medium">{headCoach}</span>
+        </div>
+      )}
 
       {/* ── SCROLLS AWAY: classification pills + action buttons (single wrap row) */}
       <div className="w-full px-4 sm:px-6 py-2.5 flex flex-wrap items-center gap-1.5" style={{ backgroundColor: bgColor }}>

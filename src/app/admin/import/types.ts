@@ -22,6 +22,14 @@ export type WrestlerOverride = {
   linkedToKey?: WrestlerKey    // same person as another entry in this import batch
 }
 
+// ── Placeholder name detection ────────────────────────────────────────────────
+// 'Unknown' and [bracket] tokens are parser placeholders, not real wrestlers.
+
+export function isPlaceholderName(name: string | null): boolean {
+  if (!name) return false
+  return /^unknown$/i.test(name.trim()) || /^\[.+\]$/i.test(name.trim())
+}
+
 // ── Wrestler key ───────────────────────────────────────────────────────────────
 // Stable identity key for a wrestler within an import batch.
 // Includes weight so that a wrestler bumping up a class is tracked separately.
@@ -74,7 +82,7 @@ export function resolveSchool(
     schoolId:     match.schoolId,
     displayName:  match.displayName ?? rawName,
     confidence:   match.confidence,
-    isOutOfState: false,
+    isOutOfState: match.confidence === 'oos',
   }
 }
 

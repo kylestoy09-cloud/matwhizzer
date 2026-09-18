@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback, useEffect } from 'react'
+import Link from 'next/link'
 import type { CheckResult, DataHealthResponse } from '@/app/api/admin/data-health/route'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -28,16 +29,18 @@ const BASE_ROUTES = [
 
 const SECTIONS: { key: CheckResult['section']; label: string }[] = [
   { key: 'schools',     label: 'Schools' },
-  { key: 'wrestlers',   label: 'wrestlers' },
+  { key: 'wrestlers',   label: 'Wrestlers' },
   { key: 'entries',     label: 'Tournament Entries' },
   { key: 'standings',   label: 'Standings' },
   { key: 'leaderboards', label: 'Leaderboards' },
+  { key: 'imports',     label: 'Imports & Roster' },
 ]
 
-function statusFor(count: number): 'green' | 'yellow' | 'red' {
-  if (count === 0) return 'green'
-  if (count <= 10) return 'yellow'
-  return 'red'
+function statusFor(check: CheckResult): 'green' | 'yellow' | 'red' {
+  if (check.count === 0) return 'green'
+  const raw: 'yellow' | 'red' = check.count <= 10 ? 'yellow' : 'red'
+  if (check.severity === 'info' && raw === 'red') return 'yellow'
+  return raw
 }
 
 const CARD: Record<'green' | 'yellow' | 'red', string> = {
@@ -120,7 +123,7 @@ function SiteCard({ check }: { check: SiteCheck }) {
 
 function CheckCard({ check }: { check: CheckResult }) {
   const [expanded, setExpanded] = useState(false)
-  const s = statusFor(check.count)
+  const s = statusFor(check)
 
   return (
     <div className={`border rounded-none p-4 ${CARD[s]}`}>
@@ -131,6 +134,10 @@ function CheckCard({ check }: { check: CheckResult }) {
         </div>
         <span className={`text-xl font-bold tabular-nums flex-shrink-0 ${TEXT[s]}`}>{check.count}</span>
       </div>
+
+      {check.severity === 'info' && check.count > 0 && (
+        <p className="text-xs opacity-50 mb-2 italic">Informational — expected pre-districts</p>
+      )}
 
       {check.error && (
         <p className="text-xs text-red-600 mb-2">Query error: {check.error}</p>
@@ -158,9 +165,19 @@ function CheckCard({ check }: { check: CheckResult }) {
         </div>
       )}
 
-      <p className="text-xs opacity-40 mt-3">
-        {new Date(check.checkedAt).toLocaleTimeString()}
-      </p>
+      <div className="flex items-center justify-between mt-3">
+        <p className="text-xs opacity-40">
+          {new Date(check.checkedAt).toLocaleTimeString()}
+        </p>
+        {check.linkTo && check.count > 0 && (
+          <Link
+            href={check.linkTo}
+            className={`text-xs underline opacity-60 hover:opacity-100 ${TEXT[s]}`}
+          >
+            Review →
+          </Link>
+        )}
+      </div>
     </div>
   )
 }
@@ -224,8 +241,8 @@ export function DataHealthClient() {
 
   // Summary counts
   const totalIssues = checks.reduce((sum, c) => sum + c.count, 0)
-  const redCount = checks.filter(c => statusFor(c.count) === 'red').length
-  const yellowCount = checks.filter(c => statusFor(c.count) === 'yellow').length
+  const redCount = checks.filter(c => statusFor(c) === 'red').length
+  const yellowCount = checks.filter(c => statusFor(c) === 'yellow').length
 
   return (
     <div>

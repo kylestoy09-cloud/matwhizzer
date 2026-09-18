@@ -19,6 +19,8 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json().catch(() => ({}))
   const names: unknown = body?.names
+  const gender: 'M' | 'F' | undefined = body?.gender === 'F' ? 'F' : body?.gender === 'M' ? 'M' : undefined
+  const seasonId: number | undefined = typeof body?.seasonId === 'number' ? body.seasonId : undefined
 
   if (!Array.isArray(names) || names.length === 0) {
     return NextResponse.json({ results: [] })
@@ -31,8 +33,10 @@ export async function POST(req: NextRequest) {
       .filter(Boolean)
   )]
 
+  const matchOpts = gender && seasonId ? { gender, seasonId } : undefined
+
   try {
-    const results = await Promise.all(unique.map(name => matchSchoolNames(name)))
+    const results = await Promise.all(unique.map(name => matchSchoolNames(name, matchOpts)))
     return NextResponse.json({ results })
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err)

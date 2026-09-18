@@ -43,28 +43,47 @@ let njSchoolCache:  NjSchoolRow[]  | null = null
 let oosSchoolCache: OosSchoolRow[] | null = null
 let aliasCache:     AliasRow[]     | null = null
 
+async function withRetry<T>(label: string, fn: () => Promise<T>, retries = 2): Promise<T> {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      return await fn()
+    } catch (err) {
+      if (attempt === retries) throw err
+      await new Promise(r => setTimeout(r, 400 * (attempt + 1)))
+      console.warn(`[match-schools] ${label} failed (attempt ${attempt + 1}/${retries + 1}), retrying…`)
+    }
+  }
+  throw new Error('unreachable')
+}
+
 async function loadNjSchools(): Promise<NjSchoolRow[]> {
   if (njSchoolCache) return njSchoolCache
-  const { data, error } = await getClient().from('schools').select('id, display_name').eq('is_nj', true).order('id')
-  if (error) throw new Error(`matchSchools: failed to load NJ schools — ${error.message}`)
-  njSchoolCache = (data ?? []) as NjSchoolRow[]
-  return njSchoolCache
+  return withRetry('loadNjSchools', async () => {
+    const { data, error } = await getClient().from('schools').select('id, display_name').eq('is_nj', true).order('id')
+    if (error) throw new Error(`matchSchools: failed to load NJ schools — ${error.message}`)
+    njSchoolCache = (data ?? []) as NjSchoolRow[]
+    return njSchoolCache!
+  })
 }
 
 async function loadOosSchools(): Promise<OosSchoolRow[]> {
   if (oosSchoolCache) return oosSchoolCache
-  const { data, error } = await getClient().from('schools').select('id, display_name').eq('is_nj', false).order('id')
-  if (error) throw new Error(`matchSchools: failed to load OOS schools — ${error.message}`)
-  oosSchoolCache = (data ?? []) as OosSchoolRow[]
-  return oosSchoolCache
+  return withRetry('loadOosSchools', async () => {
+    const { data, error } = await getClient().from('schools').select('id, display_name').eq('is_nj', false).order('id')
+    if (error) throw new Error(`matchSchools: failed to load OOS schools — ${error.message}`)
+    oosSchoolCache = (data ?? []) as OosSchoolRow[]
+    return oosSchoolCache!
+  })
 }
 
 async function loadAliases(): Promise<AliasRow[]> {
   if (aliasCache) return aliasCache
-  const { data, error } = await getClient().from('school_aliases').select('school_id, alias, alias_type, notes')
-  if (error) throw new Error(`matchSchools: failed to load aliases — ${error.message}`)
-  aliasCache = (data ?? []) as AliasRow[]
-  return aliasCache
+  return withRetry('loadAliases', async () => {
+    const { data, error } = await getClient().from('school_aliases').select('school_id, alias, alias_type, notes')
+    if (error) throw new Error(`matchSchools: failed to load aliases — ${error.message}`)
+    aliasCache = (data ?? []) as AliasRow[]
+    return aliasCache!
+  })
 }
 
 // ── Trigram similarity ─────────────────────────────────────────────────────────
@@ -145,13 +164,18 @@ function aliasResult(
   oosSchools: OosSchoolRow[],
 ): SchoolMatch {
   if (aliasHit.alias_type === 'oos') {
-    // OOS aliases store school_id in notes (school_id column stays null to avoid index conflicts)
+    // OOS aliases normally store school_id in notes (school_id column = null).
+    // Fallback: if the NOT NULL migration hadn't applied when the alias was saved,
+    // school_id may hold the OOS school's id directly.
     let oos: OosSchoolRow | undefined
     if (aliasHit.notes) {
       const parsed = parseInt(aliasHit.notes, 10)
       if (!isNaN(parsed)) oos = oosSchools.find(s => s.id === parsed)
     }
-    // Legacy OOS aliases (no notes): fall back to display_name lookup
+    if (!oos && aliasHit.school_id != null) {
+      oos = oosSchools.find(s => s.id === aliasHit.school_id!)
+    }
+    // Legacy OOS aliases (no notes, no school_id): fall back to display_name lookup
     if (!oos) oos = oosSchools.find(s => s.display_name.toLowerCase() === aliasHit.alias.toLowerCase())
     return {
       rawName,
@@ -171,11 +195,89 @@ function aliasResult(
   }
 }
 
+// ── Inactive school IDs for a gender/season ───────────────────────────────────
+
+async function loadInactiveSchoolIds(seasonId: number, gender?: 'M' | 'F'): Promise<Set<number>> {
+  const client = getClient()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let q: any = client.from('inactive_school_seasons').select('school_id').eq('season_id', seasonId)
+  if (gender) q = q.eq('gender', gender)
+  const { data } = await q
+  return new Set<number>((data ?? []).map((r: { school_id: number }) => r.school_id))
+}
+
+// ── Gender-program school IDs (authoritative) ──────────────────────────────────
+// Queries the gender-specific conference/district/region assignment tables to get
+// the definitive list of schools competing in a given gender's program for a season.
+// This is the correct filter for school matching — it separates boys and girls programs
+// at the data level rather than relying on dual-meet/tournament heuristics.
+
+async function loadGenderProgramSchoolIds(gender: 'M' | 'F', seasonId: number): Promise<Set<number> | null> {
+  const prefix     = gender === 'F' ? 'girls' : 'boys'
+  const supabase   = getClient()
+  const [confData, distData, regData] = await Promise.all([
+    supabase.from(`${prefix}_school_conferences`).select('school_id').eq('season_id', seasonId),
+    supabase.from(`${prefix}_school_districts`).select('school_id').eq('season_id', seasonId),
+    supabase.from(`${prefix}_school_regions`).select('school_id').eq('season_id', seasonId),
+  ])
+  const ids = new Set<number>()
+  for (const r of [
+    ...(confData.data ?? []),
+    ...(distData.data ?? []),
+    ...(regData.data ?? []),
+  ] as { school_id: number }[]) {
+    ids.add(r.school_id)
+  }
+  // Return null if no program data exists yet (no filter applied — fall back to all NJ schools)
+  return ids.size > 0 ? ids : null
+}
+
 // ── Public API ─────────────────────────────────────────────────────────────────
 
-export async function matchSchoolNames(rawName: string): Promise<SchoolMatch> {
+export async function matchSchoolNames(
+  rawName: string,
+  opts?: { gender?: 'M' | 'F'; seasonId?: number },
+): Promise<SchoolMatch> {
   const raw = rawName.trim()
-  const [njSchools, oosSchools, aliases] = await Promise.all([loadNjSchools(), loadOosSchools(), loadAliases()])
+
+  const [allNjSchools, oosSchools, aliases] = await Promise.all([loadNjSchools(), loadOosSchools(), loadAliases()])
+
+  // Filter NJ school pool when gender+season context is provided.
+  // The primary filter is the gender-specific program list (conference/district/region
+  // assignments) — this is the authoritative source of which schools compete in each
+  // gender's program. Boys and girls programs are fully separate: Jefferson may be in
+  // boys but not girls; Jefferson-Sparta may be in girls but not boys.
+  // A gender-specific inactive override can further remove a school from the pool.
+  let njSchools = allNjSchools
+  let njFuzzyPool = allNjSchools
+  if (opts?.gender && opts?.seasonId) {
+    const [programIds, inactiveIds] = await Promise.all([
+      loadGenderProgramSchoolIds(opts.gender, opts.seasonId),
+      loadInactiveSchoolIds(opts.seasonId, opts.gender),
+    ])
+    if (programIds && programIds.size > 0) {
+      // Restrict the entire NJ pool to this gender's program schools only.
+      njSchools   = allNjSchools.filter(s => programIds.has(s.id) && !inactiveIds.has(s.id))
+      njFuzzyPool = njSchools
+    } else if (inactiveIds.size > 0) {
+      // No program data yet — fall back to all NJ schools minus inactive
+      njSchools   = allNjSchools.filter(s => !inactiveIds.has(s.id))
+      njFuzzyPool = njSchools
+    }
+  }
+
+  // ── 0. Gender-specific alias override ────────────────────────────────────────
+  // Checked BEFORE exact NJ match so a co-op school can redirect its component
+  // school name (e.g. "Jefferson" → "Jefferson-Sparta" for girls) even when the
+  // component school exists as a valid NJ record for the other gender.
+  // Aliases opt in by setting notes = "gender:F" or notes = "gender:M".
+  if (opts?.gender) {
+    const genderAlias = aliases.find(a =>
+      a.alias.toLowerCase() === raw.toLowerCase() &&
+      a.notes === `gender:${opts.gender}`
+    )
+    if (genderAlias) return aliasResult(raw, genderAlias, njSchools, oosSchools)
+  }
 
   // ── 1. Exact NJ display_name ─────────────────────────────────────────────────
   const exactNj = njSchools.find(s => s.display_name.toLowerCase() === raw.toLowerCase())
@@ -193,6 +295,22 @@ export async function matchSchoolNames(rawName: string): Promise<SchoolMatch> {
 
     const strippedAlias = aliases.find(a => a.alias.toLowerCase() === stripped.toLowerCase())
     if (strippedAlias) return aliasResult(raw, strippedAlias, njSchools, oosSchools)
+  }
+
+  // ── 3b. Strip leading "The " prefix, then retry exact + suffix + alias ───────
+  const deTheed = raw.replace(/^the\s+/i, '').trim()
+  if (deTheed !== raw && deTheed.length > 0) {
+    const dtNj = njSchools.find(s => s.display_name.toLowerCase() === deTheed.toLowerCase())
+    if (dtNj) return njExactResult(raw, dtNj)
+    const dtAlias = aliases.find(a => a.alias.toLowerCase() === deTheed.toLowerCase())
+    if (dtAlias) return aliasResult(raw, dtAlias, njSchools, oosSchools)
+    const strippedDt = stripSuffixes(deTheed)
+    if (strippedDt.length > 0 && strippedDt !== deTheed) {
+      const sdNj = njSchools.find(s => s.display_name.toLowerCase() === strippedDt.toLowerCase())
+      if (sdNj) return njExactResult(raw, sdNj)
+      const sdAlias = aliases.find(a => a.alias.toLowerCase() === strippedDt.toLowerCase())
+      if (sdAlias) return aliasResult(raw, sdAlias, njSchools, oosSchools)
+    }
   }
 
   // ── 4. Exact OOS display_name ────────────────────────────────────────────────
@@ -217,7 +335,8 @@ export async function matchSchoolNames(rawName: string): Promise<SchoolMatch> {
   const queryName = (stripped !== raw && stripped.length > 0) ? stripped : raw
 
   // NJ: trigram only — 400+ schools, token overlap would produce too many false positives
-  const njCandidates = njSchools
+  // Use njFuzzyPool (active-season schools) when available to rank likely competitors first
+  const njCandidates = njFuzzyPool
     .map(s => ({ schoolId: s.id, displayName: s.display_name, score: trigramSimilarity(queryName, s.display_name), isOos: false as const }))
     .sort((a, b) => b.score - a.score)
     .slice(0, 4)

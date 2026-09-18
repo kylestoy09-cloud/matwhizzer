@@ -51,6 +51,7 @@ export interface InSeasonTournament {
   name: string
   season: string
   start_date: string
+  gender: 'M' | 'F'
 }
 
 export interface TournamentBoutRecord {

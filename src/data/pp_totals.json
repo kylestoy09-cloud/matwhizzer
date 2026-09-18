@@ -1,0 +1,2490 @@
+[
+  {
+    "name": "Delaware Valley",
+    "record": "24-0",
+    "wins": 24,
+    "losses": 0,
+    "total": 24,
+    "section": "Central Jersey, Group 1"
+  },
+  {
+    "name": "Manville",
+    "record": "32-1",
+    "wins": 32,
+    "losses": 1,
+    "total": 33,
+    "section": "Central Jersey, Group 1"
+  },
+  {
+    "name": "Keansburg",
+    "record": "14-14",
+    "wins": 14,
+    "losses": 14,
+    "total": 28,
+    "section": "Central Jersey, Group 1"
+  },
+  {
+    "name": "Point Pleasant Beach",
+    "record": "18-11",
+    "wins": 18,
+    "losses": 11,
+    "total": 29,
+    "section": "Central Jersey, Group 1"
+  },
+  {
+    "name": "Asbury Park",
+    "record": "17-10",
+    "wins": 17,
+    "losses": 10,
+    "total": 27,
+    "section": "Central Jersey, Group 1"
+  },
+  {
+    "name": "Shore",
+    "record": "12-13",
+    "wins": 12,
+    "losses": 13,
+    "total": 25,
+    "section": "Central Jersey, Group 1"
+  },
+  {
+    "name": "New Egypt",
+    "record": "17-11",
+    "wins": 17,
+    "losses": 11,
+    "total": 28,
+    "section": "Central Jersey, Group 1"
+  },
+  {
+    "name": "Metuchen",
+    "record": "9-16",
+    "wins": 9,
+    "losses": 16,
+    "total": 25,
+    "section": "Central Jersey, Group 1"
+  },
+  {
+    "name": "Highland Park",
+    "record": "8-25",
+    "wins": 8,
+    "losses": 25,
+    "total": 33,
+    "section": "Central Jersey, Group 1"
+  },
+  {
+    "name": "Bound Brook",
+    "record": "6-16",
+    "wins": 6,
+    "losses": 16,
+    "total": 22,
+    "section": "Central Jersey, Group 1"
+  },
+  {
+    "name": "South Hunterdon",
+    "record": "10-13",
+    "wins": 10,
+    "losses": 13,
+    "total": 23,
+    "section": "Central Jersey, Group 1"
+  },
+  {
+    "name": "Central Jersey College Charter",
+    "record": "6-24",
+    "wins": 6,
+    "losses": 24,
+    "total": 30,
+    "section": "Central Jersey, Group 1"
+  },
+  {
+    "name": "Keyport",
+    "record": "2-18",
+    "wins": 2,
+    "losses": 18,
+    "total": 20,
+    "section": "Central Jersey, Group 1"
+  },
+  {
+    "name": "South River",
+    "record": "1-28",
+    "wins": 1,
+    "losses": 28,
+    "total": 29,
+    "section": "Central Jersey, Group 1"
+  },
+  {
+    "name": "Burlington City",
+    "record": "3-16",
+    "wins": 3,
+    "losses": 16,
+    "total": 19,
+    "section": "Central Jersey, Group 1"
+  },
+  {
+    "name": "Point Pleasant Boro",
+    "record": "15-6",
+    "wins": 15,
+    "losses": 6,
+    "total": 21,
+    "section": "Central Jersey, Group 2"
+  },
+  {
+    "name": "Wall",
+    "record": "13-9",
+    "wins": 13,
+    "losses": 9,
+    "total": 22,
+    "section": "Central Jersey, Group 2"
+  },
+  {
+    "name": "Ocean Township",
+    "record": "17-8",
+    "wins": 17,
+    "losses": 8,
+    "total": 25,
+    "section": "Central Jersey, Group 2"
+  },
+  {
+    "name": "Delran",
+    "record": "24-7",
+    "wins": 24,
+    "losses": 7,
+    "total": 31,
+    "section": "Central Jersey, Group 2"
+  },
+  {
+    "name": "Manasquan",
+    "record": "16-6",
+    "wins": 16,
+    "losses": 6,
+    "total": 22,
+    "section": "Central Jersey, Group 2"
+  },
+  {
+    "name": "Rumson-Fair Haven",
+    "record": "18-4",
+    "wins": 18,
+    "losses": 4,
+    "total": 22,
+    "section": "Central Jersey, Group 2"
+  },
+  {
+    "name": "Raritan",
+    "record": "16-15",
+    "wins": 16,
+    "losses": 15,
+    "total": 31,
+    "section": "Central Jersey, Group 2"
+  },
+  {
+    "name": "Cinnaminson",
+    "record": "14-13",
+    "wins": 14,
+    "losses": 13,
+    "total": 27,
+    "section": "Central Jersey, Group 2"
+  },
+  {
+    "name": "Holmdel",
+    "record": "14-12",
+    "wins": 14,
+    "losses": 12,
+    "total": 26,
+    "section": "Central Jersey, Group 2"
+  },
+  {
+    "name": "Johnson",
+    "record": "18-10",
+    "wins": 18,
+    "losses": 10,
+    "total": 28,
+    "section": "Central Jersey, Group 2"
+  },
+  {
+    "name": "Monmouth",
+    "record": "10-15",
+    "wins": 10,
+    "losses": 15,
+    "total": 25,
+    "section": "Central Jersey, Group 2"
+  },
+  {
+    "name": "Spotswood",
+    "record": "13-13",
+    "wins": 13,
+    "losses": 13,
+    "total": 26,
+    "section": "Central Jersey, Group 2"
+  },
+  {
+    "name": "Willingboro",
+    "record": "14-22",
+    "wins": 14,
+    "losses": 22,
+    "total": 36,
+    "section": "Central Jersey, Group 2"
+  },
+  {
+    "name": "Brick Memorial",
+    "record": "17-9",
+    "wins": 17,
+    "losses": 9,
+    "total": 26,
+    "section": "Central Jersey, Group 3"
+  },
+  {
+    "name": "Matawan",
+    "record": "16-13",
+    "wins": 16,
+    "losses": 13,
+    "total": 29,
+    "section": "Central Jersey, Group 3"
+  },
+  {
+    "name": "Robbinsville",
+    "record": "19-10",
+    "wins": 19,
+    "losses": 10,
+    "total": 29,
+    "section": "Central Jersey, Group 3"
+  },
+  {
+    "name": "Hopewell Valley",
+    "record": "23-4",
+    "wins": 23,
+    "losses": 4,
+    "total": 27,
+    "section": "Central Jersey, Group 3"
+  },
+  {
+    "name": "Brick Township",
+    "record": "16-12",
+    "wins": 16,
+    "losses": 12,
+    "total": 28,
+    "section": "Central Jersey, Group 3"
+  },
+  {
+    "name": "Lawrence",
+    "record": "20-12",
+    "wins": 20,
+    "losses": 12,
+    "total": 32,
+    "section": "Central Jersey, Group 3"
+  },
+  {
+    "name": "Burlington Township",
+    "record": "24-15",
+    "wins": 24,
+    "losses": 15,
+    "total": 39,
+    "section": "Central Jersey, Group 3"
+  },
+  {
+    "name": "Allentown",
+    "record": "12-14",
+    "wins": 12,
+    "losses": 14,
+    "total": 26,
+    "section": "Central Jersey, Group 3"
+  },
+  {
+    "name": "Middlesex",
+    "record": "19-8",
+    "wins": 19,
+    "losses": 8,
+    "total": 27,
+    "section": "Central Jersey, Group 3"
+  },
+  {
+    "name": "Somerville",
+    "record": "14-10",
+    "wins": 14,
+    "losses": 10,
+    "total": 24,
+    "section": "Central Jersey, Group 3"
+  },
+  {
+    "name": "Bordentown",
+    "record": "6-22",
+    "wins": 6,
+    "losses": 22,
+    "total": 28,
+    "section": "Central Jersey, Group 3"
+  },
+  {
+    "name": "Nottingham",
+    "record": "9-17",
+    "wins": 9,
+    "losses": 17,
+    "total": 26,
+    "section": "Central Jersey, Group 3"
+  },
+  {
+    "name": "Neptune",
+    "record": "4-14",
+    "wins": 4,
+    "losses": 14,
+    "total": 18,
+    "section": "Central Jersey, Group 3"
+  },
+  {
+    "name": "Ewing",
+    "record": "1-25",
+    "wins": 1,
+    "losses": 25,
+    "total": 26,
+    "section": "Central Jersey, Group 3"
+  },
+  {
+    "name": "Colts Neck",
+    "record": "23-3",
+    "wins": 23,
+    "losses": 3,
+    "total": 26,
+    "section": "Central Jersey, Group 4"
+  },
+  {
+    "name": "Manalapan",
+    "record": "13-11",
+    "wins": 13,
+    "losses": 11,
+    "total": 24,
+    "section": "Central Jersey, Group 4"
+  },
+  {
+    "name": "Hightstown",
+    "record": "18-11",
+    "wins": 18,
+    "losses": 11,
+    "total": 29,
+    "section": "Central Jersey, Group 4"
+  },
+  {
+    "name": "Marlboro",
+    "record": "22-6",
+    "wins": 22,
+    "losses": 6,
+    "total": 28,
+    "section": "Central Jersey, Group 4"
+  },
+  {
+    "name": "Freehold Borough",
+    "record": "13-11",
+    "wins": 13,
+    "losses": 11,
+    "total": 24,
+    "section": "Central Jersey, Group 4"
+  },
+  {
+    "name": "Steinert",
+    "record": "19-5",
+    "wins": 19,
+    "losses": 5,
+    "total": 24,
+    "section": "Central Jersey, Group 4"
+  },
+  {
+    "name": "Long Branch",
+    "record": "6-24",
+    "wins": 6,
+    "losses": 24,
+    "total": 30,
+    "section": "Central Jersey, Group 4"
+  },
+  {
+    "name": "Red Bank Regional",
+    "record": "23-13",
+    "wins": 23,
+    "losses": 13,
+    "total": 36,
+    "section": "Central Jersey, Group 4"
+  },
+  {
+    "name": "Hamilton West",
+    "record": "9-18",
+    "wins": 9,
+    "losses": 18,
+    "total": 27,
+    "section": "Central Jersey, Group 4"
+  },
+  {
+    "name": "West Windsor-Plainsboro North",
+    "record": "8-26",
+    "wins": 8,
+    "losses": 26,
+    "total": 34,
+    "section": "Central Jersey, Group 4"
+  },
+  {
+    "name": "West Windsor-Plainsboro South",
+    "record": "7-20",
+    "wins": 7,
+    "losses": 20,
+    "total": 27,
+    "section": "Central Jersey, Group 4"
+  },
+  {
+    "name": "Lakewood",
+    "record": "2-23",
+    "wins": 2,
+    "losses": 23,
+    "total": 25,
+    "section": "Central Jersey, Group 4"
+  },
+  {
+    "name": "Jackson Township",
+    "record": "17-3",
+    "wins": 17,
+    "losses": 3,
+    "total": 20,
+    "section": "Central Jersey, Group 5"
+  },
+  {
+    "name": "Old Bridge",
+    "record": "22-7",
+    "wins": 22,
+    "losses": 7,
+    "total": 29,
+    "section": "Central Jersey, Group 5"
+  },
+  {
+    "name": "Monroe",
+    "record": "18-12",
+    "wins": 18,
+    "losses": 12,
+    "total": 30,
+    "section": "Central Jersey, Group 5"
+  },
+  {
+    "name": "Edison",
+    "record": "16-13",
+    "wins": 16,
+    "losses": 13,
+    "total": 29,
+    "section": "Central Jersey, Group 5"
+  },
+  {
+    "name": "Freehold Township",
+    "record": "12-23",
+    "wins": 12,
+    "losses": 23,
+    "total": 35,
+    "section": "Central Jersey, Group 5"
+  },
+  {
+    "name": "East Brunswick",
+    "record": "11-9",
+    "wins": 11,
+    "losses": 9,
+    "total": 20,
+    "section": "Central Jersey, Group 5"
+  },
+  {
+    "name": "Franklin",
+    "record": "16-20",
+    "wins": 16,
+    "losses": 20,
+    "total": 36,
+    "section": "Central Jersey, Group 5"
+  },
+  {
+    "name": "Perth Amboy",
+    "record": "15-5",
+    "wins": 15,
+    "losses": 5,
+    "total": 20,
+    "section": "Central Jersey, Group 5"
+  },
+  {
+    "name": "Hillsborough",
+    "record": "7-21",
+    "wins": 7,
+    "losses": 21,
+    "total": 28,
+    "section": "Central Jersey, Group 5"
+  },
+  {
+    "name": "North Brunswick",
+    "record": "11-25",
+    "wins": 11,
+    "losses": 25,
+    "total": 36,
+    "section": "Central Jersey, Group 5"
+  },
+  {
+    "name": "Hunterdon Central",
+    "record": "5-18",
+    "wins": 5,
+    "losses": 18,
+    "total": 23,
+    "section": "Central Jersey, Group 5"
+  },
+  {
+    "name": "Trenton",
+    "record": "13-11",
+    "wins": 13,
+    "losses": 11,
+    "total": 24,
+    "section": "Central Jersey, Group 5"
+  },
+  {
+    "name": "South Brunswick",
+    "record": "6-23",
+    "wins": 6,
+    "losses": 23,
+    "total": 29,
+    "section": "Central Jersey, Group 5"
+  },
+  {
+    "name": "New Brunswick",
+    "record": "7-24",
+    "wins": 7,
+    "losses": 24,
+    "total": 31,
+    "section": "Central Jersey, Group 5"
+  },
+  {
+    "name": "Paramus Catholic",
+    "record": "14-4",
+    "wins": 14,
+    "losses": 4,
+    "total": 18,
+    "section": "Non-Public, Group A"
+  },
+  {
+    "name": "Delbarton",
+    "record": "18-2",
+    "wins": 18,
+    "losses": 2,
+    "total": 20,
+    "section": "Non-Public, Group A"
+  },
+  {
+    "name": "St. Peter's Prep",
+    "record": "15-4",
+    "wins": 15,
+    "losses": 4,
+    "total": 19,
+    "section": "Non-Public, Group A"
+  },
+  {
+    "name": "Christian Brothers",
+    "record": "15-2",
+    "wins": 15,
+    "losses": 2,
+    "total": 17,
+    "section": "Non-Public, Group A"
+  },
+  {
+    "name": "St. Joseph (Met.)",
+    "record": "13-8",
+    "wins": 13,
+    "losses": 8,
+    "total": 21,
+    "section": "Non-Public, Group A"
+  },
+  {
+    "name": "Seton Hall Prep",
+    "record": "14-3",
+    "wins": 14,
+    "losses": 3,
+    "total": 17,
+    "section": "Non-Public, Group A"
+  },
+  {
+    "name": "St. Augustine",
+    "record": "17-9",
+    "wins": 17,
+    "losses": 9,
+    "total": 26,
+    "section": "Non-Public, Group A"
+  },
+  {
+    "name": "Bergen Catholic",
+    "record": "11-3",
+    "wins": 11,
+    "losses": 3,
+    "total": 14,
+    "section": "Non-Public, Group A"
+  },
+  {
+    "name": "St. Joseph (Mont.)",
+    "record": "13-5",
+    "wins": 13,
+    "losses": 5,
+    "total": 18,
+    "section": "Non-Public, Group A"
+  },
+  {
+    "name": "Don Bosco Prep",
+    "record": "11-8",
+    "wins": 11,
+    "losses": 8,
+    "total": 19,
+    "section": "Non-Public, Group A"
+  },
+  {
+    "name": "Paul VI",
+    "record": "10-11",
+    "wins": 10,
+    "losses": 11,
+    "total": 21,
+    "section": "Non-Public, Group A"
+  },
+  {
+    "name": "St. John Vianney",
+    "record": "6-16",
+    "wins": 6,
+    "losses": 16,
+    "total": 22,
+    "section": "Non-Public, Group A"
+  },
+  {
+    "name": "Notre Dame",
+    "record": "13-16",
+    "wins": 13,
+    "losses": 16,
+    "total": 29,
+    "section": "Non-Public, Group A"
+  },
+  {
+    "name": "St. Benedict's",
+    "record": "10-9",
+    "wins": 10,
+    "losses": 9,
+    "total": 19,
+    "section": "Non-Public, Group A"
+  },
+  {
+    "name": "Pingry",
+    "record": "7-15",
+    "wins": 7,
+    "losses": 15,
+    "total": 22,
+    "section": "Non-Public, Group A"
+  },
+  {
+    "name": "Camden Catholic",
+    "record": "17-0",
+    "wins": 17,
+    "losses": 0,
+    "total": 17,
+    "section": "Non-Public, Group B"
+  },
+  {
+    "name": "Immaculata",
+    "record": "17-7",
+    "wins": 17,
+    "losses": 7,
+    "total": 24,
+    "section": "Non-Public, Group B"
+  },
+  {
+    "name": "Red Bank Catholic",
+    "record": "17-8",
+    "wins": 17,
+    "losses": 8,
+    "total": 25,
+    "section": "Non-Public, Group B"
+  },
+  {
+    "name": "Pope John",
+    "record": "11-3",
+    "wins": 11,
+    "losses": 3,
+    "total": 14,
+    "section": "Non-Public, Group B"
+  },
+  {
+    "name": "DePaul",
+    "record": "13-10",
+    "wins": 13,
+    "losses": 10,
+    "total": 23,
+    "section": "Non-Public, Group B"
+  },
+  {
+    "name": "St. Thomas Aquinas",
+    "record": "7-17",
+    "wins": 7,
+    "losses": 17,
+    "total": 24,
+    "section": "Non-Public, Group B"
+  },
+  {
+    "name": "Holy Cross Prep",
+    "record": "4-16",
+    "wins": 4,
+    "losses": 16,
+    "total": 20,
+    "section": "Non-Public, Group B"
+  },
+  {
+    "name": "St. Joseph (Hamm.)",
+    "record": "2-27",
+    "wins": 2,
+    "losses": 27,
+    "total": 29,
+    "section": "Non-Public, Group B"
+  },
+  {
+    "name": "Holy Spirit",
+    "record": "1-33",
+    "wins": 1,
+    "losses": 33,
+    "total": 34,
+    "section": "Non-Public, Group B"
+  },
+  {
+    "name": "Rutgers Prep",
+    "record": "5-20",
+    "wins": 5,
+    "losses": 20,
+    "total": 25,
+    "section": "Non-Public, Group B"
+  },
+  {
+    "name": "Newark Academy",
+    "record": "0-26",
+    "wins": 0,
+    "losses": 26,
+    "total": 26,
+    "section": "Non-Public, Group B"
+  },
+  {
+    "name": "Gloucester Catholic",
+    "record": "0-10",
+    "wins": 0,
+    "losses": 10,
+    "total": 10,
+    "section": "Non-Public, Group B"
+  },
+  {
+    "name": "St. Mary (Ruth.)",
+    "record": "0-13",
+    "wins": 0,
+    "losses": 13,
+    "total": 13,
+    "section": "Non-Public, Group B"
+  },
+  {
+    "name": "Pioneer Academy",
+    "record": "1-8",
+    "wins": 1,
+    "losses": 8,
+    "total": 9,
+    "section": "Non-Public, Group B"
+  },
+  {
+    "name": "Saddle River Day",
+    "record": "0-5",
+    "wins": 0,
+    "losses": 5,
+    "total": 5,
+    "section": "Non-Public, Group B"
+  },
+  {
+    "name": "Emerson Boro",
+    "record": "17-11",
+    "wins": 17,
+    "losses": 11,
+    "total": 28,
+    "section": "North Jersey, Section 1, Group 1"
+  },
+  {
+    "name": "Pompton Lakes",
+    "record": "21-11",
+    "wins": 21,
+    "losses": 11,
+    "total": 32,
+    "section": "North Jersey, Section 1, Group 1"
+  },
+  {
+    "name": "Kittatinny",
+    "record": "12-12",
+    "wins": 12,
+    "losses": 12,
+    "total": 24,
+    "section": "North Jersey, Section 1, Group 1"
+  },
+  {
+    "name": "Newton",
+    "record": "14-11",
+    "wins": 14,
+    "losses": 11,
+    "total": 25,
+    "section": "North Jersey, Section 1, Group 1"
+  },
+  {
+    "name": "Kinnelon",
+    "record": "13-12",
+    "wins": 13,
+    "losses": 12,
+    "total": 25,
+    "section": "North Jersey, Section 1, Group 1"
+  },
+  {
+    "name": "Pequannock",
+    "record": "14-5",
+    "wins": 14,
+    "losses": 5,
+    "total": 19,
+    "section": "North Jersey, Section 1, Group 1"
+  },
+  {
+    "name": "Waldwick",
+    "record": "15-11",
+    "wins": 15,
+    "losses": 11,
+    "total": 26,
+    "section": "North Jersey, Section 1, Group 1"
+  },
+  {
+    "name": "New Milford",
+    "record": "10-16",
+    "wins": 10,
+    "losses": 16,
+    "total": 26,
+    "section": "North Jersey, Section 1, Group 1"
+  },
+  {
+    "name": "Indian Hills",
+    "record": "15-15",
+    "wins": 15,
+    "losses": 15,
+    "total": 30,
+    "section": "North Jersey, Section 1, Group 1"
+  },
+  {
+    "name": "Cresskill",
+    "record": "24-7",
+    "wins": 24,
+    "losses": 7,
+    "total": 31,
+    "section": "North Jersey, Section 1, Group 1"
+  },
+  {
+    "name": "Butler",
+    "record": "11-13",
+    "wins": 11,
+    "losses": 13,
+    "total": 24,
+    "section": "North Jersey, Section 1, Group 1"
+  },
+  {
+    "name": "Boonton",
+    "record": "7-14",
+    "wins": 7,
+    "losses": 14,
+    "total": 21,
+    "section": "North Jersey, Section 1, Group 1"
+  },
+  {
+    "name": "Hawthorne",
+    "record": "4-13",
+    "wins": 4,
+    "losses": 13,
+    "total": 17,
+    "section": "North Jersey, Section 1, Group 1"
+  },
+  {
+    "name": "Ridgefield",
+    "record": "5-12",
+    "wins": 5,
+    "losses": 12,
+    "total": 17,
+    "section": "North Jersey, Section 1, Group 1"
+  },
+  {
+    "name": "Wallkill Valley",
+    "record": "2-21",
+    "wins": 2,
+    "losses": 21,
+    "total": 23,
+    "section": "North Jersey, Section 1, Group 1"
+  },
+  {
+    "name": "North Warren",
+    "record": "2-23",
+    "wins": 2,
+    "losses": 23,
+    "total": 25,
+    "section": "North Jersey, Section 1, Group 1"
+  },
+  {
+    "name": "College Achieve Paterson",
+    "record": "1-12",
+    "wins": 1,
+    "losses": 12,
+    "total": 13,
+    "section": "North Jersey, Section 1, Group 1"
+  },
+  {
+    "name": "Pascack Valley",
+    "record": "21-5",
+    "wins": 21,
+    "losses": 5,
+    "total": 26,
+    "section": "North Jersey, Section 1, Group 2"
+  },
+  {
+    "name": "High Point",
+    "record": "13-12",
+    "wins": 13,
+    "losses": 12,
+    "total": 25,
+    "section": "North Jersey, Section 1, Group 2"
+  },
+  {
+    "name": "Pascack Hills",
+    "record": "17-10",
+    "wins": 17,
+    "losses": 10,
+    "total": 27,
+    "section": "North Jersey, Section 1, Group 2"
+  },
+  {
+    "name": "Mahwah",
+    "record": "15-8",
+    "wins": 15,
+    "losses": 8,
+    "total": 23,
+    "section": "North Jersey, Section 1, Group 2"
+  },
+  {
+    "name": "Westwood",
+    "record": "12-10",
+    "wins": 12,
+    "losses": 10,
+    "total": 22,
+    "section": "North Jersey, Section 1, Group 2"
+  },
+  {
+    "name": "Lakeland",
+    "record": "14-9",
+    "wins": 14,
+    "losses": 9,
+    "total": 23,
+    "section": "North Jersey, Section 1, Group 2"
+  },
+  {
+    "name": "Glen Rock",
+    "record": "18-9",
+    "wins": 18,
+    "losses": 9,
+    "total": 27,
+    "section": "North Jersey, Section 1, Group 2"
+  },
+  {
+    "name": "Dumont",
+    "record": "13-11",
+    "wins": 13,
+    "losses": 11,
+    "total": 24,
+    "section": "North Jersey, Section 1, Group 2"
+  },
+  {
+    "name": "Manchester Regional",
+    "record": "10-8",
+    "wins": 10,
+    "losses": 8,
+    "total": 18,
+    "section": "North Jersey, Section 1, Group 2"
+  },
+  {
+    "name": "West Milford",
+    "record": "6-20",
+    "wins": 6,
+    "losses": 20,
+    "total": 26,
+    "section": "North Jersey, Section 1, Group 2"
+  },
+  {
+    "name": "Jefferson",
+    "record": "7-17",
+    "wins": 7,
+    "losses": 17,
+    "total": 24,
+    "section": "North Jersey, Section 1, Group 2"
+  },
+  {
+    "name": "Ramsey",
+    "record": "8-19",
+    "wins": 8,
+    "losses": 19,
+    "total": 27,
+    "section": "North Jersey, Section 1, Group 2"
+  },
+  {
+    "name": "Vernon",
+    "record": "2-17",
+    "wins": 2,
+    "losses": 17,
+    "total": 19,
+    "section": "North Jersey, Section 1, Group 2"
+  },
+  {
+    "name": "Ramapo",
+    "record": "21-4",
+    "wins": 21,
+    "losses": 4,
+    "total": 25,
+    "section": "North Jersey, Section 1, Group 3"
+  },
+  {
+    "name": "Wayne Valley",
+    "record": "18-7",
+    "wins": 18,
+    "losses": 7,
+    "total": 25,
+    "section": "North Jersey, Section 1, Group 3"
+  },
+  {
+    "name": "River Dell",
+    "record": "25-2",
+    "wins": 25,
+    "losses": 2,
+    "total": 27,
+    "section": "North Jersey, Section 1, Group 3"
+  },
+  {
+    "name": "Montville",
+    "record": "25-5",
+    "wins": 25,
+    "losses": 5,
+    "total": 30,
+    "section": "North Jersey, Section 1, Group 3"
+  },
+  {
+    "name": "Paramus",
+    "record": "17-5",
+    "wins": 17,
+    "losses": 5,
+    "total": 22,
+    "section": "North Jersey, Section 1, Group 3"
+  },
+  {
+    "name": "Wayne Hills",
+    "record": "16-7",
+    "wins": 16,
+    "losses": 7,
+    "total": 23,
+    "section": "North Jersey, Section 1, Group 3"
+  },
+  {
+    "name": "Old Tappan",
+    "record": "9-11",
+    "wins": 9,
+    "losses": 11,
+    "total": 20,
+    "section": "North Jersey, Section 1, Group 3"
+  },
+  {
+    "name": "Bergenfield",
+    "record": "17-12",
+    "wins": 17,
+    "losses": 12,
+    "total": 29,
+    "section": "North Jersey, Section 1, Group 3"
+  },
+  {
+    "name": "Dover",
+    "record": "17-12",
+    "wins": 17,
+    "losses": 12,
+    "total": 29,
+    "section": "North Jersey, Section 1, Group 3"
+  },
+  {
+    "name": "Demarest",
+    "record": "13-14",
+    "wins": 13,
+    "losses": 14,
+    "total": 27,
+    "section": "North Jersey, Section 1, Group 3"
+  },
+  {
+    "name": "Sparta",
+    "record": "9-21",
+    "wins": 9,
+    "losses": 21,
+    "total": 30,
+    "section": "North Jersey, Section 1, Group 3"
+  },
+  {
+    "name": "Becton",
+    "record": "8-10",
+    "wins": 8,
+    "losses": 10,
+    "total": 18,
+    "section": "North Jersey, Section 1, Group 3"
+  },
+  {
+    "name": "Tenafly",
+    "record": "11-13",
+    "wins": 11,
+    "losses": 13,
+    "total": 24,
+    "section": "North Jersey, Section 1, Group 3"
+  },
+  {
+    "name": "Lenape Valley",
+    "record": "5-15",
+    "wins": 5,
+    "losses": 15,
+    "total": 20,
+    "section": "North Jersey, Section 1, Group 3"
+  },
+  {
+    "name": "Dwight-Morrow",
+    "record": "2-18",
+    "wins": 2,
+    "losses": 18,
+    "total": 20,
+    "section": "North Jersey, Section 1, Group 3"
+  },
+  {
+    "name": "Mount Olive",
+    "record": "19-2",
+    "wins": 19,
+    "losses": 2,
+    "total": 21,
+    "section": "North Jersey, Section 1, Group 4"
+  },
+  {
+    "name": "Phillipsburg",
+    "record": "13-5",
+    "wins": 13,
+    "losses": 5,
+    "total": 18,
+    "section": "North Jersey, Section 1, Group 4"
+  },
+  {
+    "name": "Ridge",
+    "record": "20-8",
+    "wins": 20,
+    "losses": 8,
+    "total": 28,
+    "section": "North Jersey, Section 1, Group 4"
+  },
+  {
+    "name": "Fair Lawn",
+    "record": "18-10",
+    "wins": 18,
+    "losses": 10,
+    "total": 28,
+    "section": "North Jersey, Section 1, Group 4"
+  },
+  {
+    "name": "Northern Highlands",
+    "record": "18-7",
+    "wins": 18,
+    "losses": 7,
+    "total": 25,
+    "section": "North Jersey, Section 1, Group 4"
+  },
+  {
+    "name": "Morris Knolls",
+    "record": "9-12",
+    "wins": 9,
+    "losses": 12,
+    "total": 21,
+    "section": "North Jersey, Section 1, Group 4"
+  },
+  {
+    "name": "Leonia",
+    "record": "17-3",
+    "wins": 17,
+    "losses": 3,
+    "total": 20,
+    "section": "North Jersey, Section 1, Group 4"
+  },
+  {
+    "name": "Garfield",
+    "record": "16-7",
+    "wins": 16,
+    "losses": 7,
+    "total": 23,
+    "section": "North Jersey, Section 1, Group 4"
+  },
+  {
+    "name": "Millburn",
+    "record": "12-9",
+    "wins": 12,
+    "losses": 9,
+    "total": 21,
+    "section": "North Jersey, Section 1, Group 4"
+  },
+  {
+    "name": "Ridgewood",
+    "record": "10-7",
+    "wins": 10,
+    "losses": 7,
+    "total": 17,
+    "section": "North Jersey, Section 1, Group 4"
+  },
+  {
+    "name": "Ridgefield Park",
+    "record": "13-12",
+    "wins": 13,
+    "losses": 12,
+    "total": 25,
+    "section": "North Jersey, Section 1, Group 4"
+  },
+  {
+    "name": "Belleville",
+    "record": "8-12",
+    "wins": 8,
+    "losses": 12,
+    "total": 20,
+    "section": "North Jersey, Section 1, Group 4"
+  },
+  {
+    "name": "Cliffside Park",
+    "record": "9-12",
+    "wins": 9,
+    "losses": 12,
+    "total": 21,
+    "section": "North Jersey, Section 1, Group 4"
+  },
+  {
+    "name": "Lyndhurst",
+    "record": "2-15",
+    "wins": 2,
+    "losses": 15,
+    "total": 17,
+    "section": "North Jersey, Section 1, Group 4"
+  },
+  {
+    "name": "Teaneck",
+    "record": "5-24",
+    "wins": 5,
+    "losses": 24,
+    "total": 29,
+    "section": "North Jersey, Section 1, Group 4"
+  },
+  {
+    "name": "Hackensack",
+    "record": "4-19",
+    "wins": 4,
+    "losses": 19,
+    "total": 23,
+    "section": "North Jersey, Section 1, Group 4"
+  },
+  {
+    "name": "Orange",
+    "record": "4-19",
+    "wins": 4,
+    "losses": 19,
+    "total": 23,
+    "section": "North Jersey, Section 1, Group 4"
+  },
+  {
+    "name": "Passaic Tech",
+    "record": "19-12",
+    "wins": 19,
+    "losses": 12,
+    "total": 31,
+    "section": "North Jersey, Section 1, Group 5"
+  },
+  {
+    "name": "North Bergen",
+    "record": "20-6",
+    "wins": 20,
+    "losses": 6,
+    "total": 26,
+    "section": "North Jersey, Section 1, Group 5"
+  },
+  {
+    "name": "Livingston",
+    "record": "13-16",
+    "wins": 13,
+    "losses": 16,
+    "total": 29,
+    "section": "North Jersey, Section 1, Group 5"
+  },
+  {
+    "name": "Union City",
+    "record": "25-6",
+    "wins": 25,
+    "losses": 6,
+    "total": 31,
+    "section": "North Jersey, Section 1, Group 5"
+  },
+  {
+    "name": "West Orange",
+    "record": "13-13",
+    "wins": 13,
+    "losses": 13,
+    "total": 26,
+    "section": "North Jersey, Section 1, Group 5"
+  },
+  {
+    "name": "Bloomfield",
+    "record": "17-14",
+    "wins": 17,
+    "losses": 14,
+    "total": 31,
+    "section": "North Jersey, Section 1, Group 5"
+  },
+  {
+    "name": "Passaic",
+    "record": "12-12",
+    "wins": 12,
+    "losses": 12,
+    "total": 24,
+    "section": "North Jersey, Section 1, Group 5"
+  },
+  {
+    "name": "Clifton",
+    "record": "9-15",
+    "wins": 9,
+    "losses": 15,
+    "total": 24,
+    "section": "North Jersey, Section 1, Group 5"
+  },
+  {
+    "name": "Morristown",
+    "record": "5-17",
+    "wins": 5,
+    "losses": 17,
+    "total": 22,
+    "section": "North Jersey, Section 1, Group 5"
+  },
+  {
+    "name": "Montclair",
+    "record": "8-20",
+    "wins": 8,
+    "losses": 20,
+    "total": 28,
+    "section": "North Jersey, Section 1, Group 5"
+  },
+  {
+    "name": "East Orange",
+    "record": "6-12",
+    "wins": 6,
+    "losses": 12,
+    "total": 18,
+    "section": "North Jersey, Section 1, Group 5"
+  },
+  {
+    "name": "Paterson Kennedy",
+    "record": "6-15",
+    "wins": 6,
+    "losses": 15,
+    "total": 21,
+    "section": "North Jersey, Section 1, Group 5"
+  },
+  {
+    "name": "Paterson Eastside",
+    "record": "3-11",
+    "wins": 3,
+    "losses": 11,
+    "total": 14,
+    "section": "North Jersey, Section 1, Group 5"
+  },
+  {
+    "name": "Cedar Grove",
+    "record": "20-7",
+    "wins": 20,
+    "losses": 7,
+    "total": 27,
+    "section": "North Jersey, Section 2, Group 1"
+  },
+  {
+    "name": "Hasbrouck Heights",
+    "record": "19-4",
+    "wins": 19,
+    "losses": 4,
+    "total": 23,
+    "section": "North Jersey, Section 2, Group 1"
+  },
+  {
+    "name": "Hanover Park",
+    "record": "15-8",
+    "wins": 15,
+    "losses": 8,
+    "total": 23,
+    "section": "North Jersey, Section 2, Group 1"
+  },
+  {
+    "name": "Whippany Park",
+    "record": "8-18",
+    "wins": 8,
+    "losses": 18,
+    "total": 26,
+    "section": "North Jersey, Section 2, Group 1"
+  },
+  {
+    "name": "Verona",
+    "record": "6-17",
+    "wins": 6,
+    "losses": 17,
+    "total": 23,
+    "section": "North Jersey, Section 2, Group 1"
+  },
+  {
+    "name": "Mountain Lakes",
+    "record": "10-19",
+    "wins": 10,
+    "losses": 19,
+    "total": 29,
+    "section": "North Jersey, Section 2, Group 1"
+  },
+  {
+    "name": "Roselle Park",
+    "record": "10-8",
+    "wins": 10,
+    "losses": 8,
+    "total": 18,
+    "section": "North Jersey, Section 2, Group 1"
+  },
+  {
+    "name": "Secaucus",
+    "record": "14-18",
+    "wins": 14,
+    "losses": 18,
+    "total": 32,
+    "section": "North Jersey, Section 2, Group 1"
+  },
+  {
+    "name": "New Providence",
+    "record": "4-29",
+    "wins": 4,
+    "losses": 29,
+    "total": 33,
+    "section": "North Jersey, Section 2, Group 1"
+  },
+  {
+    "name": "Belvidere",
+    "record": "6-19",
+    "wins": 6,
+    "losses": 19,
+    "total": 25,
+    "section": "North Jersey, Section 2, Group 1"
+  },
+  {
+    "name": "Rutherford",
+    "record": "3-22",
+    "wins": 3,
+    "losses": 22,
+    "total": 25,
+    "section": "North Jersey, Section 2, Group 1"
+  },
+  {
+    "name": "Hoboken",
+    "record": "4-14",
+    "wins": 4,
+    "losses": 14,
+    "total": 18,
+    "section": "North Jersey, Section 2, Group 1"
+  },
+  {
+    "name": "Glen Ridge",
+    "record": "1-19",
+    "wins": 1,
+    "losses": 19,
+    "total": 20,
+    "section": "North Jersey, Section 2, Group 1"
+  },
+  {
+    "name": "West Morris",
+    "record": "21-8",
+    "wins": 21,
+    "losses": 8,
+    "total": 29,
+    "section": "North Jersey, Section 2, Group 2"
+  },
+  {
+    "name": "Caldwell",
+    "record": "16-6",
+    "wins": 16,
+    "losses": 6,
+    "total": 22,
+    "section": "North Jersey, Section 2, Group 2"
+  },
+  {
+    "name": "Hackettstown",
+    "record": "24-6",
+    "wins": 24,
+    "losses": 6,
+    "total": 30,
+    "section": "North Jersey, Section 2, Group 2"
+  },
+  {
+    "name": "Gov. Livingston",
+    "record": "8-18",
+    "wins": 8,
+    "losses": 18,
+    "total": 26,
+    "section": "North Jersey, Section 2, Group 2"
+  },
+  {
+    "name": "Parsippany Hills",
+    "record": "17-15",
+    "wins": 17,
+    "losses": 15,
+    "total": 32,
+    "section": "North Jersey, Section 2, Group 2"
+  },
+  {
+    "name": "Madison",
+    "record": "12-10",
+    "wins": 12,
+    "losses": 10,
+    "total": 22,
+    "section": "North Jersey, Section 2, Group 2"
+  },
+  {
+    "name": "Bernards",
+    "record": "11-13",
+    "wins": 11,
+    "losses": 13,
+    "total": 24,
+    "section": "North Jersey, Section 2, Group 2"
+  },
+  {
+    "name": "Voorhees",
+    "record": "6-18",
+    "wins": 6,
+    "losses": 18,
+    "total": 24,
+    "section": "North Jersey, Section 2, Group 2"
+  },
+  {
+    "name": "Elmwood Park",
+    "record": "12-17",
+    "wins": 12,
+    "losses": 17,
+    "total": 29,
+    "section": "North Jersey, Section 2, Group 2"
+  },
+  {
+    "name": "Newark Collegiate",
+    "record": "10-13",
+    "wins": 10,
+    "losses": 13,
+    "total": 23,
+    "section": "North Jersey, Section 2, Group 2"
+  },
+  {
+    "name": "Parsippany",
+    "record": "5-19",
+    "wins": 5,
+    "losses": 19,
+    "total": 24,
+    "section": "North Jersey, Section 2, Group 2"
+  },
+  {
+    "name": "Roselle",
+    "record": "3-14",
+    "wins": 3,
+    "losses": 14,
+    "total": 17,
+    "section": "North Jersey, Section 2, Group 2"
+  },
+  {
+    "name": "Hillside",
+    "record": "0-16",
+    "wins": 0,
+    "losses": 16,
+    "total": 16,
+    "section": "North Jersey, Section 2, Group 2"
+  },
+  {
+    "name": "Cranford",
+    "record": "18-5",
+    "wins": 18,
+    "losses": 5,
+    "total": 23,
+    "section": "North Jersey, Section 2, Group 3"
+  },
+  {
+    "name": "West Essex",
+    "record": "20-5",
+    "wins": 20,
+    "losses": 5,
+    "total": 25,
+    "section": "North Jersey, Section 2, Group 3"
+  },
+  {
+    "name": "South Plainfield",
+    "record": "17-11",
+    "wins": 17,
+    "losses": 11,
+    "total": 28,
+    "section": "North Jersey, Section 2, Group 3"
+  },
+  {
+    "name": "Nutley",
+    "record": "24-7",
+    "wins": 24,
+    "losses": 7,
+    "total": 31,
+    "section": "North Jersey, Section 2, Group 3"
+  },
+  {
+    "name": "Morris Hills",
+    "record": "15-9",
+    "wins": 15,
+    "losses": 9,
+    "total": 24,
+    "section": "North Jersey, Section 2, Group 3"
+  },
+  {
+    "name": "Warren Hills",
+    "record": "12-16",
+    "wins": 12,
+    "losses": 16,
+    "total": 28,
+    "section": "North Jersey, Section 2, Group 3"
+  },
+  {
+    "name": "Passaic Valley",
+    "record": "16-10",
+    "wins": 16,
+    "losses": 10,
+    "total": 26,
+    "section": "North Jersey, Section 2, Group 3"
+  },
+  {
+    "name": "Roxbury",
+    "record": "8-15",
+    "wins": 8,
+    "losses": 15,
+    "total": 23,
+    "section": "North Jersey, Section 2, Group 3"
+  },
+  {
+    "name": "Brearley",
+    "record": "17-6",
+    "wins": 17,
+    "losses": 6,
+    "total": 23,
+    "section": "North Jersey, Section 2, Group 3"
+  },
+  {
+    "name": "North Plainfield",
+    "record": "15-13",
+    "wins": 15,
+    "losses": 13,
+    "total": 28,
+    "section": "North Jersey, Section 2, Group 3"
+  },
+  {
+    "name": "Randolph",
+    "record": "11-13",
+    "wins": 11,
+    "losses": 13,
+    "total": 24,
+    "section": "North Jersey, Section 2, Group 3"
+  },
+  {
+    "name": "Fort Lee",
+    "record": "11-13",
+    "wins": 11,
+    "losses": 13,
+    "total": 24,
+    "section": "North Jersey, Section 2, Group 3"
+  },
+  {
+    "name": "Mendham",
+    "record": "3-17",
+    "wins": 3,
+    "losses": 17,
+    "total": 20,
+    "section": "North Jersey, Section 2, Group 3"
+  },
+  {
+    "name": "Carteret",
+    "record": "6-24",
+    "wins": 6,
+    "losses": 24,
+    "total": 30,
+    "section": "North Jersey, Section 2, Group 3"
+  },
+  {
+    "name": "Middletown North",
+    "record": "26-5",
+    "wins": 26,
+    "losses": 5,
+    "total": 31,
+    "section": "North Jersey, Section 2, Group 4"
+  },
+  {
+    "name": "Middletown South",
+    "record": "28-6",
+    "wins": 28,
+    "losses": 6,
+    "total": 34,
+    "section": "North Jersey, Section 2, Group 4"
+  },
+  {
+    "name": "North Hunterdon",
+    "record": "13-9",
+    "wins": 13,
+    "losses": 9,
+    "total": 22,
+    "section": "North Jersey, Section 2, Group 4"
+  },
+  {
+    "name": "Rahway",
+    "record": "19-7",
+    "wins": 19,
+    "losses": 7,
+    "total": 26,
+    "section": "North Jersey, Section 2, Group 4"
+  },
+  {
+    "name": "Watchung Hills",
+    "record": "8-15",
+    "wins": 8,
+    "losses": 15,
+    "total": 23,
+    "section": "North Jersey, Section 2, Group 4"
+  },
+  {
+    "name": "Sayreville",
+    "record": "13-11",
+    "wins": 13,
+    "losses": 11,
+    "total": 24,
+    "section": "North Jersey, Section 2, Group 4"
+  },
+  {
+    "name": "Westfield",
+    "record": "14-15",
+    "wins": 14,
+    "losses": 15,
+    "total": 29,
+    "section": "North Jersey, Section 2, Group 4"
+  },
+  {
+    "name": "Montgomery",
+    "record": "15-20",
+    "wins": 15,
+    "losses": 20,
+    "total": 35,
+    "section": "North Jersey, Section 2, Group 4"
+  },
+  {
+    "name": "Colonia",
+    "record": "12-7",
+    "wins": 12,
+    "losses": 7,
+    "total": 19,
+    "section": "North Jersey, Section 2, Group 4"
+  },
+  {
+    "name": "Woodbridge",
+    "record": "13-12",
+    "wins": 13,
+    "losses": 12,
+    "total": 25,
+    "section": "North Jersey, Section 2, Group 4"
+  },
+  {
+    "name": "Scotch Plains-Fanwood",
+    "record": "26-7",
+    "wins": 26,
+    "losses": 7,
+    "total": 33,
+    "section": "North Jersey, Section 2, Group 4"
+  },
+  {
+    "name": "Iselin Kennedy",
+    "record": "18-10",
+    "wins": 18,
+    "losses": 10,
+    "total": 28,
+    "section": "North Jersey, Section 2, Group 4"
+  },
+  {
+    "name": "Lodi",
+    "record": "12-14",
+    "wins": 12,
+    "losses": 14,
+    "total": 26,
+    "section": "North Jersey, Section 2, Group 4"
+  },
+  {
+    "name": "Princeton",
+    "record": "7-22",
+    "wins": 7,
+    "losses": 22,
+    "total": 29,
+    "section": "North Jersey, Section 2, Group 4"
+  },
+  {
+    "name": "North Star Academy",
+    "record": "1-23",
+    "wins": 1,
+    "losses": 23,
+    "total": 24,
+    "section": "North Jersey, Section 2, Group 4"
+  },
+  {
+    "name": "Bridgewater-Raritan",
+    "record": "20-9",
+    "wins": 20,
+    "losses": 9,
+    "total": 29,
+    "section": "North Jersey, Section 2, Group 5"
+  },
+  {
+    "name": "Union",
+    "record": "22-5",
+    "wins": 22,
+    "losses": 5,
+    "total": 27,
+    "section": "North Jersey, Section 2, Group 5"
+  },
+  {
+    "name": "Bayonne",
+    "record": "18-8",
+    "wins": 18,
+    "losses": 8,
+    "total": 26,
+    "section": "North Jersey, Section 2, Group 5"
+  },
+  {
+    "name": "Piscataway",
+    "record": "11-11",
+    "wins": 11,
+    "losses": 11,
+    "total": 22,
+    "section": "North Jersey, Section 2, Group 5"
+  },
+  {
+    "name": "Elizabeth",
+    "record": "17-10",
+    "wins": 17,
+    "losses": 10,
+    "total": 27,
+    "section": "North Jersey, Section 2, Group 5"
+  },
+  {
+    "name": "Kearny",
+    "record": "20-10",
+    "wins": 20,
+    "losses": 10,
+    "total": 30,
+    "section": "North Jersey, Section 2, Group 5"
+  },
+  {
+    "name": "Linden",
+    "record": "16-11",
+    "wins": 16,
+    "losses": 11,
+    "total": 27,
+    "section": "North Jersey, Section 2, Group 5"
+  },
+  {
+    "name": "Newark East Side",
+    "record": "14-17",
+    "wins": 14,
+    "losses": 17,
+    "total": 31,
+    "section": "North Jersey, Section 2, Group 5"
+  },
+  {
+    "name": "Columbia",
+    "record": "9-8",
+    "wins": 9,
+    "losses": 8,
+    "total": 17,
+    "section": "North Jersey, Section 2, Group 5"
+  },
+  {
+    "name": "J.P. Stevens",
+    "record": "8-18",
+    "wins": 8,
+    "losses": 18,
+    "total": 26,
+    "section": "North Jersey, Section 2, Group 5"
+  },
+  {
+    "name": "Plainfield",
+    "record": "10-24",
+    "wins": 10,
+    "losses": 24,
+    "total": 34,
+    "section": "North Jersey, Section 2, Group 5"
+  },
+  {
+    "name": "Irvington",
+    "record": "6-12",
+    "wins": 6,
+    "losses": 12,
+    "total": 18,
+    "section": "North Jersey, Section 2, Group 5"
+  },
+  {
+    "name": "Summit",
+    "record": "3-28",
+    "wins": 3,
+    "losses": 28,
+    "total": 31,
+    "section": "North Jersey, Section 2, Group 5"
+  },
+  {
+    "name": "Barringer",
+    "record": "5-5",
+    "wins": 5,
+    "losses": 5,
+    "total": 10,
+    "section": "North Jersey, Section 2, Group 5"
+  },
+  {
+    "name": "Audubon",
+    "record": "19-9",
+    "wins": 19,
+    "losses": 9,
+    "total": 28,
+    "section": "South Jersey, Group 1"
+  },
+  {
+    "name": "Paulsboro",
+    "record": "14-8",
+    "wins": 14,
+    "losses": 8,
+    "total": 22,
+    "section": "South Jersey, Group 1"
+  },
+  {
+    "name": "Woodstown",
+    "record": "17-11",
+    "wins": 17,
+    "losses": 11,
+    "total": 28,
+    "section": "South Jersey, Group 1"
+  },
+  {
+    "name": "Pennsville",
+    "record": "23-9",
+    "wins": 23,
+    "losses": 9,
+    "total": 32,
+    "section": "South Jersey, Group 1"
+  },
+  {
+    "name": "Schalick",
+    "record": "20-6",
+    "wins": 20,
+    "losses": 6,
+    "total": 26,
+    "section": "South Jersey, Group 1"
+  },
+  {
+    "name": "Haddon Township",
+    "record": "14-18",
+    "wins": 14,
+    "losses": 18,
+    "total": 32,
+    "section": "South Jersey, Group 1"
+  },
+  {
+    "name": "Maple Shade",
+    "record": "12-15",
+    "wins": 12,
+    "losses": 15,
+    "total": 27,
+    "section": "South Jersey, Group 1"
+  },
+  {
+    "name": "Buena",
+    "record": "6-24",
+    "wins": 6,
+    "losses": 24,
+    "total": 30,
+    "section": "South Jersey, Group 1"
+  },
+  {
+    "name": "Salem",
+    "record": "6-25",
+    "wins": 6,
+    "losses": 25,
+    "total": 31,
+    "section": "South Jersey, Group 1"
+  },
+  {
+    "name": "Pitman",
+    "record": "9-16",
+    "wins": 9,
+    "losses": 16,
+    "total": 25,
+    "section": "South Jersey, Group 1"
+  },
+  {
+    "name": "Riverside",
+    "record": "5-23",
+    "wins": 5,
+    "losses": 23,
+    "total": 28,
+    "section": "South Jersey, Group 1"
+  },
+  {
+    "name": "Penns Grove",
+    "record": "2-22",
+    "wins": 2,
+    "losses": 22,
+    "total": 24,
+    "section": "South Jersey, Group 1"
+  },
+  {
+    "name": "Palmyra",
+    "record": "2-22",
+    "wins": 2,
+    "losses": 22,
+    "total": 24,
+    "section": "South Jersey, Group 1"
+  },
+  {
+    "name": "Collingswood",
+    "record": "32-4",
+    "wins": 32,
+    "losses": 4,
+    "total": 36,
+    "section": "South Jersey, Group 2"
+  },
+  {
+    "name": "Lower Cape May",
+    "record": "22-4",
+    "wins": 22,
+    "losses": 4,
+    "total": 26,
+    "section": "South Jersey, Group 2"
+  },
+  {
+    "name": "Haddonfield",
+    "record": "20-9",
+    "wins": 20,
+    "losses": 9,
+    "total": 29,
+    "section": "South Jersey, Group 2"
+  },
+  {
+    "name": "Gloucester",
+    "record": "17-8",
+    "wins": 17,
+    "losses": 8,
+    "total": 25,
+    "section": "South Jersey, Group 2"
+  },
+  {
+    "name": "Middle Township",
+    "record": "22-6",
+    "wins": 22,
+    "losses": 6,
+    "total": 28,
+    "section": "South Jersey, Group 2"
+  },
+  {
+    "name": "West Deptford",
+    "record": "17-15",
+    "wins": 17,
+    "losses": 15,
+    "total": 32,
+    "section": "South Jersey, Group 2"
+  },
+  {
+    "name": "Sterling",
+    "record": "15-16",
+    "wins": 15,
+    "losses": 16,
+    "total": 31,
+    "section": "South Jersey, Group 2"
+  },
+  {
+    "name": "Haddon Heights",
+    "record": "9-19",
+    "wins": 9,
+    "losses": 19,
+    "total": 28,
+    "section": "South Jersey, Group 2"
+  },
+  {
+    "name": "Cedar Creek",
+    "record": "16-15",
+    "wins": 16,
+    "losses": 15,
+    "total": 31,
+    "section": "South Jersey, Group 2"
+  },
+  {
+    "name": "Manchester Township",
+    "record": "6-15",
+    "wins": 6,
+    "losses": 15,
+    "total": 21,
+    "section": "South Jersey, Group 2"
+  },
+  {
+    "name": "Oakcrest",
+    "record": "12-18",
+    "wins": 12,
+    "losses": 18,
+    "total": 30,
+    "section": "South Jersey, Group 2"
+  },
+  {
+    "name": "Lindenwold",
+    "record": "8-15",
+    "wins": 8,
+    "losses": 15,
+    "total": 23,
+    "section": "South Jersey, Group 2"
+  },
+  {
+    "name": "Overbrook",
+    "record": "2-29",
+    "wins": 2,
+    "losses": 29,
+    "total": 31,
+    "section": "South Jersey, Group 2"
+  },
+  {
+    "name": "Delsea",
+    "record": "22-3",
+    "wins": 22,
+    "losses": 3,
+    "total": 25,
+    "section": "South Jersey, Group 3"
+  },
+  {
+    "name": "Seneca",
+    "record": "24-4",
+    "wins": 24,
+    "losses": 4,
+    "total": 28,
+    "section": "South Jersey, Group 3"
+  },
+  {
+    "name": "Lacey",
+    "record": "18-5",
+    "wins": 18,
+    "losses": 5,
+    "total": 23,
+    "section": "South Jersey, Group 3"
+  },
+  {
+    "name": "Ocean City",
+    "record": "17-9",
+    "wins": 17,
+    "losses": 9,
+    "total": 26,
+    "section": "South Jersey, Group 3"
+  },
+  {
+    "name": "Gateway",
+    "record": "20-11",
+    "wins": 20,
+    "losses": 11,
+    "total": 31,
+    "section": "South Jersey, Group 3"
+  },
+  {
+    "name": "Moorestown",
+    "record": "14-15",
+    "wins": 14,
+    "losses": 15,
+    "total": 29,
+    "section": "South Jersey, Group 3"
+  },
+  {
+    "name": "Pinelands",
+    "record": "13-16",
+    "wins": 13,
+    "losses": 16,
+    "total": 29,
+    "section": "South Jersey, Group 3"
+  },
+  {
+    "name": "Barnegat",
+    "record": "13-12",
+    "wins": 13,
+    "losses": 12,
+    "total": 25,
+    "section": "South Jersey, Group 3"
+  },
+  {
+    "name": "Cumberland",
+    "record": "16-17",
+    "wins": 16,
+    "losses": 17,
+    "total": 33,
+    "section": "South Jersey, Group 3"
+  },
+  {
+    "name": "Deptford",
+    "record": "16-11",
+    "wins": 16,
+    "losses": 11,
+    "total": 27,
+    "section": "South Jersey, Group 3"
+  },
+  {
+    "name": "Absegami",
+    "record": "18-14",
+    "wins": 18,
+    "losses": 14,
+    "total": 32,
+    "section": "South Jersey, Group 3"
+  },
+  {
+    "name": "Pemberton",
+    "record": "18-11",
+    "wins": 18,
+    "losses": 11,
+    "total": 29,
+    "section": "South Jersey, Group 3"
+  },
+  {
+    "name": "Timber Creek",
+    "record": "5-23",
+    "wins": 5,
+    "losses": 23,
+    "total": 28,
+    "section": "South Jersey, Group 3"
+  },
+  {
+    "name": "Clayton",
+    "record": "15-11",
+    "wins": 15,
+    "losses": 11,
+    "total": 26,
+    "section": "South Jersey, Group 3"
+  },
+  {
+    "name": "Mainland",
+    "record": "6-25",
+    "wins": 6,
+    "losses": 25,
+    "total": 31,
+    "section": "South Jersey, Group 3"
+  },
+  {
+    "name": "Toms River East",
+    "record": "19-10",
+    "wins": 19,
+    "losses": 10,
+    "total": 29,
+    "section": "South Jersey, Group 4"
+  },
+  {
+    "name": "Central Regional",
+    "record": "18-11",
+    "wins": 18,
+    "losses": 11,
+    "total": 29,
+    "section": "South Jersey, Group 4"
+  },
+  {
+    "name": "Toms River South",
+    "record": "18-6",
+    "wins": 18,
+    "losses": 6,
+    "total": 24,
+    "section": "South Jersey, Group 4"
+  },
+  {
+    "name": "Northern Burlington",
+    "record": "15-13",
+    "wins": 15,
+    "losses": 13,
+    "total": 28,
+    "section": "South Jersey, Group 4"
+  },
+  {
+    "name": "Williamstown",
+    "record": "14-13",
+    "wins": 14,
+    "losses": 13,
+    "total": 27,
+    "section": "South Jersey, Group 4"
+  },
+  {
+    "name": "Shawnee",
+    "record": "12-15",
+    "wins": 12,
+    "losses": 15,
+    "total": 27,
+    "section": "South Jersey, Group 4"
+  },
+  {
+    "name": "Clearview",
+    "record": "17-8",
+    "wins": 17,
+    "losses": 8,
+    "total": 25,
+    "section": "South Jersey, Group 4"
+  },
+  {
+    "name": "Cherry Hill West",
+    "record": "18-15",
+    "wins": 18,
+    "losses": 15,
+    "total": 33,
+    "section": "South Jersey, Group 4"
+  },
+  {
+    "name": "Hammonton",
+    "record": "14-15",
+    "wins": 14,
+    "losses": 15,
+    "total": 29,
+    "section": "South Jersey, Group 4"
+  },
+  {
+    "name": "Pennsauken",
+    "record": "11-17",
+    "wins": 11,
+    "losses": 17,
+    "total": 28,
+    "section": "South Jersey, Group 4"
+  },
+  {
+    "name": "Winslow",
+    "record": "10-13",
+    "wins": 10,
+    "losses": 13,
+    "total": 23,
+    "section": "South Jersey, Group 4"
+  },
+  {
+    "name": "Millville",
+    "record": "6-13",
+    "wins": 6,
+    "losses": 13,
+    "total": 19,
+    "section": "South Jersey, Group 4"
+  },
+  {
+    "name": "Westampton Tech",
+    "record": "8-18",
+    "wins": 8,
+    "losses": 18,
+    "total": 26,
+    "section": "South Jersey, Group 4"
+  },
+  {
+    "name": "Camden",
+    "record": "5-21",
+    "wins": 5,
+    "losses": 21,
+    "total": 26,
+    "section": "South Jersey, Group 4"
+  },
+  {
+    "name": "Southern",
+    "record": "20-1",
+    "wins": 20,
+    "losses": 1,
+    "total": 21,
+    "section": "South Jersey, Group 5"
+  },
+  {
+    "name": "Howell",
+    "record": "20-2",
+    "wins": 20,
+    "losses": 2,
+    "total": 22,
+    "section": "South Jersey, Group 5"
+  },
+  {
+    "name": "Kingsway",
+    "record": "21-5",
+    "wins": 21,
+    "losses": 5,
+    "total": 26,
+    "section": "South Jersey, Group 5"
+  },
+  {
+    "name": "Washington Township",
+    "record": "18-6",
+    "wins": 18,
+    "losses": 6,
+    "total": 24,
+    "section": "South Jersey, Group 5"
+  },
+  {
+    "name": "Lenape",
+    "record": "16-5",
+    "wins": 16,
+    "losses": 5,
+    "total": 21,
+    "section": "South Jersey, Group 5"
+  },
+  {
+    "name": "Rancocas Valley",
+    "record": "17-6",
+    "wins": 17,
+    "losses": 6,
+    "total": 23,
+    "section": "South Jersey, Group 5"
+  },
+  {
+    "name": "Cherokee",
+    "record": "14-15",
+    "wins": 14,
+    "losses": 15,
+    "total": 29,
+    "section": "South Jersey, Group 5"
+  },
+  {
+    "name": "Toms River North",
+    "record": "15-14",
+    "wins": 15,
+    "losses": 14,
+    "total": 29,
+    "section": "South Jersey, Group 5"
+  },
+  {
+    "name": "Eastern",
+    "record": "19-9",
+    "wins": 19,
+    "losses": 9,
+    "total": 28,
+    "section": "South Jersey, Group 5"
+  },
+  {
+    "name": "Highland",
+    "record": "19-15",
+    "wins": 19,
+    "losses": 15,
+    "total": 34,
+    "section": "South Jersey, Group 5"
+  },
+  {
+    "name": "Cherry Hill East",
+    "record": "13-16",
+    "wins": 13,
+    "losses": 16,
+    "total": 29,
+    "section": "South Jersey, Group 5"
+  },
+  {
+    "name": "Egg Harbor",
+    "record": "11-19",
+    "wins": 11,
+    "losses": 19,
+    "total": 30,
+    "section": "South Jersey, Group 5"
+  },
+  {
+    "name": "Vineland",
+    "record": "11-22",
+    "wins": 11,
+    "losses": 22,
+    "total": 33,
+    "section": "South Jersey, Group 5"
+  },
+  {
+    "name": "Atlantic City",
+    "record": "6-19",
+    "wins": 6,
+    "losses": 19,
+    "total": 25,
+    "section": "South Jersey, Group 5"
+  }
+]

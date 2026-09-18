@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
+import Link from 'next/link'
 import { createSupabaseBrowser } from '@/lib/supabase/client'
 
 export default function LoginPage() {
@@ -87,6 +88,12 @@ export default function LoginPage() {
                          focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent"
               placeholder="Enter password"
             />
+          </div>
+
+          <div className="text-right -mt-1">
+            <Link href="/forgot-password" className="text-xs text-slate-500 hover:text-slate-800 hover:underline">
+              Forgot password?
+            </Link>
           </div>
 
           <button

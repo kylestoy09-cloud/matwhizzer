@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
   const params = new URL(req.url).searchParams
   const q = params.get('q')?.trim() ?? ''
   const school_id = params.get('school_id')
-  const gender = params.get('gender') ?? 'M'
+  const gender = params.get('gender') ?? null
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -41,19 +41,21 @@ export async function GET(req: NextRequest) {
 
     if (ids.length === 0) return NextResponse.json({ wrestlers: [] })
 
-    const { data, error } = await supabase
+    let q2 = supabase
       .from('wrestlers')
-      .select('id, first_name, last_name')
+      .select('id, first_name, last_name, gender')
       .in('id', ids)
-      .eq('gender', gender)
       .order('last_name')
       .limit(500)
+    if (gender) q2 = q2.eq('gender', gender)
+    const { data, error } = await q2
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
 
-    const wrestlers = (data ?? []).map((w: { id: string; first_name: string; last_name: string }) => ({
+    const wrestlers = (data ?? []).map((w: { id: string; first_name: string; last_name: string; gender: string }) => ({
       id: w.id,
       display_name: `${w.first_name} ${w.last_name}`.trim(),
+      gender: w.gender,
     }))
     return NextResponse.json({ wrestlers })
   }
@@ -61,19 +63,22 @@ export async function GET(req: NextRequest) {
   // Fallback: name search across all wrestlers
   if (!q) return NextResponse.json({ wrestlers: [] })
 
-  const { data, error } = await supabase
+  let nameQuery = supabase
     .from('wrestlers')
-    .select('id, first_name, last_name')
+    .select('id, first_name, last_name, gender')
     .or(`last_name.ilike.%${q}%,first_name.ilike.%${q}%`)
-    .eq('gender', gender)
+    .eq('is_oos', false)
     .order('last_name')
     .limit(20)
+  if (gender) nameQuery = nameQuery.eq('gender', gender)
+  const { data, error } = await nameQuery
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
 
-  const wrestlers = (data ?? []).map((w: { id: string; first_name: string; last_name: string }) => ({
+  const wrestlers = (data ?? []).map((w: { id: string; first_name: string; last_name: string; gender: string }) => ({
     id: w.id,
     display_name: `${w.first_name} ${w.last_name}`.trim(),
+    gender: w.gender,
   }))
   return NextResponse.json({ wrestlers })
 }

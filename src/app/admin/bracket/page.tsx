@@ -12,7 +12,7 @@ export default async function BracketPage({
   const { mode, tid, boutId } = await searchParams
   const supabase = await createSupabaseServer()
 
-  const [tournamentsRes, weightClassesRes, inSeasonRes] = await Promise.all([
+  const [tournamentsRes, weightClassesRes, boysInSeasonRes, girlsInSeasonRes] = await Promise.all([
     supabase
       .from('tournaments')
       .select('id, name, tournament_type, gender, season_id')
@@ -27,11 +27,16 @@ export default async function BracketPage({
       .from('in_season_tournaments')
       .select('id, name, season, start_date')
       .order('start_date', { ascending: false }),
+    supabase
+      .from('in_season_tournaments_girls')
+      .select('id, name, season, start_date')
+      .order('start_date', { ascending: false }),
   ])
 
-  const inSeasonTournaments = (inSeasonRes.data ?? []).sort((a, b) =>
-    a.name.localeCompare(b.name)
-  )
+  const inSeasonTournaments = [
+    ...((boysInSeasonRes.data ?? []) as { id: string; name: string; season: string; start_date: string }[]).map(t => ({ ...t, gender: 'M' as const })),
+    ...((girlsInSeasonRes.data ?? []) as { id: string; name: string; season: string; start_date: string }[]).map(t => ({ ...t, gender: 'F' as const })),
+  ].sort((a, b) => a.name.localeCompare(b.name))
 
   return (
     <>

@@ -21,6 +21,8 @@ import {
 } from './bracketRouting'
 import { EditPanel } from './EditPanel'
 import { InSeasonEditPanel } from './InSeasonEditPanel'
+import { BracketBuilderView } from './BracketBuilderView'
+import { useAdminGender } from '@/components/admin/AdminGenderContext'
 
 // ─── Props ─────────────────────────────────────────────────────────
 
@@ -44,7 +46,11 @@ function InSeasonEditor({
   defaultTid?: string
   defaultBoutId?: string
 }) {
-  const [tid, setTid]               = useState(defaultTid ?? inSeasonTournaments[0]?.id ?? '')
+  const { gender } = useAdminGender()
+  const boutTable = gender === 'F' ? 'tournament_bouts_girls' : 'tournament_bouts'
+  const filteredTournaments = inSeasonTournaments.filter(t => t.gender === gender)
+  const [view, setView]             = useState<'bouts' | 'builder'>('bouts')
+  const [tid, setTid]               = useState(defaultTid ?? filteredTournaments[0]?.id ?? '')
   const [weights, setWeights]       = useState<number[]>([])
   const [selectedWeight, setSelectedWeight] = useState<number | null>(null)
   const [bouts, setBouts]           = useState<TournamentBoutRecord[]>([])
@@ -57,7 +63,7 @@ function InSeasonEditor({
     if (!tid) return
     const supabase = createSupabaseBrowser()
     supabase
-      .from('tournament_bouts')
+      .from(boutTable)
       .select('weight_class')
       .eq('in_season_tournament_id', tid)
       .then(({ data }) => {
@@ -76,7 +82,7 @@ function InSeasonEditor({
     setLoadingBouts(true)
     const supabase = createSupabaseBrowser()
     void supabase
-      .from('tournament_bouts')
+      .from(boutTable)
       .select('*')
       .eq('in_season_tournament_id', tid)
       .eq('weight_class', selectedWeight)
@@ -124,25 +130,58 @@ function InSeasonEditor({
   }, [bouts])
 
   return (
-    <div className="flex h-[calc(100vh-4rem)]">
-      {/* Left: bout list */}
-      <div className="flex-1 overflow-auto p-4 space-y-4">
-        {/* Tournament selector */}
-        <div className="flex flex-wrap gap-3 items-end">
-          <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Tournament</label>
+    <div className="flex flex-col h-[calc(100vh-4rem)]">
+      {/* Sub-mode toggle + tournament selector */}
+      <div className="flex items-center gap-4 px-4 py-2 border-b border-slate-100 bg-white shrink-0 flex-wrap">
+        {/* View toggle */}
+        <div className="flex gap-0.5">
+          {(['bouts', 'builder'] as const).map(v => (
+            <button
+              key={v}
+              onClick={() => setView(v)}
+              className={`px-3 py-1 text-xs font-medium transition-colors ${
+                view === v
+                  ? 'bg-slate-900 text-white'
+                  : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100'
+              }`}
+            >
+              {v === 'bouts' ? 'Bouts' : 'Bracket Builder'}
+            </button>
+          ))}
+        </div>
+
+        {/* Tournament selector — dropdown when no defaultTid, locked label when launched from a specific tournament */}
+        <div>
+          {defaultTid ? (
+            <span className="text-sm font-medium text-slate-700">
+              {filteredTournaments.find(t => t.id === defaultTid)?.name ?? 'Tournament'}
+            </span>
+          ) : (
             <select
               value={tid}
-              onChange={e => setTid(e.target.value)}
+              onChange={e => { setTid(e.target.value); setSelectedBout(null) }}
               className="rounded border border-slate-300 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
             >
-              {inSeasonTournaments.map(t => (
+              {filteredTournaments.map(t => (
                 <option key={t.id} value={t.id}>{t.name}</option>
               ))}
             </select>
-          </div>
+          )}
         </div>
+      </div>
 
+      {/* Builder view */}
+      {view === 'builder' && tid && (
+        <div className="flex-1 overflow-hidden">
+          <BracketBuilderView tid={tid} />
+        </div>
+      )}
+
+      {/* Bouts view */}
+      {view === 'bouts' && (
+      <div className="flex flex-1 overflow-hidden">
+      {/* Left: bout list */}
+      <div className="flex-1 overflow-auto p-4 space-y-4">
         {/* Weight class pills */}
         {weights.length > 0 && (
           <div className="flex flex-wrap gap-1.5">
@@ -229,8 +268,11 @@ function InSeasonEditor({
           bout={selectedBout}
           onSaved={handleSaved}
           onCancel={() => setSelectedBout(null)}
+          gender={gender}
         />
       </div>
+      </div>
+      )}
 
       {toast && (
         <div className={`fixed bottom-6 right-6 z-50 px-4 py-2 rounded-none shadow-none text-sm font-medium ${
@@ -400,7 +442,8 @@ export function BracketEditor({
   if (mode === 'in-season') {
     return (
       <div className="flex flex-col h-[calc(100vh-4rem)]">
-        <ModeBar mode={mode} onSwitch={setMode} />
+        {/* Hide mode-switching when launched from a specific tournament — user must stay in that tournament */}
+        {!defaultTid && <ModeBar mode={mode} onSwitch={setMode} />}
         <div className="flex-1 overflow-hidden">
           <InSeasonEditor
             inSeasonTournaments={inSeasonTournaments}

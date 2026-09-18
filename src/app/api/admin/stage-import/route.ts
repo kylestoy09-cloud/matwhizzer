@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
-import type { PipeImportJSON } from '@/app/admin/import-tournament/types'
+import type { PipeImportJSON } from '@/lib/pipeImportTypes'
 
 export const dynamic = 'force-dynamic'
 

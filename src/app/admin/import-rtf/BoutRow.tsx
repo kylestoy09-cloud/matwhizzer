@@ -3,6 +3,16 @@
 import type { BoutForReview } from './types'
 import { getRoundOptions } from '@/lib/parseRtf'
 
+function boutWinnerPts(resultType: string, isBye: boolean): string {
+  if (isBye) return '—'
+  switch (resultType) {
+    case 'Fall': case 'Forfeit': case 'DQ': case 'M. For.': return '6'
+    case 'TF': return '5'
+    case 'MD': return '4'
+    default: return '3'
+  }
+}
+
 function ConfidenceBadge({ b }: { b: BoutForReview }) {
   if (b.inference_confidence === 'explicit') return null
   if (b.inference_confidence === 'inferred') {
@@ -92,6 +102,11 @@ export function BoutRow({
             </select>
           )}
         </div>
+      </td>
+
+      {/* Winner pts */}
+      <td className="px-2 py-1.5 whitespace-nowrap text-center tabular-nums text-xs font-semibold text-slate-600">
+        {boutWinnerPts(bout.result_type, bout.is_bye)}
       </td>
 
       {/* Duplicate toggle */}

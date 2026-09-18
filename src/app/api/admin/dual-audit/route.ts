@@ -9,8 +9,11 @@ export async function GET(req: NextRequest) {
   const { data: { user } } = await auth.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const mid  = req.nextUrl.searchParams.get('mid')
-  const view = req.nextUrl.searchParams.get('view')
+  const mid    = req.nextUrl.searchParams.get('mid')
+  const view   = req.nextUrl.searchParams.get('view')
+  const gender: 'M' | 'F' = req.nextUrl.searchParams.get('gender') === 'F' ? 'F' : 'M'
+  const meetsTable   = gender === 'F' ? 'dual_meets_girls'        : 'dual_meets'
+  const matchesTable = gender === 'F' ? 'dual_meet_matches_girls' : 'dual_meet_matches'
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -20,7 +23,7 @@ export async function GET(req: NextRequest) {
   // ── Work-queue view: all unlinked match slots, grouped by school ────────────
   if (view === 'unlinked') {
     const { data: unlinked, error: ulErr } = await supabase
-      .from('dual_meet_matches')
+      .from(matchesTable)
       .select(`
         id, dual_meet_id, weight_class,
         school_a_id, school_b_id,
@@ -52,8 +55,8 @@ export async function GET(req: NextRequest) {
     const [{ data: ulSchools }, { data: ulMeets }] = await Promise.all([
       supabase.from('schools').select('id, display_name, is_nj').in('id', [...ulSchoolIds]),
       supabase
-        .from('dual_meets')
-        .select('id, meet_date, gender, team1:schools!team1_school_id(display_name), team2:schools!team2_school_id(display_name)')
+        .from(meetsTable)
+        .select('id, meet_date, team1:schools!team1_school_id(display_name), team2:schools!team2_school_id(display_name)')
         .in('id', [...ulMeetIds]),
     ])
 
@@ -65,7 +68,7 @@ export async function GET(req: NextRequest) {
       const t1 = dm.team1?.display_name ?? '?'
       const t2 = dm.team2?.display_name ?? '?'
       const date = new Date(dm.meet_date + 'T12:00:00').toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: '2-digit' })
-      const g = dm.gender === 'F' ? ' · Girls' : ''
+      const g = gender === 'F' ? ' · Girls' : ''
       ulMeetMap.set(dm.id, { label: `${t1} vs ${t2} · ${date}${g}` })
     }
 
@@ -113,7 +116,7 @@ export async function GET(req: NextRequest) {
   if (!mid) return NextResponse.json({ error: 'mid required' }, { status: 400 })
 
   const { data: matches, error } = await supabase
-    .from('dual_meet_matches')
+    .from(matchesTable)
     .select('*')
     .eq('dual_meet_id', mid)
     .order('weight_class', { ascending: true })

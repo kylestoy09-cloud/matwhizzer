@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseServer } from '@/lib/supabase/server'
-import { matchWrestler } from '@/lib/matchWrestlers'
+import { matchWrestler, reloadAliases } from '@/lib/matchWrestlers'
 import type { WrestlerMatch } from '@/lib/matchWrestlers'
 
 export const dynamic = 'force-dynamic'
@@ -44,6 +44,10 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    // Always reload aliases from DB before matching so recent imports are visible.
+    // The main wrestler index stays cached; only aliases reload per batch.
+    await reloadAliases()
+
     const results: WrestlerMatch[] = await Promise.all(
       wrestlers.map((w: WrestlerRequest) => {
         const name        = String(w.name ?? '').trim()

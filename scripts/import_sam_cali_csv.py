@@ -869,11 +869,11 @@ def run(args: argparse.Namespace) -> None:
             "in_season_tournament_id": tid,
             "weight_class":            weight,
             "round":                   round_code,
-            "nj_wrestler1_id":         wid_winner,
+            "wrestler1_id":         wid_winner,
             "wrestler1_name_raw":      winner_n,
             "wrestler1_school_id":     sid_w,
             "wrestler1_school_raw":    winner_t,
-            "nj_wrestler2_id":         wid_loser,
+            "wrestler2_id":         wid_loser,
             "wrestler2_name_raw":      loser_n,
             "wrestler2_school_id":     sid_l,
             "wrestler2_school_raw":    loser_t,
@@ -931,8 +931,8 @@ def run(args: argparse.Namespace) -> None:
     # ── Wrestler review list ───────────────────────────────────────────────────
     unmatched = [
         b for b in bouts
-        if (b['wrestler1_school_id'] is not None and b['nj_wrestler1_id'] is None)
-        or (b['wrestler2_school_id'] is not None and b['nj_wrestler2_id'] is None)
+        if (b['wrestler1_school_id'] is not None and b['wrestler1_id'] is None)
+        or (b['wrestler2_school_id'] is not None and b['wrestler2_id'] is None)
     ]
     new_stubs = sum(1 for v in new_wrestler_cache.values() if v is None)
     print(sep)
@@ -941,9 +941,9 @@ def run(args: argparse.Namespace) -> None:
     print(sep)
     for b in unmatched:
         w_side = ""
-        if b['wrestler1_school_id'] is not None and b['nj_wrestler1_id'] is None:
+        if b['wrestler1_school_id'] is not None and b['wrestler1_id'] is None:
             w_side += f"  winner: {b['wrestler1_name_raw']} ({b['wrestler1_school_raw']})\n"
-        if b['wrestler2_school_id'] is not None and b['nj_wrestler2_id'] is None:
+        if b['wrestler2_school_id'] is not None and b['wrestler2_id'] is None:
             w_side += f"  loser:  {b['wrestler2_name_raw']} ({b['wrestler2_school_raw']})\n"
         print(
             f"  {b['weight_class']:3d}lb {b['round']:10s} "
@@ -973,8 +973,12 @@ def run(args: argparse.Namespace) -> None:
     inserted = 0
     for i in range(0, len(bouts), CHUNK):
         chunk = bouts[i:i + CHUNK]
-        client.from_("tournament_bouts").insert(chunk).execute()
-        inserted += len(chunk)
+        res = client.from_("tournament_bouts").upsert(
+            chunk,
+            on_conflict="in_season_tournament_id,weight_class,round,wrestler1_id,wrestler2_id,winner_score,loser_score",
+            ignore_duplicates=True,
+        ).execute()
+        inserted += len(res.data or [])
         print(f"  {inserted}/{len(bouts)}")
     print(f"Done. {inserted} bouts inserted.")
 

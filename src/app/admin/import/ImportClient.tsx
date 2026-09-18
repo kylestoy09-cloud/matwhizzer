@@ -1,8 +1,10 @@
 'use client'
 
 import { useState, useCallback, useMemo, useEffect, useRef } from 'react'
+import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import { parseDualMeetText } from '@/lib/parseDualMeet'
 import type { ParsedMeet } from '@/lib/parseDualMeet'
+import { parseDualMeetGirlsText } from '@/lib/parseDualMeetGirls'
 import type { SchoolMatch } from '@/lib/matchSchools'
 import type { WrestlerMatch } from '@/lib/matchWrestlers'
 import {
@@ -11,10 +13,12 @@ import {
   type WrestlerKey,
   makeWrestlerKey,
   resolveSchool,
+  isPlaceholderName,
 } from './types'
 import { MeetCard }             from './MeetCard'
 import { ReviewPanel }          from './ReviewPanel'
 import { WrestlerReviewPanel }  from './WrestlerReviewPanel'
+import { SEASONS }              from '@/lib/seasons'
 
 // ── Phase ──────────────────────────────────────────────────────────────────────
 
@@ -25,6 +29,7 @@ type ImportResult = {
   meetsImported:    number
   matchesImported:  number
   wrestlersCreated: number
+  meetsSkippedDup:  number
   errors:           string[]
 }
 
@@ -32,15 +37,35 @@ type DraftSummary = {
   id:         string
   label:      string
   meet_count: number
+  gender:     'M' | 'F'
   updated_at: string
 }
 
 // ── ImportClient ───────────────────────────────────────────────────────────────
 
+function getSessionData(type: 'dual' | 'tournament'): { text: string; gender: 'M' | 'F'; seasonId: number } {
+  const DEFAULT_SEASON = 2
+  if (typeof window === 'undefined') return { text: '', gender: 'M', seasonId: DEFAULT_SEASON }
+  try {
+    const raw = sessionStorage.getItem('mw_pending_import')
+    if (!raw) return { text: '', gender: 'M', seasonId: DEFAULT_SEASON }
+    const parsed = JSON.parse(raw)
+    const gender: 'M' | 'F' = parsed.gender === 'F' ? 'F' : 'M'
+    const seasonId: number = typeof parsed.seasonId === 'number' ? parsed.seasonId : DEFAULT_SEASON
+    if (parsed.type === type && parsed.text) {
+      sessionStorage.removeItem('mw_pending_import')
+      return { text: parsed.text as string, gender, seasonId }
+    }
+    return { text: '', gender, seasonId }
+  } catch { return { text: '', gender: 'M', seasonId: DEFAULT_SEASON } }
+}
+
 export function ImportClient() {
+  const { gender } = useAdminGender()
   const [phase,              setPhase]              = useState<Phase>('idle')
-  const [gender,             setGender]             = useState<'M' | 'F'>('M')
-  const [rawText,            setRawText]            = useState('')
+  const [sessionData]                               = useState(() => getSessionData('dual'))
+  const [seasonId,           setSeasonId]           = useState<number>(sessionData.seasonId)
+  const [rawText,            setRawText]            = useState(sessionData.text)
   const [meets,              setMeets]              = useState<ParsedMeet[]>([])
   const [schoolResolutions,  setSchoolResolutions]  = useState<Record<string, SchoolMatch>>({})
   const [schoolOverrides,    setSchoolOverrides]    = useState<Record<string, SchoolOverride>>({})
@@ -49,6 +74,8 @@ export function ImportClient() {
   const [skipped,            setSkipped]            = useState<Set<number>>(new Set())
   const [error,              setError]              = useState<string | null>(null)
   const [importResult,       setImportResult]       = useState<ImportResult | null>(null)
+  // Maps resolved NJ school ID → display name for schools flagged as inactive this season
+  const [inactiveSchools,    setInactiveSchools]    = useState<Map<number, string>>(new Map())
 
   // Draft state
   const [draftId,       setDraftId]       = useState<string | null>(null)
@@ -89,6 +116,7 @@ export function ImportClient() {
           id:                 did ?? undefined,
           label:              dl,
           raw_text:           rt,
+          gender,
           school_overrides:   so,
           wrestler_overrides: wo,
           meet_count:         ms.length,
@@ -174,8 +202,10 @@ export function ImportClient() {
     if (!text) return
     if (textOverride) setRawText(textOverride)
 
-    // Step 1: parse (synchronous)
-    const parsed = parseDualMeetText(text)
+    // Step 1: parse (synchronous) — use gender-specific parser
+    const parsed = gender === 'F'
+      ? parseDualMeetGirlsText(text) as unknown as ParsedMeet[]
+      : parseDualMeetText(text)
 
     if (parsed.length === 0) {
       setError('No meets found. Make sure the text includes a "Team A vs. Team B (MM/DD/YYYY)" header.')
@@ -208,7 +238,7 @@ export function ImportClient() {
       const resp = await fetch('/api/admin/match-schools', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ names: [...allSchoolNames] }),
+        body:    JSON.stringify({ names: [...allSchoolNames], gender, seasonId }),
       })
       if (!resp.ok) throw new Error(`School matching failed: ${resp.status}`)
       const json = await resp.json()
@@ -221,7 +251,38 @@ export function ImportClient() {
       return
     }
 
-    // Step 3: wait for school review before matching wrestlers
+    // Step 3: check which resolved NJ schools are inactive for this season+gender
+    try {
+      const njIds = Object.values(schoolRes)
+        .filter(r => r.schoolId !== null && r.confidence !== 'oos')
+        .map(r => r.schoolId as number)
+      const uniqueIds = [...new Set(njIds)]
+      if (uniqueIds.length > 0) {
+        const resp = await fetch('/api/admin/school-enrollment', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ schoolIds: uniqueIds, seasonId, gender }),
+        })
+        if (resp.ok) {
+          const { inactiveIds } = await resp.json()
+          const inactiveSet = new Set<number>(inactiveIds)
+          const nameMap = new Map<number, string>()
+          for (const r of Object.values(schoolRes)) {
+            if (r.schoolId !== null && inactiveSet.has(r.schoolId)) {
+              nameMap.set(r.schoolId, r.displayName ?? String(r.schoolId))
+            }
+          }
+          setInactiveSchools(nameMap)
+        }
+      } else {
+        setInactiveSchools(new Map())
+      }
+    } catch {
+      // Non-fatal — inactive check failure doesn't block import
+      setInactiveSchools(new Map())
+    }
+
+    // Step 4: wait for school review before matching wrestlers
     setPhase('school_review')
   }
 
@@ -271,6 +332,37 @@ export function ImportClient() {
       const wRes: Record<string, WrestlerMatch> = {}
       results.forEach((r, i) => { wRes[keys[i]] = r })
       setWrestlerResolutions(wRes)
+
+      // Re-check inactive status with final resolved school IDs (overrides may have changed them)
+      const allResolvedIds = new Set<number>()
+      for (const { schoolId } of wrestlerMap.values()) {
+        if (schoolId !== null) allResolvedIds.add(schoolId)
+      }
+      if (allResolvedIds.size > 0) {
+        try {
+          const cr = await fetch('/api/admin/school-enrollment', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({ schoolIds: [...allResolvedIds], seasonId, gender }),
+          })
+          if (cr.ok) {
+            const { inactiveIds } = await cr.json()
+            const inactiveSet = new Set<number>(inactiveIds)
+            const nameMap = new Map<number, string>()
+            for (const r of Object.values(schoolResolutions)) {
+              if (r.schoolId !== null && inactiveSet.has(r.schoolId)) {
+                nameMap.set(r.schoolId, r.displayName ?? String(r.schoolId))
+              }
+            }
+            for (const [raw, ovr] of Object.entries(schoolOverrides)) {
+              if (ovr.schoolId && inactiveSet.has(ovr.schoolId) && !nameMap.has(ovr.schoolId)) {
+                nameMap.set(ovr.schoolId, raw)
+              }
+            }
+            setInactiveSchools(nameMap)
+          }
+        } catch { /* non-fatal */ }
+      }
     } catch (e) {
       setError(String(e))
       setPhase('school_review')
@@ -293,6 +385,7 @@ export function ImportClient() {
           id:                 draftId ?? undefined,
           label:              draftLabel,
           raw_text:           rawText,
+          gender,
           school_overrides:   schoolOverrides,
           wrestler_overrides: wrestlerOverrides,
           meet_count:         meets.length,
@@ -340,35 +433,67 @@ export function ImportClient() {
 
   async function handleImport() {
     setError(null)
+
+    // Cancel any pending debounce timer so we do a synchronous save right now
+    if (autoSaveTimer.current) {
+      clearTimeout(autoSaveTimer.current)
+      autoSaveTimer.current = null
+    }
+
+    // Read latest values from the ref (avoids stale closure)
+    const { rawText: rt, draftId: did, draftLabel: dl, meets: ms, schoolOverrides: so, wrestlerOverrides: wo } = autoSaveDataRef.current
+    if (ms.length === 0) return
+
     setPhase('importing')
     try {
-      const resp = await fetch('/api/admin/import-meets', {
+      // Force-save draft with the latest overrides so the server always has current state
+      const saveResp = await fetch('/api/admin/dual-import-draft', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({
-          meets,
-          skipped:             [...skipped],
-          schoolResolutions,
-          schoolOverrides,
-          wrestlerResolutions,
-          wrestlerOverrides,
+          id:                 did ?? undefined,
+          label:              dl,
+          raw_text:           rt,
+          gender,
+          school_overrides:   so,
+          wrestler_overrides: wo,
+          meet_count:         ms.length,
         }),
       })
+      if (!saveResp.ok) {
+        const j = await saveResp.json().catch(() => ({}))
+        throw new Error(`Could not save draft before import: ${j.error ?? saveResp.status}`)
+      }
+      const { draft: savedDraft } = await saveResp.json()
+      const importDraftId = savedDraft.id as string
+      setDraftId(importDraftId)
+
+      // Send only the draft ID — server re-parses and re-matches server-side
+      const importRoute = gender === 'F' ? '/api/admin/import-meets-girls' : '/api/admin/import-meets'
+      const resp = await fetch(importRoute, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({
+          draftId: importDraftId,
+          skipped: [...skipped],
+        }),
+      })
+      if (!resp.ok) {
+        const j = await resp.json().catch(() => ({}))
+        throw new Error((j as { error?: string }).error ?? `HTTP ${resp.status}`)
+      }
       const json = await resp.json()
-      if (!resp.ok) throw new Error(json.error ?? `HTTP ${resp.status}`)
       setImportResult(json as ImportResult)
       setPhase('done')
 
       // Mark draft as imported so it no longer appears in the list
-      if (draftId) {
-        await fetch('/api/admin/dual-import-draft', {
-          method:  'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body:    JSON.stringify({ id: draftId }),
-        })
-        setDraftId(null)
-        loadDrafts()
-      }
+      await fetch('/api/admin/dual-import-draft', {
+        method:  'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ id: importDraftId }),
+      })
+      setDraftId(null)
+      loadDrafts()
     } catch (e) {
       setError(String(e))
       setPhase('review')
@@ -377,8 +502,10 @@ export function ImportClient() {
 
   // ── Import button readiness ──────────────────────────────────────────────────
 
-  const { blockingSchools, readyCount, skippedCount, newWrestlerCount } = useMemo(() => {
-    let blocking = 0, ready = 0, newW = 0
+  const { blockingSchools, unresolvedWrestlers, readyCount, skippedCount, newWrestlerCount } = useMemo(() => {
+    let blocking = 0, ready = 0, newW = 0, unresolvedW = 0
+    const seenNew = new Set<string>()
+    const seenUnresolved = new Set<string>()
 
     for (let i = 0; i < meets.length; i++) {
       const meet = meets[i]
@@ -388,11 +515,14 @@ export function ImportClient() {
       let meetBlocked = false
       for (const rawName of [meet.team1Name, meet.team2Name]) {
         const res = resolveSchool(rawName, schoolResolutions, schoolOverrides)
-        if (res.confidence === 'none') { meetBlocked = true; blocking++ ; break }
+        if (res.confidence === 'none') {
+          meetBlocked = true
+          if (!isSkipped) blocking++
+          break
+        }
       }
 
-      if (isSkipped) { skippedCount: void 0 }
-      else if (!meetBlocked) ready++
+      if (!isSkipped && !meetBlocked) ready++
 
       if (!isSkipped) {
         for (const m of meet.matches) {
@@ -401,24 +531,46 @@ export function ImportClient() {
             [m.winnerName, m.winnerSchoolRaw] as const,
             [m.loserName,  m.loserSchoolRaw]  as const,
           ]) {
-            if (!name) continue
+            if (!name || isPlaceholderName(name)) continue
             const schoolRes = resolveSchool(schoolRaw ?? '', schoolResolutions, schoolOverrides)
             if (schoolRes.isOutOfState) continue
             const key = makeWrestlerKey(name, schoolRes.schoolId, m.weightClass)
-            const res = wrestlerResolutions[key]
-            const ovr = wrestlerOverrides[key]
-            const isNew = ovr ? ovr.confirmedNew : (res?.isNew ?? true)
-            if (isNew) newW++
+
+            // Count wrestlers that will be created (confirmed or not)
+            if (!seenNew.has(key)) {
+              seenNew.add(key)
+              const res = wrestlerResolutions[key]
+              const ovr = wrestlerOverrides[key]
+              const isNew = ovr ? ovr.confirmedNew : (res?.isNew ?? true)
+              if (isNew) newW++
+            }
+
+            // Count wrestlers that need explicit action before import can proceed:
+            // unconfirmed new, no match at all, or low-confidence fuzzy guess.
+            // High-confidence (≥0.85) and exact matches auto-resolve — no action needed.
+            if (!seenUnresolved.has(key)) {
+              seenUnresolved.add(key)
+              const res = wrestlerResolutions[key]
+              const ovr = wrestlerOverrides[key]
+              if (!ovr) {
+                const needsAction =
+                  !res ||                          // no resolution at all
+                  res.isNew ||                     // new wrestler, unconfirmed
+                  res.confidence === 'low'         // low-confidence match needs verification
+                if (needsAction) unresolvedW++
+              }
+            }
           }
         }
       }
     }
 
     return {
-      blockingSchools:  blocking,
-      readyCount:       ready,
-      skippedCount:     skipped.size,
-      newWrestlerCount: newW,
+      blockingSchools:     blocking,
+      unresolvedWrestlers: unresolvedW,
+      readyCount:          ready,
+      skippedCount:        skipped.size,
+      newWrestlerCount:    newW,
     }
   }, [meets, skipped, schoolResolutions, schoolOverrides, wrestlerResolutions, wrestlerOverrides])
 
@@ -449,6 +601,9 @@ export function ImportClient() {
                     <span className="text-slate-400 ml-2">
                       {d.meet_count} meet{d.meet_count !== 1 ? 's' : ''} · {formatDraftDate(d.updated_at)}
                     </span>
+                    <span className={`ml-2 text-[10px] font-semibold px-1.5 py-0.5 rounded ${d.gender === 'F' ? 'bg-pink-50 text-pink-700 border border-pink-200' : 'bg-blue-50 text-blue-700 border border-blue-200'}`}>
+                      {d.gender === 'F' ? 'Girls' : 'Boys'}
+                    </span>
                   </div>
                   <div className="flex gap-3 shrink-0">
                     <button
@@ -477,21 +632,20 @@ export function ImportClient() {
               Copy and paste from TrackWrestling. Supports Format A (tab-separated) and
               Format B (jammed text). Multiple meets can be pasted at once.
             </p>
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-xs text-slate-500">Gender:</span>
-              <div className="flex border border-black">
-                <button
-                  onClick={() => setGender('M')}
-                  className={`px-4 py-1 text-xs font-bold transition-colors ${gender === 'M' ? 'bg-black text-white' : 'bg-white text-slate-600 hover:bg-slate-50'}`}
-                >
-                  Boys
-                </button>
-                <button
-                  onClick={() => setGender('F')}
-                  className={`px-4 py-1 text-xs font-bold transition-colors border-l border-black ${gender === 'F' ? 'bg-rose-700 text-white' : 'bg-white text-slate-600 hover:bg-slate-50'}`}
-                >
-                  Girls
-                </button>
+            <div className="flex items-center gap-4 mb-3 flex-wrap">
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-slate-500">Season:</span>
+                <div className="flex border border-black">
+                  {Object.entries(SEASONS).map(([id, s], i) => (
+                    <button
+                      key={id}
+                      onClick={() => setSeasonId(Number(id))}
+                      className={`px-4 py-1 text-xs font-bold transition-colors ${i > 0 ? 'border-l border-black' : ''} ${seasonId === Number(id) ? 'bg-black text-white' : 'bg-white text-slate-600 hover:bg-slate-50'}`}
+                    >
+                      {s.label}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
             <textarea
@@ -561,6 +715,9 @@ export function ImportClient() {
             schoolResolutions={schoolResolutions}
             schoolOverrides={schoolOverrides}
             onSchoolOverride={handleSchoolOverride}
+            wrestlerResolutions={wrestlerResolutions}
+            onWrestlerOverride={handleWrestlerOverride}
+            gender={gender}
           />
 
           {error && (
@@ -598,6 +755,25 @@ export function ImportClient() {
             </div>
           </div>
 
+          {/* Inactive school warning (school_review phase) */}
+          {inactiveSchools.size > 0 && (
+            <div className="border border-amber-300 bg-amber-50 px-4 py-3 space-y-1">
+              <p className="text-xs font-semibold text-amber-800">
+                {inactiveSchools.size} matched school{inactiveSchools.size !== 1 ? 's are' : ' is'} inactive this season
+              </p>
+              <ul className="text-xs text-amber-700 space-y-0.5 list-disc ml-4">
+                {[...inactiveSchools.values()].map(name => (
+                  <li key={name}>{name}</li>
+                ))}
+              </ul>
+              <p className="text-[11px] text-amber-600">
+                Check whether these should be activated in{' '}
+                <a href="/admin/schools" className="underline" target="_blank" rel="noreferrer">School Profiles</a>{' '}
+                before importing — or confirm the school override above is correct.
+              </p>
+            </div>
+          )}
+
           <button
             onClick={handleMatchWrestlers}
             className="px-5 py-2 bg-black text-white text-sm font-semibold hover:bg-slate-800"
@@ -627,6 +803,9 @@ export function ImportClient() {
             <li><span className="text-green-700 font-medium">{importResult.matchesImported}</span> matches written</li>
             {importResult.wrestlersCreated > 0 && (
               <li><span className="text-blue-700 font-medium">{importResult.wrestlersCreated}</span> new wrestlers created</li>
+            )}
+            {importResult.meetsSkippedDup > 0 && (
+              <li><span className="text-amber-600 font-medium">{importResult.meetsSkippedDup}</span> skipped — already in system</li>
             )}
           </ul>
           {importResult.errors.length > 0 && (
@@ -702,6 +881,7 @@ export function ImportClient() {
                 wrestlerResolutions={wrestlerResolutions}
                 wrestlerOverrides={wrestlerOverrides}
                 skip={skipped.has(i)}
+                gender={gender}
                 onSkipChange={skip => handleSkip(i, skip)}
                 onWrestlerOverride={handleWrestlerOverride}
               />
@@ -714,6 +894,9 @@ export function ImportClient() {
             schoolResolutions={schoolResolutions}
             schoolOverrides={schoolOverrides}
             onSchoolOverride={handleSchoolOverride}
+            wrestlerResolutions={wrestlerResolutions}
+            onWrestlerOverride={handleWrestlerOverride}
+            gender={gender}
           />
 
           {/* Step 4: Wrestler review panel */}
@@ -727,14 +910,42 @@ export function ImportClient() {
             gender={gender}
           />
 
+          {/* Inactive school warning */}
+          {inactiveSchools.size > 0 && (
+            <div className="border border-amber-300 bg-amber-50 px-4 py-3 space-y-1">
+              <p className="text-xs font-semibold text-amber-800">
+                {inactiveSchools.size} inactive school{inactiveSchools.size !== 1 ? 's' : ''} in this import — verify enrollment
+              </p>
+              <ul className="text-xs text-amber-700 space-y-0.5 list-disc ml-4">
+                {[...inactiveSchools.values()].map(name => (
+                  <li key={name}>{name}</li>
+                ))}
+              </ul>
+              <p className="text-[11px] text-amber-600 mt-1">
+                These schools are marked inactive for {gender === 'M' ? 'boys' : 'girls'} this season.
+                If wrestlers appear for them, confirm enrollment in{' '}
+                <a href="/admin/schools" className="underline" target="_blank" rel="noreferrer">School Profiles</a>.
+              </p>
+            </div>
+          )}
+
+          {error && (
+            <p className="text-sm text-red-600 border border-red-300 bg-red-50 px-3 py-2">{error}</p>
+          )}
+
           {/* Controls */}
           <div className="border border-black bg-white px-4 py-4 space-y-3 mt-2">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
               <div className="text-xs text-slate-600 space-x-4">
                 <span className="text-green-700 font-medium">{readyCount} meets ready</span>
                 {skippedCount > 0 && <span className="text-slate-400">{skippedCount} skipped</span>}
-                {newWrestlerCount > 0 && (
-                  <span className="text-red-600">{newWrestlerCount} wrestlers to create</span>
+                {newWrestlerCount > 0 && unresolvedWrestlers === 0 && (
+                  <span className="text-amber-600">{newWrestlerCount} new wrestler{newWrestlerCount !== 1 ? 's' : ''} to create</span>
+                )}
+                {unresolvedWrestlers > 0 && (
+                  <span className="text-red-700 font-semibold">
+                    {unresolvedWrestlers} wrestler{unresolvedWrestlers !== 1 ? 's' : ''} unresolved — review required
+                  </span>
                 )}
                 {blockingSchools > 0 && (
                   <span className="text-red-700 font-semibold">
@@ -745,7 +956,7 @@ export function ImportClient() {
 
               <button
                 onClick={handleImport}
-                disabled={blockingSchools > 0}
+                disabled={blockingSchools > 0 || unresolvedWrestlers > 0}
                 className="px-5 py-2 bg-black text-white text-sm font-semibold hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
               >
                 Import All

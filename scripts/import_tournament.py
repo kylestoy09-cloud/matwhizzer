@@ -691,6 +691,7 @@ class WrestlerMatcher:
     def __init__(self, client: Client) -> None:
         self._client = client
         self._index: Optional[dict[int, list[dict]]] = None
+        self._name_index: dict[str, dict] = {}  # lower(display_name) → record
 
     def _load(self) -> None:
         if self._index is not None:
@@ -716,6 +717,20 @@ class WrestlerMatcher:
 
         wrestler_map = {w["id"]: w for w in wrestlers}
         weight_map = {wc["id"]: wc["weight"] for wc in (wc_res.data or [])}
+
+        # Build name-based fallback index from all wrestlers in the DB.
+        # This catches wrestlers who exist but have no tournament_entries
+        # (e.g., created by a prior dual meet import).
+        for w in wrestlers:
+            suffix = f" {w['suffix']}" if w.get("suffix") else ""
+            display = f"{w['first_name']} {w['last_name']}{suffix}".strip()
+            key = display.lower()
+            if key not in self._name_index:
+                self._name_index[key] = {
+                    "wrestler_id": w["id"],
+                    "display_name": display,
+                    "gender": w.get("gender"),
+                }
 
         record_map: dict[tuple, dict] = {}
         for e in entries:
@@ -776,6 +791,12 @@ class WrestlerMatcher:
             return {"wrestler_id": best["wrestler_id"], "display_name": best["display_name"], "confidence": "high", "is_new": False, "alternates": scored}
         if best and best["score"] >= 0.6:
             return {"wrestler_id": best["wrestler_id"], "display_name": best["display_name"], "confidence": "low", "is_new": False, "alternates": scored}
+
+        # Fallback: search by name across all schools. Catches wrestlers who exist
+        # in the DB but have no tournament_entries (e.g., from a prior dual import).
+        fallback = self._name_index.get(lower)
+        if fallback and (gender is None or fallback.get("gender") == gender):
+            return {"wrestler_id": fallback["wrestler_id"], "display_name": fallback["display_name"], "confidence": "high", "is_new": False, "alternates": scored}
 
         return {"wrestler_id": None, "display_name": None, "confidence": "none", "is_new": True, "alternates": scored}
 
@@ -868,11 +889,11 @@ def main() -> None:
             "result_type": bout.result_type,
             "result_detail": bout.result_detail,
             "fall_time_seconds": bout.fall_time_seconds,
-            "nj_wrestler1_id": w1["wrestler_id"],
+            "wrestler1_id": w1["wrestler_id"],
             "wrestler1_name_raw": bout.wrestler1_name,
             "wrestler1_school_id": s1["school_id"],
             "wrestler1_school_raw": s1["display_name"] or bout.wrestler1_school_raw,
-            "nj_wrestler2_id": w2["wrestler_id"],
+            "wrestler2_id": w2["wrestler_id"],
             "wrestler2_name_raw": bout.wrestler2_name,
             "wrestler2_school_id": s2["school_id"],
             "wrestler2_school_raw": s2["display_name"] or bout.wrestler2_school_raw,
@@ -894,8 +915,8 @@ def main() -> None:
             if row["weight_class"] != cur_wt:
                 cur_wt = row["weight_class"]
                 print(f"\n  ── {cur_wt} lb ──")
-            w1_tag = f"[{row['nj_wrestler1_id'][:8]}…]" if row["nj_wrestler1_id"] else "[OOS/new]"
-            w2_tag = f"[{row['nj_wrestler2_id'][:8]}…]" if row["nj_wrestler2_id"] else "[OOS/new]"
+            w1_tag = f"[{row['wrestler1_id'][:8]}…]" if row["wrestler1_id"] else "[OOS/new]"
+            w2_tag = f"[{row['wrestler2_id'][:8]}…]" if row["wrestler2_id"] else "[OOS/new]"
             result = row["result_type"] or "—"
             if row["result_detail"]:
                 result += f" {row['result_detail']}"

@@ -35,6 +35,7 @@ export function HeaderNav() {
   const [userOpen, setUserOpen] = useState(false)
   const [user, setUser]         = useState<User | null>(null)
   const [username, setUsername] = useState<string | null>(null)
+  const [isAdmin, setIsAdmin]   = useState(false)
 
   // ── Search state ─────────────────────────────────────────────────────────
   const [searchQuery, setSearchQuery] = useState('')
@@ -42,7 +43,28 @@ export function HeaderNav() {
   const [schools,     setSchools]     = useState<SchoolResult[]>([])
   const [searchOpen,  setSearchOpen]  = useState(false)
 
-  const isBoys = !pathname.includes('/girls')
+  // ── Gender persistence ───────────────────────────────────────────────────
+  // When the path explicitly names a gender, that wins and we save it.
+  // On gender-neutral pages (/schedule, /wrestler/…, etc.) we fall back to
+  // the last saved preference so the header colour doesn't reset to boys.
+  const [savedGender, setSavedGender] = useState<'boys' | 'girls'>('boys')
+  useEffect(() => {
+    const saved = localStorage.getItem('mw_gender') as 'boys' | 'girls' | null
+    if (saved) setSavedGender(saved)
+  }, [])
+  useEffect(() => {
+    if (pathname.includes('/girls')) {
+      setSavedGender('girls')
+      localStorage.setItem('mw_gender', 'girls')
+    } else if (pathname.includes('/boys')) {
+      setSavedGender('boys')
+      localStorage.setItem('mw_gender', 'boys')
+    }
+  }, [pathname])
+
+  const isBoys = pathname.includes('/boys') ? true
+               : pathname.includes('/girls') ? false
+               : savedGender === 'boys'
 
   // ── Colour tokens ────────────────────────────────────────────────────────
   const rowOneBg    = isBoys ? 'bg-slate-900'  : 'bg-rose-900'
@@ -51,37 +73,43 @@ export function HeaderNav() {
   const dropdownHov = isBoys ? 'hover:bg-slate-700' : 'hover:bg-rose-700'
 
   // ── Nav links (gender-aware) ─────────────────────────────────────────────
-  const homeHref = isBoys ? '/postseason/individual/boys' : '/postseason/individual/girls'
+  const homeHref = '/'
   const navItems = [
-    { href: '/schedule',                                                          label: 'Schedule'     },
-    { href: '/conferences',                                                       label: 'Standings'    },
-    { href: isBoys ? '/boys/leaderboards' : '/girls/leaderboards',               label: 'Leaderboards' },
-    { href: isBoys ? '/boys/schools'      : '/girls/schools',                    label: 'Schools'      },
-    { href: '/postseason',                                                        label: 'Post Season'  },
-    { href: '/feedback',                                                          label: 'Feedback'     },
+    { href: isBoys ? '/boys/schedule'    : '/girls/schedule',                    label: 'Schedule'     },
+    { href: isBoys ? '/boys/standings'   : '/girls/standings',                   label: 'Standings'    },
+    { href: isBoys ? '/boys/leaderboards': '/girls/leaderboards',                label: 'Leaderboards' },
+    { href: isBoys ? '/boys/schools'     : '/girls/schools',                     label: 'Schools'      },
+    { href: isBoys ? '/boys/tournaments' : '/girls/tournaments',                 label: 'Tournaments'  },
+    { href: isBoys ? '/boys/postseason'  : '/girls/postseason',                  label: 'Post Season'  },
+    { href: isBoys ? '/boys/h2h'         : '/girls/h2h',                         label: 'H2H'          },
+    { href: '/about',                                                             label: 'About'        },
   ]
 
   // ── Auth ─────────────────────────────────────────────────────────────────
   useEffect(() => {
     const supabase = createSupabaseBrowser()
+    function loadProfile(uid: string, userMeta?: Record<string, unknown>) {
+      supabase.from('users').select('username').eq('id', uid).maybeSingle()
+        .then(({ data: profile }) => {
+          setUsername(profile?.username ?? (userMeta?.username as string) ?? null)
+        })
+      supabase.from('app_users').select('role').eq('id', uid).maybeSingle()
+        .then(({ data: appUser }) => {
+          setIsAdmin(appUser?.role === 'admin')
+        })
+    }
+
     supabase.auth.getUser().then(({ data }) => {
       setUser(data.user)
-      if (data.user) {
-        supabase.from('users').select('username').eq('id', data.user.id).maybeSingle()
-          .then(({ data: profile }) => {
-            setUsername(profile?.username ?? data.user?.user_metadata?.username ?? null)
-          })
-      }
+      if (data.user) loadProfile(data.user.id, data.user.user_metadata)
     })
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null)
       if (session?.user) {
-        supabase.from('users').select('username').eq('id', session.user.id).maybeSingle()
-          .then(({ data: profile }) => {
-            setUsername(profile?.username ?? session.user?.user_metadata?.username ?? null)
-          })
+        loadProfile(session.user.id, session.user.user_metadata)
       } else {
         setUsername(null)
+        setIsAdmin(false)
       }
     })
     return () => subscription.unsubscribe()
@@ -132,6 +160,7 @@ export function HeaderNav() {
       let wrestlerQuery = supabase
         .from('wrestlers')
         .select('id, first_name, last_name')
+        .eq('gender', isBoys ? 'M' : 'F')
         .limit(5)
 
       if (parts.length >= 2) {
@@ -147,6 +176,7 @@ export function HeaderNav() {
         .from('schools')
         .select('id, display_name, logo_url')
         .ilike('display_name', `%${q}%`)
+        .eq('is_nj', true)
         .limit(5)
 
       const [wrestlerRes, schoolRes] = await Promise.all([wrestlerQuery, schoolQuery])
@@ -205,17 +235,28 @@ setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
                 onClick={() => setUserOpen(v => !v)}
                 className="flex items-center gap-1.5 text-sm text-slate-300 hover:text-white transition-colors px-2 py-1 rounded-none hover:bg-white/10"
               >
-                <span className="w-7 h-7 rounded-none bg-white/20 flex items-center justify-center text-xs font-bold">
-                  {(username ?? '?')[0].toUpperCase()}
+                <span className="w-7 h-7 rounded-none bg-white/20 flex items-center justify-center">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
                 </span>
-                <span className="hidden sm:inline text-sm">{username}</span>
+                {username && <span className="hidden sm:inline text-sm">{username}</span>}
               </button>
               {userOpen && (
                 <div className={`absolute right-0 top-full mt-1 w-44 rounded-none shadow-none border border-black z-50 overflow-hidden ${dropdownBg}`}>
                   <div className="px-4 py-2 border-b border-white/10">
                     <p className="text-xs text-slate-400">Signed in as</p>
-                    <p className="text-sm text-white font-medium truncate">{username}</p>
+                    <p className="text-sm text-white font-medium truncate">{username ?? user?.email ?? ''}</p>
                   </div>
+                  {isAdmin && (
+                    <Link
+                      href="/admin"
+                      onClick={() => setUserOpen(false)}
+                      className={`block w-full text-left px-4 py-3 text-sm text-slate-100 ${dropdownHov} hover:text-white transition-colors`}
+                    >
+                      Admin Panel
+                    </Link>
+                  )}
                   <Link
                     href="/settings"
                     onClick={() => setUserOpen(false)}
@@ -365,7 +406,7 @@ setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
                         {schools.map(s => (
                           <Link
                             key={s.id}
-                            href={`/schools/${s.id}?gender=${genderParam}`}
+                            href={`/${genderParam}/schools/${s.id}`}
                             onClick={handleResultClick}
                             className={`flex items-center gap-2 px-4 py-2.5 text-sm text-white ${dropdownHov} transition-colors`}
                           >

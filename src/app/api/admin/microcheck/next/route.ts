@@ -1,0 +1,114 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { createSupabaseServer } from '@/lib/supabase/server'
+import { createSupabaseAdmin }  from '@/lib/supabase/service'
+import { findNextTask }         from '../_engine'
+
+export const dynamic = 'force-dynamic'
+
+export async function GET(req: NextRequest) {
+  const userSb = await createSupabaseServer()
+  const { data: { user } } = await userSb.auth.getUser()
+  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const { data: appUser } = await userSb.from('app_users').select('role').eq('id', user.id).single()
+  if (!appUser || appUser.role !== 'admin') return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+
+  const gender = (req.nextUrl.searchParams.get('gender') ?? 'M') as 'M' | 'F'
+  const db = createSupabaseAdmin()
+
+  // Query everything in one parallel batch — same pattern as school-directory route
+  const [gsRes, schoolsRes, logRes, flagRes, inactiveRes] = await Promise.all([
+    db.from('boys_schools').select('school_id, display_name'),
+    db.from('schools')
+      .select('id, display_name, address, website_url, twitter_handle, facebook_url, ad_name, ad_email')
+      .eq('is_nj', true)
+      .order('display_name'),
+    db.from('microcheck_task_log')
+      .select('school_id, field')
+      .eq('gender', gender),
+    db.from('microcheck_roster_flags')
+      .select('school_id')
+      .eq('gender', gender)
+      .eq('resolved', false),
+    db.from('inactive_school_seasons')
+      .select('school_id')
+      .eq('gender', gender),
+  ])
+
+  if (gsRes.error)      return NextResponse.json({ error: 'boys_schools: ' + gsRes.error.message },  { status: 500 })
+  if (schoolsRes.error) return NextResponse.json({ error: 'schools: '      + schoolsRes.error.message }, { status: 500 })
+  if (logRes.error)     return NextResponse.json({ error: 'task_log: '     + logRes.error.message },     { status: 500 })
+
+  const boysSchools  = gsRes.data ?? []
+  const boysIdSet    = new Set(boysSchools.map(bs => bs.school_id))
+  const boysNameMap  = new Map(boysSchools.map(bs => [bs.school_id, bs.display_name]))
+  const inactiveIds  = new Set((inactiveRes.data ?? []).map(r => r.school_id))
+
+  // Filter to active boys schools only, merge in boys display names, re-sort
+  const schools = (schoolsRes.data ?? [])
+    .filter(s => boysIdSet.has(s.id) && !inactiveIds.has(s.id))
+    .map(s => ({ ...s, display_name: boysNameMap.get(s.id) ?? s.display_name }))
+    .sort((a, b) => a.display_name.localeCompare(b.display_name))
+
+  const boysSchoolIds = schools.map(s => s.id)
+
+  // Coaches
+  let coachRows: { school_id: number; email: string | null }[] = []
+  const coachRes = await db.from('boys_coaches')
+    .select('school_id, email')
+    .eq('season_id', 3)
+    .eq('is_active', true)
+    .in('school_id', boysSchoolIds)
+  if (!coachRes.error) coachRows = coachRes.data ?? []
+
+  const loggedSet  = new Set((logRes.data ?? []).map(r => `${r.school_id}_${r.field}`))
+  const coachMap   = new Map(coachRows.map(c => [c.school_id, { email: c.email }]))
+  const rosterSet  = boysIdSet  // every boys school needs a roster/grade review
+  const flaggedSet = new Set((flagRes.data ?? []).map(r => r.school_id))
+
+  // ── Read priority order, fall back to default if table missing ───────────────
+  const { data: prioRows } = await db
+    .from('microcheck_task_priority')
+    .select('task_type, sort_order, enabled')
+    .eq('enabled', true)
+    .order('sort_order')
+  const orderedTypes = (prioRows ?? []).map(p => p.task_type)
+  if (orderedTypes.length === 0) orderedTypes.push('school_profile', 'tie_resolution')
+
+  const profileTask = findNextTask(schools, loggedSet, coachMap, rosterSet, flaggedSet, gender)
+
+  for (const taskType of orderedTypes) {
+    if (taskType === 'school_profile') {
+      if (profileTask) return NextResponse.json({ task: profileTask })
+    } else {
+      const { data: queueTask } = await db
+        .from('microcheck_tasks')
+        .select('id, task_type, entity_id, gender, metadata')
+        .eq('status', 'pending')
+        .eq('task_type', taskType)
+        .eq('gender', gender)
+        .order('priority', { ascending: false })
+        .order('created_at', { ascending: true })
+        .limit(1)
+        .maybeSingle()
+      if (queueTask) {
+        const m = queueTask.metadata as Record<string, unknown>
+        return NextResponse.json({ task: {
+          task_type:       queueTask.task_type,
+          task_id:         queueTask.id,
+          entity_id:       queueTask.entity_id,
+          gender,
+          team1_school_id: m.team1_school_id as number,
+          team2_school_id: m.team2_school_id as number,
+          team1_name:      m.team1_name as string,
+          team2_name:      m.team2_name as string,
+          score:           m.score as number,
+          meet_date:       m.meet_date as string,
+          season_id:       m.season_id as number,
+          dual_table:      (m.table as string) ?? 'dual_meets',
+        }})
+      }
+    }
+  }
+
+  return NextResponse.json({ task: null })
+}

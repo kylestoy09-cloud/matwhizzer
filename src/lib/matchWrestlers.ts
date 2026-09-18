@@ -65,6 +65,12 @@ const schoolIndex = new Map<number, Map<string, WrestlerRecord>>()
 // "rawName|schoolId" → { wrestlerId, displayName } — loaded from wrestler_name_aliases
 const aliasIndex  = new Map<string, { wrestlerId: string; displayName: string }>()
 
+// "lower(displayName)|gender" → wrestlerId — fallback for wrestlers with no school entries
+const nameIndex   = new Map<string, { wrestlerId: string; displayName: string }>()
+
+// wrestlerId → gender — used to gender-check alias matches
+const wrestlerGenderMap = new Map<string, string>()
+
 /** Fetches all rows from a Supabase table, paginating in PAGE_SIZE chunks. */
 async function fetchAll<T>(
   supabase: ReturnType<typeof getClient>,
@@ -103,11 +109,14 @@ async function loadCache(): Promise<void> {
   if (wcRes.error) throw new Error(`matchWrestlers: failed to load weight_classes — ${wcRes.error.message}`)
   const weightClasses = (wcRes.data ?? []) as WeightClassRow[]
 
-  // Paginate all tables serially to avoid connection pool exhaustion
-  const wrestlers = await fetchAll<WrestlerRow>(supabase, 'wrestlers', 'id, first_name, last_name, suffix, gender')
-  const entries   = await fetchAll<EntryRow>(supabase, 'tournament_entries', 'wrestler_id, school_id, weight_class_id')
-  const bouts     = await fetchAll<BoutRow>(supabase, 'tournament_bouts', 'wrestler1_id, wrestler1_school_id, wrestler2_id, wrestler2_school_id')
-  const duals     = await fetchAll<DualMatchRow>(supabase, 'dual_meet_matches', 'wrestler_a_id, school_a_id, wrestler_b_id, school_b_id')
+  const [wrestlers, entries, bouts, boutsGirls, duals, dualsGirls] = await Promise.all([
+    fetchAll<WrestlerRow>(supabase, 'wrestlers', 'id, first_name, last_name, suffix, gender'),
+    fetchAll<EntryRow>(supabase, 'tournament_entries', 'wrestler_id, school_id, weight_class_id'),
+    fetchAll<BoutRow>(supabase, 'tournament_bouts', 'wrestler1_id, wrestler1_school_id, wrestler2_id, wrestler2_school_id'),
+    fetchAll<BoutRow>(supabase, 'tournament_bouts_girls', 'wrestler1_id, wrestler1_school_id, wrestler2_id, wrestler2_school_id'),
+    fetchAll<DualMatchRow>(supabase, 'dual_meet_matches', 'wrestler_a_id, school_a_id, wrestler_b_id, school_b_id'),
+    fetchAll<DualMatchRow>(supabase, 'dual_meet_matches_girls', 'wrestler_a_id, school_a_id, wrestler_b_id, school_b_id'),
+  ])
 
   // Build fast lookup maps
   const wrestlerMap = new Map<string, WrestlerRow>()
@@ -167,8 +176,8 @@ async function loadCache(): Promise<void> {
     schoolIndex.get(schoolId)!.set(wrestlerId, rec)
   }
 
-  // Seed from tournament_bouts (RTF in-season imports)
-  for (const b of bouts) {
+  // Seed from tournament_bouts (RTF in-season imports — boys and girls)
+  for (const b of [...bouts, ...boutsGirls]) {
     if (b.wrestler1_id && b.wrestler1_school_id) addToIndex(b.wrestler1_id, b.wrestler1_school_id)
     if (b.wrestler2_id && b.wrestler2_school_id) addToIndex(b.wrestler2_id, b.wrestler2_school_id)
   }
@@ -179,27 +188,61 @@ async function loadCache(): Promise<void> {
     if (d.wrestler_b_id && d.school_b_id) addToIndex(d.wrestler_b_id, d.school_b_id)
   }
 
-  // Load confirmed name aliases — checked before fuzzy matching
-  type AliasRow = {
-    raw_name:    string
-    school_id:   number
-    wrestler_id: string
-    wrestlers:   { first_name: string; last_name: string; suffix: string | null } | null
+  // Seed from dual_meet_matches_girls
+  for (const d of dualsGirls) {
+    if (d.wrestler_a_id && d.school_a_id) addToIndex(d.wrestler_a_id, d.school_a_id)
+    if (d.wrestler_b_id && d.school_b_id) addToIndex(d.wrestler_b_id, d.school_b_id)
   }
-  const { data: aliasRows } = await supabase
-    .from('wrestler_name_aliases')
-    .select('raw_name, school_id, wrestler_id, wrestlers(first_name, last_name, suffix)')
 
-  for (const a of (aliasRows ?? []) as unknown as AliasRow[]) {
+  // Build name fallback index and gender map from all wrestlers in the DB.
+  nameIndex.clear()
+  wrestlerGenderMap.clear()
+  for (const w of wrestlers) {
+    wrestlerGenderMap.set(w.id, w.gender ?? 'M')
+    const display = buildName(w)
+    const key = `${display.toLowerCase()}|${w.gender ?? 'M'}`
+    if (!nameIndex.has(key)) nameIndex.set(key, { wrestlerId: w.id, displayName: display })
+  }
+
+  cacheReady = true
+}
+
+type AliasRow = {
+  raw_name:    string
+  school_id:   number
+  wrestler_id: string
+  wrestlers:   { first_name: string; last_name: string; suffix: string | null } | null
+}
+
+/**
+ * Reloads the alias index from the DB. Call this once per batch of matchWrestler
+ * calls (not per-wrestler) so new aliases from recent imports are always visible.
+ * The main wrestler index (schoolIndex) is cached; only aliases reload per-batch.
+ */
+export async function reloadAliases(): Promise<void> {
+  const supabase = getClient()
+  const PAGE = 1000
+  const allRows: AliasRow[] = []
+  let from = 0
+  while (true) {
+    const { data, error } = await supabase
+      .from('wrestler_name_aliases')
+      .select('raw_name, school_id, wrestler_id, wrestlers(first_name, last_name, suffix)')
+      .range(from, from + PAGE - 1)
+    if (error) break
+    const page = (data ?? []) as unknown as AliasRow[]
+    allRows.push(...page)
+    if (page.length < PAGE) break
+    from += PAGE
+  }
+  aliasIndex.clear()
+  for (const a of allRows) {
     if (!a.wrestlers) continue
     aliasIndex.set(`${a.raw_name}|${a.school_id}`, {
       wrestlerId:  a.wrestler_id,
       displayName: buildName(a.wrestlers),
     })
-
   }
-
-  cacheReady = true
 }
 
 // ── Name helpers ───────────────────────────────────────────────────────────────
@@ -251,8 +294,10 @@ export async function matchWrestler(
   const normLower = rawNorm.toLowerCase()
 
   // ── 0. Alias index — confirmed matches from previous imports ─────────────────
+  // Gender check: skip alias if the matched wrestler is the wrong gender.
+  // Prevents a boy's saved alias from matching a girl import (or vice versa).
   const alias = aliasIndex.get(`${raw}|${schoolId}`)
-  if (alias) {
+  if (alias && (wrestlerGenderMap.get(alias.wrestlerId) ?? 'M') === gender) {
     return {
       rawName:     raw,
       schoolId,
@@ -308,7 +353,27 @@ export async function matchWrestler(
     return match(raw, schoolId, weightClass, rec, 'low', schoolScored)
   }
 
-  // ── 4. Same-last-name fallback ────────────────────────────────────────────────
+  // ── 4. Name-only fallback across all wrestlers ───────────────────────────────
+  // Must run BEFORE same-last-name so an exact-name wrestler whose only bouts
+  // were in a since-deleted tournament (and is therefore absent from schoolIndex)
+  // is preferred over a same-surname sibling who is in the index.
+  const nameFallback =
+    nameIndex.get(`${nameLower}|${gender}`) ??
+    nameIndex.get(`${normLower}|${gender}`)
+  if (nameFallback) {
+    return {
+      rawName:     raw,
+      schoolId,
+      weightClass,
+      wrestlerId:  nameFallback.wrestlerId,
+      displayName: nameFallback.displayName,
+      confidence:  'high',
+      isNew:       false,
+      alternates:  [],
+    }
+  }
+
+  // ── 5. Same-last-name fallback ────────────────────────────────────────────────
   // Catches "JD Smith" → "Jake Smith" and brothers/cousins — shown as low confidence.
   const rawLast = rawNorm.trim().split(/\s+/).pop()!.toLowerCase()
   if (rawLast.length >= 2) {
@@ -327,7 +392,7 @@ export async function matchWrestler(
     }
   }
 
-  // ── 5. No match ───────────────────────────────────────────────────────────────
+  // ── 6. No match ───────────────────────────────────────────────────────────────
   return {
     rawName:     raw,
     schoolId,
@@ -356,6 +421,8 @@ export function clearWrestlerCache(): void {
   cachePromise = null
   schoolIndex.clear()
   aliasIndex.clear()
+  nameIndex.clear()
+  wrestlerGenderMap.clear()
 }
 
 // ── Internal helpers ───────────────────────────────────────────────────────────

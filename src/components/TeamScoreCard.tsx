@@ -40,7 +40,7 @@ export function TeamScoreCard({
             <div className="flex-1 min-w-0">
               {r.school_id ? (
                 <Link
-                  href={`/schools/${r.school_id}?gender=${gender}`}
+                  href={`/${gender}/schools/${r.school_id}`}
                   className="text-sm font-medium text-slate-800 hover:underline truncate block"
                 >
                   {r.school_name || r.school}

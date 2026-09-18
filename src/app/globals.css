@@ -1,4 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@700&display=swap');
 @import "tailwindcss";
+
+@font-face {
+  font-family: 'DSEG7 Classic';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/DSEG7Classic-Regular.woff2') format('woff2'),
+       url('/fonts/DSEG7Classic-Regular.woff') format('woff');
+}
 
 :root {
   --background: #ffffff;
@@ -18,3 +27,29 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Article markdown body */
+.article-body h1, .article-body h2, .article-body h3, .article-body h4 {
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+.article-body h1 { font-size: 1.25rem; }
+.article-body h2 { font-size: 1.1rem; }
+.article-body h3 { font-size: 1rem; }
+.article-body p  { margin-bottom: 1rem; }
+.article-body ul, .article-body ol { padding-left: 1.25rem; margin-bottom: 1rem; }
+.article-body ul { list-style: disc; }
+.article-body ol { list-style: decimal; }
+.article-body li { margin-bottom: 0.25rem; }
+.article-body a  { color: #2563eb; text-decoration: underline; }
+.article-body a:hover { color: #1d4ed8; }
+.article-body strong { font-weight: 700; }
+.article-body em { font-style: italic; }
+.article-body code { font-family: monospace; background: #f1f5f9; padding: 0.1em 0.3em; border-radius: 3px; font-size: 0.9em; }
+.article-body pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 4px; overflow-x: auto; margin-bottom: 1rem; }
+.article-body pre code { background: none; padding: 0; }
+.article-body blockquote { border-left: 3px solid #e2e8f0; padding-left: 1rem; color: #64748b; margin-bottom: 1rem; }
+.article-body hr { border: none; border-top: 1px solid #e2e8f0; margin: 1.5rem 0; }
