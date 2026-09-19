@@ -81,7 +81,7 @@ export default async function GirlsSchoolsPage({
         <PageHeader title="Girls School Directory" />
         <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
           <span>{all.length} schools · NJSIAA</span>
-          <InlineSeasonPicker activeSeason={season} />
+          <InlineSeasonPicker gender="F" activeSeason={season} />
           <span>girls postseason</span>
         </div>
       </div>

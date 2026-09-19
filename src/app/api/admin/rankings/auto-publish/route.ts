@@ -1,12 +1,11 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
+import { getWorkingSeason, lockedError, parseGender } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
 
 export const dynamic    = 'force-dynamic'
 export const maxDuration = 300
 
-const CURRENT_SEASON_ID  = 2
-const CURRENT_SEASON_STR = '2025-26'
 const BATCH              = 50   // rows per Supabase insert call
 
 async function requireAdmin() {
@@ -37,11 +36,18 @@ type Group    = { key: GroupKey; scores: { wrestler_id: string; hammer_score: nu
 // Reads current wrestler_hammer_scores and auto-publishes rankings for every
 // distinct (conference|district|region) × weight_class combination.
 // Intended to be called immediately after each hammer-score recalculation run.
-export async function POST() {
+export async function POST(req: NextRequest) {
   const { user, email } = await requireAdmin()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const supabase = db()
+  const body = await req.json().catch(() => ({}))
+  const seasonGender = parseGender(body.gender)
+  const season = await getWorkingSeason(seasonGender)
+  const CURRENT_SEASON_ID = season.id
+  const CURRENT_SEASON_STR = season.label
+  const locked = lockedError(season, seasonGender)
+  if (locked) return NextResponse.json({ error: locked }, { status: 423 })
 
   // 1. Load all hammer scores
   const allScores: ScoreRow[] = []

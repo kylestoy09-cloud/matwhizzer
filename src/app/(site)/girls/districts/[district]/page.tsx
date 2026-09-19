@@ -240,7 +240,7 @@ export default async function GirlsDistrictSummaryPage({
               <h1 className="text-lg font-bold text-slate-900 truncate">District {d}</h1>
               <div className="flex items-center gap-1 text-xs text-slate-500 truncate">
                 <span>NJSIAA</span>
-                <InlineSeasonPicker activeSeason={season} seasons={[2]} />
+                <InlineSeasonPicker gender="F" activeSeason={season} seasons={[2]} />
                 <span>· Girls Postseason</span>
               </div>
             </div>
@@ -262,7 +262,7 @@ export default async function GirlsDistrictSummaryPage({
             <h1 className="text-2xl font-bold text-slate-900 truncate">District {d}</h1>
             <p className="text-sm text-slate-500 mt-0.5">NJSIAA · Girls Postseason</p>
             <div className="flex items-center text-xs text-slate-400 mt-1">
-              <InlineSeasonPicker activeSeason={season} seasons={[2]} />
+              <InlineSeasonPicker gender="F" activeSeason={season} seasons={[2]} />
             </div>
           </div>
         </div>

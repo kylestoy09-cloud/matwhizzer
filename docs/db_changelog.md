@@ -2,6 +2,23 @@
 
 ---
 
+## 2026-09-19 — Season columns on roster_grade_import and microcheck_tasks
+
+**Migration file:** `docs/migrations/20260919_season_columns_roster_import_microcheck.sql`
+
+**Purpose:** Tools stop assuming a global season.
+- `roster_grade_import.season_id` (NOT NULL, FK seasons) — each roster batch belongs to a season. Existing 12,225 rows backfilled to season 2 (2025-26). The review tool works on the newest season that has roster rows.
+- `microcheck_tasks.season_id` (nullable, FK seasons) — each task carries the season it's about. Existing tie tasks backfilled from `metadata.season_id`.
+
+**Tables affected:** `roster_grade_import`, `microcheck_tasks`
+
+**APPLIED** — 2026-09-19 via Supabase SQL editor
+
+**Reversible?** Yes — `ALTER TABLE roster_grade_import DROP COLUMN season_id; ALTER TABLE microcheck_tasks DROP COLUMN season_id;`
+**Verified?** Yes — 12,225 roster rows → season 2; 91 tie tasks → season 2
+
+---
+
 ## 2026-09-19 — Resolve boys dual ties from bout data + microcheck_tasks grants
 
 **Migration file:** `docs/migrations/20260919_resolve_boys_dual_ties.sql`

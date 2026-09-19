@@ -36,7 +36,7 @@ export default async function GirlsDistrictsPage() {
         <PageHeader title="Girls District Brackets" />
         <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
           <span>NJSIAA</span>
-          <InlineSeasonPicker activeSeason={season} seasons={[2]} />
+          <InlineSeasonPicker gender="F" activeSeason={season} seasons={[2]} />
           <span>· Select a district</span>
         </div>
       </div>

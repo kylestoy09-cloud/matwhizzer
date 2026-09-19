@@ -251,7 +251,7 @@ export default async function GirlsRegionSummaryPage({
       <div className="mb-8 text-center">
         <PageHeader title={`Girls ${displayName}`} />
         <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
-          <InlineSeasonPicker activeSeason={season} />
+          <InlineSeasonPicker gender="F" activeSeason={season} />
           <span>· Girls Postseason — Top 4 Advance</span>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getRosterImportSeason } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 import { matchSchoolNames } from '@/lib/matchSchools'
@@ -22,13 +23,14 @@ export async function GET(req: NextRequest) {
 
   if (req.nextUrl.searchParams.get('list') === 'true') {
     const db = createSupabaseAdmin()
-    // Union all sources: program enrollment tables + schools with boys dual meets in season 2
+    const season = await getRosterImportSeason(db)
+    // Union all sources: program enrollment tables + schools with boys dual meets in the roster's season
     const [distData, regData, confData, meetsTeam1, meetsTeam2] = await Promise.all([
-      db.from('boys_school_districts').select('school_id').eq('season_id', 2),
-      db.from('boys_school_regions').select('school_id').eq('season_id', 2),
-      db.from('boys_school_conferences').select('school_id').eq('season_id', 2),
-      db.from('dual_meets').select('team1_school_id').eq('gender', 'M').eq('season_id', 2),
-      db.from('dual_meets').select('team2_school_id').eq('gender', 'M').eq('season_id', 2),
+      db.from('boys_school_districts').select('school_id').eq('season_id', season.id),
+      db.from('boys_school_regions').select('school_id').eq('season_id', season.id),
+      db.from('boys_school_conferences').select('school_id').eq('season_id', season.id),
+      db.from('dual_meets').select('team1_school_id').eq('gender', 'M').eq('season_id', season.id),
+      db.from('dual_meets').select('team2_school_id').eq('gender', 'M').eq('season_id', season.id),
     ])
     const ids = new Set<number>([
       ...(distData.data   ?? []).map(r => r.school_id),
@@ -51,6 +53,7 @@ export async function GET(req: NextRequest) {
   }
 
   const db = createSupabaseAdmin()
+  const season = await getRosterImportSeason(db)
 
   // Paginate through all rows (Supabase default cap is 1,000)
   const PAGE = 1000
@@ -60,6 +63,7 @@ export async function GET(req: NextRequest) {
     const { data, error } = await db
       .from('roster_grade_import')
       .select('school_name_raw, school_id, status')
+      .eq('season_id', season.id)
       .order('school_name_raw')
       .range(from, from + PAGE - 1)
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
@@ -106,7 +110,7 @@ export async function GET(req: NextRequest) {
 
   const matchResults = await Promise.all(
     unmatched.map(async s => {
-      const match = await matchSchoolNames(s.school_name_raw, { gender: 'M', seasonId: 2 })
+      const match = await matchSchoolNames(s.school_name_raw, { gender: 'M', seasonId: season.id })
       return { school_name_raw: s.school_name_raw, match }
     })
   )
@@ -133,6 +137,7 @@ export async function PATCH(req: NextRequest) {
   }
 
   const db = createSupabaseAdmin()
+  const season = await getRosterImportSeason(db)
   const errors: string[] = []
 
   for (const { school_name_raw, school_id, action } of body) {
@@ -140,6 +145,7 @@ export async function PATCH(req: NextRequest) {
       const { error } = await db
         .from('roster_grade_import')
         .update({ status: 'skipped' })
+        .eq('season_id', season.id)
         .eq('school_name_raw', school_name_raw)
         .eq('status', 'pending')
       if (error) errors.push(`${school_name_raw}: ${error.message}`)
@@ -154,6 +160,7 @@ export async function PATCH(req: NextRequest) {
     const { error } = await db
       .from('roster_grade_import')
       .update({ school_id, status: 'school_matched' })
+      .eq('season_id', season.id)
       .eq('school_name_raw', school_name_raw)
       .in('status', ['pending'])
 

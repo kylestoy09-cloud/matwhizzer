@@ -176,7 +176,7 @@ export function SchoolHeader({
         )}
 
         <div className="text-xs" style={{ color: `${textColor}99` }}>
-          <InlineSeasonPicker activeSeason={activeSeason} />
+          <InlineSeasonPicker gender={gender === 'girls' ? 'F' : 'M'} activeSeason={activeSeason} />
         </div>
 
         {tags.map(tag => (

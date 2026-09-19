@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getWorkingSeason, lockedError, parseGender } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
 
@@ -25,6 +26,10 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json().catch(() => ({}))
   const { editorial_id } = body
+  const seasonGender = parseGender(body.gender)
+  const season = await getWorkingSeason(seasonGender)
+  const locked = lockedError(season, seasonGender)
+  if (locked) return NextResponse.json({ error: locked }, { status: 423 })
   if (!editorial_id) return NextResponse.json({ error: 'editorial_id required' }, { status: 400 })
 
   const supabase = db()

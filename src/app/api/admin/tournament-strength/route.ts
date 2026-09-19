@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getWorkingSeason, getPreviousSeason } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 
@@ -21,10 +22,12 @@ export async function GET(req: NextRequest) {
   const rawG = req.nextUrl.searchParams.get('gender')
   const gender: 'M' | 'F' = rawG === 'F' ? 'F' : 'M'
 
+  const season = await getWorkingSeason(gender)
+  const prior = await getPreviousSeason(season)
   const db = createSupabaseAdmin()
   const { data, error } = await db.rpc('tournament_strength_report', {
-    p_season: '2025-26',
-    p_postseason_season_id: 1,
+    p_season: season.label,
+    p_postseason_season_id: prior.id,
     p_gender: gender,
   })
 

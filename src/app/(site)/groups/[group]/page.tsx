@@ -99,7 +99,7 @@ export default async function GroupPage({
             <Link href={`/groups/${slug}?gender=boys`} className={`px-3 py-1.5 font-medium transition-colors ${gender === 'boys' ? 'bg-slate-900 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}>Boys</Link>
             <Link href={`/groups/${slug}?gender=girls`} className={`px-3 py-1.5 font-medium transition-colors ${gender === 'girls' ? 'bg-rose-700 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}>Girls</Link>
           </div>
-          <div className="text-xs text-slate-400"><InlineSeasonPicker activeSeason={season} /></div>
+          <div className="text-xs text-slate-400"><InlineSeasonPicker gender={gender === 'girls' ? 'F' : 'M'} activeSeason={season} /></div>
         </div>
       </div>
 

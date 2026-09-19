@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getRosterImportSeason } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 
@@ -57,11 +58,13 @@ export async function GET(req: NextRequest) {
   if (!schoolId) return NextResponse.json({ error: 'school_id required' }, { status: 400 })
 
   const db = createSupabaseAdmin()
+  const season = await getRosterImportSeason(db)
 
   // wrestlers has no school_id column — look up via wrestler_name_aliases
   const [trackRes, aliasRes] = await Promise.all([
     db.from('roster_grade_import')
       .select('id, first_name_raw, last_name_raw, weight_class, grade, status, wrestler_id')
+      .eq('season_id', season.id)
       .eq('school_id', schoolId)
       .in('status', ['school_matched', 'wrestler_matched', 'no_match'])
       .order('last_name_raw'),

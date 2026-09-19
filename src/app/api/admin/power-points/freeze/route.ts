@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getWorkingSeason, lockedError, parseGender } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
 
 export const dynamic = 'force-dynamic'
 
-const CURRENT_SEASON_ID = 2
 
 async function requireAdmin() {
   const userSupabase = await createSupabaseServer()
@@ -24,7 +24,8 @@ export async function GET(req: NextRequest) {
   const { user } = await requireAdmin()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const gender = req.nextUrl.searchParams.get('gender') ?? 'M'
+  const gender = parseGender(req.nextUrl.searchParams.get('gender'))
+  const CURRENT_SEASON_ID = (await getWorkingSeason(gender)).id
   const supabase = db()
 
   const { data, error } = await supabase
@@ -53,6 +54,11 @@ export async function POST(req: NextRequest) {
   if (gender !== 'M' && gender !== 'F') {
     return NextResponse.json({ error: 'gender must be M or F' }, { status: 400 })
   }
+
+  const season = await getWorkingSeason(gender)
+  const CURRENT_SEASON_ID = season.id
+  const locked = lockedError(season, gender)
+  if (locked) return NextResponse.json({ error: locked }, { status: 423 })
 
   const supabase = db()
 
@@ -133,7 +139,11 @@ export async function DELETE(req: NextRequest) {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body   = await req.json().catch(() => ({}))
-  const gender = (body.gender ?? 'M') as 'M' | 'F'
+  const gender = parseGender(body.gender)
+  const season = await getWorkingSeason(gender)
+  const CURRENT_SEASON_ID = season.id
+  const locked = lockedError(season, gender)
+  if (locked) return NextResponse.json({ error: locked }, { status: 423 })
   const supabase = db()
 
   await supabase

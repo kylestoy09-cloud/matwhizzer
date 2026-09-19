@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getNewestSeason } from '@/lib/season-context'
 import { createSupabaseServer }  from '@/lib/supabase/server'
 import { createSupabaseAdmin }   from '@/lib/supabase/service'
 import { findNextTask }          from '../_engine'
@@ -76,7 +77,7 @@ export async function POST(req: NextRequest) {
       .sort((a, b) => a.display_name.localeCompare(b.display_name))
     let nextCoachRows: { school_id: number; email: string | null }[] = []
     const nextCoachTable = gender === 'M' ? 'boys_coaches' : 'girls_coaches'
-    const nextCoachRes = await db.from(nextCoachTable).select('school_id, email').eq('season_id', 3).eq('is_active', true).in('school_id', [...gSchoolIds])
+    const nextCoachRes = await db.from(nextCoachTable).select('school_id, email').eq('season_id', (await getNewestSeason()).id).eq('is_active', true).in('school_id', [...gSchoolIds])
     if (!nextCoachRes.error) nextCoachRows = nextCoachRes.data ?? []
     const nextLogged  = new Set((logNext.data ?? []).map(r => `${r.school_id}_${r.field}`))
     const nextCoachMap = new Map(nextCoachRows.map(c => [c.school_id, { email: c.email }]))
@@ -142,21 +143,21 @@ export async function POST(req: NextRequest) {
       if (updateErr) return NextResponse.json({ error: updateErr.message }, { status: 500 })
 
     } else if (field === 'coach_name') {
-      // Insert new coach row for season 3
+      // Insert new coach row for the newest season
       const { error: coachErr } = await db.from('coaches').insert({
         name:      value.trim(),
         school_id,
-        season_id: 3,
+        season_id: (await getNewestSeason()).id,
         is_active: true,
       })
       if (coachErr) return NextResponse.json({ error: coachErr.message }, { status: 500 })
 
     } else if (field === 'coach_email') {
-      // Update the active season-3 coach row
+      // Update the active coach row for the newest season
       const { error: coachErr } = await db.from('coaches')
         .update({ email: value.trim() })
         .eq('school_id', school_id)
-        .eq('season_id', 3)
+        .eq('season_id', (await getNewestSeason()).id)
         .eq('is_active', true)
       if (coachErr) return NextResponse.json({ error: coachErr.message }, { status: 500 })
     }
@@ -188,7 +189,7 @@ export async function POST(req: NextRequest) {
   let coachRows: { school_id: number; email: string | null }[] = []
   const coachTable = gender === 'M' ? 'boys_coaches' : 'girls_coaches'
   const coachRes = await db.from(coachTable)
-    .select('school_id, email').eq('season_id', 3).eq('is_active', true)
+    .select('school_id, email').eq('season_id', (await getNewestSeason()).id).eq('is_active', true)
     .in('school_id', [...schoolIds])
   if (!coachRes.error) coachRows = coachRes.data ?? []
 

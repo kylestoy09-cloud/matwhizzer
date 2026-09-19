@@ -113,7 +113,7 @@ export function TeamRankingsClient({ gender }: { gender: 'M' | 'F' }) {
       const res = await fetch('/api/admin/rankings/editorial', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ variant_id: variantId, scope, scope_id: scopeId || null }),
+        body:    JSON.stringify({ variant_id: variantId, scope, scope_id: scopeId || null, gender }),
       })
       const d = await res.json()
       if (d.error) { setFlash({ kind: 'err', msg: d.error }); return }
@@ -141,7 +141,7 @@ export function TeamRankingsClient({ gender }: { gender: 'M' | 'F' }) {
       const res = await fetch('/api/admin/rankings/editorial', {
         method:  'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ id: editorial.id, results: editedRows }),
+        body:    JSON.stringify({ id: editorial.id, results: editedRows, gender }),
       })
       const d = await res.json()
       if (d.error) { setFlash({ kind: 'err', msg: d.error }); return }
@@ -162,12 +162,12 @@ export function TeamRankingsClient({ gender }: { gender: 'M' | 'F' }) {
       await fetch('/api/admin/rankings/editorial', {
         method:  'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ id: editorial.id, results: editedRows }),
+        body:    JSON.stringify({ id: editorial.id, results: editedRows, gender }),
       })
       const res = await fetch('/api/admin/rankings/publish', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ editorial_id: editorial.id }),
+        body:    JSON.stringify({ editorial_id: editorial.id, gender }),
       })
       const d = await res.json()
       if (d.error) { setFlash({ kind: 'err', msg: d.error }); return }

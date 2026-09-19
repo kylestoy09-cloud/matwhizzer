@@ -1,20 +1,22 @@
 /**
  * POST /api/admin/recalculate-hammer-scores
  *
- * Full-season replay of the Hammer Score calculation for all 2025-26 NJ
+ * Full-season replay of the Hammer Score calculation for the season in progress
+ * (newest season for the gender) for all NJ
  * wrestlers. Processes matches in strict chronological order so that the
  * score going INTO each match is accurate.
  *
  * Order of processing:
- *   1. 2024-25 postseason facts (establishes PS base scores)
- *   2. 2024-25 postseason match bouts (districts → regions → state, seeds rolling 20)
- *   3. 2025-26 in-season tournament bouts (by tournament start_date)
- *   4. 2025-26 dual meet matches (by meet_date)
+ *   1. Prior season postseason facts (establishes PS base scores)
+ *   2. Prior season postseason match bouts (districts → regions → state, seeds rolling 20)
+ *   3. Current season in-season tournament bouts (by tournament start_date)
+ *   4. Current season dual meet matches (by meet_date)
  *
  * Protected by admin session OR Vercel cron secret header.
  */
 
 import { NextRequest, NextResponse } from 'next/server'
+import { getWorkingSeason, getPreviousSeason, parseGender } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 import {
@@ -32,9 +34,6 @@ import {
 export const dynamic = 'force-dynamic'
 export const maxDuration = 300
 
-const POSTSEASON_SEASON_ID = 1
-const CURRENT_SEASON_ID    = 2
-const CURRENT_SEASON_STR   = '2025-26'
 const BOOTSTRAP_SLOTS      = 20
 
 // ─── Auth ─────────────────────────────────────────────────────────────────────
@@ -158,6 +157,8 @@ function addMatchScore(s: WrestlerState, score: number, date: string): void {
 async function buildMainWeightMap(
   db: ReturnType<typeof createSupabaseAdmin>,
   gender: string,
+  CURRENT_SEASON_ID: number,
+  CURRENT_SEASON_STR: string,
 ): Promise<Map<string, string>> {
   const mainWeight = new Map<string, string>()
 
@@ -250,13 +251,18 @@ export async function POST(req: NextRequest) {
   const regionsType = gender === 'F' ? 'girls_regions' : 'regions'
   const psTypes    = ['districts', regionsType, stateType]
 
+  const season = await getWorkingSeason(parseGender(gender))
+  const CURRENT_SEASON_ID    = season.id
+  const CURRENT_SEASON_STR   = season.label
+  const POSTSEASON_SEASON_ID = (await getPreviousSeason(season)).id
+
   const db = createSupabaseAdmin()
   const startedAt = Date.now()
   const weightByWrestler = new Map<string, string>()
 
   // Pre-compute main weights before any scoring so adjustments are available
   // from the very first match of the season.
-  const mainWeightByWrestler = await buildMainWeightMap(db, gender)
+  const mainWeightByWrestler = await buildMainWeightMap(db, gender, CURRENT_SEASON_ID, CURRENT_SEASON_STR)
 
   // ── 1. Compute postseason base scores (both seasons, take best per wrestler) ───
 
@@ -364,8 +370,8 @@ export async function POST(req: NextRequest) {
   const psFactMap24 = await computePostseasonFacts(POSTSEASON_SEASON_ID)
   const psFactMap25 = await computePostseasonFacts(CURRENT_SEASON_ID)
 
-  // Initialize wrestler states from 2024-25 results only — that is what was known
-  // entering the 2025-26 season. 2025-26 postseason results are applied as the final
+  // Initialize wrestler states from prior-season results only — that is what was known
+  // entering the current season. Current-season postseason results are applied as the final
   // postseasonAdjusted after all in-season matches have been processed (see step 7).
   const psFactMap = psFactMap24
 
@@ -578,7 +584,7 @@ export async function POST(req: NextRequest) {
     districts: '2025-02-28', [regionsType]: '2025-03-07', [stateType]: '2025-03-14'
   })
 
-  // ── 4. Process 2025-26 in-season tournaments + dual meets (chronological) ──────
+  // ── 4. Process current-season in-season tournaments + dual meets (chronological) ──────
   // All events are interleaved by date so a December dual meet is never scored
   // using a January tournament's match results as prior context.
   const schoolByWrestler = new Map<string, number>() // wrestler_id → school_id
@@ -726,16 +732,16 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // ── 6. Process 2025-26 postseason matches (after all in-season activity) ──────
-  // Runs last so pre-match hammers for in-season matches reflect only 2024-25 base.
+  // ── 6. Process current-season postseason matches (after all in-season activity) ──────
+  // Runs last so pre-match hammers for in-season matches reflect only prior-season base.
   await processPostseasonMatches(CURRENT_SEASON_ID, {
     districts: '2026-02-27', [regionsType]: '2026-03-06', [stateType]: '2026-03-13'
   })
 
-  // ── 7. Apply 2025-26 postseason result as final postseasonAdjusted ────────────
+  // ── 7. Apply current-season postseason result as final postseasonAdjusted ────────────
   // Now that all matches are scored, overwrite postseasonAdjusted with the
-  // wrestler's actual 2025-26 postseason finish so the published hammer score
-  // reflects their true current-season standing, not their 2024-25 base.
+  // wrestler's actual current-season postseason finish so the published hammer score
+  // reflects their true current-season standing, not their prior-season base.
   for (const [wId, fact25] of psFactMap25) {
     if (!njWrestlerIds.has(wId)) continue
     const s = states.get(wId)

@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getWorkingSeason } from '@/lib/season-context'
+import { type SeasonInfo } from '@/lib/seasons'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
 
 export const dynamic = 'force-dynamic'
 
-const CURRENT_SEASON_ID   = 2
-const CURRENT_SEASON_TEXT = '2025-26'
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -144,7 +144,9 @@ function matchSchool(
 
 // ── Stage ─────────────────────────────────────────────────────────────────────
 
-async function handleStage(rows: CsvRow[], supabase: ReturnType<typeof db>) {
+type SeasonsByGender = Record<'M' | 'F', SeasonInfo>
+
+async function handleStage(rows: CsvRow[], supabase: ReturnType<typeof db>, seasons: SeasonsByGender) {
   // Load reference data
   const { data: schoolData } = await supabase
     .from('schools')
@@ -161,8 +163,8 @@ async function handleStage(rows: CsvRow[], supabase: ReturnType<typeof db>) {
   }
 
   const [{ data: boysTournamentData }, { data: girlsTournamentData }] = await Promise.all([
-    supabase.from('in_season_tournaments').select('id, name').eq('season', CURRENT_SEASON_TEXT),
-    (supabase as any).from('in_season_tournaments_girls').select('id, name').eq('season', CURRENT_SEASON_TEXT),
+    supabase.from('in_season_tournaments').select('id, name').eq('season', seasons.M.label),
+    (supabase as any).from('in_season_tournaments_girls').select('id, name').eq('season', seasons.F.label),
   ])
 
   const tournaments: { id: string; name: string; gender: string }[] = [
@@ -172,8 +174,8 @@ async function handleStage(rows: CsvRow[], supabase: ReturnType<typeof db>) {
 
   // Load existing dual meets for current season (boys from dual_meets, girls from dual_meets_girls)
   const [{ data: existingBoysData }, { data: existingGirlsData }] = await Promise.all([
-    supabase.from('dual_meets').select('team1_school_id, team2_school_id, meet_date').eq('season_id', CURRENT_SEASON_ID),
-    supabase.from('dual_meets_girls').select('team1_school_id, team2_school_id, meet_date').eq('season_id', CURRENT_SEASON_ID),
+    supabase.from('dual_meets').select('team1_school_id, team2_school_id, meet_date').eq('season_id', seasons.M.id),
+    supabase.from('dual_meets_girls').select('team1_school_id, team2_school_id, meet_date').eq('season_id', seasons.F.id),
   ])
 
   const existingMeets = new Set<string>()
@@ -338,6 +340,7 @@ async function handleCommit(
   },
   email: string,
   supabase: ReturnType<typeof db>,
+  seasons: SeasonsByGender,
 ) {
   const allMeets = [
     ...(body.crossConfirmed    ?? []).map(m => ({ ...m, confirmed_by_both: true  })),
@@ -361,7 +364,7 @@ async function handleCommit(
 
     const insertTable = meet.gender === 'F' ? 'dual_meets_girls' : 'dual_meets'
     const insertPayload: Record<string, unknown> = {
-      season_id:                  CURRENT_SEASON_ID,
+      season_id:                  seasons[meet.gender === 'F' ? 'F' : 'M'].id,
       team1_school_id:            t1,
       team2_school_id:            t2,
       team1_school_name_raw:      t1Name,
@@ -412,7 +415,7 @@ async function handleCommit(
       p_entity_type: 'dual_meets',
       p_entity_id:   null,
       p_details: {
-        season:           CURRENT_SEASON_TEXT,
+        season:           { M: seasons.M.label, F: seasons.F.label },
         meets_created:    created,
         meets_skipped:    skipped,
         tournament_links: tournamentLinked,
@@ -437,9 +440,10 @@ export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => ({}))
   const action = body.action as string
   const supabase = db()
+  const seasons: SeasonsByGender = { M: await getWorkingSeason('M'), F: await getWorkingSeason('F') }
 
-  if (action === 'stage') return handleStage(body.rows ?? [], supabase)
-  if (action === 'commit') return handleCommit(body, email, supabase)
+  if (action === 'stage') return handleStage(body.rows ?? [], supabase, seasons)
+  if (action === 'commit') return handleCommit(body, email, supabase, seasons)
 
   return NextResponse.json({ error: 'Unknown action' }, { status: 400 })
 }

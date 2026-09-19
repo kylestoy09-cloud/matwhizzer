@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getWorkingSeason, lockedError, parseGender } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
 
 export const dynamic = 'force-dynamic'
 
-const CURRENT_SEASON_ID = 2
 
 async function requireAdmin() {
   const userSupabase = await createSupabaseServer()
@@ -32,6 +32,9 @@ export async function GET(req: NextRequest) {
   const weightClass = wcParam !== null ? parseInt(wcParam, 10) : null
 
   const supabase = db()
+  const seasonGender = parseGender(req.nextUrl.searchParams.get('gender'))
+  const season = await getWorkingSeason(seasonGender)
+  const CURRENT_SEASON_ID = season.id
 
   let q = supabase
     .from('ranking_editorial')
@@ -60,6 +63,10 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json().catch(() => ({}))
   const { variant_id, scope, scope_id, weight_class, period_start, period_end } = body
+  const seasonGender = parseGender(body.gender)
+  const season = await getWorkingSeason(seasonGender)
+  const locked = lockedError(season, seasonGender)
+  if (locked) return NextResponse.json({ error: locked }, { status: 423 })
   if (!variant_id) {
     return NextResponse.json({ error: 'variant_id is required' }, { status: 400 })
   }
@@ -117,6 +124,10 @@ export async function PATCH(req: NextRequest) {
 
   const body = await req.json().catch(() => ({}))
   const { id, results } = body
+  const seasonGender = parseGender(body.gender)
+  const season = await getWorkingSeason(seasonGender)
+  const locked = lockedError(season, seasonGender)
+  if (locked) return NextResponse.json({ error: locked }, { status: 423 })
   if (!id || !Array.isArray(results)) {
     return NextResponse.json({ error: 'id and results array required' }, { status: 400 })
   }

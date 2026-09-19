@@ -44,11 +44,14 @@ BEGIN
       AND dm.team1_score = dm.team2_score
       AND r.winner_school_id IN (dm.team1_school_id, dm.team2_school_id);
 
-    IF FOUND THEN n := n + 1; END IF;
-
-    UPDATE microcheck_tasks SET status = 'completed', completed_at = now()
-    WHERE task_type = 'tie_resolution' AND gender = 'M'
-      AND entity_id = r.meet_id::text AND status = 'pending';
+    IF FOUND THEN
+      n := n + 1;
+      UPDATE microcheck_tasks SET status = 'completed', completed_at = now()
+      WHERE task_type = 'tie_resolution' AND gender = 'M'
+        AND entity_id = r.meet_id::text AND status = 'pending';
+    ELSE
+      RAISE NOTICE 'Skipped % (not tied or winner not in meet); task left pending', r.meet_id;
+    END IF;
   END LOOP;
 
   RAISE NOTICE 'Resolved % tied duals', n;

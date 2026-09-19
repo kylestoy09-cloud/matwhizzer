@@ -17,6 +17,7 @@ import { MeetCard }             from '../import/MeetCard'
 import { ReviewPanel }          from '../import/ReviewPanel'
 import { WrestlerReviewPanel }  from '../import/WrestlerReviewPanel'
 import { useSeasons } from '@/components/SeasonsProvider'
+import { liveSeasonId } from '@/lib/seasons'
 
 const GENDER = 'M' as const
 
@@ -43,14 +44,14 @@ type DraftSummary = {
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-function getSessionData(): { text: string; seasonId: number } {
-  const DEFAULT_SEASON = 2
+function getSessionData(): { text: string; seasonId: number | null } {
+  const DEFAULT_SEASON = null
   if (typeof window === 'undefined') return { text: '', seasonId: DEFAULT_SEASON }
   try {
     const raw = sessionStorage.getItem('mw_pending_import')
     if (!raw) return { text: '', seasonId: DEFAULT_SEASON }
     const parsed = JSON.parse(raw)
-    const seasonId: number = typeof parsed.seasonId === 'number' ? parsed.seasonId : DEFAULT_SEASON
+    const seasonId: number | null = typeof parsed.seasonId === 'number' ? parsed.seasonId : DEFAULT_SEASON
     if (parsed.type === 'dual' && parsed.text) {
       sessionStorage.removeItem('mw_pending_import')
       return { text: parsed.text as string, seasonId }
@@ -65,7 +66,7 @@ export function ImportClientBoys() {
   const { seasons } = useSeasons()
   const [phase,              setPhase]              = useState<Phase>('idle')
   const [sessionData]                               = useState(() => getSessionData())
-  const [seasonId,           setSeasonId]           = useState<number>(sessionData.seasonId)
+  const [seasonId,           setSeasonId]           = useState<number>(() => sessionData.seasonId ?? liveSeasonId(seasons, 'M') ?? 2)
   const [rawText,            setRawText]            = useState(sessionData.text)
   const [meets,              setMeets]              = useState<ParsedMeet[]>([])
   const [schoolResolutions,  setSchoolResolutions]  = useState<Record<string, SchoolMatch>>({})
@@ -458,6 +459,7 @@ export function ImportClientBoys() {
         body:    JSON.stringify({
           draftId: importDraftId,
           skipped: [...skipped],
+          seasonId,
         }),
       })
       if (!resp.ok) {

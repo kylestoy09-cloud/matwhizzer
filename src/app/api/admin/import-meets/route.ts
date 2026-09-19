@@ -27,8 +27,6 @@ import {
 
 export const dynamic = 'force-dynamic'
 
-const SEASON_ID = 3
-
 // ── Request shape ──────────────────────────────────────────────────────────────
 
 type SlimSchoolMatch  = { rawName: string; schoolId: number | null; confidence: string }
@@ -39,6 +37,7 @@ type SlimWrestlerMatch = { wrestlerId: string | null; isNew: boolean }
 type ImportRequest = {
   draftId: string
   skipped: number[]
+  seasonId: number
 }
 
 const GENDER = 'M' as const
@@ -127,7 +126,7 @@ export async function POST(req: NextRequest) {
   const body: ImportRequest = await req.json().catch(() => null)
   if (!body?.draftId) return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
 
-  const { draftId, skipped } = body
+  const { draftId, skipped, seasonId } = body
   const skippedSet = new Set(skipped)
 
   // Service-role client — required for INSERT and draft fetch
@@ -135,6 +134,11 @@ export async function POST(req: NextRequest) {
     process.env.NEXT_PUBLIC_SUPABASE_URL  ?? '',
     process.env.SUPABASE_SERVICE_ROLE_KEY ?? '',
   )
+
+  const { data: seasonRow } = Number.isInteger(seasonId)
+    ? await supabase.from('seasons').select('id').eq('id', seasonId).maybeSingle()
+    : { data: null }
+  if (!seasonRow) return NextResponse.json({ error: `Unknown season: ${seasonId}` }, { status: 400 })
 
   // ── Fetch draft ───────────────────────────────────────────────────────────────
   const { data: draft, error: draftErr } = await supabase
@@ -171,7 +175,7 @@ export async function POST(req: NextRequest) {
       if (m.loserSchoolRaw)  allSchoolNames.add(m.loserSchoolRaw)
     }
   }
-  const schoolMatchResults = await Promise.all([...allSchoolNames].map(n => matchSchoolNames(n, { gender: 'M', seasonId: SEASON_ID })))
+  const schoolMatchResults = await Promise.all([...allSchoolNames].map(n => matchSchoolNames(n, { gender: 'M', seasonId })))
   const schoolResolutions: Record<string, SlimSchoolMatch> = {}
   for (const r of schoolMatchResults) {
     schoolResolutions[r.rawName] = { rawName: r.rawName, schoolId: r.schoolId, confidence: r.confidence }
@@ -424,7 +428,7 @@ export async function POST(req: NextRequest) {
       const { data: existing } = await supabase
         .from('dual_meets')
         .select('id')
-        .eq('season_id', SEASON_ID)
+        .eq('season_id', seasonId)
         .eq('gender', GENDER)
         .eq('meet_date', isoDate)
         .or(
@@ -443,7 +447,7 @@ export async function POST(req: NextRequest) {
     const { data: meetRow, error: meetErr } = await supabase
       .from('dual_meets')
       .insert({
-        season_id:              SEASON_ID,
+        season_id:              seasonId,
         team1_school_id:        team1SchoolId,
         team2_school_id:        team2SchoolId,
         team1_school_name_raw:  meet.team1Name,

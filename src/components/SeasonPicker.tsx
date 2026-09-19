@@ -2,15 +2,18 @@
 
 import { useRouter } from 'next/navigation'
 import { useSeasons } from '@/components/SeasonsProvider'
+import { seasonPickCookie, type Gender } from '@/lib/seasons'
 
 // Inline variant — blends into page subtitles (dark text on light background)
 // Pass `seasons` to restrict which season IDs are shown. If only one ID is
 // provided the label is rendered as static text (no dropdown).
 export function InlineSeasonPicker({
   activeSeason,
+  gender,
   seasons,
 }: {
   activeSeason: number
+  gender: Gender
   seasons?: number[]
 }) {
   const router = useRouter()
@@ -18,11 +21,11 @@ export function InlineSeasonPicker({
 
   function pickSeason(id: number) {
     // Session cookie: returning visitors always land on the live season.
-    document.cookie = `season_pick=${id}; path=/; samesite=lax`
+    document.cookie = `${seasonPickCookie(gender)}=${id}; path=/; samesite=lax`
     router.refresh()
   }
 
-  const ids = sortIds(seasons ?? all.filter(s => s.is_public).map(s => s.id))
+  const ids = sortIds(seasons ?? all.filter(s => s.public_genders.includes(gender)).map(s => s.id))
 
   // Single season — render as non-interactive label
   if (ids.length === 1) {

@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getWorkingSeason, parseGender } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
 
 export const dynamic = 'force-dynamic'
 
-const CURRENT_SEASON_ID = 2
 
 async function requireAdmin() {
   const userSupabase = await createSupabaseServer()
@@ -28,6 +28,9 @@ export async function GET(req: NextRequest) {
   const rankingType = req.nextUrl.searchParams.get('ranking_type') ?? null
 
   const supabase = db()
+  const seasonGender = parseGender(req.nextUrl.searchParams.get('gender'))
+  const season = await getWorkingSeason(seasonGender)
+  const CURRENT_SEASON_ID = season.id
 
   let q = supabase
     .from('ranking_published')

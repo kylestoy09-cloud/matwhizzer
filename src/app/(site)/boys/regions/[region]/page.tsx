@@ -250,7 +250,7 @@ export default async function RegionSummaryPage({
             <div className="min-w-0">
               <h1 className="text-lg font-bold text-slate-900 truncate">Region {r}</h1>
               <div className="flex items-center gap-1 text-xs text-slate-500 truncate">
-                <InlineSeasonPicker activeSeason={season} />
+                <InlineSeasonPicker gender="M" activeSeason={season} />
                 <span>· Boys Postseason · Top 4 Advance</span>
               </div>
             </div>
@@ -272,7 +272,7 @@ export default async function RegionSummaryPage({
             <h1 className="text-2xl font-bold text-slate-900 truncate">Region {r}</h1>
             <p className="text-sm text-slate-500 mt-0.5">Boys Postseason · Top 4 Advance</p>
             <div className="flex items-center text-xs text-slate-400 mt-1">
-              <InlineSeasonPicker activeSeason={season} />
+              <InlineSeasonPicker gender="M" activeSeason={season} />
             </div>
           </div>
         </div>

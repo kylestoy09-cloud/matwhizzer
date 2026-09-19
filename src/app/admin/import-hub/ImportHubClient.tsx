@@ -3,6 +3,7 @@
 import { useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { useSeasons } from '@/components/SeasonsProvider'
+import { liveSeasonId } from '@/lib/seasons'
 import { useAdminGender } from '@/components/admin/AdminGenderContext'
 
 function Spinner() {
@@ -20,7 +21,7 @@ export function ImportHubClient() {
   const router = useRouter()
   const { gender } = useAdminGender()
   const { seasons, label } = useSeasons()
-  const defaultSeason = seasons.find(s => s.is_public)?.id ?? 2
+  const defaultSeason = liveSeasonId(seasons, gender) ?? 2
   const [seasonId, setSeasonId] = useState<number>(defaultSeason)
   const [text, setText] = useState('')
   const [saving, setSaving] = useState(false)

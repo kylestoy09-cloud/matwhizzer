@@ -39,6 +39,7 @@ export function RankingsClient({ gender }: { gender: 'M' | 'F' }) {
         try {
           const apRes = await fetch('/api/admin/rankings/auto-publish', {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ gender: gender }),
           })
           const apD = await apRes.json()
           if (apRes.ok && !apD.error) auto_published = apD.published

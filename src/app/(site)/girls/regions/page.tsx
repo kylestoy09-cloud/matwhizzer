@@ -26,7 +26,7 @@ export default async function GirlsRegionsPage() {
         <PageHeader title="Girls Region Brackets" />
         <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
           <span>NJSIAA</span>
-          <InlineSeasonPicker activeSeason={season} />
+          <InlineSeasonPicker gender="F" activeSeason={season} />
           <span>· Select a region</span>
         </div>
       </div>

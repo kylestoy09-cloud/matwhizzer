@@ -63,7 +63,7 @@ function RecalcButton({}: { }) {
 
       // Step 2: auto-publish conference/district/region rankings
       setPhase('publishing')
-      const pRes  = await fetch('/api/admin/rankings/auto-publish', { method: 'POST' })
+      const pRes  = await fetch('/api/admin/rankings/auto-publish', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ gender: GENDER }) })
       const pJson = await pRes.json()
       if (!pRes.ok) throw new Error(pJson.error ?? 'Auto-publish failed')
       setPublish(pJson)

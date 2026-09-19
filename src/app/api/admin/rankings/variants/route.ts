@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getWorkingSeason, lockedError, parseGender } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
 import { getAllConferences, conferenceFromSlug } from '@/lib/conferences'
 
 export const dynamic = 'force-dynamic'
 
-const CURRENT_SEASON_ID  = 2
-const CURRENT_SEASON_STR = '2025-26'
 const BOYS_WEIGHTS       = [106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285]
 const NJ_SECTIONS        = ['North 1', 'North 2', 'Central Jersey', 'South', 'Non-Public']
 
@@ -32,6 +31,10 @@ export async function GET(req: NextRequest) {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const supabase = db()
+  const seasonGender = parseGender(req.nextUrl.searchParams.get('gender'))
+  const season = await getWorkingSeason(seasonGender)
+  const CURRENT_SEASON_ID = season.id
+  const CURRENT_SEASON_STR = season.label
 
   if (req.nextUrl.searchParams.get('sections') === '1') {
     const gender = req.nextUrl.searchParams.get('gender') ?? 'M'
@@ -93,6 +96,12 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json().catch(() => ({}))
   const { action, scope, scope_id, weight_class, gender, period_start, period_end } = body
+  const seasonGender = parseGender(gender)
+  const season = await getWorkingSeason(seasonGender)
+  const CURRENT_SEASON_ID = season.id
+  const CURRENT_SEASON_STR = season.label
+  const locked = lockedError(season, seasonGender)
+  if (locked) return NextResponse.json({ error: locked }, { status: 423 })
 
   const supabase = db()
   const today   = new Date().toISOString().slice(0, 10)

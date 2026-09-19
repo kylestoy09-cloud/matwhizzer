@@ -37,7 +37,11 @@ export const metadata: Metadata = {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const seasons = await getSeasons()
+  // Don't take down every page (admin included) if the seasons lookup fails.
+  const seasons = await getSeasons().catch(err => {
+    console.error(err)
+    return []
+  })
   return (
     <html lang="en" style={{ colorScheme: 'light' }}>
       <Script src="https://www.googletagmanager.com/gtag/js?id=G-XN8HTK8ZY1" strategy="afterInteractive" />

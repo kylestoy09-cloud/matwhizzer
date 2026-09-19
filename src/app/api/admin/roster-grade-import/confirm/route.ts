@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getRosterImportSeason } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 
@@ -20,9 +21,11 @@ export async function GET() {
 
   const db = createSupabaseAdmin()
 
+  const season = await getRosterImportSeason(db)
   const { data, error } = await db
     .from('roster_grade_import')
     .select('status, grade')
+    .eq('season_id', season.id)
     .eq('status', 'wrestler_matched')
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
@@ -44,9 +47,11 @@ export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => ({})) as { school_id?: number }
   const db = createSupabaseAdmin()
 
+  const season = await getRosterImportSeason(db)
   let query = db
     .from('roster_grade_import')
     .select('id, wrestler_id, grade')
+    .eq('season_id', season.id)
     .eq('status', 'wrestler_matched')
 
   if (body.school_id) query = query.eq('school_id', body.school_id)

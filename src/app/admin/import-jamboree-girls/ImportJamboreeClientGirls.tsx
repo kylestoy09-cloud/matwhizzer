@@ -17,6 +17,7 @@ import { MeetCard }             from '../import/MeetCard'
 import { ReviewPanel }          from '../import/ReviewPanel'
 import { WrestlerReviewPanel }  from '../import/WrestlerReviewPanel'
 import { useSeasons } from '@/components/SeasonsProvider'
+import { liveSeasonId } from '@/lib/seasons'
 
 const GENDER = 'F' as const
 
@@ -44,7 +45,7 @@ type DraftSummary = {
 export function ImportJamboreeClientGirls() {
   const { seasons } = useSeasons()
   const [phase,              setPhase]              = useState<Phase>('idle')
-  const [seasonId,           setSeasonId]           = useState<number>(2)
+  const [seasonId,           setSeasonId]           = useState<number>(() => liveSeasonId(seasons, 'F') ?? 2)
   const [rawText,            setRawText]            = useState('')
   const [jamboreeDate,       setJamboreeDate]       = useState('')  // MM/DD/YYYY
   const [meets,              setMeets]              = useState<ParsedMeet[]>([])
@@ -405,7 +406,7 @@ export function ImportJamboreeClientGirls() {
       const resp = await fetch('/api/admin/import-meets-girls', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ draftId: importDraftId, skipped: [...skipped] }),
+        body:    JSON.stringify({ draftId: importDraftId, skipped: [...skipped], seasonId }),
       })
       if (!resp.ok) {
         const j = await resp.json().catch(() => ({}))

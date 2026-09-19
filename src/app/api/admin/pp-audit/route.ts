@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getWorkingSeason } from '@/lib/season-context'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import ppTotals from '@/data/pp_totals.json'
@@ -32,11 +33,12 @@ export async function GET(req: NextRequest) {
   const rawG = req.nextUrl.searchParams.get('gender')
   const gender: 'M' | 'F' = rawG === 'F' ? 'F' : 'M'
 
+  const season = await getWorkingSeason(gender)
   const supabase = createSupabaseAdmin()
 
   const [schoolsRes, countsRes] = await Promise.all([
     supabase.from('schools').select('id, display_name').limit(2000),
-    supabase.rpc('get_school_meet_counts', { p_season_id: 2, p_gender: gender }),
+    supabase.rpc('get_school_meet_counts', { p_season_id: season.id, p_gender: gender }),
   ])
 
   const countMap = new Map<number, number>()

@@ -28,7 +28,6 @@ import {
 
 export const dynamic = 'force-dynamic'
 
-const SEASON_ID = 3
 const GENDER = 'F' as const
 
 // ── Request shape ──────────────────────────────────────────────────────────────
@@ -39,6 +38,7 @@ type SlimWrestlerMatch = { wrestlerId: string | null; isNew: boolean }
 type ImportRequest = {
   draftId: string
   skipped: number[]
+  seasonId: number
 }
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
@@ -115,13 +115,18 @@ export async function POST(req: NextRequest) {
   const body: ImportRequest = await req.json().catch(() => null)
   if (!body?.draftId) return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
 
-  const { draftId, skipped } = body
+  const { draftId, skipped, seasonId } = body
   const skippedSet = new Set(skipped)
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL  ?? '',
     process.env.SUPABASE_SERVICE_ROLE_KEY ?? '',
   )
+
+  const { data: seasonRow } = Number.isInteger(seasonId)
+    ? await supabase.from('seasons').select('id').eq('id', seasonId).maybeSingle()
+    : { data: null }
+  if (!seasonRow) return NextResponse.json({ error: `Unknown season: ${seasonId}` }, { status: 400 })
 
   // ── Fetch draft ───────────────────────────────────────────────────────────────
   const { data: draft, error: draftErr } = await supabase
@@ -394,7 +399,7 @@ export async function POST(req: NextRequest) {
       const { data: existing } = await supabase
         .from('dual_meets_girls')
         .select('id')
-        .eq('season_id', SEASON_ID)
+        .eq('season_id', seasonId)
         .eq('gender', GENDER)
         .eq('meet_date', isoDate)
         .or(
@@ -412,7 +417,7 @@ export async function POST(req: NextRequest) {
     const { data: meetRow, error: meetErr } = await supabase
       .from('dual_meets_girls')
       .insert({
-        season_id:              SEASON_ID,
+        season_id:              seasonId,
         team1_school_id:        team1SchoolId,
         team2_school_id:        team2SchoolId,
         team1_school_name_raw:  meet.team1Name,

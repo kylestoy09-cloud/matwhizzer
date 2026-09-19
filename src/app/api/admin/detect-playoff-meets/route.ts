@@ -1,20 +1,23 @@
 import { NextResponse } from 'next/server'
+import { getWorkingSeason } from '@/lib/season-context'
 import { createClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
 
 export const dynamic = 'force-dynamic'
 
-const SEASON_ID = 3
 const GENDER    = 'M'
 
-const PLAYOFF_DATES = [
-  '2027-02-01',  // public R1 + R2
-  '2027-02-02',  // NP R1 + QF (incl. NP-B prelim)
-  '2027-02-03',  // public sectional finals
-  '2027-02-04',  // NP state semis
-  '2027-02-05',  // public state semis
-  '2027-02-07',  // all state finals
-]
+// Add each season's playoff dates here before running detection for it.
+const PLAYOFF_DATES_BY_SEASON: Record<string, string[]> = {
+  '2026-27': [
+    '2027-02-01',  // public R1 + R2
+    '2027-02-02',  // NP R1 + QF (incl. NP-B prelim)
+    '2027-02-03',  // public sectional finals
+    '2027-02-04',  // NP state semis
+    '2027-02-05',  // public state semis
+    '2027-02-07',  // all state finals
+  ],
+}
 
 // ── Route ─────────────────────────────────────────────────────────────────────
 
@@ -24,6 +27,11 @@ export async function POST() {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   const { data: appUser } = await userSupabase.from('app_users').select('role').eq('id', user.id).single()
   if (!appUser || appUser.role !== 'admin') return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+
+  const season = await getWorkingSeason(GENDER)
+  const SEASON_ID = season.id
+  const PLAYOFF_DATES = PLAYOFF_DATES_BY_SEASON[season.label]
+  if (!PLAYOFF_DATES) return NextResponse.json({ error: `No playoff dates configured for ${season.label}` }, { status: 400 })
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,

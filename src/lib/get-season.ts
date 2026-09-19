@@ -1,13 +1,13 @@
 import { cookies } from 'next/headers'
-import { getLiveSeasonId } from '@/lib/seasons-server'
+import { getSeasons } from '@/lib/seasons-server'
+import { liveSeasonId, seasonPickCookie, type Gender } from '@/lib/seasons'
 
-export const SEASON_PICK_COOKIE = 'season_pick'
-
-/** Visitor's pick for this browser session, otherwise the live season for the program. */
-export async function getActiveSeason(gender: 'M' | 'F'): Promise<number> {
-  const store = await cookies()
-  const val = store.get(SEASON_PICK_COOKIE)?.value
-  const n = val ? parseInt(val) : NaN
-  if (Number.isFinite(n) && n >= 1) return n
-  return getLiveSeasonId(gender)
+/** Visitor's pick for this session if it's public for the program, otherwise the program's live season. */
+export async function getActiveSeason(gender: Gender): Promise<number> {
+  const [store, seasons] = await Promise.all([cookies(), getSeasons()])
+  const picked = parseInt(store.get(seasonPickCookie(gender))?.value ?? '')
+  if (seasons.some(s => s.id === picked && s.public_genders.includes(gender))) return picked
+  const live = liveSeasonId(seasons, gender)
+  if (live === undefined) throw new Error('No seasons found')
+  return live
 }

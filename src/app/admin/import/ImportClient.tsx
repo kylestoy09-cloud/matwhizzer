@@ -19,6 +19,7 @@ import { MeetCard }             from './MeetCard'
 import { ReviewPanel }          from './ReviewPanel'
 import { WrestlerReviewPanel }  from './WrestlerReviewPanel'
 import { useSeasons } from '@/components/SeasonsProvider'
+import { liveSeasonId } from '@/lib/seasons'
 
 // ── Phase ──────────────────────────────────────────────────────────────────────
 
@@ -43,15 +44,15 @@ type DraftSummary = {
 
 // ── ImportClient ───────────────────────────────────────────────────────────────
 
-function getSessionData(type: 'dual' | 'tournament'): { text: string; gender: 'M' | 'F'; seasonId: number } {
-  const DEFAULT_SEASON = 2
+function getSessionData(type: 'dual' | 'tournament'): { text: string; gender: 'M' | 'F'; seasonId: number | null } {
+  const DEFAULT_SEASON = null
   if (typeof window === 'undefined') return { text: '', gender: 'M', seasonId: DEFAULT_SEASON }
   try {
     const raw = sessionStorage.getItem('mw_pending_import')
     if (!raw) return { text: '', gender: 'M', seasonId: DEFAULT_SEASON }
     const parsed = JSON.parse(raw)
     const gender: 'M' | 'F' = parsed.gender === 'F' ? 'F' : 'M'
-    const seasonId: number = typeof parsed.seasonId === 'number' ? parsed.seasonId : DEFAULT_SEASON
+    const seasonId: number | null = typeof parsed.seasonId === 'number' ? parsed.seasonId : DEFAULT_SEASON
     if (parsed.type === type && parsed.text) {
       sessionStorage.removeItem('mw_pending_import')
       return { text: parsed.text as string, gender, seasonId }
@@ -65,7 +66,7 @@ export function ImportClient() {
   const { gender } = useAdminGender()
   const [phase,              setPhase]              = useState<Phase>('idle')
   const [sessionData]                               = useState(() => getSessionData('dual'))
-  const [seasonId,           setSeasonId]           = useState<number>(sessionData.seasonId)
+  const [seasonId,           setSeasonId]           = useState<number>(() => sessionData.seasonId ?? liveSeasonId(seasons, gender) ?? 2)
   const [rawText,            setRawText]            = useState(sessionData.text)
   const [meets,              setMeets]              = useState<ParsedMeet[]>([])
   const [schoolResolutions,  setSchoolResolutions]  = useState<Record<string, SchoolMatch>>({})
@@ -477,6 +478,7 @@ export function ImportClient() {
         body:    JSON.stringify({
           draftId: importDraftId,
           skipped: [...skipped],
+          seasonId,
         }),
       })
       if (!resp.ok) {

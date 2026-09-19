@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getNewestSeason } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin }  from '@/lib/supabase/service'
 import { findNextTask }         from '../_engine'
@@ -59,7 +60,7 @@ export async function GET(req: NextRequest) {
   let coachRows: { school_id: number; email: string | null }[] = []
   const coachRes = await db.from(coachTable)
     .select('school_id, email')
-    .eq('season_id', 3)
+    .eq('season_id', (await getNewestSeason()).id)
     .eq('is_active', true)
     .in('school_id', boysSchoolIds)
   if (!coachRes.error) coachRows = coachRes.data ?? []

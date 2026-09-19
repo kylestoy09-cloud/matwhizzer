@@ -329,7 +329,7 @@ export default async function BoysLeaderboardsPage({
         <PageHeader title="NJSIAA Leaderboard" />
         <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
           <span>NJSIAA</span>
-          <InlineSeasonPicker activeSeason={season} />
+          <InlineSeasonPicker gender="M" activeSeason={season} />
           <span>{subtitle}</span>
         </div>
       </div>
