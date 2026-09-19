@@ -189,7 +189,7 @@ function aliasResult(
   return {
     rawName,
     schoolId:    aliasHit.school_id,
-    displayName: school?.display_name ?? null,
+    displayName: school?.display_name ?? aliasHit.alias,
     confidence:  'exact',
     alternates:  [],
   }
@@ -202,7 +202,8 @@ async function loadInactiveSchoolIds(seasonId: number, gender?: 'M' | 'F'): Prom
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let q: any = client.from('inactive_school_seasons').select('school_id').eq('season_id', seasonId)
   if (gender) q = q.eq('gender', gender)
-  const { data } = await q
+  const { data, error } = await q
+  if (error) throw new Error(`matchSchools: failed to load inactive school IDs — ${error.message}`)
   return new Set<number>((data ?? []).map((r: { school_id: number }) => r.school_id))
 }
 

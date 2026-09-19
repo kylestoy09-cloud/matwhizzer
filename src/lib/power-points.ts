@@ -138,7 +138,7 @@ export function computePowerPoints(
         } else {
           // Check if the winner's value (from the opponent's perspective) would be
           // lower — if so, cap our loss value to winner - 1
-          const winnerVal = meetPointValue(prev.get(m.opponentId) ?? initialPP, m.oppScore, m.myScore)
+          const winnerVal = meetPointValue(prev.get(schoolId) ?? initialPP, m.oppScore, m.myScore)
           // winnerVal is what the OPPONENT earns (they won); our value is the loss row
           // Clause applies in reverse: our loss value can't exceed the winner's win value
           if (myVal >= winnerVal) myVal = winnerVal - 1

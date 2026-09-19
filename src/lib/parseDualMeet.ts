@@ -64,7 +64,7 @@ function splitIntoChunks(raw: string): string[] {
 }
 
 function parseHeader(chunk: string): { team1: string; team2: string; date: string } | null {
-  const m = chunk.match(/^(.+?)\s+vs\.\s+(.+?)\s+\((\d{2}\/\d{2}\/\d{4})\)/)
+  const m = chunk.match(/^(.+?)\s+vs\.\s+(.+?)\s+\((\d{1,2}\/\d{1,2}\/\d{4})\)/)
   if (!m) return null
   return { team1: m[1].trim(), team2: m[2].trim(), date: m[3] }
 }
@@ -82,7 +82,7 @@ function parseResult(s: string): { resultType: string; resultDetail: string | nu
   if (/^fall/i.test(s))    return { resultType: 'Fall',          resultDetail: s.replace(/^fall\s*/i, '').trim() || null }
   if (/^md/i.test(s))      return { resultType: 'MD',            resultDetail: s.replace(/^md\s*/i, '').trim() || null }
   if (/^tf/i.test(s))      return { resultType: 'TF',            resultDetail: s.replace(/^tf\s*/i, '').trim() || null }
-  if (/^sv-1/i.test(s))    return { resultType: 'SV-1',          resultDetail: s.replace(/^sv-1\s*/i, '').trim() || null }
+  if (/^sv-?1/i.test(s))   return { resultType: 'SV-1',          resultDetail: s.replace(/^sv-?1\s*/i, '').trim() || null }
   if (/^utb/i.test(s))     return { resultType: 'UTB',           resultDetail: s.replace(/^utb\s*/i, '').trim() || null }
   if (/^mffl/i.test(s))    return { resultType: 'MFFL',          resultDetail: null }
   if (/^dec/i.test(s))     return { resultType: 'Dec',           resultDetail: s.replace(/^dec\s*/i, '').trim() || null }

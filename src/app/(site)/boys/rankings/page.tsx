@@ -2,7 +2,7 @@ import { createSupabaseAdmin } from '@/lib/supabase/service'
 import { PageHeader } from '@/components/PageHeader'
 import { RankingsView } from './RankingsView'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 300
 
 export default async function BoysRankingsPage() {
   const db = createSupabaseAdmin()

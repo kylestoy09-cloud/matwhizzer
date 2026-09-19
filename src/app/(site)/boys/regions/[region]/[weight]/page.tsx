@@ -2,7 +2,7 @@ import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
-import { SEASONS } from '@/lib/seasons'
+import { getSeasonLabel } from '@/lib/seasons-server'
 import { BracketPoll, type BracketEntry, type DistrictChamp } from '@/components/BracketPoll'
 import { PageHeader } from '@/components/PageHeader'
 import { orderChampMatchesBySeed } from '@/lib/bracketOrder'
@@ -552,7 +552,8 @@ export default async function RegionBracketPage({
 
   if (!region || region < 1 || region > 8 || !weight) notFound()
 
-  const season = await getActiveSeason()
+  const season = await getActiveSeason('M')
+  const seasonLbl = await getSeasonLabel(season)
 
   const [{ data: matchData }, { data: entryData }, { data: champData }, logos] = await Promise.all([
     supabase.rpc('region_bracket', {
@@ -657,7 +658,7 @@ export default async function RegionBracketPage({
 
       <div className="mb-8 text-center">
         <PageHeader title={`Region ${region} · ${weight} lb`} />
-        <p className="text-slate-500 text-sm mt-1">NJSIAA {SEASONS[season]?.label ?? season} · Boys postseason</p>
+        <p className="text-slate-500 text-sm mt-1">NJSIAA {seasonLbl ?? season} · Boys postseason</p>
       </div>
 
       <WeightNav weights={WEIGHTS} current={weight} base={`/boys/regions/${region}`} />

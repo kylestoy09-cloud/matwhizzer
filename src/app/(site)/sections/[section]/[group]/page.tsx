@@ -19,7 +19,7 @@ export default async function SectionGroupPage({
   const { section: secSlug, group: grpSlug } = await params
   const { gender: genderParam } = await searchParams
   const gender = genderParam === 'girls' ? 'girls' : 'boys'
-  const season = await getActiveSeason()
+  const season = await getActiveSeason(gender === 'girls' ? 'F' : 'M')
 
   const sectionName = sectionFromSlug(secSlug)
   const groupName = groupFromSlugRaw(grpSlug)

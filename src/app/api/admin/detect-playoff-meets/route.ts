@@ -4,16 +4,16 @@ import { createSupabaseServer } from '@/lib/supabase/server'
 
 export const dynamic = 'force-dynamic'
 
-const SEASON_ID = 2
+const SEASON_ID = 3
 const GENDER    = 'M'
 
 const PLAYOFF_DATES = [
-  '2026-02-16',  // public R1 + R2
-  '2026-02-17',  // NP R1 + QF (incl. NP-B prelim)
-  '2026-02-18',  // public sectional finals
-  '2026-02-19',  // NP state semis
-  '2026-02-20',  // public state semis
-  '2026-02-22',  // all state finals
+  '2027-02-01',  // public R1 + R2
+  '2027-02-02',  // NP R1 + QF (incl. NP-B prelim)
+  '2027-02-03',  // public sectional finals
+  '2027-02-04',  // NP state semis
+  '2027-02-05',  // public state semis
+  '2027-02-07',  // all state finals
 ]
 
 // ── Route ─────────────────────────────────────────────────────────────────────
@@ -22,6 +22,8 @@ export async function POST() {
   const userSupabase = await createSupabaseServer()
   const { data: { user } } = await userSupabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const { data: appUser } = await userSupabase.from('app_users').select('role').eq('id', user.id).single()
+  if (!appUser || appUser.role !== 'admin') return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -72,7 +74,7 @@ export async function POST() {
   const allMeets = meetRows ?? []
 
   // State SF/Final dates where cross-section public matches occur
-  const STATE_BRACKET_DATES = new Set(['2026-02-20', '2026-02-22'])
+  const STATE_BRACKET_DATES = new Set(['2027-02-05', '2027-02-07'])
 
   const toTag = new Set<string>()
 
@@ -133,13 +135,13 @@ export async function POST() {
       for (const [hi, lo] of R1_PAIRS) {
         const a = seeds.get(hi), b = seeds.get(lo)
         if (!a || !b) continue
-        if (hasMeet('2026-02-16', a, b)) { r1Found++; continue }
+        if (hasMeet('2027-02-01', a, b)) { r1Found++; continue }
         missing.push(`${label}: R1 ${hi}v${lo} not found`)
       }
 
       // R2: can't predict matchup without knowing R1 results — count Feb 16 meets in bracket
       const feb16Count = allMeets.filter(m =>
-        m.meet_date === '2026-02-16' &&
+        m.meet_date === '2027-02-01' &&
         sids.has(Number(m.team1_school_id)) &&
         sids.has(Number(m.team2_school_id))
       ).length
@@ -148,7 +150,7 @@ export async function POST() {
 
       // Sectional final (Feb 18): exactly 1 match per bracket
       const sectFinalFound = allMeets.some(m =>
-        m.meet_date === '2026-02-18' &&
+        m.meet_date === '2027-02-03' &&
         sids.has(Number(m.team1_school_id)) &&
         sids.has(Number(m.team2_school_id))
       )
@@ -163,7 +165,7 @@ export async function POST() {
       for (const [hi, lo] of NPA_R1_PAIRS) {
         const a = seeds.get(hi), b = seeds.get(lo)
         if (!a || !b) continue
-        if (!hasMeet('2026-02-17', a, b)) missing.push(`NP-A: R1 ${hi}v${lo} not found`)
+        if (!hasMeet('2027-02-02', a, b)) missing.push(`NP-A: R1 ${hi}v${lo} not found`)
       }
     }
   }
@@ -175,7 +177,7 @@ export async function POST() {
       for (const [hi, lo] of [[8, 9], [4, 5], [3, 6], [2, 7]] as [number, number][]) {
         const a = seeds.get(hi), b = seeds.get(lo)
         if (!a || !b) continue
-        if (!hasMeet('2026-02-17', a, b)) missing.push(`NP-B: ${hi}v${lo} not found`)
+        if (!hasMeet('2027-02-02', a, b)) missing.push(`NP-B: ${hi}v${lo} not found`)
       }
     }
   }
@@ -194,8 +196,8 @@ export async function POST() {
       groupSchools.get(group)!.add(sid)
     }
 
-    const meetsOnStateSF    = allMeets.filter(m => m.meet_date === '2026-02-20')
-    const meetsOnStateFinal = allMeets.filter(m => m.meet_date === '2026-02-22')
+    const meetsOnStateSF    = allMeets.filter(m => m.meet_date === '2027-02-05')
+    const meetsOnStateFinal = allMeets.filter(m => m.meet_date === '2027-02-07')
 
     const isCrossSection = (t1: number, t2: number) => {
       const b1 = schoolToBracket.get(t1), b2 = schoolToBracket.get(t2)
@@ -231,14 +233,14 @@ export async function POST() {
       if (npaSeeds && npaSeeds.size >= 2) {
         const npaSchools = new Set(npaSeeds.values())
         const sfCount = allMeets.filter(m =>
-          m.meet_date === '2026-02-19' &&
+          m.meet_date === '2027-02-04' &&
           npaSchools.has(Number(m.team1_school_id)) &&
           npaSchools.has(Number(m.team2_school_id))
         ).length
         if (sfCount < 2) missing.push(`NP-A: state SFs — found ${sfCount} of 2 (Feb 19)`)
 
         const finalCount = allMeets.filter(m =>
-          m.meet_date === '2026-02-22' &&
+          m.meet_date === '2027-02-07' &&
           npaSchools.has(Number(m.team1_school_id)) &&
           npaSchools.has(Number(m.team2_school_id))
         ).length
@@ -252,14 +254,14 @@ export async function POST() {
       if (npbSeeds && npbSeeds.size >= 2) {
         const npbSchools = new Set(npbSeeds.values())
         const sfCount = allMeets.filter(m =>
-          m.meet_date === '2026-02-19' &&
+          m.meet_date === '2027-02-04' &&
           npbSchools.has(Number(m.team1_school_id)) &&
           npbSchools.has(Number(m.team2_school_id))
         ).length
         if (sfCount < 2) missing.push(`NP-B: state SFs — found ${sfCount} of 2 (Feb 19)`)
 
         const finalCount = allMeets.filter(m =>
-          m.meet_date === '2026-02-22' &&
+          m.meet_date === '2027-02-07' &&
           npbSchools.has(Number(m.team1_school_id)) &&
           npbSchools.has(Number(m.team2_school_id))
         ).length

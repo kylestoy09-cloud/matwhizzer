@@ -75,7 +75,8 @@ export async function POST(req: NextRequest) {
       .map(s => ({ ...s, display_name: gNameMap.get(s.id) ?? s.display_name }))
       .sort((a, b) => a.display_name.localeCompare(b.display_name))
     let nextCoachRows: { school_id: number; email: string | null }[] = []
-    const nextCoachRes = await db.from('boys_coaches').select('school_id, email').eq('season_id', 3).eq('is_active', true).in('school_id', [...gSchoolIds])
+    const nextCoachTable = gender === 'M' ? 'boys_coaches' : 'girls_coaches'
+    const nextCoachRes = await db.from(nextCoachTable).select('school_id, email').eq('season_id', 3).eq('is_active', true).in('school_id', [...gSchoolIds])
     if (!nextCoachRes.error) nextCoachRows = nextCoachRes.data ?? []
     const nextLogged  = new Set((logNext.data ?? []).map(r => `${r.school_id}_${r.field}`))
     const nextCoachMap = new Map(nextCoachRows.map(c => [c.school_id, { email: c.email }]))
@@ -185,7 +186,8 @@ export async function POST(req: NextRequest) {
   // rosterSet = all boys schools; every school needs a roster/grade review
 
   let coachRows: { school_id: number; email: string | null }[] = []
-  const coachRes = await db.from('boys_coaches')
+  const coachTable = gender === 'M' ? 'boys_coaches' : 'girls_coaches'
+  const coachRes = await db.from(coachTable)
     .select('school_id, email').eq('season_id', 3).eq('is_active', true)
     .in('school_id', [...schoolIds])
   if (!coachRes.error) coachRows = coachRes.data ?? []

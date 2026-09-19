@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { StatsTable } from '@/components/StatsTable'
 import { supabase } from '@/lib/supabase'
-import { SEASONS } from '@/lib/seasons'
+import { useSeasons } from '@/components/SeasonsProvider'
 
 type WrestlerRow = {
   wrestler_id: string
@@ -209,6 +209,7 @@ export function SchoolTabs({
   activeSeason: number
   basePath?: string
 }) {
+  const { label: seasonLabelOf } = useSeasons()
   const router = useRouter()
   const resolvedBase = basePath ?? `/schools/${school}`
 
@@ -340,7 +341,7 @@ export function SchoolTabs({
           p_school_id:    schoolIdNum,
           p_season_id:    activeSeason,
           p_gender:       genderCode,
-          p_season_label: SEASONS[activeSeason]?.label ?? '2025-26',
+          p_season_label: seasonLabelOf(activeSeason) ?? '2025-26',
         }),
       ])
       if (cancelled) return
@@ -417,7 +418,7 @@ export function SchoolTabs({
         (boutsRes.data ?? []).map((b: { in_season_tournament_id: string }) => b.in_season_tournament_id),
       )
       if (tidSet.size > 0) {
-        const seasonLabel = SEASONS[activeSeason]?.label ?? ''
+        const seasonLabel = seasonLabelOf(activeSeason) ?? ''
         const { data: tours } = await supabase
           .from(istTable)
           .select('id, name, start_date, end_date')
@@ -454,7 +455,7 @@ export function SchoolTabs({
     let cancelled = false
     setRosterLoading(true)
     ;(async () => {
-      const seasonStr = SEASONS[activeSeason]?.label ?? ''
+      const seasonStr = seasonLabelOf(activeSeason) ?? ''
 
       // Dual meet IDs for this school in the selected season
       const { data: meetData } = await (supabase as any)
@@ -567,7 +568,7 @@ export function SchoolTabs({
     let cancelled = false
     setSeasonLoading(true)
     ;(async () => {
-      const seasonStr = SEASONS[activeSeason]?.label ?? ''
+      const seasonStr = seasonLabelOf(activeSeason) ?? ''
 
       const [dualMeetRes, boutTourRes, psTourRes] = await Promise.all([
         (supabase as any).from(dualTable).select('id')

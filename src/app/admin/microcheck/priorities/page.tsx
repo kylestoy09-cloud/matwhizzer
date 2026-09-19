@@ -19,7 +19,11 @@ export default function TaskPrioritiesPage() {
   useEffect(() => {
     fetch('/api/admin/microcheck/priorities')
       .then(r => r.json())
-      .then(d => { setItems(d.priorities ?? []); setLoading(false) })
+      .then(d => {
+        if (d.error) { setError(d.error); setLoading(false); return }
+        setItems(d.priorities ?? [])
+        setLoading(false)
+      })
       .catch(() => { setError('Failed to load'); setLoading(false) })
   }, [])
 

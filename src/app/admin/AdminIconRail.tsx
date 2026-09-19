@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useCallback, useEffect } from 'react'
+import { useState, useRef, useCallback, useEffect, useLayoutEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -163,12 +163,25 @@ function buildRail(onChatClick?: () => void, onMicrocheckClick?: () => void, gen
   ]}
 
 
+const FLYOUT_EDGE_GAP = 8
+
 /* ─── Rail item with fixed-position flyout ─── */
 function RailItem({ entry, isActive, chatActive, microcheckActive }: { entry: RailEntry; isActive: boolean; chatActive?: boolean; microcheckActive?: boolean }) {
   const [open, setOpen]           = useState(false)
+  const [anchorTop, setAnchorTop] = useState(0)
   const [flyoutTop, setFlyoutTop] = useState(0)
   const itemRef                   = useRef<HTMLDivElement>(null)
+  const flyoutRef                 = useRef<HTMLDivElement>(null)
   const closeTimerRef             = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // HubSpot-style: top aligns to the hovered icon, but if the menu would run
+  // past the bottom of the viewport it slides up so its bottom sits at the page bottom.
+  useLayoutEffect(() => {
+    if (!open || !flyoutRef.current) return
+    const height = flyoutRef.current.offsetHeight
+    const maxTop = window.innerHeight - height - FLYOUT_EDGE_GAP
+    setFlyoutTop(Math.max(FLYOUT_EDGE_GAP, Math.min(anchorTop, maxTop)))
+  }, [open, anchorTop])
 
   const scheduleClose = useCallback(() => {
     closeTimerRef.current = setTimeout(() => setOpen(false), 150)
@@ -184,6 +197,7 @@ function RailItem({ entry, isActive, chatActive, microcheckActive }: { entry: Ra
     cancelClose()
     if (itemRef.current) {
       const rect = itemRef.current.getBoundingClientRect()
+      setAnchorTop(rect.top)
       setFlyoutTop(rect.top)
     }
     setOpen(true)
@@ -222,19 +236,20 @@ function RailItem({ entry, isActive, chatActive, microcheckActive }: { entry: Ra
       {/* Fixed-position flyout — escapes overflow-y:auto clipping */}
       {open && !entry.future && (
         <div
-          className="fixed z-[300] w-52 bg-slate-800 border border-slate-700 rounded-r shadow-2xl overflow-hidden"
-          style={{ left: 56, top: flyoutTop }}
+          ref={flyoutRef}
+          className="fixed z-[300] w-52 bg-slate-800 border border-slate-700 rounded-r shadow-2xl overflow-hidden flex flex-col"
+          style={{ left: 56, top: flyoutTop, maxHeight: `calc(100vh - ${FLYOUT_EDGE_GAP * 2}px)` }}
           onMouseEnter={cancelClose}
           onMouseLeave={scheduleClose}
         >
           {/* Section label */}
-          <div className="px-3 py-2 border-b border-slate-700/60">
+          <div className="px-3 py-2 border-b border-slate-700/60 shrink-0">
             <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400">
               {entry.label}
             </span>
           </div>
 
-          <div className="py-1 overflow-y-auto" style={{ maxHeight: `calc(100vh - ${flyoutTop}px - 48px)` }}>
+          <div className="py-1 overflow-y-auto min-h-0">
             {entry.groups.map((group, gi) => (
               <div key={gi} className={gi > 0 ? 'mt-1 border-t border-slate-700/40 pt-1' : ''}>
                 {group.heading && (

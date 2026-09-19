@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-09-19 — Resolve boys dual ties from bout data + microcheck_tasks grants
+
+**Migration file:** `docs/migrations/20260919_resolve_boys_dual_ties.sql`
+
+**Purpose:**
+- Grants `microcheck_tasks` to `service_role`/`authenticated`. The microcheck API was getting "permission denied", so resolving a tie updated the meet but never closed the task (risk of a repeat +1).
+- Resolves 13 of 26 boys season-2 tied duals from bout data using NFHS order (bouts won > falls/forfeits/defaults/DQs > tech falls > majors). Winner +1 team point, `criteria_winner_school_id` set, `tiebreaker_pending=false`, microcheck task completed. 6 of the 13 had a wrong stored winner from the earlier fix (102ead4a, 150d3aac, e9bf93bb, 0a6edd13, 174cb660, 9920ebf9).
+- Clears the unverified `criteria_winner_school_id` on the other 13 (identical through majors; 15a03fe4 also has only 8 of 14 bouts). They stay pending for manual resolution in microcheck.
+
+**Tables affected:** `dual_meets`, `microcheck_tasks`
+
+**APPLIED** — 2026-09-19 via Supabase SQL editor
+
+**Reversible?** Partially — score +1 can be reversed by subtracting 1 from the winner side for the 13 listed meet IDs
+**Verified?** Yes — 2026-09-19: 13 pending ties / 13 pending tasks
+
+---
+
 ## 2026-09-18 — Microcheck generic task queue
 
 **Migration file:** `docs/migrations/20260918_microcheck_tasks_table.sql`
@@ -3921,6 +3939,21 @@ No real athletes affected. `matches` and `precomputed_team_scores` for these sch
 
 **Reversible?** Yes — remove `ON CONFLICT (id) DO NOTHING` from the function body
 **Verified?** Yes — deployed to production
+
+---
+
+## 2026-09-18 — Seed microcheck_task_priority
+
+**Tables affected:** `microcheck_task_priority`
+
+**What changed:**
+- Inserted the two known task types (`school_profile`, `tie_resolution`) which were missing from the table, causing the Task Order page to show nothing
+- Migration file: `docs/migrations/20260918_seed_microcheck_task_priority.sql`
+
+**PENDING** — run in Supabase SQL editor
+
+**Reversible?** Yes — `DELETE FROM microcheck_task_priority;`
+**Verified?** No — pending
 
 ---
 

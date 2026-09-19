@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import { AboutClient, type CalendarRow } from './AboutClient'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 86400
 
 const SEASON_ID = 2
 

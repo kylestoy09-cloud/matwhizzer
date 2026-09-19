@@ -7,7 +7,7 @@ import { getAllConferences } from '@/lib/conferences'
 import { getAllSections, getAllGroups } from '@/lib/sections'
 import { fmtTime, SectionHeader } from '@/components/leaderboard-ui'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
-import { SEASONS } from '@/lib/seasons'
+import { useSeasons } from '@/components/SeasonsProvider'
 
 const WEIGHTS        = [106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285]
 const N_WEIGHTS      = 14
@@ -491,6 +491,7 @@ function TeamTab({ rows, teamHammerScores }: { rows: TRow[]; teamHammerScores: M
 }
 
 export function BoysRegularSeasonLeaders({ seasonId }: { seasonId: number }) {
+  const { label: seasonLabelOf } = useSeasons()
   const supabase = useMemo(() => createSupabaseBrowser(), [])
 
   const [wrestlers,        setWrestlers]        = useState<WRow[]>([])
@@ -531,7 +532,7 @@ export function BoysRegularSeasonLeaders({ seasonId }: { seasonId: number }) {
     let cancelled = false
     async function load() {
       setLoading(true)
-      const seasonLabel = SEASONS[seasonId]?.label ?? '2025-26'
+      const seasonLabel = seasonLabelOf(seasonId) ?? '2025-26'
 
       const [leadersJson, hRes] = await Promise.all([
         fetch(`/api/rs-leaders?season_id=${seasonId}&gender=M`).then(r => r.json()),

@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import Script from 'next/script'
 import './globals.css'
+import { getSeasons } from '@/lib/seasons-server'
+import { SeasonsProvider } from '@/components/SeasonsProvider'
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
 const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] })
@@ -34,7 +36,8 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const seasons = await getSeasons()
   return (
     <html lang="en" style={{ colorScheme: 'light' }}>
       <Script src="https://www.googletagmanager.com/gtag/js?id=G-XN8HTK8ZY1" strategy="afterInteractive" />
@@ -55,7 +58,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             opacity: 0.05,
           }}
         />
-        {children}
+        <SeasonsProvider seasons={seasons}>{children}</SeasonsProvider>
       </body>
     </html>
   )

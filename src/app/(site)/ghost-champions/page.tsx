@@ -40,7 +40,7 @@ function formatTournament(name: string, type: string): string {
 }
 
 export default async function GhostChampionsPage() {
-  const season = await getActiveSeason()
+  const season = await getActiveSeason('M')
   const [{ data }, logos] = await Promise.all([
     supabase.rpc('ghost_champions', { p_season: season }),
     getSchoolLogos(),

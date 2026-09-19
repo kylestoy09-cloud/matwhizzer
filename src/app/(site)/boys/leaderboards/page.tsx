@@ -1,3 +1,5 @@
+export const revalidate = 300
+
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { getActiveSeason } from '@/lib/get-season'
@@ -308,7 +310,7 @@ export default async function BoysLeaderboardsPage({
     ? pool
     : 'district'
 
-  const season = await getActiveSeason()
+  const season = await getActiveSeason('M')
 
   const [data, logos] = await Promise.all([
     isRegularSeason ? null : (isAnalytics ? fetchAnalytics(season) : fetchPoolStats(activePool, season)),

@@ -1,7 +1,7 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 300
 
 function formatDateRange(start: string, end: string | null): string {
   const s = new Date(start + 'T12:00:00')

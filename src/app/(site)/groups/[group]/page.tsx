@@ -35,7 +35,7 @@ export default async function GroupPage({
   const { gender: genderParam } = await searchParams
   const gender = genderParam === 'girls' ? 'girls' : 'boys'
   const dbGender = gender === 'girls' ? 'F' : 'M'
-  const season = await getActiveSeason()
+  const season = await getActiveSeason(gender === 'girls' ? 'F' : 'M')
 
   const groupName = groupFromSlugRaw(slug)
   if (!groupName) notFound()

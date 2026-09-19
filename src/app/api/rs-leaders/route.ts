@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 300
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function fetchRpcAll(supabase: any, rpcName: string, params: object): Promise<any[]> {

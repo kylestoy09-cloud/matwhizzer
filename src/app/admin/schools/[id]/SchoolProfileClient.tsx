@@ -1,5 +1,7 @@
 'use client'
 
+import { useSeasons } from '@/components/SeasonsProvider'
+
 import { useState, useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import { useAdminGender } from '@/components/admin/AdminGenderContext'
@@ -41,10 +43,6 @@ type ProgramData = {
 
 type Wrestler = { id: string; name: string; weights: number[]; gender: string }
 
-const SEASONS = [
-  { id: 2, label: '2025–26' },
-  { id: 1, label: '2024–25' },
-]
 
 const COACH_TITLES = ['Head Coach', 'Assistant Coach', 'JV Coach', 'Volunteer Coach']
 
@@ -117,6 +115,7 @@ export function SchoolProfileClient({
   girls:            ProgramData
   wrestlers:        Wrestler[]
 }) {
+  const { seasons: SEASONS } = useSeasons()
   const str = (v: unknown) => (v == null ? '' : String(v))
   const { gender } = useAdminGender()
 

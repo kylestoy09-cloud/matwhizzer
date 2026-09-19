@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { TournamentBracketClient } from './TournamentBracketClient'
 import type { PublicBracketSlot } from '@/components/bracket/BracketTree'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60
 
 export default async function BracketPage({
   params,

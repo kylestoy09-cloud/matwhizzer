@@ -5,7 +5,8 @@ import { WrestlerHeader } from '@/components/WrestlerHeader'
 import { StatsTable } from '@/components/StatsTable'
 import { conferenceToSlug } from '@/lib/conferences'
 import { sectionToSlug, groupToSlug } from '@/lib/sections'
-import { SEASONS } from '@/lib/seasons'
+import { getSeasons } from '@/lib/seasons-server'
+import { seasonLabel as lookupSeasonLabel } from '@/lib/seasons'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -197,6 +198,7 @@ function computeDomMatchScore(winType: string | null, fallTime: number | null): 
 // ── Component ──────────────────────────────────────────────────────────────────
 
 export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }) {
+  const allSeasons = await getSeasons()
   const id = wrestlerId
 
   // 1. Wrestler
@@ -1312,7 +1314,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
                           </thead>
                           <tbody>
                             {seasonEvents.flatMap(ev => ev.rows).map((r, ri) => {
-                              const seasonLabel = SEASONS[seasonId]?.label ?? ''
+                              const seasonLabel = lookupSeasonLabel(allSeasons, seasonId) ?? ''
                               const isRevengeWin = !r.isBye && r.result === 'W' && r.opponentId != null &&
                                 revengeWinKeys.has(`${r.opponentId}||${r.eventName}||${r.round}`)
                               const isUpsetWin = !r.isBye && r.result === 'W' && r.opponentId != null && (() => {

@@ -1,5 +1,4 @@
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
+export const revalidate = 3600
 
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
@@ -28,7 +27,7 @@ export default async function IndependentConferencePage({
 }) {
   const { gender: genderParam } = await searchParams
   const gender = genderParam === 'girls' ? 'girls' : 'boys'
-  const season = await getActiveSeason()
+  const season = await getActiveSeason(gender === 'girls' ? 'F' : 'M')
 
   // Conference logo
   const { data: confData } = await supabase

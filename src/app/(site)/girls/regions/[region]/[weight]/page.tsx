@@ -2,7 +2,7 @@ import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
-import { SEASONS } from '@/lib/seasons'
+import { getSeasonLabel } from '@/lib/seasons-server'
 import { BracketPoll, type BracketEntry, type DistrictChamp } from '@/components/BracketPoll'
 import { PageHeader } from '@/components/PageHeader'
 import { orderChampMatchesBySeed } from '@/lib/bracketOrder'
@@ -551,7 +551,8 @@ export default async function GirlsRegionBracketPage({
 
   if (!VALID_REGIONS.has(region) || !weight) notFound()
 
-  const season = await getActiveSeason()
+  const season = await getActiveSeason('F')
+  const seasonLbl = await getSeasonLabel(season)
 
   const [{ data: matchData }, { data: entryData }, { data: champData }, logos] = await Promise.all([
     supabase.rpc('girls_region_bracket', {
@@ -640,7 +641,7 @@ export default async function GirlsRegionBracketPage({
 
       <div className="mb-8 text-center">
         <PageHeader title={`Region ${region} · ${weight} lb`} />
-        <p className="text-slate-500 text-sm mt-1">NJSIAA {SEASONS[season]?.label ?? season} · Girls postseason</p>
+        <p className="text-slate-500 text-sm mt-1">NJSIAA {seasonLbl ?? season} · Girls postseason</p>
       </div>
 
       <WeightNav weights={WEIGHTS} current={weight} base={`/girls/regions/${region}`} />

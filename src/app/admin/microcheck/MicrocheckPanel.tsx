@@ -333,6 +333,17 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
                     style={{ background: '#5c3317', color: '#f5ddb0' }}>
                     {loading ? '🚽 hold on…' : '💩 CHECK ME'}
                   </button>
+                  <div className="flex justify-end mt-1">
+                    <a
+                      href="/admin/microcheck/priorities"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[10px] font-medium hover:underline"
+                      style={{ color: '#a0714f' }}
+                    >
+                      ⚙ Task order
+                    </a>
+                  </div>
                 </div>
 
                 {/* Poop sub-tabs */}

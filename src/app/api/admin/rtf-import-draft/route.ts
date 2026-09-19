@@ -48,6 +48,8 @@ export async function POST(req: NextRequest) {
   const auth = await createSupabaseServer()
   const { data: { user } } = await auth.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const { data: appUser } = await auth.from('app_users').select('role').eq('id', user.id).single()
+  if (!appUser || appUser.role !== 'admin') return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const body = await req.json()
   const { id, label, text, year, selected, school_overrides, wrestler_overrides, dates, tournament_types, reviewed, step } = body

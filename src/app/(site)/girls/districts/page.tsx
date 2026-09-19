@@ -5,10 +5,10 @@ import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { PageHeader } from '@/components/PageHeader'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 300
 
 export default async function GirlsDistrictsPage() {
-  const season = Math.max(await getActiveSeason(), 2)
+  const season = Math.max(await getActiveSeason('F'), 2)
 
   const { data: districtRows } = await supabase
     .from('districts')

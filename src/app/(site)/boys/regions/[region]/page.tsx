@@ -158,7 +158,7 @@ export default async function RegionSummaryPage({
   const r = Number(raw)
   if (!r || r < 1 || r > 8) notFound()
 
-  const season = await getActiveSeason()
+  const season = await getActiveSeason('M')
 
   const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, teamPtsRes, regionSchoolsRes, videoRes, ghostRes, regionEntriesRes, statePlacementsRes, logos] =
     await Promise.all([

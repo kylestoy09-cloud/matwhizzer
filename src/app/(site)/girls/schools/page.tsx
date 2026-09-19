@@ -31,7 +31,7 @@ export default async function GirlsSchoolsPage({
   const { q: raw, conf, group, section } = await searchParams
   const q = raw?.trim().toLowerCase() ?? ''
 
-  const season = await getActiveSeason()
+  const season = await getActiveSeason('F')
 
   const [{ data }, logos, { data: schoolData }] = await Promise.all([
     supabase.rpc('school_directory', { p_gender: 'F', p_season: season }),

@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { SEASONS } from '@/lib/seasons'
+import { useSeasons } from '@/components/SeasonsProvider'
 
 // Inline variant — blends into page subtitles (dark text on light background)
 // Pass `seasons` to restrict which season IDs are shown. If only one ID is
@@ -14,19 +14,21 @@ export function InlineSeasonPicker({
   seasons?: number[]
 }) {
   const router = useRouter()
+  const { seasons: all, label, sortIds } = useSeasons()
 
   function pickSeason(id: number) {
-    document.cookie = `season=${id}; path=/; max-age=${60 * 60 * 24 * 365}`
+    // Session cookie: returning visitors always land on the live season.
+    document.cookie = `season_pick=${id}; path=/; samesite=lax`
     router.refresh()
   }
 
-  const ids = (seasons ?? Object.keys(SEASONS).map(Number)).sort()
+  const ids = sortIds(seasons ?? all.filter(s => s.is_public).map(s => s.id))
 
   // Single season — render as non-interactive label
   if (ids.length === 1) {
     return (
       <span className="font-medium text-slate-600 text-sm">
-        {SEASONS[ids[0]]?.label ?? ids[0]}
+        {label(ids[0]) ?? ids[0]}
       </span>
     )
   }
@@ -40,7 +42,7 @@ export function InlineSeasonPicker({
     >
       {ids.map(id => (
         <option key={id} value={id} className="text-slate-900 bg-white">
-          {SEASONS[id].label}
+          {label(id) ?? id}
         </option>
       ))}
     </select>

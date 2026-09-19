@@ -18,7 +18,7 @@ export default async function GirlsPostseasonPage({
   const { q: rawQ, sq: rawSq } = await searchParams
   const q  = rawQ?.trim()  ?? ''
   const sq = rawSq?.trim() ?? ''
-  const season = await getActiveSeason()
+  const season = await getActiveSeason('F')
 
   const [wrestlerRes, schoolDirRes] = await Promise.all([
     q.length >= 2

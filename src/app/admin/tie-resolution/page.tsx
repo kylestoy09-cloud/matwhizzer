@@ -51,9 +51,9 @@ async function fetchTies(gender: 'M' | 'F'): Promise<TieMeet[]> {
 export default async function TieResolutionPage() {
   const supabase = await createSupabaseServer()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) redirect('/admin/login')
+  if (!user) redirect('/signin')
   const { data: appUser } = await supabase.from('app_users').select('role').eq('id', user.id).single()
-  if (!appUser || (appUser as any).role !== 'admin') redirect('/admin/login')
+  if (!appUser || (appUser as any).role !== 'admin') redirect('/signin')
 
   const [boys, girls] = await Promise.all([fetchTies('M'), fetchTies('F')])
   const ties = [...boys, ...girls].sort((a, b) => {

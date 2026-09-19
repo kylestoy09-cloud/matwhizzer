@@ -14,10 +14,12 @@ export async function GET(req: NextRequest) {
 
   const gender = (req.nextUrl.searchParams.get('gender') ?? 'M') as 'M' | 'F'
   const db = createSupabaseAdmin()
+  const programTable = gender === 'F' ? 'girls_schools' : 'boys_schools'
+  const coachTable   = gender === 'F' ? 'girls_coaches' : 'boys_coaches'
 
   // Query everything in one parallel batch — same pattern as school-directory route
   const [gsRes, schoolsRes, logRes, flagRes, inactiveRes] = await Promise.all([
-    db.from('boys_schools').select('school_id, display_name'),
+    db.from(programTable).select('school_id, display_name'),
     db.from('schools')
       .select('id, display_name, address, website_url, twitter_handle, facebook_url, ad_name, ad_email')
       .eq('is_nj', true)
@@ -34,9 +36,11 @@ export async function GET(req: NextRequest) {
       .eq('gender', gender),
   ])
 
-  if (gsRes.error)      return NextResponse.json({ error: 'boys_schools: ' + gsRes.error.message },  { status: 500 })
-  if (schoolsRes.error) return NextResponse.json({ error: 'schools: '      + schoolsRes.error.message }, { status: 500 })
-  if (logRes.error)     return NextResponse.json({ error: 'task_log: '     + logRes.error.message },     { status: 500 })
+  if (gsRes.error)       return NextResponse.json({ error: `${programTable}: ` + gsRes.error.message },      { status: 500 })
+  if (schoolsRes.error)  return NextResponse.json({ error: 'schools: '         + schoolsRes.error.message },  { status: 500 })
+  if (logRes.error)      return NextResponse.json({ error: 'task_log: '        + logRes.error.message },      { status: 500 })
+  if (flagRes.error)     return NextResponse.json({ error: 'roster_flags: '    + flagRes.error.message },     { status: 500 })
+  if (inactiveRes.error) return NextResponse.json({ error: 'inactive_seasons: '+ inactiveRes.error.message }, { status: 500 })
 
   const boysSchools  = gsRes.data ?? []
   const boysIdSet    = new Set(boysSchools.map(bs => bs.school_id))
@@ -53,7 +57,7 @@ export async function GET(req: NextRequest) {
 
   // Coaches
   let coachRows: { school_id: number; email: string | null }[] = []
-  const coachRes = await db.from('boys_coaches')
+  const coachRes = await db.from(coachTable)
     .select('school_id, email')
     .eq('season_id', 3)
     .eq('is_active', true)

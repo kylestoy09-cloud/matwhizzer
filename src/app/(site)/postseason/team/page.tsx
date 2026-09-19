@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import { TeamBracketClient } from './TeamBracketClient'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 300
 
 const SEASON_ID = 2
 const GENDER = 'M'

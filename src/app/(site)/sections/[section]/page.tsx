@@ -19,7 +19,7 @@ export default async function SectionPage({
   const { section: slug } = await params
   const { gender: genderParam } = await searchParams
   const gender = genderParam === 'girls' ? 'girls' : 'boys'
-  const season = await getActiveSeason()
+  const season = await getActiveSeason(gender === 'girls' ? 'F' : 'M')
 
   const sectionName = sectionFromSlug(slug)
   if (!sectionName) notFound()

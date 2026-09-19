@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { getAllConferences, conferenceToSlug } from '@/lib/conferences'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 3600
 
 export default async function ConferencesIndexPage({
   searchParams,

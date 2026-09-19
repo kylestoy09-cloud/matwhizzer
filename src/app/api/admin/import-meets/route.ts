@@ -27,7 +27,7 @@ import {
 
 export const dynamic = 'force-dynamic'
 
-const SEASON_ID = 2
+const SEASON_ID = 3
 
 // ── Request shape ──────────────────────────────────────────────────────────────
 
@@ -121,6 +121,8 @@ export async function POST(req: NextRequest) {
   const userSupabase = await createSupabaseServer()
   const { data: { user } } = await userSupabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const { data: appUser } = await userSupabase.from('app_users').select('role').eq('id', user.id).single()
+  if (!appUser || appUser.role !== 'admin') return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const body: ImportRequest = await req.json().catch(() => null)
   if (!body?.draftId) return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
@@ -169,7 +171,7 @@ export async function POST(req: NextRequest) {
       if (m.loserSchoolRaw)  allSchoolNames.add(m.loserSchoolRaw)
     }
   }
-  const schoolMatchResults = await Promise.all([...allSchoolNames].map(n => matchSchoolNames(n)))
+  const schoolMatchResults = await Promise.all([...allSchoolNames].map(n => matchSchoolNames(n, { gender: 'M', seasonId: SEASON_ID })))
   const schoolResolutions: Record<string, SlimSchoolMatch> = {}
   for (const r of schoolMatchResults) {
     schoolResolutions[r.rawName] = { rawName: r.rawName, schoolId: r.schoolId, confidence: r.confidence }

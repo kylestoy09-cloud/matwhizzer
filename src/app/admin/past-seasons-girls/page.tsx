@@ -13,20 +13,19 @@ export default async function PastSeasonsGirlsPage() {
 
   const db = createSupabaseAdmin()
 
-  // Current live girls season — exclude from the past seasons list
-  const { data: liveSgs } = await db
+  // Past = archived for girls, independent of which season is the public default
+  const { data: archivedStates } = await db
     .from('season_gender_state')
     .select('season_id')
     .eq('gender', 'F')
-    .eq('is_public_default', true)
-    .maybeSingle()
+    .eq('stage', 'archived')
 
-  const currentSeasonId = liveSgs?.season_id ?? -1
+  const archivedIds = (archivedStates ?? []).map(s => s.season_id as number)
 
-  const { data: seasons } = await db
+  const { data: seasons } = archivedIds.length === 0 ? { data: [] } : await db
     .from('seasons')
     .select('id, year_label')
-    .neq('id', currentSeasonId)
+    .in('id', archivedIds)
     .not('year_label', 'is', null)
     .order('id', { ascending: false })
 

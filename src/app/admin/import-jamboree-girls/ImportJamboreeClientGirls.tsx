@@ -16,7 +16,7 @@ import {
 import { MeetCard }             from '../import/MeetCard'
 import { ReviewPanel }          from '../import/ReviewPanel'
 import { WrestlerReviewPanel }  from '../import/WrestlerReviewPanel'
-import { SEASONS }              from '@/lib/seasons'
+import { useSeasons } from '@/components/SeasonsProvider'
 
 const GENDER = 'F' as const
 
@@ -42,6 +42,7 @@ type DraftSummary = {
 // ── ImportJamboreeClientGirls ────────────────────────────────────────────────
 
 export function ImportJamboreeClientGirls() {
+  const { seasons } = useSeasons()
   const [phase,              setPhase]              = useState<Phase>('idle')
   const [seasonId,           setSeasonId]           = useState<number>(2)
   const [rawText,            setRawText]            = useState('')
@@ -553,11 +554,11 @@ export function ImportJamboreeClientGirls() {
             <div>
               <span className="block text-xs font-semibold text-slate-700 mb-1">Season</span>
               <div className="flex border border-black">
-                {Object.entries(SEASONS).map(([id, s], i) => (
+                {seasons.map((s, i) => (
                   <button
-                    key={id}
-                    onClick={() => setSeasonId(Number(id))}
-                    className={`px-4 py-1.5 text-xs font-bold transition-colors ${i > 0 ? 'border-l border-black' : ''} ${seasonId === Number(id) ? 'bg-black text-white' : 'bg-white text-slate-600 hover:bg-slate-50'}`}
+                    key={s.id}
+                    onClick={() => setSeasonId(s.id)}
+                    className={`px-4 py-1.5 text-xs font-bold transition-colors ${i > 0 ? 'border-l border-black' : ''} ${seasonId === s.id ? 'bg-black text-white' : 'bg-white text-slate-600 hover:bg-slate-50'}`}
                   >
                     {s.label}
                   </button>

@@ -103,7 +103,7 @@ export async function SchoolProfileCore({
 
   let season: number
   try {
-    season = await getActiveSeason()
+    season = await getActiveSeason(genderCode)
   } catch {
     season = 2
   }

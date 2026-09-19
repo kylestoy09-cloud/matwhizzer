@@ -5,10 +5,10 @@ import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { PageHeader } from '@/components/PageHeader'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 300
 
 export default async function BoysRegionsPage() {
-  const season = await getActiveSeason()
+  const season = await getActiveSeason('M')
 
   const { data: regionRows } = await supabase
     .from('regions')

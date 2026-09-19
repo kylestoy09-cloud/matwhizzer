@@ -157,7 +157,7 @@ export default async function DistrictSummaryPage({
   const d = Number(raw)
   if (!d || d < 1 || d > 32) notFound()
 
-  const season = await getActiveSeason()
+  const season = await getActiveSeason('M')
 
   const [placementsRes, matTimeRes, fastPinRes, fastTfRes, bonusPctRes, schoolsRes, teamScoreRes, teamPtsRes, stateEntRes, ghostRes, distEntriesRes, statePlacementsRes, logos] =
     await Promise.all([

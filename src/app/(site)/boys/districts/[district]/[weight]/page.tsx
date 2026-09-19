@@ -6,7 +6,7 @@ type LogoMap = Awaited<ReturnType<typeof getSchoolLogos>>
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
-import { SEASONS } from '@/lib/seasons'
+import { getSeasonLabel } from '@/lib/seasons-server'
 import { PageHeader } from '@/components/PageHeader'
 import { orderChampMatchesBySeed } from '@/lib/bracketOrder'
 
@@ -439,7 +439,8 @@ export default async function DistrictBracketPage({
 
   if (!district || district < 1 || district > 32 || !weight) notFound()
 
-  const season = await getActiveSeason()
+  const season = await getActiveSeason('M')
+  const seasonLbl = await getSeasonLabel(season)
 
   const [{ data }, logos] = await Promise.all([
     supabase.rpc('district_bracket', {
@@ -505,7 +506,7 @@ export default async function DistrictBracketPage({
 
       <div className="mb-8 text-center">
         <PageHeader title={`District ${district} · ${weight} lb`} />
-        <p className="text-slate-500 text-sm mt-1">NJSIAA {SEASONS[season]?.label ?? season} · Boys postseason</p>
+        <p className="text-slate-500 text-sm mt-1">NJSIAA {seasonLbl ?? season} · Boys postseason</p>
       </div>
 
       <WeightNav weights={WEIGHTS} current={weight} base={`/boys/districts/${district}`} />

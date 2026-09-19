@@ -7,7 +7,7 @@ import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 300
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -53,7 +53,7 @@ export default async function ConferencePage({
   const { conference: slug } = await params
   const { gender: genderParam } = await searchParams
   const gender = genderParam === 'girls' ? 'girls' : 'boys'
-  const season = await getActiveSeason()
+  const season = await getActiveSeason(gender === 'girls' ? 'F' : 'M')
 
   const conferenceName = conferenceFromSlug(slug)
   if (!conferenceName) notFound()

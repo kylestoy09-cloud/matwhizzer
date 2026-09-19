@@ -2,7 +2,7 @@ import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
-import { SEASONS } from '@/lib/seasons'
+import { getSeasonLabel } from '@/lib/seasons-server'
 import { BracketPoll, type BracketEntry } from '@/components/BracketPoll'
 import { PageHeader } from '@/components/PageHeader'
 import { orderChampMatchesBySeed } from '@/lib/bracketOrder'
@@ -557,7 +557,8 @@ export default async function StateBracketPage({
   const weight = Number(rawW)
   if (!weight) notFound()
 
-  const season = await getActiveSeason()
+  const season = await getActiveSeason('M')
+  const seasonLbl = await getSeasonLabel(season)
 
   const [{ data }, { data: entryData }, { data: ghostData }, logos] = await Promise.all([
     supabase.rpc('state_bracket', {
@@ -624,7 +625,7 @@ export default async function StateBracketPage({
 
       <div className="mb-8 text-center">
         <PageHeader title={`Boys State · ${weight} lb`} goldTrim />
-        <p className="text-slate-500 text-sm mt-1">NJSIAA {SEASONS[season]?.label ?? season} · 32-man double elimination</p>
+        <p className="text-slate-500 text-sm mt-1">NJSIAA {seasonLbl ?? season} · 32-man double elimination</p>
       </div>
 
       <WeightNav weights={WEIGHTS} current={weight} base="/boys/state" />

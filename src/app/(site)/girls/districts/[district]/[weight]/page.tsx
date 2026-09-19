@@ -1,6 +1,6 @@
 import { supabase } from '@/lib/supabase'
 import { getActiveSeason } from '@/lib/get-season'
-import { SEASONS } from '@/lib/seasons'
+import { getSeasonLabel } from '@/lib/seasons-server'
 import { PageHeader } from '@/components/PageHeader'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -424,7 +424,8 @@ export default async function GirlsDistrictBracketPage({
   if (!district || district < 1 || district > 12 || !weight) notFound()
 
   // Girls districts only exist from season 2 onward
-  const season = Math.max(await getActiveSeason(), 2)
+  const season = Math.max(await getActiveSeason('F'), 2)
+  const seasonLbl = await getSeasonLabel(season)
 
   const [{ data }, logos] = await Promise.all([
     supabase.rpc('district_bracket', {
@@ -482,7 +483,7 @@ export default async function GirlsDistrictBracketPage({
 
       <div className="mb-8 text-center">
         <PageHeader title={`District ${district} · ${weight} lb`} />
-        <p className="text-slate-500 text-sm mt-1">NJSIAA {SEASONS[season]?.label ?? season} · Girls postseason</p>
+        <p className="text-slate-500 text-sm mt-1">NJSIAA {seasonLbl ?? season} · Girls postseason</p>
       </div>
 
       <WeightNav weights={WEIGHTS} current={weight} base={`/girls/districts/${district}`} />

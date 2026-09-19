@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
-import { SEASONS } from '@/lib/seasons'
+import { useSeasons } from '@/components/SeasonsProvider'
 import { useAdminGender } from '@/components/admin/AdminGenderContext'
 
 function Spinner() {
@@ -19,7 +19,8 @@ type DetectedType = 'tournament' | 'dual' | 'unknown'
 export function ImportHubClient() {
   const router = useRouter()
   const { gender } = useAdminGender()
-  const defaultSeason = Number(Object.entries(SEASONS).find(([, v]) => v.isCurrent)?.[0] ?? 2)
+  const { seasons, label } = useSeasons()
+  const defaultSeason = seasons.find(s => s.is_public)?.id ?? 2
   const [seasonId, setSeasonId] = useState<number>(defaultSeason)
   const [text, setText] = useState('')
   const [saving, setSaving] = useState(false)
@@ -62,11 +63,11 @@ export function ImportHubClient() {
         <div className="flex items-center gap-3">
           <span className="text-sm font-bold text-slate-900 shrink-0">Season:</span>
           <div className="flex border border-black overflow-hidden">
-            {Object.entries(SEASONS).map(([id, s], i) => (
+            {seasons.map((s, i) => (
               <button
-                key={id}
-                onClick={() => setSeasonId(Number(id))}
-                className={`px-6 py-2 text-sm font-bold transition-colors ${i > 0 ? 'border-l border-black' : ''} ${seasonId === Number(id) ? 'bg-black text-white' : 'bg-white text-slate-600 hover:bg-slate-100'}`}
+                key={s.id}
+                onClick={() => setSeasonId(s.id)}
+                className={`px-6 py-2 text-sm font-bold transition-colors ${i > 0 ? 'border-l border-black' : ''} ${seasonId === s.id ? 'bg-black text-white' : 'bg-white text-slate-600 hover:bg-slate-100'}`}
               >
                 {s.label}
               </button>
@@ -74,7 +75,7 @@ export function ImportHubClient() {
           </div>
         </div>
         <span className="text-xs text-slate-500">
-          School matching will be restricted to {gender === 'M' ? 'boys' : 'girls'} schools in {SEASONS[seasonId]?.label ?? seasonId}.
+          School matching will be restricted to {gender === 'M' ? 'boys' : 'girls'} schools in {label(seasonId) ?? seasonId}.
         </span>
       </div>
 

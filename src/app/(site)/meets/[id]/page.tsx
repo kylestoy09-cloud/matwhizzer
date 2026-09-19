@@ -1,10 +1,9 @@
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
+export const revalidate = 300
 
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { SEASONS } from '@/lib/seasons'
+import { getSeasonLabel } from '@/lib/seasons-server'
 import { logoFlipStyle } from '@/lib/logo-direction'
 
 /* eslint-disable @next/next/no-img-element */
@@ -196,7 +195,7 @@ export default async function DualMeetPage({
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
   })
 
-  const seasonLabel = SEASONS[meet.season_id]?.label ?? String(meet.season_id)
+  const seasonLabel = (await getSeasonLabel(meet.season_id)) ?? String(meet.season_id)
   const genderLabel = meet.gender === 'F' ? 'Girls' : 'Boys'
 
   const winner =

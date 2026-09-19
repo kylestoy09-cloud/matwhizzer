@@ -28,7 +28,7 @@ import {
 
 export const dynamic = 'force-dynamic'
 
-const SEASON_ID = 2
+const SEASON_ID = 3
 const GENDER = 'F' as const
 
 // ── Request shape ──────────────────────────────────────────────────────────────

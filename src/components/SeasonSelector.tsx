@@ -1,6 +1,6 @@
 'use client'
 
-import { SEASONS } from '@/lib/seasons'
+import { useSeasons } from '@/components/SeasonsProvider'
 
 // Controlled season dropdown — caller owns state and decides what onChange does.
 // Styled to match InlineSeasonPicker. Pass `seasons` as an array of season IDs.
@@ -13,12 +13,13 @@ export function SeasonSelector({
   currentSeasonId: number
   onChange: (seasonId: number) => void
 }) {
-  const ids = [...seasons].sort()
+  const { label, sortIds } = useSeasons()
+  const ids = sortIds(seasons)
 
   if (ids.length === 1) {
     return (
       <span className="font-medium text-slate-600 text-sm">
-        {SEASONS[ids[0]]?.label ?? ids[0]}
+        {label(ids[0]) ?? ids[0]}
       </span>
     )
   }
@@ -36,7 +37,7 @@ export function SeasonSelector({
     >
       {ids.map(id => (
         <option key={id} value={id} className="text-slate-900 bg-white">
-          {SEASONS[id]?.label ?? id}
+          {label(id) ?? id}
         </option>
       ))}
     </select>

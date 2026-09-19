@@ -97,7 +97,7 @@ async function fetchAll<T>(
 async function ensureCache(): Promise<void> {
   if (cacheReady) return
   // All concurrent callers share the same in-flight promise — only one load runs.
-  if (!cachePromise) cachePromise = loadCache()
+  if (!cachePromise) cachePromise = loadCache().catch(err => { cachePromise = null; throw err })
   return cachePromise
 }
 
@@ -229,7 +229,7 @@ export async function reloadAliases(): Promise<void> {
       .from('wrestler_name_aliases')
       .select('raw_name, school_id, wrestler_id, wrestlers(first_name, last_name, suffix)')
       .range(from, from + PAGE - 1)
-    if (error) break
+    if (error) return
     const page = (data ?? []) as unknown as AliasRow[]
     allRows.push(...page)
     if (page.length < PAGE) break

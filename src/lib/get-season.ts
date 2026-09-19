@@ -1,10 +1,13 @@
 import { cookies } from 'next/headers'
-export { SEASONS } from '@/lib/seasons'
+import { getLiveSeasonId } from '@/lib/seasons-server'
 
-/** Returns the active season ID (default = 2 for 2025-26). */
-export async function getActiveSeason(): Promise<number> {
+export const SEASON_PICK_COOKIE = 'season_pick'
+
+/** Visitor's pick for this browser session, otherwise the live season for the program. */
+export async function getActiveSeason(gender: 'M' | 'F'): Promise<number> {
   const store = await cookies()
-  const val = store.get('season')?.value
+  const val = store.get(SEASON_PICK_COOKIE)?.value
   const n = val ? parseInt(val) : NaN
-  return Number.isFinite(n) && n >= 1 ? n : 2
+  if (Number.isFinite(n) && n >= 1) return n
+  return getLiveSeasonId(gender)
 }

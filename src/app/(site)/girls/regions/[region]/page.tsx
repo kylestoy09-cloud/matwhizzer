@@ -161,7 +161,7 @@ export default async function GirlsRegionSummaryPage({
 
   const displayName = `Region ${region}`
 
-  const season = await getActiveSeason()
+  const season = await getActiveSeason('F')
 
   const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, teamPtsRes, regionSchoolsRes, videoRes, ghostRes, regionEntriesRes, statePlacementsRes, logos] =
     await Promise.all([

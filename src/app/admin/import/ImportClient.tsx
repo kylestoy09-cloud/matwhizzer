@@ -18,7 +18,7 @@ import {
 import { MeetCard }             from './MeetCard'
 import { ReviewPanel }          from './ReviewPanel'
 import { WrestlerReviewPanel }  from './WrestlerReviewPanel'
-import { SEASONS }              from '@/lib/seasons'
+import { useSeasons } from '@/components/SeasonsProvider'
 
 // ── Phase ──────────────────────────────────────────────────────────────────────
 
@@ -61,6 +61,7 @@ function getSessionData(type: 'dual' | 'tournament'): { text: string; gender: 'M
 }
 
 export function ImportClient() {
+  const { seasons } = useSeasons()
   const { gender } = useAdminGender()
   const [phase,              setPhase]              = useState<Phase>('idle')
   const [sessionData]                               = useState(() => getSessionData('dual'))
@@ -636,11 +637,11 @@ export function ImportClient() {
               <div className="flex items-center gap-2">
                 <span className="text-xs text-slate-500">Season:</span>
                 <div className="flex border border-black">
-                  {Object.entries(SEASONS).map(([id, s], i) => (
+                  {seasons.map((s, i) => (
                     <button
-                      key={id}
-                      onClick={() => setSeasonId(Number(id))}
-                      className={`px-4 py-1 text-xs font-bold transition-colors ${i > 0 ? 'border-l border-black' : ''} ${seasonId === Number(id) ? 'bg-black text-white' : 'bg-white text-slate-600 hover:bg-slate-50'}`}
+                      key={s.id}
+                      onClick={() => setSeasonId(s.id)}
+                      className={`px-4 py-1 text-xs font-bold transition-colors ${i > 0 ? 'border-l border-black' : ''} ${seasonId === s.id ? 'bg-black text-white' : 'bg-white text-slate-600 hover:bg-slate-50'}`}
                     >
                       {s.label}
                     </button>

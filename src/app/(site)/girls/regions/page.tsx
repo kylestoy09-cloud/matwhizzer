@@ -11,7 +11,7 @@ const REGIONS = [
 ]
 
 export default async function GirlsRegionsPage() {
-  const season = await getActiveSeason()
+  const season = await getActiveSeason('F')
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-10">

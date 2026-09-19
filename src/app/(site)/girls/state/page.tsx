@@ -5,7 +5,7 @@ import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 
 export default async function GirlsStatePage() {
-  const season = await getActiveSeason()
+  const season = await getActiveSeason('F')
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <Link href="/girls" className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 mb-6 transition-colors">

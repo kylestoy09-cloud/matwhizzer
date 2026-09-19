@@ -93,11 +93,11 @@ export function getExpectedOutcomeRank(diff: number): number {
 function fallTimeTier(secs: number, type: 'fall' | 'tf'): number {
   // Pins are odd ranks (1,3,5,7,9,11); tech falls are even (2,4,6,8,10,12)
   const base = type === 'fall' ? 1 : 2
-  if (secs < 60)  return base       // First Minute
-  if (secs < 120) return base + 2   // First Period  (1:00–2:00)
-  if (secs < 180) return base + 4   // 3 Minute      (2:00–3:00)
-  if (secs < 240) return base + 6   // Second Period  (3:00–4:00)
-  if (secs < 300) return base + 8   // 5 Minute      (4:00–5:00)
+  if (secs <= 60)  return base       // First Minute   (0:00–1:00)
+  if (secs <= 120) return base + 2   // First Period   (1:01–2:00)
+  if (secs <= 180) return base + 4   // 3 Minute       (2:01–3:00)
+  if (secs <= 240) return base + 6   // Second Period  (3:01–4:00)
+  if (secs <= 300) return base + 8   // 5 Minute       (4:01–5:00)
   return base + 10                   // Third Period   (5:00+)
 }
 
