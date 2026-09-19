@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-09-19 — njsiaa-documents storage bucket (RECONSTRUCTED)
+
+**Migration file:** `docs/migrations/20260919_njsiaa_documents_bucket.sql`
+
+**Purpose:** Public Storage bucket for archived NJSIAA regulatory PDFs, so season documents survive NJSIAA link changes. Path: `<season end year>/<boys|girls>/<doc-slug>.pdf`.
+
+Uploaded (2025-26 boys, SHA-256 verified against njsiaa.org originals):
+- `2026/boys/regular-season-rules.pdf` — from njsiaa.org/.../2025-09/boys-wrestling-regular-season-rules-2025-26.pdf
+- `2026/boys/team-tournament-regs.pdf` — from njsiaa.org/.../2025-11/wrestling-boys-team-regs-2025-26.pdf
+- `2026/boys/individual-tournament-regs.pdf` — from njsiaa.org/.../2025-11/wrestling-boys-individual-regs-2025-26.pdf
+
+**APPLIED** — 2026-09-19 via Storage API (RECONSTRUCTED SQL)
+
+**Reversible?** Yes — empty and delete the bucket
+**Verified?** Yes — public URLs return files with matching checksums
+
+---
+
 ## 2026-09-19 — Season columns on roster_grade_import and microcheck_tasks
 
 **Migration file:** `docs/migrations/20260919_season_columns_roster_import_microcheck.sql`

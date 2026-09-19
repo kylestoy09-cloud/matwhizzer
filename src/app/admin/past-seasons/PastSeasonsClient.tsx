@@ -3,8 +3,9 @@
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
 import { DualsTab } from './tabs/DualsTab'
+import { NjsiaaTab } from './tabs/NjsiaaTab'
 
-export type PastSeason = { id: number; year_label: string }
+export type PastSeason = { id: number; year_label: string; end_year: number }
 
 const TABS = [
   { id: 'duals',        label: 'Duals' },
@@ -14,6 +15,7 @@ const TABS = [
   { id: 'tournaments',  label: 'Tournaments' },
   { id: 'leaderboards', label: 'Leaderboards' },
   { id: 'playoffs',     label: 'Playoffs' },
+  { id: 'njsiaa',       label: 'NJSIAA' },
 ] as const
 
 type TabId = typeof TABS[number]['id']
@@ -108,6 +110,8 @@ function TabContent({ tab, season, gender }: { tab: TabId; season: PastSeason; g
       return <LeaderboardsTab season={season} gender={gender} />
     case 'playoffs':
       return <PlayoffsTab season={season} gender={gender} />
+    case 'njsiaa':
+      return <NjsiaaTab season={season} gender={gender} />
   }
 }
 

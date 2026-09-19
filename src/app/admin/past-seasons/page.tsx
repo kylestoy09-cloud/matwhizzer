@@ -24,12 +24,12 @@ export default async function PastSeasonsPage() {
 
   const { data: seasons } = archivedIds.length === 0 ? { data: [] } : await db
     .from('seasons')
-    .select('id, year_label')
+    .select('id, year_label, end_year')
     .in('id', archivedIds)
     .not('year_label', 'is', null)
-    .order('id', { ascending: false })
+    .order('end_year', { ascending: false })
 
-  const pastSeasons = (seasons ?? []).filter(s => s.year_label) as { id: number; year_label: string }[]
+  const pastSeasons = (seasons ?? []).filter(s => s.year_label) as { id: number; year_label: string; end_year: number }[]
 
   return (
     <HubShell header={<></>}>
