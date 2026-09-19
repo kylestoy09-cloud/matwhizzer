@@ -72,7 +72,7 @@ export default async function ConferencePage({
     .from('conference_standings')
     .select('id,division,school_id,school_name,overall_wins,overall_losses,div_wins,div_losses,pf,pa,school:schools(id,display_name,logo_url,header_background)')
     .eq('conference_slug', slug)
-    .eq('season_id', season ?? 2)
+    .eq('season_id', season)
     .order('division')
 
   const rows = (standingsData ?? []) as unknown as StandingRow[]
@@ -178,7 +178,7 @@ export default async function ConferencePage({
                     className={`px-3 py-1.5 font-medium transition-colors ${gender === 'girls' ? 'bg-rose-700 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}>Girls</Link>
                 </div>
                 <div className="flex items-center text-xs text-slate-400">
-                  <InlineSeasonPicker gender={gender === 'girls' ? 'F' : 'M'} activeSeason={season ?? 2} />
+                  <InlineSeasonPicker gender={gender === 'girls' ? 'F' : 'M'} activeSeason={season} />
                 </div>
               </div>
             </div>

@@ -6,6 +6,7 @@ export type SeasonInfo = {
   id: number
   label: string
   start_year: number
+  end_year: number
   public_genders: Gender[]
   live_genders: Gender[]
   /** season_gender_state.stage per gender; missing = season doesn't exist for that gender. */

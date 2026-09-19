@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase'
+import { getSeasonIdsWithTournamentType } from '@/lib/seasons-server'
 import { getActiveSeason } from '@/lib/get-season'
 import { getSeasonLabel } from '@/lib/seasons-server'
 import { PageHeader } from '@/components/PageHeader'
@@ -424,7 +425,9 @@ export default async function GirlsDistrictBracketPage({
   if (!district || district < 1 || district > 12 || !weight) notFound()
 
   // Girls districts only exist from season 2 onward
-  const season = Math.max(await getActiveSeason('F'), 2)
+  const districtSeasons = await getSeasonIdsWithTournamentType('districts', 'F')
+  const activeSeason = await getActiveSeason('F')
+  const season = districtSeasons.includes(activeSeason) ? activeSeason : (districtSeasons[0] ?? activeSeason)
   const seasonLbl = await getSeasonLabel(season)
 
   const [{ data }, logos] = await Promise.all([

@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase'
+import { getSeasons, getStateTournamentId } from '@/lib/seasons-server'
 import Link from 'next/link'
 import { getActiveSeason } from '@/lib/get-season'
 import { PostseasonLeaders } from '@/components/PostseasonLeaders'
@@ -19,6 +20,8 @@ export default async function BoysPostseasonPage({
   const q  = rawQ?.trim()  ?? ''
   const sq = rawSq?.trim() ?? ''
   const season = await getActiveSeason('M')
+  const stateTid = await getStateTournamentId(season, 'M')
+  const seasonEndYear = (await getSeasons()).find(x => x.id === season)?.end_year ?? 0
 
   const [wrestlerRes, schoolDirRes] = await Promise.all([
     q.length >= 2
@@ -66,7 +69,7 @@ export default async function BoysPostseasonPage({
       supabase.rpc('lb_dominance', { p_gender: 'M', p_season: season }),
       supabase.rpc('top_postseason_team_scores', { p_gender: 'M', p_season: season, p_limit: 25 }),
       supabase.rpc('state_placements', { p_gender: 'M', p_season: season }),
-      supabase.rpc('state_champions', { p_tournament_id: season === 2 ? 180 : 133 }),
+      stateTid !== null ? supabase.rpc('state_champions', { p_tournament_id: stateTid }) : Promise.resolve({ data: [] }),
       getSchoolLogos(),
     ])
     topDominance = (dominanceRes.data ?? []).slice(0, 8) as DominanceRow[]
@@ -101,7 +104,7 @@ export default async function BoysPostseasonPage({
         <div className="space-y-10 border-t border-slate-200 pt-10 mb-10">
 
           {stateChampions.length > 0 && (
-            <StateChampions rows={stateChampions} seasonYear={season === 2 ? 2026 : 2025} />
+            <StateChampions rows={stateChampions} seasonYear={seasonEndYear} />
           )}
 
           {podiumSchools.length > 0 && (

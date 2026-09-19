@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getNewestSeason } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin }  from '@/lib/supabase/service'
 
@@ -19,7 +20,8 @@ export async function GET(req: NextRequest) {
   const user = await requireAdmin()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const seasonId = Number(req.nextUrl.searchParams.get('season_id') ?? 3)
+  const seasonParam = req.nextUrl.searchParams.get('season_id')
+  const seasonId = seasonParam ? Number(seasonParam) : (await getNewestSeason()).id
   const db = createSupabaseAdmin()
 
   const [

@@ -66,7 +66,7 @@ export function ImportClientBoys() {
   const { seasons } = useSeasons()
   const [phase,              setPhase]              = useState<Phase>('idle')
   const [sessionData]                               = useState(() => getSessionData())
-  const [seasonId,           setSeasonId]           = useState<number>(() => sessionData.seasonId ?? liveSeasonId(seasons, 'M') ?? 2)
+  const [seasonId,           setSeasonId]           = useState<number>(() => sessionData.seasonId ?? liveSeasonId(seasons, 'M') ?? 0)
   const [rawText,            setRawText]            = useState(sessionData.text)
   const [meets,              setMeets]              = useState<ParsedMeet[]>([])
   const [schoolResolutions,  setSchoolResolutions]  = useState<Record<string, SchoolMatch>>({})

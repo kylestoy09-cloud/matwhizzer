@@ -41,8 +41,9 @@ export async function GET(req: NextRequest) {
     .select('id')
     .eq('year_label', season)
     .maybeSingle()
-  const currentSeasonId: number = seasonRow?.id ?? 1
-  const postseasonSeasonId: number = Math.max(1, currentSeasonId - 1)
+  if (!seasonRow) return NextResponse.json({ error: `Unknown season: ${season}` }, { status: 400 })
+  const currentSeasonId: number = seasonRow.id
+  const postseasonSeasonId: number = currentSeasonId - 1
 
   const [registryRes, strengthRes] = await Promise.all([
     db

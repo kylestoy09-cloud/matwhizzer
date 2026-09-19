@@ -187,9 +187,10 @@ export async function POST(req: NextRequest) {
     // 3. Compute next year_label: "2025-26" → "2026-27"
     const [startStr] = (cur.year_label ?? '').split('-')
     const startYear = parseInt(startStr)
-    const nextLabel = Number.isFinite(startYear)
-      ? `${startYear + 1}-${String(startYear + 2).slice(-2)}`
-      : `${cur.year_label ?? ''} (next)`
+    if (!Number.isFinite(startYear)) {
+      return NextResponse.json({ error: `Can't read the season year from "${cur.year_label}"` }, { status: 400 })
+    }
+    const nextLabel = `${startYear + 1}-${String(startYear + 2).slice(-2)}`
 
     // 4. Get or create the next shared season year record
     let newSeasonId: number
@@ -203,14 +204,8 @@ export async function POST(req: NextRequest) {
     if (existing) {
       newSeasonId = existing.id
     } else {
-      // seasons.id has no sequence default — compute next id manually
-      const { data: maxRow } = await client
-        .from('seasons')
-        .select('id')
-        .order('id', { ascending: false })
-        .limit(1)
-        .maybeSingle()
-      const nextId = ((maxRow?.id as number | null) ?? 0) + 1
+      // Season key = championship (ending) year, e.g. 2026-27 → 2027
+      const nextId = startYear + 2
 
       const { data: newSeason, error: createErr } = await client
         .from('seasons')

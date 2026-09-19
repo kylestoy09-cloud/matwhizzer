@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getWorkingSeason, parseGender } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 
 export const dynamic = 'force-dynamic'
-
-const CURRENT_SEASON = 2
 
 async function requireAdmin() {
   const sb = await createSupabaseServer()
@@ -34,6 +33,7 @@ export async function GET(req: NextRequest) {
   const type   = searchParams.get('type')
   const value  = searchParams.get('value')
   const gender = searchParams.get('gender') === 'F' ? 'F' : 'M'
+  const CURRENT_SEASON = (await getWorkingSeason(parseGender(gender))).id
   const t = tables(gender)
 
   if (!type) return NextResponse.json({ error: 'type required' }, { status: 400 })
@@ -178,6 +178,7 @@ export async function POST(req: NextRequest) {
   const { type, value, school_id, action, gender = 'M' } = body as {
     type: string; value: string; school_id: number; action: 'add' | 'remove'; gender: string
   }
+  const CURRENT_SEASON = (await getWorkingSeason(parseGender(gender))).id
 
   if (!type || !value || !school_id || !action) {
     return NextResponse.json({ error: 'type, value, school_id, action required' }, { status: 400 })
@@ -258,6 +259,7 @@ export async function PUT(req: NextRequest) {
     gender: string
     assignments: Array<{ school_id: number; value: string }>
   }
+  const CURRENT_SEASON = (await getWorkingSeason(parseGender(gender))).id
 
   if (!type || !Array.isArray(assignments) || assignments.length === 0) {
     return NextResponse.json({ error: 'type and assignments required' }, { status: 400 })

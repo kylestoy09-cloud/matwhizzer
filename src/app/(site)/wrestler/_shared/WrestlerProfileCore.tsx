@@ -6,7 +6,7 @@ import { StatsTable } from '@/components/StatsTable'
 import { conferenceToSlug } from '@/lib/conferences'
 import { sectionToSlug, groupToSlug } from '@/lib/sections'
 import { getSeasons } from '@/lib/seasons-server'
-import { seasonLabel as lookupSeasonLabel } from '@/lib/seasons'
+import { liveSeasonId, seasonLabel as lookupSeasonLabel } from '@/lib/seasons'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -233,7 +233,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
   const entrySeasons = typedEntries.map(
     e => (unwrap(e.tournament) as { season_id: number } | null)?.season_id ?? 0
   )
-  const currentSeason = entrySeasons.length > 0 ? Math.max(...entrySeasons) : 2
+  const currentSeason = entrySeasons.length > 0 ? Math.max(...entrySeasons) : (liveSeasonId(allSeasons, wrestler.gender === 'F' ? 'F' : 'M') ?? 0)
 
   // School and grade: prefer current season entries, fall back to any
   const currentEntries = typedEntries.filter(
@@ -488,7 +488,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
     const tname  = t?.name ?? 'Unknown'
     const ttype  = t?.tournament_type ?? ''
     const weight = wc?.weight ?? 0
-    const seasonId = t?.season_id ?? 1
+    const seasonId = t?.season_id ?? 0
     const key = `${seasonId}||${tname}||${weight}`
     if (!groups.has(key)) {
       groups.set(key, { tournament_name: tname, tournament_type: ttype, weight, season_id: seasonId, matches: [] })
@@ -835,7 +835,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
   // Current-season stats for the profile header
   const currentGroups = bySeason.get(currentSeason) ?? []
   const currentAnnotated = annotated.filter(
-    m => (unwrap(m.tournament)?.season_id ?? 1) === currentSeason
+    m => (unwrap(m.tournament)?.season_id ?? 0) === currentSeason
   )
   const nonBye = currentAnnotated.filter(m => m.opponent !== 'Bye')
   const wins   = nonBye.filter(m => m.result === 'W').length
@@ -850,7 +850,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
   const seasonStatsMap = new Map<number, SeasonStat>()
   for (const m of annotated) {
     if (m.opponent === 'Bye') continue
-    const sid = unwrap(m.tournament)?.season_id ?? 1
+    const sid = unwrap(m.tournament)?.season_id ?? 0
     if (!seasonStatsMap.has(sid)) {
       seasonStatsMap.set(sid, {
         seasonId: sid, wins: 0, losses: 0, pins: 0, tfs: 0, mds: 0,
@@ -916,7 +916,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
     s.bonusPct = contestedMatches > 0 ? Math.round(((s.pins + s.tfs + s.mds) / contestedMatches) * 100) : 0
     // Postseason dom scores
     const domScores: number[] = annotated
-      .filter(m => m.opponent !== 'Bye' && (unwrap(m.tournament)?.season_id ?? 1) === s.seasonId)
+      .filter(m => m.opponent !== 'Bye' && (unwrap(m.tournament)?.season_id ?? 0) === s.seasonId)
       .map(m => { const sc = computeDomMatchScore(m.win_type, m.fall_time_seconds); return m.result === 'W' ? sc : -sc })
     // In-season bout dom scores
     for (const bout of allBouts) {

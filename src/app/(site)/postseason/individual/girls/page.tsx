@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase'
+import { getSeasons } from '@/lib/seasons-server'
 import Link from 'next/link'
 import { getActiveSeason } from '@/lib/get-season'
 import { PostseasonLeaders } from '@/components/PostseasonLeaders'
@@ -19,6 +20,7 @@ export default async function GirlsPostseasonPage({
   const q  = rawQ?.trim()  ?? ''
   const sq = rawSq?.trim() ?? ''
   const season = await getActiveSeason('F')
+  const seasonEndYear = (await getSeasons()).find(x => x.id === season)?.end_year ?? 0
 
   const [wrestlerRes, schoolDirRes] = await Promise.all([
     q.length >= 2
@@ -101,7 +103,7 @@ export default async function GirlsPostseasonPage({
         <div className="space-y-10 border-t border-slate-200 pt-10 mb-10">
 
           {stateChampions.length > 0 && (
-            <StateChampions rows={stateChampions} seasonYear={season === 2 ? 2026 : 2025} />
+            <StateChampions rows={stateChampions} seasonYear={seasonEndYear} />
           )}
 
           {podiumSchools.length > 0 && (

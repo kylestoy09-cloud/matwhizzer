@@ -45,7 +45,7 @@ type DraftSummary = {
 export function ImportJamboreeClientGirls() {
   const { seasons } = useSeasons()
   const [phase,              setPhase]              = useState<Phase>('idle')
-  const [seasonId,           setSeasonId]           = useState<number>(() => liveSeasonId(seasons, 'F') ?? 2)
+  const [seasonId,           setSeasonId]           = useState<number>(() => liveSeasonId(seasons, 'F') ?? 0)
   const [rawText,            setRawText]            = useState('')
   const [jamboreeDate,       setJamboreeDate]       = useState('')  // MM/DD/YYYY
   const [meets,              setMeets]              = useState<ParsedMeet[]>([])

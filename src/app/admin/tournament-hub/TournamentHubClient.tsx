@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback, useRef } from 'react'
+import { useSeasons } from '@/components/SeasonsProvider'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useAdminGender } from '@/components/admin/AdminGenderContext'
@@ -204,6 +205,7 @@ function Num({ n }: { n: number | null }) {
 // ── Row Expander Panel ────────────────────────────────────────────────────────
 
 function RowExpander({ row, gender, season, onClose, onTidCreated }: { row: HubRow; gender: 'M' | 'F'; season: string; onClose: () => void; onTidCreated: (tid: string) => void }) {
+  const { seasons } = useSeasons()
   const router = useRouter()
   const tid = row.in_season_tournament_id
   const [creating, setCreating] = useState(false)
@@ -242,7 +244,7 @@ function RowExpander({ row, gender, season, onClose, onTidCreated }: { row: HubR
       type: 'tournament',
       text: boutText,
       gender,
-      seasonId: 2,
+      seasonId: seasons.find(x => x.label === season)?.id,
       tournament_id:   tid ?? undefined,
       tournament_name: row.name,
       registry_id:     row.registry_id,

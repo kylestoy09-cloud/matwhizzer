@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { getStateTournamentId } from '@/lib/seasons-server'
 import { supabase } from '@/lib/supabase'
 import { BracketBuster } from '@/components/BracketBuster'
 import { TeamScoreCard } from '@/components/TeamScoreCard'
@@ -105,9 +106,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
   const poolRpc = isBoys ? 'lb_p' : 'lb_gp'
 
   // Get state tournament ID for ghost champions
-  const stateTid = isBoys
-    ? (season === 2 ? 180 : 133)
-    : (season === 2 ? 185 : 138)
+  const stateTid = await getStateTournamentId(season, isBoys ? 'M' : 'F')
 
   const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, teamPtsRes, distStrengthRes, marginsRes, podiumDistRes, ghostRes, stateEntriesRes, logos] =
     await Promise.all([

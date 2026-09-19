@@ -1,4 +1,5 @@
 import { createSupabaseServer } from '@/lib/supabase/server'
+import { getNewestSeason } from '@/lib/season-context'
 import { createClient } from '@supabase/supabase-js'
 import { notFound } from 'next/navigation'
 import { AdminBackButton } from '../../AdminBackButton'
@@ -30,7 +31,7 @@ export default async function SchoolProfileAdminPage({
   if (!user) notFound()
 
   const db = serviceDb()
-  const CURRENT_SEASON = 2
+  const CURRENT_SEASON = (await getNewestSeason()).id
 
   const [
     schoolRes,

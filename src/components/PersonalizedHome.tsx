@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { liveSeasonId } from '@/lib/seasons'
+import { useSeasons } from '@/components/SeasonsProvider'
 import Link from 'next/link'
 import { createSupabaseBrowser } from '@/lib/supabase/client'
 
@@ -109,6 +111,7 @@ function resultLabel(m: MatchRow) {
 }
 
 export function PersonalizedHome() {
+  const { seasons } = useSeasons()
   const [schools, setSchools] = useState<SchoolInfo[]>([])
   const [preference, setPreference] = useState<string>('both')
   const [breakdown, setBreakdown] = useState<BreakdownRow[]>([])
@@ -181,12 +184,12 @@ export function PersonalizedHome() {
       const primary = schoolInfoList.find(s => s.isPrimary)
 
       const wrPromises = schoolInfoList.map(s =>
-        supabase.rpc('school_wrestlers', { p_school_id: s.id, p_gender: gender, p_season: 2 })
+        supabase.rpc('school_wrestlers', { p_school_id: s.id, p_gender: gender, p_season: liveSeasonId(seasons, gender === 'F' ? 'F' : 'M') })
           .then(res => ({ schoolId: s.id, data: (res.data ?? []) as WrestlerRow[] }))
       )
 
       const bdPromise = primary
-        ? supabase.rpc('school_points_breakdown', { p_school_id: primary.id, p_gender: gender, p_season: 2 })
+        ? supabase.rpc('school_points_breakdown', { p_school_id: primary.id, p_gender: gender, p_season: liveSeasonId(seasons, gender === 'F' ? 'F' : 'M') })
         : Promise.resolve({ data: null })
 
       const [wrResults, bdRes] = await Promise.all([

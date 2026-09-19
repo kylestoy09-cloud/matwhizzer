@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase'
+import { getSeasonLabel } from '@/lib/seasons-server'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
@@ -101,12 +102,7 @@ export async function SchoolProfileCore({
 
   const genderCode: 'M' | 'F' = gender === 'girls' ? 'F' : 'M'
 
-  let season: number
-  try {
-    season = await getActiveSeason(genderCode)
-  } catch {
-    season = 2
-  }
+  const season = await getActiveSeason(genderCode)
 
   const { data: profileData, error: profileError } = await supabase
     .from('schools')
@@ -155,7 +151,7 @@ export async function SchoolProfileCore({
 
   const dataSchoolId = activeCoop ? activeCoop.coop_school_id : schoolId
 
-  const seasonLabel = season === 1 ? '2024–25' : '2025–26'
+  const seasonLabel = (await getSeasonLabel(season)) ?? ''
   const coopGenderLabel =
     activeCoop?.gender === 'M' ? 'Boys' :
     activeCoop?.gender === 'F' ? 'Girls' : 'Boys & Girls'

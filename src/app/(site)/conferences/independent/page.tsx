@@ -114,7 +114,7 @@ export default async function IndependentConferencePage({
                     className={`px-3 py-1.5 font-medium transition-colors ${gender === 'girls' ? 'bg-rose-700 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}>Girls</Link>
                 </div>
                 <div className="flex items-center text-xs text-slate-400">
-                  <InlineSeasonPicker gender={gender === 'girls' ? 'F' : 'M'} activeSeason={season ?? 2} />
+                  <InlineSeasonPicker gender={gender === 'girls' ? 'F' : 'M'} activeSeason={season} />
                 </div>
               </div>
             </div>

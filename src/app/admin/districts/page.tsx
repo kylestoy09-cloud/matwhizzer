@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation'
+import { getSeasons } from '@/lib/seasons-server'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 import { HubShell } from '../dashboards/HubShell'
@@ -37,7 +38,7 @@ export default async function DistrictsPage() {
     .from('season_gender_state')
     .select('season_id, gender, is_public_default')
 
-  const activeSeason = stateRows?.find(s => s.is_public_default)?.season_id ?? 2
+  const activeSeason = stateRows?.find(s => s.is_public_default)?.season_id ?? (await getSeasons())[0]?.id
 
   // Count district tournaments with results for both genders
   const [boysRes, girlsRes] = await Promise.all([

@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation'
+import { getSeasons } from '@/lib/seasons-server'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 import { HubShell } from '../dashboards/HubShell'
@@ -36,7 +37,7 @@ export default async function RegionSeedsPage() {
     .from('season_gender_state')
     .select('season_id, gender, is_public_default')
 
-  const activeSeason = stateRows?.find(s => s.is_public_default)?.season_id ?? 2
+  const activeSeason = stateRows?.find(s => s.is_public_default)?.season_id ?? (await getSeasons())[0]?.id
 
   const [boysRes, girlsRes] = await Promise.all([
     db.from('tournaments').select('id').eq('tournament_type', 'regions').eq('season_id', activeSeason).eq('gender', 'M'),

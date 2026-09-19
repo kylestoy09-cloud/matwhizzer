@@ -21,7 +21,7 @@ export function ImportHubClient() {
   const router = useRouter()
   const { gender } = useAdminGender()
   const { seasons, label } = useSeasons()
-  const defaultSeason = liveSeasonId(seasons, gender) ?? 2
+  const defaultSeason = liveSeasonId(seasons, gender) ?? 0
   const [seasonId, setSeasonId] = useState<number>(defaultSeason)
   const [text, setText] = useState('')
   const [saving, setSaving] = useState(false)

@@ -1,12 +1,11 @@
 import { redirect } from 'next/navigation'
+import { getWorkingSeason } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
 import { HubShell } from '../dashboards/HubShell'
 import { PlayoffSeedsClient } from '../playoff-seeds/PlayoffSeedsClient'
 
 export const dynamic = 'force-dynamic'
-
-const SEASON_ID = 2
 
 const ALL_GROUPS: { section: string; classification: string; label: string }[] = [
   ...(['1','2','3','4','5'] as const).flatMap(g =>
@@ -77,6 +76,7 @@ export default async function TeamPlayoffsPage({
 }) {
   const { gender: genderParam } = await searchParams
   const GENDER = genderParam === 'F' ? 'F' : 'M'
+  const SEASON_ID = (await getWorkingSeason(GENDER)).id
 
   const auth = await createSupabaseServer()
   const { data: { user } } = await auth.auth.getUser()

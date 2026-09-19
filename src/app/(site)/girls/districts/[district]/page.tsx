@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { getSeasonIdsWithTournamentType } from '@/lib/seasons-server'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
@@ -155,7 +156,9 @@ export default async function GirlsDistrictSummaryPage({
   if (!d || d < 1 || d > 12) notFound()
 
   // Girls districts only exist from season 2 onward
-  const season = Math.max(await getActiveSeason('F'), 2)
+  const districtSeasons = await getSeasonIdsWithTournamentType('districts', 'F')
+  const activeSeason = await getActiveSeason('F')
+  const season = districtSeasons.includes(activeSeason) ? activeSeason : (districtSeasons[0] ?? activeSeason)
 
   const [placementsRes, matTimeRes, fastPinRes, fastTfRes, bonusPctRes, schoolsRes, teamScoreRes, teamPtsRes, stateEntRes, ghostRes, distEntriesRes, statePlacementsRes, logos] =
     await Promise.all([
@@ -240,7 +243,7 @@ export default async function GirlsDistrictSummaryPage({
               <h1 className="text-lg font-bold text-slate-900 truncate">District {d}</h1>
               <div className="flex items-center gap-1 text-xs text-slate-500 truncate">
                 <span>NJSIAA</span>
-                <InlineSeasonPicker gender="F" activeSeason={season} seasons={[2]} />
+                <InlineSeasonPicker gender="F" activeSeason={season} seasons={districtSeasons} />
                 <span>· Girls Postseason</span>
               </div>
             </div>
@@ -262,7 +265,7 @@ export default async function GirlsDistrictSummaryPage({
             <h1 className="text-2xl font-bold text-slate-900 truncate">District {d}</h1>
             <p className="text-sm text-slate-500 mt-0.5">NJSIAA · Girls Postseason</p>
             <div className="flex items-center text-xs text-slate-400 mt-1">
-              <InlineSeasonPicker gender="F" activeSeason={season} seasons={[2]} />
+              <InlineSeasonPicker gender="F" activeSeason={season} seasons={districtSeasons} />
             </div>
           </div>
         </div>

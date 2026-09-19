@@ -1,11 +1,11 @@
 import { createClient } from '@supabase/supabase-js'
+import { getLiveSeason } from '@/lib/seasons-server'
 import { AboutClient, type CalendarRow } from './AboutClient'
 
 export const revalidate = 86400
 
-const SEASON_ID = 2
-
 export default async function AboutPage() {
+  const SEASON_ID = (await getLiveSeason('M')).id
   const db = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,

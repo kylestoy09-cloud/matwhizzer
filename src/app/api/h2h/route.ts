@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getSeasons } from '@/lib/seasons-server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 import { getExpectedOutcomeRank, OUTCOME_LABELS } from '@/lib/hammerScore'
 
@@ -120,6 +121,7 @@ function fmtDetail(resultType: string | null, winnerScore: number | null, loserS
 }
 
 export async function GET(req: NextRequest) {
+  const seasonLabelById = new Map((await getSeasons()).map(x => [x.id, x.label]))
   const { searchParams } = new URL(req.url)
   const idA = searchParams.get('a')
   const idB = searchParams.get('b')
@@ -280,7 +282,7 @@ export async function GET(req: NextRequest) {
           const t = entryToTournament.get(myEntryId as string)
           const tType = t?.tournament_type ?? 'postseason'
           const seasonId = t?.season_id
-          const season = seasonId === 1 ? '2024-25' : seasonId === 2 ? '2025-26' : String(seasonId ?? '')
+          const season = (seasonId != null ? seasonLabelById.get(seasonId) : undefined) ?? String(seasonId ?? '')
           const eventLabel = tType === 'boys_state' ? `${season} State` : tType === 'regions' ? `${season} Regions` : tType === 'districts' ? `${season} Districts` : 'Postseason'
 
           const rt = m.win_type as string | null

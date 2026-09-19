@@ -1,9 +1,9 @@
 import { createClient } from '@supabase/supabase-js'
+import { getLiveSeason } from '@/lib/seasons-server'
 import { TeamBracketClient } from './TeamBracketClient'
 
 export const revalidate = 300
 
-const SEASON_ID = 2
 const GENDER = 'M'
 const SECTIONS = ['North I', 'North II', 'Central', 'South'] as const
 const GROUPS = ['1', '2', '3', '4', '5'] as const
@@ -48,6 +48,7 @@ export type MeetResult = {
 }
 
 export default async function PostseasonTeamPage() {
+  const SEASON_ID = (await getLiveSeason('M')).id
   const db = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,

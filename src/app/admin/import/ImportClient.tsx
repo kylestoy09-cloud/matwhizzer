@@ -66,7 +66,7 @@ export function ImportClient() {
   const { gender } = useAdminGender()
   const [phase,              setPhase]              = useState<Phase>('idle')
   const [sessionData]                               = useState(() => getSessionData('dual'))
-  const [seasonId,           setSeasonId]           = useState<number>(() => sessionData.seasonId ?? liveSeasonId(seasons, gender) ?? 2)
+  const [seasonId,           setSeasonId]           = useState<number>(() => sessionData.seasonId ?? liveSeasonId(seasons, gender) ?? 0)
   const [rawText,            setRawText]            = useState(sessionData.text)
   const [meets,              setMeets]              = useState<ParsedMeet[]>([])
   const [schoolResolutions,  setSchoolResolutions]  = useState<Record<string, SchoolMatch>>({})

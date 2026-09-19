@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { getSeasonIdsWithTournamentType } from '@/lib/seasons-server'
 import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
 import { getActiveSeason } from '@/lib/get-season'
@@ -8,7 +9,9 @@ import { PageHeader } from '@/components/PageHeader'
 export const revalidate = 300
 
 export default async function GirlsDistrictsPage() {
-  const season = Math.max(await getActiveSeason('F'), 2)
+  const districtSeasons = await getSeasonIdsWithTournamentType('districts', 'F')
+  const activeSeason = await getActiveSeason('F')
+  const season = districtSeasons.includes(activeSeason) ? activeSeason : (districtSeasons[0] ?? activeSeason)
 
   const { data: districtRows } = await supabase
     .from('districts')
@@ -36,7 +39,7 @@ export default async function GirlsDistrictsPage() {
         <PageHeader title="Girls District Brackets" />
         <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
           <span>NJSIAA</span>
-          <InlineSeasonPicker gender="F" activeSeason={season} seasons={[2]} />
+          <InlineSeasonPicker gender="F" activeSeason={season} seasons={districtSeasons} />
           <span>· Select a district</span>
         </div>
       </div>
