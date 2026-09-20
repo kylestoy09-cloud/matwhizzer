@@ -59,7 +59,7 @@ export async function GET(req: NextRequest) {
   const inactiveIds = new Set((inactiveRows ?? []).map(r => r.school_id))
 
   // Coop relationships for this season+gender
-  // school_coops.season stores the year as int (e.g. 2025 for 2025-26)
+  // school_coops.season is a season key (championship year), same as season_id elsewhere
   const { data: coops } = await db
     .from('school_coops')
     .select('coop_school_id, member_school_id, is_primary')

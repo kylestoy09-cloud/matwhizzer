@@ -2,6 +2,44 @@
 
 ---
 
+## 2026-09-20 — Seasons re-keyed to championship (ending) year
+
+**Migration file:** `docs/migrations/20260919_rekey_seasons_championship_year.sql`
+
+**Purpose:** Season IDs were a meaningless sequence (1, 2, 3); past seasons get backfilled out of order. Keys are now the championship year: 1→2025 (2024-25), 2→2026 (2025-26), 3→2027 (2026-27). Backfills take 2024, 2023, … Previous season = key − 1. Display labels unchanged.
+
+**How:** All 32 FKs to `seasons` rebuilt with `ON UPDATE CASCADE`, then `seasons.id` set to `end_year`. The two season columns without an FK (`precomputed_team_scores`, `season_calendar`) and season IDs inside `microcheck_tasks.metadata` remapped explicitly. Row counts per season compared before/after inside the same transaction.
+
+**Prerequisite (shipped first):** commit `bbf2384` removed every hardcoded season number from the app, so the code works with either numbering.
+
+**Tables affected:** all 34 with `season_id`, plus `seasons`
+
+**APPLIED** — 2026-09-20 via Supabase SQL editor
+
+**Reversible?** Yes — same block with the map inverted (2025→1, 2026→2, 2027→3)
+**Verified?** Yes — 2026-09-20: no rows remain under 1/2/3; spot counts match (duals 3,980 → 2026; tournaments 46 → 2025 / 58 → 2026; roster import 12,225 → 2026; microcheck metadata → 2026); public pages, state champions, podium and team-score leaderboards all render
+
+**Follow-up:** `school_coops.season` had no FK so it was not remapped — handled by `20260920_school_coops_season_rekey_and_grants.sql`.
+
+---
+
+## 2026-09-20 — school_coops season re-key + missing grants
+
+**Migration file:** `docs/migrations/20260920_school_coops_season_rekey_and_grants.sql`
+
+**Purpose:**
+- `school_coops.season` holds season IDs (verified: 1=M, 2=F — the code comment claiming start years was wrong) but had no FK, so the championship-year re-key skipped it. Remapped 1→2025, 2→2026 and given an FK with `ON UPDATE CASCADE` so future key changes follow.
+- Grants `school_coops` and `precomputed_team_scores` to `service_role`/`authenticated`. Both returned "permission denied" to the API, which is why `/api/admin/school-enrollment` found no co-ops.
+
+**Tables affected:** `school_coops`, `precomputed_team_scores` (grants only)
+
+**APPLIED** — pending run in Supabase SQL editor
+
+**Reversible?** Yes — `UPDATE school_coops SET season = season - 2024; ALTER TABLE school_coops DROP CONSTRAINT school_coops_season_fkey;`
+**Verified?** No — pending (expect 2025|M|1, 2026|F|1)
+
+---
+
 ## 2026-09-19 — njsiaa-documents storage bucket (RECONSTRUCTED)
 
 **Migration file:** `docs/migrations/20260919_njsiaa_documents_bucket.sql`
