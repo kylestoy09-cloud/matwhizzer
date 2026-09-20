@@ -33,10 +33,10 @@
 
 **Tables affected:** `school_coops`, `precomputed_team_scores` (grants only)
 
-**APPLIED** — pending run in Supabase SQL editor
+**APPLIED** — 2026-09-20 via Supabase SQL editor
 
 **Reversible?** Yes — `UPDATE school_coops SET season = season - 2024; ALTER TABLE school_coops DROP CONSTRAINT school_coops_season_fkey;`
-**Verified?** No — pending (expect 2025|M|1, 2026|F|1)
+**Verified?** Yes — 2026-09-20: school_coops 2025|M|1, 2026|F|1; both tables now readable by the API (precomputed_team_scores 861 rows in 2025, 1,050 in 2026)
 
 ---
 
