@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSeasons } from '@/lib/seasons-server'
+import { liveSeasonId, seasonLabel } from '@/lib/seasons'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 import { getExpectedOutcomeRank, OUTCOME_LABELS } from '@/lib/hammerScore'
 
@@ -121,7 +122,6 @@ function fmtDetail(resultType: string | null, winnerScore: number | null, loserS
 }
 
 export async function GET(req: NextRequest) {
-  const seasonLabelById = new Map((await getSeasons()).map(x => [x.id, x.label]))
   const { searchParams } = new URL(req.url)
   const idA = searchParams.get('a')
   const idB = searchParams.get('b')
@@ -130,6 +130,10 @@ export async function GET(req: NextRequest) {
   const dualMatchesTable = gender === 'F' ? 'dual_meet_matches_girls' : 'dual_meet_matches'
   const dualMeetsTable   = gender === 'F' ? 'dual_meets_girls'        : 'dual_meets'
   if (!idA || !idB) return NextResponse.json({ error: 'Missing wrestler ids' }, { status: 400 })
+
+  const seasons = await getSeasons()
+  const seasonById = new Map(seasons.map(x => [x.id, x]))
+  const hammerSeasonLabel = seasonLabel(seasons, liveSeasonId(seasons, gender) ?? 0)
 
   const db = createSupabaseAdmin()
 
@@ -282,13 +286,23 @@ export async function GET(req: NextRequest) {
           const t = entryToTournament.get(myEntryId as string)
           const tType = t?.tournament_type ?? 'postseason'
           const seasonId = t?.season_id
-          const season = (seasonId != null ? seasonLabelById.get(seasonId) : undefined) ?? String(seasonId ?? '')
-          const eventLabel = tType === 'boys_state' ? `${season} State` : tType === 'regions' ? `${season} Regions` : tType === 'districts' ? `${season} Districts` : 'Postseason'
+          const seasonRow = seasonId != null ? seasonById.get(seasonId) : undefined
+          const season = seasonRow?.label ?? String(seasonId ?? '')
+          const round =
+            tType === 'boys_state' || tType === 'girls_state'   ? 'State'
+          : tType === 'regions'    || tType === 'girls_regions' ? 'Regions'
+          : tType === 'districts'                               ? 'Districts'
+          : null
+          const eventLabel = round ? `${season} ${round}` : 'Postseason'
+          // Postseason bouts carry no date; approximate from the season so history sorts chronologically.
+          const postseasonDate = seasonRow
+            ? `${seasonRow.end_year}-${round === 'State' ? '03-13' : round === 'Regions' ? '03-06' : '02-27'}`
+            : '1900-01-01'
 
           const rt = m.win_type as string | null
           results.push({
             opponentId: oppEntryId as string, // entry ID, resolved below
-            date: tType === 'boys_state' ? '2026-03-13' : tType === 'regions' ? '2026-03-06' : '2026-02-27',
+            date: postseasonDate,
             event: eventLabel,
             eventType: 'postseason',
             won,
@@ -406,7 +420,7 @@ export async function GET(req: NextRequest) {
     .from('wrestler_hammer_scores')
     .select('wrestler_id, hammer_score')
     .in('wrestler_id', [idA, idB])
-    .eq('season', '2025-26')
+    .eq('season', hammerSeasonLabel ?? '')
 
   const hammerMap = new Map((hammerRows ?? []).map(h => [h.wrestler_id as string, h.hammer_score as number]))
   const hammerA = hammerMap.get(idA) ?? null

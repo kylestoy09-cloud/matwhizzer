@@ -411,6 +411,8 @@ export function LiveScoringPanel({
   const [pendingActionB, setPendingActionB] = useState<{pts: number; label: string} | null>(null)
 
   const periodRef    = useRef(period)
+  // Position each period started in (set by the choice flow) — undo rebuilds from here.
+  const periodStartPos = useRef<Partial<Record<string, Position>>>({})
   const timeRef      = useRef(timeLeft)
   const posRef       = useRef(position)
   const scoreARef    = useRef(0)
@@ -526,6 +528,7 @@ export function LiveScoringPanel({
       choice === 'top'    ? (flow.chooser === 'a' ? 'a_top' : 'b_top') :
       choice === 'bottom' ? (flow.chooser === 'a' ? 'b_top' : 'a_top') : 'neutral'
     setPosition(newPos)
+    periodStartPos.current['2'] = newPos
     if (flow.canDefer) setP3Chooser(other)
     setPeriod(2); setTimeLeft(120); setFlipFlow(null)
   }
@@ -534,7 +537,7 @@ export function LiveScoringPanel({
     const newPos: Position =
       choice === 'top'    ? (chooser === 'a' ? 'a_top' : 'b_top') :
       choice === 'bottom' ? (chooser === 'a' ? 'b_top' : 'a_top') : 'neutral'
-    setPosition(newPos); setPeriod(3); setTimeLeft(120); setFlipFlow(null)
+    setPosition(newPos); periodStartPos.current['3'] = newPos; setPeriod(3); setTimeLeft(120); setFlipFlow(null)
   }
 
   // ── Scoring ────────────────────────────────────────────────────────────────
@@ -617,9 +620,11 @@ export function LiveScoringPanel({
 
   function undoLastAction() {
     const next = actions.slice(0, -1)
-    // Recompute position from remaining actions
-    let pos: Position = 'neutral'
+    // Rebuild position from how this period started, then replay only this period's actions
+    const cur = String(periodRef.current)
+    let pos: Position = periodStartPos.current[cur] ?? 'neutral'
     for (const a of next) {
+      if (String(a.period) !== cur) continue
       if (a.label === 'Takedown') pos = a.wrestler === 'a' ? 'a_top' : 'b_top'
       else if (a.label === 'Escape') pos = 'neutral'
       else if (a.label === 'Reversal') pos = a.wrestler === 'a' ? 'a_top' : 'b_top'
@@ -652,11 +657,13 @@ export function LiveScoringPanel({
     }
     setTb2Chooser(flow.tb2chooser)
     setPosition(choiceToPos(flow.chooser, choice))
+    periodStartPos.current['TB1'] = choiceToPos(flow.chooser, choice)
     setFlipFlow(null)
   }
 
   function applyTB2Choice(chooser: 'a' | 'b', choice: string) {
     setPosition(choiceToPos(chooser, choice))
+    periodStartPos.current['TB2'] = choiceToPos(chooser, choice)
     setFlipFlow(null)
   }
 
@@ -666,6 +673,7 @@ export function LiveScoringPanel({
 
   function applyUTBChoice(chooser: 'a' | 'b', choice: string) {
     setPosition(choiceToPos(chooser, choice))
+    periodStartPos.current['UTB'] = choiceToPos(chooser, choice)
     setFlipFlow(null)
   }
 

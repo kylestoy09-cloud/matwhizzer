@@ -3,6 +3,8 @@ import { createSupabaseServer } from '@/lib/supabase/server'
 
 export const dynamic = 'force-dynamic'
 
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+
 export async function GET(req: NextRequest) {
   const supabase = await createSupabaseServer()
   const { data: { user } } = await supabase.auth.getUser()
@@ -26,10 +28,16 @@ export async function POST(req: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const body = await req.json()
+  const body = await req.json().catch(() => null)
+  if (!body) return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
   const { dual_meet_id, bouts, team_a_score, team_b_score, finalize } = body
 
-  if (!dual_meet_id) return NextResponse.json({ error: 'dual_meet_id required' }, { status: 400 })
+  if (typeof dual_meet_id !== 'string' || !UUID.test(dual_meet_id)) {
+    return NextResponse.json({ error: 'dual_meet_id must be a meet id' }, { status: 400 })
+  }
+  if (bouts !== undefined && !Array.isArray(bouts)) {
+    return NextResponse.json({ error: 'bouts must be a list' }, { status: 400 })
+  }
 
   const now = new Date().toISOString()
   const payload: Record<string, unknown> = {

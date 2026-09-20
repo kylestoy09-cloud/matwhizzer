@@ -404,8 +404,8 @@ function MatchHeader({ meet, phase, isPremier, premierLabel, homeColor, boutPred
 
 // ─── H2H Panel ────────────────────────────────────────────────────────────────
 
-function H2HPanel({ match, nameA, nameB, meetId, onPrediction }: {
-  match: Match; nameA: string; nameB: string; meetId: string
+function H2HPanel({ match, nameA, nameB, meetId, gender, onPrediction }: {
+  match: Match; nameA: string; nameB: string; meetId: string; gender: 'M' | 'F'
   onPrediction?: (winner: 'a' | 'b' | 'even', label: string) => void
 }) {
   const [data, setData] = useState<H2HData | null>(null)
@@ -415,7 +415,7 @@ function H2HPanel({ match, nameA, nameB, meetId, onPrediction }: {
   useEffect(() => {
     if (!match.wrestler_a_id || !match.wrestler_b_id) return
     setLoading(true); setErr(null)
-    const params = new URLSearchParams({ a: match.wrestler_a_id, b: match.wrestler_b_id })
+    const params = new URLSearchParams({ a: match.wrestler_a_id, b: match.wrestler_b_id, gender })
     if (meetId) params.set('exclude_meet', meetId)
     fetch(`/api/h2h?${params}`)
       .then(r => r.json())
@@ -954,6 +954,7 @@ function BoutRow({ match, phase, index, scorecardEntry, onScorecardChange, schoo
                         nameA={schoolA}
                         nameB={schoolB}
                         meetId={meetId}
+                        gender={gender === 'F' ? 'F' : 'M'}
                         onPrediction={phase === 'future' ? (w, l) => {
                           setApiPrediction({ winner: w, label: l })
                           onBoutPrediction(match.id, w, l)
@@ -992,12 +993,15 @@ function BoutCard({ detail, phase, meetId, onBoutPrediction }: {
   )
   const [submitted, setSubmitted] = useState(false)
   const [saving, setSaving] = useState(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
   const [openIdx, setOpenIdx] = useState<number | null>(null)
 
-  function handleBoutComplete(i: number, winner: 'a' | 'b', resultType: string) {
+  function handleBoutComplete(matchId: string, i: number, winner: 'a' | 'b', resultType: string) {
     setScorecard(sc => {
+      const idx = sc.findIndex(e => e.matchId === matchId)
+      if (idx === -1) return [...sc, { matchId, winner, resultType }]
       const next = [...sc]
-      next[i] = { ...next[i], winner, resultType }
+      next[idx] = { ...next[idx], winner, resultType }
       return next
     })
     const sorted = [...detail.matches].sort((a, b) => (a.order_index ?? 0) - (b.order_index ?? 0))
@@ -1035,16 +1039,25 @@ function BoutCard({ detail, phase, meetId, onBoutPrediction }: {
       })
     const teamA = bouts.reduce((s, b) => s + b.pts_a, 0)
     const teamB = bouts.reduce((s, b) => s + b.pts_b, 0)
+    try { localStorage.setItem(`scorecard_${detail.meet.id}`, JSON.stringify(scorecard)) } catch {}
+
     try {
-      await fetch('/api/fan-scores', {
+      const res = await fetch('/api/fan-scores', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ dual_meet_id: detail.meet.id, bouts, team_a_score: teamA, team_b_score: teamB, finalize: true }),
       })
-    } catch {}
-    try { localStorage.setItem(`scorecard_${detail.meet.id}`, JSON.stringify(scorecard)) } catch {}
-    setSubmitted(true)
-    setSaving(false)
+      if (!res.ok) {
+        const d = await res.json().catch(() => ({}))
+        throw new Error(d.error ?? `Couldn't save your scorecard (${res.status})`)
+      }
+      setSubmitted(true)
+      setSaveError(null)
+    } catch (e) {
+      setSaveError(e instanceof Error ? e.message : 'Couldn\'t save your scorecard')
+    } finally {
+      setSaving(false)
+    }
   }
 
   const sorted = [...detail.matches].sort((a, b) => (a.order_index ?? 0) - (b.order_index ?? 0))
@@ -1094,14 +1107,16 @@ function BoutCard({ detail, phase, meetId, onBoutPrediction }: {
                 colorB={detail.meet.color_b}
                 dirA={detail.meet.logo_dir_a}
                 dirB={detail.meet.logo_dir_b}
-                scorecardEntry={scorecard[i] ?? { matchId: match.id, winner: null, resultType: 'DEC' }}
+                scorecardEntry={scorecard.find(e => e.matchId === match.id) ?? { matchId: match.id, winner: null, resultType: 'DEC' }}
                 onScorecardChange={entry => setScorecard(sc => {
-                  const next = [...sc]; next[i] = entry; return next
+                  const idx = sc.findIndex(e => e.matchId === match.id)
+                  if (idx === -1) return [...sc, entry]
+                  const next = [...sc]; next[idx] = entry; return next
                 })}
                 onBoutPrediction={onBoutPrediction}
                 isOpen={openIdx === i}
                 onToggle={() => setOpenIdx(prev => prev === i ? null : i)}
-                onComplete={(winner, resultType) => handleBoutComplete(i, winner, resultType)}
+                onComplete={(winner, resultType) => handleBoutComplete(match.id, i, winner, resultType)}
               />
             ))}
           </tbody>
@@ -1115,7 +1130,9 @@ function BoutCard({ detail, phase, meetId, onBoutPrediction }: {
             <p className="text-xs text-green-700 font-medium">✓ Saved to your profile · {detail.meet.school_a} {scoreA} – {scoreB} {detail.meet.school_b}</p>
           ) : (
             <>
-              <p className="text-xs text-slate-400">Score any bouts, then mark as final to save to your profile</p>
+              <p className={`text-xs ${saveError ? 'text-red-600 font-medium' : 'text-slate-400'}`}>
+                {saveError ?? 'Score any bouts, then mark as final to save to your profile'}
+              </p>
               <button
                 onClick={handleSubmit}
                 disabled={saving || scorecard.every(e => !e.winner)}
@@ -1279,7 +1296,7 @@ export function MatchCardTestClient() {
     setBoutPredictions({})
     const bouts = detail.matches.filter(m => m.wrestler_a_id && m.wrestler_b_id)
     for (const match of bouts) {
-      fetch(`/api/h2h?a=${match.wrestler_a_id}&b=${match.wrestler_b_id}&exclude_meet=${detail.meet.id}`)
+      fetch(`/api/h2h?a=${match.wrestler_a_id}&b=${match.wrestler_b_id}&gender=${detail.meet.gender === 'F' ? 'F' : 'M'}&exclude_meet=${detail.meet.id}`)
         .then(r => r.json())
         .then(d => {
           if (d.prediction) handleBoutPrediction(match.id, d.prediction.favoredWrestler, d.prediction.outcomeLabel)

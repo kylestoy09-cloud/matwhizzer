@@ -108,7 +108,7 @@ function matchQuality(m: MatchDetail): number {
   const absMargin = Math.abs((m.myScore ?? 0) - (m.oppScore ?? 0))
   const secs = m.fallTimeSecs ?? 9999
   const rankFor = (won: boolean, base: number) => won ? base : (33 - base)
-  if (rt === 'Fall' || rt === 'TF') {
+  if (rt === 'Fall' || rt === 'TF' || rt === 'TF-1.5' || rt === 'TF-2') {
     const typeBase = rt === 'Fall' ? 1 : 2
     let tier: number
     if (secs < 60) tier = 0
@@ -155,13 +155,13 @@ export default function H2HPage({ gender = 'M' }: { gender?: 'M' | 'F' }) {
   const fetchH2H = useCallback(async (a: WrestlerOption, b: WrestlerOption) => {
     setLoading(true); setError(null); setData(null)
     try {
-      const res = await fetch(`/api/h2h?a=${a.id}&b=${b.id}`)
+      const res = await fetch(`/api/h2h?a=${a.id}&b=${b.id}&gender=${gender}`)
       const json = await res.json()
       if (!res.ok) throw new Error(json.error ?? 'Failed to load')
       setData(json)
     } catch (e: any) { setError(e.message) }
     finally { setLoading(false) }
-  }, [])
+  }, [gender])
 
   useEffect(() => {
     if (wrestlerA && wrestlerB) fetchH2H(wrestlerA, wrestlerB)
