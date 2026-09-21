@@ -48,13 +48,26 @@ export type MeetResult = {
 }
 
 export default async function PostseasonTeamPage() {
-  const SEASON_ID = (await getLiveSeason('M')).id
+  const liveSeason = await getLiveSeason('M')
+  const SEASON_ID = liveSeason.id
   const db = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
   )
 
   // Fetch all confirmed playoff seeds
+  // Public state SF / final dates from the NJSIAA season calendar
+  const { data: stateCalRows } = await db
+    .from('season_calendar')
+    .select('event_type, event_date')
+    .eq('season_id', SEASON_ID)
+    .in('event_type', ['team_playoff_state_sf_public', 'team_playoff_state_final_public'])
+  const stateDateOf = new Map((stateCalRows ?? []).map(r => [r.event_type as string, r.event_date as string]))
+  const stateDates = {
+    sf:    stateDateOf.get('team_playoff_state_sf_public') ?? null,
+    final: stateDateOf.get('team_playoff_state_final_public') ?? null,
+  }
+
   const { data: seedRows } = await db
     .from('playoff_seeds')
     .select('section, classification, seed, school_id, schools(id, display_name, logo_url, primary_color)')
@@ -225,13 +238,14 @@ export default async function PostseasonTeamPage() {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-slate-900">Postseason — Team Brackets</h1>
-        <p className="text-sm text-slate-500 mt-1">2024–25 NJSIAA Boys Wrestling Team Playoffs</p>
+        <p className="text-sm text-slate-500 mt-1">{liveSeason.label} NJSIAA Boys Wrestling Team Playoffs</p>
       </div>
       <TeamBracketClient
         regularGroups={regularGroups}
         npGroups={npGroups}
         leaderStats={leaderStats}
         meetResults={meetResults}
+        stateDates={stateDates}
       />
     </div>
   )

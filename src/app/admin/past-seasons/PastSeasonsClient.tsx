@@ -4,11 +4,13 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
 import { DualsTab } from './tabs/DualsTab'
 import { NjsiaaTab } from './tabs/NjsiaaTab'
+import { StandingsTab } from './tabs/StandingsTab'
 
 export type PastSeason = { id: number; year_label: string; end_year: number }
 
 const TABS = [
   { id: 'duals',        label: 'Duals' },
+  { id: 'standings',    label: 'Standings' },
   { id: 'schools',      label: 'Schools' },
   { id: 'wrestlers',    label: 'Wrestlers' },
   { id: 'coaches',      label: 'Coaches' },
@@ -98,6 +100,8 @@ function TabContent({ tab, season, gender }: { tab: TabId; season: PastSeason; g
   switch (tab) {
     case 'duals':
       return <DualsTabWrapper season={season} gender={gender} />
+    case 'standings':
+      return <StandingsTab season={season} gender={gender} />
     case 'schools':
       return <SchoolsTab season={season} gender={gender} />
     case 'wrestlers':

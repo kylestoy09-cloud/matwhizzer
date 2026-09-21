@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
+import { useSeasons } from '@/components/SeasonsProvider'
 
 type SchoolProfileTask = {
   task_type:   'school_profile'
@@ -45,6 +46,7 @@ const FIELD_LABELS: Record<string, string> = {
 }
 
 export function MicrocheckClient() {
+  const { label: seasonLabelOf } = useSeasons()
   const [task,           setTask]           = useState<TaskInfo | null | 'idle' | 'loading' | 'done'>('idle')
   const [value,          setValue]          = useState('')
   const [submitting,     setSubmitting]     = useState(false)
@@ -207,7 +209,6 @@ export function MicrocheckClient() {
   // ── Tie resolution card ────────────────────────────────────────────────────
 
   if (task.task_type === 'tie_resolution') {
-    const SEASON: Record<number, string> = { 1: '2024–25', 2: '2025–26', 3: '2026–27' }
     const gLabel  = task.gender === 'F' ? 'Girls' : 'Boys'
     const dateStr = new Date(task.meet_date + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
     const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(`${task.team1_name} ${gLabel} wrestling schedule results`)}`
@@ -221,7 +222,7 @@ export function MicrocheckClient() {
           <h1 className="text-3xl font-bold text-slate-900 leading-tight mb-1">
             {task.team1_name} vs {task.team2_name}
           </h1>
-          <p className="text-slate-500 mb-2">{SEASON[task.season_id] ?? `Season ${task.season_id}`} · {dateStr}</p>
+          <p className="text-slate-500 mb-2">{seasonLabelOf(task.season_id) ?? `Season ${task.season_id}`} · {dateStr}</p>
           <a
             href={searchUrl}
             target="_blank"

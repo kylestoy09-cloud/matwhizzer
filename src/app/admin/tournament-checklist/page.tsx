@@ -4,9 +4,14 @@ import { TournamentChecklistClient } from './TournamentChecklistClient'
 
 export const dynamic = 'force-dynamic'
 
-// Reference list of expected in-season tournaments this season.
+// Historical record: the reference list below is the 2025-26 schedule, so this page is pinned to
+// that season on purpose. It does not roll over. Use the Tournament Registry for the current season.
+const CHECKLIST_SEASON = '2025-26' // season-literal-ok: pinned historical record
+
+// Reference list of expected in-season tournaments for CHECKLIST_SEASON.
 // Names here are the raw source names (not necessarily exact DB names).
 // Duplicates in the source list are preserved so the match UI can flag them.
+// season-literal-ok-start: pinned 2025-26 reference schedule
 const REFERENCE_TOURNAMENTS = [
   { date: '2026-02-14', name: 'Escape Gloucester County Cell Block 6', state: 'NJ' },
   { date: '2026-02-07', name: 'Panther Open at William Tennent', state: 'PA' },
@@ -91,6 +96,7 @@ const REFERENCE_TOURNAMENTS = [
   { date: '2025-12-13', name: 'Blue Devil Classic', state: 'NJ' },
   { date: '2025-12-13', name: 'Iron Man Tournament', state: 'OH' },
 ] as const
+// season-literal-ok-end
 
 export type RefTournament = {
   date: string
@@ -129,7 +135,7 @@ export default async function TournamentChecklistPage() {
   const { data: dbTournaments } = await supabase
     .from('in_season_tournaments')
     .select('id, name, start_date, end_date')
-    .eq('season', '2025-26')
+    .eq('season', CHECKLIST_SEASON)
     .order('start_date')
 
   const db = dbTournaments ?? []

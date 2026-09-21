@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useSeasons } from '@/components/SeasonsProvider'
 
 type Tournament = {
   id: number
@@ -14,7 +15,7 @@ type Tournament = {
 }
 
 const GENDER_LABELS: Record<string, string> = { M: 'Boys', F: 'Girls', MF: 'Combined' }
-const SEASONS = ['2025-26', '2024-25', '2023-24', '2022-23']
+const OLDEST_SEASON_START = 2022
 
 function TournamentForm({
   initial,
@@ -29,8 +30,9 @@ function TournamentForm({
   saving: boolean
   error: string | null
 }) {
+  const SEASONS = useSeasons().labelsBackTo(OLDEST_SEASON_START)
   const [name,   setName]   = useState(initial.name   ?? '')
-  const [season, setSeason] = useState(initial.season ?? '2025-26')
+  const [season, setSeason] = useState(initial.season ?? SEASONS[0])
   const [date,   setDate]   = useState(initial.date   ?? '')
   const [gender, setGender] = useState(initial.gender ?? 'M')
   const [notes,  setNotes]  = useState(initial.notes  ?? '')

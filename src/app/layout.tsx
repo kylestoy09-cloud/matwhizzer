@@ -15,7 +15,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: 'Mat Whizzer',
-  description: 'NJSIAA Wrestling Results 2024–25',
+  description: 'NJSIAA Wrestling Results',
   icons: {
     icon: [
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Mat Whizzer',
-    description: 'NJSIAA Wrestling Results 2024–25',
+    description: 'NJSIAA Wrestling Results',
     images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'Mat Whizzer — NJSIAA Wrestling' }],
   },
   twitter: {

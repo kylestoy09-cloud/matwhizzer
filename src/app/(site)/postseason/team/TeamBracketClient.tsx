@@ -241,14 +241,14 @@ function Bracket8({ seeds, meetResults }: { seeds: SeedEntry[]; meetResults: Mee
 // SF pairings are determined by power points (not fixed by section), so we
 // find the actual matches by date rather than assuming which sections meet.
 
-const STATE_SF_DATE  = '2026-02-20'
-const STATE_FIN_DATE = '2026-02-22'
+export type StateDates = { sf: string | null; final: string | null }
 
 function StateBracket({
-  sections, meetResults,
+  sections, meetResults, stateDates,
 }: {
   sections: Array<{ section: string; seeds: SeedEntry[] }>
   meetResults: MeetResult[]
+  stateDates: StateDates
 }) {
   const bySec = new Map(sections.map(s => [s.section, s.seeds]))
   const allSeeds = sections.flatMap(s => s.seeds)
@@ -266,7 +266,7 @@ function StateBracket({
 
   // Find SF and Final matches: both teams must be sectional champs, matched by date
   const sfMeets = meetResults.filter(m =>
-    m.meetDate === STATE_SF_DATE &&
+    m.meetDate === stateDates.sf &&
     champSids.has(m.team1SchoolId) && champSids.has(m.team2SchoolId)
   )
   const mSF1 = sfMeets[0] ?? null
@@ -281,7 +281,7 @@ function StateBracket({
   const sf2Winner = advance(mSF2, sf2A, sf2B, bySid)
 
   const mFinal = meetResults.find(m =>
-    m.meetDate === STATE_FIN_DATE &&
+    m.meetDate === stateDates.final &&
     champSids.has(m.team1SchoolId) && champSids.has(m.team2SchoolId)
   ) ?? null
   const finA = mFinal ? bySid.get(mFinal.team1SchoolId) ?? null : null
@@ -565,12 +565,13 @@ const GROUP_TABS = [
 ]
 
 export function TeamBracketClient({
-  regularGroups, npGroups, leaderStats, meetResults,
+  regularGroups, npGroups, leaderStats, meetResults, stateDates,
 }: {
   regularGroups: GroupBracket[]
   npGroups:      GroupBracket[]
   leaderStats:   LeaderStats
   meetResults:   MeetResult[]
+  stateDates:    StateDates
 }) {
   const [activeGroup,   setActiveGroup]   = useState(0)
   const [activeSectionByGroup, setActiveSectionByGroup] = useState<number[]>(
@@ -641,7 +642,7 @@ export function TeamBracketClient({
             </h2>
             <p className="text-xs text-slate-400 mb-4">NJSIAA Group {currentGroup?.classification} State Championship</p>
             {currentGroup && (
-              <StateBracket sections={currentGroup.sections} meetResults={meetResults} />
+              <StateBracket sections={currentGroup.sections} meetResults={meetResults} stateDates={stateDates} />
             )}
           </div>
         ) : (() => {

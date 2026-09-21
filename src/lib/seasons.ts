@@ -45,3 +45,12 @@ export function workingSeason(seasons: SeasonInfo[], gender: Gender): SeasonInfo
 export function previousSeason(seasons: SeasonInfo[], season: SeasonInfo): SeasonInfo | undefined {
   return seasons.filter(s => s.start_year < season.start_year).sort((a, b) => b.start_year - a.start_year)[0]
 }
+
+/** Labels newest-first ("2026-27", "2025-26", …) from the newest season back to the season starting in
+ *  oldestStartYear — for pickers that reach further back than the seasons table (MS, offseason history). */
+export function seasonLabelsBackTo(seasons: SeasonInfo[], oldestStartYear: number): string[] {
+  const newest = Math.max(oldestStartYear, ...seasons.map(s => s.start_year))
+  const labels: string[] = []
+  for (let y = newest; y >= oldestStartYear; y--) labels.push(`${y}-${String(y + 1).slice(-2)}`)
+  return labels
+}

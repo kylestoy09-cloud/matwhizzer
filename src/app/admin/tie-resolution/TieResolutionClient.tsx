@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from 'react'
+import { useSeasons } from '@/components/SeasonsProvider'
 import type { TieMeet } from './page'
 
-const SEASON_LABEL: Record<number, string> = { 1: '2024–25', 2: '2025–26', 3: '2026–27' }
 
 function searchUrl(name: string, gender: 'M' | 'F') {
   const g = gender === 'F' ? 'Girls' : 'Boys'
@@ -11,6 +11,7 @@ function searchUrl(name: string, gender: 'M' | 'F') {
 }
 
 export function TieResolutionClient({ ties: initialTies }: { ties: TieMeet[] }) {
+  const { label: seasonLabelOf } = useSeasons()
   const [ties, setTies] = useState<TieMeet[]>(initialTies)
   const [resolving, setResolving] = useState<string | null>(null)
 
@@ -55,7 +56,7 @@ export function TieResolutionClient({ ties: initialTies }: { ties: TieMeet[] }) 
         {ties.map(meet => {
           const busy = resolving === meet.id
           const genderLabel = meet.gender === 'F' ? 'Girls' : 'Boys'
-          const season = SEASON_LABEL[meet.season_id] ?? `Season ${meet.season_id}`
+          const season = seasonLabelOf(meet.season_id) ?? `Season ${meet.season_id}`
           const dateStr = new Date(meet.meet_date + 'T12:00:00').toLocaleDateString('en-US', {
             month: 'short', day: 'numeric', year: 'numeric',
           })

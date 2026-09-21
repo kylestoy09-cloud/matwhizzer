@@ -2,6 +2,237 @@
 
 ---
 
+## 2026-09-21 — Team-score cache refreshes itself (boys)
+
+**Migration file:** `docs/migrations/20260921_team_score_cache_auto_refresh.sql`
+
+**Purpose:** `precomputed_team_scores` never recomputed on its own, so it drifted every time bracket data changed (fixed once by the rebuild migration). Now: statement-level triggers on `tournament_entries` and `matches` mark the season dirty in `team_score_cache_dirty` when a boys postseason tournament's rows change; pg_cron runs `refresh_dirty_team_score_caches()` every 5 minutes, which rebuilds each dirty season once via `refresh_boys_team_score_cache(season)` (names via `school_display_name`). Marking is one small insert per statement, so imports aren't slowed. Immediate refresh: `SELECT refresh_boys_team_score_cache(2026);`. Girls not covered yet.
+
+**Tables affected:** `team_score_cache_dirty` (new), `precomputed_team_scores` (via refresh); triggers on `tournament_entries`, `matches`; pg_cron job `refresh-boys-team-score-cache`
+
+**PENDING** — run in Supabase SQL editor
+
+**Reversible?** Yes — rollback block in migration file
+**Verified?** No — pending
+
+---
+
+## 2026-09-21 — API "Max rows" raised to 100,000 (CONFIG — Supabase dashboard)
+
+**Migration file:** none — project API setting (Dashboard → Project Settings → Data API → Max rows). Recorded here because it changes what every query returns.
+
+**Purpose:** PostgREST returned at most 1,000 rows per request whatever `.limit()`/`.range()` asked for, silently truncating ~500 reads (327 table queries, 187 RPC calls) — e.g. school points-per-dual rank used 1,000 of 3,980 boys meets, Dual Hub showed 72 of 3,974 completed meets, Data Health saw ~7% of wrestlers and entries. Raising the cap fixes all of them at once, including RPCs. Largest legitimate read today ≈ 55k rows (a season of dual bouts). Code that pages with `src/lib/fetchAllRows.ts` keeps working either way.
+
+**APPLIED** — 2026-09-21 via Supabase dashboard
+
+**Reversible?** Yes — set Max rows back to 1000
+**Verified?** Yes — 2026-09-21: anon `.range(0, 9999)` on `dual_meets` returns 3,980; service role gets all 14,980 wrestlers
+
+---
+
+## 2026-09-21 — Boys district/region assignments from brackets (2024-25, 2025-26)
+
+**Migration file:** `docs/migrations/20260921_boys_alignment_from_brackets.sql`
+
+**Purpose:** The 2024-25 boys district rows were a copy of 2025-26 (303/305 identical) although districts were realigned. List vs actual district brackets: 2024-25 — 241 schools in the wrong district, 10 missing; 2025-26 — 2 wrong districts (Westwood, Kingsway), 33 wrong regions, 9 missing (incl. Bergen Charter, Cliffside Park, Kittatinny, Passaic Tech). Sets each school's district to the bracket it wrestled in and its region from that district (D1-4 → R1 … D29-32 → R8, verified from where qualifiers wrestled). Schools with no bracket entries unchanged; conferences untouched.
+
+**Tables affected:** `boys_school_districts`, `boys_school_regions`
+
+**PENDING** — run in Supabase SQL editor
+
+**Reversible?** Partially — see note in migration file
+**Verified?** No — pending (verify query should show 0 mismatches)
+
+---
+
+## 2026-09-21 — Rebuild boys team-score cache (2024-25, 2025-26)
+
+**Migration file:** `docs/migrations/20260921_rebuild_boys_team_score_cache.sql`
+
+**Purpose:** `precomputed_team_scores` (the only source for the postseason leaderboard) had drifted from the bracket data since it was last written (2026-07-22): of 1,233 boys rows, 108 schools missing (2024-25 District 31 had none; St Joseph (Montvale) missing from 2024-25 Region 2), 682 stale totals, 24 rows for schools that no longer score. Scoring functions unchanged since then; the data changed. Deletes and re-inserts every boys district/region/state tournament's rows from the scoring RPCs in one block, with names as of each season (`school_display_name`). Requires the Lodi/Saddle Brook migration first.
+
+**Tables affected:** `precomputed_team_scores` (boys rows only)
+
+**APPLIED** — 2026-09-21 via Supabase SQL editor
+
+**Reversible?** Re-runnable; old values were stale
+**Verified?** Yes — 2026-09-21: 1,317 boys rows (2025: 296 district / 234 region / 128 state; 2026: 290 / 236 / 133); re-audit vs RPCs: 0 missing, 0 stale, 0 extra
+
+---
+
+## 2026-09-21 — service_role grants (33 tables) + 2026-27 hammer formula
+
+**Migration file:** `docs/migrations/20260921_service_role_grants.sql`
+
+**Purpose:** Probing every PostgREST endpoint with the service_role key found 33 tables returning "permission denied" (403), e.g. `hammer_score_config`, `admin_season_config`, `coaches`, `districts`, `regions`, `placements`, `ms_wrestlers`. Server code using `createSupabaseAdmin()` on these failed silently: the hammer formula editor could not load/save, and `/admin/calendar` always used hardcoded fallback dates. Grants `service_role` only; anon/authenticated unchanged. Also copies the active 2025-26 hammer formula to 2026-27 per gender (Finalize Season now does this for future rollovers).
+
+**Tables affected:** 33 tables (grants); `hammer_score_config` (≤2 rows inserted)
+
+**APPLIED** — 2026-09-21 via Supabase SQL editor
+
+**Reversible?** Yes — `REVOKE ALL ON public.<table> FROM service_role;` per table; `DELETE FROM hammer_score_config WHERE season = '2026-27';`
+**Verified?** Yes — 2026-09-21: all 118 PostgREST endpoints return 200 to service_role (0 blocked); hammer_score_config has active 2026-27 rows for M and F
+
+---
+
+## 2026-09-21 — Normalize 2026-27 season_calendar vocabulary
+
+**Migration file:** `docs/migrations/20260921_season_calendar_2027_normalize.sql`
+
+**Purpose:** The 2026-27 rows from `20260917_njsiaa_calendar_s3.sql` used categories `season`/`postseason` and event types `districts`/`regions`/`state`/`team_playoff` with no gender. The About page only renders the 2025-26 categories (so those rows never showed), and wrestler profiles, hammer recalculation and playoff detection look up 2025-26 event types. Converted 19 rows to the canonical vocabulary (`team_entry`, `weight`, `individual_boys`, `team_public_boys`, `team_np_boys`; `individual_district_boys`, `team_playoff_r12_public`, …). All rows are boys (per Kyle). Girls 2026-27 dates not yet entered.
+
+**Tables affected:** `season_calendar` (19 rows updated, ids 124–142)
+
+**APPLIED** — 2026-09-21 via REST (service role)
+
+**Reversible?** Yes — restore values from `20260917_njsiaa_calendar_s3.sql`
+**Verified?** Yes — 2026-09-21: season 2027 categories now individual_boys 6, team_entry 5, preseason 4, team_public_boys 4, team_np_boys 3, weight 1
+
+---
+
+## 2026-09-21 — Lodi (379) and Saddle Brook (59), boys; season-based school names
+
+**Migration file:** `docs/migrations/20260921_restore_lodi_saddle_brook.sql`
+
+**Purpose:** Boys only. Lodi and Saddle Brook were two programs in 2024-25 and merged into a Lodi-hosted co-op, "Lodi/Saddle Brook", from 2025-26. `20260806_merge_lodi.sql` had deleted Saddle Brook (59) and folded its 2024-25 postseason entries into 379; 379 was also missing from the 2025-26 boys program list. School names now follow the season:
+- New `school_season_names` (school, season, gender → name) + `school_display_name()`: `schools.display_name` is the current name; the table records seasons where it differed. 379 stays "Lodi/Saddle Brook" (current) and is "Lodi" for 2024-25 boys
+- Recreates **59 Saddle Brook** (original id, colors, logo) with a `boys_schools` row
+- Boys program rows: 2024-25 both District 6, Region 2, NJIC; 2025-26 379 District 7, Region 2, NJIC (+ NJIC 2026-27)
+- Re-points the 8 Saddle Brook 2024-25 boys postseason entries to 59 (aborts if count differs); Lodi's stay on 379
+- Co-op: `school_coops` 379 ← 59 and 59 inactive, 2025-26 and 2026-27 boys
+- Team-score cache rows for 2024-25 District 6 / Region 2 (379 as "Lodi", 59) and the missing 2025-26 boys District 7 / Region 2 rows for 379
+- Alias "Lodi/Saddle Brook High School" → 379
+- First version failed (rolled back, nothing applied): `inactive_school_seasons` primary key is still `(school_id, season_id)`, so a school can't be inactive for both genders in one season. Girls are out of scope here
+
+**Tables affected:** `school_season_names` (new), `schools`, `boys_schools`, `boys_school_districts`, `boys_school_regions`, `boys_school_conferences`, `tournament_entries`, `school_coops`, `inactive_school_seasons`, `precomputed_team_scores`, `school_aliases`
+
+**APPLIED** — 2026-09-21 via Supabase SQL editor
+
+**Reversible?** Yes — rollback block in migration file
+**Verified?** Yes — 2026-09-21: cache shows 2025 District 6 Saddle Brook 13.0 and Lodi 8.0; 2026 Lodi/Saddle Brook District 7 17.5, Region 2 3.0
+
+---
+
+## 2026-09-21 — Registry links and Belvidere dual dates
+
+**Migration file:** `docs/migrations/20260921_registry_links_and_belvidere_dates.sql`
+
+**Purpose:** Data corrections.
+- `tournament_registry`: Hillsborough Holiday Brawl unlinked from the EB Lady Bear Invitational tournament (separate events); Del Val Kickoff marked not imported (0 bouts anywhere)
+- `dual_meets`: Belvidere's 2/14 and 2/21 meets had swapped dates — Bloomfield meet → 2026-02-14, Union meet → 2026-02-21 (per source export)
+
+**Tables affected:** `tournament_registry`, `dual_meets`
+
+**APPLIED** — 2026-09-21 via Supabase SQL editor
+
+**Reversible?** Yes — rollback block in migration file
+**Verified?** Yes — 2026-09-21: Belvidere meets now 6ba739c1 (Union) 2026-02-21, b9b20fe0 (Bloomfield) 2026-02-14
+
+---
+
+## 2026-09-21 — power_points_computed: hide computed Power Points
+
+**Migration file:** `docs/migrations/20260921_power_points_computed_table.sql`
+
+**Purpose:** Computed Power Points stay hidden until the formula matches NJSIAA. `power_points` now holds official released figures only (Standings tab import); all public displays read it. New admin-only `power_points_computed` (RLS on, no anon/authenticated grants) receives `scripts/compute_power_points.mts` output for comparison against official. Moves the 314 existing rows (all computed 2026-08-09, none frozen) into it; aborts if any row is frozen. Public PP is empty until official figures are imported.
+
+**Tables affected:** `power_points`, `power_points_computed` (new)
+
+**APPLIED** — 2026-09-21 via Supabase SQL editor
+
+**Reversible?** Yes — rollback block in migration file
+**Verified?** Yes — 2026-09-21: power_points 0 rows, power_points_computed 314 rows
+
+---
+
+## 2026-09-21 — Girls partial meets count toward record
+
+**Migration file:** `docs/migrations/20260921_girls_partials_count_toward_record.sql`
+
+**Purpose:** 1-2 bout girls meets stay tagged `meet_kind='partial'` but now count toward team W-L (`counts_toward_record=true`), reversing the 20260920 default. Records will be reviewed against official standings once all results are in; individual meets can be switched off then. Jamborees still never count. Importer sets the same for new partial meets.
+
+**Tables affected:** `dual_meets_girls`
+
+**APPLIED** — 2026-09-21 via Supabase SQL editor
+
+**Reversible?** Yes — rollback in migration file
+**Verified?** Yes — 2026-09-21: dual 959, partial 206, all `counts_toward_record=true`
+
+---
+
+## 2026-09-21 — 2024-25 postseason dates in season_calendar
+
+**Migration file:** `docs/migrations/20260921_season_calendar_2025_postseason.sql`
+
+**Purpose:** Wrestler profiles now read postseason event dates from `season_calendar` (replacing a hardcoded map keyed by the old season ids 1/2). Season 2025 had no individual postseason rows, so its district/region/state events showed no date. Dates supplied by Kyle: boys districts 2/22/2025, regions 2/28–3/1/2025, state 3/6–3/8/2025; girls regions 2/23/2025, state 3/6–3/8/2025 (no girls districts in 2024-25).
+
+**Tables affected:** `season_calendar` (5 rows inserted, ids 143–147)
+
+**APPLIED** — 2026-09-21 via REST (service role)
+
+**Reversible?** Yes — `DELETE FROM season_calendar WHERE season_id = 2025 AND event_type LIKE 'individual_%';`
+**Verified?** Yes — 2026-09-21: 5 rows returned on insert with the dates above
+
+---
+
+## 2026-09-21 — Resolve boys dual ties from official NJSIAA W-L
+
+**Migration file:** `docs/migrations/20260921_resolve_boys_ties_from_official_wl.sql`
+
+**Purpose:** Uses the official 2025-26 Power Points W-L as the authority for tied boys duals (season 2026). A tie's winner is the only assignment that brings both schools to their official record.
+- Resolves the 13 ties left pending by 20260919 (bout data could not decide them). Winner +1 team point, `criteria_winner_school_id` set, `tiebreaker_pending=false`, microcheck task completed. 10 confirmed by both schools' records; 3 one-sided (opponent not in the official list). Ridgefield Memorial (357) identified as official "Ridgefield".
+- Reverses 4 criteria winners set by 20260919 that official W-L contradicts: 25c33521 (Willingboro), 7dfec3f2 (Bayonne), e2270193 (New Milford), 0a6edd13 (Pequannock). Moves the +1 point to the correct side.
+
+**Tables affected:** `dual_meets`, `microcheck_tasks`
+
+**APPLIED** — 2026-09-21 via Supabase SQL editor
+
+**Reversible?** Yes — see rollback notes in migration file
+**Verified?** Yes — 2026-09-21: 0 pending boys ties, 0 pending tie tasks
+
+---
+
+## 2026-09-20 — conference_standings: add gender
+
+**Migration file:** `docs/migrations/20260920_conference_standings_gender.sql`
+
+**Purpose:** `conference_standings` had no gender column, so girls standings could not be stored and the public girls conference page was reading boys rows. Needed by the Past Seasons standings importer (gender-specific per program).
+
+**What changed:**
+- `conference_standings.gender text NOT NULL DEFAULT 'M'` with `CHECK (gender IN ('M','F'))` — all existing rows become boys
+- Index `idx_conf_standings_season_gender (season_id, gender, conference_slug)`
+- Public conference page and importer filter on it (code ships after this is applied)
+
+**Tables affected:** `conference_standings`
+
+**APPLIED** — 2026-09-21 via Supabase SQL editor
+
+**Reversible?** Yes — drop the index and column (see rollback block in migration file)
+**Verified?** Yes — 2026-09-21: 285 rows `gender='M'`, 0 `'F'`; boys conference page renders, girls page empty
+
+---
+
+## 2026-09-20 — dual_meets_girls: meet_kind + counts_toward_record
+
+**Migration file:** `docs/migrations/20260920_dual_meets_girls_meet_kind.sql`
+
+**Purpose:** Girls duals include jamboree pairings and 1-2 bout "random" meets that look like one-match duals. Bouts from all of them must stay in the data (wrestler records, rankings, profiles), but jamboree pairings must not count as dual W-L, and partial meets only count when an official standings source includes them.
+
+**What changed:**
+- `dual_meets_girls.meet_kind text NOT NULL DEFAULT 'dual'` — `'dual' | 'partial' | 'jamboree'`
+- `dual_meets_girls.counts_toward_record boolean NOT NULL DEFAULT true`
+- Backfill: meets with 1-2 bouts → `meet_kind = 'partial'`, `counts_toward_record = false` (~206 of 1,165 at time of writing). The `counts_toward_record` default for partials is reversed by `20260921_girls_partials_count_toward_record.sql`
+- Defaults leave the existing importer working unchanged; importer and W-L / Power Points code follow in a separate change
+
+**Tables affected:** `dual_meets_girls`
+
+**APPLIED** — 2026-09-21 via Supabase SQL editor
+
+**Reversible?** Yes — drop the two columns (see rollback block in migration file)
+**Verified?** Yes — 2026-09-21: 959 dual (957 with 3+ bouts, 2 with 0), 206 partial, 0 jamboree; 206 `counts_toward_record=false`
+
+---
+
 ## 2026-09-20 — Seasons re-keyed to championship (ending) year
 
 **Migration file:** `docs/migrations/20260919_rekey_seasons_championship_year.sql`
@@ -745,7 +976,7 @@ These are long-standing combined programs for both boys and girls.
 
 **What changed:** Seeds 18 rows (9 weeks × 2 genders) for Season 3 (2026-27). Dates: Dec 13, 20, 27 2026; Jan 3, 10, 17, 24, 31; Feb 7 2027. **DO NOT RUN until Season 3 exists in `seasons` table (`year_label = '2026-27'`).** Script validates and raises an error if Season 3 is missing. Safe to re-run (ON CONFLICT DO NOTHING).
 
-**APPLIED** — NOT YET — run after Season 2 → Season 3 rollover
+**APPLIED** — 2026-09-21 via REST (service role) — 18 rows inserted for season 2027 (same dates as the file)
 
 **Reversible?** Yes — `DELETE FROM individual_ranking_weeks WHERE season_id = (SELECT id FROM seasons WHERE year_label = '2026-27');`
 **Verified?** No
@@ -1546,6 +1777,21 @@ These are long-standing combined programs for both boys and girls.
 
 **What changed:**
 - West Morris (ID 108, North II) corrected from Group 3 to Group 2
+
+---
+
+## 2026-08-06 — Merge Lodi (55) and Saddle Brook (59) into 379 (RECONSTRUCTED entry)
+
+**Migration file:** `docs/migrations/20260806_merge_lodi.sql`
+
+**Purpose:** Treated Lodi (55) and Saddle Brook (59) as empty shells: repointed their aliases to Lodi/Saddle Brook (379), deleted their `power_points`, `school_districts`, `precomputed_team_scores` and `playoff_seeds` rows, and deleted both schools. The file existed but was never logged; entry added 2026-09-21. Their 2024-25 postseason entries had already been pointed at 379, so the merge also absorbed their separate 2024-25 history.
+
+**Tables affected:** `school_aliases`, `power_points`, `school_districts`, `precomputed_team_scores`, `playoff_seeds`, `schools`
+
+**APPLIED** — 2026-08-06 (date from file name)
+
+**Reversible?** Superseded — `20260921_restore_lodi_saddle_brook.sql` recreates Saddle Brook and makes 379 Lodi
+**Verified?** Yes (2026-09-21) — 55 and 59 absent from `schools`
 
 ---
 

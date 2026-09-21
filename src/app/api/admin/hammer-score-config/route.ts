@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
+import { getWorkingSeason } from '@/lib/season-context'
 
 export const dynamic = 'force-dynamic'
 
@@ -10,7 +11,7 @@ export async function GET(req: NextRequest) {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const gender: 'M' | 'F' = req.nextUrl.searchParams.get('gender') === 'F' ? 'F' : 'M'
-  const season = req.nextUrl.searchParams.get('season') ?? '2025-26'
+  const season = req.nextUrl.searchParams.get('season') ?? (await getWorkingSeason(gender)).label
   const db = createSupabaseAdmin()
 
   const { data, error } = await db
@@ -25,7 +26,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
 
-  return NextResponse.json({ row: data ?? null })
+  return NextResponse.json({ row: data ?? null, season })
 }
 
 export async function POST(req: NextRequest) {
@@ -34,13 +35,14 @@ export async function POST(req: NextRequest) {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body = await req.json()
-  const { gender, season, name, config } = body as {
+  const { gender, name, config } = body as {
     gender: 'M' | 'F'
     season: string
     name: string
     config: unknown
   }
 
+  const season = body.season ?? (gender ? (await getWorkingSeason(gender)).label : null)
   if (!gender || !season || !config) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }

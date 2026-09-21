@@ -16,15 +16,15 @@ function Header() {
   )
 }
 
-export function RankingsHubSwitch({ currentSeason }: { currentSeason: string }) {
+export function RankingsHubSwitch({ boysSeason, girlsSeason }: { boysSeason: string; girlsSeason: string }) {
   const { gender } = useAdminGender()
   const isGirls = gender === 'F'
 
   return (
     <HubShell header={<Header />}>
       {isGirls
-        ? <RankingsHubClientGirls currentSeason={currentSeason} />
-        : <RankingsHubClientBoys currentSeason={currentSeason} />
+        ? <RankingsHubClientGirls currentSeason={girlsSeason} />
+        : <RankingsHubClientBoys currentSeason={boysSeason} />
       }
     </HubShell>
   )

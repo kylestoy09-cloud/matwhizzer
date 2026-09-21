@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getWorkingSeason } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
+import { fetchAllRows } from '@/lib/fetchAllRows'
 
 export const dynamic = 'force-dynamic'
 
@@ -26,12 +28,12 @@ type StrengthRow = {
   total_nj_wrestlers: number
 }
 
-// GET /api/admin/tournament-hub?season=2025-26&gender=F
+// GET /api/admin/tournament-hub?season=<label>&gender=F  (season defaults to the season in progress)
 export async function GET(req: NextRequest) {
   if (!await requireAdmin()) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const season = req.nextUrl.searchParams.get('season') ?? '2025-26'
   const gender = (req.nextUrl.searchParams.get('gender') as 'M' | 'F') ?? 'F'
+  const season = req.nextUrl.searchParams.get('season') ?? (await getWorkingSeason(gender)).label
 
   const db = createSupabaseAdmin()
 
@@ -74,11 +76,12 @@ export async function GET(req: NextRequest) {
     tournamentIds.length > 0
       ? db.rpc('tournament_hub_counts', { p_tournament_ids: tournamentIds, p_gender: gender })
       : Promise.resolve({ data: [] as CountsRow[], error: null }),
+    // Paged: the API caps each request at 1,000 rows regardless of .limit()
     tournamentIds.length > 0
-      ? db.from('tournament_placements').select('in_season_tournament_id').in('in_season_tournament_id', tournamentIds).limit(5000)
+      ? fetchAllRows((from, to) => db.from('tournament_placements').select('in_season_tournament_id').in('in_season_tournament_id', tournamentIds).order('id').range(from, to))
       : Promise.resolve({ data: [] }),
     tournamentIds.length > 0
-      ? db.from('in_season_tournament_team_scores').select('tournament_id').in('tournament_id', tournamentIds).limit(5000)
+      ? fetchAllRows((from, to) => db.from('in_season_tournament_team_scores').select('tournament_id').in('tournament_id', tournamentIds).order('id').range(from, to))
       : Promise.resolve({ data: [] }),
   ])
 

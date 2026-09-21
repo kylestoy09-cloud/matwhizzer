@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useSeasons } from '@/components/SeasonsProvider'
 import Link from 'next/link'
 
 // ── Types ────────────────────────────────────────────────────────────────────
@@ -40,7 +41,7 @@ type Placement = {
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
-const SEASONS = ['2025-26', '2024-25', '2023-24', '2022-23', '2021-22', '2020-21']
+const OLDEST_SEASON_START = 2020
 
 const GENDER_LABELS: Record<string, string> = { M: 'Boys', F: 'Girls', MF: 'Combined' }
 
@@ -73,7 +74,7 @@ type TournamentForm = {
 const EMPTY_FORM: TournamentForm = {
   name: '',
   tier_id: '',
-  season: SEASONS[0],
+  season: '',  // set to the newest season in the component
   date: '',
   gender: 'M',
   notes: '',
@@ -122,6 +123,7 @@ function TournamentForm({
   saving: boolean
   error: string | null
 }) {
+  const SEASONS = useSeasons().labelsBackTo(OLDEST_SEASON_START)
   const selectedTier = tiers.find(t => String(t.id) === form.tier_id)
 
   return (
@@ -293,6 +295,8 @@ function PlacementTable({ tournamentId }: { tournamentId: number }) {
 // ── Main component ────────────────────────────────────────────────────────────
 
 export function MsTournamentsClient() {
+  const SEASONS = useSeasons().labelsBackTo(OLDEST_SEASON_START)
+  const emptyForm: TournamentForm = { ...EMPTY_FORM, season: SEASONS[0] }
   const [tournaments, setTournaments] = useState<Tournament[]>([])
   const [tiers, setTiers] = useState<Tier[]>([])
   const [loading, setLoading] = useState(true)
@@ -301,12 +305,12 @@ export function MsTournamentsClient() {
   const [filterGender, setFilterGender] = useState<string>('all')
 
   const [showAdd, setShowAdd] = useState(false)
-  const [addForm, setAddForm] = useState<TournamentForm>(EMPTY_FORM)
+  const [addForm, setAddForm] = useState<TournamentForm>(emptyForm)
   const [addSaving, setAddSaving] = useState(false)
   const [addError, setAddError] = useState<string | null>(null)
 
   const [editId, setEditId] = useState<number | null>(null)
-  const [editForm, setEditForm] = useState<TournamentForm>(EMPTY_FORM)
+  const [editForm, setEditForm] = useState<TournamentForm>(emptyForm)
   const [editSaving, setEditSaving] = useState(false)
   const [editError, setEditError] = useState<string | null>(null)
 
@@ -335,7 +339,7 @@ export function MsTournamentsClient() {
     setAddSaving(false)
     if (data.error) { setAddError(data.error); return }
     setTournaments(prev => [data.tournament, ...prev])
-    setAddForm(EMPTY_FORM)
+    setAddForm(emptyForm)
     setShowAdd(false)
   }
 
@@ -407,7 +411,7 @@ export function MsTournamentsClient() {
         </select>
 
         <button
-          onClick={() => { setShowAdd(true); setAddForm(EMPTY_FORM); setAddError(null) }}
+          onClick={() => { setShowAdd(true); setAddForm(emptyForm); setAddError(null) }}
           disabled={showAdd}
           className="ml-auto px-4 py-1.5 bg-black text-white text-sm font-medium disabled:opacity-40 hover:bg-slate-800 transition-colors"
         >

@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/generate-mascot-index.mjs",
+    "prebuild": "node scripts/check-season-literals.mjs && node scripts/generate-mascot-index.mjs",
+    "check:seasons": "node scripts/check-season-literals.mjs",
     "build": "next build",
     "build:flipbook": "node scripts/build-flipbook.mjs",
     "start": "next start",

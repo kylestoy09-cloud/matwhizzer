@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getWorkingSeason } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 import {
@@ -261,7 +262,7 @@ export async function GET(req: NextRequest) {
 
   const { searchParams } = req.nextUrl
   const gender  = (searchParams.get('gender') ?? 'M') as 'M' | 'F'
-  const season  = searchParams.get('season') ?? '2025-26'
+  const season  = searchParams.get('season') ?? (await getWorkingSeason(gender)).label
   const weight  = searchParams.get('weight') ?? 'all'  // e.g. "157" or "all"
 
   const db = createSupabaseAdmin()

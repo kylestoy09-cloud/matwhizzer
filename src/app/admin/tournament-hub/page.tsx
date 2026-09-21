@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
+import { getWorkingSeason } from '@/lib/season-context'
 import { HubShell } from '../dashboards/HubShell'
 import { TournamentHubHeader } from './TournamentHubHeader'
 import { TournamentHubClient } from './TournamentHubClient'
@@ -14,24 +15,16 @@ export default async function TournamentHubPage() {
 
   const db = createSupabaseAdmin()
 
-  const [seasonsRes, statesRes, registryRes] = await Promise.all([
-    db.from('seasons').select('id, year_label').order('id', { ascending: false }),
-    db.from('season_gender_state').select('season_id, gender, is_public_default'),
+  // Season in progress per gender — the same season the tournament importers write to
+  const [boysSeason, girlsSeason, registryRes] = await Promise.all([
+    getWorkingSeason('M'),
+    getWorkingSeason('F'),
     db.from('tournament_registry').select('season, gender, imported, in_season_tournament_id'),
   ])
 
-  const seasons  = seasonsRes.data ?? []
-  const states   = statesRes.data ?? []
   const registry = registryRes.data ?? []
-
-  function liveSeason(gender: 'M' | 'F'): string {
-    const liveId = states.find(s => s.gender === gender && s.is_public_default)?.season_id
-    const match  = liveId ? seasons.find(s => s.id === liveId) : null
-    return match?.year_label ?? seasons[0]?.year_label ?? '2025-26'
-  }
-
-  const seasonM = liveSeason('M')
-  const seasonF = liveSeason('F')
+  const seasonM  = boysSeason.label
+  const seasonF  = girlsSeason.label
 
   function countFor(season: string, gender: 'M' | 'F') {
     const rows = registry.filter(r =>

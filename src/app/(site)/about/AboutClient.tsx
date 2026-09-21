@@ -131,6 +131,7 @@ function CalendarSection({ category, rows }: { category: string; rows: CalendarR
 
 // ── Doc content (season-agnostic for now) ─────────────────────────────────────
 
+// season-literal-ok-start: summaries of the 2025-26 NJSIAA rule documents (content, replaced when new documents are published)
 const DOC_TABS: DocTab[] = [
   {
     kind: 'doc',
@@ -230,6 +231,7 @@ const DOC_TABS: DocTab[] = [
     ],
   },
 ]
+// season-literal-ok-end
 
 // ── Collapsible ───────────────────────────────────────────────────────────────
 

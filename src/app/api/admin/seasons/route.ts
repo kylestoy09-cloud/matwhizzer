@@ -232,7 +232,25 @@ export async function POST(req: NextRequest) {
 
     if (sgsErr) return NextResponse.json({ error: sgsErr.message }, { status: 500 })
 
-    // 6. Seed preseason_checklist for new season (gender-unaware until migration adds gender col)
+    // 6. Carry this gender's active hammer score formula forward to the new season (if none yet),
+    //    so the new season starts from last season's formula instead of the built-in defaults.
+    let hammerConfigCopied = false
+    const { data: nextCfg } = await client
+      .from('hammer_score_config').select('id')
+      .eq('season', nextLabel).eq('gender', gender).eq('is_active', true).maybeSingle()
+    if (!nextCfg) {
+      const { data: curCfg } = await client
+        .from('hammer_score_config').select('name, config')
+        .eq('season', cur.year_label).eq('gender', gender).eq('is_active', true).maybeSingle()
+      if (curCfg) {
+        const { error: cfgErr } = await client.from('hammer_score_config').insert({
+          season: nextLabel, gender, name: curCfg.name, config: curCfg.config, is_active: true,
+        })
+        hammerConfigCopied = !cfgErr
+      }
+    }
+
+    // 7. Seed preseason_checklist for new season (gender-unaware until migration adds gender col)
     const STEP_KEYS = [
       'alignment', 'coaches', 'roster_rollover', 'schedule_import',
       'school_list', 'tournament_rollover', 'rankings_setup',
@@ -250,11 +268,11 @@ export async function POST(req: NextRequest) {
         p_action: 'finalize_season',
         p_entity_type: 'season_gender_state',
         p_entity_id: String(seasonId),
-        p_details: { archivedSeasonId: seasonId, newSeasonId, newLabel: nextLabel, gender },
+        p_details: { archivedSeasonId: seasonId, newSeasonId, newLabel: nextLabel, gender, hammerConfigCopied },
       })
     } catch { /* non-fatal */ }
 
-    return NextResponse.json({ ok: true, newSeasonId, newLabel: nextLabel })
+    return NextResponse.json({ ok: true, newSeasonId, newLabel: nextLabel, hammerConfigCopied })
   }
 
   return NextResponse.json({ error: 'Unknown action' }, { status: 400 })

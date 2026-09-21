@@ -532,7 +532,7 @@ export function GirlsRegularSeasonLeaders({ seasonId }: { seasonId: number }) {
     let cancelled = false
     async function load() {
       setLoading(true)
-      const seasonLabel = seasonLabelOf(seasonId) ?? '2025-26'
+      const seasonLabel = seasonLabelOf(seasonId) ?? ''
 
       const [leadersJson, hRes] = await Promise.all([
         fetch(`/api/rs-leaders?season_id=${seasonId}&gender=F`).then(r => r.json()),

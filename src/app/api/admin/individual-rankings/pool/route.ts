@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getWorkingSeason } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 
@@ -37,7 +38,7 @@ async function requireAdmin() {
 }
 
 // GET /api/admin/individual-rankings/pool
-// ?gender=M&weight=106&stage=district&entity=5&season=2025-26
+// ?gender=M&weight=106&stage=district&entity=5&season=<label>  (season defaults to the season in progress)
 export async function GET(req: NextRequest) {
   const user = await requireAdmin()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -47,7 +48,7 @@ export async function GET(req: NextRequest) {
   const weight  = parseInt(searchParams.get('weight') ?? '0', 10)
   const stage   = (searchParams.get('stage') ?? 'district') as Stage
   const entity  = searchParams.get('entity') ?? ''
-  const season  = searchParams.get('season') ?? '2025-26'
+  const season  = searchParams.get('season') ?? (await getWorkingSeason(gender)).label
 
   if (!weight || !entity) return NextResponse.json({ error: 'Missing weight or entity' }, { status: 400 })
 

@@ -505,7 +505,7 @@ export function ScheduleClient({ gender = 'M' }: { gender?: 'M' | 'F' }) {
             <div
               key={ev.id}
               className={`flex items-center gap-2 px-3 py-2 text-sm border-l-4 ${
-                ev.event_category === 'postseason'
+                /^(team_|individual_|state_)/.test(ev.event_category)
                   ? 'border-amber-500 bg-amber-50 text-amber-900'
                   : 'border-blue-400 bg-blue-50 text-blue-900'
               }`}

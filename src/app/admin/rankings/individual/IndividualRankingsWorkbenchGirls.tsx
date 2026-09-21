@@ -13,19 +13,6 @@ const WEIGHTS = [100, 107, 114, 120, 126, 132, 138, 145, 152, 165, 185, 235]
 // 4 NJ wrestling sections — stable, doesn't change season to season
 const NJ_SECTIONS = ['North I', 'North II', 'Central', 'South']
 
-// Fixed Season 3 week dates (Dec 13 2026 → Feb 7 2027, every Saturday).
-// UI uses these as display labels. DB week IDs are matched by week_number once seeded.
-const SEASON3_WEEKS = [
-  { number: 1,  date: '2026-12-13', label: 'Dec 13' },
-  { number: 2,  date: '2026-12-20', label: 'Dec 20' },
-  { number: 3,  date: '2026-12-27', label: 'Dec 27' },
-  { number: 4,  date: '2027-01-03', label: 'Jan 3'  },
-  { number: 5,  date: '2027-01-10', label: 'Jan 10' },
-  { number: 6,  date: '2027-01-17', label: 'Jan 17' },
-  { number: 7,  date: '2027-01-24', label: 'Jan 24' },
-  { number: 8,  date: '2027-01-31', label: 'Jan 31' },
-  { number: 9,  date: '2027-02-07', label: 'Feb 7'  },
-]
 
 // Totals for completion meters (boys)
 const DISTRICT_TOTAL = 12
@@ -137,8 +124,16 @@ export function IndividualRankingsWorkbenchGirls({ season }: { season: string })
 
   // Selections
   const todayStr = new Date().toISOString().slice(0, 10)
-  const defaultWeekNum = SEASON3_WEEKS.find(w => w.date >= todayStr)?.number ?? 9
+  // Ranking weeks come from individual_ranking_weeks for the season in progress
+  const weeks = useMemo(() => dbWeeks.map(w => ({
+    number: w.week_number,
+    date:   w.week_date,
+    label:  new Date(w.week_date + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+  })), [dbWeeks])
+  const defaultWeekNum = weeks.find(w => w.date >= todayStr)?.number ?? weeks[weeks.length - 1]?.number ?? 1
   const [selectedWeekNum,  setSelectedWeekNum]  = useState(defaultWeekNum)
+  // Weeks load asynchronously — jump to the upcoming week once they arrive
+  useEffect(() => { setSelectedWeekNum(defaultWeekNum) }, [defaultWeekNum])
   const [selectedWeight,   setSelectedWeight]   = useState<number | null>(null)
   const [selectedDistrict, setSelectedDistrict] = useState('')
   const [selectedRegion,   setSelectedRegion]   = useState('')
@@ -260,7 +255,7 @@ export function IndividualRankingsWorkbenchGirls({ season }: { season: string })
       <div>
         <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-2">Week</p>
         <div className="flex flex-wrap gap-1.5">
-          {SEASON3_WEEKS.map(w => {
+          {weeks.map(w => {
             const isActive = selectedWeekNum === w.number
             const isPast   = w.date < todayStr
             const isNext   = !isPast && w.date >= todayStr && w.number === defaultWeekNum

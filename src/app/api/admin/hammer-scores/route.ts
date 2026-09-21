@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
+import { getWorkingSeason } from '@/lib/season-context'
 
 export const dynamic = 'force-dynamic'
 
@@ -10,6 +11,7 @@ export async function GET(req: NextRequest) {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const gender: 'M' | 'F' = req.nextUrl.searchParams.get('gender') === 'F' ? 'F' : 'M'
+  const season = (await getWorkingSeason(gender)).label
   const db = createSupabaseAdmin()
 
   const PAGE = 500
@@ -19,7 +21,7 @@ export async function GET(req: NextRequest) {
     const { data, error } = await db
       .from('wrestler_hammer_scores')
       .select('wrestler_id, postseason_adjusted, tournament_score, match_score, hammer_score, match_count, last_match_date, weight_class, conference, section, classification, district, region, last_calculated_at')
-      .eq('season', '2025-26')
+      .eq('season', season)
       .eq('gender', gender)
       .order('hammer_score', { ascending: false })
       .range(offset, offset + PAGE - 1)

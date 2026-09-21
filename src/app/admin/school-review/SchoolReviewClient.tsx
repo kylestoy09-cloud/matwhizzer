@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect, useTransition } from 'react'
+import { useSeasons } from '@/components/SeasonsProvider'
 import { useRouter } from 'next/navigation'
 
 export type SchoolRow = {
@@ -78,6 +79,7 @@ function DistrictRegionCell({ s2, s3 }: { s2: string | null; s3: string | null }
 }
 
 export function SchoolReviewClient({ schools: initialSchools, seasonId, gender }: Props) {
+  const { label: seasonLabelOf } = useSeasons()
   const router = useRouter()
   const [schools, setSchools] = useState(initialSchools)
   const [filter, setFilter] = useState<'all' | 'active' | 'inactive' | 'merged' | 'unassigned' | 'was_inactive'>('all')
@@ -193,7 +195,7 @@ export function SchoolReviewClient({ schools: initialSchools, seasonId, gender }
   return (
     <div className="p-6 max-w-[1400px]">
       <div className="flex items-center justify-between mb-4">
-        <h1 className="text-xl font-bold text-slate-800">School Review — Boys 2026-27</h1>
+        <h1 className="text-xl font-bold text-slate-800">School Review — {gender === 'F' ? 'Girls' : 'Boys'} {seasonLabelOf(seasonId) ?? ''}</h1>
         <button
           onClick={() => startTransition(() => router.refresh())}
           className="text-sm text-slate-500 hover:text-slate-700 border border-slate-200 rounded px-3 py-1.5"

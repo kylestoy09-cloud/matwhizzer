@@ -5,6 +5,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
+import { getWorkingSeason, parseGender } from '@/lib/season-context'
 import { parseCsvBouts } from '@/lib/parseCsvBouts'
 import { matchSchoolNames, clearSchoolCache } from '@/lib/matchSchools'
 import { clearWrestlerCache } from '@/lib/matchWrestlers'
@@ -14,7 +15,6 @@ import type { SchoolFlag, WrestlerFlag } from '@/app/admin/import-rtf/types'
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
 
-const SEASON = '2025-26'
 
 function serviceClient() {
   return createClient(
@@ -52,6 +52,8 @@ export async function POST(req: NextRequest) {
   }
 
   const istTable  = gender === 'F' ? 'in_season_tournaments_girls' : 'in_season_tournaments'
+
+  const SEASON    = (await getWorkingSeason(parseGender(gender))).label
   const boutTable = gender === 'F' ? 'tournament_bouts_girls'      : 'tournament_bouts'
 
   if (!csvText?.trim()) return NextResponse.json({ error: 'No CSV data provided' }, { status: 400 })

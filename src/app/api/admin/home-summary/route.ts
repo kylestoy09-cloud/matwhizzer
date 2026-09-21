@@ -55,11 +55,23 @@ export async function GET(req: NextRequest) {
 
   // ── Preseason checks (auto, not manual) ─────────────────────────────────
   const p = gender === 'F' ? 'girls' : 'boys'
+  // Season calendar event types every season needs, per gender. Wrestler profiles, hammer
+  // recalculation and playoff detection read their dates from these rows.
+  const REQUIRED_CALENDAR = gender === 'F'
+    ? ['individual_region_girls', 'individual_state_girls',
+       'team_playoff_r12_girls', 'team_playoff_sectional_final_girls', 'team_playoff_state_final_girls']
+    : ['individual_district_boys', 'individual_region_boys', 'individual_state_boys',
+       'team_playoff_r12_public', 'team_playoff_sectional_final_public', 'team_playoff_state_sf_public',
+       'team_playoff_state_final_public', 'team_playoff_r12_np', 'team_playoff_state_sf_np', 'team_playoff_state_final_np']
+
   const [
     { count: groupCount },
     { count: dualCount },
     { count: tournCount },
     { count: wrestlerCount },
+    { data: calendarRows },
+    { count: weekCount },
+    { count: hammerCfgCount },
   ] = await Promise.all([
     // Groups: how many schools have a district assignment for this gender + season
     db.from(`${p}_school_districts`).select('*', { count: 'exact', head: true }).eq('season_id', sid)
@@ -73,10 +85,17 @@ export async function GET(req: NextRequest) {
     // Wrestlers: active wrestlers in the system for this gender
     db.from('wrestlers').select('*', { count: 'exact', head: true }).eq('gender', gender)
       .then(r => ({ count: r.count ?? 0 })),
+    db.from('season_calendar').select('event_type').eq('season_id', sid).in('event_type', REQUIRED_CALENDAR),
+    db.from('individual_ranking_weeks').select('*', { count: 'exact', head: true }).eq('season_id', sid).eq('gender', gender)
+      .then(r => ({ count: r.count ?? 0 })),
+    db.from('hammer_score_config').select('*', { count: 'exact', head: true }).eq('season', label ?? '').eq('gender', gender).eq('is_active', true)
+      .then(r => ({ count: r.count ?? 0 })),
   ])
+  const haveCalendar   = new Set((calendarRows ?? []).map(r => r.event_type as string))
+  const missingCalendar = REQUIRED_CALENDAR.filter(e => !haveCalendar.has(e))
 
   // Fetch manual overrides for auto-check keys
-  const AUTO_KEYS = ['groups', 'schedule', 'tournaments', 'wrestlers']
+  const AUTO_KEYS = ['groups', 'schedule', 'tournaments', 'wrestlers', 'calendar', 'ranking_weeks', 'hammer_config']
   const { data: overrideRows } = await db
     .from('preseason_checklist')
     .select('id, step_key, status')
@@ -93,6 +112,10 @@ export async function GET(req: NextRequest) {
     { key: 'schedule',    label: `${prog} dual meet schedule imported`,      autoOk: dualCount > 0,     detail: dualCount > 0 ? `${dualCount} dual meets scheduled` : 'No dual meets yet' },
     { key: 'tournaments', label: `${prog} tournament list registered`,       autoOk: tournCount > 0,    detail: tournCount > 0 ? `${tournCount} tournaments registered` : 'None yet' },
     { key: 'wrestlers',   label: `${prog} wrestlers in system`,              autoOk: wrestlerCount > 0, detail: wrestlerCount > 0 ? `${wrestlerCount} wrestlers` : 'No wrestlers yet' },
+    { key: 'calendar',    label: `${prog} postseason & playoff dates in season calendar`, autoOk: missingCalendar.length === 0,
+      detail: missingCalendar.length === 0 ? `All ${REQUIRED_CALENDAR.length} dates entered` : `Missing: ${missingCalendar.join(', ')}` },
+    { key: 'ranking_weeks', label: `${prog} individual ranking weeks seeded`, autoOk: weekCount > 0, detail: weekCount > 0 ? `${weekCount} weeks` : 'No weeks for this season' },
+    { key: 'hammer_config', label: `${prog} hammer score formula set for ${label}`, autoOk: hammerCfgCount > 0, detail: hammerCfgCount > 0 ? 'Active formula found' : 'No formula row for this season' },
   ].map(c => {
     const override = overrideMap[c.key]
     const overridden = override?.status === 'complete'

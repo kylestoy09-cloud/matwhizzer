@@ -6,7 +6,7 @@ import { StatsTable } from '@/components/StatsTable'
 import { conferenceToSlug } from '@/lib/conferences'
 import { sectionToSlug, groupToSlug } from '@/lib/sections'
 import { getSeasons } from '@/lib/seasons-server'
-import { liveSeasonId, seasonLabel as lookupSeasonLabel } from '@/lib/seasons'
+import { liveSeasonId, seasonLabel as lookupSeasonLabel, type SeasonInfo } from '@/lib/seasons'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -42,12 +42,10 @@ type MatchGroup = {
   matches: (Match & { result: 'W' | 'L'; opponent: string; opponentSchool: string | null; opponentId: string | null })[]
 }
 
-const SEASON_LABELS: Record<number, string> = {
-  1: '2024–25',
-  2: '2025–26',
+// Short season tag for badges: season ids are the championship (end) year, e.g. 2026 → '26
+function seasonShort(seasonId: number): string {
+  return seasonId > 0 ? `'${String(seasonId).slice(-2)}` : ''
 }
-
-const SEASON_SHORT: Record<number, string> = { 1: "'25", 2: "'26" }
 
 function placementShortLabel(tournamentName: string, tournamentType: string): string {
   const clean = cleanTournamentName(tournamentName)
@@ -99,29 +97,39 @@ function formatScore(m: Match, isWinner: boolean): string {
   return m.win_type ?? ''
 }
 
-// Maps season text ("2025-26") → integer id
-function seasonToId(season: string | null): number {
-  if (!season) return 1
-  const year = parseInt(season.split('-')[0])
-  if (year === 2024) return 1
-  if (year === 2025) return 2
-  return 1
+// Maps season text ("2025-26") → season id (the championship/end year, e.g. 2026)
+function seasonToId(seasons: SeasonInfo[], season: string | null): number {
+  if (!season) return 0
+  const startYear = parseInt(season.split('-')[0])
+  return seasons.find(s => s.label === season || s.start_year === startYear)?.id ?? 0
 }
 
-const POSTSEASON_DATES: Record<string, Record<number, { display: string; sort: string }>> = {
-  districts:     { 1: { display: 'Feb 8, 2025',     sort: '2025-02-08' }, 2: { display: 'Feb 28, 2026',    sort: '2026-02-28' } },
-  regions:       { 1: { display: 'Feb 15, 2025',    sort: '2025-02-15' }, 2: { display: 'Mar 6–7, 2026',   sort: '2026-03-06' } },
-  girls_regions: { 1: { display: 'Feb 15, 2025',    sort: '2025-02-15' }, 2: { display: 'Mar 6–7, 2026',   sort: '2026-03-06' } },
-  boys_state:    { 1: { display: 'Feb 28, 2025',    sort: '2025-02-28' }, 2: { display: 'Mar 12–14, 2026', sort: '2026-03-12' } },
-  girls_state:   { 1: { display: 'Feb 28, 2025',    sort: '2025-02-28' }, 2: { display: 'Mar 12–14, 2026', sort: '2026-03-12' } },
+// Postseason tournament → season_calendar.event_type (dates come from the calendar, per season)
+function postseasonEventType(tournamentType: string, gender: string | null): string | null {
+  const g = gender === 'F' ? 'girls' : 'boys'
+  switch (tournamentType) {
+    case 'districts':     return `individual_district_${g}`
+    case 'regions':       return 'individual_region_boys'
+    case 'girls_regions': return 'individual_region_girls'
+    case 'boys_state':    return 'individual_state_boys'
+    case 'girls_state':   return 'individual_state_girls'
+    default:              return null
+  }
 }
 
-function postseasonDateLabel(tournamentType: string, seasonId: number): string | null {
-  return POSTSEASON_DATES[tournamentType]?.[seasonId]?.display ?? null
-}
+type CalendarDate = { event_date: string; event_date_end: string | null }
 
-function postseasonSortDate(tournamentType: string, seasonId: number): string {
-  return POSTSEASON_DATES[tournamentType]?.[seasonId]?.sort ?? '1900-01-01'
+function formatCalendarDate(d: CalendarDate): string {
+  const fmt = (iso: string, opts: Intl.DateTimeFormatOptions) =>
+    new Date(iso + 'T12:00:00').toLocaleDateString('en-US', opts)
+  if (!d.event_date_end || d.event_date_end === d.event_date) {
+    return fmt(d.event_date, { month: 'short', day: 'numeric', year: 'numeric' })
+  }
+  const [y1, m1] = d.event_date.split('-')
+  const [y2, m2, d2] = d.event_date_end.split('-')
+  const startLabel = fmt(d.event_date, { month: 'short', day: 'numeric' })
+  if (y1 === y2 && m1 === m2) return `${startLabel}–${parseInt(d2)}, ${y2}`
+  return `${startLabel} – ${fmt(d.event_date_end, { month: 'short', day: 'numeric', year: 'numeric' })}`
 }
 
 function matchTypeColor(type: string): string {
@@ -198,8 +206,32 @@ function computeDomMatchScore(winType: string | null, fallTime: number | null): 
 // ── Component ──────────────────────────────────────────────────────────────────
 
 export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }) {
-  const allSeasons = await getSeasons()
+  const [allSeasons, calendarRes] = await Promise.all([
+    getSeasons(),
+    supabase
+      .from('season_calendar')
+      .select('season_id, event_type, event_date, event_date_end')
+      .like('event_type', 'individual_%'),
+  ])
   const id = wrestlerId
+
+  // Postseason dates by `${season_id}|${event_type}`
+  const postseasonCalendar = new Map<string, CalendarDate>(
+    ((calendarRes.data ?? []) as ({ season_id: number; event_type: string } & CalendarDate)[])
+      .map(r => [`${r.season_id}|${r.event_type}`, r])
+  )
+  const postseasonDate = (tournamentType: string, seasonId: number): CalendarDate | undefined => {
+    const eventType = postseasonEventType(tournamentType, wrestler?.gender ?? null)
+    return eventType ? postseasonCalendar.get(`${seasonId}|${eventType}`) : undefined
+  }
+  const postseasonDateLabel = (tournamentType: string, seasonId: number): string | null => {
+    const d = postseasonDate(tournamentType, seasonId)
+    return d ? formatCalendarDate(d) : null
+  }
+  // No calendar date → end of that season, in bracket order (districts, regions, state)
+  const postseasonSortDate = (tournamentType: string, seasonId: number): string =>
+    postseasonDate(tournamentType, seasonId)?.event_date
+      ?? `${seasonId}-12-3${TOURNAMENT_TYPE_ORDER[tournamentType] ?? 0}`
 
   // 1. Wrestler
   const { data: wrestler } = await supabase
@@ -733,7 +765,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
 
   // 2. In-season tournament bouts — one UnifiedEvent per tournament+weight
   for (const { tid, name, startDate, bouts: tBouts } of boutTournaments) {
-    const eventSeasonId = seasonToId(tBouts[0]?.event?.season ?? null)
+    const eventSeasonId = seasonToId(allSeasons, tBouts[0]?.event?.season ?? null)
     const eventDateDisplay = startDate
       ? new Date(startDate + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
       : null
@@ -877,7 +909,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
     const boutResult: 'W' | 'L' | null = bout.winner === null ? null
       : (isW1 && bout.winner === 1) || (!isW1 && bout.winner === 2) ? 'W' : 'L'
     if (boutResult === null) continue
-    const sid = seasonToId(bout.event?.season ?? null)
+    const sid = seasonToId(allSeasons, bout.event?.season ?? null)
     if (!seasonStatsMap.has(sid)) {
       seasonStatsMap.set(sid, { seasonId: sid, wins: 0, losses: 0, pins: 0, tfs: 0, mds: 0, bonusPct: 0, hammerRating: 0, pinTimeSecs: 0, tfTimeSecs: 0, consolationWins: 0, forfeitWins: 0, forfeitLosses: 0 })
     }
@@ -920,7 +952,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
       .map(m => { const sc = computeDomMatchScore(m.win_type, m.fall_time_seconds); return m.result === 'W' ? sc : -sc })
     // In-season bout dom scores
     for (const bout of allBouts) {
-      if (seasonToId(bout.event?.season ?? null) !== s.seasonId) continue
+      if (seasonToId(allSeasons, bout.event?.season ?? null) !== s.seasonId) continue
       const isW1 = bout.wrestler1_id === id
       const r: 'W' | 'L' | null = bout.winner === null ? null
         : (isW1 && bout.winner === 1) || (!isW1 && bout.winner === 2) ? 'W' : 'L'
@@ -1177,7 +1209,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
                   )
                   .map((p, i) => {
                     const short = placementShortLabel(p.tournament, p.tournamentType)
-                    const yr = SEASON_SHORT[p.seasonId] ?? ''
+                    const yr = seasonShort(p.seasonId)
                     const medal = p.place === 1 ? '\u{1F947}' : p.place === 2 ? '\u{1F948}' : p.place === 3 ? '\u{1F949}' : null
                     return (
                       <span key={i} className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800">
@@ -1193,7 +1225,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
                     (a.type === 'hammer' ? 0 : 1) - (b.type === 'hammer' ? 0 : 1)
                   )
                   .map((a, i) => {
-                    const yr = SEASON_SHORT[a.seasonId] ?? ''
+                    const yr = seasonShort(a.seasonId)
                     const icon = a.type === 'hammer' ? '\u{1F528}' : '\u{26A1}'
                     return (
                       <span key={`award-${i}`} className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 border border-slate-300 text-slate-700">
@@ -1216,7 +1248,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
                       <span className="font-bold text-sm uppercase tracking-wide">Ghost Champion</span>
                       <span className="text-xs text-slate-400">
                         #{gc.seed} seed &middot; {cleanTournamentName(gc.tournament_name)} &middot; {gc.weight}lb
-                        {seasonIds.length > 1 && ` · ${SEASON_LABELS[gc.season_id as number] ?? ''}`}
+                        {seasonIds.length > 1 && ` · ${lookupSeasonLabel(allSeasons, gc.season_id as number) ?? ''}`}
                       </span>
                     </div>
                     {gc.wins_on_path && gc.wins_on_path.length > 0 && (
@@ -1256,7 +1288,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
                     { key: 'avgTf',     label: 'Avg TF',   align: 'center', numeric: false },
                   ]}
                   rows={seasonStats.map(s => ({
-                    season:    SEASON_LABELS[s.seasonId] ?? `S${s.seasonId}`,
+                    season:    lookupSeasonLabel(allSeasons, s.seasonId) ?? `S${s.seasonId}`,
                     wl:        `${s.wins}-${s.losses}`,
                     pins:      s.pins,
                     tfs:       s.tfs,
@@ -1285,7 +1317,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
               <div key="match_history" className="space-y-8">
                 {unifiedSeasonIds.map(seasonId => {
                   const seasonEvents = unifiedBySeason.get(seasonId) ?? []
-                  const label = SEASON_LABELS[seasonId] ?? `Season ${seasonId}`
+                  const label = lookupSeasonLabel(allSeasons, seasonId) ?? `Season ${seasonId}`
                   const seasonWins   = seasonEvents.flatMap(e => e.rows).filter(r => !r.isBye && r.result === 'W').length
                   const seasonLosses = seasonEvents.flatMap(e => e.rows).filter(r => !r.isBye && r.result === 'L').length
                   return (

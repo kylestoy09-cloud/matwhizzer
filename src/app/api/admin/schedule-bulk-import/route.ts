@@ -239,7 +239,7 @@ async function handleStage(rows: CsvRow[], supabase: ReturnType<typeof db>, seas
         flagged.push({
           key:      `tournament|${reporting.id}|${date}|${gender}`,
           reason:   'unmatched_tournament',
-          message:  `"${text2 || '(no name)'}" doesn't match any 2025-26 tournament`,
+          message:  `"${text2 || '(no name)'}" doesn't match any ${seasons[gender === 'F' ? 'F' : 'M'].label} tournament`,
           schools:  [reporting.name],
           meet_date: date,
           gender,

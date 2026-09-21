@@ -63,7 +63,7 @@ export function RankingsClient({ gender }: { gender: 'M' | 'F' }) {
         <div>
           <h2 className="text-sm font-semibold text-slate-800">Hammer Score Calculation</h2>
           <p className="text-xs text-slate-500 mt-0.5">
-            Full-season replay for all 2025-26 NJ wrestlers. Writes to <code className="font-mono">wrestler_hammer_scores</code> staging table. Takes ~60–90 seconds.
+            Full-season replay for all NJ wrestlers in the season in progress. Writes to <code className="font-mono">wrestler_hammer_scores</code> staging table. Takes ~60–90 seconds.
           </p>
         </div>
         <button

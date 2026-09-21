@@ -11,6 +11,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
+import { getWorkingSeason } from '@/lib/season-context'
+import type { SeasonInfo } from '@/lib/seasons'
 import type { PipeImportJSON, SchoolOverride, WrestlerOverride, BoutRow } from '@/lib/pipeImportTypes'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -18,7 +20,6 @@ type AnySupabase = SupabaseClient<any, any, any>
 
 export const dynamic = 'force-dynamic'
 
-const SEASON = '2025-26'
 const CHUNK  = 500
 
 function parseName(full: string): { first_name: string; last_name: string } {
@@ -37,6 +38,7 @@ async function ensureTournament(
   endDate: string | null,
   supabase: AnySupabase,
   table: string,
+  season: SeasonInfo,
 ): Promise<string> {
   if (existingId) return existingId
 
@@ -44,15 +46,15 @@ async function ensureTournament(
     .from(table)
     .select('id')
     .eq('name', name)
-    .eq('season', SEASON)
+    .eq('season', season.label)
     .single()
 
   if (check.data) return (check.data as { id: string }).id
 
   const payload: Record<string, string | null> = {
     name,
-    season: SEASON,
-    start_date: startDate ?? '2025-12-27',
+    season: season.label,
+    start_date: startDate ?? `${season.start_year}-12-27`,
     end_date: endDate ?? null,
   }
 
@@ -79,6 +81,7 @@ export async function POST(req: NextRequest) {
   }
   const { importData, schoolOverrides, wrestlerOverrides } = body
   const gender: 'M' | 'F' = body.gender === 'F' ? 'F' : 'M'
+  const season = await getWorkingSeason(gender)
   const istTable  = gender === 'F' ? 'in_season_tournaments_girls' : 'in_season_tournaments'
   const boutTable = gender === 'F' ? 'tournament_bouts_girls'      : 'tournament_bouts'
 
@@ -192,7 +195,7 @@ export async function POST(req: NextRequest) {
 
     let tid: string
     try {
-      tid = await ensureTournament(t.name, t.existing_id, t.start_date, t.end_date, supabase, istTable)
+      tid = await ensureTournament(t.name, t.existing_id, t.start_date, t.end_date, supabase, istTable, season)
     } catch (err) {
       errors.push(String(err))
       continue

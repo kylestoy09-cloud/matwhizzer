@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
+import { getWorkingSeason, parseGender } from '@/lib/season-context'
 import { parseRtfText, parseDateRange, boutResultToDb, normalizeRound } from '@/lib/parseRtf'
 import { matchSchoolNames } from '@/lib/matchSchools'
 import { matchWrestler, oosSchoolHasPrior, clearWrestlerCache, reloadAliases } from '@/lib/matchWrestlers'
@@ -11,7 +12,6 @@ import type { SchoolFlag, WrestlerFlag, ReviewedTournament, SchoolOverride } fro
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
 
-const SEASON = '2025-26'
 
 function serviceClient() {
   return createClient(
@@ -94,6 +94,8 @@ export async function POST(req: NextRequest) {
   }
 
   const istTable  = gender === 'F' ? 'in_season_tournaments_girls' : 'in_season_tournaments'
+
+  const SEASON    = (await getWorkingSeason(parseGender(gender))).label
   const boutTable = gender === 'F' ? 'tournament_bouts_girls'      : 'tournament_bouts'
 
   const parsed = parseRtfText(text)

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getWorkingSeason, parseGender } from '@/lib/season-context'
 import { createClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
 
@@ -17,11 +18,11 @@ async function requireAdmin() {
   return user
 }
 
-// GET /api/admin/tournament-registry?season=2025-26&gender=F
+// GET /api/admin/tournament-registry?season=<label>&gender=F  (season defaults to the season in progress)
 export async function GET(req: NextRequest) {
   if (!await requireAdmin()) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  const season = req.nextUrl.searchParams.get('season') ?? '2025-26'
   const gender = req.nextUrl.searchParams.get('gender') as 'M' | 'F' | null
+  const season = req.nextUrl.searchParams.get('season') ?? (await getWorkingSeason(parseGender(gender))).label
   const client = serviceClient()
   let query = client
     .from('tournament_registry')

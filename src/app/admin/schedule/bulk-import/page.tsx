@@ -11,8 +11,8 @@ export default function ScheduleBulkImportPage() {
       <p className="text-sm text-slate-500 mb-8">
         Import scheduled dual meets from multiple schools at once. Matches where both schools report
         the same event are cross-confirmed and created automatically. Single-sided matches against
-        tracked opponents are flagged for review. Tournament entries are matched to 2025-26 events
-        from the rollover tool.
+        tracked opponents are flagged for review. Tournament entries are matched to the season-in-progress
+        events from the rollover tool.
       </p>
       <ScheduleBulkImportClient />
     </div>

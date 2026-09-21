@@ -7,11 +7,13 @@ export const dynamic = 'force-dynamic'
 const BUCKET = 'njsiaa-documents'
 
 // NJSIAA originals the archived copies were downloaded from, by storage path.
+// season-literal-ok-start: fixed URLs of archived NJSIAA documents
 const SOURCE_URLS: Record<string, string> = {
   '2026/boys/regular-season-rules.pdf':       'https://www.njsiaa.org/sites/default/files/documents/2025-09/boys-wrestling-regular-season-rules-2025-26.pdf',
   '2026/boys/team-tournament-regs.pdf':       'https://www.njsiaa.org/sites/default/files/documents/2025-11/wrestling-boys-team-regs-2025-26.pdf',
   '2026/boys/individual-tournament-regs.pdf': 'https://www.njsiaa.org/sites/default/files/documents/2025-11/wrestling-boys-individual-regs-2025-26.pdf',
 }
+// season-literal-ok-end
 
 async function requireAdmin() {
   const userSb = await createSupabaseServer()

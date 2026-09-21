@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
+import { getWorkingSeason, parseGender } from '@/lib/season-context'
 
 export const dynamic = 'force-dynamic'
 
@@ -14,13 +15,14 @@ async function requireAdmin() {
 }
 
 // GET /api/admin/individual-rankings/bootstrap?gender=M
-// Returns districts, regions, and seeded week rows for the latest season.
+// Returns districts, regions, and seeded week rows for the season in progress.
 export async function GET(req: NextRequest) {
   const user = await requireAdmin()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const gender = req.nextUrl.searchParams.get('gender') ?? 'M'
   const client = createSupabaseAdmin()
+  const season = await getWorkingSeason(parseGender(gender))
 
   const districtTable = gender === 'F' ? 'girls_districts' : 'boys_districts'
   const regionTable   = gender === 'F' ? 'girls_regions'   : 'boys_regions'
@@ -32,6 +34,7 @@ export async function GET(req: NextRequest) {
       .from('individual_ranking_weeks')
       .select('id, week_number, week_date, season_id')
       .eq('gender', gender)
+      .eq('season_id', season.id)
       .order('week_number'),
   ])
 

@@ -47,8 +47,9 @@ function ImportBadge({ imported }: { imported: boolean }) {
   )
 }
 
-export function TournamentRegistryClient({ season }: { season: string }) {
+export function TournamentRegistryClient({ seasonByGender }: { seasonByGender: Record<'M' | 'F', string> }) {
   const { gender } = useAdminGender()
+  const season = seasonByGender[gender === 'F' ? 'F' : 'M']
   const [events, setEvents] = useState<RegistryEvent[]>([])
   const [loading, setLoading] = useState(true)
   const [filterType, setFilterType] = useState<FilterType>('all')

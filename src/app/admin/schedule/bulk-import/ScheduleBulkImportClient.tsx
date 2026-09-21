@@ -397,7 +397,7 @@ export function ScheduleBulkImportClient() {
                   ['opponent_name', 'opponent', 'Free text; used for fuzzy tournament matching'],
                   ['gender', '', 'M or F (default M)'],
                   ['event_type', 'type', 'dual_meet or tournament (auto-detected if blank)'],
-                  ['event_name', 'tournament_name', 'For tournament rows; fuzzy-matched to 2025-26 events'],
+                  ['event_name', 'tournament_name', 'For tournament rows; fuzzy-matched to this season\'s events'],
                 ].map(([col, alias, note]) => (
                   <tr key={col}>
                     <td className="pr-4 py-0.5 text-slate-700">{col}</td>

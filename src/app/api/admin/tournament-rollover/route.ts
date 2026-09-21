@@ -1,11 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
+import { getWorkingSeason, getPreviousSeason } from '@/lib/season-context'
+import type { Gender } from '@/lib/seasons'
 
 export const dynamic = 'force-dynamic'
 
-const PRIOR_SEASON   = '2024-25'
-const CURRENT_SEASON = '2025-26'
+// Rolls the previous season's tournaments into the season in progress, per gender
+async function rolloverSeasons(gender: Gender): Promise<{ prior: string; current: string }> {
+  const current = await getWorkingSeason(gender)
+  const prior   = await getPreviousSeason(current)
+  return { prior: prior.label, current: current.label }
+}
 
 // Columns to copy from prior tournament → new tournament record
 const COPY_COLS = [
@@ -52,11 +58,13 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ migrationPending })
   }
 
+  const [boysSeasons, girlsSeasons] = await Promise.all([rolloverSeasons('M'), rolloverSeasons('F')])
+
   // Fetch prior-season tournaments from both tables
   const SELECT_COLS = COPY_COLS.join(', ') + ', id, start_date, end_date'
   const [{ data: boysTournaments, error: boysErr }, { data: girlsTournaments, error: girlsErr }] = await Promise.all([
-    supabase.from('in_season_tournaments').select(SELECT_COLS).eq('season', PRIOR_SEASON).order('start_date'),
-    supabase.from('in_season_tournaments_girls').select(SELECT_COLS.replace(/\bgender\b,?\s*/g, '')).eq('season', PRIOR_SEASON).order('start_date'),
+    supabase.from('in_season_tournaments').select(SELECT_COLS).eq('season', boysSeasons.prior).order('start_date'),
+    supabase.from('in_season_tournaments_girls').select(SELECT_COLS.replace(/\bgender\b,?\s*/g, '')).eq('season', girlsSeasons.prior).order('start_date'),
   ])
 
   if (boysErr && girlsErr) return NextResponse.json({ error: boysErr.message }, { status: 500 })
@@ -67,8 +75,8 @@ export async function GET(req: NextRequest) {
 
   // Also fetch which tournaments have already been rolled over (to warn about duplicates)
   const [{ data: existingBoys }, { data: existingGirls }] = await Promise.all([
-    supabase.from('in_season_tournaments').select('name').eq('season', CURRENT_SEASON),
-    supabase.from('in_season_tournaments_girls').select('name').eq('season', CURRENT_SEASON),
+    supabase.from('in_season_tournaments').select('name').eq('season', boysSeasons.current),
+    supabase.from('in_season_tournaments_girls').select('name').eq('season', girlsSeasons.current),
   ])
 
   const existingNames = new Set([
@@ -80,6 +88,7 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json({
     migrationPending,
+    seasons: { M: boysSeasons, F: girlsSeasons },
     tournaments: rows.map(t => ({
       id:              t.id,
       name:            t.name,
@@ -167,13 +176,15 @@ export async function POST(req: NextRequest) {
   const withParticipants: string[] = []
   const withoutParticipants: string[] = []
 
+  const [boysSeasons, girlsSeasons] = await Promise.all([rolloverSeasons('M'), rolloverSeasons('F')])
+
   for (const entry of entries) {
     // Insert new tournament
     const rolloverIsGirls   = entry.gender === 'F'
     const rolloverIstTable  = rolloverIsGirls ? 'in_season_tournaments_girls'             : 'in_season_tournaments'
     const rolloverPartTable = rolloverIsGirls ? 'in_season_tournament_participants_girls'  : 'in_season_tournament_participants'
     const insertRow: Record<string, unknown> = {
-      season:     CURRENT_SEASON,
+      season:     (rolloverIsGirls ? girlsSeasons : boysSeasons).current,
       start_date: entry.newStartDate,
       name:            entry.name,
       tournament_type: entry.tournament_type,
@@ -240,8 +251,7 @@ export async function POST(req: NextRequest) {
       p_entity_type: 'in_season_tournaments',
       p_entity_id:   null,
       p_details: {
-        prior_season:        PRIOR_SEASON,
-        current_season:      CURRENT_SEASON,
+        seasons:             { M: boysSeasons, F: girlsSeasons },
         created,
         skipped,
         participants_linked: participantsLinked,

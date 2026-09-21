@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { StatsTable } from '@/components/StatsTable'
 import { supabase } from '@/lib/supabase'
+import { fetchAllRows } from '@/lib/fetchAllRows'
 import { useSeasons } from '@/components/SeasonsProvider'
 
 type WrestlerRow = {
@@ -37,7 +38,15 @@ type DualMeet = {
   status: string
   team1: { display_name: string; is_nj: boolean } | null
   team2: { display_name: string; is_nj: boolean } | null
+  // Girls only (dual_meets_girls). Absent for boys, which always count.
+  meet_kind?: 'dual' | 'partial' | 'jamboree'
+  counts_toward_record?: boolean
 }
+
+// Meets with counts_toward_record = false (jamboree pairings, and any partial
+// meet switched off) keep their bouts but never move a school's team W-L or
+// per-dual averages.
+const countsForRecord = (m: { counts_toward_record?: boolean }) => m.counts_toward_record !== false
 
 type TournamentEvent = {
   id: string
@@ -239,6 +248,7 @@ export function SchoolTabs({
   const matchTable = genderCode === 'F' ? 'dual_meet_matches_girls'      : 'dual_meet_matches'
   const boutTable  = genderCode === 'F' ? 'tournament_bouts_girls'       : 'tournament_bouts'
   const istTable   = genderCode === 'F' ? 'in_season_tournaments_girls'  : 'in_season_tournaments'
+  const recordCols = genderCode === 'F' ? ', meet_kind, counts_toward_record' : ''
   const [meets,          setMeets]          = useState<DualMeet[]>([])
   const [tourEvents,     setTourEvents]     = useState<TournamentEvent[]>([])
   const [tourPlaces,     setTourPlaces]     = useState<Map<string, number>>(new Map())
@@ -321,27 +331,28 @@ export function SchoolTabs({
     if (dualStats) return
     let cancelled = false
     ;(async () => {
-      type MeetRow = { team1_school_id: number; team2_school_id: number; team1_score: number | null; team2_score: number | null }
+      type MeetRow = { team1_school_id: number; team2_school_id: number; team1_score: number | null; team2_score: number | null; counts_toward_record?: boolean }
       const base = { season_id: activeSeason, gender: genderCode }
 
       const [schoolMeetsRes, allMeetsRes, bonusRes] = await Promise.all([
         // School-specific query — always complete regardless of season size
         (supabase as any)
           .from(dualTable)
-          .select('team1_school_id, team2_school_id, team1_score, team2_score')
+          .select(`team1_school_id, team2_school_id, team1_score, team2_score${recordCols}`)
           .eq('season_id', base.season_id)
           .or(`team1_school_id.eq.${schoolIdNum},team2_school_id.eq.${schoolIdNum}`),
-        // All-schools query for pts/dual ranking — override default 1 000-row cap
-        (supabase as any)
+        // All-schools query for pts/dual ranking — paged, the API caps each request at 1,000 rows
+        fetchAllRows<MeetRow>((from, to) => (supabase as any)
           .from(dualTable)
-          .select('team1_school_id, team2_school_id, team1_score, team2_score')
+          .select(`team1_school_id, team2_school_id, team1_score, team2_score${recordCols}`)
           .eq('season_id', base.season_id)
-          .range(0, 9999),
+          .order('id')
+          .range(from, to)),
         supabase.rpc('dual_meet_bonus_ranks', {
           p_school_id:    schoolIdNum,
           p_season_id:    activeSeason,
           p_gender:       genderCode,
-          p_season_label: seasonLabelOf(activeSeason) ?? '2025-26',
+          p_season_label: seasonLabelOf(activeSeason) ?? '',
         }),
       ])
       if (cancelled) return
@@ -350,7 +361,7 @@ export function SchoolTabs({
       let teamWins = 0, teamLosses = 0
       for (const m of (schoolMeetsRes.data ?? []) as MeetRow[]) {
         const s1 = m.team1_score; const s2 = m.team2_score
-        if (s1 === null || s2 === null) continue
+        if (s1 === null || s2 === null || !countsForRecord(m)) continue
         const mine   = m.team1_school_id === schoolIdNum ? s1 : s2
         const theirs = m.team1_school_id === schoolIdNum ? s2 : s1
         if (mine > theirs) teamWins++
@@ -362,7 +373,7 @@ export function SchoolTabs({
       const touch = (sid: number) => { if (!agg.has(sid)) agg.set(sid, { pts: 0, meets: 0 }) }
       for (const m of (allMeetsRes.data ?? []) as MeetRow[]) {
         const s1 = m.team1_score; const s2 = m.team2_score
-        if (s1 === null || s2 === null) continue
+        if (s1 === null || s2 === null || !countsForRecord(m)) continue
         touch(m.team1_school_id); touch(m.team2_school_id)
         agg.get(m.team1_school_id)!.pts += s1; agg.get(m.team1_school_id)!.meets++
         agg.get(m.team2_school_id)!.pts += s2; agg.get(m.team2_school_id)!.meets++
@@ -398,7 +409,7 @@ export function SchoolTabs({
           .from(dualTable)
           .select(`
             id, team1_school_id, team2_school_id, meet_date,
-            team1_score, team2_score, status,
+            team1_score, team2_score, status${recordCols},
             team1:schools!team1_school_id(display_name, is_nj),
             team2:schools!team2_school_id(display_name, is_nj)
           `)
@@ -1289,7 +1300,9 @@ export function SchoolTabs({
               const isHome = m.team1_school_id === schoolIdNum
               const myScore    = isHome ? m.team1_score    : m.team2_score
               const theirScore = isHome ? m.team2_score    : m.team1_score
-              if (myScore !== null && theirScore !== null) {
+              if (!countsForRecord(m)) {
+                runningRecord.set(item.id, null)
+              } else if (myScore !== null && theirScore !== null) {
                 if (myScore > theirScore) runW++
                 else if (myScore < theirScore) runL++
                 runningRecord.set(item.id, { w: runW, l: runL })
@@ -1449,6 +1462,14 @@ export function SchoolTabs({
                                 <span className={isExpanded ? 'text-white' : 'text-slate-800'}>
                                   {!isHome && <span className="mr-0.5">@</span>}{opponentName ?? '—'}
                                   <span className={`ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full whitespace-nowrap ${isExpanded ? 'bg-blue-800 text-blue-100' : 'bg-blue-900 text-white'}`}>Non-NJSIAA</span>
+                                </span>
+                              )}
+                              {!countsForRecord(item.meet) && (
+                                <span
+                                  title="Bouts count for wrestlers; not a team dual, so the team record is unchanged"
+                                  className={`ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full whitespace-nowrap ${isExpanded ? 'bg-slate-700 text-slate-300' : 'bg-slate-100 text-slate-500'}`}
+                                >
+                                  {item.meet.meet_kind === 'jamboree' ? 'Jamboree' : 'Bouts only'}
                                 </span>
                               )}
                             </td>

@@ -53,6 +53,8 @@ export function TournamentRolloverClient() {
   const [rows,        setRows]        = useState<Map<string, RowState>>(new Map())
   const [result,      setResult]      = useState<RolloverResult | null>(null)
   const [errorMsg,    setErrorMsg]    = useState<string | null>(null)
+  // Prior → current season labels, resolved server-side from the season in progress
+  const [seasons,     setSeasons]     = useState<{ prior: string; current: string }>({ prior: 'last season', current: 'this season' })
 
   useEffect(() => {
     async function load() {
@@ -65,6 +67,7 @@ export function TournamentRolloverClient() {
         const d2 = await r2.json()
         if (d2.error) { setErrorMsg(d2.error); setPhase('error'); return }
 
+        if (d2.seasons?.M) setSeasons(d2.seasons.M)
         const ts: PriorTournament[] = d2.tournaments ?? []
         setTournaments(ts)
 
@@ -171,7 +174,7 @@ export function TournamentRolloverClient() {
   }
 
   if (phase === 'loading') {
-    return <p className="text-sm text-slate-400">Loading 2024-25 tournaments…</p>
+    return <p className="text-sm text-slate-400">Loading {seasons.prior} tournaments…</p>
   }
 
   if (phase === 'error') {
@@ -191,7 +194,7 @@ export function TournamentRolloverClient() {
         <div className="border border-green-200 bg-green-50 rounded px-5 py-4">
           <p className="text-sm font-semibold text-green-800">Rollover complete</p>
           <p className="text-sm text-green-700 mt-1">
-            {result.created} tournament{result.created !== 1 ? 's' : ''} created for 2025-26
+            {result.created} tournament{result.created !== 1 ? 's' : ''} created for {seasons.current}
             {result.skipped > 0 ? ` · ${result.skipped} skipped (duplicate)` : ''}
             {result.participantsLinked > 0 ? ` · ${result.participantsLinked} school participants linked` : ''}
           </p>
@@ -223,7 +226,7 @@ export function TournamentRolloverClient() {
   if (tournaments.length === 0) {
     return (
       <p className="text-sm text-slate-500">
-        No 2024-25 in-season tournaments found. Nothing to roll over.
+        No {seasons.prior} in-season tournaments found. Nothing to roll over.
       </p>
     )
   }
@@ -245,7 +248,7 @@ export function TournamentRolloverClient() {
               <tr>
                 <th className="px-3 py-2 text-left font-semibold text-slate-600 w-8"></th>
                 <th className="px-3 py-2 text-left font-semibold text-slate-600">Tournament</th>
-                <th className="px-3 py-2 text-left font-semibold text-slate-600">2024-25 Date</th>
+                <th className="px-3 py-2 text-left font-semibold text-slate-600">{seasons.prior} Date</th>
                 <th className="px-3 py-2 text-left font-semibold text-slate-600">New Start Date <span className="text-red-500">*</span></th>
                 <th className="px-3 py-2 text-left font-semibold text-slate-600">New End Date</th>
                 <th className="px-3 py-2 text-left font-semibold text-slate-600">Participants</th>
@@ -357,7 +360,7 @@ export function TournamentRolloverClient() {
           disabled={readyCount === 0}
           className="px-5 py-2 bg-slate-900 text-white text-sm rounded font-medium hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed"
         >
-          Roll Over {readyCount} Tournament{readyCount !== 1 ? 's' : ''} →  2025-26
+          Roll Over {readyCount} Tournament{readyCount !== 1 ? 's' : ''} → {seasons.current}
         </button>
         {selectedCount > readyCount && (
           <p className="text-xs text-amber-600">

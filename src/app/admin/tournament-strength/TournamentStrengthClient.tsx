@@ -20,7 +20,7 @@ export type StrengthRow = {
 
 const POINT_OPTIONS = [20, 15, 10, 5, 1] as const
 
-function downloadCsv(rows: StrengthRow[], gender: 'M' | 'F') {
+function downloadCsv(rows: StrengthRow[], gender: 'M' | 'F', season: string) {
   const header = ['Tournament', 'Date', 'Points', 'Dist. Champs', 'Region Top 4', 'State Quals', 'NJ Wrestlers']
   const prog = gender === 'F' ? 'girls' : 'boys'
   const lines = [
@@ -39,7 +39,7 @@ function downloadCsv(rows: StrengthRow[], gender: 'M' | 'F') {
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
   a.href = url
-  a.download = `tournament-strength-2025-26-${prog}.csv`
+  a.download = `tournament-strength-${season}-${prog}.csv`
   a.click()
   URL.revokeObjectURL(url)
 }
@@ -123,6 +123,7 @@ type SortCol = keyof Omit<StrengthRow, 'tournament_id' | 'has_finals' | 'has_3rd
 export function TournamentStrengthClient() {
   const { gender } = useAdminGender()
   const [rows, setRows]       = useState<StrengthRow[]>([])
+  const [seasons, setSeasons] = useState<{ season: string; priorSeason: string } | null>(null)
   const [loading, setLoading] = useState(true)
   const [fetchError, setFetchError] = useState<string | null>(null)
   const [sort, setSort]       = useState<SortCol>('start_date')
@@ -136,6 +137,7 @@ export function TournamentStrengthClient() {
       .then(d => {
         if (d.error) throw new Error(d.error)
         setRows(d.rows ?? [])
+        setSeasons({ season: d.season, priorSeason: d.priorSeason })
       })
       .catch(e => setFetchError(e.message ?? 'Failed to load'))
       .finally(() => setLoading(false))
@@ -197,7 +199,7 @@ export function TournamentStrengthClient() {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm text-slate-500">{rows.length} {prog} tournaments · 2025–26 season · 2024–25 postseason accolades</p>
+          <p className="text-sm text-slate-500">{rows.length} {prog} tournaments · {seasons?.season ?? '…'} season · {seasons?.priorSeason ?? '…'} postseason accolades</p>
           {unassigned > 0 ? (
             <p className="text-xs text-amber-600 mt-0.5">
               {assigned} of {rows.length} assigned point values · {unassigned} remaining
@@ -207,7 +209,7 @@ export function TournamentStrengthClient() {
           ) : null}
         </div>
         <button
-          onClick={() => downloadCsv(sorted, gender)}
+          onClick={() => downloadCsv(sorted, gender, seasons?.season ?? 'season')}
           className="px-3 py-1.5 text-xs font-semibold border border-slate-300 text-slate-700 hover:bg-slate-50 transition-colors"
         >
           Download CSV

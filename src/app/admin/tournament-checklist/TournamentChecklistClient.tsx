@@ -31,7 +31,8 @@ export function TournamentChecklistClient({
       <div className="flex items-center gap-3 mb-8">
         <Link href="/admin" className="text-xs text-slate-500 hover:text-slate-900">← Admin</Link>
         <span className="text-slate-300">/</span>
-        <h1 className="text-xl font-bold text-slate-900">Tournament Checklist</h1>
+        {/* season-literal-ok: pinned historical record */}
+        <h1 className="text-xl font-bold text-slate-900">Tournament Checklist — 2025-26 record</h1>
       </div>
 
       {/* Summary */}

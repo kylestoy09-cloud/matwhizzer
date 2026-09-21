@@ -530,7 +530,25 @@ export async function POST(req: NextRequest) {
   }
 
   // ── 3. Process postseason matches (both seasons) ──────────────────────────────
-  async function processPostseasonMatches(seasonId: number, dates: Record<string, string>) {
+  // Postseason bout dates for a season, from the NJSIAA season calendar (keyed by tournament_type)
+  async function postseasonDates(seasonId: number): Promise<Record<string, string>> {
+    const g = gender === 'F' ? 'girls' : 'boys'
+    const eventToType: Record<string, string> = {
+      [`individual_district_${g}`]: 'districts',
+      [`individual_region_${g}`]:   regionsType,
+      [`individual_state_${g}`]:    stateType,
+    }
+    const { data, error } = await db
+      .from('season_calendar')
+      .select('event_type, event_date')
+      .eq('season_id', seasonId)
+      .in('event_type', Object.keys(eventToType))
+    if (error) throw new Error(`season_calendar: ${error.message}`)
+    return Object.fromEntries((data ?? []).map(r => [eventToType[r.event_type as string], r.event_date as string]))
+  }
+
+  async function processPostseasonMatches(seasonId: number) {
+    const dates = await postseasonDates(seasonId)
     const psTourneyOrder: Record<string, number> = { districts: 0, [regionsType]: 1, [stateType]: 2 }
     const { data: psTs } = await db
       .from('tournaments')
@@ -570,7 +588,10 @@ export async function POST(req: NextRequest) {
       const matchRowMap = new Map<string, PsMatchRow>()
       for (const m of [...wMatches, ...lMatches]) matchRowMap.set(m.id, m)
 
-      const matchDate = dates[t.tournament_type as string] ?? dates[stateType]
+      const matchDate = dates[t.tournament_type as string]
+      if (!matchDate) {
+        throw new Error(`No ${t.tournament_type} date in the season calendar for season ${seasonId} — add it before recalculating`)
+      }
       for (const m of matchRowMap.values()) {
         const winnerWId = m.winner_entry_id ? entryToWrestler.get(m.winner_entry_id) ?? null : null
         const loserWId  = m.loser_entry_id  ? entryToWrestler.get(m.loser_entry_id)  ?? null : null
@@ -580,9 +601,7 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  await processPostseasonMatches(POSTSEASON_SEASON_ID, {
-    districts: '2025-02-28', [regionsType]: '2025-03-07', [stateType]: '2025-03-14'
-  })
+  await processPostseasonMatches(POSTSEASON_SEASON_ID)
 
   // ── 4. Process current-season in-season tournaments + dual meets (chronological) ──────
   // All events are interleaved by date so a December dual meet is never scored
@@ -734,9 +753,7 @@ export async function POST(req: NextRequest) {
 
   // ── 6. Process current-season postseason matches (after all in-season activity) ──────
   // Runs last so pre-match hammers for in-season matches reflect only prior-season base.
-  await processPostseasonMatches(CURRENT_SEASON_ID, {
-    districts: '2026-02-27', [regionsType]: '2026-03-06', [stateType]: '2026-03-13'
-  })
+  await processPostseasonMatches(CURRENT_SEASON_ID)
 
   // ── 7. Apply current-season postseason result as final postseasonAdjusted ────────────
   // Now that all matches are scored, overwrite postseasonAdjusted with the
@@ -856,7 +873,7 @@ export async function POST(req: NextRequest) {
   }
 
   const scoreRows = [...states.values()]
-    .filter(s => s.matchCount > 0 && s.lastMatchDate != null && s.lastMatchDate >= '2025-04-01')
+    .filter(s => s.matchCount > 0 && s.lastMatchDate != null && s.lastMatchDate >= `${season.start_year}-04-01`)
     .map(s => {
       const tourComp  = computeTournamentComponent([...s.tournamentPlacements.values()])
       const matchComp = computeMatchComponent(buildScoreWindow(s))

@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext } from 'react'
-import { seasonLabel, sortSeasonIds, type SeasonInfo } from '@/lib/seasons'
+import { seasonLabel, seasonLabelsBackTo, sortSeasonIds, type SeasonInfo } from '@/lib/seasons'
 
 const SeasonsContext = createContext<SeasonInfo[]>([])
 
@@ -15,5 +15,6 @@ export function useSeasons() {
     seasons,
     label: (id: number) => seasonLabel(seasons, id),
     sortIds: (ids: number[]) => sortSeasonIds(seasons, ids),
+    labelsBackTo: (oldestStartYear: number) => seasonLabelsBackTo(seasons, oldestStartYear),
   }
 }

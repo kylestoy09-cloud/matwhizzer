@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
+import { getWorkingSeason, parseGender } from '@/lib/season-context'
 import { parseRtfText, parseDateRange } from '@/lib/parseRtf'
 import { matchTournament } from '@/lib/matchTournaments'
 import type { TournamentSummary } from '@/app/admin/import-rtf/types'
 
 export const dynamic = 'force-dynamic'
 
-const SEASON = '2025-26'
 
 function serviceClient() {
   return createClient(
@@ -34,6 +34,8 @@ export async function POST(req: NextRequest) {
   }
 
   const istTable  = gender === 'F' ? 'in_season_tournaments_girls' : 'in_season_tournaments'
+
+  const SEASON    = (await getWorkingSeason(parseGender(gender))).label
   const boutTable = gender === 'F' ? 'tournament_bouts_girls'      : 'tournament_bouts'
 
   const parsed = parseRtfText(text)

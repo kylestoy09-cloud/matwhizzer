@@ -73,6 +73,7 @@ export default async function ConferencePage({
     .select('id,division,school_id,school_name,overall_wins,overall_losses,div_wins,div_losses,pf,pa,school:schools(id,display_name,logo_url,header_background)')
     .eq('conference_slug', slug)
     .eq('season_id', season)
+    .eq('gender', gender === 'girls' ? 'F' : 'M')
     .order('division')
 
   const rows = (standingsData ?? []) as unknown as StandingRow[]

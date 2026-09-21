@@ -5,7 +5,6 @@ import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import type { HammerConfig } from '@/lib/hammerConfig'
 import type { PreviewRow } from '@/app/api/admin/hammer-score-preview/route'
 
-const SEASON = '2025-26'
 
 // ─── Tiny primitives ─────────────────────────────────────────────────────────
 
@@ -209,6 +208,8 @@ export function HammerConfigEditor() {
   const { gender } = useAdminGender()
   const [cfg,     setCfg]     = useState<HammerConfig>(DEFAULT_CONFIG)
   const [name,    setName]    = useState('Default')
+  // Season in progress for this gender, resolved by the API
+  const [season,  setSeason]  = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [saving,  setSaving]  = useState(false)
   const [saved,   setSaved]   = useState(false)
@@ -223,8 +224,9 @@ export function HammerConfigEditor() {
   const load = useCallback(async () => {
     setLoading(true)
     setError(null)
-    const res  = await fetch(`/api/admin/hammer-score-config?gender=${gender}&season=${SEASON}`)
+    const res  = await fetch(`/api/admin/hammer-score-config?gender=${gender}`)
     const data = await res.json()
+    setSeason(data.season ?? null)
     if (data.row) {
       setCfg(data.row.config as HammerConfig)
       setName(data.row.name ?? 'Default')
@@ -244,7 +246,7 @@ export function HammerConfigEditor() {
     const res = await fetch('/api/admin/hammer-score-preview', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ gender, season: SEASON, config: cfg }),
+      body: JSON.stringify({ gender, season, config: cfg }),
     })
     const data = await res.json()
     setPreviewing(false)
@@ -259,7 +261,7 @@ export function HammerConfigEditor() {
     const res = await fetch('/api/admin/hammer-score-config', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ gender, season: SEASON, name, config: cfg }),
+      body: JSON.stringify({ gender, season, name, config: cfg }),
     })
     const data = await res.json()
     setSaving(false)
@@ -295,7 +297,7 @@ export function HammerConfigEditor() {
             className="border border-slate-200 px-2 py-1 text-sm text-slate-800 focus:outline-none focus:border-blue-400 w-40"
           />
         </div>
-        <span className="text-xs text-slate-400 border border-slate-200 px-2 py-1">{gender === 'M' ? 'Boys' : 'Girls'} · {SEASON}</span>
+        <span className="text-xs text-slate-400 border border-slate-200 px-2 py-1">{gender === 'M' ? 'Boys' : 'Girls'} · {season ?? '…'}</span>
       </div>
 
       {/* ── Matches ────────────────────────────────────────────────── */}
