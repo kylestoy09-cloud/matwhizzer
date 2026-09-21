@@ -169,6 +169,30 @@ export function StandingsTab({ season, gender }: { season: PastSeason; gender: '
       : b)))
   }
 
+  // What stops a table from importing (shared by its own button and Import all)
+  function blockCheck(bs: BlockState) {
+    const included     = bs.rows.filter(r => r.include)
+    const unresolved   = included.filter(r => !r.schoolId).length
+    const ids          = included.map(r => r.schoolId).filter((v): v is number => v !== null)
+    const duplicates   = ids.length - new Set(ids).size
+    const yearMismatch = bs.block.endYear !== season.end_year
+    const needsConf    = bs.block.kind === 'standings' && !bs.conferenceSlug
+    const blocked      = yearMismatch || needsConf || unresolved > 0 || duplicates > 0 || included.length === 0 || bs.status === 'saving' || bs.status === 'done'
+    return { included, unresolved, duplicates, yearMismatch, needsConf, blocked }
+  }
+
+  const [importingAll, setImportingAll] = useState(false)
+
+  async function importAllReady() {
+    setImportingAll(true)
+    try {
+      const ready = blocks.map((bs, i) => ({ bs, i })).filter(({ bs }) => !blockCheck(bs).blocked)
+      for (const { i } of ready) await importBlock(i)
+    } finally {
+      setImportingAll(false)
+    }
+  }
+
   async function importBlock(i: number) {
     const bs = blocks[i]
     const chosen = bs.block.rows.map((r, ri) => ({ r, s: bs.rows[ri] })).filter(x => x.s.include)
@@ -259,15 +283,28 @@ export function StandingsTab({ season, gender }: { season: PastSeason; gender: '
         </div>
       )}
 
+      {blocks.length > 1 && (() => {
+        const readyCount = blocks.filter(bs => !blockCheck(bs).blocked).length
+        const doneCount  = blocks.filter(bs => bs.status === 'done').length
+        return (
+          <div className="mb-6 flex flex-wrap items-center gap-3">
+            <button
+              onClick={importAllReady}
+              disabled={importingAll || readyCount === 0}
+              className="px-4 py-1.5 text-xs font-semibold rounded bg-slate-800 text-white hover:bg-slate-700 disabled:opacity-40"
+            >
+              {importingAll ? 'Importing…' : `Import all ready tables (${readyCount})`}
+            </button>
+            <span className="text-xs text-slate-500">
+              {blocks.length} tables · {doneCount} imported · {blocks.length - readyCount - doneCount} need attention below
+            </span>
+          </div>
+        )
+      })()}
+
       {blocks.map((bs, i) => {
-        const b            = bs.block
-        const included     = bs.rows.filter(r => r.include)
-        const unresolved   = included.filter(r => !r.schoolId).length
-        const ids          = included.map(r => r.schoolId).filter((v): v is number => v !== null)
-        const duplicates   = ids.length - new Set(ids).size
-        const yearMismatch = b.endYear !== season.end_year
-        const needsConf    = b.kind === 'standings' && !bs.conferenceSlug
-        const blocked      = yearMismatch || needsConf || unresolved > 0 || duplicates > 0 || included.length === 0 || bs.status === 'saving' || bs.status === 'done'
+        const b = bs.block
+        const { included, unresolved, duplicates, yearMismatch, needsConf, blocked } = blockCheck(bs)
         const existing     = b.kind === 'standings' && bs.conferenceSlug ? existingCounts[bs.conferenceSlug] ?? 0 : 0
 
         return (

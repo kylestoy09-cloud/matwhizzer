@@ -57,6 +57,58 @@ const STANDINGS_ROW_RE = /^(.+?)\s+(\d+-\d+(?:-\d+)?)(?:\s+(.*))?$/
 const PP_ROW_RE        = /^(\d+)\s+(.+?)\s+(\d+)-(\d+)(?:-\d+)?\s+[\d.]+\s+(\d+(?:\.\d+)?)$/
 const PP_HEADER_RE     = /^(rank|team|w-l(\s+pct)?|pct|pp)$/i
 
+// Column labels nj.com uses after OVERALL in standings headers
+const STANDINGS_LABELS = new Set(['PCT', 'DIV', 'CONF', 'HOME', 'AWAY', 'NEUTRAL', 'PF', 'PA', 'STREAK', 'STRK', 'GB', 'L10'])
+const RECORD_RE = /^\d+-\d+(?:-\d+)?$/
+const PCT_RE    = /^\d*\.\d+$/
+const NUM_RE    = /^\d+(?:\.\d+)?$/
+
+// Some browsers copy nj.com tables one cell per line instead of one row per
+// line. Rebuild each row as a single line (cells separated by 4 spaces) so the
+// row parser below handles both layouts. Rows already on one line pass through.
+function joinVerticalRows(lines: string[]): string[] {
+  const out: string[] = []
+  let mode: 'none' | 'standings' | 'power_points' = 'none'
+  let rowWidth = 0                          // standings: values after the team name
+  for (let i = 0; i < lines.length; ) {
+    const line = lines[i]
+    const title = line.match(TITLE_RE)
+    if (title) {
+      mode = /\bStandings$/i.test(title[3]) ? 'standings' : /\bPower Points$/i.test(title[3]) ? 'power_points' : 'none'
+      rowWidth = 0
+      out.push(line); i++; continue
+    }
+
+    if (mode === 'power_points') {
+      const [team, rec, pct, pp] = lines.slice(i + 1, i + 5)
+      if (/^\d+$/.test(line) && team && rec && RECORD_RE.test(rec) && PCT_RE.test(pct ?? '') && NUM_RE.test(pp ?? '')) {
+        out.push([line, team, rec, pct, pp].join('    ')); i += 5; continue
+      }
+    }
+
+    if (mode === 'standings') {
+      // Division header: "Freedom" / "OVERALL" / "PCT" / "DIV" / … one per line
+      if (/^overall$/i.test(lines[i + 1] ?? '') && !HEADER_RE.test(line)) {
+        const labels: string[] = []
+        let j = i + 2
+        while (j < lines.length && STANDINGS_LABELS.has(lines[j].toUpperCase())) labels.push(lines[j++])
+        out.push([line, 'OVERALL', ...labels].join('    '))
+        rowWidth = 1 + labels.length
+        i = j; continue
+      }
+      // Row: team name, then rowWidth single-value cells starting with a record
+      const cells = lines.slice(i + 1, i + 1 + rowWidth)
+      if (rowWidth > 0 && !RECORD_RE.test(line) && cells.length === rowWidth
+          && RECORD_RE.test(cells[0]) && cells.every(c => !/\s/.test(c))) {
+        out.push([line, ...cells].join('    ')); i += 1 + rowWidth; continue
+      }
+    }
+
+    out.push(line); i++
+  }
+  return out
+}
+
 function parseRecord(s: string | undefined): { w: number; l: number } | null {
   const m = s?.match(/^(\d+)-(\d+)(?:-\d+)?$/)
   return m ? { w: parseInt(m[1], 10), l: parseInt(m[2], 10) } : null
@@ -74,7 +126,7 @@ export function parseStandingsText(text: string): ParseResult {
   let division = ''
   let sawTitle = false
 
-  const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean)
+  const lines = joinVerticalRows(text.split(/\r?\n/).map(l => l.trim()).filter(Boolean))
 
   for (const line of lines) {
     const title = line.match(TITLE_RE)
