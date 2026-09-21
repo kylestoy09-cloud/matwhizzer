@@ -2,21 +2,64 @@
 
 ---
 
-## 2026-09-21 — Lodi (379) and Saddle Brook (59): separate in 2024-25, co-op from 2025-26
+## 2026-09-21 — API "Max rows" raised to 100,000 (CONFIG — Supabase dashboard)
+
+**Migration file:** none — project API setting (Dashboard → Project Settings → Data API → Max rows). Recorded here because it changes what every query returns.
+
+**Purpose:** PostgREST returned at most 1,000 rows per request whatever `.limit()`/`.range()` asked for, silently truncating ~500 reads (327 table queries, 187 RPC calls) — e.g. school points-per-dual rank used 1,000 of 3,980 boys meets, Dual Hub showed 72 of 3,974 completed meets, Data Health saw ~7% of wrestlers and entries. Raising the cap fixes all of them at once, including RPCs. Largest legitimate read today ≈ 55k rows (a season of dual bouts). Code that pages with `src/lib/fetchAllRows.ts` keeps working either way.
+
+**PENDING** — change in dashboard
+
+**Reversible?** Yes — set Max rows back to 1000
+**Verified?** No — pending (`.range(0, 9999)` on `dual_meets` should return 3,980 rows)
+
+---
+
+## 2026-09-21 — Boys district/region assignments from brackets (2024-25, 2025-26)
+
+**Migration file:** `docs/migrations/20260921_boys_alignment_from_brackets.sql`
+
+**Purpose:** The 2024-25 boys district rows were a copy of 2025-26 (303/305 identical) although districts were realigned. List vs actual district brackets: 2024-25 — 241 schools in the wrong district, 10 missing; 2025-26 — 2 wrong districts (Westwood, Kingsway), 33 wrong regions, 9 missing (incl. Bergen Charter, Cliffside Park, Kittatinny, Passaic Tech). Sets each school's district to the bracket it wrestled in and its region from that district (D1-4 → R1 … D29-32 → R8, verified from where qualifiers wrestled). Schools with no bracket entries unchanged; conferences untouched.
+
+**Tables affected:** `boys_school_districts`, `boys_school_regions`
+
+**PENDING** — run in Supabase SQL editor
+
+**Reversible?** Partially — see note in migration file
+**Verified?** No — pending (verify query should show 0 mismatches)
+
+---
+
+## 2026-09-21 — Rebuild boys team-score cache (2024-25, 2025-26)
+
+**Migration file:** `docs/migrations/20260921_rebuild_boys_team_score_cache.sql`
+
+**Purpose:** `precomputed_team_scores` (the only source for the postseason leaderboard) had drifted from the bracket data since it was last written (2026-07-22): of 1,233 boys rows, 108 schools missing (2024-25 District 31 had none; St Joseph (Montvale) missing from 2024-25 Region 2), 682 stale totals, 24 rows for schools that no longer score. Scoring functions unchanged since then; the data changed. Deletes and re-inserts every boys district/region/state tournament's rows from the scoring RPCs in one block, with names as of each season (`school_display_name`). Requires the Lodi/Saddle Brook migration first.
+
+**Tables affected:** `precomputed_team_scores` (boys rows only)
+
+**PENDING** — run in Supabase SQL editor (after `20260921_restore_lodi_saddle_brook.sql`)
+
+**Reversible?** Re-runnable; old values were stale
+**Verified?** No — pending
+
+---
+
+## 2026-09-21 — Lodi (379) and Saddle Brook (59), boys; season-based school names
 
 **Migration file:** `docs/migrations/20260921_restore_lodi_saddle_brook.sql`
 
-**Purpose:** Two programs in 2024-25; merged into a Lodi-hosted co-op from 2025-26. `20260806_merge_lodi.sql` deleted Saddle Brook (59) and Lodi (55) and folded their 2024-25 postseason entries into 379 "Lodi/Saddle Brook" (old 3-school model). 379 was also missing from the 2025-26 boys program list, so the season-aware matcher could not resolve it. Remodeled the current co-op way (same as Morris Hills 76 ← Morris Knolls 77):
-- 379 becomes **Lodi**: display name, mascot, colors and logo from the original Lodi row; `boys_schools`/`girls_schools` keep the co-op name "Lodi/Saddle Brook" (`is_combined=true`)
-- Recreates **59 Saddle Brook** (original id, colors, logo) with `boys_schools`/`girls_schools` rows
-- Program rows: 2024-25 boys both District 6, Region 2, NJIC; 2025-26 boys 379 District 7, Region 2, NJIC (+ NJIC 2026-27)
-- Re-points the 8 Saddle Brook 2024-25 postseason entries (`school_context_raw='Saddle Brook'`) to 59; aborts if count differs. Lodi's stay on 379
-- Co-op: `school_coops` 379 ← 59 and `inactive_school_seasons` for 59 (2025-26 M/F, 2026-27 M)
-- `precomputed_team_scores`: 2024-25 District 6 / Region 2 rows for 379 and 59; missing 2025-26 boys District 7 / Region 2 rows for 379
-- Aliases: "Lodi/Saddle Brook", "Lodi/Saddle Brook High School" → 379; "Saddle Brook" → 59
-- 55 is not recreated (Lodi's history is on 379)
+**Purpose:** Boys only. Lodi and Saddle Brook were two programs in 2024-25 and merged into a Lodi-hosted co-op, "Lodi/Saddle Brook", from 2025-26. `20260806_merge_lodi.sql` had deleted Saddle Brook (59) and folded its 2024-25 postseason entries into 379; 379 was also missing from the 2025-26 boys program list. School names now follow the season:
+- New `school_season_names` (school, season, gender → name) + `school_display_name()`: `schools.display_name` is the current name; the table records seasons where it differed. 379 stays "Lodi/Saddle Brook" (current) and is "Lodi" for 2024-25 boys
+- Recreates **59 Saddle Brook** (original id, colors, logo) with a `boys_schools` row
+- Boys program rows: 2024-25 both District 6, Region 2, NJIC; 2025-26 379 District 7, Region 2, NJIC (+ NJIC 2026-27)
+- Re-points the 8 Saddle Brook 2024-25 boys postseason entries to 59 (aborts if count differs); Lodi's stay on 379
+- Co-op: `school_coops` 379 ← 59 and 59 inactive, 2025-26 and 2026-27 boys
+- Team-score cache rows for 2024-25 District 6 / Region 2 (379 as "Lodi", 59) and the missing 2025-26 boys District 7 / Region 2 rows for 379
+- Alias "Lodi/Saddle Brook High School" → 379
+- First version failed (rolled back, nothing applied): `inactive_school_seasons` primary key is still `(school_id, season_id)`, so a school can't be inactive for both genders in one season. Girls are out of scope here
 
-**Tables affected:** `schools`, `boys_schools`, `girls_schools`, `boys_school_districts`, `boys_school_regions`, `boys_school_conferences`, `tournament_entries`, `school_coops`, `inactive_school_seasons`, `precomputed_team_scores`, `school_aliases`
+**Tables affected:** `school_season_names` (new), `schools`, `boys_schools`, `boys_school_districts`, `boys_school_regions`, `boys_school_conferences`, `tournament_entries`, `school_coops`, `inactive_school_seasons`, `precomputed_team_scores`, `school_aliases`
 
 **PENDING** — run in Supabase SQL editor
 
@@ -35,10 +78,10 @@
 
 **Tables affected:** `tournament_registry`, `dual_meets`
 
-**PENDING** — run in Supabase SQL editor
+**APPLIED** — 2026-09-21 via Supabase SQL editor
 
 **Reversible?** Yes — rollback block in migration file
-**Verified?** No — pending
+**Verified?** Yes — 2026-09-21: Belvidere meets now 6ba739c1 (Union) 2026-02-21, b9b20fe0 (Bloomfield) 2026-02-14
 
 ---
 
@@ -50,10 +93,10 @@
 
 **Tables affected:** `power_points`, `power_points_computed` (new)
 
-**PENDING** — run in Supabase SQL editor
+**APPLIED** — 2026-09-21 via Supabase SQL editor
 
 **Reversible?** Yes — rollback block in migration file
-**Verified?** No — pending
+**Verified?** Yes — 2026-09-21: power_points 0 rows, power_points_computed 314 rows
 
 ---
 
@@ -65,10 +108,10 @@
 
 **Tables affected:** `dual_meets_girls`
 
-**PENDING** — run in Supabase SQL editor
+**APPLIED** — 2026-09-21 via Supabase SQL editor
 
 **Reversible?** Yes — rollback in migration file
-**Verified?** No — pending
+**Verified?** Yes — 2026-09-21: dual 959, partial 206, all `counts_toward_record=true`
 
 ---
 
@@ -82,10 +125,10 @@
 
 **Tables affected:** `dual_meets`, `microcheck_tasks`
 
-**PENDING** — run in Supabase SQL editor
+**APPLIED** — 2026-09-21 via Supabase SQL editor
 
 **Reversible?** Yes — see rollback notes in migration file
-**Verified?** No — pending (expect 0 pending boys ties / 0 pending tasks)
+**Verified?** Yes — 2026-09-21: 0 pending boys ties, 0 pending tie tasks
 
 ---
 
