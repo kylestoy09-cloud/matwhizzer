@@ -2,6 +2,21 @@
 
 ---
 
+## 2026-09-21 — Girls co-op names match on import; 2025-26 girls program gaps
+
+**Migration file:** `docs/migrations/20260921_girls_coop_names_and_program_rows.sql`
+
+**Purpose:** Girls imports now match school names season-aware, and four co-ops with 2025-26 duals no longer resolved: "Buena Regional/Vineland" (287), "Cherry Hill East/Cherry Hill West" (267), "Jefferson-Sparta" (4), "Ramsey/Northern Highlands" (18) — no alias for the raw co-op name, and hosts missing from the 2025-26 girls program list. Adds girls-only aliases (`notes='gender:F'`) for those names and the girls display names, and inserts 2025-26 girls district + region rows (insert-only, from the girls district brackets; expect 6 schools: Jefferson, Old Tappan, Ramsey D1; Cherry Hill East D11; Buena, Millville D12). East Orange, Roselle, Keansburg have no bracket entries and are left for manual picks.
+
+**Tables affected:** `school_aliases`, `girls_school_districts`, `girls_school_regions`
+
+**PENDING** — run in Supabase SQL editor
+
+**Reversible?** Yes — rollback block in migration file
+**Verified?** No — pending
+
+---
+
 ## 2026-09-21 — power_points: public read grant
 
 **Migration file:** `docs/migrations/20260921_power_points_public_read.sql`
