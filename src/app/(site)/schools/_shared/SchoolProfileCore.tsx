@@ -3,6 +3,7 @@ import { getSeasonLabel } from '@/lib/seasons-server'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
+import { getSchoolSeasonName } from '@/lib/schoolSeasonNames'
 import { conferenceToSlug } from '@/lib/conferences'
 import { sectionToSlug, groupToSlug } from '@/lib/sections'
 import { SchoolTabs } from '../[school]/SchoolTabs'
@@ -128,14 +129,17 @@ export async function SchoolProfileCore({
 
   // ── Co-op data + gender-specific display name ──────────────────────────────
   const genderSchoolTable = gender === 'girls' ? 'girls_schools' : 'boys_schools'
-  const [{ data: coopMemberships }, { data: coopMemberData }, { data: genderSchoolData }] = await Promise.all([
+  const [{ data: coopMemberships }, { data: coopMemberData }, { data: genderSchoolData }, seasonName] = await Promise.all([
     supabase.rpc('get_coop_membership', { p_school_id: schoolId }),
     supabase.rpc('get_coop_members', { p_coop_school_id: schoolId }),
     supabase.from(genderSchoolTable).select('display_name').eq('school_id', schoolId).maybeSingle(),
+    getSchoolSeasonName(supabase, schoolId, season, genderCode),
   ])
 
-  if (genderSchoolData?.display_name) {
-    profile = { ...profile, display_name: genderSchoolData.display_name }
+  // The name for this season wins; otherwise the gender-specific name.
+  const shownName = seasonName ?? genderSchoolData?.display_name
+  if (shownName) {
+    profile = { ...profile, display_name: shownName }
   }
 
   const memberships = (coopMemberships ?? []) as CoopMembership[]

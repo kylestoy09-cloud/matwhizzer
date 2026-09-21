@@ -3,6 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { matchSchoolNames } from '@/lib/matchSchools'
 import { clearWrestlerCache } from '@/lib/matchWrestlers'
+import { getWorkingSeason, parseGender } from '@/lib/season-context'
 
 export const dynamic = 'force-dynamic'
 
@@ -48,7 +49,9 @@ export async function POST(req: NextRequest) {
   const displayName = `${nickname} ${lastName}`  // "Liam McSorley"
 
   // ── Step 3: Match school ───────────────────────────────────────────────────────
-  const schoolMatch = await matchSchoolNames(schoolRawName)
+  // Current-season program, so a co-op member name resolves to the co-op
+  const matchGender = parseGender(gender)
+  const schoolMatch = await matchSchoolNames(schoolRawName, { gender: matchGender, seasonId: (await getWorkingSeason(matchGender)).id })
   const schoolId    = schoolMatch.schoolId
 
   // ── Step 4: Find existing wrestler ────────────────────────────────────────────

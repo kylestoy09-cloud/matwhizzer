@@ -10,10 +10,10 @@
 
 **Tables affected:** `team_score_cache_dirty` (new), `precomputed_team_scores` (via refresh); triggers on `tournament_entries`, `matches`; pg_cron job `refresh-boys-team-score-cache`
 
-**PENDING** — run in Supabase SQL editor
+**APPLIED** — 2026-09-21 via Supabase SQL editor
 
 **Reversible?** Yes — rollback block in migration file
-**Verified?** No — pending
+**Verified?** Yes — 2026-09-21: `team_score_cache_dirty` present; boys cache re-audit vs RPCs 0 missing / 0 stale / 0 extra
 
 ---
 
@@ -38,10 +38,10 @@
 
 **Tables affected:** `boys_school_districts`, `boys_school_regions`
 
-**PENDING** — run in Supabase SQL editor
+**APPLIED** — 2026-09-21 via Supabase SQL editor
 
 **Reversible?** Partially — see note in migration file
-**Verified?** No — pending (verify query should show 0 mismatches)
+**Verified?** Yes — 2026-09-21: 0 district / 0 region mismatches for both seasons; re-audit: 314 schools (2024-25, incl. Saddle Brook) and 310 (2025-26) all match their brackets
 
 ---
 

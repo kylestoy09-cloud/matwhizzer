@@ -13,6 +13,13 @@ export type SeasonInfo = {
   stages: Partial<Record<Gender, string>>
 }
 
+/** Season id for a YYYY-MM-DD date. Seasons are keyed by championship (ending)
+ *  year and run summer to spring, so July onward belongs to next year's season. */
+export function seasonIdForDate(isoDate: string): number {
+  const [y, m] = isoDate.split('-').map(Number)
+  return m >= 7 ? y + 1 : y
+}
+
 export function seasonLabel(seasons: SeasonInfo[], id: number): string | undefined {
   return seasons.find(s => s.id === id)?.label
 }
