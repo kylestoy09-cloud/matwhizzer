@@ -39,7 +39,15 @@ type ImportRequest = {
   draftId: string
   skipped: number[]
   seasonId: number
+  // Set by the jamboree import page. Each pairwise pseudo-dual it produces is
+  // stored as meet_kind 'jamboree' and excluded from team W-L / Power Points.
+  meetKind?: 'dual' | 'jamboree'
 }
+
+// Meets with this many bouts are one-or-two-wrestler "random" meets. They are
+// tagged meet_kind 'partial' (same rule as the 20260920 backfill) but still
+// count toward team W-L until records are reviewed against official standings.
+const PARTIAL_MAX_BOUTS = 2
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
@@ -117,6 +125,7 @@ export async function POST(req: NextRequest) {
 
   const { draftId, skipped, seasonId } = body
   const skippedSet = new Set(skipped)
+  const isJamboree = body.meetKind === 'jamboree'
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL  ?? '',
@@ -163,7 +172,9 @@ export async function POST(req: NextRequest) {
       if (m.loserSchoolRaw)  allSchoolNames.add(m.loserSchoolRaw)
     }
   }
-  const schoolMatchResults = await Promise.all([...allSchoolNames].map(n => matchSchoolNames(n)))
+  // Season-aware, same as the review screen: a co-op member name (e.g. "Lodi")
+  // must resolve to that season's program, not the member school.
+  const schoolMatchResults = await Promise.all([...allSchoolNames].map(n => matchSchoolNames(n, { gender: GENDER, seasonId })))
   const schoolResolutions: Record<string, SlimSchoolMatch> = {}
   for (const r of schoolMatchResults) {
     schoolResolutions[r.rawName] = { rawName: r.rawName, schoolId: r.schoolId, confidence: r.confidence }
@@ -383,6 +394,7 @@ export async function POST(req: NextRequest) {
   let meetsImported   = 0
   let matchesImported = 0
   let meetsSkippedDup = 0
+  let meetsPartial    = 0
   const errors: string[] = []
 
   const aliasMap = new Map<string, { raw_name: string; school_id: number; wrestler_id: string }>()
@@ -426,6 +438,8 @@ export async function POST(req: NextRequest) {
         team1_score:            meet.team1Score ?? null,
         team2_score:            meet.team2Score ?? null,
         status:                 'final',
+        meet_kind:              isJamboree ? 'jamboree' : 'dual',
+        counts_toward_record:   !isJamboree,
       })
       .select('id')
       .single()
@@ -439,6 +453,7 @@ export async function POST(req: NextRequest) {
 
     const dualMeetId = meetRow.id as string
     meetsImported++
+    let boutsInserted = 0
 
     // Insert matches one at a time so duplicate weight class errors (tri-meets,
     // jamborees) are collected as warnings rather than failing the whole meet.
@@ -534,7 +549,18 @@ export async function POST(req: NextRequest) {
         }
       } else {
         matchesImported++
+        boutsInserted++
       }
+    }
+
+    // Classify by bouts actually stored, the same rule the backfill used.
+    if (!isJamboree && boutsInserted >= 1 && boutsInserted <= PARTIAL_MAX_BOUTS) {
+      const { error: kindErr } = await supabase
+        .from('dual_meets_girls')
+        .update({ meet_kind: 'partial' })
+        .eq('id', dualMeetId)
+      if (kindErr) errors.push(`Meet ${i + 1}: could not mark as partial: ${kindErr.message}`)
+      else meetsPartial++
     }
   }
 
@@ -576,6 +602,8 @@ export async function POST(req: NextRequest) {
     matchesImported,
     wrestlersCreated,
     meetsSkippedDup,
+    meetsPartial,
+    meetKind:         isJamboree ? 'jamboree' : 'dual',
     errors,
   })
 }
