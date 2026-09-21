@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { StatsTable } from '@/components/StatsTable'
 import { supabase } from '@/lib/supabase'
+import { fetchAllRows } from '@/lib/fetchAllRows'
 import { useSeasons } from '@/components/SeasonsProvider'
 
 type WrestlerRow = {
@@ -340,12 +341,13 @@ export function SchoolTabs({
           .select(`team1_school_id, team2_school_id, team1_score, team2_score${recordCols}`)
           .eq('season_id', base.season_id)
           .or(`team1_school_id.eq.${schoolIdNum},team2_school_id.eq.${schoolIdNum}`),
-        // All-schools query for pts/dual ranking — override default 1 000-row cap
-        (supabase as any)
+        // All-schools query for pts/dual ranking — paged, the API caps each request at 1,000 rows
+        fetchAllRows<MeetRow>((from, to) => (supabase as any)
           .from(dualTable)
           .select(`team1_school_id, team2_school_id, team1_score, team2_score${recordCols}`)
           .eq('season_id', base.season_id)
-          .range(0, 9999),
+          .order('id')
+          .range(from, to)),
         supabase.rpc('dual_meet_bonus_ranks', {
           p_school_id:    schoolIdNum,
           p_season_id:    activeSeason,

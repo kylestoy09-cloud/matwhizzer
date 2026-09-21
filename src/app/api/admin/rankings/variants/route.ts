@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getWorkingSeason, lockedError, parseGender } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
+import { fetchAllRows } from '@/lib/fetchAllRows'
 import { getAllConferences, conferenceFromSlug } from '@/lib/conferences'
 
 export const dynamic = 'force-dynamic'
@@ -38,15 +39,15 @@ export async function GET(req: NextRequest) {
 
   if (req.nextUrl.searchParams.get('sections') === '1') {
     const gender = req.nextUrl.searchParams.get('gender') ?? 'M'
-    let q = supabase
+    // Paged: the API caps each request at 1,000 rows, which dropped sections
+    const { data } = await fetchAllRows((from, to) => supabase
       .from('wrestler_hammer_scores')
       .select('section')
       .eq('season', CURRENT_SEASON_STR)
+      .eq('gender', gender === 'F' ? 'F' : 'M')
       .not('section', 'is', null)
-      .limit(1000)
-    if (gender === 'F') q = q.eq('gender', 'F')
-    else q = q.eq('gender', 'M')
-    const { data } = await q
+      .order('wrestler_id')
+      .range(from, to))
     const sections = [...new Set((data ?? []).map((r: { section: string }) => r.section))].sort()
     const weightClasses = gender === 'F'
       ? [100, 107, 114, 120, 126, 132, 138, 145, 152, 165, 185, 235]

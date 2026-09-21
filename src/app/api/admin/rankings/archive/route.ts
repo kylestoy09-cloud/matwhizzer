@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getWorkingSeason, parseGender } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
+import { fetchAllRows } from '@/lib/fetchAllRows'
 
 export const dynamic = 'force-dynamic'
 
@@ -32,16 +33,17 @@ export async function GET(req: NextRequest) {
   const season = await getWorkingSeason(seasonGender)
   const CURRENT_SEASON_ID = season.id
 
-  let q = supabase
-    .from('ranking_published')
-    .select('ranking_type, scope, scope_id, weight_class, published_at')
-    .eq('season_id', CURRENT_SEASON_ID)
-    .order('scope').order('scope_id').order('weight_class').order('published_at', { ascending: false })
-    .limit(5000)
-
-  if (rankingType) q = q.eq('ranking_type', rankingType)
-
-  const { data, error } = await q
+  // Paged: the API caps each request at 1,000 rows regardless of .limit()
+  const { data, error } = await fetchAllRows((from, to) => {
+    let q = supabase
+      .from('ranking_published')
+      .select('ranking_type, scope, scope_id, weight_class, published_at')
+      .eq('season_id', CURRENT_SEASON_ID)
+    if (rankingType) q = q.eq('ranking_type', rankingType)
+    return q
+      .order('scope').order('scope_id').order('weight_class').order('published_at', { ascending: false }).order('id')
+      .range(from, to)
+  })
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
 
   // Dedupe into distinct combos, counting snapshots and tracking latest published_at

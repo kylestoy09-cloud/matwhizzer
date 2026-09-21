@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
+import { fetchAllRows } from '@/lib/fetchAllRows'
 
 export const dynamic = 'force-dynamic'
 
@@ -79,12 +80,14 @@ export async function POST(req: NextRequest) {
   }
 
   // Fetch all tournament_entries (current season only) with wrestler + school
-  const { data: entries } = await supabase
+  // Paged: the API caps each request at 1,000 rows regardless of .limit()
+  const { data: entries } = await fetchAllRows((from, to) => supabase
     .from('tournament_entries')
     .select('wrestler_id, school_id, tournaments(season_id)')
     .not('wrestler_id', 'is', null)
     .not('school_id',   'is', null)
-    .limit(50000)
+    .order('id')
+    .range(from, to))
 
   const rows = (entries ?? []) as unknown as {
     wrestler_id: string

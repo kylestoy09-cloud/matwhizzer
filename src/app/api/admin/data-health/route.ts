@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
+import { fetchAllRows } from '@/lib/fetchAllRows'
 import { createSupabaseServer } from '@/lib/supabase/server'
 
 export const dynamic = 'force-dynamic'
@@ -56,26 +57,27 @@ export async function GET() {
     nullWrestlerBoutsRes,
     nullWrestlerBoutsGirlsRes,
   ] = await Promise.all([
-    supabase.from('schools')
+    // Paged: the API caps each request at 1,000 rows regardless of .limit()
+    fetchAllRows((from, to) => supabase.from('schools')
       .select('id, display_name, logo_url, athletic_conference')
-      .limit(1000),
-    supabase.from('wrestlers')
+      .order('id').range(from, to)),
+    fetchAllRows((from, to) => supabase.from('wrestlers')
       .select('id, first_name, last_name, gender, graduation_year, grade_confirmed_at, projected_weight_class, confirmed_weight_class, is_oos')
-      .limit(10000),
-    supabase.from('tournament_entries')
+      .order('id').range(from, to)),
+    fetchAllRows((from, to) => supabase.from('tournament_entries')
       .select('id, wrestler_id, school_id, weight_class_id, tournament_id')
-      .limit(20000),
+      .order('id').range(from, to)),
     supabase.from('weight_classes')
       .select('id, weight'),
-    supabase.from('conference_standings')
+    fetchAllRows((from, to) => supabase.from('conference_standings')
       .select('id, school_id, school_name')
-      .limit(1000),
-    supabase.from('precomputed_team_scores')
+      .order('id').range(from, to)),
+    fetchAllRows((from, to) => supabase.from('precomputed_team_scores')
       .select('id, tournament_id, school_id, school_name')
-      .limit(5000),
-    supabase.from('placements')
+      .order('id').range(from, to)),
+    fetchAllRows((from, to) => supabase.from('placements')
       .select('id, entry_id, weight_class_id, place, tournament_id')
-      .limit(10000),
+      .order('id').range(from, to)),
     supabase.from('pending_wrestler_transfers')
       .select('id, wrestler_id, detected_via, created_at', { count: 'exact' })
       .eq('status', 'pending')

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin }  from '@/lib/supabase/service'
+import { fetchAllRows } from '@/lib/fetchAllRows'
 
 export const dynamic = 'force-dynamic'
 
@@ -15,17 +16,18 @@ export async function GET() {
 
   const [usersRes, logRes, queueRes] = await Promise.all([
     db.from('app_users').select('id, display_name, role'),
-    db.from('microcheck_task_log')
+    // Paged: the API caps each request at 1,000 rows regardless of .limit()
+    fetchAllRows((from, to) => db.from('microcheck_task_log')
       .select('admin_id, completed_at')
       .eq('status', 'completed')
-      .order('completed_at', { ascending: false })
-      .limit(20000),
-    db.from('microcheck_tasks')
+      .order('completed_at', { ascending: false }).order('id')
+      .range(from, to)),
+    fetchAllRows((from, to) => db.from('microcheck_tasks')
       .select('completed_by, completed_at')
       .eq('status', 'completed')
       .not('completed_by', 'is', null)
-      .order('completed_at', { ascending: false })
-      .limit(10000),
+      .order('completed_at', { ascending: false }).order('id')
+      .range(from, to)),
   ])
 
   if (usersRes.error) return NextResponse.json({ error: 'app_users: ' + usersRes.error.message }, { status: 500 })
