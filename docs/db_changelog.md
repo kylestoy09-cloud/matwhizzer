@@ -38,10 +38,10 @@
 
 **Tables affected:** `boys_school_districts`, `boys_school_regions`
 
-**PENDING** — run in Supabase SQL editor
+**APPLIED** — 2026-09-21 via Supabase SQL editor
 
 **Reversible?** Partially — see note in migration file
-**Verified?** No — pending (verify query should show 0 mismatches)
+**Verified?** Yes — 2026-09-21: 0 district / 0 region mismatches for both seasons; re-audit: 314 schools (2024-25, incl. Saddle Brook) and 310 (2025-26) all match their brackets
 
 ---
 
