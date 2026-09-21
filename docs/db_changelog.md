@@ -10,10 +10,10 @@
 
 **Tables affected:** `power_points` (grant only)
 
-**PENDING** — run in Supabase SQL editor
+**APPLIED** — 2026-09-21 via Supabase SQL editor
 
 **Reversible?** Yes — `REVOKE SELECT ON power_points FROM anon, authenticated`
-**Verified?** No — pending
+**Verified?** Yes — 2026-09-21: anon and authenticated have SELECT; public key reads rows; /groups/group-1 shows 2025-26 PP (Delaware Valley 43.00, Manville 42.33)
 
 ---
 
