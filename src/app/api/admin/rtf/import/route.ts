@@ -5,6 +5,7 @@ import { parseRtfText, parseDateRange, boutResultToDb, normalizeRound } from '@/
 import { matchSchoolNames, clearSchoolCache } from '@/lib/matchSchools'
 import { matchWrestler, clearWrestlerCache, reloadAliases } from '@/lib/matchWrestlers'
 import { matchTournament } from '@/lib/matchTournaments'
+import { seasonIdForDate } from '@/lib/seasons'
 import type { SchoolFlag, ImportResult, SchoolOverride, WrestlerOverride, TournamentOverride, MsProfileLink } from '@/app/admin/import-rtf/types'
 
 export const dynamic = 'force-dynamic'
@@ -51,6 +52,7 @@ async function buildSchoolCache(
   rawNames: string[],
   overrides: Record<string, SchoolOverride>,
   client: ReturnType<typeof createClient>,
+  matchOpts: { gender: 'M' | 'F'; seasonId?: number },
 ): Promise<Map<string, ResolvedSchool>> {
   const cache = new Map<string, ResolvedSchool>()
   for (const raw of rawNames) {
@@ -76,7 +78,7 @@ async function buildSchoolCache(
         .insert({ school_id: override.school_id, alias: raw, alias_type: 'nj' })
         .then(() => {}).catch(() => {})
     } else {
-      const m = await matchSchoolNames(raw)
+      const m = await matchSchoolNames(raw, matchOpts)
       cache.set(raw, {
         school_id: m.schoolId,
         display_name: m.displayName,
@@ -162,11 +164,19 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  // Match school names against this season's program (co-op members resolve to
+  // the co-op for co-op seasons). Season comes from the first selected event.
+  const firstSelected = parsed.find(t => selectedSet.has(`${t.name}|${t.date_raw}`))
+  const firstDate = firstSelected
+    ? (tournamentDates[`${firstSelected.name}|${firstSelected.date_raw}`]?.start_date ?? parseDateRange(firstSelected.date_raw, year)[0])
+    : null
+  const matchOpts = { gender, seasonId: firstDate ? seasonIdForDate(firstDate) : undefined }
+
   const client = serviceClient()
   let schoolCache: Map<string, ResolvedSchool>
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    schoolCache = await buildSchoolCache([...allSchoolRaws], schoolOverrides, client as any)
+    schoolCache = await buildSchoolCache([...allSchoolRaws], schoolOverrides, client as any, matchOpts)
   } catch (err) {
     return NextResponse.json({ error: `School setup failed: ${String(err)}` }, { status: 500 })
   }

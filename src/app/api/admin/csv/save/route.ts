@@ -9,6 +9,7 @@ import { parseCsvBouts } from '@/lib/parseCsvBouts'
 import { matchSchoolNames, clearSchoolCache } from '@/lib/matchSchools'
 import { matchWrestler, clearWrestlerCache } from '@/lib/matchWrestlers'
 import { boutResultToDb } from '@/lib/parseRtf'
+import { seasonIdForDate } from '@/lib/seasons'
 import type { SchoolOverride, WrestlerOverride } from '@/app/admin/import-rtf/types'
 
 export const dynamic = 'force-dynamic'
@@ -107,7 +108,8 @@ export async function POST(req: NextRequest) {
         .insert({ school_id: override.school_id, alias: raw, alias_type: 'nj' })
         .then(() => {}).catch(() => {})
     } else {
-      const m = await matchSchoolNames(raw)
+      // Season-aware so co-op member names resolve to that season's program
+      const m = await matchSchoolNames(raw, { gender, seasonId: seasonIdForDate(startDate) })
       schoolCache.set(raw, { school_id: m.schoolId, display_name: m.displayName, confidence: m.confidence })
     }
   }

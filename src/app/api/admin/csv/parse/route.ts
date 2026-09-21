@@ -9,6 +9,7 @@ import { parseCsvBouts } from '@/lib/parseCsvBouts'
 import { matchSchoolNames, clearSchoolCache } from '@/lib/matchSchools'
 import { clearWrestlerCache } from '@/lib/matchWrestlers'
 import { matchTournament } from '@/lib/matchTournaments'
+import { seasonIdForDate } from '@/lib/seasons'
 import type { SchoolFlag, WrestlerFlag } from '@/app/admin/import-rtf/types'
 
 export const dynamic = 'force-dynamic'
@@ -80,8 +81,10 @@ export async function POST(req: NextRequest) {
   }
 
   const schoolCache = new Map<string, ResolvedSchool>()
+  // Season-aware so co-op member names resolve to that season's program
+  const matchOpts = { gender, seasonId: seasonIdForDate(startDate) }
   for (const raw of allSchoolRaws) {
-    const m = await matchSchoolNames(raw)
+    const m = await matchSchoolNames(raw, matchOpts)
     schoolCache.set(raw, {
       school_id: m.schoolId,
       display_name: m.displayName,
