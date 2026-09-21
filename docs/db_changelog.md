@@ -2,6 +2,21 @@
 
 ---
 
+## 2026-09-21 — power_points: public read grant
+
+**Migration file:** `docs/migrations/20260921_power_points_public_read.sql`
+
+**Purpose:** `power_points` had a public SELECT policy (20260806) but no SELECT grant for `anon`/`authenticated`, so every public read failed with "permission denied" and the group pages never showed Power Points (they displayed an internal "run compute_power_points.mts" message instead, now replaced with "haven't been released yet"). The table now holds only official released figures (311 boys 2025-26 rows imported 2026-09-21), so public read is intended; writes stay service-role only.
+
+**Tables affected:** `power_points` (grant only)
+
+**PENDING** — run in Supabase SQL editor
+
+**Reversible?** Yes — `REVOKE SELECT ON power_points FROM anon, authenticated`
+**Verified?** No — pending
+
+---
+
 ## 2026-09-21 — Team-score cache refreshes itself (boys)
 
 **Migration file:** `docs/migrations/20260921_team_score_cache_auto_refresh.sql`

@@ -121,8 +121,7 @@ export default async function GroupPage({
 
       {!hasPP ? (
         <div className="border border-black rounded-none bg-white px-6 py-8 text-center text-slate-500 text-sm">
-          Power Points not yet computed for this season.
-          Run <code className="font-mono bg-slate-100 px-1">scripts/compute_power_points.mts</code> to generate them.
+          Power Points for this season haven&rsquo;t been released yet.
         </div>
       ) : (
         <div className="space-y-6">
