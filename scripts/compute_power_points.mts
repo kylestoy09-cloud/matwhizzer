@@ -1,11 +1,24 @@
 /**
- * Compute NJSIAA Power Points for all NJ schools and write to the power_points table.
+ * Compute Power Points for all NJ schools and write to power_points_computed.
+ *
+ * Computed values are ADMIN ONLY until the formula matches NJSIAA. The public
+ * site reads power_points, which holds official released figures only.
  *
  * Usage:
- *   set -a && source .env.local && set +a && npx tsx scripts/compute_power_points.mts
- *   # Add --gender F to compute girls Power Points instead
+ *   set -a && source .env.local && set +a && npx tsx scripts/compute_power_points.mts --season 2027 --gender M
+ *   --season  championship (ending) year, e.g. 2027 for 2026-27. Required.
+ *   --gender  M or F. Required. Boys read dual_meets; girls read dual_meets_girls
+ *             and skip meets with counts_toward_record = false (jamborees).
+ *   --cutoff  YYYY-MM-DD override. Default: the season's "Power Points Close"
+ *             date in season_calendar (gender-specific row preferred).
+ *   --dry-run compute and print, write nothing (--out <file> saves the rows as JSON)
  *
- * Algorithm (matches NJSIAA):
+ * Opponent ratings (prior season), first available:
+ *   1. official power_points for season - 1, same gender
+ *   2. PRIOR_SEASON_RTFS file below
+ *   3. flat DEFAULT_PP for everyone
+ *
+ * Algorithm (work in progress — does not yet reproduce NJSIAA exactly):
  *   Each school's PP = average of best 9 meet values (one per opponent), where
  *   each meet value is looked up in the RANKING_SCALE using:
  *     - The OPPONENT'S prior-season final PP as the row index
@@ -15,7 +28,7 @@
  */
 
 import { createClient } from '@supabase/supabase-js'
-import { readFileSync, existsSync } from 'fs'
+import { readFileSync, writeFileSync, existsSync } from 'fs'
 import { computePowerPoints, computeRecord, type SchoolMeets } from '../src/lib/power-points.ts'
 
 const SUPABASE_URL = 'https://vhffduvgcljvhtlyqgcd.supabase.co'
@@ -24,13 +37,51 @@ if (!SERVICE_KEY) { console.error('SUPABASE_SERVICE_ROLE_KEY env var required');
 
 const supabase = createClient(SUPABASE_URL, SERVICE_KEY)
 
-const GENDER  = process.argv.includes('--gender') ? process.argv[process.argv.indexOf('--gender') + 1] : 'M'
-const SEASON  = 2
-const CUTOFF  = '2026-02-08'
-const DEFAULT_PP = 23.0
+function arg(name: string): string | undefined {
+  const i = process.argv.indexOf(`--${name}`)
+  return i === -1 ? undefined : process.argv[i + 1]
+}
 
-// Path to the prior season RTF — adjust if the file moves
-const PRIOR_SEASON_RTF = '/Users/thebrain/Desktop/wrestling_brackets/Whizzer Upload/2024-25 Final Power Rankings.rtf'
+const DEFAULT_PP = 23.0
+const UPLOAD_DIR = '/Users/thebrain/Desktop/wrestling_brackets/Whizzer Upload'
+
+// Prior-season final Power Points files, keyed `${season}-${gender}`, used only
+// when no official power_points exist for the prior season. Boys and girls are
+// separate programs: never rate one gender's opponents with the other's file.
+const PRIOR_SEASON_RTFS: Record<string, string> = {
+  '2026-M': `${UPLOAD_DIR}/2025-26 Boys Data/2024-25 Final Power Rankings.rtf`,
+}
+
+const GENDER = arg('gender')
+const SEASON = parseInt(arg('season') ?? '', 10)
+if (GENDER !== 'M' && GENDER !== 'F') { console.error('--gender M|F is required'); process.exit(1) }
+if (!Number.isInteger(SEASON) || SEASON < 2000) { console.error('--season <championship year>, e.g. 2027, is required'); process.exit(1) }
+
+const KEY = `${SEASON}-${GENDER}`
+
+// Cutoff: --cutoff, else the season calendar's "Power Points Close" date.
+async function calendarCutoff(): Promise<string | null> {
+  const { data, error } = await supabase
+    .from('season_calendar')
+    .select('event_date, gender')
+    .eq('season_id', SEASON)
+    .ilike('label', 'Power Points Close%')
+  if (error) { console.error('Failed to read season_calendar:', error.message); process.exit(1) }
+  const rows = data ?? []
+  const row = rows.find(r => r.gender === GENDER) ?? rows.find(r => r.gender == null)
+  return row?.event_date ?? null
+}
+const CUTOFF = arg('cutoff') ?? await calendarCutoff()
+if (!CUTOFF || !/^\d{4}-\d{2}-\d{2}$/.test(CUTOFF)) {
+  console.error(`No "Power Points Close" date in season_calendar for season ${SEASON}. Add one or pass --cutoff YYYY-MM-DD.`)
+  process.exit(1)
+}
+
+const PRIOR_SEASON_RTF = PRIOR_SEASON_RTFS[KEY] ?? null
+if (PRIOR_SEASON_RTF && !existsSync(PRIOR_SEASON_RTF)) {
+  console.error(`Prior-season file for ${KEY} not found: ${PRIOR_SEASON_RTF}`)
+  process.exit(1)
+}
 
 // ── Parse prior-season RTF ────────────────────────────────────────────────────
 
@@ -41,8 +92,8 @@ function parsePriorSeasonRTF(path: string): PriorEntry[] {
   const results: PriorEntry[] = []
 
   // Section header pattern: "2024-2025 Wrestling [SECTION], Group [N] Power Points"
-  // or "2024-2025 Wrestling Non-Public [A/B] Power Points"
-  const headerRe = /2024-2025 Wrestling ([^\\]+?) Power Points/g
+  // or "2024-2025 Wrestling Non-Public [A/B] Power Points" (years = prior season)
+  const headerRe = new RegExp(`${SEASON - 2}-${SEASON - 1} Wrestling ([^\\\\]+?) Power Points`, 'g')
 
   // Team name from hyperlink: {\fldrslt \cf10 \strokec10 TEAM NAME}}
   const teamRe = /\\fldrslt [^}]*?\\strokec\d+\s+([^}\\]+)}}/g
@@ -180,14 +231,54 @@ function partialMatchScore(a: string, b: string): number {
 
 console.log(`Computing Power Points: season=${SEASON} gender=${GENDER} cutoff=${CUTOFF}`)
 
-// Load NJ schools with aliases
-const { data: schools, error: schoolErr } = await supabase
+// Load NJ schools with aliases. No is_combined filter: co-ops are real programs
+// and must get Power Points.
+const { data: allNjSchools, error: schoolErr } = await supabase
   .from('schools')
   .select('id, display_name, section, is_nj')
   .eq('is_nj', true)
-  .eq('is_combined', false)
 
-if (schoolErr || !schools) { console.error('Failed to load schools:', schoolErr?.message); process.exit(1) }
+if (schoolErr || !allNjSchools) { console.error('Failed to load schools:', schoolErr?.message); process.exit(1) }
+
+// Load dual meets (paginate to avoid the 1000-row Supabase default limit).
+// Girls: only meets that count toward team record (skips jamborees and any meet
+// switched off via counts_toward_record).
+type MeetRow = { team1_school_id: number; team2_school_id: number; team1_score: number; team2_score: number }
+const PAGE = 1000
+const meets: MeetRow[] = []
+for (let from = 0; ; from += PAGE) {
+  let q = supabase
+    .from(GENDER === 'F' ? 'dual_meets_girls' : 'dual_meets')
+    .select('team1_school_id, team2_school_id, team1_score, team2_score')
+    .eq('season_id', SEASON)
+    .not('is_playoff', 'is', true)
+    .lte('meet_date', CUTOFF)
+    .not('team1_school_id', 'is', null)
+    .not('team2_school_id', 'is', null)
+    .not('team1_score', 'is', null)
+    .not('team2_score', 'is', null)
+  q = GENDER === 'F' ? q.eq('counts_toward_record', true) : q.eq('gender', GENDER)
+  const { data, error: meetErr } = await q.range(from, from + PAGE - 1)
+  if (meetErr) { console.error('Failed to load dual meets:', meetErr.message); process.exit(1) }
+  if (!data || data.length === 0) break
+  meets.push(...(data as MeetRow[]))
+  if (data.length < PAGE) break
+}
+
+// Boys: every NJ school gets a row (existing behavior). Girls: only schools in
+// the girls program this season, or that wrestled a counting girls dual — a
+// school with no girls team must not get a girls Power Points row.
+let schools = allNjSchools
+if (GENDER === 'F') {
+  const inGirls = new Set<number>()
+  for (const t of ['girls_school_conferences', 'girls_school_districts', 'girls_school_regions']) {
+    const { data, error } = await supabase.from(t).select('school_id').eq('season_id', SEASON)
+    if (error) { console.error(`Failed to load ${t}:`, error.message); process.exit(1) }
+    for (const r of data ?? []) inGirls.add(r.school_id as number)
+  }
+  for (const m of meets) { inGirls.add(m.team1_school_id); inGirls.add(m.team2_school_id) }
+  schools = allNjSchools.filter(s => inGirls.has(s.id as number))
+}
 
 const { data: aliasRows } = await supabase
   .from('school_aliases')
@@ -210,38 +301,27 @@ console.log(`Loaded ${schools.length} NJ schools`)
 
 // Load prior season final PP — used as static opponent reference during calculation
 let priorSeasonPP = new Map<number, number>()
-if (existsSync(PRIOR_SEASON_RTF)) {
+const { data: officialPrior, error: priorErr } = await supabase
+  .from('power_points')
+  .select('school_id, power_points, frozen_power_points')
+  .eq('season_id', SEASON - 1)
+  .eq('gender', GENDER)
+if (priorErr) { console.error('Failed to load prior-season official PP:', priorErr.message); process.exit(1) }
+if ((officialPrior ?? []).length > 0) {
+  for (const r of officialPrior ?? []) priorSeasonPP.set(r.school_id as number, Number(r.frozen_power_points ?? r.power_points))
+  console.log(`Prior-season opponent ratings: ${priorSeasonPP.size} official ${SEASON - 1} Power Points`)
+} else if (PRIOR_SEASON_RTF) {
   console.log('Parsing prior season Power Points RTF...')
   const priorEntries = parsePriorSeasonRTF(PRIOR_SEASON_RTF)
   console.log(`  Parsed ${priorEntries.length} prior-season entries`)
+  if (priorEntries.length === 0) { console.error('Prior-season file parsed to 0 entries'); process.exit(1) }
   priorSeasonPP = buildPriorSeasonPPMap(priorEntries, schoolsWithAliases)
   console.log(`  Matched ${priorSeasonPP.size} schools to prior-season PP values`)
 } else {
-  console.log('No prior season RTF found — using flat 23.0 as opponent baseline for all')
+  console.log(`No prior-season Power Points for ${KEY} — using flat ${DEFAULT_PP} as every opponent's baseline`)
 }
 
-// Load dual meets (paginate to avoid the 1000-row Supabase default limit)
 const njIds = new Set(schools.map(s => s.id as number))
-
-const PAGE = 1000
-const meets: { team1_school_id: number; team2_school_id: number; team1_score: number; team2_score: number }[] = []
-for (let from = 0; ; from += PAGE) {
-  const { data, error: meetErr } = await supabase
-    .from('dual_meets')
-    .select('team1_school_id, team2_school_id, team1_score, team2_score')
-    .eq('season_id', SEASON)
-    .eq('gender', GENDER)
-    .lte('meet_date', CUTOFF)
-    .not('team1_school_id', 'is', null)
-    .not('team2_school_id', 'is', null)
-    .not('team1_score', 'is', null)
-    .not('team2_score', 'is', null)
-    .range(from, from + PAGE - 1)
-  if (meetErr) { console.error('Failed to load dual meets:', meetErr.message); process.exit(1) }
-  if (!data || data.length === 0) break
-  meets.push(...(data as typeof meets))
-  if (data.length < PAGE) break
-}
 
 const njMeets = meets.filter(
   m => njIds.has(m.team1_school_id as number) && njIds.has(m.team2_school_id as number)
@@ -290,12 +370,22 @@ const rows = schools.map(s => {
     overall_wins:   wins,
     overall_losses: losses,
     meets_counted:  Math.min(uniqueOpps, 9),
+    cutoff_date:    CUTOFF,
+    computed_at:    new Date().toISOString(),
   }
 })
 
-console.log(`\nUpserting ${rows.length} rows into power_points...`)
+if (process.argv.includes('--dry-run')) {
+  console.log(`\n--dry-run: would upsert ${rows.length} rows; nothing written.`)
+  const out = arg('out')
+  if (out) { writeFileSync(out, JSON.stringify(rows)); console.log(`Rows written to ${out}`) }
+  process.exit(0)
+}
+
+// Admin-only table. Never power_points: that holds official figures only.
+console.log(`\nUpserting ${rows.length} rows into power_points_computed...`)
 const { error: upsertErr } = await supabase
-  .from('power_points')
+  .from('power_points_computed')
   .upsert(rows, { onConflict: 'school_id,season_id,gender' })
 
 if (upsertErr) { console.error('Upsert failed:', upsertErr.message); process.exit(1) }
