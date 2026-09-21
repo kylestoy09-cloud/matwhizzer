@@ -2,16 +2,31 @@
 
 ---
 
+## 2026-09-21 — Team-score cache refreshes itself (boys)
+
+**Migration file:** `docs/migrations/20260921_team_score_cache_auto_refresh.sql`
+
+**Purpose:** `precomputed_team_scores` never recomputed on its own, so it drifted every time bracket data changed (fixed once by the rebuild migration). Now: statement-level triggers on `tournament_entries` and `matches` mark the season dirty in `team_score_cache_dirty` when a boys postseason tournament's rows change; pg_cron runs `refresh_dirty_team_score_caches()` every 5 minutes, which rebuilds each dirty season once via `refresh_boys_team_score_cache(season)` (names via `school_display_name`). Marking is one small insert per statement, so imports aren't slowed. Immediate refresh: `SELECT refresh_boys_team_score_cache(2026);`. Girls not covered yet.
+
+**Tables affected:** `team_score_cache_dirty` (new), `precomputed_team_scores` (via refresh); triggers on `tournament_entries`, `matches`; pg_cron job `refresh-boys-team-score-cache`
+
+**PENDING** — run in Supabase SQL editor
+
+**Reversible?** Yes — rollback block in migration file
+**Verified?** No — pending
+
+---
+
 ## 2026-09-21 — API "Max rows" raised to 100,000 (CONFIG — Supabase dashboard)
 
 **Migration file:** none — project API setting (Dashboard → Project Settings → Data API → Max rows). Recorded here because it changes what every query returns.
 
 **Purpose:** PostgREST returned at most 1,000 rows per request whatever `.limit()`/`.range()` asked for, silently truncating ~500 reads (327 table queries, 187 RPC calls) — e.g. school points-per-dual rank used 1,000 of 3,980 boys meets, Dual Hub showed 72 of 3,974 completed meets, Data Health saw ~7% of wrestlers and entries. Raising the cap fixes all of them at once, including RPCs. Largest legitimate read today ≈ 55k rows (a season of dual bouts). Code that pages with `src/lib/fetchAllRows.ts` keeps working either way.
 
-**PENDING** — change in dashboard
+**APPLIED** — 2026-09-21 via Supabase dashboard
 
 **Reversible?** Yes — set Max rows back to 1000
-**Verified?** No — pending (`.range(0, 9999)` on `dual_meets` should return 3,980 rows)
+**Verified?** Yes — 2026-09-21: anon `.range(0, 9999)` on `dual_meets` returns 3,980; service role gets all 14,980 wrestlers
 
 ---
 
@@ -38,10 +53,10 @@
 
 **Tables affected:** `precomputed_team_scores` (boys rows only)
 
-**PENDING** — run in Supabase SQL editor (after `20260921_restore_lodi_saddle_brook.sql`)
+**APPLIED** — 2026-09-21 via Supabase SQL editor
 
 **Reversible?** Re-runnable; old values were stale
-**Verified?** No — pending
+**Verified?** Yes — 2026-09-21: 1,317 boys rows (2025: 296 district / 234 region / 128 state; 2026: 290 / 236 / 133); re-audit vs RPCs: 0 missing, 0 stale, 0 extra
 
 ---
 
@@ -61,10 +76,10 @@
 
 **Tables affected:** `school_season_names` (new), `schools`, `boys_schools`, `boys_school_districts`, `boys_school_regions`, `boys_school_conferences`, `tournament_entries`, `school_coops`, `inactive_school_seasons`, `precomputed_team_scores`, `school_aliases`
 
-**PENDING** — run in Supabase SQL editor
+**APPLIED** — 2026-09-21 via Supabase SQL editor
 
 **Reversible?** Yes — rollback block in migration file
-**Verified?** No — pending
+**Verified?** Yes — 2026-09-21: cache shows 2025 District 6 Saddle Brook 13.0 and Lodi 8.0; 2026 Lodi/Saddle Brook District 7 17.5, Region 2 3.0
 
 ---
 
