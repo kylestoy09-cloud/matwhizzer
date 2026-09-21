@@ -18,10 +18,12 @@ export default async function DualHubPage() {
   const [boysTotal, girlsTotal, boysCompleted, girlsCompleted] = await Promise.all([
     db.from('dual_meets').select('id', { count: 'exact', head: true }),
     db.from('dual_meets_girls').select('id', { count: 'exact', head: true }),
-    db.from('dual_meet_matches').select('dual_meet_id').then(r =>
-      new Set((r.data ?? []).map((m: any) => m.dual_meet_id)).size),
-    db.from('dual_meet_matches_girls').select('dual_meet_id').then(r =>
-      new Set((r.data ?? []).map((m: any) => m.dual_meet_id)).size),
+    // Meets with at least one bout, counted in the database (reading bout rows
+    // here was capped at 1,000 and reported ~72 of ~4,000)
+    db.from('dual_meets').select('id, dual_meet_matches!inner(dual_meet_id)', { count: 'exact', head: true })
+      .then(r => r.count ?? 0),
+    db.from('dual_meets_girls').select('id, dual_meet_matches_girls!inner(dual_meet_id)', { count: 'exact', head: true })
+      .then(r => r.count ?? 0),
   ])
 
   const totalM    = boysTotal.count  ?? 0
