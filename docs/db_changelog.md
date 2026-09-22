@@ -10,10 +10,10 @@
 
 **Tables affected:** `school_aliases`, `girls_school_districts`, `girls_school_regions`
 
-**PENDING** — run in Supabase SQL editor
+**APPLIED** — 2026-09-21 via Supabase SQL editor
 
 **Reversible?** Yes — rollback block in migration file
-**Verified?** No — pending
+**Verified?** Yes — 2026-09-21: Jefferson, Old Tappan, Ramsey → D1/R10; Cherry Hill East → D11/R12; Buena, Millville → D12/R12
 
 ---
 
