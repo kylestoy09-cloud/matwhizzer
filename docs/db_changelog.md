@@ -10,10 +10,10 @@
 
 **Tables affected:** `school_aliases`
 
-**PENDING** — run in Supabase SQL editor
+**APPLIED** — 2026-09-21 via Supabase SQL editor
 
 **Reversible?** Yes — delete the alias
-**Verified?** No — pending
+**Verified?** Yes — 2026-09-21: "Roselle" → 358 for boys and girls, 2025-26 and 2026-27; "Abraham Clark" → 358; "Roselle Park" → 125
 
 ---
 
