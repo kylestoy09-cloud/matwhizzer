@@ -2,6 +2,21 @@
 
 ---
 
+## 2026-09-21 — Alias "Roselle" → Roselle (358, Abraham Clark)
+
+**Migration file:** `docs/migrations/20260921_roselle_alias.sql`
+
+**Purpose:** Bare "Roselle" always means Roselle / Abraham Clark HS (358); Roselle Park (125) is always written "Roselle Park". 358's display name only matched when 358 was in that season's program list, so girls 2025-26 imports couldn't resolve "Roselle". The alias matches regardless. Replaces the old "flag bare Roselle for review" rule.
+
+**Tables affected:** `school_aliases`
+
+**PENDING** — run in Supabase SQL editor
+
+**Reversible?** Yes — delete the alias
+**Verified?** No — pending
+
+---
+
 ## 2026-09-21 — Girls co-op names match on import; 2025-26 girls program gaps
 
 **Migration file:** `docs/migrations/20260921_girls_coop_names_and_program_rows.sql`
