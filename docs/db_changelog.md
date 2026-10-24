@@ -2,6 +2,21 @@
 
 ---
 
+## 2026-10-24 — Girls 2025-26 ties resolved from Track tiebreaker criteria
+
+**Migration file:** `docs/migrations/20261024_resolve_girls_ties_from_track_criteria.sql`
+
+**Purpose:** 65 girls 2025-26 duals were still tied (`tiebreaker_pending`). There is no official girls W-L to settle them against, so they were matched to the "Tie Breaker:" line on each dual in the Track exports (`Whizzer Upload/2025-26 Girls Data`). The export keeps the criterion and both teams' values but not the selected winner, so the higher value wins. Boys 2025-26 checked against official W-L: higher value won 7 of 8 "forfeits" ties and 12 of 15 overall. Resolved the 15 girls ties with a real criterion (14 "forfeits", 1 "firstPts"): winner +1 team point, `criteria_winner_school_id` set, `tiebreaker_pending=false`, microcheck task completed. Also fixed Clifton vs Passaic (01-28), stored 0-0, to the bout-sum 45-18 Clifton. The other 49 have a "Team Id" line (Track's arbitrary last-resort fallback) or no line, and stay pending in microcheck.
+
+**Tables affected:** `dual_meets_girls` (`team1_score`, `team2_score`, `criteria_winner_school_id`, `tiebreaker_pending`), `microcheck_tasks`
+
+**APPLIED** — 2026-10-24 via service-role script
+
+**Reversible?** Yes — rollback steps in the migration file
+**Verified?** Yes — 2026-10-24: 15 resolved + Clifton fixed; 49 pending girls ties and 49 pending girls tie tasks remain
+
+---
+
 ## 2026-09-24 — Split Luke Miller (Lacey / Demarest)
 
 **Migration file:** `docs/migrations/20260924_split_luke_miller_demarest.sql`
