@@ -2,12 +2,10 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
-import { createSupabaseBrowser } from '@/lib/supabase/client'
 import { getAllConferences } from '@/lib/conferences'
 import { getAllSections, getAllGroups } from '@/lib/sections'
 import { fmtTime, SectionHeader } from '@/components/leaderboard-ui'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
-import { useSeasons } from '@/components/SeasonsProvider'
 
 const WEIGHTS        = [106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285]
 const N_WEIGHTS      = 14
@@ -491,8 +489,6 @@ function TeamTab({ rows, teamHammerScores }: { rows: TRow[]; teamHammerScores: M
 }
 
 export function BoysRegularSeasonLeaders({ seasonId }: { seasonId: number }) {
-  const { label: seasonLabelOf } = useSeasons()
-  const supabase = useMemo(() => createSupabaseBrowser(), [])
 
   const [wrestlers,        setWrestlers]        = useState<WRow[]>([])
   const [teams,            setTeams]            = useState<TRow[]>([])
@@ -532,28 +528,15 @@ export function BoysRegularSeasonLeaders({ seasonId }: { seasonId: number }) {
     let cancelled = false
     async function load() {
       setLoading(true)
-      const seasonLabel = seasonLabelOf(seasonId) ?? ''
-
-      const [leadersJson, hRes] = await Promise.all([
-        fetch(`/api/rs-leaders?season_id=${seasonId}&gender=M`).then(r => r.json()),
-        supabase.from('wrestler_hammer_scores')
-          .select('weight_class, hammer_score, school_id, wrestlers(school_id, gender)')
-          .eq('season', seasonLabel)
-          .not('weight_class', 'is', null),
-      ])
+      const leadersJson = await fetch(`/api/rs-leaders?season_id=${seasonId}&gender=M`).then(r => r.json())
       if (cancelled) return
 
-      if (hRes.data && hRes.data.length > 0) {
+      const hammerMax = (leadersJson.hammerMax ?? []) as { school_id: number; weight_class: string; hammer_score: number }[]
+      if (hammerMax.length > 0) {
         const schoolWeightMax = new Map<number, Map<string, number>>()
-        for (const row of hRes.data) {
-          const wrestlerInfo = (row.wrestlers as unknown) as { school_id: number; gender: string } | null
-          const sid = (wrestlerInfo?.school_id ?? row.school_id) as number | null
-          if (!sid || !row.weight_class) continue
-          if (wrestlerInfo?.gender && wrestlerInfo.gender !== 'M') continue
-          if (!schoolWeightMax.has(sid)) schoolWeightMax.set(sid, new Map())
-          const wm = schoolWeightMax.get(sid)!
-          const cur = wm.get(row.weight_class as string) ?? 0
-          wm.set(row.weight_class as string, Math.max(cur, row.hammer_score as number))
+        for (const row of hammerMax) {
+          if (!schoolWeightMax.has(row.school_id)) schoolWeightMax.set(row.school_id, new Map())
+          schoolWeightMax.get(row.school_id)!.set(row.weight_class, row.hammer_score)
         }
         const thm = new Map<number, number>()
         for (const [schoolId, wm] of schoolWeightMax) {
@@ -569,7 +552,7 @@ export function BoysRegularSeasonLeaders({ seasonId }: { seasonId: number }) {
     }
     load()
     return () => { cancelled = true }
-  }, [supabase, seasonId])
+  }, [seasonId])
 
   const visibleWrestlers = useMemo(
     () => wrestlers.filter(r => passesFilter(r, appliedConfs, appliedSections, appliedGroups)),

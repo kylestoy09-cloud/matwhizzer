@@ -66,7 +66,7 @@ export async function GET(req: NextRequest) {
       .select('id, first_name_raw, last_name_raw, weight_class, grade, status, wrestler_id')
       .eq('season_id', season.id)
       .eq('school_id', schoolId)
-      .in('status', ['school_matched', 'wrestler_matched', 'no_match'])
+      .in('status', ['school_matched', 'wrestler_matched', 'no_match', 'confirmed'])
       .order('last_name_raw'),
     db.from('wrestler_name_aliases')
       .select('wrestler_id')
@@ -96,7 +96,7 @@ export async function GET(req: NextRequest) {
 
   // For each track entry, score against all live wrestlers
   const entries = trackEntries.map(entry => {
-    if (entry.status === 'wrestler_matched' && entry.wrestler_id) {
+    if ((entry.status === 'wrestler_matched' || entry.status === 'confirmed') && entry.wrestler_id) {
       const matched = liveWrestlers.find(w => w.id === entry.wrestler_id)
       return { ...entry, matches: [], autoMatch: null, matchedWrestler: matched ?? null }
     }
@@ -121,12 +121,14 @@ export async function GET(req: NextRequest) {
 }
 
 // PATCH — save wrestler match decisions
-// Body: Array<{ id: string; wrestler_id: string | null; status: 'wrestler_matched' | 'no_match' }>
+// Body: Array<{ id: string; wrestler_id: string | null; status: 'wrestler_matched' | 'no_match'; grade?: 'Fr' | 'So' | 'Jr' | 'Sr' }>
+const VALID_GRADES = new Set(['Fr', 'So', 'Jr', 'Sr'])
+
 export async function PATCH(req: NextRequest) {
   const user = await requireAdmin()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const body = await req.json() as { id: string; wrestler_id: string | null; status: string }[]
+  const body = await req.json() as { id: string; wrestler_id: string | null; status: string; grade?: string }[]
   if (!Array.isArray(body) || body.length === 0) {
     return NextResponse.json({ error: 'Invalid body' }, { status: 400 })
   }
@@ -134,14 +136,51 @@ export async function PATCH(req: NextRequest) {
   const db = createSupabaseAdmin()
   const errors: string[] = []
 
-  for (const { id, wrestler_id, status } of body) {
-    const { error } = await db
-      .from('roster_grade_import')
-      .update({ wrestler_id: wrestler_id ?? null, status })
-      .eq('id', id)
+  for (const { id, wrestler_id, status, grade } of body) {
+    const update: Record<string, unknown> = { wrestler_id: wrestler_id ?? null, status }
+    if (grade !== undefined) {
+      if (!VALID_GRADES.has(grade)) { errors.push(`${id}: invalid grade "${grade}"`); continue }
+      update.grade = grade
+    }
+    const { error } = await db.from('roster_grade_import').update(update).eq('id', id)
     if (error) errors.push(`${id}: ${error.message}`)
   }
 
   if (errors.length > 0) return NextResponse.json({ error: errors.join('; ') }, { status: 500 })
   return NextResponse.json({ ok: true, updated: body.length })
+}
+
+// PUT — set grades directly for roster wrestlers who have no import row
+// (on our roster but missing from the upload). Same write as a manual grade
+// edit on the admin wrestler profile.
+// Body: Array<{ wrestler_id: string; grade: 'Fr' | 'So' | 'Jr' | 'Sr' }>
+export async function PUT(req: NextRequest) {
+  const user = await requireAdmin()
+  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
+  const body = await req.json() as { wrestler_id: string; grade: string }[]
+  if (!Array.isArray(body) || body.length === 0) {
+    return NextResponse.json({ error: 'Invalid body' }, { status: 400 })
+  }
+
+  const db = createSupabaseAdmin()
+  const now = new Date().toISOString()
+  const errors: string[] = []
+  let updated = 0
+
+  for (const { wrestler_id, grade } of body) {
+    if (!VALID_GRADES.has(grade)) { errors.push(`${wrestler_id}: invalid grade "${grade}"`); continue }
+    const { data, error } = await db.from('wrestlers')
+      .update({ grade, grade_confirmed_at: now, grade_confirmed_source: 'manual' })
+      .eq('id', wrestler_id)
+      .eq('gender', 'M')
+      .eq('is_oos', false)
+      .select('id')
+    if (error) errors.push(`${wrestler_id}: ${error.message}`)
+    else if (!data?.length) errors.push(`${wrestler_id}: not an NJ boys wrestler`)
+    else updated++
+  }
+
+  if (errors.length > 0) return NextResponse.json({ error: errors.join('; ') }, { status: 500 })
+  return NextResponse.json({ ok: true, updated })
 }

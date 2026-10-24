@@ -51,6 +51,7 @@ export async function GET(req: NextRequest) {
     .from('wrestlers')
     .select('id, first_name, last_name')
     .in('id', [...wrestlerIds])
+    .eq('is_oos', false)
     .order('last_name')
 
   return NextResponse.json({ wrestlers: wrestlers ?? [] })

@@ -424,13 +424,15 @@ function H2HPanel({ match, nameA, nameB, meetId, gender, onPrediction }: {
         setData(d)
         if (d.prediction && onPrediction) onPrediction(d.prediction.favoredWrestler, d.prediction.outcomeLabel)
       })
-      .catch(e => setErr(String(e)))
+      .catch(e => setErr(e instanceof Error ? e.message : String(e)))
       .finally(() => setLoading(false))
   }, [match.wrestler_a_id, match.wrestler_b_id, meetId])
 
   if (!match.wrestler_a_id || !match.wrestler_b_id)
     return <p className="text-xs text-slate-400 py-3 text-center">No wrestler IDs — H2H unavailable</p>
   if (loading) return <p className="text-xs text-slate-400 py-3">Loading H2H data…</p>
+  if (err === 'H2H is only available between NJSIAA wrestlers')
+    return <p className="text-xs text-slate-400 py-3 text-center italic">H2H inactive — out-of-state wrestler</p>
   if (err)     return <p className="text-xs text-red-500 py-3">{err}</p>
   if (!data)   return null
 

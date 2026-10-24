@@ -3,6 +3,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAdminGender } from '@/components/admin/AdminGenderContext'
+import { UnresolvedGrades } from './UnresolvedGrades'
+import { UnlinkedDuals } from './UnlinkedDuals'
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
@@ -44,9 +46,67 @@ type TrackEntry = {
   matchedWrestler: { id: string; first_name: string; last_name: string; grade: string | null; grade_confirmed_source: string | null } | null
 }
 
-type Phase = 'schools' | 'wrestlers' | 'confirm'
+type Phase = 'schools' | 'wrestlers' | 'confirm' | 'unresolved' | 'unlinked'
 
 type ProgramSchool = { id: number; display_name: string }
+
+type LiveWrestler = { id: string; first_name: string; last_name: string; grade: string | null; grade_confirmed_source: string | null }
+
+// One row per live roster wrestler: which import entry (if any) is proposed/confirmed
+// for them, what grade to write, and whether the admin has rejected the proposal.
+type RosterEdit = {
+  entryId:   string | null
+  grade:     string
+  rejected:  boolean
+  confirmed: boolean   // already written to wrestlers table — row is locked
+  score?:    number    // match confidence, only set for freshly-proposed (unsaved) matches
+}
+
+// Greedily pairs each live roster wrestler with the best available import entry.
+// Already-persisted matches (confirmed/wrestler_matched) win over fresh guesses,
+// and each import entry can only be claimed once.
+function computeRosterEdits(entries: TrackEntry[], liveWrestlers: LiveWrestler[]): Record<string, RosterEdit> {
+  const result: Record<string, RosterEdit> = {}
+  const usedEntryIds = new Set<string>()
+
+  for (const w of liveWrestlers) {
+    let entry = entries.find(e => e.wrestler_id === w.id && e.status === 'confirmed')
+    const confirmed = !!entry
+    if (!entry) entry = entries.find(e => e.wrestler_id === w.id && e.status === 'wrestler_matched')
+
+    let score: number | undefined
+    if (!entry) {
+      let best: { entry: TrackEntry; score: number } | null = null
+      for (const e of entries) {
+        if (e.status !== 'school_matched' || usedEntryIds.has(e.id)) continue
+        const m = e.matches.find(mm => mm.wrestlerId === w.id)
+        if (m && (!best || m.score > best.score)) best = { entry: e, score: m.score }
+      }
+      entry = best?.entry
+      score = best?.score
+    }
+
+    if (entry) usedEntryIds.add(entry.id)
+    result[w.id] = {
+      entryId:   entry?.id ?? null,
+      // No import row: start from the wrestler's own grade ('' = none) so nothing is
+      // implied; picking a grade writes it directly (see manualGradeEdits)
+      grade:     entry?.grade ?? w.grade ?? '',
+      rejected:  false,
+      confirmed,
+      score,
+    }
+  }
+  return result
+}
+
+// Roster wrestlers with no import row whose grade the admin set or changed by hand
+function manualGradeEdits(edits: Record<string, RosterEdit>, liveWrestlers: LiveWrestler[]) {
+  return liveWrestlers
+    .map(w => ({ w, e: edits[w.id] }))
+    .filter(({ w, e }) => e && !e.entryId && !e.confirmed && e.grade && e.grade !== w.grade)
+    .map(({ w, e }) => ({ wrestler_id: w.id, grade: e.grade }))
+}
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
@@ -142,19 +202,36 @@ export function RosterGradeImportClient() {
   const [schoolEdits, setSchoolEdits] = useState<Record<string, number | null>>({})
   const [savingSchools, setSavingSchools] = useState(false)
 
-  // Wrestler phase
+  // Wrestler phase — roster-centric review
   const [selectedSchool, setSelectedSchool] = useState<School | null>(null)
   const [entries, setEntries] = useState<TrackEntry[]>([])
-  const [liveWrestlers, setLiveWrestlers] = useState<{ id: string; first_name: string; last_name: string; grade: string | null; grade_confirmed_source: string | null }[]>([])
+  const [liveWrestlers, setLiveWrestlers] = useState<LiveWrestler[]>([])
   const [liveCount, setLiveCount] = useState(0)
   const [entriesLoading, setEntriesLoading] = useState(false)
-  const [wrestlerEdits, setWrestlerEdits] = useState<Record<string, { wrestler_id: string | null; status: string }>>({})
-  const [savingWrestlers, setSavingWrestlers] = useState(false)
+  const [rosterEdits, setRosterEdits] = useState<Record<string, RosterEdit>>({})
+  const [searchWrestlerId, setSearchWrestlerId] = useState<string | null>(null)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [confirmingRoster, setConfirmingRoster] = useState(false)
+  const [rosterMessage, setRosterMessage] = useState<string | null>(null)
 
   // Confirm phase
-  const [confirmStats, setConfirmStats] = useState<{ total: number; byGrade: Record<string, number> } | null>(null)
+  const [confirmStats, setConfirmStats] = useState<{ total: number; byGrade: Record<string, number>; unresolved?: number } | null>(null)
   const [confirming, setConfirming] = useState(false)
   const [confirmResult, setConfirmResult] = useState<string | null>(null)
+
+  // Grades Unresolved tab
+  const [unresolvedCount, setUnresolvedCount] = useState<number | null>(null)
+  const [unlinkedCount, setUnlinkedCount] = useState<number | null>(null)
+  useEffect(() => {
+    fetch('/api/admin/roster-grade-import/unresolved')
+      .then(r => r.json())
+      .then(d => { if (Array.isArray(d.items)) setUnresolvedCount(d.items.length) })
+      .catch(() => {})
+    fetch('/api/admin/unlinked-duals')
+      .then(r => r.json())
+      .then(d => { if (Array.isArray(d.items)) setUnlinkedCount(d.items.length) })
+      .catch(() => {})
+  }, [])
 
   // School filter
   const [schoolFilter, setSchoolFilter] = useState<'all' | 'unmatched' | 'matched'>('all')
@@ -236,7 +313,9 @@ export function RosterGradeImportClient() {
 
   async function openSchool(school: School) {
     setSelectedSchool(school)
-    setWrestlerEdits({})
+    setRosterEdits({})
+    setRosterMessage(null)
+    setSearchWrestlerId(null)
     setEntriesLoading(true)
     setPhase('wrestlers')
     try {
@@ -246,17 +325,7 @@ export function RosterGradeImportClient() {
       setEntries(data.entries)
       setLiveWrestlers(data.liveWrestlers ?? [])
       setLiveCount(data.liveCount)
-      // Auto-populate edits for high-confidence auto-matches not yet saved,
-      // and for school_matched entries with zero candidates (definite no-match).
-      const autoEdits: typeof wrestlerEdits = {}
-      for (const e of data.entries as TrackEntry[]) {
-        if (e.status === 'school_matched' && e.autoMatch) {
-          autoEdits[e.id] = { wrestler_id: e.autoMatch.wrestlerId, status: 'wrestler_matched' }
-        } else if (e.status === 'school_matched' && !e.autoMatch && (e.matches ?? []).length === 0) {
-          autoEdits[e.id] = { wrestler_id: null, status: 'no_match' }
-        }
-      }
-      setWrestlerEdits(autoEdits)
+      setRosterEdits(computeRosterEdits(data.entries, data.liveWrestlers ?? []))
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : String(err))
       setPhase('schools')
@@ -265,34 +334,66 @@ export function RosterGradeImportClient() {
     }
   }
 
-  // ── Save wrestler matches ─────────────────────────────────────────────────────
+  // ── Confirm roster grades ─────────────────────────────────────────────────────
+  // Writes grades only for the live roster wrestlers the admin accepted; any
+  // rejected proposal is written back to no_match instead of being confirmed.
 
-  async function saveWrestlerMatches() {
-    const payload = Object.entries(wrestlerEdits).map(([id, v]) => ({ id, ...v }))
-    if (payload.length === 0) return
+  async function confirmRoster() {
+    const school = selectedSchool!
+    const accept = Object.entries(rosterEdits).filter(([, e]) => !e.confirmed && !e.rejected && e.entryId)
+    const revert = Object.entries(rosterEdits).filter(([, e]) => !e.confirmed && e.rejected && e.entryId)
+    const manual = manualGradeEdits(rosterEdits, liveWrestlers)
+    if (accept.length === 0 && revert.length === 0 && manual.length === 0) return
 
-    setSavingWrestlers(true)
+    setConfirmingRoster(true)
+    setRosterMessage(null)
     try {
-      const res = await fetch('/api/admin/roster-grade-import/wrestlers', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      })
-      if (!res.ok) throw new Error(await res.text())
-      // Reload entries to reflect saved state
-      const school = selectedSchool!
+      const patchPayload = [
+        ...accept.map(([wrestlerId, e]) => ({ id: e.entryId!, wrestler_id: wrestlerId, status: 'wrestler_matched', grade: e.grade })),
+        ...revert.map(([, e]) => ({ id: e.entryId!, wrestler_id: null, status: 'no_match' })),
+      ]
+      if (patchPayload.length > 0) {
+        const patchRes = await fetch('/api/admin/roster-grade-import/wrestlers', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(patchPayload),
+        })
+        if (!patchRes.ok) throw new Error(await patchRes.text())
+      }
+
+      if (manual.length > 0) {
+        const putRes = await fetch('/api/admin/roster-grade-import/wrestlers', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(manual),
+        })
+        const putData = await putRes.json()
+        if (!putRes.ok) throw new Error(putData.error)
+      }
+
+      if (accept.length > 0) {
+        const confirmRes = await fetch('/api/admin/roster-grade-import/confirm', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ school_id: school.school_id, ids: accept.map(([, e]) => e.entryId) }),
+        })
+        const confirmData = await confirmRes.json()
+        if (!confirmRes.ok) throw new Error(confirmData.error)
+      }
+
+      const written = accept.length + manual.length
+      setRosterMessage(`Confirmed ${written} grade${written !== 1 ? 's' : ''} to the roster.`)
       const r2 = await fetch(`/api/admin/roster-grade-import/wrestlers?school_id=${school.school_id}`)
       const data = await r2.json()
       setEntries(data.entries)
       setLiveWrestlers(data.liveWrestlers ?? [])
       setLiveCount(data.liveCount)
-      setWrestlerEdits({})
-      // Refresh school list in background
+      setRosterEdits(computeRosterEdits(data.entries, data.liveWrestlers ?? []))
       loadSchools()
     } catch (e: unknown) {
-      alert(e instanceof Error ? e.message : String(e))
+      setRosterMessage(`Error: ${e instanceof Error ? e.message : String(e)}`)
     } finally {
-      setSavingWrestlers(false)
+      setConfirmingRoster(false)
     }
   }
 
@@ -335,6 +436,14 @@ export function RosterGradeImportClient() {
 
   // ── Phase: Schools ──────────────────────────────────────────────────────────
 
+  if (phase === 'unlinked') {
+    return <UnlinkedDuals onBack={() => { setPhase('schools'); loadSchools() }} onCount={setUnlinkedCount} />
+  }
+
+  if (phase === 'unresolved') {
+    return <UnresolvedGrades onBack={() => { setPhase('schools'); loadSchools() }} onCount={setUnresolvedCount} />
+  }
+
   if (phase === 'schools') {
     return (
       <div>
@@ -345,7 +454,19 @@ export function RosterGradeImportClient() {
           <span><strong className="text-slate-900">{totalSchools - matchedSchools - skippedSchools}</strong> unmatched</span>
           <span><strong className="text-slate-900">{totalWrestlerMatched}</strong> wrestlers matched</span>
           <button
-            className="ml-auto px-3 py-1 rounded bg-slate-900 text-white text-xs font-medium disabled:opacity-40"
+            className={`ml-auto px-3 py-1 rounded text-xs font-medium border ${unresolvedCount ? 'border-amber-400 text-amber-800 bg-amber-50' : 'border-slate-300 text-slate-600'}`}
+            onClick={() => setPhase('unresolved')}
+          >
+            Grades Unresolved{unresolvedCount != null ? ` (${unresolvedCount})` : ''}
+          </button>
+          <button
+            className={`px-3 py-1 rounded text-xs font-medium border ${unlinkedCount ? 'border-amber-400 text-amber-800 bg-amber-50' : 'border-slate-300 text-slate-600'}`}
+            onClick={() => setPhase('unlinked')}
+          >
+            Unlinked Matches{unlinkedCount != null ? ` (${unlinkedCount})` : ''}
+          </button>
+          <button
+            className="px-3 py-1 rounded bg-slate-900 text-white text-xs font-medium disabled:opacity-40"
             onClick={() => setPhase('confirm')}
           >
             Go to Confirm →
@@ -505,30 +626,6 @@ export function RosterGradeImportClient() {
   // ── Phase: Wrestlers ────────────────────────────────────────────────────────
 
   if (phase === 'wrestlers') {
-    const pendingEdits = Object.keys(wrestlerEdits).length
-
-    // Partition entries into sections
-    const autoMatched  = entries.filter(e =>
-      (e.status === 'wrestler_matched' && !wrestlerEdits[e.id]) ||
-      (e.status === 'school_matched'   && wrestlerEdits[e.id]?.status === 'wrestler_matched') ||
-      (e.status === 'school_matched'   && !wrestlerEdits[e.id] && e.autoMatch)
-    )
-    const needsReview  = entries.filter(e =>
-      e.status === 'school_matched' && !wrestlerEdits[e.id] && !e.autoMatch
-    )
-    const noMatchEntries = entries.filter(e =>
-      (e.status === 'no_match' && !wrestlerEdits[e.id]) ||
-      (wrestlerEdits[e.id]?.status === 'no_match')
-    )
-    const confirmed = entries.filter(e => e.status === 'confirmed')
-
-    // Live wrestlers not referenced by any entry or edit
-    const matchedWrestlerIds = new Set([
-      ...entries.map(e => e.wrestler_id).filter(Boolean),
-      ...Object.values(wrestlerEdits).map(v => v.wrestler_id).filter(Boolean),
-    ])
-    const unmatchedLive = liveWrestlers.filter(w => !matchedWrestlerIds.has(w.id))
-
     function gradeBadge(grade: string | null) {
       if (!grade) return <span className="text-xs text-slate-400">—</span>
       const cls = grade === 'Sr' ? 'bg-slate-200 text-slate-700' :
@@ -537,6 +634,15 @@ export function RosterGradeImportClient() {
                                    'bg-yellow-100 text-yellow-700'
       return <span className={`text-xs px-1.5 py-0.5 rounded font-medium ${cls}`}>{grade}</span>
     }
+
+    // Import entries currently claimed by an accepted (non-rejected) roster row
+    const activeEntryIds = new Set(
+      Object.values(rosterEdits).filter(e => e.entryId && !e.rejected).map(e => e.entryId as string)
+    )
+    const leftoverEntries = entries.filter(e => !activeEntryIds.has(e.id) && e.status !== 'confirmed')
+
+    const confirmCount = Object.values(rosterEdits).filter(e => !e.confirmed && !e.rejected && e.entryId).length
+      + manualGradeEdits(rosterEdits, liveWrestlers).length
 
     return (
       <div>
@@ -549,191 +655,194 @@ export function RosterGradeImportClient() {
             ← Schools
           </button>
           <h2 className="text-lg font-semibold text-slate-900">{selectedSchool?.school_name_raw}</h2>
-          <span className="text-sm text-slate-500">{entries.length} import · {liveCount} in system</span>
-          {pendingEdits > 0 && (
+          <span className="text-sm text-slate-500">{liveCount} on roster · {entries.length} import rows</span>
+          {confirmCount > 0 && (
             <button
-              disabled={savingWrestlers}
-              onClick={saveWrestlerMatches}
+              disabled={confirmingRoster}
+              onClick={confirmRoster}
               className="ml-auto px-3 py-1 rounded bg-green-700 text-white text-sm font-medium disabled:opacity-40"
             >
-              {savingWrestlers ? 'Saving…' : `Save ${pendingEdits} edit${pendingEdits !== 1 ? 's' : ''}`}
+              {confirmingRoster ? 'Confirming…' : `Confirm ${confirmCount} Grade${confirmCount !== 1 ? 's' : ''}`}
             </button>
           )}
         </div>
+
+        {rosterMessage && (
+          <div className={`mb-4 text-sm rounded px-3 py-2 ${rosterMessage.startsWith('Error') ? 'bg-red-50 text-red-700' : 'bg-green-50 text-green-700'}`}>
+            {rosterMessage}
+          </div>
+        )}
 
         {entriesLoading && <p className="text-sm text-slate-500">Loading…</p>}
 
         {!entriesLoading && (
           <div className="space-y-8">
 
-            {/* ── Section 1: Auto-matched ─────────────────────────────────── */}
+            {/* ── Our roster ──────────────────────────────────────────────── */}
             <section>
               <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">
-                Auto-matched ({autoMatched.length + confirmed.length})
+                Our roster ({liveWrestlers.length})
               </h3>
-              {autoMatched.length === 0 && confirmed.length === 0 && (
-                <p className="text-xs text-slate-400 italic">None</p>
-              )}
               <table className="w-full text-sm border-collapse">
                 <thead>
                   <tr className="text-left text-xs text-slate-400 border-b border-slate-100">
-                    <th className="px-3 py-1">Import Name</th>
-                    <th className="px-3 py-1">Wt</th>
-                    <th className="px-3 py-1">Grade</th>
-                    <th className="px-3 py-1">Matched To</th>
-                    <th className="px-3 py-1">Score</th>
+                    <th className="px-3 py-1">Wrestler</th>
+                    <th className="px-3 py-1">Current Grade</th>
+                    <th className="px-3 py-1">Matched Import Name</th>
+                    <th className="px-3 py-1">Import Grade</th>
+                    <th className="px-3 py-1">New Grade</th>
                     <th className="px-3 py-1"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  {confirmed.map(e => (
-                    <tr key={e.id} className="border-b border-slate-50 opacity-50">
-                      <td className="px-3 py-1 text-slate-700">{e.first_name_raw} {e.last_name_raw}</td>
-                      <td className="px-3 py-1 text-slate-400">{e.weight_class ?? '—'}</td>
-                      <td className="px-3 py-1">{gradeBadge(e.grade)}</td>
-                      <td className="px-3 py-1 text-green-700 text-xs">✓ Confirmed</td>
-                      <td className="px-3 py-1"></td>
-                      <td className="px-3 py-1"></td>
-                    </tr>
-                  ))}
-                  {autoMatched.map(e => {
-                    const edit = wrestlerEdits[e.id]
-                    const matchName = edit?.wrestler_id
-                      ? liveWrestlers.find(w => w.id === edit.wrestler_id)
-                        ? `${liveWrestlers.find(w => w.id === edit.wrestler_id)!.first_name} ${liveWrestlers.find(w => w.id === edit.wrestler_id)!.last_name}`
-                        : `ID ${edit.wrestler_id?.slice(0, 8)}`
-                      : e.matchedWrestler
-                        ? `${e.matchedWrestler.first_name} ${e.matchedWrestler.last_name}`
-                        : e.autoMatch?.displayName ?? '—'
-                    const score = edit ? e.autoMatch?.score : e.autoMatch?.score
-                    return (
-                      <tr key={e.id} className="border-b border-slate-50">
-                        <td className="px-3 py-1 text-slate-800">{e.first_name_raw} {e.last_name_raw}</td>
-                        <td className="px-3 py-1 text-slate-400">{e.weight_class ?? '—'}</td>
-                        <td className="px-3 py-1">{gradeBadge(e.grade)}</td>
-                        <td className="px-3 py-1 text-blue-700 text-xs">{matchName}</td>
-                        <td className="px-3 py-1 text-slate-400 text-xs">{score ? pct(score) : '—'}</td>
-                        <td className="px-3 py-1">
-                          <button
-                            className="text-xs text-slate-400 hover:text-red-600"
-                            onClick={() => setWrestlerEdits(p => ({
-                              ...p,
-                              [e.id]: { wrestler_id: null, status: 'no_match' },
-                            }))}
-                          >
-                            Reject
-                          </button>
-                        </td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-            </section>
+                  {liveWrestlers.map(w => {
+                    const edit = rosterEdits[w.id]
+                    if (!edit) return null
+                    const matchedEntry = edit.entryId ? entries.find(e => e.id === edit.entryId) ?? null : null
+                    const isSearching = searchWrestlerId === w.id
+                    const searchResults = leftoverEntries.filter(e =>
+                      `${e.first_name_raw} ${e.last_name_raw}`.toLowerCase().includes(searchQuery.toLowerCase())
+                    ).slice(0, 20)
 
-            {/* ── Section 2: Needs review ──────────────────────────────────── */}
-            <section>
-              <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">
-                Needs review ({needsReview.length + noMatchEntries.length})
-              </h3>
-              {needsReview.length === 0 && noMatchEntries.length === 0 && (
-                <p className="text-xs text-slate-400 italic">None</p>
-              )}
-              <table className="w-full text-sm border-collapse">
-                <thead>
-                  <tr className="text-left text-xs text-slate-400 border-b border-slate-100">
-                    <th className="px-3 py-1">Import Name</th>
-                    <th className="px-3 py-1">Wt</th>
-                    <th className="px-3 py-1">Grade</th>
-                    <th className="px-3 py-1">Candidates</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {noMatchEntries.map(e => {
-                    const edit = wrestlerEdits[e.id]
+                    if (edit.confirmed) {
+                      return (
+                        <tr key={w.id} className="border-b border-slate-50 opacity-50">
+                          <td className="px-3 py-1 text-slate-700">{w.first_name} {w.last_name}</td>
+                          <td className="px-3 py-1">{gradeBadge(w.grade)}</td>
+                          <td className="px-3 py-1 text-green-700 text-xs">
+                            {matchedEntry ? `${matchedEntry.first_name_raw} ${matchedEntry.last_name_raw}` : '—'}
+                          </td>
+                          <td className="px-3 py-1">{matchedEntry ? gradeBadge(matchedEntry.grade) : '—'}</td>
+                          <td className="px-3 py-1 text-green-700 text-xs font-medium">✓ Confirmed</td>
+                          <td className="px-3 py-1"></td>
+                        </tr>
+                      )
+                    }
+
                     return (
-                      <tr key={e.id} className="border-b border-slate-50">
-                        <td className="px-3 py-1 text-slate-600">{e.first_name_raw} {e.last_name_raw}</td>
-                        <td className="px-3 py-1 text-slate-400">{e.weight_class ?? '—'}</td>
-                        <td className="px-3 py-1">{gradeBadge(e.grade)}</td>
-                        <td className="px-3 py-1">
-                          {edit ? (
-                            <span className="text-xs text-slate-500 italic">
-                              No match
-                              <button className="ml-2 text-slate-400 hover:text-slate-600"
-                                onClick={() => setWrestlerEdits(p => { const n = {...p}; delete n[e.id]; return n })}>
-                                ✕
+                      <tr key={w.id} className={`border-b border-slate-50 ${edit.rejected ? 'opacity-40' : ''}`}>
+                        <td className="px-3 py-1 text-slate-800 font-medium align-top">{w.first_name} {w.last_name}</td>
+                        <td className="px-3 py-1 align-top">{gradeBadge(w.grade)}</td>
+                        <td className="px-3 py-1 align-top">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            {matchedEntry ? (
+                              <>
+                                <span className="text-blue-700 text-xs">{matchedEntry.first_name_raw} {matchedEntry.last_name_raw}</span>
+                                {edit.score != null && <span className="text-xs text-slate-400">{pct(edit.score)}</span>}
+                                <button
+                                  className="text-xs text-slate-400 hover:text-slate-700 underline"
+                                  onClick={() => { setSearchWrestlerId(isSearching ? null : w.id); setSearchQuery('') }}
+                                >
+                                  change
+                                </button>
+                              </>
+                            ) : (
+                              <>
+                                <span className="text-xs text-slate-400 italic">No match</span>
+                                <button
+                                  className="text-xs text-blue-600 underline"
+                                  onClick={() => { setSearchWrestlerId(isSearching ? null : w.id); setSearchQuery('') }}
+                                >
+                                  search
+                                </button>
+                              </>
+                            )}
+                          </div>
+                          {isSearching && (
+                            <div className="relative mt-1">
+                              <input
+                                autoFocus
+                                type="text"
+                                value={searchQuery}
+                                onChange={e => setSearchQuery(e.target.value)}
+                                placeholder="Search import names…"
+                                className="text-xs border border-slate-300 rounded px-2 py-1 w-56 outline-none focus:border-blue-500"
+                                onBlur={() => setTimeout(() => setSearchWrestlerId(null), 150)}
+                              />
+                              <div className="absolute z-10 top-full left-0 mt-0.5 w-64 bg-white border border-slate-200 rounded shadow-lg max-h-48 overflow-y-auto">
+                                {searchResults.map(e => (
+                                  <button
+                                    key={e.id}
+                                    className="w-full text-left px-3 py-1.5 text-xs hover:bg-blue-50 text-slate-700"
+                                    onMouseDown={() => {
+                                      setRosterEdits(p => ({
+                                        ...p,
+                                        [w.id]: { entryId: e.id, grade: e.grade, rejected: false, confirmed: false },
+                                      }))
+                                      setSearchWrestlerId(null)
+                                    }}
+                                  >
+                                    {e.first_name_raw} {e.last_name_raw}{' '}
+                                    <span className="text-slate-400">· Wt {e.weight_class ?? '—'} · {e.grade}</span>
+                                  </button>
+                                ))}
+                                {searchResults.length === 0 && (
+                                  <div className="px-3 py-1.5 text-xs text-slate-400 italic">No matches</div>
+                                )}
+                              </div>
+                            </div>
+                          )}
+                        </td>
+                        <td className="px-3 py-1 align-top">{matchedEntry ? gradeBadge(matchedEntry.grade) : <span className="text-xs text-slate-400">—</span>}</td>
+                        <td className="px-3 py-1 align-top">
+                          <select
+                            value={edit.grade}
+                            disabled={edit.rejected}
+                            onChange={e => setRosterEdits(p => ({ ...p, [w.id]: { ...p[w.id], grade: e.target.value } }))}
+                            className="text-xs border border-slate-300 rounded px-1.5 py-0.5 disabled:opacity-40"
+                          >
+                            {!edit.grade && <option value="">—</option>}
+                            {['Fr', 'So', 'Jr', 'Sr'].map(g => <option key={g} value={g}>{g}</option>)}
+                          </select>
+                        </td>
+                        <td className="px-3 py-1 align-top">
+                          {matchedEntry && (
+                            edit.rejected ? (
+                              <button
+                                className="text-xs text-slate-500 underline"
+                                onClick={() => setRosterEdits(p => ({ ...p, [w.id]: { ...p[w.id], rejected: false } }))}
+                              >
+                                Undo
                               </button>
-                            </span>
-                          ) : (
-                            <span className="text-xs text-slate-400 italic">No match</span>
+                            ) : (
+                              <button
+                                className="text-xs text-red-600 hover:text-red-800"
+                                onClick={() => setRosterEdits(p => ({ ...p, [w.id]: { ...p[w.id], rejected: true } }))}
+                              >
+                                Reject
+                              </button>
+                            )
                           )}
                         </td>
                       </tr>
                     )
                   })}
-                  {needsReview.map(e => (
-                    <tr key={e.id} className="border-b border-slate-50">
-                      <td className="px-3 py-1 text-slate-800 font-medium">{e.first_name_raw} {e.last_name_raw}</td>
-                      <td className="px-3 py-1 text-slate-400">{e.weight_class ?? '—'}</td>
-                      <td className="px-3 py-1">{gradeBadge(e.grade)}</td>
-                      <td className="px-3 py-1">
-                        <div className="flex flex-wrap gap-1 items-center">
-                          {e.matches.map(m => (
-                            <button
-                              key={m.wrestlerId}
-                              className="text-xs px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 hover:bg-blue-50"
-                              onClick={() => setWrestlerEdits(p => ({
-                                ...p,
-                                [e.id]: { wrestler_id: m.wrestlerId, status: 'wrestler_matched' },
-                              }))}
-                            >
-                              {m.displayName} <span className="text-slate-400">{pct(m.score)}</span>
-                            </button>
-                          ))}
-                          {e.matches.length === 0 && (
-                            <span className="text-xs text-slate-400 italic mr-2">No candidates</span>
-                          )}
-                          <button
-                            className="text-xs px-2 py-0.5 rounded bg-red-50 text-red-600 border border-red-200"
-                            onClick={() => setWrestlerEdits(p => ({
-                              ...p,
-                              [e.id]: { wrestler_id: null, status: 'no_match' },
-                            }))}
-                          >
-                            No Match
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
                 </tbody>
               </table>
             </section>
 
-            {/* ── Section 3: In system, not in import ─────────────────────── */}
+            {/* ── Import names not matched to our roster ───────────────────── */}
             <section>
               <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">
-                In system — not in import ({unmatchedLive.length})
+                Import names not matched to your roster ({leftoverEntries.length})
               </h3>
-              {unmatchedLive.length === 0 && (
-                <p className="text-xs text-slate-400 italic">All system wrestlers accounted for</p>
-              )}
-              {unmatchedLive.length > 0 && (
+              {leftoverEntries.length === 0 ? (
+                <p className="text-xs text-slate-400 italic">All import names matched</p>
+              ) : (
                 <table className="w-full text-sm border-collapse">
                   <thead>
                     <tr className="text-left text-xs text-slate-400 border-b border-slate-100">
-                      <th className="px-3 py-1">Wrestler</th>
-                      <th className="px-3 py-1">Current Grade</th>
-                      <th className="px-3 py-1">Grade Source</th>
+                      <th className="px-3 py-1">Import Name</th>
+                      <th className="px-3 py-1">Wt</th>
+                      <th className="px-3 py-1">Grade</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {unmatchedLive.map(w => (
-                      <tr key={w.id} className="border-b border-slate-50">
-                        <td className="px-3 py-1 text-slate-700">{w.first_name} {w.last_name}</td>
-                        <td className="px-3 py-1">{gradeBadge(w.grade)}</td>
-                        <td className="px-3 py-1 text-xs text-slate-400">{w.grade_confirmed_source ?? '—'}</td>
+                    {leftoverEntries.map(e => (
+                      <tr key={e.id} className="border-b border-slate-50">
+                        <td className="px-3 py-1 text-slate-500">{e.first_name_raw} {e.last_name_raw}</td>
+                        <td className="px-3 py-1 text-slate-400">{e.weight_class ?? '—'}</td>
+                        <td className="px-3 py-1">{gradeBadge(e.grade)}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -782,6 +891,10 @@ export function RosterGradeImportClient() {
             This will write <code>grade</code> and <code>grade_confirmed_source = &apos;roster_upload&apos;</code>
             to the live <code>wrestlers</code> table for all {confirmStats.total} matched entries,
             and mark them as <code>confirmed</code> in the import table.
+            {!!confirmStats.unresolved && (
+              <> {confirmStats.unresolved} wrestler{confirmStats.unresolved !== 1 ? 's' : ''} with conflicting grades
+              {confirmStats.unresolved !== 1 ? ' are' : ' is'} skipped — resolve them in <button className="underline" onClick={() => setPhase('unresolved')}>Grades Unresolved</button>.</>
+            )}
           </p>
 
           {confirmResult && (

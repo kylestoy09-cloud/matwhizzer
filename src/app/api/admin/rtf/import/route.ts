@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { getWorkingSeason, parseGender } from '@/lib/season-context'
 import { parseRtfText, parseDateRange, boutResultToDb, normalizeRound } from '@/lib/parseRtf'
-import { matchSchoolNames, clearSchoolCache } from '@/lib/matchSchools'
+import { matchSchoolNames, clearSchoolCache, isNjLookalike } from '@/lib/matchSchools'
 import { matchWrestler, clearWrestlerCache, reloadAliases } from '@/lib/matchWrestlers'
 import { matchTournament } from '@/lib/matchTournaments'
 import { seasonIdForDate } from '@/lib/seasons'
@@ -66,17 +66,29 @@ async function buildSchoolCache(
         : await findOrCreateOosSchool(client, override.display_name ?? raw)
       const display_name = override.display_name ?? raw
       cache.set(raw, { school_id, display_name, confidence: 'oos', alternates: [] })
-      // Persist alias: school_id stored in notes to avoid conflict with nj_alias_unique partial index.
-      // Swallow all errors (duplicates are fine; transient errors must not abort the import).
-      await (client as any).from('school_aliases')
-        .insert({ school_id: null, alias: raw, alias_type: 'oos', notes: String(school_id) })
-        .then(() => {}).catch(() => {})
+      // Remember the decision so this raw name resolves to the OOS school next time —
+      // but only for names that can't be mistaken for an NJ school ("Bishop McCort" yes,
+      // "Dover, DE" no: those get reviewed at every import). school_id is NOT NULL in
+      // production; notes carries the same id (convention matchSchools.ts reads first).
+      // (Not needed when the raw name already is the OOS display name.)
+      if (raw.toLowerCase() !== display_name.toLowerCase() &&
+          !(await isNjLookalike(raw)) && !(await isNjLookalike(display_name))) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const c = client as any
+        await c.from('school_aliases').delete().eq('alias', raw).eq('alias_type', 'oos')
+        const { error } = await c.from('school_aliases')
+          .insert({ school_id, alias: raw, alias_type: 'oos', notes: String(school_id) })
+        if (error) console.warn(`[rtf-import] OOS alias "${raw}" → ${school_id} not saved: ${error.message}`)
+      }
     } else if (override?.type === 'nj') {
       cache.set(raw, { school_id: override.school_id, display_name: override.display_name, confidence: 'exact', alternates: [] })
-      // Save alias so this raw name auto-resolves next import
-      await (client as any).from('school_aliases')
-        .insert({ school_id: override.school_id, alias: raw, alias_type: 'nj' })
-        .then(() => {}).catch(() => {})
+      // Save alias so this raw name auto-resolves next import (not needed when the
+      // raw name already is the display name, e.g. a confirmed exact match at an OOS event)
+      if (raw.toLowerCase() !== override.display_name.toLowerCase()) {
+        await (client as any).from('school_aliases')
+          .insert({ school_id: override.school_id, alias: raw, alias_type: 'nj' })
+          .then(() => {}).catch(() => {})
+      }
     } else {
       const m = await matchSchoolNames(raw, matchOpts)
       cache.set(raw, {
@@ -233,6 +245,28 @@ export async function POST(req: NextRequest) {
         )
         if (hasOos) tournamentType = 'inside_outside'
       }
+      // Out-of-state events: every school must have been confirmed in review (an exact
+      // NJ name match can still be an OOS program, e.g. "Dover" from Dover, DE).
+      if (tournamentType === 'outside') {
+        const unreviewed = new Set<string>()
+        for (const b of dedupedBoutsAll) {
+          for (const raw of [b.wrestler1_school, b.wrestler2_school]) {
+            if (raw && !schoolOverrides[raw]) unreviewed.add(raw)
+          }
+        }
+        for (const sc of t.team_scores) {
+          if (sc.school_name && !schoolOverrides[sc.school_name]) unreviewed.add(sc.school_name)
+        }
+        if (unreviewed.size > 0) {
+          results.push({
+            tournament: t.name, bouts_inserted: 0, placements_upserted: 0, team_scores_inserted: 0,
+            wrestlers_created: 0, skipped: true,
+            error: `Out-of-state event: ${unreviewed.size} school${unreviewed.size !== 1 ? 's' : ''} not reviewed (${[...unreviewed].slice(0, 5).join(', ')}${unreviewed.size > 5 ? ', …' : ''}). Re-run matching and confirm every school.`,
+          })
+          continue
+        }
+      }
+
       const tOverride = tournamentOverrides[tkey]
 
       // Resolve which tournament record to use:

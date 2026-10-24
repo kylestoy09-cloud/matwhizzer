@@ -32,26 +32,38 @@ const WEIGHT_ALT  = WEIGHT_LIST.join('|')
 
 // ── Shared helpers ────────────────────────────────────────────────────────────
 
+// Index of the "(" that opens the group closed at closeIdx, or -1.
+function matchingOpenParen(s: string, closeIdx: number): number {
+  let depth = 0
+  for (let i = closeIdx; i >= 0; i--) {
+    if (s[i] === ')') depth++
+    else if (s[i] === '(') { depth--; if (depth === 0) return i }
+  }
+  return -1
+}
+
 function splitNameSchool(s: string): { name: string; school: string | null } {
   const lastClose = s.lastIndexOf(')')
   if (lastClose === -1) return { name: s.trim(), school: null }
-  let depth = 0, openIdx = -1
-  for (let i = lastClose; i >= 0; i--) {
-    if (s[i] === ')') depth++
-    else if (s[i] === '(') { depth--; if (depth === 0) { openIdx = i; break } }
-  }
+  const openIdx = matchingOpenParen(s, lastClose)
   if (openIdx <= 0) return { name: s.trim(), school: null }
   return { name: s.slice(0, openIdx).trim(), school: s.slice(openIdx + 1, lastClose).trim() || null }
 }
 
+// NFHS dual scoring: fall, forfeit, default (injury) and disqualification are all
+// worth 6; technical fall 5; major decision 4; every decision 3.
 function winnerPoints(resultType: string): number {
   switch (resultType) {
-    case 'Fall': case 'For': case 'MFFL': return 6
+    case 'Fall': case 'For': case 'MFFL': case 'Inj': case 'DQ': return 6
     case 'TF':   return 5
     case 'MD':   return 4
-    default:     return 3   // Dec, SV-1, UTB, Inj
+    default:     return 3   // Dec, SV-1, UTB
   }
 }
+
+// A trailing "(…)" group is the bout result only if it opens with a result token —
+// otherwise it is the loser's school and the line carries no result.
+const RESULT_TOKEN_RE = /^(?:fall|dec|md|maj|tf|sv-?1|tb-?1|tb-?2|utb|mffl|inj|def|for|dq|double\s*forfeit)\b/i
 
 function pairKey(s1: string, s2: string): string {
   const [a, b] = [s1, s2].sort()
@@ -75,6 +87,52 @@ type RawBout = {
   resultDetail:    string | null
   isDoubleForfeit: boolean
   isForfeitWin:    boolean
+}
+
+// ── Cross-view de-duplication (Formats 1 and 3) ───────────────────────────────
+// TrackWrestling repeats each bout in every team's section, and the weight it
+// shows can differ between the all-matches grid and a team view (Del Val Kickoff
+// listed one Dec 9-4 at both 120 and 126). Listings that agree on winner, loser
+// and result are therefore the same bout even when the weight differs: the weight
+// reported by the most listings wins, and the first listing breaks a tie.
+//
+// The result stays in the key so a real rematch survives — if a pair meets twice
+// the two bouts end differently, while a repeated listing of one bout carries the
+// identical result string in every section.
+//
+// Forfeits and double forfeits leave one side unknown, so those stay keyed by
+// weight — otherwise every forfeit in the event would collapse into one bout.
+
+function boutSignature(b: RawBout): string {
+  if (!b.winnerName || !b.loserName) {
+    return `w${b.weight}|${(b.winnerName ?? '').toLowerCase()}|${(b.loserName ?? '').toLowerCase()}|${b.resultType}`
+  }
+  return `${b.winnerName.toLowerCase()}|||${b.loserName.toLowerCase()}|||${b.resultType}|||${b.resultDetail ?? ''}`
+}
+
+function collapseDuplicateBouts(bouts: RawBout[]): RawBout[] {
+  const groups = new Map<string, RawBout[]>()
+  const order: string[] = []
+
+  for (const b of bouts) {
+    const sig = boutSignature(b)
+    if (!groups.has(sig)) { groups.set(sig, []); order.push(sig) }
+    groups.get(sig)!.push(b)
+  }
+
+  return order.map(sig => {
+    const group = groups.get(sig)!
+    if (group.length === 1) return group[0]
+
+    const counts = new Map<number, number>()
+    for (const b of group) counts.set(b.weight, (counts.get(b.weight) ?? 0) + 1)
+
+    let best = group[0]
+    for (const b of group) {
+      if ((counts.get(b.weight) ?? 0) > (counts.get(best.weight) ?? 0)) best = b
+    }
+    return best
+  })
 }
 
 // ── Grouping logic (shared) ───────────────────────────────────────────────────
@@ -184,6 +242,8 @@ function parseResultF1(s: string): { resultType: string; resultDetail: string | 
   if (/^mffl/i.test(s))             return { resultType: 'MFFL',          resultDetail: null }
   if (/^dec/i.test(s))              return { resultType: 'Dec',           resultDetail: cleanDetail(s.replace(/^dec\s*/i,   '')) }
   if (/^inj/i.test(s))              return { resultType: 'Inj',           resultDetail: cleanDetail(s.replace(/^inj\.?\s*/i,'')) }
+  if (/^def/i.test(s))              return { resultType: 'Inj',           resultDetail: cleanDetail(s.replace(/^def\.?\s*/i,'')) }
+  if (/^dq/i.test(s))               return { resultType: 'DQ',            resultDetail: null }
   if (/^for/i.test(s))              return { resultType: 'For',           resultDetail: null }
   if (/^double\s*forfeit/i.test(s)) return { resultType: 'Double Forfeit', resultDetail: null }
   return { resultType: s, resultDetail: null }
@@ -213,11 +273,7 @@ function parseBoutLineF1(line: string): RawBout | null {
 
   const lastClose = afterOver.lastIndexOf(')')
   if (lastClose === -1) return null
-  let depth = 0, bStart = -1
-  for (let i = lastClose; i >= 0; i--) {
-    if (afterOver[i] === ')') depth++
-    else if (afterOver[i] === '(') { depth--; if (depth === 0) { bStart = i; break } }
-  }
+  const bStart = matchingOpenParen(afterOver, lastClose)
   if (bStart === -1) return null
 
   const resultStr = afterOver.slice(bStart + 1, lastClose)
@@ -238,19 +294,14 @@ function parseBoutLineF1(line: string): RawBout | null {
 
 function parseFormatOne(rawText: string, date: string): ParsedMeetGirls[] {
   const lines = rawText.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n')
-  const seen  = new Set<string>()
   const bouts: RawBout[] = []
 
   for (const line of lines) {
     const b = parseBoutLineF1(line)
-    if (!b) continue
-    const k = `${b.weight}|${(b.winnerName ?? '').toLowerCase()}|${(b.loserName ?? '').toLowerCase()}`
-    if (seen.has(k)) continue
-    seen.add(k)
-    bouts.push(b)
+    if (b) bouts.push(b)
   }
 
-  return buildMeets(bouts, date)
+  return buildMeets(collapseDuplicateBouts(bouts), date)
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -265,17 +316,27 @@ const EB_TYPE_MAP: Record<string, string> = {
   'technical fall': 'TF',
   'injury default': 'Inj',
   default:       'Inj',
+  forfeit:       'For',
+  disqualification: 'DQ',
 }
 const EB_TRAIL_MAP: Record<string, string> = {
   fall:  'Fall',
   dec:   'Dec',
   maj:   'MD',
+  md:    'MD',
   tf:    'TF',
   'sv-1':'SV-1',
   'tb-1':'SV-1',
   utb:   'UTB',
   'inj.':'Inj',
   inj:   'Inj',
+  'def.':'Inj',
+  def:   'Inj',
+  'for.':'For',
+  for:   'For',
+  forfeit:'For',
+  dq:    'DQ',
+  mffl:  'MFFL',
 }
 
 function parseResultTrailF2(trailStr: string): { resultType: string; resultDetail: string | null } {
@@ -341,13 +402,26 @@ function parseBulletBodyF2(body: string, weight: number): RawBout | null {
   }
 
   const afterOver = afterWon.slice(overIdx + 6).trim()
-  // "Loser Name (School) Fall 0:27"
-  // Find the end of loser (School) — last ) that's followed by trailing result
+  // "Loser Name (School) Fall 0:27" — the result trails the loser's school. Some
+  // pastes wrap it in parentheses instead ("… (Riverside) (Fall 0:27)"), so peel
+  // that group off first; otherwise the last ")" is the school's and the result
+  // string would be read as the loser's school name.
   const lastClose = afterOver.lastIndexOf(')')
   if (lastClose === -1) return null
 
-  const loserPart  = afterOver.slice(0, lastClose + 1).trim()
-  const trailStr   = afterOver.slice(lastClose + 1).trim()
+  let loserPart = afterOver.slice(0, lastClose + 1).trim()
+  let trailStr  = afterOver.slice(lastClose + 1).trim()
+
+  if (!trailStr && lastClose === afterOver.length - 1) {
+    const paren = matchingOpenParen(afterOver, lastClose)
+    if (paren > 0) {
+      const inner = afterOver.slice(paren + 1, lastClose).trim()
+      if (RESULT_TOKEN_RE.test(inner)) {
+        loserPart = afterOver.slice(0, paren).trim()
+        trailStr  = inner
+      }
+    }
+  }
 
   const { name: winnerName, school: winnerSchool } = splitNameSchool(winnerPart)
   const { name: loserName,  school: loserSchool  } = splitNameSchool(loserPart)
@@ -411,8 +485,17 @@ function parseFormatTwo(rawText: string, date: string): ParsedMeetGirls[] {
 const WEIGHT_STANDALONE_RE   = new RegExp(`^(${WEIGHT_ALT})$`)   // used against individual lines (no m flag needed)
 const WEIGHT_STANDALONE_RE_M = new RegExp(`^(${WEIGHT_ALT})$`, 'm') // used against full text
 
-// Lines that are pure noise from TW table copy-paste
+// Lines that are pure noise from TW table copy-paste. The wildcard alternatives
+// ("…high school…", "…jamboree…") match anywhere in the line, so this is only
+// ever tested against lines that are NOT bout lines — a school named "Randolph
+// High School" or an event named "… Jamboree" would otherwise take its bouts
+// down with it.
 const NOISE_RE = /^(?:no|yes|weight|summary|stats|tw event|click here|team:|teams|divisions|weights|wrestlers|matches|dashboard|del val kickoff|round results|.*kickoff.*|.*jamboree.*|\d{1,2}\/\d{1,2}\/\d{4}|.*high school.*|.*\d{5}.*)\s*$/i
+
+// A line carrying a result is a bout row, never noise.
+function looksLikeBoutLine(line: string): boolean {
+  return line.includes(' over ') || /\bdouble\s*forfeit\b/i.test(line)
+}
 
 function parseBoutBodyF3(line: string, weight: number): RawBout | null {
   // Strip "Varsity - " / "JV - " prefix
@@ -428,11 +511,7 @@ function parseBoutBodyF3(line: string, weight: number): RawBout | null {
 
   const lastClose = afterOver.lastIndexOf(')')
   if (lastClose === -1) return null
-  let depth = 0, bStart = -1
-  for (let i = lastClose; i >= 0; i--) {
-    if (afterOver[i] === ')') depth++
-    else if (afterOver[i] === '(') { depth--; if (depth === 0) { bStart = i; break } }
-  }
+  const bStart = matchingOpenParen(afterOver, lastClose)
   if (bStart === -1) return null
 
   const resultStr = afterOver.slice(bStart + 1, lastClose)
@@ -453,7 +532,6 @@ function parseBoutBodyF3(line: string, weight: number): RawBout | null {
 
 function parseFormatThree(rawText: string, date: string): ParsedMeetGirls[] {
   const lines = rawText.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n')
-  const seen  = new Set<string>()
   const bouts: RawBout[] = []
   let currentWeight: number | null = null
 
@@ -468,23 +546,33 @@ function parseFormatThree(rawText: string, date: string): ParsedMeetGirls[] {
       continue
     }
 
-    // Skip noise
-    if (NOISE_RE.test(line)) continue
+    const isBoutLine = looksLikeBoutLine(line)
+
+    // Skip noise — but never a line that carries a result
+    if (!isBoutLine && NOISE_RE.test(line)) continue
+
+    // A weight header covers every bout row under it, so rows that are not bouts
+    // (a bare "Double Forfeit", a stray label) are skipped without clearing the
+    // weight — clearing it dropped the rest of the section.
+    if (!isBoutLine) continue
+
+    // Some pastes mix in weight-prefixed rows ("100 Varsity - A (X) over B (Y) …").
+    // Those carry their own weight and must not inherit the section's.
+    const prefixed = parseBoutLineF1(line)
+    if (prefixed) {
+      bouts.push(prefixed)
+      continue
+    }
+    if (WEIGHT_RE_F1.test(line)) continue   // weight-prefixed but unparseable — don't mis-weight it
 
     if (currentWeight === null) continue
-    if (!line.includes(' over ')) { currentWeight = null; continue }
 
     const b = parseBoutBodyF3(line, currentWeight)
-    if (!b) continue
-
-    const k = `${b.weight}|${(b.winnerName ?? '').toLowerCase()}|${(b.loserName ?? '').toLowerCase()}`
-    if (seen.has(k)) continue
-    seen.add(k)
-    bouts.push(b)
+    if (b) bouts.push(b)
     // don't reset currentWeight — same weight can have multiple bouts in the same section
   }
 
-  return buildMeets(bouts, date)
+  return buildMeets(collapseDuplicateBouts(bouts), date)
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

@@ -2,6 +2,111 @@
 
 ---
 
+## 2026-09-24 — Split Luke Miller (Lacey / Demarest)
+
+**Migration file:** `docs/migrations/20260924_split_luke_miller_demarest.sql`
+
+**Purpose:** Two different wrestlers named Luke Miller shared one record (Lacey junior, Jr from districts). The 2026-07-31 alias build aliased that record at both Lacey (249) and Demarest (314), so the Demarest sophomore's roster grade import row matched the Lacey junior and his BCCA bout was credited to him; his 4 Demarest dual matches had been imported with his name but no wrestler_id, so he never appeared on Demarest's roster (reported by Kyle). Created the Demarest Luke Miller (So, `961025db-…`) and moved the Demarest alias, the 4 dual sides (+ winner on his fall vs Mehta), the BCCA bout and the Demarest import row to him; confirmed Lacey's Jr. Scan found 33 more records on two schools' 2025-26 roster uploads — they now appear in the roster grade import's Grades Unresolved tab, whose "different wrestler" action splits the record by school the same way (`src/lib/splitWrestler.ts`).
+
+**Tables affected:** `wrestlers` (1 inserted), `wrestler_name_aliases`, `dual_meet_matches`, `tournament_bouts`, `wrestler_match_score_log`, `roster_grade_import`
+
+**APPLIED** — 2026-09-24 via service-role script
+
+**Reversible?** Yes — point the moved rows back to `b2654654-b493-436d-8c8a-87e49a09ea1f` (ids in the migration file), null the 4 dual sides, delete the new wrestler
+**Verified?** Yes — 2026-09-24: all 9 statements affected the expected rows (1 alias, 4 duals, 1 winner, 1 bout, 2 import rows)
+
+---
+
+## 2026-09-24 — Roster grades from microcheck matches written to wrestlers
+
+**Migration file:** `docs/migrations/20260924_microcheck_roster_grades_backfill.sql`
+
+**Purpose:** The microcheck roster_match task saved each reviewed match as `roster_grade_import.status = 'wrestler_matched'` but never ran the confirm step, so 6,679 human-reviewed matches (2026-09-20..22, 296 schools) never reached wrestler profiles — only 77 grades from /admin/roster-grade-import were written, and boys roster grade coverage read 52%. Wrote the import grade for every matched wrestler with no grade or the same grade (`grade_confirmed_source = 'roster_upload'`, `grade_confirmed_at` = when the match was reviewed) and marked those rows `confirmed` (`confirmed_by = 'backfill: microcheck roster_match'`). 42 wrestlers held back as `wrestler_matched` for manual review: current grade differs from the import, or two import rows with different grades matched the same wrestler. The microcheck panel now confirms on submit.
+
+**Tables affected:** `wrestlers` (`grade`, `grade_confirmed_at`, `grade_confirmed_source`), `roster_grade_import` (`status`, `confirmed_by`, `confirmed_at`)
+
+**APPLIED** — 2026-09-24 via service-role script (pre-apply snapshot of the 6,646 wrestlers saved in the session scratchpad)
+
+**Reversible?** Partly — import rows: `UPDATE roster_grade_import SET status='wrestler_matched', confirmed_by=NULL, confirmed_at=NULL WHERE confirmed_by='backfill: microcheck roster_match'`; wrestler grades need the snapshot
+**Verified?** Yes — 2026-09-24: 6,604 wrestlers written, 6,612 import rows confirmed, 0 errors; boys roster grade coverage 52% → 97.5% (289 of 311 schools at 100%)
+
+---
+
+## 2026-09-24 — Roster-upload grades: backfill grade_confirmed_at
+
+**Migration file:** `docs/migrations/20260924_roster_upload_grade_confirmed_at.sql`
+
+**Purpose:** The roster grade import confirm step wrote `grade` and `grade_confirmed_source = 'roster_upload'` but never `grade_confirmed_at`, so 40 of 77 roster-upload wrestlers still counted as "NJ wrestlers without confirmed grade" in data health and showed no "Last confirmed" date on the admin profile. The confirm route now sets it; this backfills those 40 from the import row's `confirmed_at` (now() if none). Same change: roster wrestlers with no import row (e.g. Dorian Velez, Dumont) can now get a grade in the review screen — written as `grade_confirmed_source = 'manual'`, same as the admin profile edit.
+
+**Tables affected:** `wrestlers` (`grade_confirmed_at` only)
+
+**APPLIED** — 2026-09-24 via service-role script
+
+**Reversible?** Yes — set `grade_confirmed_at = NULL` for the 40 ids (informational field)
+**Verified?** Yes — 2026-09-24: 40 updated; 0 roster-upload wrestlers with a grade and no `grade_confirmed_at`
+
+---
+
+## 2026-09-24 — OOS name collisions: Franklin, PA / Delaware Valley, PA / Williamstown, WV
+
+**Migration file:** `docs/migrations/20260924_oos_name_collision_fix.sql`
+
+**Purpose:** Same failure as the Dover, DE fix, found by scanning every out-of-state tournament for single-appearance NJ schools. OOS programs whose name exactly matches an NJ school were imported as that school (exact matches skipped the RTF school review): "Franklin" at Powerade (PA) → Franklin 169 (John Montgomery, Max Firestine, Titus Colangelo); "Delaware Valley" at Bethlehem Holiday Classic (PA) → Delaware Valley 141 (Nick D`Ambola); "Williamstown" at WSAZ Invitational (WV) → Williamstown 303 (Cole Smith — Williamstown, WV per Kyle). Created OOS schools Franklin, PA (1199), Delaware Valley, PA (1200), Williamstown, WV (1201). The first four wrestlers (created by those imports, one bout each) are re-homed there with `is_oos = true`. The WSAZ bout had been attached to an existing NJ Cole Smith (2024-25 NJ postseason), so it moved to a new OOS Cole Smith; the NJ record keeps its own history. Hammer / match-score-log rows built from these bouts were deleted. The RTF importer now requires every school at an Outside event to be confirmed (see the code change of the same date).
+
+**Tables affected:** `schools` (3 inserted), `wrestlers` (1 inserted, 4 updated), `wrestler_name_aliases` (5 inserted), `tournament_bouts` (5 updated), `wrestler_hammer_scores`, `wrestler_match_score_log`
+
+**APPLIED** — 2026-09-24 via service-role script
+
+**Reversible?** Yes — rollback statements in the migration file
+**Verified?** Yes — 2026-09-24: 0 bouts for these wrestlers still on schools 169/141/303; all 5 OOS wrestlers aliased to 1199/1200/1201 with `is_oos = true`
+
+---
+
+## 2026-09-24 — Dover (61) / Dover, DE (608) OOS mixup fix
+
+**Migration file:** `docs/migrations/20260924_dover_de_oos_mixup_fix.sql`
+
+**Purpose:** The 2026-08-10 import of Howdy Duncan (2025-12-19/20, a Delaware tournament Pennsville attended) put every out-of-state school on an OOS stub (604–626, including 608 "Dover, DE"), but the raw school name "Dover" exactly matched NJ Dover's display_name alias, so Jahziah Jimenez, Maxtin Kiesel and Silas Sheranko were created as NJ wrestlers on Dover NJ's roster (reported by Kyle). Each has one Howdy Duncan bout and nothing else. Re-homed their `wrestler_name_aliases` rows and their 3 Howdy Duncan bouts from 61 to 608, set `is_oos = true`, and deleted their 2025-26 `wrestler_hammer_scores` / `wrestler_match_score_log` rows — matching the other OOS wrestlers from that tournament (the recalculation skips OOS wrestlers).
+
+**Tables affected:** `wrestler_name_aliases`, `wrestlers`, `tournament_bouts`, `wrestler_hammer_scores`, `wrestler_match_score_log`
+
+**APPLIED** — 2026-09-24 via service-role script
+
+**Reversible?** Yes — rollback statements in the migration file; hammer/log rows return on the next boys 2025-26 recalculation
+**Verified?** Yes — 2026-09-24: school 61 aliases 56 → 53; 608 has the 3 aliases; 0 Howdy Duncan bouts left on school 61; all 3 `is_oos = true`
+
+---
+
+## 2026-09-23 — OOS aliases for Christian Brothers (506)
+
+**Migration file:** `docs/migrations/20260923_cba_oos_aliases.sql`
+
+**Purpose:** Follow-up to the same-day CBA OOS mixup fix. School 506 ("Christian Brothers College", OOS) had zero aliases, so any raw import name other than an exact match on its display_name fell through to trigram fuzzy matching — which is how its roster collided with NJ's Christian Brothers Academy (197) in the first place. The program is known in source data by two names ("Christian Brothers High School" and "Christian Brothers College"); added both as exact `alias_type='oos'` aliases pointing to 506 so `matchSchools.ts` resolves them at the exact-alias step, before fuzzy matching ever runs.
+
+**Tables affected:** `school_aliases`
+
+**APPLIED** — 2026-09-23 via service-role script
+
+**Reversible?** Yes — `DELETE FROM school_aliases WHERE id IN (2876, 2877);`
+**Verified?** Yes — 2026-09-23: both rows inserted with `school_id=506, alias_type='oos'`
+
+---
+
+## 2026-09-23 — Christian Brothers (197) OOS mixup fix
+
+**Migration file:** `docs/migrations/20260923_cba_oos_mixup_fix.sql`
+
+**Purpose:** A 2026-08-03 bulk import of ~231 wrestlers across ~19 out-of-state Catholic prep programs (Gonzaga, DeMatha, Bishop O'Connell, Malvern Prep, Mt. St. Charles Academy, etc. — consistent with an East Coast Catholic Classic-style field) fuzzy-matched an out-of-state "Christian Brothers" roster to NJ school_id 197 (Christian Brothers Academy, Lincroft) instead of the existing empty OOS stub school_id 506 ("Christian Brothers College"). This put 18 out-of-state wrestlers on CBA's live NJ roster with no bout/tournament/dual history anywhere — caught when the roster grade import review didn't match Track Wrestling's actual 44-man roster. Re-homed their `wrestler_name_aliases` row from school 197 to 506 and set `is_oos = true` so they surface correctly on the OOS Wrestlers page.
+
+**Tables affected:** `wrestler_name_aliases`, `wrestlers`
+
+**APPLIED** — 2026-09-23 via service-role script
+
+**Reversible?** Yes — re-run with `school_id = 197` and `is_oos = false` for the same 18 wrestler ids (listed in the migration file)
+**Verified?** Yes — 2026-09-23: school 197 alias count dropped from 48 to 30 (44 real CBA roster + a few pre-existing unrelated dupes); all 18 confirmed `is_oos = true`
+
+---
+
 ## 2026-09-21 — Alias "Roselle" → Roselle (358, Abraham Clark)
 
 **Migration file:** `docs/migrations/20260921_roselle_alias.sql`

@@ -3,11 +3,11 @@ import { createClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { getWorkingSeason, parseGender } from '@/lib/season-context'
 import { parseRtfText, parseDateRange, boutResultToDb, normalizeRound } from '@/lib/parseRtf'
-import { matchSchoolNames } from '@/lib/matchSchools'
+import { matchSchoolNames, isNjLookalike } from '@/lib/matchSchools'
 import { matchWrestler, oosSchoolHasPrior, clearWrestlerCache, reloadAliases } from '@/lib/matchWrestlers'
 import { matchTournament } from '@/lib/matchTournaments'
 import { findMsProfileCandidates, msSeasonsForHsSeason, type MsWrestlerRow } from '@/lib/matchMsWrestler'
-import type { SchoolFlag, WrestlerFlag, ReviewedTournament, SchoolOverride } from '@/app/admin/import-rtf/types'
+import type { SchoolFlag, WrestlerFlag, ReviewedTournament, SchoolOverride, TournamentType } from '@/app/admin/import-rtf/types'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
@@ -82,6 +82,7 @@ export async function POST(req: NextRequest) {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   let text: string, year: number, selected: string[], schoolOverrides: Record<string, SchoolOverride>, gender: 'M' | 'F'
+  let tournamentTypes: Record<string, TournamentType>
   try {
     const body = await req.json()
     text = body.text
@@ -89,6 +90,7 @@ export async function POST(req: NextRequest) {
     selected = body.selected ?? []
     schoolOverrides = body.schoolOverrides ?? {}
     gender = body.gender ?? 'M'
+    tournamentTypes = body.tournamentTypes ?? {}
   } catch {
     return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
   }
@@ -198,6 +200,13 @@ export async function POST(req: NextRequest) {
 
   const reviewed: ReviewedTournament[] = []
 
+  // OOS-matched schools whose name (raw or matched) resembles an NJ school
+  const lookalikeCache = new Map<string, boolean>()
+  for (const [raw, r] of schoolCache) {
+    if (r.confidence !== 'oos') continue
+    lookalikeCache.set(raw, await isNjLookalike(raw) || (r.display_name ? await isNjLookalike(r.display_name) : false))
+  }
+
   function detectTournamentType(venue_name: string | null, venue_address: string | null): 'inside' | 'outside' {
     const text = [venue_name, venue_address].filter(Boolean).join(' ')
     if (/\bNJ\b|New Jersey|\b0[78]\d{3}\b/i.test(text)) return 'inside'
@@ -209,6 +218,25 @@ export async function POST(req: NextRequest) {
     if (!selectedSet.has(`${t.name}|${t.date_raw}`)) continue
 
     const [start_date, end_date] = parseDateRange(t.date_raw, year)
+    const tkey = `${t.name}|${t.date_raw}`
+    const tournament_type = tournamentTypes[tkey] ?? detectTournamentType(t.venue_name, t.venue_address)
+    // Out-of-state events: every school goes through review, even exact matches.
+    // OOS programs can share a name with an NJ school exactly (Dover, DE vs Dover),
+    // so an exact match is not proof the wrestler is from NJ.
+    const reviewAll = tournament_type === 'outside'
+    const needsReview = (r: ResolvedSchool) =>
+      r.confidence !== 'skip' && (reviewAll || (r.confidence !== 'exact' && r.confidence !== 'oos'))
+    const flagFor = (raw: string, r: ResolvedSchool, bout_count: number): SchoolFlag => ({
+      raw,
+      confidence: r.confidence as SchoolFlag['confidence'],
+      school_id: r.school_id,
+      display_name: r.display_name,
+      alternates: r.alternates,
+      bout_count,
+      oos_event: reviewAll || undefined,
+      nj_lookalike: lookalikeCache.get(raw) || undefined,
+      bulk_ok: (reviewAll && r.confidence === 'oos' && r.school_id != null && lookalikeCache.get(raw) === false) || undefined,
+    })
     let existing: { data: { id: string } | null } = { data: null }
     let has_bouts = false
     try {
@@ -247,16 +275,7 @@ export async function POST(req: NextRequest) {
       for (const raw of [b.wrestler1_school, b.wrestler2_school]) {
         if (!raw || schoolFlagMap.has(raw)) continue
         const r = schoolCache.get(raw)!
-        if (r.confidence !== 'skip' && r.confidence !== 'exact' && r.confidence !== 'oos') {
-          schoolFlagMap.set(raw, {
-            raw,
-            confidence: r.confidence as SchoolFlag['confidence'],
-            school_id: r.school_id,
-            display_name: r.display_name,
-            alternates: r.alternates,
-            bout_count: 0,
-          })
-        }
+        if (needsReview(r)) schoolFlagMap.set(raw, flagFor(raw, r, 0))
       }
     }
     for (const b of dedupedBouts) {
@@ -269,16 +288,7 @@ export async function POST(req: NextRequest) {
     for (const s of t.team_scores) {
       if (!s.school_name || teamScoreFlagMap.has(s.school_name)) continue
       const r = schoolCache.get(s.school_name)!
-      if (r.confidence !== 'skip' && r.confidence !== 'exact' && r.confidence !== 'oos') {
-        teamScoreFlagMap.set(s.school_name, {
-          raw: s.school_name,
-          confidence: r.confidence as SchoolFlag['confidence'],
-          school_id: r.school_id,
-          display_name: r.display_name,
-          alternates: r.alternates,
-          bout_count: s.place,
-        })
-      }
+      if (needsReview(r)) teamScoreFlagMap.set(s.school_name, flagFor(s.school_name, r, s.place))
     }
 
     const wrestlerFlagMap = new Map<string, WrestlerFlag>()
@@ -292,6 +302,7 @@ export async function POST(req: NextRequest) {
           // Skip wrestlers at unknown schools or uncertain NJ matches — resolve school flags first
           if (!s?.school_id) continue
           if (s.confidence !== 'exact' && s.confidence !== 'alias' && s.confidence !== 'high' && s.confidence !== 'oos') continue
+          if (reviewAll && !schoolOverrides[school_raw]) continue
           const fkey = `${name}|${s.school_id}|${b.weight_class}`
           if (wrestlerFlagMap.has(fkey)) continue
           const isOos = s.confidence === 'oos'
@@ -337,7 +348,7 @@ export async function POST(req: NextRequest) {
       start_date,
       end_date,
       source_format: t.source_format,
-      tournament_type: detectTournamentType(t.venue_name, t.venue_address),
+      tournament_type,
       bout_count: dedupedBouts.length,
       placement_count: new Set(t.placements.map(p => `${p.weight_class}|${p.place}|${p.bracket}`)).size,
       team_score_count: t.team_score_count,

@@ -406,7 +406,13 @@ export function ImportJamboreeClientGirls() {
       const resp = await fetch('/api/admin/import-meets-girls', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ draftId: importDraftId, skipped: [...skipped], seasonId, meetKind: 'jamboree' }),
+        body:    JSON.stringify({
+          draftId:      importDraftId,
+          skipped:      [...skipped],
+          seasonId,
+          meetKind:     'jamboree',
+          jamboreeDate: jamboreeDate.trim(),
+        }),
       })
       if (!resp.ok) {
         const j = await resp.json().catch(() => ({}))

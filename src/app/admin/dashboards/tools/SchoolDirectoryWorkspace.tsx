@@ -18,6 +18,8 @@ type SchoolRow = {
   region_id:      number | null
   section:        string | null
   classification: string | null
+  roster_count:   number
+  graded_count:   number
 }
 
 type Options = {
@@ -37,6 +39,7 @@ type ColDef = {
 
 const COLUMNS: ColDef[] = [
   { key: 'display_name',   label: 'School',        type: 'readonly',    width: 160 },
+  { key: 'grade_pct',      label: 'Grade %',        type: 'readonly',    width: 110 },
   { key: 'address',        label: 'Address',        type: 'text',        width: 200 },
   { key: 'website_url',    label: 'Website',        type: 'url',         width: 160 },
   { key: 'twitter_handle', label: 'Twitter',        type: 'text',        width: 120 },
@@ -106,6 +109,10 @@ export function SchoolDirectoryWorkspace({ seasonId }: Props) {
     }
     if (col.type === 'region') {
       return options.regions.find(r => r.id === row.region_id)?.name ?? ''
+    }
+    if (col.key === 'grade_pct') {
+      if (!row.roster_count) return ''
+      return `${Math.round(row.graded_count / row.roster_count * 100)}% (${row.graded_count}/${row.roster_count})`
     }
     return (raw as string | null) ?? ''
   }
@@ -248,8 +255,12 @@ export function SchoolDirectoryWorkspace({ seasonId }: Props) {
                     const savingCls = isSaving ? 'opacity-50' : ''
 
                     if (col.type === 'readonly') {
+                      const pctCls = col.key !== 'grade_pct' || !row.roster_count ? ''
+                        : row.graded_count / row.roster_count >= 0.8 ? 'tabular-nums !text-green-700'
+                        : row.graded_count / row.roster_count >= 0.4 ? 'tabular-nums !text-amber-700'
+                        : 'tabular-nums !text-red-600'
                       return (
-                        <td key={col.key} className={`${baseCls} ${rowBg}`} style={{ minWidth: col.width, maxWidth: col.width }}>
+                        <td key={col.key} className={`${baseCls} ${rowBg} ${pctCls}`} style={{ minWidth: col.width, maxWidth: col.width }}>
                           {dispVal || <span className="text-slate-300">—</span>}
                         </td>
                       )

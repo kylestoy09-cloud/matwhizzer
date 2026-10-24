@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getNewestSeason } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin }  from '@/lib/supabase/service'
+import { boysRosterGradeCounts } from '@/lib/rosterGrades'
 
 export const dynamic = 'force-dynamic'
 
@@ -62,6 +63,8 @@ export async function GET(req: NextRequest) {
       .eq('status', 'cant_find'),
   ])
 
+  const gradeCounts = await boysRosterGradeCounts(db, (boysSchoolsRes.data ?? []).map(bs => bs.school_id))
+
   // Build lookup maps
   const schoolMap        = new Map((schoolsRes.data ?? []).map(s => [s.id, s]))
   const coachMap         = new Map((coachesRes.data ?? []).map(c => [c.school_id, c]))
@@ -77,6 +80,7 @@ export async function GET(req: NextRequest) {
       const s  = schoolMap.get(bs.school_id)
       const c  = coachMap.get(bs.school_id)
       const pr = profileMap.get(bs.school_id)
+      const gc = gradeCounts.bySchool.get(bs.school_id)
       return {
         id:             bs.school_id,
         display_name:   bs.display_name,
@@ -93,6 +97,8 @@ export async function GET(req: NextRequest) {
         region_id:      regionMap.get(bs.school_id)     ?? null,
         section:        pr?.section        ?? null,
         classification: pr?.classification ?? null,
+        roster_count:   gc?.roster ?? 0,
+        graded_count:   gc?.graded ?? 0,
       }
     })
     .sort((a, b) => a.display_name.localeCompare(b.display_name))

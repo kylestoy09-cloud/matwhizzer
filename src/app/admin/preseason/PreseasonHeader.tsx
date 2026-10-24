@@ -37,6 +37,7 @@ type Props = {
   seasonLabelF: string
   total: number
   pctGrades:   number
+  pctGradeReviews: number
   pctAddress:  number
   pctWebsite:  number
   pctTwitter:  number
@@ -47,7 +48,7 @@ type Props = {
   statsF: GenderPreseasonStats
 }
 
-export function PreseasonHeader({ seasonLabelM, seasonLabelF, total, pctGrades, pctAddress, pctWebsite, pctTwitter, pctFacebook, pctAdName, pctAdEmail, statsM, statsF }: Props) {
+export function PreseasonHeader({ seasonLabelM, seasonLabelF, total, pctGrades, pctGradeReviews, pctAddress, pctWebsite, pctTwitter, pctFacebook, pctAdName, pctAdEmail, statsM, statsF }: Props) {
   const { gender } = useAdminGender()
   const stats = gender === 'M' ? statsM : statsF
   const seasonLabel = gender === 'M' ? seasonLabelM : seasonLabelF
@@ -61,6 +62,7 @@ export function PreseasonHeader({ seasonLabelM, seasonLabelF, total, pctGrades, 
       <div className="flex flex-wrap gap-2">
         <Pill label="Schools"      value={total} />
         <Pill label="Grades"       value={`${pctGrades}%`}             pct={pctGrades} />
+        <Pill label="Grade Reviews" value={`${pctGradeReviews}%`}      pct={pctGradeReviews} />
         <Pill label="Addresses"    value={`${pctAddress}%`}            pct={pctAddress} />
         <Pill label="Websites"     value={`${pctWebsite}%`}            pct={pctWebsite} />
         <Pill label="Twitter"      value={`${pctTwitter}%`}            pct={pctTwitter} />

@@ -76,14 +76,14 @@ const FIELD_LABELS: Record<string, string> = {
 }
 
 const FIELD_SEARCH: Record<string, (school: string) => string> = {
-  coach_name:   s => `${s} boys wrestling coach`,
-  coach_email:  s => `${s} boys wrestling coach email`,
-  ad_name:      s => `${s} athletic director`,
-  ad_email:     s => `${s} athletic director email`,
-  website_url:  s => `${s} wrestling`,
-  twitter_handle: s => `${s} wrestling twitter`,
-  facebook_url: s => `${s} wrestling facebook`,
-  address:      s => `${s} address`,
+  coach_name:   s => `${s} high school NJ boys wrestling coach`,
+  coach_email:  s => `${s} high school NJ boys wrestling coach email`,
+  ad_name:      s => `${s} high school NJ athletic director`,
+  ad_email:     s => `${s} high school NJ athletic director email`,
+  website_url:  s => `${s} high school NJ wrestling`,
+  twitter_handle: s => `${s} high school NJ wrestling twitter`,
+  facebook_url: s => `${s} high school NJ wrestling facebook`,
+  address:      s => `${s} high school NJ address`,
 }
 
 function SearchButton({ field, schoolName }: { field: string; schoolName: string }) {
@@ -248,6 +248,16 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
           })
           const patchData = await patchRes.json()
           if (patchData.error) { setError(patchData.error); return }
+        }
+        // Write the matched grades to the wrestlers (saving a match alone doesn't)
+        if (claimedEntryIds.size > 0) {
+          const confirmRes = await fetch('/api/admin/roster-grade-import/confirm', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({ school_id: task.school_id, ids: [...claimedEntryIds] }),
+          })
+          const confirmData = await confirmRes.json()
+          if (confirmData.error) { setError(confirmData.error); return }
         }
       }
 
