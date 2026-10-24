@@ -1,6 +1,8 @@
 import { redirect } from 'next/navigation'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
+import { fetchAllRows } from '@/lib/fetchAllRows'
+import { boysRosterGradeCounts } from '@/lib/rosterGrades'
 import { PreseasonDashboard } from './PreseasonDashboard'
 import type { GenderPreseasonStats } from './PreseasonHeader'
 
@@ -76,19 +78,31 @@ export default async function PreseasonPage() {
     db.from('boys_coaches').select('school_id').in('school_id', schoolIds).not('email', 'is', null),
     db.from('girls_coaches').select('school_id').in('school_id', schoolIds).not('email', 'is', null),
     preSeasonIdM
-      ? db.from('dual_meets').select('team1_school_id,team2_school_id').eq('season_id', preSeasonIdM).eq('gender', 'M')
+      ? fetchAllRows<{ team1_school_id: number; team2_school_id: number }>((from, to) =>
+          db.from('dual_meets').select('team1_school_id,team2_school_id').eq('season_id', preSeasonIdM).eq('gender', 'M').order('id').range(from, to))
       : Promise.resolve({ data: [] }),
     preSeasonIdF
-      ? db.from('dual_meets').select('team1_school_id,team2_school_id').eq('season_id', preSeasonIdF).eq('gender', 'F')
+      ? fetchAllRows<{ team1_school_id: number; team2_school_id: number }>((from, to) =>
+          db.from('dual_meets').select('team1_school_id,team2_school_id').eq('season_id', preSeasonIdF).eq('gender', 'F').order('id').range(from, to))
       : Promise.resolve({ data: [] }),
-    db.from('wrestlers').select('school_id').in('school_id', schoolIds).eq('gender', 'M'),
-    db.from('wrestlers').select('school_id').in('school_id', schoolIds).eq('gender', 'F'),
+    // wrestlers has no school_id column — rosters come from wrestler_name_aliases (active wrestlers only)
+    fetchAllRows<{ school_id: number }>((from, to) =>
+      db.from('wrestler_name_aliases').select('school_id, wrestlers!inner(gender, is_active)')
+        .in('school_id', schoolIds).eq('wrestlers.gender', 'M').eq('wrestlers.is_active', true).order('id').range(from, to)),
+    fetchAllRows<{ school_id: number }>((from, to) =>
+      db.from('wrestler_name_aliases').select('school_id, wrestlers!inner(gender, is_active)')
+        .in('school_id', schoolIds).eq('wrestlers.gender', 'F').eq('wrestlers.is_active', true).order('id').range(from, to)),
     // Grade % = schools that have completed a roster_match micro check / total schools
-    db.from('microcheck_task_log').select('school_id').eq('gender', 'M').eq('field', 'roster_match').in('school_id', schoolIds),
+    fetchAllRows<{ school_id: number }>((from, to) =>
+      db.from('microcheck_task_log').select('school_id').eq('gender', 'M').eq('field', 'roster_match').in('school_id', schoolIds).order('id').range(from, to)),
   ])
 
+  // Grades = % of boys roster wrestlers with a grade; Grade Reviews = % of schools
+  // whose roster grade review (roster_match micro check) is done
   const schoolsWithGradeReview = new Set((gradeReviewRows ?? []).map(r => r.school_id))
-  const pctGrades              = pct(schoolsWithGradeReview.size, total)
+  const pctGradeReviews        = pct(schoolsWithGradeReview.size, total)
+  const gradeCounts            = await boysRosterGradeCounts(db, schoolIds)
+  const pctGrades              = pct(gradeCounts.graded, gradeCounts.roster)
 
   const schoolsWithBoysCoach    = new Set((boysCoachRows ?? []).map(r => r.school_id))
   const schoolsWithGirlsCoach   = new Set((girlsCoachRows ?? []).map(r => r.school_id))
@@ -132,6 +146,7 @@ export default async function PreseasonPage() {
       seasonLabelF={seasonLabelF}
       total={total}
       pctGrades={pctGrades}
+      pctGradeReviews={pctGradeReviews}
       pctAddress={pctAddress}
       pctWebsite={pctWebsite}
       pctTwitter={pctTwitter}

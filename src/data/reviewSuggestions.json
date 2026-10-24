@@ -1,0 +1,716 @@
+{
+ "generated": "2026-09-24T18:30:06.903Z",
+ "roster_grades": {
+  "0e62bde1-ac74-4da8-a41d-87130ecc96fc": {
+   "probability": 0.92,
+   "summary": "Two wrestlers: keep Delbarton School (Jr), split off Edison",
+   "grade": "Jr",
+   "actions": {
+    "0289260f-66cf-4592-b97a-58acaaf3dcdc": "new",
+    "65ae34f0-33d2-407e-8cfb-729421ac560e": "same"
+   },
+   "rationale": "Delbarton School: 5 duals, 10 bouts, 6 postseason, wt 132; roster Jr. Other: Edison (no linked matches; roster: So, 126). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  },
+  "0670a0fe-6cfb-4ab8-88c0-909c96b0271d": {
+   "probability": 0.92,
+   "summary": "Two wrestlers: keep Burlington City (So), split off Manchester Township",
+   "grade": "So",
+   "actions": {
+    "04cf6c86-2f10-4b30-918f-c889b8761d2c": "new",
+    "0b8433c2-acc8-4ee7-8b91-6f133ea1bcef": "same"
+   },
+   "rationale": "Burlington City: 17 duals, 2 postseason, wt 126/132; roster So. Other: Manchester Township (no linked matches; roster: Fr, 113). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  },
+  "b844b60f-e5b8-4bd4-ae20-e6566b0936be": {
+   "probability": 0.85,
+   "summary": "Two wrestlers: keep Carteret (Sr), split off Pennsauken",
+   "grade": "Sr",
+   "actions": {
+    "07b2e73e-b91e-410c-a5c3-c628476c7a8d": "same",
+    "50cc2b44-95aa-49da-a63c-201b3a81bdb3": "new"
+   },
+   "rationale": "Carteret: 8 duals, 2 bouts, 1 postseason, wt 165/175; roster Sr. Other: Pennsauken (1 duals, wt 165; roster: Jr, 190). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler. Both wrestled 165, but the rosters give different grades (Sr vs Jr)."
+  },
+  "541f9509-d7bf-496c-bf5a-99094489cd54": {
+   "probability": 0.96,
+   "summary": "Two wrestlers: keep Ramsey (So), split off Pemberton",
+   "grade": "So",
+   "actions": {
+    "116f6dc0-8a47-4a85-856c-02f9bc95a771": "same",
+    "cea39318-39a3-40be-a311-9a1f1cd5ce10": "new"
+   },
+   "rationale": "Ramsey: 10 duals, 2 bouts, 1 postseason, wt 157/165; roster So. Other: Pemberton (no linked matches, 2 unlinked duals under this name; roster: So, 285). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  },
+  "11ad2328-22b4-4452-87ff-20bb406d2629": {
+   "probability": 0.97,
+   "summary": "Two wrestlers: keep Burlington City (Sr), split off Scotch Plains-Fanwood",
+   "grade": "Sr",
+   "actions": {
+    "12268c00-8d61-477a-9ced-c0a6b1c6f468": "new",
+    "8ba064c9-9a36-4a82-a108-c7984f9b2573": "same"
+   },
+   "rationale": "Burlington City: 11 duals, 2 postseason, wt 132/138/144; roster Sr. Other: Scotch Plains-Fanwood (no linked matches, 4 unlinked duals under this name; roster: Jr, 126). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  },
+  "ae0c487d-34bb-4150-bb52-797920075dcb": {
+   "probability": 0.95,
+   "summary": "Two wrestlers: keep Ridgefield Memorial (Fr), split off Lyndhurst-North Arlington",
+   "grade": "Fr",
+   "actions": {
+    "17203b1f-348c-474e-b449-5dae2b56d330": "new",
+    "5f51b042-a207-4ffd-b561-e01999cdf126": "same"
+   },
+   "rationale": "Ridgefield Memorial: 17 duals, 3 bouts, 1 postseason, wt 144/157/165; roster Fr. Other: Lyndhurst-North Arlington (no linked matches, 7 unlinked duals under this name; roster: Jr, 150). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler. The record also has 2 bouts for Oxford, which may be a third wrestler; that isn't touched here."
+  },
+  "3c2ed55c-47e2-4457-91fa-ac36417b897d": {
+   "probability": 0.97,
+   "summary": "Two wrestlers: keep Union City (Sr), split off Winslow",
+   "grade": "Sr",
+   "actions": {
+    "195a1470-47ba-41a2-93c3-248bd6901a5d": "same",
+    "a0673d8c-0590-4e9e-9060-ff4a84978f90": "new"
+   },
+   "rationale": "Union City: 26 duals, 8 bouts, 3 postseason, wt 120/126; roster Sr. Other: Winslow (6 bouts, wt 150, 12 unlinked duals under this name; roster: So, 150). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  },
+  "b2731464-9d88-4ddc-a645-d67a4a26e286": {
+   "probability": 0.93,
+   "summary": "Two wrestlers: keep Northern Highlands (Sr), split off Fort Lee",
+   "grade": "Sr",
+   "actions": {
+    "1a0a2e91-2751-4e50-b576-bb2764ebd290": "new",
+    "4cca2583-bbee-4d76-b0bd-294dd65b6aab": "same"
+   },
+   "rationale": "Northern Highlands: 20 duals, 8 bouts, 2 postseason, wt 138; roster Sr. Other: Fort Lee (1 postseason; roster: Sr, 165). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  },
+  "bc2c6a27-419a-4667-97a5-dfd29e652b38": {
+   "probability": 0.9,
+   "summary": "Two wrestlers: keep St Joseph (Montvale) HS (Sr), split off Elmwood Park",
+   "grade": "Sr",
+   "actions": {
+    "1acac4fa-fc07-486e-abaa-f35c45af0f02": "same",
+    "430d9cd1-e9d3-4d24-921e-d4d5c736ea8c": "new"
+   },
+   "rationale": "St Joseph (Montvale) HS: 13 duals, 5 postseason, wt 165; roster Sr. Other: Elmwood Park (no linked matches; roster: Jr, 132). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  },
+  "7c78cc4b-b7c1-4bfe-bf3b-553d1552e6d9": {
+   "probability": 0.93,
+   "summary": "Two wrestlers: keep Lodi/Saddle Brook (So), split off South Brunswick",
+   "grade": "So",
+   "actions": {
+    "1cb1daac-3e9b-45ff-bec8-6a66766105bc": "same",
+    "8d9c47d4-170e-4464-95dc-831994e70793": "new"
+   },
+   "rationale": "Lodi/Saddle Brook: 2 duals, 1 bouts, wt 215; roster So. Other: South Brunswick (1 duals, wt 126; roster: Fr, 132). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  },
+  "bd3da149-1ddd-4a6d-822d-4080fc5fee9f": {
+   "probability": 0.95,
+   "summary": "Two wrestlers: keep Bridgewater-Raritan (Sr), split off Becton-Wood-Ridge",
+   "grade": "Sr",
+   "actions": {
+    "240ac3f5-07c5-4148-b99b-45002c486828": "new",
+    "36a69fd0-52b4-4cef-b362-dc9b11f48a4c": "same"
+   },
+   "rationale": "Bridgewater-Raritan: 5 duals, wt 215; roster Sr. Other: Becton-Wood-Ridge (3 duals, wt 126/132; roster: Jr, 150). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  },
+  "a6a94f84-9bac-477d-a8f7-ef4fb8dc02d1": {
+   "probability": 0.97,
+   "summary": "Two wrestlers: keep Delsea (So), split off Bloomfield",
+   "grade": "So",
+   "actions": {
+    "255022c6-0de4-40eb-9d45-20fad78249ad": "same",
+    "b90d9351-bedb-4186-8d9c-e4518be20c7e": "new"
+   },
+   "rationale": "Delsea: 14 duals, 6 bouts, 1 postseason, wt 215/285; roster So. Other: Bloomfield (2 bouts, wt 150, 6 unlinked duals under this name; roster: So, 150). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  },
+  "442431b2-4e42-4f39-920f-754da709a041": {
+   "probability": 0.93,
+   "summary": "Two wrestlers: keep Clayton/Glassboro (Jr), split off Rancocas Valley",
+   "grade": "Jr",
+   "actions": {
+    "26a1be12-6c68-40d0-967a-bf3a79c8e6c8": "new",
+    "f058fef4-e285-4663-bf4e-f58b593db00c": "same"
+   },
+   "rationale": "Clayton/Glassboro: 20 duals, 1 bouts, 4 postseason, wt 175/190; roster Jr. Other: Rancocas Valley (1 duals, wt 144; roster: So, 132). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  },
+  "00f76ee2-95f7-44b9-9111-6d2acd15a979": {
+   "probability": 0.85,
+   "summary": "Two wrestlers: keep Lodi/Saddle Brook (Jr), split off Manville",
+   "grade": "Jr",
+   "actions": {
+    "26b699d8-f09c-4afc-bc4d-7ec7c6f6f288": "new",
+    "bc37ea5b-076f-46d1-849e-d3a69b35e956": "same"
+   },
+   "rationale": "Lodi/Saddle Brook: 3 duals, 1 bouts, wt 165/175; roster Jr. Other: Manville (2 duals, wt 215; roster: Jr, 285). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler. Both Jr, but 215 vs 165/175."
+  },
+  "58f16250-7f75-45ae-bc2d-3fbbd82cc68d": {
+   "probability": 0.95,
+   "summary": "Two wrestlers: keep Bound Brook (Fr), split off Ramsey",
+   "grade": "Fr",
+   "actions": {
+    "2862c3db-db54-4394-b8c8-61f1b1a7dca2": "new",
+    "ee4389dd-5dcb-43ea-b98e-fc01b02b5954": "same"
+   },
+   "rationale": "Bound Brook: 22 duals, 9 bouts, 1 postseason, wt 215/285; roster Fr. Other: Ramsey (2 duals, 1 postseason, wt 157; roster: Jr, 157). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  },
+  "77d4fde3-0640-409e-9021-e3b3eb41ad47": {
+   "probability": 0.97,
+   "summary": "Two wrestlers: keep Keansburg (So), split off Lakeland",
+   "grade": "So",
+   "actions": {
+    "2b4a7944-bb95-4d57-8c51-753d184c66ca": "new",
+    "a08cd4aa-b34a-4975-ae30-2db86fc00eaf": "same"
+   },
+   "rationale": "Keansburg: 26 duals, 11 bouts, 1 postseason, wt 132/138; roster So. Other: Lakeland (no linked matches, 12 unlinked duals under this name; roster: Jr, 165). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  },
+  "cd0517c8-542f-4522-b9bd-0ae8bd1c86d3": {
+   "probability": 0.93,
+   "summary": "Two wrestlers: keep Willingboro (Fr), split off Newark East Side",
+   "grade": "Fr",
+   "actions": {
+    "4137d0a8-4d42-45d5-83cc-65f1cda4bd72": "same",
+    "eb27e17c-2f60-40d5-a329-dfee15c7984f": "new"
+   },
+   "rationale": "Willingboro: 4 duals, 2 bouts, wt 132/138; roster Fr. Other: Newark East Side (5 duals, wt 157; roster: So, 157). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  },
+  "f7463ddb-21ae-4468-b07b-84be3878c7b6": {
+   "probability": 0.9,
+   "summary": "Two wrestlers: keep Perth Amboy (Jr), split off New Brunswick",
+   "grade": "Jr",
+   "actions": {
+    "46384cbc-661d-4cc2-be33-17601d221cae": "new",
+    "d7f34d8c-1d5b-4f55-8598-af82e3499321": "same"
+   },
+   "rationale": "Perth Amboy: 18 duals, 1 bouts, 1 postseason, wt 165; roster Jr. Other: New Brunswick (4 duals, wt 157; roster: Fr, 190). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  },
+  "c98b8942-4b36-4dfe-8741-e7b40b38eaf0": {
+   "probability": 0.93,
+   "summary": "Two wrestlers: keep Bayonne (Jr), split off North Bergen & Depaul Catholic",
+   "grade": "Jr",
+   "actions": {
+    "5051cde7-a18d-4e50-882a-bd1a26d40287": "new",
+    "70f44ebf-9d50-477f-9a34-d045467ca9e3": "same",
+    "78c4f57a-fce4-45c0-a3fe-dca4d894d921": "new"
+   },
+   "rationale": "Bayonne: 20 duals, 8 bouts, 2 postseason, wt 150/157; roster Jr. Other: North Bergen (1 duals, wt 120; roster: Fr, 126); Depaul Catholic (1 bouts, wt 126, 14 unlinked duals under this name; roster: Jr, 132). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler. Three different wrestlers: Bayonne 150, DePaul 126 (14 unlinked duals), North Bergen 120."
+  },
+  "4b778747-c72c-497e-8a45-ad961c8faf8d": {
+   "probability": 0.88,
+   "summary": "Two wrestlers: keep Eastern (Sr), split off St. Augustine",
+   "grade": "Sr",
+   "actions": {
+    "51a7b0a2-b08f-4939-970c-12fc3bad64ab": "new",
+    "9c13dd0c-fce4-43d6-bc2b-bb872604d2bc": "same"
+   },
+   "rationale": "Eastern: 27 duals, 7 bouts, 3 postseason, wt 150/157; roster Sr. Other: St. Augustine (4 duals, 2 bouts, wt 144/150/157; roster: Fr, 150). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler. Weights overlap (150/157) but the rosters give Fr vs Sr."
+  },
+  "3adc1078-14bd-4766-b403-3b348c4ee261": {
+   "probability": 0.95,
+   "summary": "Two wrestlers: keep Monmouth (Jr), split off Manasquan",
+   "grade": "Jr",
+   "actions": {
+    "58900777-dc62-4b7b-9fc1-3700aef02564": "new",
+    "c5d609bf-94e1-47ee-bc4a-fc46078c71aa": "same"
+   },
+   "rationale": "Monmouth: 20 duals, 5 bouts, 1 postseason, wt 157/165/175; roster Jr. Other: Manasquan (1 duals, wt 113; roster: So, 120). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  },
+  "f04a1bc3-34d0-4524-9860-395c4e797626": {
+   "probability": 0.8,
+   "summary": "Two wrestlers: keep Lindenwold (Sr), split off West Windsor-Plainsboro North",
+   "grade": "Sr",
+   "actions": {
+    "594c06ad-67be-4d44-b5dc-a0b5b3c4e316": "new",
+    "5b17ff2a-4744-492f-9c4d-eab40ce3e5c7": "same"
+   },
+   "rationale": "Lindenwold: 14 duals, 1 postseason, wt 215; roster Sr. Other: West Windsor-Plainsboro North (1 postseason; roster: Sr, 215). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler. Both rosters list a 215-lb senior and both schools have a postseason entry, which is an unusual coincidence, but one wrestler can't be on both rosters."
+  },
+  "b1af086e-5563-4173-9e33-01a2a4b56424": {
+   "probability": 0.92,
+   "summary": "Two wrestlers: keep Old Bridge (Fr), split off Kearny",
+   "grade": "Fr",
+   "actions": {
+    "5d4ad8de-a30a-4551-b85d-b60b5159e834": "same",
+    "f2e796a5-e456-48e4-b0b4-2afa5061808a": "new"
+   },
+   "rationale": "Old Bridge: 11 duals, 2 bouts, 1 postseason, wt 138/144; roster Fr. Other: Kearny (no linked matches; roster: Sr, 157). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  },
+  "10bba7bf-bbfd-4672-978c-c25721f21da1": {
+   "probability": 0.95,
+   "summary": "Two wrestlers: keep Dover (Fr), split off Middle Township",
+   "grade": "Fr",
+   "actions": {
+    "62bcce36-a142-433b-bd30-e7ae4a846fe5": "same",
+    "b7cad45d-6366-496b-8d7d-d26acc925498": "new"
+   },
+   "rationale": "Dover: 9 duals, 1 bouts, wt 113; roster Fr. Other: Middle Township (2 duals, 7 bouts, wt 175/190; roster: Jr, 175). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler. 113 vs 175/190 is certainly two people; activity is close (10 vs 9), so which one keeps the original record is arbitrary."
+  },
+  "f7c3ddbe-8045-4e34-a853-39312cde8503": {
+   "probability": 0.93,
+   "summary": "Two wrestlers: keep West Windsor-Plainsboro South (So), split off Tenafly",
+   "grade": "So",
+   "actions": {
+    "64cb493b-fd69-4b04-8667-3a591fcae31e": "same",
+    "ce27e52c-a584-418a-9fbd-537df9268d5a": "new"
+   },
+   "rationale": "West Windsor-Plainsboro South: 2 duals, wt 120; roster So. Other: Tenafly (1 duals, wt 175; roster: Sr, 175). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  },
+  "571a53b1-7e6d-4c59-81ba-76c6eb1b0079": {
+   "probability": 0.55,
+   "summary": "Keep Fr (districts)",
+   "grade": "Fr",
+   "actions": {
+    "6877592d-f7a4-445c-930d-68524b1aef69": "same"
+   },
+   "rationale": "His 2025-26 district entry lists him as a freshman; the Gateway roster upload says So. No 2024-25 duals exist in the database to check whether he wrestled last year. This is a coin flip, so check with Gateway if it matters."
+  },
+  "d48d609e-018f-4341-8283-16c5b002b379": {
+   "probability": 0.85,
+   "summary": "Two wrestlers: keep West Essex (Sr), split off Newark East Side",
+   "grade": "Sr",
+   "actions": {
+    "6e247d4c-c546-4d9d-8924-a1b5a4402861": "same",
+    "9fd1812d-596f-4f9d-83ef-929673579fb9": "new"
+   },
+   "rationale": "West Essex: 10 duals, 5 bouts, wt 150/157; roster Sr. Other: Newark East Side (4 duals, wt 157/165; roster: Sr, 165). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler. Not a transfer: West Essex bouts on Jan 7–9 and again from Jan 28, Newark East Side bouts Jan 14–17 in between. Both are 157-lb seniors, so the weight doesn't separate them."
+  },
+  "d5aa105b-3d09-4536-a43b-72b34b7fdd2b": {
+   "probability": 0.97,
+   "summary": "Two wrestlers: keep South Brunswick (Sr), split off Raritan",
+   "grade": "Sr",
+   "actions": {
+    "6fac6f23-e832-42ea-98cb-07eb4d0a735b": "new",
+    "bdb63253-43a4-47c5-954e-3a99dee7b178": "same"
+   },
+   "rationale": "South Brunswick: 13 duals, 8 bouts, 1 postseason, wt 132/138; roster Sr. Other: Raritan (no linked matches, 6 unlinked duals under this name; roster: Jr, 157). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  },
+  "cc2c1d2a-df40-44c3-8f73-2ef0c4584431": {
+   "probability": 0.97,
+   "summary": "Two wrestlers: keep Randolph (Sr), split off Shawnee",
+   "grade": "Sr",
+   "actions": {
+    "7444326f-e5f4-443b-8f5f-23866c522570": "same",
+    "eb42bb1e-443f-41b0-af79-2ac060f10d90": "new"
+   },
+   "rationale": "Randolph: 23 duals, 14 bouts, 1 postseason, wt 165/175; roster Sr. Other: Shawnee (5 bouts, 1 postseason, wt 165, 12 unlinked duals under this name; roster: Sr, 165). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  },
+  "b2cd53bd-6dd0-410a-88c3-22a668337707": {
+   "probability": 0.9,
+   "summary": "Two wrestlers: keep Holmdel (Sr), split off North Brunswick",
+   "grade": "Sr",
+   "actions": {
+    "8b13ae29-e470-4787-b0f5-f17a54ca0972": "new",
+    "f33bf5de-c1a1-45e0-8026-f65763db6dbf": "same"
+   },
+   "rationale": "Holmdel: 22 duals, 14 bouts, 6 postseason, wt 190/215/285; roster Sr. Other: North Brunswick (no linked matches; roster: So, 175). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  },
+  "234246be-d03a-4914-bd57-4b3008392891": {
+   "probability": 0.96,
+   "summary": "Two wrestlers: keep North Brunswick (So), split off Somerville",
+   "grade": "So",
+   "actions": {
+    "980aa464-c5b8-49e3-b557-b22bbd84b6f7": "new",
+    "df4e61d8-f788-40ad-8a23-a668c2a36ca7": "same"
+   },
+   "rationale": "North Brunswick: 30 duals, 9 bouts, 1 postseason, wt 190/215; roster So. Other: Somerville (no linked matches, 6 unlinked duals under this name; roster: Fr, 215). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  },
+  "e6235560-0707-4776-8426-4c9acba73410": {
+   "probability": 0.97,
+   "summary": "Two wrestlers: keep Roxbury (So), split off Hopewell Valley",
+   "grade": "So",
+   "actions": {
+    "9fd4920a-f02a-425a-b874-cabb6932cdd8": "new",
+    "f5dc99a3-dbde-42d4-82b8-8ed2ba3fee70": "same"
+   },
+   "rationale": "Roxbury: 12 duals, 5 bouts, 1 postseason, wt 144/150; roster So. Other: Hopewell Valley (2 bouts, wt 132, 11 unlinked duals under this name; roster: Jr, 150). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  },
+  "df39dae0-64a3-4c4c-bcdf-c2bc3b2f88bd": {
+   "probability": 0.95,
+   "summary": "Two wrestlers: keep Immaculata (Fr), split off Washington Township",
+   "grade": "Fr",
+   "actions": {
+    "aea0af8a-83ff-4b3f-a3c9-61d849c1a859": "new",
+    "bb2609cb-7055-4f20-a2c6-b69544b9c819": "same"
+   },
+   "rationale": "Immaculata: 22 duals, 9 bouts, 2 postseason, wt 120/126; roster Fr. Other: Washington Township (3 duals, wt 190; roster: Jr, 165). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  },
+  "69cab96d-2088-4561-b880-e56e2688a2c9": {
+   "probability": 0.95,
+   "summary": "Two wrestlers: keep St. Peter's Prep (So), split off Lakeland",
+   "grade": "So",
+   "actions": {
+    "b51901fb-1f4d-4eb3-ac78-59d68cdd0cae": "same",
+    "ed769bf1-ed9d-44a5-a85b-b3e2bdff9f67": "new"
+   },
+   "rationale": "St. Peter's Prep: 16 duals, 6 bouts, 3 postseason, wt 126/129/132; roster So. Other: Lakeland (no linked matches, 2 unlinked duals under this name; roster: So, 126). Different rosters mean different wrestlers. Splitting moves the other school's alias, matches and postseason entries to the new wrestler."
+  }
+ },
+ "unlinked_duals": {
+  "272|adam kolenovic sayo": {
+   "probability": 0.97,
+   "summary": "Link to Adam Kolenovic Sayo (Sr, Maple Shade)",
+   "action": "link",
+   "wrestler_id": "796f44ef-ac94-40cc-9240-094dacc0a8a7",
+   "rationale": "Maple Shade already has this wrestler with linked matches this season (wt 165); these 1 dual sides are wt 175, which fits. The importer probably ran before his record/alias existed."
+  },
+  "43|nadir chirino": {
+   "probability": 0.97,
+   "summary": "Link to Nadir Chirino (no grade, Hackensack)",
+   "action": "link",
+   "wrestler_id": "d56e01b3-6c05-4dfe-bf0c-55a826e1a658",
+   "rationale": "Hackensack already has this wrestler with linked matches this season (wt 157/165); these 3 dual sides are wt 157/165, which fits. The importer probably ran before his record/alias existed."
+  },
+  "393|derek cabana": {
+   "probability": 0.97,
+   "summary": "Link to Derek Cabana (So, Ridgefield Park/Bogota)",
+   "action": "link",
+   "wrestler_id": "4512eb8d-7a6e-4bf1-a5ad-79f020ff2b81",
+   "rationale": "Ridgefield Park/Bogota already has this wrestler with linked matches this season (wt 190); these 1 dual sides are wt 215, which fits. The roster upload lists him So. The importer probably ran before his record/alias existed."
+  },
+  "43|evan cardenas": {
+   "probability": 0.97,
+   "summary": "Link to Evan Cardenas (So, Hackensack)",
+   "action": "link",
+   "wrestler_id": "be9f72b5-efb2-47c5-95c5-ce87a6759723",
+   "rationale": "Hackensack already has this wrestler with linked matches this season (wt 132/138/144); these 1 dual sides are wt 138, which fits. The roster upload lists him So. The importer probably ran before his record/alias existed."
+  },
+  "43|jack gonzalez": {
+   "probability": 0.97,
+   "summary": "Link to Jack Gonzalez (Sr, Hackensack)",
+   "action": "link",
+   "wrestler_id": "c8bf6f62-065d-451d-b917-8904d6964078",
+   "rationale": "Hackensack already has this wrestler with linked matches this season (wt 150/157); these 2 dual sides are wt 157, which fits. The roster upload lists him Sr. The importer probably ran before his record/alias existed."
+  },
+  "145|aiden gonzalez": {
+   "probability": 0.96,
+   "summary": "New wrestler: split Aiden Gonzalez (Fr) off the North Brunswick record",
+   "action": "new",
+   "grade": "Fr",
+   "split_from": "234246be-d03a-4914-bd57-4b3008392891",
+   "rationale": "The only Aiden Gonzalez record is aliased here but all its matches are for North Brunswick (wt 190/215). These Somerville duals are wt 215, and Somerville's roster lists a Fr at 215, so this is a different wrestler sharing the name. Same fix as the Grades Unresolved split, and doing either one clears both."
+  },
+  "184|youssef adam": {
+   "probability": 0.97,
+   "summary": "New wrestler: split Youssef Adam (Jr) off the South Brunswick record",
+   "action": "new",
+   "grade": "Jr",
+   "split_from": "d5aa105b-3d09-4536-a43b-72b34b7fdd2b",
+   "rationale": "The only Youssef Adam record is aliased here but all its matches are for South Brunswick (wt 132/138). These Raritan duals are wt 157, and Raritan's roster lists a Jr at 157, so this is a different wrestler sharing the name. Same fix as the Grades Unresolved split, and doing either one clears both."
+  },
+  "393|joshua campoverde": {
+   "probability": 0.97,
+   "summary": "Link to Joshua Campoverde (So, Ridgefield Park/Bogota)",
+   "action": "link",
+   "wrestler_id": "633942d5-0aad-4d08-aff4-2207af52056f",
+   "rationale": "Ridgefield Park/Bogota already has this wrestler with linked matches this season (wt 144/150); these 2 dual sides are wt 150, which fits. The roster upload lists him So. The importer probably ran before his record/alias existed."
+  },
+  "304|joshua martinez": {
+   "probability": 0.97,
+   "summary": "New wrestler: split Joshua Martinez (So) off the Union City record",
+   "action": "new",
+   "grade": "So",
+   "split_from": "3c2ed55c-47e2-4457-91fa-ac36417b897d",
+   "rationale": "The only Joshua Martinez record is aliased here but all its matches are for Union City (wt 120/126). These Winslow duals are wt 150/157, and Winslow's roster lists a So at 150, so this is a different wrestler sharing the name. Same fix as the Grades Unresolved split, and doing either one clears both."
+  },
+  "22|jayden cruz": {
+   "probability": 0.93,
+   "summary": "New wrestler: split Jayden Cruz (Jr) off the Bayonne record",
+   "action": "new",
+   "grade": "Jr",
+   "split_from": "c98b8942-4b36-4dfe-8741-e7b40b38eaf0",
+   "rationale": "The only Jayden Cruz record is aliased here but all its matches are for Bayonne (wt 120/150/157). These Depaul Catholic duals are wt 126, and Depaul Catholic's roster lists a Jr at 132, so this is a different wrestler sharing the name. Same fix as the Grades Unresolved split, and doing either one clears both."
+  },
+  "83|kevin hernandez": {
+   "probability": 0.95,
+   "summary": "New wrestler: split Kevin Hernandez (Jr) off the Ridgefield Memorial record",
+   "action": "new",
+   "grade": "Jr",
+   "split_from": "ae0c487d-34bb-4150-bb52-797920075dcb",
+   "rationale": "The only Kevin Hernandez record is aliased here but all its matches are for Ridgefield Memorial (wt 157/165). These Lyndhurst-North Arlington duals are wt 150, and Lyndhurst-North Arlington's roster lists a Jr at 150, so this is a different wrestler sharing the name. Same fix as the Grades Unresolved split, and doing either one clears both."
+  },
+  "5|anthony rodriguez": {
+   "probability": 0.97,
+   "summary": "New wrestler: split Anthony Rodriguez (Jr) off the Keansburg record",
+   "action": "new",
+   "grade": "Jr",
+   "split_from": "77d4fde3-0640-409e-9021-e3b3eb41ad47",
+   "rationale": "The only Anthony Rodriguez record is aliased here but all its matches are for Keansburg (wt 132/138). These Lakeland duals are wt 165/175/190, and Lakeland's roster lists a Jr at 165, so this is a different wrestler sharing the name. Same fix as the Grades Unresolved split, and doing either one clears both."
+  },
+  "384|zayyar naing": {
+   "probability": 0.97,
+   "summary": "Link to Zayyar Naing (Jr, Monmouth)",
+   "action": "link",
+   "wrestler_id": "15e4fe87-e374-4fed-a5e4-86ab6eb62ca6",
+   "rationale": "Monmouth already has this wrestler with linked matches this season (wt 175/190); these 2 dual sides are wt 175, which fits. The roster upload lists him Jr. The importer probably ran before his record/alias existed."
+  },
+  "43|anthony oates": {
+   "probability": 0.97,
+   "summary": "Link to Anthony Oates (Sr, Hackensack)",
+   "action": "link",
+   "wrestler_id": "900687d2-024f-439e-a77f-10a213d0874b",
+   "rationale": "Hackensack already has this wrestler with linked matches this season (wt 126/132); these 3 dual sides are wt 126, which fits. The roster upload lists him Sr. The importer probably ran before his record/alias existed."
+  },
+  "272|sean headley": {
+   "probability": 0.97,
+   "summary": "Link to Sean Headley (So, Maple Shade)",
+   "action": "link",
+   "wrestler_id": "60b5dd52-a84d-4a88-a43d-bca940617d6d",
+   "rationale": "Maple Shade already has this wrestler with linked matches this season (wt 138/144/150); these 3 dual sides are wt 144, which fits. The roster upload lists him So. The importer probably ran before his record/alias existed."
+  },
+  "272|sean o`connor wade": {
+   "probability": 0.97,
+   "summary": "Link to Sean O`Connor Wade (Sr, Maple Shade)",
+   "action": "link",
+   "wrestler_id": "efa74dcf-c8ec-4e06-b3d6-22de7cd9397e",
+   "rationale": "Maple Shade already has this wrestler with linked matches this season (wt 132/138); these 2 dual sides are wt 132/138, which fits. The importer probably ran before his record/alias existed."
+  },
+  "267|julian gallo": {
+   "probability": 0.97,
+   "summary": "Link to Julian Gallo (So, Cherry Hill East)",
+   "action": "link",
+   "wrestler_id": "e832ed38-267a-47d8-ae23-1c05a78d01b8",
+   "rationale": "Cherry Hill East already has this wrestler with linked matches this season (wt 144/157/165/175); these 3 dual sides are wt 144/165, which fits. The roster upload lists him So. The importer probably ran before his record/alias existed."
+  },
+  "267|kohler kahn": {
+   "probability": 0.97,
+   "summary": "Link to Kohler Kahn (Sr, Cherry Hill East)",
+   "action": "link",
+   "wrestler_id": "19734122-8087-4e5d-9f64-1aebba0447b8",
+   "rationale": "Cherry Hill East already has this wrestler with linked matches this season (wt 165/175); these 3 dual sides are wt 165/175, which fits. The roster upload lists him Sr. The importer probably ran before his record/alias existed."
+  },
+  "275|tyler davis": {
+   "probability": 0.97,
+   "summary": "New wrestler: split Tyler Davis (Sr) off the Randolph record",
+   "action": "new",
+   "grade": "Sr",
+   "split_from": "cc2c1d2a-df40-44c3-8f73-2ef0c4584431",
+   "rationale": "The only Tyler Davis record is aliased here but all its matches are for Randolph (wt 165/175). These Shawnee duals are wt 165/175, and Shawnee's roster lists a Sr at 165, so this is a different wrestler sharing the name. Same fix as the Grades Unresolved split, and doing either one clears both."
+  },
+  "393|isaiah carrion": {
+   "probability": 0.97,
+   "summary": "Link to Isaiah Carrion (Jr, Ridgefield Park/Bogota)",
+   "action": "link",
+   "wrestler_id": "bdcd80c5-8c21-4268-9bd8-778e31d5a621",
+   "rationale": "Ridgefield Park/Bogota already has this wrestler with linked matches this season (wt 175); these 2 dual sides are wt 165/190, which fits. The roster upload lists him Sr. The importer probably ran before his record/alias existed."
+  },
+  "267|colin gorman": {
+   "probability": 0.97,
+   "summary": "Link to Colin Gorman (Jr, Cherry Hill East)",
+   "action": "link",
+   "wrestler_id": "1d03fee7-c543-46c0-b1b9-2060cf873d86",
+   "rationale": "Cherry Hill East already has this wrestler with linked matches this season (wt 157/165/175); these 3 dual sides are wt 157/165/175, which fits. The roster upload lists him Jr. The importer probably ran before his record/alias existed."
+  },
+  "170|sebastian soto": {
+   "probability": 0.97,
+   "summary": "New wrestler: split Sebastian Soto (Jr) off the Roxbury record",
+   "action": "new",
+   "grade": "Jr",
+   "split_from": "e6235560-0707-4776-8426-4c9acba73410",
+   "rationale": "The only Sebastian Soto record is aliased here but all its matches are for Roxbury (wt 144/150). These Hopewell Valley duals are wt 132, and Hopewell Valley's roster lists a Jr at 150, so this is a different wrestler sharing the name. Same fix as the Grades Unresolved split, and doing either one clears both."
+  },
+  "81|christopher diaz": {
+   "probability": 0.97,
+   "summary": "New wrestler: split Christopher Diaz (So) off the Delsea record",
+   "action": "new",
+   "grade": "So",
+   "split_from": "a6a94f84-9bac-477d-a8f7-ef4fb8dc02d1",
+   "rationale": "The only Christopher Diaz record is aliased here but all its matches are for Delsea (wt 215/285). These Bloomfield duals are wt 144/150, and Bloomfield's roster lists a So at 150, so this is a different wrestler sharing the name. Same fix as the Grades Unresolved split, and doing either one clears both."
+  },
+  "314|jordan liao": {
+   "probability": 0.97,
+   "summary": "Link to Jordan Liao (So, Demarest)",
+   "action": "link",
+   "wrestler_id": "d93b3018-c8fd-4c4a-8d68-7afbac54439c",
+   "rationale": "Demarest already has this wrestler with linked matches this season (wt 215/285); these 4 dual sides are wt 215/285, which fits. The roster upload lists him So. The importer probably ran before his record/alias existed."
+  },
+  "384|nicolas ocelotl": {
+   "probability": 0.97,
+   "summary": "Link to Nicolas Ocelotl (So, Monmouth)",
+   "action": "link",
+   "wrestler_id": "400d84b2-d3bb-467e-8405-9a379feea3d7",
+   "rationale": "Monmouth already has this wrestler with linked matches this season (wt 120/126); these 3 dual sides are wt 126, which fits. The roster upload lists him So. The importer probably ran before his record/alias existed."
+  },
+  "310|cristian garcia": {
+   "probability": 0.9,
+   "summary": "New wrestler: split Cristian Garcia (Jr) off the Elizabeth record",
+   "action": "new",
+   "grade": "Jr",
+   "split_from": "70900188-d6f3-4c00-a792-766064c6a5e4",
+   "rationale": "The only Cristian Garcia record is aliased here but all its matches are for Elizabeth (wt 215/285). These Penns Grove duals are wt 138/144, and Penns Grove's roster lists a Jr at 132, so this is a different wrestler sharing the name. Same fix as the Grades Unresolved split, and doing either one clears both."
+  },
+  "5|christian ramirez": {
+   "probability": 0.95,
+   "summary": "New wrestler: split Christian Ramirez (So) off the St. Peter's Prep record",
+   "action": "new",
+   "grade": "So",
+   "split_from": "69cab96d-2088-4561-b880-e56e2688a2c9",
+   "rationale": "The only Christian Ramirez record is aliased here but all its matches are for St. Peter's Prep (wt 126/132). These Lakeland duals are wt 120, and Lakeland's roster lists a So at 126, so this is a different wrestler sharing the name. Same fix as the Grades Unresolved split, and doing either one clears both."
+  },
+  "272|aaron wells": {
+   "probability": 0.97,
+   "summary": "Link to Aaron Wells (Sr, Maple Shade)",
+   "action": "link",
+   "wrestler_id": "1a6cc466-3a77-4f86-923d-6ad3d0dcbd31",
+   "rationale": "Maple Shade already has this wrestler with linked matches this season (wt 144/150); these 2 dual sides are wt 150, which fits. The roster upload lists him Sr. The importer probably ran before his record/alias existed."
+  },
+  "272|justice fennell drummond": {
+   "probability": 0.97,
+   "summary": "Link to Justice Fennell Drummond (Sr, Maple Shade)",
+   "action": "link",
+   "wrestler_id": "5306bcd7-9ab3-4884-ade7-9ed6711d6348",
+   "rationale": "Maple Shade already has this wrestler with linked matches this season (wt 138/144); these 2 dual sides are wt 144, which fits. The importer probably ran before his record/alias existed."
+  },
+  "393|alexander cruz": {
+   "probability": 0.97,
+   "summary": "Link to Alexander Cruz (Jr, Ridgefield Park/Bogota)",
+   "action": "link",
+   "wrestler_id": "dc564eed-dfc2-4328-986a-01a7a45cc77d",
+   "rationale": "Ridgefield Park/Bogota already has this wrestler with linked matches this season (wt 215/285); these 4 dual sides are wt 285, which fits. The roster upload lists him Sr. The importer probably ran before his record/alias existed."
+  },
+  "314|reed kane": {
+   "probability": 0.97,
+   "summary": "Link to Reed Kane (So, Demarest)",
+   "action": "link",
+   "wrestler_id": "9c30459f-4d9a-4947-95f3-7becb12e8c2e",
+   "rationale": "Demarest already has this wrestler with linked matches this season (wt 113); these 4 dual sides are wt 113, which fits. The roster upload lists him So. The importer probably ran before his record/alias existed."
+  },
+  "126|aiden brown": {
+   "probability": 0.97,
+   "summary": "New wrestler: split Aiden Brown (Jr) off the Burlington City record",
+   "action": "new",
+   "grade": "Jr",
+   "split_from": "11ad2328-22b4-4452-87ff-20bb406d2629",
+   "rationale": "The only Aiden Brown record is aliased here but all its matches are for Burlington City (wt 132/138/144). These Scotch Plains-Fanwood duals are wt 126/132, and Scotch Plains-Fanwood's roster lists a Jr at 126, so this is a different wrestler sharing the name. Same fix as the Grades Unresolved split, and doing either one clears both."
+  },
+  "267|daniel radilovski": {
+   "probability": 0.97,
+   "summary": "Link to Daniel Radilovski (So, Cherry Hill East)",
+   "action": "link",
+   "wrestler_id": "b7b013fc-bef2-42d8-9c56-2f8aa90aca6b",
+   "rationale": "Cherry Hill East already has this wrestler with linked matches this season (wt 190); these 2 dual sides are wt 190, which fits. The roster upload lists him So. The importer probably ran before his record/alias existed."
+  },
+  "43|vincent defalco": {
+   "probability": 0.97,
+   "summary": "Link to Vincent DeFalco (Jr, Hackensack)",
+   "action": "link",
+   "wrestler_id": "8c85bebf-1587-48e9-92ae-4428a392ae6a",
+   "rationale": "Hackensack already has this wrestler with linked matches this season (wt 215); these 1 dual sides are wt 215, which fits. The roster upload lists him Jr. The importer probably ran before his record/alias existed."
+  },
+  "384|michael gianvecchio": {
+   "probability": 0.97,
+   "summary": "Link to Michael Gianvecchio (Fr, Monmouth)",
+   "action": "link",
+   "wrestler_id": "3e6268a1-8726-4d2f-b40f-133bb73c906d",
+   "rationale": "Monmouth already has this wrestler with linked matches this season (wt 126); these 3 dual sides are wt 120, which fits. The roster upload lists him Fr. The importer probably ran before his record/alias existed."
+  },
+  "34|christian hernandez": {
+   "probability": 0.97,
+   "summary": "Link to Christian Hernandez (Sr, New Milford)",
+   "action": "link",
+   "wrestler_id": "32e7e6fb-0c0b-4efe-9671-f366e68ab027",
+   "rationale": "New Milford already has this wrestler with linked matches this season (wt 165/175); these 3 dual sides are wt 165, which fits. The roster upload lists him Sr. The importer probably ran before his record/alias existed."
+  },
+  "43|cesar maschang": {
+   "probability": 0.97,
+   "summary": "Link to Cesar Maschang (Sr, Hackensack)",
+   "action": "link",
+   "wrestler_id": "e6e54b50-1163-49eb-bf07-46f449531400",
+   "rationale": "Hackensack already has this wrestler with linked matches this season (wt 285); these 2 dual sides are wt 285, which fits. The roster upload lists him Sr. The importer probably ran before his record/alias existed."
+  },
+  "34|aaron velez": {
+   "probability": 0.97,
+   "summary": "Link to Aaron Velez (Sr, New Milford)",
+   "action": "link",
+   "wrestler_id": "500104c3-4dfe-44b8-87f0-75c0c78b0114",
+   "rationale": "New Milford already has this wrestler with linked matches this season (wt 175); these 3 dual sides are wt 175, which fits. The roster upload lists him Sr. The importer probably ran before his record/alias existed."
+  },
+  "382|andrew martin": {
+   "probability": 0.97,
+   "summary": "Link to Andrew Martin (So, Matawan)",
+   "action": "link",
+   "wrestler_id": "fb471af3-7364-4f9a-a1eb-0c1fb2f9562e",
+   "rationale": "Matawan already has this wrestler with linked matches this season (wt 120/126/132); these 2 dual sides are wt 126/132, which fits. The roster upload lists him Jr. The importer probably ran before his record/alias existed."
+  },
+  "272|lucas voiro": {
+   "probability": 0.97,
+   "summary": "Link to Lucas Voiro (Sr, Maple Shade)",
+   "action": "link",
+   "wrestler_id": "f92c5d0e-db4d-47ce-b204-ab18b07083f1",
+   "rationale": "Maple Shade already has this wrestler with linked matches this season (wt 120/126); these 2 dual sides are wt 126, which fits. The roster upload lists him Sr. The importer probably ran before his record/alias existed."
+  },
+  "393|xavian robinson": {
+   "probability": 0.97,
+   "summary": "Link to Xavian Robinson (Sr, Ridgefield Park/Bogota)",
+   "action": "link",
+   "wrestler_id": "d9962998-2360-4bdd-bff4-55c12c638a06",
+   "rationale": "Ridgefield Park/Bogota already has this wrestler with linked matches this season (wt 113/120); these 1 dual sides are wt 120, which fits. The roster upload lists him Sr. The importer probably ran before his record/alias existed."
+  },
+  "273|anthony flores": {
+   "probability": 0.96,
+   "summary": "New wrestler: split Anthony Flores (So) off the Ramsey record",
+   "action": "new",
+   "grade": "So",
+   "split_from": "541f9509-d7bf-496c-bf5a-99094489cd54",
+   "rationale": "The only Anthony Flores record is aliased here but all its matches are for Ramsey (wt 157/165). These Pemberton duals are wt 215/285, and Pemberton's roster lists a So at 285, so this is a different wrestler sharing the name. Same fix as the Grades Unresolved split, and doing either one clears both."
+  },
+  "3|damien gonzalez": {
+   "probability": 0.97,
+   "summary": "Link to Damien Gonzalez (Sr, Emerson-Park Ridge)",
+   "action": "link",
+   "wrestler_id": "8843159b-85ea-4d0c-9cfa-275d2220e1be",
+   "rationale": "Emerson-Park Ridge already has this wrestler with linked matches this season (wt 215/285); these 1 dual sides are wt 285, which fits. The roster upload lists him Sr. The importer probably ran before his record/alias existed."
+  },
+  "393|tyler lippencott": {
+   "probability": 0.97,
+   "summary": "Link to Tyler Lippencott (So, Ridgefield Park/Bogota)",
+   "action": "link",
+   "wrestler_id": "84d023e8-f63e-4b34-a467-3667abf8bf40",
+   "rationale": "Ridgefield Park/Bogota already has this wrestler with linked matches this season (wt 113/120); these 2 dual sides are wt 113, which fits. The roster upload lists him So. The importer probably ran before his record/alias existed."
+  },
+  "221|jahkiy simon": {
+   "probability": 0.97,
+   "summary": "Link to Jahkiy Simon (Sr, Neptune)",
+   "action": "link",
+   "wrestler_id": "d45e08df-4b95-4c70-8b70-a7dc9dcb74b4",
+   "rationale": "Neptune already has this wrestler with linked matches this season (wt 138/144); these 1 dual sides are wt 138, which fits. The roster upload lists him Sr. The importer probably ran before his record/alias existed."
+  },
+  "384|jack thomas": {
+   "probability": 0.97,
+   "summary": "Link to Jack Thomas (Jr, Monmouth)",
+   "action": "link",
+   "wrestler_id": "3adc1078-14bd-4766-b403-3b348c4ee261",
+   "rationale": "Monmouth already has this wrestler with linked matches this season (wt 113/157/165/175); these 1 dual sides are wt 175, which fits. The roster upload lists him Jr. The importer probably ran before his record/alias existed."
+  },
+  "384|minh do": {
+   "probability": 0.97,
+   "summary": "Link to Minh Do (Jr, Monmouth)",
+   "action": "link",
+   "wrestler_id": "67d1a6bd-0834-49ea-9b06-8e4bd051874f",
+   "rationale": "Monmouth already has this wrestler with linked matches this season (wt 175/190); these 1 dual sides are wt 190, which fits. The roster upload lists him Jr. The importer probably ran before his record/alias existed."
+  },
+  "384|robert orozco royce": {
+   "probability": 0.97,
+   "summary": "Link to Robert Orozco Royce (Jr, Monmouth)",
+   "action": "link",
+   "wrestler_id": "91ac390b-0552-47c8-a790-06a0b0b9d3f7",
+   "rationale": "Monmouth already has this wrestler with linked matches this season (wt 138/144); these 1 dual sides are wt 144, which fits. The importer probably ran before his record/alias existed."
+  },
+  "272|gianni bolletino": {
+   "probability": 0.97,
+   "summary": "Link to Gianni Bolletino (Sr, Maple Shade)",
+   "action": "link",
+   "wrestler_id": "8b9c6c7f-a589-458d-be57-55ff37a633f2",
+   "rationale": "Maple Shade already has this wrestler with linked matches this season (wt 157); these 1 dual sides are wt 165, which fits. The roster upload lists him Sr. The importer probably ran before his record/alias existed."
+  },
+  "393|lawrence zeppetelli": {
+   "probability": 0.97,
+   "summary": "Link to Lawrence Zeppetelli (So, Ridgefield Park/Bogota)",
+   "action": "link",
+   "wrestler_id": "10e5cd72-9907-4500-9ce8-614a5e5f705e",
+   "rationale": "Ridgefield Park/Bogota already has this wrestler with linked matches this season (wt 132); these 1 dual sides are wt 138, which fits. The roster upload lists him So. The importer probably ran before his record/alias existed."
+  },
+  "384|ryan fleury": {
+   "probability": 0.8,
+   "summary": "Leave unlinked (data error)",
+   "action": "skip",
+   "rationale": "A 106-lb forfeit win in the Dec 13 dual, where Monmouth's 106 slot is otherwise empty. Ryan Fleury wrestled 285 in several other duals that same day, so the name was recorded in the wrong slot. Linking it would give a 285-pounder a 106 forfeit."
+  }
+ }
+}

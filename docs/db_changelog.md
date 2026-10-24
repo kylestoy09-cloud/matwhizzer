@@ -2,6 +2,51 @@
 
 ---
 
+## 2026-09-24 — Split Luke Miller (Lacey / Demarest)
+
+**Migration file:** `docs/migrations/20260924_split_luke_miller_demarest.sql`
+
+**Purpose:** Two different wrestlers named Luke Miller shared one record (Lacey junior, Jr from districts). The 2026-07-31 alias build aliased that record at both Lacey (249) and Demarest (314), so the Demarest sophomore's roster grade import row matched the Lacey junior and his BCCA bout was credited to him; his 4 Demarest dual matches had been imported with his name but no wrestler_id, so he never appeared on Demarest's roster (reported by Kyle). Created the Demarest Luke Miller (So, `961025db-…`) and moved the Demarest alias, the 4 dual sides (+ winner on his fall vs Mehta), the BCCA bout and the Demarest import row to him; confirmed Lacey's Jr. Scan found 33 more records on two schools' 2025-26 roster uploads — they now appear in the roster grade import's Grades Unresolved tab, whose "different wrestler" action splits the record by school the same way (`src/lib/splitWrestler.ts`).
+
+**Tables affected:** `wrestlers` (1 inserted), `wrestler_name_aliases`, `dual_meet_matches`, `tournament_bouts`, `wrestler_match_score_log`, `roster_grade_import`
+
+**APPLIED** — 2026-09-24 via service-role script
+
+**Reversible?** Yes — point the moved rows back to `b2654654-b493-436d-8c8a-87e49a09ea1f` (ids in the migration file), null the 4 dual sides, delete the new wrestler
+**Verified?** Yes — 2026-09-24: all 9 statements affected the expected rows (1 alias, 4 duals, 1 winner, 1 bout, 2 import rows)
+
+---
+
+## 2026-09-24 — Roster grades from microcheck matches written to wrestlers
+
+**Migration file:** `docs/migrations/20260924_microcheck_roster_grades_backfill.sql`
+
+**Purpose:** The microcheck roster_match task saved each reviewed match as `roster_grade_import.status = 'wrestler_matched'` but never ran the confirm step, so 6,679 human-reviewed matches (2026-09-20..22, 296 schools) never reached wrestler profiles — only 77 grades from /admin/roster-grade-import were written, and boys roster grade coverage read 52%. Wrote the import grade for every matched wrestler with no grade or the same grade (`grade_confirmed_source = 'roster_upload'`, `grade_confirmed_at` = when the match was reviewed) and marked those rows `confirmed` (`confirmed_by = 'backfill: microcheck roster_match'`). 42 wrestlers held back as `wrestler_matched` for manual review: current grade differs from the import, or two import rows with different grades matched the same wrestler. The microcheck panel now confirms on submit.
+
+**Tables affected:** `wrestlers` (`grade`, `grade_confirmed_at`, `grade_confirmed_source`), `roster_grade_import` (`status`, `confirmed_by`, `confirmed_at`)
+
+**APPLIED** — 2026-09-24 via service-role script (pre-apply snapshot of the 6,646 wrestlers saved in the session scratchpad)
+
+**Reversible?** Partly — import rows: `UPDATE roster_grade_import SET status='wrestler_matched', confirmed_by=NULL, confirmed_at=NULL WHERE confirmed_by='backfill: microcheck roster_match'`; wrestler grades need the snapshot
+**Verified?** Yes — 2026-09-24: 6,604 wrestlers written, 6,612 import rows confirmed, 0 errors; boys roster grade coverage 52% → 97.5% (289 of 311 schools at 100%)
+
+---
+
+## 2026-09-24 — Roster-upload grades: backfill grade_confirmed_at
+
+**Migration file:** `docs/migrations/20260924_roster_upload_grade_confirmed_at.sql`
+
+**Purpose:** The roster grade import confirm step wrote `grade` and `grade_confirmed_source = 'roster_upload'` but never `grade_confirmed_at`, so 40 of 77 roster-upload wrestlers still counted as "NJ wrestlers without confirmed grade" in data health and showed no "Last confirmed" date on the admin profile. The confirm route now sets it; this backfills those 40 from the import row's `confirmed_at` (now() if none). Same change: roster wrestlers with no import row (e.g. Dorian Velez, Dumont) can now get a grade in the review screen — written as `grade_confirmed_source = 'manual'`, same as the admin profile edit.
+
+**Tables affected:** `wrestlers` (`grade_confirmed_at` only)
+
+**APPLIED** — 2026-09-24 via service-role script
+
+**Reversible?** Yes — set `grade_confirmed_at = NULL` for the 40 ids (informational field)
+**Verified?** Yes — 2026-09-24: 40 updated; 0 roster-upload wrestlers with a grade and no `grade_confirmed_at`
+
+---
+
 ## 2026-09-24 — OOS name collisions: Franklin, PA / Delaware Valley, PA / Williamstown, WV
 
 **Migration file:** `docs/migrations/20260924_oos_name_collision_fix.sql`
