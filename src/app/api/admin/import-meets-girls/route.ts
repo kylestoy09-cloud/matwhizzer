@@ -16,6 +16,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { parseDualMeetGirlsText } from '@/lib/parseDualMeetGirls'
+import { parseJamboreeGirlsText } from '@/lib/parseJamboreeGirls'
 import { matchSchoolNames } from '@/lib/matchSchools'
 import { matchWrestler, reloadAliases, clearWrestlerCache } from '@/lib/matchWrestlers'
 import { boutResultToDb } from '@/lib/parseRtf'
@@ -42,6 +43,9 @@ type ImportRequest = {
   // Set by the jamboree import page. Each pairwise pseudo-dual it produces is
   // stored as meet_kind 'jamboree' and excluded from team W-L / Power Points.
   meetKind?: 'dual' | 'jamboree'
+  // Required when meetKind is 'jamboree': the event date (MM/DD/YYYY). Jamboree
+  // listings carry no per-meet date line, so the parser takes it as an argument.
+  jamboreeDate?: string
 }
 
 // Meets with this many bouts are one-or-two-wrestler "random" meets. They are
@@ -157,7 +161,20 @@ export async function POST(req: NextRequest) {
   const wrestlerOverrides: Record<string, WrestlerOverride> = (draft.wrestler_overrides as Record<string, WrestlerOverride>) ?? {}
 
   // ── Parse meets using girls parser ───────────────────────────────────────────
-  const meets = parseDualMeetGirlsText(draft.raw_text as string)
+  // Jamboree drafts hold the raw event listing (no "A vs. B (date)" headers), so
+  // they must be re-parsed with the jamboree parser — the same one the review
+  // screen used — and it needs the event date the page collected.
+  let meets
+  if (isJamboree) {
+    const jamboreeDate = (body.jamboreeDate ?? '').trim()
+    if (!/^\d{2}\/\d{2}\/\d{4}$/.test(jamboreeDate)) {
+      return NextResponse.json({ error: 'Jamboree import requires jamboreeDate in MM/DD/YYYY format' }, { status: 400 })
+    }
+    meets = parseJamboreeGirlsText(draft.raw_text as string, jamboreeDate)
+  } else {
+    meets = parseDualMeetGirlsText(draft.raw_text as string)
+  }
+
   if (meets.length === 0) {
     return NextResponse.json({ error: 'Draft produced no parseable meets' }, { status: 400 })
   }
