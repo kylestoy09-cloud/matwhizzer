@@ -12,11 +12,14 @@ export type BoutReviewConfirmation = {
 
 export type SchoolFlag = {
   raw: string
-  confidence: 'exact' | 'alias' | 'high' | 'low' | 'none'
+  confidence: 'exact' | 'alias' | 'high' | 'low' | 'none' | 'oos'
   school_id: number | null
   display_name: string | null
   alternates: { school_id: number; display_name: string; score: number; is_oos?: boolean }[]
   bout_count: number
+  oos_event?: boolean  // out-of-state event: every school must be confirmed, even exact matches
+  nj_lookalike?: boolean  // OOS school whose name resembles an NJ school — never bulk-confirmed
+  bulk_ok?: boolean       // existing OOS school, distinct from every NJ name — can be bulk-confirmed
 }
 
 export type WrestlerFlag = {

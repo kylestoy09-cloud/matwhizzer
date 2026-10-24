@@ -5,6 +5,7 @@ import type {
   TournamentSummary,
   TournamentType,
   ReviewedTournament,
+  SchoolFlag,
   SchoolOverride,
   WrestlerOverride,
   TournamentOverride,
@@ -217,6 +218,8 @@ export function RtfImportClient() {
 
   const [reviewed, setReviewed] = useState<ReviewedTournament[]>([])
   const [schoolOverrides, setSchoolOverrides] = useState<Record<string, SchoolOverride>>({})
+  // Wrestlers are only matched at confirmed schools, so any school decision needs a re-match
+  const [wrestlersStale, setWrestlersStale] = useState(false)
   const [wrestlerOverrides, setWrestlerOverrides] = useState<Record<string, WrestlerOverride>>({})
   const [dates, setDates] = useState<Record<string, { start_date: string; end_date: string | null }>>({})
   const [expandedTournament, setExpandedTournament] = useState<string | null>(null)
@@ -418,10 +421,11 @@ export function RtfImportClient() {
     startTransition(async () => {
       try {
       const data = await apiPost<{ reviewed: ReviewedTournament[] }>(
-        '/api/admin/rtf/match', { text, year, selected: [...selected], schoolOverrides, gender },
+        '/api/admin/rtf/match', { text, year, selected: [...selected], schoolOverrides, tournamentTypes, gender },
       )
       if (data.error) { setMatchError(data.error); return }
       setReviewed(data.reviewed)
+      setWrestlersStale(false)
       const d: Record<string, { start_date: string; end_date: string | null }> = {}
       const tt: Record<string, TournamentType> = {}
       const vv: Record<string, { venue_name: string; venue_address: string }> = {}
@@ -464,13 +468,22 @@ export function RtfImportClient() {
     startTransition(async () => {
       try {
         const data = await apiPost<{ reviewed: ReviewedTournament[] }>(
-          '/api/admin/rtf/match', { text, year, selected: [...selected], schoolOverrides, gender },
+          '/api/admin/rtf/match', { text, year, selected: [...selected], schoolOverrides, tournamentTypes, gender },
         )
         if (data.error) { setMatchError(data.error); return }
-        // Only take wrestler_flags from the fresh response — everything else stays
+        // Take fresh wrestler_flags; add any new school flags (e.g. a tournament switched to
+        // Outside now needs every school confirmed) while keeping existing cards and dates
+        const mergeFlags = (prev: SchoolFlag[], next: SchoolFlag[]) =>
+          [...prev, ...next.filter(f => !prev.some(p => p.raw === f.raw))]
+        setWrestlersStale(false)
         setReviewed(prev => prev.map(t => {
           const fresh = data.reviewed.find(r => r.name === t.name && r.date_raw === t.date_raw)
-          return fresh ? { ...t, wrestler_flags: fresh.wrestler_flags } : t
+          return fresh ? {
+            ...t,
+            wrestler_flags: fresh.wrestler_flags,
+            school_flags: mergeFlags(t.school_flags, fresh.school_flags),
+            team_score_flags: mergeFlags(t.team_score_flags ?? [], fresh.team_score_flags ?? []),
+          } : t
         }))
       } catch (e) {
         setMatchError(e instanceof Error ? e.message : 'Unexpected error — try again')
@@ -508,6 +521,7 @@ export function RtfImportClient() {
   }
 
   function handleOverride(raw: string, o: SchoolOverride | undefined) {
+    setWrestlersStale(true)
     setSchoolOverrides(prev => {
       const next = { ...prev }
       if (o === undefined) delete next[raw]
@@ -536,12 +550,21 @@ export function RtfImportClient() {
 
   function resetAll() {
     setText(''); setSummaries([]); setSelected(new Set())
-    setReviewed([]); setSchoolOverrides({}); setWrestlerOverrides({}); setDates({}); setTournamentTypes({})
+    setReviewed([]); setSchoolOverrides({}); setWrestlersStale(false); setWrestlerOverrides({}); setDates({}); setTournamentTypes({})
     setTournamentOverrides({}); setHubPinnedTkey(null); setMsProfileLinks({})
     setBoutRounds({}); setBoutDuplicates({}); setBoutSeeds({})
     setImportResults([]); setDraftId(null); setDraftLabel('')
     setSaveState('idle'); setStep('input')
   }
+
+  // A tournament switched to Outside after matching has no school cards yet for its
+  // exact matches — block import until a re-match loads them.
+  function needsOosRematch(t: ReviewedTournament) {
+    const tkey = `${t.name}|${t.date_raw}`
+    return tournamentTypes[tkey] === 'outside' && !deferredTournaments.has(tkey) &&
+      ![...t.school_flags, ...(t.team_score_flags ?? [])].some(f => f.oos_event)
+  }
+  const oosRematchCount = reviewed.filter(needsOosRematch).length
 
   const totalSchoolFlags = reviewed.reduce(
     (n, t) =>
@@ -835,6 +858,11 @@ export function RtfImportClient() {
                         <option value="outside">Outside (NJ teams travel out of state)</option>
                       </select>
                     </div>
+                    {needsOosRematch(t) && (
+                      <p className="text-xs text-red-600">
+                        Outside events need every school confirmed — click ↺ Re-match wrestlers to load the school review.
+                      </p>
+                    )}
 
                     {/* Venue */}
                     {(() => {
@@ -860,6 +888,28 @@ export function RtfImportClient() {
                       )
                     })()}
 
+                    {(() => {
+                      // Bulk-confirm only existing OOS schools whose names are distinct from
+                      // every NJ school; NJ matches and lookalikes (Dover, DE) stay one by one.
+                      const bulk = [...t.school_flags, ...(t.team_score_flags ?? [])]
+                        .filter((f, i, all) => f.bulk_ok && !schoolOverrides[f.raw] && all.findIndex(g => g.raw === f.raw) === i)
+                      if (bulk.length === 0) return null
+                      return (
+                        <button
+                          onClick={() => {
+                            setWrestlersStale(true)
+                            setSchoolOverrides(prev => {
+                              const next = { ...prev }
+                              for (const f of bulk) next[f.raw] = { type: 'oos', school_id: f.school_id!, display_name: f.display_name! }
+                              return next
+                            })
+                          }}
+                          className="text-xs px-2 py-1 border border-amber-300 text-amber-800 hover:border-amber-500 hover:bg-amber-50 transition-colors"
+                        >
+                          ✓ Confirm all {bulk.length} known out-of-state school{bulk.length !== 1 ? 's' : ''} (names unlike any NJ school)
+                        </button>
+                      )
+                    })()}
                     {t.school_flags.length > 0 && (
                       <div>
                         <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">School flags ({t.school_flags.length})</p>
@@ -990,6 +1040,16 @@ export function RtfImportClient() {
                 {totalSchoolFlags} school{totalSchoolFlags !== 1 ? 's' : ''} unresolved — resolve before importing.
               </p>
             )}
+            {wrestlersStale && totalSchoolFlags === 0 && (
+              <p className="text-sm text-red-600">
+                School decisions changed — click ↺ Re-match wrestlers so wrestlers at those schools get reviewed.
+              </p>
+            )}
+            {oosRematchCount > 0 && (
+              <p className="text-sm text-red-600">
+                {oosRematchCount} outside tournament{oosRematchCount !== 1 ? 's' : ''} need{oosRematchCount === 1 ? 's' : ''} a re-match so every school can be confirmed.
+              </p>
+            )}
             {totalWrestlerFlags > 0 && (
               <p className="text-sm text-red-600">
                 {totalWrestlerFlags} wrestler{totalWrestlerFlags !== 1 ? 's' : ''} unresolved — every bout needs both wrestler IDs before import.
@@ -1011,7 +1071,7 @@ export function RtfImportClient() {
               </button>
               <button
                 onClick={handleImport}
-                disabled={isPending || deferredTournaments.size === reviewed.length || totalWrestlerFlags > 0 || totalSchoolFlags > 0}
+                disabled={isPending || deferredTournaments.size === reviewed.length || totalWrestlerFlags > 0 || totalSchoolFlags > 0 || oosRematchCount > 0 || wrestlersStale}
                 className="px-4 py-2 bg-black text-white text-sm font-medium disabled:opacity-40 hover:bg-slate-800 transition-colors flex items-center gap-2"
               >
                 {isPending ? <><Spinner /> Importing…</> : `Import ${reviewed.length - deferredTournaments.size} Tournament${reviewed.length - deferredTournaments.size !== 1 ? 's' : ''}`}

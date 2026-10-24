@@ -140,13 +140,16 @@ export async function GET(req: NextRequest) {
   // ── Wrestler names ────────────────────────────────────────────────────────
   const { data: names } = await db
     .from('wrestlers')
-    .select('id, first_name, last_name')
+    .select('id, first_name, last_name, is_oos')
     .in('id', [idA, idB])
 
-  const nameMap = new Map((names ?? []).map(w => [w.id as string, w as { id: string; first_name: string; last_name: string }]))
+  const nameMap = new Map((names ?? []).map(w => [w.id as string, w as { id: string; first_name: string; last_name: string; is_oos: boolean }]))
   const wrestlerA = nameMap.get(idA)
   const wrestlerB = nameMap.get(idB)
   if (!wrestlerA || !wrestlerB) return NextResponse.json({ error: 'Wrestler not found' }, { status: 404 })
+  if (wrestlerA.is_oos || wrestlerB.is_oos) {
+    return NextResponse.json({ error: 'H2H is only available between NJSIAA wrestlers' }, { status: 400 })
+  }
 
   // ── Per-wrestler match history ────────────────────────────────────────────
   // Keyed by wrestler_id → array of { opponentId, date, event, won, resultType, detail }

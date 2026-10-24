@@ -2,6 +2,66 @@
 
 ---
 
+## 2026-09-24 — OOS name collisions: Franklin, PA / Delaware Valley, PA / Williamstown, WV
+
+**Migration file:** `docs/migrations/20260924_oos_name_collision_fix.sql`
+
+**Purpose:** Same failure as the Dover, DE fix, found by scanning every out-of-state tournament for single-appearance NJ schools. OOS programs whose name exactly matches an NJ school were imported as that school (exact matches skipped the RTF school review): "Franklin" at Powerade (PA) → Franklin 169 (John Montgomery, Max Firestine, Titus Colangelo); "Delaware Valley" at Bethlehem Holiday Classic (PA) → Delaware Valley 141 (Nick D`Ambola); "Williamstown" at WSAZ Invitational (WV) → Williamstown 303 (Cole Smith — Williamstown, WV per Kyle). Created OOS schools Franklin, PA (1199), Delaware Valley, PA (1200), Williamstown, WV (1201). The first four wrestlers (created by those imports, one bout each) are re-homed there with `is_oos = true`. The WSAZ bout had been attached to an existing NJ Cole Smith (2024-25 NJ postseason), so it moved to a new OOS Cole Smith; the NJ record keeps its own history. Hammer / match-score-log rows built from these bouts were deleted. The RTF importer now requires every school at an Outside event to be confirmed (see the code change of the same date).
+
+**Tables affected:** `schools` (3 inserted), `wrestlers` (1 inserted, 4 updated), `wrestler_name_aliases` (5 inserted), `tournament_bouts` (5 updated), `wrestler_hammer_scores`, `wrestler_match_score_log`
+
+**APPLIED** — 2026-09-24 via service-role script
+
+**Reversible?** Yes — rollback statements in the migration file
+**Verified?** Yes — 2026-09-24: 0 bouts for these wrestlers still on schools 169/141/303; all 5 OOS wrestlers aliased to 1199/1200/1201 with `is_oos = true`
+
+---
+
+## 2026-09-24 — Dover (61) / Dover, DE (608) OOS mixup fix
+
+**Migration file:** `docs/migrations/20260924_dover_de_oos_mixup_fix.sql`
+
+**Purpose:** The 2026-08-10 import of Howdy Duncan (2025-12-19/20, a Delaware tournament Pennsville attended) put every out-of-state school on an OOS stub (604–626, including 608 "Dover, DE"), but the raw school name "Dover" exactly matched NJ Dover's display_name alias, so Jahziah Jimenez, Maxtin Kiesel and Silas Sheranko were created as NJ wrestlers on Dover NJ's roster (reported by Kyle). Each has one Howdy Duncan bout and nothing else. Re-homed their `wrestler_name_aliases` rows and their 3 Howdy Duncan bouts from 61 to 608, set `is_oos = true`, and deleted their 2025-26 `wrestler_hammer_scores` / `wrestler_match_score_log` rows — matching the other OOS wrestlers from that tournament (the recalculation skips OOS wrestlers).
+
+**Tables affected:** `wrestler_name_aliases`, `wrestlers`, `tournament_bouts`, `wrestler_hammer_scores`, `wrestler_match_score_log`
+
+**APPLIED** — 2026-09-24 via service-role script
+
+**Reversible?** Yes — rollback statements in the migration file; hammer/log rows return on the next boys 2025-26 recalculation
+**Verified?** Yes — 2026-09-24: school 61 aliases 56 → 53; 608 has the 3 aliases; 0 Howdy Duncan bouts left on school 61; all 3 `is_oos = true`
+
+---
+
+## 2026-09-23 — OOS aliases for Christian Brothers (506)
+
+**Migration file:** `docs/migrations/20260923_cba_oos_aliases.sql`
+
+**Purpose:** Follow-up to the same-day CBA OOS mixup fix. School 506 ("Christian Brothers College", OOS) had zero aliases, so any raw import name other than an exact match on its display_name fell through to trigram fuzzy matching — which is how its roster collided with NJ's Christian Brothers Academy (197) in the first place. The program is known in source data by two names ("Christian Brothers High School" and "Christian Brothers College"); added both as exact `alias_type='oos'` aliases pointing to 506 so `matchSchools.ts` resolves them at the exact-alias step, before fuzzy matching ever runs.
+
+**Tables affected:** `school_aliases`
+
+**APPLIED** — 2026-09-23 via service-role script
+
+**Reversible?** Yes — `DELETE FROM school_aliases WHERE id IN (2876, 2877);`
+**Verified?** Yes — 2026-09-23: both rows inserted with `school_id=506, alias_type='oos'`
+
+---
+
+## 2026-09-23 — Christian Brothers (197) OOS mixup fix
+
+**Migration file:** `docs/migrations/20260923_cba_oos_mixup_fix.sql`
+
+**Purpose:** A 2026-08-03 bulk import of ~231 wrestlers across ~19 out-of-state Catholic prep programs (Gonzaga, DeMatha, Bishop O'Connell, Malvern Prep, Mt. St. Charles Academy, etc. — consistent with an East Coast Catholic Classic-style field) fuzzy-matched an out-of-state "Christian Brothers" roster to NJ school_id 197 (Christian Brothers Academy, Lincroft) instead of the existing empty OOS stub school_id 506 ("Christian Brothers College"). This put 18 out-of-state wrestlers on CBA's live NJ roster with no bout/tournament/dual history anywhere — caught when the roster grade import review didn't match Track Wrestling's actual 44-man roster. Re-homed their `wrestler_name_aliases` row from school 197 to 506 and set `is_oos = true` so they surface correctly on the OOS Wrestlers page.
+
+**Tables affected:** `wrestler_name_aliases`, `wrestlers`
+
+**APPLIED** — 2026-09-23 via service-role script
+
+**Reversible?** Yes — re-run with `school_id = 197` and `is_oos = false` for the same 18 wrestler ids (listed in the migration file)
+**Verified?** Yes — 2026-09-23: school 197 alias count dropped from 48 to 30 (44 real CBA roster + a few pre-existing unrelated dupes); all 18 confirmed `is_oos = true`
+
+---
+
 ## 2026-09-21 — Alias "Roselle" → Roselle (358, Abraham Clark)
 
 **Migration file:** `docs/migrations/20260921_roselle_alias.sql`

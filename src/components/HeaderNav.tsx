@@ -161,6 +161,7 @@ export function HeaderNav() {
         .from('wrestlers')
         .select('id, first_name, last_name')
         .eq('gender', isBoys ? 'M' : 'F')
+        .eq('is_oos', false)
         .limit(5)
 
       if (parts.length >= 2) {

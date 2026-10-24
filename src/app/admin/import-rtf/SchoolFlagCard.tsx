@@ -25,6 +25,7 @@ function ConfBadge({ c }: { c: string }) {
     c === 'alias' ? 'bg-teal-100 text-teal-800' :
     c === 'high'  ? 'bg-blue-100 text-blue-800' :
     c === 'low'   ? 'bg-yellow-100 text-yellow-800' :
+    c === 'oos'   ? 'bg-amber-100 text-amber-800' :
                     'bg-red-100 text-red-800'
   return <span className={`inline-block text-xs font-medium px-1.5 py-0.5 rounded ${cls}`}>{c}</span>
 }
@@ -104,6 +105,30 @@ export function SchoolFlagCard({
         </div>
         <ConfBadge c={flag.confidence} />
       </div>
+
+      {/* Out-of-state event: the suggested match needs an explicit confirm */}
+      {flag.oos_event && !resolved && (
+        <div className="mb-2">
+          <p className="text-xs text-slate-500 mb-1">
+            Out-of-state event — confirm this school, or pick the out-of-state program if it only shares the name.
+          </p>
+          {flag.nj_lookalike && (
+            <p className="text-xs text-red-600 mb-1">Name resembles an NJ school — check it carefully.</p>
+          )}
+          {flag.school_id != null && flag.display_name && (
+            <button
+              onClick={() => onOverride(flag.raw, flag.confidence === 'oos'
+                ? { type: 'oos', school_id: flag.school_id!, display_name: flag.display_name! }
+                : { type: 'nj', school_id: flag.school_id!, display_name: flag.display_name! })}
+              className={`text-xs px-2 py-0.5 border transition-colors ${flag.confidence === 'oos'
+                ? 'border-amber-300 text-amber-800 hover:border-amber-500 hover:bg-amber-50'
+                : 'border-slate-300 hover:border-black hover:bg-slate-50'}`}
+            >
+              ✓ Confirm {flag.confidence === 'oos' ? 'OOS: ' : 'NJ: '}{flag.display_name}
+            </button>
+          )}
+        </div>
+      )}
 
       {/* NJ alternates */}
       {njAlts.length > 0 && (

@@ -372,6 +372,45 @@ export async function matchSchoolNames(
   return { rawName, schoolId: bestNj.schoolId, displayName: bestNj.displayName, confidence, alternates: allAlternates }
 }
 
+// ── NJ lookalike check ──────────────────────────────────────────────────────────
+// True when an out-of-state school name could be mistaken for an NJ school
+// ("Dover, DE" vs Dover, "Delaware Valley, PA" vs Delaware Valley). These never
+// get a saved OOS alias and are never bulk-confirmed at OOS events: a person has
+// to look at them every time. Clearly distinct names ("Bishop McCort") return false.
+
+const STATE_SUFFIX = /[\s,]*(\(\s*[A-Za-z]{2}\s*\)|,\s*[A-Za-z]{2}\.?)\s*$/
+
+function lookalikeKey(name: string): string {
+  return stripSuffixes(name.replace(STATE_SUFFIX, '').replace(/[.'`’]/g, '').trim()).toLowerCase()
+}
+
+function nameTokens(name: string): string[] {
+  return name.split(/[^a-z0-9]+/).filter(t => t.length > 2)
+}
+
+export async function isNjLookalike(name: string): Promise<boolean> {
+  const [njSchools, aliases] = await Promise.all([loadNjSchools(), loadAliases()])
+  const key = lookalikeKey(name)
+  if (!key) return false
+  const toks = nameTokens(key)
+  const njIds = new Set(njSchools.map(s => s.id))
+  const njNames = [
+    ...njSchools.map(s => s.display_name),
+    ...aliases.filter(a => a.alias_type !== 'oos' && a.school_id != null && njIds.has(a.school_id)).map(a => a.alias),
+  ]
+  for (const nj of njNames) {
+    const njKey = lookalikeKey(nj)
+    if (!njKey) continue
+    if (njKey === key) return true
+    const njToks = nameTokens(njKey)
+    // One name's words all appear in the other ("Delaware Valley" ⊂ "Delaware Valley, PA")
+    if (njToks.length > 0 && toks.length > 0 &&
+        (njToks.every(t => toks.includes(t)) || toks.every(t => njToks.includes(t)))) return true
+    if (trigramSimilarity(key, njKey) >= 0.5) return true
+  }
+  return false
+}
+
 export function clearSchoolCache(): void {
   njSchoolCache  = null
   oosSchoolCache = null
