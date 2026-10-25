@@ -425,11 +425,12 @@ export async function POST(req: NextRequest) {
     const isoDate = toISODate(meet.date)
 
     if (team1SchoolId && team2SchoolId) {
-      const { data: existing } = await supabase
+      // dual_meets_girls has no gender column — the table is girls-only. A failed
+      // lookup must stop the meet rather than read as "no duplicate".
+      const { data: existing, error: dupErr } = await supabase
         .from('dual_meets_girls')
         .select('id')
         .eq('season_id', seasonId)
-        .eq('gender', GENDER)
         .eq('meet_date', isoDate)
         .or(
           `and(team1_school_id.eq.${team1SchoolId},team2_school_id.eq.${team2SchoolId}),` +
@@ -437,6 +438,10 @@ export async function POST(req: NextRequest) {
         )
         .limit(1)
 
+      if (dupErr) {
+        errors.push(`Meet ${i + 1} (${meet.team1Name} vs ${meet.team2Name}): duplicate check failed: ${dupErr.message}`)
+        continue
+      }
       if (existing && existing.length > 0) {
         meetsSkippedDup++
         continue
