@@ -2,6 +2,21 @@
 
 ---
 
+## 2026-10-24 — Girls 2025-26 team playoffs tagged; Hillsborough Holiday Brawl import reset
+
+**Migration file:** `docs/migrations/20261024_girls_playoffs_tag_and_brawl_reset.sql` (applied with `scripts/apply_girls_playoffs_tag_and_brawl_reset.mts`)
+
+**Purpose:** (1) Sets `is_playoff` on the 14 NJSIAA girls team playoff duals (2/17, 2/19, 2/22). Two were already loaded from the February duals file; the playoff import added a second, flipped copy of High Point / MHMK (02-19), which is deleted. The girls importer's duplicate check filtered on a `gender` column that `dual_meets_girls` doesn't have, so every lookup errored and read as "no duplicate"; fixed in `import-meets-girls/route.ts`. (2) Deletes the 35 Hillsborough Holiday Brawl (12-28) pseudo-duals (49 bouts) from a jamboree import whose parser ignored pool weight labels ("114C"), kept round prefixes in names, and missed bouts with non-breaking spaces. Also deletes the 23 `wrestler_name_aliases` rows with round-prefixed raw names. Parser fixed in `src/lib/parseJamboreeGirls.ts`; the event (204 bouts) is to be re-imported.
+
+**Tables affected:** `dual_meets_girls` (14 updated, 36 deleted), `dual_meet_matches_girls` (61 deleted by cascade), `wrestler_name_aliases` (23 deleted)
+
+**APPLIED** — 2026-10-24, service-role script
+
+**Reversible?** Yes — re-insert from `docs/migrations/backups/20261024_girls_playoffs_tag_and_brawl_reset.json`, set `is_playoff = false` on the 14 meets
+**Verified?** Yes — 2026-10-24: 14 girls playoff meets; 0 Hillsborough jamboree meets
+
+---
+
 ## 2026-10-24 — Girls 2025-26 duplicate meets cleanup
 
 **Migration file:** `docs/migrations/20261024_girls_duplicate_meets_cleanup.sql`
@@ -30,10 +45,10 @@ Sterling/Collingswood (01-16 / 01-17) was left alone because its copies differ. 
 
 **Tables affected:** `power_points` (2 columns, 1 check constraint, 273 rows)
 
-**PENDING** — run in Supabase SQL editor
+**APPLIED** — 2026-10-24, Supabase SQL editor
 
 **Reversible?** Yes — rollback statements in the migration file
-**Verified?** Pending — run the verification query at the bottom of the migration file (expect north 37, south 36, non_classified 200)
+**Verified?** Yes — 2026-10-24: north 37 (2 with ties), south 36 (2 with ties), non_classified 200 (4 with ties)
 
 ---
 

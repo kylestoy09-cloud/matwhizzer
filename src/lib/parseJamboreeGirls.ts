@@ -22,6 +22,9 @@
 //   No
 //   No
 //   Same bout appears in multiple team-view sections → de-duplicated.
+//   Pool events label the weight with a pool letter ("114C"); the letter is
+//   dropped. Bracket rows carry a round prefix ("Champ. Round 2 - ") that is
+//   stripped before the names are read.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import type { ParsedMeetGirls, ParsedMatchGirls } from './parseDualMeetGirls'
@@ -48,6 +51,25 @@ function splitNameSchool(s: string): { name: string; school: string | null } {
   const openIdx = matchingOpenParen(s, lastClose)
   if (openIdx <= 0) return { name: s.trim(), school: null }
   return { name: s.slice(0, openIdx).trim(), school: s.slice(openIdx + 1, lastClose).trim() || null }
+}
+
+// Round / level labels Track puts in front of a bout ("Varsity - Round 1 - ",
+// "Champ. Round 2 - ", "1st Place Match - "). Only these known labels are
+// removed — a name can itself contain " - " ("Mariana CEPEDA - MOREL").
+const BOUT_PREFIX_RE = new RegExp(
+  '^(?:' + [
+    'varsity', 'jv', 'junior varsity',
+    '(?:champ\\.?|championship|cons\\.?|consolation)?\\s*round\\s+\\d+',
+    '(?:1st|2nd|3rd|5th|7th)\\s+place\\s+match',
+    '(?:quarter|semi)?-?finals?',
+  ].join('|') + ')\\s*-\\s*',
+  'i',
+)
+
+function stripBoutPrefix(body: string): string {
+  let prev: string
+  do { prev = body; body = body.replace(BOUT_PREFIX_RE, '') } while (body !== prev)
+  return body.trim()
 }
 
 // NFHS dual scoring: fall, forfeit, default (injury) and disqualification are all
@@ -87,6 +109,7 @@ type RawBout = {
   resultDetail:    string | null
   isDoubleForfeit: boolean
   isForfeitWin:    boolean
+  fromPool?:       boolean   // listed under a pool weight label ("114C")
 }
 
 // ── Cross-view de-duplication (Formats 1 and 3) ───────────────────────────────
@@ -110,6 +133,59 @@ function boutSignature(b: RawBout): string {
   return `${b.winnerName.toLowerCase()}|||${b.loserName.toLowerCase()}|||${b.resultType}|||${b.resultDetail ?? ''}`
 }
 
+// Track repeats a pool event in two views that do not always agree, so after
+// the exact-signature pass three more kinds of listing are folded together:
+//   - a 0:00 time ("Fall 0:00", "TF 16-0 0:00") where another view has the real
+//     time and the same result;
+//   - a name spelled differently in one view ("Eternitiey Brown Cooper" /
+//     "Eternity Brown-Cooper") with the same schools and identical result;
+//   - a bracket-style row ("Champ. Round 2 - A over B (Dec 3-0)") and a pool row
+//     ("114C  A over B (Fall 0:46)") with the same winner and loser. A round
+//     robin pool meets each pair once, so the pool row is kept.
+// A rematch the other way round (B over A) is never folded.
+function isPlaceholderTime(detail: string | null): boolean {
+  return /(?:^|\s)0:00$/.test(detail ?? '')
+}
+function detailWithoutTime(detail: string | null): string {
+  return (detail ?? '').replace(/(?:^|\s)\d{1,2}:\d{2}$/, '').trim()
+}
+
+function lettersOnly(s: string): string {
+  return s.toLowerCase().replace(/[^a-z]/g, '')
+}
+
+function editDistance(a: string, b: string): number {
+  const row = Array.from({ length: b.length + 1 }, (_, j) => j)
+  for (let i = 1; i <= a.length; i++) {
+    let diag = row[0]
+    row[0] = i
+    for (let j = 1; j <= b.length; j++) {
+      const up = row[j]
+      row[j] = Math.min(row[j] + 1, row[j - 1] + 1, diag + (a[i - 1] === b[j - 1] ? 0 : 1))
+      diag = up
+    }
+  }
+  return row[b.length]
+}
+
+function sameWrestler(n1: string, s1: string | null, n2: string, s2: string | null): 'exact' | 'variant' | null {
+  if (n1.toLowerCase() === n2.toLowerCase()) return 'exact'
+  if (s1 !== s2) return null
+  return editDistance(lettersOnly(n1), lettersOnly(n2)) <= 2 ? 'variant' : null
+}
+
+function sameBout(a: RawBout, b: RawBout): boolean {
+  if (!a.winnerName || !a.loserName || !b.winnerName || !b.loserName) return false
+  const w = sameWrestler(a.winnerName, a.winnerSchool, b.winnerName, b.winnerSchool)
+  const l = sameWrestler(a.loserName, a.loserSchool, b.loserName, b.loserSchool)
+  if (!w || !l) return false
+  const sameType = a.resultType === b.resultType
+  if (sameType && (a.resultDetail ?? '') === (b.resultDetail ?? '')) return true
+  if (sameType && (isPlaceholderTime(a.resultDetail) || isPlaceholderTime(b.resultDetail))
+      && detailWithoutTime(a.resultDetail) === detailWithoutTime(b.resultDetail)) return true
+  return w === 'exact' && l === 'exact' && !!a.fromPool !== !!b.fromPool
+}
+
 function collapseDuplicateBouts(bouts: RawBout[]): RawBout[] {
   const groups = new Map<string, RawBout[]>()
   const order: string[] = []
@@ -120,18 +196,31 @@ function collapseDuplicateBouts(bouts: RawBout[]): RawBout[] {
     groups.get(sig)!.push(b)
   }
 
+  for (let i = 0; i < order.length; i++) {
+    for (let j = order.length - 1; j > i; j--) {
+      const gi = groups.get(order[i])!, gj = groups.get(order[j])!
+      if (!gi.some(a => gj.some(b => sameBout(a, b)))) continue
+      gi.push(...gj)
+      groups.delete(order[j])
+      order.splice(j, 1)
+    }
+  }
+
   return order.map(sig => {
     const group = groups.get(sig)!
     if (group.length === 1) return group[0]
 
+    // weight: the one reported by the most listings (first listing breaks a tie)
     const counts = new Map<number, number>()
     for (const b of group) counts.set(b.weight, (counts.get(b.weight) ?? 0) + 1)
+    let weight = group[0].weight
+    for (const b of group) if ((counts.get(b.weight) ?? 0) > (counts.get(weight) ?? 0)) weight = b.weight
 
-    let best = group[0]
-    for (const b of group) {
-      if ((counts.get(b.weight) ?? 0) > (counts.get(best.weight) ?? 0)) best = b
-    }
-    return best
+    // result: a pool listing over a bracket-style one, a real time over 0:00
+    const pool = group.filter(b => b.fromPool)
+    const pick = (pool.length ? pool : group)
+    const best = pick.find(b => !isPlaceholderTime(b.resultDetail)) ?? pick[0]
+    return { ...best, weight }
   })
 }
 
@@ -256,7 +345,7 @@ function parseBoutLineF1(line: string): RawBout | null {
   const weight = parseInt(wm[1])
   if (!WEIGHT_SET.has(weight)) return null
 
-  let body = t.slice(wm[0].length).replace(/^(?:varsity|jv|junior varsity)\s*-\s*/i, '').trim()
+  let body = stripBoutPrefix(t.slice(wm[0].length))
 
   if (/^double\s*forfeit/i.test(body)) {
     return { weight, winnerName: null, winnerSchool: null, loserName: null, loserSchool: null,
@@ -482,8 +571,9 @@ function parseFormatTwo(rawText: string, date: string): ParsedMeetGirls[] {
 // Weight is on its own line; bout on the next non-noise line.
 // ─────────────────────────────────────────────────────────────────────────────
 
-const WEIGHT_STANDALONE_RE   = new RegExp(`^(${WEIGHT_ALT})$`)   // used against individual lines (no m flag needed)
-const WEIGHT_STANDALONE_RE_M = new RegExp(`^(${WEIGHT_ALT})$`, 'm') // used against full text
+// Optional pool letter: "114C" is pool C at 114.
+const WEIGHT_STANDALONE_RE   = new RegExp(`^(${WEIGHT_ALT})[A-Z]?$`)   // used against individual lines (no m flag needed)
+const WEIGHT_STANDALONE_RE_M = new RegExp(`^(${WEIGHT_ALT})[A-Z]?$`, 'm') // used against full text
 
 // Lines that are pure noise from TW table copy-paste. The wildcard alternatives
 // ("…high school…", "…jamboree…") match anywhere in the line, so this is only
@@ -498,8 +588,8 @@ function looksLikeBoutLine(line: string): boolean {
 }
 
 function parseBoutBodyF3(line: string, weight: number): RawBout | null {
-  // Strip "Varsity - " / "JV - " prefix
-  const body = line.replace(/^(?:varsity|jv|junior varsity)\s*-\s*/i, '').trim()
+  // Strip "Varsity - " / "Champ. Round 2 - " prefixes
+  const body = stripBoutPrefix(line)
   if (!body.includes(' over ')) return null
 
   const overIdx = body.indexOf(' over ')
@@ -534,6 +624,7 @@ function parseFormatThree(rawText: string, date: string): ParsedMeetGirls[] {
   const lines = rawText.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n')
   const bouts: RawBout[] = []
   let currentWeight: number | null = null
+  let currentIsPool = false
 
   for (const rawLine of lines) {
     const line = rawLine.trim()
@@ -543,6 +634,7 @@ function parseFormatThree(rawText: string, date: string): ParsedMeetGirls[] {
     const wm = line.match(WEIGHT_STANDALONE_RE)
     if (wm) {
       currentWeight = parseInt(wm[1])
+      currentIsPool = line.length > wm[1].length
       continue
     }
 
@@ -568,7 +660,7 @@ function parseFormatThree(rawText: string, date: string): ParsedMeetGirls[] {
     if (currentWeight === null) continue
 
     const b = parseBoutBodyF3(line, currentWeight)
-    if (b) bouts.push(b)
+    if (b) bouts.push({ ...b, fromPool: currentIsPool })
     // don't reset currentWeight — same weight can have multiple bouts in the same section
   }
 
@@ -589,6 +681,9 @@ function isFormatThree(rawText: string): boolean {
 }
 
 export function parseJamboreeGirlsText(rawText: string, date: string): ParsedMeetGirls[] {
+  // Track copies carry non-breaking spaces (" over\u00A0Name\u00A0(School)"),
+  // which the literal " over " search misses.
+  rawText = rawText.replace(/[\u00A0\u2000-\u200A\u202F\u205F\u3000]/g, ' ').replace(/[\u200B\uFEFF]/g, '')
   if (isFormatTwo(rawText))   return parseFormatTwo(rawText, date)
   if (isFormatThree(rawText)) return parseFormatThree(rawText, date)
   return parseFormatOne(rawText, date)
