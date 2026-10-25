@@ -2,6 +2,26 @@
 
 ---
 
+## 2026-10-24 — Girls 2025-26 duplicate meets cleanup
+
+**Migration file:** `docs/migrations/20261024_girls_duplicate_meets_cleanup.sql`
+
+**Purpose:** Checking girls duals against the official standings turned up meets imported twice. Each copy carried its own bouts, so those matches were double-counted on wrestler profiles. Removed:
+- **Bloomfield Girls Tournament** (`a1120f19`, 345 bouts): a duplicate of the registry-linked **Bloomfield Holiday Girls Tournament** (`51c968e8`).
+- **2025 Lady Howdy Duncan Tournament** (`b8c7ac03`, 28 bouts): a partial re-import of **2025 Howdy Duncan Ladies Classic** (`3cb4ae0d`, 92 bouts). Registry link and venue moved to `3cb4ae0d`.
+- **9 duplicate duals** (75 bouts), each entered from both teams' sides. The copy with the most bouts was kept. Freehold Borough 36-12 Madison had 3 copies, and Madison's 2 copies left out Freehold's forfeit wins.
+
+Sterling/Collingswood (01-16 / 01-17) was left alone because its copies differ. Also set Elizabeth vs West Orange and North Brunswick vs Old Bridge to 33-33 ties: girls official records include ties, and both show as ties in the standings.
+
+**Tables affected:** `in_season_tournaments_girls` (2 deleted, 1 updated), `tournament_bouts_girls` (373 deleted via cascade), `tournament_registry` (1 relinked), `dual_meets_girls` (9 deleted, 2 updated), `dual_meet_matches_girls` (75 deleted via cascade), `microcheck_tasks` (1 deleted)
+
+**APPLIED** — 2026-10-24 via service-role script (`scripts/apply_girls_duplicate_cleanup.mts`). Full pre-delete rows are saved in `docs/migrations/backups/20261024_girls_duplicate_meets_cleanup.json`.
+
+**Reversible?** Yes — re-insert from the backup file (steps in the migration file)
+**Verified?** Yes — 2026-10-24: 1,156 girls duals, 0 same-day duplicate pairs; only Sterling/Collingswood remains as a near-date pair (intentional). Girls hammer recalculation still needs to be re-run.
+
+---
+
 ## 2026-10-24 — Girls 2025-26 official Power Points and standings
 
 **Migration file:** `docs/migrations/20261024_girls_power_points_2025_26.sql`
