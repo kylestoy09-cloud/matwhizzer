@@ -2,6 +2,21 @@
 
 ---
 
+## 2026-10-24 — Girls 2025-26 official Power Points and standings
+
+**Migration file:** `docs/migrations/20261024_girls_power_points_2025_26.sql`
+
+**Purpose:** Loads the official girls 2025-26 standings (`Whizzer Upload/2025-26 Girls Data/2026 final standings girls.rtf`). Girls PP come in three lists: North Jersey (37), South Jersey (36) and Non-classified (200 loaded): schools that don't compete for team titles, display-only with no playoffs. Adds `power_points.overall_ties` (girls official records include ties, e.g. Elizabeth 12-6-1) and `power_points.pp_group` (`north` / `south` / `non_classified`, NULL for boys). 273 girls rows inserted; all 73 North/South names matched exactly. 36 Non-classified rows skipped: 35 have no school record (34 are 0-0, plus Mary Help of Christians 1-0), and the rest are 0-0 duplicates of a matched school.
+
+**Tables affected:** `power_points` (2 columns, 1 check constraint, 273 rows)
+
+**PENDING** — run in Supabase SQL editor
+
+**Reversible?** Yes — rollback statements in the migration file
+**Verified?** Pending — run the verification query at the bottom of the migration file (expect north 37, south 36, non_classified 200)
+
+---
+
 ## 2026-10-24 — Girls 2025-26 ties resolved from Track tiebreaker criteria
 
 **Migration file:** `docs/migrations/20261024_resolve_girls_ties_from_track_criteria.sql`
