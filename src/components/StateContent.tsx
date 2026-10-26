@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { getStateTournamentId } from '@/lib/seasons-server'
-import { supabase } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase/public-cached'
 import { BracketBuster } from '@/components/BracketBuster'
 import { TeamScoreCard } from '@/components/TeamScoreCard'
 import { IndividualTeamPoints } from '@/components/IndividualTeamPoints'

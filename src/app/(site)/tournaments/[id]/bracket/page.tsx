@@ -1,5 +1,5 @@
 import { createSupabaseAdmin } from '@/lib/supabase/service'
-import { supabase } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase/public-cached'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { TournamentBracketClient } from './TournamentBracketClient'

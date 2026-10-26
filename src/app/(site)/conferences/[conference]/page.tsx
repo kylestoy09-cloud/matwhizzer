@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase/public-cached'
 import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'

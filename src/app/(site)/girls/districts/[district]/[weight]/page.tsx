@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase/public-cached'
 import { getSeasonIdsWithTournamentType } from '@/lib/seasons-server'
 import { getActiveSeason } from '@/lib/get-season'
 import { getSeasonLabel } from '@/lib/seasons-server'
