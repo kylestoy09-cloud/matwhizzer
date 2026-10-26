@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase/public-cached'
 import { getSeasons } from '@/lib/seasons-server'
 import Link from 'next/link'
 import { getActiveSeason } from '@/lib/get-season'

@@ -2,6 +2,21 @@
 
 ---
 
+## 2026-10-26 — Wrestler indexes on dual meet matches (Disk IO fix)
+
+**Migration file:** `docs/migrations/20261026_dual_meet_matches_wrestler_indexes.sql`
+
+**Purpose:** Supabase warned that the project was depleting its Disk IO budget. `pg_stat_user_tables` showed 109k full scans of `dual_meet_matches` reading ~6B rows. The cause was the wrestler profile query `wrestler_a_id = X OR wrestler_b_id = X`: neither column was indexed on `dual_meet_matches` or `dual_meet_matches_girls`, so each profile view scanned the whole table (~100k boys calls at ~140 ms, ~32k girls calls at ~99 ms). Added single-column indexes on both columns of both tables, and ran `ANALYZE` on `dual_meet_matches`, `dual_meet_matches_girls`, `tournament_entries` and `matches` (their stats showed 0 live rows).
+
+**Tables affected:** `dual_meet_matches` (2 indexes), `dual_meet_matches_girls` (2 indexes)
+
+**APPLIED** — 2026-10-26, Supabase SQL editor
+
+**Reversible?** Yes — DROP INDEX statements in the migration file
+**Verified?** Yes — 2026-10-26: EXPLAIN ANALYZE on a boys profile lookup uses BitmapOr over `idx_dmm_wrestler_a` / `idx_dmm_wrestler_b`, 22 rows in 2.6 ms (was ~140 ms seq scan)
+
+---
+
 ## 2026-10-24 — Girls 2025-26 team playoffs tagged; Hillsborough Holiday Brawl import reset
 
 **Migration file:** `docs/migrations/20261024_girls_playoffs_tag_and_brawl_reset.sql` (applied with `scripts/apply_girls_playoffs_tag_and_brawl_reset.mts`)

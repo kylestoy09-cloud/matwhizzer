@@ -1,7 +1,7 @@
 export const revalidate = 300
 
 import { redirect } from 'next/navigation'
-import { supabase } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase/public-cached'
 
 export default async function WrestlerRedirect({
   params,

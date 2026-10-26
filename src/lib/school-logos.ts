@@ -1,5 +1,5 @@
 import { cache } from 'react'
-import { supabase } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase/public-cached'
 
 type BadgeProps = { logoUrl: string | null; bgColor: string | null }
 const NULL_BADGE: BadgeProps = { logoUrl: null, bgColor: null }

@@ -1,6 +1,6 @@
 export const revalidate = 3600
 
-import { supabase } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase/public-cached'
 import Link from 'next/link'
 import Image from 'next/image'
 import { getActiveSeason } from '@/lib/get-season'
