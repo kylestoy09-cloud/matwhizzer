@@ -10,14 +10,17 @@
 // ─── Weight class ordering ────────────────────────────────────────────────────
 // Used to compute how far a wrestler is competing away from their main weight.
 
-export const WEIGHT_ORDER_BOYS = [106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285]
+export const WEIGHT_ORDER_BOYS  = [106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285]
+export const WEIGHT_ORDER_GIRLS = [100, 107, 114, 120, 126, 132, 138, 145, 152, 165, 185, 235]
 
 // Returns the hammer score adjustment when a wrestler competes away from their main weight.
-// Up by N classes: –8 per class. Down by N classes: +6 per class.
-export function getWeightAdjustment(mainWeight: string | null, matchWeight: string | null): number {
+// Up by N classes: –8 per class. Down by N classes: +6 per class. Classes are
+// counted on the wrestler's own gender's ladder.
+export function getWeightAdjustment(mainWeight: string | null, matchWeight: string | null, gender: 'M' | 'F'): number {
   if (!mainWeight || !matchWeight) return 0
-  const mainIdx = WEIGHT_ORDER_BOYS.indexOf(parseInt(mainWeight))
-  const matchIdx = WEIGHT_ORDER_BOYS.indexOf(parseInt(matchWeight))
+  const order = gender === 'F' ? WEIGHT_ORDER_GIRLS : WEIGHT_ORDER_BOYS
+  const mainIdx = order.indexOf(parseInt(mainWeight))
+  const matchIdx = order.indexOf(parseInt(matchWeight))
   if (mainIdx === -1 || matchIdx === -1 || mainIdx === matchIdx) return 0
   const classDiff = matchIdx - mainIdx
   return classDiff > 0 ? classDiff * -8 : classDiff * -6

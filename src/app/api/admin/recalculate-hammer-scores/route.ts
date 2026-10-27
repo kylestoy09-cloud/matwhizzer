@@ -29,6 +29,7 @@ import {
   postseasonScore,
   totalHammerScore,
   getWeightAdjustment,
+  WEIGHT_ORDER_GIRLS,
   type PostseasonFact,
 } from '@/lib/hammerScore'
 
@@ -55,10 +56,18 @@ async function authorize(req: NextRequest): Promise<boolean> {
 // ─── win_type normalizer ───────────────────────────────────────────────────────
 // matches.win_type uses all-caps; classifyOutcome expects mixed-case result_type.
 
-function normalizeWeight(raw: string | number | null | undefined): string | null {
+// Snap a raw weight to a class on the gender's ladder. Boys keep their original
+// cut-offs; girls snap to the nearest of the 12 girls classes (the boys ladder
+// turned every girls 100/107 into "106", 114 into "113", and so on).
+function normalizeWeight(raw: string | number | null | undefined, gender: 'M' | 'F'): string | null {
   if (raw == null) return null
   const n = Number(raw)
   if (isNaN(n) || n <= 0) return null
+  if (gender === 'F') {
+    let best = WEIGHT_ORDER_GIRLS[0]
+    for (const c of WEIGHT_ORDER_GIRLS) if (Math.abs(c - n) < Math.abs(best - n) || (Math.abs(c - n) === Math.abs(best - n) && c > best)) best = c
+    return String(best)
+  }
   if (n <= 109) return '106'
   if (n <= 116) return '113'
   if (n <= 123) return '120'
@@ -182,7 +191,7 @@ async function buildMainWeightMap(
       .in('dual_meet_id', meetIds.slice(i, i + 50))
       .eq('is_double_forfeit', false)
     for (const m of (data ?? [])) {
-      const nwc = normalizeWeight((m as any).weight_class)
+      const nwc = normalizeWeight((m as any).weight_class, gender as 'M' | 'F')
       if (!nwc) continue
       for (const wid of [m.wrestler_a_id, m.wrestler_b_id] as (string | null)[]) {
         if (!wid) continue
@@ -209,7 +218,7 @@ async function buildMainWeightMap(
       .select('wrestler1_id, wrestler2_id, weight_class')
       .eq('in_season_tournament_id', (t as any).id)
     for (const b of (bouts ?? [])) {
-      const nwc = normalizeWeight((b as any).weight_class)
+      const nwc = normalizeWeight((b as any).weight_class, gender as 'M' | 'F')
       if (!nwc) continue
       if ((b as any).wrestler1_id) mainWeight.set((b as any).wrestler1_id, nwc)
       if ((b as any).wrestler2_id) mainWeight.set((b as any).wrestler2_id, nwc)
@@ -231,7 +240,7 @@ async function buildMainWeightMap(
         .range(offset, offset + 999)
       if (!data?.length) break
       for (const e of (data as any[])) {
-        const nwc = normalizeWeight(e.weight_classes?.weight)
+        const nwc = normalizeWeight(e.weight_classes?.weight, gender as 'M' | 'F')
         if (nwc && e.wrestler_id) mainWeight.set(e.wrestler_id as string, nwc)
       }
       if (data.length < 1000) break
@@ -505,9 +514,9 @@ export async function POST(req: NextRequest) {
 
     // Apply weight-class adjustment: a wrestler competing away from their main weight
     // gets –8 per class up or +6 per class down applied to their effective hammer.
-    const matchWc = matchWeightClass ? normalizeWeight(matchWeightClass) : null
-    const adjA = stateA ? getWeightAdjustment(mainWeightByWrestler.get(wrestlerAId!) ?? null, matchWc) : 0
-    const adjB = stateB ? getWeightAdjustment(mainWeightByWrestler.get(wrestlerBId!) ?? null, matchWc) : 0
+    const matchWc = matchWeightClass ? normalizeWeight(matchWeightClass, gender as 'M' | 'F') : null
+    const adjA = stateA ? getWeightAdjustment(mainWeightByWrestler.get(wrestlerAId!) ?? null, matchWc, gender as 'M' | 'F') : 0
+    const adjB = stateB ? getWeightAdjustment(mainWeightByWrestler.get(wrestlerBId!) ?? null, matchWc, gender as 'M' | 'F') : 0
 
     const { scoreA, scoreB } = computeMatchScore(hammerA + adjA, hammerB + adjB, outcomeRankA)
     const isWinnerA = outcomeRankA <= 16
@@ -726,7 +735,7 @@ export async function POST(req: NextRequest) {
             }
           }
 
-          const nwc = normalizeWeight(b.weight_class as string | null)
+          const nwc = normalizeWeight(b.weight_class as string | null, gender as 'M' | 'F')
           if (nwc) {
             if (w1) weightByWrestler.set(w1, nwc)
             if (w2) weightByWrestler.set(w2, nwc)
@@ -754,7 +763,7 @@ export async function POST(req: NextRequest) {
           if (bId && m.school_b_id) schoolByWrestler.set(bId, m.school_b_id as number)
           if (m.is_double_forfeit || m.is_forfeit_win) continue
           const aIsWinner = m.winner_id === aId
-          const dnwc = normalizeWeight(m.weight_class as string | null)
+          const dnwc = normalizeWeight(m.weight_class as string | null, gender as 'M' | 'F')
           if (dnwc) {
             if (aId && !weightByWrestler.has(aId)) weightByWrestler.set(aId, dnwc)
             if (bId && !weightByWrestler.has(bId)) weightByWrestler.set(bId, dnwc)
@@ -834,7 +843,7 @@ export async function POST(req: NextRequest) {
         if (!data?.length) break
         for (const e of (data as any[])) {
           if (!e.wrestler_id) continue
-          const nwc = normalizeWeight((e.weight_classes as any)?.weight)
+          const nwc = normalizeWeight((e.weight_classes as any)?.weight, gender as 'M' | 'F')
           if (nwc) weightByWrestler.set(e.wrestler_id as string, nwc)
           // Supplement school if dual meets didn't cover this wrestler
           if (e.school_id && !schoolByWrestler.has(e.wrestler_id as string)) {
