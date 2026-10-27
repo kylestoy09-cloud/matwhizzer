@@ -257,7 +257,7 @@ export async function POST(req: NextRequest) {
   // else — an archived season's hammer scores and weights stay as they are.
   const logOnly = body?.logOnly === true
   if (logOnly && typeof body?.season !== 'string') {
-    return NextResponse.json({ error: 'logOnly requires season, e.g. "2025-26"' }, { status: 400 })
+    return NextResponse.json({ error: 'logOnly requires season (a seasons.year_label)' }, { status: 400 })
   }
   const season = logOnly
     ? (await getSeasons()).find(s => s.label === body.season)
