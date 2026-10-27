@@ -379,7 +379,11 @@ export async function POST(req: NextRequest) {
 
   const states = new Map<string, WrestlerState>()
 
-  // Fetch all NJ wrestler IDs (is_oos false or null)
+  // Fetch all NJ wrestler IDs (is_oos false or null) of this run's gender. A
+  // girl who wrestles a boys bout is not scored by the boys run (or vice versa):
+  // wrestler_hammer_scores holds one row per wrestler per season, so a
+  // wrong-gender row blocks that wrestler's own row (2,011 girls had boys rows
+  // and every girls insert batch failed, 2026-10-26).
   const njWrestlerIds = new Set<string>()
   {
     const PAGE = 1000
@@ -387,6 +391,7 @@ export async function POST(req: NextRequest) {
       const { data, error } = await db
         .from('wrestlers')
         .select('id')
+        .eq('gender', gender)
         .or('is_oos.is.null,is_oos.eq.false')
         .range(offset, offset + PAGE - 1)
       if (error) throw new Error('nj wrestlers: ' + error.message)
@@ -459,7 +464,7 @@ export async function POST(req: NextRequest) {
   }
 
   const logEntries: {
-    wrestler_id: string; season: string; match_date: string
+    wrestler_id: string; season: string; gender: string; match_date: string
     match_source: string; source_id: string
     opponent_wrestler_id: string | null
     pre_match_hammer: number; opponent_pre_match_hammer: number
@@ -499,7 +504,7 @@ export async function POST(req: NextRequest) {
     if (stateA) {
       addMatchScore(stateA, scoreA, date)
       logEntries.push({
-        wrestler_id: wrestlerAId!, season: CURRENT_SEASON_STR, match_date: date,
+        wrestler_id: wrestlerAId!, season: CURRENT_SEASON_STR, gender, match_date: date,
         match_source: source, source_id: sourceId,
         opponent_wrestler_id: wrestlerBId,
         pre_match_hammer: hammerA, opponent_pre_match_hammer: hammerB,
@@ -509,7 +514,7 @@ export async function POST(req: NextRequest) {
     if (stateB) {
       addMatchScore(stateB, scoreB, date)
       logEntries.push({
-        wrestler_id: wrestlerBId!, season: CURRENT_SEASON_STR, match_date: date,
+        wrestler_id: wrestlerBId!, season: CURRENT_SEASON_STR, gender, match_date: date,
         match_source: source, source_id: sourceId,
         opponent_wrestler_id: wrestlerAId,
         pre_match_hammer: hammerB, opponent_pre_match_hammer: hammerA,
@@ -851,17 +856,22 @@ export async function POST(req: NextRequest) {
   // Group by weight class so we do one UPDATE per weight (14 max) instead of per wrestler.
   const byWeight = new Map<string, string[]>()
   for (const [wid, wc] of mainWeightByWrestler) {
+    if (!njWrestlerIds.has(wid)) continue   // this run's gender only (a girl in a boys bout kept a boys weight)
     if (!byWeight.has(wc)) byWeight.set(wc, [])
     byWeight.get(wc)!.push(wid)
   }
   for (const [wc, ids] of byWeight) {
     for (let i = 0; i < ids.length; i += 500) {
-      await db.from('wrestlers').update({ main_weight: wc }).in('id', ids.slice(i, i + 500))
+      const { error } = await db.from('wrestlers').update({ main_weight: wc }).in('id', ids.slice(i, i + 500))
+      if (error) throw new Error(`UPDATE wrestlers.main_weight failed: ${error.message}`)
     }
   }
 
   // ── 7. Write results to DB ────────────────────────────────────────────────────
-  const { error: delLogErr } = await db.from('wrestler_match_score_log').delete().eq('season', CURRENT_SEASON_STR)
+  // Only this gender's log rows — a season-wide delete wiped the boys log on a
+  // girls run (2026-10-26).
+  const { error: delLogErr } = await db.from('wrestler_match_score_log').delete()
+    .eq('season', CURRENT_SEASON_STR).eq('gender', gender)
   if (delLogErr) throw new Error(`DELETE wrestler_match_score_log failed: ${delLogErr.message}`)
   const { error: delScoreErr } = await db.from('wrestler_hammer_scores').delete()
     .eq('season', CURRENT_SEASON_STR).eq('gender', gender)
@@ -869,7 +879,8 @@ export async function POST(req: NextRequest) {
 
   const BATCH = 500
   for (let i = 0; i < logEntries.length; i += BATCH) {
-    await db.from('wrestler_match_score_log').insert(logEntries.slice(i, i + BATCH))
+    const { error } = await db.from('wrestler_match_score_log').insert(logEntries.slice(i, i + BATCH))
+    if (error) throw new Error(`INSERT wrestler_match_score_log failed at row ${i}: ${error.message}`)
   }
 
   const scoreRows = [...states.values()]
@@ -902,7 +913,8 @@ export async function POST(req: NextRequest) {
     })
 
   for (let i = 0; i < scoreRows.length; i += BATCH) {
-    await db.from('wrestler_hammer_scores').insert(scoreRows.slice(i, i + BATCH))
+    const { error } = await db.from('wrestler_hammer_scores').insert(scoreRows.slice(i, i + BATCH))
+    if (error) throw new Error(`INSERT wrestler_hammer_scores failed at row ${i}: ${error.message}`)
   }
 
   const duration_ms = Date.now() - startedAt

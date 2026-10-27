@@ -2,6 +2,21 @@
 
 ---
 
+## 2026-10-26 — Hammer scores: gender on the match log; remove wrong-gender rows
+
+**Migration file:** `docs/migrations/20261026_hammer_log_gender.sql`
+
+**Purpose:** The girls hammer recalculation saved nothing, for two reasons. (1) 2,011 girls held gender 'M' rows in `wrestler_hammer_scores` from a boys run that scored every NJ wrestler in a boys bout regardless of gender. The table allows one row per wrestler per season, so every girls insert batch failed, and the route ignored the error. (2) The route deleted the whole season's `wrestler_match_score_log` before writing, so the girls run wiped the boys log (150,981 rows → 50,844). Adds `wrestler_match_score_log.gender` (filled from `wrestlers`) plus an index, and deletes the wrong-gender hammer rows (backup `docs/migrations/backups/20261026_hammer_wrong_gender_rows.json`). Route fixed the same day: each run scores and sets `main_weight` only for its own gender, deletes only its own log rows, and fails on any write error.
+
+**Tables affected:** `wrestler_match_score_log` (+1 column, +1 index), `wrestler_hammer_scores` (−2,011 rows)
+
+**PENDING** — run in Supabase SQL editor, then re-run the boys and girls hammer recalculations
+
+**Reversible?** Yes — rollback notes in the migration file
+**Verified?** Pending — verify query (expect 0 / 0)
+
+---
+
 ## 2026-10-26 — Guard deletes of postseason data and NJ school / program rows
 
 **Migration file:** `docs/migrations/20261026_guard_protected_deletes.sql`
