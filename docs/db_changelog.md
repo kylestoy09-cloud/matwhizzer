@@ -2,6 +2,29 @@
 
 ---
 
+## 2026-10-26 — Restore Mary Help of Christians Academy (381) and Kayla Coletta
+
+**Migration file:** `docs/migrations/20261026_restore_mary_help_kayla_coletta.sql` (most rows applied with `scripts/restore_mary_help_kayla_coletta.mts`)
+
+**Purpose:** Part B of `20260917_cliffside_ridgefield_s1_fix.sql` deleted school 381 as having no program, and deleted every row referencing it to clear the foreign keys. That erased Kayla Coletta (107) entirely:
+- 2025-26 postseason: District 2 runner-up, Region 1 semifinalist, state 8th place.
+- 2024-25: North Region 1.
+- In season: 17 tournament bouts.
+- Mary Help's 1-0 dual (Garfield, 01/15/2026).
+
+Recreates 381 with its girls rows only, at the same ID, with its existing logo. Restores her 4 entries and 13 matches with their original IDs from `source_of_truth_*.csv` (2026-03-21), her 2 placements, the 17 bouts with their original IDs (from the 2026-09-12 hammer log), the dual, the official standings row (non-classified 1-0, 23 PP) and 4 team-score cache rows. Also adds OOS school "William Penn Charter School". The 8 jamboree bouts held out of the Other-events import are now loaded (`docs/migrations/backups/20261026_girls_other_events_import_part2.json`). A check against the 2026-03-21 exports and the 2026-09-12 hammer log found no other data lost to that delete.
+
+**Tables affected:** `schools` (+2), `girls_schools`, `girls_school_profiles`, `girls_school_districts`, `girls_school_regions`, `school_names` (+1 each), `tournament_entries` (+4), `matches` (+13, SQL editor), `placements` (+2), `tournament_bouts_girls` (+17), `dual_meets_girls` (+1 / +8 jamboree), `dual_meet_matches_girls` (+1 / +8), `power_points` (+1), `precomputed_team_scores` (+4), `wrestler_name_aliases` (+2), `wrestlers` (+1 OOS)
+
+**PARTIAL:**
+- Applied 2026-10-26 via service role: everything except `matches`.
+- **PENDING:** the 13 `matches` rows (no service-role grant). Run the migration file in the Supabase SQL editor.
+
+**Reversible?** Yes — delete by the IDs in `docs/migrations/backups/20261026_restore_mary_help_kayla_coletta.json` (reverse order) and the 13 match IDs in the migration file
+**Verified?** Pending — run the verify query in the migration file (expect 13 matches). Girls hammer recalculation needed afterward.
+
+---
+
 ## 2026-10-26 — Girls 2025-26 "Other" events imported (jamborees, quads, tris)
 
 **Migration file:** `docs/migrations/20261026_girls_other_events_import.sql` (applied with `scripts/batch_import_girls_other_events.mts`)
@@ -620,6 +643,8 @@ Uploaded (2025-26 boys, SHA-256 verified against njsiaa.org originals):
 
 **Reversible?** Partially — can re-insert school_coops rows and reset is_nj; school 381 row data is gone
 **Verified?** No — pending
+
+**Correction (2026-10-26):** Item 4 above was wrong. School 381 was not "FK-clear" and had real data. Part B of this migration deleted every row referencing 381, including Kayla Coletta's 2025-26 district, region and state entries, matches and placements, her 2024-25 region entry, and her in-season bouts. The FK errors during the 9/17 run named those rows. Restored by `20261026_restore_mary_help_kayla_coletta.sql`.
 
 ---
 

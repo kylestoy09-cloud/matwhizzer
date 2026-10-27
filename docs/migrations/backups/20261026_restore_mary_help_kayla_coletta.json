@@ -1,0 +1,637 @@
+{
+ "steps": [
+  {
+   "table": "schools",
+   "rows": [
+    {
+     "id": 381
+    }
+   ]
+  },
+  {
+   "table": "schools",
+   "rows": [
+    {
+     "id": 1202
+    }
+   ]
+  },
+  {
+   "table": "girls_schools",
+   "rows": [
+    {
+     "school_id": 381,
+     "display_name": "Mary Help of Christians Academy",
+     "is_combined": false
+    }
+   ]
+  },
+  {
+   "table": "girls_school_profiles",
+   "rows": [
+    {
+     "school_id": 381,
+     "section": "Non-Public",
+     "classification": null,
+     "updated_at": "2026-10-27T01:14:52.142798+00:00"
+    }
+   ]
+  },
+  {
+   "table": "girls_school_districts",
+   "rows": [
+    {
+     "school_id": 381,
+     "season_id": 2026,
+     "district_id": 2
+    }
+   ]
+  },
+  {
+   "table": "girls_school_regions",
+   "rows": [
+    {
+     "school_id": 381,
+     "season_id": 2026,
+     "region_id": 10
+    }
+   ]
+  },
+  {
+   "table": "school_names",
+   "rows": [
+    {
+     "abbreviation": "MHCA",
+     "school_name": "Mary Help of Christians Academy",
+     "school_id": 381
+    }
+   ]
+  },
+  {
+   "table": "tournament_entries",
+   "rows": [
+    {
+     "id": "62f75caa-5359-45da-a4bc-71854229e6b5"
+    },
+    {
+     "id": "30d4df64-a15c-40ab-9907-6d465cf833df"
+    },
+    {
+     "id": "37e62b6c-5a6d-4cbd-b9f0-4206cfb125fa"
+    },
+    {
+     "id": "d4470f4a-0eab-4c3f-aa4c-4aac80bab9c5"
+    }
+   ]
+  },
+  {
+   "table": "placements",
+   "rows": [
+    {
+     "id": "0cb64242-7234-4d9e-a670-2597852c2ed9",
+     "tournament_id": 187,
+     "weight_class_id": 68,
+     "place": 2,
+     "entry_id": "30d4df64-a15c-40ab-9907-6d465cf833df",
+     "wrestler_name_raw": "Kayla Coletta"
+    },
+    {
+     "id": "9cd475d8-d42e-4873-ac71-17682560b34c",
+     "tournament_id": 185,
+     "weight_class_id": 68,
+     "place": 8,
+     "entry_id": "d4470f4a-0eab-4c3f-aa4c-4aac80bab9c5",
+     "wrestler_name_raw": "Kayla Coletta"
+    }
+   ]
+  },
+  {
+   "table": "tournament_bouts_girls",
+   "rows": [
+    {
+     "id": "2ad296a6-ea9b-4026-9e92-b17df3d4204e",
+     "in_season_tournament_id": "2233e693-c37e-4122-b3b0-6ee000b00144",
+     "weight_class": 114,
+     "round": "QF",
+     "wrestler1_id": "f2efe0e6-36cd-412b-b576-d1f50bae9992",
+     "wrestler1_name_raw": "Kayla Coletta",
+     "wrestler1_school_id": 381,
+     "wrestler1_school_raw": "Mary Help of Christians Academy",
+     "wrestler2_id": "9e7e6a69-2792-4645-93f7-3dc1a19f73c2",
+     "wrestler2_name_raw": "Salem Fuchs",
+     "wrestler2_school_id": 18,
+     "wrestler2_school_raw": "Ramsey/Northern Highlands",
+     "winner": 1,
+     "result_type": "Fall",
+     "result_detail": null,
+     "fall_time_seconds": 168,
+     "winner_score": null,
+     "loser_score": null,
+     "result_time_estimated": false,
+     "source_format": "rtf",
+     "created_at": "2026-10-27T01:15:07.838201+00:00"
+    },
+    {
+     "id": "ac3a71e9-fe06-44c6-ab9d-7b2caf2be92b",
+     "in_season_tournament_id": "2233e693-c37e-4122-b3b0-6ee000b00144",
+     "weight_class": 114,
+     "round": "SF",
+     "wrestler1_id": "f2efe0e6-36cd-412b-b576-d1f50bae9992",
+     "wrestler1_name_raw": "Kayla Coletta",
+     "wrestler1_school_id": 381,
+     "wrestler1_school_raw": "Mary Help of Christians Academy",
+     "wrestler2_id": "2056563b-4cfb-4b2b-a4f3-9e49b8922999",
+     "wrestler2_name_raw": "Ava Connolly",
+     "wrestler2_school_id": 38,
+     "wrestler2_school_raw": "Wayne Hills",
+     "winner": 1,
+     "result_type": "Dec",
+     "result_detail": "5-4",
+     "fall_time_seconds": null,
+     "winner_score": 5,
+     "loser_score": 4,
+     "result_time_estimated": false,
+     "source_format": "rtf",
+     "created_at": "2026-10-27T01:15:07.838201+00:00"
+    },
+    {
+     "id": "84f0e412-22ec-4ea5-9cb6-fca5b7686a95",
+     "in_season_tournament_id": "2233e693-c37e-4122-b3b0-6ee000b00144",
+     "weight_class": 114,
+     "round": "F",
+     "wrestler1_id": "f2efe0e6-36cd-412b-b576-d1f50bae9992",
+     "wrestler1_name_raw": "Kayla Coletta",
+     "wrestler1_school_id": 381,
+     "wrestler1_school_raw": "Mary Help of Christians Academy",
+     "wrestler2_id": "17de75a6-d32f-4b61-a611-1a33516b7fc8",
+     "wrestler2_name_raw": "Gabriella Jaquez",
+     "wrestler2_school_id": 5,
+     "wrestler2_school_raw": "Lakeland",
+     "winner": 1,
+     "result_type": "Fall",
+     "result_detail": null,
+     "fall_time_seconds": 143,
+     "winner_score": null,
+     "loser_score": null,
+     "result_time_estimated": false,
+     "source_format": "rtf",
+     "created_at": "2026-10-27T01:15:07.838201+00:00"
+    },
+    {
+     "id": "a1f0ad92-990f-4c08-aa84-98f423e9be54",
+     "in_season_tournament_id": "0997cea8-7358-4add-99f9-8f2d92cfb4dc",
+     "weight_class": 114,
+     "round": "R2",
+     "wrestler1_id": "f2efe0e6-36cd-412b-b576-d1f50bae9992",
+     "wrestler1_name_raw": "Kayla Coletta",
+     "wrestler1_school_id": 381,
+     "wrestler1_school_raw": "Mary Help of Christians Academy",
+     "wrestler2_id": "58eb3f4f-3fbf-4f39-b472-0cf3409b9b67",
+     "wrestler2_name_raw": "Jazlynn Lopez",
+     "wrestler2_school_id": 238,
+     "wrestler2_school_raw": "Collingswood",
+     "winner": 1,
+     "result_type": "Fall",
+     "result_detail": null,
+     "fall_time_seconds": 153,
+     "winner_score": null,
+     "loser_score": null,
+     "result_time_estimated": false,
+     "source_format": "rtf",
+     "created_at": "2026-10-27T01:15:07.838201+00:00"
+    },
+    {
+     "id": "5e0bbecf-46c2-49de-ac1f-a7c3ed182e20",
+     "in_season_tournament_id": "0997cea8-7358-4add-99f9-8f2d92cfb4dc",
+     "weight_class": 114,
+     "round": "QF",
+     "wrestler1_id": "300cab74-42c5-487d-b6b5-8d80ce8407a1",
+     "wrestler1_name_raw": "Maeve Perry",
+     "wrestler1_school_id": 135,
+     "wrestler1_school_raw": "North Hunterdon",
+     "wrestler2_id": "f2efe0e6-36cd-412b-b576-d1f50bae9992",
+     "wrestler2_name_raw": "Kayla Coletta",
+     "wrestler2_school_id": 381,
+     "wrestler2_school_raw": "Mary Help of Christians Academy",
+     "winner": 1,
+     "result_type": "Fall",
+     "result_detail": null,
+     "fall_time_seconds": 152,
+     "winner_score": null,
+     "loser_score": null,
+     "result_time_estimated": false,
+     "source_format": "rtf",
+     "created_at": "2026-10-27T01:15:07.838201+00:00"
+    },
+    {
+     "id": "debe8806-6675-4d18-84d8-d5b43bea50f5",
+     "in_season_tournament_id": "0997cea8-7358-4add-99f9-8f2d92cfb4dc",
+     "weight_class": 114,
+     "round": "C1",
+     "wrestler1_id": "f2efe0e6-36cd-412b-b576-d1f50bae9992",
+     "wrestler1_name_raw": "Kayla Coletta",
+     "wrestler1_school_id": 381,
+     "wrestler1_school_raw": "Mary Help of Christians Academy",
+     "wrestler2_id": "b76dabcc-13bd-41d7-b453-1134abd103ee",
+     "wrestler2_name_raw": "Blair Buzniak",
+     "wrestler2_school_id": 238,
+     "wrestler2_school_raw": "Collingswood",
+     "winner": 1,
+     "result_type": "Fall",
+     "result_detail": null,
+     "fall_time_seconds": 199,
+     "winner_score": null,
+     "loser_score": null,
+     "result_time_estimated": false,
+     "source_format": "rtf",
+     "created_at": "2026-10-27T01:15:07.838201+00:00"
+    },
+    {
+     "id": "ebff2bb1-f37a-4d33-84d8-eb1b188dbc5c",
+     "in_season_tournament_id": "0997cea8-7358-4add-99f9-8f2d92cfb4dc",
+     "weight_class": 114,
+     "round": "5th_Place",
+     "wrestler1_id": "f2efe0e6-36cd-412b-b576-d1f50bae9992",
+     "wrestler1_name_raw": "Kayla Coletta",
+     "wrestler1_school_id": 381,
+     "wrestler1_school_raw": "Mary Help of Christians Academy",
+     "wrestler2_id": "d1cf85f6-c9c4-4301-9595-51de32080a94",
+     "wrestler2_name_raw": "Francis Peraza",
+     "wrestler2_school_id": 162,
+     "wrestler2_school_raw": "North Brunswick",
+     "winner": 1,
+     "result_type": "Fall",
+     "result_detail": null,
+     "fall_time_seconds": 89,
+     "winner_score": null,
+     "loser_score": null,
+     "result_time_estimated": false,
+     "source_format": "rtf",
+     "created_at": "2026-10-27T01:15:07.838201+00:00"
+    },
+    {
+     "id": "a3dc3d7a-7e26-46e9-8888-4e3b97484b6c",
+     "in_season_tournament_id": "1f8c733e-fd85-42fb-a586-c468409536cc",
+     "weight_class": 114,
+     "round": "QF",
+     "wrestler1_id": "f2efe0e6-36cd-412b-b576-d1f50bae9992",
+     "wrestler1_name_raw": "Kayla Coletta",
+     "wrestler1_school_id": 381,
+     "wrestler1_school_raw": "Mary Help of Christians Academy",
+     "wrestler2_id": "33a264b5-d841-4bb3-b645-873d74ea69f9",
+     "wrestler2_name_raw": "Kashmera Williams",
+     "wrestler2_school_id": 116,
+     "wrestler2_school_raw": "North Star Academy",
+     "winner": 1,
+     "result_type": "Fall",
+     "result_detail": null,
+     "fall_time_seconds": 150,
+     "winner_score": null,
+     "loser_score": null,
+     "result_time_estimated": false,
+     "source_format": "rtf",
+     "created_at": "2026-10-27T01:15:07.838201+00:00"
+    },
+    {
+     "id": "3282dfac-8e7a-4402-a724-d769f1f8b39a",
+     "in_season_tournament_id": "1f8c733e-fd85-42fb-a586-c468409536cc",
+     "weight_class": 114,
+     "round": "SF",
+     "wrestler1_id": "f2efe0e6-36cd-412b-b576-d1f50bae9992",
+     "wrestler1_name_raw": "Kayla Coletta",
+     "wrestler1_school_id": 381,
+     "wrestler1_school_raw": "Mary Help of Christians Academy",
+     "wrestler2_id": "2c8c74ac-9833-4015-8485-07a7f8ca8ced",
+     "wrestler2_name_raw": "Stephanie Tepale",
+     "wrestler2_school_id": 391,
+     "wrestler2_school_raw": "Passaic Tech",
+     "winner": 1,
+     "result_type": "TF",
+     "result_detail": "15-0",
+     "fall_time_seconds": null,
+     "winner_score": 15,
+     "loser_score": 0,
+     "result_time_estimated": false,
+     "source_format": "rtf",
+     "created_at": "2026-10-27T01:15:07.838201+00:00"
+    },
+    {
+     "id": "8ce58857-9394-4148-af62-1b3e7815fced",
+     "in_season_tournament_id": "1f8c733e-fd85-42fb-a586-c468409536cc",
+     "weight_class": 114,
+     "round": "F",
+     "wrestler1_id": "f2efe0e6-36cd-412b-b576-d1f50bae9992",
+     "wrestler1_name_raw": "Kayla Coletta",
+     "wrestler1_school_id": 381,
+     "wrestler1_school_raw": "Mary Help of Christians Academy",
+     "wrestler2_id": "7dd281b3-fe9b-4606-afd5-ec21136fa826",
+     "wrestler2_name_raw": "Lexi Cammarata",
+     "wrestler2_school_id": 28,
+     "wrestler2_school_raw": "Wallkill Valley",
+     "winner": 1,
+     "result_type": "Dec",
+     "result_detail": "19-13",
+     "fall_time_seconds": null,
+     "winner_score": 19,
+     "loser_score": 13,
+     "result_time_estimated": false,
+     "source_format": "rtf",
+     "created_at": "2026-10-27T01:15:07.838201+00:00"
+    },
+    {
+     "id": "b030bfa3-ed8c-4d9e-ade5-7bc54e5e25c4",
+     "in_season_tournament_id": "4883670e-f8ee-4a71-9c00-bbf63bd48834",
+     "weight_class": 114,
+     "round": "R2",
+     "wrestler1_id": "f2efe0e6-36cd-412b-b576-d1f50bae9992",
+     "wrestler1_name_raw": "Kayla Coletta",
+     "wrestler1_school_id": 381,
+     "wrestler1_school_raw": "Mary Help of Christians Academy",
+     "wrestler2_id": "ca1b8411-5b67-4205-9257-ae59e65efd8f",
+     "wrestler2_name_raw": "Jamilah Cotea",
+     "wrestler2_school_id": 321,
+     "wrestler2_school_raw": "Becton/Wood-Ridge",
+     "winner": 1,
+     "result_type": "Fall",
+     "result_detail": null,
+     "fall_time_seconds": 56,
+     "winner_score": null,
+     "loser_score": null,
+     "result_time_estimated": false,
+     "source_format": "rtf",
+     "created_at": "2026-10-27T01:15:07.838201+00:00"
+    },
+    {
+     "id": "c4988fb2-bc5d-4248-bd1e-28de12506e54",
+     "in_season_tournament_id": "4883670e-f8ee-4a71-9c00-bbf63bd48834",
+     "weight_class": 114,
+     "round": "QF",
+     "wrestler1_id": "f2efe0e6-36cd-412b-b576-d1f50bae9992",
+     "wrestler1_name_raw": "Kayla Coletta",
+     "wrestler1_school_id": 381,
+     "wrestler1_school_raw": "Mary Help of Christians Academy",
+     "wrestler2_id": "c4e936ea-f648-4a37-bd2f-d26fc34fef08",
+     "wrestler2_name_raw": "Willa Walsh",
+     "wrestler2_school_id": 224,
+     "wrestler2_school_raw": "Point Pleasant Boro",
+     "winner": 1,
+     "result_type": "Fall",
+     "result_detail": null,
+     "fall_time_seconds": 208,
+     "winner_score": null,
+     "loser_score": null,
+     "result_time_estimated": false,
+     "source_format": "rtf",
+     "created_at": "2026-10-27T01:15:07.838201+00:00"
+    },
+    {
+     "id": "adbe075b-8b01-4d13-a1ac-0a0a35315fa8",
+     "in_season_tournament_id": "4883670e-f8ee-4a71-9c00-bbf63bd48834",
+     "weight_class": 114,
+     "round": "SF",
+     "wrestler1_id": "566301e0-61f2-4856-88c9-5f4629e12591",
+     "wrestler1_name_raw": "Annabelle Toye",
+     "wrestler1_school_id": 141,
+     "wrestler1_school_raw": "Delaware Valley",
+     "wrestler2_id": "f2efe0e6-36cd-412b-b576-d1f50bae9992",
+     "wrestler2_name_raw": "Kayla Coletta",
+     "wrestler2_school_id": 381,
+     "wrestler2_school_raw": "Mary Help of Christians Academy",
+     "winner": 1,
+     "result_type": "Dec",
+     "result_detail": "8-3",
+     "fall_time_seconds": null,
+     "winner_score": 8,
+     "loser_score": 3,
+     "result_time_estimated": false,
+     "source_format": "rtf",
+     "created_at": "2026-10-27T01:15:07.838201+00:00"
+    },
+    {
+     "id": "d744c2a7-2081-4330-a070-c5719cc8ffe8",
+     "in_season_tournament_id": "4883670e-f8ee-4a71-9c00-bbf63bd48834",
+     "weight_class": 114,
+     "round": "3rd_Place",
+     "wrestler1_id": "f2efe0e6-36cd-412b-b576-d1f50bae9992",
+     "wrestler1_name_raw": "Kayla Coletta",
+     "wrestler1_school_id": 381,
+     "wrestler1_school_raw": "Mary Help of Christians Academy",
+     "wrestler2_id": "d6bbcfec-d06b-41f6-a2b0-988bd404dbe6",
+     "wrestler2_name_raw": "Hannah Jang",
+     "wrestler2_school_id": 193,
+     "wrestler2_school_raw": "Marlboro",
+     "winner": 1,
+     "result_type": "Fall",
+     "result_detail": null,
+     "fall_time_seconds": 160,
+     "winner_score": null,
+     "loser_score": null,
+     "result_time_estimated": false,
+     "source_format": "rtf",
+     "created_at": "2026-10-27T01:15:07.838201+00:00"
+    },
+    {
+     "id": "bd5e74ac-99b4-4158-b1ea-dc7fe83c4d14",
+     "in_season_tournament_id": "af1d296e-964a-4b6b-8a0c-306eaf14956b",
+     "weight_class": 107,
+     "round": "QF",
+     "wrestler1_id": "f2efe0e6-36cd-412b-b576-d1f50bae9992",
+     "wrestler1_name_raw": "Kayla Coletta",
+     "wrestler1_school_id": 381,
+     "wrestler1_school_raw": "Mary Help of Christians Academy",
+     "wrestler2_id": "33172278-1948-4525-b3f0-fda9a91e9e6c",
+     "wrestler2_name_raw": "Madison Navarro",
+     "wrestler2_school_id": 50,
+     "wrestler2_school_raw": "Clifton",
+     "winner": 1,
+     "result_type": "Fall",
+     "result_detail": null,
+     "fall_time_seconds": 150,
+     "winner_score": null,
+     "loser_score": null,
+     "result_time_estimated": false,
+     "source_format": "rtf",
+     "created_at": "2026-10-27T01:15:07.838201+00:00"
+    },
+    {
+     "id": "693fbdff-6d07-4044-b95f-a83f1b50bb33",
+     "in_season_tournament_id": "af1d296e-964a-4b6b-8a0c-306eaf14956b",
+     "weight_class": 107,
+     "round": "SF",
+     "wrestler1_id": "f2efe0e6-36cd-412b-b576-d1f50bae9992",
+     "wrestler1_name_raw": "Kayla Coletta",
+     "wrestler1_school_id": 381,
+     "wrestler1_school_raw": "Mary Help of Christians Academy",
+     "wrestler2_id": "53494d41-c2e6-4581-a730-052a11a9427c",
+     "wrestler2_name_raw": "Evalina Guzikowski",
+     "wrestler2_school_id": 172,
+     "wrestler2_school_raw": "Monroe",
+     "winner": 1,
+     "result_type": "MD",
+     "result_detail": "9-1",
+     "fall_time_seconds": null,
+     "winner_score": 9,
+     "loser_score": 1,
+     "result_time_estimated": false,
+     "source_format": "rtf",
+     "created_at": "2026-10-27T01:15:07.838201+00:00"
+    },
+    {
+     "id": "c40e00ba-1c2d-4f44-965b-476953a38061",
+     "in_season_tournament_id": "af1d296e-964a-4b6b-8a0c-306eaf14956b",
+     "weight_class": 107,
+     "round": "F",
+     "wrestler1_id": "ba0620f9-d8a0-433f-9c42-a9227313272f",
+     "wrestler1_name_raw": "Adriana Yodice",
+     "wrestler1_school_id": 153,
+     "wrestler1_school_raw": "Paramus Catholic",
+     "wrestler2_id": "f2efe0e6-36cd-412b-b576-d1f50bae9992",
+     "wrestler2_name_raw": "Kayla Coletta",
+     "wrestler2_school_id": 381,
+     "wrestler2_school_raw": "Mary Help of Christians Academy",
+     "winner": 1,
+     "result_type": "TF",
+     "result_detail": "20-4",
+     "fall_time_seconds": null,
+     "winner_score": 20,
+     "loser_score": 4,
+     "result_time_estimated": false,
+     "source_format": "rtf",
+     "created_at": "2026-10-27T01:15:07.838201+00:00"
+    }
+   ]
+  },
+  {
+   "table": "dual_meets_girls",
+   "rows": [
+    {
+     "id": "7114d319-b376-45fa-bb96-7e6f9022c267",
+     "season_id": 2026,
+     "team1_school_id": 53,
+     "team2_school_id": 381,
+     "team1_school_name_raw": "Garfield",
+     "team2_school_name_raw": "Mary Help of Christians Academy",
+     "meet_date": "2026-01-15",
+     "team1_score": 0,
+     "team2_score": 6,
+     "status": "final",
+     "is_playoff": false,
+     "criteria_winner_school_id": null,
+     "confirmed_by_both_schools": false,
+     "schedule_source": null,
+     "meet_time": null,
+     "is_complete": false,
+     "created_at": "2026-10-27T01:15:07.996564+00:00",
+     "tiebreaker_pending": false,
+     "meet_kind": "partial",
+     "counts_toward_record": true
+    }
+   ]
+  },
+  {
+   "table": "dual_meet_matches_girls",
+   "rows": [
+    {
+     "id": "8becf515-e404-488d-8fa3-8f12d18ef154",
+     "dual_meet_id": "7114d319-b376-45fa-bb96-7e6f9022c267",
+     "weight_class": 114,
+     "order_index": 0,
+     "wrestler_a_id": "a58e8a7a-9f39-4dee-9d85-4dcc34e8ce12",
+     "wrestler_b_id": "f2efe0e6-36cd-412b-b576-d1f50bae9992",
+     "wrestler_a_name_raw": "Emilia Tylki",
+     "wrestler_b_name_raw": "Kayla Coletta",
+     "school_a_id": 53,
+     "school_b_id": 381,
+     "winner_id": "f2efe0e6-36cd-412b-b576-d1f50bae9992",
+     "result_type": "Fall",
+     "result_detail": null,
+     "fall_time_seconds": 147,
+     "result_time_estimated": false,
+     "winner_score": null,
+     "loser_score": null,
+     "team1_points": 0,
+     "team2_points": 6,
+     "is_double_forfeit": false,
+     "is_forfeit_win": false,
+     "validated": false,
+     "created_at": "2026-10-27T01:15:08.066536+00:00"
+    }
+   ]
+  },
+  {
+   "table": "power_points",
+   "rows": [
+    {
+     "id": 5589,
+     "school_id": 381,
+     "season_id": 2026,
+     "gender": "F",
+     "power_points": 23,
+     "overall_wins": 1,
+     "overall_losses": 0,
+     "meets_counted": 1,
+     "created_at": "2026-10-27T01:15:08.156077+00:00",
+     "frozen_power_points": null,
+     "overall_ties": 0,
+     "pp_group": "non_classified"
+    }
+   ]
+  },
+  {
+   "table": "precomputed_team_scores",
+   "rows": [
+    {
+     "id": 3658,
+     "tournament_id": 135,
+     "school_name": "Mary Help of Christians Academy",
+     "total_points": 20,
+     "season_id": 2025,
+     "tournament_type": "girls_regions",
+     "school_id": 381
+    },
+    {
+     "id": 3659,
+     "tournament_id": 187,
+     "school_name": "Mary Help of Christians Academy",
+     "total_points": 22,
+     "season_id": 2026,
+     "tournament_type": "girls_districts",
+     "school_id": 381
+    },
+    {
+     "id": 3660,
+     "tournament_id": 181,
+     "school_name": "Mary Help of Christians Academy",
+     "total_points": 15,
+     "season_id": 2026,
+     "tournament_type": "girls_regions",
+     "school_id": 381
+    },
+    {
+     "id": 3661,
+     "tournament_id": 185,
+     "school_name": "Mary Help of Christians Academy",
+     "total_points": 6.5,
+     "season_id": 2026,
+     "tournament_type": "girls_state",
+     "school_id": 381
+    }
+   ]
+  },
+  {
+   "table": "wrestler_name_aliases",
+   "rows": [
+    {
+     "id": 51723,
+     "raw_name": "Kayla Coletta",
+     "school_id": 381,
+     "wrestler_id": "f2efe0e6-36cd-412b-b576-d1f50bae9992",
+     "created_at": "2026-10-27T01:15:08.360644+00:00"
+    }
+   ]
+  }
+ ],
+ "sqlEditor": [
+  "matches"
+ ]
+}

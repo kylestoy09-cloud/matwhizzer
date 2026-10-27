@@ -49,10 +49,14 @@ const LOW_MATCH_DECISIONS: Record<string, boolean> = {
   'Janet Nieves':            false,
 }
 // Raw school names held out until a school record exists / is confirmed.
-const HOLD_SCHOOLS: Record<string, string> = {
-  'Mary Help of Christians Academy': 'no school record',
-  'William Penn Charter School':     'matcher picked William Penn H.S. (OOS) — not the same school',
-}
+// (Mary Help of Christians Academy and William Penn Charter School were held on
+// the first run and released after 20261026_restore_mary_help_kayla_coletta.)
+const HOLD_SCHOOLS: Record<string, string> = {}
+// One bout Track lists twice with different times, in two views of the same
+// event: keep the listing with this detail.
+const SAME_BOUT_KEEP: { winner: string; loser: string; date: string; keep: string }[] = [
+  { winner: 'Marianna Zegel', loser: 'Kayla Coletta', date: '2026-02-09', keep: '1:28' },   // Par Hills Mini Jam IV, 1:25 / 1:28
+]
 
 async function all(q: () => any) {
   let out: any[] = []
@@ -146,7 +150,7 @@ for (const ev of [...events.values()].sort((a, b) => a.iso.localeCompare(b.iso))
   const out: any = { name: ev.name, date: ev.iso, dateNote: ev.dateNote, files: ev.files, pairings: [] }
   for (const m of meets) {
     const s1 = await school(m.team1Name), s2 = await school(m.team2Name)
-    const ok = (s: any) => s.schoolId && (s.confidence === 'exact' || s.confidence === 'high')
+    const ok = (s: any) => s.schoolId && (s.confidence === 'exact' || s.confidence === 'high' || (s.confidence === 'oos' && s.displayName === s.rawName))
     const p: any = {
       team1: { raw: m.team1Name, id: s1.schoolId, name: s1.displayName, conf: s1.confidence },
       team2: { raw: m.team2Name, id: s2.schoolId, name: s2.displayName, conf: s2.confidence },
@@ -160,6 +164,11 @@ for (const ev of [...events.values()].sort((a, b) => a.iso.localeCompare(b.iso))
       if (ex) { p.status = 'exists'; p.existing = { id: ex.id, kind: ex.meet_kind, score: `${ex.team1_score}-${ex.team2_score}` } }
     }
     for (const b of m.matches) {
+      const dup = SAME_BOUT_KEEP.find(d => d.date === ev.iso && d.winner === b.winnerName && d.loser === b.loserName)
+      if (dup && b.resultDetail !== dup.keep) {
+        if (b.winnerSchoolRaw === m.team1Name) p.team1Score -= b.team1Points; else p.team2Score -= b.team2Points
+        continue
+      }
       const bout: any = { ...b }
       if (p.status !== 'review_school' && p.status !== 'held') {
         const ws = b.winnerSchoolRaw === m.team1Name ? s1.schoolId : s2.schoolId
@@ -225,7 +234,7 @@ report.summary = {
   wlCandidates: ps.filter((p: any) => p.wlCandidate).length,
   otherWinnerFlags: ps.filter((p: any) => p.officialSuggestsOtherWinner).length,
   wrestlers: ws.reduce((a: any, w: any) => (a[w.status] = (a[w.status] ?? 0) + 1, a), {}),
-  unmatchedSchools: [...schoolCache.values()].filter(s => !(s.schoolId && (s.confidence === 'exact' || s.confidence === 'high'))).map(s => ({ raw: s.rawName, conf: s.confidence, best: s.displayName })),
+  unmatchedSchools: [...schoolCache.values()].filter(s => !(s.schoolId && (s.confidence === 'exact' || s.confidence === 'high' || (s.confidence === 'oos' && s.displayName === s.rawName)))).map(s => ({ raw: s.rawName, conf: s.confidence, best: s.displayName })),
 }
 writeFileSync(reportPath, JSON.stringify(report, null, 1))
 console.log(JSON.stringify(report.summary, null, 1))
