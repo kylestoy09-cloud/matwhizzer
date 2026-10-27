@@ -10,10 +10,10 @@
 
 **Tables affected:** trigger + function on the 7 tables above
 
-**PENDING** — run in Supabase SQL editor
+**APPLIED** — 2026-10-26, Supabase SQL editor
 
 **Reversible?** Yes — rollback block in the migration file
-**Verified?** Pending — run the verify query (expect 7 triggers) and the commented test delete (expect "Delete from schools is blocked")
+**Verified?** Yes — 2026-10-26: `guard_protected_delete` present on all 7 tables (boys_schools, girls_schools, matches, placements, schools, tournament_entries, tournaments)
 
 ---
 
