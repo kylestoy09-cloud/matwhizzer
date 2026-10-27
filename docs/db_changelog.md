@@ -10,10 +10,10 @@
 
 **Tables affected:** `wrestler_match_score_log` (+1 column, +1 index), `wrestler_hammer_scores` (−2,011 rows)
 
-**PENDING** — run in Supabase SQL editor, then re-run the boys and girls hammer recalculations
+**APPLIED** — 2026-10-26, Supabase SQL editor. The first run failed on `text = gender_type`; it ran after the `::text` casts were added. Boys and girls hammer recalculations to follow.
 
 **Reversible?** Yes — rollback notes in the migration file
-**Verified?** Pending — verify query (expect 0 / 0)
+**Verified?** Yes — 2026-10-26: 0 log rows without gender, 0 wrong-gender hammer rows
 
 ---
 
