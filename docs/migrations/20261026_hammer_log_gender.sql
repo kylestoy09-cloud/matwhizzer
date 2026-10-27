@@ -13,13 +13,16 @@
 --    girls insert batch fail (silently). Deletes rows whose gender doesn't match
 --    the wrestler's. Backup: docs/migrations/backups/20261026_hammer_wrong_gender_rows.json
 --
+-- wrestlers.gender is the gender_type enum; the other two columns are text,
+-- hence the casts. Every statement is safe to re-run.
+--
 -- After running: re-run the boys AND girls hammer recalculations (the boys log
 -- has to be rebuilt).
 
 ALTER TABLE wrestler_match_score_log ADD COLUMN IF NOT EXISTS gender text;
 
 UPDATE wrestler_match_score_log l
-SET    gender = w.gender
+SET    gender = w.gender::text
 FROM   wrestlers w
 WHERE  w.id = l.wrestler_id AND l.gender IS NULL;
 
@@ -28,13 +31,13 @@ CREATE INDEX IF NOT EXISTS idx_wrestler_match_score_log_season_gender
 
 DELETE FROM wrestler_hammer_scores h
 USING  wrestlers w
-WHERE  w.id = h.wrestler_id AND h.gender IS DISTINCT FROM w.gender;
+WHERE  w.id = h.wrestler_id AND h.gender IS DISTINCT FROM w.gender::text;
 
 -- Verify: expect 0 rows with no gender, 0 wrong-gender hammer rows
 SELECT 'log rows without gender' AS what, COUNT(*) FROM wrestler_match_score_log WHERE gender IS NULL
 UNION ALL
 SELECT 'wrong-gender hammer rows', COUNT(*) FROM wrestler_hammer_scores h JOIN wrestlers w ON w.id = h.wrestler_id
-WHERE h.gender IS DISTINCT FROM w.gender;
+WHERE h.gender IS DISTINCT FROM w.gender::text;
 
 -- ROLLBACK: re-insert the backup rows; DROP INDEX idx_wrestler_match_score_log_season_gender;
 -- ALTER TABLE wrestler_match_score_log DROP COLUMN gender;
