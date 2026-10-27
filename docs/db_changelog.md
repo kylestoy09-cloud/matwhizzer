@@ -2,6 +2,21 @@
 
 ---
 
+## 2026-10-26 — Girls 2025-26 "Other" events imported (jamborees, quads, tris)
+
+**Migration file:** `docs/migrations/20261026_girls_other_events_import.sql` (applied with `scripts/batch_import_girls_other_events.mts`)
+
+**Purpose:** None of the girls "Other" events in the Track exports (Other Girls Matches, January Girls - Other 1-15, February Other) had been loaded, so about 2,000 individual bouts were missing from girls profiles and records. Imports 79 events as 971 jamboree pseudo-duals (`meet_kind='jamboree'`, `counts_toward_record=false`, so no team W-L change) with 2,022 bouts, using the fixed jamboree parser and the importer's school and wrestler matchers. 52 new wrestlers, 107 new name aliases (existing aliases untouched). Includes Hillsborough Holiday Brawl and Pt. Beach Round Robin. Skipped: Queen of the Mat (already a tournament), 7 pairings already loaded, 8 pairings with Mary Help of Christians Academy (school record deleted 2026-09-17) or William Penn Charter School (no school record). A first run stopped on a same-day duplicate pairing and was fully rolled back before the final run.
+
+**Tables affected:** `dual_meets_girls` (+971), `dual_meet_matches_girls` (+2,022), `wrestlers` (+52), `wrestler_name_aliases` (+107)
+
+**APPLIED** — 2026-10-26, service-role script
+
+**Reversible?** Yes — delete by the ids in `docs/migrations/backups/20261026_girls_other_events_import.json`
+**Verified?** Yes — 2026-10-26: 971 girls jamboree meets, 2,022 bouts, 0 bouts with an unlinked named wrestler. Girls hammer recalculation still needs to be re-run.
+
+---
+
 ## 2026-10-26 — Wrestler indexes on dual meet matches (Disk IO fix)
 
 **Migration file:** `docs/migrations/20261026_dual_meet_matches_wrestler_indexes.sql`
