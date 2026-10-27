@@ -10,6 +10,7 @@ type RunResult = {
   wrestlers_scored?: number
   bouts_processed?:  number
   duration_ms?:      number
+  season?:           string
   auto_published?:   number
   error?:            string
 }
@@ -91,7 +92,7 @@ export function RankingsClientGirls() {
 
       {status === 'done' && result && (
         <div className="px-5 py-4 bg-green-50 border-t border-green-100">
-          <p className="text-sm font-semibold text-green-800">Scoring complete</p>
+          <p className="text-sm font-semibold text-green-800">Scoring complete{result.season ? ` — ${result.season} season` : ''}</p>
           <p className="text-sm text-green-700 mt-1">
             {result.wrestlers_scored != null && `${result.wrestlers_scored.toLocaleString()} wrestlers scored`}
             {result.bouts_processed  != null && ` · ${result.bouts_processed.toLocaleString()} bouts processed`}

@@ -17,6 +17,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getWorkingSeason, getPreviousSeason, parseGender } from '@/lib/season-context'
+import { getSeasons } from '@/lib/seasons-server'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 import {
@@ -251,7 +252,17 @@ export async function POST(req: NextRequest) {
   const regionsType = gender === 'F' ? 'girls_regions' : 'regions'
   const psTypes    = ['districts', regionsType, stateType]
 
-  const season = await getWorkingSeason(parseGender(gender))
+  // Normally the gender's working season. `{ season: '2025-26', logOnly: true }`
+  // rebuilds one past season's match log for this gender and writes nothing
+  // else — an archived season's hammer scores and weights stay as they are.
+  const logOnly = body?.logOnly === true
+  if (logOnly && typeof body?.season !== 'string') {
+    return NextResponse.json({ error: 'logOnly requires season, e.g. "2025-26"' }, { status: 400 })
+  }
+  const season = logOnly
+    ? (await getSeasons()).find(s => s.label === body.season)
+    : await getWorkingSeason(parseGender(gender))
+  if (!season) return NextResponse.json({ error: `Unknown season ${body?.season}` }, { status: 400 })
   const CURRENT_SEASON_ID    = season.id
   const CURRENT_SEASON_STR   = season.label
   const POSTSEASON_SEASON_ID = (await getPreviousSeason(season)).id
@@ -860,7 +871,7 @@ export async function POST(req: NextRequest) {
     if (!byWeight.has(wc)) byWeight.set(wc, [])
     byWeight.get(wc)!.push(wid)
   }
-  for (const [wc, ids] of byWeight) {
+  for (const [wc, ids] of logOnly ? [] : byWeight) {
     for (let i = 0; i < ids.length; i += 500) {
       const { error } = await db.from('wrestlers').update({ main_weight: wc }).in('id', ids.slice(i, i + 500))
       if (error) throw new Error(`UPDATE wrestlers.main_weight failed: ${error.message}`)
@@ -873,9 +884,11 @@ export async function POST(req: NextRequest) {
   const { error: delLogErr } = await db.from('wrestler_match_score_log').delete()
     .eq('season', CURRENT_SEASON_STR).eq('gender', gender)
   if (delLogErr) throw new Error(`DELETE wrestler_match_score_log failed: ${delLogErr.message}`)
-  const { error: delScoreErr } = await db.from('wrestler_hammer_scores').delete()
-    .eq('season', CURRENT_SEASON_STR).eq('gender', gender)
-  if (delScoreErr) throw new Error(`DELETE wrestler_hammer_scores failed: ${delScoreErr.message}`)
+  if (!logOnly) {
+    const { error: delScoreErr } = await db.from('wrestler_hammer_scores').delete()
+      .eq('season', CURRENT_SEASON_STR).eq('gender', gender)
+    if (delScoreErr) throw new Error(`DELETE wrestler_hammer_scores failed: ${delScoreErr.message}`)
+  }
 
   const BATCH = 500
   for (let i = 0; i < logEntries.length; i += BATCH) {
@@ -912,13 +925,13 @@ export async function POST(req: NextRequest) {
       }
     })
 
-  for (let i = 0; i < scoreRows.length; i += BATCH) {
+  for (let i = 0; i < (logOnly ? 0 : scoreRows.length); i += BATCH) {
     const { error } = await db.from('wrestler_hammer_scores').insert(scoreRows.slice(i, i + BATCH))
     if (error) throw new Error(`INSERT wrestler_hammer_scores failed at row ${i}: ${error.message}`)
   }
 
   const duration_ms = Date.now() - startedAt
-  const wrestlers_scored = scoreRows.length
+  const wrestlers_scored = logOnly ? 0 : scoreRows.length
   const bouts_processed  = logEntries.length
 
   const sb   = await createSupabaseServer()
@@ -928,10 +941,10 @@ export async function POST(req: NextRequest) {
     p_action:      'scoring_run',
     p_entity_type: 'wrestler_hammer_scores',
     p_entity_id:   null,
-    p_details: { wrestlers_scored, bouts_processed, duration_ms, season: CURRENT_SEASON_STR },
+    p_details: { wrestlers_scored, bouts_processed, duration_ms, season: CURRENT_SEASON_STR, gender, log_only: logOnly },
   })
 
-  return NextResponse.json({ wrestlers_scored, bouts_processed, duration_ms })
+  return NextResponse.json({ wrestlers_scored, bouts_processed, duration_ms, season: CURRENT_SEASON_STR, gender, log_only: logOnly })
 }
 
 // GET handler for Vercel cron job (crons fire GET, not POST)
