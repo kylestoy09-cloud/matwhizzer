@@ -2,7 +2,8 @@ import { redirect } from 'next/navigation'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 import { fetchAllRows } from '@/lib/fetchAllRows'
-import { boysRosterGradeCounts } from '@/lib/rosterGrades'
+import { boysRosterGradeCounts, girlsRosterGradeCounts } from '@/lib/rosterGrades'
+import { boysProgramSchoolIds, girlsProgramSchoolIds } from '@/lib/genderPrograms'
 import { PreseasonDashboard } from './PreseasonDashboard'
 import type { GenderPreseasonStats } from './PreseasonHeader'
 
@@ -37,29 +38,20 @@ export default async function PreseasonPage() {
   const seasonLabelM = (seasonLabelRows ?? []).find(s => s.id === preSeasonIdM)?.year_label ?? '—'
   const seasonLabelF = (seasonLabelRows ?? []).find(s => s.id === preSeasonIdF)?.year_label ?? '—'
 
-  const { data: schools } = await db
-    .from('schools')
-    .select('id, town, address, website_url, twitter_handle, facebook_url, ad_name, ad_email')
-    .eq('is_nj', true)
+  // Each gender's list is that gender's NJ programs for its preseason season —
+  // never every NJ school (see src/lib/genderPrograms.ts).
+  const [boysIds, girlsIds] = await Promise.all([
+    boysProgramSchoolIds(db, preSeasonIdM),
+    girlsProgramSchoolIds(db, preSeasonIdF),
+  ])
+  const schoolIds = [...new Set([...boysIds, ...girlsIds])]
 
-  const schoolIds = (schools ?? []).map(s => s.id)
-  const total     = schoolIds.length
+  const { data: schools } = await fetchAllRows<{ id: number; town: string | null; address: string | null; website_url: string | null; twitter_handle: string | null; facebook_url: string | null; ad_name: string | null; ad_email: string | null }>(
+    (from, to) => db.from('schools')
+      .select('id, town, address, website_url, twitter_handle, facebook_url, ad_name, ad_email')
+      .in('id', schoolIds).order('id').range(from, to))
+  const schoolById = new Map((schools ?? []).map(s => [s.id, s]))
 
-  // Gender-independent stats (from schools table columns)
-  const withAddress   = (schools ?? []).filter(s => s.address).length
-  const withWebsite   = (schools ?? []).filter(s => s.website_url).length
-  const withTwitter   = (schools ?? []).filter(s => s.twitter_handle).length
-  const withFacebook  = (schools ?? []).filter(s => s.facebook_url).length
-  const withAdName    = (schools ?? []).filter(s => s.ad_name).length
-  const withAdEmail   = (schools ?? []).filter(s => s.ad_email).length
-  const pctAddress    = pct(withAddress,  total)
-  const pctWebsite    = pct(withWebsite,  total)
-  const pctTwitter    = pct(withTwitter,  total)
-  const pctFacebook   = pct(withFacebook, total)
-  const pctAdName     = pct(withAdName,   total)
-  const pctAdEmail    = pct(withAdEmail,  total)
-
-  // Fetch all gender-specific data in parallel
   const [
     { data: boysCoachRows },
     { data: girlsCoachRows },
@@ -70,73 +62,75 @@ export default async function PreseasonPage() {
     { data: girlsScheduleRows },
     { data: boysRosterRows },
     { data: girlsRosterRows },
-    { data: gradeReviewRows },
+    { data: boysGradeReviewRows },
+    { data: girlsGradeReviewRows },
+    boysGrades,
+    girlsGrades,
   ] = await Promise.all([
-    db.from('boys_coaches').select('school_id').in('school_id', schoolIds).not('name', 'is', null),
-    db.from('girls_coaches').select('school_id').in('school_id', schoolIds).not('name', 'is', null),
+    db.from('boys_coaches').select('school_id').in('school_id', boysIds).not('name', 'is', null),
+    db.from('girls_coaches').select('school_id').in('school_id', girlsIds).not('name', 'is', null),
     db.from('girls_coaches').select('school_id').in('school_id', schoolIds).eq('title', 'Athletic Director'),
-    db.from('boys_coaches').select('school_id').in('school_id', schoolIds).not('email', 'is', null),
-    db.from('girls_coaches').select('school_id').in('school_id', schoolIds).not('email', 'is', null),
+    db.from('boys_coaches').select('school_id').in('school_id', boysIds).not('email', 'is', null),
+    db.from('girls_coaches').select('school_id').in('school_id', girlsIds).not('email', 'is', null),
     preSeasonIdM
       ? fetchAllRows<{ team1_school_id: number; team2_school_id: number }>((from, to) =>
           db.from('dual_meets').select('team1_school_id,team2_school_id').eq('season_id', preSeasonIdM).eq('gender', 'M').order('id').range(from, to))
       : Promise.resolve({ data: [] }),
+    // girls duals live in their own table (dual_meets holds boys only)
     preSeasonIdF
       ? fetchAllRows<{ team1_school_id: number; team2_school_id: number }>((from, to) =>
-          db.from('dual_meets').select('team1_school_id,team2_school_id').eq('season_id', preSeasonIdF).eq('gender', 'F').order('id').range(from, to))
+          db.from('dual_meets_girls').select('team1_school_id,team2_school_id').eq('season_id', preSeasonIdF).order('id').range(from, to))
       : Promise.resolve({ data: [] }),
     // wrestlers has no school_id column — rosters come from wrestler_name_aliases (active wrestlers only)
     fetchAllRows<{ school_id: number }>((from, to) =>
       db.from('wrestler_name_aliases').select('school_id, wrestlers!inner(gender, is_active)')
-        .in('school_id', schoolIds).eq('wrestlers.gender', 'M').eq('wrestlers.is_active', true).order('id').range(from, to)),
+        .in('school_id', boysIds).eq('wrestlers.gender', 'M').eq('wrestlers.is_active', true).order('id').range(from, to)),
     fetchAllRows<{ school_id: number }>((from, to) =>
       db.from('wrestler_name_aliases').select('school_id, wrestlers!inner(gender, is_active)')
-        .in('school_id', schoolIds).eq('wrestlers.gender', 'F').eq('wrestlers.is_active', true).order('id').range(from, to)),
-    // Grade % = schools that have completed a roster_match micro check / total schools
+        .in('school_id', girlsIds).eq('wrestlers.gender', 'F').eq('wrestlers.is_active', true).order('id').range(from, to)),
+    // Grade Reviews = schools that have completed a roster_match micro check
     fetchAllRows<{ school_id: number }>((from, to) =>
-      db.from('microcheck_task_log').select('school_id').eq('gender', 'M').eq('field', 'roster_match').in('school_id', schoolIds).order('id').range(from, to)),
+      db.from('microcheck_task_log').select('school_id').eq('gender', 'M').eq('field', 'roster_match').in('school_id', boysIds).order('id').range(from, to)),
+    fetchAllRows<{ school_id: number }>((from, to) =>
+      db.from('microcheck_task_log').select('school_id').eq('gender', 'F').eq('field', 'roster_match').in('school_id', girlsIds).order('id').range(from, to)),
+    boysRosterGradeCounts(db, boysIds),
+    girlsRosterGradeCounts(db, girlsIds),
   ])
 
-  // Grades = % of boys roster wrestlers with a grade; Grade Reviews = % of schools
-  // whose roster grade review (roster_match micro check) is done
-  const schoolsWithGradeReview = new Set((gradeReviewRows ?? []).map(r => r.school_id))
-  const pctGradeReviews        = pct(schoolsWithGradeReview.size, total)
-  const gradeCounts            = await boysRosterGradeCounts(db, schoolIds)
-  const pctGrades              = pct(gradeCounts.graded, gradeCounts.roster)
-
-  const schoolsWithBoysCoach    = new Set((boysCoachRows ?? []).map(r => r.school_id))
-  const schoolsWithGirlsCoach   = new Set((girlsCoachRows ?? []).map(r => r.school_id))
-  const schoolsWithAd           = new Set((adRows ?? []).map(r => r.school_id))
-  const schoolsWithBoysEmail    = new Set((boysEmailRows ?? []).map(r => r.school_id))
-  const schoolsWithGirlsEmail   = new Set((girlsEmailRows ?? []).map(r => r.school_id))
-  const schoolsWithBoysSchedule = new Set(
-    (boysScheduleRows ?? []).flatMap(r => [r.team1_school_id, r.team2_school_id]).filter(Boolean)
-  )
-  const schoolsWithGirlsSchedule = new Set(
-    (girlsScheduleRows ?? []).flatMap(r => [r.team1_school_id, r.team2_school_id]).filter(Boolean)
-  )
-  const schoolsWithBoysRoster   = new Set((boysRosterRows ?? []).map(r => r.school_id))
-  const schoolsWithGirlsRoster  = new Set((girlsRosterRows ?? []).map(r => r.school_id))
+  const ids = (rows: { school_id: number }[] | null) => new Set((rows ?? []).map(r => r.school_id))
+  const scheduleIds = (rows: { team1_school_id: number; team2_school_id: number }[] | null) =>
+    new Set((rows ?? []).flatMap(r => [r.team1_school_id, r.team2_school_id]).filter(Boolean))
+  const schoolsWithAd = ids(adRows)
 
   function buildStats(
+    programIds: number[],
     coachSet: Set<number>,
     coachEmailSet: Set<number>,
     scheduleSet: Set<number>,
-    rosterSet: Set<number>
+    rosterSet: Set<number>,
+    gradeReviewSet: Set<number>,
+    grades: { roster: number; graded: number },
   ): GenderPreseasonStats {
-    const completedCount = schoolIds.filter(id =>
-      coachSet.has(id) &&
-      (schools ?? []).find(s => s.id === id)?.town &&
-      scheduleSet.has(id) &&
-      rosterSet.has(id)
-    ).length
+    const total = programIds.length
+    const count = (f: (id: number) => unknown) => programIds.filter(id => f(id)).length
+    const field = (k: 'address' | 'website_url' | 'twitter_handle' | 'facebook_url' | 'ad_name' | 'ad_email') =>
+      pct(count(id => schoolById.get(id)?.[k]), total)
     return {
-      pctCoaches:      pct(coachSet.size,      total),
-      pctAds:          pct(schoolsWithAd.size, total),
-      pctCoachEmail:   pct(coachEmailSet.size, total),
-      pctSchedules:    pct(scheduleSet.size,   total),
-      pctRosters:      pct(rosterSet.size,     total),
-      pctCompleted:    pct(completedCount,      total),
+      total,
+      pctGrades:       pct(grades.graded, grades.roster),
+      pctGradeReviews: pct(count(id => gradeReviewSet.has(id)), total),
+      pctAddress:      field('address'),
+      pctWebsite:      field('website_url'),
+      pctTwitter:      field('twitter_handle'),
+      pctFacebook:     field('facebook_url'),
+      pctAdName:       field('ad_name'),
+      pctAdEmail:      field('ad_email'),
+      pctCoaches:      pct(count(id => coachSet.has(id)),      total),
+      pctAds:          pct(count(id => schoolsWithAd.has(id)), total),
+      pctCoachEmail:   pct(count(id => coachEmailSet.has(id)), total),
+      pctSchedules:    pct(count(id => scheduleSet.has(id)),   total),
+      pctRosters:      pct(count(id => rosterSet.has(id)),     total),
+      pctCompleted:    pct(count(id => coachSet.has(id) && schoolById.get(id)?.town && scheduleSet.has(id) && rosterSet.has(id)), total),
     }
   }
 
@@ -144,17 +138,8 @@ export default async function PreseasonPage() {
     <PreseasonDashboard
       seasonLabelM={seasonLabelM}
       seasonLabelF={seasonLabelF}
-      total={total}
-      pctGrades={pctGrades}
-      pctGradeReviews={pctGradeReviews}
-      pctAddress={pctAddress}
-      pctWebsite={pctWebsite}
-      pctTwitter={pctTwitter}
-      pctFacebook={pctFacebook}
-      pctAdName={pctAdName}
-      pctAdEmail={pctAdEmail}
-      statsM={buildStats(schoolsWithBoysCoach,  schoolsWithBoysEmail,  schoolsWithBoysSchedule,  schoolsWithBoysRoster)}
-      statsF={buildStats(schoolsWithGirlsCoach, schoolsWithGirlsEmail, schoolsWithGirlsSchedule, schoolsWithGirlsRoster)}
+      statsM={buildStats(boysIds,  ids(boysCoachRows),  ids(boysEmailRows),  scheduleIds(boysScheduleRows),  ids(boysRosterRows),  ids(boysGradeReviewRows),  boysGrades)}
+      statsF={buildStats(girlsIds, ids(girlsCoachRows), ids(girlsEmailRows), scheduleIds(girlsScheduleRows), ids(girlsRosterRows), ids(girlsGradeReviewRows), girlsGrades)}
       preSeasonIdM={preSeasonIdM ?? 3}
     />
   )

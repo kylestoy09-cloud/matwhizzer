@@ -5,6 +5,7 @@ import { useAdminGender } from '@/components/admin/AdminGenderContext'
 type ColItem = { label: string; done: number; total: number }
 
 export type GenderSeasonData = {
+  schoolCount: number     // this gender's NJ programs for the live season
   wrestlerCount: number
   completed: ColItem[]
   today: ColItem[]
@@ -40,12 +41,11 @@ function StatusCol({ title, items, accent }: { title: string; items: ColItem[]; 
 
 type Props = {
   seasonLabel: string
-  schoolCount: number
   dataM: GenderSeasonData
   dataF: GenderSeasonData
 }
 
-export function SeasonHeader({ seasonLabel, schoolCount, dataM, dataF }: Props) {
+export function SeasonHeader({ seasonLabel, dataM, dataF }: Props) {
   const { gender } = useAdminGender()
   const data = gender === 'M' ? dataM : dataF
 
@@ -62,7 +62,7 @@ export function SeasonHeader({ seasonLabel, schoolCount, dataM, dataF }: Props) 
 
       {/* Row 2: school + wrestler counts */}
       <div className="flex border-b border-slate-100 overflow-x-auto">
-        <CountBlock label="Schools"   value={schoolCount} />
+        <CountBlock label="Schools"   value={data.schoolCount} />
         <CountBlock label="Wrestlers" value={data.wrestlerCount} />
       </div>
 

@@ -5,6 +5,7 @@ import { createSupabaseServer } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
 import { AdminBackButton } from '../AdminBackButton'
 import { PlayoffSeedsClient } from './PlayoffSeedsClient'
+import { boysProgramSchoolIds, girlsProgramSchoolIds } from '@/lib/genderPrograms'
 
 export const dynamic = 'force-dynamic'
 
@@ -44,6 +45,9 @@ export default async function PlayoffSeedsPage({
   type School = { id: number; display_name: string; logo_url: string | null; primary_color: string | null }
   type SeedEntry = { seed: number; school: School | null; wins: number; losses: number; pp: number }
 
+  // Non-Public pools: this gender's programs only (see src/lib/genderPrograms.ts)
+  const programIds = await (GENDER === 'F' ? girlsProgramSchoolIds : boysProgramSchoolIds)(db, SEASON_ID)
+
   const [{ data: ppRows }, { data: npaSchools }, { data: npbSchools }] = await Promise.all([
     db.from('power_points')
       .select('school_id, power_points, frozen_power_points, overall_wins, overall_losses, schools!inner(id, display_name, logo_url, primary_color, section, classification)')
@@ -52,11 +56,11 @@ export default async function PlayoffSeedsPage({
       .order('power_points', { ascending: false }),
     db.from('schools')
       .select('id, display_name, logo_url, primary_color')
-      .eq('section', 'Non-Public').eq('classification', 'A').eq('is_nj', true)
+      .eq('section', 'Non-Public').eq('classification', 'A').in('id', programIds)
       .order('display_name'),
     db.from('schools')
       .select('id, display_name, logo_url, primary_color')
-      .eq('section', 'Non-Public').eq('classification', 'B').eq('is_nj', true)
+      .eq('section', 'Non-Public').eq('classification', 'B').in('id', programIds)
       .order('display_name'),
   ])
 

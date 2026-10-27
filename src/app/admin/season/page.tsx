@@ -3,6 +3,7 @@ import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 import { SeasonDashboard } from './SeasonDashboard'
 import type { GenderSeasonData } from './SeasonHeader'
+import { boysProgramSchoolIds, girlsProgramSchoolIds } from '@/lib/genderPrograms'
 
 export const dynamic = 'force-dynamic'
 
@@ -29,10 +30,15 @@ export default async function SeasonPage() {
   const seasonIdF = sgsRows?.find(r => r.gender === 'F')?.season_id ?? null
   const allSeasonIds = [...new Set([seasonIdM, seasonIdF].filter(Boolean))] as number[]
 
+  // Schools = each gender's NJ programs for its live season (src/lib/genderPrograms.ts)
+  const [boysIds, girlsIds] = await Promise.all([
+    boysProgramSchoolIds(db, seasonIdM),
+    girlsProgramSchoolIds(db, seasonIdF),
+  ])
+
   // ── Round 2: season labels + counts (all server-side, no row cap) ──────────
   const [
     { data: seasonRows },
-    { count: schoolCount },
     { count: wrestlerCountM },
     { count: wrestlerCountF },
     // Boys dual counts
@@ -47,7 +53,6 @@ export default async function SeasonPage() {
     { count: dualUpcomingF },
   ] = await Promise.all([
     db.from('seasons').select('id, year_label').in('id', allSeasonIds.length ? allSeasonIds : [0]),
-    db.from('schools').select('*', { count: 'exact', head: true }).eq('is_nj', true),
     db.from('wrestlers').select('*', { count: 'exact', head: true }).eq('gender', 'M').eq('is_oos', false),
     db.from('wrestlers').select('*', { count: 'exact', head: true }).eq('gender', 'F').eq('is_oos', false),
     // Boys duals
@@ -121,6 +126,7 @@ export default async function SeasonPage() {
   const tournUpcomingF = tournDatesF.filter(t => !completedSetF.has(t.id) && (t.start_date ?? '') > today).length
 
   const dataM: GenderSeasonData = {
+    schoolCount: boysIds.length,
     wrestlerCount: wrestlerCountM ?? 0,
     completed: [
       { label: 'Duals',       done: dualDoneM    ?? 0, total: dualTotalM    ?? 0 },
@@ -137,6 +143,7 @@ export default async function SeasonPage() {
   }
 
   const dataF: GenderSeasonData = {
+    schoolCount: girlsIds.length,
     wrestlerCount: wrestlerCountF ?? 0,
     completed: [
       { label: 'Duals',       done: dualDoneF    ?? 0, total: dualTotalF    ?? 0 },
@@ -155,7 +162,6 @@ export default async function SeasonPage() {
   return (
     <SeasonDashboard
       seasonLabel={seasonLabelM || seasonLabelF || 'Current Season'}
-      schoolCount={schoolCount ?? 0}
       dataM={dataM}
       dataF={dataF}
     />

@@ -2,6 +2,21 @@
 
 ---
 
+## 2026-10-26 — Guard deletes of postseason data and NJ school / program rows
+
+**Migration file:** `docs/migrations/20261026_guard_protected_deletes.sql`
+
+**Purpose:** Adds a `BEFORE DELETE` trigger, `guard_protected_delete`. It blocks deletes from `tournament_entries`, `matches`, `placements`, `tournaments`, `schools` (NJ schools only; OOS merges still work), `boys_schools` and `girls_schools`, unless the transaction sets `matwhizzer.allow_protected_delete = 'on'`. This stops the 9/17 pattern, where FK errors were cleared by deleting a girls-only school's postseason rows. Checked 2026-10-26 that no app route, RPC or trigger deletes these rows, so no tool is affected.
+
+**Tables affected:** trigger + function on the 7 tables above
+
+**PENDING** — run in Supabase SQL editor
+
+**Reversible?** Yes — rollback block in the migration file
+**Verified?** Pending — run the verify query (expect 7 triggers) and the commented test delete (expect "Delete from schools is blocked")
+
+---
+
 ## 2026-10-26 — Restore Mary Help of Christians Academy (381) and Kayla Coletta
 
 **Migration file:** `docs/migrations/20261026_restore_mary_help_kayla_coletta.sql` (most rows applied with `scripts/restore_mary_help_kayla_coletta.mts`)
@@ -16,12 +31,10 @@ Recreates 381 with its girls rows only, at the same ID, with its existing logo. 
 
 **Tables affected:** `schools` (+2), `girls_schools`, `girls_school_profiles`, `girls_school_districts`, `girls_school_regions`, `school_names` (+1 each), `tournament_entries` (+4), `matches` (+13, SQL editor), `placements` (+2), `tournament_bouts_girls` (+17), `dual_meets_girls` (+1 / +8 jamboree), `dual_meet_matches_girls` (+1 / +8), `power_points` (+1), `precomputed_team_scores` (+4), `wrestler_name_aliases` (+2), `wrestlers` (+1 OOS)
 
-**PARTIAL:**
-- Applied 2026-10-26 via service role: everything except `matches`.
-- **PENDING:** the 13 `matches` rows (no service-role grant). Run the migration file in the Supabase SQL editor.
+**APPLIED** — 2026-10-26: service-role rows by script; the 13 `matches` rows in the Supabase SQL editor (no service-role grant on `matches`)
 
 **Reversible?** Yes — delete by the IDs in `docs/migrations/backups/20261026_restore_mary_help_kayla_coletta.json` (reverse order) and the 13 match IDs in the migration file
-**Verified?** Pending — run the verify query in the migration file (expect 13 matches). Girls hammer recalculation needed afterward.
+**Verified?** Yes — 2026-10-26: verify query returned all 13 matches (7 W, 6 L) across 2024-25 North Region 1 and 2025-26 District 2 / Region 1 / States. Girls hammer recalculation needed afterward.
 
 ---
 

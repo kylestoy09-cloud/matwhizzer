@@ -1,6 +1,7 @@
-// Boys roster grade coverage per school. "Roster" matches the roster grade
-// import review: active, NJ (not OOS) boys wrestlers linked to the school through
-// wrestler_name_aliases (wrestlers has no school_id column).
+// Roster grade coverage per school, one function per gender. "Roster" matches
+// the roster grade import review: active, NJ (not OOS) wrestlers of that gender
+// linked to the school through wrestler_name_aliases (wrestlers has no
+// school_id column).
 
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { fetchAllRows } from '@/lib/fetchAllRows'
@@ -11,16 +12,33 @@ export type RosterGradeCounts = {
   graded:   number
 }
 
-export async function boysRosterGradeCounts(
+export function boysRosterGradeCounts(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   db: SupabaseClient<any, any, any>,
   schoolIds: number[],
+): Promise<RosterGradeCounts> {
+  return rosterGradeCounts(db, schoolIds, 'M')
+}
+
+export function girlsRosterGradeCounts(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  db: SupabaseClient<any, any, any>,
+  schoolIds: number[],
+): Promise<RosterGradeCounts> {
+  return rosterGradeCounts(db, schoolIds, 'F')
+}
+
+async function rosterGradeCounts(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  db: SupabaseClient<any, any, any>,
+  schoolIds: number[],
+  gender: 'M' | 'F',
 ): Promise<RosterGradeCounts> {
   const { data, error } = await fetchAllRows<{ school_id: number; wrestler_id: string; wrestlers: unknown }>(
     (from, to) => db.from('wrestler_name_aliases')
       .select('school_id, wrestler_id, wrestlers!inner(grade)')
       .in('school_id', schoolIds)
-      .eq('wrestlers.gender', 'M')
+      .eq('wrestlers.gender', gender)
       .eq('wrestlers.is_active', true)
       .eq('wrestlers.is_oos', false)
       .neq('wrestlers.first_name', 'Unknown')

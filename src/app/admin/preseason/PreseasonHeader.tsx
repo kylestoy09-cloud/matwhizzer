@@ -24,6 +24,15 @@ function Pill({ label, value, pct }: StatPill) {
 }
 
 export type GenderPreseasonStats = {
+  total: number          // this gender's NJ programs
+  pctGrades: number
+  pctGradeReviews: number
+  pctAddress: number
+  pctWebsite: number
+  pctTwitter: number
+  pctFacebook: number
+  pctAdName: number
+  pctAdEmail: number
   pctCoaches: number
   pctAds: number
   pctCoachEmail: number
@@ -35,20 +44,11 @@ export type GenderPreseasonStats = {
 type Props = {
   seasonLabelM: string
   seasonLabelF: string
-  total: number
-  pctGrades:   number
-  pctGradeReviews: number
-  pctAddress:  number
-  pctWebsite:  number
-  pctTwitter:  number
-  pctFacebook: number
-  pctAdName:   number
-  pctAdEmail:  number
   statsM: GenderPreseasonStats
   statsF: GenderPreseasonStats
 }
 
-export function PreseasonHeader({ seasonLabelM, seasonLabelF, total, pctGrades, pctGradeReviews, pctAddress, pctWebsite, pctTwitter, pctFacebook, pctAdName, pctAdEmail, statsM, statsF }: Props) {
+export function PreseasonHeader({ seasonLabelM, seasonLabelF, statsM, statsF }: Props) {
   const { gender } = useAdminGender()
   const stats = gender === 'M' ? statsM : statsF
   const seasonLabel = gender === 'M' ? seasonLabelM : seasonLabelF
@@ -60,17 +60,17 @@ export function PreseasonHeader({ seasonLabelM, seasonLabelF, total, pctGrades, 
         <p className="text-sm text-slate-500 font-medium">{seasonLabel}</p>
       </div>
       <div className="flex flex-wrap gap-2">
-        <Pill label="Schools"      value={total} />
-        <Pill label="Grades"       value={`${pctGrades}%`}             pct={pctGrades} />
-        <Pill label="Grade Reviews" value={`${pctGradeReviews}%`}      pct={pctGradeReviews} />
-        <Pill label="Addresses"    value={`${pctAddress}%`}            pct={pctAddress} />
-        <Pill label="Websites"     value={`${pctWebsite}%`}            pct={pctWebsite} />
-        <Pill label="Twitter"      value={`${pctTwitter}%`}            pct={pctTwitter} />
-        <Pill label="Facebook"     value={`${pctFacebook}%`}           pct={pctFacebook} />
+        <Pill label="Schools"      value={stats.total} />
+        <Pill label="Grades"       value={`${stats.pctGrades}%`}       pct={stats.pctGrades} />
+        <Pill label="Grade Reviews" value={`${stats.pctGradeReviews}%`} pct={stats.pctGradeReviews} />
+        <Pill label="Addresses"    value={`${stats.pctAddress}%`}      pct={stats.pctAddress} />
+        <Pill label="Websites"     value={`${stats.pctWebsite}%`}      pct={stats.pctWebsite} />
+        <Pill label="Twitter"      value={`${stats.pctTwitter}%`}      pct={stats.pctTwitter} />
+        <Pill label="Facebook"     value={`${stats.pctFacebook}%`}     pct={stats.pctFacebook} />
         <Pill label="Coaches"      value={`${stats.pctCoaches}%`}      pct={stats.pctCoaches} />
         <Pill label="Coach Email"  value={`${stats.pctCoachEmail}%`}   pct={stats.pctCoachEmail} />
-        <Pill label="AD Name"      value={`${pctAdName}%`}             pct={pctAdName} />
-        <Pill label="AD Email"     value={`${pctAdEmail}%`}            pct={pctAdEmail} />
+        <Pill label="AD Name"      value={`${stats.pctAdName}%`}       pct={stats.pctAdName} />
+        <Pill label="AD Email"     value={`${stats.pctAdEmail}%`}      pct={stats.pctAdEmail} />
         <Pill label="Schedules"    value={`${stats.pctSchedules}%`}    pct={stats.pctSchedules} />
         <Pill label="Rosters"      value={`${stats.pctRosters}%`}      pct={stats.pctRosters} />
         <Pill label="Completed"    value={`${stats.pctCompleted}%`}    pct={stats.pctCompleted} />

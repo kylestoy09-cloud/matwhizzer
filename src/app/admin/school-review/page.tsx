@@ -3,6 +3,7 @@ import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 import { SchoolReviewClient } from './SchoolReviewClient'
 import type { SchoolRow } from './SchoolReviewClient'
+import { boysProgramSchoolIds } from '@/lib/genderPrograms'
 
 export const dynamic = 'force-dynamic'
 
@@ -24,11 +25,12 @@ export default async function SchoolReviewPage() {
   const seasonId = sgsRow?.season_id ?? null
   const prevSeasonId = seasonId ? seasonId - 1 : null
 
-  // All NJ schools
+  // Every boys program, inactive ones included — this page manages inactive
+  // status. Not every NJ school: girls-only schools have no boys program.
   const { data: allSchools } = await db
     .from('schools')
     .select('id, display_name')
-    .eq('is_nj', true)
+    .in('id', await boysProgramSchoolIds(db))
     .order('display_name')
 
   const schoolIds = (allSchools ?? []).map(s => s.id)
