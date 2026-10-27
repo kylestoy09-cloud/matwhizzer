@@ -893,11 +893,6 @@ export async function POST(req: NextRequest) {
   const { error: delLogErr } = await db.from('wrestler_match_score_log').delete()
     .eq('season', CURRENT_SEASON_STR).eq('gender', gender)
   if (delLogErr) throw new Error(`DELETE wrestler_match_score_log failed: ${delLogErr.message}`)
-  if (!logOnly) {
-    const { error: delScoreErr } = await db.from('wrestler_hammer_scores').delete()
-      .eq('season', CURRENT_SEASON_STR).eq('gender', gender)
-    if (delScoreErr) throw new Error(`DELETE wrestler_hammer_scores failed: ${delScoreErr.message}`)
-  }
 
   const BATCH = 500
   for (let i = 0; i < logEntries.length; i += BATCH) {
@@ -934,9 +929,19 @@ export async function POST(req: NextRequest) {
       }
     })
 
+  // Upsert in place, then drop this gender's rows the run didn't write. The
+  // table is never empty or half-written, so the Hammer Scores page can be
+  // read mid-run (delete-then-insert showed partial, repeated rows).
+  const runStamp = new Date(startedAt).toISOString()
   for (let i = 0; i < (logOnly ? 0 : scoreRows.length); i += BATCH) {
-    const { error } = await db.from('wrestler_hammer_scores').insert(scoreRows.slice(i, i + BATCH))
-    if (error) throw new Error(`INSERT wrestler_hammer_scores failed at row ${i}: ${error.message}`)
+    const { error } = await db.from('wrestler_hammer_scores')
+      .upsert(scoreRows.slice(i, i + BATCH), { onConflict: 'wrestler_id,season' })
+    if (error) throw new Error(`UPSERT wrestler_hammer_scores failed at row ${i}: ${error.message}`)
+  }
+  if (!logOnly) {
+    const { error: staleErr } = await db.from('wrestler_hammer_scores').delete()
+      .eq('season', CURRENT_SEASON_STR).eq('gender', gender).lt('last_calculated_at', runStamp)
+    if (staleErr) throw new Error(`DELETE stale wrestler_hammer_scores failed: ${staleErr.message}`)
   }
 
   const duration_ms = Date.now() - startedAt

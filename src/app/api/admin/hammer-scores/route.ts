@@ -24,6 +24,7 @@ export async function GET(req: NextRequest) {
       .eq('season', season)
       .eq('gender', gender)
       .order('hammer_score', { ascending: false })
+      .order('wrestler_id')   // tie-breaker: hundreds share a score, and an unstable order repeats/skips rows across pages
       .range(offset, offset + PAGE - 1)
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
