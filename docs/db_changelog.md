@@ -13,7 +13,7 @@
 **APPLIED** — 2026-10-26, Supabase SQL editor
 
 **Reversible?** Yes — rollback block in the migration file
-**Verified?** Yes — 2026-10-26: `guard_protected_delete` present on all 7 tables (boys_schools, girls_schools, matches, placements, schools, tournament_entries, tournaments)
+**Verified?** Yes — 2026-10-26: `guard_protected_delete` present on all 7 tables (boys_schools, girls_schools, matches, placements, schools, tournament_entries, tournaments); test `DELETE FROM schools WHERE id = 381` rejected with "Delete from schools is blocked" (P0001), nothing deleted
 
 ---
 
