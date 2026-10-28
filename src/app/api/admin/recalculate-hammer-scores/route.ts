@@ -421,6 +421,23 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  // Every wrestler id that exists (both genders, OOS included). A few bouts and
+  // entries still point at deleted wrestlers (e.g. a deleted OOS roster, the
+  // removed "Forfeit" placeholders); the log's opponent FK rejects those ids, so
+  // the opponent is logged as unknown instead of failing the whole run.
+  const existingWrestlerIds = new Set<string>()
+  {
+    const PAGE = 1000
+    for (let offset = 0; ; offset += PAGE) {
+      const { data, error } = await db.from('wrestlers').select('id').order('id').range(offset, offset + PAGE - 1)
+      if (error) throw new Error('wrestler ids: ' + error.message)
+      if (!data?.length) break
+      for (const r of data) existingWrestlerIds.add(r.id as string)
+      if (data.length < PAGE) break
+    }
+  }
+  const knownOpponent = (id: string | null) => (id && existingWrestlerIds.has(id) ? id : null)
+
   function getState(wrestlerId: string): WrestlerState {
     if (!states.has(wrestlerId)) {
       const fact = psFactMap.get(wrestlerId)
@@ -526,7 +543,7 @@ export async function POST(req: NextRequest) {
       logEntries.push({
         wrestler_id: wrestlerAId!, season: CURRENT_SEASON_STR, gender, match_date: date,
         match_source: source, source_id: sourceId,
-        opponent_wrestler_id: wrestlerBId,
+        opponent_wrestler_id: knownOpponent(wrestlerBId),
         pre_match_hammer: hammerA, opponent_pre_match_hammer: hammerB,
         outcome_rank: outcomeRankA, is_winner: isWinnerA, score_earned: scoreA,
       })
@@ -536,7 +553,7 @@ export async function POST(req: NextRequest) {
       logEntries.push({
         wrestler_id: wrestlerBId!, season: CURRENT_SEASON_STR, gender, match_date: date,
         match_source: source, source_id: sourceId,
-        opponent_wrestler_id: wrestlerAId,
+        opponent_wrestler_id: knownOpponent(wrestlerAId),
         pre_match_hammer: hammerB, opponent_pre_match_hammer: hammerA,
         outcome_rank: 33 - outcomeRankA, is_winner: !isWinnerA, score_earned: scoreB,
       })
