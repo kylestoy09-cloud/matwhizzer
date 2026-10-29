@@ -2,6 +2,21 @@
 
 ---
 
+## 2026-10-28 — Fix delete guard on non-school tables
+
+**Migration file:** `docs/migrations/20261028_guard_protected_deletes_fix.sql`
+
+**Purpose:** `guard_protected_delete()` read `OLD.is_nj` on every protected table. PL/pgSQL does not short-circuit the `AND`, so deletes on `matches`, `tournament_entries` and the other non-school tables failed with `record "old" has no field "is_nj"`, even with the deliberate unlock set. Found when the District 15 placeholder removal was run; nothing was deleted. The function now checks the table first and reads `is_nj` via `to_jsonb`. The original test only covered `schools`.
+
+**Tables affected:** function `guard_protected_delete` (replaced)
+
+**PENDING** — run in Supabase SQL editor, then re-run `20261028_remove_d15_forfeit_placeholder.sql`
+
+**Reversible?** Yes — re-run the earlier function definition
+**Verified?** Pending — the two test deletes in the file must fail with "is blocked"
+
+---
+
 ## 2026-10-28 — Kushner Academy wrestlers re-linked (boys dual 2025-12-10)
 
 **Migration file:** `docs/migrations/20261028_kushner_wrestlers_relink.sql` (applied with `scripts/apply_kushner_wrestlers_relink.mts`)

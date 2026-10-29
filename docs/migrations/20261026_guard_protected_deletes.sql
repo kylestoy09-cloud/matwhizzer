@@ -21,6 +21,9 @@
 -- trigger does). Only manual SQL, scripts and the admin data browser do, and
 -- those are what this guard is for.
 --
+-- NOTE: the function below has a bug on non-school tables; superseded by
+-- 20261028_guard_protected_deletes_fix.sql.
+--
 -- To delete on purpose, after counting what references the rows, backing them
 -- up and getting approval (CLAUDE.md, "Deleting Data"), run in the SAME
 -- transaction / DO block:
