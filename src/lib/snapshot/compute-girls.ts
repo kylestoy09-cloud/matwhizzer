@@ -74,7 +74,7 @@ export async function computeSnapshotGirls(
   // ── Fetch dual meets (girls tables) ──────────────────────────────────────
 
   const meetsRes = await db.from('dual_meets_girls').select(`
-    id, meet_date, team1_score, team2_score,
+    id, meet_date, team1_score, team2_score, meet_kind,
     team1:schools!team1_school_id(id, display_name, section, locale_section),
     team2:schools!team2_school_id(id, display_name, section, locale_section)
   `).eq('meet_date', date).eq('season_id', seasonId)
@@ -82,6 +82,12 @@ export async function computeSnapshotGirls(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const meets: any[] = must(meetsRes, 'meets')
   const meetIds = meets.map(m => m.id as string)
+  // Team-level dual stats (scores, margins, fastest dual, team upsets, per-dual
+  // pins/techs) use real duals only. Jamboree pairings and 1-2 bout partials are
+  // stored as meets too, and a one-bout pairing would otherwise be "the fastest
+  // dual". Individual bout stats still use every meet's bouts.
+  const isTeamDual = (m: { meet_kind?: string | null }) => (m.meet_kind ?? 'dual') === 'dual'
+  const teamMeets = meets.filter(isTeamDual)
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let bouts: any[] = []
@@ -315,7 +321,7 @@ export async function computeSnapshotGirls(
 
   const perMeetStatsBySchool = new Map<number, SchoolStats[]>()
 
-  for (const m of meets) {
+  for (const m of teamMeets) {
     const mStats = new Map<number, SchoolStats>()
     const getMStats = (id: number, name: string): SchoolStats => {
       if (!mStats.has(id)) mStats.set(id, { school_id: id, school_name: name, pins: 0, pin_times: [], techs: 0, tech_times: [], bonus: 0, total_bouts: 0 })
@@ -490,7 +496,7 @@ export async function computeSnapshotGirls(
   }
 
   const teamUpsets: TeamUpsetRow[] = []
-  for (const m of meets) {
+  for (const m of teamMeets) {
     const s1 = m.team1_score ?? 0, s2 = m.team2_score ?? 0
     if (s1 === s2) continue
     const wSch = s1 > s2 ? m.team1 : m.team2, lSch = s1 > s2 ? m.team2 : m.team1
@@ -583,7 +589,8 @@ export async function computeSnapshotGirls(
       return rows.filter(r => !!bouts.find(bo => bo.winner_id === r.winner_id && bo.result_type === r.result_type && bo.weight_class === r.weight_class && secMeetIds.has(bo.dual_meet_id)))
     }
 
-    const { single, combined, margin } = teamScoreStats(secMeets)
+    const secTeamMeets = secMeets.filter(isTeamDual)
+    const { single, combined, margin } = teamScoreStats(secTeamMeets)
 
     return {
       streaks:  { pin: isState ? streaksData.pin : streaksData.pin.filter(r => secWrIds.has(r.wrestler_id)), tech: isState ? streaksData.tech : streaksData.tech.filter(r => secWrIds.has(r.wrestler_id)), bonus: isState ? streaksData.bonus : streaksData.bonus.filter(r => secWrIds.has(r.wrestler_id)), win: isState ? streaksData.win : streaksData.win.filter(r => secWrIds.has(r.wrestler_id)) },
@@ -593,7 +600,7 @@ export async function computeSnapshotGirls(
       top_upsets_by_gap:    filterRated(allUpsetsByGap).slice(0, 10),
       top25_teams:          getTop25Teams(scope),
       team_upsets:          isState ? teamUpsets : teamUpsets.filter(u => secSchIds.has(u.winner_school_id) || secSchIds.has(u.loser_school_id)),
-      final_bout_wins:      finalBoutWins(secMeets),
+      final_bout_wins:      finalBoutWins(secTeamMeets),
       fastest_pin:          fastestFromBouts(secBouts, PIN_TYPE),
       fastest_tech:         fastestFromBouts(secBouts, TECH_TYPE),
       team_pins:            buildStoppageRows(secSchIds, 'pins'),
@@ -605,7 +612,7 @@ export async function computeSnapshotGirls(
       largest_margin:       margin,
       first_career_wins:    isState ? firstWins : firstWins.filter(f => f.school_id != null && secSchIds.has(f.school_id!)),
       first_career_matches: isState ? firstMatches : firstMatches.filter(f => f.school_id != null && secSchIds.has(f.school_id!)),
-      fastest_duals:        dualMatTimes(secMeets),
+      fastest_duals:        dualMatTimes(secTeamMeets),
     }
   }
 
@@ -618,8 +625,8 @@ export async function computeSnapshotGirls(
   }
 
   const globalPins = fastestFromBouts(bouts, PIN_TYPE), globalTechs = fastestFromBouts(bouts, TECH_TYPE)
-  const { single: gSingle, combined: gCombined, margin: gMargin } = teamScoreStats(meets)
-  const gDuals = dualMatTimes(meets)
+  const { single: gSingle, combined: gCombined, margin: gMargin } = teamScoreStats(teamMeets)
+  const gDuals = dualMatTimes(teamMeets)
 
   maybeHigh('fastest_pin',         globalPins[0]?.fall_time_sec,  { wrestler: globalPins[0]?.wrestler_name,  school: globalPins[0]?.school_name })
   maybeHigh('fastest_tech',        globalTechs[0]?.fall_time_sec, { wrestler: globalTechs[0]?.wrestler_name, school: globalTechs[0]?.school_name })
