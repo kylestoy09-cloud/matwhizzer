@@ -42,6 +42,14 @@ async function inChunks(ids: string[], run: (chunk: string[]) => PromiseLike<{ d
 const BONUS_TYPES    = new Set(['Fall', 'TF', 'MD'])
 const PIN_TYPE       = 'Fall'
 const TECH_TYPE      = 'TF'
+// Speed records ignore times no real bout can have: the sources carry
+// placeholder times ("Fall 0:01"), and a tech fall takes far longer than a
+// second. A 1-second pin and tech had become 2025-26 season records.
+const MIN_PIN_SEC    = 5
+const MIN_TECH_SEC   = 30
+// "Fastest dual" compares duals with a near-full card of wrestled bouts; a dual
+// with no bouts stored (or mostly forfeits) totals ~0 mat time.
+const MIN_DUAL_CONTESTED = 10
 const FULL_BOUT_SEC  = 360   // 6:00 regulation
 const ALLOTTED_SEC   = 5040  // 14 × 6:00
 
@@ -421,7 +429,7 @@ export async function computeSnapshot(
   function fastestFromBouts(boutList: typeof bouts, rt: string): SpeedRecord[] {
     const records: SpeedRecord[] = []
     for (const b of boutList) {
-      if (b.result_type !== rt || !b.fall_time_seconds || b.fall_time_seconds <= 0) continue
+      if (b.result_type !== rt || !b.fall_time_seconds || b.fall_time_seconds < (rt === TECH_TYPE ? MIN_TECH_SEC : MIN_PIN_SEC)) continue
       const meet = meetMap.get(String(b.dual_meet_id))
       if (!meet) continue
       const isA = b.wrestler_a_id === b.winner_id
@@ -615,6 +623,7 @@ export async function computeSnapshot(
 
   function dualMatTimes(ml: typeof meets): DualMatTimeRow[] {
     return ml
+      .filter(m => (boutsByMeet.get(String(m.id)) ?? []).filter((b: any) => !b.is_double_forfeit && !b.is_forfeit_win).length >= MIN_DUAL_CONTESTED)
       .map(m => {
         const mb = boutsByMeet.get(String(m.id)) ?? []
         return { dual_meet_id: m.id, school1: m.team1?.display_name ?? '', school2: m.team2?.display_name ?? '', total_seconds: mb.reduce((s: number, b: any) => s + boutSeconds(b), 0), allotted_seconds: ALLOTTED_SEC, bout_count: mb.length, season_high: false }
