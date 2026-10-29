@@ -43,21 +43,21 @@ export function PowerPointTable({ standings, gender }: { standings: PPStandingsR
         <table className="w-full text-sm min-w-[500px]">
           <thead className="bg-slate-50 border-b border-slate-200">
             <tr>
-              <th className="text-center px-3 py-3 font-medium text-slate-500 w-12">#</th>
-              <th className="text-left px-4 py-3 font-medium text-slate-500">School</th>
-              <th className="text-right px-4 py-3 font-medium text-slate-500 w-20">W-L</th>
-              <th className="text-right px-4 py-3 font-medium text-slate-500 w-16">PCT</th>
-              <th className="text-right px-4 py-3 font-medium text-slate-500 w-24">Power Pts</th>
+              <th className="text-center px-3 py-1 font-medium text-slate-500 w-12">#</th>
+              <th className="text-left px-3 py-1 font-medium text-slate-500">School</th>
+              <th className="text-right px-3 py-1 font-medium text-slate-500 w-24">Record</th>
+              <th className="text-right px-3 py-1 font-medium text-slate-500 w-16">PCT</th>
+              <th className="text-right px-3 py-1 font-medium text-slate-500 w-24">Power Pts</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
             {standings.map(s => (
               <tr key={s.display_name} className="hover:bg-slate-50">
-                <td className="text-center px-3 py-3 text-slate-400 tabular-nums">{s.rank}</td>
-                <td className="px-4 py-3"><SchoolCell s={s} gender={gender} /></td>
-                <td className="text-right px-4 py-3 tabular-nums text-slate-700">{s.wins}-{s.losses}</td>
-                <td className="text-right px-4 py-3 tabular-nums text-slate-500">{(s.pct * 1000 | 0) / 1000 === 0 && s.wins === 0 ? '—' : s.pct.toFixed(3).replace(/^0/, '')}</td>
-                <td className="text-right px-4 py-3 tabular-nums font-semibold text-slate-900">{s.power_points.toFixed(2)}</td>
+                <td className="text-center px-3 py-1 text-slate-400 tabular-nums">{s.rank}</td>
+                <td className="px-3 py-1"><SchoolCell s={s} gender={gender} /></td>
+                <td className="text-right px-3 py-1 tabular-nums text-slate-700">{s.wins}-{s.losses}{s.ties ? `-${s.ties}` : ''}</td>
+                <td className="text-right px-3 py-1 tabular-nums text-slate-500">{s.wins + s.losses + s.ties === 0 ? '—' : s.pct.toFixed(3).replace(/^0/, '')}</td>
+                <td className="text-right px-3 py-1 tabular-nums font-semibold text-slate-900">{s.power_points.toFixed(2)}</td>
               </tr>
             ))}
           </tbody>
@@ -74,23 +74,23 @@ export function StandingsTable({ standings, gender }: { standings: PostseasonRow
         <table className="w-full text-sm min-w-[600px]">
           <thead className="bg-slate-50 border-b border-slate-200">
             <tr>
-              <th className="text-center px-3 py-3 font-medium text-slate-500 w-12">#</th>
-              <th className="text-left px-4 py-3 font-medium text-slate-500">School</th>
-              <th className="text-right px-4 py-3 font-medium text-slate-500 w-24">Districts</th>
-              <th className="text-right px-4 py-3 font-medium text-slate-500 w-24">Regions</th>
-              <th className="text-right px-4 py-3 font-medium text-slate-500 w-24">State</th>
-              <th className="text-right px-4 py-3 font-medium text-slate-500 w-24">Total</th>
+              <th className="text-center px-3 py-1 font-medium text-slate-500 w-12">#</th>
+              <th className="text-left px-3 py-1 font-medium text-slate-500">School</th>
+              <th className="text-right px-3 py-1 font-medium text-slate-500 w-24">Districts</th>
+              <th className="text-right px-3 py-1 font-medium text-slate-500 w-24">Regions</th>
+              <th className="text-right px-3 py-1 font-medium text-slate-500 w-24">State</th>
+              <th className="text-right px-3 py-1 font-medium text-slate-500 w-24">Total</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
             {standings.map((s, i) => (
               <tr key={s.display_name} className="hover:bg-slate-50">
-                <td className="text-center px-3 py-3 text-slate-400 tabular-nums">{i + 1}</td>
-                <td className="px-4 py-3"><SchoolCell s={s} gender={gender} /></td>
-                <td className="text-right px-4 py-3 tabular-nums text-slate-700">{s.district_points || '—'}</td>
-                <td className="text-right px-4 py-3 tabular-nums text-slate-700">{s.region_points || '—'}</td>
-                <td className="text-right px-4 py-3 tabular-nums text-slate-700">{s.state_points || '—'}</td>
-                <td className="text-right px-4 py-3 tabular-nums font-semibold text-slate-900">{s.total_points || '—'}</td>
+                <td className="text-center px-3 py-1 text-slate-400 tabular-nums">{i + 1}</td>
+                <td className="px-3 py-1"><SchoolCell s={s} gender={gender} /></td>
+                <td className="text-right px-3 py-1 tabular-nums text-slate-700">{s.district_points || '—'}</td>
+                <td className="text-right px-3 py-1 tabular-nums text-slate-700">{s.region_points || '—'}</td>
+                <td className="text-right px-3 py-1 tabular-nums text-slate-700">{s.state_points || '—'}</td>
+                <td className="text-right px-3 py-1 tabular-nums font-semibold text-slate-900">{s.total_points || '—'}</td>
               </tr>
             ))}
           </tbody>

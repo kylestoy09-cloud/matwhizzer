@@ -20,8 +20,15 @@ export type PPStandingsRow = SchoolRow & {
   rank: number
   wins: number
   losses: number
+  ties: number
   pct: number
   power_points: number
+}
+
+// Official records count a tie as half a win.
+function winPct(w: number, l: number, t: number): number {
+  const total = w + l + t
+  return total > 0 ? (w + t / 2) / total : 0
 }
 
 export async function buildPowerPointStandings(
@@ -37,17 +44,18 @@ export async function buildPowerPointStandings(
   const dbGender = gender === 'girls' ? 'F' : 'M'
   const { data } = await supabase
     .from('power_points')
-    .select('school_id, power_points, frozen_power_points, overall_wins, overall_losses')
+    .select('school_id, power_points, frozen_power_points, overall_wins, overall_losses, overall_ties')
     .in('school_id', schoolIds)
     .eq('season_id', season)
     .eq('gender', dbGender)
     .order('power_points', { ascending: false })
 
-  const ppMap = new Map<number, { wins: number; losses: number; pp: number }>()
+  const ppMap = new Map<number, { wins: number; losses: number; ties: number; pp: number }>()
   for (const r of data ?? []) {
     ppMap.set(r.school_id, {
       wins: r.overall_wins,
       losses: r.overall_losses,
+      ties: r.overall_ties ?? 0,
       pp: Number(r.frozen_power_points ?? r.power_points),
     })
   }
@@ -56,13 +64,13 @@ export async function buildPowerPointStandings(
     .filter(s => s.id != null && ppMap.has(s.id!))
     .map(s => {
       const entry = ppMap.get(s.id!)!
-      const total = entry.wins + entry.losses
       return {
         ...s,
         rank: 0,
         wins: entry.wins,
         losses: entry.losses,
-        pct: total > 0 ? entry.wins / total : 0,
+        ties: entry.ties,
+        pct: winPct(entry.wins, entry.losses, entry.ties),
         power_points: entry.pp,
       }
     })
@@ -70,6 +78,44 @@ export async function buildPowerPointStandings(
   rows.sort((a, b) => b.power_points - a.power_points)
   rows.forEach((r, i) => { r.rank = i + 1 })
   return rows
+}
+
+// Girls Power Points come in three official lists: North and South (schools
+// competing for team titles) and Non-classified (display only, no playoffs).
+// Records and points are the official released figures (power_points).
+export type GirlsPPGroups = { north: PPStandingsRow[]; south: PPStandingsRow[]; non_classified: PPStandingsRow[] }
+
+export async function buildGirlsPowerPointGroups(season: number): Promise<GirlsPPGroups> {
+  const { data } = await supabase
+    .from('power_points')
+    .select('school_id, power_points, frozen_power_points, overall_wins, overall_losses, overall_ties, pp_group, schools!inner(id, display_name, mascot, primary_color, logo_url, header_background)')
+    .eq('season_id', season)
+    .eq('gender', 'F')
+    .not('pp_group', 'is', null)
+    .order('power_points', { ascending: false })
+    .order('school_id')
+
+  const groups: GirlsPPGroups = { north: [], south: [], non_classified: [] }
+  for (const r of data ?? []) {
+    const s = r.schools as unknown as SchoolRow
+    const g = r.pp_group as keyof GirlsPPGroups
+    if (!groups[g]) continue
+    const ties = r.overall_ties ?? 0
+    groups[g].push({
+      ...s,
+      rank: 0,
+      wins: r.overall_wins,
+      losses: r.overall_losses,
+      ties,
+      pct: winPct(r.overall_wins, r.overall_losses, ties),
+      power_points: Number(r.frozen_power_points ?? r.power_points),
+    })
+  }
+  for (const rows of Object.values(groups)) {
+    rows.sort((a, b) => b.power_points - a.power_points)
+    rows.forEach((r, i) => { r.rank = i + 1 })
+  }
+  return groups
 }
 
 export async function buildStandings(

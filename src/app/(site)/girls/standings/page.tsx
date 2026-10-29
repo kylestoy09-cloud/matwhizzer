@@ -1,7 +1,7 @@
 export const revalidate = 300
 
-import { StandingsContent } from '@/app/(site)/standings/StandingsContent'
+import { GirlsStandingsContent } from '@/app/(site)/standings/GirlsStandingsContent'
 
 export default function GirlsStandingsPage() {
-  return <StandingsContent gender="girls" />
+  return <GirlsStandingsContent />
 }

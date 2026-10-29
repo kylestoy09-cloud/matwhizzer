@@ -278,7 +278,7 @@ export function SchoolTabs({
 
   // ── Stats board — dual meet team record + pts/dual + bonus stat state rankings
   type DualStats = {
-    teamWins: number; teamLosses: number; totalPts: number; meets: number
+    teamWins: number; teamLosses: number; teamTies: number; totalPts: number; meets: number
     ptsDualRank:   number | null
     pinsRank:      number | null
     techsRank:     number | null
@@ -334,7 +334,7 @@ export function SchoolTabs({
       type MeetRow = { team1_school_id: number; team2_school_id: number; team1_score: number | null; team2_score: number | null; counts_toward_record?: boolean }
       const base = { season_id: activeSeason, gender: genderCode }
 
-      const [schoolMeetsRes, allMeetsRes, bonusRes] = await Promise.all([
+      const [schoolMeetsRes, allMeetsRes, bonusRes, officialRes] = await Promise.all([
         // School-specific query — always complete regardless of season size
         (supabase as any)
           .from(dualTable)
@@ -354,11 +354,17 @@ export function SchoolTabs({
           p_gender:       genderCode,
           p_season_label: seasonLabelOf(activeSeason) ?? '',
         }),
+        // Official released record (Power Points) — shown instead of our computed
+        // W-L whenever it exists for this school / season / gender
+        supabase.from('power_points')
+          .select('overall_wins, overall_losses, overall_ties')
+          .eq('school_id', schoolIdNum).eq('season_id', activeSeason).eq('gender', genderCode)
+          .maybeSingle(),
       ])
       if (cancelled) return
 
       // W-L from school-specific rows (complete)
-      let teamWins = 0, teamLosses = 0
+      let teamWins = 0, teamLosses = 0, teamTies = 0
       for (const m of (schoolMeetsRes.data ?? []) as MeetRow[]) {
         const s1 = m.team1_score; const s2 = m.team2_score
         if (s1 === null || s2 === null || !countsForRecord(m)) continue
@@ -366,6 +372,11 @@ export function SchoolTabs({
         const theirs = m.team1_school_id === schoolIdNum ? s2 : s1
         if (mine > theirs) teamWins++
         else if (mine < theirs) teamLosses++
+        else teamTies++
+      }
+      const official = officialRes.data as { overall_wins: number; overall_losses: number; overall_ties: number | null } | null
+      if (official) {
+        teamWins = official.overall_wins; teamLosses = official.overall_losses; teamTies = official.overall_ties ?? 0
       }
 
       // Per-school pts/meets aggregation for ranking (uses all-schools rows)
@@ -387,7 +398,7 @@ export function SchoolTabs({
       const br = (bonusRes.data as { pins_rank: number | null; techs_rank: number | null; bonus_pct_rank: number | null }[] | null)?.[0] ?? null
 
       if (!cancelled) setDualStats({
-        teamWins, teamLosses,
+        teamWins, teamLosses, teamTies,
         totalPts: myAgg?.pts ?? 0,
         meets:    myAgg?.meets ?? 0,
         ptsDualRank,
@@ -723,7 +734,7 @@ export function SchoolTabs({
       <div className="grid grid-cols-4 sm:grid-cols-7 gap-px bg-slate-200 border border-slate-200 mb-4 overflow-hidden rounded-lg">
         <StatChip
           label="Record"
-          value={dualStats ? `${dualStats.teamWins}-${dualStats.teamLosses}` : null}
+          value={dualStats ? `${dualStats.teamWins}-${dualStats.teamLosses}${dualStats.teamTies ? `-${dualStats.teamTies}` : ''}` : null}
         />
         <StatChip
           label="Power Rankings"

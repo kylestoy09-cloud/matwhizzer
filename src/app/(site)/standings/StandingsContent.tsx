@@ -8,7 +8,7 @@ const SECTIONS = ['North I', 'North II', 'Central', 'South'] as const
 const PUBLIC_GROUPS = ['1', '2', '3', '4', '5'] as const
 const NP_GROUPS = ['A', 'B'] as const
 
-export async function StandingsContent({ gender }: { gender: 'boys' | 'girls' }) {
+export async function ConferenceGrid({ gender }: { gender: 'boys' | 'girls' }) {
   const { data: confRows } = await supabase.from('conferences').select('slug, logo_url')
   const logoMap = new Map<string, string>()
   for (const c of confRows ?? []) if (c.logo_url) logoMap.set(c.slug, c.logo_url)
@@ -18,6 +18,36 @@ export async function StandingsContent({ gender }: { gender: 'boys' | 'girls' })
     logoUrl: logoMap.get(c.slug) ?? null,
   }))
 
+  return (
+    <section>
+        <h2 className="text-2xl font-bold text-slate-900 mb-2">By Conference</h2>
+        <p className="text-sm text-slate-500 mb-6">NJ high school wrestling conferences</p>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          {conferences.map(c => (
+            <Link
+              key={c.slug}
+              href={`/conferences/${c.slug}?gender=${gender}`}
+              className="block bg-white border border-black rounded-lg hover:border-slate-400 transition-colors overflow-hidden"
+            >
+              {c.logoUrl ? (
+                <Image src={c.logoUrl} alt={c.name} width={1079} height={647} className="w-full h-auto" />
+              ) : (
+                <div
+                  className="w-full aspect-[1079/647] flex items-center justify-center font-bold text-4xl"
+                  style={{ backgroundColor: '#1a1a2e', color: '#FFD700' }}
+                >
+                  {c.name[0]}
+                </div>
+              )}
+            </Link>
+          ))}
+        </div>
+    </section>
+  )
+}
+
+export async function StandingsContent({ gender }: { gender: 'boys' | 'girls' }) {
   return (
     <div className="max-w-5xl mx-auto px-4 py-10 space-y-12">
 
@@ -71,32 +101,7 @@ export async function StandingsContent({ gender }: { gender: 'boys' | 'girls' })
         </div>
       </section>
 
-      {/* ── By Conference ─────────────────────────────────────────── */}
-      <section>
-        <h2 className="text-2xl font-bold text-slate-900 mb-2">By Conference</h2>
-        <p className="text-sm text-slate-500 mb-6">NJ high school wrestling conferences</p>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {conferences.map(c => (
-            <Link
-              key={c.slug}
-              href={`/conferences/${c.slug}?gender=${gender}`}
-              className="block bg-white border border-black rounded-lg hover:border-slate-400 transition-colors overflow-hidden"
-            >
-              {c.logoUrl ? (
-                <Image src={c.logoUrl} alt={c.name} width={1079} height={647} className="w-full h-auto" />
-              ) : (
-                <div
-                  className="w-full aspect-[1079/647] flex items-center justify-center font-bold text-4xl"
-                  style={{ backgroundColor: '#1a1a2e', color: '#FFD700' }}
-                >
-                  {c.name[0]}
-                </div>
-              )}
-            </Link>
-          ))}
-        </div>
-      </section>
+      <ConferenceGrid gender={gender} />
 
     </div>
   )
