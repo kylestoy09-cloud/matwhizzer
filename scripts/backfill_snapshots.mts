@@ -30,6 +30,20 @@ const T = {
 }
 const db = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
 const ok = <X,>(r: { data: X; error: any }) => { if (r.error) throw r.error; return r.data }
+// Network blips ("fetch failed") and statement timeouts are retried. Every write
+// here is an upsert or a delete, so repeating one is harmless.
+const TRANSIENT = /statement timeout|fetch failed|ECONNRESET|ETIMEDOUT|socket hang up|network/i
+async function retry<X>(fn: () => Promise<X>, what: string): Promise<X> {
+  for (let attempt = 1; ; attempt++) {
+    try { return await fn() }
+    catch (e: any) {
+      if (attempt >= 4 || !TRANSIENT.test(String(e?.message ?? e) + String(e?.cause ?? ''))) throw e
+      console.log(`  ${what}: ${String(e?.message ?? e).slice(0, 80)} — retrying (${attempt}/3)`)
+      await new Promise(r => setTimeout(r, 15000 * attempt))
+    }
+  }
+}
+const okR = <X,>(what: string, q: () => PromiseLike<{ data: X; error: any }>) => retry(async () => ok(await q()), what)
 async function all(q: () => any) { let out: any[] = []; for (let i = 0; ; i += 1000) { const { data, error } = await q().range(i, i + 999); if (error) throw error; out = out.concat(data); if (data.length < 1000) break } return out }
 
 // The compute modules import './types' without an extension (Next resolves it,
@@ -99,35 +113,26 @@ try {
     if (i < startAt) continue
     // Computing only reads, so a timed-out day can simply be computed again;
     // nothing for the day is saved until the compute succeeds.
-    let result: any
-    for (let attempt = 1; ; attempt++) {
-      try { result = await compute(date, season, seasonId, db); break }
-      catch (e: any) {
-        if (attempt >= 3 || !/statement timeout/.test(String(e?.message ?? e))) throw e
-        console.log(`  ${date}: timeout, retrying (${attempt}/2)`)
-        await new Promise(r => setTimeout(r, 15000 * attempt))
-      }
-    }
-    const { payload, seasonHighUpdates, updatedStreaks, todayTeamHighs } = result
-    ok(await db.from(T.reports).upsert({ report_date: date, season, payload, computed_at: new Date().toISOString() }, { onConflict: 'report_date' }))
+    const { payload, seasonHighUpdates, updatedStreaks, todayTeamHighs } = await retry(() => compute(date, season, seasonId, db), `${date} compute`)
+    await okR(`${date} report`, () => db.from(T.reports).upsert({ report_date: date, season, payload, computed_at: new Date().toISOString() }, { onConflict: 'report_date' }))
 
     for (const [stat_key, { value, context, set_on }] of Object.entries(seasonHighUpdates as Record<string, any>)) {
-      const existing = ok(await db.from(T.highs).select('value, is_lower_better').eq('season', season).eq('stat_key', stat_key).maybeSingle()) as any
+      const existing = await okR(`${date} high`, () => db.from(T.highs).select('value, is_lower_better').eq('season', season).eq('stat_key', stat_key).maybeSingle()) as any
       const isLowerBetter = stat_key.startsWith('fastest_')
       if (existing == null || (isLowerBetter ? value < existing.value : value > existing.value)) {
-        ok(await db.from(T.highs).upsert({ season, stat_key, value, context, set_on, is_lower_better: isLowerBetter }, { onConflict: 'season,stat_key' }))
+        await okR(`${date} high`, () => db.from(T.highs).upsert({ season, stat_key, value, context, set_on, is_lower_better: isLowerBetter }, { onConflict: 'season,stat_key' }))
       }
     }
     if (updatedStreaks && updatedStreaks.size > 0) {
       const rows = buildStreaks(updatedStreaks, season, date)
-      for (let j = 0; j < rows.length; j += 500) ok(await db.from(T.streaks).upsert(rows.slice(j, j + 500), { onConflict: 'wrestler_id,season,streak_type' }))
+      for (let j = 0; j < rows.length; j += 500) await okR(`${date} streaks`, () => db.from(T.streaks).upsert(rows.slice(j, j + 500), { onConflict: 'wrestler_id,season,streak_type' }))
     }
     if (todayTeamHighs && todayTeamHighs.length > 0) {
       const schoolIds = [...new Set(todayTeamHighs.map((r: any) => r.school_id))]
-      const existing = ok(await db.from(T.team).select('season, school_id, stat_key, best_value, avg_time_sec').eq('season', season).in('school_id', schoolIds)) as any[]
+      const existing = await okR(`${date} team highs`, () => db.from(T.team).select('season, school_id, stat_key, best_value, avg_time_sec').eq('season', season).in('school_id', schoolIds)) as any[]
       const ex = new Map(existing.map(e => [`${e.school_id}:${e.stat_key}`, { best_value: parseFloat(e.best_value), avg_time_sec: e.avg_time_sec }]))
       const up = todayTeamHighs.filter((r: any) => { const e = ex.get(`${r.school_id}:${r.stat_key}`); return !e || r.best_value > e.best_value || (r.best_value === e.best_value && r.avg_time_sec != null && e.avg_time_sec != null && r.avg_time_sec < e.avg_time_sec) })
-      if (up.length) ok(await db.from(T.team).upsert(up.map((r: any) => ({ ...r, season, best_on: date })), { onConflict: 'season,school_id,stat_key' }))
+      if (up.length) await okR(`${date} team highs`, () => db.from(T.team).upsert(up.map((r: any) => ({ ...r, season, best_on: date })), { onConflict: 'season,school_id,stat_key' }))
     }
     if ((i + 1) % 10 === 0 || i === days.length - 1) console.log(`  ${i + 1}/${days.length} ${date}  (${Math.round((Date.now() - t0) / 1000)}s)`)
   }

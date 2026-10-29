@@ -49,3 +49,4 @@ profile_generator/fonts/
 __pycache__/
 *.pyc
 *.pyo
+scripts/.snapshot_tmp/
