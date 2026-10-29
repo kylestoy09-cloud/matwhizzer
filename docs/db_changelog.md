@@ -13,7 +13,7 @@
 **APPLIED** — 2026-10-26, Supabase SQL editor. The first run failed on `text = gender_type`; it ran after the `::text` casts were added. Boys and girls hammer recalculations to follow.
 
 **Reversible?** Yes — rollback notes in the migration file
-**Verified?** Yes — 2026-10-26: 0 log rows without gender, 0 wrong-gender hammer rows
+**Verified?** Yes — 2026-10-26: 0 log rows without gender, 0 wrong-gender hammer rows. Rebuilt afterward: girls 2025-26 recalculated (2,419 wrestlers, 38,298 log rows). Boys 2025-26 match log rebuilt 2026-10-28 with the route's new `logOnly` mode (138,351 rows; archived boys hammer scores, 7,593 rows calculated 2026-09-12, left untouched). 228 boys rows have no opponent link: bouts against wrestlers whose records were deleted earlier (Kushner Academy 2025-12-10; a removed District 15 Forfeit placeholder).
 
 ---
 
