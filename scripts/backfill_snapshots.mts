@@ -65,8 +65,11 @@ try {
 
   // ── Backup, then clear ───────────────────────────────────────────────────
   const backup = `docs/migrations/backups/${new Date().toISOString().slice(0, 10).replace(/-/g, '')}_snapshot_backfill_${G ? 'girls' : 'boys'}.json`
-  if (existsSync(backup)) throw new Error(`backup ${backup} exists — already run today?`)
   const dates = reportsToClear.map(r => r.report_date)
+  // A re-run replaces this script's own output; the first run's backup holds
+  // the original rows and is kept as is.
+  if (existsSync(backup)) console.log('keeping earlier backup', backup)
+  else {
   const saved = {
     reports: dates.length ? ok(await db.from(T.reports).select('*').in('report_date', dates)) : [],
     streaks: await all(() => db.from(T.streaks).select('*').eq('season', season).order('wrestler_id')),
@@ -75,6 +78,7 @@ try {
   }
   writeFileSync(backup, JSON.stringify(saved))
   console.log('backup', backup, Object.fromEntries(Object.entries(saved).map(([k, v]) => [k, (v as any[]).length])))
+  }
   if (dates.length) ok(await db.from(T.reports).delete().in('report_date', dates))
   for (const k of ['streaks', 'highs', 'team'] as const) ok(await db.from(T[k]).delete().eq('season', season))
 

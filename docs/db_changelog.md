@@ -2,6 +2,21 @@
 
 ---
 
+## 2026-10-29 — Index the hammer match log by day
+
+**Migration file:** `docs/migrations/20261029_match_score_log_date_index.sql`
+
+**Purpose:** Daily snapshots read one day of `wrestler_match_score_log` (season, gender, source, date). Only `(season, gender)` was indexed, so the read scanned the whole season and timed out on busy days (boys 2026-02-14 hit the statement timeout during the snapshot rebuild). Adds `(season, gender, match_source, match_date)`.
+
+**Tables affected:** `wrestler_match_score_log` (+1 index)
+
+**PENDING** — run in Supabase SQL editor
+
+**Reversible?** Yes — `DROP INDEX idx_wrestler_match_score_log_day`
+**Verified?** Pending — the EXPLAIN in the file should use the new index
+
+---
+
 ## 2026-10-28 — Newton/Kittatinny girls playoff duals moved to Newton (24)
 
 **Migration file:** `docs/migrations/20261028_newton_kittatinny_playoffs.sql` (applied with `scripts/apply_newton_kittatinny_playoffs.mts`)

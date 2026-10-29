@@ -20,6 +20,23 @@ import type {
 } from './types'
 import { DB_SECTION_TO_SCOPE } from './types'
 
+// Every lookup must succeed. A failed query used to read as "no rows", so a
+// busy day could be saved with whole sections silently missing.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function must(res: { data: any; error: { message: string } | null }, what: string): any[] {
+  if (res.error) throw new Error(`snapshot ${what}: ${res.error.message}`)
+  return res.data ?? []
+}
+
+// Long id lists overflow the request URL ("Bad Request"): query in chunks.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function inChunks(ids: string[], run: (chunk: string[]) => PromiseLike<{ data: any; error: { message: string } | null }>, what: string): Promise<any[]> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const out: any[] = []
+  for (let i = 0; i < ids.length; i += 150) out.push(...must(await run(ids.slice(i, i + 150)), what))
+  return out
+}
+
 const BONUS_TYPES   = new Set(['Fall', 'TF', 'MD'])
 const PIN_TYPE      = 'Fall'
 const TECH_TYPE     = 'TF'
@@ -63,21 +80,20 @@ export async function computeSnapshotGirls(
   `).eq('meet_date', date).eq('season_id', seasonId)
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const meets: any[] = meetsRes.data ?? []
+  const meets: any[] = must(meetsRes, 'meets')
   const meetIds = meets.map(m => m.id as string)
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let bouts: any[] = []
   if (meetIds.length > 0) {
-    const r = await db.from('dual_meet_matches_girls').select(`
+    bouts = await inChunks(meetIds, ids => db.from('dual_meet_matches_girls').select(`
       id, dual_meet_id, weight_class, order_index,
       wrestler_a_id, wrestler_b_id, winner_id,
       wrestler_a_name_raw, wrestler_b_name_raw,
       school_a_id, school_b_id,
       result_type, fall_time_seconds,
       is_forfeit_win, is_double_forfeit
-    `).in('dual_meet_id', meetIds)
-    bouts = r.data ?? []
+    `).in('dual_meet_id', ids), 'day bouts')
   }
 
   const [streakStateRes, hammersRes, matchLogRes, tourneyRes, teamRankingsRes, histMeetsRes] = await Promise.all([
@@ -86,17 +102,17 @@ export async function computeSnapshotGirls(
     // The recalc logs girls duals as 'dual_meet' (source_id = a dual_meet_matches_girls id);
     // 'dual_meet_girls' was never written, so girls snapshots saw no dual results.
     db.from('wrestler_match_score_log').select('wrestler_id, opponent_wrestler_id, pre_match_hammer, opponent_pre_match_hammer, is_winner, source_id, match_source, match_date').eq('match_date', date).eq('season', season).eq('gender', 'F').eq('match_source', 'dual_meet'),
-    db.from('in_season_tournaments_girls').select('id, name, start_date, end_date').lte('start_date', date).gte('end_date', date).eq('season_id', seasonId),
+    db.from('in_season_tournaments_girls').select('id, name, start_date, end_date').lte('start_date', date).gte('end_date', date).eq('season', season),   // in-season tournaments key the season by label
     db.from('ranking_published').select('scope, scope_id, results, published_at').eq('ranking_type', 'team_girls').lte('published_at', `${date}T23:59:59.999Z`).order('published_at', { ascending: false }).limit(20),   // as of the report date
     db.from('dual_meets_girls').select('id, meet_date, team1:schools!team1_school_id(id, display_name), team2:schools!team2_school_id(id, display_name)').eq('season_id', seasonId).lt('meet_date', date),
   ])
 
   const hammerMap = new Map<string, number>()
-  for (const h of (hammersRes.data ?? [])) hammerMap.set(h.wrestler_id, parseFloat(h.hammer_score))
+  for (const h of must(hammersRes, 'hammers')) hammerMap.set(h.wrestler_id, parseFloat(h.hammer_score))
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const streakStateBefore = new Map<string, any>()
-  for (const s of (streakStateRes.data ?? [])) streakStateBefore.set(`${s.wrestler_id}:${s.streak_type}`, s)
+  for (const s of must(streakStateRes, 'streakState')) streakStateBefore.set(`${s.wrestler_id}:${s.streak_type}`, s)
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const meetMap = new Map<string, any>()
@@ -135,7 +151,7 @@ export async function computeSnapshotGirls(
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const boutLogPairs = new Map<string, { winner: any; loser: any }>()
-  for (const e of (matchLogRes.data ?? [])) {
+  for (const e of must(matchLogRes, 'matchLog')) {
     if (!boutLogPairs.has(e.source_id)) boutLogPairs.set(e.source_id, { winner: null, loser: null })
     const p = boutLogPairs.get(e.source_id)!
     if (e.is_winner) p.winner = e; else p.loser = e
@@ -167,7 +183,7 @@ export async function computeSnapshotGirls(
   const histMeetDateMap = new Map<string, string>()
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const histSchoolNameMap = new Map<number, string>()
-  for (const m of (histMeetsRes.data ?? [])) {
+  for (const m of must(histMeetsRes, 'histMeets')) {
     histMeetDateMap.set(String(m.id), m.meet_date)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     for (const team of [m.team1, m.team2] as any[]) {
@@ -179,10 +195,9 @@ export async function computeSnapshotGirls(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let histBouts: any[] = []
   if (histMeetIds.length > 0) {
-    const hbRes = await db.from('dual_meet_matches_girls')
+    histBouts = await inChunks(histMeetIds, ids => db.from('dual_meet_matches_girls')
       .select('wrestler_a_id, wrestler_b_id, winner_id, result_type, dual_meet_id, is_double_forfeit, wrestler_a_name_raw, wrestler_b_name_raw, school_a_id, school_b_id')
-      .in('dual_meet_id', histMeetIds)
-    histBouts = (hbRes.data ?? []) as any[]
+      .in('dual_meet_id', ids), 'history bouts')
     histBouts.sort((a: any, b: any) => {
       const da  = histMeetDateMap.get(String(a.dual_meet_id)) ?? ''
       const db2 = histMeetDateMap.get(String(b.dual_meet_id)) ?? ''
@@ -424,9 +439,9 @@ export async function computeSnapshotGirls(
   let firstWins: FirstWinRow[] = [], firstMatches: FirstWinRow[] = []
 
   if (todayWinnerIds.length > 0) {
-    const careerRes = await db.from('wrestler_match_score_log').select('wrestler_id, is_winner').lt('match_date', date).in('wrestler_id', todayWinnerIds)
+    const career = await inChunks(todayWinnerIds, ids => db.from('wrestler_match_score_log').select('wrestler_id, is_winner').lt('match_date', date).in('wrestler_id', ids), 'career log')
     const careerWins = new Map<string, number>(), careerLosses = new Map<string, number>()
-    for (const r of (careerRes.data ?? [])) {
+    for (const r of career) {
       if (r.is_winner) careerWins.set(r.wrestler_id, (careerWins.get(r.wrestler_id) ?? 0) + 1)
       else             careerLosses.set(r.wrestler_id, (careerLosses.get(r.wrestler_id) ?? 0) + 1)
     }
@@ -449,7 +464,7 @@ export async function computeSnapshotGirls(
   // ── Rankings (girls) ──────────────────────────────────────────────────────
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const publishedRankings: any[] = teamRankingsRes.data ?? []
+  const publishedRankings: any[] = must(teamRankingsRes, 'teamRankings')
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const latestRanking = new Map<string, any>()
   for (const rp of publishedRankings) { const key = `${rp.scope}:${rp.scope_id ?? ''}`; if (!latestRanking.has(key)) latestRanking.set(key, rp) }
@@ -489,7 +504,7 @@ export async function computeSnapshotGirls(
   // ── Tournaments ───────────────────────────────────────────────────────────
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const tournaments: any[] = tourneyRes.data ?? []
+  const tournaments: any[] = must(tourneyRes, 'tourney')
   const tourIds = tournaments.map(t => t.id as string)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let tourBouts: any[] = [], tourSeeds: any[] = []
@@ -499,8 +514,8 @@ export async function computeSnapshotGirls(
       db.from('tournament_bouts_girls').select('id, in_season_tournament_id, weight_class, round, wrestler1_id, wrestler2_id, wrestler1_name_raw, wrestler2_name_raw, wrestler1_school_raw, wrestler2_school_raw, winner, result_type, fall_time_seconds').in('in_season_tournament_id', tourIds),
       db.from('in_season_tournament_seeds_girls').select('in_season_tournament_id, weight_class, seed, wrestler_id, wrestler_name_raw').in('in_season_tournament_id', tourIds),
     ])
-    tourBouts = tbRes.data ?? []
-    tourSeeds = tsRes.data ?? []
+    tourBouts = must(tbRes, 'tb')
+    tourSeeds = must(tsRes, 'ts')
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -541,7 +556,7 @@ export async function computeSnapshotGirls(
     const tourLogRes = await db.from('wrestler_match_score_log').select('wrestler_id, pre_match_hammer, opponent_pre_match_hammer, is_winner, source_id').eq('match_date', date).eq('season', season).eq('gender', 'F').eq('match_source', 'tournament_bout')
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const tPairs = new Map<string, { winner: any; loser: any }>()
-    for (const e of (tourLogRes.data ?? [])) { if (!tPairs.has(e.source_id)) tPairs.set(e.source_id, { winner: null, loser: null }); const p = tPairs.get(e.source_id)!; if (e.is_winner) p.winner = e; else p.loser = e }
+    for (const e of must(tourLogRes, 'tourLog')) { if (!tPairs.has(e.source_id)) tPairs.set(e.source_id, { winner: null, loser: null }); const p = tPairs.get(e.source_id)!; if (e.is_winner) p.winner = e; else p.loser = e }
     for (const [boutId, pair] of tPairs) {
       if (!pair.winner || !pair.loser || pair.loser.pre_match_hammer <= pair.winner.pre_match_hammer) continue
       const gap = pair.loser.pre_match_hammer - pair.winner.pre_match_hammer
