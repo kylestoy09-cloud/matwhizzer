@@ -10,10 +10,10 @@
 
 **Tables affected:** `wrestler_match_score_log` (+1 index)
 
-**PENDING** — run in Supabase SQL editor
+**APPLIED** — 2026-10-29, Supabase SQL editor
 
 **Reversible?** Yes — `DROP INDEX idx_wrestler_match_score_log_day`
-**Verified?** Pending — the EXPLAIN in the file should use the new index
+**Verified?** Yes — 2026-10-29: EXPLAIN shows an Index Scan on `idx_wrestler_match_score_log_day`
 
 ---
 
