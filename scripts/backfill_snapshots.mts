@@ -3,6 +3,7 @@
 //
 //   node --env-file=.env.local scripts/backfill_snapshots.mts <M|F> <season label> <season id>          dry run
 //   node --env-file=.env.local scripts/backfill_snapshots.mts <M|F> <season label> <season id> --apply  backup, clear, rebuild
+//   node --env-file=.env.local scripts/backfill_snapshots.mts <M|F> <season label> <season id> --resume continue after the last saved day
 //
 // Days = every date with a scored match in wrestler_match_score_log or a dual
 // meet, for that season and gender. Before rebuilding, the gender's existing
@@ -17,7 +18,8 @@ import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from 'fs'
 const [gender, season, seasonIdArg, flag] = process.argv.slice(2)
 if (!['M', 'F'].includes(gender) || !season || !seasonIdArg) throw new Error('usage: <M|F> <season label> <season id> [--apply]')
 const seasonId = Number(seasonIdArg)
-const APPLY = flag === '--apply'
+const RESUME = flag === '--resume'
+const APPLY = flag === '--apply' || RESUME
 const G = gender === 'F'
 const T = {
   reports: G ? 'snapshot_reports_girls' : 'snapshot_reports',
@@ -63,7 +65,15 @@ try {
   console.log('existing rows to replace:', counts, reportsToClear.map(r => `${r.report_date} (${r.season})`).join(', '))
   if (!APPLY) process.exit(0)
 
-  // ── Backup, then clear ───────────────────────────────────────────────────
+  // ── Backup, then clear (a resume keeps what is already rebuilt) ───────────
+  let startAt = 0
+  if (RESUME) {
+    const done = ok(await db.from(T.reports).select('report_date').eq('season', season).order('report_date', { ascending: false }).limit(1)) as any[]
+    const last = done[0]?.report_date
+    startAt = last ? days.findIndex((d: string) => d > last) : 0
+    if (startAt < 0) { console.log('nothing to resume — all days saved'); process.exit(0) }
+    console.log(`resuming at ${days[startAt]} (last saved ${last ?? 'none'})`)
+  } else {
   const backup = `docs/migrations/backups/${new Date().toISOString().slice(0, 10).replace(/-/g, '')}_snapshot_backfill_${G ? 'girls' : 'boys'}.json`
   const dates = reportsToClear.map(r => r.report_date)
   // A re-run replaces this script's own output; the first run's backup holds
@@ -81,11 +91,24 @@ try {
   }
   if (dates.length) ok(await db.from(T.reports).delete().in('report_date', dates))
   for (const k of ['streaks', 'highs', 'team'] as const) ok(await db.from(T[k]).delete().eq('season', season))
+  }
 
   // ── Rebuild, day by day ──────────────────────────────────────────────────
   const t0 = Date.now()
   for (const [i, date] of days.entries()) {
-    const { payload, seasonHighUpdates, updatedStreaks, todayTeamHighs } = await compute(date, season, seasonId, db)
+    if (i < startAt) continue
+    // Computing only reads, so a timed-out day can simply be computed again;
+    // nothing for the day is saved until the compute succeeds.
+    let result: any
+    for (let attempt = 1; ; attempt++) {
+      try { result = await compute(date, season, seasonId, db); break }
+      catch (e: any) {
+        if (attempt >= 3 || !/statement timeout/.test(String(e?.message ?? e))) throw e
+        console.log(`  ${date}: timeout, retrying (${attempt}/2)`)
+        await new Promise(r => setTimeout(r, 15000 * attempt))
+      }
+    }
+    const { payload, seasonHighUpdates, updatedStreaks, todayTeamHighs } = result
     ok(await db.from(T.reports).upsert({ report_date: date, season, payload, computed_at: new Date().toISOString() }, { onConflict: 'report_date' }))
 
     for (const [stat_key, { value, context, set_on }] of Object.entries(seasonHighUpdates as Record<string, any>)) {
