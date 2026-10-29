@@ -2,6 +2,21 @@
 
 ---
 
+## 2026-10-28 — Newton/Kittatinny girls playoff duals moved to Newton (24)
+
+**Migration file:** `docs/migrations/20261028_newton_kittatinny_playoffs.sql` (applied with `scripts/apply_newton_kittatinny_playoffs.mts`)
+
+**Purpose:** School alias 577 mapped "Newton/Kittatinny" to 315 (Kittatinny). The girls co-op is school 24, which holds the official 12-5 North record. So its two team playoff duals (02-17) landed on 315 and Newton showed 11-4. Moves both meets and their 24 bouts to 24, and points the alias at 24.
+
+**Tables affected:** `dual_meets_girls` (2), `dual_meet_matches_girls` (24), `school_aliases` (1)
+
+**APPLIED** — 2026-10-28, service-role script
+
+**Reversible?** Yes — backup `docs/migrations/backups/20261028_newton_kittatinny_playoffs.json`
+**Verified?** Yes — 2026-10-28: 0 girls meets on 315; Newton counted record 12-5, matching the official record
+
+---
+
 ## 2026-10-28 — Girls 2025-26: remaining ties closed as final ties
 
 **Migration file:** `docs/migrations/20261028_girls_close_remaining_ties.sql` (applied with `scripts/apply_girls_close_remaining_ties.mts`)
