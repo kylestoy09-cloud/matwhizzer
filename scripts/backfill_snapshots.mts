@@ -44,7 +44,7 @@ async function retry<X>(fn: () => Promise<X>, what: string): Promise<X> {
   }
 }
 const okR = <X,>(what: string, q: () => PromiseLike<{ data: X; error: any }>) => retry(async () => ok(await q()), what)
-async function all(q: () => any) { let out: any[] = []; for (let i = 0; ; i += 1000) { const { data, error } = await q().range(i, i + 999); if (error) throw error; out = out.concat(data); if (data.length < 1000) break } return out }
+async function all(q: () => any) { let out: any[] = []; for (let i = 0; ; i += 1000) { const data = await retry(async () => { const { data, error } = await q().range(i, i + 999); if (error) throw error; return data }, 'read'); out = out.concat(data); if (data.length < 1000) break } return out }
 
 // The compute modules import './types' without an extension (Next resolves it,
 // Node does not), so load copies with the extension added.
@@ -72,10 +72,10 @@ try {
   console.log(`${G ? 'girls' : 'boys'} ${season}: ${days.length} days, ${days[0]} → ${days[days.length - 1]}`)
 
   // ── Existing rows for this gender / season ───────────────────────────────
-  const reports = ok(await db.from(T.reports).select('report_date,season,computed_at')) as any[]
+  const reports = await okR('reports', () => db.from(T.reports).select('report_date,season,computed_at')) as any[]
   const reportsToClear = reports.filter(r => r.season === season || (r.report_date >= days[0] && r.report_date <= days[days.length - 1]))
   const counts = { reports: reportsToClear.length } as Record<string, number>
-  for (const k of ['streaks', 'highs', 'team'] as const) counts[k] = (await db.from(T[k]).select('*', { count: 'exact', head: true }).eq('season', season)).count ?? 0
+  for (const k of ['streaks', 'highs', 'team'] as const) counts[k] = (await retry(async () => { const r = await db.from(T[k]).select('*', { count: 'exact', head: true }).eq('season', season); if (r.error) throw r.error; return r }, 'count')).count ?? 0
   console.log('existing rows to replace:', counts, reportsToClear.map(r => `${r.report_date} (${r.season})`).join(', '))
   if (!APPLY) process.exit(0)
 
@@ -103,8 +103,8 @@ try {
   writeFileSync(backup, JSON.stringify(saved))
   console.log('backup', backup, Object.fromEntries(Object.entries(saved).map(([k, v]) => [k, (v as any[]).length])))
   }
-  if (dates.length) ok(await db.from(T.reports).delete().in('report_date', dates))
-  for (const k of ['streaks', 'highs', 'team'] as const) ok(await db.from(T[k]).delete().eq('season', season))
+  if (dates.length) await okR('clear reports', () => db.from(T.reports).delete().in('report_date', dates))
+  for (const k of ['streaks', 'highs', 'team'] as const) await okR(`clear ${k}`, () => db.from(T[k]).delete().eq('season', season))
   }
 
   // ── Rebuild, day by day ──────────────────────────────────────────────────

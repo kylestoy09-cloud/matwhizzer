@@ -2,6 +2,33 @@
 
 ---
 
+## 2026-10-29 — Daily snapshot reports rebuilt for 2025-26 (boys and girls)
+
+**Migration file:** none (data rebuild) — `scripts/backfill_snapshots.mts <M|F> 2025-26 2026 --apply`
+
+**Purpose:** There was no real day-by-day snapshot history. Girls had no reports at all, and boys had 8 out-of-order test reports from September (one labeled 2026-27, one dated off-season) plus streak state built from them. Rebuilt every day with matches, 12/8/2025 – 3/12/2026, in date order so streaks and season highs accumulate as they would have live:
+- **Boys:** 68 reports.
+- **Girls:** 74 reports.
+
+The rebuild ran on the fixed snapshot engine:
+- Each gender reads only its own log and hammer rows.
+- Girls reports include dual results.
+- Every query error stops the run instead of saving a partial report.
+- Tournaments load by season label, including single-day events.
+- Finals (round F) count as champions.
+- Speed records ignore placeholder times.
+- Girls team stats use real duals only.
+- Rankings are taken as of the report date.
+
+**Tables affected:** `snapshot_reports(_girls)`, `snapshot_streak_state(_girls)`, `snapshot_season_highs(_girls)`, `snapshot_team_season_highs(_girls)` — 2025-26 rows replaced
+
+**APPLIED** — 2026-10-29, script
+
+**Reversible?** Yes — the original rows are in `docs/migrations/backups/20261029_snapshot_backfill_boys.json` and `20261029_snapshot_backfill_girls.json` (girls were empty)
+**Verified?** Yes — 2026-10-29: boys 68 / girls 74 reports. Season records: fastest pin 0:05 (both), fastest tech 0:35 / 0:45, fastest dual 13:11 / 16:52, longest win streak 32 / 20. Tournament days carry events and champions (boys 12/28: 5 tournaments; girls 12/20: Ron Mazzola, Queen of the East).
+
+---
+
 ## 2026-10-29 — Index the hammer match log by day
 
 **Migration file:** `docs/migrations/20261029_match_score_log_date_index.sql`
