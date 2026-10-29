@@ -5,6 +5,7 @@ import { fetchAllRows } from '@/lib/fetchAllRows'
 import { boysRosterGradeCounts, girlsRosterGradeCounts } from '@/lib/rosterGrades'
 import { boysProgramSchoolIds, girlsProgramSchoolIds } from '@/lib/genderPrograms'
 import { PreseasonDashboard } from './PreseasonDashboard'
+import { getWorkingSeason } from '@/lib/season-context'
 import type { GenderPreseasonStats } from './PreseasonHeader'
 
 export const dynamic = 'force-dynamic'
@@ -140,7 +141,8 @@ export default async function PreseasonPage() {
       seasonLabelF={seasonLabelF}
       statsM={buildStats(boysIds,  ids(boysCoachRows),  ids(boysEmailRows),  scheduleIds(boysScheduleRows),  ids(boysRosterRows),  ids(boysGradeReviewRows),  boysGrades)}
       statsF={buildStats(girlsIds, ids(girlsCoachRows), ids(girlsEmailRows), scheduleIds(girlsScheduleRows), ids(girlsRosterRows), ids(girlsGradeReviewRows), girlsGrades)}
-      preSeasonIdM={preSeasonIdM ?? 3}
+      directorySeasonM={preSeasonIdM ?? (await getWorkingSeason('M')).id}
+      directorySeasonF={preSeasonIdF ?? (await getWorkingSeason('F')).id}
     />
   )
 }
