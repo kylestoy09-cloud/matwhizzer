@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-10-28 — Girls 2025-26: remaining ties closed as final ties
+
+**Migration file:** `docs/migrations/20261028_girls_close_remaining_ties.sql` (applied with `scripts/apply_girls_close_remaining_ties.mts`)
+
+**Purpose:** Closes 45 of the 46 pending girls ties as final ties. Scores are unchanged; the microcheck tasks are completed.
+- **44** are meets the official standings don't count. Their Track tiebreaker is "Team Id" or missing, so no winner can be supported. A boys check showed the lower Team Id won only 1 of 3 officially settled ties.
+- **1**, South Brunswick vs WW-P South, is an official tie.
+
+Left pending: Northern Valley-Demarest vs Dwight Morrow (12-23); only one of the two schools has an official record.
+
+**Tables affected:** `dual_meets_girls` (45 updated), `microcheck_tasks` (45 completed)
+
+**APPLIED** — 2026-10-28, service-role script
+
+**Reversible?** Yes — backup `docs/migrations/backups/20261028_girls_close_remaining_ties.json`
+**Verified?** Yes — 2026-10-28: 1 pending girls tie, 1 pending girls tie task
+
+---
+
 ## 2026-10-28 — Girls 2025-26 team W-L reconciled with the official standings
 
 **Migration file:** `docs/migrations/20261028_girls_wl_reconciliation.sql` (applied with `scripts/apply_girls_wl_reconciliation.mts`)
