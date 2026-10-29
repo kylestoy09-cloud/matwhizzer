@@ -2,6 +2,26 @@
 
 ---
 
+## 2026-10-28 — Girls 2025-26 team W-L reconciled with the official standings
+
+**Migration file:** `docs/migrations/20261028_girls_wl_reconciliation.sql` (applied with `scripts/apply_girls_wl_reconciliation.mts`)
+
+**Purpose:** Match girls team W-L to the official standings (`power_points`). Each change brings both schools closer to their official record (report: `docs/girls_2025_26_wl_reconciliation.md`). The official records mostly leave out thin meets (0-2 bouts wrestled) and meets between two non-classified schools.
+- **180 meets → not counted** (`counts_toward_record = false`); bouts stay on profiles. 44 of these are pending ties and stay pending.
+- **5 jamboree pairings → counted.**
+- **3 pending ties settled** (Sterling, Mountain Lakes, Clayton/Glassboro). The official record agrees with Track's "Team Id" tiebreaker in each: the lower Team Id wins.
+
+Two proposed winner flips were not applied because the bouts contradict the official record: WW-P South–Robbinsville and Freehold Borough–Colts Neck.
+
+**Tables affected:** `dual_meets_girls` (188 updated), `microcheck_tasks` (3 completed)
+
+**APPLIED** — 2026-10-28, service-role script
+
+**Reversible?** Yes — backup `docs/migrations/backups/20261028_girls_wl_reconciliation.json`
+**Verified?** Yes — 2026-10-28: exact official W-L matches 97 → 197 of 274 (North 31/37, South 22/36, non-classified 144/201); 46 girls ties still pending
+
+---
+
 ## 2026-10-28 — Fix delete guard on non-school tables
 
 **Migration file:** `docs/migrations/20261028_guard_protected_deletes_fix.sql`
