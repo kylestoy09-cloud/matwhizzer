@@ -10,10 +10,10 @@
 
 **Tables affected:** function `guard_protected_delete` (replaced)
 
-**PENDING** — run in Supabase SQL editor, then re-run `20261028_remove_d15_forfeit_placeholder.sql`
+**APPLIED** — 2026-10-28, Supabase SQL editor
 
 **Reversible?** Yes — re-run the earlier function definition
-**Verified?** Pending — the two test deletes in the file must fail with "is blocked"
+**Verified?** Yes — 2026-10-28: the District 15 removal then ran through the unlock (7 matches, 7 entries deleted). Unlocked deletes now work on non-school tables.
 
 ---
 
@@ -42,10 +42,10 @@
 
 **Tables affected:** `matches` (−7), `tournament_entries` (−7)
 
-**PENDING** — run in Supabase SQL editor
+**APPLIED** — 2026-10-28, Supabase SQL editor, after `20261028_guard_protected_deletes_fix.sql`
 
 **Reversible?** Yes — backup `docs/migrations/backups/20261028_remove_d15_forfeit_placeholder.json`
-**Verified?** Pending — expect 0 remaining entries
+**Verified?** Yes — 2026-10-28: 0 entries and 0 matches remain for the placeholder
 
 ---
 
