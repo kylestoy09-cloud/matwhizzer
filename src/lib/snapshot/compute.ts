@@ -50,6 +50,10 @@ const MIN_TECH_SEC   = 30
 // "Fastest dual" compares duals with a near-full card of wrestled bouts; a dual
 // with no bouts stored (or mostly forfeits) totals ~0 mat time.
 const MIN_DUAL_CONTESTED = 10
+// Championship bouts. Imports store the final as round 'F' (the old
+// /final|champ/ test never matched it, so tournament champions were always empty).
+const isChampRound = (r: string | null | undefined) =>
+  r === 'F' || /^(?:finals?|championship|1st[_ ]place(?: match)?)$/i.test((r ?? '').trim())
 const FULL_BOUT_SEC  = 360   // 6:00 regulation
 const ALLOTTED_SEC   = 5040  // 14 × 6:00
 
@@ -151,7 +155,9 @@ export async function computeSnapshot(
       is_winner, source_id, match_source, match_date
     `).eq('match_date', date).eq('season', season).eq('gender', 'M').eq('match_source', 'dual_meet'),
     db.from('in_season_tournaments').select('id, name, start_date, end_date')
-      .lte('start_date', date).gte('end_date', date).eq('season', season),   // in-season tournaments key the season by label
+      .lte('start_date', date).eq('season', season)   // in-season tournaments key the season by label
+      // single-day events often have no end_date (31 of 41 girls, 10 of 74 boys in 2025-26)
+      .or(`end_date.gte.${date},and(end_date.is.null,start_date.eq.${date})`),
     db.from('ranking_published').select('scope, scope_id, results, published_at')
       .eq('ranking_type', 'team')
       .lte('published_at', `${date}T23:59:59.999Z`)   // as of the report date (backfills must not see later rankings)
@@ -761,7 +767,7 @@ export async function computeSnapshot(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const champMap = new Map<string, any>()
   for (const [tourId, tb] of tourBoutsByTour) {
-    for (const b of tb.filter((b: any) => /final|champ/i.test(b.round ?? ''))) {
+    for (const b of tb.filter((b: any) => isChampRound(b.round))) {
       champMap.set(`${tourId}:${b.weight_class}`, b)
     }
   }

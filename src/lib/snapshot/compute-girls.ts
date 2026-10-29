@@ -48,6 +48,10 @@ const MIN_TECH_SEC   = 30
 // "Fastest dual" compares duals with a near-full card of wrestled bouts; a dual
 // with no bouts stored (or mostly forfeits) totals ~0 mat time.
 const MIN_DUAL_CONTESTED = 8
+// Championship bouts. Imports store the final as round 'F' (the old
+// /final|champ/ test never matched it, so tournament champions were always empty).
+const isChampRound = (r: string | null | undefined) =>
+  r === 'F' || /^(?:finals?|championship|1st[_ ]place(?: match)?)$/i.test((r ?? '').trim())
 const FULL_BOUT_SEC = 360
 const ALLOTTED_SEC  = 4320  // 12 girls weights × 6:00 (5040 was the boys 14-weight card)
 
@@ -116,7 +120,9 @@ export async function computeSnapshotGirls(
     // The recalc logs girls duals as 'dual_meet' (source_id = a dual_meet_matches_girls id);
     // 'dual_meet_girls' was never written, so girls snapshots saw no dual results.
     db.from('wrestler_match_score_log').select('wrestler_id, opponent_wrestler_id, pre_match_hammer, opponent_pre_match_hammer, is_winner, source_id, match_source, match_date').eq('match_date', date).eq('season', season).eq('gender', 'F').eq('match_source', 'dual_meet'),
-    db.from('in_season_tournaments_girls').select('id, name, start_date, end_date').lte('start_date', date).gte('end_date', date).eq('season', season),   // in-season tournaments key the season by label
+    db.from('in_season_tournaments_girls').select('id, name, start_date, end_date').lte('start_date', date).eq('season', season)   // in-season tournaments key the season by label
+      // single-day events often have no end_date (31 of 41 girls, 10 of 74 boys in 2025-26)
+      .or(`end_date.gte.${date},and(end_date.is.null,start_date.eq.${date})`),
     db.from('ranking_published').select('scope, scope_id, results, published_at').eq('ranking_type', 'team_girls').lte('published_at', `${date}T23:59:59.999Z`).order('published_at', { ascending: false }).limit(20),   // as of the report date
     db.from('dual_meets_girls').select('id, meet_date, team1:schools!team1_school_id(id, display_name), team2:schools!team2_school_id(id, display_name)').eq('season_id', seasonId).lt('meet_date', date),
   ])
@@ -544,7 +550,7 @@ export async function computeSnapshotGirls(
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const champMap = new Map<string, any>()
-  for (const [tourId, tb] of tourBoutsByTour) { for (const b of tb.filter((b: any) => /final|champ/i.test(b.round ?? ''))) champMap.set(`${tourId}:${b.weight_class}`, b) }
+  for (const [tourId, tb] of tourBoutsByTour) { for (const b of tb.filter((b: any) => isChampRound(b.round))) champMap.set(`${tourId}:${b.weight_class}`, b) }
 
   const champRows: TournamentChampRow[] = [], lowestSeedWins: LowestSeedWinRow[] = []
   for (const [key, cb] of champMap) {
