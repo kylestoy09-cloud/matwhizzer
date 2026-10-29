@@ -120,12 +120,12 @@ export async function computeSnapshot(
     histMeetsRes,
   ] = await Promise.all([
     db.from('snapshot_streak_state').select('*').eq('season', season),
-    db.from('wrestler_hammer_scores').select('wrestler_id, hammer_score').eq('season', season),
+    db.from('wrestler_hammer_scores').select('wrestler_id, hammer_score').eq('season', season).eq('gender', 'M'),
     db.from('wrestler_match_score_log').select(`
       wrestler_id, opponent_wrestler_id,
       pre_match_hammer, opponent_pre_match_hammer,
       is_winner, source_id, match_source, match_date
-    `).eq('match_date', date).eq('season', season).eq('match_source', 'dual_meet'),
+    `).eq('match_date', date).eq('season', season).eq('gender', 'M').eq('match_source', 'dual_meet'),
     db.from('in_season_tournaments').select('id, name, start_date, end_date')
       .lte('start_date', date).gte('end_date', date).eq('season_id', seasonId),
     db.from('ranking_published').select('scope, scope_id, results, published_at')
@@ -772,7 +772,7 @@ export async function computeSnapshot(
 
   let biggestTourUpset: TournamentBiggestUpset | null = null
   if (tourIds.length > 0) {
-    const tourLogRes = await db.from('wrestler_match_score_log').select('wrestler_id, pre_match_hammer, opponent_pre_match_hammer, is_winner, source_id').eq('match_date', date).eq('season', season).eq('match_source', 'tournament_bout')
+    const tourLogRes = await db.from('wrestler_match_score_log').select('wrestler_id, pre_match_hammer, opponent_pre_match_hammer, is_winner, source_id').eq('match_date', date).eq('season', season).eq('gender', 'M').eq('match_source', 'tournament_bout')
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const tPairs = new Map<string, { winner: any; loser: any }>()
     for (const e of (tourLogRes.data ?? [])) {

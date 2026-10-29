@@ -1,8 +1,9 @@
 // ─── Snapshot compute engine (girls) ─────────────────────────────────────────
 // Exact mirror of compute.ts — uses dual_meets_girls, dual_meet_matches_girls,
 // snapshot_streak_state_girls, snapshot_season_highs_girls, snapshot_reports_girls.
-// Every other data source (wrestler_hammer_scores, wrestler_match_score_log,
-// in_season_tournaments, ranking_published) is shared/ungendered.
+// wrestler_hammer_scores and wrestler_match_score_log are shared tables with a
+// gender column: always filter them to 'F'. in_season_tournaments and
+// ranking_published are shared.
 
 import type { SupabaseClient } from '@supabase/supabase-js'
 import type {
@@ -81,8 +82,10 @@ export async function computeSnapshotGirls(
 
   const [streakStateRes, hammersRes, matchLogRes, tourneyRes, teamRankingsRes, histMeetsRes] = await Promise.all([
     db.from('snapshot_streak_state_girls').select('*').eq('season', season),
-    db.from('wrestler_hammer_scores').select('wrestler_id, hammer_score').eq('season', season),
-    db.from('wrestler_match_score_log').select('wrestler_id, opponent_wrestler_id, pre_match_hammer, opponent_pre_match_hammer, is_winner, source_id, match_source, match_date').eq('match_date', date).eq('season', season).eq('match_source', 'dual_meet_girls'),
+    db.from('wrestler_hammer_scores').select('wrestler_id, hammer_score').eq('season', season).eq('gender', 'F'),
+    // The recalc logs girls duals as 'dual_meet' (source_id = a dual_meet_matches_girls id);
+    // 'dual_meet_girls' was never written, so girls snapshots saw no dual results.
+    db.from('wrestler_match_score_log').select('wrestler_id, opponent_wrestler_id, pre_match_hammer, opponent_pre_match_hammer, is_winner, source_id, match_source, match_date').eq('match_date', date).eq('season', season).eq('gender', 'F').eq('match_source', 'dual_meet'),
     db.from('in_season_tournaments_girls').select('id, name, start_date, end_date').lte('start_date', date).gte('end_date', date).eq('season_id', seasonId),
     db.from('ranking_published').select('scope, scope_id, results, published_at').eq('ranking_type', 'team_girls').order('published_at', { ascending: false }).limit(20),
     db.from('dual_meets_girls').select('id, meet_date, team1:schools!team1_school_id(id, display_name), team2:schools!team2_school_id(id, display_name)').eq('season_id', seasonId).lt('meet_date', date),
@@ -535,7 +538,7 @@ export async function computeSnapshotGirls(
 
   let biggestTourUpset: TournamentBiggestUpset | null = null
   if (tourIds.length > 0) {
-    const tourLogRes = await db.from('wrestler_match_score_log').select('wrestler_id, pre_match_hammer, opponent_pre_match_hammer, is_winner, source_id').eq('match_date', date).eq('season', season).eq('match_source', 'tournament_bout')
+    const tourLogRes = await db.from('wrestler_match_score_log').select('wrestler_id, pre_match_hammer, opponent_pre_match_hammer, is_winner, source_id').eq('match_date', date).eq('season', season).eq('gender', 'F').eq('match_source', 'tournament_bout')
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const tPairs = new Map<string, { winner: any; loser: any }>()
     for (const e of (tourLogRes.data ?? [])) { if (!tPairs.has(e.source_id)) tPairs.set(e.source_id, { winner: null, loser: null }); const p = tPairs.get(e.source_id)!; if (e.is_winner) p.winner = e; else p.loser = e }

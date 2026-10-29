@@ -905,16 +905,33 @@ export async function POST(req: NextRequest) {
   }
 
   // ── 7. Write results to DB ────────────────────────────────────────────────────
-  // Only this gender's log rows — a season-wide delete wiped the boys log on a
-  // girls run (2026-10-26).
-  const { error: delLogErr } = await db.from('wrestler_match_score_log').delete()
-    .eq('season', CURRENT_SEASON_STR).eq('gender', gender)
-  if (delLogErr) throw new Error(`DELETE wrestler_match_score_log failed: ${delLogErr.message}`)
+  // Replace this gender's log for the season (only this gender's — a
+  // season-wide delete wiped the boys log on a girls run, 2026-10-26). New rows
+  // go in first; the old ones are removed only after every batch succeeds, and a
+  // failed run removes its own partial rows, so the previous log survives
+  // intact. Old vs new is split on the newest existing created_at (database
+  // clock), not on this server's clock.
+  const { data: newestOld, error: newestErr } = await db.from('wrestler_match_score_log')
+    .select('created_at').eq('season', CURRENT_SEASON_STR).eq('gender', gender)
+    .order('created_at', { ascending: false }).limit(1)
+  if (newestErr) throw new Error(`READ wrestler_match_score_log failed: ${newestErr.message}`)
+  const oldCutoff = (newestOld?.[0]?.created_at as string | undefined) ?? null
 
   const BATCH = 500
   for (let i = 0; i < logEntries.length; i += BATCH) {
     const { error } = await db.from('wrestler_match_score_log').insert(logEntries.slice(i, i + BATCH))
-    if (error) throw new Error(`INSERT wrestler_match_score_log failed at row ${i}: ${error.message}`)
+    if (error) {
+      let undo = db.from('wrestler_match_score_log').delete().eq('season', CURRENT_SEASON_STR).eq('gender', gender)
+      if (oldCutoff) undo = undo.gt('created_at', oldCutoff)
+      const { error: undoErr } = await undo
+      throw new Error(`INSERT wrestler_match_score_log failed at row ${i}: ${error.message}` +
+        (undoErr ? ` (removing this run's partial rows also failed: ${undoErr.message})` : '; previous log kept'))
+    }
+  }
+  if (oldCutoff) {
+    const { error: delLogErr } = await db.from('wrestler_match_score_log').delete()
+      .eq('season', CURRENT_SEASON_STR).eq('gender', gender).lte('created_at', oldCutoff)
+    if (delLogErr) throw new Error(`DELETE old wrestler_match_score_log failed: ${delLogErr.message}`)
   }
 
   const scoreRows = [...states.values()]
