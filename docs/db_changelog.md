@@ -2,6 +2,38 @@
 
 ---
 
+## 2026-10-28 — Kushner Academy wrestlers re-linked (boys dual 2025-12-10)
+
+**Migration file:** `docs/migrations/20261028_kushner_wrestlers_relink.sql` (applied with `scripts/apply_kushner_wrestlers_relink.mts`)
+
+**Purpose:** 9 bouts in Scotch Plains-Fanwood vs Kushner Academy pointed at deleted initials-only Kushner wrestlers; the hammer log's FK exposed them. Matched against Kushner's 2026-01-08 lineup:
+- **Re-pointed 5 bouts** to the existing full-name wrestlers: Lankry→Lankary, Strub→Straw, Sher, Rojas, Yarkony→Urcony.
+- **Recreated 4 wrestlers** under their original IDs: Lazanowitz, Sperber, Kestler, Weill.
+
+**Tables affected:** `dual_meet_matches` (5 updated), `wrestler_name_aliases` (5 updated), `wrestlers` (+4)
+
+**APPLIED** — 2026-10-28, service-role script
+
+**Reversible?** Yes — backup `docs/migrations/backups/20261028_kushner_wrestlers_relink.json`; rollback in the migration file
+**Verified?** Yes — 2026-10-28: all 21 wrestler IDs in the meet exist
+
+---
+
+## 2026-10-28 — Remove the District 15 (2024-25) Forfeit placeholder
+
+**Migration file:** `docs/migrations/20261028_remove_d15_forfeit_placeholder.sql`
+
+**Purpose:** A deleted "Forfeit" placeholder wrestler was still entered 7 times in Boys District 15 (2024-25). Each entry was a QF forfeit to a top seed, i.e. a bye stored as a match. Removes the 7 matches and 7 entries, the same way the other placeholders were removed in `20260413_delete_schools_367_399`. First use of the delete guard's per-transaction unlock.
+
+**Tables affected:** `matches` (−7), `tournament_entries` (−7)
+
+**PENDING** — run in Supabase SQL editor
+
+**Reversible?** Yes — backup `docs/migrations/backups/20261028_remove_d15_forfeit_placeholder.json`
+**Verified?** Pending — expect 0 remaining entries
+
+---
+
 ## 2026-10-26 — Hammer scores: gender on the match log; remove wrong-gender rows
 
 **Migration file:** `docs/migrations/20261026_hammer_log_gender.sql`
