@@ -87,7 +87,7 @@ export async function computeSnapshotGirls(
     // 'dual_meet_girls' was never written, so girls snapshots saw no dual results.
     db.from('wrestler_match_score_log').select('wrestler_id, opponent_wrestler_id, pre_match_hammer, opponent_pre_match_hammer, is_winner, source_id, match_source, match_date').eq('match_date', date).eq('season', season).eq('gender', 'F').eq('match_source', 'dual_meet'),
     db.from('in_season_tournaments_girls').select('id, name, start_date, end_date').lte('start_date', date).gte('end_date', date).eq('season_id', seasonId),
-    db.from('ranking_published').select('scope, scope_id, results, published_at').eq('ranking_type', 'team_girls').order('published_at', { ascending: false }).limit(20),
+    db.from('ranking_published').select('scope, scope_id, results, published_at').eq('ranking_type', 'team_girls').lte('published_at', `${date}T23:59:59.999Z`).order('published_at', { ascending: false }).limit(20),   // as of the report date
     db.from('dual_meets_girls').select('id, meet_date, team1:schools!team1_school_id(id, display_name), team2:schools!team2_school_id(id, display_name)').eq('season_id', seasonId).lt('meet_date', date),
   ])
 

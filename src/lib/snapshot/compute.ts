@@ -130,6 +130,7 @@ export async function computeSnapshot(
       .lte('start_date', date).gte('end_date', date).eq('season_id', seasonId),
     db.from('ranking_published').select('scope, scope_id, results, published_at')
       .eq('ranking_type', 'team')
+      .lte('published_at', `${date}T23:59:59.999Z`)   // as of the report date (backfills must not see later rankings)
       .order('published_at', { ascending: false })
       .limit(20),
     db.from('dual_meets').select('id, meet_date, team1:schools!team1_school_id(id, display_name), team2:schools!team2_school_id(id, display_name)').eq('season_id', seasonId).lt('meet_date', date),
