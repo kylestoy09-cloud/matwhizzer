@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { OffseasonTournamentsClient } from './OffseasonTournamentsClient'
+import { RATING_SHORT } from '@/lib/rating'
 
 export const dynamic = 'force-dynamic'
 
@@ -15,7 +16,7 @@ export default async function OffseasonTournamentsPage() {
         <p className="text-xs text-slate-400 uppercase tracking-wide font-semibold mb-1">Non-NJSIAA · HS Off-Season</p>
         <h1 className="text-lg font-bold text-slate-900">Tournaments</h1>
         <p className="text-sm text-slate-500 mt-1">
-          Track HS off-season events (summer duals, invitationals, folkstyle nationals). Results are reference data — no hammer score impact.
+          Track HS off-season events (summer duals, invitationals, folkstyle nationals). Results are reference data — no {RATING_SHORT} impact.
         </p>
       </div>
       <OffseasonTournamentsClient />

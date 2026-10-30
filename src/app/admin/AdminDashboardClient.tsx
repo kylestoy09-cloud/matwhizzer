@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import { AdminSeasonToggle } from '@/components/admin/AdminSeasonToggle'
 import { SignOutButton } from './sign-out-button'
+import { RATING_NAME } from '@/lib/rating'
 
 type Check = { key: string; label: string; done: boolean; detail: string }
 
@@ -196,7 +197,7 @@ export function AdminDashboardClient({ email }: { email: string }) {
                 { label: 'Dual Audit',          href: '/admin/dual-audit' },
                 { label: 'PP Audit',            href: '/admin/pp-audit' },
                 { label: 'Team Scores',         href: '/admin/team-scores' },
-                { label: 'Hammer Scores',       href: '/admin/hammer-scores' },
+                { label: RATING_NAME,       href: '/admin/hammer-scores' },
               ]}
             >
               {summary.season ? (

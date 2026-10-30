@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { AdminBackButton } from '../AdminBackButton'
+import { RATING_SHORT } from '@/lib/rating'
 
 export const dynamic = 'force-dynamic'
 
@@ -19,7 +20,7 @@ export default function RankingsPage() {
         >
           <p className="font-semibold text-slate-900 mb-1">Individual Rankings — Boys</p>
           <p className="text-sm text-slate-500">
-            State and section rankings by weight class. Seed from Hammer Scores, edit order, publish.
+            State and section rankings by weight class. Seed from {RATING_SHORT}, edit order, publish.
           </p>
         </Link>
 
@@ -29,7 +30,7 @@ export default function RankingsPage() {
         >
           <p className="font-semibold text-slate-900 mb-1">Individual Rankings — Girls</p>
           <p className="text-sm text-slate-500">
-            State and section rankings by weight class. Seed from Hammer Scores, edit order, publish.
+            State and section rankings by weight class. Seed from {RATING_SHORT}, edit order, publish.
           </p>
         </Link>
 

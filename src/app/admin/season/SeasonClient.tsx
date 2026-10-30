@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { AdminSeasonToggle } from '@/components/admin/AdminSeasonToggle'
 import { useAdminGender } from '@/components/admin/AdminGenderContext'
+import { RATING_NAME } from '@/lib/rating'
 
 function Ring({ pct }: { pct: number }) {
   const r = 26, circ = 2 * Math.PI * r, dash = (pct / 100) * circ
@@ -28,7 +29,7 @@ const TOOL_LINKS = [
   { label: 'Dual Audit',          href: '/admin/dual-audit' },
   { label: 'PP Audit',            href: '/admin/pp-audit' },
   { label: 'Team Scores',         href: '/admin/team-scores' },
-  { label: 'Hammer Scores',       href: '/admin/hammer-scores' },
+  { label: RATING_NAME,       href: '/admin/hammer-scores' },
 ]
 
 type Progress = {

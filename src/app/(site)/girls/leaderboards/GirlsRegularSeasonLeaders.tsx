@@ -6,6 +6,7 @@ import { getAllConferences } from '@/lib/conferences'
 import { getAllSections, getAllGroups } from '@/lib/sections'
 import { fmtTime, SectionHeader } from '@/components/leaderboard-ui'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
+import { RATING_NAME, RATING_SHORT, RATING_BLURB } from '@/lib/rating'
 
 const WEIGHTS        = [100, 107, 114, 120, 126, 132, 138, 145, 152, 165, 185, 235]
 const N_WEIGHTS      = 12
@@ -369,11 +370,12 @@ function IndividualTab({ rows }: { rows: WRow[] }) {
           ]}
         />
         <RSTable<WRow>
-          title="Hammer Score"
+          title={RATING_NAME}
+          description={RATING_BLURB}
           rows={hammer}
           cols={[
             { label: 'Wrestler', align: 'left', render: r => <WCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name} logoUrl={r.logo_url} bgColor={r.color_primary} /> },
-            { label: 'Score', align: 'right', sortKey: r => r.hammer_score ?? 0, render: r => <span className="font-bold text-slate-800 tabular-nums">{r.hammer_score?.toFixed(1) ?? '—'}</span> },
+            { label: RATING_SHORT, align: 'right', sortKey: r => r.hammer_score ?? 0, render: r => <span className="font-bold text-slate-800 tabular-nums">{r.hammer_score?.toFixed(1) ?? '—'}</span> },
           ]}
         />
       </div>
@@ -455,13 +457,13 @@ function TeamTab({ rows, teamHammerScores }: { rows: TRow[]; teamHammerScores: M
         ]}
       />
       <RSTable<TRow>
-        title="Hammer Score"
-        description={`Highest-rated wrestler per weight class, summed across all ${N_WEIGHTS} weights ÷ ${N_WEIGHTS}`}
+        title={`Team ${RATING_NAME}`}
+        description={`Best ${RATING_SHORT} at each weight class, summed across all ${N_WEIGHTS} weights ÷ ${N_WEIGHTS}`}
         rows={hammer}
         cols={[
           { label: 'School', align: 'left', render: r => <SCell id={r.school_id} name={r.school_name} logoUrl={r.logo_url} bgColor={r.color_primary} /> },
           {
-            label: 'Score', align: 'right',
+            label: RATING_SHORT, align: 'right',
             sortKey: r => teamHammerScores.get(r.school_id) ?? 0,
             render: r => <span className="font-bold text-slate-800 tabular-nums">{(teamHammerScores.get(r.school_id) ?? 0).toFixed(2)}</span>,
           },

@@ -3,6 +3,7 @@ import { createSupabaseServer } from '@/lib/supabase/server'
 import { getWorkingSeason } from '@/lib/season-context'
 import { HubShell } from '../dashboards/HubShell'
 import { RankingsHubClientGirls } from '../rankings-hub/RankingsHubClientGirls'
+import { RATING_NAME } from '@/lib/rating'
 
 export const dynamic = 'force-dynamic'
 
@@ -11,7 +12,7 @@ function RankingsHeader() {
     <div className="p-4">
       <div className="flex items-baseline justify-between">
         <p className="text-base font-bold text-slate-800">Rankings Hub — Girls</p>
-        <p className="text-sm text-slate-500 font-medium">Hammer Scores · Individual · Team</p>
+        <p className="text-sm text-slate-500 font-medium">{RATING_NAME} · Individual · Team</p>
       </div>
     </div>
   )

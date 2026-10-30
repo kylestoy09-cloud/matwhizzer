@@ -4,6 +4,7 @@ import { createSupabaseServer } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
 import { fetchAllRows } from '@/lib/fetchAllRows'
 import { getAllConferences, conferenceFromSlug } from '@/lib/conferences'
+import { RATING_SHORT } from '@/lib/rating'
 
 export const dynamic = 'force-dynamic'
 
@@ -124,7 +125,7 @@ export async function POST(req: NextRequest) {
 
     const { data: scores, error: scoresErr } = await scoresQ
     if (scoresErr) return NextResponse.json({ error: scoresErr.message }, { status: 500 })
-    if (!scores?.length) return NextResponse.json({ error: 'No hammer scores found for this scope and weight class' }, { status: 404 })
+    if (!scores?.length) return NextResponse.json({ error: `No ${RATING_SHORT} ratings found for this scope and weight class` }, { status: 404 })
 
     const wrestlerIds = scores.map((s: { wrestler_id: string }) => s.wrestler_id)
     const nameMap = new Map<string, string>()
@@ -221,7 +222,7 @@ export async function POST(req: NextRequest) {
       .select('wrestler_id, hammer_score')
       .eq('season', CURRENT_SEASON_STR)
     if (scoresErr) return NextResponse.json({ error: scoresErr.message }, { status: 500 })
-    if (!allScores?.length) return NextResponse.json({ error: 'No hammer scores found for current season' }, { status: 404 })
+    if (!allScores?.length) return NextResponse.json({ error: `No ${RATING_SHORT} ratings found for the current season` }, { status: 404 })
 
     const wrestlerIds = (allScores as { wrestler_id: string; hammer_score: number }[]).map(s => s.wrestler_id)
 

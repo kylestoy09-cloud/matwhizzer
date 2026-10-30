@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { TournamentStrengthClient } from './TournamentStrengthClient'
+import { RATING_NAME } from '@/lib/rating'
 
 export const dynamic = 'force-dynamic'
 
@@ -20,7 +21,7 @@ export default async function TournamentStrengthPage() {
 
       <div className="mb-6">
         <p className="text-sm text-slate-600">
-          For each in-season tournament: assign a point value for Hammer Score calculation, then see how many wrestlers competed who were district champions, region top-4 finishers, or state qualifiers in the prior postseason.
+          For each in-season tournament: assign a point value for the {RATING_NAME}, then see how many wrestlers competed who were district champions, region top-4 finishers, or state qualifiers in the prior postseason.
         </p>
         <p className="text-xs text-slate-400 mt-1">
           Bracket column shows which placement rounds have data: <span className="font-mono">F</span> = Finals (1st/2nd) · <span className="font-mono">3rd</span> = 3rd Place match · <span className="font-mono">5th</span> · <span className="font-mono">7th</span> · Green = data exists · Red = needed but missing

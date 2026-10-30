@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getWorkingSeason, lockedError, parseGender } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
+import { RATING_SHORT } from '@/lib/rating'
 
 export const dynamic    = 'force-dynamic'
 export const maxDuration = 300
@@ -64,7 +65,7 @@ export async function POST(req: NextRequest) {
   }
 
   if (!allScores.length) {
-    return NextResponse.json({ ok: true, published: 0, message: 'No hammer scores found' })
+    return NextResponse.json({ ok: true, published: 0, message: `No ${RATING_SHORT} ratings found` })
   }
 
   // 2. Batch-fetch wrestler names

@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { MsWrestlersClient } from './MsWrestlersClient'
+import { RATING_SHORT } from '@/lib/rating'
 
 export const dynamic = 'force-dynamic'
 
@@ -16,7 +17,7 @@ export default async function MsWrestlersPage() {
         <h1 className="text-lg font-bold text-slate-900">Wrestler Profiles</h1>
         <p className="text-sm text-slate-500 mt-1">
           All wrestlers who have podium finishes in the MS database. Link a profile to a HS wrestler record
-          to apply the postseason credit to their hammer score.
+          to apply the postseason credit to their {RATING_SHORT}.
         </p>
       </div>
       <MsWrestlersClient />

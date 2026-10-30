@@ -13,6 +13,7 @@ import type {
 } from '@/lib/snapshot/types'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { SECTION_SCOPE_NAMES } from '@/lib/snapshot/types'
+import { RATING_SHORT } from '@/lib/rating'
 
 // ── Utils ─────────────────────────────────────────────────────────────────────
 
@@ -195,7 +196,7 @@ function SnappedTable({ rows, label }: { rows: SnappedStreakRow[]; label: string
 function RatedMatchTable({ rows }: { rows: RatedMatchRow[] }) {
   if (rows.length === 0) return <Empty />
   return (
-    <Table headers={['Wt', 'Winner', 'School', 'Loser', 'School', 'W Hammer', 'L Hammer', 'Combined', 'Result']}>
+    <Table headers={['Wt', 'Winner', 'School', 'Loser', 'School', `W ${RATING_SHORT}`, `L ${RATING_SHORT}`, 'Combined', 'Result']}>
       {rows.map((r, i) => (
         <TR key={i}>
           <TD mono>{r.weight_class}</TD>
@@ -385,7 +386,7 @@ function MarginCard({ row }: { row: TeamMarginRow | null }) {
 function FirstWinsTable({ rows, showStar }: { rows: FirstWinRow[]; showStar?: boolean }) {
   if (rows.length === 0) return <Empty />
   return (
-    <Table headers={['Wrestler', 'School', 'Wt', 'Opponent', 'Opp Hammer', 'Result']}>
+    <Table headers={['Wrestler', 'School', 'Wt', 'Opponent', `Opp ${RATING_SHORT}`, 'Result']}>
       {rows.map((r, i) => (
         <TR key={i} star={showStar && r.truly_first_match}>
           <TD>{r.wrestler_name}</TD>
@@ -428,10 +429,10 @@ function DualTimeTable({ rows }: { rows: DualMatTimeRow[] }) {
 function TournamentsPanel({ data }: { data: TournamentsData }) {
   return (
     <div className="space-y-4">
-      <Panel title="Top Champions by Combined Opponent Hammer" badge="Top 10">
+      <Panel title={`Top Champions by Combined Opponent ${RATING_SHORT}`} badge="Top 10">
         {data.top_champs.length === 0
           ? <Empty msg="No tournament data today" />
-          : <Table headers={['Tournament', 'Wt', 'Champion', 'School', 'Opp Hammer']}>
+          : <Table headers={['Tournament', 'Wt', 'Champion', 'School', `Opp ${RATING_SHORT}`]}>
               {data.top_champs.map((r, i) => (
                 <TR key={i}>
                   <TD>{r.tournament_name}</TD>
@@ -478,7 +479,7 @@ function TournamentsPanel({ data }: { data: TournamentsData }) {
         }
       </Panel>
 
-      <Panel title="Biggest Upset (by Hammer Gap)">
+      <Panel title={`Biggest Upset (by ${RATING_SHORT} Gap)`}>
         {data.biggest_upset == null
           ? <Empty msg="No tournament upset data" />
           : <div className="text-sm text-slate-700 flex flex-wrap gap-4">
@@ -486,7 +487,7 @@ function TournamentsPanel({ data }: { data: TournamentsData }) {
               <div><span className="text-slate-400 text-xs">Weight</span><br />{data.biggest_upset.weight_class}</div>
               <div><span className="text-slate-400 text-xs">Winner</span><br />{data.biggest_upset.winner_name} ({data.biggest_upset.winner_school})</div>
               <div><span className="text-slate-400 text-xs">Loser</span><br />{data.biggest_upset.loser_name} ({data.biggest_upset.loser_school})</div>
-              <div><span className="text-slate-400 text-xs">Hammer Gap</span><br /><span className="font-mono font-bold text-orange-600">{data.biggest_upset.gap.toFixed(1)}</span></div>
+              <div><span className="text-slate-400 text-xs">{RATING_SHORT} Gap</span><br /><span className="font-mono font-bold text-orange-600">{data.biggest_upset.gap.toFixed(1)}</span></div>
               <div><span className="text-slate-400 text-xs">Result</span><br />{data.biggest_upset.result_type}</div>
             </div>
         }
@@ -532,13 +533,13 @@ function SectionPanel({ data, highs }: { data: SectionData; highs: SeasonHighsBu
       </Panel>
 
       {/* Top rated matches */}
-      <Panel title="Top 10 Highest-Rated Matches" badge="by combined hammer">
+      <Panel title="Top 10 Highest-Rated Matches" badge={`by combined ${RATING_SHORT}`}>
         <RatedMatchTable rows={data.top_rated_matches} />
       </Panel>
-      <Panel title="Top 10 Highest-Rated Upsets" badge="by loser hammer">
+      <Panel title="Top 10 Highest-Rated Upsets" badge={`by loser ${RATING_SHORT}`}>
         <RatedMatchTable rows={data.top_rated_upsets} />
       </Panel>
-      <Panel title="Top 10 Upsets by Hammer Gap">
+      <Panel title={`Top 10 Upsets by ${RATING_SHORT} Gap`}>
         <UpsetByGapTable rows={data.top_upsets_by_gap} />
       </Panel>
 

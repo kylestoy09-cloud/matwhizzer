@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { HammerScoresPageClientBoys } from './HammerScoresPageClientBoys'
+import { RATING_NAME } from '@/lib/rating'
 
 export const dynamic = 'force-dynamic'
 
@@ -16,7 +17,7 @@ export default async function HammerScoresPage() {
         <div className="flex items-center gap-3">
           <Link href="/admin" className="text-xs text-slate-400 hover:text-slate-700 transition-colors">← Admin</Link>
           <span className="text-slate-200">/</span>
-          <h1 className="text-lg font-bold text-slate-900">Hammer Scores</h1>
+          <h1 className="text-lg font-bold text-slate-900">{RATING_NAME}</h1>
         </div>
         <Link
           href="/admin/hammer-scores/config"

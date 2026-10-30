@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { RATING_SHORT } from '@/lib/rating'
 
 // ─�� Types ────────────────────────────────────────────────────────────────────
 
@@ -189,7 +190,7 @@ function LinkModal({
           </div>
 
           <p className="text-xs text-slate-400">
-            Linking connects this MS record to the HS wrestler profile for hammer score credit computation.
+            Linking connects this MS record to the HS wrestler profile for {RATING_SHORT} credit computation.
           </p>
 
           {error && <p className="text-sm text-red-600">{error}</p>}

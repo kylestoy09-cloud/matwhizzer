@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { RATING_NAME } from '@/lib/rating'
 
 type RunStatus = 'idle' | 'running' | 'auto-publishing' | 'done' | 'error'
 
@@ -62,7 +63,7 @@ export function RankingsClient({ gender }: { gender: 'M' | 'F' }) {
     <div className="border border-slate-200 rounded overflow-hidden mb-8">
       <div className="bg-slate-50 px-5 py-3 border-b border-slate-200 flex items-center justify-between">
         <div>
-          <h2 className="text-sm font-semibold text-slate-800">Hammer Score Calculation</h2>
+          <h2 className="text-sm font-semibold text-slate-800">{RATING_NAME} Calculation</h2>
           <p className="text-xs text-slate-500 mt-0.5">
             Full-season replay for all NJ wrestlers in the season in progress. Writes to <code className="font-mono">wrestler_hammer_scores</code> staging table. Takes ~60–90 seconds.
           </p>

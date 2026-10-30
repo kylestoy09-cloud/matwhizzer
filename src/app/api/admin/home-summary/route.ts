@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 import { getSeasonProgress } from '@/lib/season-progress'
+import { RATING_SHORT } from '@/lib/rating'
 
 export const dynamic = 'force-dynamic'
 
@@ -115,7 +116,7 @@ export async function GET(req: NextRequest) {
     { key: 'calendar',    label: `${prog} postseason & playoff dates in season calendar`, autoOk: missingCalendar.length === 0,
       detail: missingCalendar.length === 0 ? `All ${REQUIRED_CALENDAR.length} dates entered` : `Missing: ${missingCalendar.join(', ')}` },
     { key: 'ranking_weeks', label: `${prog} individual ranking weeks seeded`, autoOk: weekCount > 0, detail: weekCount > 0 ? `${weekCount} weeks` : 'No weeks for this season' },
-    { key: 'hammer_config', label: `${prog} hammer score formula set for ${label}`, autoOk: hammerCfgCount > 0, detail: hammerCfgCount > 0 ? 'Active formula found' : 'No formula row for this season' },
+    { key: 'hammer_config', label: `${prog} ${RATING_SHORT} formula set for ${label}`, autoOk: hammerCfgCount > 0, detail: hammerCfgCount > 0 ? 'Active formula found' : 'No formula row for this season' },
   ].map(c => {
     const override = overrideMap[c.key]
     const overridden = override?.status === 'complete'

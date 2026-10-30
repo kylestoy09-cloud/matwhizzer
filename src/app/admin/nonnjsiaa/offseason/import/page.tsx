@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { HsOffseasonImportClient } from './HsOffseasonImportClient'
+import { RATING_SHORT } from '@/lib/rating'
 
 export const dynamic = 'force-dynamic'
 
@@ -21,7 +22,7 @@ export default async function HsOffseasonImportPage({
         <p className="text-xs text-slate-400 uppercase tracking-wide font-semibold mb-1">Non-NJSIAA · HS Off-Season</p>
         <h1 className="text-lg font-bold text-slate-900">Import Results</h1>
         <p className="text-sm text-slate-500 mt-1">
-          Paste podium results text, review placements, then match wrestlers and clubs. Results are reference-only — no hammer score impact.
+          Paste podium results text, review placements, then match wrestlers and clubs. Results are reference-only — no {RATING_SHORT} impact.
         </p>
       </div>
       <HsOffseasonImportClient preselectedTournamentId={preselectedId} />

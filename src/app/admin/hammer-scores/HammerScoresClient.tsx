@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
+import { RATING_SHORT } from '@/lib/rating'
 
 export type HammerRow = {
   wrestler_id: string
@@ -306,7 +307,7 @@ export function HammerScoresClient({ rows, calculatedAt, gender }: { rows: Hamme
               <th className="px-3 py-2 text-left text-slate-500 font-medium">#</th>
               <th className="px-3 py-2 text-left text-slate-500 font-medium">Wrestler</th>
               <SortHeader label="Wt"     sortKey="weight_class"       current={sortKey} dir={sortDir} onSort={handleSort} />
-              <SortHeader label="Hammer" sortKey="hammer_score"       current={sortKey} dir={sortDir} onSort={handleSort} />
+              <SortHeader label={RATING_SHORT} sortKey="hammer_score"       current={sortKey} dir={sortDir} onSort={handleSort} />
               <SortHeader label="PS"     sortKey="postseason_adjusted" current={sortKey} dir={sortDir} onSort={handleSort} />
               <SortHeader label="Tour"   sortKey="tournament_score"    current={sortKey} dir={sortDir} onSort={handleSort} />
               <SortHeader label="Match"  sortKey="match_score"         current={sortKey} dir={sortDir} onSort={handleSort} />

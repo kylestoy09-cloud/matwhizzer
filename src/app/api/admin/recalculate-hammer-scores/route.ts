@@ -256,7 +256,8 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json().catch(() => ({}))
-  const gender     = (body?.gender === 'F' ? 'F' : 'M') as string
+  // The admin button sends { gender }; the daily crons call GET ?gender=M / ?gender=F
+  const gender     = ((body?.gender ?? req.nextUrl.searchParams.get('gender')) === 'F' ? 'F' : 'M') as string
   const stateType  = gender === 'F' ? 'girls_state'   : 'boys_state'
   const regionsType = gender === 'F' ? 'girls_regions' : 'regions'
   const psTypes    = ['districts', regionsType, stateType]

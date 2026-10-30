@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { createSupabaseBrowser } from '@/lib/supabase/client'
 import { AdminGenderSelector } from '@/components/admin/AdminGenderSelector'
+import { RATING_SHORT } from '@/lib/rating'
 
 function ChevronIcon({ open }: { open: boolean }) {
   return (
@@ -41,7 +42,7 @@ const UTILITY: NavItem[] = [
   { label: 'Articles',               href: '/admin/content/articles' },
   { label: 'Data Health',            href: '/admin/data-health' },
   { label: 'Search / Edit Wrestlers', href: '/admin/wrestlers' },
-  { label: 'Hammer Score Config',    href: '/admin/hammer-scores/config' },
+  { label: `${RATING_SHORT} Formula`,    href: '/admin/hammer-scores/config' },
   { label: 'OOS Schools',            href: '/admin/oos-schools' },
   { label: 'OOS Wrestlers',          href: '/admin/oos-wrestlers' },
 ]

@@ -4,6 +4,7 @@ const GENDER = 'M' as const
 
 import { Fragment, useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
+import { RATING_SHORT } from '@/lib/rating'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -483,7 +484,7 @@ export function WorkbenchTableBoys({ weight, stage, entity, entityLabel, season,
     return (
       <div className="border border-slate-200 rounded p-8 text-center space-y-1">
         <p className="text-sm text-slate-600 font-medium">{weight} lb · {entityLabel}</p>
-        <p className="text-xs text-slate-400">No wrestlers found in hammer scores for this {stageLabel.toLowerCase()}.</p>
+        <p className="text-xs text-slate-400">No wrestlers found in {RATING_SHORT} for this {stageLabel.toLowerCase()}.</p>
       </div>
     )
   }
@@ -574,7 +575,7 @@ export function WorkbenchTableBoys({ weight, stage, entity, entityLabel, season,
               <th className="px-3 py-1 text-left text-xs font-semibold text-slate-500">School</th>
               <th className="px-3 py-1 text-center text-xs font-semibold text-slate-500 w-8">Gr</th>
               <th className="px-3 py-1 text-center text-xs font-semibold text-slate-500 w-12">W‑L</th>
-              <th className="px-3 py-1 text-right text-xs font-semibold text-slate-500 w-36">Hammer</th>
+              <th className="px-3 py-1 text-right text-xs font-semibold text-slate-500 w-36">{RATING_SHORT}</th>
               <th className="px-3 py-1 text-left text-xs font-semibold text-slate-500 w-36">Best Win</th>
               <th className="px-3 py-1 text-left text-xs font-semibold text-slate-500 w-36">Notable L</th>
               <th className="px-3 py-1 text-left text-xs font-semibold text-slate-500 w-16">Last 5</th>

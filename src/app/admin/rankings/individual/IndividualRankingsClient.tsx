@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { useAdminGender } from '@/components/admin/AdminGenderContext'
+import { RATING_SHORT } from '@/lib/rating'
 
 type ResultRow = { rank: number; wrestler_id: string; label: string; score: number; movement?: string | null }
 type Variant   = { id: string; formula_name: string; computed_at: string; results: ResultRow[] }
@@ -95,7 +96,7 @@ export function IndividualRankingsClient() {
       })
       const d = await res.json()
       if (d.error) { setFlash({ kind: 'err', msg: d.error }); return }
-      setFlash({ kind: 'ok', msg: `Seeded ${d.variant.results?.length ?? 0} wrestlers from Hammer Scores` })
+      setFlash({ kind: 'ok', msg: `Seeded ${d.variant.results?.length ?? 0} wrestlers from ${RATING_SHORT}` })
       await load(weightClass)
     } finally {
       setSeeding(false)
@@ -278,7 +279,7 @@ export function IndividualRankingsClient() {
                       disabled={seeding}
                       className="px-4 py-2 bg-slate-800 text-white text-sm rounded font-medium hover:bg-slate-700 disabled:opacity-50"
                     >
-                      {seeding ? 'Seeding…' : 'Seed from Hammer Scores'}
+                      {seeding ? 'Seeding…' : `Seed from ${RATING_SHORT}`}
                     </button>
                   </div>
                 ) : (
@@ -318,7 +319,7 @@ export function IndividualRankingsClient() {
                         disabled={seeding}
                         className="text-xs px-3 py-1.5 border border-slate-300 text-slate-600 rounded hover:bg-slate-100 disabled:opacity-50"
                       >
-                        {seeding ? 'Seeding…' : '+ New Hammer Seed'}
+                        {seeding ? 'Seeding…' : `+ New ${RATING_SHORT} Seed`}
                       </button>
                     </div>
                   </div>

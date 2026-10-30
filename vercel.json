@@ -1,8 +1,12 @@
 {
   "crons": [
     {
-      "path": "/api/admin/recalculate-hammer-scores",
+      "path": "/api/admin/recalculate-hammer-scores?gender=M",
       "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/admin/recalculate-hammer-scores?gender=F",
+      "schedule": "30 6 * * *"
     }
   ]
 }

@@ -6,11 +6,12 @@ import { HammerScoresPageClient } from '../hammer-scores/HammerScoresPageClient'
 import { IndividualRankingsShell } from '../rankings/individual/IndividualRankingsShell'
 import { TeamRankingsClient } from '../rankings/team/TeamRankingsClient'
 import { ArchiveClient } from '../rankings/archive/ArchiveClient'
+import { RATING_NAME } from '@/lib/rating'
 
 type Tool = 'hammer' | 'individual' | 'team' | 'archive'
 
 const TABS: { id: Tool; label: string }[] = [
-  { id: 'hammer',     label: 'Hammer Scores' },
+  { id: 'hammer',     label: RATING_NAME },
   { id: 'individual', label: 'Individual Rankings' },
   { id: 'team',       label: 'Team Rankings' },
   { id: 'archive',    label: 'Archive' },

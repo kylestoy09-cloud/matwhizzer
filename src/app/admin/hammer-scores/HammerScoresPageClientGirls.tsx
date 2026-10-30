@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { HammerScoresClientGirls, type HammerRow } from './HammerScoresClientGirls'
+import { RATING_SHORT } from '@/lib/rating'
 
 export function HammerScoresPageClientGirls() {
   const [rows,         setRows]         = useState<HammerRow[]>([])
@@ -27,7 +28,7 @@ export function HammerScoresPageClientGirls() {
   }, [])
 
   if (loading) {
-    return <p className="text-sm text-slate-400 py-12 text-center">Loading Girls hammer scores…</p>
+    return <p className="text-sm text-slate-400 py-12 text-center">Loading Girls {RATING_SHORT}…</p>
   }
 
   if (fetchError) {
@@ -46,7 +47,7 @@ export function HammerScoresPageClientGirls() {
     return (
       <div className="border border-amber-200 bg-amber-50 px-4 py-4 text-sm text-amber-700">
         <p className="font-semibold mb-1">No Girls scores yet</p>
-        <p>Girls hammer score calculation is not yet configured. Check back once the girls season data is in place.</p>
+        <p>Girls {RATING_SHORT} calculation is not yet configured. Check back once the girls season data is in place.</p>
         <div className="mt-4">
           <HammerScoresClientGirls rows={[]} calculatedAt={null} />
         </div>

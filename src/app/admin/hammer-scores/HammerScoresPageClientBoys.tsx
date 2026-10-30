@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { HammerScoresClientBoys, type HammerRow } from './HammerScoresClientBoys'
+import { RATING_SHORT } from '@/lib/rating'
 
 export function HammerScoresPageClientBoys() {
   const [rows,         setRows]         = useState<HammerRow[]>([])
@@ -27,7 +28,7 @@ export function HammerScoresPageClientBoys() {
   }, [])
 
   if (loading) {
-    return <p className="text-sm text-slate-400 py-12 text-center">Loading Boys hammer scores…</p>
+    return <p className="text-sm text-slate-400 py-12 text-center">Loading Boys {RATING_SHORT}…</p>
   }
 
   if (fetchError) {

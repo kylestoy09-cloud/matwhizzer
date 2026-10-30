@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { RATING_NAME, RATING_SHORT } from '@/lib/rating'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -190,7 +191,7 @@ function UpsetBlurb({ u, weekNumber }: { u: UpsetRow; weekNumber: number }) {
     <div className="py-2.5 px-0 border-b border-slate-100 last:border-0">
       <div className="flex items-start gap-3">
         {/* Diff badge */}
-        <div className={`shrink-0 mt-0.5 px-1.5 py-0.5 rounded text-xs font-bold tabular-nums ${
+        <div title={`${RATING_SHORT} gap`} className={`shrink-0 mt-0.5 px-1.5 py-0.5 rounded text-xs font-bold tabular-nums ${
           u.differential >= 25 ? 'bg-red-600 text-white'
           : u.differential >= 15 ? 'bg-orange-500 text-white'
           : u.differential >= 8  ? 'bg-amber-500 text-white'
@@ -478,7 +479,7 @@ export function RankingsView({ gender, weeks, districts, regions, wrestlerBasePa
                         </td>
                         <td className="px-3 py-2 text-xs text-slate-500">{w.school}</td>
                         <td className="px-3 py-2 text-right">
-                          <span className="text-xs text-slate-400 tabular-nums font-mono">{w.hammer_score_snapshot.toFixed(1)}</span>
+                          <span title={RATING_NAME} className="text-xs text-slate-400 tabular-nums font-mono">{RATING_SHORT} {w.hammer_score_snapshot.toFixed(1)}</span>
                         </td>
                       </tr>
                     ))}

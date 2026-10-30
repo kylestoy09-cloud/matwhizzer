@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useAdminGender } from '@/components/admin/AdminGenderContext'
+import { RATING_SHORT } from '@/lib/rating'
 
 /* ─── Icon helper ─── */
 function Icon({ children }: { children: React.ReactNode }) {
@@ -142,7 +143,7 @@ function buildRail(onChatClick?: () => void, onMicrocheckClick?: () => void, gen
         { label: 'Data Browser',          href: '/admin/data-browser' },
         { label: 'Page Layout',           href: '/admin/content/layout' },
         { label: 'Data Health',           href: '/admin/data-health' },
-        { label: 'Hammer Score Config',   href: '/admin/hammer-scores/config' },
+        { label: `${RATING_SHORT} Formula`,   href: '/admin/hammer-scores/config' },
         { label: 'Resolve Unknowns', href: gender === 'F' ? '/admin/resolve-unknowns-girls' : '/admin/resolve-unknowns' },
         { label: 'Home Page Test',        href: '/admin/homepage-test' },
         { label: 'Admin Profiles',        href: '/admin/admin-profiles' },

@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { MsTiersClient } from './MsTiersClient'
+import { RATING_SHORT } from '@/lib/rating'
 
 export const dynamic = 'force-dynamic'
 
@@ -16,7 +17,7 @@ export default async function MsTiersPage() {
         <h1 className="text-lg font-bold text-slate-900">Tournament Tiers</h1>
         <p className="text-sm text-slate-500 mt-1">
           Define tiers for MS tournaments and set the postseason credit each placement earns.
-          Credits are on the same 0–50 scale as the hammer score postseason component.
+          Credits are on the same 0–50 scale as the {RATING_SHORT} postseason component.
         </p>
       </div>
       <MsTiersClient />

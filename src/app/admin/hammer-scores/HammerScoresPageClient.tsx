@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { HammerScoresClient, type HammerRow } from './HammerScoresClient'
+import { RATING_SHORT } from '@/lib/rating'
 
 export function HammerScoresPageClient({ gender }: { gender: 'M' | 'F' }) {
   const [rows,         setRows]         = useState<HammerRow[]>([])
@@ -29,7 +30,7 @@ export function HammerScoresPageClient({ gender }: { gender: 'M' | 'F' }) {
   const prog = gender === 'F' ? 'Girls' : 'Boys'
 
   if (loading) {
-    return <p className="text-sm text-slate-400 py-12 text-center">Loading {prog} hammer scores…</p>
+    return <p className="text-sm text-slate-400 py-12 text-center">Loading {prog} {RATING_SHORT}…</p>
   }
 
   if (fetchError) {
@@ -56,7 +57,7 @@ export function HammerScoresPageClient({ gender }: { gender: 'M' | 'F' }) {
             </div>
           </>
         ) : (
-          <p>Girls hammer score calculation is not yet configured. Check back once the girls season data is in place.</p>
+          <p>Girls {RATING_SHORT} calculation is not yet configured. Check back once the girls season data is in place.</p>
         )}
       </div>
     )

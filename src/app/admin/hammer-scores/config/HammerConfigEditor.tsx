@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import type { HammerConfig } from '@/lib/hammerConfig'
 import type { PreviewRow } from '@/app/api/admin/hammer-score-preview/route'
+import { RATING_SHORT } from '@/lib/rating'
 
 
 // ─── Tiny primitives ─────────────────────────────────────────────────────────
@@ -343,7 +344,7 @@ export function HammerConfigEditor() {
         </Subsection>
 
         <Subsection title="Expected Outcome Thresholds">
-          <p className="text-xs text-slate-400 mb-2">15 score-diff breakpoints (descending) that map hammer score gap to an expected outcome rank (1–15). Must have exactly 15 values.</p>
+          <p className="text-xs text-slate-400 mb-2">15 score-diff breakpoints (descending) that map {RATING_SHORT} gap to an expected outcome rank (1–15). Must have exactly 15 values.</p>
           <div className="flex gap-1.5 flex-wrap">
             {m.expected_outcome_thresholds.map((v, i) => (
               <div key={i} className="flex flex-col items-center gap-0.5">
@@ -402,7 +403,7 @@ export function HammerConfigEditor() {
         </Subsection>
 
         <Subsection title="OOS Opponent Score Bands">
-          <p className="text-xs text-slate-400 mb-2">Estimated hammer score range for out-of-state opponents, scaled by round depth (lo = early rounds, hi = deep rounds).</p>
+          <p className="text-xs text-slate-400 mb-2">Estimated {RATING_SHORT} range for out-of-state opponents, scaled by round depth (lo = early rounds, hi = deep rounds).</p>
           <Row label="20-pt tournament — lo">
             <NumInput value={m.oos_bands.tier_20.lo}    onChange={v => setM({ oos_bands: { ...m.oos_bands, tier_20:    { ...m.oos_bands.tier_20,    lo: v } } })} min={0} />
           </Row>
@@ -493,7 +494,7 @@ export function HammerConfigEditor() {
         <Row label="Tournament ceiling"><NumInput value={cc.tournament} onChange={v => setCeil({ tournament: v })} min={0} max={100} /></Row>
         <Row label="Match ceiling">    <NumInput value={cc.match}       onChange={v => setCeil({ match: v })}       min={0} max={100} /></Row>
         <div className="mt-2 text-xs text-slate-400">
-          Max possible hammer score: {cc.postseason + cc.tournament + cc.match}
+          Max possible {RATING_SHORT}: {cc.postseason + cc.tournament + cc.match}
         </div>
       </Section>
 
