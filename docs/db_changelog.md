@@ -2,6 +2,45 @@
 
 ---
 
+## 2026-10-30 — Dominance average purged
+
+**Migration file:** `docs/migrations/20261030_purge_dominance_average.sql`
+
+**Purpose:** Removes the old per-match dominance average (pins/TFs graded by speed to a max of 9, MD = 2, Dec = 1, losses negative). It predates the Hammer Score rating:
+- It was called "Dominance Score" until the March 2026 brand refresh renamed it "Hammer Rating".
+- It sat beside the real Hammer Score (`wrestler_hammer_scores`: last 20 matches, tournaments, postseason finish), and the boys leaderboards labeled it "Hammer Score".
+
+The site stopped using it first (commit "Remove the dominance average and the Hammer Champ award"):
+- Home and postseason lists.
+- State Champions "Hammer" column.
+- District, region and state cards.
+- Leaderboard Postseason and Analytics tables.
+- Team-table fallback.
+- Profile career "Hammer" column and the 🔨 Hammer Champ award (top dominance at a district/region/state). The ⚡ Terminator award stays.
+- School roster "Hammer" column.
+
+**Database changes:**
+- **Dropped:**
+  - leaderboards: `lb_dominance`, `lb_p_dominance`, `lb_gp_dominance`
+  - pages: `district_dominance`, `region_dominance`, `girls_region_dominance` (both), `state_dominance`
+  - the helper `dom_match_score`, dropped only after a check that nothing else used it
+- **Rebuilt:**
+  - `state_champions` without `dominance_score` (was not in the repo before)
+  - `lb_rs_team_stats` without `hammer_sum`
+
+**Tables affected:** none (functions only)
+
+**APPLIED** — 2026-10-30, Supabase SQL editor
+
+**Reversible?** Yes — `docs/migrations/backups/20261030_dominance_functions_before.sql`. `dom_match_score`'s body was not captured, so it would need rewriting from the formula above.
+**Verified?** Yes — 2026-10-30:
+- 0 functions mention dominance.
+- `state_champions` returns 14 boys 2025-26 champions (weight, wrestler, school, seed).
+- `lb_rs_team_stats` returns 312 boys / 251 girls schools with no `hammer_sum`.
+- Live home, postseason, state and leaderboard pages show no dominance or "Hammer Rating".
+
+---
+
 ## 2026-10-30 — Bonus %: one rule for every leaderboard and the school ranks, both genders
 
 **Migration file:** `docs/migrations/20261030_bonus_pct_one_rule.sql`
