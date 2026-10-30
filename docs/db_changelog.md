@@ -2,12 +2,27 @@
 
 ---
 
+## 2026-10-29 — Girls program 358 named Roselle
+
+**Migration file:** `docs/migrations/20261029_girls_358_name_roselle.sql`
+
+**Purpose:** The girls-programs cleanup added school 358 to `girls_schools` as "Abraham Clark". The school is Roselle, the same as its boys program; "Abraham Clark" is never used as a name.
+
+**Tables affected:** `girls_schools` (1 display_name)
+
+**APPLIED** — 2026-10-29, service-role script
+
+**Reversible?** Yes
+**Verified?** Yes — 358 = Roselle
+
+---
+
 ## 2026-10-29 — Girls programs for 2025-26 lined up with the Track rosters
 
 **Migration file:** `docs/migrations/20261029_girls_programs_2025_26_cleanup.sql`
 
 **Purpose:** The Track girls rosters list 255 teams. These changes make our girls programs match:
-- **Added as girls programs:** Abraham Clark (358) and East Orange (111). Both have girls duals.
+- **Added as girls programs:** Roselle (358, added as "Abraham Clark" and renamed in the entry above) and East Orange (111). Both have girls duals.
 - **Added, then inactive for 2025-26:** Barringer (80) and Penns Grove (310). Neither had a team.
 - **Inactive for 2025-26:** Ramapo (17). There's no roster anywhere.
 - **Kittatinny (315) moved to Newton/Kittatinny (24):**
@@ -17,14 +32,14 @@
 
 **Tables affected:** `girls_schools` (+4, 24 is_combined), `inactive_school_seasons` (+4), `tournament_entries` (23 school_id 315→24), `precomputed_team_scores` (3 school_id 315→24)
 
-**PENDING** — Supabase SQL editor
+**APPLIED** — 2026-10-29, Supabase SQL editor
 
 **Reversible?** Yes:
 - Set the 23 entries (girls, 2026, now at 24 but originally at 315) and cache rows 1672, 1198 and 1410 back to 315.
 - Remove the 4 inactive rows and the 4 girls_schools rows.
 - Set 24's is_combined back to false.
 
-**Verified?** Pending
+**Verified?** Yes — 2026-10-29: 4 inactive rows, Newton combined, 0 girls 2026 entries left at 315, cache rows 1672/1198/1410 on 24
 
 ---
 
