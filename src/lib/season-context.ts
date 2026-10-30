@@ -33,12 +33,12 @@ export async function getNewestSeason(): Promise<SeasonInfo> {
   return s
 }
 
-/** Roster-grade review works on the newest season (by start_year) that has roster rows loaded. */
-export async function getRosterImportSeason(db: ReturnType<typeof createSupabaseAdmin>): Promise<SeasonInfo> {
+/** Roster-grade review works on the newest season (by start_year) that has roster rows loaded for that gender. */
+export async function getRosterImportSeason(db: ReturnType<typeof createSupabaseAdmin>, gender: Gender): Promise<SeasonInfo> {
   for (const s of await getSeasons()) {
-    const { count, error } = await db.from('roster_grade_import').select('id', { count: 'exact', head: true }).eq('season_id', s.id)
+    const { count, error } = await db.from('roster_grade_import').select('id', { count: 'exact', head: true }).eq('season_id', s.id).eq('gender', gender)
     if (error) throw new Error(`roster_grade_import: ${error.message}`)
     if (count) return s
   }
-  throw new Error('No roster rows loaded for any season')
+  throw new Error(`No ${gender === 'F' ? 'girls' : 'boys'} roster rows loaded for any season`)
 }

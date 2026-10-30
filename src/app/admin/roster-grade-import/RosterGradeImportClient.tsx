@@ -184,13 +184,17 @@ function SchoolPicker({
 
 // ── Main Component ─────────────────────────────────────────────────────────────
 
-export function RosterGradeImportClient() {
+// Boys and girls are separate imports with their own API routes and pages:
+// /admin/roster-grade-import (boys) and /admin/roster-grade-import-girls.
+export function RosterGradeImportClient({ gender }: { gender: 'M' | 'F' }) {
   const router = useRouter()
-  const { gender } = useAdminGender()
+  const { gender: adminGender, loaded } = useAdminGender()
+  const api = gender === 'F' ? '/api/admin/roster-grade-import-girls' : '/api/admin/roster-grade-import'
 
+  // The admin gender toggle switches to the other gender's import page
   useEffect(() => {
-    if (gender === 'F') router.replace('/admin')
-  }, [gender, router])
+    if (loaded && adminGender !== gender) router.replace(adminGender === 'F' ? '/admin/roster-grade-import-girls' : '/admin/roster-grade-import')
+  }, [loaded, adminGender, gender, router])
 
   const [phase, setPhase] = useState<Phase>('schools')
   const [schools, setSchools] = useState<School[]>([])
@@ -223,15 +227,17 @@ export function RosterGradeImportClient() {
   const [unresolvedCount, setUnresolvedCount] = useState<number | null>(null)
   const [unlinkedCount, setUnlinkedCount] = useState<number | null>(null)
   useEffect(() => {
-    fetch('/api/admin/roster-grade-import/unresolved')
+    fetch(`${api}/unresolved`)
       .then(r => r.json())
       .then(d => { if (Array.isArray(d.items)) setUnresolvedCount(d.items.length) })
       .catch(() => {})
+    // Unlinked dual matches is a boys tool (boys dual_meet_matches)
+    if (gender === 'F') return
     fetch('/api/admin/unlinked-duals')
       .then(r => r.json())
       .then(d => { if (Array.isArray(d.items)) setUnlinkedCount(d.items.length) })
       .catch(() => {})
-  }, [])
+  }, [api, gender])
 
   // School filter
   const [schoolFilter, setSchoolFilter] = useState<'all' | 'unmatched' | 'matched'>('all')
@@ -243,8 +249,8 @@ export function RosterGradeImportClient() {
     setSchoolsError(null)
     try {
       const [rosterRes, programRes] = await Promise.all([
-        fetch('/api/admin/roster-grade-import/schools'),
-        fetch('/api/admin/roster-grade-import/schools?list=true'),
+        fetch(`${api}/schools`),
+        fetch(`${api}/schools?list=true`),
       ])
       if (!rosterRes.ok) throw new Error(await rosterRes.text())
       const { schools: data } = await rosterRes.json()
@@ -258,16 +264,16 @@ export function RosterGradeImportClient() {
     } finally {
       setSchoolsLoading(false)
     }
-  }, [])
+  }, [api])
 
   useEffect(() => { loadSchools() }, [loadSchools])
 
   // ── Load confirm stats ────────────────────────────────────────────────────────
 
   const loadConfirmStats = useCallback(async () => {
-    const res = await fetch('/api/admin/roster-grade-import/confirm')
+    const res = await fetch(`${api}/confirm`)
     if (res.ok) setConfirmStats(await res.json())
-  }, [])
+  }, [api])
 
   useEffect(() => {
     if (phase === 'confirm') loadConfirmStats()
@@ -285,7 +291,7 @@ export function RosterGradeImportClient() {
 
     setSavingSchools(true)
     try {
-      const res = await fetch('/api/admin/roster-grade-import/schools', {
+      const res = await fetch(`${api}/schools`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -301,7 +307,7 @@ export function RosterGradeImportClient() {
   }
 
   async function skipSchool(school_name_raw: string) {
-    await fetch('/api/admin/roster-grade-import/schools', {
+    await fetch(`${api}/schools`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify([{ school_name_raw, action: 'skip' }]),
@@ -319,7 +325,7 @@ export function RosterGradeImportClient() {
     setEntriesLoading(true)
     setPhase('wrestlers')
     try {
-      const res = await fetch(`/api/admin/roster-grade-import/wrestlers?school_id=${school.school_id}`)
+      const res = await fetch(`${api}/wrestlers?school_id=${school.school_id}`)
       if (!res.ok) throw new Error(await res.text())
       const data = await res.json()
       setEntries(data.entries)
@@ -353,7 +359,7 @@ export function RosterGradeImportClient() {
         ...revert.map(([, e]) => ({ id: e.entryId!, wrestler_id: null, status: 'no_match' })),
       ]
       if (patchPayload.length > 0) {
-        const patchRes = await fetch('/api/admin/roster-grade-import/wrestlers', {
+        const patchRes = await fetch(`${api}/wrestlers`, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(patchPayload),
@@ -362,7 +368,7 @@ export function RosterGradeImportClient() {
       }
 
       if (manual.length > 0) {
-        const putRes = await fetch('/api/admin/roster-grade-import/wrestlers', {
+        const putRes = await fetch(`${api}/wrestlers`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(manual),
@@ -372,7 +378,7 @@ export function RosterGradeImportClient() {
       }
 
       if (accept.length > 0) {
-        const confirmRes = await fetch('/api/admin/roster-grade-import/confirm', {
+        const confirmRes = await fetch(`${api}/confirm`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ school_id: school.school_id, ids: accept.map(([, e]) => e.entryId) }),
@@ -383,7 +389,7 @@ export function RosterGradeImportClient() {
 
       const written = accept.length + manual.length
       setRosterMessage(`Confirmed ${written} grade${written !== 1 ? 's' : ''} to the roster.`)
-      const r2 = await fetch(`/api/admin/roster-grade-import/wrestlers?school_id=${school.school_id}`)
+      const r2 = await fetch(`${api}/wrestlers?school_id=${school.school_id}`)
       const data = await r2.json()
       setEntries(data.entries)
       setLiveWrestlers(data.liveWrestlers ?? [])
@@ -403,7 +409,7 @@ export function RosterGradeImportClient() {
     setConfirming(true)
     setConfirmResult(null)
     try {
-      const res = await fetch('/api/admin/roster-grade-import/confirm', {
+      const res = await fetch(`${api}/confirm`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({}),
@@ -436,12 +442,12 @@ export function RosterGradeImportClient() {
 
   // ── Phase: Schools ──────────────────────────────────────────────────────────
 
-  if (phase === 'unlinked') {
+  if (phase === 'unlinked' && gender === 'M') {
     return <UnlinkedDuals onBack={() => { setPhase('schools'); loadSchools() }} onCount={setUnlinkedCount} />
   }
 
   if (phase === 'unresolved') {
-    return <UnresolvedGrades onBack={() => { setPhase('schools'); loadSchools() }} onCount={setUnresolvedCount} />
+    return <UnresolvedGrades api={api} onBack={() => { setPhase('schools'); loadSchools() }} onCount={setUnresolvedCount} />
   }
 
   if (phase === 'schools') {
@@ -459,12 +465,14 @@ export function RosterGradeImportClient() {
           >
             Grades Unresolved{unresolvedCount != null ? ` (${unresolvedCount})` : ''}
           </button>
+          {gender === 'M' && (
           <button
             className={`px-3 py-1 rounded text-xs font-medium border ${unlinkedCount ? 'border-amber-400 text-amber-800 bg-amber-50' : 'border-slate-300 text-slate-600'}`}
             onClick={() => setPhase('unlinked')}
           >
             Unlinked Matches{unlinkedCount != null ? ` (${unlinkedCount})` : ''}
           </button>
+          )}
           <button
             className="px-3 py-1 rounded bg-slate-900 text-white text-xs font-medium disabled:opacity-40"
             onClick={() => setPhase('confirm')}

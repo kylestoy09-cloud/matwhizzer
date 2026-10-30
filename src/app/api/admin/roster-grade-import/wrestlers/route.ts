@@ -34,8 +34,10 @@ function nameSimilarity(
   trackFirst: string, trackLast: string,
   liveFirst: string,  liveLast: string,
 ): number {
-  const trackFull = `${trackFirst} ${trackLast}`.toLowerCase().trim()
-  const liveFull  = `${liveFirst}  ${liveLast}`.toLowerCase().trim()
+  // Whole-name compare, so a split like "Ana Lopez" / "Diaz" matches "Ana" / "Lopez Diaz"
+  const full = (a: string, b: string) => `${a} ${b}`.toLowerCase().replace(/\s+/g, ' ').trim()
+  const trackFull = full(trackFirst, trackLast)
+  const liveFull  = full(liveFirst, liveLast)
   // Exact full name
   if (trackFull === liveFull) return 1.0
   // Last name exact + first name initial
@@ -58,13 +60,14 @@ export async function GET(req: NextRequest) {
   if (!schoolId) return NextResponse.json({ error: 'school_id required' }, { status: 400 })
 
   const db = createSupabaseAdmin()
-  const season = await getRosterImportSeason(db)
+  const season = await getRosterImportSeason(db, 'M')
 
   // wrestlers has no school_id column — look up via wrestler_name_aliases
   const [trackRes, aliasRes] = await Promise.all([
     db.from('roster_grade_import')
       .select('id, first_name_raw, last_name_raw, weight_class, grade, status, wrestler_id')
       .eq('season_id', season.id)
+      .eq('gender', 'M')
       .eq('school_id', schoolId)
       .in('status', ['school_matched', 'wrestler_matched', 'no_match', 'confirmed'])
       .order('last_name_raw'),

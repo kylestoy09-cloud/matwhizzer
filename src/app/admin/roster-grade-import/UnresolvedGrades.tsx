@@ -59,7 +59,7 @@ function initialDecision(item: Item): Decision {
 
 // ── Component ──────────────────────────────────────────────────────────────────
 
-export function UnresolvedGrades({ onBack, onCount }: { onBack: () => void; onCount: (n: number) => void }) {
+export function UnresolvedGrades({ api, onBack, onCount }: { api: string; onBack: () => void; onCount: (n: number) => void }) {
   const [items, setItems] = useState<Item[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -71,7 +71,7 @@ export function UnresolvedGrades({ onBack, onCount }: { onBack: () => void; onCo
     setLoading(true)
     setError(null)
     try {
-      const res = await fetch('/api/admin/roster-grade-import/unresolved')
+      const res = await fetch(`${api}/unresolved`)
       const data = await res.json()
       if (!res.ok) throw new Error(data.error)
       const list: Item[] = data.items ?? []
@@ -83,7 +83,7 @@ export function UnresolvedGrades({ onBack, onCount }: { onBack: () => void; onCo
     } finally {
       setLoading(false)
     }
-  }, [onCount])
+  }, [api, onCount])
 
   useEffect(() => { load() }, [load])
 
@@ -93,7 +93,7 @@ export function UnresolvedGrades({ onBack, onCount }: { onBack: () => void; onCo
     setSaving(item.wrestler.id)
     setRowError(p => { const n = { ...p }; delete n[item.wrestler.id]; return n })
     try {
-      const res = await fetch('/api/admin/roster-grade-import/unresolved', {
+      const res = await fetch(`${api}/unresolved`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

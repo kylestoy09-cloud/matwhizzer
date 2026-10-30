@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
 
   if (req.nextUrl.searchParams.get('list') === 'true') {
     const db = createSupabaseAdmin()
-    const season = await getRosterImportSeason(db)
+    const season = await getRosterImportSeason(db, 'M')
     // Union all sources: program enrollment tables + schools with boys dual meets in the roster's season
     const [distData, regData, confData, meetsTeam1, meetsTeam2] = await Promise.all([
       db.from('boys_school_districts').select('school_id').eq('season_id', season.id),
@@ -53,7 +53,7 @@ export async function GET(req: NextRequest) {
   }
 
   const db = createSupabaseAdmin()
-  const season = await getRosterImportSeason(db)
+  const season = await getRosterImportSeason(db, 'M')
 
   // Paginate through all rows (Supabase default cap is 1,000)
   const PAGE = 1000
@@ -64,6 +64,7 @@ export async function GET(req: NextRequest) {
       .from('roster_grade_import')
       .select('school_name_raw, school_id, status')
       .eq('season_id', season.id)
+      .eq('gender', 'M')
       .order('school_name_raw')
       .range(from, from + PAGE - 1)
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
@@ -137,7 +138,7 @@ export async function PATCH(req: NextRequest) {
   }
 
   const db = createSupabaseAdmin()
-  const season = await getRosterImportSeason(db)
+  const season = await getRosterImportSeason(db, 'M')
   const errors: string[] = []
 
   for (const { school_name_raw, school_id, action } of body) {
@@ -146,6 +147,7 @@ export async function PATCH(req: NextRequest) {
         .from('roster_grade_import')
         .update({ status: 'skipped' })
         .eq('season_id', season.id)
+        .eq('gender', 'M')
         .eq('school_name_raw', school_name_raw)
         .eq('status', 'pending')
       if (error) errors.push(`${school_name_raw}: ${error.message}`)
@@ -161,6 +163,7 @@ export async function PATCH(req: NextRequest) {
       .from('roster_grade_import')
       .update({ school_id, status: 'school_matched' })
       .eq('season_id', season.id)
+      .eq('gender', 'M')
       .eq('school_name_raw', school_name_raw)
       .in('status', ['pending'])
 

@@ -2,6 +2,26 @@
 
 ---
 
+## 2026-10-29 — roster_grade_import gets a gender column (girls roster import)
+
+**Migration file:** `docs/migrations/20261029_roster_grade_import_gender.sql`
+
+**Purpose:** Girls 2025-26 Track rosters are going through the Roster Grade Import tool, the same way the boys did in September. The table had no gender, so girls rows for season 2026 would have shared one pool with the 12,225 boys rows. Adds `gender` (M/F, NOT NULL; every existing row set to M) and indexes `(season_id, gender, status)` and `(school_id, gender)`.
+
+Code to go with it:
+- The boys routes filter on gender M.
+- New girls routes (`/api/admin/roster-grade-import-girls/*`) and page (`/admin/roster-grade-import-girls`).
+- New loader: `scripts/load_roster_grade_import.mts`.
+
+**Tables affected:** `roster_grade_import` (+1 column, +1 check, +2 indexes)
+
+**PENDING** — run in the Supabase SQL editor before the code deploys
+
+**Reversible?** Yes — `ALTER TABLE roster_grade_import DROP COLUMN gender;` (after removing girls rows)
+**Verified?** Pending — expect one row from the verify query: M / 2026 / 12225
+
+---
+
 ## 2026-10-29 — Daily snapshot reports rebuilt for 2025-26 (boys and girls)
 
 **Migration file:** none (data rebuild) — `scripts/backfill_snapshots.mts <M|F> 2025-26 2026 --apply`

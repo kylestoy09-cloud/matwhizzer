@@ -7,21 +7,26 @@ export type AdminGender = 'M' | 'F'
 type AdminGenderContextType = {
   gender: AdminGender
   setGender: (g: AdminGender) => void
+  // false until the saved choice has been read; gender is 'M' until then
+  loaded: boolean
 }
 
 const AdminGenderContext = createContext<AdminGenderContextType>({
   gender: 'M',
   setGender: () => {},
+  loaded: false,
 })
 
 const STORAGE_KEY = 'mw_admin_gender'
 
 export function AdminGenderProvider({ children }: { children: ReactNode }) {
   const [gender, setGenderState] = useState<AdminGender>('M')
+  const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY)
     if (stored === 'M' || stored === 'F') setGenderState(stored)
+    setLoaded(true)
   }, [])
 
   function setGender(g: AdminGender) {
@@ -30,7 +35,7 @@ export function AdminGenderProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AdminGenderContext.Provider value={{ gender, setGender }}>
+    <AdminGenderContext.Provider value={{ gender, setGender, loaded }}>
       {children}
     </AdminGenderContext.Provider>
   )

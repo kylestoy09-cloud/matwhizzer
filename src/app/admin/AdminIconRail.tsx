@@ -133,7 +133,7 @@ function buildRail(onChatClick?: () => void, onMicrocheckClick?: () => void, gen
         { label: 'Team Scores',         href: '/admin/team-scores' },
         { label: 'Post-Season Bracket', href: '/admin/bracket' },
         { label: 'Match Card',          href: '/admin/match-card' },
-        ...(gender === 'M' ? [{ label: 'Roster Grade Import', href: '/admin/roster-grade-import' }] : []),
+        { label: 'Roster Grade Import', href: gender === 'F' ? '/admin/roster-grade-import-girls' : '/admin/roster-grade-import' },
       ]},
       { heading: 'Admin Tools', items: [
         { label: 'Help Desk',             href: '/admin/help-desk' },

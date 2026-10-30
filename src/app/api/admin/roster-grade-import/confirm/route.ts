@@ -40,11 +40,12 @@ export async function GET() {
 
   const db = createSupabaseAdmin()
 
-  const season = await getRosterImportSeason(db)
+  const season = await getRosterImportSeason(db, 'M')
   const { data, error } = await fetchAllRows<{ wrestler_id: string | null; grade: string }>((from, to) => db
     .from('roster_grade_import')
     .select('wrestler_id, grade')
     .eq('season_id', season.id)
+    .eq('gender', 'M')
     .eq('status', 'wrestler_matched')
     .order('id')
     .range(from, to))
@@ -71,12 +72,13 @@ export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => ({})) as { school_id?: number; ids?: string[] }
   const db = createSupabaseAdmin()
 
-  const season = await getRosterImportSeason(db)
+  const season = await getRosterImportSeason(db, 'M')
   const { data: fetched, error: fetchErr } = await fetchAllRows<{ id: string; wrestler_id: string | null; grade: string }>((from, to) => {
     let query = db
       .from('roster_grade_import')
       .select('id, wrestler_id, grade')
       .eq('season_id', season.id)
+      .eq('gender', 'M')
       .eq('status', 'wrestler_matched')
     if (body.school_id) query = query.eq('school_id', body.school_id)
     if (body.ids && body.ids.length > 0) query = query.in('id', body.ids)

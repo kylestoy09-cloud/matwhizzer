@@ -34,12 +34,13 @@ export async function GET() {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const db = createSupabaseAdmin()
-  const season = await getRosterImportSeason(db)
+  const season = await getRosterImportSeason(db, 'M')
 
   const { data: allRows, error } = await fetchAllRows<ImportRow>((from, to) =>
     db.from('roster_grade_import')
       .select('id, status, wrestler_id, grade, first_name_raw, last_name_raw, weight_class, school_id')
       .eq('season_id', season.id)
+      .eq('gender', 'M')
       .in('status', ['wrestler_matched', 'confirmed'])
       .not('wrestler_id', 'is', null)
       .order('id')
@@ -127,13 +128,14 @@ export async function POST(req: NextRequest) {
   }
 
   const db = createSupabaseAdmin()
-  const season = await getRosterImportSeason(db)
+  const season = await getRosterImportSeason(db, 'M')
   const now = new Date().toISOString()
   const confirmedBy = user.email ?? 'admin'
 
   const { data: dbRows, error: rErr } = await db.from('roster_grade_import')
     .select('id, wrestler_id, grade, first_name_raw, last_name_raw, school_id, status')
     .eq('season_id', season.id)
+    .eq('gender', 'M')
     .in('id', body.rows.map(r => r.id))
   if (rErr) return NextResponse.json({ error: rErr.message }, { status: 500 })
   const rowById = new Map((dbRows ?? []).map(r => [r.id, r]))

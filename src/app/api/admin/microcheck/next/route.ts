@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getNewestSeason } from '@/lib/season-context'
+import { getNewestSeason, getWorkingSeason } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin }  from '@/lib/supabase/service'
 import { findNextTask }         from '../_engine'
@@ -17,6 +17,8 @@ export async function GET(req: NextRequest) {
   const db = createSupabaseAdmin()
   const programTable = gender === 'F' ? 'girls_schools' : 'boys_schools'
   const coachTable   = gender === 'F' ? 'girls_coaches' : 'boys_coaches'
+  // A school marked inactive in a past season may be back; only this gender's working season counts
+  const working      = await getWorkingSeason(gender)
 
   // Query everything in one parallel batch — same pattern as school-directory route
   const [gsRes, schoolsRes, logRes, flagRes, inactiveRes] = await Promise.all([
@@ -34,7 +36,8 @@ export async function GET(req: NextRequest) {
       .eq('resolved', false),
     db.from('inactive_school_seasons')
       .select('school_id')
-      .eq('gender', gender),
+      .eq('gender', gender)
+      .eq('season_id', working.id),
   ])
 
   if (gsRes.error)       return NextResponse.json({ error: `${programTable}: ` + gsRes.error.message },      { status: 500 })
@@ -43,18 +46,18 @@ export async function GET(req: NextRequest) {
   if (flagRes.error)     return NextResponse.json({ error: 'roster_flags: '    + flagRes.error.message },     { status: 500 })
   if (inactiveRes.error) return NextResponse.json({ error: 'inactive_seasons: '+ inactiveRes.error.message }, { status: 500 })
 
-  const boysSchools  = gsRes.data ?? []
-  const boysIdSet    = new Set(boysSchools.map(bs => bs.school_id))
-  const boysNameMap  = new Map(boysSchools.map(bs => [bs.school_id, bs.display_name]))
+  const programSchools  = gsRes.data ?? []
+  const programIdSet    = new Set(programSchools.map(bs => bs.school_id))
+  const programNameMap  = new Map(programSchools.map(bs => [bs.school_id, bs.display_name]))
   const inactiveIds  = new Set((inactiveRes.data ?? []).map(r => r.school_id))
 
-  // Filter to active boys schools only, merge in boys display names, re-sort
+  // Filter to this gender's active programs, merge in program display names, re-sort
   const schools = (schoolsRes.data ?? [])
-    .filter(s => boysIdSet.has(s.id) && !inactiveIds.has(s.id))
-    .map(s => ({ ...s, display_name: boysNameMap.get(s.id) ?? s.display_name }))
+    .filter(s => programIdSet.has(s.id) && !inactiveIds.has(s.id))
+    .map(s => ({ ...s, display_name: programNameMap.get(s.id) ?? s.display_name }))
     .sort((a, b) => a.display_name.localeCompare(b.display_name))
 
-  const boysSchoolIds = schools.map(s => s.id)
+  const programSchoolIds = schools.map(s => s.id)
 
   // Coaches
   let coachRows: { school_id: number; email: string | null }[] = []
@@ -62,12 +65,12 @@ export async function GET(req: NextRequest) {
     .select('school_id, email')
     .eq('season_id', (await getNewestSeason()).id)
     .eq('is_active', true)
-    .in('school_id', boysSchoolIds)
+    .in('school_id', programSchoolIds)
   if (!coachRes.error) coachRows = coachRes.data ?? []
 
   const loggedSet  = new Set((logRes.data ?? []).map(r => `${r.school_id}_${r.field}`))
   const coachMap   = new Map(coachRows.map(c => [c.school_id, { email: c.email }]))
-  const rosterSet  = boysIdSet  // every boys school needs a roster/grade review
+  const rosterSet  = programIdSet  // every program school needs a roster/grade review
   const flaggedSet = new Set((flagRes.data ?? []).map(r => r.school_id))
 
   // ── Read priority order, fall back to default if table missing ───────────────

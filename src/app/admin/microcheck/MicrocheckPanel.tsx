@@ -1,6 +1,10 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
+import { useAdminGender } from '@/components/admin/AdminGenderContext'
+
+// Each gender's roster import has its own API routes
+const rosterApi = (g: 'M' | 'F') => g === 'F' ? '/api/admin/roster-grade-import-girls' : '/api/admin/roster-grade-import'
 
 /* ── Name similarity (module-level so useEffect can call it) ── */
 function _triSim(a: string, b: string): number {
@@ -107,6 +111,7 @@ function SearchButton({ field, schoolName }: { field: string; schoolName: string
 type View = 'home' | 'task' | 'done'
 
 export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
+  const { gender } = useAdminGender()
   const [tab,          setTab]          = useState<'tasks' | 'cantfind' | 'flagged'>('tasks')
   const [view,         setView]         = useState<View>('home')
   const [task,         setTask]         = useState<TaskInfo | null>(null)
@@ -173,7 +178,7 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
     setRosterLoading(true)
     setRosterEntries([])
     setPendingDecisions(new Map())
-    fetch(`/api/admin/roster-grade-import/wrestlers?school_id=${task.school_id}`)
+    fetch(`${rosterApi(task.gender)}/wrestlers?school_id=${task.school_id}`)
       .then(r => r.json())
       .then(data => {
         if (data.error) { setError(data.error); return }
@@ -209,7 +214,7 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
     setError(null)
     setValue('')
     try {
-      const res = await fetch('/api/admin/microcheck/next?gender=M')
+      const res = await fetch(`/api/admin/microcheck/next?gender=${gender}`)
       const data = await res.json()
       if (data.error) { setError(data.error); return }
       if (!data.task) { setView('done'); setTask(null); return }
@@ -241,7 +246,7 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
             payload.push({ id: e.id, wrestler_id: null, status: 'no_match' })
         }
         if (payload.length > 0) {
-          const patchRes = await fetch('/api/admin/roster-grade-import/wrestlers', {
+          const patchRes = await fetch(`${rosterApi(task.gender)}/wrestlers`, {
             method:  'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body:    JSON.stringify(payload),
@@ -251,7 +256,7 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
         }
         // Write the matched grades to the wrestlers (saving a match alone doesn't)
         if (claimedEntryIds.size > 0) {
-          const confirmRes = await fetch('/api/admin/roster-grade-import/confirm', {
+          const confirmRes = await fetch(`${rosterApi(task.gender)}/confirm`, {
             method:  'POST',
             headers: { 'Content-Type': 'application/json' },
             body:    JSON.stringify({ school_id: task.school_id, ids: [...claimedEntryIds] }),

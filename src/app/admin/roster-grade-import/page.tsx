@@ -22,7 +22,7 @@ export default async function RosterGradeImportPage() {
           Step 1: match schools. Step 2: match wrestlers per school. Step 3: confirm grades.
         </p>
       </div>
-      <RosterGradeImportClient />
+      <RosterGradeImportClient gender="M" />
     </div>
   )
 }

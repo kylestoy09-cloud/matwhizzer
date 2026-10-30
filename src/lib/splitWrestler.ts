@@ -5,6 +5,9 @@
 // same wrestler). This creates the second person and moves everything recorded
 // for the old record *at that school* to them. Hammer scores / match score logs
 // are rebuilt by the next recalculation.
+//
+// The new person takes the old record's gender, and their dual bouts live in
+// that gender's table (dual_meet_matches / dual_meet_matches_girls).
 
 import type { SupabaseClient } from '@supabase/supabase-js'
 
@@ -26,8 +29,13 @@ export async function splitWrestlerAtSchool(
     moved[k] = (moved[k] ?? 0) + (r.data?.length ?? 0)
   }
 
+  const { data: old, error: oErr } = await db.from('wrestlers').select('gender').eq('id', oldId).single()
+  if (oErr) throw new Error(`load wrestler: ${oErr.message}`)
+  const gender = old.gender as 'M' | 'F'
+  const dualBouts = gender === 'F' ? 'dual_meet_matches_girls' : 'dual_meet_matches'
+
   const { data: created, error: cErr } = await db.from('wrestlers').insert({
-    first_name: person.first_name, last_name: person.last_name, gender: 'M', is_oos: false,
+    first_name: person.first_name, last_name: person.last_name, gender, is_oos: false,
     grade: person.grade,
     grade_confirmed_at: person.grade ? (person.graded_at ?? new Date().toISOString()) : null,
     grade_confirmed_source: person.grade ? 'roster_upload' : null,
@@ -52,21 +60,21 @@ export async function splitWrestlerAtSchool(
       .insert({ raw_name: `${person.first_name} ${person.last_name}`, school_id: schoolId, wrestler_id: newId }).select('id'))
   }
 
-  // Dual meets: sides he wrestled for that school (+ winner on those bouts)
+  // Dual meets: sides they wrestled for that school (+ winner on those bouts)
   for (const side of ['a', 'b'] as const) {
-    const { data: rows, error } = await db.from('dual_meet_matches').select('id, winner_id')
+    const { data: rows, error } = await db.from(dualBouts).select('id, winner_id')
       .eq(`wrestler_${side}_id`, oldId).eq(`school_${side}_id`, schoolId)
-    if (error) throw new Error(`dual_meet_matches: ${error.message}`)
+    if (error) throw new Error(`${dualBouts}: ${error.message}`)
     const ids = (rows ?? []).map(r => r.id)
     if (ids.length === 0) continue
-    count('dual_meet_matches', await db.from('dual_meet_matches').update({ [`wrestler_${side}_id`]: newId }).in('id', ids).select('id'))
+    count(dualBouts, await db.from(dualBouts).update({ [`wrestler_${side}_id`]: newId }).in('id', ids).select('id'))
     const won = (rows ?? []).filter(r => r.winner_id === oldId).map(r => r.id)
-    if (won.length) await db.from('dual_meet_matches').update({ winner_id: newId }).in('id', won)
+    if (won.length) await db.from(dualBouts).update({ winner_id: newId }).in('id', won)
   }
-  // Dual sides imported with his name at that school but never linked to anyone
+  // Dual sides imported with their name at that school but never linked to anyone
   const fullName = `${person.first_name} ${person.last_name}`
   for (const side of ['a', 'b'] as const) {
-    count('dual_meet_matches (unlinked)', await db.from('dual_meet_matches').update({ [`wrestler_${side}_id`]: newId })
+    count(`${dualBouts} (unlinked)`, await db.from(dualBouts).update({ [`wrestler_${side}_id`]: newId })
       .is(`wrestler_${side}_id`, null).eq(`school_${side}_id`, schoolId).ilike(`wrestler_${side}_name_raw`, fullName).select('id'))
   }
 

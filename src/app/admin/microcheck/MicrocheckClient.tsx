@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import { useSeasons } from '@/components/SeasonsProvider'
+import { useAdminGender } from '@/components/admin/AdminGenderContext'
 
 type SchoolProfileTask = {
   task_type:   'school_profile'
@@ -47,6 +48,7 @@ const FIELD_LABELS: Record<string, string> = {
 
 export function MicrocheckClient() {
   const { label: seasonLabelOf } = useSeasons()
+  const { gender } = useAdminGender()
   const [task,           setTask]           = useState<TaskInfo | null | 'idle' | 'loading' | 'done'>('idle')
   const [value,          setValue]          = useState('')
   const [submitting,     setSubmitting]     = useState(false)
@@ -60,7 +62,7 @@ export function MicrocheckClient() {
     setError(null)
     setValue('')
     try {
-      const res  = await fetch('/api/admin/microcheck/next?gender=M')
+      const res  = await fetch(`/api/admin/microcheck/next?gender=${gender}`)
       const data = await res.json()
       if (data.error) { setError(data.error); setTask(null); return }
       setTask(data.task ?? 'done')
@@ -68,7 +70,7 @@ export function MicrocheckClient() {
       setError('Network error — try again')
       setTask(null)
     }
-  }, [])
+  }, [gender])
 
   async function submitTie(winner: 'team1' | 'team2') {
     if (typeof task !== 'object' || task === null || task.task_type !== 'tie_resolution') return
@@ -308,7 +310,7 @@ export function MicrocheckClient() {
               Match wrestlers in the Roster Importer, then come back and tap Done.
             </p>
             <a
-              href="/admin/roster-grade-import"
+              href={task.gender === 'F' ? '/admin/roster-grade-import-girls' : '/admin/roster-grade-import'}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-700 hover:text-blue-900"
