@@ -2,6 +2,32 @@
 
 ---
 
+## 2026-10-29 — Girls programs for 2025-26 lined up with the Track rosters
+
+**Migration file:** `docs/migrations/20261029_girls_programs_2025_26_cleanup.sql`
+
+**Purpose:** The Track girls rosters list 255 teams. These changes make our girls programs match:
+- **Added as girls programs:** Abraham Clark (358) and East Orange (111). Both have girls duals.
+- **Added, then inactive for 2025-26:** Barringer (80) and Penns Grove (310). Neither had a team.
+- **Inactive for 2025-26:** Ramapo (17). There's no roster anywhere.
+- **Kittatinny (315) moved to Newton/Kittatinny (24):**
+  - Kittatinny is inactive for girls 2025-26 and merged into 24.
+  - Newton's girls program is marked combined.
+  - The 2025-26 girls tournament entries (23) and team-score rows (districts, regions, states) move from 315 to 24.
+
+**Tables affected:** `girls_schools` (+4, 24 is_combined), `inactive_school_seasons` (+4), `tournament_entries` (23 school_id 315→24), `precomputed_team_scores` (3 school_id 315→24)
+
+**PENDING** — Supabase SQL editor
+
+**Reversible?** Yes:
+- Set the 23 entries (girls, 2026, now at 24 but originally at 315) and cache rows 1672, 1198 and 1410 back to 315.
+- Remove the 4 inactive rows and the 4 girls_schools rows.
+- Set 24's is_combined back to false.
+
+**Verified?** Pending
+
+---
+
 ## 2026-10-29 — roster_grade_import gets a gender column (girls roster import)
 
 **Migration file:** `docs/migrations/20261029_roster_grade_import_gender.sql`
@@ -15,10 +41,10 @@ Code to go with it:
 
 **Tables affected:** `roster_grade_import` (+1 column, +1 check, +2 indexes)
 
-**PENDING** — run in the Supabase SQL editor before the code deploys
+**APPLIED** — 2026-10-29, Supabase SQL editor
 
 **Reversible?** Yes — `ALTER TABLE roster_grade_import DROP COLUMN gender;` (after removing girls rows)
-**Verified?** Pending — expect one row from the verify query: M / 2026 / 12225
+**Verified?** Yes — 2026-10-29: M / 2026 / 12225
 
 ---
 
