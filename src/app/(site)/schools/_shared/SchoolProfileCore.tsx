@@ -241,8 +241,11 @@ export async function SchoolProfileCore({
       supabase.from('school_districts').select('district:districts(name)').eq('school_id', profile.id).eq('season_id', season),
       supabase.from('school_regions').select('region:regions(name,gender)').eq('school_id', profile.id).eq('season_id', season),
       supabase.from('school_conferences').select('conference').eq('school_id', profile.id).eq('season_id', season).maybeSingle(),
-      // Coaches are kept per gender (the old shared coaches table is retired)
-      supabase.from(genderCode === 'F' ? 'girls_coaches' : 'boys_coaches').select('name').eq('school_id', dataSchoolId).eq('season_id', season).eq('title', 'Head Coach').eq('is_active', true).limit(1),
+      // Coaches are kept per gender (the old shared coaches table is retired).
+      // A coach stays on the page until a newer season has one: the page's
+      // season if it has a head coach, else the latest earlier one, else the
+      // newest on file (coaches collected ahead of a season that isn't live yet).
+      supabase.from(genderCode === 'F' ? 'girls_coaches' : 'boys_coaches').select('name, season_id').eq('school_id', dataSchoolId).eq('title', 'Head Coach').eq('is_active', true).order('season_id', { ascending: false }),
     ])
     if (distData && distData.length > 0) {
       const d = distData[0] as any
@@ -256,8 +259,12 @@ export async function SchoolProfileCore({
     if (confData.data?.conference) {
       profile = { ...profile, athletic_conference: confData.data.conference }
     }
-    if (!coachData.error && (coachData.data as any[])?.length > 0) {
-      headCoachName = (coachData.data as any[])[0]?.name ?? null
+    if (!coachData.error && coachData.data?.length) {
+      const coaches = coachData.data as { name: string; season_id: number | null }[]
+      const pick = coaches.find(c => c.season_id === season)
+        ?? coaches.find(c => c.season_id != null && c.season_id < season)
+        ?? coaches[0]
+      headCoachName = pick?.name ?? null
     }
   }
 
