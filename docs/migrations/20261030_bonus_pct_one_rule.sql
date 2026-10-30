@@ -82,12 +82,12 @@ AS $function$
     -- wins (a forfeit win is not a match)
     SELECT te.wrestler_id,
       COALESCE(te.school_id, sl.school_id) AS school_id,
-      CASE WHEN bout_is_bonus(m.win_type) THEN 1 ELSE 0 END AS is_bonus
+      CASE WHEN bout_is_bonus(m.win_type::text) THEN 1 ELSE 0 END AS is_bonus
     FROM matches m
     JOIN pool_tournaments pt ON m.tournament_id = pt.id
     JOIN tournament_entries te ON te.id = m.winner_entry_id
     LEFT JOIN school_lookup sl ON sl.wrestler_id = te.wrestler_id
-    WHERE m.validated = true AND NOT bout_no_match(m.win_type) AND NOT bout_is_forfeit(m.win_type)
+    WHERE m.validated = true AND NOT bout_no_match(m.win_type::text) AND NOT bout_is_forfeit(m.win_type::text)
     UNION ALL
     -- losses (forfeit losses count)
     SELECT te.wrestler_id,
@@ -97,7 +97,7 @@ AS $function$
     JOIN pool_tournaments pt ON m.tournament_id = pt.id
     JOIN tournament_entries te ON te.id = m.loser_entry_id
     LEFT JOIN school_lookup sl ON sl.wrestler_id = te.wrestler_id
-    WHERE m.validated = true AND NOT bout_no_match(m.win_type)
+    WHERE m.validated = true AND NOT bout_no_match(m.win_type::text)
       AND m.loser_entry_id IS NOT NULL
   ),
   agg AS (
@@ -151,12 +151,12 @@ AS $function$
     -- wins (a forfeit win is not a match)
     SELECT te.wrestler_id,
       COALESCE(te.school_id, sl.school_id) AS school_id,
-      CASE WHEN bout_is_bonus(m.win_type) THEN 1 ELSE 0 END AS is_bonus
+      CASE WHEN bout_is_bonus(m.win_type::text) THEN 1 ELSE 0 END AS is_bonus
     FROM matches m
     JOIN pool_tournaments pt ON m.tournament_id = pt.id
     JOIN tournament_entries te ON te.id = m.winner_entry_id
     LEFT JOIN school_lookup sl ON sl.wrestler_id = te.wrestler_id
-    WHERE m.validated = true AND NOT bout_no_match(m.win_type) AND NOT bout_is_forfeit(m.win_type)
+    WHERE m.validated = true AND NOT bout_no_match(m.win_type::text) AND NOT bout_is_forfeit(m.win_type::text)
     UNION ALL
     -- losses (forfeit losses count)
     SELECT te.wrestler_id,
@@ -166,7 +166,7 @@ AS $function$
     JOIN pool_tournaments pt ON m.tournament_id = pt.id
     JOIN tournament_entries te ON te.id = m.loser_entry_id
     LEFT JOIN school_lookup sl ON sl.wrestler_id = te.wrestler_id
-    WHERE m.validated = true AND NOT bout_no_match(m.win_type)
+    WHERE m.validated = true AND NOT bout_no_match(m.win_type::text)
       AND m.loser_entry_id IS NOT NULL
   ),
   agg AS (
