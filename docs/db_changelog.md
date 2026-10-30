@@ -2,6 +2,41 @@
 
 ---
 
+## 2026-10-30 — Bonus %: one rule for every leaderboard and the school ranks, both genders
+
+**Migration file:** `docs/migrations/20261030_bonus_pct_one_rule.sql`
+
+**Purpose:** Wrestlers with losses kept showing 100% Bonus %. Bonus % was computed separately in six functions, each handling forfeits its own way, and past fixes reached only some of them:
+- **Forfeit losses dropped (both genders):** `lb_p_most_bonus` and `lb_gp_most_bonus` left out every forfeit, so a forfeit loss vanished. Examples: Gavin Geleta 5/5, Amari Vann 4/4.
+- **Girls postseason board showed "—":** the 2026-08-03 fix only reached boys. `lb_gp_most_bonus` still returned `total_wins`, so the girls page showed "—" on every row.
+- **Girls regular season empty:** `lb_rs_individual_stats` and `lb_rs_team_stats` read the boys tables for both genders. The live versions also weren't v10.
+- **School-page state ranks broken:** `dual_meet_bonus_ranks` had two overloads. One was ambiguous, and the other read a `gender` column that `in_season_tournaments` doesn't have.
+
+**The rule** now lives in helper functions `bout_no_match`, `bout_is_forfeit` and `bout_is_bonus`:
+- **Bonus %:** bonus wins (fall, tech fall, major, incl. "Maj") ÷ matches counted.
+- **Matches counted:**
+  - every match wrestled
+  - forfeit **losses**
+  - contested matches that ended early (Inj./Def./DQ), for both wrestlers
+- **Not counted:** forfeit **wins**, byes, double forfeits, no contests.
+- **Medical forfeits** (M. For., MFFL, MFF; FORF in the postseason) are forfeits.
+
+**Tables affected:** none. Functions only:
+- **New:** 3 helpers.
+- **Replaced:** `lb_p_most_bonus`, `lb_gp_most_bonus` (return column now `total_matches`), `lb_rs_individual_stats`, `lb_rs_team_stats`.
+- **Rebuilt:** `dual_meet_bonus_ranks` (one 4-argument version).
+
+**APPLIED** — 2026-10-30, Supabase SQL editor
+
+**Reversible?** Yes — old definitions are in `docs/migrations/backups/20261030_bonus_functions_before.sql`.
+**Verified?** Yes — 2026-10-30:
+- **Postseason:** every pool, both genders, 2024-25 and 2025-26: 0 wrestlers at 100% with a counted loss. Geleta and Vann are below 100%.
+- **Regular season:** 0 at 100% with a loss (boys 11 at 100%, girls 6).
+- **Girls regular season:** 2,092 wrestlers and 251 teams (was 0).
+- **School ranks:** return a row for boys and girls.
+
+---
+
 ## 2026-10-29 — Girls Roster Grade Import in the admin tool registry
 
 **Migration file:** `docs/migrations/20261029_tool_registry_girls_roster_grade_import.sql`
