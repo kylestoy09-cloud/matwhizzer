@@ -241,7 +241,8 @@ export async function SchoolProfileCore({
       supabase.from('school_districts').select('district:districts(name)').eq('school_id', profile.id).eq('season_id', season),
       supabase.from('school_regions').select('region:regions(name,gender)').eq('school_id', profile.id).eq('season_id', season),
       supabase.from('school_conferences').select('conference').eq('school_id', profile.id).eq('season_id', season).maybeSingle(),
-      supabase.from('coaches').select('name').eq('school_id', dataSchoolId).eq('season_id', season).eq('title', 'Head Coach').eq('is_active', true).limit(1),
+      // Coaches are kept per gender (the old shared coaches table is retired)
+      supabase.from(genderCode === 'F' ? 'girls_coaches' : 'boys_coaches').select('name').eq('school_id', dataSchoolId).eq('season_id', season).eq('title', 'Head Coach').eq('is_active', true).limit(1),
     ])
     if (distData && distData.length > 0) {
       const d = distData[0] as any

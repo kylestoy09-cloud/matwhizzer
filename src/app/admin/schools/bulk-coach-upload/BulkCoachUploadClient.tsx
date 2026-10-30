@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { useAdminGender } from '@/components/admin/AdminGenderContext'
 
 function parseCSV(text: string): Record<string, string>[] {
   const lines = text.trim().split(/\r?\n/)
@@ -115,6 +116,9 @@ export function BulkCoachUploadClient() {
   const [error, setError]   = useState<string | null>(null)
   const [rows,  setRows]    = useState<CoachPreviewRow[]>([])
   const [log,   setLog]     = useState('')
+  // Coaches go to the admin toggle's gender, for the season the preview names
+  const { gender } = useAdminGender()
+  const [season, setSeason] = useState<{ id: number; label: string } | null>(null)
 
   const handleFile = async (file: File) => {
     setError(null)
@@ -129,10 +133,11 @@ export function BulkCoachUploadClient() {
     const res = await fetch('/api/admin/bulk-coach-match', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ rows: parsed }),
+      body: JSON.stringify({ rows: parsed, gender }),
     })
     const data = await res.json()
     if (data.error) { setError(data.error); return }
+    setSeason({ id: data.season_id, label: data.season_label })
 
     // Add stable key for React list rendering
     setRows((data.preview as Omit<CoachPreviewRow, 'key'>[]).map((r, i) => ({ ...r, key: i })))
@@ -164,6 +169,8 @@ export function BulkCoachUploadClient() {
             title:       row.title || 'Head Coach',
             coachEmail:  row.email,
             phone:       row.phone,
+            seasonId:    season?.id,
+            gender,
           }),
         })
         const d = await r.json()
@@ -177,6 +184,7 @@ export function BulkCoachUploadClient() {
             title:      row.title || undefined,
             coachEmail: row.email || undefined,
             phone:      row.phone || undefined,
+            gender,
           }),
         })
         const d = await r.json()
@@ -219,6 +227,7 @@ export function BulkCoachUploadClient() {
   if (phase === 'preview') return (
     <div>
       <div className="flex items-center gap-4 mb-4 text-sm text-slate-600">
+        <span className="font-semibold text-slate-900">{gender === 'F' ? 'Girls' : 'Boys'} coaches{season ? ` · ${season.label}` : ''}</span>
         <span><span className="font-semibold text-green-700">{applicable.length}</span> to apply</span>
         {unmatched.length > 0 && (
           <span><span className="font-semibold text-red-600">{unmatched.length}</span> unmatched</span>

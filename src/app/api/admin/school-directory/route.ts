@@ -36,6 +36,7 @@ export async function GET(req: NextRequest) {
     boysRegionsRes,
     profilesRes,
     cantFindRes,
+    inactiveRes,
   ] = await Promise.all([
     db.from('boys_schools').select('school_id, display_name'),
     db.from('schools')
@@ -61,6 +62,11 @@ export async function GET(req: NextRequest) {
       .select('school_id, field')
       .eq('gender', 'M')
       .eq('status', 'cant_find'),
+    // Programs marked inactive for this season (shown, flagged in the Active column)
+    db.from('inactive_school_seasons')
+      .select('school_id')
+      .eq('gender', 'M')
+      .eq('season_id', seasonId),
   ])
 
   const gradeCounts = await boysRosterGradeCounts(db, (boysSchoolsRes.data ?? []).map(bs => bs.school_id))
@@ -74,6 +80,7 @@ export async function GET(req: NextRequest) {
   const profileMap       = new Map((profilesRes.data ?? []).map(p => [p.school_id, p]))
   // Set of "school_id:field" for cant_find entries — drives amber highlighting
   const cantFindSet = new Set((cantFindRes.data ?? []).map(e => `${e.school_id}:${e.field}`))
+  const inactiveSet = new Set((inactiveRes.data ?? []).map(r => r.school_id))
 
   const schools = (boysSchoolsRes.data ?? [])
     .map(bs => {
@@ -99,6 +106,7 @@ export async function GET(req: NextRequest) {
         classification: pr?.classification ?? null,
         roster_count:   gc?.roster ?? 0,
         graded_count:   gc?.graded ?? 0,
+        active:         !inactiveSet.has(bs.school_id),
       }
     })
     .sort((a, b) => a.display_name.localeCompare(b.display_name))

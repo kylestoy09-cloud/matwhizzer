@@ -22,6 +22,7 @@ type SchoolRow = {
   classification: string | null
   roster_count:   number
   graded_count:   number
+  active:         boolean   // false = marked inactive for this season
 }
 
 type Options = {
@@ -41,6 +42,7 @@ type ColDef = {
 
 const COLUMNS: ColDef[] = [
   { key: 'display_name',   label: 'School',        type: 'readonly',    width: 160 },
+  { key: 'active',         label: 'Active',         type: 'readonly',    width: 80  },
   { key: 'grade_pct',      label: 'Grade %',        type: 'readonly',    width: 110 },
   { key: 'address',        label: 'Address',        type: 'text',        width: 200 },
   { key: 'website_url',    label: 'Website',        type: 'url',         width: 160 },
@@ -112,6 +114,7 @@ export function SchoolDirectoryWorkspaceGirls({ seasonId }: Props) {
     if (col.type === 'region') {
       return options.regions.find(r => r.id === row.region_id)?.name ?? ''
     }
+    if (col.key === 'active') return row.active ? 'Active' : 'Inactive'
     if (col.key === 'grade_pct') {
       if (!row.roster_count) return ''
       return `${Math.round(row.graded_count / row.roster_count * 100)}% (${row.graded_count}/${row.roster_count})`
@@ -261,8 +264,9 @@ export function SchoolDirectoryWorkspaceGirls({ seasonId }: Props) {
                         : row.graded_count / row.roster_count >= 0.8 ? 'tabular-nums !text-green-700'
                         : row.graded_count / row.roster_count >= 0.4 ? 'tabular-nums !text-amber-700'
                         : 'tabular-nums !text-red-600'
+                      const activeCls = col.key !== 'active' ? '' : row.active ? '!text-green-700' : '!text-slate-400'
                       return (
-                        <td key={col.key} className={`${baseCls} ${rowBg} ${pctCls}`} style={{ minWidth: col.width, maxWidth: col.width }}>
+                        <td key={col.key} className={`${baseCls} ${rowBg} ${pctCls} ${activeCls}`} style={{ minWidth: col.width, maxWidth: col.width }}>
                           {dispVal || <span className="text-slate-300">—</span>}
                         </td>
                       )
