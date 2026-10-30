@@ -2,6 +2,23 @@
 
 ---
 
+## 2026-10-29 — Girls Roster Grade Import in the admin tool registry
+
+**Migration file:** `docs/migrations/20261029_tool_registry_girls_roster_grade_import.sql`
+
+**Purpose:**
+- Adds `roster_grade_import_girls` (`/admin/roster-grade-import-girls`, gender girls). It shows in offseason, preseason and season, because girls 2025-26 is still in season.
+- The boys row `roster_grade_import_boys` was added 2026-09-15 in the dashboard. It's **RECONSTRUCTED** in the same file (ON CONFLICT DO NOTHING).
+
+**Tables affected:** `admin_tool_registry` (+1 row)
+
+**APPLIED** — 2026-10-29, service-role script
+
+**Reversible?** Yes — delete the girls row
+**Verified?** Yes — row present
+
+---
+
 ## 2026-10-29 — Girls program 358 named Roselle
 
 **Migration file:** `docs/migrations/20261029_girls_358_name_roselle.sql`
