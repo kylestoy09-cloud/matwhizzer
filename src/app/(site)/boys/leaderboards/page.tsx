@@ -8,7 +8,7 @@ import { PageHeader } from '@/components/PageHeader'
 import {
   LeaderTable, WrestlerCell, TabNav, SectionHeader,
   fmtTime, fmtSchool, cleanTournament,
-  type DomRow, type DistrictRow, type SchoolRow,
+  type DistrictRow, type SchoolRow,
   type WeightRow, type ComebackRow,
 } from '@/components/leaderboard-ui'
 import { BracketBuster } from '@/components/BracketBuster'
@@ -61,15 +61,6 @@ type PoolBonusRow = {
   total_matches: number
 }
 
-type PoolDomRow = {
-  wrestler_id: string
-  wrestler_name: string
-  school: string | null
-  school_name: string | null
-  school_id?: number | null
-  dominance_score: number
-  win_count: number
-}
 
 type PoolMatTimeRow = {
   wrestler_id: string
@@ -105,7 +96,6 @@ type PoolData = {
   mostPins:     PoolPinRow[]
   mostTf:       PoolTfRow[]
   mostBonus:    PoolBonusRow[]
-  poolDom:      PoolDomRow[]
   matTime:      PoolMatTimeRow[]
   teamPoints:   PoolTeamRow[]
   wrestlerPts:  PoolWrestlerPtsRow[]
@@ -161,7 +151,6 @@ type RevengeRow = {
 }
 
 type AnalyticsData = {
-  dominance:    DomRow[]
   districts:    DistrictRow[]
   schools:      SchoolRow[]
   weights:      WeightRow[]
@@ -182,7 +171,6 @@ async function fetchPoolStats(pool: string, season: number): Promise<PoolData> {
     { data: mostPins },
     { data: mostTf },
     { data: mostBonus },
-    { data: poolDom },
     { data: matTime },
     { data: teamPoints },
     { data: wrestlerPts },
@@ -192,7 +180,6 @@ async function fetchPoolStats(pool: string, season: number): Promise<PoolData> {
     supabase.rpc('lb_p_most_pins',          p),
     supabase.rpc('lb_p_most_tf',            p),
     supabase.rpc('lb_p_most_bonus',         p),
-    supabase.rpc('lb_p_dominance',          p),
     supabase.rpc('lb_p_mat_time',           p),
     supabase.rpc('lb_p_team_points',        p),
     supabase.rpc('lb_p_wrestler_points',    p),
@@ -203,7 +190,6 @@ async function fetchPoolStats(pool: string, season: number): Promise<PoolData> {
     mostPins:    (mostPins    ?? []) as PoolPinRow[],
     mostTf:      (mostTf      ?? []) as PoolTfRow[],
     mostBonus:   (mostBonus   ?? []) as PoolBonusRow[],
-    poolDom:     (poolDom     ?? []) as PoolDomRow[],
     matTime:     (matTime     ?? []) as PoolMatTimeRow[],
     teamPoints:  (teamPoints  ?? []) as PoolTeamRow[],
     wrestlerPts: (wrestlerPts ?? []) as PoolWrestlerPtsRow[],
@@ -212,7 +198,6 @@ async function fetchPoolStats(pool: string, season: number): Promise<PoolData> {
 
 async function fetchAnalytics(season: number): Promise<AnalyticsData> {
   const [
-    { data: dominance },
     { data: districts },
     { data: schools },
     { data: weights },
@@ -222,7 +207,6 @@ async function fetchAnalytics(season: number): Promise<AnalyticsData> {
     { data: lowSeedChamps },
     { data: revenge },
   ] = await Promise.all([
-    supabase.rpc('lb_dominance',              { p_gender: 'M', p_season: season }),
     supabase.rpc('lb_district_strength',      { p_gender: 'M', p_season: season }),
     supabase.rpc('lb_school_depth',           { p_gender: 'M', p_season: season }),
     supabase.rpc('lb_weight_competitiveness', { p_gender: 'M', p_season: season }),
@@ -233,7 +217,6 @@ async function fetchAnalytics(season: number): Promise<AnalyticsData> {
     supabase.rpc('lb_revenge_matches',        { p_gender: 'M', p_season: season }),
   ])
   return {
-    dominance:    ((dominance  ?? []) as DomRow[]).slice(0, 25),
     districts:    (districts  ?? []) as DistrictRow[],
     schools:      (schools    ?? []) as SchoolRow[],
     weights:      (weights    ?? []) as WeightRow[],
@@ -555,25 +538,6 @@ function WrestlerTab({ d, poolLabel, logos }: { d: PoolData; poolLabel: string; 
               ]}
             />
 
-            <LeaderTable<PoolDomRow>
-              title="Hammer Score"
-              description="Avg dominance per match: pins/TFs graded by speed (max 9), MD=2, Dec=1, losses scored inverse"
-              rows={d.poolDom}
-              cols={[
-                {
-                  label: 'Wrestler', align: 'left',
-                  render: r => <PWCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name || r.school} {...logos.badgeByIdOrName(r.school_id, r.school_name || r.school)} />,
-                },
-                {
-                  label: 'Wins', align: 'right',
-                  render: r => <span className="text-slate-500 tabular-nums">{r.win_count}</span>,
-                },
-                {
-                  label: 'Score', align: 'right',
-                  render: r => <span className="font-bold text-slate-800 tabular-nums">{r.dominance_score}</span>,
-                },
-              ]}
-            />
 
           </div>
 
@@ -617,25 +581,6 @@ function AnalyticsTab({ d, season, logos }: { d: AnalyticsData; season: number; 
   return (
     <div className="space-y-10">
 
-      <LeaderTable<DomRow>
-        title="Hammer Score"
-        description="Avg dominance per match: pins/TFs graded by speed (max 9), MD=2, Dec=1, losses scored inverse"
-        rows={d.dominance}
-        cols={[
-          {
-            label: 'Wrestler', align: 'left',
-            render: r => <WrestlerCell id={r.wrestler_id} name={r.name} school={r.school} {...logos.badge(r.school)} />,
-          },
-          {
-            label: 'Wins', align: 'right',
-            render: r => <span className="text-slate-500 tabular-nums">{r.win_count}</span>,
-          },
-          {
-            label: 'Score', align: 'right',
-            render: r => <span className="font-bold text-slate-800 tabular-nums">{r.dominance_score}</span>,
-          },
-        ]}
-      />
 
       <LeaderTable<ComebackRow>
         title="Backside Warriors"

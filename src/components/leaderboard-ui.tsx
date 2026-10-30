@@ -10,7 +10,6 @@ export type MdRow         = { wrestler_id: string; name: string; school: string 
 export type WinPctRow     = { wrestler_id: string; name: string; school: string | null; wins: number; total: number; win_pct: number }
 export type BonusRow      = { wrestler_id: string; name: string; school: string | null; bonus_count: number; total_wins: number }
 export type TeamPointsRow = { school: string; school_name: string; total_points: number; match_count: number }
-export type DomRow        = { wrestler_id: string; name: string; school: string | null; dominance_score: number; win_count: number }
 export type DistrictRow   = { district_name: string; state_qualifiers: number }
 export type SchoolRow     = { school: string; weight_classes_placed: number; wrestlers: number }
 export type WeightRow     = { weight: number; gender: string; avg_margin: number; match_count: number }

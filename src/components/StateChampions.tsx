@@ -8,7 +8,6 @@ type ChampionRow = {
   wrestler_id: string
   wrestler_name: string
   school: string
-  dominance_score: number
   seed: number | null
   logo_url?: string | null
   bg_color?: string | null
@@ -35,7 +34,6 @@ export function StateChampions({
               <th className="px-3 py-2 text-left w-14">Wt</th>
               <th className="px-3 py-2 text-left">Wrestler</th>
               <th className="px-3 py-2 text-left hidden sm:table-cell">School</th>
-              <th className="px-3 py-2 text-right w-20">Hammer</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
@@ -62,9 +60,6 @@ export function StateChampions({
                     </div>
                   </td>
                   <td className="px-3 py-2 text-slate-500 hidden sm:table-cell">{r.school}</td>
-                  <td className="px-3 py-2 text-right font-semibold text-amber-600">
-                    {r.dominance_score.toFixed(2)}
-                  </td>
                 </tr>
               )
             })}

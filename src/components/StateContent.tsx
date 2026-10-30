@@ -24,11 +24,6 @@ type FastestPinRow = {
   fall_time_seconds: number; weight: number
 }
 type FastestTfRow = FastestPinRow
-type DominanceRow = {
-  wrestler_id: string; wrestler_name: string
-  school: string | null; school_name: string | null
-  dominance_score: number; win_count: number
-}
 type TeamScoreRow = { school: string; school_name: string | null; school_id: number | null; total_points: number }
 type TeamPtsRow = {
   wrestler_id: string; wrestler_name: string;
@@ -108,13 +103,12 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
   // Get state tournament ID for ghost champions
   const stateTid = await getStateTournamentId(season, isBoys ? 'M' : 'F')
 
-  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, dominanceRes, teamScoreRes, teamPtsRes, distStrengthRes, marginsRes, podiumDistRes, ghostRes, stateEntriesRes, logos] =
+  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, teamScoreRes, teamPtsRes, distStrengthRes, marginsRes, podiumDistRes, ghostRes, stateEntriesRes, logos] =
     await Promise.all([
       supabase.rpc('state_placements',                    { p_gender: g, p_season: season }),
       supabase.rpc(`${poolRpc}_mat_time`,                 poolParams),
       supabase.rpc(`${poolRpc}_fastest_pin`,              poolParams),
       supabase.rpc(`${poolRpc}_fastest_tf`,               poolParams),
-      supabase.rpc(`${poolRpc}_dominance`,                poolParams),
       supabase.rpc(`${poolRpc}_team_points`,              poolParams),
       supabase.rpc(`${poolRpc}_wrestler_points`,          poolParams),
       supabase.rpc('lb_district_strength',                { p_gender: g, p_season: season }),
@@ -133,7 +127,6 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
   const matTime        = ((matTimeRes.data ?? []) as MatTimeRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
   const fastPin        = ((fastPinRes.data ?? []) as FastestPinRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
   const fastTf         = ((fastTfRes.data ?? []) as FastestTfRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
-  const dominance      = ((dominanceRes.data ?? []) as DominanceRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
   const teamScore      = ((teamScoreRes.data ?? []) as TeamScoreRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
   const teamPts        = ((teamPtsRes.data ?? []) as { wrestler_id: string; wrestler_name: string; school: string | null; school_name: string | null; total_points: number; win_count: number }[])
     .map(r => ({ wrestler_id: r.wrestler_id, wrestler_name: r.wrestler_name, school: r.school, school_name: r.school_name, weight: 0, team_points: Number(r.total_points), logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null })) as TeamPtsRow[]
@@ -265,13 +258,6 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
             rows={fastTf}
             subtitle={r => `${r.school_name || r.school || '—'} · ${r.weight} lb`}
             value={r => fmtTime(r.fall_time_seconds)}
-          />
-          <StatCard<DominanceRow>
-            title="Hammer Rating"
-            note="Avg dominance per match: pins/TFs graded by speed (max 9), MD=2, Dec=1, losses scored inverse"
-            rows={dominance}
-            subtitle={r => `${r.school_name || r.school || '—'} · ${r.win_count} wins`}
-            value={r => String(r.dominance_score)}
           />
           <TeamScoreCard rows={teamScore} />
         </div>

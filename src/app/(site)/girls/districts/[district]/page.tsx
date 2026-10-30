@@ -58,14 +58,6 @@ type FastestTfRow = {
   weight: number
 }
 
-type DominanceRow = {
-  wrestler_id: string
-  wrestler_name: string
-  school: string | null
-  school_name: string | null
-  dominance_score: number
-  win_count: number
-}
 
 type TeamScoreRow = {
   school: string
@@ -160,13 +152,12 @@ export default async function GirlsDistrictSummaryPage({
   const activeSeason = await getActiveSeason('F')
   const season = districtSeasons.includes(activeSeason) ? activeSeason : (districtSeasons[0] ?? activeSeason)
 
-  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, bonusPctRes, schoolsRes, teamScoreRes, teamPtsRes, stateEntRes, ghostRes, distEntriesRes, statePlacementsRes, logos] =
+  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, schoolsRes, teamScoreRes, teamPtsRes, stateEntRes, ghostRes, distEntriesRes, statePlacementsRes, logos] =
     await Promise.all([
       supabase.rpc('district_placements',  { p_district: d, p_gender: 'F', p_season: season }),
       supabase.rpc('district_mat_time',    { p_district: d, p_gender: 'F', p_season: season }),
       supabase.rpc('district_fastest_pin', { p_district: d, p_gender: 'F', p_season: season }),
       supabase.rpc('district_fastest_tf',  { p_district: d, p_gender: 'F', p_season: season }),
-      supabase.rpc('district_dominance',   { p_district: d, p_gender: 'F', p_season: season }),
       supabase.rpc('district_schools',     { p_district: d, p_gender: 'F', p_season: season }),
       supabase.rpc('district_team_score',  { p_district: d, p_gender: 'F', p_season: season }),
       supabase.rpc('district_team_pts',    { p_district: d, p_gender: 'F', p_season: season }),
@@ -190,7 +181,6 @@ export default async function GirlsDistrictSummaryPage({
   const matTime    = ((matTimeRes.data   ?? []) as MatTimeRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
   const fastPin    = ((fastPinRes.data   ?? []) as FastestPinRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
   const fastTf     = ((fastTfRes.data    ?? []) as FastestTfRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
-  const dominance  = ((bonusPctRes.data  ?? []) as DominanceRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
   const schools    = (schoolsRes.data    ?? []) as SchoolRow[]
   const teamScore  = ((teamScoreRes.data ?? []) as TeamScoreRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
   const teamPts    = ((teamPtsRes.data   ?? []) as TeamPtsRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
@@ -411,13 +401,6 @@ export default async function GirlsDistrictSummaryPage({
             value={r => fmtTime(r.fall_time_seconds)}
           />
 
-          <StatCard<DominanceRow>
-            title="Hammer Rating"
-            note="Avg dominance per match: pins/TFs graded by speed (max 9), MD=2, Dec=1, losses scored inverse"
-            rows={dominance}
-            subtitle={r => `${r.school_name || r.school || '—'} · ${r.win_count} wins`}
-            value={r => String(r.dominance_score)}
-          />
 
         </div>
       </section>

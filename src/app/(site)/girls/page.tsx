@@ -11,7 +11,6 @@ import { getSchoolLogos } from '@/lib/school-logos'
 type WrestlerRow = { id: string; first_name: string; last_name: string }
 type SchoolRow   = { school: string; school_name: string; school_id: number | null; total_points: number; wrestler_count: number }
 type TeamScoreRow = { school: string; school_name: string | null; school_id: number | null; district_points: number; region_points: number; state_points: number; total_points: number }
-type DominanceRow = { wrestler_id: string; name: string; school: string | null; dominance_score: number; win_count: number }
 
 export default async function GirlsPage({
   searchParams,
@@ -62,19 +61,16 @@ export default async function GirlsPage({
   const showLeaderboards = q.length < 2 && sq.length < 2
 
   let topTeamScores: TeamScoreRow[] = []
-  let topDominance: DominanceRow[] = []
   let podiumSchools: { school_name: string; count: number }[] = []
-  let stateChampions: { weight: number; wrestler_id: string; wrestler_name: string; school: string; dominance_score: number; seed: number | null; logo_url?: string | null; bg_color?: string | null }[] = []
+  let stateChampions: { weight: number; wrestler_id: string; wrestler_name: string; school: string; seed: number | null; logo_url?: string | null; bg_color?: string | null }[] = []
 
   if (showLeaderboards) {
-    const [dominanceRes, teamScoreRes, placementsRes, championsRes, logos] = await Promise.all([
-      supabase.rpc('lb_dominance', { p_gender: 'F', p_season: season }),
+    const [teamScoreRes, placementsRes, championsRes, logos] = await Promise.all([
       supabase.rpc('top_postseason_team_scores', { p_gender: 'F', p_season: season, p_limit: 25 }),
       supabase.rpc('state_placements', { p_gender: 'F', p_season: season }),
       supabase.rpc('state_champions', { p_tournament_id: 185 }),
       getSchoolLogos(),
     ])
-    topDominance = (dominanceRes.data ?? []).slice(0, 8) as DominanceRow[]
     topTeamScores = ((teamScoreRes.data ?? []) as TeamScoreRow[]).map(r => ({
       ...r,
       logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null,
@@ -135,31 +131,6 @@ export default async function GirlsPage({
             <PostseasonLeaders rows={topTeamScores} schoolBase="/schools" accentColor="rose" gender="girls" />
           )}
 
-          {topDominance.length > 0 && (
-            <section>
-              <h2 className="text-lg font-bold text-rose-900 mb-3">Hammer Rating</h2>
-              <p className="text-slate-500 text-sm mb-4">Avg dominance per match: pins/TFs graded by speed (max 9), MD=2, Dec=1, losses scored inverse</p>
-              <div className="bg-white rounded-none border border-black shadow-none overflow-hidden">
-                <div className="divide-y divide-slate-100">
-                  {topDominance.map((r, i) => (
-                    <div key={r.wrestler_id} className="flex items-center gap-2 px-4 py-2.5">
-                      <span className="text-xs text-slate-400 w-4 shrink-0 text-right">{i + 1}</span>
-                      <div className="flex-1 min-w-0">
-                        <Link
-                          href={`/girls/wrestler/${r.wrestler_id}`}
-                          className="text-sm font-medium text-slate-800 hover:underline truncate block"
-                        >
-                          {r.name}
-                        </Link>
-                        <div className="text-[11px] text-slate-400 truncate">{r.school || '\u2014'} · {r.win_count} wins</div>
-                      </div>
-                      <span className="text-sm font-semibold text-slate-700 shrink-0">{r.dominance_score}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </section>
-          )}
         </div>
       )}
 

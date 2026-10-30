@@ -60,7 +60,6 @@ type TRow = {
   bonus_wins: number
   contested_matches: number
   total_matches: number
-  hammer_sum: number
   dual_meet_count: number
   dual_team_points: number
 }
@@ -405,15 +404,10 @@ function TeamTab({ rows, teamHammerScores }: { rows: TRow[]; teamHammerScores: M
     [...rows].filter(r => (r.contested_matches ?? 0) >= MIN_TEAM_MATCHES)
       .sort((a, b) => b.bonus_wins / b.total_matches - a.bonus_wins / a.total_matches), [rows])
 
-  const hammer = useMemo(() => {
-    if (teamHammerScores.size > 0) {
-      return [...rows]
-        .filter(r => (teamHammerScores.get(r.school_id) ?? 0) > 0)
-        .sort((a, b) => (teamHammerScores.get(b.school_id) ?? 0) - (teamHammerScores.get(a.school_id) ?? 0))
-    }
-    return [...rows].filter(r => (r.contested_matches ?? 0) >= MIN_MATCHES)
-      .sort((a, b) => b.hammer_sum / b.contested_matches - a.hammer_sum / a.contested_matches)
-  }, [rows, teamHammerScores])
+  const hammer = useMemo(() =>
+    [...rows]
+      .filter(r => (teamHammerScores.get(r.school_id) ?? 0) > 0)
+      .sort((a, b) => (teamHammerScores.get(b.school_id) ?? 0) - (teamHammerScores.get(a.school_id) ?? 0)), [rows, teamHammerScores])
 
   const MIN_DUALS = 5
   const ppd = useMemo(() =>
@@ -468,8 +462,8 @@ function TeamTab({ rows, teamHammerScores }: { rows: TRow[]; teamHammerScores: M
           { label: 'School', align: 'left', render: r => <SCell id={r.school_id} name={r.school_name} logoUrl={r.logo_url} bgColor={r.color_primary} /> },
           {
             label: 'Score', align: 'right',
-            sortKey: r => teamHammerScores.size > 0 ? (teamHammerScores.get(r.school_id) ?? 0) : (r.contested_matches > 0 ? r.hammer_sum / r.contested_matches : 0),
-            render: r => <span className="font-bold text-slate-800 tabular-nums">{teamHammerScores.size > 0 ? (teamHammerScores.get(r.school_id) ?? 0).toFixed(2) : (r.hammer_sum / r.contested_matches).toFixed(2)}</span>,
+            sortKey: r => teamHammerScores.get(r.school_id) ?? 0,
+            render: r => <span className="font-bold text-slate-800 tabular-nums">{(teamHammerScores.get(r.school_id) ?? 0).toFixed(2)}</span>,
           },
         ]}
       />

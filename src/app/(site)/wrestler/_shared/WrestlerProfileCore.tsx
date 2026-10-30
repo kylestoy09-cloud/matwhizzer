@@ -194,16 +194,6 @@ function computeMatchMatTime(winType: string | null, fallTime: number | null, is
   return 420
 }
 
-function computeDomMatchScore(winType: string | null, fallTime: number | null): number {
-  if (!winType) return 0
-  if (['FALL', 'TF', 'TF-1.5'].includes(winType)) {
-    return Math.max(9 - (fallTime ?? 0) / 60, 0)
-  }
-  if (winType === 'MD') return 2
-  if (['DEC', 'SV-1', '2-OT', 'UTB'].includes(winType)) return 1
-  return 0
-}
-
 // ── Component ──────────────────────────────────────────────────────────────────
 
 export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }) {
@@ -877,7 +867,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
   // Career stats computation
   type SeasonStat = {
     seasonId: number; wins: number; losses: number; pins: number; tfs: number; mds: number
-    bonusPct: number; hammerRating: number; pinTimeSecs: number; tfTimeSecs: number; consolationWins: number
+    bonusPct: number; pinTimeSecs: number; tfTimeSecs: number; consolationWins: number
     forfeitWins: number; forfeitLosses: number
   }
   const seasonStatsMap = new Map<number, SeasonStat>()
@@ -887,7 +877,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
     if (!seasonStatsMap.has(sid)) {
       seasonStatsMap.set(sid, {
         seasonId: sid, wins: 0, losses: 0, pins: 0, tfs: 0, mds: 0,
-        bonusPct: 0, hammerRating: 0, pinTimeSecs: 0, tfTimeSecs: 0, consolationWins: 0, forfeitWins: 0, forfeitLosses: 0,
+        bonusPct: 0, pinTimeSecs: 0, tfTimeSecs: 0, consolationWins: 0, forfeitWins: 0, forfeitLosses: 0,
       })
     }
     const s = seasonStatsMap.get(sid)!
@@ -912,7 +902,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
     if (boutResult === null) continue
     const sid = seasonToId(allSeasons, bout.event?.season ?? null)
     if (!seasonStatsMap.has(sid)) {
-      seasonStatsMap.set(sid, { seasonId: sid, wins: 0, losses: 0, pins: 0, tfs: 0, mds: 0, bonusPct: 0, hammerRating: 0, pinTimeSecs: 0, tfTimeSecs: 0, consolationWins: 0, forfeitWins: 0, forfeitLosses: 0 })
+      seasonStatsMap.set(sid, { seasonId: sid, wins: 0, losses: 0, pins: 0, tfs: 0, mds: 0, bonusPct: 0, pinTimeSecs: 0, tfTimeSecs: 0, consolationWins: 0, forfeitWins: 0, forfeitLosses: 0 })
     }
     const s = seasonStatsMap.get(sid)!
     const rt = bout.result_type?.toUpperCase() ?? ''
@@ -930,7 +920,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
     if (!row.meet || row.is_double_forfeit) continue
     const sid = row.meet.season_id
     if (!seasonStatsMap.has(sid)) {
-      seasonStatsMap.set(sid, { seasonId: sid, wins: 0, losses: 0, pins: 0, tfs: 0, mds: 0, bonusPct: 0, hammerRating: 0, pinTimeSecs: 0, tfTimeSecs: 0, consolationWins: 0, forfeitWins: 0, forfeitLosses: 0 })
+      seasonStatsMap.set(sid, { seasonId: sid, wins: 0, losses: 0, pins: 0, tfs: 0, mds: 0, bonusPct: 0, pinTimeSecs: 0, tfTimeSecs: 0, consolationWins: 0, forfeitWins: 0, forfeitLosses: 0 })
     }
     const s = seasonStatsMap.get(sid)!
     const dualResult: 'W' | 'L' = row.winner_id === id ? 'W' : 'L'
@@ -947,60 +937,20 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
   for (const s of seasonStatsMap.values()) {
     const contestedMatches = (s.wins - s.forfeitWins) + (s.losses - s.forfeitLosses)
     s.bonusPct = contestedMatches > 0 ? Math.round(((s.pins + s.tfs + s.mds) / contestedMatches) * 100) : 0
-    // Postseason dom scores
-    const domScores: number[] = annotated
-      .filter(m => m.opponent !== 'Bye' && (unwrap(m.tournament)?.season_id ?? 0) === s.seasonId)
-      .map(m => { const sc = computeDomMatchScore(m.win_type, m.fall_time_seconds); return m.result === 'W' ? sc : -sc })
-    // In-season bout dom scores
-    for (const bout of allBouts) {
-      if (seasonToId(allSeasons, bout.event?.season ?? null) !== s.seasonId) continue
-      const isW1 = bout.wrestler1_id === id
-      const r: 'W' | 'L' | null = bout.winner === null ? null
-        : (isW1 && bout.winner === 1) || (!isW1 && bout.winner === 2) ? 'W' : 'L'
-      if (r === null) continue
-      const sc = computeDomMatchScore(bout.result_type?.toUpperCase() ?? '', bout.fall_time_seconds)
-      domScores.push(r === 'W' ? sc : -sc)
-    }
-    // Dual meet dom scores
-    for (const row of allDualMatches) {
-      if (!row.meet || row.is_double_forfeit || row.meet.season_id !== s.seasonId) continue
-      const r: 'W' | 'L' = row.winner_id === id ? 'W' : 'L'
-      const sc = computeDomMatchScore((row.result_type ?? '').toUpperCase(), row.fall_time_seconds)
-      domScores.push(r === 'W' ? sc : -sc)
-    }
-    s.hammerRating = domScores.length > 0 ? domScores.reduce((a, b) => a + b, 0) / domScores.length : 0
   }
   const seasonStats = [...seasonStatsMap.values()].sort((a, b) => b.seasonId - a.seasonId)
   const careerTotals = seasonStats.reduce((acc, s) => ({
     wins: acc.wins + s.wins, losses: acc.losses + s.losses,
     pins: acc.pins + s.pins, tfs: acc.tfs + s.tfs, mds: acc.mds + s.mds,
-    bonusPct: 0, hammerRating: 0,
+    bonusPct: 0,
     pinTimeSecs: acc.pinTimeSecs + s.pinTimeSecs,
     tfTimeSecs: acc.tfTimeSecs + s.tfTimeSecs,
     consolationWins: acc.consolationWins + s.consolationWins,
     forfeitWins: acc.forfeitWins + s.forfeitWins,
     forfeitLosses: acc.forfeitLosses + s.forfeitLosses,
-  }), { wins: 0, losses: 0, pins: 0, tfs: 0, mds: 0, bonusPct: 0, hammerRating: 0, pinTimeSecs: 0, tfTimeSecs: 0, consolationWins: 0, forfeitWins: 0, forfeitLosses: 0 })
+  }), { wins: 0, losses: 0, pins: 0, tfs: 0, mds: 0, bonusPct: 0, pinTimeSecs: 0, tfTimeSecs: 0, consolationWins: 0, forfeitWins: 0, forfeitLosses: 0 })
   const careerContested = (careerTotals.wins - careerTotals.forfeitWins) + (careerTotals.losses - careerTotals.forfeitLosses)
   careerTotals.bonusPct = careerContested > 0 ? Math.round(((careerTotals.pins + careerTotals.tfs + careerTotals.mds) / careerContested) * 100) : 0
-  // Career dom scores across all match types
-  const allDomScores: number[] = [
-    ...annotated.filter(m => m.opponent !== 'Bye').map(m => { const sc = computeDomMatchScore(m.win_type, m.fall_time_seconds); return m.result === 'W' ? sc : -sc }),
-    ...allBouts.flatMap(bout => {
-      const isW1 = bout.wrestler1_id === id
-      const r: 'W' | 'L' | null = bout.winner === null ? null
-        : (isW1 && bout.winner === 1) || (!isW1 && bout.winner === 2) ? 'W' : 'L'
-      if (r === null) return []
-      const sc = computeDomMatchScore(bout.result_type?.toUpperCase() ?? '', bout.fall_time_seconds)
-      return [r === 'W' ? sc : -sc]
-    }),
-    ...allDualMatches.filter(row => row.meet && !row.is_double_forfeit).map(row => {
-      const r: 'W' | 'L' = row.winner_id === id ? 'W' : 'L'
-      const sc = computeDomMatchScore((row.result_type ?? '').toUpperCase(), row.fall_time_seconds)
-      return r === 'W' ? sc : -sc
-    }),
-  ]
-  careerTotals.hammerRating = allDomScores.length > 0 ? allDomScores.reduce((a, b) => a + b, 0) / allDomScores.length : 0
 
   // Detect placements (champion = won Finals on championship side)
   type PlacementInfo = { tournament: string; place: number; tournamentType: string; seasonId: number }
@@ -1073,8 +1023,8 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
       .filter((x): x is string => x !== null)
   )].sort()
 
-  // Detect Hammer Champ & Terminator awards across all seasons
-  type AwardInfo = { type: 'hammer' | 'terminator'; label: string; seasonId: number }
+  // Detect Terminator awards (fastest total mat time) across all seasons
+  type AwardInfo = { type: 'terminator'; label: string; seasonId: number }
   const awards: AwardInfo[] = []
 
   // Build list of tournaments to check: { seasonId, level, num } for each district/region/state
@@ -1097,23 +1047,19 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
 
   const genderType = wrestler.gender === 'F' ? 'F' : 'M'
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  type AwardCall = { check: TournCheck; kind: 'hammer' | 'terminator'; promise: PromiseLike<{ data: any }> }
+  type AwardCall = { check: TournCheck; kind: 'terminator'; promise: PromiseLike<{ data: any }> }
   // Build RPC calls for each tournament check
   const awardPromises = uniqueChecks.flatMap(c => {
     const calls: AwardCall[] = []
     if (c.level === 'district') {
-      calls.push({ check: c, kind: 'hammer', promise: supabase.rpc('district_dominance', { p_district: c.num, p_gender: genderType, p_season: c.seasonId }) })
       calls.push({ check: c, kind: 'terminator', promise: supabase.rpc('district_mat_time', { p_district: c.num, p_gender: genderType, p_season: c.seasonId }) })
     } else if (c.level === 'region') {
       if (genderType === 'M') {
-        calls.push({ check: c, kind: 'hammer', promise: supabase.rpc('region_dominance', { p_region: c.num, p_gender: genderType, p_season: c.seasonId }) })
         calls.push({ check: c, kind: 'terminator', promise: supabase.rpc('region_mat_time', { p_region: c.num, p_gender: genderType, p_season: c.seasonId }) })
       } else {
-        calls.push({ check: c, kind: 'hammer', promise: supabase.rpc('girls_region_dominance', { p_region: c.num, p_season: c.seasonId }) })
         calls.push({ check: c, kind: 'terminator', promise: supabase.rpc('girls_region_mat_time', { p_region: c.num, p_season: c.seasonId }) })
       }
     } else if (c.level === 'state') {
-      calls.push({ check: c, kind: 'hammer', promise: supabase.rpc('state_dominance', { p_gender: genderType, p_season: c.seasonId }) })
       calls.push({ check: c, kind: 'terminator', promise: supabase.rpc('state_mat_time', { p_gender: genderType, p_season: c.seasonId }) })
     }
     return calls
@@ -1221,13 +1167,10 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
                     )
                   })}
                 {[...awards]
-                  .sort((a, b) =>
-                    b.seasonId - a.seasonId ||
-                    (a.type === 'hammer' ? 0 : 1) - (b.type === 'hammer' ? 0 : 1)
-                  )
+                  .sort((a, b) => b.seasonId - a.seasonId)
                   .map((a, i) => {
                     const yr = seasonShort(a.seasonId)
-                    const icon = a.type === 'hammer' ? '\u{1F528}' : '\u{26A1}'
+                    const icon = '\u{26A1}'
                     return (
                       <span key={`award-${i}`} className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 border border-slate-300 text-slate-700">
                         <span>{icon}</span>
@@ -1284,7 +1227,6 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
                     { key: 'pins',      label: 'Pins',     align: 'center' },
                     { key: 'tfs',       label: 'TFs',      align: 'center' },
                     { key: 'bonus',     label: 'Bonus%',   align: 'center', numeric: false },
-                    { key: 'hammer',    label: 'Hammer',   align: 'center', numeric: false },
                     { key: 'avgPin',    label: 'Avg Pin',  align: 'center', numeric: false },
                     { key: 'avgTf',     label: 'Avg TF',   align: 'center', numeric: false },
                   ]}
@@ -1294,7 +1236,6 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
                     pins:      s.pins,
                     tfs:       s.tfs,
                     bonus:     `${s.bonusPct}%`,
-                    hammer:    s.hammerRating.toFixed(2),
                     avgPin:    s.pins > 0 ? formatPinTimeStat(Math.round(s.pinTimeSecs / s.pins)) : '—',
                     avgTf:     s.tfs  > 0 ? formatPinTimeStat(Math.round(s.tfTimeSecs  / s.tfs))  : '—',
                   }))}
@@ -1304,7 +1245,6 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
                     pins:      careerTotals.pins,
                     tfs:       careerTotals.tfs,
                     bonus:     `${careerTotals.bonusPct}%`,
-                    hammer:    careerTotals.hammerRating.toFixed(2),
                     avgPin:    careerTotals.pins > 0 ? formatPinTimeStat(Math.round(careerTotals.pinTimeSecs / careerTotals.pins)) : '—',
                     avgTf:     careerTotals.tfs  > 0 ? formatPinTimeStat(Math.round(careerTotals.tfTimeSecs  / careerTotals.tfs))  : '—',
                   } : undefined}

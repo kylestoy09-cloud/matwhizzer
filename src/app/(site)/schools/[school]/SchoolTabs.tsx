@@ -98,7 +98,6 @@ type SeasonStat = {
   techTimeSecs: number
   mds: number
   teamPts: number
-  hammer: number | null
 }
 
 function BestFinish({ w }: { w: WrestlerRow }) {
@@ -651,19 +650,7 @@ export function SchoolTabs({
           wrestlerName: w.wrestler_name, weight: w.primary_weight,
           wins: 0, losses: 0, pins: 0, pinTimeSecs: 0,
           techs: 0, techTimeSecs: 0, mds: 0, teamPts: 0,
-          hammer: null,
         })
-      }
-
-      const domScores = new Map<string, number[]>()
-      for (const w of wrestlers) domScores.set(w.wrestler_id, [])
-
-      function domScore(rt: string | null, fallSecs: number | null): number {
-        const t = (rt ?? '').toUpperCase()
-        if (['FALL', 'TF', 'TF-1', 'TF-1.5'].includes(t)) return Math.max(9 - (fallSecs ?? 0) / 60, 0)
-        if (t === 'MD') return 2
-        if (['DEC', 'SV-1', '2-OT', 'UTB'].includes(t)) return 1
-        return 0
       }
 
       function applyBout(wid: string, won: boolean, rt: string | null, fallSecs: number | null, pts = 0) {
@@ -675,8 +662,6 @@ export function SchoolTabs({
           else if (t === 'TF') { s.techs++; s.techTimeSecs += fallSecs ?? 0 }
           else if (t === 'MD') { s.mds++ }
         } else { s.losses++ }
-        const sc = domScore(rt, fallSecs)
-        domScores.get(wid)?.push(won ? sc : -sc)
       }
 
       function dualPtsFor(rt: string | null): number {
@@ -705,12 +690,6 @@ export function SchoolTabs({
         const lId = entryToWrestler.get(m.loser_entry_id ?? '')
         if (wId) applyBout(wId, true,  m.result_type, m.fall_time_seconds)
         if (lId) applyBout(lId, false, m.result_type, m.fall_time_seconds)
-      }
-
-      for (const [wid, scores] of domScores.entries()) {
-        const s = stats.get(wid)
-        if (!s || scores.length === 0) continue
-        s.hammer = scores.reduce((a, b) => a + b, 0) / scores.length
       }
 
       if (!cancelled) { setSeasonStatsMap(stats); setSeasonLoading(false); setSeasonLoaded(true) }
@@ -1027,11 +1006,6 @@ export function SchoolTabs({
                     const vb = sb.wins + sb.losses > 0 ? sb.wins / (sb.wins + sb.losses) : -1
                     return (va - vb) * dir
                   }
-                  case 'hammer': {
-                    if (sa.hammer === null && sb.hammer === null) return 0
-                    if (sa.hammer === null) return 1; if (sb.hammer === null) return -1
-                    return (sa.hammer - sb.hammer) * dir
-                  }
                   case 'pins':   return (sa.pins - sb.pins) * dir
                   case 'pinTime': {
                     if (!sa.pins && !sb.pins) return 0
@@ -1075,7 +1049,6 @@ export function SchoolTabs({
                         <th className="px-2 py-1.5 text-xs font-bold uppercase tracking-wide text-left">Wrestler</th>
                         <SortTh sortKey="wins"     label="W-L"      />
                         <SortTh sortKey="winPct"   label="Win%"     />
-                        <SortTh sortKey="hammer"   label="Hammer"   />
                         <SortTh sortKey="pins"     label="Pins"     />
                         <SortTh sortKey="pinTime"  label="Avg Pin" defaultDir="asc" />
                         <SortTh sortKey="techs"    label="TF"       />
@@ -1088,7 +1061,6 @@ export function SchoolTabs({
                       {sortedRows.map(({ w, s }, i) => {
                         const total   = s.wins + s.losses
                         const winPct  = total > 0 ? (s.wins / total * 100).toFixed(1) + '%' : '—'
-                        const hammer  = s.hammer !== null ? s.hammer.toFixed(1) : '—'
                         const avgPin  = s.pins  > 0 ? fmtTime(Math.round(s.pinTimeSecs  / s.pins))  : '—'
                         const avgTf   = s.techs > 0 ? fmtTime(Math.round(s.techTimeSecs / s.techs)) : '—'
                         const bonus   = (s.wins + s.losses) > 0 ? Math.round((s.pins + s.techs + s.mds) / (s.wins + s.losses) * 100) + '%' : '—'
@@ -1100,7 +1072,6 @@ export function SchoolTabs({
                             </td>
                             <td className="px-2 py-1.5 tabular-nums text-right text-slate-700">{total > 0 ? `${s.wins}-${s.losses}` : '—'}</td>
                             <td className="px-2 py-1.5 tabular-nums text-right text-slate-700">{winPct}</td>
-                            <td className="px-2 py-1.5 tabular-nums text-right text-slate-700">{hammer}</td>
                             <td className="px-2 py-1.5 tabular-nums text-right text-slate-700">{s.pins  || '—'}</td>
                             <td className="px-2 py-1.5 tabular-nums text-right text-slate-700">{avgPin}</td>
                             <td className="px-2 py-1.5 tabular-nums text-right text-slate-700">{s.techs || '—'}</td>
