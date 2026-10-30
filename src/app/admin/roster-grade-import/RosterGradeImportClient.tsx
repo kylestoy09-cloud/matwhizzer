@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import { UnresolvedGrades } from './UnresolvedGrades'
@@ -188,13 +188,22 @@ function SchoolPicker({
 // /admin/roster-grade-import (boys) and /admin/roster-grade-import-girls.
 export function RosterGradeImportClient({ gender }: { gender: 'M' | 'F' }) {
   const router = useRouter()
-  const { gender: adminGender, loaded } = useAdminGender()
+  const { gender: adminGender, setGender, loaded } = useAdminGender()
   const api = gender === 'F' ? '/api/admin/roster-grade-import-girls' : '/api/admin/roster-grade-import'
 
-  // The admin gender toggle switches to the other gender's import page
+  // Opening this page sets the admin toggle to its gender (a link to the girls
+  // page must not bounce to boys); flipping the toggle afterwards switches to
+  // the other gender's import page
+  const arrived = useRef(false)
   useEffect(() => {
-    if (loaded && adminGender !== gender) router.replace(adminGender === 'F' ? '/admin/roster-grade-import-girls' : '/admin/roster-grade-import')
-  }, [loaded, adminGender, gender, router])
+    if (!loaded) return
+    if (!arrived.current) {
+      arrived.current = true
+      if (adminGender !== gender) setGender(gender)
+      return
+    }
+    if (adminGender !== gender) router.replace(adminGender === 'F' ? '/admin/roster-grade-import-girls' : '/admin/roster-grade-import')
+  }, [loaded, adminGender, gender, setGender, router])
 
   const [phase, setPhase] = useState<Phase>('schools')
   const [schools, setSchools] = useState<School[]>([])

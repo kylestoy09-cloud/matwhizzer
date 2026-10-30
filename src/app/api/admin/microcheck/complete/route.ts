@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getNewestSeason } from '@/lib/season-context'
 import { createSupabaseServer }  from '@/lib/supabase/server'
 import { createSupabaseAdmin }   from '@/lib/supabase/service'
-import { findNextTask }          from '../_engine'
+import { nextMicrocheckTask }    from '../_next'
 
 export const dynamic = 'force-dynamic'
 
@@ -13,6 +13,11 @@ async function requireAdmin() {
   const { data: appUser } = await userSb.from('app_users').select('role').eq('id', user.id).single()
   if (!appUser || appUser.role !== 'admin') return null
   return user
+}
+
+// The save already succeeded, so a failed lookup of the next task just ends the run
+async function followingTask(db: ReturnType<typeof createSupabaseAdmin>, gender: 'M' | 'F') {
+  try { return await nextMicrocheckTask(db, gender) } catch { return null }
 }
 
 // Fields that map directly to a column on the schools table
@@ -59,53 +64,8 @@ export async function POST(req: NextRequest) {
     }).eq('id', task_id)
     if (taskErr) return NextResponse.json({ error: taskErr.message }, { status: 500 })
 
-    // Return next task — school_profile first, then queue
-    const genderTableNext = gender === 'M' ? 'boys_schools' : 'girls_schools'
-    const [gsNext, schoolsNext, logNext, flagNext, inactiveNext] = await Promise.all([
-      db.from(genderTableNext).select('school_id, display_name'),
-      db.from('schools').select('id, display_name, address, website_url, twitter_handle, facebook_url, ad_name, ad_email').eq('is_nj', true).order('display_name'),
-      db.from('microcheck_task_log').select('school_id, field').eq('gender', gender),
-      db.from('microcheck_roster_flags').select('school_id').eq('gender', gender).eq('resolved', false),
-      db.from('inactive_school_seasons').select('school_id').eq('gender', gender),
-    ])
-    const gSchoolIds = new Set((gsNext.data ?? []).map(r => r.school_id))
-    const gNameMap   = new Map((gsNext.data ?? []).map(r => [r.school_id, r.display_name]))
-    const inactiveSet = new Set((inactiveNext.data ?? []).map(r => r.school_id))
-    const nextSchools = (schoolsNext.data ?? [])
-      .filter(s => gSchoolIds.has(s.id) && !inactiveSet.has(s.id))
-      .map(s => ({ ...s, display_name: gNameMap.get(s.id) ?? s.display_name }))
-      .sort((a, b) => a.display_name.localeCompare(b.display_name))
-    let nextCoachRows: { school_id: number; email: string | null }[] = []
-    const nextCoachTable = gender === 'M' ? 'boys_coaches' : 'girls_coaches'
-    const nextCoachRes = await db.from(nextCoachTable).select('school_id, email').eq('season_id', (await getNewestSeason()).id).eq('is_active', true).in('school_id', [...gSchoolIds])
-    if (!nextCoachRes.error) nextCoachRows = nextCoachRes.data ?? []
-    const nextLogged  = new Set((logNext.data ?? []).map(r => `${r.school_id}_${r.field}`))
-    const nextCoachMap = new Map(nextCoachRows.map(c => [c.school_id, { email: c.email }]))
-    const nextFlagged = new Set((flagNext.data ?? []).map(r => r.school_id))
-    const profileTask = findNextTask(nextSchools, nextLogged, nextCoachMap, gSchoolIds, nextFlagged, gender)
-    if (profileTask) return NextResponse.json({ ok: true, task: profileTask })
-
-    const { data: nextQueue } = await db
-      .from('microcheck_tasks')
-      .select('id, task_type, entity_id, gender, metadata')
-      .eq('status', 'pending')
-      .eq('gender', gender)
-      .order('priority', { ascending: false })
-      .order('created_at', { ascending: true })
-      .limit(1)
-      .maybeSingle()
-
-    if (nextQueue) {
-      const m = nextQueue.metadata as Record<string, unknown>
-      return NextResponse.json({ ok: true, task: {
-        task_type: nextQueue.task_type, task_id: nextQueue.id, entity_id: nextQueue.entity_id, gender,
-        team1_school_id: m.team1_school_id, team2_school_id: m.team2_school_id,
-        team1_name: m.team1_name, team2_name: m.team2_name,
-        score: m.score, meet_date: m.meet_date, season_id: m.season_id,
-        dual_table: (m.table as string) ?? 'dual_meets',
-      }})
-    }
-    return NextResponse.json({ ok: true, task: null })
+    // Hand back the next task (same rules as /next)
+    return NextResponse.json({ ok: true, task: await followingTask(db, gender) })
   }
 
   // ── school_profile (existing flow) ───────────────────────────────────────────
@@ -135,6 +95,7 @@ export async function POST(req: NextRequest) {
   if (logErr) return NextResponse.json({ error: logErr.message }, { status: 500 })
 
   // 2. Write value to target table (only for completed, not cant_find)
+  const coachTable = gender === 'F' ? 'girls_coaches' : 'boys_coaches'
   if (status === 'completed' && value?.trim()) {
     if (SCHOOL_COLS.has(field)) {
       const { error: updateErr } = await db.from('schools')
@@ -143,9 +104,10 @@ export async function POST(req: NextRequest) {
       if (updateErr) return NextResponse.json({ error: updateErr.message }, { status: 500 })
 
     } else if (field === 'coach_name') {
-      // Insert new coach row for the newest season
-      const { error: coachErr } = await db.from('coaches').insert({
+      // Insert new head coach row for the newest season, in this gender's coach table
+      const { error: coachErr } = await db.from(coachTable).insert({
         name:      value.trim(),
+        title:     'Head Coach',
         school_id,
         season_id: (await getNewestSeason()).id,
         is_active: true,
@@ -154,7 +116,7 @@ export async function POST(req: NextRequest) {
 
     } else if (field === 'coach_email') {
       // Update the active coach row for the newest season
-      const { error: coachErr } = await db.from('coaches')
+      const { error: coachErr } = await db.from(coachTable)
         .update({ email: value.trim() })
         .eq('school_id', school_id)
         .eq('season_id', (await getNewestSeason()).id)
@@ -164,40 +126,6 @@ export async function POST(req: NextRequest) {
     // roster_match: no DB write here — the actual matching is done in the roster import tool
   }
 
-  // 3. Find and return the next task (same logic as /next)
-  const genderTable = gender === 'M' ? 'boys_schools' : 'girls_schools'
-  const [gsRes, schoolsRes, logRes, flagRes] = await Promise.all([
-    db.from(genderTable).select('school_id'),
-    db.from('schools')
-      .select('id, display_name, address, website_url, twitter_handle, facebook_url, ad_name, ad_email')
-      .eq('is_nj', true)
-      .order('display_name'),
-    db.from('microcheck_task_log').select('school_id, field').eq('gender', gender),
-    db.from('microcheck_roster_flags').select('school_id').eq('gender', gender).eq('resolved', false),
-  ])
-
-  if (gsRes.error || schoolsRes.error || logRes.error) {
-    return NextResponse.json({ ok: true, task: null })
-  }
-
-  const schoolIds = new Set((gsRes.data ?? []).map(r => r.school_id))
-  const schools   = (schoolsRes.data ?? [])
-    .filter(s => schoolIds.has(s.id))
-    .sort((a, b) => a.display_name.localeCompare(b.display_name))
-  // rosterSet = all boys schools; every school needs a roster/grade review
-
-  let coachRows: { school_id: number; email: string | null }[] = []
-  const coachTable = gender === 'M' ? 'boys_coaches' : 'girls_coaches'
-  const coachRes = await db.from(coachTable)
-    .select('school_id, email').eq('season_id', (await getNewestSeason()).id).eq('is_active', true)
-    .in('school_id', [...schoolIds])
-  if (!coachRes.error) coachRows = coachRes.data ?? []
-
-  const loggedSet  = new Set((logRes.data ?? []).map(r => `${r.school_id}_${r.field}`))
-  const coachMap   = new Map(coachRows.map(c => [c.school_id, { email: c.email }]))
-  const rosterSet  = schoolIds  // every boys school needs a roster/grade review
-  const flaggedSet = new Set((flagRes.data ?? []).map(r => r.school_id))
-
-  const nextTask = findNextTask(schools, loggedSet, coachMap, rosterSet, flaggedSet, gender)
-  return NextResponse.json({ ok: true, task: nextTask })
+  // 3. Hand back the next task (same rules as /next)
+  return NextResponse.json({ ok: true, task: await followingTask(db, gender) })
 }
