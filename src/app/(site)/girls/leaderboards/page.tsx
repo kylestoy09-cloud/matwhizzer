@@ -534,10 +534,6 @@ function WrestlerTab({ d, poolLabel, logos }: { d: PoolData; poolLabel: string; 
                   label: 'Pct', align: 'right',
                   render: r => <span className="font-bold text-slate-800 tabular-nums">{r.total_matches > 0 ? `${(r.bonus_wins / r.total_matches * 100).toFixed(1)}%` : '—'}</span>,
                 },
-                {
-                  label: 'B/M', align: 'right',
-                  render: r => <span className="text-slate-500 tabular-nums text-xs">{r.bonus_wins}/{r.total_matches}</span>,
-                },
               ]}
             />
 
