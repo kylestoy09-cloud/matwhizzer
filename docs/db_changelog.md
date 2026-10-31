@@ -22,12 +22,16 @@
 
 **Tables affected:** `microcheck_task_types`, `microcheck_focus`, `microcheck_claims`, `microcheck_roster_flags`
 
-**PENDING** — run in the Supabase SQL editor, before the deploy
+**APPLIED** — 2026-10-31, Supabase SQL editor (second run; the first failed on the flags key, which kept its pre-rename name `microdose_roster_flags_pkey`, and rolled back)
 
 **Reversible?** Yes:
 - drop the three new tables
 - put the flags key back to `(school_id)` (fails if a school is flagged for both genders)
-**Verified?** No — pending
+**Verified?** Yes — 2026-10-31:
+- 14 checks, girls roster grades first
+- two people asking at once got different tasks
+- asking again returned your own held task, and skip moved to the next school
+- girls roster grades 253 open, girls ties 1
 
 ---
 
