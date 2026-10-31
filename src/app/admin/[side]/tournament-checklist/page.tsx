@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 import { createSupabaseServer } from '@/lib/supabase/server'
+import { createSupabaseAdmin } from '@/lib/supabase/service'
 import { getWorkingSeason } from '@/lib/season-context'
 import { TournamentChecklistClient } from './TournamentChecklistClient'
 
@@ -44,14 +45,16 @@ export default async function TournamentChecklistPage({ params }: { params: Prom
   const gender: 'M' | 'F' = (await params).side === 'girls' ? 'F' : 'M'
   const season = (await getWorkingSeason(gender)).label
 
+  // tournament_registry is readable by the service role only
+  const db0 = createSupabaseAdmin()
   const [{ data: registry }, { data: dbTournaments }] = await Promise.all([
-    supabase
+    db0
       .from('tournament_registry')
       .select('name, date_start, state')
       .eq('season', season)
       .in('gender', [gender, 'both'])
       .order('date_start', { ascending: false }),
-    supabase
+    db0
       .from(gender === 'F' ? 'in_season_tournaments_girls' : 'in_season_tournaments')
       .select('id, name, start_date, end_date')
       .eq('season', season)
