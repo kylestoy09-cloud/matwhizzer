@@ -2,7 +2,9 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { HammerScoresGenderSwitch } from './HammerScoresGenderSwitch'
-import { RATING_NAME, RATING_SHORT, RATING_BLURB } from '@/lib/rating'
+import { RATING_NAME, RATING_SHORT } from '@/lib/rating'
+import { getRatingBlurb } from '@/lib/rating-server'
+import { RatingBlurbEditor } from './RatingBlurbEditor'
 
 // Where the rating's name is defined — every page and tool reads it from this one file.
 const RATING_SOURCE_URL = 'https://github.com/kylestoy09-cloud/matwhizzer/blob/main/src/lib/rating.ts'
@@ -45,7 +47,7 @@ export default async function HammerScoresPage() {
             rel="noopener noreferrer"
             className="text-xs text-blue-600 hover:text-blue-800 transition-colors"
           >
-            Edit in src/lib/rating.ts ↗
+            Name: src/lib/rating.ts ↗
           </a>
         </div>
         <dl className="grid grid-cols-[6rem_1fr] gap-x-3 gap-y-1 text-sm">
@@ -53,11 +55,11 @@ export default async function HammerScoresPage() {
           <dd className="text-slate-900 font-medium">{RATING_NAME}</dd>
           <dt className="text-slate-500">Short form</dt>
           <dd className="text-slate-900 font-medium">{RATING_SHORT}</dd>
-          <dt className="text-slate-500">Description</dt>
-          <dd className="text-slate-600">{RATING_BLURB}</dd>
+          <dt className="text-slate-500">Bio</dt>
+          <dd><RatingBlurbEditor initial={await getRatingBlurb()} /></dd>
         </dl>
         <p className="mt-2 text-xs text-slate-400">
-          The master name for both boys and girls. Every public page and admin tool reads it from this file; changing it there and deploying renames the rating site-wide.
+          The bio is edited here and shows on the boys and girls Regular Season leaderboards. The name and short form are the master for both boys and girls, set in that file: changing them there renames the rating site-wide.
         </p>
       </div>
 

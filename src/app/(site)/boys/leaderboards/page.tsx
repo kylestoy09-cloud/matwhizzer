@@ -17,6 +17,7 @@ import mascotIndex from '@/data/mascot-index.json'
 import { getSchoolLogos } from '@/lib/school-logos'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 import { BoysRegularSeasonLeaders } from './BoysRegularSeasonLeaders'
+import { getRatingBlurb } from '@/lib/rating-server'
 
 // ── Pool-specific types ───────────────────────────────────────────────────────
 
@@ -320,7 +321,7 @@ export default async function BoysLeaderboardsPage({
       <TabNav active={tab} basePath="/boys/leaderboards" />
 
       {isRegularSeason ? (
-        <BoysRegularSeasonLeaders seasonId={season} />
+        <BoysRegularSeasonLeaders seasonId={season} blurb={await getRatingBlurb()} />
       ) : !isAnalytics ? (
         <>
           <PoolNav active={activePool} tab={tab} />

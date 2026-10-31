@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-10-31 — Whizzer Resume Rating bio editable in the admin
+
+**Migration file:** `docs/migrations/20261031_rating_settings.sql`
+
+**Purpose:** Admins edit the rating's bio on the Whizzer Resume Rating page instead of in code. The bio shows under the rating's table on the boys and girls Regular Season leaderboards, and saving refreshes both.
+
+**Database changes:**
+- `rating_settings` (new, key/value), seeded with the current bio under `blurb`.
+- Code falls back to `RATING_BLURB` in `src/lib/rating.ts` when the row is missing.
+
+**Tables affected:** `rating_settings`
+
+**PENDING** — run in the Supabase SQL editor (the deployed code works before it; saving needs it)
+
+**Reversible?** Yes — `DROP TABLE public.rating_settings;` (the leaderboards fall back to the built-in text)
+**Verified?** No — pending
+
+---
+
 ## 2026-10-31 — Microcheck task control: one queue, manual order, missing-data tracking
 
 **Migration file:** `docs/migrations/20261031_microcheck_task_control.sql`

@@ -6,7 +6,7 @@ import { getAllConferences } from '@/lib/conferences'
 import { getAllSections, getAllGroups } from '@/lib/sections'
 import { fmtTime, SectionHeader } from '@/components/leaderboard-ui'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
-import { RATING_NAME, RATING_SHORT, RATING_BLURB } from '@/lib/rating'
+import { RATING_NAME, RATING_SHORT } from '@/lib/rating'
 
 const WEIGHTS        = [100, 107, 114, 120, 126, 132, 138, 145, 152, 165, 185, 235]
 const N_WEIGHTS      = 12
@@ -226,7 +226,7 @@ function SCell({ id, name, logoUrl, bgColor }: {
 const GRADE_ORDER = ['Fr', 'So', 'Jr', 'Sr']
 const GRADE_LABELS: Record<string, string> = { Fr: 'Freshman', So: 'Sophomore', Jr: 'Junior', Sr: 'Senior' }
 
-function IndividualTab({ rows }: { rows: WRow[] }) {
+function IndividualTab({ rows, blurb }: { rows: WRow[]; blurb: string }) {
   const [wt, setWt]       = useState<number | 'all'>('all')
   const [gr, setGr]       = useState<string | 'all'>('all')
   const weightSet = useMemo(() => new Set(WEIGHTS), [])
@@ -371,7 +371,7 @@ function IndividualTab({ rows }: { rows: WRow[] }) {
         />
         <RSTable<WRow>
           title={RATING_NAME}
-          description={RATING_BLURB}
+          description={blurb}
           rows={hammer}
           cols={[
             { label: 'Wrestler', align: 'left', render: r => <WCell id={r.wrestler_id} name={r.wrestler_name} school={r.school_name} logoUrl={r.logo_url} bgColor={r.color_primary} /> },
@@ -484,7 +484,8 @@ function TeamTab({ rows, teamHammerScores }: { rows: TRow[]; teamHammerScores: M
   )
 }
 
-export function GirlsRegularSeasonLeaders({ seasonId }: { seasonId: number }) {
+// blurb: the rating's bio, edited on the admin rating page
+export function GirlsRegularSeasonLeaders({ seasonId, blurb }: { seasonId: number; blurb: string }) {
 
   const [wrestlers,        setWrestlers]        = useState<WRow[]>([])
   const [teams,            setTeams]            = useState<TRow[]>([])
@@ -608,7 +609,7 @@ export function GirlsRegularSeasonLeaders({ seasonId }: { seasonId: number }) {
       ) : sub === 'team' ? (
         <TeamTab rows={visibleTeams} teamHammerScores={teamHammerScores} />
       ) : (
-        <IndividualTab rows={visibleWrestlers} />
+        <IndividualTab rows={visibleWrestlers} blurb={blurb} />
       )}
     </div>
   )
