@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { createSupabaseServer } from '@/lib/supabase/server'
-import { HammerScoresPageClientBoys } from './HammerScoresPageClientBoys'
+import { HammerScoresGenderSwitch } from './HammerScoresGenderSwitch'
 import { RATING_NAME, RATING_SHORT, RATING_BLURB } from '@/lib/rating'
 
 // Where the rating's name is defined — every page and tool reads it from this one file.
@@ -61,7 +61,7 @@ export default async function HammerScoresPage() {
         </p>
       </div>
 
-      <HammerScoresPageClientBoys />
+      <HammerScoresGenderSwitch />
     </div>
   )
 }
