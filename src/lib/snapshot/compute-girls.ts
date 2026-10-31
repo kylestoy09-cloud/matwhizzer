@@ -2,8 +2,8 @@
 // Exact mirror of compute.ts — uses dual_meets_girls, dual_meet_matches_girls,
 // snapshot_streak_state_girls, snapshot_season_highs_girls, snapshot_reports_girls.
 // wrestler_hammer_scores and wrestler_match_score_log are shared tables with a
-// gender column: always filter them to 'F'. in_season_tournaments and
-// ranking_published are shared.
+// gender column: always filter them to 'F', and so is ranking_published.
+// in_season_tournaments is shared.
 
 import type { SupabaseClient } from '@supabase/supabase-js'
 import type {
@@ -123,7 +123,7 @@ export async function computeSnapshotGirls(
     db.from('in_season_tournaments_girls').select('id, name, start_date, end_date').lte('start_date', date).eq('season', season)   // in-season tournaments key the season by label
       // single-day events often have no end_date (31 of 41 girls, 10 of 74 boys in 2025-26)
       .or(`end_date.gte.${date},and(end_date.is.null,start_date.eq.${date})`),
-    db.from('ranking_published').select('scope, scope_id, results, published_at').eq('ranking_type', 'team_girls').lte('published_at', `${date}T23:59:59.999Z`).order('published_at', { ascending: false }).limit(20),   // as of the report date
+    db.from('ranking_published').select('scope, scope_id, results, published_at').eq('ranking_type', 'team').eq('gender', 'F').lte('published_at', `${date}T23:59:59.999Z`).order('published_at', { ascending: false }).limit(20),   // as of the report date
     db.from('dual_meets_girls').select('id, meet_date, team1:schools!team1_school_id(id, display_name), team2:schools!team2_school_id(id, display_name)').eq('season_id', seasonId).lt('meet_date', date),
   ])
 

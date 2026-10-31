@@ -160,6 +160,7 @@ export async function computeSnapshot(
       .or(`end_date.gte.${date},and(end_date.is.null,start_date.eq.${date})`),
     db.from('ranking_published').select('scope, scope_id, results, published_at')
       .eq('ranking_type', 'team')
+      .eq('gender', 'M')
       .lte('published_at', `${date}T23:59:59.999Z`)   // as of the report date (backfills must not see later rankings)
       .order('published_at', { ascending: false })
       .limit(20),

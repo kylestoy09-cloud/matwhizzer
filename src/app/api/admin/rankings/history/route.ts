@@ -48,7 +48,8 @@ export async function GET(req: NextRequest) {
     .from('ranking_published')
     .select('id, published_at, published_by, source_type, period_start, period_end, results')
     .eq('scope', scope)
-    .eq('season_id', CURRENT_SEASON_ID)
+    .eq('gender', seasonGender)
+      .eq('season_id', CURRENT_SEASON_ID)
     .order('published_at', { ascending: false })
     .limit(20)
 

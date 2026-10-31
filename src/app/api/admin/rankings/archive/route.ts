@@ -38,6 +38,7 @@ export async function GET(req: NextRequest) {
     let q = supabase
       .from('ranking_published')
       .select('ranking_type, scope, scope_id, weight_class, published_at')
+      .eq('gender', seasonGender)
       .eq('season_id', CURRENT_SEASON_ID)
     if (rankingType) q = q.eq('ranking_type', rankingType)
     return q

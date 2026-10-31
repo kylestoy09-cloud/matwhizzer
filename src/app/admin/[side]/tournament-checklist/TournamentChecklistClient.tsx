@@ -13,10 +13,14 @@ export function TournamentChecklistClient({
   tournaments,
   totalInDb,
   totalMissing,
+  title,
+  registryHref,
 }: {
   tournaments: RefTournament[]
   totalInDb: number
   totalMissing: number
+  title: string
+  registryHref: string
 }) {
   const [filter, setFilter] = useState<'all' | 'missing' | 'found'>('all')
 
@@ -29,11 +33,18 @@ export function TournamentChecklistClient({
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
       <div className="flex items-center gap-3 mb-8">
-        <Link href="/admin" className="text-xs text-slate-500 hover:text-slate-900">← Admin</Link>
+        <Link href={registryHref} className="text-xs text-slate-500 hover:text-slate-900">← Tournament Registry</Link>
         <span className="text-slate-300">/</span>
-        {/* season-literal-ok: pinned historical record */}
-        <h1 className="text-xl font-bold text-slate-900">Tournament Checklist — Boys 2025-26 record</h1>
+        <h1 className="text-xl font-bold text-slate-900">Tournament Checklist — {title}</h1>
       </div>
+
+      {tournaments.length === 0 && (
+        <p className="mb-8 text-sm text-slate-600 border border-slate-200 bg-slate-50 px-4 py-3">
+          No tournaments have been entered for this season yet. Enter the schedule in the{' '}
+          <Link href={registryHref} className="underline font-semibold">Tournament Registry</Link>{' '}
+          (the preseason &ldquo;Enter Tournament Schedule&rdquo; step), then come back here.
+        </p>
+      )}
 
       {/* Summary */}
       <div className="grid grid-cols-3 gap-4 mb-8">

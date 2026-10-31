@@ -2,6 +2,53 @@
 
 ---
 
+## 2026-10-31 — Preseason step: Enter Tournament Schedule
+
+**Migration file:** `docs/migrations/20261031_tournament_schedule_step.sql`
+
+**Purpose:** The tournament schedule (names and dates) is entered by hand each season in the Tournament Registry. The Tournament Checklist now compares imported tournaments against that list, for both sides, not against a 2025-26 boys list typed into the code.
+
+**Database changes:**
+- `admin_tasks`: a preseason process step `tournament_schedule` ("Enter Tournament Schedule") for boys and girls, at order 3. Later steps move down one.
+- `admin_tool_registry`: `tournament_checklist` back to `both`, side-less path.
+
+**Tables affected:** `admin_tasks`, `admin_tool_registry`
+
+**PENDING** — run in the Supabase SQL editor
+
+**Reversible?** Yes:
+- delete the two `tournament_schedule` tasks and move the later steps back up one
+- set `tournament_checklist` to `boys`, `/admin/boys/tournament-checklist`
+**Verified?** No — pending
+
+---
+
+## 2026-10-31 — Rankings get a gender; mixed girls-run rankings removed
+
+**Migration file:** `docs/migrations/20261031_ranking_gender.sql`
+
+**Purpose:** `ranking_published`, `ranking_computed_variants` and `ranking_editorial` had no gender, and boys and girls share season ids. The girls auto-publish loaded every 2025-26 rating with no gender filter (fixed in code 2026-10-30), so its runs from 2026-10-27 to 2026-10-29 published boys and mixed rankings. One example: District 1, 120 lb had 10 boys and 11 girls in one ranking.
+
+**Database changes:**
+- **`gender` column** (`M`/`F`, NOT NULL, check constraint) on all three tables, plus season/gender indexes.
+- **Before 2026-09-14** (boys 2025-26 locked): the boys publish, tagged `M` (782 published, 783 variants). The editorial row is also `M`.
+- **Girls runs:**
+  - girls-only rankings tagged `F` (562 published, 562 variants)
+  - the other 4,692 published and 4,692 variants deleted
+- **Code:** auto-publish, variants, editorial and publish write the gender; archive, history, variants, editorial and the snapshots filter on it.
+- **The girls snapshot** read the never-written `team_girls` type; it now reads `team` + `F`.
+
+**Tables affected:** `ranking_published`, `ranking_computed_variants`, `ranking_editorial`
+
+**PENDING** — run in the Supabase SQL editor, before the deploy that reads the column
+
+**Reversible?** Partly:
+- the deleted rows are in `docs/migrations/backups/20261031_ranking_rows_deleted.json.gz`
+- the gender columns can be dropped
+**Verified?** No — pending
+
+---
+
 ## 2026-10-30 — Admin boys and girls sides: task and article gender, tool registry addresses
 
 **Migration files:**

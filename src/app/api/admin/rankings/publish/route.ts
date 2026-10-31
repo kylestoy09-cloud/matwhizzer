@@ -52,6 +52,7 @@ export async function POST(req: NextRequest) {
   const { data: published, error: insertErr } = await supabase
     .from('ranking_published')
     .insert({
+      gender: seasonGender,
       ranking_type:        e.ranking_type,
       scope:               e.scope,
       scope_id:            e.scope_id,

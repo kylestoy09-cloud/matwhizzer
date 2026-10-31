@@ -135,7 +135,7 @@ export async function POST(req: NextRequest) {
   type VariantInsert = {
     ranking_type: string; formula_name: string
     scope: string; scope_id: string | null
-    season_id: number; weight_class: number
+    season_id: number; gender: 'M' | 'F'; weight_class: number
     period_start: string; period_end: string; results: unknown
   }
 
@@ -146,6 +146,7 @@ export async function POST(req: NextRequest) {
     scope:        key.scope,
     scope_id:     key.scope_id,
     season_id:    CURRENT_SEASON_ID,
+    gender:       seasonGender,
     weight_class: parseInt(key.weight_class, 10),
     period_start: today,
     period_end:   weekOut,
@@ -171,7 +172,7 @@ export async function POST(req: NextRequest) {
   // 7. Build ranking_published rows (pair with variant results by position)
   type PublishedInsert = {
     ranking_type: string; scope: string; scope_id: string | null
-    season_id: number; weight_class: number
+    season_id: number; gender: 'M' | 'F'; weight_class: number
     period_start: string; period_end: string
     source_type: string; source_editorial_id: null
     source_variant_id: string; published_by: null; results: unknown
@@ -182,6 +183,7 @@ export async function POST(req: NextRequest) {
     scope:               v.scope,
     scope_id:            v.scope_id,
     season_id:           CURRENT_SEASON_ID,
+    gender:              seasonGender,
     weight_class:        v.weight_class,
     period_start:        today,
     period_end:          weekOut,

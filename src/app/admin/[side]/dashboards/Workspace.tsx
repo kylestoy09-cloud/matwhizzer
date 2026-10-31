@@ -6,6 +6,7 @@ import { RosterRolloverWorkspace }    from './tools/RosterRolloverWorkspace'
 import { TransfersWorkspace }         from './tools/TransfersWorkspace'
 import { TournamentRolloverWorkspace } from './tools/TournamentRolloverWorkspace'
 import { CoachesImportWorkspace }     from './tools/CoachesImportWorkspace'
+import { TournamentScheduleWorkspace } from './tools/TournamentScheduleWorkspace'
 
 function ScheduleImportStub() {
   return (
@@ -38,6 +39,7 @@ const TOOL_COMPONENTS: Record<string, React.ComponentType> = {
   transfers:          TransfersWorkspace,
   tournament_rollover: TournamentRolloverWorkspace,
   coaches_import:     CoachesImportWorkspace,
+  tournament_schedule: TournamentScheduleWorkspace,
   schedule_import:    ScheduleImportStub,
 }
 

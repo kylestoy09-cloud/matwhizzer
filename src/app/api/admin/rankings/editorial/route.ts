@@ -40,6 +40,7 @@ export async function GET(req: NextRequest) {
     .from('ranking_editorial')
     .select('id, ranking_type, scope, scope_id, weight_class, season_id, period_start, period_end, based_on_variant_id, results, updated_by, updated_at')
     .eq('scope', scope)
+    .eq('gender', seasonGender)
     .eq('season_id', CURRENT_SEASON_ID)
     .order('updated_at', { ascending: false })
     .limit(1)
@@ -86,6 +87,7 @@ export async function POST(req: NextRequest) {
   const { data: editorial, error: insertErr } = await supabase
     .from('ranking_editorial')
     .insert({
+      gender: seasonGender,
       ranking_type:        v.ranking_type ?? 'individual',
       scope:               scope ?? v.scope,
       scope_id:            scope_id ?? v.scope_id ?? null,

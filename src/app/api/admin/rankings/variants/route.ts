@@ -73,6 +73,7 @@ export async function GET(req: NextRequest) {
     .from('ranking_computed_variants')
     .select('id, ranking_type, formula_name, scope, scope_id, weight_class, season_id, period_start, period_end, computed_at, results')
     .eq('scope', scope)
+    .eq('gender', seasonGender)
     .eq('season_id', CURRENT_SEASON_ID)
     .order('computed_at', { ascending: false })
     .limit(10)
@@ -159,7 +160,7 @@ export async function POST(req: NextRequest) {
 
     const { data: variant, error: insertErr } = await supabase
       .from('ranking_computed_variants')
-      .insert({ ranking_type: 'individual', formula_name: 'hammer_score', scope, scope_id: scope_id ?? null, season_id: CURRENT_SEASON_ID, weight_class, period_start: period_start ?? today, period_end: period_end ?? weekOut, results })
+      .insert({ ranking_type: 'individual', formula_name: 'hammer_score', scope, scope_id: scope_id ?? null, season_id: CURRENT_SEASON_ID, gender: seasonGender, weight_class, period_start: period_start ?? today, period_end: period_end ?? weekOut, results })
       .select('id, formula_name, computed_at, results').single()
     if (insertErr) return NextResponse.json({ error: insertErr.message }, { status: 500 })
 
@@ -204,7 +205,7 @@ export async function POST(req: NextRequest) {
 
     const { data: variant, error: insertErr } = await supabase
       .from('ranking_computed_variants')
-      .insert({ ranking_type: 'team', formula_name: 'power_points', scope, scope_id: scope_id ?? null, season_id: CURRENT_SEASON_ID, weight_class: null, period_start: period_start ?? today, period_end: period_end ?? weekOut, results })
+      .insert({ ranking_type: 'team', formula_name: 'power_points', scope, scope_id: scope_id ?? null, season_id: CURRENT_SEASON_ID, gender: seasonGender, weight_class: null, period_start: period_start ?? today, period_end: period_end ?? weekOut, results })
       .select('id, formula_name, computed_at, results').single()
     if (insertErr) return NextResponse.json({ error: insertErr.message }, { status: 500 })
 
@@ -284,7 +285,7 @@ export async function POST(req: NextRequest) {
 
     const { data: variant, error: insertErr } = await supabase
       .from('ranking_computed_variants')
-      .insert({ ranking_type: 'team', formula_name: 'returning_hammer_strength', scope, scope_id: scope_id ?? null, season_id: CURRENT_SEASON_ID, weight_class: null, period_start: period_start ?? today, period_end: period_end ?? weekOut, results })
+      .insert({ ranking_type: 'team', formula_name: 'returning_hammer_strength', scope, scope_id: scope_id ?? null, season_id: CURRENT_SEASON_ID, gender: seasonGender, weight_class: null, period_start: period_start ?? today, period_end: period_end ?? weekOut, results })
       .select('id, formula_name, computed_at, results').single()
     if (insertErr) return NextResponse.json({ error: insertErr.message }, { status: 500 })
 
