@@ -7,6 +7,7 @@ import { getAllSections, getAllGroups } from '@/lib/sections'
 import { fmtTime, SectionHeader } from '@/components/leaderboard-ui'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 import { RATING_NAME, RATING_SHORT } from '@/lib/rating'
+import { unpackRsLeaders } from '@/lib/rsLeaders'
 
 const WEIGHTS        = [106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285]
 const N_WEIGHTS      = 14
@@ -543,7 +544,7 @@ export function BoysRegularSeasonLeaders({ seasonId, blurb }: { seasonId: number
         setTeamHammerScores(thm)
       }
 
-      setWrestlers((leadersJson.wrestlers ?? []) as WRow[])
+      setWrestlers(unpackRsLeaders<WRow>(leadersJson))
       setTeams((leadersJson.teams ?? []) as TRow[])
       setLoading(false)
     }

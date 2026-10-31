@@ -4,9 +4,11 @@ import { fetchAllRows } from '@/lib/fetchAllRows'
 
 export const revalidate = 300
 
+// Every page re-runs the whole function, so ask for everything in one page (the API
+// returns up to 100,000 rows); the loop only matters past that.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function fetchRpcAll(supabase: any, rpcName: string, params: object): Promise<any[]> {
-  const PAGE = 1000
+  const PAGE = 100_000
   const rows: any[] = []
   let from = 0
   while (true) {
@@ -61,12 +63,22 @@ export async function GET(req: NextRequest) {
   const p = { p_season_id: seasonId, p_gender: gender }
 
   try {
-    const [wrestlers, teams, hammerMax] = await Promise.all([
+    const [rows, teams, hammerMax] = await Promise.all([
       fetchRpcAll(supabase, 'lb_rs_individual_stats', p),
       fetchRpcAll(supabase, 'lb_rs_team_stats',       p),
       fetchHammerMax(supabase, seasonId, gender),
     ])
-    return NextResponse.json({ wrestlers, teams, hammerMax })
+    // A school's details go once in `schools`, not on each of its wrestlers' rows;
+    // the leaderboard joins them back (see unpackRsLeaders)
+    const schools: Record<number, unknown[]> = {}
+    const wrestlers = rows.map(({ school_name, section, classification, athletic_conference, logo_url, color_primary, ...w }) => {
+      schools[w.school_id] ??= [school_name, section, classification, athletic_conference, logo_url, color_primary]
+      return w
+    })
+    // Cached at the edge for 5 minutes; after that the old copy is served while a new one builds
+    return NextResponse.json({ wrestlers, schools, teams, hammerMax }, {
+      headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=86400' },
+    })
   } catch (err) {
     return NextResponse.json({ error: String(err), wrestlers: [], teams: [], hammerMax: [] }, { status: 500 })
   }
