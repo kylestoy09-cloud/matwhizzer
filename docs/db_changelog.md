@@ -14,10 +14,10 @@
 
 **Tables affected:** `rating_settings`
 
-**PENDING** — run in the Supabase SQL editor (the deployed code works before it; saving needs it)
+**APPLIED** — 2026-10-31, Supabase SQL editor
 
 **Reversible?** Yes — `DROP TABLE public.rating_settings;` (the leaderboards fall back to the built-in text)
-**Verified?** No — pending
+**Verified?** Yes — 2026-10-31: `rating_settings` holds the `blurb` row, and the server can read it
 
 ---
 
