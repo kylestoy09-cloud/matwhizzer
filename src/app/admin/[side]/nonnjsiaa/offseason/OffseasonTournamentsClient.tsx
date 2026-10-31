@@ -1,5 +1,6 @@
 'use client'
 
+import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useSeasons } from '@/components/SeasonsProvider'
@@ -100,6 +101,8 @@ function TournamentForm({
 }
 
 export function OffseasonTournamentsClient() {
+  // This side's events plus combined (MF) events
+  const { gender: sideGender } = useAdminGender()
   const [tournaments, setTournaments] = useState<Tournament[]>([])
   const [loading, setLoading] = useState(true)
   const [showCreate, setShowCreate] = useState(false)
@@ -151,8 +154,9 @@ export function OffseasonTournamentsClient() {
     setTournaments(prev => prev.filter(t => t.id !== id))
   }
 
+  const mine = tournaments.filter(t => t.gender === sideGender || t.gender === 'MF')
   const bySeason = new Map<string, Tournament[]>()
-  for (const t of tournaments) {
+  for (const t of mine) {
     if (!bySeason.has(t.season)) bySeason.set(t.season, [])
     bySeason.get(t.season)!.push(t)
   }
@@ -163,7 +167,7 @@ export function OffseasonTournamentsClient() {
       {/* Create */}
       {showCreate ? (
         <TournamentForm
-          initial={{}}
+          initial={{ gender: sideGender }}
           onSave={handleCreate}
           onCancel={() => { setShowCreate(false); setFormError(null) }}
           saving={saving}
@@ -184,7 +188,7 @@ export function OffseasonTournamentsClient() {
 
       {loading ? (
         <p className="text-sm text-slate-400">Loading…</p>
-      ) : tournaments.length === 0 ? (
+      ) : mine.length === 0 ? (
         <p className="text-sm text-slate-400">No HS off-season tournaments yet.</p>
       ) : (
         sortedSeasons.map(season => (

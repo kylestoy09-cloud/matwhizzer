@@ -101,6 +101,7 @@ export function TaskCreatorPanel({ currentUser, defaultDate, bounds, onCreated }
     const selectedTool = tools.find(t => t.key === toolKey)
     const { error } = await supabase.from('admin_tasks').insert({
       dashboard,
+      gender,
       group_type:     taskType === 'process' ? 'process' : 'freestyle',
       title:          title.trim(),
       description:    notes.trim() || null,

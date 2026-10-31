@@ -36,7 +36,10 @@ function parseCsv(text: string): Array<Record<string, string>> {
   })
 }
 
-export function AlignmentImportClient() {
+// Boys and girls write their own alignment tables through their own routes
+export function AlignmentImportClient({ gender }: { gender: 'M' | 'F' }) {
+  const api   = gender === 'F' ? '/api/admin/alignment-import-girls' : '/api/admin/alignment-import'
+  const label = gender === 'F' ? 'girls' : 'boys'
   const fileRef = useRef<HTMLInputElement>(null)
 
   const [meta, setMeta] = useState<ApiMeta | null>(null)
@@ -51,11 +54,11 @@ export function AlignmentImportClient() {
   const [importError, setImportError] = useState<string | null>(null)
 
   useEffect(() => {
-    fetch('/api/admin/alignment-import')
+    fetch(api)
       .then(r => r.json())
       .then(setMeta)
       .catch(() => setMetaError('Failed to load districts/regions from DB'))
-  }, [])
+  }, [api])
 
   const handleFile = useCallback((file: File) => {
     if (!meta) return
@@ -136,7 +139,7 @@ export function AlignmentImportClient() {
     setImporting(true)
     setImportError(null)
     try {
-      const res = await fetch('/api/admin/alignment-import', {
+      const res = await fetch(api, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -172,8 +175,8 @@ export function AlignmentImportClient() {
       <div className="flex items-center gap-3">
         <span className="text-sm text-slate-500">Target season:</span>
         {meta.seasonId
-          ? <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">Season {meta.seasonId} (boys preseason)</span>
-          : <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-700">No active boys preseason found</span>
+          ? <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">Season {meta.seasonId} ({label} preseason)</span>
+          : <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-700">No active {label} preseason found</span>
         }
       </div>
 
@@ -282,7 +285,7 @@ export function AlignmentImportClient() {
         <div className="p-4 bg-green-50 border border-green-200 rounded space-y-2">
           <p className="text-green-800 font-semibold">Import complete</p>
           <p className="text-sm text-green-700">
-            {importResult.imported} schools written to <code>boys_school_districts</code> and <code>boys_school_regions</code> for Season {meta.seasonId}.
+            {importResult.imported} schools written to <code>{label}_school_districts</code> and <code>{label}_school_regions</code> for Season {meta.seasonId}.
           </p>
           <button
             onClick={() => { setPreview(null); setFileName(''); setImportResult(null); if (fileRef.current) fileRef.current.value = '' }}

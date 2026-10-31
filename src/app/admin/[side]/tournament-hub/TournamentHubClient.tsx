@@ -154,6 +154,7 @@ function BracketChips({ row }: { row: HubRow }) {
 type SaveState = 'idle' | 'saving' | 'saved' | 'error'
 
 function PointDropdown({ row, onSaved }: { row: HubRow; onSaved: (id: string, value: number | null) => void }) {
+  const { gender } = useAdminGender()
   const [saveState, setSaveState] = useState<SaveState>('idle')
 
   async function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -163,7 +164,7 @@ function PointDropdown({ row, onSaved }: { row: HubRow; onSaved: (id: string, va
       const res = await fetch('/api/admin/tournament-hub', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+        body: JSON.stringify({ gender,
           registry_id:             row.registry_id,
           in_season_tournament_id: row.in_season_tournament_id,
           point_value:             value,
@@ -318,7 +319,7 @@ function RowExpander({ row, gender, season, onClose, onTidCreated }: { row: HubR
       const res = await fetch('/api/admin/tournament-detail', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'save_seeds', in_season_tournament_id: tid, seeds }),
+        body: JSON.stringify({ gender, action: 'save_seeds', in_season_tournament_id: tid, seeds }),
       })
       const d = await res.json()
       if (d.error) throw new Error(d.error)
@@ -384,7 +385,7 @@ function RowExpander({ row, gender, season, onClose, onTidCreated }: { row: HubR
       await fetch('/api/admin/tournament-detail', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'add_participant', in_season_tournament_id: tid, school_id: r.school_id }),
+        body: JSON.stringify({ gender, action: 'add_participant', in_season_tournament_id: tid, school_id: r.school_id }),
       })
       saved++
       // Write alias when the pasted name differs from display_name and wasn't already an alias match

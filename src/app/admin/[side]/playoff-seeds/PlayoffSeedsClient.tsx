@@ -549,7 +549,9 @@ export function PlayoffSeedsClient({ groups, seasonId, gender }: { groups: Group
             <h2 className="text-lg font-bold text-slate-900">
               {g.section === 'Non-Public'
                 ? `Non-Public Group ${g.classification}`
-                : `${g.section} Group ${g.classification}`}
+                : gender === 'F'
+                  ? `Girls ${g.label}`
+                  : `${g.section} Group ${g.classification}`}
             </h2>
             {confirmedKeys.has(g.key) && (
               <span className="px-2 py-0.5 rounded bg-green-100 text-green-700 text-xs font-medium">Confirmed</span>

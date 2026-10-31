@@ -13,7 +13,8 @@ type Preview = {
 
 type Phase = 'idle' | 'loading' | 'preview' | 'confirming' | 'done' | 'error'
 
-export function SeasonRolloverClient() {
+export function SeasonRolloverClient({ gender }: { gender: 'M' | 'F' }) {
+  const api = gender === 'F' ? '/api/admin/season-rollover-girls' : '/api/admin/season-rollover'
   const [migrationPending, setMigrationPending] = useState<boolean | null>(null)
   const [phase,    setPhase]    = useState<Phase>('idle')
   const [preview,  setPreview]  = useState<Preview | null>(null)
@@ -22,16 +23,16 @@ export function SeasonRolloverClient() {
   const [showAll,  setShowAll]  = useState(false)
 
   useEffect(() => {
-    fetch('/api/admin/season-rollover?check=1')
+    fetch(`${api}?check=1`)
       .then(r => r.json())
       .then(d => setMigrationPending(d.migrationPending ?? false))
-  }, [])
+  }, [api])
 
   const loadPreview = async () => {
     setPhase('loading')
     setErrorMsg(null)
     try {
-      const r = await fetch('/api/admin/season-rollover')
+      const r = await fetch(api)
       const d = await r.json()
       if (d.error) { setErrorMsg(d.error); setPhase('error'); return }
       setPreview(d.preview)
@@ -46,7 +47,7 @@ export function SeasonRolloverClient() {
     setPhase('confirming')
     setErrorMsg(null)
     try {
-      const r = await fetch('/api/admin/season-rollover', { method: 'POST' })
+      const r = await fetch(api, { method: 'POST' })
       const d = await r.json()
       if (d.error) { setErrorMsg(d.error); setPhase('error'); return }
       setResult({ advanced: d.advanced, graduated: d.graduated })
@@ -72,7 +73,7 @@ export function SeasonRolloverClient() {
   return (
     <div className="border border-slate-200 rounded overflow-hidden">
       <div className="bg-slate-50 px-5 py-4 border-b border-slate-200">
-        <h2 className="text-base font-semibold text-slate-800">Roll Over Season</h2>
+        <h2 className="text-base font-semibold text-slate-800">Roll Over Season — {gender === 'F' ? 'Girls' : 'Boys'}</h2>
         <p className="text-sm text-slate-500 mt-0.5">
           Advances every wrestler with a confirmed grade by one year. Seniors are marked inactive (graduated).
           Wrestlers without a confirmed grade are left untouched.

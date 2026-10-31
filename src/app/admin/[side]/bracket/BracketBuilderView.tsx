@@ -1,5 +1,6 @@
 'use client'
 
+import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import { useState, useEffect, useCallback } from 'react'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -105,6 +106,7 @@ function ResultPanel({
   onSaved: (updated: BracketSlot, advancedTo: { winner: number | null; loser: number | null }) => void
   onCancel: () => void
 }) {
+  const { gender } = useAdminGender()
   const [winner,       setWinner]       = useState<'top' | 'bottom' | null>(slot.winner_position)
   const [resultType,   setResultType]   = useState(slot.result_type ?? '')
   const [resultDetail, setResultDetail] = useState(slot.result_detail ?? '')
@@ -126,7 +128,7 @@ function ResultPanel({
       const res = await fetch('/api/admin/tournament-brackets', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+        body: JSON.stringify({ gender,
           action:                   'update_result',
           in_season_tournament_id:  slot.in_season_tournament_id,
           weight_class:             slot.weight_class,
@@ -386,6 +388,7 @@ function WeightBracket({
 // ── Main Component ────────────────────────────────────────────────────────────
 
 export function BracketBuilderView({ tid }: { tid: string }) {
+  const { gender } = useAdminGender()
   const [byWeight,      setByWeight]      = useState<Record<number, BracketSlot[]>>({})
   const [seedCounts,    setSeedCounts]    = useState<Record<number, number>>({})
   const [loading,       setLoading]       = useState(true)
@@ -400,7 +403,7 @@ export function BracketBuilderView({ tid }: { tid: string }) {
 
   const loadBracket = useCallback(async () => {
     setLoading(true)
-    const res = await fetch(`/api/admin/tournament-brackets?tid=${tid}`)
+    const res = await fetch(`/api/admin/tournament-brackets?tid=${tid}&gender=${gender}`)
     const data = await res.json()
     const bw: Record<number, BracketSlot[]> = data.byWeight ?? {}
     setByWeight(bw)
@@ -413,7 +416,7 @@ export function BracketBuilderView({ tid }: { tid: string }) {
       return bracketWeights[0] ?? seedWeights[0] ?? 106
     })
     setLoading(false)
-  }, [tid])
+  }, [tid, gender])
 
   useEffect(() => { loadBracket() }, [loadBracket])
 
@@ -430,7 +433,7 @@ export function BracketBuilderView({ tid }: { tid: string }) {
       const res = await fetch('/api/admin/tournament-brackets', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
+        body: JSON.stringify({ ...body, gender }),
       })
       const data = await res.json()
       if (data.error) throw new Error(data.error)
@@ -451,7 +454,7 @@ export function BracketBuilderView({ tid }: { tid: string }) {
       const res = await fetch('/api/admin/tournament-brackets', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+        body: JSON.stringify({ gender,
           action: 'generate_empty',
           in_season_tournament_id: tid,
           weight_class: weight,
@@ -475,7 +478,7 @@ export function BracketBuilderView({ tid }: { tid: string }) {
       const res = await fetch('/api/admin/tournament-brackets', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'sync_from_bouts', in_season_tournament_id: tid }),
+        body: JSON.stringify({ gender, action: 'sync_from_bouts', in_season_tournament_id: tid }),
       })
       const data = await res.json()
       if (data.error) throw new Error(data.error)
@@ -495,7 +498,7 @@ export function BracketBuilderView({ tid }: { tid: string }) {
       const res = await fetch('/api/admin/tournament-brackets', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'diagnose', in_season_tournament_id: tid }),
+        body: JSON.stringify({ gender, action: 'diagnose', in_season_tournament_id: tid }),
       })
       const data = await res.json()
       if (data.error) throw new Error(data.error)

@@ -1,5 +1,6 @@
 'use client'
 
+import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import Link from 'next/link'
 import type { DualMeetOption } from './page'
@@ -101,13 +102,13 @@ function meetLabel(m: DualMeetOption): string {
   const date = new Date(m.meet_date + 'T12:00:00').toLocaleDateString('en-US', {
     month: 'numeric', day: 'numeric', year: '2-digit',
   })
-  const genderSuffix = m.gender === 'F' ? ' · Girls' : ''
-  return `${m.team1_name ?? '—'} vs ${m.team2_name ?? '—'} · ${date}${genderSuffix}`
+  return `${m.team1_name ?? '—'} vs ${m.team2_name ?? '—'} · ${date}`
 }
 
 // ── Main component ────────────────────────────────────────────────────────────
 
 export function DualAuditClient({ meets }: { meets: DualMeetOption[] }) {
+  const { gender } = useAdminGender()
   const [mode, setMode]                     = useState<'meet' | 'queue'>('meet')
   const [mid, setMid]                       = useState(meets[0]?.id ?? '')
   const [matches, setMatches]               = useState<AugmentedMatch[]>([])
@@ -129,7 +130,7 @@ export function DualAuditClient({ meets }: { meets: DualMeetOption[] }) {
     setMatches([])
     setSelectedMatch(null)
 
-    fetch(`/api/admin/dual-audit?mid=${encodeURIComponent(mid)}`)
+    fetch(`/api/admin/dual-audit?mid=${encodeURIComponent(mid)}&gender=${gender}`)
       .then(r => r.json())
       .then(d => {
         if (d.error) { setLoadError(d.error); return }
@@ -137,7 +138,7 @@ export function DualAuditClient({ meets }: { meets: DualMeetOption[] }) {
       })
       .catch(e => setLoadError(String(e)))
       .finally(() => setLoading(false))
-  }, [mid])
+  }, [mid, gender])
 
   const matchFlags = useMemo(() => {
     const map = new Map<string, FilterKey[]>()
@@ -196,7 +197,7 @@ export function DualAuditClient({ meets }: { meets: DualMeetOption[] }) {
               if (queueGroups.length === 0 && !queueLoading) {
                 setQueueLoading(true)
                 setQueueError('')
-                fetch('/api/admin/dual-audit?view=unlinked')
+                fetch(`/api/admin/dual-audit?view=unlinked&gender=${gender}`)
                   .then(r => r.json())
                   .then(d => { if (d.error) setQueueError(d.error); else setQueueGroups(d.groups ?? []) })
                   .catch(e => setQueueError(String(e)))
@@ -234,7 +235,7 @@ export function DualAuditClient({ meets }: { meets: DualMeetOption[] }) {
               setQueueGroups([])
               setQueueLoading(true)
               setQueueError('')
-              fetch('/api/admin/dual-audit?view=unlinked')
+              fetch(`/api/admin/dual-audit?view=unlinked&gender=${gender}`)
                 .then(r => r.json())
                 .then(d => { if (d.error) setQueueError(d.error); else setQueueGroups(d.groups ?? []) })
                 .catch(e => setQueueError(String(e)))
@@ -517,6 +518,7 @@ function WrestlerPicker({
   currentName: string | null
   onSelect:    (w: WrestlerOption | null) => void
 }) {
+  const { gender } = useAdminGender()
   const [roster, setRoster]   = useState<WrestlerOption[]>([])
   const [loading, setLoading] = useState(false)
   const loadedFor = useRef<number | null>(null)
@@ -525,11 +527,11 @@ function WrestlerPicker({
     if (!schoolId || schoolId === loadedFor.current) return
     loadedFor.current = schoolId
     setLoading(true)
-    fetch(`/api/admin/school-wrestlers?schoolId=${schoolId}`)
+    fetch(`/api/admin/school-wrestlers?schoolId=${schoolId}&gender=${gender}`)
       .then(r => r.json())
       .then(d => setRoster(d.wrestlers ?? []))
       .finally(() => setLoading(false))
-  }, [schoolId])
+  }, [schoolId, gender])
 
   return (
     <div>
@@ -582,6 +584,7 @@ function DualMatchEditPanel({
   onSaved:  (m: AugmentedMatch) => void
   onCancel: () => void
 }) {
+  const { gender } = useAdminGender()
   const [wrestlerAId,    setWrestlerAId]    = useState<string | null>(null)
   const [wrestlerAName,  setWrestlerAName]  = useState<string | null>(null)
   const [wrestlerBId,    setWrestlerBId]    = useState<string | null>(null)
@@ -650,6 +653,7 @@ function DualMatchEditPanel({
       fall_time_seconds: fallSec,
       is_double_forfeit: isDoubleForfeit,
       is_forfeit_win:    isForfeitWin,
+      gender,
     }
 
     try {

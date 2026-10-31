@@ -1,5 +1,6 @@
 'use client'
 
+import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import { useState, useEffect } from 'react'
 import { useSeasons } from '@/components/SeasonsProvider'
 import Link from 'next/link'
@@ -295,8 +296,10 @@ function PlacementTable({ tournamentId }: { tournamentId: number }) {
 // ── Main component ────────────────────────────────────────────────────────────
 
 export function MsTournamentsClient() {
+  // This side's events plus combined (MF) events; new events default to this side
+  const { gender: sideGender } = useAdminGender()
   const SEASONS = useSeasons().labelsBackTo(OLDEST_SEASON_START)
-  const emptyForm: TournamentForm = { ...EMPTY_FORM, season: SEASONS[0] }
+  const emptyForm: TournamentForm = { ...EMPTY_FORM, season: SEASONS[0], gender: sideGender }
   const [tournaments, setTournaments] = useState<Tournament[]>([])
   const [tiers, setTiers] = useState<Tier[]>([])
   const [loading, setLoading] = useState(true)
@@ -371,6 +374,7 @@ export function MsTournamentsClient() {
 
   const filtered = tournaments.filter(t => {
     if (filterSeason !== 'all' && t.season !== filterSeason) return false
+    if (t.gender !== sideGender && t.gender !== 'MF') return false
     if (filterGender !== 'all' && t.gender !== filterGender) return false
     return true
   })
@@ -404,10 +408,9 @@ export function MsTournamentsClient() {
           onChange={e => setFilterGender(e.target.value)}
           className="text-sm border border-slate-300 px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-black"
         >
-          <option value="all">All genders</option>
-          <option value="M">Boys</option>
-          <option value="F">Girls</option>
-          <option value="MF">Combined</option>
+          <option value="all">{sideGender === 'F' ? 'Girls' : 'Boys'} + combined</option>
+          <option value={sideGender}>{sideGender === 'F' ? 'Girls' : 'Boys'} only</option>
+          <option value="MF">Combined only</option>
         </select>
 
         <button

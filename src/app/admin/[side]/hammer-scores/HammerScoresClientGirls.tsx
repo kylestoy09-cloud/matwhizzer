@@ -56,7 +56,7 @@ function RecalcButton({}: { }) {
       const res  = await fetch('/api/admin/recalculate-hammer-scores', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({}),
+        body: JSON.stringify({ gender: 'F' }),
       })
       const json = await res.json()
       if (!res.ok) throw new Error(json.error ?? 'Unknown error')

@@ -1,5 +1,6 @@
 'use client'
 
+import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
@@ -14,6 +15,7 @@ type Transfer = {
 }
 
 export function TransfersWorkspace() {
+  const { gender } = useAdminGender()
   const [transfers,        setTransfers]        = useState<Transfer[]>([])
   const [migrationPending, setMigrationPending] = useState<boolean | null>(null)
   const [loading,          setLoading]          = useState(true)
@@ -25,7 +27,7 @@ export function TransfersWorkspace() {
   async function load() {
     setLoading(true)
     try {
-      const res = await fetch('/api/admin/wrestler-transfers?status=pending')
+      const res = await fetch(`/api/admin/wrestler-transfers?status=pending&gender=${gender}`)
       const d = await res.json()
       setMigrationPending(d.migrationPending ?? false)
       setTransfers(d.transfers ?? [])
@@ -34,7 +36,7 @@ export function TransfersWorkspace() {
     }
   }
 
-  useEffect(() => { load() }, [])
+  useEffect(() => { load() }, [gender])
 
   async function handleScan() {
     setScanning(true)

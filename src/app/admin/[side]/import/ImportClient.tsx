@@ -94,12 +94,12 @@ export function ImportClient() {
 
   const loadDrafts = useCallback(async () => {
     try {
-      const resp = await fetch('/api/admin/dual-import-draft')
+      const resp = await fetch(`/api/admin/dual-import-draft?gender=${gender}`)
       if (!resp.ok) return
       const json = await resp.json()
       setDrafts(json.drafts ?? [])
     } catch {}
-  }, [])
+  }, [gender])
 
   useEffect(() => { loadDrafts() }, [loadDrafts])
 
@@ -131,7 +131,7 @@ export function ImportClient() {
     } catch {
       setAutoSaveState(null)
     }
-  }, [])
+  }, [gender])
 
   // Save immediately when entering a review phase
   useEffect(() => {

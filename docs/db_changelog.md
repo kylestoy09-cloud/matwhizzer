@@ -2,6 +2,37 @@
 
 ---
 
+## 2026-10-30 — Admin boys and girls sides: task and article gender, tool registry addresses
+
+**Migration files:**
+- `docs/migrations/20261030_admin_sides_gender_columns.sql` (run before the deploy)
+- `docs/migrations/20261030_admin_tool_registry_side_paths.sql`
+
+**Purpose:** The admin now has a boys side (`/admin/boys/...`) and a girls side (`/admin/girls/...`). The address decides the gender. Universal tools (settings, microcheck, chat, finances, build health) stay at `/admin/...`.
+
+**Database changes:**
+- **`admin_tasks.gender`** (`M`/`F`, default `M`, check constraint, index):
+  - The five existing tasks (preseason process steps) are boys tasks.
+  - Girls get a copy of each process step.
+  - The unique process-key index is now per dashboard per gender.
+- **`articles.gender`** (`M`/`F`, default `M`, check constraint): the table was empty.
+- **`admin_tool_registry`**, 26 rows:
+  - 11 tools that now have a girls version become `both`.
+  - Tools with one row per gender point at their side's address.
+  - Tournament Checklist becomes `boys` (no girls reference list yet).
+  - The rating's tool label becomes "Whizzer Resume Rating".
+
+**Tables affected:** `admin_tasks`, `articles`, `admin_tool_registry`
+
+**PENDING** — run in the Supabase SQL editor
+
+**Reversible?** Yes:
+- registry: `docs/migrations/backups/20261030_admin_tool_registry_paths_before.sql`
+- gender columns: drop them, and delete the `gender = 'F'` admin_tasks copies
+**Verified?** No — pending
+
+---
+
 ## 2026-10-30 — Dominance average purged
 
 **Migration file:** `docs/migrations/20261030_purge_dominance_average.sql`

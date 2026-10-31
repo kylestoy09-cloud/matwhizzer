@@ -14,6 +14,8 @@ function serviceClient() {
 // GET /api/admin/dual-import-draft — list drafts or fetch one full draft
 // ?id=<uuid> returns full draft (raw_text + overrides); no id returns summary list
 export async function GET(req: NextRequest) {
+  const g = req.nextUrl.searchParams.get('gender')
+  const gender = g === 'M' || g === 'F' ? g : null
   const auth = await createSupabaseServer()
   const { data: { user } } = await auth.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -37,6 +39,8 @@ export async function GET(req: NextRequest) {
     .select('id, label, meet_count, gender, status, created_at, updated_at')
     .eq('user_id', user.id)
     .eq('status', 'draft')
+    // ?gender=M|F: one side's drafts
+    .in('gender', gender ? [gender] : ['M', 'F'])
     .order('updated_at', { ascending: false })
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })

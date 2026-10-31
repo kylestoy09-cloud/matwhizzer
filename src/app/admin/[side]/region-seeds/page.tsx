@@ -26,7 +26,7 @@ function Pill({ label, value, pct }: { label: string; value: string | number; pc
   )
 }
 
-export default async function RegionSeedsPage() {
+export default async function RegionSeedsPage({ params }: { params: Promise<{ side: string }> }) {
   const supabase = await createSupabaseServer()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/admin/login')
@@ -37,42 +37,33 @@ export default async function RegionSeedsPage() {
     .from('season_gender_state')
     .select('season_id, gender, is_public_default')
 
-  const activeSeason = stateRows?.find(s => s.is_public_default)?.season_id ?? (await getSeasons())[0]?.id
+  // This side's public season and its region tournaments only
+  const gender = (await params).side === 'girls' ? 'F' : 'M'
+  const activeSeason = stateRows?.find(s => s.is_public_default && s.gender === gender)?.season_id ?? (await getSeasons())[0]?.id
 
-  const [boysRes, girlsRes] = await Promise.all([
-    db.from('tournaments').select('id').eq('tournament_type', 'regions').eq('season_id', activeSeason).eq('gender', 'M'),
-    db.from('tournaments').select('id').eq('tournament_type', 'regions').eq('season_id', activeSeason).eq('gender', 'F'),
-  ])
+  const { data: tournRows } = await db.from('tournaments').select('id').eq('tournament_type', 'regions').eq('season_id', activeSeason).eq('gender', gender)
+  const tournIds = (tournRows ?? []).map(t => String(t.id))
 
-  const boysTournIds  = (boysRes.data ?? []).map(t => String(t.id))
-  const girlsTournIds = (girlsRes.data ?? []).map(t => String(t.id))
-  const allTournIds   = [...boysTournIds, ...girlsTournIds]
-
-  const { data: placRows } = allTournIds.length > 0
-    ? await db.from('tournament_placements').select('tournament_id').in('tournament_id', allTournIds)
+  const { data: placRows } = tournIds.length > 0
+    ? await db.from('tournament_placements').select('tournament_id').in('tournament_id', tournIds)
     : { data: [] }
 
   const withPlacementsSet = new Set(placRows?.map(p => String(p.tournament_id)) ?? [])
-  const boysComplete  = boysTournIds.filter(id => withPlacementsSet.has(id)).length
-  const girlsComplete = girlsTournIds.filter(id => withPlacementsSet.has(id)).length
-  const totalComplete = boysComplete + girlsComplete
-  const totalRegions  = 8 + 4 // boys + girls
-  const pct = Math.round(totalComplete / totalRegions * 100)
+  const complete = tournIds.filter(id => withPlacementsSet.has(id)).length
+  const total    = gender === 'F' ? 4 : 8
+  const pct = Math.round(complete / total * 100)
 
   const header = (
     <div className="p-4">
       <div className="flex items-baseline justify-between mb-4">
-        <p className="text-base font-bold text-slate-800">Regions</p>
+        <p className="text-base font-bold text-slate-800">Regions — {gender === 'F' ? 'Girls' : 'Boys'}</p>
         <p className="text-sm text-slate-500 font-medium">Postseason Region Tournaments</p>
       </div>
       <div className="flex flex-wrap gap-2">
-        <Pill label="Total"          value={totalRegions} />
-        <Pill label="Complete"       value={`${pct}%`} pct={pct} />
-        <Pill label="Boys Total"     value={8} />
-        <Pill label="Boys Complete"  value={boysComplete} />
-        <Pill label="Girls Total"    value={4} />
-        <Pill label="Girls Complete" value={girlsComplete} />
-        <Pill label="Pending"        value={totalRegions - totalComplete} />
+        <Pill label="Total"    value={total} />
+        <Pill label="Complete" value={`${pct}%`} pct={pct} />
+        <Pill label="Done"     value={complete} />
+        <Pill label="Pending"  value={total - complete} />
       </div>
     </div>
   )

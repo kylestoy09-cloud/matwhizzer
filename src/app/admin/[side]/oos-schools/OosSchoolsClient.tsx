@@ -13,7 +13,8 @@ type School = {
 
 type DupGroup = School[]
 
-export function OosSchoolsClient() {
+export function OosSchoolsClient({ gender }: { gender: 'M' | 'F' }) {
+  const label = gender === 'F' ? 'Girls' : 'Boys'
   const [schools, setSchools]       = useState<School[]>([])
   const [duplicates, setDuplicates] = useState<DupGroup[]>([])
   const [loading, setLoading]       = useState(true)
@@ -28,7 +29,7 @@ export function OosSchoolsClient() {
   async function load() {
     setLoading(true)
     try {
-      const res = await fetch('/api/admin/oos-schools')
+      const res = await fetch(`/api/admin/oos-schools?gender=${gender}`)
       const d = await res.json()
       if (d.error) throw new Error(d.error)
       setSchools(d.schools)
@@ -40,7 +41,7 @@ export function OosSchoolsClient() {
     }
   }
 
-  useEffect(() => { load() }, [])
+  useEffect(() => { load() }, [gender])
 
   async function merge(keep_id: number, merge_id: number, groupKey: string) {
     setMerging(groupKey)
@@ -73,9 +74,12 @@ export function OosSchoolsClient() {
   return (
     <div className="p-6 max-w-5xl mx-auto space-y-6">
       <div>
-        <h1 className="text-xl font-semibold text-slate-900">OOS Schools</h1>
+        <h1 className="text-xl font-semibold text-slate-900">OOS Schools — {label}</h1>
         <p className="text-sm text-slate-500 mt-1">
-          {schools.length} out-of-state schools · {total_bouts.toLocaleString()} total bout appearances
+          {schools.length} out-of-state schools in {label.toLowerCase()} data · {total_bouts.toLocaleString()} {label.toLowerCase()} bout appearances
+        </p>
+        <p className="text-xs text-slate-400 mt-1">
+          School records are shared by boys and girls: merging two schools merges them for both.
         </p>
       </div>
 

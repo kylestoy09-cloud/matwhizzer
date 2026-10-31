@@ -1,5 +1,6 @@
 'use client'
 
+import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { createSupabaseBrowser } from '@/lib/supabase/client'
@@ -53,22 +54,25 @@ export function GlobalTaskPanel({ currentUser, dashboard }: Props) {
   const [newDash,  setNewDash]  = useState(dashboard ?? 'preseason')
   const [adding,   setAdding]   = useState(false)
   const supabase = createSupabaseBrowser()
+  const { gender, side } = useAdminGender()
 
-  useEffect(() => { loadTasks() }, [])
+  useEffect(() => { loadTasks() }, [gender])
 
+  // Each side has its own tasks
   async function loadTasks() {
     const { data } = await supabase
       .from('admin_tasks')
       .select('*')
+      .eq('gender', gender)
       .order('due_date', { ascending: true, nullsFirst: false })
       .order('order_index')
     setTasks((data ?? []) as Task[])
   }
 
-  function goToday() { router.push('/admin') }
+  function goToday() { router.push(`/admin/${side}`) }
 
   function selectTask(task: Task) {
-    router.push(`/admin/${task.dashboard}?task=${task.id}`)
+    router.push(`/admin/${side}/${task.dashboard}?task=${task.id}`)
   }
 
   async function toggleComplete(e: React.MouseEvent, task: Task) {
@@ -86,6 +90,7 @@ export function GlobalTaskPanel({ currentUser, dashboard }: Props) {
     setAdding(true)
     await supabase.from('admin_tasks').insert({
       dashboard: newDash,
+      gender,
       group_type: 'freestyle',
       title: newTitle.trim(),
       due_date: newDue || null,

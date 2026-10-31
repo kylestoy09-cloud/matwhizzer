@@ -13,41 +13,61 @@ function normalizeName(name: string): string {
     .trim()
 }
 
-export async function GET() {
+// GET /api/admin/oos-schools?gender=M|F
+// Out-of-state school rows are shared by boys and girls. Each side lists the OOS
+// schools that appear in its own tournament data, counted from that gender's
+// tables, plus schools no data points at for either gender (left to clean up).
+export async function GET(req: NextRequest) {
   const supabase = await createSupabaseServer()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
+  const gender = req.nextUrl.searchParams.get('gender') === 'F' ? 'F' : 'M'
   const db = createSupabaseAdmin()
 
-  const [schoolsRes, boutsRes, girlsBoutsRes, placementsRes, aliasRes, tsRes] = await Promise.all([
+  const [schoolsRes, boysBoutsRes, girlsBoutsRes, placementsRes, aliasRes, tsRes, boysTRes, girlsTRes] = await Promise.all([
     db.from('schools').select('id, display_name').eq('is_nj', false).order('display_name'),
     db.from('tournament_bouts').select('wrestler1_school_id, wrestler2_school_id'),
     db.from('tournament_bouts_girls').select('wrestler1_school_id, wrestler2_school_id'),
-    db.from('tournament_placements').select('school_id'),
+    db.from('tournament_placements').select('school_id, in_season_tournament_id'),
     db.from('wrestler_name_aliases').select('school_id'),
-    db.from('in_season_tournament_team_scores').select('school_id'),
+    db.from('in_season_tournament_team_scores').select('school_id, tournament_id'),
+    db.from('in_season_tournaments').select('id'),
+    db.from('in_season_tournaments_girls').select('id'),
   ])
 
   if (schoolsRes.error) return NextResponse.json({ error: schoolsRes.error.message }, { status: 500 })
 
-  // Build usage counts per school_id (boys + girls combined)
-  const boutCount = new Map<number, number>()
-  for (const r of [...(boutsRes.data ?? []), ...(girlsBoutsRes.data ?? [])]) {
-    if (r.wrestler1_school_id) boutCount.set(r.wrestler1_school_id, (boutCount.get(r.wrestler1_school_id) ?? 0) + 1)
-    if (r.wrestler2_school_id) boutCount.set(r.wrestler2_school_id, (boutCount.get(r.wrestler2_school_id) ?? 0) + 1)
+  const boysT  = new Set((boysTRes.data ?? []).map(t => t.id as string))
+  const girlsT = new Set((girlsTRes.data ?? []).map(t => t.id as string))
+  const mineT  = gender === 'F' ? girlsT : boysT
+
+  const bump = (m: Map<number, number>, id: number | null | undefined) => { if (id) m.set(id, (m.get(id) ?? 0) + 1) }
+  const boutsBy = (rows: { wrestler1_school_id: number | null; wrestler2_school_id: number | null }[] | null) => {
+    const m = new Map<number, number>()
+    for (const r of rows ?? []) { bump(m, r.wrestler1_school_id); bump(m, r.wrestler2_school_id) }
+    return m
   }
+  const boysBouts  = boutsBy(boysBoutsRes.data)
+  const girlsBouts = boutsBy(girlsBoutsRes.data)
+  const boutCount  = gender === 'F' ? girlsBouts : boysBouts
+
   const plCount = new Map<number, number>()
+  const anyPl   = new Set<number>()
   for (const r of placementsRes.data ?? []) {
-    if (r.school_id) plCount.set(r.school_id, (plCount.get(r.school_id) ?? 0) + 1)
+    if (!r.school_id) continue
+    anyPl.add(r.school_id)
+    if (mineT.has(r.in_season_tournament_id)) bump(plCount, r.school_id)
   }
+  // Aliases are not tied to a gender: shown on both sides
   const aliasCount = new Map<number, number>()
-  for (const r of aliasRes.data ?? []) {
-    if (r.school_id) aliasCount.set(r.school_id, (aliasCount.get(r.school_id) ?? 0) + 1)
-  }
+  for (const r of aliasRes.data ?? []) bump(aliasCount, r.school_id)
   const tsCount = new Map<number, number>()
+  const anyTs   = new Set<number>()
   for (const r of tsRes.data ?? []) {
-    if (r.school_id) tsCount.set(r.school_id, (tsCount.get(r.school_id) ?? 0) + 1)
+    if (!r.school_id) continue
+    anyTs.add(r.school_id)
+    if (mineT.has(r.tournament_id)) bump(tsCount, r.school_id)
   }
 
   const schools = (schoolsRes.data ?? []).map(s => ({
@@ -57,7 +77,11 @@ export async function GET() {
     placement_count: plCount.get(s.id) ?? 0,
     alias_count: aliasCount.get(s.id) ?? 0,
     team_score_count: tsCount.get(s.id) ?? 0,
-  }))
+  })).filter(s => {
+    const mine = s.bout_count + s.placement_count + s.team_score_count
+    const anywhere = (boysBouts.get(s.id) ?? 0) + (girlsBouts.get(s.id) ?? 0) + (anyPl.has(s.id) ? 1 : 0) + (anyTs.has(s.id) ? 1 : 0)
+    return mine > 0 || anywhere === 0
+  })
 
   // Detect duplicates: group by normalized name
   const normMap = new Map<string, typeof schools>()

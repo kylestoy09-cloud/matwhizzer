@@ -16,14 +16,16 @@ async function requireAdmin() {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function db() { return createClient<any>(process.env.NEXT_PUBLIC_SUPABASE_URL ?? '', process.env.SUPABASE_SERVICE_ROLE_KEY ?? '') }
 
-// GET /api/admin/articles — list all articles, newest first
+// GET /api/admin/articles?gender=M|F — one side's articles, newest first
 export async function GET(req: NextRequest) {
   const { user } = await requireAdmin()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
+  const gender = req.nextUrl.searchParams.get('gender') === 'F' ? 'F' : 'M'
   const { data, error } = await db()
     .from('articles')
     .select('id, title, slug, author, status, published_at, created_at, updated_at')
+    .eq('gender', gender)
     .order('created_at', { ascending: false })
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
@@ -36,8 +38,8 @@ export async function POST(req: NextRequest) {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body = await req.json()
-  const { title, slug, body: articleBody, author, status } = body as {
-    title: string; slug: string; body: string; author: string; status: 'draft' | 'published'
+  const { title, slug, body: articleBody, author, status, gender } = body as {
+    title: string; slug: string; body: string; author: string; status: 'draft' | 'published'; gender?: 'M' | 'F'
   }
 
   if (!title || !slug) return NextResponse.json({ error: 'title and slug required' }, { status: 400 })
@@ -49,6 +51,7 @@ export async function POST(req: NextRequest) {
     body: articleBody ?? '',
     author: author ?? '',
     status: status ?? 'draft',
+    gender: gender === 'F' ? 'F' : 'M',
     published_at: status === 'published' ? now : null,
     updated_at: now,
   }

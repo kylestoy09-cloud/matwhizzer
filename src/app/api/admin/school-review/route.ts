@@ -45,6 +45,14 @@ export async function POST(req: NextRequest) {
 
   const db = createSupabaseAdmin()
 
+  // Program names: girls programs are named in girls_schools; boys use the school record
+  const getName = async (id: number) => gender === 'F'
+    ? db.from('girls_schools').select('display_name').eq('school_id', id).single()
+    : db.from('schools').select('display_name').eq('id', id).single()
+  const setName = async (id: number, display_name: string) => gender === 'F'
+    ? db.from('girls_schools').update({ display_name }).eq('school_id', id)
+    : db.from('schools').update({ display_name }).eq('id', id)
+
   // ── DEACTIVATE ──────────────────────────────────────────────────────────────
   if (action === 'deactivate') {
     const { schoolId } = body
@@ -80,13 +88,11 @@ export async function POST(req: NextRequest) {
     }
 
     // Get School B's current name before renaming
-    const { data: recordSchool, error: fetchErr } = await db
-      .from('schools').select('display_name').eq('id', recordId).single()
+    const { data: recordSchool, error: fetchErr } = await getName(recordId)
     if (fetchErr || !recordSchool) return NextResponse.json({ error: 'Record school not found' }, { status: 404 })
 
     // Rename School B to the merged name
-    const { error: renameErr } = await db
-      .from('schools').update({ display_name: mergedName }).eq('id', recordId)
+    const { error: renameErr } = await setName(recordId, mergedName)
     if (renameErr) return NextResponse.json({ error: renameErr.message }, { status: 500 })
 
     // Mark School A as inactive with merge metadata
@@ -126,8 +132,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Restore School B's display_name
-    const { error: restoreErr } = await db
-      .from('schools').update({ display_name: record_school_prev_name }).eq('id', merged_into_school_id)
+    const { error: restoreErr } = await setName(merged_into_school_id, record_school_prev_name)
     if (restoreErr) return NextResponse.json({ error: restoreErr.message }, { status: 500 })
 
     // Delete the inactive row — School A is active again

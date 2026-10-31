@@ -1,11 +1,11 @@
 import { redirect } from 'next/navigation'
 import { getWorkingSeason } from '@/lib/season-context'
-import Link from 'next/link'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
 import { AdminBackButton } from '@/app/admin/AdminBackButton'
 import { PlayoffSeedsClient } from './PlayoffSeedsClient'
-import { boysProgramSchoolIds, girlsProgramSchoolIds } from '@/lib/genderPrograms'
+import { boysProgramSchoolIds } from '@/lib/genderPrograms'
+import { girlsPlayoffGroups } from './girlsPlayoffGroups'
 
 export const dynamic = 'force-dynamic'
 
@@ -24,13 +24,9 @@ const ALL_GROUPS: { section: string; classification: string; label: string }[] =
 const NPA_KEY = 'Non-Public|A'
 const NPB_KEY = 'Non-Public|B'
 
-export default async function PlayoffSeedsPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ gender?: string }>
-}) {
-  const { gender: genderParam } = await searchParams
-  const GENDER = genderParam === 'F' ? 'F' : 'M'
+export default async function PlayoffSeedsPage({ params }: { params: Promise<{ side: string }> }) {
+  if ((await params).side === 'girls') return <GirlsPlayoffSeedsPage />
+  const GENDER = 'M' as const
   const SEASON_ID = (await getWorkingSeason(GENDER)).id
 
   const auth = await createSupabaseServer()
@@ -46,7 +42,7 @@ export default async function PlayoffSeedsPage({
   type SeedEntry = { seed: number; school: School | null; wins: number; losses: number; pp: number }
 
   // Non-Public pools: this gender's programs only (see src/lib/genderPrograms.ts)
-  const programIds = await (GENDER === 'F' ? girlsProgramSchoolIds : boysProgramSchoolIds)(db, SEASON_ID)
+  const programIds = await boysProgramSchoolIds(db, SEASON_ID)
 
   const [{ data: ppRows }, { data: npaSchools }, { data: npbSchools }] = await Promise.all([
     db.from('power_points')
@@ -151,25 +147,29 @@ export default async function PlayoffSeedsPage({
       <AdminBackButton />
       <div className="mt-4 mb-6 flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Playoff Seeds</h1>
+          <h1 className="text-2xl font-bold text-slate-900">Playoff Seeds — Boys</h1>
           <p className="text-sm text-slate-500 mt-1">Review and confirm first-round bracket seedings for all 22 groups. Pre-filled from Power Points standings.</p>
-        </div>
-        <div className="flex border border-slate-300 rounded overflow-hidden shrink-0">
-          <Link
-            href="/admin/playoff-seeds?gender=M"
-            className={`px-4 py-2 text-sm font-medium transition-colors ${GENDER === 'M' ? 'bg-slate-900 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}
-          >
-            Boys
-          </Link>
-          <Link
-            href="/admin/playoff-seeds?gender=F"
-            className={`px-4 py-2 text-sm font-medium transition-colors border-l border-slate-300 ${GENDER === 'F' ? 'bg-rose-700 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}
-          >
-            Girls
-          </Link>
         </div>
       </div>
       <PlayoffSeedsClient groups={groups} seasonId={SEASON_ID} gender={GENDER} />
+    </div>
+  )
+}
+
+async function GirlsPlayoffSeedsPage() {
+  const auth = await createSupabaseServer()
+  const { data: { user } } = await auth.auth.getUser()
+  if (!user) redirect('/admin/login')
+
+  const { SEASON_ID, groups } = await girlsPlayoffGroups()
+  return (
+    <div className="max-w-7xl mx-auto px-4 pt-4 pb-16">
+      <AdminBackButton />
+      <div className="mt-4 mb-6">
+        <h1 className="text-2xl font-bold text-slate-900">Playoff Seeds — Girls</h1>
+        <p className="text-sm text-slate-500 mt-1">Review and confirm the North and South brackets. Pre-filled from the girls Power Points pools.</p>
+      </div>
+      <PlayoffSeedsClient groups={groups} seasonId={SEASON_ID} gender="F" />
     </div>
   )
 }

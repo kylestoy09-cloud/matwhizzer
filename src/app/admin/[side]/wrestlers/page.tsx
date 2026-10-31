@@ -3,10 +3,13 @@
 import { useState, useRef } from 'react'
 import Link from 'next/link'
 import { AdminBackButton } from '@/app/admin/AdminBackButton'
+import { useAdminGender } from '@/components/admin/AdminGenderContext'
 
 type WrestlerResult = { id: string; display_name: string; gender: string }
 
 export default function WrestlersDirectoryPage() {
+  // Searches this side's wrestlers only
+  const { gender, side } = useAdminGender()
   const [query,    setQuery]    = useState('')
   const [results,  setResults]  = useState<WrestlerResult[]>([])
   const [loading,  setLoading]  = useState(false)
@@ -19,7 +22,7 @@ export default function WrestlersDirectoryPage() {
     debounceRef.current = setTimeout(async () => {
       setLoading(true)
       try {
-        const res = await fetch(`/api/admin/search-wrestlers?q=${encodeURIComponent(val)}`)
+        const res = await fetch(`/api/admin/search-wrestlers?q=${encodeURIComponent(val)}&gender=${gender}`)
         const d = await res.json()
         setResults(d.wrestlers ?? [])
       } finally {
@@ -35,7 +38,7 @@ export default function WrestlersDirectoryPage() {
       <p className="text-sm text-slate-500 mb-6">
         Search for a wrestler to view or edit their profile. For bulk changes use the
         season rollover tool. For transfer review see{' '}
-        <Link href="/admin/wrestlers/pending-transfers" className="underline text-slate-700">
+        <Link href={`/admin/${side}/wrestlers/pending-transfers`} className="underline text-slate-700">
           Pending Transfers
         </Link>.
       </p>
@@ -58,7 +61,7 @@ export default function WrestlersDirectoryPage() {
             {results.map(w => (
               <li key={w.id}>
                 <Link
-                  href={`/admin/wrestlers/${w.id}`}
+                  href={`/admin/${side}/wrestlers/${w.id}`}
                   className="flex items-center justify-between px-4 py-2.5 hover:bg-slate-50 text-sm"
                 >
                   <span className="flex items-center gap-2">

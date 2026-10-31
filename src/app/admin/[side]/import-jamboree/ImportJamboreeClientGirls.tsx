@@ -69,7 +69,7 @@ export function ImportJamboreeClientGirls() {
 
   const loadDrafts = useCallback(async () => {
     try {
-      const resp = await fetch('/api/admin/dual-import-draft')
+      const resp = await fetch('/api/admin/dual-import-draft?gender=F')
       if (!resp.ok) return
       const json = await resp.json()
       setDrafts((json.drafts ?? []).filter((d: DraftSummary) => d.gender === 'F'))

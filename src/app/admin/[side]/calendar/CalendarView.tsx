@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import { createSupabaseBrowser } from '@/lib/supabase/client'
 
 type ViewMode = 'year' | 'month' | '2week' | 'week' | 'day'
@@ -36,26 +37,28 @@ export function CalendarView({ onDayClick }: Props) {
 
   const supabase = createSupabaseBrowser()
 
-  useEffect(() => { loadEvents() }, [])
+  const { gender } = useAdminGender()
 
+  useEffect(() => { loadEvents() }, [gender])
+
+  // This side's duals and tournaments only, plus the admin tasks
   async function loadEvents() {
-    const [{ data: duals }, { data: girlsDuals }, { data: tourneys }, { data: girlsTourneys }, { data: tasks }] = await Promise.all([
-      supabase.from('dual_meets').select('id, date, home_team_name, away_team_name').not('date', 'is', null),
-      (supabase as any).from('dual_meets_girls').select('id, meet_date, team1_school_name_raw, team2_school_name_raw').not('meet_date', 'is', null),
-      supabase.from('in_season_tournaments').select('id, date, name').not('date', 'is', null),
-      (supabase as any).from('in_season_tournaments_girls').select('id, date, name').not('date', 'is', null),
-      supabase.from('admin_tasks').select('id, due_date, title').not('due_date', 'is', null),
+    const dualTable    = gender === 'F' ? 'dual_meets_girls' : 'dual_meets'
+    const tourneyTable = gender === 'F' ? 'in_season_tournaments_girls' : 'in_season_tournaments'
+    const [{ data: duals }, { data: tourneys }, { data: tasks }, { data: schools }] = await Promise.all([
+      supabase.from(dualTable).select('id, meet_date, team1_school_id, team2_school_id').not('meet_date', 'is', null),
+      supabase.from(tourneyTable).select('id, start_date, name').not('start_date', 'is', null),
+      supabase.from('admin_tasks').select('id, due_date, title').eq('gender', gender).not('due_date', 'is', null),
+      supabase.from('schools').select('id, display_name'),
     ])
+    const schoolName = new Map(((schools ?? []) as { id: number; display_name: string }[]).map(sc => [sc.id, sc.display_name]))
+    const name = (id: number | null) => (id && schoolName.get(id)) || 'TBD'
 
     const ev: CalendarEvent[] = [
-      ...((duals ?? []) as { id: string; date: string; home_team_name: string; away_team_name: string }[])
-        .map(d => ({ id: d.id, date: d.date, title: `${d.home_team_name} vs ${d.away_team_name}`, type: 'dual' as const })),
-      ...((girlsDuals ?? []) as { id: string; meet_date: string; team1_school_name_raw: string; team2_school_name_raw: string }[])
-        .map(d => ({ id: d.id, date: d.meet_date, title: `[G] ${d.team1_school_name_raw ?? '?'} vs ${d.team2_school_name_raw ?? '?'}`, type: 'dual' as const })),
-      ...((tourneys ?? []) as { id: string; date: string; name: string }[])
-        .map(t => ({ id: t.id, date: t.date, title: t.name, type: 'tournament' as const })),
-      ...((girlsTourneys ?? []) as { id: string; date: string; name: string }[])
-        .map(t => ({ id: t.id, date: t.date, title: `[G] ${t.name}`, type: 'tournament' as const })),
+      ...((duals ?? []) as { id: string; meet_date: string; team1_school_id: number | null; team2_school_id: number | null }[])
+        .map(d => ({ id: d.id, date: d.meet_date, title: `${name(d.team1_school_id)} vs ${name(d.team2_school_id)}`, type: 'dual' as const })),
+      ...((tourneys ?? []) as { id: string; start_date: string; name: string }[])
+        .map(t => ({ id: t.id, date: t.start_date, title: t.name, type: 'tournament' as const })),
       ...((tasks ?? []) as { id: string; due_date: string; title: string }[])
         .map(t => ({ id: t.id, date: t.due_date, title: t.title, type: 'task' as const })),
     ]

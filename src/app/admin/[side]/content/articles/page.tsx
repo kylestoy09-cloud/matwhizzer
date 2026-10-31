@@ -21,10 +21,13 @@ function fmtDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
 }
 
-export default async function ArticlesListPage() {
+export default async function ArticlesListPage({ params }: { params: Promise<{ side: string }> }) {
+  const { side } = await params
+  // Each side has its own articles
   const { data } = await db()
     .from('articles')
     .select('id, title, slug, author, status, published_at, updated_at')
+    .eq('gender', side === 'girls' ? 'F' : 'M')
     .order('created_at', { ascending: false })
 
   const articles = (data ?? []) as Article[]
@@ -34,11 +37,11 @@ export default async function ArticlesListPage() {
       <AdminBackButton />
       <div className="flex items-center justify-between mt-4 mb-6">
         <div>
-          <h1 className="text-xl font-bold text-slate-900">Articles</h1>
+          <h1 className="text-xl font-bold text-slate-900">Articles — {side === 'girls' ? 'Girls' : 'Boys'}</h1>
           <p className="text-sm text-slate-500 mt-0.5">{articles.length} article{articles.length !== 1 ? 's' : ''}</p>
         </div>
         <Link
-          href="/admin/content/articles/new"
+          href={`/admin/${side}/content/articles/new`}
           className="px-4 py-2 text-sm font-semibold bg-slate-900 text-white hover:bg-slate-700 transition-colors"
         >
           + New Article
@@ -55,7 +58,7 @@ export default async function ArticlesListPage() {
             <div key={a.id} className="flex items-center gap-4 px-4 py-3 hover:bg-slate-50 transition-colors">
               <div className="flex-1 min-w-0">
                 <Link
-                  href={`/admin/content/articles/${a.id}`}
+                  href={`/admin/${side}/content/articles/${a.id}`}
                   className="font-medium text-slate-900 hover:text-blue-600 transition-colors text-sm"
                 >
                   {a.title}

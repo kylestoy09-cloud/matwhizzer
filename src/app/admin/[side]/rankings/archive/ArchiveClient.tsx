@@ -1,5 +1,6 @@
 'use client'
 
+import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import { useState, useEffect } from 'react'
 
 type Combo = {
@@ -41,6 +42,7 @@ function MovChip({ v }: { v: string | null | undefined }) {
 type SelectedCombo = { ranking_type: string; scope: string; scope_id: string | null; weight_class: number | null }
 
 export function ArchiveClient() {
+  const { gender } = useAdminGender()
   const [combos,    setCombos]    = useState<Combo[]>([])
   const [snapshots, setSnapshots] = useState<Snapshot[]>([])
   const [selected,  setSelected]  = useState<SelectedCombo | null>(null)
@@ -51,12 +53,12 @@ export function ArchiveClient() {
   const [scopeFilter, setScopeFilter] = useState<'all' | string>('all')
 
   useEffect(() => {
-    fetch('/api/admin/rankings/archive')
+    fetch(`/api/admin/rankings/archive?gender=${gender}`)
       .then(r => r.json())
       .then(d => setCombos(d.combos ?? []))
       .catch(() => {})
       .finally(() => setLoading(false))
-  }, [])
+  }, [gender])
 
   async function loadHistory(combo: SelectedCombo) {
     setSelected(combo)
@@ -65,7 +67,7 @@ export function ArchiveClient() {
     setHistLoading(true)
     const wcParam = combo.weight_class !== null ? `&weight_class=${combo.weight_class}` : ''
     const sidParam = combo.scope_id ? `&scope_id=${encodeURIComponent(combo.scope_id)}` : '&scope_id='
-    const res = await fetch(`/api/admin/rankings/history?scope=${combo.scope}${sidParam}${wcParam}`)
+    const res = await fetch(`/api/admin/rankings/history?scope=${combo.scope}${sidParam}${wcParam}&gender=${gender}`)
     const d = await res.json()
     setSnapshots(d.history ?? [])
     setHistLoading(false)

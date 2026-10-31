@@ -14,7 +14,9 @@ export async function GET(req: NextRequest) {
 
   const schoolId  = req.nextUrl.searchParams.get('school_id')
   const weightCls = req.nextUrl.searchParams.get('weight_class')
-  const gender    = req.nextUrl.searchParams.get('gender') ?? 'boys'
+  // Accepts M/F (what the match card sends) as well as boys/girls
+  const g         = req.nextUrl.searchParams.get('gender')
+  const gender    = g === 'F' || g === 'girls' ? 'girls' : 'boys'
 
   if (!schoolId || !weightCls) return NextResponse.json({ wrestlers: [] })
 

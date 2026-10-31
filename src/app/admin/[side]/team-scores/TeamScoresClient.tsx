@@ -190,7 +190,7 @@ export function TeamScoresClient() {
       const res = await fetch('/api/admin/parse-team-scores', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: scoresText, tournament_query: tournamentQuery }),
+        body: JSON.stringify({ gender, text: scoresText, tournament_query: tournamentQuery }),
       })
       const json = await res.json()
       if (!res.ok || json.error) throw new Error(json.error ?? 'Parse failed')

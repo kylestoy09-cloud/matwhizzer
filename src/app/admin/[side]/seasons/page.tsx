@@ -4,11 +4,12 @@ import { SeasonRolloverClient } from './SeasonRolloverClient'
 
 export const dynamic = 'force-dynamic'
 
-export default function SeasonsPage() {
+export default async function SeasonsPage({ params }: { params: Promise<{ side: string }> }) {
+  const girls = (await params).side === 'girls'
   return (
     <div className="max-w-3xl mx-auto px-4 pt-4 pb-16">
       <AdminBackButton />
-      <h1 className="text-xl font-bold text-slate-900 mt-4 mb-2">Seasons &amp; Roster</h1>
+      <h1 className="text-xl font-bold text-slate-900 mt-4 mb-2">Seasons &amp; Roster — {girls ? 'Girls' : 'Boys'}</h1>
 
       <section className="mb-10">
         <h2 className="text-base font-semibold text-slate-800 mb-1">Season Lifecycle</h2>
@@ -24,7 +25,7 @@ export default function SeasonsPage() {
         <p className="text-sm text-slate-500 mb-4">
           Advance wrestlers to their next grade at the end of a season.
         </p>
-        <SeasonRolloverClient />
+        <SeasonRolloverClient gender={girls ? 'F' : 'M'} />
       </section>
     </div>
   )

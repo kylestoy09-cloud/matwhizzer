@@ -1,5 +1,6 @@
 'use client'
 
+import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createSupabaseBrowser } from '@/lib/supabase/client'
@@ -29,13 +30,15 @@ export function TodayTaskCard({ currentUser }: Props) {
   const [tasks,  setTasks]  = useState<Task[]>([])
   const today    = new Date().toISOString().slice(0, 10)
   const supabase = createSupabaseBrowser()
+  const { gender, side } = useAdminGender()
 
-  useEffect(() => { load() }, [])
+  useEffect(() => { load() }, [gender])
 
   async function load() {
     const { data } = await supabase
       .from('admin_tasks')
       .select('*')
+      .eq('gender', gender)
       .eq('due_date', today)
       .order('order_index')
     setTasks((data ?? []) as Task[])
@@ -54,11 +57,11 @@ export function TodayTaskCard({ currentUser }: Props) {
     if (task.workspace_tool && task.workspace_href) {
       router.push(task.workspace_href)
     } else {
-      router.push(`/admin/${task.dashboard}?task=${task.id}`)
+      router.push(`/admin/${side}/${task.dashboard}?task=${task.id}`)
     }
   }
 
-  function goToday() { router.push('/admin') }
+  function goToday() { router.push(`/admin/${side}`) }
 
   const pending = tasks.filter(t => !t.completed_at)
   const done    = tasks.filter(t => !!t.completed_at)

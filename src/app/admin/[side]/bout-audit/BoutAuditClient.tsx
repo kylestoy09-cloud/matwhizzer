@@ -1,5 +1,6 @@
 'use client'
 
+import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import Link from 'next/link'
 import type { InSeasonTournament, TournamentBoutRecord } from '../bracket/types'
@@ -83,6 +84,7 @@ export function BoutAuditClient({
   tournaments: InSeasonTournament[]
   defaultTid?: string
 }) {
+  const { gender: sideGender } = useAdminGender()
   const [tid, setTid]                         = useState(defaultTid ?? tournaments[0]?.id ?? '')
   const [bouts, setBouts]                     = useState<AugmentedBout[]>([])
   const [loading, setLoading]                 = useState(false)
@@ -348,6 +350,7 @@ export function BoutAuditClient({
             bout={selectedBout}
             onSaved={handleSaved}
             onCancel={handleCancel}
+            gender={sideGender}
           />
         </div>
       </div>

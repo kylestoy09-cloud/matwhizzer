@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
+import { getWorkingSeason } from '@/lib/season-context'
 
 export const dynamic = 'force-dynamic'
 
@@ -22,10 +23,17 @@ function getDashboard(cfg: SeasonConfig | null): string {
   return 'offseason'
 }
 
-export default async function AdminDashboard() {
+export default async function AdminDashboard({ params }: { params: Promise<{ side: string }> }) {
   const supabase = await createSupabaseServer()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/admin/login')
+  const { side } = await params
+
+  // Girls follow the girls season's own stage; the dated config below is the boys calendar
+  if (side === 'girls') {
+    const stage = (await getWorkingSeason('F')).stages.F
+    redirect(`/admin/girls/${stage === 'preseason' || stage === 'season' || stage === 'postseason' ? stage : 'offseason'}`)
+  }
 
   const db = createSupabaseAdmin()
   const { data: seasonCfg } = await db
@@ -35,5 +43,5 @@ export default async function AdminDashboard() {
     .maybeSingle()
 
   const dashboard = getDashboard(seasonCfg as SeasonConfig | null)
-  redirect(`/admin/${dashboard}`)
+  redirect(`/admin/boys/${dashboard}`)
 }

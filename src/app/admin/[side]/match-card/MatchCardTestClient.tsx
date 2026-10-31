@@ -1,5 +1,6 @@
 'use client'
 
+import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import { useState, useEffect } from 'react'
 import { LiveScoringPanel } from './LiveScoringPanel'
 import { logoFlipStyle } from '@/lib/logo-direction'
@@ -426,7 +427,7 @@ function H2HPanel({ match, nameA, nameB, meetId, gender, onPrediction }: {
       })
       .catch(e => setErr(e instanceof Error ? e.message : String(e)))
       .finally(() => setLoading(false))
-  }, [match.wrestler_a_id, match.wrestler_b_id, meetId])
+  }, [match.wrestler_a_id, match.wrestler_b_id, meetId, gender])
 
   if (!match.wrestler_a_id || !match.wrestler_b_id)
     return <p className="text-xs text-slate-400 py-3 text-center">No wrestler IDs — H2H unavailable</p>
@@ -1276,6 +1277,7 @@ function TestControls({ meets, meetId, onMeetChange, phase, onPhaseChange, isPre
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 export function MatchCardTestClient() {
+  const { gender: sideGender } = useAdminGender()
   const [meets, setMeets] = useState<RawMeet[]>([])
   const [meetId, setMeetId] = useState('')
   const [detail, setDetail] = useState<MeetDetail | null>(null)
@@ -1309,16 +1311,16 @@ export function MatchCardTestClient() {
   }, [detail?.meet?.id, phase])
 
   useEffect(() => {
-    fetch('/api/admin/match-card')
+    fetch(`/api/admin/match-card?gender=${sideGender}`)
       .then(r => r.json())
       .then(d => setMeets(d.meets ?? []))
       .catch(() => {})
-  }, [])
+  }, [sideGender])
 
   useEffect(() => {
     if (!meetId) { setDetail(null); return }
     setLoading(true); setErr(null); setDetail(null)
-    fetch(`/api/admin/match-card?id=${meetId}`)
+    fetch(`/api/admin/match-card?id=${meetId}&gender=${sideGender}`)
       .then(r => r.json())
       .then(d => {
         if (d.error) throw new Error(d.error)
@@ -1329,7 +1331,7 @@ export function MatchCardTestClient() {
       })
       .catch(e => setErr(String(e)))
       .finally(() => setLoading(false))
-  }, [meetId])
+  }, [meetId, sideGender])
 
   return (
     <div className="p-4 space-y-4">

@@ -92,7 +92,7 @@ export function ImportClientBoys() {
 
   const loadDrafts = useCallback(async () => {
     try {
-      const resp = await fetch('/api/admin/dual-import-draft')
+      const resp = await fetch('/api/admin/dual-import-draft?gender=M')
       if (!resp.ok) return
       const json = await resp.json()
       // Show only boys drafts

@@ -196,7 +196,7 @@ export function TeamRankingsClientGirls({}: { }) {
       const res = await fetch('/api/admin/power-points/freeze', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({}),
+        body:    JSON.stringify({ gender: GENDER }),
       })
       const d = await res.json()
       if (d.error) { setFlash({ kind: 'err', msg: d.error }); return }

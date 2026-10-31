@@ -1,5 +1,6 @@
 'use client'
 
+import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { MsWrestlerFlagCard } from './MsWrestlerFlagCard'
@@ -233,6 +234,8 @@ function ClubFlagRow({ flag, override, onOverride, allClubs }: {
 // ── Main component ────────────────────────────────────────────────────────────
 
 export function MsImportClient({ preselectedTournamentId }: { preselectedTournamentId: number | null }) {
+  // This side's events plus combined (MF) events
+  const { gender: sideGender } = useAdminGender()
   const [tournaments, setTournaments] = useState<Tournament[]>([])
   const [loadingTournaments, setLoadingTournaments] = useState(true)
 
@@ -266,9 +269,9 @@ export function MsImportClient({ preselectedTournamentId }: { preselectedTournam
   useEffect(() => {
     fetch('/api/admin/ms/tournaments')
       .then(r => r.json())
-      .then(d => { setTournaments(d.tournaments ?? []); setLoadingTournaments(false) })
+      .then(d => { setTournaments((d.tournaments ?? []).filter((t: { gender: string }) => t.gender === sideGender || t.gender === 'MF')); setLoadingTournaments(false) })
       .catch(() => setLoadingTournaments(false))
-  }, [])
+  }, [sideGender])
 
   const selectedTournament = tournaments.find(t => String(t.id) === tournamentId)
 

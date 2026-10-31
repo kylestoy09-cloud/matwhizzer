@@ -26,7 +26,7 @@ function Pill({ label, value, pct }: { label: string; value: string | number; pc
   )
 }
 
-export default async function DistrictsPage() {
+export default async function DistrictsPage({ params }: { params: Promise<{ side: string }> }) {
   const supabase = await createSupabaseServer()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/admin/login')
@@ -38,43 +38,33 @@ export default async function DistrictsPage() {
     .from('season_gender_state')
     .select('season_id, gender, is_public_default')
 
-  const activeSeason = stateRows?.find(s => s.is_public_default)?.season_id ?? (await getSeasons())[0]?.id
+  // This side's public season and its district tournaments only
+  const gender = (await params).side === 'girls' ? 'F' : 'M'
+  const activeSeason = stateRows?.find(s => s.is_public_default && s.gender === gender)?.season_id ?? (await getSeasons())[0]?.id
 
-  // Count district tournaments with results for both genders
-  const [boysRes, girlsRes] = await Promise.all([
-    db.from('tournaments').select('id').eq('tournament_type', 'districts').eq('season_id', activeSeason).eq('gender', 'M'),
-    db.from('tournaments').select('id').eq('tournament_type', 'districts').eq('season_id', activeSeason).eq('gender', 'F'),
-  ])
+  const { data: tournRows } = await db.from('tournaments').select('id').eq('tournament_type', 'districts').eq('season_id', activeSeason).eq('gender', gender)
+  const tournIds = (tournRows ?? []).map(t => String(t.id))
 
-  const boysTournIds  = (boysRes.data ?? []).map(t => String(t.id))
-  const girlsTournIds = (girlsRes.data ?? []).map(t => String(t.id))
-  const allTournIds   = [...boysTournIds, ...girlsTournIds]
-
-  const { data: placRows } = allTournIds.length > 0
-    ? await db.from('tournament_placements').select('tournament_id').in('tournament_id', allTournIds)
+  const { data: placRows } = tournIds.length > 0
+    ? await db.from('tournament_placements').select('tournament_id').in('tournament_id', tournIds)
     : { data: [] }
 
   const withPlacementsSet = new Set(placRows?.map(p => String(p.tournament_id)) ?? [])
-  const boysComplete  = boysTournIds.filter(id => withPlacementsSet.has(id)).length
-  const girlsComplete = girlsTournIds.filter(id => withPlacementsSet.has(id)).length
-  const totalComplete = boysComplete + girlsComplete
-  const totalDistricts = 32 + 12 // boys + girls
-  const pct = Math.round(totalComplete / totalDistricts * 100)
+  const complete = tournIds.filter(id => withPlacementsSet.has(id)).length
+  const total    = gender === 'F' ? 12 : 32
+  const pct = Math.round(complete / total * 100)
 
   const header = (
     <div className="p-4">
       <div className="flex items-baseline justify-between mb-4">
-        <p className="text-base font-bold text-slate-800">Districts</p>
+        <p className="text-base font-bold text-slate-800">Districts — {gender === 'F' ? 'Girls' : 'Boys'}</p>
         <p className="text-sm text-slate-500 font-medium">Postseason District Tournaments</p>
       </div>
       <div className="flex flex-wrap gap-2">
-        <Pill label="Total"           value={totalDistricts} />
-        <Pill label="Complete"        value={`${pct}%`} pct={pct} />
-        <Pill label="Boys Total"      value={32} />
-        <Pill label="Boys Complete"   value={boysComplete} />
-        <Pill label="Girls Total"     value={12} />
-        <Pill label="Girls Complete"  value={girlsComplete} />
-        <Pill label="Pending"         value={totalDistricts - totalComplete} />
+        <Pill label="Total"    value={total} />
+        <Pill label="Complete" value={`${pct}%`} pct={pct} />
+        <Pill label="Done"     value={complete} />
+        <Pill label="Pending"  value={total - complete} />
       </div>
     </div>
   )

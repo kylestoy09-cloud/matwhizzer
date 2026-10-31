@@ -199,11 +199,11 @@ export function SchoolProfileClient({
   const [inactiveMsg,      setInactiveMsg]       = useState<{ text: string; ok: boolean } | null>(null)
 
   const loadInactiveStatus = useCallback(() => {
-    fetch(`/api/admin/school-season-status?schoolId=${schoolId}&seasonId=${editSeasonId}`)
+    fetch(`/api/admin/school-season-status?schoolId=${schoolId}&seasonId=${editSeasonId}&gender=${gender}`)
       .then(r => r.json())
       .then(d => { if (typeof d.inactive === 'boolean') setIsInactiveSeason(d.inactive) })
       .catch(() => {})
-  }, [schoolId, editSeasonId])
+  }, [schoolId, editSeasonId, gender])
 
   useEffect(() => { loadInactiveStatus() }, [loadInactiveStatus])
 
@@ -219,7 +219,7 @@ export function SchoolProfileClient({
     try {
       const r = await fetch('/api/admin/school-season-status', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ schoolId, seasonId: editSeasonId, action }),
+        body: JSON.stringify({ gender, schoolId, seasonId: editSeasonId, action }),
       })
       const d = await r.json()
       if (!r.ok) throw new Error(d.error)
@@ -357,7 +357,7 @@ export function SchoolProfileClient({
   const saveMeetDate = async (meetId: string) => {
     const r = await fetch('/api/admin/school-schedule', {
       method: 'PATCH', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ meetId, meetDate: meetDateVal }),
+      body: JSON.stringify({ gender, meetId, meetDate: meetDateVal }),
     })
     const d = await r.json()
     if (d.error) { setSchedMsg({ text: d.error, ok: false }); return }
@@ -741,11 +741,11 @@ export function SchoolProfileClient({
         <h2 className="text-base font-semibold text-slate-800 mb-4 pb-1 border-b border-slate-200">
           Roster <span className="text-slate-400 font-normal text-sm">(from tournament entries, all seasons)</span>
         </h2>
-        {wrestlers.length === 0 ? (
+        {wrestlers.every(w => w.gender !== gender) ? (
           <p className="text-sm text-slate-400">No wrestlers on file.</p>
         ) : (
           <div className="grid grid-cols-2 gap-2">
-            {(['M', 'F'] as const).map(g => {
+            {[gender].map(g => {
               const group = wrestlers.filter(w => w.gender === g)
               if (group.length === 0) return null
               return (

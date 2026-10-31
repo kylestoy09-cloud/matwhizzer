@@ -1,5 +1,6 @@
 'use client'
 
+import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { BracketBuilderView } from '@/app/admin/[side]/bracket/BracketBuilderView'
@@ -102,6 +103,7 @@ function Spinner() {
 // ── Overview Tab ──────────────────────────────────────────────────────────────
 
 function OverviewTab({ data, onRefresh }: { data: DetailData; onRefresh: () => void }) {
+  const { gender } = useAdminGender()
   const reg = data.registry
   const tour = data.tournament
 
@@ -125,7 +127,7 @@ function OverviewTab({ data, onRefresh }: { data: DetailData; onRefresh: () => v
       const res = await fetch('/api/admin/tournament-detail', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'create_and_link', registry_id: reg.id }),
+        body: JSON.stringify({ gender, action: 'create_and_link', registry_id: reg.id }),
       })
       const d = await res.json()
       if (d.error) throw new Error(d.error)
@@ -144,7 +146,7 @@ function OverviewTab({ data, onRefresh }: { data: DetailData; onRefresh: () => v
       const res = await fetch('/api/admin/tournament-detail', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'link_existing', registry_id: reg.id, existing_tournament_id: linkId.trim() }),
+        body: JSON.stringify({ gender, action: 'link_existing', registry_id: reg.id, existing_tournament_id: linkId.trim() }),
       })
       const d = await res.json()
       if (d.error) throw new Error(d.error)
@@ -162,7 +164,7 @@ function OverviewTab({ data, onRefresh }: { data: DetailData; onRefresh: () => v
       const res = await fetch('/api/admin/tournament-detail', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+        body: JSON.stringify({ gender,
           registry_id: reg.id,
           in_season_tournament_id: reg.in_season_tournament_id,
           name,
@@ -303,6 +305,7 @@ function OverviewTab({ data, onRefresh }: { data: DetailData; onRefresh: () => v
 // ── Schools Tab ───────────────────────────────────────────────────────────────
 
 function SchoolsTab({ data, onRefresh }: { data: DetailData; onRefresh: () => void }) {
+  const { gender } = useAdminGender()
   const tid = data.registry.in_season_tournament_id
   const [search, setSearch]           = useState('')
   const [searchResults, setSearchRes] = useState<{ id: number; display_name: string }[]>([])
@@ -318,7 +321,7 @@ function SchoolsTab({ data, onRefresh }: { data: DetailData; onRefresh: () => vo
       const res = await fetch('/api/admin/tournament-detail', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'sync_participants_from_bouts', in_season_tournament_id: tid }),
+        body: JSON.stringify({ gender, action: 'sync_participants_from_bouts', in_season_tournament_id: tid }),
       })
       const d = await res.json()
       if (d.error) throw new Error(d.error)
@@ -348,7 +351,7 @@ function SchoolsTab({ data, onRefresh }: { data: DetailData; onRefresh: () => vo
     await fetch('/api/admin/tournament-detail', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'add_participant', in_season_tournament_id: tid, school_id: schoolId }),
+      body: JSON.stringify({ gender, action: 'add_participant', in_season_tournament_id: tid, school_id: schoolId }),
     })
     setSearch(''); setSearchRes([])
     onRefresh()
@@ -360,7 +363,7 @@ function SchoolsTab({ data, onRefresh }: { data: DetailData; onRefresh: () => vo
     await fetch('/api/admin/tournament-detail', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'remove_participant', in_season_tournament_id: tid, school_id: schoolId }),
+      body: JSON.stringify({ gender, action: 'remove_participant', in_season_tournament_id: tid, school_id: schoolId }),
     })
     setRemoving(null)
     onRefresh()
@@ -459,6 +462,7 @@ function SchoolsTab({ data, onRefresh }: { data: DetailData; onRefresh: () => vo
 // ── Seeds Tab ─────────────────────────────────────────────────────────────────
 
 function SeedsTab({ data, onRefresh }: { data: DetailData; onRefresh: () => void }) {
+  const { gender } = useAdminGender()
   const tid = data.registry.in_season_tournament_id
   const [pasteText, setPasteText] = useState('')
   const [parsed, setParsed]       = useState<Array<{ weight_class: number; seed: number; wrestler_name_raw: string; school_name_raw: string }> | null>(null)
@@ -506,7 +510,7 @@ function SeedsTab({ data, onRefresh }: { data: DetailData; onRefresh: () => void
       const res = await fetch('/api/admin/tournament-detail', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'save_seeds', in_season_tournament_id: tid, seeds: parsed }),
+        body: JSON.stringify({ gender, action: 'save_seeds', in_season_tournament_id: tid, seeds: parsed }),
       })
       const d = await res.json()
       if (d.error) throw new Error(d.error)
@@ -661,6 +665,7 @@ function BracketTab({ data }: { data: DetailData }) {
 // ── Scores Tab ────────────────────────────────────────────────────────────────
 
 function ScoresTab({ data, onRefresh }: { data: DetailData; onRefresh: () => void }) {
+  const { gender } = useAdminGender()
   const tid = data.registry.in_season_tournament_id
   const isJamboree = data.registry.event_type === 'jamboree'
   const [pasteText, setPasteText] = useState('')
@@ -677,7 +682,7 @@ function ScoresTab({ data, onRefresh }: { data: DetailData; onRefresh: () => voi
       const res = await fetch('/api/admin/compute-jamboree-scores', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tournament_id: tid }),
+        body: JSON.stringify({ gender, tournament_id: tid }),
       })
       const d = await res.json()
       if (d.error) throw new Error(d.error)
@@ -885,6 +890,7 @@ function ScoresTab({ data, onRefresh }: { data: DetailData; onRefresh: () => voi
 // ── Winners Tab ───────────────────────────────────────────────────────────────
 
 function WinnersTab({ data, onRefresh }: { data: DetailData; onRefresh: () => void }) {
+  const { gender } = useAdminGender()
   const tid = data.registry.in_season_tournament_id
   const [pasteText, setPasteText] = useState('')
   const [parsed, setParsed]       = useState<Array<{ weight_class: number; place: number; wrestler_name_raw: string; school_name_raw: string }> | null>(null)
@@ -934,7 +940,7 @@ function WinnersTab({ data, onRefresh }: { data: DetailData; onRefresh: () => vo
       const res = await fetch('/api/admin/tournament-detail', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'save_placements', in_season_tournament_id: tid, placements: rows }),
+        body: JSON.stringify({ gender, action: 'save_placements', in_season_tournament_id: tid, placements: rows }),
       })
       const d = await res.json()
       if (d.error) throw new Error(d.error)
@@ -1064,6 +1070,7 @@ function WinnersTab({ data, onRefresh }: { data: DetailData; onRefresh: () => vo
 // ── Main Component ────────────────────────────────────────────────────────────
 
 export function TournamentDetailClient({ registryId }: { registryId: string }) {
+  const { gender } = useAdminGender()
   const [data, setData]     = useState<DetailData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError]   = useState<string | null>(null)
@@ -1072,7 +1079,7 @@ export function TournamentDetailClient({ registryId }: { registryId: string }) {
   const load = useCallback(async () => {
     setLoading(true); setError(null)
     try {
-      const res = await fetch(`/api/admin/tournament-detail?id=${registryId}`)
+      const res = await fetch(`/api/admin/tournament-detail?id=${registryId}&gender=${gender}`)
       const d = await res.json()
       if (d.error) throw new Error(d.error)
       setData(d)
@@ -1081,7 +1088,7 @@ export function TournamentDetailClient({ registryId }: { registryId: string }) {
     } finally {
       setLoading(false)
     }
-  }, [registryId])
+  }, [registryId, gender])
 
   useEffect(() => { load() }, [load])
 

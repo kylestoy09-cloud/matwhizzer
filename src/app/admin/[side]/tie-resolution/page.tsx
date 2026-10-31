@@ -24,7 +24,7 @@ async function fetchTies(gender: 'M' | 'F'): Promise<TieMeet[]> {
   const { data, error } = await db
     .from(table)
     .select(`
-      id, meet_date, season_id, gender,
+      id, meet_date, season_id,
       team1_school_id, team2_school_id,
       team1_score, team2_score,
       team1:schools!team1_school_id(display_name),
@@ -48,18 +48,15 @@ async function fetchTies(gender: 'M' | 'F'): Promise<TieMeet[]> {
   }))
 }
 
-export default async function TieResolutionPage() {
+export default async function TieResolutionPage({ params }: { params: Promise<{ side: string }> }) {
   const supabase = await createSupabaseServer()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/signin')
   const { data: appUser } = await supabase.from('app_users').select('role').eq('id', user.id).single()
   if (!appUser || (appUser as any).role !== 'admin') redirect('/signin')
 
-  const [boys, girls] = await Promise.all([fetchTies('M'), fetchTies('F')])
-  const ties = [...boys, ...girls].sort((a, b) => {
-    if (b.season_id !== a.season_id) return b.season_id - a.season_id
-    return a.meet_date < b.meet_date ? 1 : -1
-  })
+  // This side's ties (already newest season first, then newest meet)
+  const ties = await fetchTies((await params).side === 'girls' ? 'F' : 'M')
 
   return <TieResolutionClient ties={ties} />
 }

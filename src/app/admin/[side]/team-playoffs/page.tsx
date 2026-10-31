@@ -4,7 +4,8 @@ import { createSupabaseServer } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
 import { HubShell } from '../dashboards/HubShell'
 import { PlayoffSeedsClient } from '../playoff-seeds/PlayoffSeedsClient'
-import { boysProgramSchoolIds, girlsProgramSchoolIds } from '@/lib/genderPrograms'
+import { boysProgramSchoolIds } from '@/lib/genderPrograms'
+import { girlsPlayoffGroups } from '../playoff-seeds/girlsPlayoffGroups'
 
 export const dynamic = 'force-dynamic'
 
@@ -70,13 +71,9 @@ function TeamPlayoffsHeader({
   )
 }
 
-export default async function TeamPlayoffsPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ gender?: string }>
-}) {
-  const { gender: genderParam } = await searchParams
-  const GENDER = genderParam === 'F' ? 'F' : 'M'
+export default async function TeamPlayoffsPage({ params }: { params: Promise<{ side: string }> }) {
+  if ((await params).side === 'girls') return <GirlsTeamPlayoffsPage />
+  const GENDER = 'M' as const
   const SEASON_ID = (await getWorkingSeason(GENDER)).id
 
   const auth = await createSupabaseServer()
@@ -92,7 +89,7 @@ export default async function TeamPlayoffsPage({
   type SeedEntry = { seed: number; school: School | null; wins: number; losses: number; pp: number }
 
   // Non-Public pools: this gender's programs only (see src/lib/genderPrograms.ts)
-  const programIds = await (GENDER === 'F' ? girlsProgramSchoolIds : boysProgramSchoolIds)(db, SEASON_ID)
+  const programIds = await boysProgramSchoolIds(db, SEASON_ID)
 
   const [{ data: ppRows }, { data: npaSchools }, { data: npbSchools }] = await Promise.all([
     db.from('power_points')
@@ -202,6 +199,27 @@ export default async function TeamPlayoffsPage({
       }
     >
       <PlayoffSeedsClient groups={groups} seasonId={SEASON_ID} gender={GENDER} />
+    </HubShell>
+  )
+}
+
+async function GirlsTeamPlayoffsPage() {
+  const auth = await createSupabaseServer()
+  const { data: { user } } = await auth.auth.getUser()
+  if (!user) redirect('/admin/login')
+
+  const { SEASON_ID, groups } = await girlsPlayoffGroups()
+  return (
+    <HubShell
+      header={
+        <TeamPlayoffsHeader
+          groupsConfirmed={groups.filter(g => g.confirmed).length}
+          totalGroups={groups.length}
+          seedsSet={groups.filter(g => g.seeds.some(s => s.school)).length}
+        />
+      }
+    >
+      <PlayoffSeedsClient groups={groups} seasonId={SEASON_ID} gender="F" />
     </HubShell>
   )
 }

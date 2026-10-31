@@ -29,6 +29,9 @@ export async function GET(req: NextRequest) {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const status = req.nextUrl.searchParams.get('status') ?? 'pending'
+  // ?gender=M|F limits the list to one side's wrestlers
+  const genderParam = req.nextUrl.searchParams.get('gender')
+  const gender = genderParam === 'M' || genderParam === 'F' ? genderParam : null
   const supabase = db()
 
   // Probe for table
@@ -55,7 +58,10 @@ export async function GET(req: NextRequest) {
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
 
-  return NextResponse.json({ migrationPending: false, transfers: data ?? [] })
+  const transfers = gender
+    ? (data ?? []).filter(t => (t.wrestlers as unknown as { gender: string | null } | null)?.gender === gender)
+    : (data ?? [])
+  return NextResponse.json({ migrationPending: false, transfers })
 }
 
 // POST /api/admin/wrestler-transfers — scan for transfer candidates

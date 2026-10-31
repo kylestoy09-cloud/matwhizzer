@@ -46,7 +46,8 @@ const TYPE_LABEL: Record<string, string> = {
   inside:         'NJ Only',
 }
 
-export function TournamentRolloverClient() {
+// One side's tournaments: the API returns both genders, each side rolls over its own
+export function TournamentRolloverClient({ gender }: { gender: 'M' | 'F' }) {
   const [migrationPending, setMigrationPending] = useState<boolean | null>(null)
   const [phase,       setPhase]       = useState<Phase>('loading')
   const [tournaments, setTournaments] = useState<PriorTournament[]>([])
@@ -67,8 +68,8 @@ export function TournamentRolloverClient() {
         const d2 = await r2.json()
         if (d2.error) { setErrorMsg(d2.error); setPhase('error'); return }
 
-        if (d2.seasons?.M) setSeasons(d2.seasons.M)
-        const ts: PriorTournament[] = d2.tournaments ?? []
+        if (d2.seasons?.[gender]) setSeasons(d2.seasons[gender])
+        const ts: PriorTournament[] = ((d2.tournaments ?? []) as PriorTournament[]).filter(t => (t.gender ?? 'M') === gender)
         setTournaments(ts)
 
         const initialRows = new Map<string, RowState>()
@@ -89,7 +90,7 @@ export function TournamentRolloverClient() {
       }
     }
     load()
-  }, [])
+  }, [gender])
 
   function updateRow(id: string, patch: Partial<RowState>) {
     setRows(prev => {

@@ -1,5 +1,6 @@
 'use client'
 
+import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import type {
@@ -307,6 +308,8 @@ function PlacementRow({ row, onChange, onDelete, isFirst }: {
 // ── Main component ────────────────────────────────────────────────────────────
 
 export function HsOffseasonImportClient({ preselectedTournamentId }: { preselectedTournamentId: number | null }) {
+  // This side's events plus combined (MF) events
+  const { gender: sideGender } = useAdminGender()
   const [tournaments, setTournaments] = useState<Tournament[]>([])
   const [loadingTournaments, setLoadingTournaments] = useState(true)
   const [step, setStep] = useState<Step>('input')
@@ -334,9 +337,9 @@ export function HsOffseasonImportClient({ preselectedTournamentId }: { preselect
   useEffect(() => {
     fetch('/api/admin/nonnjsiaa/offseason')
       .then(r => r.json())
-      .then(d => { setTournaments(d.tournaments ?? []); setLoadingTournaments(false) })
+      .then(d => { setTournaments((d.tournaments ?? []).filter((t: { gender: string }) => t.gender === sideGender || t.gender === 'MF')); setLoadingTournaments(false) })
       .catch(() => setLoadingTournaments(false))
-  }, [])
+  }, [sideGender])
 
   const selectedTournament = tournaments.find(t => String(t.id) === tournamentId)
 

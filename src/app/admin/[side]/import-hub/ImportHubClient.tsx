@@ -49,7 +49,7 @@ export function ImportHubClient() {
     } finally {
       setSaving(false)
     }
-  }, [text])
+  }, [text, gender])
 
   function routeToImporter(type: 'tournament' | 'dual') {
     try {

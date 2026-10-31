@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import { createClient } from '@supabase/supabase-js'
 import { AdminBackButton } from '@/app/admin/AdminBackButton'
 import { WrestlerProfileClient } from './WrestlerProfileClient'
@@ -13,10 +13,10 @@ function db() {
   )
 }
 
-type Params = { params: Promise<{ id: string }> }
+type Params = { params: Promise<{ id: string; side: string }> }
 
 export default async function WrestlerProfilePage({ params }: Params) {
-  const { id } = await params
+  const { id, side } = await params
   const supabase = db()
 
   const enrollmentCheck = await supabase.from('wrestlers').select('grade').limit(1)
@@ -33,6 +33,9 @@ export default async function WrestlerProfilePage({ params }: Params) {
     .single()
 
   if (error || !wrestler) notFound()
+  // A wrestler belongs to one side: opened from the other, move to the right one
+  const wrestlerSide = (wrestler as unknown as { gender: string }).gender === 'F' ? 'girls' : 'boys'
+  if (wrestlerSide !== side) redirect(`/admin/${wrestlerSide}/wrestlers/${id}`)
 
   // Current school from history
   let currentSchool: { id: number; display_name: string } | null = null

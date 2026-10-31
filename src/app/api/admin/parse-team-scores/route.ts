@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const { text, tournament_query } = await req.json()
+  const { text, tournament_query, gender } = await req.json()
 
   const rawScores = parseTeamScoreBlock(text ?? '')
   if (!rawScores.length) {
@@ -32,9 +32,10 @@ export async function POST(req: NextRequest) {
     client.from('in_season_tournaments').select('id, name, start_date, season').ilike('name', `%${query}%`).order('start_date', { ascending: false }).limit(6),
     client.from('in_season_tournaments_girls').select('id, name, start_date, season').ilike('name', `%${query}%`).order('start_date', { ascending: false }).limit(6),
   ])
+  // gender (M/F) limits the match to that side's tournaments
   const tournaments = [
-    ...(boysTournaments ?? []).map(t => ({ ...t, gender: 'M' as const })),
-    ...(girlsTournaments ?? []).map(t => ({ ...t, gender: 'F' as const })),
+    ...(gender === 'F' ? [] : (boysTournaments ?? []).map(t => ({ ...t, gender: 'M' as const }))),
+    ...(gender === 'M' ? [] : (girlsTournaments ?? []).map(t => ({ ...t, gender: 'F' as const }))),
   ]
     .sort((a, b) => (b.start_date ?? '').localeCompare(a.start_date ?? ''))
     .slice(0, 6)

@@ -1,5 +1,6 @@
 'use client'
 
+import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import { useState, useRef } from 'react'
 import type { CsvRow, StagedMeet, StagedLink, FlaggedItem } from '@/app/api/admin/schedule-bulk-import/route'
 
@@ -50,14 +51,15 @@ const COL_MAP: Record<string, keyof CsvRow> = {
   tournament_name:       'event_name',
 }
 
-function normalizeRow(raw: Record<string, string>, idx: number): CsvRow {
+// A row with no gender belongs to the side doing the import
+function normalizeRow(raw: Record<string, string>, idx: number, sideGender: 'M' | 'F'): CsvRow {
   const out: CsvRow = {
     reporting_school_id:   '',
     reporting_school_name: '',
     opponent_id:           '',
     opponent_name:         '',
     meet_date:             '',
-    gender:                'M',
+    gender:                sideGender,
     event_type:            '',
     event_name:            '',
     _row_index:            idx,
@@ -66,6 +68,7 @@ function normalizeRow(raw: Record<string, string>, idx: number): CsvRow {
     const canonical = COL_MAP[k]
     if (canonical) (out as unknown as Record<string, string>)[canonical] = v
   }
+  out.gender = (out.gender || sideGender).trim().toUpperCase()
   return out
 }
 
@@ -99,6 +102,7 @@ const GENDER_LABEL: Record<string, string> = { M: 'Boys', F: 'Girls' }
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export function ScheduleBulkImportClient() {
+  const { gender: sideGender } = useAdminGender()
   const [phase,        setPhase]        = useState<Phase>('idle')
   const [csvText,      setCsvText]      = useState('')
   const [staged,       setStaged]       = useState<StageResult | null>(null)
@@ -121,7 +125,15 @@ export function ScheduleBulkImportClient() {
     setErrorMsg(null)
 
     const rawRows = parseCSV(csvText)
-    const rows = rawRows.map((r, i) => normalizeRow(r, i + 1))
+    const allRows = rawRows.map((r, i) => normalizeRow(r, i + 1, sideGender))
+    // Each side imports its own schedule: rows for the other gender are left out
+    const rows = allRows.filter(r => r.gender === sideGender)
+    const otherSide = allRows.filter(r => r.gender !== sideGender).map(r => r._row_index)
+    if (rows.length === 0) {
+      setErrorMsg(`No ${GENDER_LABEL[sideGender].toLowerCase()} rows to import${otherSide.length ? ` (rows ${otherSide.join(', ')} are for the other side)` : ''}.`)
+      setPhase('error')
+      return
+    }
 
     try {
       const res = await fetch('/api/admin/schedule-bulk-import', {
@@ -131,6 +143,7 @@ export function ScheduleBulkImportClient() {
       })
       const d = await res.json()
       if (d.error) { setErrorMsg(d.error); setPhase('error'); return }
+      if (otherSide.length) d.parseErrors = [`Rows ${otherSide.join(', ')} are for the ${sideGender === 'F' ? 'boys' : 'girls'} side and were left out`, ...(d.parseErrors ?? [])]
       setStaged(d)
       setPhase('staged')
     } catch (e) {
@@ -395,7 +408,7 @@ export function ScheduleBulkImportClient() {
                   ['meet_date', 'date', 'YYYY-MM-DD or M/D/YYYY'],
                   ['opponent_id', 'opponent_school_id', 'Leave blank for untracked schools'],
                   ['opponent_name', 'opponent', 'Free text; used for fuzzy tournament matching'],
-                  ['gender', '', 'M or F (default M)'],
+                  ['gender', '', `M or F (default ${sideGender}, this side)`],
                   ['event_type', 'type', 'dual_meet or tournament (auto-detected if blank)'],
                   ['event_name', 'tournament_name', 'For tournament rows; fuzzy-matched to this season\'s events'],
                 ].map(([col, alias, note]) => (

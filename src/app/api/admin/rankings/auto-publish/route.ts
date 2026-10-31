@@ -50,13 +50,15 @@ export async function POST(req: NextRequest) {
   const locked = lockedError(season, seasonGender)
   if (locked) return NextResponse.json({ error: locked }, { status: 423 })
 
-  // 1. Load all hammer scores
+  // 1. Load this gender's ratings
   const allScores: ScoreRow[] = []
   for (let offset = 0; ; offset += 500) {
     const { data, error } = await supabase
       .from('wrestler_hammer_scores')
       .select('wrestler_id, hammer_score, weight_class, conference, district, region')
       .eq('season', CURRENT_SEASON_STR)
+      // Boys and girls share season labels (2025-26): without this, a girls publish ranks boys too
+      .eq('gender', seasonGender)
       .range(offset, offset + 499)
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
     if (!data?.length) break

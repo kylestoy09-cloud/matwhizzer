@@ -21,17 +21,20 @@ async function requireAdmin() {
 
 // GET /api/admin/oos-wrestlers
 // Returns all OOS wrestlers with usage counts and suspected duplicate groups.
-export async function GET() {
+export async function GET(req: NextRequest) {
   const user = await requireAdmin()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const supabase = db()
 
-  // All OOS wrestlers
-  const { data: wrestlers, error } = await supabase
+  // This side's OOS wrestlers (?gender=M|F; both when omitted)
+  const g = req.nextUrl.searchParams.get('gender')
+  let wq = supabase
     .from('wrestlers')
     .select('id, first_name, last_name, gender')
     .eq('is_oos', true)
+  if (g === 'M' || g === 'F') wq = wq.eq('gender', g)
+  const { data: wrestlers, error } = await wq
     .order('last_name')
     .order('first_name')
 

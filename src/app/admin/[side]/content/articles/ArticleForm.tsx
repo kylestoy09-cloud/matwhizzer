@@ -1,5 +1,6 @@
 'use client'
 
+import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
@@ -16,6 +17,7 @@ function slugify(title: string) {
 
 export function ArticleForm({ id }: ArticleFormProps) {
   const router = useRouter()
+  const { gender, side } = useAdminGender()
   const isNew = !id
 
   const [title,   setTitle]   = useState('')
@@ -55,7 +57,7 @@ export function ArticleForm({ id }: ArticleFormProps) {
 
   async function save(publishStatus: 'draft' | 'published') {
     setSaving(true); setError(null)
-    const payload = { title, slug, body, author, status: publishStatus }
+    const payload = { title, slug, body, author, status: publishStatus, gender }
     try {
       const res = await fetch(
         isNew ? '/api/admin/articles' : `/api/admin/articles/${id}`,
@@ -67,7 +69,7 @@ export function ArticleForm({ id }: ArticleFormProps) {
       )
       const d = await res.json()
       if (!res.ok) throw new Error(d.error ?? 'Save failed')
-      router.push('/admin/content/articles')
+      router.push(`/admin/${side}/content/articles`)
       router.refresh()
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : String(e))
@@ -81,7 +83,7 @@ export function ArticleForm({ id }: ArticleFormProps) {
     setDeleting(true)
     try {
       await fetch(`/api/admin/articles/${id}`, { method: 'DELETE' })
-      router.push('/admin/content/articles')
+      router.push(`/admin/${side}/content/articles`)
       router.refresh()
     } catch {
       setError('Delete failed')
@@ -172,7 +174,7 @@ export function ArticleForm({ id }: ArticleFormProps) {
           {status === 'draft' ? 'Save Draft' : 'Unpublish → Draft'}
         </button>
         <button
-          onClick={() => router.push('/admin/content/articles')}
+          onClick={() => router.push(`/admin/${side}/content/articles`)}
           className="px-4 py-2 text-sm text-slate-500 hover:text-slate-800 transition-colors"
         >
           Cancel

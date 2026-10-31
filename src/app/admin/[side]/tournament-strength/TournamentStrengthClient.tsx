@@ -76,6 +76,7 @@ function BracketStatus({ row }: { row: StrengthRow }) {
 type SaveState = 'idle' | 'saving' | 'saved' | 'error'
 
 function PointValueDropdown({ row, onSaved }: { row: StrengthRow; onSaved: (id: string, value: number | null) => void }) {
+  const { gender } = useAdminGender()
   const [saveState, setSaveState] = useState<SaveState>('idle')
 
   const handleChange = useCallback(async (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -86,7 +87,7 @@ function PointValueDropdown({ row, onSaved }: { row: StrengthRow; onSaved: (id: 
       const res = await fetch('/api/admin/update-tournament-point-value', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: row.tournament_id, point_value: value }),
+        body: JSON.stringify({ id: row.tournament_id, point_value: value, gender }),
       })
       if (!res.ok) throw new Error()
       onSaved(row.tournament_id, value)
@@ -96,7 +97,7 @@ function PointValueDropdown({ row, onSaved }: { row: StrengthRow; onSaved: (id: 
       setSaveState('error')
       setTimeout(() => setSaveState('idle'), 2000)
     }
-  }, [row.tournament_id, onSaved])
+  }, [row.tournament_id, onSaved, gender])
 
   return (
     <div className="flex items-center gap-1.5">

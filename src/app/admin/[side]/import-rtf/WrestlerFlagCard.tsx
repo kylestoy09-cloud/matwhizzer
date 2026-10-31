@@ -126,7 +126,7 @@ export function WrestlerFlagCard({ flag, override, onOverride, gender, msProfile
       setRoster(data.wrestlers ?? [])
     } catch { setRoster([]) }
     finally { setRosterLoading(false) }
-  }, [flag.school_id, roster.length])
+  }, [flag.school_id, roster.length, gender])
 
   useEffect(() => {
     if (mode === 'search') loadRoster()

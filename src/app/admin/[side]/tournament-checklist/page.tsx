@@ -127,10 +127,24 @@ function wordScore(a: string, b: string): number {
   return shared / Math.max(wa.size, wb.size, 1)
 }
 
-export default async function TournamentChecklistPage() {
+export default async function TournamentChecklistPage({ params }: { params: Promise<{ side: string }> }) {
   const supabase = await createSupabaseServer()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/admin/login')
+
+  // The reference list is the boys schedule; girls has no reference list yet
+  const { side } = await params
+  if (side === 'girls') {
+    return (
+      <div className="max-w-3xl mx-auto px-4 pt-6 pb-16">
+        <h1 className="text-xl font-bold text-slate-900">Tournament Checklist — Girls</h1>
+        <p className="mt-3 text-sm text-slate-600">
+          This checklist compares the database against a reference list of the season&apos;s tournaments.
+          Only the boys 2025-26 list has been provided, so there is no girls checklist yet.
+        </p>
+      </div>
+    )
+  }
 
   const { data: dbTournaments } = await supabase
     .from('in_season_tournaments')

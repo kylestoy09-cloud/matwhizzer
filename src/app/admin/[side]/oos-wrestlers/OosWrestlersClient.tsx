@@ -1,5 +1,6 @@
 'use client'
 
+import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import { useState, useEffect, useTransition } from 'react'
 
 type Wrestler = {
@@ -15,12 +16,12 @@ type Wrestler = {
 type DupGroup = Wrestler[]
 
 export function OosWrestlersClient() {
+  const { gender } = useAdminGender()
   const [wrestlers, setWrestlers]   = useState<Wrestler[]>([])
   const [duplicates, setDuplicates] = useState<DupGroup[]>([])
   const [loading, setLoading]       = useState(true)
   const [error, setError]           = useState<string | null>(null)
   const [search, setSearch]         = useState('')
-  const [gender, setGender]         = useState<'M' | 'F' | 'all'>('M')
   const [tab, setTab]               = useState<'all' | 'duplicates'>('duplicates')
   const [merging, setMerging]       = useState<string | null>(null)
   const [mergeMsg, setMergeMsg]     = useState<Record<string, string>>({})
@@ -30,7 +31,7 @@ export function OosWrestlersClient() {
   async function load() {
     setLoading(true)
     try {
-      const res = await fetch('/api/admin/oos-wrestlers')
+      const res = await fetch(`/api/admin/oos-wrestlers?gender=${gender}`)
       const d = await res.json()
       if (d.error) throw new Error(d.error)
       setWrestlers(d.wrestlers)
@@ -42,7 +43,7 @@ export function OosWrestlersClient() {
     }
   }
 
-  useEffect(() => { load() }, [])
+  useEffect(() => { load() }, [gender])
 
   async function merge(keep_id: string, merge_id: string, groupKey: string) {
     setMerging(groupKey)
@@ -64,17 +65,14 @@ export function OosWrestlersClient() {
     }
   }
 
-  const genderFiltered = wrestlers.filter(w =>
-    gender === 'all' ? true : w.gender === gender
-  )
+  // The API returns this side's wrestlers only
+  const genderFiltered = wrestlers
 
   const filtered = genderFiltered.filter(w =>
     w.display_name.toLowerCase().includes(search.toLowerCase())
   )
 
-  const dupFiltered = duplicates.filter(g =>
-    gender === 'all' ? true : g[0]?.gender === gender
-  )
+  const dupFiltered = duplicates
 
   const total_bouts = wrestlers.reduce((s, r) => s + r.bout_count, 0)
 
@@ -111,15 +109,6 @@ export function OosWrestlersClient() {
 
       {/* Filter bar */}
       <div className="flex items-center gap-3">
-        <select
-          value={gender}
-          onChange={e => { setGender(e.target.value as 'M' | 'F' | 'all'); setPendingMerge(null) }}
-          className="border border-slate-300 px-3 py-1.5 text-sm focus:outline-none focus:border-black"
-        >
-          <option value="M">Boys</option>
-          <option value="F">Girls</option>
-          <option value="all">All</option>
-        </select>
         {tab === 'all' && (
           <input
             value={search}
