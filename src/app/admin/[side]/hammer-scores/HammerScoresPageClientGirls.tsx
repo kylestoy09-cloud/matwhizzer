@@ -37,7 +37,7 @@ export function HammerScoresPageClientGirls() {
         <p className="font-semibold mb-1">Failed to load scores</p>
         <p className="font-mono text-xs">{fetchError}</p>
         <p className="mt-2 text-xs">
-          Run <code className="font-mono">docs/migrations/20260811_hammer_score_schema.sql</code> if tables are missing.
+          If the rating tables are missing, run the rating schema migration (20260811).
         </p>
       </div>
     )

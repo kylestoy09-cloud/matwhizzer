@@ -11,6 +11,7 @@ type RunResult = {
   wrestlers_scored?: number
   bouts_processed?:  number
   duration_ms?:      number
+  season?:           string
   auto_published?:   number
   error?:            string
 }
@@ -66,7 +67,7 @@ export function RankingsClientBoys() {
         <div>
           <h2 className="text-sm font-semibold text-slate-800">{RATING_NAME} Calculation</h2>
           <p className="text-xs text-slate-500 mt-0.5">
-            Full-season replay for all NJ wrestlers in the season in progress. Writes to <code className="font-mono">wrestler_hammer_scores</code> staging table. Takes ~60–90 seconds.
+            Full-season replay for all NJ wrestlers in the season in progress. Saves each wrestler's {RATING_NAME}. Takes ~60–90 seconds.
           </p>
         </div>
         <button
@@ -92,7 +93,7 @@ export function RankingsClientBoys() {
 
       {status === 'done' && result && (
         <div className="px-5 py-4 bg-green-50 border-t border-green-100">
-          <p className="text-sm font-semibold text-green-800">Scoring complete</p>
+          <p className="text-sm font-semibold text-green-800">Scoring complete{result.season ? ` — ${result.season} season` : ''}</p>
           <p className="text-sm text-green-700 mt-1">
             {result.wrestlers_scored != null && `${result.wrestlers_scored.toLocaleString()} wrestlers scored`}
             {result.bouts_processed  != null && ` · ${result.bouts_processed.toLocaleString()} bouts processed`}
@@ -100,7 +101,9 @@ export function RankingsClientBoys() {
             {result.auto_published   != null && ` · ${result.auto_published} group rankings auto-published`}
           </p>
           <p className="text-xs text-green-600 mt-1">
-            Results written to <code className="font-mono">wrestler_hammer_scores</code>. Use the Individual and Team workbenches below to seed rankings from these scores.
+            {result.wrestlers_scored
+              ? `${RATING_NAME} saved. Use the Individual and Team workbenches below to seed rankings from these ratings.`
+              : `No ${result.season ?? ''} matches yet, so no one has a rating. Ratings begin with the season's first match.`}
           </p>
         </div>
       )}

@@ -45,8 +45,8 @@ function SortHeader({ label, sortKey, current, dir, onSort }: {
 
 function RecalcButton({}: { }) {
   const [phase,   setPhase]   = useState<'idle' | 'scoring' | 'publishing' | 'done' | 'error'>('idle')
-  const [scoring, setScoring] = useState<{ wrestlers?: number; matchesScored?: number; elapsedMs?: number } | null>(null)
-  const [publish, setPublish] = useState<{ published?: number; conference?: number; district?: number; region?: number } | null>(null)
+  const [scoring, setScoring] = useState<{ wrestlers_scored?: number; bouts_processed?: number; duration_ms?: number; season?: string } | null>(null)
+  const [publish, setPublish] = useState<{ published?: number; conference?: number; district?: number; region?: number; message?: string } | null>(null)
   const [errMsg,  setErrMsg]  = useState<string | null>(null)
 
   async function run() {
@@ -89,13 +89,16 @@ function RecalcButton({}: { }) {
           {phase === 'error' && <p className="font-semibold">Error: {errMsg}</p>}
           {scoring && (
             <p className={phase === 'done' ? 'font-semibold text-slate-800' : ''}>
-              {scoring.wrestlers?.toLocaleString()} wrestlers · {scoring.matchesScored?.toLocaleString()} match entries · {((scoring.elapsedMs ?? 0) / 1000).toFixed(1)}s
+              {scoring.wrestlers_scored
+                ? <>{scoring.wrestlers_scored.toLocaleString()} wrestlers rated · {scoring.bouts_processed?.toLocaleString()} bouts · {((scoring.duration_ms ?? 0) / 1000).toFixed(1)}s</>
+                : <>Ran in {((scoring.duration_ms ?? 0) / 1000).toFixed(1)}s — no {scoring.season} matches yet, so no one has a rating. Ratings begin with the season&apos;s first match.</>}
             </p>
           )}
           {publish && (
             <p className="text-slate-500">
-              Rankings published: {publish.published} lists ({publish.conference} conf · {publish.district} district · {publish.region} region)
-              {phase === 'done' && ' — refresh to see updated scores'}
+              {publish.published
+                ? <>Rankings published: {publish.published} lists ({publish.conference} conf · {publish.district} district · {publish.region} region){phase === 'done' && ' — refresh to see updated scores'}</>
+                : 'No rankings to publish yet.'}
             </p>
           )}
         </div>

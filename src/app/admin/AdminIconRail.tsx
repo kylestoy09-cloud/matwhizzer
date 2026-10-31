@@ -41,7 +41,9 @@ type RailEntry   = { id: string; label: string; icon: React.ReactNode; future?: 
 
 // Universal tools (top of the rail) belong to neither side; everything below the
 // divider is a gender tool and links only to the side being worked on.
-function buildUniversal(onChatClick?: () => void, onMicrocheckClick?: () => void): RailEntry[] {
+function buildUniversal(side: AdminSide, onChatClick?: () => void, onMicrocheckClick?: () => void): RailEntry[] {
+  // WRR Formula and Tool Audit are kept per gender: these open the side being worked on
+  const sideName = side === 'girls' ? 'Girls' : 'Boys'
   return [
   {
     id: 'microcheck', label: 'Micro Checks', icon: icons.microcheck,
@@ -78,6 +80,10 @@ function buildUniversal(onChatClick?: () => void, onMicrocheckClick?: () => void
       { label: 'Data Health',    href: '/admin/data-health' },
       { label: 'Page Layout',    href: '/admin/page-layout' },
       { label: 'Home Page Test', href: '/admin/homepage-test' },
+    ]},
+    { heading: `${sideName} side`, items: [
+      { label: `${RATING_SHORT} Formula`, href: adminHref(side, '/hammer-scores/config') },
+      { label: 'Tool Audit',              href: adminHref(side, '/tool-audit') },
     ]}],
   },
   ]
@@ -164,8 +170,6 @@ function buildGender(side: AdminSide): RailEntry[] {
       ]},
       { heading: 'Admin Tools', items: [
         { label: 'Tie Resolution',          href: a('/tie-resolution') },
-        { label: 'Tool Audit',              href: a('/tool-audit') },
-        { label: `${RATING_SHORT} Formula`, href: a('/hammer-scores/config') },
         { label: 'Resolve Unknowns',        href: a('/resolve-unknowns') },
       ]},
       { heading: 'Coming Soon', items: [
@@ -351,7 +355,7 @@ export function AdminIconRail({
 
       {/* Icons — no overflow-y:auto so flyouts aren't clipped */}
       <div className="flex-1 flex flex-col">
-        {buildUniversal(onChatClick, onMicrocheckClick).map(entry => (
+        {buildUniversal(side, onChatClick, onMicrocheckClick).map(entry => (
           <RailItem
             key={entry.id}
             entry={entry}
