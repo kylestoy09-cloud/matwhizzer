@@ -140,7 +140,7 @@ export default async function TournamentChecklistPage({ params }: { params: Prom
         <h1 className="text-xl font-bold text-slate-900">Tournament Checklist — Girls</h1>
         <p className="mt-3 text-sm text-slate-600">
           This checklist compares the database against a reference list of the season&apos;s tournaments.
-          Only the boys 2025-26 list has been provided, so there is no girls checklist yet.
+          Only a boys list has been provided, so there is no girls checklist yet.
         </p>
       </div>
     )
