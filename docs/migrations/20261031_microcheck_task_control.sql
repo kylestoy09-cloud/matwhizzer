@@ -10,9 +10,13 @@
 --   microcheck_claims      a task handed to someone is held for them for 10 minutes so
 --                          the next person who asks gets the next task.
 -- microcheck_roster_flags is keyed by school only, so a school could not be flagged for
--- both genders: the key becomes (school_id, gender).
+-- both genders: the key (still named microdose_roster_flags_pkey from before the rename)
+-- becomes (school_id, gender).
 -- microcheck_task_priority (the old two-row order) is no longer read.
 DO $$
+DECLARE
+  pk_name text;
+  pk_cols text[];
 BEGIN
   CREATE TABLE IF NOT EXISTS public.microcheck_task_types (
     key         text        PRIMARY KEY,
@@ -61,8 +65,19 @@ BEGIN
     claimed_at  timestamptz NOT NULL DEFAULT now()
   );
 
-  ALTER TABLE public.microcheck_roster_flags DROP CONSTRAINT IF EXISTS microcheck_roster_flags_pkey;
-  ALTER TABLE public.microcheck_roster_flags ADD PRIMARY KEY (school_id, gender);
+  -- The key kept its pre-rename name, so find it by table rather than by name
+  SELECT c.conname, array_agg(a.attname::text ORDER BY a.attname)
+    INTO pk_name, pk_cols
+  FROM pg_constraint c
+  JOIN pg_attribute a ON a.attrelid = c.conrelid AND a.attnum = ANY (c.conkey)
+  WHERE c.conrelid = 'public.microcheck_roster_flags'::regclass AND c.contype = 'p'
+  GROUP BY c.conname;
+  IF pk_cols IS DISTINCT FROM ARRAY['gender', 'school_id'] THEN
+    IF pk_name IS NOT NULL THEN
+      EXECUTE format('ALTER TABLE public.microcheck_roster_flags DROP CONSTRAINT %I', pk_name);
+    END IF;
+    ALTER TABLE public.microcheck_roster_flags ADD PRIMARY KEY (school_id, gender);
+  END IF;
 END $$;
 
 ALTER TABLE public.microcheck_task_types ENABLE ROW LEVEL SECURITY;
