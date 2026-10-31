@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import { RATING_SHORT } from '@/lib/rating'
+import { adminHref, type AdminSide } from '@/lib/admin-side'
 
 /* ─── Icon helper ─── */
 function Icon({ children }: { children: React.ReactNode }) {
@@ -28,7 +29,8 @@ const icons = {
   pastSeasons: <Icon><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></Icon>,
   finances:    <Icon><path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></Icon>,
   banners:     <Icon><path strokeLinecap="round" strokeLinejoin="round" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" /></Icon>,
-  tools:       <Icon><path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><circle cx="12" cy="12" r="3" /></Icon>,
+  tools:       <Icon><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75a4.5 4.5 0 01-4.884 4.484c-1.076-.091-2.264.071-2.95.904l-7.152 8.684a2.548 2.548 0 11-3.586-3.586l8.684-7.152c.833-.686.995-1.874.904-2.95a4.5 4.5 0 016.336-4.486l-3.276 3.276a3.004 3.004 0 002.25 2.25l3.276-3.276c.256.565.398 1.192.398 1.852z" /><path strokeLinecap="round" strokeLinejoin="round" d="M4.867 19.125h.008v.008h-.008v-.008z" /></Icon>,
+  settings:    <Icon><path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><circle cx="12" cy="12" r="3" /></Icon>,
   buildHealth: <Icon><path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></Icon>,
 }
 
@@ -37,7 +39,9 @@ type FlyoutGroup = { heading?: string; items: FlyoutItem[] }
 type FlyoutItem  = { label: string; href: string; future?: boolean }
 type RailEntry   = { id: string; label: string; icon: React.ReactNode; future?: boolean; clickAction?: () => void; groups: FlyoutGroup[] }
 
-function buildRail(onChatClick?: () => void, onMicrocheckClick?: () => void, gender: 'M' | 'F' = 'M'): RailEntry[] {
+// Universal tools (top of the rail) belong to neither side; everything below the
+// divider is a gender tool and links only to the side being worked on.
+function buildUniversal(onChatClick?: () => void, onMicrocheckClick?: () => void): RailEntry[] {
   return [
   {
     id: 'microcheck', label: 'Micro Checks', icon: icons.microcheck,
@@ -49,72 +53,8 @@ function buildRail(onChatClick?: () => void, onMicrocheckClick?: () => void, gen
     groups: [],
   },
   {
-    id: 'dashboards', label: 'Dashboards', icon: icons.dashboards,
-    groups: [
-      { heading: 'Season', items: [
-        { label: 'Preseason',       href: '/admin/preseason' },
-        { label: 'Season',          href: '/admin/season' },
-        { label: 'Postseason',      href: '/admin/postseason' },
-      ]},
-      { heading: 'Season Hubs', items: [
-        { label: 'Tournament Hub',  href: '/admin/tournament-hub' },
-        { label: 'Dual Hub',        href: '/admin/dual-hub' },
-        { label: 'Rankings Hub',    href: '/admin/rankings-hub' },
-        { label: 'Snap Shot',       href: gender === 'F' ? '/admin/snapshot-girls' : '/admin/snapshot' },
-      ]},
-      { heading: 'Postseason Hubs', items: [
-        { label: 'Team Playoffs',   href: '/admin/team-playoffs' },
-        { label: 'Districts',       href: '/admin/districts' },
-        { label: 'Regions',         href: '/admin/region-seeds' },
-        { label: 'States',          href: '/admin/states-hub' },
-      ]},
-    ],
-  },
-  {
-    id: 'profiles', label: 'Profiles', icon: icons.profiles,
-    groups: [{ items: [
-      { label: 'School Profiles',  href: '/admin/schools' },
-      { label: 'Wrestler Profiles', href: '/admin/wrestlers' },
-      { label: 'OOS Schools',      href: '/admin/oos-schools' },
-      { label: 'OOS Wrestlers',    href: '/admin/oos-wrestlers' },
-    ]}],
-  },
-  {
-    id: 'calendar', label: 'Calendar', icon: icons.calendar,
-    groups: [{ items: [{ label: 'Calendar & Tasks', href: '/admin/calendar' }] }],
-  },
-  {
-    id: 'blog', label: 'Articles', icon: icons.blog,
-    groups: [{ items: [
-      { label: 'All Articles', href: '/admin/content/articles' },
-      { label: 'New Article',  href: '/admin/content/articles/new' },
-    ]}],
-  },
-  {
-    id: 'nonnjsiaa', label: 'Non-NJSIAA', icon: icons.nonnjsiaa,
-    groups: [
-      { heading: 'MS Tournaments', items: [
-        { label: 'Tournament Tiers',  href: '/admin/ms/tiers' },
-        { label: 'Tournaments',       href: '/admin/ms/tournaments' },
-        { label: 'Import Results',    href: '/admin/ms/import' },
-        { label: 'Wrestler Profiles', href: '/admin/ms/wrestlers' },
-      ]},
-      { heading: 'HS Off-Season', items: [
-        { label: 'Tournaments',    href: '/admin/nonnjsiaa/offseason' },
-        { label: 'Import Results', href: '/admin/nonnjsiaa/offseason/import' },
-      ]},
-      { heading: 'Clubs', items: [
-        { label: 'Club Profiles', href: '/admin/nonnjsiaa/clubs' },
-      ]},
-    ],
-  },
-  {
     id: 'store', label: 'Store', icon: icons.store, future: true,
     groups: [{ items: [{ label: 'Store', href: '#', future: true }] }],
-  },
-  {
-    id: 'past-seasons', label: 'Past Seasons', icon: icons.pastSeasons,
-    groups: [{ items: [{ label: 'View Past Seasons', href: gender === 'F' ? '/admin/past-seasons-girls' : '/admin/past-seasons' }] }],
   },
   {
     id: 'finances', label: 'Finances', icon: icons.finances,
@@ -125,29 +65,108 @@ function buildRail(onChatClick?: () => void, onMicrocheckClick?: () => void, gen
     groups: [{ items: [{ label: 'Banner Manager', href: '#', future: true }] }],
   },
   {
+    id: 'build-health', label: 'Build Health', icon: icons.buildHealth,
+    groups: [{ items: [{ label: 'Admin Build Health', href: '/admin/build-health' }] }],
+  },
+  {
+    id: 'settings', label: 'Admin Settings', icon: icons.settings,
+    groups: [{ items: [
+      { label: 'Help Desk',      href: '/admin/help-desk' },
+      { label: 'Admin Profiles', href: '/admin/admin-profiles' },
+      { label: 'Activity Log',   href: '/admin/activity-log' },
+      { label: 'Data Browser',   href: '/admin/data-browser' },
+      { label: 'Data Health',    href: '/admin/data-health' },
+      { label: 'Page Layout',    href: '/admin/page-layout' },
+      { label: 'Home Page Test', href: '/admin/homepage-test' },
+    ]}],
+  },
+  ]
+}
+
+function buildGender(side: AdminSide): RailEntry[] {
+  const a = (path: string) => adminHref(side, path)
+  return [
+  {
+    id: 'dashboards', label: 'Dashboards', icon: icons.dashboards,
+    groups: [
+      { heading: 'Season', items: [
+        { label: 'Preseason',       href: a('/preseason') },
+        { label: 'Season',          href: a('/season') },
+        { label: 'Postseason',      href: a('/postseason') },
+      ]},
+      { heading: 'Season Hubs', items: [
+        { label: 'Tournament Hub',  href: a('/tournament-hub') },
+        { label: 'Dual Hub',        href: a('/dual-hub') },
+        { label: 'Rankings Hub',    href: a('/rankings-hub') },
+        { label: 'Snap Shot',       href: a('/snapshot') },
+      ]},
+      { heading: 'Postseason Hubs', items: [
+        { label: 'Team Playoffs',   href: a('/team-playoffs') },
+        { label: 'Districts',       href: a('/districts') },
+        { label: 'Regions',         href: a('/region-seeds') },
+        { label: 'States',          href: a('/states-hub') },
+      ]},
+    ],
+  },
+  {
+    id: 'profiles', label: 'Profiles', icon: icons.profiles,
+    groups: [{ items: [
+      { label: 'School Profiles',  href: a('/schools') },
+      { label: 'Wrestler Profiles', href: a('/wrestlers') },
+      { label: 'OOS Schools',      href: a('/oos-schools') },
+      { label: 'OOS Wrestlers',    href: a('/oos-wrestlers') },
+    ]}],
+  },
+  {
+    id: 'calendar', label: 'Calendar', icon: icons.calendar,
+    groups: [{ items: [{ label: 'Calendar & Tasks', href: a('/calendar') }] }],
+  },
+  {
+    id: 'blog', label: 'Articles', icon: icons.blog,
+    groups: [{ items: [
+      { label: 'All Articles', href: a('/content/articles') },
+      { label: 'New Article',  href: a('/content/articles/new') },
+    ]}],
+  },
+  {
+    id: 'nonnjsiaa', label: 'Non-NJSIAA', icon: icons.nonnjsiaa,
+    groups: [
+      { heading: 'MS Tournaments', items: [
+        { label: 'Tournament Tiers',  href: a('/ms/tiers') },
+        { label: 'Tournaments',       href: a('/ms/tournaments') },
+        { label: 'Import Results',    href: a('/ms/import') },
+        { label: 'Wrestler Profiles', href: a('/ms/wrestlers') },
+      ]},
+      { heading: 'HS Off-Season', items: [
+        { label: 'Tournaments',    href: a('/nonnjsiaa/offseason') },
+        { label: 'Import Results', href: a('/nonnjsiaa/offseason/import') },
+      ]},
+      { heading: 'Clubs', items: [
+        { label: 'Club Profiles', href: a('/nonnjsiaa/clubs') },
+      ]},
+    ],
+  },
+  {
+    id: 'past-seasons', label: 'Past Seasons', icon: icons.pastSeasons,
+    groups: [{ items: [{ label: 'View Past Seasons', href: a('/past-seasons') }] }],
+  },
+  {
     id: 'tools', label: 'Tools', icon: icons.tools,
     groups: [
       { heading: 'Season Tools', items: [
-        { label: 'Groups & Alignment',  href: '/admin/groups' },
-        { label: 'Bulk Schedule',       href: '/admin/schedule/bulk-import' },
-        { label: 'Import Hub',          href: '/admin/import-hub' },
-        { label: 'Team Scores',         href: '/admin/team-scores' },
-        { label: 'Post-Season Bracket', href: '/admin/bracket' },
-        { label: 'Match Card',          href: '/admin/match-card' },
-        { label: 'Roster Grade Import', href: gender === 'F' ? '/admin/roster-grade-import-girls' : '/admin/roster-grade-import' },
+        { label: 'Groups & Alignment',  href: a('/groups') },
+        { label: 'Bulk Schedule',       href: a('/schedule/bulk-import') },
+        { label: 'Import Hub',          href: a('/import-hub') },
+        { label: 'Team Scores',         href: a('/team-scores') },
+        { label: 'Post-Season Bracket', href: a('/bracket') },
+        { label: 'Match Card',          href: a('/match-card') },
+        { label: 'Roster Grade Import', href: a('/roster-grade-import') },
       ]},
       { heading: 'Admin Tools', items: [
-        { label: 'Help Desk',             href: '/admin/help-desk' },
-        { label: 'Tie Resolution',        href: '/admin/tie-resolution' },
-        { label: 'Tool Audit',            href: '/admin/tool-audit' },
-        { label: 'Data Browser',          href: '/admin/data-browser' },
-        { label: 'Page Layout',           href: '/admin/content/layout' },
-        { label: 'Data Health',           href: '/admin/data-health' },
-        { label: `${RATING_SHORT} Formula`,   href: '/admin/hammer-scores/config' },
-        { label: 'Resolve Unknowns', href: gender === 'F' ? '/admin/resolve-unknowns-girls' : '/admin/resolve-unknowns' },
-        { label: 'Home Page Test',        href: '/admin/homepage-test' },
-        { label: 'Admin Profiles',        href: '/admin/admin-profiles' },
-        { label: 'Activity Log',          href: '/admin/activity-log' },
+        { label: 'Tie Resolution',          href: a('/tie-resolution') },
+        { label: 'Tool Audit',              href: a('/tool-audit') },
+        { label: `${RATING_SHORT} Formula`, href: a('/hammer-scores/config') },
+        { label: 'Resolve Unknowns',        href: a('/resolve-unknowns') },
       ]},
       { heading: 'Coming Soon', items: [
         { label: 'Settings',    href: '#', future: true },
@@ -157,11 +176,8 @@ function buildRail(onChatClick?: () => void, onMicrocheckClick?: () => void, gen
       ]},
     ],
   },
-  {
-    id: 'build-health', label: 'Build Health', icon: icons.buildHealth,
-    groups: [{ items: [{ label: 'Admin Build Health', href: '/admin/build-health' }] }],
-  },
-  ]}
+  ]
+}
 
 
 const FLYOUT_EDGE_GAP = 8
@@ -297,7 +313,7 @@ export function AdminIconRail({
   microcheckOpen?:    boolean
 }) {
   const pathname    = usePathname()
-  const { gender }  = useAdminGender()
+  const { gender, side } = useAdminGender()
 
   if (pathname === '/admin/login') return null
 
@@ -319,7 +335,7 @@ export function AdminIconRail({
     >
       {/* Logo */}
       <Link
-        href="/admin"
+        href={adminHref(side)}
         className={`flex items-center justify-center h-12 shrink-0 border-b ${logoHov} transition-colors`}
         style={divider}
       >
@@ -335,7 +351,7 @@ export function AdminIconRail({
 
       {/* Icons — no overflow-y:auto so flyouts aren't clipped */}
       <div className="flex-1 flex flex-col">
-        {buildRail(onChatClick, onMicrocheckClick, gender).map(entry => (
+        {buildUniversal(onChatClick, onMicrocheckClick).map(entry => (
           <RailItem
             key={entry.id}
             entry={entry}
@@ -343,6 +359,10 @@ export function AdminIconRail({
             chatActive={entry.id === 'chat' ? chatOpen : undefined}
             microcheckActive={entry.id === 'microcheck' ? microcheckOpen : undefined}
           />
+        ))}
+        <div className="mx-3 my-1.5 border-t border-white/20" />
+        {buildGender(side).map(entry => (
+          <RailItem key={entry.id} entry={entry} isActive={isActive(entry)} />
         ))}
       </div>
     </aside>

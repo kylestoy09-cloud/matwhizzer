@@ -4,7 +4,7 @@ import { createSupabaseServer } from '@/lib/supabase/server'
 import { getWorkingSeason, parseGender } from '@/lib/season-context'
 import { parseRtfText, parseDateRange } from '@/lib/parseRtf'
 import { matchTournament } from '@/lib/matchTournaments'
-import type { TournamentSummary } from '@/app/admin/import-rtf/types'
+import type { TournamentSummary } from '@/app/admin/[side]/import-rtf/types'
 
 export const dynamic = 'force-dynamic'
 

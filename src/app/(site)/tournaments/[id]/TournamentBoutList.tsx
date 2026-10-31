@@ -97,12 +97,15 @@ export function TournamentBoutList({
   selectedWeight,
   isAdmin,
   isOutside = false,
+  adminSide,
 }: {
   bouts: Bout[]
   tournamentId: string
   selectedWeight: number
   isAdmin: boolean
   isOutside?: boolean
+  // The admin side this tournament's edit links open on
+  adminSide: 'boys' | 'girls'
 }) {
   const sorted = [...bouts].sort((a, b) => {
     const ao = ROUND_ORDER[a.round] ?? 50
@@ -241,7 +244,7 @@ export function TournamentBoutList({
                 {isAdmin && (
                   <td className="px-1 py-1.5 text-right">
                     <Link
-                      href={`/admin/bracket?mode=in-season&tid=${tournamentId}&boutId=${b.id}&w=${selectedWeight}`}
+                      href={`/admin/${adminSide}/bracket?mode=in-season&tid=${tournamentId}&boutId=${b.id}&w=${selectedWeight}`}
                       className="text-slate-300 hover:text-slate-600 text-xs"
                     >
                       ✎

@@ -11,7 +11,7 @@ import { matchSchoolNames, clearSchoolCache } from '@/lib/matchSchools'
 import { matchWrestler, clearWrestlerCache } from '@/lib/matchWrestlers'
 import { boutResultToDb } from '@/lib/parseRtf'
 import { seasonIdForDate } from '@/lib/seasons'
-import type { SchoolOverride, WrestlerOverride } from '@/app/admin/import-rtf/types'
+import type { SchoolOverride, WrestlerOverride } from '@/app/admin/[side]/import-rtf/types'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 300

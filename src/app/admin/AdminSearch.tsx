@@ -14,7 +14,7 @@ type SearchResult = {
 }
 
 export function AdminSearch() {
-  const { gender } = useAdminGender()
+  const { gender, side } = useAdminGender()
   const router = useRouter()
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<SearchResult[]>([])
@@ -67,28 +67,28 @@ export function AdminSearch() {
         name: s.name,
         type: 'school' as const,
         subtitle: 'NJ School',
-        href: `/admin/schools/${s.id}`,
+        href: `/admin/${side}/schools/${s.id}`,
       })),
       ...(oosSchools.data ?? []).map(s => ({
         id: s.id,
         name: s.name,
         type: 'oos-school' as const,
         subtitle: 'OOS School',
-        href: `/admin/oos-schools`,
+        href: `/admin/${side}/oos-schools`,
       })),
       ...(wrestlers.data ?? []).map(w => ({
         id: w.id,
         name: w.name,
         type: 'wrestler' as const,
         subtitle: (w.schools as unknown as { name: string } | null)?.name ?? 'Wrestler',
-        href: `/admin/wrestlers/${w.id}`,
+        href: `/admin/${side}/wrestlers/${w.id}`,
       })),
       ...(oosWrestlers.data ?? []).map(w => ({
         id: w.id,
         name: w.name,
         type: 'oos-wrestler' as const,
         subtitle: (w.oos_schools as unknown as { name: string } | null)?.name ?? 'OOS Wrestler',
-        href: `/admin/oos-wrestlers`,
+        href: `/admin/${side}/oos-wrestlers`,
       })),
     ]
 
@@ -96,7 +96,7 @@ export function AdminSearch() {
     setLoading(false)
     setOpen(built.length > 0)
     setActiveIdx(-1)
-  }, [gender])
+  }, [gender, side])
 
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current)

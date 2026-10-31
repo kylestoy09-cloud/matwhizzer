@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import { createSupabaseServer } from '@/lib/supabase/server'
-import { AdminBackButton } from '../AdminBackButton'
+import { AdminBackButton } from '@/app/admin/AdminBackButton'
 import { DataHealthClient } from './DataHealthClient'
 
 export const dynamic = 'force-dynamic'

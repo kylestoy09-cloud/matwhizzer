@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import { routeAdmin } from '@/lib/admin-routing'
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
@@ -27,7 +28,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/signin', request.url))
   }
 
-  return response
+  return routeAdmin(request, response)
 }
 
 /** Refresh session cookies on the login page so a logged-in admin gets fresh tokens. */

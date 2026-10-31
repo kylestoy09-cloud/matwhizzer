@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
-import { normalizeMsName, type MsWrestlerFlag, type ClubFlag } from '@/app/admin/ms/import/msImportTypes'
+import { normalizeMsName, type MsWrestlerFlag, type ClubFlag } from '@/app/admin/[side]/ms/import/msImportTypes'
 
 export const dynamic = 'force-dynamic'
 

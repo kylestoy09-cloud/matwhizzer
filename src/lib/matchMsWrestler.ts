@@ -1,7 +1,7 @@
 // Fuzzy match a HS wrestler's raw name against ms_wrestlers records.
 // Used during HS import review to surface MS prospect profiles for new wrestlers.
 
-import type { MsPlacementInfo, MsProfileCandidate } from '@/app/admin/import-rtf/types'
+import type { MsPlacementInfo, MsProfileCandidate } from '@/app/admin/[side]/import-rtf/types'
 
 export type MsWrestlerRow = {
   ms_wrestler_id: number

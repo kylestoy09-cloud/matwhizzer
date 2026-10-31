@@ -7,7 +7,7 @@ import { matchSchoolNames, isNjLookalike } from '@/lib/matchSchools'
 import { matchWrestler, oosSchoolHasPrior, clearWrestlerCache, reloadAliases } from '@/lib/matchWrestlers'
 import { matchTournament } from '@/lib/matchTournaments'
 import { findMsProfileCandidates, msSeasonsForHsSeason, type MsWrestlerRow } from '@/lib/matchMsWrestler'
-import type { SchoolFlag, WrestlerFlag, ReviewedTournament, SchoolOverride, TournamentType } from '@/app/admin/import-rtf/types'
+import type { SchoolFlag, WrestlerFlag, ReviewedTournament, SchoolOverride, TournamentType } from '@/app/admin/[side]/import-rtf/types'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60

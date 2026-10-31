@@ -1,41 +1,63 @@
 'use client'
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
+import { createContext, useContext, useState, type ReactNode } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import {
+  ADMIN_SIDE_COOKIE, genderOfSide, sideFromPath, sideOfGender, swapSidePath, adminHref,
+  type AdminSide,
+} from '@/lib/admin-side'
 
 export type AdminGender = 'M' | 'F'
 
 type AdminGenderContextType = {
   gender: AdminGender
+  side: AdminSide
+  // On a side page the address decides the gender. On a universal page it is the
+  // side last visited; setGender there just switches which side the panel links to.
   setGender: (g: AdminGender) => void
-  // false until the saved choice has been read; gender is 'M' until then
+  // false until the gender is known; gender is 'M' until then
   loaded: boolean
 }
 
 const AdminGenderContext = createContext<AdminGenderContextType>({
   gender: 'M',
+  side: 'boys',
   setGender: () => {},
   loaded: false,
 })
 
-const STORAGE_KEY = 'mw_admin_gender'
+function rememberSide(side: AdminSide) {
+  document.cookie = `${ADMIN_SIDE_COOKIE}=${side};path=/;max-age=${60 * 60 * 24 * 365};samesite=lax`
+}
 
-export function AdminGenderProvider({ children }: { children: ReactNode }) {
-  const [gender, setGenderState] = useState<AdminGender>('M')
-  const [loaded, setLoaded] = useState(false)
+export function AdminGenderProvider({
+  children,
+  lastSide,
+}: {
+  children: ReactNode
+  // The side remembered in the cookie, read by the server layout
+  lastSide: AdminSide | null
+}) {
+  const pathname = usePathname()
+  const router = useRouter()
+  const pathSide = sideFromPath(pathname)
+  const [rememberedSide, setRememberedSide] = useState<AdminSide>(lastSide ?? 'boys')
 
-  useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY)
-    if (stored === 'M' || stored === 'F') setGenderState(stored)
-    setLoaded(true)
-  }, [])
+  // Visiting a side makes it the remembered one
+  if (pathSide && pathSide !== rememberedSide) setRememberedSide(pathSide)
+
+  const side = pathSide ?? rememberedSide
 
   function setGender(g: AdminGender) {
-    setGenderState(g)
-    localStorage.setItem(STORAGE_KEY, g)
+    const to = sideOfGender(g)
+    rememberSide(to)
+    setRememberedSide(to)
+    if (pathSide && pathSide !== to) router.push(swapSidePath(pathname, to))
+    else if (!pathSide && pathname === '/admin') router.push(adminHref(to))
   }
 
   return (
-    <AdminGenderContext.Provider value={{ gender, setGender, loaded }}>
+    <AdminGenderContext.Provider value={{ gender: genderOfSide(side), side, setGender, loaded: true }}>
       {children}
     </AdminGenderContext.Provider>
   )

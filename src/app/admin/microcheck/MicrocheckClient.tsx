@@ -310,7 +310,7 @@ export function MicrocheckClient() {
               Match wrestlers in the Roster Importer, then come back and tap Done.
             </p>
             <a
-              href={task.gender === 'F' ? '/admin/roster-grade-import-girls' : '/admin/roster-grade-import'}
+              href={task.gender === 'F' ? '/admin/girls/roster-grade-import' : '/admin/boys/roster-grade-import'}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-700 hover:text-blue-900"

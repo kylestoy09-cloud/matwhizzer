@@ -438,7 +438,7 @@ export function TournamentPageClient({
             <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Team Scores</p>
             {isAdmin && (
               <Link
-                href={`/admin/team-scores?tournament=${encodeURIComponent(tournament.name)}`}
+                href={`/admin/${tournament.gender === 'F' ? 'girls' : 'boys'}/team-scores?tournament=${encodeURIComponent(tournament.name)}`}
                 className="text-xs font-semibold text-slate-500 hover:text-slate-900 border border-slate-300 px-2.5 py-1 hover:border-slate-500 transition-colors"
               >
                 {hasScores ? 'Edit scores' : '+ Import scores'}
@@ -837,6 +837,7 @@ export function TournamentPageClient({
               selectedWeight={selectedWeight}
               isAdmin={isAdmin}
               isOutside={isOutside}
+              adminSide={tournament.gender === 'F' ? 'girls' : 'boys'}
             />
           )}
         </>

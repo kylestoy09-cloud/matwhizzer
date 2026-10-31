@@ -11,7 +11,7 @@ import { matchSchoolNames, clearSchoolCache } from '@/lib/matchSchools'
 import { clearWrestlerCache } from '@/lib/matchWrestlers'
 import { matchTournament } from '@/lib/matchTournaments'
 import { seasonIdForDate } from '@/lib/seasons'
-import type { SchoolFlag, WrestlerFlag } from '@/app/admin/import-rtf/types'
+import type { SchoolFlag, WrestlerFlag } from '@/app/admin/[side]/import-rtf/types'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60

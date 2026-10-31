@@ -1,39 +1,28 @@
-import { redirect } from 'next/navigation'
-import { createSupabaseServer } from '@/lib/supabase/server'
-import { createSupabaseAdmin } from '@/lib/supabase/service'
+import Link from 'next/link'
 
-export const dynamic = 'force-dynamic'
-
-type SeasonConfig = {
-  preseason_start: string
-  season_start: string
-  postseason_start: string
-  season_end: string
-  postseason_end: string
-}
-
-function getDashboard(cfg: SeasonConfig | null): string {
-  if (!cfg) return 'offseason'
-  const today = new Date().toISOString().slice(0, 10)
-
-  if (today >= cfg.postseason_start) return 'postseason'  // postseason takes priority from Jan 25
-  if (today >= cfg.season_start)     return 'season'
-  if (today >= cfg.preseason_start)  return 'preseason'
-  return 'offseason'
-}
-
-export default async function AdminDashboard() {
-  const supabase = await createSupabaseServer()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) redirect('/admin/login')
-
-  const db = createSupabaseAdmin()
-  const { data: seasonCfg } = await db
-    .from('admin_season_config')
-    .select('preseason_start, season_start, postseason_start, season_end, postseason_end')
-    .eq('is_current', true)
-    .maybeSingle()
-
-  const dashboard = getDashboard(seasonCfg as SeasonConfig | null)
-  redirect(`/admin/${dashboard}`)
+// /admin with no side remembered yet: pick one, the same way the home page asks.
+// Once a side has been visited the middleware sends /admin straight there.
+export default function AdminSidePicker() {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-3rem)] px-4">
+      <h1 className="text-2xl font-bold text-slate-900">MatWhizzer Admin</h1>
+      <p className="text-sm text-slate-500 mt-1">Which side are you working on?</p>
+      <div className="flex gap-5 mt-8">
+        <Link
+          href="/admin/boys"
+          className="flex items-center justify-center gap-2 w-36 py-3 bg-blue-600 text-white font-bold text-lg border-2 border-blue-600 rounded-full hover:bg-blue-700 hover:border-blue-700 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+        >
+          Boys
+          <span aria-hidden="true">→</span>
+        </Link>
+        <Link
+          href="/admin/girls"
+          className="flex items-center justify-center gap-2 w-36 py-3 bg-rose-800 text-white font-bold text-lg border-2 border-rose-800 rounded-full hover:bg-rose-900 hover:border-rose-900 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-800 focus-visible:ring-offset-2"
+        >
+          Girls
+          <span aria-hidden="true">→</span>
+        </Link>
+      </div>
+    </div>
+  )
 }

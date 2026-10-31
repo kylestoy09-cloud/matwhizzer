@@ -23,7 +23,7 @@ import {
   type WrestlerOverride,
   type WrestlerKey,
   makeWrestlerKey,
-} from '@/app/admin/import/types'
+} from '@/app/admin/[side]/import/types'
 
 export const dynamic = 'force-dynamic'
 
