@@ -267,9 +267,9 @@ export function MsImportClient({ preselectedTournamentId }: { preselectedTournam
   const [savedTournamentName, setSavedTournamentName] = useState('')
 
   useEffect(() => {
-    fetch('/api/admin/ms/tournaments')
+    fetch(`/api/admin/ms/tournaments?gender=${sideGender}`)
       .then(r => r.json())
-      .then(d => { setTournaments((d.tournaments ?? []).filter((t: { gender: string }) => t.gender === sideGender || t.gender === 'MF')); setLoadingTournaments(false) })
+      .then(d => { setTournaments(d.tournaments ?? []); setLoadingTournaments(false) })
       .catch(() => setLoadingTournaments(false))
   }, [sideGender])
 

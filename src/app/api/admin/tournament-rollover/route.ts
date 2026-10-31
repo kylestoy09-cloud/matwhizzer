@@ -84,7 +84,11 @@ export async function GET(req: NextRequest) {
     ...((existingGirls ?? []) as unknown as { name: string }[]).map(r => r.name.toLowerCase()),
   ])
 
-  const rows = allTournaments
+  // ?gender=M|F: one side's tournaments
+  const genderParam = req.nextUrl.searchParams.get('gender')
+  const rows = genderParam === 'M' || genderParam === 'F'
+    ? allTournaments.filter(t => (t.gender ?? 'M') === genderParam)
+    : allTournaments
 
   return NextResponse.json({
     migrationPending,

@@ -322,14 +322,14 @@ export function MsTournamentsClient() {
 
   useEffect(() => {
     Promise.all([
-      fetch('/api/admin/ms/tournaments').then(r => r.json()),
+      fetch(`/api/admin/ms/tournaments?gender=${sideGender}`).then(r => r.json()),
       fetch('/api/admin/ms/tiers').then(r => r.json()),
     ]).then(([td, tierd]) => {
       setTournaments(td.tournaments ?? [])
       setTiers(tierd.tiers ?? [])
       setLoading(false)
     }).catch(() => setLoading(false))
-  }, [])
+  }, [sideGender])
 
   async function handleAdd() {
     setAddSaving(true); setAddError(null)
@@ -374,7 +374,6 @@ export function MsTournamentsClient() {
 
   const filtered = tournaments.filter(t => {
     if (filterSeason !== 'all' && t.season !== filterSeason) return false
-    if (t.gender !== sideGender && t.gender !== 'MF') return false
     if (filterGender !== 'all' && t.gender !== filterGender) return false
     return true
   })

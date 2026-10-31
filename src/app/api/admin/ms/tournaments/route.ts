@@ -17,12 +17,14 @@ async function authCheck() {
   return user
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   const user = await authCheck()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
+  // ?gender=M|F: that gender's events plus combined (MF) events
+  const g = req.nextUrl.searchParams.get('gender')
   const client = serviceClient()
-  const { data, error } = await client
+  let query = client
     .from('ms_tournaments')
     .select(`
       id, name, season, date, gender, notes, created_at,
@@ -31,6 +33,8 @@ export async function GET() {
     `)
     .order('season', { ascending: false })
     .order('date', { ascending: false })
+  if (g === 'M' || g === 'F') query = query.in('gender', [g, 'MF'])
+  const { data, error } = await query
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
 

@@ -29,6 +29,9 @@ export async function GET(req: NextRequest) {
     .order('name', { ascending: true })
 
   if (season) query = query.eq('season', season)
+  // ?gender=M|F: that gender's events plus combined (MF) events
+  const g = req.nextUrl.searchParams.get('gender')
+  if (g === 'M' || g === 'F') query = query.in('gender', [g, 'MF'])
 
   const { data, error } = await query
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })

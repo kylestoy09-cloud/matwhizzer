@@ -112,11 +112,11 @@ export function OffseasonTournamentsClient() {
   const [deleteError, setDeleteError] = useState<string | null>(null)
 
   useEffect(() => {
-    fetch('/api/admin/nonnjsiaa/offseason')
+    fetch(`/api/admin/nonnjsiaa/offseason?gender=${sideGender}`)
       .then(r => r.json())
       .then(d => { setTournaments(d.tournaments ?? []); setLoading(false) })
       .catch(() => setLoading(false))
-  }, [])
+  }, [sideGender])
 
   async function handleCreate(fields: Omit<Tournament, 'id' | 'placement_count'>) {
     setSaving(true); setFormError(null)
@@ -154,7 +154,7 @@ export function OffseasonTournamentsClient() {
     setTournaments(prev => prev.filter(t => t.id !== id))
   }
 
-  const mine = tournaments.filter(t => t.gender === sideGender || t.gender === 'MF')
+  const mine = tournaments  // the API returns this side's events plus combined ones
   const bySeason = new Map<string, Tournament[]>()
   for (const t of mine) {
     if (!bySeason.has(t.season)) bySeason.set(t.season, [])
