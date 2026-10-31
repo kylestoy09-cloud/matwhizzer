@@ -14,12 +14,12 @@
 
 **Tables affected:** `admin_tasks`, `admin_tool_registry`
 
-**PENDING** — run in the Supabase SQL editor
+**APPLIED** — 2026-10-31, Supabase SQL editor
 
 **Reversible?** Yes:
 - delete the two `tournament_schedule` tasks and move the later steps back up one
 - set `tournament_checklist` to `boys`, `/admin/boys/tournament-checklist`
-**Verified?** No — pending
+**Verified?** Yes — 2026-10-31: six preseason steps per gender, Enter Tournament Schedule at 3, Roll Over Tournaments at 4; checklist row is both
 
 ---
 
@@ -40,12 +40,12 @@
 
 **Tables affected:** `ranking_published`, `ranking_computed_variants`, `ranking_editorial`
 
-**PENDING** — run in the Supabase SQL editor, before the deploy that reads the column
+**APPLIED** — 2026-10-31, Supabase SQL editor
 
 **Reversible?** Partly:
 - the deleted rows are in `docs/migrations/backups/20261031_ranking_rows_deleted.json.gz`
 - the gender columns can be dropped
-**Verified?** No — pending
+**Verified?** Yes — 2026-10-31: published 782 boys / 562 girls, computed 783 / 562, editorial boys
 
 ---
 
