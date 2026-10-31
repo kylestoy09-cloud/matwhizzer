@@ -2,10 +2,11 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import { useSeasons } from '@/components/SeasonsProvider'
-import { useAdminGender } from '@/components/admin/AdminGenderContext'
 
 type SchoolProfileTask = {
   task_type:   'school_profile'
+  task_key:    string
+  group_label: string
   school_id:   number
   school_name: string
   gender:      'M' | 'F'
@@ -17,6 +18,8 @@ type SchoolProfileTask = {
 
 type TieResolutionTask = {
   task_type:       'tie_resolution'
+  task_key:        string
+  group_label:     string
   task_id:         string
   entity_id:       string
   gender:          'M' | 'F'
@@ -48,7 +51,8 @@ const FIELD_LABELS: Record<string, string> = {
 
 export function MicrocheckClient() {
   const { label: seasonLabelOf } = useSeasons()
-  const { gender } = useAdminGender()
+  // Tasks passed over with "Skip for now" this visit; the queue covers boys and girls
+  const [skipped,        setSkipped]        = useState<string[]>([])
   const [task,           setTask]           = useState<TaskInfo | null | 'idle' | 'loading' | 'done'>('idle')
   const [value,          setValue]          = useState('')
   const [submitting,     setSubmitting]     = useState(false)
@@ -57,12 +61,12 @@ export function MicrocheckClient() {
   const [showScore,      setShowScore]      = useState(false)
   const [scoreLoading,   setScoreLoading]   = useState(false)
 
-  const fetchNext = useCallback(async () => {
+  const fetchNext = useCallback(async (skip: string[] = []) => {
     setTask('loading')
     setError(null)
     setValue('')
     try {
-      const res  = await fetch(`/api/admin/microcheck/next?gender=${gender}`)
+      const res  = await fetch(`/api/admin/microcheck/next?skip=${encodeURIComponent(skip.join(','))}`)
       const data = await res.json()
       if (data.error) { setError(data.error); setTask(null); return }
       setTask(data.task ?? 'done')
@@ -70,7 +74,15 @@ export function MicrocheckClient() {
       setError('Network error — try again')
       setTask(null)
     }
-  }, [gender])
+  }, [])
+
+  function skipTask() {
+    if (typeof task !== 'object' || task === null) return
+    const key = task.task_type === 'tie_resolution' ? `queue:${task.task_id}` : `${task.task_key}:${task.school_id}`
+    const next = [...skipped, key]
+    setSkipped(next)
+    fetchNext(next)
+  }
 
   async function submitTie(winner: 'team1' | 'team2') {
     if (typeof task !== 'object' || task === null || task.task_type !== 'tie_resolution') return
@@ -110,6 +122,7 @@ export function MicrocheckClient() {
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({
           task_type: 'school_profile',
+          task_key:  task.task_key,
           school_id: task.school_id,
           gender:    task.gender,
           field:     task.field,
@@ -153,7 +166,7 @@ export function MicrocheckClient() {
         <h1 className="text-3xl font-bold text-slate-900 mb-2">Microcheck</h1>
         <p className="text-slate-500 mb-10">Chip away at open tasks one at a time.</p>
         <button
-          onClick={fetchNext}
+          onClick={() => fetchNext(skipped)}
           className="px-8 py-4 rounded-xl bg-slate-900 text-white text-base font-semibold active:scale-95 transition-transform mb-6"
         >
           Check me in
@@ -187,7 +200,7 @@ export function MicrocheckClient() {
         <h1 className="text-2xl font-bold text-slate-900 mb-2">All caught up</h1>
         <p className="text-slate-500 mb-8">No more open tasks right now.</p>
         <button
-          onClick={fetchNext}
+          onClick={() => fetchNext(skipped)}
           className="px-5 py-2 rounded-lg bg-slate-900 text-white text-sm font-medium"
         >
           Check again
@@ -203,7 +216,7 @@ export function MicrocheckClient() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 px-6 text-center">
         <p className="text-red-600 text-sm mb-4">{error ?? 'Something went wrong'}</p>
-        <button onClick={fetchNext} className="px-4 py-2 rounded-lg bg-slate-200 text-sm">Retry</button>
+        <button onClick={() => fetchNext(skipped)} className="px-4 py-2 rounded-lg bg-slate-200 text-sm">Retry</button>
       </div>
     )
   }
@@ -211,7 +224,7 @@ export function MicrocheckClient() {
   // ── Tie resolution card ────────────────────────────────────────────────────
 
   if (task.task_type === 'tie_resolution') {
-    const gLabel  = task.gender === 'F' ? 'Girls' : 'Boys'
+    const gLabel  = task.group_label
     const dateStr = new Date(task.meet_date + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
     const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(`${task.team1_name} ${gLabel} wrestling schedule results`)}`
 
@@ -257,7 +270,7 @@ export function MicrocheckClient() {
             </button>
             <button
               disabled={submitting}
-              onClick={fetchNext}
+              onClick={skipTask}
               className="w-full py-4 rounded-xl bg-slate-100 text-slate-600 text-base font-medium disabled:opacity-40 active:scale-95 transition-transform"
             >
               Skip for now
@@ -282,7 +295,7 @@ export function MicrocheckClient() {
 
         {/* Tag line */}
         <div className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">
-          Boys · {fieldTag}
+          {task.group_label} · {fieldTag}
         </div>
 
         {/* School name */}

@@ -81,6 +81,10 @@ function buildUniversal(side: AdminSide, onChatClick?: () => void, onMicrocheckC
       { label: 'Page Layout',    href: '/admin/page-layout' },
       { label: 'Home Page Test', href: '/admin/homepage-test' },
     ]},
+    { heading: 'Microcheck', items: [
+      { label: 'Task Order',   href: '/admin/microcheck/priorities' },
+      { label: 'Missing Data', href: '/admin/microcheck/tracker' },
+    ]},
     { heading: `${sideName} side`, items: [
       { label: `${RATING_SHORT} Formula`, href: adminHref(side, '/hammer-scores/config') },
       { label: 'Tool Audit',              href: adminHref(side, '/tool-audit') },

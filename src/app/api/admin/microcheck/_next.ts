@@ -1,116 +1,119 @@
-// The next microcheck task for a gender. Used by /next and by /complete (which
-// hands back the following task), so both apply the same rules: this gender's
-// NJ programs, minus schools inactive in the gender's working season, school
-// profile tasks and queued tasks in microcheck_task_priority order.
+// The next microcheck task, from one queue covering boys and girls. Used by /next and
+// by /complete (which hands back the following task), so both apply the same rules:
+//   1. school + check pairs pushed to the front from the Missing Data page, oldest first
+//   2. then each enabled task type in the Task Order page's order ("do next" pins first);
+//      within a type, schools A→Z (only the type's chosen schools, when it has a list)
+// A task handed out is held for that person for 10 minutes, so the next person who
+// asks gets the next task.
 
-import { getNewestSeason, getWorkingSeason } from '@/lib/season-context'
 import type { createSupabaseAdmin } from '@/lib/supabase/service'
-import { findNextTask } from './_engine'
+import { FIELD_DEFS, type TaskInfo } from './_engine'
+import { loadWorkload, typeGenderLabel, type QueueItem, type TaskType, type Workload } from './_workload'
 
 type Db = ReturnType<typeof createSupabaseAdmin>
 
-export async function nextMicrocheckTask(db: Db, gender: 'M' | 'F') {
-  const programTable = gender === 'F' ? 'girls_schools' : 'boys_schools'
-  const coachTable   = gender === 'F' ? 'girls_coaches' : 'boys_coaches'
-  // A school marked inactive in a past season may be back; only this gender's working season counts
-  const working      = await getWorkingSeason(gender)
+const HOLD_MINUTES = 10
 
-  const [gsRes, schoolsRes, logRes, flagRes, inactiveRes] = await Promise.all([
-    db.from(programTable).select('school_id, display_name'),
-    db.from('schools')
-      .select('id, display_name, address, website_url, twitter_handle, facebook_url, ad_name, ad_email')
-      .eq('is_nj', true)
-      .order('display_name'),
-    db.from('microcheck_task_log')
-      .select('school_id, field')
-      .eq('gender', gender),
-    db.from('microcheck_roster_flags')
-      .select('school_id')
-      .eq('gender', gender)
-      .eq('resolved', false),
-    db.from('inactive_school_seasons')
-      .select('school_id')
-      .eq('gender', gender)
-      .eq('season_id', working.id),
-  ])
+export const claimKeyFor = (task: TaskInfo) =>
+  task.task_type === 'tie_resolution' ? `queue:${task.task_id}` : `${task.task_key}:${task.school_id}`
 
-  if (gsRes.error)       throw new Error(`${programTable}: ${gsRes.error.message}`)
-  if (schoolsRes.error)  throw new Error(`schools: ${schoolsRes.error.message}`)
-  if (logRes.error)      throw new Error(`task_log: ${logRes.error.message}`)
-  if (flagRes.error)     throw new Error(`roster_flags: ${flagRes.error.message}`)
-  if (inactiveRes.error) throw new Error(`inactive_seasons: ${inactiveRes.error.message}`)
+function schoolTask(w: Workload, t: TaskType, schoolId: number): TaskInfo {
+  const def = FIELD_DEFS[t.field!]
+  const school = w.schools.find(s => s.id === schoolId)!
+  return {
+    task_type:   'school_profile',
+    task_key:    t.key,
+    group_label: typeGenderLabel(t.gender),
+    school_id:   schoolId,
+    school_name: w.nameFor(t, schoolId),
+    // Shared data is logged under the school's boys program, or girls when it has none
+    gender:      t.gender ?? (school.boys ? 'M' : 'F'),
+    field:       t.field!,
+    label:       def.label,
+    input_type:  def.input_type,
+    placeholder: def.placeholder,
+  }
+}
 
-  const programSchools  = gsRes.data ?? []
-  const programIdSet    = new Set(programSchools.map(ps => ps.school_id))
-  const programNameMap  = new Map(programSchools.map(ps => [ps.school_id, ps.display_name]))
-  const inactiveIds     = new Set((inactiveRes.data ?? []).map(r => r.school_id))
+function queueTask(t: TaskType, q: QueueItem): TaskInfo {
+  const m = q.metadata
+  return {
+    task_type:       'tie_resolution',
+    task_key:        t.key,
+    group_label:     typeGenderLabel(t.gender),
+    task_id:         q.id,
+    entity_id:       q.entity_id,
+    gender:          t.gender ?? 'M',
+    team1_school_id: m.team1_school_id as number,
+    team2_school_id: m.team2_school_id as number,
+    team1_name:      m.team1_name as string,
+    team2_name:      m.team2_name as string,
+    score:           m.score as number,
+    meet_date:       m.meet_date as string,
+    season_id:       m.season_id as number,
+    dual_table:      (m.table as string) ?? 'dual_meets',
+  }
+}
 
-  // Filter to this gender's active programs, merge in program display names, re-sort
-  const schools = (schoolsRes.data ?? [])
-    .filter(s => programIdSet.has(s.id) && !inactiveIds.has(s.id))
-    .map(s => ({ ...s, display_name: programNameMap.get(s.id) ?? s.display_name }))
-    .sort((a, b) => a.display_name.localeCompare(b.display_name))
-
-  const programSchoolIds = schools.map(s => s.id)
-
-  // Coaches
-  let coachRows: { school_id: number; email: string | null }[] = []
-  const coachRes = await db.from(coachTable)
-    .select('school_id, email')
-    .eq('season_id', (await getNewestSeason()).id)
-    .eq('is_active', true)
-    .in('school_id', programSchoolIds)
-  if (!coachRes.error) coachRows = coachRes.data ?? []
-
-  const loggedSet  = new Set((logRes.data ?? []).map(r => `${r.school_id}_${r.field}`))
-  const coachMap   = new Map(coachRows.map(c => [c.school_id, { email: c.email }]))
-  const rosterSet  = programIdSet  // every program school needs a roster/grade review
-  const flaggedSet = new Set((flagRes.data ?? []).map(r => r.school_id))
-
-  // ── Read priority order, fall back to default if table missing ───────────────
-  const { data: prioRows } = await db
-    .from('microcheck_task_priority')
-    .select('task_type, sort_order, enabled')
-    .eq('enabled', true)
-    .order('sort_order')
-  const orderedTypes = (prioRows ?? []).map(p => p.task_type)
-  if (orderedTypes.length === 0) orderedTypes.push('school_profile', 'tie_resolution')
-
-  const profileTask = findNextTask(schools, loggedSet, coachMap, rosterSet, flaggedSet, gender)
-
-  for (const taskType of orderedTypes) {
-    if (taskType === 'school_profile') {
-      if (profileTask) return profileTask
-    } else {
-      const { data: queueTask } = await db
-        .from('microcheck_tasks')
-        .select('id, task_type, entity_id, gender, metadata')
-        .eq('status', 'pending')
-        .eq('task_type', taskType)
-        .eq('gender', gender)
-        .order('priority', { ascending: false })
-        .order('created_at', { ascending: true })
-        .limit(1)
-        .maybeSingle()
-      if (queueTask) {
-        const m = queueTask.metadata as Record<string, unknown>
-        return {
-          task_type:       queueTask.task_type,
-          task_id:         queueTask.id,
-          entity_id:       queueTask.entity_id,
-          gender,
-          team1_school_id: m.team1_school_id as number,
-          team2_school_id: m.team2_school_id as number,
-          team1_name:      m.team1_name as string,
-          team2_name:      m.team2_name as string,
-          score:           m.score as number,
-          meet_date:       m.meet_date as string,
-          season_id:       m.season_id as number,
-          dual_table:      (m.table as string) ?? 'dual_meets',
-        }
-      }
+/** Every task still to do, in dealing order. */
+function* candidates(w: Workload): Generator<TaskInfo> {
+  const typeByKey = new Map(w.types.map(t => [t.key, t]))
+  for (const f of w.focus) {
+    const t = typeByKey.get(f.task_key)
+    if (t?.enabled && t.source === 'school_field' && w.status(t.key, f.school_id) === 'missing') yield schoolTask(w, t, f.school_id)
+  }
+  for (const t of w.types) {
+    if (!t.enabled) continue
+    if (t.source === 'queue') {
+      for (const q of w.queue.get(t.key) ?? []) yield queueTask(t, q)
+      continue
+    }
+    const only = t.school_ids?.length ? new Set(t.school_ids) : null
+    for (const s of w.schools) {
+      if (only && !only.has(s.id)) continue
+      if (w.status(t.key, s.id) === 'missing') yield schoolTask(w, t, s.id)
     }
   }
+}
 
+// skip: tasks this person passed over this session; their holds are released
+export async function nextMicrocheckTask(db: Db, userId: string, skip: Set<string> = new Set()): Promise<TaskInfo | null> {
+  if (skip.size) await db.from('microcheck_claims').delete().eq('claimed_by', userId).in('claim_key', [...skip])
+
+  // Holds older than the window are released
+  const cutoff = new Date(Date.now() - HOLD_MINUTES * 60_000).toISOString()
+  const { error: relErr } = await db.from('microcheck_claims').delete().lt('claimed_at', cutoff)
+  if (relErr) throw new Error(`microcheck_claims: ${relErr.message}`)
+
+  const [w, { data: claims, error: claimErr }] = await Promise.all([
+    loadWorkload(db),
+    db.from('microcheck_claims').select('claim_key, claimed_by'),
+  ])
+  if (claimErr) throw new Error(`microcheck_claims: ${claimErr.message}`)
+  const heldBy = new Map((claims ?? []).map(c => [c.claim_key as string, c.claimed_by as string]))
+
+  for (const task of candidates(w)) {
+    const key = claimKeyFor(task)
+    if (skip.has(key)) continue
+    const holder = heldBy.get(key)
+    if (holder && holder !== userId) continue
+    if (!holder) {
+      // Someone may have taken it since the read: the insert decides
+      const { error } = await db.from('microcheck_claims').insert({ claim_key: key, claimed_by: userId })
+      if (error) {
+        if (error.code === '23505') continue
+        throw new Error(`microcheck_claims: ${error.message}`)
+      }
+    } else {
+      await db.from('microcheck_claims').update({ claimed_at: new Date().toISOString() }).eq('claim_key', key)
+    }
+    return task
+  }
   return null
+}
+
+/** Done with a task: release its hold and drop it from the front-of-queue list. */
+export async function releaseTask(db: Db, claimKey: string, taskKey?: string, schoolId?: number) {
+  await db.from('microcheck_claims').delete().eq('claim_key', claimKey)
+  if (taskKey && schoolId != null) await db.from('microcheck_focus').delete().eq('task_key', taskKey).eq('school_id', schoolId)
 }

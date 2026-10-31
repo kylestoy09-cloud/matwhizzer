@@ -1,7 +1,6 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
-import { useAdminGender } from '@/components/admin/AdminGenderContext'
 
 // Each gender's roster import has its own API routes
 const rosterApi = (g: 'M' | 'F') => g === 'F' ? '/api/admin/roster-grade-import-girls' : '/api/admin/roster-grade-import'
@@ -39,6 +38,9 @@ function topCandidates(wrestler: LiveWrestler, entries: ImportEntry[], n = 3) {
 }
 
 type TaskInfo = {
+  task_type:   'school_profile'
+  task_key:    string
+  group_label: string        // Boys / Girls / Both programs
   school_id:   number
   school_name: string
   gender:      'M' | 'F'
@@ -48,12 +50,26 @@ type TaskInfo = {
   placeholder: string
 }
 
+type TieTask = {
+  task_type:   'tie_resolution'
+  task_key:    string
+  group_label: string
+  task_id:     string
+  entity_id:   string
+  gender:      'M' | 'F'
+  team1_name:  string
+  team2_name:  string
+  score:       number
+  meet_date:   string
+  dual_table:  string
+}
+
 type ScoreEntry    = { admin_id: string; name: string; completed: number }
 type DailyKing     = { date: string; admin_id: string; name: string; count: number }
 type MonthlyStanding = { admin_id: string; name: string; days: number; totalTasks: number }
 type MonthlyRoyal  = { month: string; admin_id: string; name: string; days: number; standings: MonthlyStanding[] }
-type CantFindEntry = { school_id: number; school_name: string; field: string; completed_at: string; admin_name: string }
-type FlaggedEntry  = { school_id: number; school_name: string; suspect_count: number; resolved: boolean }
+type CantFindEntry = { school_id: number; school_name: string; field: string; gender: 'M' | 'F'; completed_at: string; admin_name: string }
+type FlaggedEntry  = { school_id: number; school_name: string; gender: 'M' | 'F'; suspect_count: number; resolved: boolean }
 
 type ImportEntry = {
   id:             string
@@ -108,13 +124,15 @@ function SearchButton({ field, schoolName }: { field: string; schoolName: string
   )
 }
 
-type View = 'home' | 'task' | 'done'
+type View = 'home' | 'task' | 'tie' | 'done'
 
 export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
-  const { gender } = useAdminGender()
   const [tab,          setTab]          = useState<'tasks' | 'cantfind' | 'flagged'>('tasks')
   const [view,         setView]         = useState<View>('home')
   const [task,         setTask]         = useState<TaskInfo | null>(null)
+  const [tie,          setTie]          = useState<TieTask | null>(null)
+  // Tasks passed over this session; the queue covers boys and girls
+  const [skipped,      setSkipped]      = useState<string[]>([])
   const [value,        setValue]        = useState('')
   const [loading,      setLoading]      = useState(false)
   const [submitting,   setSubmitting]   = useState(false)
@@ -209,17 +227,48 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
       .finally(() => setRosterLoading(false))
   }, [task])
 
-  async function getTask() {
+  function showTask(t: TaskInfo | TieTask | null) {
+    setValue('')
+    if (!t) { setView('done'); setTask(null); setTie(null); return }
+    if (t.task_type === 'tie_resolution') { setTie(t); setTask(null); setView('tie'); return }
+    setTask(t); setTie(null); setView('task')
+  }
+
+  function skipCurrent() {
+    const key = tie ? `queue:${tie.task_id}` : task ? `${task.task_key}:${task.school_id}` : null
+    if (!key) return
+    const next = [...skipped, key]
+    setSkipped(next)
+    getTask(next)
+  }
+
+  async function submitTie(winner: 'team1' | 'team2') {
+    if (!tie) return
+    setSubmitting(true)
+    setError(null)
+    try {
+      const res = await fetch('/api/admin/microcheck/complete', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ task_type: 'tie_resolution', task_id: tie.task_id, entity_id: tie.entity_id, gender: tie.gender, winner, dual_table: tie.dual_table }),
+      })
+      const data = await res.json()
+      if (data.error) { setError(data.error); return }
+      await loadScore()
+      showTask(data.task)
+    } catch { setError('Network error') }
+    finally { setSubmitting(false) }
+  }
+
+  async function getTask(skip: string[] = skipped) {
     setLoading(true)
     setError(null)
     setValue('')
     try {
-      const res = await fetch(`/api/admin/microcheck/next?gender=${gender}`)
+      const res = await fetch(`/api/admin/microcheck/next?skip=${encodeURIComponent(skip.join(','))}`)
       const data = await res.json()
       if (data.error) { setError(data.error); return }
-      if (!data.task) { setView('done'); setTask(null); return }
-      setTask(data.task)
-      setView('task')
+      showTask(data.task)
     } catch { setError('Network error') }
     finally { setLoading(false) }
   }
@@ -270,6 +319,7 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({
+          task_key:  task.task_key,
           school_id: task.school_id,
           gender:    task.gender,
           field:     task.field,
@@ -280,20 +330,18 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
       const data = await res.json()
       if (data.error) { setError(data.error); return }
       await loadScore()
-      if (!data.task) { setView('done'); setTask(null); return }
-      setTask(data.task)
-      setValue('')
+      showTask(data.task)
     } catch { setError('Network error') }
     finally { setSubmitting(false) }
   }
 
-  async function resolveFlag(school_id: number, resolved: boolean) {
+  async function resolveFlag(school_id: number, gender: 'M' | 'F', resolved: boolean) {
     await fetch('/api/admin/microcheck/flagged', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ school_id, resolved }),
+      body: JSON.stringify({ school_id, gender, resolved }),
     })
-    setFlagged(prev => prev.map(f => f.school_id === school_id ? { ...f, resolved } : f))
+    setFlagged(prev => prev.map(f => f.school_id === school_id && f.gender === gender ? { ...f, resolved } : f))
   }
 
   function setDecision(wrestlerId: string, decision: PendingDecision | null) {
@@ -343,12 +391,21 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
                 {/* CHECK ME button — top */}
                 <div className="px-3 pt-3 pb-1 shrink-0">
                   {error && <p className="text-xs text-red-600 mb-1">{error}</p>}
-                  <button disabled={loading} onClick={getTask}
+                  <button disabled={loading} onClick={() => getTask()}
                     className="w-full py-3 rounded-xl text-sm font-black tracking-wide disabled:opacity-40"
                     style={{ background: '#5c3317', color: '#f5ddb0' }}>
                     {loading ? '🚽 hold on…' : '💩 CHECK ME'}
                   </button>
                   <div className="flex justify-end mt-1">
+                    <a
+                      href="/admin/microcheck/tracker"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[10px] font-medium hover:underline mr-3"
+                      style={{ color: '#a0714f' }}
+                    >
+                      ▦ Missing data
+                    </a>
                     <a
                       href="/admin/microcheck/priorities"
                       target="_blank"
@@ -391,7 +448,7 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
                 {/* Task header */}
                 <div className="px-4 pt-4 pb-2 shrink-0">
                   <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">
-                    Boys · {FIELD_LABELS[task.field] ?? task.field}
+                    {task.group_label} · {FIELD_LABELS[task.field] ?? task.field}
                   </div>
                   <h2 className="text-lg font-bold text-slate-900 leading-tight">{task.school_name}</h2>
                 </div>
@@ -447,7 +504,49 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
                       Can't Find
                     </button>
                   )}
+                  <button disabled={submitting} onClick={skipCurrent} className="w-full text-xs text-slate-500 hover:text-slate-800 py-1 disabled:opacity-40">
+                    Skip for now
+                  </button>
                   <button onClick={() => { setView('home'); setTask(null) }} className="w-full text-xs text-slate-400 hover:text-slate-600 py-1">
+                    ← Back to leaderboard
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Tie view */}
+            {view === 'tie' && tie && (
+              <div className="flex flex-col h-full">
+                <div className="px-4 pt-4 pb-2 shrink-0">
+                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">
+                    {tie.group_label} · Tie Resolution
+                  </div>
+                  <h2 className="text-lg font-bold text-slate-900 leading-tight">{tie.team1_name} vs {tie.team2_name}</h2>
+                  <p className="text-xs text-slate-500 mt-1">
+                    {new Date(tie.meet_date + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} · tied {tie.score}–{tie.score}
+                  </p>
+                  <a
+                    href={`https://www.google.com/search?q=${encodeURIComponent(`${tie.team1_name} ${tie.group_label} wrestling schedule results`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-blue-600 hover:underline mt-2 inline-block"
+                  >
+                    Search {tie.team1_name} schedule →
+                  </a>
+                </div>
+                <div className="flex-1" />
+                <div className="p-4 border-t border-slate-100 shrink-0 space-y-2">
+                  {error && <p className="text-xs text-red-600">{error}</p>}
+                  <button disabled={submitting} onClick={() => submitTie('team1')} className="w-full py-2.5 rounded-lg bg-slate-900 text-white text-sm font-semibold disabled:opacity-40">
+                    {submitting ? '…' : `${tie.team1_name} won`}
+                  </button>
+                  <button disabled={submitting} onClick={() => submitTie('team2')} className="w-full py-2.5 rounded-lg bg-slate-900 text-white text-sm font-semibold disabled:opacity-40">
+                    {submitting ? '…' : `${tie.team2_name} won`}
+                  </button>
+                  <button disabled={submitting} onClick={skipCurrent} className="w-full text-xs text-slate-500 hover:text-slate-800 py-1 disabled:opacity-40">
+                    Skip for now
+                  </button>
+                  <button onClick={() => { setView('home'); setTie(null) }} className="w-full text-xs text-slate-400 hover:text-slate-600 py-1">
                     ← Back to leaderboard
                   </button>
                 </div>
@@ -463,7 +562,7 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
                   <p className="text-xs text-slate-500">No more open tasks right now.</p>
                 </div>
                 <div className="p-4 border-t border-slate-100 shrink-0 space-y-2">
-                  <button onClick={getTask} className="w-full py-2.5 rounded-lg bg-slate-900 text-white text-sm font-semibold">Check Me</button>
+                  <button onClick={() => getTask()} className="w-full py-2.5 rounded-lg bg-slate-900 text-white text-sm font-semibold">Check Me</button>
                   <button onClick={() => setView('home')} className="w-full text-xs text-slate-400 hover:text-slate-600 py-1">← Back to leaderboard</button>
                 </div>
               </div>
@@ -484,8 +583,8 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
             {!flagLoading && flagged.length > 0 && (
               <div className="space-y-1.5">
                 {flagged.map(f => (
-                  <div key={f.school_id} className="border border-amber-200 bg-amber-50 rounded-lg px-3 py-2">
-                    <p className="text-xs font-semibold text-slate-800">{f.school_name}</p>
+                  <div key={`${f.gender}${f.school_id}`} className="border border-amber-200 bg-amber-50 rounded-lg px-3 py-2">
+                    <p className="text-xs font-semibold text-slate-800">{f.school_name} <span className="font-normal text-slate-500">· {f.gender === 'F' ? 'Girls' : 'Boys'}</span></p>
                     <p className="text-[10px] text-amber-700">{f.suspect_count} wrestler{f.suspect_count !== 1 ? 's' : ''} not in import</p>
                   </div>
                 ))}
@@ -506,7 +605,7 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
                     <div className="flex items-start justify-between gap-2">
                       <div>
                         <p className="text-xs font-semibold text-slate-800">{e.school_name}</p>
-                        <p className="text-xs text-slate-500">{FIELD_LABELS[e.field] ?? e.field}</p>
+                        <p className="text-xs text-slate-500">{FIELD_LABELS[e.field] ?? e.field}{['roster_match', 'coach_name', 'coach_email'].includes(e.field) ? ` · ${e.gender === 'F' ? 'Girls' : 'Boys'}` : ''}</p>
                       </div>
                       <span className="text-[10px] text-slate-400 shrink-0">{new Date(e.completed_at).toLocaleDateString()}</span>
                     </div>

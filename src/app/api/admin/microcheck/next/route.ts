@@ -5,6 +5,7 @@ import { nextMicrocheckTask }   from '../_next'
 
 export const dynamic = 'force-dynamic'
 
+// ?skip=<claim key>,... — tasks passed over this session
 export async function GET(req: NextRequest) {
   const userSb = await createSupabaseServer()
   const { data: { user } } = await userSb.auth.getUser()
@@ -12,9 +13,9 @@ export async function GET(req: NextRequest) {
   const { data: appUser } = await userSb.from('app_users').select('role').eq('id', user.id).single()
   if (!appUser || appUser.role !== 'admin') return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
-  const gender = (req.nextUrl.searchParams.get('gender') ?? 'M') as 'M' | 'F'
+  // One queue for boys and girls: the task carries its own gender
   try {
-    return NextResponse.json({ task: await nextMicrocheckTask(createSupabaseAdmin(), gender) })
+    return NextResponse.json({ task: await nextMicrocheckTask(createSupabaseAdmin(), user.id, new Set((req.nextUrl.searchParams.get('skip') ?? '').split(',').filter(Boolean))) })
   } catch (e) {
     return NextResponse.json({ error: e instanceof Error ? e.message : String(e) }, { status: 500 })
   }

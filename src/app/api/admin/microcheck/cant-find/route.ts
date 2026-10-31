@@ -15,8 +15,7 @@ export async function GET() {
 
   const { data: logs } = await db
     .from('microcheck_task_log')
-    .select('school_id, field, admin_id, completed_at')
-    .eq('gender', 'M')
+    .select('school_id, gender, field, admin_id, completed_at')
     .eq('status', 'cant_find')
     .order('completed_at', { ascending: false })
 
@@ -26,17 +25,18 @@ export async function GET() {
   const adminIds  = [...new Set(logs.map(l => l.admin_id))]
 
   const [schoolsRes, adminsRes] = await Promise.all([
-    db.from('boys_schools').select('school_id, display_name').in('school_id', schoolIds),
+    db.from('schools').select('id, display_name').in('id', schoolIds),
     db.from('app_users').select('id, display_name').in('id', adminIds),
   ])
 
-  const schoolMap = new Map((schoolsRes.data ?? []).map(s => [s.school_id, s.display_name]))
+  const schoolMap = new Map((schoolsRes.data ?? []).map(s => [s.id, s.display_name]))
   const adminMap  = new Map((adminsRes.data ?? []).map(a => [a.id, a.display_name]))
 
   const entries = logs.map(l => ({
     school_id:    l.school_id,
     school_name:  schoolMap.get(l.school_id) ?? 'Unknown',
     field:        l.field,
+    gender:       l.gender,
     completed_at: l.completed_at,
     admin_name:   adminMap.get(l.admin_id) ?? 'Unknown',
   }))

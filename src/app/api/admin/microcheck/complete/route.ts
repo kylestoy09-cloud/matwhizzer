@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getNewestSeason } from '@/lib/season-context'
 import { createSupabaseServer }  from '@/lib/supabase/server'
 import { createSupabaseAdmin }   from '@/lib/supabase/service'
-import { nextMicrocheckTask }    from '../_next'
+import { nextMicrocheckTask, releaseTask } from '../_next'
 
 export const dynamic = 'force-dynamic'
 
@@ -16,8 +16,8 @@ async function requireAdmin() {
 }
 
 // The save already succeeded, so a failed lookup of the next task just ends the run
-async function followingTask(db: ReturnType<typeof createSupabaseAdmin>, gender: 'M' | 'F') {
-  try { return await nextMicrocheckTask(db, gender) } catch { return null }
+async function followingTask(db: ReturnType<typeof createSupabaseAdmin>, userId: string) {
+  try { return await nextMicrocheckTask(db, userId) } catch { return null }
 }
 
 // Fields that map directly to a column on the schools table
@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
 
   // ── tie_resolution ────────────────────────────────────────────────────────────
   if (body.task_type === 'tie_resolution') {
-    const { task_id, entity_id, gender, winner, dual_table } = body as {
+    const { task_id, entity_id, winner, dual_table } = body as {
       task_type: 'tie_resolution'
       task_id: string
       entity_id: string
@@ -64,15 +64,17 @@ export async function POST(req: NextRequest) {
     }).eq('id', task_id)
     if (taskErr) return NextResponse.json({ error: taskErr.message }, { status: 500 })
 
+    await releaseTask(db, `queue:${task_id}`)
     // Hand back the next task (same rules as /next)
-    return NextResponse.json({ ok: true, task: await followingTask(db, gender) })
+    return NextResponse.json({ ok: true, task: await followingTask(db, user.id) })
   }
 
   // ── school_profile (existing flow) ───────────────────────────────────────────
-  const { school_id, gender, field, status, value } = body as {
+  const { school_id, gender, field, status, value, task_key } = body as {
     school_id: number
     gender: 'M' | 'F'
     field: string
+    task_key?: string
     status: 'completed' | 'cant_find'
     value: string | null
   }
@@ -126,6 +128,8 @@ export async function POST(req: NextRequest) {
     // roster_match: no DB write here — the actual matching is done in the roster import tool
   }
 
+  if (task_key) await releaseTask(db, `${task_key}:${school_id}`, task_key, school_id)
+
   // 3. Hand back the next task (same rules as /next)
-  return NextResponse.json({ ok: true, task: await followingTask(db, gender) })
+  return NextResponse.json({ ok: true, task: await followingTask(db, user.id) })
 }

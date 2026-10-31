@@ -2,6 +2,35 @@
 
 ---
 
+## 2026-10-31 — Microcheck task control: one queue, manual order, missing-data tracking
+
+**Migration file:** `docs/migrations/20261031_microcheck_task_control.sql`
+
+**Purpose:** Microcheck becomes one queue for boys and girls that admins order by hand: no developer needed to reprioritize.
+
+**Database changes:**
+- **`microcheck_task_types`** (new): 14 checks, each with:
+  - its gender (NULL = shared school data: address, website, social, AD, asked once per school)
+  - its place in the order, on/off
+  - a "do next" pin and an optional list of schools to limit it to
+
+  Seeded with girls roster grades first. Within a check, schools go A→Z.
+- **`microcheck_focus`** (new): single school + check pairs pushed to the front from the Missing Data page.
+- **`microcheck_claims`** (new): a task handed out is held 10 minutes for that person, so two people asking at once get different tasks.
+- **`microcheck_roster_flags`**: key `(school_id)` → `(school_id, gender)`, so a school can be flagged for each gender.
+- **`microcheck_task_priority`** (the old two-row order) is no longer read; left in place.
+
+**Tables affected:** `microcheck_task_types`, `microcheck_focus`, `microcheck_claims`, `microcheck_roster_flags`
+
+**PENDING** — run in the Supabase SQL editor, before the deploy
+
+**Reversible?** Yes:
+- drop the three new tables
+- put the flags key back to `(school_id)` (fails if a school is flagged for both genders)
+**Verified?** No — pending
+
+---
+
 ## 2026-10-31 — Preseason step: Enter Tournament Schedule
 
 **Migration file:** `docs/migrations/20261031_tournament_schedule_step.sql`
