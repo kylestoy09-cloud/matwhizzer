@@ -24,12 +24,16 @@
 
 **Tables affected:** `admin_tasks`, `articles`, `admin_tool_registry`
 
-**PENDING** — run in the Supabase SQL editor
+**APPLIED** — 2026-10-30, Supabase SQL editor
 
 **Reversible?** Yes:
 - registry: `docs/migrations/backups/20261030_admin_tool_registry_paths_before.sql`
 - gender columns: drop them, and delete the `gender = 'F'` admin_tasks copies
-**Verified?** No — pending
+**Verified?** Yes:
+- admin_tasks has 5 boys and 5 girls tasks
+- `articles.gender` exists
+- 14 registry rows point at a side's address, 31 are `both`
+- the rating's tool label reads Whizzer Resume Rating
 
 ---
 
