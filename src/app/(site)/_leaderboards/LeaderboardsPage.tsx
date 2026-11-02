@@ -37,10 +37,14 @@ export async function LeaderboardsPage({ gender, searchParams }: { gender: Gende
   const L = (patch: Parameters<typeof hrefFor>[2]) => hrefFor(path, p, patch)
   const fresh = { sort: null, n: null }                     // switching tables starts at the top 25
 
+  // Advanced Analytics is postseason analytics: a tab under Postseason, not beside it
   const phaseTabs = [
-    { key: 'regular',    label: 'Regular Season',     href: L({ tab: 'regular', cat: null, wt: null, ...fresh }) },
-    { key: 'postseason', label: 'Postseason',         href: L({ tab: 'postseason', cat: null, wt: null, conf: null, sec: null, grp: null, ...fresh }) },
-    { key: 'analytics',  label: 'Advanced Analytics', href: L({ tab: 'analytics', cat: null, wt: null, conf: null, sec: null, grp: null, ...fresh }) },
+    { key: 'regular',    label: 'Regular Season', href: L({ tab: 'regular', cat: null, wt: null, ...fresh }) },
+    { key: 'postseason', label: 'Postseason',     href: L({ tab: 'postseason', cat: null, wt: null, conf: null, sec: null, grp: null, ...fresh }) },
+  ]
+  const postseasonTabs = [
+    { key: 'postseason', label: 'Leaderboards',       href: L({ tab: 'postseason', cat: null, wt: null, ...fresh }) },
+    { key: 'analytics',  label: 'Advanced Analytics', href: L({ tab: 'analytics', cat: null, wt: null, ...fresh }) },
   ]
   const subtitle = p.tab === 'regular' ? 'regular season — duals & in-season tournaments' : 'postseason — districts, regions & state'
 
@@ -56,7 +60,8 @@ export async function LeaderboardsPage({ gender, searchParams }: { gender: Gende
       </div>
 
       <div className="space-y-4">
-        <TabRow items={phaseTabs} active={p.tab} />
+        <TabRow items={phaseTabs} active={p.tab === 'regular' ? 'regular' : 'postseason'} />
+        {p.tab !== 'regular' && <TabRow items={postseasonTabs} active={p.tab} level={2} />}
         {p.tab === 'analytics'
           ? await AnalyticsView({ gender, season, p, base, L })
           : await TableView({ gender, season, p, base, L, path })}
