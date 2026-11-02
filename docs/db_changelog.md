@@ -2,6 +2,28 @@
 
 ---
 
+## 2026-11-01 — Dual bouts with wrestlers on the wrong side; one more profile split
+
+**Scripts:**
+- `scripts/fix_dual_wrestler_sides.mts`: backups `docs/migrations/backups/20261101_dual_wrestler_sides_before_*.json`
+- `scripts/find_mixed_wrestler_profiles.mts`: the scan, reusable
+
+**Purpose:** An early dual import put the winner on side B. In bouts team 1 won, the two wrestlers sat on each other's side: the points and winner were right, but each wrestler was credited to the other team. This made 41 profiles look like they wrestled for two schools.
+
+**Data changes:**
+- **42 bouts:** wrestler id and raw name swapped between sides; schools, points and winner unchanged.
+  - Boys: 4 bouts in 1 meet, Gloucester VA vs West Deptford, 2026-01-09.
+  - Girls: 38 bouts in 6 meets, 2026-01-16 to 02-13 (Old Tappan, Kearny, Lenape Valley-Hopatcong, Warren Hills, Ramsey, Passaic, Lodi/Saddle Brook, Vernon).
+  - Found by rule across all dual bouts (points to one team, winner on the other side); 0 remain.
+- **Jayden Cruz:** split at DePaul Catholic. DePaul's roster lists its own Jayden Cruz, Jr. Backup `..._splits_before_2.json`.
+
+**APPLIED** — 2026-11-01 by script
+
+**Reversible?** Yes, from the backups
+**Verified?** Yes — the rule finds 0 bouts with wrestlers on the wrong side.
+
+---
+
 ## 2026-11-01 — Girls 2026-01-06: Bloomfield vs Delaware Valley separated from Mount Olive/Randolph vs Hunterdon Central
 
 **Script:** `scripts/fix_bloomfield_delval_20260106.mts`. Backup of the 6 moved rows: `docs/migrations/backups/20261101_mount_olive_hcr_extra_bouts.json`

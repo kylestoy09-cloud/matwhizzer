@@ -1,0 +1,25 @@
+[
+ {
+  "gender": "M",
+  "wrestler_id": "c98b8942-4b36-4dfe-8741-e7b40b38eaf0",
+  "name": "Jayden Cruz",
+  "keep_school": "Bayonne",
+  "split_school": "Depaul Catholic",
+  "split_school_id": 22,
+  "judgment_call": false,
+  "new_wrestler_id": "df2643d7-3e3d-405b-bea2-d4bbce0ce627",
+  "new_grade": "Jr",
+  "kept_grade_fix": null,
+  "moved": {
+   "wrestler_name_aliases": 1,
+   "dual_meet_matches (unlinked)": 14,
+   "tournament_bouts": 1,
+   "tournament_placements": 0,
+   "tournament_entries": 0,
+   "in_season_tournament_seeds": 0,
+   "wrestler_school_history": 0,
+   "individual_rankings": 0,
+   "roster_grade_import": 1
+  }
+ }
+]
