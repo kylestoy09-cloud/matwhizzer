@@ -130,12 +130,18 @@ async function IndividualTable({ gender, season, p, base, L, rs }: ViewArgs & { 
     case 'most':
       active = p.sort === 'pins' || p.sort === 'techs' ? p.sort : 'combo'
       title = active === 'pins' ? 'Most Pins' : active === 'techs' ? 'Most Techs' : 'Most Pins + Techs'
-      description = `Falls and tech falls ${where}. Click a column to sort by it.`
-      cols = [who, wt,
-        sortCol('pins', 'Pins', r => (active === 'pins' ? b(r.pins) : dim(r.pins))),
-        sortCol('techs', 'Techs', r => (active === 'techs' ? b(r.techs) : dim(r.techs))),
-        sortCol('combo', 'Pins + Techs', r => (active === 'combo' ? b(r.pins_techs) : dim(r.pins_techs))),
-      ]
+      description = `Falls and tech falls ${where}, with each one's average time — a tie on the count goes to the faster average. Click a column to sort by it.`
+      {
+        const avg = (key: string, v: number | null) => <span className={`tabular-nums font-mono text-xs ${active === key ? 'text-slate-700' : 'text-slate-400'}`}>{fmtTime(v)}</span>
+        cols = [who, wt,
+          sortCol('pins', 'Pins', r => (active === 'pins' ? b(r.pins) : dim(r.pins))),
+          { label: 'Avg Pin', align: 'right', render: r => avg('pins', r.pin_avg) },
+          sortCol('techs', 'Techs', r => (active === 'techs' ? b(r.techs) : dim(r.techs))),
+          { label: 'Avg Tech', align: 'right', render: r => avg('techs', r.tf_avg) },
+          sortCol('combo', 'Pins + Techs', r => (active === 'combo' ? b(r.pins_techs) : dim(r.pins_techs))),
+          { label: 'Avg', align: 'right', render: r => avg('combo', r.pt_avg) },
+        ]
+      }
       break
     case 'bonus':
       title = 'Bonus Point %'

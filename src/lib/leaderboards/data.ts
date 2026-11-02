@@ -13,7 +13,7 @@ export type School = { id: number; display_name: string; logo_url: string | null
 export type WrestlerRow = {
   wrestler_id: string; wrestler_name: string; weight: number | null; school: School | null
   pins: number; fastest_pin: number | null; pin_avg: number | null
-  techs: number; fastest_tf: number | null; tf_avg: number | null; pins_techs: number
+  techs: number; fastest_tf: number | null; tf_avg: number | null; pins_techs: number; pt_avg: number | null
   bonus_wins: number; matches: number; bonus_pct: number | null
   // regular season
   fastest_pin_wt?: number | null; fastest_tf_wt?: number | null; wrr?: number | null
@@ -62,8 +62,9 @@ function individualOrder(q: Q, p: Params, minMatches: number): Q {
         ? q.not('fastest_tf', 'is', null).order('fastest_tf').order('fastest_pin', LAST)
         : q.not('fastest_pin', 'is', null).order('fastest_pin').order('fastest_tf', LAST)
     case 'most': {
-      const col = p.sort === 'pins' ? 'pins' : p.sort === 'techs' ? 'techs' : 'pins_techs'
-      return q.gt(col, 0).order(col, DESC).order('pins_techs', DESC).order('pins', DESC)
+      // a tie on the count goes to the faster average time
+      const [col, avg] = p.sort === 'pins' ? ['pins', 'pin_avg'] : p.sort === 'techs' ? ['techs', 'tf_avg'] : ['pins_techs', 'pt_avg']
+      return q.gt(col, 0).order(col, DESC).order(avg, LAST)
     }
     case 'bonus':
       return q.gte('matches', minMatches).not('bonus_pct', 'is', null).order('bonus_pct', DESC).order('bonus_wins', DESC)
@@ -81,7 +82,7 @@ function individualOrder(q: Q, p: Params, minMatches: number): Q {
 export async function rsIndividual(gender: Gender, season: number, p: Params) {
   const filtered = p.conf.length + p.sec.length + p.grp.length > 0
   let q = supabase.from('lb_rs_wrestler')
-    .select(`wrestler_id, wrestler_name, weight, pins, fastest_pin, fastest_pin_wt, pin_avg, techs, fastest_tf, fastest_tf_wt, tf_avg, pins_techs, bonus_wins, matches, bonus_pct, wrr, ${schoolEmbed(filtered)}`)
+    .select(`wrestler_id, wrestler_name, weight, pins, fastest_pin, fastest_pin_wt, pin_avg, techs, fastest_tf, fastest_tf_wt, tf_avg, pins_techs, pt_avg, bonus_wins, matches, bonus_pct, wrr, ${schoolEmbed(filtered)}`)
     .eq('gender', gender).eq('season_id', season)
   if (p.wt) q = q.eq('weight', p.wt)
   q = individualOrder(withSchoolFilters(q, p), p, MIN_RS_MATCHES).order('wrestler_id')
@@ -108,7 +109,7 @@ export async function rsTeam(gender: Gender, season: number, p: Params) {
 
 export async function psIndividual(gender: Gender, season: number, p: Params) {
   let q = supabase.from('lb_ps_wrestler')
-    .select(`wrestler_id, wrestler_name, weight, pins, fastest_pin, fastest_pin_ctx, pin_avg, techs, fastest_tf, fastest_tf_ctx, tf_avg, pins_techs, bonus_wins, matches, bonus_pct, wins, points, mat_time, mat_wins, ${schoolEmbed(false)}`)
+    .select(`wrestler_id, wrestler_name, weight, pins, fastest_pin, fastest_pin_ctx, pin_avg, techs, fastest_tf, fastest_tf_ctx, tf_avg, pins_techs, pt_avg, bonus_wins, matches, bonus_pct, wins, points, mat_time, mat_wins, ${schoolEmbed(false)}`)
     .eq('gender', gender).eq('season_id', season).eq('pool', poolFor(p.level, p.scope))
   if (p.wt) q = q.eq('weight', p.wt)
   q = individualOrder(q, p, MIN_PS_MATCHES).order('wrestler_id')

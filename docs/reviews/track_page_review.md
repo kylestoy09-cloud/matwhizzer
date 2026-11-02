@@ -62,5 +62,6 @@ the row backed up), or leave it.
 
 - 8 girls whose 2025-26 postseason entries have no school (school id and source text both empty), so leaderboards show them without one: Tie Willis, Justina Barowsky, Josephine Lemke, Josephine Panfilli, Patricia Brady, Briana Grainer, Jade Graham, Wilma Bayne. Need their schools from the brackets.
 
+- About 100 2025-26 falls recorded under 10 seconds (88 boys duals, 12 boys tournaments) — possible typos; they top the Quickest Deck boards.
 - 229 boys / 42 girls duals where the final score differs from the bout points, mostly by 1 point (likely team deductions; not verified).
 - Duplicate school records for one school: "Blair Academy" / "Blair Academy (B Team)", "Hodgson" / "Hodgson Vo Tech School".

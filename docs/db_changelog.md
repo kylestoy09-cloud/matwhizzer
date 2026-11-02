@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-11-02 — Leaderboards: average time across pins and techs
+
+**Migration file:** `docs/migrations/20261102_leaderboards_v2_pt_avg.sql`
+
+**Purpose:** The Most boards show the average fall time, average tech time and the average across both. A tie on the count goes to the faster average (Kyle, 2026-11-02).
+
+**Changes:**
+- `pt_avg` column on `lb_rs_wrestler` and `lb_ps_wrestler`
+- `lb_rs_refresh` / `lb_ps_refresh` fill it: the average over every timed fall and tech fall; tech times under 8 s are excluded
+- Tables refreshed for 2025-26 and 2026-27, boys and girls
+
+**APPLIED** — 2026-11-02, Supabase SQL editor
+
+**Reversible?** Yes — rollback notes in the migration file
+**Verified?** Yes — Jayden James's stored averages equal those computed from his bouts (8 pins 89.6 s, 15 techs 293.3 s, both 222.4 s); ties order by faster average
+
+---
+
 ## 2026-11-02 — 4 profiles in the wrong gender's bouts
 
 **Script:** `scripts/fix_cross_gender_profiles.mts`. Backup: `docs/migrations/backups/20261102_cross_gender_profiles_before.json`
