@@ -65,8 +65,19 @@ const schoolIndex = new Map<number, Map<string, WrestlerRecord>>()
 // "rawName|schoolId" → { wrestlerId, displayName } — loaded from wrestler_name_aliases
 const aliasIndex  = new Map<string, { wrestlerId: string; displayName: string }>()
 
-// "lower(displayName)|gender" → wrestlerId — fallback for wrestlers with no school entries
-const nameIndex   = new Map<string, { wrestlerId: string; displayName: string }>()
+// "lower(displayName)|gender" → wrestlers — fallback for wrestlers with no school entries
+const nameIndex   = new Map<string, { wrestlerId: string; displayName: string }[]>()
+
+// Wrestlers on record at some school (school index or an alias); rebuilt after a reload
+let onRecordCache: Set<string> | null = null
+function onRecordSomewhere(): Set<string> {
+  if (!onRecordCache) {
+    onRecordCache = new Set<string>()
+    for (const recs of schoolIndex.values()) for (const id of recs.keys()) onRecordCache.add(id)
+    for (const a of aliasIndex.values()) onRecordCache.add(a.wrestlerId)
+  }
+  return onRecordCache
+}
 
 // wrestlerId → gender — used to gender-check alias matches
 const wrestlerGenderMap = new Map<string, string>()
@@ -201,9 +212,10 @@ async function loadCache(): Promise<void> {
     wrestlerGenderMap.set(w.id, w.gender ?? 'M')
     const display = buildName(w)
     const key = `${display.toLowerCase()}|${w.gender ?? 'M'}`
-    if (!nameIndex.has(key)) nameIndex.set(key, { wrestlerId: w.id, displayName: display })
+    nameIndex.set(key, [...(nameIndex.get(key) ?? []), { wrestlerId: w.id, displayName: display }])
   }
 
+  onRecordCache = null
   cacheReady = true
 }
 
@@ -236,6 +248,7 @@ export async function reloadAliases(): Promise<void> {
     from += PAGE
   }
   aliasIndex.clear()
+  onRecordCache = null
   for (const a of allRows) {
     if (!a.wrestlers) continue
     aliasIndex.set(`${a.raw_name}|${a.school_id}`, {
@@ -353,13 +366,16 @@ export async function matchWrestler(
     return match(raw, schoolId, weightClass, rec, 'low', schoolScored)
   }
 
-  // ── 4. Name-only fallback across all wrestlers ───────────────────────────────
+  // ── 4. Name-only fallback, for a wrestler on record at no school ─────────────
   // Must run BEFORE same-last-name so an exact-name wrestler whose only bouts
   // were in a since-deleted tournament (and is therefore absent from schoolIndex)
-  // is preferred over a same-surname sibling who is in the index.
-  const nameFallback =
-    nameIndex.get(`${nameLower}|${gender}`) ??
-    nameIndex.get(`${normLower}|${gender}`)
+  // is preferred over a same-surname sibling who is in the index. A same-name
+  // wrestler on record at another school is a different person, never a match.
+  const onRecord = onRecordSomewhere()
+  const nameFallback = [
+    ...(nameIndex.get(`${nameLower}|${gender}`) ?? []),
+    ...(nameIndex.get(`${normLower}|${gender}`) ?? []),
+  ].find(n => !onRecord.has(n.wrestlerId))
   if (nameFallback) {
     return {
       rawName:     raw,
@@ -423,6 +439,7 @@ export function clearWrestlerCache(): void {
   aliasIndex.clear()
   nameIndex.clear()
   wrestlerGenderMap.clear()
+  onRecordCache = null
 }
 
 // ── Internal helpers ───────────────────────────────────────────────────────────

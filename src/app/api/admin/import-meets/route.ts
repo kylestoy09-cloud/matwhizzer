@@ -357,7 +357,7 @@ export async function POST(req: NextRequest) {
 
     // Already on record at that school (e.g. a re-run import): use that wrestler.
     // A same-name wrestler at another school is someone else.
-    const existingMap = await findSameSchoolWrestlers(supabase as never, GENDER, uniqueNew, 'dual_meet_matches')
+    const existingMap = await findSameSchoolWrestlers(supabase as never, GENDER, uniqueNew)
 
     const trulyNew = uniqueNew.filter(w => !existingMap.has(personKey(w)))
 

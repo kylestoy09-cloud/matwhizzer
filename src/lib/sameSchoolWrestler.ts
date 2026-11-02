@@ -1,7 +1,8 @@
 // An existing wrestler counts as the same person as a "new" name in an import only when
-// they share the name AND are on record at the same school: a name alias there, or (for
-// out-of-state wrestlers, who get no aliases) a dual bout for that school. A name match
-// alone joined different people at different schools into one profile.
+// they share the name AND are on record at the same school: a name alias there, or a
+// dual or tournament bout for that school (out-of-state wrestlers and those created by
+// the tournament-bout import have no aliases). A name match alone joined different
+// people at different schools into one profile.
 
 import type { createSupabaseAdmin } from '@/lib/supabase/service'
 
@@ -12,7 +13,7 @@ export const personKey = (p: Person) =>
   `${p.first_name.trim().toLowerCase()}|${p.last_name.trim().toLowerCase()}|${p.school_id ?? 'null'}`
 
 /** personKey → existing wrestler id, for people who already have a record at that school. */
-export async function findSameSchoolWrestlers(db: Db, gender: string, people: Person[], matchTable?: 'dual_meet_matches' | 'dual_meet_matches_girls'): Promise<Map<string, string>> {
+export async function findSameSchoolWrestlers(db: Db, gender: string, people: Person[]): Promise<Map<string, string>> {
   const out = new Map<string, string>()
   const withSchool = people.filter(p => p.school_id != null)
   if (!withSchool.length) return out
@@ -37,13 +38,18 @@ export async function findSameSchoolWrestlers(db: Db, gender: string, people: Pe
       schoolsOf.set(a.wrestler_id, (schoolsOf.get(a.wrestler_id) ?? new Set()).add(a.school_id))
     }
   }
-  if (matchTable) {
-    for (let i = 0; i < ids.length; i += 100) {
-      const chunk = ids.slice(i, i + 100)
-      for (const [w, sc] of [['wrestler_a_id', 'school_a_id'], ['wrestler_b_id', 'school_b_id']] as const) {
-        const { data, error } = await db.from(matchTable).select(`${w}, ${sc}`).in(w, chunk).limit(100000)
-        if (error) throw new Error(`${matchTable}: ${error.message}`)
-        for (const r of (data ?? []) as Record<string, string | number | null>[]) {
+  const boutSides: [string, [string, string][]][] = gender === 'F'
+    ? [['dual_meet_matches_girls', [['wrestler_a_id', 'school_a_id'], ['wrestler_b_id', 'school_b_id']]],
+       ['tournament_bouts_girls', [['wrestler1_id', 'wrestler1_school_id'], ['wrestler2_id', 'wrestler2_school_id']]]]
+    : [['dual_meet_matches', [['wrestler_a_id', 'school_a_id'], ['wrestler_b_id', 'school_b_id']]],
+       ['tournament_bouts', [['wrestler1_id', 'wrestler1_school_id'], ['wrestler2_id', 'wrestler2_school_id']]]]
+  for (let i = 0; i < ids.length; i += 100) {
+    const chunk = ids.slice(i, i + 100)
+    for (const [table, sides] of boutSides) {
+      for (const [w, sc] of sides) {
+        const { data, error } = await db.from(table).select(`${w}, ${sc}`).in(w, chunk).limit(100000)
+        if (error) throw new Error(`${table}: ${error.message}`)
+        for (const r of (data ?? []) as unknown as Record<string, string | number | null>[]) {
           const id = r[w] as string | null, school = r[sc] as number | null
           if (id && school != null) schoolsOf.set(id, (schoolsOf.get(id) ?? new Set()).add(school))
         }
