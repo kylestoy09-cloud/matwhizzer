@@ -2,6 +2,35 @@
 
 ---
 
+## 2026-11-01 — 26 profiles that held two people split
+
+**Script:** `scripts/split_merged_wrestlers.mts`
+- list: `docs/migrations/backups/20261101_merged_wrestler_splits_list.json`
+- backup: `..._splits_before.json`
+- result: `..._splits_done.json`
+
+**Purpose:** The dual imports, the tournament-bout import and the nickname resolver reused any same-name wrestler from any school (fixed 2026-11-01: same school only). That joined different people into one profile.
+- **Found by scan:** profiles at two schools on the same day, or switching back and forth within a season.
+- **Confirmed by Track rosters:** two schools each list the name.
+
+**Data changes:**
+- **26 splits:** 23 boys, 3 girls. 129 rows moved to new people at their own school: dual and tournament bouts, entries, placements, aliases, roster links.
+- **New people:** their school's roster grade where listed; out-of-state where the school is.
+- **Kept-profile grades:**
+  - Angel Gonzalez Jr → Sr
+  - Mario Rodriguez → So
+  - Christian Gonzalez cleared (it was the Camden boy's)
+- **Fix to `splitWrestler.ts`:** girls tournament bouts now move too, and the new person is out-of-state for an out-of-state school.
+
+**Not changed:** archived boys 2025-26 ratings for these profiles (girls ratings rebuild on the next recalculation).
+
+**APPLIED** — 2026-11-01 by script
+
+**Reversible?** Yes, from the before-backup (move the rows back, delete the new people)
+**Verified?** Yes — all 26 kept profiles have no rows left at the second school; each new person has them.
+
+---
+
 ## 2026-11-01 — Track roster players kept current; grades settled in the import review
 
 **Migration file:** `docs/migrations/20261101_roster_pool_graduated.sql`

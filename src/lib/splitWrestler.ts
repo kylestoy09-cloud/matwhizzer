@@ -6,8 +6,9 @@
 // for the old record *at that school* to them. Hammer scores / match score logs
 // are rebuilt by the next recalculation.
 //
-// The new person takes the old record's gender, and their dual bouts live in
-// that gender's table (dual_meet_matches / dual_meet_matches_girls).
+// The new person takes the old record's gender, and their dual and tournament bouts
+// live in that gender's tables (dual_meet_matches / _girls, tournament_bouts / _girls).
+// They are out-of-state when that school is.
 
 import type { SupabaseClient } from '@supabase/supabase-js'
 
@@ -33,9 +34,12 @@ export async function splitWrestlerAtSchool(
   if (oErr) throw new Error(`load wrestler: ${oErr.message}`)
   const gender = old.gender as 'M' | 'F'
   const dualBouts = gender === 'F' ? 'dual_meet_matches_girls' : 'dual_meet_matches'
+  const tournBouts = gender === 'F' ? 'tournament_bouts_girls' : 'tournament_bouts'
+  const { data: school, error: sErr } = await db.from('schools').select('is_nj').eq('id', schoolId).single()
+  if (sErr) throw new Error(`load school: ${sErr.message}`)
 
   const { data: created, error: cErr } = await db.from('wrestlers').insert({
-    first_name: person.first_name, last_name: person.last_name, gender, is_oos: false,
+    first_name: person.first_name, last_name: person.last_name, gender, is_oos: school.is_nj === false,
     grade: person.grade,
     grade_confirmed_at: person.grade ? (person.graded_at ?? new Date().toISOString()) : null,
     grade_confirmed_source: person.grade ? 'roster_upload' : null,
@@ -79,7 +83,7 @@ export async function splitWrestlerAtSchool(
   }
 
   for (const n of [1, 2] as const) {
-    count('tournament_bouts', await db.from('tournament_bouts').update({ [`wrestler${n}_id`]: newId })
+    count(tournBouts, await db.from(tournBouts).update({ [`wrestler${n}_id`]: newId })
       .eq(`wrestler${n}_id`, oldId).eq(`wrestler${n}_school_id`, schoolId).select('id'))
   }
 
