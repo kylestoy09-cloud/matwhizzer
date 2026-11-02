@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { findSameSchoolWrestlers, personKey } from '@/lib/sameSchoolWrestler'
 import { createClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { matchSchoolNames } from '@/lib/matchSchools'
@@ -62,15 +63,17 @@ export async function POST(req: NextRequest) {
   let foundDisplayName: string | null = null
   let created = false
 
-  for (const [first, last] of [[nickname, lastName], [firstName, lastName]]) {
-    const { data } = await supabase
-      .from('wrestlers')
-      .select('id, first_name, last_name, suffix')
-      .ilike('first_name', first)
-      .ilike('last_name', last)
-      .limit(1)
-    if (data && data.length > 0) {
-      const w = data[0]
+  // Only someone of this gender already on record at this school counts: the same name
+  // at another school is a different person
+  const sameSchool = schoolId == null ? new Map<string, string>() : await findSameSchoolWrestlers(supabase as never, gender, [
+    { first_name: nickname, last_name: lastName, school_id: schoolId },
+    { first_name: firstName, last_name: lastName, school_id: schoolId },
+  ])
+  for (const first of [nickname, firstName]) {
+    const id = sameSchool.get(personKey({ first_name: first, last_name: lastName, school_id: schoolId }))
+    if (!id) continue
+    const { data: w } = await supabase.from('wrestlers').select('id, first_name, last_name, suffix').eq('id', id).single()
+    if (w) {
       wrestlerId       = w.id
       foundDisplayName = `${w.first_name} ${w.last_name}${w.suffix ? ' ' + w.suffix : ''}`
       break

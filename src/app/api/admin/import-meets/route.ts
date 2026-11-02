@@ -13,6 +13,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { applyImportGrades } from '@/lib/applyImportGrades'
+import { findSameSchoolWrestlers, personKey } from '@/lib/sameSchoolWrestler'
 import type { GradeChoice } from '@/lib/rosterGradeSuggest'
 import { createClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
@@ -290,7 +291,7 @@ export async function POST(req: NextRequest) {
   const newWrestlerSource = new Map<WrestlerKey, { rawName: string; schoolId: number | null }>()
   const newWrestlerMeta = new Map<
     WrestlerKey,
-    { first_name: string; last_name: string; suffix: string | null; gender: string; is_stub: boolean }
+    { first_name: string; last_name: string; suffix: string | null; gender: string; is_stub: boolean; school_id: number | null }
   >()
 
   for (let i = 0; i < meets.length; i++) {
@@ -315,7 +316,7 @@ export async function POST(req: NextRequest) {
 
         const isLinked = !!wrestlerOverrides[key]?.linkedToKey
         if (isNew && !wrestlerId && !isLinked) {
-          newWrestlerMeta.set(key, { ...parseName(name), gender: GENDER, is_stub: isOos })
+          newWrestlerMeta.set(key, { ...parseName(name), gender: GENDER, is_stub: isOos, school_id: schoolId })
           if (!isOos) newWrestlerSource.set(key, { rawName: name, schoolId })
         }
       }
@@ -351,28 +352,14 @@ export async function POST(req: NextRequest) {
   // resolve below to an existing same-name wrestler at another school
   const createdWrestlerIds = new Set<string>()
   if (newWrestlerMeta.size > 0) {
-    // Deduplicate by (first_name, last_name, gender)
-    const uniqueNew = [
-      ...new Map(
-        [...newWrestlerMeta.values()].map(w => [`${w.first_name}|${w.last_name}|${w.gender}`, w])
-      ).values()
-    ]
+    // One new person per name AT A SCHOOL: the same name at two schools is two people
+    const uniqueNew = [...new Map([...newWrestlerMeta.values()].map(w => [personKey(w), w])).values()]
 
-    // Fetch any that already exist (e.g. previously imported)
-    const firstNames = [...new Set(uniqueNew.map(w => w.first_name))]
-    const { data: existing } = await supabase
-      .from('wrestlers')
-      .select('id, first_name, last_name, gender')
-      .in('first_name', firstNames)
+    // Already on record at that school (e.g. a re-run import): use that wrestler.
+    // A same-name wrestler at another school is someone else.
+    const existingMap = await findSameSchoolWrestlers(supabase as never, GENDER, uniqueNew, 'dual_meet_matches')
 
-    const existingMap = new Map<string, string>()  // "first|last|gender" → id
-    for (const w of existing ?? []) {
-      existingMap.set(`${w.first_name}|${w.last_name}|${w.gender}`, w.id)
-    }
-
-    const trulyNew = uniqueNew.filter(
-      w => !existingMap.has(`${w.first_name}|${w.last_name}|${w.gender}`)
-    )
+    const trulyNew = uniqueNew.filter(w => !existingMap.has(personKey(w)))
 
     if (trulyNew.length > 0) {
       const { data: created, error: createErr } = await supabase
@@ -384,7 +371,7 @@ export async function POST(req: NextRequest) {
           gender:     w.gender,
           is_stub:    w.is_stub,
         })))
-        .select('id, first_name, last_name, gender')
+        .select('id')
 
       if (createErr) {
         return NextResponse.json(
@@ -392,17 +379,21 @@ export async function POST(req: NextRequest) {
           { status: 500 },
         )
       }
-
-      for (const w of created ?? []) {
-        createdWrestlerIds.add(w.id)
-        existingMap.set(`${w.first_name}|${w.last_name}|${w.gender}`, w.id)
-        wrestlersCreated++
+      if ((created ?? []).length !== trulyNew.length) {
+        return NextResponse.json({ error: `Created ${created?.length ?? 0} of ${trulyNew.length} wrestlers` }, { status: 500 })
       }
+
+      // Rows come back in insert order
+      ;(created ?? []).forEach((w, i) => {
+        createdWrestlerIds.add(w.id)
+        existingMap.set(personKey(trulyNew[i]), w.id)
+        wrestlersCreated++
+      })
     }
 
     // Map keys → IDs for new wrestlers
     for (const [key, v] of newWrestlerMeta.entries()) {
-      const id = existingMap.get(`${v.first_name}|${v.last_name}|${v.gender}`)
+      const id = existingMap.get(personKey(v))
       if (id) wrestlerIdMap.set(key, id)
     }
   }

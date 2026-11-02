@@ -9,6 +9,7 @@
 //   5. Insert to tournament_bouts in chunks
 
 import { NextRequest, NextResponse } from 'next/server'
+import { findSameSchoolWrestlers, personKey } from '@/lib/sameSchoolWrestler'
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { getWorkingSeason } from '@/lib/season-context'
@@ -131,22 +132,17 @@ export async function POST(req: NextRequest) {
   const newWrestlerMap = new Map<string, string>()  // wrestlerKey → new uuid
 
   if (toCreate.length > 0) {
-    const lastNames = [...new Set(toCreate.map(w => parseName(w.name).last_name).filter(Boolean))]
-    const existingRes = await supabase
-      .from('wrestlers')
-      .select('id, first_name, last_name')
-      .in('last_name', lastNames)
-      .eq('gender', gender)
-    const existing = new Map(
-      (existingRes.data ?? []).map(r => [`${r.first_name}|${r.last_name}`, r.id])
-    )
+    // Reuse a same-name wrestler only when they are on record at the same school:
+    // the same name at another school is a different person
+    const existing = await findSameSchoolWrestlers(supabase as never, gender,
+      toCreate.map(w => ({ ...parseName(w.name), school_id: w.school_id })))
 
     const toInsert: { first_name: string; last_name: string; gender: string }[] = []
     const insertKeys: string[] = []  // parallel array: wrestler key
 
     for (const [i, w] of toCreate.entries()) {
       const parsed = parseName(w.name)
-      const existKey = `${parsed.first_name}|${parsed.last_name}`
+      const existKey = personKey({ ...parsed, school_id: w.school_id })
       const wrestlerKey = [...toCreateKeys][i]
       if (existing.has(existKey)) {
         newWrestlerMap.set(wrestlerKey, existing.get(existKey)!)
