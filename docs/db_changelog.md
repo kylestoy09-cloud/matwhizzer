@@ -2,6 +2,32 @@
 
 ---
 
+## 2026-11-02 — Bracket filler entries removed
+
+**Migration file:** `docs/migrations/20261102_remove_placeholder_entries.sql`. Backup: `docs/migrations/backups/20261102_placeholder_entries_before.json`
+
+**Purpose:** 19 postseason entries with no school were bracket filler, not wrestlers. Each one's only bouts were forfeit losses, with no duals, and one filler "beat" another. They showed on brackets and in 24 postseason leaderboard rows.
+- Boys District 13 (2024-25): "Forefit A" ×5
+- Boys District 21: Rutgers coaches' names
+- Boys District 23: Brian Grainer
+- Girls District 9 (2025-26): 8 names
+- Girls District 5: 1 entry pointing at a profile that doesn't exist
+
+Approved by Kyle with the counts.
+
+**Data changes:**
+- 22 forfeit wins over filler became byes
+- 9 bouts deleted (8 duplicate copies, 1 filler vs filler)
+- 19 entries deleted
+- 14 profiles deleted
+
+**PENDING** — to run in the Supabase SQL editor
+
+**Reversible?** Yes, from the backup
+**Verified?** Pending
+
+---
+
 ## 2026-11-02 — Site functions name schools by id (no bracket text on the site)
 
 **Migration file:** `docs/migrations/20261102_site_school_ids.sql`. Old definitions (rollback): `docs/migrations/backups/20261102_site_functions_before.sql`
@@ -19,10 +45,12 @@
 - `ghost_champions` and `get_wrestler_ghost_championships`: each win on the path also carries `opponent_id` and `opponent_school_id`
 - Not changed: `state_placements(gender)` without a season (nothing calls it)
 
-**PENDING** — to run in the Supabase SQL editor
+**APPLIED** — 2026-11-02, Supabase SQL editor
 
 **Reversible?** Yes — drop the new versions and run the backup file
-**Verified?** Pending
+**Verified?** Yes:
+- every changed function returns school ids, and no row has a name without an id
+- live audit of 341 pages (district / region / state overviews and weight pages, both genders, home, postseason, Ghost Champions): 0 bracket-text names, 23,248 logos. The only TBDs were empty forfeit sides, now hidden.
 
 ---
 

@@ -235,7 +235,7 @@ function WrestlerRow({
       <span className="flex-1 min-w-0 truncate">{inner}</span>
       {!isBye && (
         <span className="text-[10px] text-slate-400 shrink-0 flex items-center">
-          <SchoolTag id={schoolId} name={school} maxWidth={52} className="text-[10px] text-slate-400" />
+          {wrestlerId && <SchoolTag id={schoolId} name={school} maxWidth={52} className="text-[10px] text-slate-400" />}
           {grade ? <span className="ml-1 text-slate-300">{grade}</span> : null}
         </span>
       )}

@@ -252,7 +252,7 @@ function WrestlerRow({
       </span>
       {name && (
         <span className="text-[10px] text-slate-400 shrink-0 flex items-center">
-          <SchoolTag id={schoolId} name={school} maxWidth={48} className="text-[10px] text-slate-400" />
+          {wrestlerId && <SchoolTag id={schoolId} name={school} maxWidth={48} className="text-[10px] text-slate-400" />}
         </span>
       )}
     </div>

@@ -60,8 +60,13 @@ the row backed up), or leave it.
 
 ## 4. Other open items
 
-- 8 girls whose 2025-26 postseason entries have no school (school id and source text both empty), so leaderboards show them without one: Tie Willis, Justina Barowsky, Josephine Lemke, Josephine Panfilli, Patricia Brady, Briana Grainer, Jade Graham, Wilma Bayne. Need their schools from the brackets.
+- ~~8 girls whose 2025-26 postseason entries have no school~~ — resolved 2026-11-02: bracket filler names, not wrestlers (only forfeit losses, no duals). Removed with 11 other filler entries (`20261102_remove_placeholder_entries.sql`).
 
 - About 100 2025-26 falls recorded under 10 seconds (88 boys duals, 12 boys tournaments) — possible typos; they top the Quickest Deck boards.
 - 229 boys / 42 girls duals where the final score differs from the bout points, mostly by 1 point (likely team deductions; not verified).
 - Duplicate school records for one school: "Blair Academy" / "Blair Academy (B Team)", "Hodgson" / "Hodgson Vo Tech School".
+
+## 5. Before the 2026-27 season (pinned 2026-11-02)
+
+- **Nightly jobs have never run.** CRON_SECRET isn't set in Vercel, so the 4 crons (ratings 06:00/06:30 UTC, leaderboards 07:00/07:15 UTC) get a 401 every night. Off-season that costs nothing. Before the first bouts: set CRON_SECRET in Vercel (Production), add a skip when no bouts were added since the last run, and confirm one night's run in `admin_activity_log` (entries by 'cron').
+- **Girls Region 1, 2025-26:** no finals or 3rd-place bouts on file, so the region page has no placements. Needs the bracket results.
