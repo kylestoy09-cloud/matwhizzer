@@ -47,10 +47,12 @@ async function authorize(req: NextRequest): Promise<boolean> {
   // Legacy header (manual calls)
   const cronSecret = req.headers.get('x-cron-secret')
   if (cronSecret && cronSecret === process.env.CRON_SECRET) return true
-  // Admin session
+  // Admin session (any signed-in user is not enough: fans have accounts)
   const sb = await createSupabaseServer()
   const { data: { user } } = await sb.auth.getUser()
-  return !!user
+  if (!user) return false
+  const { data: appUser } = await sb.from('app_users').select('role').eq('id', user.id).single()
+  return appUser?.role === 'admin'
 }
 
 // ─── win_type normalizer ───────────────────────────────────────────────────────
