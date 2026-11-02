@@ -11,13 +11,14 @@ type Column = { key: string; label: string; gender: 'M' | 'F' | null; group_labe
 type Row    = { id: number; name: string; boys: boolean; girls: boolean; cells: string; focus: string }
 type Queue  = { key: string; label: string; open: number }
 
-// d done · c entered via microcheck · x can't find · f flagged · m missing · - not applicable
+// d done · c entered via microcheck · x can't find · f flagged · m missing · w waiting on import step 1 · - not applicable
 const CELL: Record<string, { mark: string; cls: string; title: string }> = {
   d:   { mark: '✓', cls: 'text-emerald-600',             title: 'On file' },
   c:   { mark: '✓', cls: 'text-emerald-600 font-bold',   title: 'Entered through microcheck' },
   x:   { mark: '?', cls: 'text-amber-600 font-bold',     title: "Can't find" },
   f:   { mark: '!', cls: 'text-red-600 font-bold',       title: 'Roster flagged for manual review' },
   m:   { mark: '·', cls: 'text-red-500 font-black',      title: 'Missing: click to do next' },
+  w:   { mark: '…', cls: 'text-slate-400',               title: 'Waiting: roster import rows not matched to schools yet (Roster Grade Import step 1)' },
   '-': { mark: '',  cls: 'text-slate-200',               title: 'Does not apply' },
 }
 const GROUP_STYLE: Record<string, string> = {

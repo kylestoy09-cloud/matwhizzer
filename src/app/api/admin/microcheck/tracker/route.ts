@@ -5,7 +5,7 @@ import { loadWorkload, openCounts, typeGenderLabel, type CellStatus } from '../_
 
 export const dynamic = 'force-dynamic'
 
-const CODE: Record<CellStatus, string> = { done: 'd', completed: 'c', cant_find: 'x', flagged: 'f', missing: 'm', na: '-' }
+const CODE: Record<CellStatus, string> = { done: 'd', completed: 'c', cant_find: 'x', flagged: 'f', missing: 'm', waiting: 'w', na: '-' }
 
 // GET — the Missing Data grid: every active program school × every school-data check.
 // Each school's row is a string of one-letter codes, one per column (see CODE).

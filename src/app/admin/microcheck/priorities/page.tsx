@@ -20,6 +20,7 @@ type TaskType = {
   scope_schools: { id: number; name: string }[]
   open?:         number
   total?:        number
+  waiting?:      number
 }
 type Focus = { id: string; task_key: string; school_id: number; school_name: string; task_label: string; status: string }
 
@@ -150,6 +151,7 @@ export default function TaskOrderPage() {
                 <span className="flex-1 text-sm font-medium text-slate-800">{t.label}</span>
                 <span className="text-xs tabular-nums text-slate-500 shrink-0">
                   {t.open ?? 0} open{t.source === 'school_field' && t.total != null ? ` / ${t.total}` : ''}
+                  {!!t.waiting && <span className="block text-[10px] text-slate-400" title="The roster import's rows are not matched to schools yet: Roster Grade Import step 1">{t.waiting} waiting on import step 1</span>}
                 </span>
                 <button onClick={() => update(i, { pinned_at: t.pinned_at ? null : new Date().toISOString() })}
                   className={`text-xs px-2 py-0.5 rounded border shrink-0 ${t.pinned_at ? 'bg-amber-100 border-amber-300 text-amber-800' : 'border-slate-200 text-slate-500 hover:bg-slate-50'}`}

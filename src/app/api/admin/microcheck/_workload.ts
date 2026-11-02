@@ -31,8 +31,10 @@ export type TaskType = {
 // cant_find  someone looked and could not find it
 // flagged    roster held for manual review
 // missing    still to do
+// waiting    roster grades: the gender's import is loaded but this school's rows are not
+//            matched to it yet (Roster Grade Import step 1), so there is nothing to check
 // na         does not apply (no program, or no coach yet for a coach email)
-export type CellStatus = 'done' | 'completed' | 'cant_find' | 'flagged' | 'missing' | 'na'
+export type CellStatus = 'done' | 'completed' | 'cant_find' | 'flagged' | 'missing' | 'waiting' | 'na'
 
 export type QueueItem = { id: string; entity_id: string; metadata: Record<string, unknown> }
 
@@ -62,7 +64,7 @@ export function orderTypes(types: TaskType[]): TaskType[] {
 export async function loadWorkload(db: Db): Promise<Workload> {
   const [workingM, workingF, newest] = await Promise.all([getWorkingSeason('M'), getWorkingSeason('F'), getNewestSeason()])
 
-  const [typesRes, boysRes, girlsRes, schoolsRes, logRes, flagRes, inactiveRes, coachM, coachF, queueRes, focusRes] = await Promise.all([
+  const [typesRes, boysRes, girlsRes, schoolsRes, logRes, flagRes, inactiveRes, coachM, coachF, queueRes, focusRes, importRes] = await Promise.all([
     db.from('microcheck_task_types').select('*'),
     db.from('boys_schools').select('school_id, display_name'),
     db.from('girls_schools').select('school_id, display_name'),
@@ -75,8 +77,9 @@ export async function loadWorkload(db: Db): Promise<Workload> {
     db.from('microcheck_tasks').select('id, task_type, entity_id, gender, metadata, priority, created_at').eq('status', 'pending')
       .order('priority', { ascending: false }).order('created_at', { ascending: true }),
     db.from('microcheck_focus').select('id, task_key, school_id, created_at').order('created_at'),
+    db.from('roster_grade_import').select('gender, school_id, status').limit(100000),
   ])
-  for (const [name, r] of Object.entries({ typesRes, boysRes, girlsRes, schoolsRes, logRes, flagRes, inactiveRes, coachM, coachF, queueRes, focusRes })) {
+  for (const [name, r] of Object.entries({ typesRes, boysRes, girlsRes, schoolsRes, logRes, flagRes, inactiveRes, coachM, coachF, queueRes, focusRes, importRes })) {
     if (r.error) throw new Error(`${name}: ${r.error.message}`)
   }
 
@@ -103,6 +106,15 @@ export async function loadWorkload(db: Db): Promise<Workload> {
     F: new Map((coachF.data ?? []).map(c => [c.school_id as number, (c.email as string | null) ?? null])),
   }
 
+  // Roster import per gender: which schools have rows matched to them, and whether any
+  // rows are still unmatched (step 1 not finished: those rows carry only a school name)
+  const importUnmatched = new Set<string>()
+  const importMatched = new Set<string>()
+  for (const r of importRes.data ?? []) {
+    if (r.status === 'pending') importUnmatched.add(r.gender as string)
+    else if (r.school_id) importMatched.add(`${r.gender}|${r.school_id}`)
+  }
+
   const typeByKey = new Map(types.map(t => [t.key, t]))
   const cache = new Map<string, CellStatus>()
 
@@ -118,7 +130,14 @@ export async function loadWorkload(db: Db): Promise<Workload> {
 
     if (t.field === 'roster_match') {
       if (flagged.has(`${t.gender}|${schoolId}`)) return 'flagged'
-      return fromLog(loggedAny) ?? 'missing'
+      const logged = fromLog(loggedAny)
+      if (logged) return logged
+      // Until step 1 links this gender's rows to schools, a school without linked rows
+      // would wrongly show as "not in the import": hold it. Once step 1 is done, a school
+      // with no rows really has none and gets the task (to mark it no roster).
+      const g = t.gender ?? 'M'
+      if (importUnmatched.has(g) && !importMatched.has(`${g}|${schoolId}`)) return 'waiting'
+      return 'missing'
     }
     if (t.field === 'coach_name' || t.field === 'coach_email') {
       const g = t.gender ?? 'M'
@@ -165,18 +184,19 @@ export async function loadWorkload(db: Db): Promise<Workload> {
 }
 
 /** Open work per type: missing cells (school fields) or pending tasks (queues). */
-export function openCounts(w: Workload): Map<string, { open: number; total: number }> {
-  const out = new Map<string, { open: number; total: number }>()
+export function openCounts(w: Workload): Map<string, { open: number; total: number; waiting: number }> {
+  const out = new Map<string, { open: number; total: number; waiting: number }>()
   for (const t of w.types) {
-    if (t.source === 'queue') { out.set(t.key, { open: w.queue.get(t.key)?.length ?? 0, total: w.queue.get(t.key)?.length ?? 0 }); continue }
-    let open = 0, total = 0
+    if (t.source === 'queue') { out.set(t.key, { open: w.queue.get(t.key)?.length ?? 0, total: w.queue.get(t.key)?.length ?? 0, waiting: 0 }); continue }
+    let open = 0, total = 0, waiting = 0
     for (const s of w.schools) {
       const st = w.status(t.key, s.id)
       if (st === 'na') continue
       total++
       if (st === 'missing') open++
+      if (st === 'waiting') waiting++
     }
-    out.set(t.key, { open, total })
+    out.set(t.key, { open, total, waiting })
   }
   return out
 }
