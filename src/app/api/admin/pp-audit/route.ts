@@ -4,6 +4,7 @@ import { createSupabaseAdmin } from '@/lib/supabase/service'
 import { fetchAllRows } from '@/lib/fetchAllRows'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import ppTotals from '@/data/pp_totals.json'
+import { isAdminUser } from '@/lib/auth/isAdminUser'
 
 export const dynamic = 'force-dynamic'
 
@@ -30,6 +31,7 @@ export async function GET(req: NextRequest) {
   const userSupabase = await createSupabaseServer()
   const { data: { user } } = await userSupabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const rawG = req.nextUrl.searchParams.get('gender')
   const gender: 'M' | 'F' = rawG === 'F' ? 'F' : 'M'

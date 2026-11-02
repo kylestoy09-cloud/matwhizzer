@@ -30,6 +30,7 @@ import {
   type WrestlerKey,
   makeWrestlerKey,
 } from '@/app/admin/[side]/import/types'
+import { isAdminUser } from '@/lib/auth/isAdminUser'
 
 export const dynamic = 'force-dynamic'
 
@@ -127,6 +128,7 @@ export async function POST(req: NextRequest) {
   const userSupabase = await createSupabaseServer()
   const { data: { user } } = await userSupabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const body: ImportRequest = await req.json().catch(() => null)
   if (!body?.draftId) return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })

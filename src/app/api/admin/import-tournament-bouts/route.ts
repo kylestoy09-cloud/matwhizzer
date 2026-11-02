@@ -16,6 +16,7 @@ import { createSupabaseServer } from '@/lib/supabase/server'
 import { getWorkingSeason } from '@/lib/season-context'
 import type { SeasonInfo } from '@/lib/seasons'
 import type { PipeImportJSON, SchoolOverride, WrestlerOverride, BoutRow } from '@/lib/pipeImportTypes'
+import { isAdminUser } from '@/lib/auth/isAdminUser'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnySupabase = SupabaseClient<any, any, any>
@@ -74,6 +75,7 @@ export async function POST(req: NextRequest) {
   const authClient = await createSupabaseServer()
   const { data: { user } } = await authClient.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const body = await req.json() as {
     importData: PipeImportJSON

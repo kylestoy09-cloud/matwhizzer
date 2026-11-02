@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
+import { isAdminUser } from '@/lib/auth/isAdminUser'
 
 export const dynamic = 'force-dynamic'
 
@@ -8,6 +9,7 @@ export async function GET(req: NextRequest) {
   const auth = await createSupabaseServer()
   const { data: { user } } = await auth.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const mid    = req.nextUrl.searchParams.get('mid')
   const view   = req.nextUrl.searchParams.get('view')

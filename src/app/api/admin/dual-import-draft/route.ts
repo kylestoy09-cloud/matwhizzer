@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
+import { isAdminUser } from '@/lib/auth/isAdminUser'
 
 export const dynamic = 'force-dynamic'
 
@@ -19,6 +20,7 @@ export async function GET(req: NextRequest) {
   const auth = await createSupabaseServer()
   const { data: { user } } = await auth.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const supabase = serviceClient()
   const id = req.nextUrl.searchParams.get('id')
@@ -53,6 +55,7 @@ export async function POST(req: NextRequest) {
   const auth = await createSupabaseServer()
   const { data: { user } } = await auth.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const body = await req.json()
   const { id, label, raw_text, school_overrides, wrestler_overrides, grade_choices, meet_count } = body
@@ -110,6 +113,7 @@ export async function DELETE(req: NextRequest) {
   const auth = await createSupabaseServer()
   const { data: { user } } = await auth.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const id = req.nextUrl.searchParams.get('id')
   if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 })
@@ -130,6 +134,7 @@ export async function PATCH(req: NextRequest) {
   const auth = await createSupabaseServer()
   const { data: { user } } = await auth.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const { id } = await req.json()
   if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 })

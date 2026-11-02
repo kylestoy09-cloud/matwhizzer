@@ -3,6 +3,7 @@ import { createSupabaseServer } from '@/lib/supabase/server'
 import { parseRtfText } from '@/lib/parseRtf'
 import { parseDualMeetText } from '@/lib/parseDualMeet'
 import { parseDualMeetGirlsText } from '@/lib/parseDualMeetGirls'
+import { isAdminUser } from '@/lib/auth/isAdminUser'
 
 export const dynamic = 'force-dynamic'
 
@@ -10,6 +11,7 @@ export async function POST(req: NextRequest) {
   const supabase = await createSupabaseServer()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   let text: string
   let gender: 'M' | 'F' = 'M'

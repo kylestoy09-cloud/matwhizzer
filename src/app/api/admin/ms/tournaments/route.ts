@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
+import { isAdminUser } from '@/lib/auth/isAdminUser'
 
 export const dynamic = 'force-dynamic'
 
@@ -20,6 +21,7 @@ async function authCheck() {
 export async function GET(req: NextRequest) {
   const user = await authCheck()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   // ?gender=M|F: that gender's events plus combined (MF) events
   const g = req.nextUrl.searchParams.get('gender')
@@ -50,6 +52,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const user = await authCheck()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   let body: Record<string, unknown>
   try { body = await req.json() } catch { return NextResponse.json({ error: 'Invalid body' }, { status: 400 }) }

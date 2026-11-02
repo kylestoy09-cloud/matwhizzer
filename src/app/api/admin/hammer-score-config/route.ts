@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 import { getWorkingSeason } from '@/lib/season-context'
+import { isAdminUser } from '@/lib/auth/isAdminUser'
 
 export const dynamic = 'force-dynamic'
 
@@ -9,6 +10,7 @@ export async function GET(req: NextRequest) {
   const sb = await createSupabaseServer()
   const { data: { user } } = await sb.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const gender: 'M' | 'F' = req.nextUrl.searchParams.get('gender') === 'F' ? 'F' : 'M'
   const season = req.nextUrl.searchParams.get('season') ?? (await getWorkingSeason(gender)).label
@@ -33,6 +35,7 @@ export async function POST(req: NextRequest) {
   const sb = await createSupabaseServer()
   const { data: { user } } = await sb.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const body = await req.json()
   const { gender, name, config } = body as {

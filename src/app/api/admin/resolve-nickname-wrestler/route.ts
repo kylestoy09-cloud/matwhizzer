@@ -5,6 +5,7 @@ import { createSupabaseServer } from '@/lib/supabase/server'
 import { matchSchoolNames } from '@/lib/matchSchools'
 import { clearWrestlerCache } from '@/lib/matchWrestlers'
 import { getWorkingSeason, parseGender } from '@/lib/season-context'
+import { isAdminUser } from '@/lib/auth/isAdminUser'
 
 export const dynamic = 'force-dynamic'
 
@@ -24,6 +25,7 @@ export async function POST(req: NextRequest) {
   const auth = await createSupabaseServer()
   const { data: { user } } = await auth.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const body = await req.json().catch(() => ({}))
   const { reconstructed, gender = 'M' } = body as { reconstructed?: string; gender?: string }

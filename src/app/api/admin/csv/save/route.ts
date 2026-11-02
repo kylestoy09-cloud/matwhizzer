@@ -15,6 +15,7 @@ import { boutResultToDb } from '@/lib/parseRtf'
 import { seasonIdForDate } from '@/lib/seasons'
 import type { SchoolOverride, WrestlerOverride } from '@/app/admin/[side]/import-rtf/types'
 import { nonNjSchools } from '@/lib/schoolIsOos'
+import { isAdminUser } from '@/lib/auth/isAdminUser'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 300
@@ -32,6 +33,7 @@ export async function POST(req: NextRequest) {
   const authClient = await createSupabaseServer()
   const { data: { user } } = await authClient.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   // New wrestlers given a grade (from the review or the Track roster)
   let gradesSet = 0
   let gradesFromRoster = 0

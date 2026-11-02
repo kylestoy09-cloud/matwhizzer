@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
+import { isAdminUser } from '@/lib/auth/isAdminUser'
 
 export const dynamic = 'force-dynamic'
 
@@ -9,7 +10,8 @@ const SUPER_ADMIN_EMAIL = 'kyle.stoy09@gmail.com'
 async function checkSuperAdmin() {
   const supabase = await createSupabaseServer()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user || user.email !== SUPER_ADMIN_EMAIL) return null
+  // owner only, and still an admin account
+  if (!user || user.email !== SUPER_ADMIN_EMAIL || !(await isAdminUser(user.id))) return null
   return user
 }
 

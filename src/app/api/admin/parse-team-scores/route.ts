@@ -4,6 +4,7 @@ import { createSupabaseServer } from '@/lib/supabase/server'
 import { parseTeamScoreBlock } from '@/lib/parseRtf'
 import { matchSchoolNames } from '@/lib/matchSchools'
 import { seasonIdForDate } from '@/lib/seasons'
+import { isAdminUser } from '@/lib/auth/isAdminUser'
 
 export const dynamic = 'force-dynamic'
 
@@ -18,6 +19,7 @@ export async function POST(req: NextRequest) {
   const supabase = await createSupabaseServer()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const { text, tournament_query, gender } = await req.json()
 

@@ -2,15 +2,12 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getWorkingSeason, parseGender } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
+import { getAdminUser } from '@/lib/auth/isAdminUser'
 
 export const dynamic = 'force-dynamic'
 
-async function requireAdmin() {
-  const sb = await createSupabaseServer()
-  const { data: { user } } = await sb.auth.getUser()
-  if (!user) return null
-  return user
-}
+// The signed-in admin, or null (signing in is not enough: fans have accounts)
+const requireAdmin = getAdminUser
 
 function tables(gender: string) {
   const p = gender === 'F' ? 'girls' : 'boys'

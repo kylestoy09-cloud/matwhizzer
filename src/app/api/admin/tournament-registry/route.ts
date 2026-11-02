@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getWorkingSeason, parseGender } from '@/lib/season-context'
 import { createClient } from '@supabase/supabase-js'
-import { createSupabaseServer } from '@/lib/supabase/server'
+import { getAdminUser } from '@/lib/auth/isAdminUser'
 
 export const dynamic = 'force-dynamic'
 
@@ -12,11 +12,8 @@ function serviceClient() {
   )
 }
 
-async function requireAdmin() {
-  const supabase = await createSupabaseServer()
-  const { data: { user } } = await supabase.auth.getUser()
-  return user
-}
+// The signed-in admin, or null (signing in is not enough: fans have accounts)
+const requireAdmin = getAdminUser
 
 // GET /api/admin/tournament-registry?season=<label>&gender=F  (season defaults to the season in progress)
 export async function GET(req: NextRequest) {

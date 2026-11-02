@@ -8,6 +8,7 @@ import { matchWrestler, oosSchoolHasPrior, clearWrestlerCache, reloadAliases } f
 import { matchTournament } from '@/lib/matchTournaments'
 import { findMsProfileCandidates, msSeasonsForHsSeason, type MsWrestlerRow } from '@/lib/matchMsWrestler'
 import type { SchoolFlag, WrestlerFlag, ReviewedTournament, SchoolOverride, TournamentType } from '@/app/admin/[side]/import-rtf/types'
+import { isAdminUser } from '@/lib/auth/isAdminUser'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
@@ -80,6 +81,7 @@ export async function POST(req: NextRequest) {
   const supabase = await createSupabaseServer()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   let text: string, year: number, selected: string[], schoolOverrides: Record<string, SchoolOverride>, gender: 'M' | 'F'
   let tournamentTypes: Record<string, TournamentType>

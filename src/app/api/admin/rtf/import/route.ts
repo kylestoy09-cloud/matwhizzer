@@ -11,6 +11,7 @@ import { matchTournament } from '@/lib/matchTournaments'
 import { seasonIdForDate } from '@/lib/seasons'
 import type { SchoolFlag, ImportResult, SchoolOverride, WrestlerOverride, TournamentOverride, MsProfileLink } from '@/app/admin/[side]/import-rtf/types'
 import { nonNjSchools } from '@/lib/schoolIsOos'
+import { isAdminUser } from '@/lib/auth/isAdminUser'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 300
@@ -109,6 +110,7 @@ export async function POST(req: NextRequest) {
   const supabase = await createSupabaseServer()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   const adminEmail = user.email ?? null
   // New wrestlers given a grade across the run (from the review or the Track roster)
   let gradesSetTotal = 0

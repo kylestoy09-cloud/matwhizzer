@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
+import { isAdminUser } from '@/lib/auth/isAdminUser'
 
 export const dynamic = 'force-dynamic'
 
@@ -20,6 +21,7 @@ async function authCheck() {
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const user = await authCheck()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const { id } = await params
   let body: Record<string, unknown>
@@ -51,6 +53,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
 export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const user = await authCheck()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const { id } = await params
   const client = serviceClient()

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 import { fetchAllRows } from '@/lib/fetchAllRows'
 import { createSupabaseServer } from '@/lib/supabase/server'
+import { isAdminUser } from '@/lib/auth/isAdminUser'
 
 export const dynamic = 'force-dynamic'
 
@@ -39,6 +40,7 @@ export async function GET() {
   const userSupabase = await createSupabaseServer()
   const { data: { user } } = await userSupabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const supabase = createSupabaseAdmin()
   const checkedAt = new Date().toISOString()

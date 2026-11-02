@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createSupabaseServer } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
+import { getAdminUser } from '@/lib/auth/isAdminUser'
 
 export const dynamic = 'force-dynamic'
 
@@ -12,12 +12,8 @@ function db() {
   )
 }
 
-async function requireAdmin() {
-  const auth = await createSupabaseServer()
-  const { data: { user } } = await auth.auth.getUser()
-  if (!user) return null
-  return user
-}
+// The signed-in admin, or null (signing in is not enough: fans have accounts)
+const requireAdmin = getAdminUser
 
 // GET /api/admin/oos-wrestlers
 // Returns all OOS wrestlers with usage counts and suspected duplicate groups.

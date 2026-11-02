@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
+import { isAdminUser } from '@/lib/auth/isAdminUser'
 
 export const dynamic = 'force-dynamic'
 
@@ -21,6 +22,7 @@ export async function GET(req: NextRequest) {
   const supabase = await createSupabaseServer()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const gender = req.nextUrl.searchParams.get('gender') === 'F' ? 'F' : 'M'
   const db = createSupabaseAdmin()
@@ -99,6 +101,7 @@ export async function POST(req: NextRequest) {
   const supabase = await createSupabaseServer()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const { action, keep_id, merge_id } = await req.json()
 

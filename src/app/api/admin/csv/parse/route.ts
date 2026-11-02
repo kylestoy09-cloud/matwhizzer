@@ -12,6 +12,7 @@ import { clearWrestlerCache } from '@/lib/matchWrestlers'
 import { matchTournament } from '@/lib/matchTournaments'
 import { seasonIdForDate } from '@/lib/seasons'
 import type { SchoolFlag, WrestlerFlag } from '@/app/admin/[side]/import-rtf/types'
+import { isAdminUser } from '@/lib/auth/isAdminUser'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
@@ -35,6 +36,7 @@ export async function POST(req: NextRequest) {
   const authClient = await createSupabaseServer()
   const { data: { user } } = await authClient.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   let csvText: string
   let tournamentName: string

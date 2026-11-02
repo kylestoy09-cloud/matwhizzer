@@ -6,6 +6,7 @@ import {
   TIER_MAP, OOS_TIER, stateTierKey, regionTierKey, districtTierKey, matchCaliberPts,
   type TierKey, type TierRow, type MatchCaliberRecord, type PreSeedRow,
 } from '@/lib/districtPreseed'
+import { isAdminUser } from '@/lib/auth/isAdminUser'
 
 export const dynamic = 'force-dynamic'
 
@@ -260,6 +261,7 @@ export async function GET(req: NextRequest) {
   const sb = await createSupabaseServer()
   const { data: { user } } = await sb.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const { searchParams } = req.nextUrl
   const gender  = (searchParams.get('gender') ?? 'M') as 'M' | 'F'

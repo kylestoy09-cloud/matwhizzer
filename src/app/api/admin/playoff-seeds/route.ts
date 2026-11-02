@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
+import { isAdminUser } from '@/lib/auth/isAdminUser'
 
 export const dynamic = 'force-dynamic'
 
@@ -17,6 +18,7 @@ export async function GET(req: NextRequest) {
   const auth = await createSupabaseServer()
   const { data: { user } } = await auth.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const params = new URL(req.url).searchParams
   const season_id = parseInt(params.get('season_id') ?? '2')
@@ -40,6 +42,7 @@ export async function POST(req: NextRequest) {
   const auth = await createSupabaseServer()
   const { data: { user } } = await auth.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const body = await req.json()
   const { season_id, gender, section, classification, seeds, confirmed } = body

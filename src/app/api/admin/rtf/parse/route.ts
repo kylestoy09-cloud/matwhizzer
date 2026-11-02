@@ -5,6 +5,7 @@ import { getWorkingSeason, parseGender } from '@/lib/season-context'
 import { parseRtfText, parseDateRange } from '@/lib/parseRtf'
 import { matchTournament } from '@/lib/matchTournaments'
 import type { TournamentSummary } from '@/app/admin/[side]/import-rtf/types'
+import { isAdminUser } from '@/lib/auth/isAdminUser'
 
 export const dynamic = 'force-dynamic'
 
@@ -20,6 +21,7 @@ export async function POST(req: NextRequest) {
   const supabase = await createSupabaseServer()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   let text: string
   let year: number

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { matchSchoolNames } from '@/lib/matchSchools'
+import { isAdminUser } from '@/lib/auth/isAdminUser'
 
 export const dynamic = 'force-dynamic'
 
@@ -16,6 +17,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: `Auth error: ${message}` }, { status: 500 })
   }
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdminUser(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const body = await req.json().catch(() => ({}))
   const names: unknown = body?.names
