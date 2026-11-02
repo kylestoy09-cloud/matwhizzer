@@ -118,8 +118,16 @@ export async function GET(req: NextRequest) {
 
   const proposalMap = new Map(matchResults.map(r => [r.school_name_raw, r.match]))
 
+  // The linked program's name, also for programs outside the season's pick list (inactive ones)
+  const linkedIds = [...new Set(schools.map(s => s.school_id).filter((id): id is number => id != null))]
+  const { data: linkedNames } = linkedIds.length
+    ? await db.from('boys_schools').select('school_id, display_name').in('school_id', linkedIds)
+    : { data: [] }
+  const nameById = new Map((linkedNames ?? []).map(r => [r.school_id as number, r.display_name as string]))
+
   const result = schools.map(s => ({
     ...s,
+    school_name: s.school_id ? (nameById.get(s.school_id) ?? null) : null,
     proposal: s.school_id ? null : (proposalMap.get(s.school_name_raw) ?? null),
   }))
 

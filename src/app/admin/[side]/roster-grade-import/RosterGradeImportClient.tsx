@@ -9,6 +9,7 @@ import { UnlinkedDuals } from './UnlinkedDuals'
 type School = {
   school_name_raw: string
   school_id: number | null
+  school_name: string | null      // the linked program's name
   total: number
   pending: number
   school_matched: number
@@ -537,7 +538,7 @@ export function RosterGradeImportClient({ gender }: { gender: 'M' | 'F' }) {
                       <td className="px-3 py-1">
                         {school.school_id ? (
                           <span className="text-green-700 text-xs">
-                            {programSchools.find(p => p.id === school.school_id)?.display_name ?? `ID ${school.school_id}`}
+                            {school.school_name ?? programSchools.find(p => p.id === school.school_id)?.display_name ?? `ID ${school.school_id}`}
                           </span>
                         ) : (
                           <div className="space-y-1">
@@ -578,7 +579,9 @@ export function RosterGradeImportClient({ gender }: { gender: 'M' | 'F' }) {
                         )}
                         {hasEdit && (
                           <div className="mt-1 text-xs text-green-700 font-medium">
-                            → {programSchools.find(p => p.id === editId)?.display_name ?? `ID ${editId}`}
+                            → {programSchools.find(p => p.id === editId)?.display_name
+                                ?? (school.proposal && [school.proposal, ...(school.proposal.alternates ?? [])].find(a => a.schoolId === editId)?.displayName)
+                                ?? `ID ${editId}`}
                             <button className="ml-2 text-slate-400" onClick={() => setSchoolEdits(p => { const n = {...p}; delete n[school.school_name_raw]; return n })}>✕</button>
                           </div>
                         )}
