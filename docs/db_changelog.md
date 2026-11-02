@@ -2,6 +2,30 @@
 
 ---
 
+## 2026-11-02 — 237 empty wrestler profiles deleted
+
+**Script:** `scripts/delete_empty_profiles.mts` (approved 2026-11-02: "we should be deleting all empty profiles so they don't appear in search")
+
+**Data changes (deleted, counts shown before approval):**
+- 166 profiles emptied by the duplicate merge.
+- 71 other profiles with no references, all boys, created 2026-06 to 09. Examples: Justice Commendatore, "Extra: Yamir Jones", "Gregory " (blank last name).
+
+**How "empty" was checked:**
+- Each profile was counted immediately before the delete across all 35 foreign-key columns to `wrestlers.id`, plus `users.followed_wrestler_ids`.
+- `wrestler_completeness` has one row per wrestler and follows the wrestlers table (15,094 → 14,928 → 14,857), so it is not a reference.
+- The first delete was a one-profile probe, ready to stop on a foreign-key error; none occurred.
+
+**Backups:**
+- `docs/migrations/backups/20261102_merged_duplicate_profiles_deleted.json`
+- `docs/migrations/backups/20261102_unreferenced_profiles_deleted.json`
+
+**APPLIED** — 2026-11-02 by script
+
+**Reversible?** Yes, re-insert the rows from the backups (same ids)
+**Verified?** Yes — a rerun finds 0 unreferenced profiles
+
+---
+
 ## 2026-11-02 — Integrity review: result types rated, CBC bouts, 16 two-person profiles, 166 duplicate profiles merged
 
 **Check:** `scripts/integrity_check.mts` (read-only, 35 rules). Run before and after every data change. Baseline vs after:
