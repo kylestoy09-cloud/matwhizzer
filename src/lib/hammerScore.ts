@@ -104,6 +104,20 @@ function fallTimeTier(secs: number, type: 'fall' | 'tf'): number {
   return base + 10                   // Third Period   (5:00+)
 }
 
+// Result types as imported carry extra text ("TB-1 4-3", "SV-2") or other spellings
+// ("DEC", "Maj", "OT"). Unmatched types count as not scored, so before this, ~190 wrestled
+// bouts were left out of the rating (2026-11-02).
+function canonicalResultType(resultType: string | null): string | null {
+  if (!resultType) return resultType
+  const t = resultType.trim()
+  if (/^(SV|TB|UTB)-?\d/i.test(t) || /^(\d-)?OT$/i.test(t)) return 'SV-1'   // overtime / tiebreaker
+  if (/^dec$/i.test(t)) return 'Dec'
+  if (/^(md|maj)$/i.test(t)) return 'MD'
+  if (/^tf$/i.test(t)) return 'TF'
+  if (/^fall$/i.test(t)) return 'Fall'
+  return t
+}
+
 export function classifyOutcome(
   resultType: string | null,
   fallTimeSeconds: number | null,
@@ -111,7 +125,7 @@ export function classifyOutcome(
   loserScore: number | null,
   isWinner: boolean,
 ): number | null {
-  switch (resultType) {
+  switch (canonicalResultType(resultType)) {
     case 'For':
     case 'MFFL':
     case 'DQ':

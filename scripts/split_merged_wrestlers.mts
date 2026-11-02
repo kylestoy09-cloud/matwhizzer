@@ -18,7 +18,7 @@ const skipJudgment = process.argv.includes('--skip-judgment')
 // and results go to <prefix>_before.json / <prefix>_done.json)
 const li = process.argv.indexOf('--list')
 const prefix = `docs/migrations/backups/${li > 0 ? process.argv[li + 1] : '20261101_merged_wrestler_splits'}`
-type Case = { gender: 'M' | 'F'; wrestler_id: string; name: string; keep_school: string; split_school: string; split_school_id: number; judgment_call: boolean }
+type Case = { gender: 'M' | 'F'; wrestler_id: string; name: string; keep_school: string; split_school: string; split_school_id: number; judgment_call: boolean; into_wrestler_id?: string; keep_is_nj?: boolean }
 const cases = (JSON.parse(fs.readFileSync(`${prefix}_list.json`, 'utf8')) as Case[])
   .filter(c => !(skipJudgment && c.judgment_call))
 
@@ -50,7 +50,7 @@ for (const c of cases) {
   backup[`${c.wrestler_id}@${c.split_school_id}`] = { case: c, wrestler: w, rows }
   const n = Object.values(rows).reduce((a, r) => a + r.length, 0)
   totalRows += n
-  console.log(`${c.judgment_call ? '?' : ' '} ${c.name.padEnd(20)} keep ${c.keep_school} | new person at ${c.split_school}: ${n} rows (${Object.entries(rows).map(([k, r]) => `${k.split('.')[0]} ${r.length}`).join(', ')})`)
+  console.log(`${c.judgment_call ? '?' : ' '} ${c.name.padEnd(20)} keep ${c.keep_school} | ${c.into_wrestler_id ? `into existing ${c.into_wrestler_id.slice(0, 8)}` : 'new person'} at ${c.split_school}: ${n} rows (${Object.entries(rows).map(([k, r]) => `${k.split('.')[0]} ${r.length}`).join(', ')})`)
 }
 console.log(`\n${cases.length} splits, ${totalRows} rows move`)
 if (!apply) process.exit(0)
@@ -67,7 +67,7 @@ for (const c of cases) {
   const splitRow = rosterRows?.find(r => r.school_id === c.split_school_id)
 
   const r = await splitWrestlerAtSchool(db, c.wrestler_id, c.split_school_id,
-    { first_name: w!.first_name, last_name: w!.last_name, grade: splitRow?.grade ?? null }, { moveRecords: true })
+    { first_name: w!.first_name, last_name: w!.last_name, grade: splitRow?.grade ?? null }, { moveRecords: true, intoId: c.into_wrestler_id })
 
   // The kept profile's grade: its own school's roster row wins; a grade that came only from
   // the other school's row belongs to the other person
@@ -79,7 +79,13 @@ for (const c of cases) {
     await db.from('wrestlers').update({ grade: null, grade_confirmed_at: null, grade_confirmed_source: null }).eq('id', c.wrestler_id)
     gradeFix = `${w!.grade} -> none (was the other person's)`
   }
-  results.push({ ...c, new_wrestler_id: r.newId, new_grade: splitRow?.grade ?? null, kept_grade_fix: gradeFix, moved: r.moved })
+  // The kept profile is out-of-state exactly when the school it keeps is
+  let oosFix: string | null = null
+  if (c.keep_is_nj !== undefined) {
+    const { data: k } = await db.from('wrestlers').select('is_oos').eq('id', c.wrestler_id).single()
+    if (!!k!.is_oos !== !c.keep_is_nj) { await db.from('wrestlers').update({ is_oos: !c.keep_is_nj }).eq('id', c.wrestler_id); oosFix = `is_oos ${!!k!.is_oos} -> ${!c.keep_is_nj}` }
+  }
+  results.push({ ...c, oos_fix: oosFix, new_wrestler_id: r.newId, new_grade: splitRow?.grade ?? null, kept_grade_fix: gradeFix, moved: r.moved })
   console.log(`split ${c.name} @ ${c.split_school} -> ${r.newId} (grade ${splitRow?.grade ?? '-'})${gradeFix ? ` | kept profile grade ${gradeFix}` : ''}`)
 }
 fs.writeFileSync(`${prefix}_done.json`, JSON.stringify(results, null, 1))

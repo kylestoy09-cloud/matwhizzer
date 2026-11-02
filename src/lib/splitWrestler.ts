@@ -8,7 +8,8 @@
 //
 // The new person takes the old record's gender, and their dual and tournament bouts
 // live in that gender's tables (dual_meet_matches / _girls, tournament_bouts / _girls).
-// They are out-of-state when that school is.
+// They are out-of-state when that school is. With opts.intoId the records go to that
+// existing wrestler instead (the other person already has a profile at the school).
 
 import type { SupabaseClient } from '@supabase/supabase-js'
 
@@ -22,7 +23,7 @@ export async function splitWrestlerAtSchool(
   oldId: string,
   schoolId: number,
   person: { first_name: string; last_name: string; grade: string | null; graded_at?: string },
-  opts: { moveRecords: boolean },
+  opts: { moveRecords: boolean; intoId?: string },
 ): Promise<SplitResult> {
   const moved: Record<string, number> = {}
   const count = (k: string, r: { data: unknown[] | null; error: { message: string } | null }) => {
@@ -38,14 +39,22 @@ export async function splitWrestlerAtSchool(
   const { data: school, error: sErr } = await db.from('schools').select('is_nj').eq('id', schoolId).single()
   if (sErr) throw new Error(`load school: ${sErr.message}`)
 
-  const { data: created, error: cErr } = await db.from('wrestlers').insert({
-    first_name: person.first_name, last_name: person.last_name, gender, is_oos: school.is_nj === false,
-    grade: person.grade,
-    grade_confirmed_at: person.grade ? (person.graded_at ?? new Date().toISOString()) : null,
-    grade_confirmed_source: person.grade ? 'roster_upload' : null,
-  }).select('id').single()
-  if (cErr) throw new Error(`create wrestler: ${cErr.message}`)
-  const newId = created.id as string
+  let newId: string
+  if (opts.intoId) {
+    const { data: into, error: iErr } = await db.from('wrestlers').select('id, gender').eq('id', opts.intoId).single()
+    if (iErr) throw new Error(`load target wrestler: ${iErr.message}`)
+    if (into.gender !== gender) throw new Error('target wrestler is the other gender')
+    newId = into.id as string
+  } else {
+    const { data: created, error: cErr } = await db.from('wrestlers').insert({
+      first_name: person.first_name, last_name: person.last_name, gender, is_oos: school.is_nj === false,
+      grade: person.grade,
+      grade_confirmed_at: person.grade ? (person.graded_at ?? new Date().toISOString()) : null,
+      grade_confirmed_source: person.grade ? 'roster_upload' : null,
+    }).select('id').single()
+    if (cErr) throw new Error(`create wrestler: ${cErr.message}`)
+    newId = created.id as string
+  }
 
   if (!opts.moveRecords) {
     // Both people are at the same school — matches can't be told apart, so only
@@ -55,11 +64,15 @@ export async function splitWrestlerAtSchool(
     return { newId, moved }
   }
 
-  // Alias at that school → new person (or add one)
-  const aliasMove = await db.from('wrestler_name_aliases').update({ wrestler_id: newId })
+  // Alias at that school → new person (or add one). An existing target that already has
+  // an alias there keeps its own; the old record's stays put (never deleted here).
+  const { count: targetAliases } = opts.intoId
+    ? await db.from('wrestler_name_aliases').select('*', { count: 'exact', head: true }).eq('wrestler_id', newId).eq('school_id', schoolId)
+    : { count: 0 }
+  const aliasMove = targetAliases ? { data: [] as unknown[], error: null } : await db.from('wrestler_name_aliases').update({ wrestler_id: newId })
     .eq('wrestler_id', oldId).eq('school_id', schoolId).select('id')
   count('wrestler_name_aliases', aliasMove)
-  if (!aliasMove.data?.length) {
+  if (!aliasMove.data?.length && !targetAliases) {
     count('wrestler_name_aliases', await db.from('wrestler_name_aliases')
       .insert({ raw_name: `${person.first_name} ${person.last_name}`, school_id: schoolId, wrestler_id: newId }).select('id'))
   }

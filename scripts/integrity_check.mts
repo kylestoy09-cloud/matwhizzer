@@ -5,6 +5,7 @@
 // duplicate meets, skipped meets, out-of-state flags wrong in both directions.
 import { createClient } from '@supabase/supabase-js'
 import fs from 'fs'
+import { classifyOutcome } from '../src/lib/hammerScore'
 const db = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
 const chk = (r: any, w: string) => { if (r.error) throw new Error(`${w}: ${r.error.message}`); return r.data as any[] }
 async function all(t: string, cols: string, f?: (q: any) => any, key = 'id') {
@@ -93,6 +94,20 @@ rule('not flagged out-of-state, only wrestles for non-NJ schools', notFlaggedNon
 rule('flagged out-of-state, only wrestles for NJ schools', flaggedNj)
 rule('wrestles for both NJ and non-NJ schools (* = non-NJ)', mixed)
 
+// bouts credited to a school where the wrestler has no alias, though they have aliases
+// elsewhere (a results file naming two schools alike: Dover / Dover DE, CBA / CBC)
+{
+  const aliasAt = new Map<string, Set<number>>()
+  for (const a of await all('wrestler_name_aliases', 'id, wrestler_id, school_id')) if (a.school_id != null) (aliasAt.get(a.wrestler_id) ?? aliasAt.set(a.wrestler_id, new Set()).get(a.wrestler_id)!).add(a.school_id)
+  const off: string[] = []
+  for (const [w, m] of rec) {
+    const al = aliasAt.get(w); if (!al?.size) continue
+    const stray = [...m.keys()].filter(s => !al.has(s))
+    if (stray.length) off.push(`${W.get(w)?.gender} ${wn(w)}: alias at ${[...al].map(sn).join('/')}; records at ${stray.map(x => `${sn(x)} ${m.get(x)}`).join(', ')}`)
+  }
+  rule('records at a school where the wrestler has no alias (but has one elsewhere)', off)
+}
+
 // same school twice under two records
 const norm = (n: string) => n.toLowerCase().replace(/,\s*[a-z]{2}$/, '').replace(/\b(high school|hs|school|regional|reg)\b/g, '').replace(/[^a-z0-9]/g, '')
 const byNorm = new Map<string, any[]>(); for (const s of schools) (byNorm.get(norm(s.display_name)) ?? byNorm.set(norm(s.display_name), []).get(norm(s.display_name))!).push(s)
@@ -120,9 +135,10 @@ for (const g of ['M', 'F'] as const) {
   const logged = new Set(log.map(r => `${r.wrestler_id}|${r.source_id}`)), miss: string[] = []
   for (let i = 0; i < ids.length; i += 50) for (const b of chk(await db.from(bt).select('id, wrestler_a_id, wrestler_b_id, winner_id, result_type').in('dual_meet_id', ids.slice(i, i + 50)).limit(5000), bt)) {
     if (!b.wrestler_a_id || !b.wrestler_b_id || !b.winner_id) continue
+    if (classifyOutcome(b.result_type, 60, 1, 0, true) === null) continue   // a result the rating skips on purpose (forfeit, injury, DQ)
     for (const w of [b.wrestler_a_id, b.wrestler_b_id]) { const ww = W.get(w); if (ww && !ww.is_oos && ww.gender === g && !logged.has(`${w}|${b.id}`)) miss.push(`${wn(w)} ${b.result_type} ${b.id.slice(0, 8)}`) }
   }
-  rule(`${L} 2025-26: wrestled dual bout missing from the rating log`, miss)
+  rule(`${L} 2025-26: scoreable dual bout missing from the rating log`, miss)
 }
 
 const failing = results.filter(r => r.count > 0)

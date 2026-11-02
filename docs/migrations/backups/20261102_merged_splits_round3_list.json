@@ -1,0 +1,165 @@
+[
+ {
+  "gender": "M",
+  "wrestler_id": "b2654654-b493-436d-8c8a-87e49a09ea1f",
+  "name": "Luke Miller",
+  "keep_school": "Lacey",
+  "split_school": "Demarest",
+  "split_school_id": 314,
+  "judgment_call": false,
+  "keep_is_nj": true,
+  "into_wrestler_id": "961025db-cf07-4bd8-8d49-d6b69cca9df1"
+ },
+ {
+  "gender": "M",
+  "wrestler_id": "e18a2bec-4e44-420c-a31b-a4a3ce44d4fa",
+  "name": "Jayden Williams",
+  "keep_school": "South Brunswick",
+  "split_school": "Sterling",
+  "split_school_id": 244,
+  "judgment_call": false,
+  "keep_is_nj": true,
+  "into_wrestler_id": "1e81c0ee-f15d-415e-b673-e9ad4956fd13"
+ },
+ {
+  "gender": "M",
+  "wrestler_id": "9d99e85b-abf5-48d2-aab1-fa35c17629c2",
+  "name": "Rocco Randazzo",
+  "keep_school": "Howell",
+  "split_school": "Cinnaminson",
+  "split_school_id": 257,
+  "judgment_call": false,
+  "keep_is_nj": true
+ },
+ {
+  "gender": "M",
+  "wrestler_id": "26426b63-b838-4281-89d1-ac51b1200b8c",
+  "name": "John Murphy",
+  "keep_school": "Middletown South",
+  "split_school": "Freehold Borough",
+  "split_school_id": 199,
+  "judgment_call": false,
+  "keep_is_nj": true
+ },
+ {
+  "gender": "M",
+  "wrestler_id": "04d71203-3c28-49ac-8015-4619ab7ced7c",
+  "name": "Jayden Lopez",
+  "keep_school": "Dover",
+  "split_school": "Elizabeth",
+  "split_school_id": 123,
+  "judgment_call": false,
+  "keep_is_nj": true
+ },
+ {
+  "gender": "M",
+  "wrestler_id": "6474eb87-43f3-4ab0-8499-14308834ed1e",
+  "name": "Jayden Johnson",
+  "keep_school": "Manchester Township",
+  "split_school": "Keansburg",
+  "split_school_id": 191,
+  "judgment_call": false,
+  "keep_is_nj": true
+ },
+ {
+  "gender": "M",
+  "wrestler_id": "55a3a9ad-3d30-4833-bdf2-0ea86467f6bb",
+  "name": "Ryan Rodriguez",
+  "keep_school": "Clifton",
+  "split_school": "Kearny",
+  "split_school_id": 103,
+  "judgment_call": false,
+  "keep_is_nj": true
+ },
+ {
+  "gender": "M",
+  "wrestler_id": "15045612-a37e-48cd-9dc4-369b6838e756",
+  "name": "Ryan Miller",
+  "keep_school": "Hillside",
+  "split_school": "Schalick",
+  "split_school_id": 286,
+  "judgment_call": false,
+  "keep_is_nj": true
+ },
+ {
+  "gender": "F",
+  "wrestler_id": "ea334540-aeba-427b-8fed-bd8187501af1",
+  "name": "Skylar Lawrence",
+  "keep_school": "North Star Academy",
+  "split_school": "Pitman",
+  "split_school_id": 311,
+  "judgment_call": false,
+  "keep_is_nj": true
+ },
+ {
+  "gender": "M",
+  "wrestler_id": "bc9a9804-7aab-4b11-9eb4-fb1d7eb294d0",
+  "name": "Dominic Thomas",
+  "keep_school": "Morris Knolls",
+  "split_school": "Orting (WA)",
+  "split_school_id": 956,
+  "judgment_call": false,
+  "keep_is_nj": true
+ },
+ {
+  "gender": "M",
+  "wrestler_id": "e091bb22-0e6a-4044-88f8-d78845b43b37",
+  "name": "Jacob Rivera",
+  "keep_school": "Bayonne",
+  "split_school": "Delaware Military Academy",
+  "split_school_id": 635,
+  "judgment_call": false,
+  "keep_is_nj": true,
+  "into_wrestler_id": "d92cb44c-ede8-416c-8786-ca7c4e6d2039"
+ },
+ {
+  "gender": "M",
+  "wrestler_id": "a07a8668-c544-4865-85c8-6c03e1ea5f65",
+  "name": "Angel Serrano",
+  "keep_school": "Pomona",
+  "split_school": "Plainfield",
+  "split_school_id": 154,
+  "judgment_call": false,
+  "keep_is_nj": false
+ },
+ {
+  "gender": "M",
+  "wrestler_id": "8c2780f8-2e03-4c4c-ad95-19ea70cbf168",
+  "name": "Steven Rodriguez",
+  "keep_school": "St John`s College",
+  "split_school": "Fair Lawn",
+  "split_school_id": 52,
+  "judgment_call": false,
+  "keep_is_nj": false
+ },
+ {
+  "gender": "F",
+  "wrestler_id": "f7fc4921-6afd-4c61-87e0-6686be925eee",
+  "name": "Brianna Biggs",
+  "keep_school": "Lenape",
+  "split_school": "King George",
+  "split_school_id": 730,
+  "judgment_call": false,
+  "keep_is_nj": true
+ },
+ {
+  "gender": "M",
+  "wrestler_id": "d31d81f7-80ee-408b-98de-c77bcad55a7e",
+  "name": "Dylan Miller",
+  "keep_school": "Frank W Cox",
+  "split_school": "Old Bridge",
+  "split_school_id": 163,
+  "judgment_call": false,
+  "keep_is_nj": false
+ },
+ {
+  "gender": "M",
+  "wrestler_id": "da811bba-5fd4-45e9-91f7-1705131dedfe",
+  "name": "Antonio Cruz",
+  "keep_school": "Newark East Side",
+  "split_school": "Plainfield",
+  "split_school_id": 154,
+  "judgment_call": false,
+  "keep_is_nj": true
+ }
+]

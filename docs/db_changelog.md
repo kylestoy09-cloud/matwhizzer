@@ -2,6 +2,61 @@
 
 ---
 
+## 2026-11-02 — Integrity review: result types rated, CBC bouts, 16 two-person profiles, 166 duplicate profiles merged
+
+**Check:** `scripts/integrity_check.mts` (read-only, 35 rules). Run before and after every data change. Baseline vs after:
+- flagged out-of-state at NJ-only schools: 18 → 0
+- NJ + non-NJ mixed: 8 → 2 (both transfers)
+- same-name same-school profiles: 149 → 4 (each really two people)
+- scoreable dual bouts missing from the 2025-26 rating log: boys 816 → 0, girls 226 → 0
+
+**1. Result types (code, `src/lib/hammerScore.ts`).** `classifyOutcome` matched exact strings only, so about 190 wrestled bouts were never rated: `TB-1 4-3` and other tiebreakers with a score, `OT`, `2-OT`, `TB-2`, `SV-2`, `DEC`, and 22 girls tournament `Maj`. Now mapped: overtime/tiebreaker = SV-1, DEC = Dec, Maj = MD. Forfeit, injury, DQ, default and NC are still not scored, on purpose.
+
+**2. Christian Brothers College (`scripts/fix_cbc_tournament_bouts.mts`).** The 2026 East Coast Catholic Classic (2026-01-09) names both CBA (NJ, 197) and CBC (St. Louis, 506) "Christian Brothers".
+- 92 bout sides for the 18 CBC wrestlers moved from CBA to CBC. They have aliases at 506, are on no CBA roster and have no duals. Their out-of-state flag was correct.
+- The 23 CBA wrestlers at that event are unchanged.
+- Backup: `20261102_cbc_tournament_bouts_before.json`.
+
+**3. Two people on one profile (`split_merged_wrestlers.mts --list 20261102_merged_splits_round3`).** 16 splits; 34 rows moved (mostly 2024-25 postseason entries, which feed the rating's starting base). Each case has evidence:
+- both Track rosters list the name
+- the wrestler was a freshman in 2025-26 with records at another school in 2024-25
+- records 9 weight classes apart
+- an NJ and an out-of-state record in the same season
+
+3 went into the other person's existing profile (Luke Miller @ Demarest, Jayden Williams @ Sterling, Jacob Rivera @ Delaware Military). 3 kept profiles un-flagged out-of-state (Dominic Thomas, Jacob Rivera, Brianna Biggs).
+- `splitWrestler.ts` gains `intoId`, to move records into an existing profile.
+- **Left as one person:** 84 apparent transfers (consistent weights); co-op girls (Old Tappan/Demarest, WW-P N/S, Cherry Hill E/W); Blair "B Team" and Hodgson duplicate school records.
+- **Undecided:** Finley Pazinko, Jake Valeri, Aidan Thompson, Ashley Coronel, and Antonio Cruz's Cedar Creek bout.
+
+**5. Duplicate profiles (`scripts/merge_duplicate_profiles.mts`).** 166 same-name same-school pairs merged into the profile with more records. A pair merges only if nothing says it's two people:
+- both wrestled on the same date
+- both entered in the same tournament
+- the roster lists the name twice
+- different grades
+- weights 3+ classes apart
+
+4 pairs are two people and stay separate: Ryan Kim (Fort Lee), Julian Sanchez (WW-P North), Chris Gallucci (Sterling), Dan Vargas (Easton).
+- **References moved:** all foreign keys to `wrestlers.id` (from the API's FK list), plus `users.followed_wrestler_ids`.
+- **Derived rows removed:** the duplicates' rating rows (17) and boys 2025-26 snapshot streak rows (600). Streak rows are only read when building the next weekly snapshot for their season, so nothing reads these now.
+- **Not deleted:** the 166 emptied profiles (0 references; deletion pending approval).
+- **Interruption:** the first run timed out on `wrestler_match_score_log.opponent_wrestler_id` (no index). That column is left to the rating rebuild, and `--resume` finished from the backup.
+- Backup: `20261102_duplicate_profiles_before.json`.
+
+**Ratings rebuilt after all of the above:** boys 2025-26 (archive) and girls 2025-26.
+
+**Open:**
+- #4: 31 girls duals where one wrestler faces several opponents at one weight (combined meets). Needs Track pages.
+- #6: Ella Magee vs Ella Magee (2026 SJWHOF Girls Varsity, NC placeholder); deleting it needs approval.
+- #7: 6 bouts with a girl in a boys dual.
+- 229 boys / 42 girls duals whose score differs from the bout points (likely team deductions, unverified).
+
+**APPLIED** — 2026-11-02 by script
+
+**Reversible?** Yes, from the backups
+**Verified?** Yes — integrity check before/after as above; every remaining failure has been reviewed.
+
+---
+
 ## 2026-11-02 — Dover tournament bouts; 12 NJ/out-of-state profiles split; rating log cleanup made sturdier
 
 **Scripts:**

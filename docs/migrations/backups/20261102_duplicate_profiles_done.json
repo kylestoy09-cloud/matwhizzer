@@ -1,0 +1,1662 @@
+[
+ {
+  "name": "Justin Ryland",
+  "gender": "M",
+  "school": "Delaware Military Academy",
+  "keep": "1a83b247-7389-489c-8323-7c3f96169b09",
+  "dup": "24863be3-7e96-4309-bc0a-6edc8b831f55",
+  "keepRecords": 4,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Nico Linert",
+  "gender": "M",
+  "school": "Lawrenceville School",
+  "keep": "0d1f8b5b-4955-4b46-a7d4-1917e3da041b",
+  "dup": "140559dc-f23d-4b55-ad1d-141a1cd119d0",
+  "keepRecords": 1,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Anthony Bray",
+  "gender": "M",
+  "school": "Morris Knolls",
+  "keep": "51e8e67f-b362-466f-8625-1148cdcedafd",
+  "dup": "904f7ee0-f266-48bc-b6dd-8aacb12e0645",
+  "keepRecords": 7,
+  "dupRecords": 6,
+  "reasons": []
+ },
+ {
+  "name": "Grant Baker",
+  "gender": "M",
+  "school": "West Morris",
+  "keep": "d40d62d2-79f8-46db-bb41-eee91881b626",
+  "dup": "8e080c0a-9d3e-4d15-818a-06ab2cfebd90",
+  "keepRecords": 10,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Ryan Zeltser",
+  "gender": "M",
+  "school": "Montville",
+  "keep": "fe7d2a59-2f9f-41f9-933e-22b4829cf3e2",
+  "dup": "4a25ca87-22cd-4585-8a7e-bac84a5715f3",
+  "keepRecords": 22,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Charlie White",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "d6159eaa-f8f2-42ee-a0ec-15816c2142b5",
+  "dup": "a6abc26c-9600-4c89-8d25-d8cdaac8d6d7",
+  "keepRecords": 5,
+  "dupRecords": 3,
+  "reasons": []
+ },
+ {
+  "name": "Charlie White",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "d6159eaa-f8f2-42ee-a0ec-15816c2142b5",
+  "dup": "a6c1846f-3767-4062-a2f0-9ea61039bc2e",
+  "keepRecords": 5,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Charlie White",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "d6159eaa-f8f2-42ee-a0ec-15816c2142b5",
+  "dup": "2919bb62-09de-4e99-9618-350a90e0f783",
+  "keepRecords": 5,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Alex Dymnicki",
+  "gender": "M",
+  "school": "West Morris",
+  "keep": "5e7c5d24-df09-49d1-8555-6ea7f24bf999",
+  "dup": "72316caa-38a0-4cf0-9e6b-378fd0fdd7e9",
+  "keepRecords": 22,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Zane Shama",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "fba381e6-28fd-4259-b826-5eba79f40faf",
+  "dup": "dc730de6-bd68-4cd3-bf62-6b7e82355c55",
+  "keepRecords": 5,
+  "dupRecords": 4,
+  "reasons": []
+ },
+ {
+  "name": "Zane Shama",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "fba381e6-28fd-4259-b826-5eba79f40faf",
+  "dup": "d92a9b69-9933-42c1-8145-f7debb8cfbbd",
+  "keepRecords": 5,
+  "dupRecords": 4,
+  "reasons": []
+ },
+ {
+  "name": "Zane Shama",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "fba381e6-28fd-4259-b826-5eba79f40faf",
+  "dup": "ef123ea5-6736-4faa-a813-6cf3b508c5e2",
+  "keepRecords": 5,
+  "dupRecords": 4,
+  "reasons": []
+ },
+ {
+  "name": "Luke Hosonitz",
+  "gender": "M",
+  "school": "Blair Academy",
+  "keep": "a9a1aee4-7bf2-4ec8-bcdb-b160d14c396e",
+  "dup": "7b7eeabe-e33d-4427-bb69-8252b5734f42",
+  "keepRecords": 4,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Zayd Medhat",
+  "gender": "M",
+  "school": "Montville",
+  "keep": "1cab0612-ee77-4c63-a39c-85c259090f34",
+  "dup": "307cdd5b-e4c9-4796-a22a-4f1bb7064bd9",
+  "keepRecords": 3,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Carson Miller",
+  "gender": "M",
+  "school": "Frank W Cox",
+  "keep": "e7958d4d-a354-4592-b740-82c65dddbd66",
+  "dup": "957fa774-1577-4e10-92e1-17622a7f6d76",
+  "keepRecords": 5,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Ryan McRoberts",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "7c4459c9-7d68-4494-8d25-af3171e7930f",
+  "dup": "4dfce44f-9410-4738-84cc-d7b8e2acdbcc",
+  "keepRecords": 3,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Ryan McRoberts",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "7c4459c9-7d68-4494-8d25-af3171e7930f",
+  "dup": "59e2ca66-e3e0-4b8c-bd0d-ebd2dbbe35fc",
+  "keepRecords": 3,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Ryan McRoberts",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "7c4459c9-7d68-4494-8d25-af3171e7930f",
+  "dup": "a83316ce-594b-472d-ae1d-f8e9620a118b",
+  "keepRecords": 3,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Finnegan O`Brien",
+  "gender": "M",
+  "school": "Blair Academy",
+  "keep": "94a306ef-28c6-48ed-bfec-6e21638aae45",
+  "dup": "6f5ae90a-75b1-41f1-8558-e68dcf5c2940",
+  "keepRecords": 8,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Aiden Wan",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "9c59c6fb-8677-4011-bc07-b5cd68742c33",
+  "dup": "1794d37d-9c24-4a7f-aa8a-cb90c5cff5d0",
+  "keepRecords": 3,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Aiden Wan",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "9c59c6fb-8677-4011-bc07-b5cd68742c33",
+  "dup": "5c8eae2b-5389-43c8-be5c-86f54728301c",
+  "keepRecords": 3,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Damien Moccia",
+  "gender": "M",
+  "school": "Watchung Hills",
+  "keep": "d3e3ba97-9249-485c-9566-9640d1b54a0e",
+  "dup": "1b01a59b-14dd-4744-81b2-bf7c4a1a62a4",
+  "keepRecords": 7,
+  "dupRecords": 3,
+  "reasons": []
+ },
+ {
+  "name": "Jacob Jones",
+  "gender": "M",
+  "school": "Green Farms Academy",
+  "keep": "add28b3f-20b3-4f2f-b760-cea561a06ec4",
+  "dup": "efef42a1-8e37-4327-a25c-70de77e63215",
+  "keepRecords": 4,
+  "dupRecords": 3,
+  "reasons": []
+ },
+ {
+  "name": "Gavin Boeckel",
+  "gender": "M",
+  "school": "Montville",
+  "keep": "76105eba-5650-47a3-bf63-788ca94ab112",
+  "dup": "bf2c9624-7dbd-4bd1-abf7-8eb9fc2850f5",
+  "keepRecords": 12,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Chris Horsch",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "21c7bfdc-045e-411b-aa52-37df949b1934",
+  "dup": "a5ca00ea-d6ca-46a1-bcb5-5ceb5571914f",
+  "keepRecords": 4,
+  "dupRecords": 3,
+  "reasons": []
+ },
+ {
+  "name": "Chris Horsch",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "21c7bfdc-045e-411b-aa52-37df949b1934",
+  "dup": "d6a2adeb-78bd-4030-ad3f-30e562aa49ac",
+  "keepRecords": 4,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Chris Horsch",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "21c7bfdc-045e-411b-aa52-37df949b1934",
+  "dup": "9cf7399c-1f7c-417f-b61c-b617d9497661",
+  "keepRecords": 4,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Chris Horsch",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "21c7bfdc-045e-411b-aa52-37df949b1934",
+  "dup": "15dffea9-d327-4708-8614-7c7de94dd6f0",
+  "keepRecords": 4,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Anthony Stover",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "65c8695a-4522-47ce-aa4e-7a8c009f6d8d",
+  "dup": "9dbc1eb3-03a0-4d9b-9210-4ac7912ac328",
+  "keepRecords": 6,
+  "dupRecords": 6,
+  "reasons": []
+ },
+ {
+  "name": "Anthony Stover",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "65c8695a-4522-47ce-aa4e-7a8c009f6d8d",
+  "dup": "efc10d84-70ab-4cfc-86fc-781f53f598d5",
+  "keepRecords": 6,
+  "dupRecords": 4,
+  "reasons": []
+ },
+ {
+  "name": "Anthony Stover",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "65c8695a-4522-47ce-aa4e-7a8c009f6d8d",
+  "dup": "164e4e8f-56f1-4861-9a32-a978eb2896ac",
+  "keepRecords": 6,
+  "dupRecords": 4,
+  "reasons": []
+ },
+ {
+  "name": "Paden Alyea",
+  "gender": "M",
+  "school": "Skyline",
+  "keep": "a79f3b24-825b-4b5d-975b-1cdbb77624b4",
+  "dup": "9deb499b-5bb2-4895-8dbb-8c645e0dc869",
+  "keepRecords": 7,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Rafael Zukoski",
+  "gender": "M",
+  "school": "Hackettstown",
+  "keep": "52b79861-0f5f-4a1f-9bd2-b6377cd00a4d",
+  "dup": "2e796541-2df1-4b5d-860b-5bd0e375b990",
+  "keepRecords": 12,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Nicholas Mateus",
+  "gender": "M",
+  "school": "Morris Knolls",
+  "keep": "1d2eef39-df36-4a88-9a0f-556cf26ae3c8",
+  "dup": "351040dd-c251-4b2e-a901-86249a6d4b41",
+  "keepRecords": 11,
+  "dupRecords": 4,
+  "reasons": []
+ },
+ {
+  "name": "Michael Turi",
+  "gender": "M",
+  "school": "Wyoming Seminary",
+  "keep": "878fdef7-dbab-4fc7-9294-1cd6c045037c",
+  "dup": "4ae62268-5d57-4ebf-92ab-b7b3a7147d7f",
+  "keepRecords": 2,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Eli Shea",
+  "gender": "M",
+  "school": "Green Farms Academy",
+  "keep": "5b567584-9969-4d81-bc4e-6a1faf44b347",
+  "dup": "c90ab497-a0d2-4de1-bcd6-67b9e9276718",
+  "keepRecords": 6,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Rajat Bhaskaran",
+  "gender": "M",
+  "school": "Delaware Military Academy",
+  "keep": "4fb0ab6d-b592-46c0-a224-f5be35bf28cb",
+  "dup": "18a56fcb-7829-4049-b69b-ed5881e9c9c8",
+  "keepRecords": 2,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Anderson Palian",
+  "gender": "M",
+  "school": "Wyoming Seminary",
+  "keep": "a88d09ac-bc33-471a-90b2-0f24e2078b36",
+  "dup": "78121302-913c-43ce-a76b-3e08046d72f5",
+  "keepRecords": 1,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Benjamin Koch",
+  "gender": "M",
+  "school": "Blair Academy",
+  "keep": "ca818943-b79e-41eb-8d2a-7b11c77308a0",
+  "dup": "985b6994-7f5f-4b6f-8fa6-a71bbefe83e9",
+  "keepRecords": 6,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Jackson Heslin",
+  "gender": "M",
+  "school": "Green Farms Academy",
+  "keep": "fe95c6d2-2141-444f-9cb1-362c076191e3",
+  "dup": "5efa7042-afbd-4d99-8be9-344b476be42c",
+  "keepRecords": 3,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Landon Lill",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "7fec9c19-9ed4-4798-9edc-788fc2ec12a7",
+  "dup": "ee35778a-c9d0-430a-b918-b01176f95c8d",
+  "keepRecords": 6,
+  "dupRecords": 5,
+  "reasons": []
+ },
+ {
+  "name": "Landon Lill",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "7fec9c19-9ed4-4798-9edc-788fc2ec12a7",
+  "dup": "c829e624-ccb4-4de7-9c8d-2da330dc4487",
+  "keepRecords": 6,
+  "dupRecords": 5,
+  "reasons": []
+ },
+ {
+  "name": "Landon Lill",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "7fec9c19-9ed4-4798-9edc-788fc2ec12a7",
+  "dup": "630688e2-dd09-47bf-8030-009d45fbf37f",
+  "keepRecords": 6,
+  "dupRecords": 3,
+  "reasons": []
+ },
+ {
+  "name": "Morgan Torres",
+  "gender": "M",
+  "school": "Watchung Hills",
+  "keep": "421fad9d-c8a7-4fb5-8e4e-4e99031c0869",
+  "dup": "0ac82247-ecc5-4c52-baf0-ef58256e97b5",
+  "keepRecords": 22,
+  "dupRecords": 7,
+  "reasons": []
+ },
+ {
+  "name": "Jack Harty",
+  "gender": "M",
+  "school": "Green Farms Academy",
+  "keep": "8f1614ef-551f-4761-82b7-a7e910136589",
+  "dup": "01227b43-c51e-4567-b4d0-9ae7bff15b90",
+  "keepRecords": 5,
+  "dupRecords": 3,
+  "reasons": []
+ },
+ {
+  "name": "Chris Miller",
+  "gender": "M",
+  "school": "Salesianum",
+  "keep": "49b0249b-5554-4878-a9a2-011e3f5f534c",
+  "dup": "d11c49be-36d5-44e2-a48d-ccd7ee097426",
+  "keepRecords": 2,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Chase Thompson",
+  "gender": "M",
+  "school": "Salesianum",
+  "keep": "7acd9618-7eb5-4af1-a3c0-3ce7a49908f8",
+  "dup": "2abb7595-defc-45cd-87cc-4756a852ccbd",
+  "keepRecords": 4,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Jaxson Sgurletta",
+  "gender": "M",
+  "school": "Green Farms Academy",
+  "keep": "ed7545d4-85d1-477d-b69c-f6dd4cf7b584",
+  "dup": "6b904a2b-6e77-4414-8a99-79cfb8ea1ea3",
+  "keepRecords": 3,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Benedict Kiely",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "f6c37d39-fe6d-4faf-b494-c21ab02decb1",
+  "dup": "a054d959-d266-4a9f-a836-d5f71fe3e519",
+  "keepRecords": 3,
+  "dupRecords": 3,
+  "reasons": []
+ },
+ {
+  "name": "Oliver Goodman",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "c0b2050a-c69f-48a3-83f1-a9560648dc8d",
+  "dup": "57f951d3-31fb-4d2f-a2ea-f295c7c8f2b4",
+  "keepRecords": 2,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Oliver Goodman",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "c0b2050a-c69f-48a3-83f1-a9560648dc8d",
+  "dup": "29f57b01-64db-4faf-9d0a-45ae7fcb305e",
+  "keepRecords": 2,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Matthew Kleinhandler",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "041b9969-983f-4baa-bfbc-581462177e92",
+  "dup": "82bc2028-fc1d-4118-ab41-1b39979236b9",
+  "keepRecords": 5,
+  "dupRecords": 4,
+  "reasons": []
+ },
+ {
+  "name": "Matthew Kleinhandler",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "041b9969-983f-4baa-bfbc-581462177e92",
+  "dup": "13f6845b-d1ad-4e4a-b3d8-0adf08d33d4a",
+  "keepRecords": 5,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Gabe Campanelli",
+  "gender": "M",
+  "school": "Salesianum",
+  "keep": "484c1664-e477-4e7d-ab67-3aaf0b22ff69",
+  "dup": "dbb84f9e-eaa8-4c53-a20c-410cad9ca685",
+  "keepRecords": 3,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Tyler Delcollo",
+  "gender": "M",
+  "school": "Delaware Military Academy",
+  "keep": "19ff965f-56bc-4139-8316-638d6a624370",
+  "dup": "5eee3e2e-291a-4cd9-8033-709b110a1c99",
+  "keepRecords": 4,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Matthew Dailey",
+  "gender": "M",
+  "school": "Wyoming Seminary",
+  "keep": "01464b2c-241b-4e9a-89ec-c72ba3da3c26",
+  "dup": "8c1bb3c4-2b14-4e18-9abb-0f388c9eb091",
+  "keepRecords": 2,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Jeremy McGrath",
+  "gender": "M",
+  "school": "Green Farms Academy",
+  "keep": "ee286986-ef44-4d6e-a129-c4a7d4cc2eab",
+  "dup": "36666844-5c1e-457b-a400-cb80efc11e75",
+  "keepRecords": 5,
+  "dupRecords": 3,
+  "reasons": []
+ },
+ {
+  "name": "Salah Tsarni",
+  "gender": "M",
+  "school": "Blair Academy",
+  "keep": "91c49982-e152-4255-8bb9-460da157e940",
+  "dup": "35ff8cc4-f79a-43c4-9e83-163453ed5eb0",
+  "keepRecords": 6,
+  "dupRecords": 4,
+  "reasons": []
+ },
+ {
+  "name": "Isaiah Grady",
+  "gender": "M",
+  "school": "Skyline",
+  "keep": "53394fba-15c5-4bff-826f-08da7ab4e5d1",
+  "dup": "e446a871-dc51-4bc9-a469-0599886abfa4",
+  "keepRecords": 3,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Lucas Parietti",
+  "gender": "M",
+  "school": "Wyoming Seminary",
+  "keep": "790c35ea-7be7-443d-82b3-206665bba972",
+  "dup": "9cc55990-d318-40a8-b983-f75f1d23d02b",
+  "keepRecords": 2,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Carter Davis",
+  "gender": "M",
+  "school": "Salesianum",
+  "keep": "a82d4c03-5a68-48de-9e58-9e313f48bd7c",
+  "dup": "25b4bdc4-071b-40bf-aa43-af9d3ecbc189",
+  "keepRecords": 3,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Anthony Evaristo",
+  "gender": "M",
+  "school": "Morris Knolls",
+  "keep": "b988790d-cc3a-4419-bff7-5b1f2a3b30e6",
+  "dup": "6d8337f6-8505-4f98-83eb-ffc599123ff7",
+  "keepRecords": 8,
+  "dupRecords": 4,
+  "reasons": []
+ },
+ {
+  "name": "Wyatt Stauffer",
+  "gender": "M",
+  "school": "Blair Academy",
+  "keep": "369d7c33-9eed-4ee8-86eb-08c99843503c",
+  "dup": "081b5050-fb86-48b8-94fb-f312388bcada",
+  "keepRecords": 6,
+  "dupRecords": 3,
+  "reasons": []
+ },
+ {
+  "name": "Jackson Grandel",
+  "gender": "M",
+  "school": "Delaware Military Academy",
+  "keep": "785dbb8b-8974-4231-9e4f-9628a10b009e",
+  "dup": "a20f75d0-84e4-4568-b26b-f466f0802866",
+  "keepRecords": 3,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Hayden Hurst",
+  "gender": "M",
+  "school": "West Morris",
+  "keep": "951d2015-d47a-426b-9dca-1775333c0f78",
+  "dup": "d71b4c54-dc3e-4b32-8877-c29256ce639a",
+  "keepRecords": 9,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Vicente Granada",
+  "gender": "M",
+  "school": "Frank W Cox",
+  "keep": "ce629a80-a3a4-48b2-82f4-f84a878cf57d",
+  "dup": "ea256ecb-f1d9-443f-8702-996032116ddf",
+  "keepRecords": 4,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Luca Seramone",
+  "gender": "M",
+  "school": "Delaware Military Academy",
+  "keep": "d948c4c2-9765-4be1-aee8-c970d7ef7dbf",
+  "dup": "678175de-5d32-4613-88aa-3d308697272d",
+  "keepRecords": 5,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Jacob Buffum",
+  "gender": "M",
+  "school": "Skyline",
+  "keep": "04e80c9f-04f6-4a53-bb73-1bc617f7d250",
+  "dup": "2194a103-3143-4855-8c22-4ba3ebd01132",
+  "keepRecords": 6,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Joseph Mahoney",
+  "gender": "M",
+  "school": "Green Farms Academy",
+  "keep": "9fc69479-5141-4f8d-b890-58c1ee116bd8",
+  "dup": "8d92eed9-51b4-4b1f-a00f-59dff8ac0b91",
+  "keepRecords": 5,
+  "dupRecords": 3,
+  "reasons": []
+ },
+ {
+  "name": "Ryan Horner",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "61285906-9de1-409a-8774-bd56c04f0a66",
+  "dup": "79c62cd3-ffac-4b7e-8aa5-a90e190baac8",
+  "keepRecords": 8,
+  "dupRecords": 6,
+  "reasons": []
+ },
+ {
+  "name": "Ryan Horner",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "61285906-9de1-409a-8774-bd56c04f0a66",
+  "dup": "b3e2f558-b41c-4f04-b078-23fa83715ca1",
+  "keepRecords": 8,
+  "dupRecords": 5,
+  "reasons": []
+ },
+ {
+  "name": "Ryan Horner",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "61285906-9de1-409a-8774-bd56c04f0a66",
+  "dup": "af9df381-dec5-4cee-a6a7-90fd998baee7",
+  "keepRecords": 8,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Owen Trautman",
+  "gender": "M",
+  "school": "Montville",
+  "keep": "67bef674-c8a9-46d4-afa2-21fb3b8d1c73",
+  "dup": "031d202f-4fda-4faa-8a86-bbab238b4463",
+  "keepRecords": 3,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Joseph Schinder",
+  "gender": "M",
+  "school": "Blair Academy",
+  "keep": "dcf16562-5cb0-4079-a8a2-f17f76b9b35c",
+  "dup": "c13a4a54-b59d-4491-ba7b-3fbbd7f7bb16",
+  "keepRecords": 5,
+  "dupRecords": 4,
+  "reasons": []
+ },
+ {
+  "name": "Thomas Kellas",
+  "gender": "M",
+  "school": "Blair Academy",
+  "keep": "71be0efd-0dd9-4d2f-ac50-b06116e487a3",
+  "dup": "e3381526-2237-41ed-a551-c3b841ab6179",
+  "keepRecords": 5,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Alexander Vasquez",
+  "gender": "M",
+  "school": "Salesianum",
+  "keep": "103fbf98-994b-413a-8c3f-c3c223b15123",
+  "dup": "22768c92-e381-4008-8946-1a87b7fe6875",
+  "keepRecords": 2,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Joe Bachmann",
+  "gender": "M",
+  "school": "Faith Christian Academy",
+  "keep": "914e15fc-cbd8-4390-909c-a641331e7ab0",
+  "dup": "c8d87f0f-5b2a-4d81-ada9-02d18d8a0a0c",
+  "keepRecords": 6,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Ryan Schneider",
+  "gender": "M",
+  "school": "Green Farms Academy",
+  "keep": "30851c9d-c7d8-4bab-98c6-02ab62cbcc9c",
+  "dup": "da479336-cd09-4b2f-82a3-1a2093863a96",
+  "keepRecords": 5,
+  "dupRecords": 3,
+  "reasons": []
+ },
+ {
+  "name": "Edward George",
+  "gender": "M",
+  "school": "Blair Academy",
+  "keep": "bce739c1-b1bf-4d58-a95c-5d55ede3ec9c",
+  "dup": "a4a39cd4-79d2-4324-8c81-8d7e99463c8d",
+  "keepRecords": 6,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Noah Fenner",
+  "gender": "M",
+  "school": "Easton Area High School",
+  "keep": "47398240-8ff3-4716-bf7a-d3cd630b6f82",
+  "dup": "dd1b42dd-9e19-44bb-9879-5728a2aee06a",
+  "keepRecords": 6,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Kimoni Giles",
+  "gender": "M",
+  "school": "Green Farms Academy",
+  "keep": "6adbd297-2d88-4c54-9918-f11a5a68b33b",
+  "dup": "128b9726-7c66-4642-b063-0cf63bbe2960",
+  "keepRecords": 1,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Tyler Neiva",
+  "gender": "M",
+  "school": "Green Farms Academy",
+  "keep": "e30136ac-85b6-4cb0-9a83-eece796f3415",
+  "dup": "9505f97f-f46c-4716-bab3-d1f9f096a6a4",
+  "keepRecords": 4,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Chase Kastner",
+  "gender": "M",
+  "school": "Green Farms Academy",
+  "keep": "eb23448f-96a2-4dca-a44e-d35fb6a20138",
+  "dup": "706433ce-7da3-4e73-a915-e41d5c40d290",
+  "keepRecords": 5,
+  "dupRecords": 3,
+  "reasons": []
+ },
+ {
+  "name": "Dylan Luik",
+  "gender": "M",
+  "school": "Skyline",
+  "keep": "5aa18acf-acbf-4b55-a2c3-4a904d6efd5a",
+  "dup": "a3703ecd-8e7f-4eca-afca-02004c3b99ad",
+  "keepRecords": 4,
+  "dupRecords": 3,
+  "reasons": []
+ },
+ {
+  "name": "Adem Amar",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "f4c75923-9a9e-4ad2-afd8-4b4f69862828",
+  "dup": "1ba9ff24-598b-4971-b6e6-3bb697f995c6",
+  "keepRecords": 5,
+  "dupRecords": 3,
+  "reasons": []
+ },
+ {
+  "name": "Adem Amar",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "f4c75923-9a9e-4ad2-afd8-4b4f69862828",
+  "dup": "4637ff1d-4cfd-4708-ba40-5770427a503e",
+  "keepRecords": 5,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Adem Amar",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "f4c75923-9a9e-4ad2-afd8-4b4f69862828",
+  "dup": "04d9a672-a24a-433d-a7f5-0322f59a802e",
+  "keepRecords": 5,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Adem Amar",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "f4c75923-9a9e-4ad2-afd8-4b4f69862828",
+  "dup": "45dbeb2f-3f39-4ed1-9435-fa37763636f1",
+  "keepRecords": 5,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Asher Bacon",
+  "gender": "M",
+  "school": "Faith Christian Academy",
+  "keep": "8ced4ed0-f504-4200-8b83-8c290d94e68e",
+  "dup": "5c02b9fd-5c80-46f1-8665-35de82343bc2",
+  "keepRecords": 1,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Massimo Sheinin",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "7b7d4060-3497-422c-8fac-b887c60c1823",
+  "dup": "cbb4c105-28d4-467f-8c6b-f982c5c9b5e3",
+  "keepRecords": 5,
+  "dupRecords": 3,
+  "reasons": []
+ },
+ {
+  "name": "Massimo Sheinin",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "7b7d4060-3497-422c-8fac-b887c60c1823",
+  "dup": "e42e6eb8-d26d-4dcd-97a2-6c3b548df7f6",
+  "keepRecords": 5,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Massimo Sheinin",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "7b7d4060-3497-422c-8fac-b887c60c1823",
+  "dup": "53334df1-a875-49b3-ab20-44be77b8734a",
+  "keepRecords": 5,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Massimo Sheinin",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "7b7d4060-3497-422c-8fac-b887c60c1823",
+  "dup": "64591dc2-ed53-4b75-af5c-d924832351e8",
+  "keepRecords": 5,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Nolan McCarthy",
+  "gender": "M",
+  "school": "Wyoming Seminary",
+  "keep": "e3c4a3f3-e78c-40b4-b85a-c982fe262e3a",
+  "dup": "2e8a514b-fe45-4814-aaa5-83a9cd162492",
+  "keepRecords": 2,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Chase Burns",
+  "gender": "M",
+  "school": "Grassfield",
+  "keep": "e0048a6e-082c-4e16-bc6a-0d584ccba0d7",
+  "dup": "359dd65e-7c87-47fd-8f17-cf0be1d75485",
+  "keepRecords": 5,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Dylan Emond",
+  "gender": "M",
+  "school": "Blair Academy",
+  "keep": "44883fca-9ad7-4f71-aad7-4fccf58e228e",
+  "dup": "cc49595b-a54b-4dee-ba3d-1287b1a2872c",
+  "keepRecords": 4,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Caleb Rafal",
+  "gender": "M",
+  "school": "Frank W Cox",
+  "keep": "7c64bac3-3ce3-43ba-8091-99c84970fcd1",
+  "dup": "1cda7a07-b914-4d00-81e0-d1a6477a5ec9",
+  "keepRecords": 3,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Lucas Forman",
+  "gender": "M",
+  "school": "Wyoming Seminary",
+  "keep": "99c8be8b-f2d1-47fd-bb70-b43f73cf17bd",
+  "dup": "f388ca55-3072-4aed-b8ca-7c78771f5d8a",
+  "keepRecords": 1,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Vinny DiVello",
+  "gender": "M",
+  "school": "Skyline",
+  "keep": "838f590e-c49c-4f13-98d5-c16dba636322",
+  "dup": "8fe46345-abdf-4398-9c7d-70e3b5b664e1",
+  "keepRecords": 4,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Cole Perrin",
+  "gender": "M",
+  "school": "Delaware Military Academy",
+  "keep": "420f8524-340d-4e6f-9872-6f25d8c193e4",
+  "dup": "865fb5b7-63d9-4292-aa39-e1cc5334368c",
+  "keepRecords": 4,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Evan May",
+  "gender": "M",
+  "school": "Watchung Hills",
+  "keep": "b749238a-3db2-40f7-85fc-c112d28f9ebc",
+  "dup": "f15c7365-ba0a-46a2-a16f-db7f607b2040",
+  "keepRecords": 10,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Dominic Lucian",
+  "gender": "M",
+  "school": "Salesianum",
+  "keep": "8562dee6-2a70-4c57-a49d-3dfdb8a9087d",
+  "dup": "8100f863-d238-460d-b742-4098bc5a6c84",
+  "keepRecords": 6,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Vedwin Nivas",
+  "gender": "M",
+  "school": "Blair Academy",
+  "keep": "0fdce094-5d29-4191-b1e6-a101c806273b",
+  "dup": "de570145-1537-4e02-9313-fc59925e2052",
+  "keepRecords": 8,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Ronan Montes",
+  "gender": "M",
+  "school": "Blair Academy",
+  "keep": "57869597-451d-4857-a9a5-4b5848a0dc8a",
+  "dup": "8e722b1a-6be5-438b-b58e-8f709d7c47bf",
+  "keepRecords": 4,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Weston Borgers",
+  "gender": "M",
+  "school": "Blair Academy",
+  "keep": "9958f5e7-665b-4af1-8c3d-75cc62019c34",
+  "dup": "67efdd9c-286f-41f5-9cc6-c7bb2dc3cb1d",
+  "keepRecords": 8,
+  "dupRecords": 3,
+  "reasons": []
+ },
+ {
+  "name": "Alex Marchetti",
+  "gender": "M",
+  "school": "Wyoming Seminary",
+  "keep": "d19d7e62-be08-4e5d-ae0d-f58a1554d9b3",
+  "dup": "7fc0bb24-05f7-4110-9bba-7a9eb3028619",
+  "keepRecords": 1,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Vincenzo Anello",
+  "gender": "M",
+  "school": "Blair Academy",
+  "keep": "bfe1fe00-9206-4076-a348-a1bcdb525c76",
+  "dup": "f536ce84-7def-44db-b044-0d188e831295",
+  "keepRecords": 7,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Lucas Goodman",
+  "gender": "M",
+  "school": "The Peddie School",
+  "keep": "d88bb9cc-96bd-47a3-a227-ebe14fa63367",
+  "dup": "75aba2f7-82b1-49ff-88f9-37109d091315",
+  "keepRecords": 5,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Matthew Arndt",
+  "gender": "M",
+  "school": "Battlefield",
+  "keep": "ebb27c1b-bb6a-4fa2-b313-8fdcdd6294f8",
+  "dup": "83ade19a-ae3c-4e64-bf77-4d40fdea3be7",
+  "keepRecords": 9,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "James Delvescovo",
+  "gender": "M",
+  "school": "Salesianum",
+  "keep": "cbc1637a-9912-4489-bc85-cf25d0423890",
+  "dup": "2e16cb3c-b65c-43d0-a9dc-724d39adfbd3",
+  "keepRecords": 2,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Dan Boyle",
+  "gender": "M",
+  "school": "Council Rock North Hs",
+  "keep": "8f5e95d3-435d-4c60-afba-a015242da410",
+  "dup": "1e46f03f-3935-4a00-b697-de96b2afb8ac",
+  "keepRecords": 1,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Vincent Stoeckel",
+  "gender": "M",
+  "school": "South Plainfield",
+  "keep": "f59dc122-7001-49ba-833d-956849f5ea51",
+  "dup": "12fa3706-54b9-4960-96d8-0a82cf902b23",
+  "keepRecords": 1,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Alonzo Parker",
+  "gender": "M",
+  "school": "Easton Area High School",
+  "keep": "12fcdc40-7954-4e31-b482-4bc92e94e23a",
+  "dup": "bb6b8b36-0483-4669-ae16-62a6364bf823",
+  "keepRecords": 7,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Brayden Abrams",
+  "gender": "M",
+  "school": "Easton Area High School",
+  "keep": "39437c3c-23fd-4156-8a3b-0c3fbe61b636",
+  "dup": "1ed950c1-e974-4223-9341-22238edefc15",
+  "keepRecords": 3,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Gavin Scott",
+  "gender": "M",
+  "school": "Delaware Military Academy",
+  "keep": "bb0857d8-3a4f-4ffa-bac9-eb84fe3829af",
+  "dup": "f8caaf95-8f23-46c8-8af8-c07f1b00e9cf",
+  "keepRecords": 3,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Nicholas Salamone",
+  "gender": "M",
+  "school": "Easton Area High School",
+  "keep": "843306fe-e1b1-48ce-9bc4-3fc0a068b101",
+  "dup": "60619279-87e7-4c97-83b8-a2b833db9b7f",
+  "keepRecords": 7,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Jack Anello",
+  "gender": "M",
+  "school": "Blair Academy",
+  "keep": "9d31ccce-d377-4f1a-b145-5fdff079ea80",
+  "dup": "9c946b50-223a-4f28-99ff-74ddbae0537c",
+  "keepRecords": 6,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Michael Lynch",
+  "gender": "M",
+  "school": "Blair Academy",
+  "keep": "32e86134-31fd-4114-8164-90616c4c4711",
+  "dup": "794617c2-ce1d-4a86-ba6c-0569e5403c22",
+  "keepRecords": 4,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Parker Withers",
+  "gender": "M",
+  "school": "Skyline",
+  "keep": "2ea5775a-b360-479b-868b-a5bdc04ecd4f",
+  "dup": "8aa01480-2977-4ae9-b1a6-7c82e23f6560",
+  "keepRecords": 5,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Olen Le",
+  "gender": "M",
+  "school": "Battlefield",
+  "keep": "a3653405-9475-4711-b322-a8816a2d3854",
+  "dup": "2c9f3bea-0ee3-4844-970d-8c1d0340d6f0",
+  "keepRecords": 2,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Chaney Lewis",
+  "gender": "M",
+  "school": "Wyoming Seminary",
+  "keep": "b4915202-b2ff-44d6-8ce5-99b107c500dd",
+  "dup": "a2af4b77-751f-44a4-b71a-194c1be52539",
+  "keepRecords": 2,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Nicholas Barrett",
+  "gender": "M",
+  "school": "Grassfield",
+  "keep": "d694f6ac-1de8-4fa1-8a8f-bc3788dca48e",
+  "dup": "1986f57f-8ddf-4355-bf12-967f96aa3b20",
+  "keepRecords": 3,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Brighton Karvoski",
+  "gender": "M",
+  "school": "Green Farms Academy",
+  "keep": "42ad6959-10ea-45c2-8ee1-28425552428e",
+  "dup": "0a2823ec-2f6c-4643-b9d6-47cfcfa3314a",
+  "keepRecords": 6,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Karl Ludwig",
+  "gender": "M",
+  "school": "Frank W Cox",
+  "keep": "66a6b332-c953-4c6d-9790-d83e02327fd6",
+  "dup": "795a7067-9d15-428e-ae5c-cffff4e3bf37",
+  "keepRecords": 4,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Hunter Johnson",
+  "gender": "M",
+  "school": "Grassfield",
+  "keep": "10c9f1d1-e1cd-46de-93db-fbc404586842",
+  "dup": "8b116920-cb49-4719-ad05-6df03c477053",
+  "keepRecords": 3,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Leland Mendez",
+  "gender": "M",
+  "school": "Grassfield",
+  "keep": "48aa6a4d-58e8-4830-8406-6f464c607eb8",
+  "dup": "fb3d176c-b436-4351-b222-e2bcf1f710aa",
+  "keepRecords": 4,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Antonio Montella",
+  "gender": "M",
+  "school": "West Morris",
+  "keep": "9a2c826e-03b3-415b-8380-ccd25fbbccdc",
+  "dup": "ea38d681-9937-490e-8433-242b60b26b1c",
+  "keepRecords": 3,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Logan Biederman",
+  "gender": "M",
+  "school": "Council Rock North Hs",
+  "keep": "41cbe359-fca2-4f93-8b24-64605f79eec6",
+  "dup": "23fd4b2a-4972-415a-b9a4-74e9cdc085e5",
+  "keepRecords": 2,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Wyatt Spencer",
+  "gender": "M",
+  "school": "Wyoming Seminary",
+  "keep": "b1f2a020-5173-40d4-9b39-79e559931276",
+  "dup": "3ef97722-c9dd-4588-9486-db95a0100f29",
+  "keepRecords": 1,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Josiah Sykes",
+  "gender": "M",
+  "school": "Skyline",
+  "keep": "01728c56-1407-4850-aba6-c88279eb3381",
+  "dup": "fce7fdc2-d024-435a-95cd-4d53d950933e",
+  "keepRecords": 5,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Tyler Cruise",
+  "gender": "M",
+  "school": "Easton Area High School",
+  "keep": "ff95746b-f4e1-4c78-b808-bf192b728893",
+  "dup": "053af63b-7d6a-441b-8c32-0b455b182c4f",
+  "keepRecords": 4,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Cael Mielnik",
+  "gender": "M",
+  "school": "Blair Academy",
+  "keep": "b3fdf0d8-6726-4c7e-8ea7-901aa1f191c5",
+  "dup": "665e9216-f8d7-4d83-95c7-734b92befd66",
+  "keepRecords": 7,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Tanner Milburn",
+  "gender": "M",
+  "school": "Easton Area High School",
+  "keep": "ac792d04-3a95-4605-8964-76a567b85436",
+  "dup": "b540f3e1-4942-4632-b4ca-a8b60f62d797",
+  "keepRecords": 4,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Jace Wright",
+  "gender": "M",
+  "school": "Battlefield",
+  "keep": "e7c9a064-78c3-434d-8cb4-65fe11f1c243",
+  "dup": "de43907b-802c-4efa-89bb-f647036fa5be",
+  "keepRecords": 4,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Ryan Haynes",
+  "gender": "M",
+  "school": "Wyoming Seminary",
+  "keep": "0e7142d8-228a-4753-bdb8-4fd2e2e11d19",
+  "dup": "5f60dfa1-120c-4f2b-bd86-0805a41aa85b",
+  "keepRecords": 2,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Nolan Mather",
+  "gender": "M",
+  "school": "Grassfield",
+  "keep": "1a3a815b-77ee-4979-a6fc-c3c6298175b4",
+  "dup": "39dee833-d983-432d-9ae6-b8656a85c2c3",
+  "keepRecords": 4,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Ethan Krazer",
+  "gender": "M",
+  "school": "Easton Area High School",
+  "keep": "7a23968e-f389-434e-bac6-b25ce6650d1e",
+  "dup": "2222f45c-4bc7-44ff-a3ef-4a403d839395",
+  "keepRecords": 5,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Cael Weidemoyer",
+  "gender": "M",
+  "school": "Faith Christian Academy",
+  "keep": "f8596950-ac41-4327-ac00-dc70822fc416",
+  "dup": "cadca625-1373-4320-a0db-1064fe028756",
+  "keepRecords": 3,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Justin Cosover",
+  "gender": "M",
+  "school": "Easton Area High School",
+  "keep": "c8fb2fff-71ad-4778-bbfd-6dd25cbdcc19",
+  "dup": "8237cd16-b224-4230-bef2-39c0ee09c5b5",
+  "keepRecords": 4,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Simeon Barrett",
+  "gender": "M",
+  "school": "Grassfield",
+  "keep": "b03c2822-b4e8-44c8-96c0-dfce26f1abcc",
+  "dup": "424c62fd-c0be-4c2b-aedb-10b98b2793c1",
+  "keepRecords": 3,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Wyatt Snyder",
+  "gender": "M",
+  "school": "Easton Area High School",
+  "keep": "73f9c8ed-aecf-47f9-8af3-6a6a618f5846",
+  "dup": "a8c9e4f2-06d7-40e0-bbfd-4cf9e94fb505",
+  "keepRecords": 2,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Travis Gentile",
+  "gender": "M",
+  "school": "Morris Knolls",
+  "keep": "85f3a962-3baa-422a-bfe3-ad64e2bd204c",
+  "dup": "59300489-b63c-4114-b022-92844641c6bc",
+  "keepRecords": 2,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Connor Manning",
+  "gender": "M",
+  "school": "Lawrenceville School",
+  "keep": "79da7477-7f28-4641-9188-cdeb3ccaa591",
+  "dup": "756b6f41-0a48-463c-9b35-1d6030738743",
+  "keepRecords": 1,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Colton Jones",
+  "gender": "M",
+  "school": "Grassfield",
+  "keep": "c50779f0-ebf2-413f-a967-3da1be7a64a8",
+  "dup": "0ecdf5c8-e976-4f8d-bc3c-8eaf22ae0072",
+  "keepRecords": 5,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Michael Rambone",
+  "gender": "M",
+  "school": "Easton Area High School",
+  "keep": "338ca91f-84bc-4310-8f19-fc29d4ca4b04",
+  "dup": "098786aa-1ed3-4a01-a2f0-bbf04764a140",
+  "keepRecords": 2,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Izaque Tomaz",
+  "gender": "M",
+  "school": "Frank W Cox",
+  "keep": "0d38e61d-f038-4026-a4f6-4c4925fcb237",
+  "dup": "afc9ba5d-c41d-46cc-bca4-051b28460733",
+  "keepRecords": 6,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "James Cornelius",
+  "gender": "M",
+  "school": "Frank W Cox",
+  "keep": "a226d7e8-70ef-4b14-ae4d-b3e41b86d1d1",
+  "dup": "222a74d6-768f-4455-a689-17028983a926",
+  "keepRecords": 3,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Brian Chamberlain",
+  "gender": "M",
+  "school": "Wyoming Seminary",
+  "keep": "3ce4ffeb-8ab8-468f-b302-27c42426eaed",
+  "dup": "ef132b33-78df-4487-98b9-767e81c850ca",
+  "keepRecords": 7,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Nate Moore",
+  "gender": "M",
+  "school": "Grassfield",
+  "keep": "feb2ece3-4528-48c2-b4e9-d265d6c76e6d",
+  "dup": "fa97e5b2-86dc-4958-ace2-ba48980d8c80",
+  "keepRecords": 8,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Brady Greene",
+  "gender": "M",
+  "school": "Grassfield",
+  "keep": "f4bdbe44-527b-4f67-9491-bd6921739621",
+  "dup": "61b31711-ee92-4abf-bc66-5381befe2445",
+  "keepRecords": 2,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Garrett Till",
+  "gender": "M",
+  "school": "Salesianum",
+  "keep": "4a79cdd6-a67c-42ac-ab02-fa9329027f8a",
+  "dup": "9e4143e5-6fbb-4e41-91c2-c76584ab9b3e",
+  "keepRecords": 2,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Higen Castillo",
+  "gender": "M",
+  "school": "Grassfield",
+  "keep": "5ed0560a-56bc-4a8a-a642-639592d22c3a",
+  "dup": "fb61cbec-7ab4-4bea-b9b7-879138fa2441",
+  "keepRecords": 3,
+  "dupRecords": 2,
+  "reasons": []
+ },
+ {
+  "name": "Rudy Wagner",
+  "gender": "M",
+  "school": "Frank W Cox",
+  "keep": "2e0beace-7317-49e4-96f9-16745d49dcb5",
+  "dup": "52c95cb8-d584-4a67-b6a6-0622441b1b86",
+  "keepRecords": 6,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Cruz Little",
+  "gender": "M",
+  "school": "Faith Christian Academy",
+  "keep": "9e4ccfc3-c034-49e1-90d0-9e72bff8fb24",
+  "dup": "7487bbdc-70eb-4083-aacf-6405deb603e3",
+  "keepRecords": 2,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Brayden Ranauto",
+  "gender": "M",
+  "school": "Salesianum",
+  "keep": "6143c7e3-cd4f-4829-b350-bbbb91262609",
+  "dup": "741fa70d-95b5-4c48-b9c1-7e1ad3247ea3",
+  "keepRecords": 4,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Nathan Yoder",
+  "gender": "M",
+  "school": "Faith Christian Academy",
+  "keep": "1e34f5b0-3071-4a92-8395-fa0023ce22f1",
+  "dup": "47370e28-ecde-4af9-896f-42e54d417fb3",
+  "keepRecords": 1,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Freddy Bachmann",
+  "gender": "M",
+  "school": "Faith Christian Academy",
+  "keep": "b29f0be6-9e15-4868-8c04-bc2744ff17c8",
+  "dup": "dae447ea-4fb3-4b5a-bb41-c574f70bfadb",
+  "keepRecords": 5,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Moore Nick",
+  "gender": "M",
+  "school": "Grassfield",
+  "keep": "c1901eaa-2a96-4d82-9494-5388970ab518",
+  "dup": "92ca82e9-c4ae-4a74-8126-8bdbfe9b0d16",
+  "keepRecords": 7,
+  "dupRecords": 3,
+  "reasons": []
+ },
+ {
+  "name": "Shane Wagner",
+  "gender": "M",
+  "school": "Faith Christian Academy",
+  "keep": "34f71eaa-7e1d-438f-8ed1-1756573dbec5",
+  "dup": "92a3fe86-e724-4658-8d0f-d205b96ab604",
+  "keepRecords": 2,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Dennis Bruin",
+  "gender": "M",
+  "school": "Grassfield",
+  "keep": "2602fa89-212d-4572-b8d4-d57147ba3aa8",
+  "dup": "f6be2274-d337-467d-8369-bbbeeae8ede4",
+  "keepRecords": 4,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Nicholas Papiro",
+  "gender": "M",
+  "school": "Delaware Military Academy",
+  "keep": "79cc6085-6e8e-4ff0-b7d2-9289f0661b28",
+  "dup": "d9495146-9a0f-4ae9-8d49-36093ed1f303",
+  "keepRecords": 4,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Luca Schinelli",
+  "gender": "M",
+  "school": "Grassfield",
+  "keep": "1c883222-486d-45c6-ad79-c1a660ec26e8",
+  "dup": "8743309d-8914-4edd-9e64-69fc64d1ceba",
+  "keepRecords": 4,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Will Socorso",
+  "gender": "M",
+  "school": "Salesianum",
+  "keep": "6d9700a0-c574-44cd-a1cc-2947879c0cf5",
+  "dup": "c903ab21-f809-45d5-a788-ba2ee15ce11f",
+  "keepRecords": 3,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Mark Effendian",
+  "gender": "M",
+  "school": "Faith Christian Academy",
+  "keep": "12b339af-cb6b-4603-be60-f2b532c491bb",
+  "dup": "ed571a38-42a7-4481-bd72-0480b0b6f240",
+  "keepRecords": 5,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Santino Sianni",
+  "gender": "M",
+  "school": "Salesianum",
+  "keep": "23b41fbc-0ac3-4340-b68e-472dc1778871",
+  "dup": "a02a02be-aee4-46a5-813b-7ce3e53ddaa1",
+  "keepRecords": 3,
+  "dupRecords": 1,
+  "reasons": []
+ },
+ {
+  "name": "Jack Famularo",
+  "gender": "M",
+  "school": "Easton Area High School",
+  "keep": "392c852e-f0ce-480b-a735-dc29660b1927",
+  "dup": "91fd624c-1683-4311-bf15-e8dba2b23391",
+  "keepRecords": 4,
+  "dupRecords": 1,
+  "reasons": []
+ }
+]
