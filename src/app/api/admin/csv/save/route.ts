@@ -3,6 +3,8 @@
 // inserts seeds, inserts bouts.
 
 import { NextRequest, NextResponse } from 'next/server'
+import { applyImportGrades } from '@/lib/applyImportGrades'
+import type { GradeChoice } from '@/lib/rosterGradeSuggest'
 import { createClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { getWorkingSeason, parseGender } from '@/lib/season-context'
@@ -29,6 +31,9 @@ export async function POST(req: NextRequest) {
   const authClient = await createSupabaseServer()
   const { data: { user } } = await authClient.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  // New wrestlers given a grade (from the review or the Track roster)
+  let gradesSet = 0
+  let gradesFromRoster = 0
 
   let csvText: string
   let tournamentName: string
@@ -321,6 +326,22 @@ export async function POST(req: NextRequest) {
         newWrestlerMap.set(`${w.name}|${w.school_id}`, ins.data.id)
       }
     }
+    // Grades for the new NJ wrestlers, as settled in the review (the create choice's
+    // grade, else the single exact Track roster match)
+    const gradeChoices: Record<string, GradeChoice> = {}
+    for (const [flagKey, ov] of Object.entries(wrestlerOverrides)) {
+      if (ov?.type === 'create' && ov.grade !== undefined) gradeChoices[flagKey.split('|').slice(0, 2).join('|')] = ov.grade
+    }
+    const gradeResult = await applyImportGrades(client as never, {
+      gender: gender === 'F' ? 'F' : 'M',
+      newWrestlers: newWrestlers
+        .filter(w => !w.is_oos && newWrestlerMap.has(`${w.name}|${w.school_id}`))
+        .map(w => ({ rawName: w.name, schoolId: w.school_id, wrestlerId: newWrestlerMap.get(`${w.name}|${w.school_id}`)! })),
+      choices: gradeChoices,
+      adminEmail: user.email ?? null,
+    })
+    gradesSet = gradeResult.graded
+    gradesFromRoster = gradeResult.fromRoster
   }
 
   // ── Bout rows ──────────────────────────────────────────────────────────────
@@ -480,6 +501,8 @@ export async function POST(req: NextRequest) {
   }
 
   return NextResponse.json({
+    gradesSet,
+    gradesFromRoster,
     tournament_id: tid,
     bouts_inserted,
     seeds_inserted,

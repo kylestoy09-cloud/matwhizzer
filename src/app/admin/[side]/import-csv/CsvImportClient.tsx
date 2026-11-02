@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef, useEffect, useMemo } from 'react'
+import { suggestionKey, type GradeSuggestion } from '@/lib/rosterGradeSuggest'
 import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import { SchoolFlagCard } from '@/app/admin/[side]/import-rtf/SchoolFlagCard'
 import { WrestlerFlagCard } from '@/app/admin/[side]/import-rtf/WrestlerFlagCard'
@@ -53,6 +54,31 @@ export function CsvImportClient() {
 
   const [schoolOverrides, setSchoolOverrides] = useState<Record<string, SchoolOverride>>({})
   const [wrestlerOverrides, setWrestlerOverrides] = useState<Record<string, WrestlerOverride>>({})
+  // Track roster grade suggestions for the new wrestlers in the review
+  const [gradeSuggestions, setGradeSuggestions] = useState<Record<string, GradeSuggestion>>({})
+  const suggestionRequest = useMemo(() => {
+    const seen = new Set<string>()
+    const out: { name: string; schoolId: number }[] = []
+    for (const f of parsed?.wrestler_flags ?? []) {
+      if (!f.is_new || f.is_oos) continue
+      const k = suggestionKey(f.raw_name, f.school_id)
+      if (seen.has(k)) continue
+      seen.add(k); out.push({ name: f.raw_name, schoolId: f.school_id })
+    }
+    return out
+  }, [parsed])
+  useEffect(() => {
+    if (!suggestionRequest.length) return
+    let cancelled = false
+    fetch('/api/admin/roster-grade-suggest', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ gender, wrestlers: suggestionRequest }),
+    })
+      .then(r => r.json())
+      .then(d => { if (!cancelled) setGradeSuggestions(d.suggestions ?? {}) })
+      .catch(() => {})
+    return () => { cancelled = true }
+  }, [suggestionRequest, gender])
 
   const [force, setForce] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -309,6 +335,7 @@ export function CsvImportClient() {
                       return { ...prev, [key]: ov }
                     })}
                     gender={gender}
+                    gradeSuggestion={gradeSuggestions[suggestionKey(flag.raw_name, flag.school_id)]}
                   />
                 ))}
               </div>

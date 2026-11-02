@@ -1,5 +1,7 @@
 'use client'
 
+import type { GradeChoice } from '@/lib/rosterGradeSuggest'
+
 import { useState, useCallback, useMemo, useEffect, useRef } from 'react'
 import { parseDualMeetGirlsText } from '@/lib/parseDualMeetGirls'
 import type { ParsedMeet } from '@/lib/parseDualMeet'
@@ -30,6 +32,8 @@ type ImportResult = {
   meetsImported:    number
   matchesImported:  number
   wrestlersCreated: number
+  gradesSet?:       number
+  gradesFromRoster?: number
   meetsSkippedDup:  number
   errors:           string[]
 }
@@ -73,6 +77,8 @@ export function ImportClientGirls() {
   const [schoolOverrides,    setSchoolOverrides]    = useState<Record<string, SchoolOverride>>({})
   const [wrestlerResolutions,setWrestlerResolutions]= useState<Record<string, WrestlerMatch>>({})
   const [wrestlerOverrides,  setWrestlerOverrides]  = useState<Record<string, WrestlerOverride>>({})
+  // Grades chosen in the review for wrestlers being created (see WrestlerReviewPanel)
+  const [gradeChoices,       setGradeChoices]       = useState<Record<string, GradeChoice>>({})
   const [skipped,            setSkipped]            = useState<Set<number>>(new Set())
   const [error,              setError]              = useState<string | null>(null)
   const [importResult,       setImportResult]       = useState<ImportResult | null>(null)
@@ -86,7 +92,7 @@ export function ImportClientGirls() {
   const [draftError,    setDraftError]    = useState<string | null>(null)
   const [autoSaveState, setAutoSaveState] = useState<'pending' | 'saved' | null>(null)
   const autoSaveTimer   = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const autoSaveDataRef = useRef({ rawText, draftId, draftLabel, meets, phase, schoolOverrides, wrestlerOverrides })
+  const autoSaveDataRef = useRef({ rawText, draftId, draftLabel, meets, phase, schoolOverrides, wrestlerOverrides, gradeChoices })
 
   // ── Load drafts on mount ─────────────────────────────────────────────────────
 
@@ -102,11 +108,11 @@ export function ImportClientGirls() {
 
   useEffect(() => { loadDrafts() }, [loadDrafts])
 
-  autoSaveDataRef.current = { rawText, draftId, draftLabel, meets, phase, schoolOverrides, wrestlerOverrides }
+  autoSaveDataRef.current = { rawText, draftId, draftLabel, meets, phase, schoolOverrides, wrestlerOverrides, gradeChoices }
 
   // ── Auto-save core ────────────────────────────────────────────────────────────
   const performAutoSave = useCallback(async () => {
-    const { rawText: rt, draftId: did, draftLabel: dl, meets: ms, schoolOverrides: so, wrestlerOverrides: wo } = autoSaveDataRef.current
+    const { rawText: rt, draftId: did, draftLabel: dl, meets: ms, schoolOverrides: so, wrestlerOverrides: wo, gradeChoices: gc } = autoSaveDataRef.current
     if (ms.length === 0) return
     try {
       const resp = await fetch('/api/admin/dual-import-draft', {
@@ -119,6 +125,7 @@ export function ImportClientGirls() {
           gender:             GENDER,
           school_overrides:   so,
           wrestler_overrides: wo,
+          grade_choices:      gc,
           meet_count:         ms.length,
         }),
       })
@@ -175,6 +182,17 @@ export function ImportClientGirls() {
     })
   }, [])
 
+  // ── Grade choice handler (null = back to the Track roster suggestion) ─────────
+
+  const handleGradeChoice = useCallback((key: string, c: GradeChoice | null) => {
+    setGradeChoices(prev => {
+      const next = { ...prev }
+      if (c === null) delete next[key]
+      else next[key] = c
+      return next
+    })
+  }, [])
+
   // ── Skip handler ─────────────────────────────────────────────────────────────
 
   const handleSkip = useCallback((idx: number, skip: boolean) => {
@@ -193,6 +211,7 @@ export function ImportClientGirls() {
     initialOverrides?: {
       schoolOverrides:   Record<string, SchoolOverride>
       wrestlerOverrides: Record<string, WrestlerOverride>
+      gradeChoices?:     Record<string, GradeChoice>
     }
   ) {
     setError(null)
@@ -213,6 +232,7 @@ export function ImportClientGirls() {
     setSkipped(initSkipped)
     setSchoolOverrides(initialOverrides?.schoolOverrides   ?? {})
     setWrestlerOverrides(initialOverrides?.wrestlerOverrides ?? {})
+    setGradeChoices(initialOverrides?.gradeChoices ?? {})
     setImportResult(null)
 
     const allSchoolNames = new Set<string>()
@@ -376,6 +396,7 @@ export function ImportClientGirls() {
           gender:             GENDER,
           school_overrides:   schoolOverrides,
           wrestler_overrides: wrestlerOverrides,
+          grade_choices:      gradeChoices,
           meet_count:         meets.length,
         }),
       })
@@ -402,6 +423,7 @@ export function ImportClientGirls() {
       await handleProcess(draft.raw_text, {
         schoolOverrides:   draft.school_overrides   ?? {},
         wrestlerOverrides: draft.wrestler_overrides ?? {},
+        gradeChoices:      draft.grade_choices ?? {},
       })
     } catch (e) {
       setError(String(e))
@@ -427,7 +449,7 @@ export function ImportClientGirls() {
       autoSaveTimer.current = null
     }
 
-    const { rawText: rt, draftId: did, draftLabel: dl, meets: ms, schoolOverrides: so, wrestlerOverrides: wo } = autoSaveDataRef.current
+    const { rawText: rt, draftId: did, draftLabel: dl, meets: ms, schoolOverrides: so, wrestlerOverrides: wo, gradeChoices: gc } = autoSaveDataRef.current
     if (ms.length === 0) return
 
     setPhase('importing')
@@ -442,6 +464,7 @@ export function ImportClientGirls() {
           gender:             GENDER,
           school_overrides:   so,
           wrestler_overrides: wo,
+          grade_choices:      gc,
           meet_count:         ms.length,
         }),
       })
@@ -774,6 +797,9 @@ export function ImportClientGirls() {
             {importResult.wrestlersCreated > 0 && (
               <li><span className="text-blue-700 font-medium">{importResult.wrestlersCreated}</span> new wrestlers created</li>
             )}
+            {!!importResult.gradesSet && (
+              <li><span className="text-green-700 font-medium">{importResult.gradesSet}</span> new wrestlers given a grade{importResult.gradesFromRoster ? ` (${importResult.gradesFromRoster} from the Track roster)` : ''}</li>
+            )}
             {importResult.meetsSkippedDup > 0 && (
               <li><span className="text-amber-600 font-medium">{importResult.meetsSkippedDup}</span> skipped — already in system</li>
             )}
@@ -873,6 +899,8 @@ export function ImportClientGirls() {
             wrestlerResolutions={wrestlerResolutions}
             wrestlerOverrides={wrestlerOverrides}
             onWrestlerOverride={handleWrestlerOverride}
+            gradeChoices={gradeChoices}
+            onGradeChoice={handleGradeChoice}
             gender={GENDER}
           />
 

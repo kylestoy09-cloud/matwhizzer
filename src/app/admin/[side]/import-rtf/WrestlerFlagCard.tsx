@@ -1,5 +1,8 @@
 'use client'
 
+import { GradeControl } from '@/components/admin/GradeControl'
+import type { GradeChoice, GradeSuggestion } from '@/lib/rosterGradeSuggest'
+
 import { useState, useCallback, useEffect, useRef } from 'react'
 import type { WrestlerFlag, WrestlerOverride, MsProfileCandidate, MsProfileLink } from './types'
 
@@ -85,9 +88,10 @@ type Props = {
   gender: 'M' | 'F'
   msProfileLink?: MsProfileLink
   onMsLink?: (key: string, link: MsProfileLink | undefined) => void
+  gradeSuggestion?: GradeSuggestion
 }
 
-export function WrestlerFlagCard({ flag, override, onOverride, gender, msProfileLink, onMsLink }: Props) {
+export function WrestlerFlagCard({ flag, override, onOverride, gender, msProfileLink, onMsLink, gradeSuggestion }: Props) {
   const defaultNames = splitName(flag.raw_name)
   const [mode, setMode] = useState<'default' | 'edit' | 'confirmed' | 'search'>(() => {
     if (override?.type === 'create') return 'confirmed'
@@ -108,12 +112,15 @@ export function WrestlerFlagCard({ flag, override, onOverride, gender, msProfile
   // on every parent render, while still always calling the latest version.
   const onOverrideRef = useRef(onOverride)
   onOverrideRef.current = onOverride
+  // The grade choice survives name edits (the create override is re-sent on each)
+  const gradeRef = useRef<GradeChoice | undefined>(override?.type === 'create' ? override.grade : undefined)
+  gradeRef.current = override?.type === 'create' ? override.grade : gradeRef.current
 
   // Emit create override whenever name fields or the flag key changes (new wrestler mode).
   // flag.key is included so a parent re-render with a new flag doesn't fire against the old key.
   useEffect(() => {
     if (mode !== 'edit') return
-    onOverrideRef.current(flag.key, { type: 'create', first_name: firstName, last_name: lastName })
+    onOverrideRef.current(flag.key, { type: 'create', first_name: firstName, last_name: lastName, grade: gradeRef.current })
   }, [flag.key, firstName, lastName, mode])
 
   // Pre-load roster when entering search mode
@@ -152,7 +159,7 @@ export function WrestlerFlagCard({ flag, override, onOverride, gender, msProfile
   }
 
   function confirmCreate() {
-    onOverride(flag.key, { type: 'create', first_name: firstName, last_name: lastName })
+    onOverride(flag.key, { type: 'create', first_name: firstName, last_name: lastName, grade: gradeRef.current })
     setMode('confirmed')
   }
 
@@ -203,6 +210,16 @@ export function WrestlerFlagCard({ flag, override, onOverride, gender, msProfile
           )}
           {!isSkipped && override?.type === 'create' && mode !== 'confirmed' && (
             <span className="text-blue-600">● new — needs confirmation</span>
+          )}
+          {!isSkipped && !flag.is_oos && override?.type === 'create' && (
+            <GradeControl
+              suggestion={gradeSuggestion}
+              choice={override.grade}
+              onChange={c => {
+                gradeRef.current = c ?? undefined
+                onOverride(flag.key, { ...override, grade: c ?? undefined })
+              }}
+            />
           )}
           {!override && flag.is_new && (
             <span className="text-blue-600">● new</span>

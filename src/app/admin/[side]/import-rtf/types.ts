@@ -1,3 +1,5 @@
+import type { GradeChoice } from '@/lib/rosterGradeSuggest'
+
 // Shared types for the RTF import pipeline.
 // No 'use server' or 'use client' — safe to import from both sides.
 
@@ -38,7 +40,8 @@ export type WrestlerFlag = {
 }
 
 export type WrestlerOverride =
-  | { type: 'create'; first_name: string; last_name: string }
+  // grade: chosen in the review; not set = the single exact Track roster match, if any
+  | { type: 'create'; first_name: string; last_name: string; grade?: GradeChoice }
   | { type: 'existing'; wrestler_id: string; display_name: string }
   | { type: 'accept' }
   | { type: 'skip' }

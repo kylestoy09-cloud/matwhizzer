@@ -18,7 +18,9 @@ export function SeasonRolloverClient({ gender }: { gender: 'M' | 'F' }) {
   const [migrationPending, setMigrationPending] = useState<boolean | null>(null)
   const [phase,    setPhase]    = useState<Phase>('idle')
   const [preview,  setPreview]  = useState<Preview | null>(null)
-  const [result,   setResult]   = useState<{ advanced: number; graduated: number } | null>(null)
+  const [result,   setResult]   = useState<{ advanced: number; graduated: number; poolAdvanced?: number; poolGraduated?: number } | null>(null)
+  // Stored Track roster players (not on our wrestler list yet) advance in the same run
+  const [pool,     setPool]     = useState<{ advancing: number; graduating: number } | null>(null)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const [showAll,  setShowAll]  = useState(false)
 
@@ -36,6 +38,7 @@ export function SeasonRolloverClient({ gender }: { gender: 'M' | 'F' }) {
       const d = await r.json()
       if (d.error) { setErrorMsg(d.error); setPhase('error'); return }
       setPreview(d.preview)
+      setPool(d.rosterPool ?? null)
       setPhase('preview')
     } catch (e) {
       setErrorMsg(String(e))
@@ -50,7 +53,7 @@ export function SeasonRolloverClient({ gender }: { gender: 'M' | 'F' }) {
       const r = await fetch(api, { method: 'POST' })
       const d = await r.json()
       if (d.error) { setErrorMsg(d.error); setPhase('error'); return }
-      setResult({ advanced: d.advanced, graduated: d.graduated })
+      setResult({ advanced: d.advanced, graduated: d.graduated, poolAdvanced: d.rosterPlayersAdvanced, poolGraduated: d.rosterPlayersGraduated })
       setPhase('done')
     } catch (e) {
       setErrorMsg(String(e))
@@ -120,6 +123,13 @@ export function SeasonRolloverClient({ gender }: { gender: 'M' | 'F' }) {
                 <p className="text-xs text-slate-400 mt-0.5">Left Unchanged (unknown grade)</p>
               </div>
             </div>
+            {pool && (pool.advancing > 0 || pool.graduating > 0) && (
+              <p className="text-xs text-slate-500">
+                Also advancing stored Track roster players not on our wrestler list yet:{' '}
+                <span className="font-semibold text-slate-700">{pool.advancing}</span> move up a grade,{' '}
+                <span className="font-semibold text-slate-700">{pool.graduating}</span> seniors are marked graduated (kept, no longer suggested).
+              </p>
+            )}
 
             {/* Advancing list */}
             {preview.advancing.length > 0 && (
@@ -199,6 +209,7 @@ export function SeasonRolloverClient({ gender }: { gender: 'M' | 'F' }) {
               <p className="text-sm font-semibold text-green-800">Rollover complete</p>
               <p className="text-sm text-green-700 mt-1">
                 {result.advanced} wrestlers advanced · {result.graduated} graduated (marked inactive)
+                {result.poolAdvanced != null && <> · stored roster players: {result.poolAdvanced} advanced, {result.poolGraduated} graduated</>}
               </p>
             </div>
           </div>

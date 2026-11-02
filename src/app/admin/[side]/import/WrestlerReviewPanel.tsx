@@ -3,6 +3,8 @@
 import { Fragment, useState, useEffect, useMemo, useCallback } from 'react'
 import type { ParsedMeet } from '@/lib/parseDualMeet'
 import type { WrestlerMatch } from '@/lib/matchWrestlers'
+import { suggestionKey, type GradeChoice, type GradeSuggestion } from '@/lib/rosterGradeSuggest'
+import { GradeControl } from '@/components/admin/GradeControl'
 import {
   type SchoolMatch,
   type SchoolOverride,
@@ -291,6 +293,10 @@ type Props = {
   wrestlerOverrides:   Record<string, WrestlerOverride>
   onWrestlerOverride:  (key: WrestlerKey, o: WrestlerOverride | null) => void
   gender:              'M' | 'F'
+  // Grades for wrestlers being created, keyed "<raw name>|<school id>"; not set = use the
+  // single exact Track roster match if there is one (shown filled in)
+  gradeChoices:        Record<string, GradeChoice>
+  onGradeChoice:       (key: string, c: GradeChoice | null) => void
 }
 
 // ── WrestlerReviewPanel ────────────────────────────────────────────────────────
@@ -303,6 +309,8 @@ export function WrestlerReviewPanel({
   wrestlerOverrides,
   onWrestlerOverride,
   gender,
+  gradeChoices,
+  onGradeChoice,
 }: Props) {
   const [open,          setOpen]          = useState(false)
   const [activeKey,     setActiveKey]     = useState<WrestlerKey | null>(null)
@@ -380,6 +388,28 @@ export function WrestlerReviewPanel({
 
     return { errorItems: err, lowItems: low, newItems: newW }
   }, [meets, schoolResolutions, schoolOverrides, wrestlerResolutions, wrestlerOverrides])
+
+  // ── Grade suggestions from stored Track roster players ───────────────────────
+
+  const [suggestions, setSuggestions] = useState<Record<string, GradeSuggestion>>({})
+  const suggestionRequest = useMemo(() => {
+    const seenKeys = new Set<string>()
+    return newItems
+      .filter(i => { const k = suggestionKey(i.rawName, i.schoolId); if (seenKeys.has(k)) return false; seenKeys.add(k); return true })
+      .map(i => ({ name: i.rawName, schoolId: i.schoolId }))
+  }, [newItems])
+  useEffect(() => {
+    if (!suggestionRequest.length) return
+    let cancelled = false
+    fetch('/api/admin/roster-grade-suggest', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ gender, wrestlers: suggestionRequest }),
+    })
+      .then(r => r.json())
+      .then(d => { if (!cancelled) setSuggestions(d.suggestions ?? {}) })
+      .catch(() => {})
+    return () => { cancelled = true }
+  }, [suggestionRequest, gender])
 
   // ── Group new wrestlers by school ──────────────────────────────────────────
 
@@ -676,6 +706,13 @@ export function WrestlerReviewPanel({
                                     {group.weights.join('/')}
                                   </span>
                                   <span className="text-xs text-slate-800 flex-1">{group.rawName}</span>
+                                  {(!primaryOverride || primaryOverride.confirmedNew) && (
+                                    <GradeControl
+                                      suggestion={suggestions[group.groupKey]}
+                                      choice={gradeChoices[group.groupKey]}
+                                      onChange={c => onGradeChoice(group.groupKey, c)}
+                                    />
+                                  )}
                                   {isFixed && primaryOverride && (
                                     <span className="text-[10px] font-bold px-1 py-0.5 bg-green-100 text-green-700 border border-green-300 shrink-0">
                                       {primaryOverride.confirmedNew

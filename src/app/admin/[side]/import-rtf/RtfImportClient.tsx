@@ -1,6 +1,8 @@
 'use client'
 
-import { useState, useTransition, useEffect, useRef, useCallback } from 'react'
+import { suggestionKey, type GradeSuggestion } from '@/lib/rosterGradeSuggest'
+
+import { useState, useTransition, useEffect, useRef, useCallback, useMemo } from 'react'
 import type {
   TournamentSummary,
   TournamentType,
@@ -220,6 +222,31 @@ export function RtfImportClient() {
   const [schoolOverrides, setSchoolOverrides] = useState<Record<string, SchoolOverride>>({})
   // Wrestlers are only matched at confirmed schools, so any school decision needs a re-match
   const [wrestlersStale, setWrestlersStale] = useState(false)
+  // Track roster grade suggestions for the new wrestlers in the review
+  const [gradeSuggestions, setGradeSuggestions] = useState<Record<string, GradeSuggestion>>({})
+  const suggestionRequest = useMemo(() => {
+    const seen = new Set<string>()
+    const out: { name: string; schoolId: number }[] = []
+    for (const t of reviewed) for (const f of t.wrestler_flags) {
+      if (!f.is_new || f.is_oos) continue
+      const k = suggestionKey(f.raw_name, f.school_id)
+      if (seen.has(k)) continue
+      seen.add(k); out.push({ name: f.raw_name, schoolId: f.school_id })
+    }
+    return out
+  }, [reviewed])
+  useEffect(() => {
+    if (!suggestionRequest.length) return
+    let cancelled = false
+    fetch('/api/admin/roster-grade-suggest', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ gender, wrestlers: suggestionRequest }),
+    })
+      .then(r => r.json())
+      .then(d => { if (!cancelled) setGradeSuggestions(d.suggestions ?? {}) })
+      .catch(() => {})
+    return () => { cancelled = true }
+  }, [suggestionRequest, gender])
   const [wrestlerOverrides, setWrestlerOverrides] = useState<Record<string, WrestlerOverride>>({})
   const [dates, setDates] = useState<Record<string, { start_date: string; end_date: string | null }>>({})
   const [expandedTournament, setExpandedTournament] = useState<string | null>(null)
@@ -962,6 +989,7 @@ export function RtfImportClient() {
                                   gender={gender}
                                   msProfileLink={msProfileLinks[f.key]}
                                   onMsLink={handleMsLink}
+                                  gradeSuggestion={gradeSuggestions[suggestionKey(f.raw_name, f.school_id)]}
                                 />
                               ))}
                             </div>

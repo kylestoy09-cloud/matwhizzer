@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { applyImportGrades } from '@/lib/applyImportGrades'
+import type { GradeChoice } from '@/lib/rosterGradeSuggest'
 import { createClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { getWorkingSeason, parseGender } from '@/lib/season-context'
@@ -106,6 +108,10 @@ export async function POST(req: NextRequest) {
   const supabase = await createSupabaseServer()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const adminEmail = user.email ?? null
+  // New wrestlers given a grade across the run (from the review or the Track roster)
+  let gradesSetTotal = 0
+  let gradesFromRosterTotal = 0
 
   let text: string, year: number, selected: string[], gender: 'M' | 'F'
   let schoolOverrides: Record<string, SchoolOverride>
@@ -456,6 +462,23 @@ export async function POST(req: NextRequest) {
         }
       }
 
+      // Grades for the new NJ wrestlers, as settled in the review (the create choice's
+      // grade, else the single exact Track roster match)
+      const gradeChoices: Record<string, GradeChoice> = {}
+      for (const [flagKey, ov] of Object.entries(wrestlerOverrides)) {
+        if (ov?.type === 'create' && ov.grade !== undefined) gradeChoices[flagKey.split('|').slice(0, 2).join('|')] = ov.grade
+      }
+      const gradeResult = await applyImportGrades(client as never, {
+        gender: gender === 'F' ? 'F' : 'M',
+        newWrestlers: newWrestlers
+          .filter(w => !w.is_oos && newWrestlerMap.has(`${w.name}|${w.school_id}`))
+          .map(w => ({ rawName: w.name, schoolId: w.school_id, wrestlerId: newWrestlerMap.get(`${w.name}|${w.school_id}`)! })),
+        choices: gradeChoices,
+        adminEmail: adminEmail,
+      })
+      gradesSetTotal += gradeResult.graded
+      gradesFromRosterTotal += gradeResult.fromRoster
+
       // Apply MS prospect links for newly-created NJ wrestlers
       for (const [nkey, newId] of newWrestlerMap.entries()) {
         // Find any msProfileLink for this wrestler (key = name|school_id|weight_class, we match on prefix)
@@ -615,5 +638,5 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  return NextResponse.json({ results })
+  return NextResponse.json({ results, gradesSet: gradesSetTotal, gradesFromRoster: gradesFromRosterTotal })
 }

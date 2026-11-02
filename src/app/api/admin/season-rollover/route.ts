@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
+import { advanceRosterPool, rosterPoolPreview } from '@/lib/rosterPool'
 
 export const dynamic = 'force-dynamic'
 
@@ -110,7 +111,11 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  return NextResponse.json({ preview })
+  // Stored Track roster players advance in the same run
+  let rosterPool: { advancing: number; graduating: number } | null = null
+  try { rosterPool = await rosterPoolPreview(supabase as never, 'M') } catch { rosterPool = null }
+
+  return NextResponse.json({ preview, rosterPool })
 }
 
 // POST — execute the rollover
@@ -165,6 +170,10 @@ export async function POST(req: NextRequest) {
     if (error) errors.push(`graduate: ${error.message}`)
   }
 
+  // Stored Track roster players (not yet tied to a wrestler) advance with them
+  const pool = await advanceRosterPool(supabase as never, 'M')
+  errors.push(...pool.errors)
+
   if (errors.length > 0) return NextResponse.json({ error: errors.join('; ') }, { status: 500 })
 
   try {
@@ -176,6 +185,8 @@ export async function POST(req: NextRequest) {
       p_details:     {
         advanced:    toAdvance.length,
         graduated:   toGraduate.length,
+        roster_players_advanced:  pool.advanced,
+        roster_players_graduated: pool.graduated,
       },
     })
   } catch { /* non-fatal */ }
@@ -184,5 +195,7 @@ export async function POST(req: NextRequest) {
     ok: true,
     advanced:  toAdvance.length,
     graduated: toGraduate.length,
+    rosterPlayersAdvanced:  pool.advanced,
+    rosterPlayersGraduated: pool.graduated,
   })
 }

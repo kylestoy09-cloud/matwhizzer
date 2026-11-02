@@ -2,6 +2,35 @@
 
 ---
 
+## 2026-11-01 — Track roster players kept current; grades settled in the import review
+
+**Migration file:** `docs/migrations/20261101_roster_pool_graduated.sql`
+
+**Purpose:** Track roster players not on our wrestler list stay on file with a current class, so a grade is ready when they show up in a match upload.
+- **Roll Over Roster** (boys and girls) advances them with the wrestlers: grade + 1, season + 1. Seniors become `graduated`: kept for history, never suggested.
+- **The import review** (dual: boys, girls, girls jamboree; tournament: RTF, CSV) shows a Grade on each new wrestler:
+  - one exact same-school name match: filled in
+  - close spellings: offered to pick, never filled in
+  - anything can be changed or cleared before saving
+- **Saving the import** writes the grade (never over an existing grade) and ties the roster player to the wrestler (`confirmed`).
+
+**Database changes:**
+- `roster_grade_import` status check adds `graduated`; the old inline check is found by definition and replaced.
+- `dual_import_drafts.grade_choices` (jsonb, default `{}`): grade choices made in the review.
+
+**Data change already made (2026-11-01):** girls Roster Grade Import step 1. `scripts/link_girls_roster_schools.mts` linked all 2,876 girls rows to their schools (253 school names, all exact matches, each to a different girls program). Status `pending` → `school_matched`.
+
+**Tables affected:** `roster_grade_import`, `dual_import_drafts`
+
+**PENDING** — run in the Supabase SQL editor, before the deploy (draft saving writes `grade_choices`)
+
+**Reversible?** Yes:
+- drop `grade_choices`, and restore the old check (fails if any row is already `graduated`)
+- step 1: set the girls rows back to `pending` with `school_id` NULL
+**Verified?** Step 1: yes, 2,876 rows `school_matched` (Absegami's 5 → 276). Migration: pending.
+
+---
+
 ## 2026-10-31 — Whizzer Resume Rating bio editable in the admin
 
 **Migration file:** `docs/migrations/20261031_rating_settings.sql`

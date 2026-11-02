@@ -48,14 +48,14 @@ export async function GET(req: NextRequest) {
 }
 
 // POST /api/admin/dual-import-draft — create or update a draft
-// Body: { id?, label, raw_text, school_overrides, wrestler_overrides, meet_count, gender }
+// Body: { id?, label, raw_text, school_overrides, wrestler_overrides, grade_choices, meet_count, gender }
 export async function POST(req: NextRequest) {
   const auth = await createSupabaseServer()
   const { data: { user } } = await auth.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body = await req.json()
-  const { id, label, raw_text, school_overrides, wrestler_overrides, meet_count } = body
+  const { id, label, raw_text, school_overrides, wrestler_overrides, grade_choices, meet_count } = body
   const gender: 'M' | 'F' = body.gender === 'F' ? 'F' : 'M'
 
   if (!raw_text) return NextResponse.json({ error: 'raw_text required' }, { status: 400 })
@@ -72,6 +72,7 @@ export async function POST(req: NextRequest) {
         gender,
         school_overrides:   school_overrides  ?? {},
         wrestler_overrides: wrestler_overrides ?? {},
+        ...(grade_choices ? { grade_choices } : {}),
         meet_count:         meet_count ?? 0,
         updated_at:         new Date().toISOString(),
       })
@@ -94,6 +95,7 @@ export async function POST(req: NextRequest) {
       gender,
       school_overrides:   school_overrides  ?? {},
       wrestler_overrides: wrestler_overrides ?? {},
+      ...(grade_choices ? { grade_choices } : {}),
       meet_count:         meet_count ?? 0,
     })
     .select('id')

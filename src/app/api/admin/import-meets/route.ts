@@ -12,6 +12,8 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server'
+import { applyImportGrades } from '@/lib/applyImportGrades'
+import type { GradeChoice } from '@/lib/rosterGradeSuggest'
 import { createClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { parseDualMeetText } from '@/lib/parseDualMeet'
@@ -143,7 +145,7 @@ export async function POST(req: NextRequest) {
   // ── Fetch draft ───────────────────────────────────────────────────────────────
   const { data: draft, error: draftErr } = await supabase
     .from('dual_import_drafts')
-    .select('raw_text, school_overrides, wrestler_overrides, gender')
+    .select('raw_text, school_overrides, wrestler_overrides, grade_choices, gender')
     .eq('id', draftId)
     .eq('user_id', user.id)
     .single()
@@ -284,6 +286,8 @@ export async function POST(req: NextRequest) {
 
   // ── Step 1: Collect new wrestlers needed across all meets ─────────────────────
   // key → { first_name, last_name, suffix, gender }
+  // Where each new wrestler came from (raw name, school), for the review's grade choice
+  const newWrestlerSource = new Map<WrestlerKey, { rawName: string; schoolId: number | null }>()
   const newWrestlerMeta = new Map<
     WrestlerKey,
     { first_name: string; last_name: string; suffix: string | null; gender: string; is_stub: boolean }
@@ -312,6 +316,7 @@ export async function POST(req: NextRequest) {
         const isLinked = !!wrestlerOverrides[key]?.linkedToKey
         if (isNew && !wrestlerId && !isLinked) {
           newWrestlerMeta.set(key, { ...parseName(name), gender: GENDER, is_stub: isOos })
+          if (!isOos) newWrestlerSource.set(key, { rawName: name, schoolId })
         }
       }
     }
@@ -406,11 +411,22 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  // ── Step 2c: Grades for the new wrestlers, as settled in the import review ────
+  const gradeResult = await applyImportGrades(supabase as never, {
+    gender:       GENDER,
+    newWrestlers: [...newWrestlerSource.entries()]
+      .map(([key, src]) => ({ ...src, wrestlerId: wrestlerIdMap.get(key) ?? '' }))
+      .filter(w => w.wrestlerId),
+    choices:      (draft.grade_choices as Record<string, GradeChoice> | null) ?? {},
+    adminEmail:   user.email ?? null,
+  })
+
   // ── Step 3: Import each meet ──────────────────────────────────────────────────
   let meetsImported   = 0
   let matchesImported = 0
   let meetsSkippedDup = 0
   const errors: string[] = []
+  errors.push(...gradeResult.errors)
 
   // Collect raw_name → wrestler_id aliases for NJ wrestlers across all meets
   const aliasMap = new Map<string, { raw_name: string; school_id: number; wrestler_id: string }>()
@@ -617,6 +633,8 @@ export async function POST(req: NextRequest) {
   }
 
   return NextResponse.json({
+    gradesSet:      gradeResult.graded,
+    gradesFromRoster: gradeResult.fromRoster,
     ok:               errors.length === 0,
     meetsImported,
     matchesImported,
