@@ -262,17 +262,27 @@ export async function POST(req: NextRequest) {
   const regionsType = gender === 'F' ? 'girls_regions' : 'regions'
   const psTypes    = ['districts', regionsType, stateType]
 
-  // Normally the gender's working season. `{ season: '2025-26', logOnly: true }`
-  // rebuilds one past season's match log for this gender and writes nothing
-  // else — an archived season's hammer scores and weights stay as they are.
+  // Normally the gender's working season. For one past season of this gender:
+  //   { season: '2025-26', logOnly: true }   rebuilds its match log and writes nothing
+  //                                          else; its hammer scores and weights stay
+  //   { season: '2025-26', archive: true }   rebuilds its match log and scores from the
+  //                                          data as it is now (after fixes to that
+  //                                          season); each archived row keeps its school,
+  //                                          conference, section, classification, district
+  //                                          and region, and current main weights are untouched
   const logOnly = body?.logOnly === true
-  if (logOnly && typeof body?.season !== 'string') {
-    return NextResponse.json({ error: 'logOnly requires season (a seasons.year_label)' }, { status: 400 })
+  const archive = body?.archive === true
+  if ((logOnly || archive) && typeof body?.season !== 'string') {
+    return NextResponse.json({ error: 'logOnly / archive require season (a seasons.year_label)' }, { status: 400 })
   }
-  const season = logOnly
+  const working = await getWorkingSeason(parseGender(gender))
+  const season = logOnly || archive
     ? (await getSeasons()).find(s => s.label === body.season)
-    : await getWorkingSeason(parseGender(gender))
+    : working
   if (!season) return NextResponse.json({ error: `Unknown season ${body?.season}` }, { status: 400 })
+  if (archive && season.id === working.id) {
+    return NextResponse.json({ error: `${season.label} is the season in progress; run it without archive` }, { status: 400 })
+  }
   const CURRENT_SEASON_ID    = season.id
   const CURRENT_SEASON_STR   = season.label
   const POSTSEASON_SEASON_ID = (await getPreviousSeason(season)).id
@@ -898,7 +908,7 @@ export async function POST(req: NextRequest) {
     if (!byWeight.has(wc)) byWeight.set(wc, [])
     byWeight.get(wc)!.push(wid)
   }
-  for (const [wc, ids] of logOnly ? [] : byWeight) {
+  for (const [wc, ids] of logOnly || archive ? [] : byWeight) {
     for (let i = 0; i < ids.length; i += 500) {
       const { error } = await db.from('wrestlers').update({ main_weight: wc }).in('id', ids.slice(i, i + 500))
       if (error) throw new Error(`UPDATE wrestlers.main_weight failed: ${error.message}`)
@@ -910,30 +920,43 @@ export async function POST(req: NextRequest) {
   // season-wide delete wiped the boys log on a girls run, 2026-10-26). New rows
   // go in first; the old ones are removed only after every batch succeeds, and a
   // failed run removes its own partial rows, so the previous log survives
-  // intact. Old vs new is split on the newest existing created_at (database
-  // clock), not on this server's clock.
-  const { data: newestOld, error: newestErr } = await db.from('wrestler_match_score_log')
-    .select('created_at').eq('season', CURRENT_SEASON_STR).eq('gender', gender)
-    .order('created_at', { ascending: false }).limit(1)
-  if (newestErr) throw new Error(`READ wrestler_match_score_log failed: ${newestErr.message}`)
-  const oldCutoff = (newestOld?.[0]?.created_at as string | undefined) ?? null
+  // intact. Old and new rows are told apart by id, read through the primary
+  // key: a full season's log (138k boys rows) times out any statement that
+  // filters or deletes it by created_at (2026-11-01).
+  const oldLogIds: string[] = []
+  for (let last: string | null = null; ;) {
+    let q = db.from('wrestler_match_score_log').select('id')
+      .eq('season', CURRENT_SEASON_STR).eq('gender', gender).order('id').limit(1000)
+    if (last) q = q.gt('id', last)
+    const { data, error } = await q
+    if (error) throw new Error(`READ wrestler_match_score_log failed: ${error.message}`)
+    for (const r of data ?? []) oldLogIds.push(String(r.id))
+    if (!data || data.length < 1000) break
+    last = String(data[data.length - 1].id)
+  }
+
+  // 200 ids per delete: the ids go in the request URL
+  async function deleteLogIds(ids: string[]): Promise<string | null> {
+    for (let i = 0; i < ids.length; i += 200) {
+      const { error } = await db.from('wrestler_match_score_log').delete().in('id', ids.slice(i, i + 200))
+      if (error) return error.message
+    }
+    return null
+  }
 
   const BATCH = 500
+  const newLogIds: string[] = []
   for (let i = 0; i < logEntries.length; i += BATCH) {
-    const { error } = await db.from('wrestler_match_score_log').insert(logEntries.slice(i, i + BATCH))
+    const { data, error } = await db.from('wrestler_match_score_log').insert(logEntries.slice(i, i + BATCH)).select('id')
     if (error) {
-      let undo = db.from('wrestler_match_score_log').delete().eq('season', CURRENT_SEASON_STR).eq('gender', gender)
-      if (oldCutoff) undo = undo.gt('created_at', oldCutoff)
-      const { error: undoErr } = await undo
+      const undoErr = await deleteLogIds(newLogIds)
       throw new Error(`INSERT wrestler_match_score_log failed at row ${i}: ${error.message}` +
-        (undoErr ? ` (removing this run's partial rows also failed: ${undoErr.message})` : '; previous log kept'))
+        (undoErr ? ` (removing this run's partial rows also failed: ${undoErr})` : '; previous log kept'))
     }
+    for (const r of data ?? []) newLogIds.push(String(r.id))
   }
-  if (oldCutoff) {
-    const { error: delLogErr } = await db.from('wrestler_match_score_log').delete()
-      .eq('season', CURRENT_SEASON_STR).eq('gender', gender).lte('created_at', oldCutoff)
-    if (delLogErr) throw new Error(`DELETE old wrestler_match_score_log failed: ${delLogErr.message}`)
-  }
+  const delLogErr = await deleteLogIds(oldLogIds)
+  if (delLogErr) throw new Error(`DELETE old wrestler_match_score_log failed: ${delLogErr}`)
 
   const scoreRows = [...states.values()]
     .filter(s => s.matchCount > 0 && s.lastMatchDate != null && s.lastMatchDate >= `${season.start_year}-04-01`)
@@ -964,6 +987,27 @@ export async function POST(req: NextRequest) {
       }
     })
 
+  // An archived season keeps the school details its rows were scored under
+  if (archive) {
+    const kept = new Map<string, Record<string, unknown>>()
+    for (let offset = 0; ; offset += 1000) {
+      const { data, error } = await db.from('wrestler_hammer_scores')
+        .select('wrestler_id, school_id, conference, section, classification, district, region')
+        .eq('season', CURRENT_SEASON_STR).eq('gender', gender).order('wrestler_id').range(offset, offset + 999)
+      if (error) throw new Error(`READ archived wrestler_hammer_scores failed: ${error.message}`)
+      for (const r of data ?? []) kept.set(r.wrestler_id as string, r)
+      if (!data || data.length < 1000) break
+    }
+    for (const row of scoreRows) {
+      const k = kept.get(row.wrestler_id)
+      if (!k) continue
+      Object.assign(row, {
+        school_id: k.school_id, conference: k.conference, section: k.section,
+        classification: k.classification, district: k.district, region: k.region,
+      })
+    }
+  }
+
   // Upsert in place, then drop this gender's rows the run didn't write. The
   // table is never empty or half-written, so the Hammer Scores page can be
   // read mid-run (delete-then-insert showed partial, repeated rows).
@@ -990,10 +1034,10 @@ export async function POST(req: NextRequest) {
     p_action:      'scoring_run',
     p_entity_type: 'wrestler_hammer_scores',
     p_entity_id:   null,
-    p_details: { wrestlers_scored, bouts_processed, duration_ms, season: CURRENT_SEASON_STR, gender, log_only: logOnly },
+    p_details: { wrestlers_scored, bouts_processed, duration_ms, season: CURRENT_SEASON_STR, gender, log_only: logOnly, archive },
   })
 
-  return NextResponse.json({ wrestlers_scored, bouts_processed, duration_ms, season: CURRENT_SEASON_STR, gender, log_only: logOnly })
+  return NextResponse.json({ wrestlers_scored, bouts_processed, duration_ms, season: CURRENT_SEASON_STR, gender, log_only: logOnly, archive })
 }
 
 // GET handler for Vercel cron job (crons fire GET, not POST)

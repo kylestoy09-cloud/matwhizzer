@@ -2,6 +2,45 @@
 
 ---
 
+## 2026-11-01 — Boys 2025-26 ratings (WRR) rebuilt; rating log replaced by id
+
+**Code:** `src/app/api/admin/recalculate-hammer-scores/route.ts`
+- **New `{ season, archive: true }` mode:** rescores a past season from current data. Each archived row keeps its school, conference, section, classification, district and region; current main weights are untouched.
+- **Old log rows are now found by id, not `created_at`.** Ids are read through the primary key and deleted 200 at a time. Deleting a full season's log (138k boys rows) in one statement timed out; that would also have broken the nightly run once the live boys log grew that large.
+
+**Backups:**
+- scores: `docs/migrations/backups/20261102_boys_2025-26_wrr_scores_before.json.gz` (7,593 rows from 2026-09-12)
+- log: `20261102_boys_2025-26_wrr_log_before.json.gz` (138,340 rows from 2026-10-28; local only, 16 MB, gitignored; the log can be rebuilt from the bouts)
+
+**Why:** The archived scores were from 2026-09-12. They predated:
+- the 2026-10-26 rating fixes (each gender scored separately)
+- 7 weeks of bout corrections
+- the 2026-11-01 profile splits and duplicate-meet removal
+
+**Result:**
+- 7,604 rows (was 7,593). 3,776 unchanged; of the 3,797 changed, 3,659 moved by under 0.5.
+- **+31:** split people and wrestlers newly qualifying.
+- **−20:** 18 now out-of-state; 2 NJ wrestlers whose single bout moved.
+- **School details on kept rows:** 0 changed.
+- **Base:** 26 wrestlers lost their prior-season base.
+  - 2 were borrowed from a different person (split today: Jason Gonzalez, Bryan Hernandez).
+  - 24 lost a "discovery" base of 20, the rule where an unrated wrestler who beats a 20+ opponent gets 20. These form chains (e.g. Fontanez → Dapito). The chains start with bouts scored differently before 2026-10-28; there is no copy of the 2026-09-12 bouts to say exactly how.
+  - Six wrestlers dropped about 21–32 points each.
+
+**Mid-run cleanup:** two runs failed on the old timed-out delete and left extra log copies. Trimmed to one full set by script before the final run.
+- The final log has 138,404 rows.
+- The girls log had 38,300 rows after three normal runs: no copies.
+
+**APPLIED** — 2026-11-01. The route was run from a script with the service role. The activity log entry was written by hand, because the route's own write needs a signed-in request.
+
+**Reversible?** Yes, upsert the scores backup.
+**Verified?** Yes:
+- row and log counts as above
+- archived school details unchanged
+- the girls normal run checked three times
+
+---
+
 ## 2026-11-01 — Duplicate St. Augustine vs Green Run meet removed
 
 **Script:** `scripts/remove_duplicate_green_run_meet.mts` (approved 2026-11-01). Backup: `docs/migrations/backups/20261101_duplicate_green_run_meet.json`
