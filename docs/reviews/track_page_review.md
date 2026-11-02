@@ -60,6 +60,7 @@ the row backed up), or leave it.
 
 ## 4. Other open items
 
-- 6 bouts with a girl in a boys dual: Riley Allen, Addison Collins, Gabriel Grant, Alexis Santiago (×3). Is Gabriel Grant actually a boy?
+- 8 girls whose 2025-26 postseason entries have no school (school id and source text both empty), so leaderboards show them without one: Tie Willis, Justina Barowsky, Josephine Lemke, Josephine Panfilli, Patricia Brady, Briana Grainer, Jade Graham, Wilma Bayne. Need their schools from the brackets.
+
 - 229 boys / 42 girls duals where the final score differs from the bout points, mostly by 1 point (likely team deductions; not verified).
 - Duplicate school records for one school: "Blair Academy" / "Blair Academy (B Team)", "Hodgson" / "Hodgson Vo Tech School".

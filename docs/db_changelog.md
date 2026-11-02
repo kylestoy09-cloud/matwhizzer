@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-11-02 — 4 profiles in the wrong gender's bouts
+
+**Script:** `scripts/fix_cross_gender_profiles.mts`. Backup: `docs/migrations/backups/20261102_cross_gender_profiles_before.json`
+
+**Purpose:** Girls don't wrestle on boys teams in NJ (Kyle, 2026-11-02). The integrity check found 4 profiles marked female with 6 sides in boys duals.
+
+**Data changes:**
+- **Alexis Santiago (Asbury Park):** every bout is a boys dual, and Asbury Park's boys Track roster lists him (Fr). Gender F → M. The Easton girl split off earlier is a separate person.
+- **Riley Allen, Addison Collins (Peddie), Gabriel Grant (East Orange):** a boy merged into a same-name girl by the old name-only import match. Each boys-dual side moved to a new male profile at that school (Peddie: out-of-state).
+- **Afterwards:** boys 2025-26 ratings rebuilt (archive) and the leaderboard tables refreshed. Gabriel Grant's only bout is a forfeit win, so he isn't rated.
+
+**APPLIED** — 2026-11-02 by script
+
+**Reversible?** Yes, from the backup
+**Verified?** Yes — integrity rules: wrong-gender bouts 0; scoreable bouts missing from the rating log 0 (boys and girls)
+
+---
+
 ## 2026-11-02 — Leaderboards v2: tables per view, postseason At/Through, analytics by level
 
 **Migration file:** `docs/migrations/20261102_leaderboards_v2.sql`
@@ -24,11 +42,18 @@
 - the Unknown placeholder no longer appears as a wrestler
 - girls postseason Team Points was always empty: two `lb_gp_team_points` versions made every call fail
 
-**Status: PENDING.** Written 2026-11-02 and held until the project's Disk IO budget recovers. To apply:
-1. Run the migration in the SQL editor.
-2. Refresh each season with data, boys and girls (`/api/admin/refresh-leaderboards?gender=M&season=2026`, then `F`).
-3. Check every view against direct queries.
-4. Merge branch `leaderboards-v2` and deploy.
+**APPLIED** — 2026-11-02, Supabase SQL editor (plus the follow-up below). Tables filled for 2025-26 and 2026-27, boys and girls; each refresh takes under 5 s.
+
+**Verified against the old leaderboards and direct queries:**
+- **Postseason:** the top 25 for pins, techs, wrestler points and team points are identical for every pool that existed before (Districts, Through Regions, Through State), boys and girls.
+- **At + At = Through:** exact for every wrestler.
+- **Girls team points** match the official `district_team_score` for all 217 schools.
+- **Logos:** 0 NJ rows without a logo.
+- **Regular season:** 5,966 of 5,967 boys and all 2,066 girls identical to the old table. The exceptions are expected: a forfeit loss the old code skipped (`Forfeit` spelling), the Unknown placeholder, and the boy below who was marked female.
+- **Points per dual:** up for 260 boys and 73 girls teams; the old count dropped SV-1, injury defaults and tiebreakers.
+- **Down for 2 girls teams** (Lakeland, Newark Collegiate, -3 each): the old code scored a medical forfeit as 6. The bout records 3, and the recorded bout points match the final score of every meet with a medical forfeit.
+
+**Follow-up migration:** `20261102_leaderboards_v2_team_bouts.sql`, APPLIED. The team tables count every bout the team wrestled; individual tables list only that gender.
 
 **Rollback:** drop the new objects (end of the migration file). The old functions are untouched.
 
