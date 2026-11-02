@@ -392,12 +392,19 @@ export function WrestlerReviewPanel({
   // ── Grade suggestions from stored Track roster players ───────────────────────
 
   const [suggestions, setSuggestions] = useState<Record<string, GradeSuggestion>>({})
-  const suggestionRequest = useMemo(() => {
-    const seenKeys = new Set<string>()
-    return newItems
-      .filter(i => { const k = suggestionKey(i.rawName, i.schoolId); if (seenKeys.has(k)) return false; seenKeys.add(k); return true })
-      .map(i => ({ name: i.rawName, schoolId: i.schoolId }))
-  }, [newItems])
+  // Keyed by the set of names, not the list object: the list is rebuilt on every decision
+  const suggestionSignature = useMemo(
+    () => [...new Set(newItems.map(i => suggestionKey(i.rawName, i.schoolId)))].sort().join('\n'),
+    [newItems],
+  )
+  const suggestionRequest = useMemo(
+    () => suggestionSignature ? suggestionSignature.split('\n').map(k => {
+      const cut = k.lastIndexOf('|')
+      const id = k.slice(cut + 1)
+      return { name: k.slice(0, cut), schoolId: id === 'null' ? null : Number(id) }
+    }) : [],
+    [suggestionSignature],
+  )
   useEffect(() => {
     if (!suggestionRequest.length) return
     let cancelled = false

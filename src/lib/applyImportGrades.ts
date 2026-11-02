@@ -44,11 +44,11 @@ export async function applyImportGrades(db: Db, opts: {
 
     if (pick.rosterId) {
       usedRoster.add(pick.rosterId)
-      const { error: rErr } = await db.from('roster_grade_import')
+      const { data: tied, error: rErr } = await db.from('roster_grade_import')
         .update({ status: 'confirmed', wrestler_id: w.wrestlerId, confirmed_by: opts.adminEmail, confirmed_at: now })
-        .eq('id', pick.rosterId).in('status', ['school_matched', 'no_match'])
+        .eq('id', pick.rosterId).in('status', ['school_matched', 'no_match']).select('id')
       if (rErr) errors.push(`roster player for ${w.rawName}: ${rErr.message}`)
-      else fromRoster++
+      else if (tied?.length) fromRoster++   // 0 rows: that roster player was already used
     }
   }
   return { graded, fromRoster, errors }

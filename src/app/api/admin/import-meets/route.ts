@@ -347,6 +347,9 @@ export async function POST(req: NextRequest) {
 
   // Create new wrestlers
   let wrestlersCreated = 0
+  // Only wrestlers created by this import get a grade from the review: a "new" name can
+  // resolve below to an existing same-name wrestler at another school
+  const createdWrestlerIds = new Set<string>()
   if (newWrestlerMeta.size > 0) {
     // Deduplicate by (first_name, last_name, gender)
     const uniqueNew = [
@@ -391,6 +394,7 @@ export async function POST(req: NextRequest) {
       }
 
       for (const w of created ?? []) {
+        createdWrestlerIds.add(w.id)
         existingMap.set(`${w.first_name}|${w.last_name}|${w.gender}`, w.id)
         wrestlersCreated++
       }
@@ -416,7 +420,7 @@ export async function POST(req: NextRequest) {
     gender:       GENDER,
     newWrestlers: [...newWrestlerSource.entries()]
       .map(([key, src]) => ({ ...src, wrestlerId: wrestlerIdMap.get(key) ?? '' }))
-      .filter(w => w.wrestlerId),
+      .filter(w => createdWrestlerIds.has(w.wrestlerId)),
     choices:      (draft.grade_choices as Record<string, GradeChoice> | null) ?? {},
     adminEmail:   user.email ?? null,
   })
