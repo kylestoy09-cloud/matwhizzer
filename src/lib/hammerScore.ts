@@ -113,7 +113,7 @@ function canonicalResultType(resultType: string | null): string | null {
   if (/^(SV|TB|UTB)-?\d/i.test(t) || /^(\d-)?OT$/i.test(t)) return 'SV-1'   // overtime / tiebreaker
   if (/^dec$/i.test(t)) return 'Dec'
   if (/^(md|maj)$/i.test(t)) return 'MD'
-  if (/^tf$/i.test(t)) return 'TF'
+  if (/^tf(-[\d.]+)?$/i.test(t)) return 'TF'                                   // TF, TF-1, TF-1.5
   if (/^fall$/i.test(t)) return 'Fall'
   return t
 }
