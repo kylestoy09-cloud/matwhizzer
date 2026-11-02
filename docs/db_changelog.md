@@ -2,6 +2,41 @@
 
 ---
 
+## 2026-11-02 — Leaderboards v2: tables per view, postseason At/Through, analytics by level
+
+**Migration file:** `docs/migrations/20261102_leaderboards_v2.sql`
+
+**Purpose:** Each leaderboard table gets its own page that reads only its rows. Today the regular-season page downloads every wrestler's season stats (2.5 MB, about 8 s uncached) and recomputes them from all bouts every 5 minutes, one of the heaviest recurring reads.
+- Season stats are now computed once into tables, after each nightly rating run, by the new `/api/admin/refresh-leaderboards` cron at 07:00 / 07:15 UTC.
+- Postseason gets At / Through for regions and state, plus weights and paging; the old functions were fixed at 25 rows.
+
+**New objects only** (nothing existing altered or dropped):
+- **`lb_kind(text)`:** one result translation for every leaderboard, matching the rating's `classifyOutcome`. Tested against every stored spelling.
+- **Tables `lb_rs_wrestler`, `lb_rs_team`, `lb_ps_wrestler`, `lb_ps_team`:** readable by the site; FK to schools for name and logo.
+- **`lb_rs_refresh(gender, season)` / `lb_ps_refresh(gender, season)`:** service role only.
+- **`lb_an_bracket_buster`, `lb_an_comebacks`, `lb_an_technical_masters`, `lb_an_margins`, `lb_an_cinderella`:** with a level filter and school ids.
+
+**Fixes carried in** (from reading the old functions):
+- overtime and tiebreaker wins scored 0 in points per dual (now the sum of team points recorded on each bout)
+- bonus % had three definitions; now one (falls + techs + majors ÷ matches)
+- a tech fall under 8 s is ignored everywhere
+- names from `wrestlers`, never raw imports
+- the Unknown placeholder no longer appears as a wrestler
+- girls postseason Team Points was always empty: two `lb_gp_team_points` versions made every call fail
+
+**Status: PENDING.** Written 2026-11-02 and held until the project's Disk IO budget recovers. To apply:
+1. Run the migration in the SQL editor.
+2. Refresh each season with data, boys and girls (`/api/admin/refresh-leaderboards?gender=M&season=2026`, then `F`).
+3. Check every view against direct queries.
+4. Merge branch `leaderboards-v2` and deploy.
+
+**Rollback:** drop the new objects (end of the migration file). The old functions are untouched.
+
+**Also on the branch:**
+- `/api/admin/refresh-leaderboards` requires an admin (`app_users.role`), not just any signed-in user.
+
+---
+
 ## 2026-11-02 — 237 empty wrestler profiles deleted
 
 **Script:** `scripts/delete_empty_profiles.mts` (approved 2026-11-02: "we should be deleting all empty profiles so they don't appear in search")

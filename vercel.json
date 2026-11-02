@@ -7,6 +7,14 @@
     {
       "path": "/api/admin/recalculate-hammer-scores?gender=F",
       "schedule": "30 6 * * *"
+    },
+    {
+      "path": "/api/admin/refresh-leaderboards?gender=M",
+      "schedule": "0 7 * * *"
+    },
+    {
+      "path": "/api/admin/refresh-leaderboards?gender=F",
+      "schedule": "15 7 * * *"
     }
   ]
 }
