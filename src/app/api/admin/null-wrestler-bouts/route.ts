@@ -41,6 +41,7 @@ export async function GET(req: NextRequest) {
     .neq('result_type', 'BYE')
     .or('wrestler1_id.is.null,wrestler2_id.is.null')
     .order('weight_class')
+    .order('id')
     .range(offset, offset + limit - 1)
 
   if (boutsErr) return NextResponse.json({ error: boutsErr.message }, { status: 500 })

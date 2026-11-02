@@ -59,6 +59,7 @@ export async function POST(req: NextRequest) {
       .eq('season', CURRENT_SEASON_STR)
       // Boys and girls share season labels (2025-26): without this, a girls publish ranks boys too
       .eq('gender', seasonGender)
+      .order('wrestler_id')
       .range(offset, offset + 499)
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
     if (!data?.length) break

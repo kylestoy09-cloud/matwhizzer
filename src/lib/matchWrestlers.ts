@@ -95,6 +95,7 @@ async function fetchAll<T>(
     const { data, error } = await supabase
       .from(table)
       .select(select)
+      .order('id')   // a unique order, or pages overlap and rows go missing
       .range(from, from + PAGE - 1)
     if (error) throw new Error(`matchWrestlers: failed to load ${table} — ${error.message}`)
     const page = (data ?? []) as T[]
@@ -240,6 +241,7 @@ export async function reloadAliases(): Promise<void> {
     const { data, error } = await supabase
       .from('wrestler_name_aliases')
       .select('raw_name, school_id, wrestler_id, wrestlers(first_name, last_name, suffix)')
+      .order('id')
       .range(from, from + PAGE - 1)
     if (error) return
     const page = (data ?? []) as unknown as AliasRow[]

@@ -177,8 +177,8 @@ async function buildMainWeightMap(
   const meetIds: string[] = []
   for (let offset = 0; ; offset += 1000) {
     const { data } = await (gender === 'F'
-      ? db.from('dual_meets_girls').select('id').eq('season_id', CURRENT_SEASON_ID).range(offset, offset + 999)
-      : db.from('dual_meets').select('id').eq('season_id', CURRENT_SEASON_ID).eq('gender', gender).range(offset, offset + 999)
+      ? db.from('dual_meets_girls').select('id').eq('season_id', CURRENT_SEASON_ID).order('id').range(offset, offset + 999)
+      : db.from('dual_meets').select('id').eq('season_id', CURRENT_SEASON_ID).eq('gender', gender).order('id').range(offset, offset + 999)
     )
     if (!data?.length) break
     for (const m of data) meetIds.push(String(m.id))
@@ -237,6 +237,7 @@ async function buildMainWeightMap(
       const { data } = await db.from('tournament_entries')
         .select('wrestler_id, weight_classes(weight)')
         .in('tournament_id', psTIds)
+        .order('id')
         .range(offset, offset + 999)
       if (!data?.length) break
       for (const e of (data as any[])) {
@@ -267,9 +268,9 @@ export async function POST(req: NextRequest) {
   //                                          else; its hammer scores and weights stay
   //   { season: '2025-26', archive: true }   rebuilds its match log and scores from the
   //                                          data as it is now (after fixes to that
-  //                                          season); each archived row keeps its school,
-  //                                          conference, section, classification, district
-  //                                          and region, and current main weights are untouched
+  //                                          season); a row whose school is unchanged keeps
+  //                                          its archived conference, section and
+  //                                          classification, and current main weights are untouched
   const logOnly = body?.logOnly === true
   const archive = body?.archive === true
   if ((logOnly || archive) && typeof body?.season !== 'string') {
@@ -318,6 +319,7 @@ export async function POST(req: NextRequest) {
         .from('tournament_entries')
         .select('id, wrestler_id, tournament_id')
         .in('tournament_id', tIds)
+        .order('id')
         .range(offset, offset + ENTRY_PAGE - 1)
       if (!data?.length) break
       allEntries.push(...(data as EntryRow[]))
@@ -424,6 +426,7 @@ export async function POST(req: NextRequest) {
         .select('id')
         .eq('gender', gender)
         .or('is_oos.is.null,is_oos.eq.false')
+        .order('id')
         .range(offset, offset + PAGE - 1)
       if (error) throw new Error('nj wrestlers: ' + error.message)
       if (!data?.length) break
@@ -683,6 +686,7 @@ export async function POST(req: NextRequest) {
           .from(inSeasonBoutTable)
           .select('id, round, wrestler1_id, wrestler2_id, winner, result_type, fall_time_seconds, winner_score, loser_score, weight_class')
           .eq('in_season_tournament_id', t.id)
+          .order('id')
           .range(offset, offset + 999)
         if (!page?.length) break
         bouts.push(...page)
@@ -692,12 +696,14 @@ export async function POST(req: NextRequest) {
     }
 
     // ── Fetch all dual meets ─────────────────────────────────────────────────────
+    // Paged by date then id: date alone is not unique, so pages overlapped and the
+    // boys run skipped 17 meets every time (2026-11-02)
     const meetDateMap = new Map<string, string>() // meet_id → meet_date
     const MEET_PAGE = 1000
     for (let offset = 0; ; offset += MEET_PAGE) {
       const { data } = await (gender === 'F'
-        ? db.from('dual_meets_girls').select('id, meet_date').eq('season_id', CURRENT_SEASON_ID).range(offset, offset + MEET_PAGE - 1).order('meet_date', { ascending: true })
-        : db.from('dual_meets').select('id, meet_date').eq('season_id', CURRENT_SEASON_ID).eq('gender', gender).range(offset, offset + MEET_PAGE - 1).order('meet_date', { ascending: true })
+        ? db.from('dual_meets_girls').select('id, meet_date').eq('season_id', CURRENT_SEASON_ID).order('meet_date', { ascending: true }).order('id').range(offset, offset + MEET_PAGE - 1)
+        : db.from('dual_meets').select('id, meet_date').eq('season_id', CURRENT_SEASON_ID).eq('gender', gender).order('meet_date', { ascending: true }).order('id').range(offset, offset + MEET_PAGE - 1)
       )
       if (!data?.length) break
       for (const m of data) meetDateMap.set(String(m.id), m.meet_date as string)
@@ -867,6 +873,7 @@ export async function POST(req: NextRequest) {
           .from('tournament_entries')
           .select('wrestler_id, tournament_id, school_id, weight_classes(weight)')
           .in('tournament_id', tIds)
+          .order('id')
           .range(offset, offset + PAGE - 1)
         if (!data?.length) break
         for (const e of (data as any[])) {
@@ -987,12 +994,15 @@ export async function POST(req: NextRequest) {
       }
     })
 
-  // An archived season keeps the school details its rows were scored under
+  // School, district and region come from the season's own bouts and entries. Conference,
+  // section and classification come from today's school record, which may have moved on
+  // since: an archived row keeps them when its school is unchanged. (Keeping the archived
+  // school itself kept a split profile at the other person's school, 2026-11-02.)
   if (archive) {
     const kept = new Map<string, Record<string, unknown>>()
     for (let offset = 0; ; offset += 1000) {
       const { data, error } = await db.from('wrestler_hammer_scores')
-        .select('wrestler_id, school_id, conference, section, classification, district, region')
+        .select('wrestler_id, school_id, conference, section, classification')
         .eq('season', CURRENT_SEASON_STR).eq('gender', gender).order('wrestler_id').range(offset, offset + 999)
       if (error) throw new Error(`READ archived wrestler_hammer_scores failed: ${error.message}`)
       for (const r of data ?? []) kept.set(r.wrestler_id as string, r)
@@ -1000,11 +1010,8 @@ export async function POST(req: NextRequest) {
     }
     for (const row of scoreRows) {
       const k = kept.get(row.wrestler_id)
-      if (!k) continue
-      Object.assign(row, {
-        school_id: k.school_id, conference: k.conference, section: k.section,
-        classification: k.classification, district: k.district, region: k.region,
-      })
+      if (!k || k.school_id !== row.school_id) continue
+      Object.assign(row, { conference: k.conference, section: k.section, classification: k.classification })
     }
   }
 

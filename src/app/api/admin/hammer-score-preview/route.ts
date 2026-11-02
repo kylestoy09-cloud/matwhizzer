@@ -59,6 +59,7 @@ export async function POST(req: NextRequest) {
       .select('wrestler_id, postseason_adjusted, tournament_score, match_score, hammer_score, weight_class')
       .eq('season', season)
       .eq('gender', gender)
+      .order('wrestler_id')
       .range(offset, offset + PAGE - 1)
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })

@@ -94,6 +94,7 @@ async function computePriorYearTiers(
       .from('tournament_entries')
       .select('id, wrestler_id, tournament_id')
       .in('tournament_id', allTIds)
+      .order('id')
       .range(off, off + 999)
     if (!data?.length) break
     allEntries.push(...(data as EntryRow[]))
@@ -290,6 +291,7 @@ export async function GET(req: NextRequest) {
       .from('wrestlers')
       .select('id')
       .or('is_oos.is.null,is_oos.eq.false')
+      .order('id')
       .range(off, off + 999)
     if (!data?.length) break
     for (const r of data) njIds.add(r.id as string)

@@ -2,6 +2,47 @@
 
 ---
 
+## 2026-11-02 — Rating recalc paged queries fixed; boys 2025-26 ratings rebuilt again
+
+**Code:**
+- **`recalculate-hammer-scores/route.ts`:** the dual-meet loader paged by `meet_date` only. Date is not unique, so pages overlapped, and **every boys run skipped the same 17 meets** (379 bouts never rated). It now orders by date, then id. Six other paged reads in the route had no order at all and now order by id:
+  - meet ids
+  - postseason entries (3 places)
+  - NJ wrestlers
+  - tournament bouts
+- **Same fix elsewhere:** paged reads without a unique order now end on id (or wrestler_id):
+  - name matcher index and aliases (`src/lib/matchWrestlers.ts`)
+  - admin postseason page
+  - district pre-seed
+  - rating preview
+  - individual upsets
+  - rankings auto-publish
+  - null-wrestler bouts
+  - roster import school lists (boys and girls)
+- **Archive mode corrected:** it kept the archived school, which kept a split profile (Justin Ramirez) at the other person's school, Manville. School, district and region now come from the season's own bouts and entries, as in a normal run. Only conference, section and classification are kept, and only when the school is unchanged.
+
+**Corrections to the 2026-11-01 entry:**
+- Ryan Shultz and Aiden Romero did not "lose a bout that moved": their meets were among the 17 skipped. They are rated again.
+- That run kept Ramirez at Manville; the rerun fixes it.
+
+**Result of the rerun:**
+- 7,607 rows (32 added vs September, 18 dropped: now out-of-state)
+- 138,783 log rows
+- 0 boys 2025-26 meets with wrestled bouts left unrated
+- 9 school changes vs September, all corrections: Ramirez; 4 Gloucester VA wrestlers previously credited to West Deptford by the side-swap bug; 2 previously blank; 2 "Unknown" placeholders
+
+**Open (not changed, needs a decision):**
+- 164 ratings (148 boys, 16 girls) belong to wrestlers at schools marked non-NJ who aren't flagged out-of-state. Most are NJ prep schools outside the NJSIAA (Lawrenceville, Peddie, Blair), plus PA schools and Gloucester VA.
+- 4 rating rows belong to "Unknown" placeholders.
+- A full boys season run took 191 s locally; the Vercel limit is 300 s.
+
+**APPLIED** — 2026-11-02 by script (route code, service role)
+
+**Reversible?** Yes, from the 2026-11-02 scores backup
+**Verified?** Yes — counts above; Shultz, Romero and Ramirez checked individually
+
+---
+
 ## 2026-11-01 — Boys 2025-26 ratings (WRR) rebuilt; rating log replaced by id
 
 **Code:** `src/app/api/admin/recalculate-hammer-scores/route.ts`

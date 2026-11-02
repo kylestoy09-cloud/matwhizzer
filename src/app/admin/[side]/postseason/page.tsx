@@ -57,6 +57,7 @@ async function countWrestlersWithMatches(db: DB, ids: number[]): Promise<number>
         .select('id, wrestler_id')
         .in('tournament_id', ids)
         .not('wrestler_id', 'is', null)
+        .order('id')
         .range(from, to) as unknown) as Promise<{ data: EntryRow[] | null }>
     ),
     pageAll<MatchRow>(
@@ -64,6 +65,7 @@ async function countWrestlersWithMatches(db: DB, ids: number[]): Promise<number>
         .select('winner_entry_id, loser_entry_id')
         .in('tournament_id', ids)
         .not('winner_entry_id', 'is', null)
+        .order('id')
         .range(from, to) as unknown) as Promise<{ data: MatchRow[] | null }>
     ),
   ])

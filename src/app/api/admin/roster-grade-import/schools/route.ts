@@ -66,6 +66,7 @@ export async function GET(req: NextRequest) {
       .eq('season_id', season.id)
       .eq('gender', 'M')
       .order('school_name_raw')
+      .order('id')
       .range(from, from + PAGE - 1)
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
     if (!data || data.length === 0) break

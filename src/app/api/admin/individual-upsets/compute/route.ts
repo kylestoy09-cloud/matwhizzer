@@ -94,6 +94,7 @@ export async function POST(req: NextRequest) {
         .eq('gender',       gender)
         .eq('weight_class', weight_class)
         .not('district', 'is', null)     // NJ only (has a district assignment)
+        .order('wrestler_id')
         .range(offset, offset + 499)
       if (!data?.length) break
       for (const r of data as HammerRow[]) wrestlerGeoMap.set(r.wrestler_id, r)
