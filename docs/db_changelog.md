@@ -2,6 +2,37 @@
 
 ---
 
+## 2026-11-02 — Dover tournament bouts; 12 NJ/out-of-state profiles split; rating log cleanup made sturdier
+
+**Scripts:**
+- `scripts/fix_dover_tournament_bouts.mts`: backup `docs/migrations/backups/20261102_dover_tournament_bouts_before.json`
+- `scripts/split_merged_wrestlers.mts --list 20261102_merged_oos_splits`: list, backup and result in `docs/migrations/backups/20261102_merged_oos_splits_*.json`. The script now takes `--list <prefix>`.
+
+**Data changes:**
+- **Dover:** the Dover Holiday Tournament (2025-12-13) and Howdy Duncan (2025-12-19) sources label Dover, NJ as "Dover, DE" / "Dover". 22 bout sides for 9 Dover, NJ wrestlers moved from Dover, DE (608) to Dover (61).
+  - Those 9 have Dover duals, NJSIAA postseason and Dover's Track roster.
+  - 3 other "Dover, DE" wrestlers (no NJ record, on no Track roster) stay.
+- **12 splits:** each was an NJ wrestler merged with a same-name out-of-state wrestler, from the RTF/CSV cross-school name fallback (fixed 2026-11-01). 22 bout rows moved to new out-of-state people: Daniel Mendoza, Chase Young, Jake Welsh, Alex Hall, Aiden Peterson, Ryan Brown, Anthony Cruz, Kevin Hernandez, Derek Rodriguez, Joshua Perez, Cole Wilson, and Alexis Santiago (Asbury Park / Easton, confirmed two girls). `flag_non_njsiaa_wrestlers.mts` now finds 0 to flag and 0 mixed.
+- **Ratings rebuilt:**
+  - boys 2025-26 (archive): 7,455 rows, log 138,487
+  - girls 2025-26: 2,402 rows, log 38,277
+  - no rated wrestler at a non-NJ school
+
+**Code (`recalculate-hammer-scores/route.ts`):** a failed log insert now re-reads the season's ids and removes every row not in the old log. A girls run hit a statement timeout, and its batch was written even though the reply failed, so 500 rows were missed by the undo; they were removed by hand.
+- **Cause of the timeouts:** about a million log rows were deleted on 2026-11-01/02, and the database had not yet cleaned up that space.
+- **Suggested:** `VACUUM (ANALYZE) public.wrestler_match_score_log;` in the SQL editor.
+
+**Open (decision needed):** in a dual meet an out-of-state opponent counts as rating 0 (tournaments use the round: 55/60/65).
+- Boys 2025-26: 794 NJ dual bouts (1.8%), 229 of them against wrestlers flagged 2026-11-02 (Peddie 157).
+- Girls 2025-26: 43.
+
+**APPLIED** — 2026-11-02 by script
+
+**Reversible?** Yes, from the backups
+**Verified?** Yes — counts above. Leo Lorenzo is rated at Dover with 42 bouts.
+
+---
+
 ## 2026-11-02 — Non-NJSIAA wrestlers flagged out-of-state; imports set the flag from the school
 
 **Decision (Kyle, 2026-11-02):** wrestlers at schools marked non-NJ get no NJ rating, ranking or seeding. That covers other states and NJ schools outside the NJSIAA (Lawrenceville, Peddie, Blair).

@@ -1,0 +1,110 @@
+[
+ {
+  "gender": "M",
+  "wrestler_id": "d4a6ac07-72f2-4867-8358-2602c9fb64f0",
+  "name": "DANIEL MENDOZA",
+  "keep_school": "Elizabeth",
+  "split_school": "Victor Valley",
+  "split_school_id": 932,
+  "judgment_call": false
+ },
+ {
+  "gender": "M",
+  "wrestler_id": "868d2e48-e8d2-4eea-86d6-15c6fae267ca",
+  "name": "Chase Young",
+  "keep_school": "Bergen Catholic",
+  "split_school": "Del Oro",
+  "split_school_id": 925,
+  "judgment_call": false
+ },
+ {
+  "gender": "M",
+  "wrestler_id": "7d29bcde-5785-46fd-8c84-254dbafd06d9",
+  "name": "Jake Welsh",
+  "keep_school": "Butler",
+  "split_school": "Hurricane High School",
+  "split_school_id": 1049,
+  "judgment_call": false
+ },
+ {
+  "gender": "M",
+  "wrestler_id": "c9f144d3-bace-4e38-b907-1006c33f79b3",
+  "name": "Alex Hall",
+  "keep_school": "Tenafly",
+  "split_school": "St. Pius X (Kansas City)",
+  "split_school_id": 517,
+  "judgment_call": false
+ },
+ {
+  "gender": "M",
+  "wrestler_id": "ad737488-4fb4-421c-b6b7-36e3b3e3269c",
+  "name": "Aiden Peterson",
+  "keep_school": "Garfield",
+  "split_school": "St Edward",
+  "split_school_id": 519,
+  "judgment_call": false
+ },
+ {
+  "gender": "M",
+  "wrestler_id": "525e8501-2040-426a-9301-e06b696936f3",
+  "name": "Ryan Brown",
+  "keep_school": "West Windsor-Plainsboro North",
+  "split_school": "Connellsville Area High School",
+  "split_school_id": 760,
+  "judgment_call": false
+ },
+ {
+  "gender": "M",
+  "wrestler_id": "68409d90-77f6-4328-af8b-c40909fb928e",
+  "name": "Anthony Cruz",
+  "keep_school": "Phillipsburg",
+  "split_school": "Folsom",
+  "split_school_id": 912,
+  "judgment_call": false
+ },
+ {
+  "gender": "M",
+  "wrestler_id": "ae0c487d-34bb-4150-bb52-797920075dcb",
+  "name": "Kevin Hernandez",
+  "keep_school": "Ridgefield Memorial",
+  "split_school": "Oxford",
+  "split_school_id": 643,
+  "judgment_call": false
+ },
+ {
+  "gender": "M",
+  "wrestler_id": "b0046216-fdbc-40dc-a96a-b80812470d10",
+  "name": "Derek Rodriguez",
+  "keep_school": "Bloomfield",
+  "split_school": "Whitehall High School",
+  "split_school_id": 578,
+  "judgment_call": false
+ },
+ {
+  "gender": "M",
+  "wrestler_id": "23ba93d6-32a1-400f-b5e0-28319ee04112",
+  "name": "Joshua Perez",
+  "keep_school": "Long Branch",
+  "split_school": "Xavier",
+  "split_school_id": 464,
+  "judgment_call": false
+ },
+ {
+  "gender": "M",
+  "wrestler_id": "4f779710-40b6-43b1-8143-e16cf12d6e4e",
+  "name": "Cole Wilson",
+  "keep_school": "Manchester Township",
+  "split_school": "St Paul VI Catholic",
+  "split_school_id": 641,
+  "judgment_call": false
+ },
+ {
+  "gender": "F",
+  "wrestler_id": "5e1ee2c3-8a5f-440d-91cb-a9db5fe57271",
+  "name": "Alexis Santiago",
+  "keep_school": "Asbury Park",
+  "split_school": "Easton Area High School",
+  "split_school_id": 736,
+  "judgment_call": false
+ }
+]

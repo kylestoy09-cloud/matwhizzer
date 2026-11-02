@@ -956,7 +956,22 @@ export async function POST(req: NextRequest) {
   for (let i = 0; i < logEntries.length; i += BATCH) {
     const { data, error } = await db.from('wrestler_match_score_log').insert(logEntries.slice(i, i + BATCH)).select('id')
     if (error) {
-      const undoErr = await deleteLogIds(newLogIds)
+      // A batch can be written even though its reply failed (a timeout), so its ids
+      // never reached newLogIds: re-read the season's ids and remove all that are new
+      const old = new Set(oldLogIds)
+      const current: string[] = []
+      let undoErr: string | null = null
+      for (let last: string | null = null; ;) {
+        let q = db.from('wrestler_match_score_log').select('id')
+          .eq('season', CURRENT_SEASON_STR).eq('gender', gender).order('id').limit(1000)
+        if (last) q = q.gt('id', last)
+        const { data: page, error: readErr } = await q
+        if (readErr) { undoErr = readErr.message; break }
+        for (const r of page ?? []) current.push(String(r.id))
+        if (!page || page.length < 1000) break
+        last = String(page[page.length - 1].id)
+      }
+      undoErr = undoErr ?? await deleteLogIds([...new Set([...newLogIds, ...current.filter(id => !old.has(id))])])
       throw new Error(`INSERT wrestler_match_score_log failed at row ${i}: ${error.message}` +
         (undoErr ? ` (removing this run's partial rows also failed: ${undoErr})` : '; previous log kept'))
     }

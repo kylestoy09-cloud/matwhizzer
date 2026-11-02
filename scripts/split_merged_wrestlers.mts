@@ -14,8 +14,12 @@ import { splitWrestlerAtSchool } from '../src/lib/splitWrestler'
 const db = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
 const apply = process.argv.includes('--apply')
 const skipJudgment = process.argv.includes('--skip-judgment')
+// --list <prefix>: run another list, docs/migrations/backups/<prefix>_list.json (backups
+// and results go to <prefix>_before.json / <prefix>_done.json)
+const li = process.argv.indexOf('--list')
+const prefix = `docs/migrations/backups/${li > 0 ? process.argv[li + 1] : '20261101_merged_wrestler_splits'}`
 type Case = { gender: 'M' | 'F'; wrestler_id: string; name: string; keep_school: string; split_school: string; split_school_id: number; judgment_call: boolean }
-const cases = (JSON.parse(fs.readFileSync('docs/migrations/backups/20261101_merged_wrestler_splits_list.json', 'utf8')) as Case[])
+const cases = (JSON.parse(fs.readFileSync(`${prefix}_list.json`, 'utf8')) as Case[])
   .filter(c => !(skipJudgment && c.judgment_call))
 
 // Every row a split touches, by table: [table, wrestler column, school column]
@@ -51,7 +55,7 @@ for (const c of cases) {
 console.log(`\n${cases.length} splits, ${totalRows} rows move`)
 if (!apply) process.exit(0)
 
-const file = `docs/migrations/backups/20261101_merged_wrestler_splits_before.json`
+const file = `${prefix}_before.json`
 fs.writeFileSync(file, JSON.stringify(backup))
 console.log('backup written:', file)
 const results: unknown[] = []
@@ -78,4 +82,4 @@ for (const c of cases) {
   results.push({ ...c, new_wrestler_id: r.newId, new_grade: splitRow?.grade ?? null, kept_grade_fix: gradeFix, moved: r.moved })
   console.log(`split ${c.name} @ ${c.split_school} -> ${r.newId} (grade ${splitRow?.grade ?? '-'})${gradeFix ? ` | kept profile grade ${gradeFix}` : ''}`)
 }
-fs.writeFileSync(`docs/migrations/backups/20261101_merged_wrestler_splits_done.json`, JSON.stringify(results, null, 1))
+fs.writeFileSync(`${prefix}_done.json`, JSON.stringify(results, null, 1))
