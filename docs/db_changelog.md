@@ -2,6 +2,29 @@
 
 ---
 
+## 2026-11-01 — Duplicate St. Augustine vs Green Run meet removed
+
+**Script:** `scripts/remove_duplicate_green_run_meet.mts` (approved 2026-11-01). Backup: `docs/migrations/backups/20261101_duplicate_green_run_meet.json`
+
+**Purpose:** St. Augustine 80 – 0 Green Run (2026-01-09) was imported twice on 2026-08-02, against "Green Run" (770) and "Green Run, VA" (772), with the same 14 bouts. That double-counted the dual for every wrestler in it.
+
+**Data changes (deleted, after counting references):**
+- the copy against 772: 1 meet, 14 bouts
+- 11 boys 2025-26 rating match log rows for those bouts
+- school 772 "Green Run, VA" (nothing else used it)
+
+The kept meet (`262e4935…`, against 770) is unchanged.
+
+**APPLIED** — 2026-11-01 by script
+
+**Reversible?** Yes, re-insert from the backup
+**Verified?** Yes — the profile scan finds:
+- boys: 0 merged, 0 wrong-team, 0 duplicate-school
+- girls: 0 wrong-team; 2 flagged are NV-Demarest/Old Tappan co-op girls credited to either school, so one person each
+- left as is by decision: the "Unknown" placeholders and the 2025-12-15 empty jamboree pairings
+
+---
+
 ## 2026-11-01 — Dual bouts with wrestlers on the wrong side; one more profile split
 
 **Scripts:**
