@@ -1,0 +1,8 @@
+[
+  {"file": "region_champions", "match": {"region": 5, "year": 2026, "weight": 165}, "set": {"school": "St. Joseph Metuchen"}, "source": "MatWhizzer 2025-26 Region 5 bracket (school blank on the site)"},
+  {"file": "region_champions", "match": {"region": 5, "year": 2026, "weight": 175}, "set": {"school": "St. Joseph Metuchen"}, "source": "MatWhizzer 2025-26 Region 5 bracket (school blank on the site)"},
+  {"file": "region_champions", "match": {"region": 5, "year": 2026, "weight": "Hwt"}, "set": {"name": "Nicholas Duarte", "school": "Hillsborough"}, "source": "MatWhizzer 2025-26 Region 5 bracket (blank on the site)"},
+  {"file": "region_champions", "match": {"region": 8, "year": 2026, "weight": 106}, "set": {"school": "Southern Regional"}, "source": "MatWhizzer 2025-26 Region 8 bracket (school blank on the site)"},
+  {"file": "region_champions", "match": {"region": 3, "year": 2026, "weight": 106}, "set": {"name": "Finn Andersen"}, "source": "MatWhizzer 2025-26 Region 3 bracket (site: Anderson)"},
+  {"file": "region_champions", "match": {"region": 3, "year": 2026, "weight": 150}, "set": {"name": "Nicholas Schwartz"}, "source": "MatWhizzer 2025-26 Region 3 bracket (site: Scwartz)"}
+]

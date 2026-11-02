@@ -1,0 +1,6854 @@
+[
+ {
+  "year": 2026,
+  "weight": 106,
+  "name": "Thomas Blewett",
+  "school": "Middletown North"
+ },
+ {
+  "year": 2026,
+  "weight": 113,
+  "name": "Killian Coluccio",
+  "school": "Lacey"
+ },
+ {
+  "year": 2026,
+  "weight": 120,
+  "name": "Cameron Sontz",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2026,
+  "weight": 126,
+  "name": "Paul Kenny",
+  "school": "CBA"
+ },
+ {
+  "year": 2026,
+  "weight": 132,
+  "name": "Greyson Pettit",
+  "school": "Delsea"
+ },
+ {
+  "year": 2026,
+  "weight": 138,
+  "name": "Gideon Gonzalez",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2026,
+  "weight": 144,
+  "name": "Robert Duffy",
+  "school": "CBA"
+ },
+ {
+  "year": 2026,
+  "weight": 150,
+  "name": "Sonny Amato",
+  "school": "Rumson"
+ },
+ {
+  "year": 2026,
+  "weight": 157,
+  "name": "Joey Canova",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2026,
+  "weight": 165,
+  "name": "Jayden James",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2026,
+  "weight": 175,
+  "name": "Santino Rodriguez",
+  "school": "Don Bosco"
+ },
+ {
+  "year": 2026,
+  "weight": 190,
+  "name": "Carl Betz",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2026,
+  "weight": 215,
+  "name": "Tanner Hodgins",
+  "school": "Howell"
+ },
+ {
+  "year": 2026,
+  "weight": "Hwt",
+  "name": "Cristian Alvarez",
+  "school": "St Joseph's - Montvale"
+ },
+ {
+  "year": 2025,
+  "weight": 106,
+  "name": "JoJo Burke",
+  "school": "St Joseph's - Montvale"
+ },
+ {
+  "year": 2025,
+  "weight": 113,
+  "name": "Cameron Sontz",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2025,
+  "weight": 120,
+  "name": "Paul Kenny",
+  "school": "CBA"
+ },
+ {
+  "year": 2025,
+  "weight": 126,
+  "name": "Anthony Knox",
+  "school": "St John Vianney"
+ },
+ {
+  "year": 2025,
+  "weight": 132,
+  "name": "Sammy Spaulding",
+  "school": "Camden Catholic"
+ },
+ {
+  "year": 2025,
+  "weight": 138,
+  "name": "Caedyn Ricciardi",
+  "school": "St Peter's Prep"
+ },
+ {
+  "year": 2025,
+  "weight": 144,
+  "name": "Blase Mele",
+  "school": "Princeton"
+ },
+ {
+  "year": 2025,
+  "weight": 150,
+  "name": "Jayden James",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2025,
+  "weight": 157,
+  "name": "Wyatt Stout",
+  "school": "Southern"
+ },
+ {
+  "year": 2025,
+  "weight": 165,
+  "name": "Alessio Perentin",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2025,
+  "weight": 175,
+  "name": "Ryan Burton",
+  "school": "St Joseph's - Montvale"
+ },
+ {
+  "year": 2025,
+  "weight": 190,
+  "name": "Harvey Ludington",
+  "school": "Brick Memorial"
+ },
+ {
+  "year": 2025,
+  "weight": 215,
+  "name": "Anthony Harris",
+  "school": "St Joseph's - Montvale"
+ },
+ {
+  "year": 2025,
+  "weight": "Hwt",
+  "name": "Rocco Dellagatta",
+  "school": "St John Vianney"
+ },
+ {
+  "year": 2024,
+  "weight": 106,
+  "name": "Cameron Sontz",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2024,
+  "weight": 113,
+  "name": "Tyler Hagenson",
+  "school": "Mt Olive"
+ },
+ {
+  "year": 2024,
+  "weight": 120,
+  "name": "Anthony Knox",
+  "school": "St John Vianney"
+ },
+ {
+  "year": 2024,
+  "weight": 126,
+  "name": "Ryan DeGeorge",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2024,
+  "weight": 132,
+  "name": "Adrian DeJesus",
+  "school": "St Joseph's - Montvale"
+ },
+ {
+  "year": 2024,
+  "weight": 138,
+  "name": "Caedyn Ricciardi",
+  "school": "St Peter's Prep"
+ },
+ {
+  "year": 2024,
+  "weight": 144,
+  "name": "Sonny Amato",
+  "school": "Rumson"
+ },
+ {
+  "year": 2024,
+  "weight": 150,
+  "name": "Zach Ballante",
+  "school": "St Joseph's - Montvale"
+ },
+ {
+  "year": 2024,
+  "weight": 157,
+  "name": "Matt Henrich",
+  "school": "Southern"
+ },
+ {
+  "year": 2024,
+  "weight": 165,
+  "name": "Alessio Perentin",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2024,
+  "weight": 175,
+  "name": "Ryan Burton",
+  "school": "St Joseph's - Montvale"
+ },
+ {
+  "year": 2024,
+  "weight": 190,
+  "name": "Harvey Ludington",
+  "school": "Brick Memorial"
+ },
+ {
+  "year": 2024,
+  "weight": 215,
+  "name": "Vincent Lee",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2024,
+  "weight": "Hwt",
+  "name": "Rocco Dellagatta",
+  "school": "St Joseph's - Montvale"
+ },
+ {
+  "year": 2023,
+  "weight": 106,
+  "name": "Logan Wadle",
+  "school": "North Hunterdon"
+ },
+ {
+  "year": 2023,
+  "weight": 113,
+  "name": "Logan Roman",
+  "school": "Old Bridge"
+ },
+ {
+  "year": 2023,
+  "weight": 120,
+  "name": "Anthony Knox",
+  "school": "St John Vianney"
+ },
+ {
+  "year": 2023,
+  "weight": 126,
+  "name": "Luke Stanich",
+  "school": "Roxbury"
+ },
+ {
+  "year": 2023,
+  "weight": 132,
+  "name": "Anthony Santaniello",
+  "school": "Brick Memorial"
+ },
+ {
+  "year": 2023,
+  "weight": 138,
+  "name": "Tyler Vazquez",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2023,
+  "weight": 144,
+  "name": "Richie Grungo",
+  "school": "St Augustine"
+ },
+ {
+  "year": 2023,
+  "weight": 150,
+  "name": "Matt Henrich",
+  "school": "Southern"
+ },
+ {
+  "year": 2023,
+  "weight": 157,
+  "name": "Alessio Perentin",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2023,
+  "weight": 165,
+  "name": "Louis Cerchio",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2023,
+  "weight": 175,
+  "name": "Simon Ruiz",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2023,
+  "weight": 190,
+  "name": "Michael Dellagatta",
+  "school": "St Joseph's - Montvale"
+ },
+ {
+  "year": 2023,
+  "weight": 215,
+  "name": "Hudson Skove",
+  "school": "Rumson"
+ },
+ {
+  "year": 2023,
+  "weight": "Hwt",
+  "name": "Jimmy Mullen",
+  "school": "St Joseph's - Montvale"
+ },
+ {
+  "year": 2022,
+  "weight": 106,
+  "name": "Adrian DeJesus",
+  "school": "St Peter's Prep"
+ },
+ {
+  "year": 2022,
+  "weight": 113,
+  "name": "Anthony Knox",
+  "school": "St John Vianney"
+ },
+ {
+  "year": 2022,
+  "weight": 120,
+  "name": "Evan Tallmadge",
+  "school": "Brick Memorial"
+ },
+ {
+  "year": 2022,
+  "weight": 126,
+  "name": "Evan Mougalian",
+  "school": "Kinnelon"
+ },
+ {
+  "year": 2022,
+  "weight": 132,
+  "name": "Tyler Vazquez",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2022,
+  "weight": 138,
+  "name": "Joseph Cangro",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2022,
+  "weight": 144,
+  "name": "Joe Fongaro",
+  "school": "Boonton"
+ },
+ {
+  "year": 2022,
+  "weight": 150,
+  "name": "Andrew Troczynski",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2022,
+  "weight": 157,
+  "name": "Simon Ruiz",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2022,
+  "weight": 165,
+  "name": "Hunter Mays",
+  "school": "Howell"
+ },
+ {
+  "year": 2022,
+  "weight": 175,
+  "name": "Harvey Ludington",
+  "school": "Brick Memorial"
+ },
+ {
+  "year": 2022,
+  "weight": 190,
+  "name": "Brian Soldano",
+  "school": "High Point"
+ },
+ {
+  "year": 2022,
+  "weight": 215,
+  "name": "Martin Cosgrove",
+  "school": "Camden Catholic"
+ },
+ {
+  "year": 2022,
+  "weight": "Hwt",
+  "name": "Jimmy Mullen",
+  "school": "St Joseph's - Montvale"
+ },
+ {
+  "year": 2021,
+  "weight": 106,
+  "name": "Daniel Jones",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2021,
+  "weight": 113,
+  "name": "Evan Tallmadge",
+  "school": "Brick Memorial"
+ },
+ {
+  "year": 2021,
+  "weight": 120,
+  "name": "Anthony Santaniello",
+  "school": "Brick Memorial"
+ },
+ {
+  "year": 2021,
+  "weight": 126,
+  "name": "Vincent Santaniello",
+  "school": "Brick Memorial"
+ },
+ {
+  "year": 2021,
+  "weight": 132,
+  "name": "Ty Whalen",
+  "school": "Clearview"
+ },
+ {
+  "year": 2021,
+  "weight": 138,
+  "name": "Joey Olivieri",
+  "school": "Hanover Park"
+ },
+ {
+  "year": 2021,
+  "weight": 145,
+  "name": "Anthony White",
+  "school": "South Plainfield"
+ },
+ {
+  "year": 2021,
+  "weight": 152,
+  "name": "Andrew Troczynski",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2021,
+  "weight": 160,
+  "name": "Hunter Mays",
+  "school": "Howell"
+ },
+ {
+  "year": 2021,
+  "weight": 170,
+  "name": "Aaron Ayzerov",
+  "school": "Paramus"
+ },
+ {
+  "year": 2021,
+  "weight": 182,
+  "name": "Brian Soldano",
+  "school": "High Point"
+ },
+ {
+  "year": 2021,
+  "weight": 195,
+  "name": "Nick Lodato",
+  "school": "Pope John"
+ },
+ {
+  "year": 2021,
+  "weight": 220,
+  "name": "Mike Misita",
+  "school": "Williamstown"
+ },
+ {
+  "year": 2021,
+  "weight": "Hwt",
+  "name": "David Szuba",
+  "school": "Brick Memorial"
+ },
+ {
+  "year": 2020,
+  "weight": 106,
+  "name": "Evan Mougalian",
+  "school": "Kinnelon"
+ },
+ {
+  "year": 2020,
+  "weight": 113,
+  "name": "Tyler Klinsky",
+  "school": "Middletown North"
+ },
+ {
+  "year": 2020,
+  "weight": 120,
+  "name": "Dean Peterson",
+  "school": "St John Vianney"
+ },
+ {
+  "year": 2020,
+  "weight": 126,
+  "name": "Robert Howard",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2020,
+  "weight": 132,
+  "name": "Joey Olivieri",
+  "school": "Hanover Park"
+ },
+ {
+  "year": 2020,
+  "weight": 138,
+  "name": "Anthony Clark",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2020,
+  "weight": 145,
+  "name": "Andrew Clark",
+  "school": "Collingswood"
+ },
+ {
+  "year": 2020,
+  "weight": 152,
+  "name": "Nick Boggiano",
+  "school": "Toms River North"
+ },
+ {
+  "year": 2020,
+  "weight": 160,
+  "name": "Brian Soldano",
+  "school": "High Point"
+ },
+ {
+  "year": 2020,
+  "weight": 170,
+  "name": "Connor O`Neill",
+  "school": "DePaul"
+ },
+ {
+  "year": 2020,
+  "weight": 182,
+  "name": "John Poznanski",
+  "school": "Colonia"
+ },
+ {
+  "year": 2020,
+  "weight": 195,
+  "name": "Martin Cosgrove",
+  "school": "Camden Catholic"
+ },
+ {
+  "year": 2020,
+  "weight": 220,
+  "name": "PJ Casale",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2020,
+  "weight": "Hwt",
+  "name": "Jimmy Mullen",
+  "school": "St Joseph's - Montvale"
+ },
+ {
+  "year": 2019,
+  "weight": 106,
+  "name": "Brett Ungar",
+  "school": "Hunterdon Central"
+ },
+ {
+  "year": 2019,
+  "weight": 113,
+  "name": "Dean Peterson",
+  "school": "St John Vianney"
+ },
+ {
+  "year": 2019,
+  "weight": 120,
+  "name": "Eddie Ventresca",
+  "school": "Pope John"
+ },
+ {
+  "year": 2019,
+  "weight": 126,
+  "name": "Sammy Alvarez",
+  "school": "St Joseph's - Montvale"
+ },
+ {
+  "year": 2019,
+  "weight": 132,
+  "name": "Nicholas Raimo",
+  "school": "Hanover Park"
+ },
+ {
+  "year": 2019,
+  "weight": 138,
+  "name": "Joseph Aragona",
+  "school": "Pope John"
+ },
+ {
+  "year": 2019,
+  "weight": 145,
+  "name": "Lucas Revano",
+  "school": "Camden Catholic"
+ },
+ {
+  "year": 2019,
+  "weight": 152,
+  "name": "Robert Garcia",
+  "school": "Pope John"
+ },
+ {
+  "year": 2019,
+  "weight": 160,
+  "name": "Robert Kanniard",
+  "school": "Wall"
+ },
+ {
+  "year": 2019,
+  "weight": 170,
+  "name": "Brandon Green",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 2019,
+  "weight": 182,
+  "name": "Christopher Foca",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2019,
+  "weight": 195,
+  "name": "Jacob Cardenas",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2019,
+  "weight": 220,
+  "name": "Zach DelVecchio",
+  "school": "South Plainfield"
+ },
+ {
+  "year": 2019,
+  "weight": "Hwt",
+  "name": "Lewis Fernandes",
+  "school": "Voorhees"
+ },
+ {
+  "year": 2018,
+  "weight": 106,
+  "name": "Joey Olivieri",
+  "school": "Hanover Park"
+ },
+ {
+  "year": 2018,
+  "weight": 113,
+  "name": "Anthony Clark",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2018,
+  "weight": 120,
+  "name": "Robert Howard",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2018,
+  "weight": 126,
+  "name": "Patrick Glory",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2018,
+  "weight": 132,
+  "name": "Lucas Revano",
+  "school": "Camden Catholic"
+ },
+ {
+  "year": 2018,
+  "weight": 138,
+  "name": "Quinn Kinner",
+  "school": "Kingsway"
+ },
+ {
+  "year": 2018,
+  "weight": 145,
+  "name": "Ricky Cabanillas",
+  "school": "DePaul"
+ },
+ {
+  "year": 2018,
+  "weight": 152,
+  "name": "Cole Corrigan",
+  "school": "Toms River South"
+ },
+ {
+  "year": 2018,
+  "weight": 160,
+  "name": "Shane Griffith",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2018,
+  "weight": 170,
+  "name": "Michael O'Malley",
+  "school": "Hasbrouck Heights"
+ },
+ {
+  "year": 2018,
+  "weight": 182,
+  "name": "Bill Janzer",
+  "school": "Delsea"
+ },
+ {
+  "year": 2018,
+  "weight": 195,
+  "name": "Jacob Cardenas",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2018,
+  "weight": 220,
+  "name": "Peter Acciardi",
+  "school": "Don Bosco"
+ },
+ {
+  "year": 2018,
+  "weight": "Hwt",
+  "name": "Lewis Fernandes",
+  "school": "Voorhees"
+ },
+ {
+  "year": 2017,
+  "weight": 106,
+  "name": "Anthony Clark",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2017,
+  "weight": 113,
+  "name": "Antonio Mininno",
+  "school": "Gateway"
+ },
+ {
+  "year": 2017,
+  "weight": 120,
+  "name": "Patrick Glory",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2017,
+  "weight": 126,
+  "name": "Nicholas Raimo",
+  "school": "Hanover Park"
+ },
+ {
+  "year": 2017,
+  "weight": 132,
+  "name": "Quinn Kinner",
+  "school": "Kingsway"
+ },
+ {
+  "year": 2017,
+  "weight": 138,
+  "name": "Jake Benner",
+  "school": "Ocean Township"
+ },
+ {
+  "year": 2017,
+  "weight": 145,
+  "name": "Nick Palumbo",
+  "school": "Lenape Valley"
+ },
+ {
+  "year": 2017,
+  "weight": 152,
+  "name": "Stephan Glasgow",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 2017,
+  "weight": 160,
+  "name": "Mekhi Lewis",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 2017,
+  "weight": 170,
+  "name": "Bill Janzer",
+  "school": "Delsea"
+ },
+ {
+  "year": 2017,
+  "weight": 182,
+  "name": "George Walton",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 2017,
+  "weight": 195,
+  "name": "Kyle Lightner",
+  "school": "Delaware Valley"
+ },
+ {
+  "year": 2017,
+  "weight": 220,
+  "name": "Eric Keosseian",
+  "school": "Howell"
+ },
+ {
+  "year": 2017,
+  "weight": "Hwt",
+  "name": "Eric Chakonis",
+  "school": "Don Bosco"
+ },
+ {
+  "year": 2016,
+  "weight": 106,
+  "name": "Joe Manchio",
+  "school": "Seneca"
+ },
+ {
+  "year": 2016,
+  "weight": 113,
+  "name": "Sebastian Rivera",
+  "school": "CBA"
+ },
+ {
+  "year": 2016,
+  "weight": 120,
+  "name": "Brandon Cray",
+  "school": "Steinert"
+ },
+ {
+  "year": 2016,
+  "weight": 126,
+  "name": "Nick Suriano",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2016,
+  "weight": 132,
+  "name": "Zack Firestone",
+  "school": "Clearview"
+ },
+ {
+  "year": 2016,
+  "weight": 138,
+  "name": "Shane Griffith",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2016,
+  "weight": 145,
+  "name": "Mekhi Lewis",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 2016,
+  "weight": 152,
+  "name": "Stephan Glasgow",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 2016,
+  "weight": 160,
+  "name": "Kyle Cochran",
+  "school": "Paramus"
+ },
+ {
+  "year": 2016,
+  "weight": 170,
+  "name": "Joe Grello",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2016,
+  "weight": 182,
+  "name": "Brandon Kui",
+  "school": "DePaul"
+ },
+ {
+  "year": 2016,
+  "weight": 195,
+  "name": "Kevin Mulligan",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2016,
+  "weight": 220,
+  "name": "Matt Correnti",
+  "school": "Holy Cross"
+ },
+ {
+  "year": 2016,
+  "weight": "Hwt",
+  "name": "Eric Chakonis",
+  "school": "Don Bosco"
+ },
+ {
+  "year": 2015,
+  "weight": 106,
+  "name": "Gerard Angelo",
+  "school": "Hanover Park"
+ },
+ {
+  "year": 2015,
+  "weight": 113,
+  "name": "Brandon Cray",
+  "school": "Steinert"
+ },
+ {
+  "year": 2015,
+  "weight": 120,
+  "name": "Nick Suriano",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2015,
+  "weight": 126,
+  "name": "Pat D'Arcy",
+  "school": "Holy Spirit"
+ },
+ {
+  "year": 2015,
+  "weight": 132,
+  "name": "Shane Griffith",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2015,
+  "weight": 138,
+  "name": "Kyle Bierdumpfel",
+  "school": "Don Bosco"
+ },
+ {
+  "year": 2015,
+  "weight": 145,
+  "name": "Alec Donovan",
+  "school": "Brick Memorial"
+ },
+ {
+  "year": 2015,
+  "weight": 152,
+  "name": "Joe Tavoso",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2015,
+  "weight": 160,
+  "name": "David McFadden",
+  "school": "DePaul"
+ },
+ {
+  "year": 2015,
+  "weight": 170,
+  "name": "Joe Grello",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2015,
+  "weight": 182,
+  "name": "Kevin Mulligan",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2015,
+  "weight": 195,
+  "name": "Tyree Sutton",
+  "school": "Keansburg"
+ },
+ {
+  "year": 2015,
+  "weight": 220,
+  "name": "Christian Colucci",
+  "school": "St. Peter's Prep"
+ },
+ {
+  "year": 2015,
+  "weight": "Hwt",
+  "name": "Zack Chakonis",
+  "school": "Don Bosco"
+ },
+ {
+  "year": 2014,
+  "weight": 106,
+  "name": "Ty Agaisse",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2014,
+  "weight": 113,
+  "name": "Nick Suriano",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2014,
+  "weight": 120,
+  "name": "Anthony Cefolo",
+  "school": "Hanover Park"
+ },
+ {
+  "year": 2014,
+  "weight": 126,
+  "name": "Craig De La Cruz",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 2014,
+  "weight": 132,
+  "name": "Anthony Giraldo",
+  "school": "North Bergen"
+ },
+ {
+  "year": 2014,
+  "weight": 138,
+  "name": "Ronnie Gentile",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 2014,
+  "weight": 145,
+  "name": "David McFadden",
+  "school": "DePaul"
+ },
+ {
+  "year": 2014,
+  "weight": 152,
+  "name": "Jack Clark",
+  "school": "St Augustine"
+ },
+ {
+  "year": 2014,
+  "weight": 160,
+  "name": "Jonathan Schleifer",
+  "school": "East Brunswick"
+ },
+ {
+  "year": 2014,
+  "weight": 170,
+  "name": "Dillon Artigliere",
+  "school": "Roxbury"
+ },
+ {
+  "year": 2014,
+  "weight": 182,
+  "name": "Johnny Sebastian",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2014,
+  "weight": 195,
+  "name": "Anthony Cassar",
+  "school": "Montgomery"
+ },
+ {
+  "year": 2014,
+  "weight": 220,
+  "name": "Bryan Dobzanski",
+  "school": "Delsea"
+ },
+ {
+  "year": 2014,
+  "weight": "Hwt",
+  "name": "Andrew Stevens",
+  "school": "Camden"
+ },
+ {
+  "year": 2013,
+  "weight": 106,
+  "name": "Nick Suriano",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2013,
+  "weight": 113,
+  "name": "Luis Gonzalez",
+  "school": "Don Bosco"
+ },
+ {
+  "year": 2013,
+  "weight": 120,
+  "name": "Craig De La Cruz",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 2013,
+  "weight": 126,
+  "name": "Anthony Giraldo",
+  "school": "North Bergen"
+ },
+ {
+  "year": 2013,
+  "weight": 132,
+  "name": "Scott DelVecchio",
+  "school": "South Plainfield"
+ },
+ {
+  "year": 2013,
+  "weight": 138,
+  "name": "Anthony Ashnault",
+  "school": "South Plainfield"
+ },
+ {
+  "year": 2013,
+  "weight": 145,
+  "name": "BJ Clagon",
+  "school": "Toms River South"
+ },
+ {
+  "year": 2013,
+  "weight": 152,
+  "name": "Wayne Stinson",
+  "school": "Northern Burlington"
+ },
+ {
+  "year": 2013,
+  "weight": 160,
+  "name": "Dillon Artigliere",
+  "school": "Roxbury"
+ },
+ {
+  "year": 2013,
+  "weight": 170,
+  "name": "Ethan Ramos",
+  "school": "Hawthorne"
+ },
+ {
+  "year": 2013,
+  "weight": 182,
+  "name": "Johnny Sebastian",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2013,
+  "weight": 195,
+  "name": "Razohnn Gross",
+  "school": "Don Bosco"
+ },
+ {
+  "year": 2013,
+  "weight": 220,
+  "name": "Bryan Dobzanski",
+  "school": "Delsea"
+ },
+ {
+  "year": 2013,
+  "weight": "Hwt",
+  "name": "Alex Thompson",
+  "school": "Haddon Heights"
+ },
+ {
+  "year": 2012,
+  "weight": 106,
+  "name": "Anthony Cefolo",
+  "school": "Hanover Park"
+ },
+ {
+  "year": 2012,
+  "weight": 113,
+  "name": "Brenden Calas",
+  "school": "Seton Hall"
+ },
+ {
+  "year": 2012,
+  "weight": 120,
+  "name": "Mike Magaldo",
+  "school": "Watchung Hills"
+ },
+ {
+  "year": 2012,
+  "weight": 126,
+  "name": "Anthony Ashnault",
+  "school": "South Plainfield"
+ },
+ {
+  "year": 2012,
+  "weight": 132,
+  "name": "Scott DelVecchio",
+  "school": "South Plainfield"
+ },
+ {
+  "year": 2012,
+  "weight": 138,
+  "name": "BJ Clagon",
+  "school": "Toms River South"
+ },
+ {
+  "year": 2012,
+  "weight": 145,
+  "name": "Alexander Richardson",
+  "school": "St Peters Prep"
+ },
+ {
+  "year": 2012,
+  "weight": 152,
+  "name": "Raamiah Bethea",
+  "school": "Trenton Central"
+ },
+ {
+  "year": 2012,
+  "weight": 160,
+  "name": "Johnny Sebastian",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2012,
+  "weight": 170,
+  "name": "Ryan Harrington",
+  "school": "Mendham"
+ },
+ {
+  "year": 2012,
+  "weight": 182,
+  "name": "Dallas Winston",
+  "school": "Jackson Memorial"
+ },
+ {
+  "year": 2012,
+  "weight": 195,
+  "name": "Razohnn Gross",
+  "school": "Don Bosco"
+ },
+ {
+  "year": 2012,
+  "weight": 220,
+  "name": "Brandon Hull",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 2012,
+  "weight": "Hwt",
+  "name": "Cody Melton",
+  "school": "Northern Burlington"
+ },
+ {
+  "year": 2011,
+  "weight": 103,
+  "name": "Brenden Calas",
+  "school": "Seton Hall Prep"
+ },
+ {
+  "year": 2011,
+  "weight": 112,
+  "name": "Anthony Ashnault",
+  "school": "South Plainfield"
+ },
+ {
+  "year": 2011,
+  "weight": 119,
+  "name": "Rob Deutsch",
+  "school": "Eastern"
+ },
+ {
+  "year": 2011,
+  "weight": 125,
+  "name": "Nick Francavilla",
+  "school": "High Point"
+ },
+ {
+  "year": 2011,
+  "weight": 130,
+  "name": "Anthony Perrotti",
+  "school": "West Essex"
+ },
+ {
+  "year": 2011,
+  "weight": 135,
+  "name": "TJ Miller",
+  "school": "Camden Catholic"
+ },
+ {
+  "year": 2011,
+  "weight": 140,
+  "name": "Drew Wagenhoffer",
+  "school": "High Point"
+ },
+ {
+  "year": 2011,
+  "weight": 145,
+  "name": "James Green",
+  "school": "Willingboro"
+ },
+ {
+  "year": 2011,
+  "weight": 152,
+  "name": "Christian Barber",
+  "school": "Westfield"
+ },
+ {
+  "year": 2011,
+  "weight": 160,
+  "name": "Ryan Harrington",
+  "school": "West Morris - Mendham"
+ },
+ {
+  "year": 2011,
+  "weight": 171,
+  "name": "Ethan Orr",
+  "school": "High Point"
+ },
+ {
+  "year": 2011,
+  "weight": 189,
+  "name": "James Fox",
+  "school": "St. Peter's Prep"
+ },
+ {
+  "year": 2011,
+  "weight": 215,
+  "name": "Andrew Campolattano",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 2011,
+  "weight": "Hwt",
+  "name": "William Smith",
+  "school": "High Point"
+ },
+ {
+  "year": 2010,
+  "weight": 103,
+  "name": "Anthony Ashnault",
+  "school": "South Plainfield"
+ },
+ {
+  "year": 2010,
+  "weight": 112,
+  "name": "Nick Francavilla",
+  "school": "High Point"
+ },
+ {
+  "year": 2010,
+  "weight": 119,
+  "name": "Alex Shaffer",
+  "school": "Hunterdon Central"
+ },
+ {
+  "year": 2010,
+  "weight": 125,
+  "name": "Joe Duca",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 2010,
+  "weight": 130,
+  "name": "Frank Cagnina",
+  "school": "Queen of Peace"
+ },
+ {
+  "year": 2010,
+  "weight": 135,
+  "name": "Scott Festejo",
+  "school": "Long Branch"
+ },
+ {
+  "year": 2010,
+  "weight": 140,
+  "name": "Hank Stinson",
+  "school": "Eastern"
+ },
+ {
+  "year": 2010,
+  "weight": 145,
+  "name": "Taylor Walsh",
+  "school": "Camden Catholic"
+ },
+ {
+  "year": 2010,
+  "weight": 152,
+  "name": "Ethan Orr",
+  "school": "High Point"
+ },
+ {
+  "year": 2010,
+  "weight": 160,
+  "name": "Nick Visicaro",
+  "school": "Long Branch"
+ },
+ {
+  "year": 2010,
+  "weight": 171,
+  "name": "Ryan Callahan",
+  "school": "Wallkill Valley"
+ },
+ {
+  "year": 2010,
+  "weight": 189,
+  "name": "Andrew Campolattano",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 2010,
+  "weight": 215,
+  "name": "Zach Greenwald",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 2010,
+  "weight": "Hwt",
+  "name": "Jimmy Lawson",
+  "school": "Manchester"
+ },
+ {
+  "year": 2009,
+  "weight": 103,
+  "name": "Nick Francavilla",
+  "school": "High Point"
+ },
+ {
+  "year": 2009,
+  "weight": 112,
+  "name": "Rob Deutsch",
+  "school": "Eastern"
+ },
+ {
+  "year": 2009,
+  "weight": 119,
+  "name": "Vinnie DelleFave",
+  "school": "Toms River East"
+ },
+ {
+  "year": 2009,
+  "weight": 125,
+  "name": "Frank Cagnina",
+  "school": "Queen of Peace"
+ },
+ {
+  "year": 2009,
+  "weight": 130,
+  "name": "Mike Morales",
+  "school": "Brick Memorial"
+ },
+ {
+  "year": 2009,
+  "weight": 135,
+  "name": "Taylor Walsh",
+  "school": "Camden Catholic"
+ },
+ {
+  "year": 2009,
+  "weight": 140,
+  "name": "Anthony Baldosaro",
+  "school": "Eastern"
+ },
+ {
+  "year": 2009,
+  "weight": 145,
+  "name": "Emmanuel Ajagbe",
+  "school": "Bogota"
+ },
+ {
+  "year": 2009,
+  "weight": 152,
+  "name": "Steve Santos",
+  "school": "Brick Memorial"
+ },
+ {
+  "year": 2009,
+  "weight": 160,
+  "name": "Nick Visicaro",
+  "school": "Long Branch"
+ },
+ {
+  "year": 2009,
+  "weight": 171,
+  "name": "Brendan Ard",
+  "school": "Watchung Hills"
+ },
+ {
+  "year": 2009,
+  "weight": 189,
+  "name": "Andrew Campolattano",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 2009,
+  "weight": 215,
+  "name": "Glenn Carson",
+  "school": "Southern"
+ },
+ {
+  "year": 2009,
+  "weight": "Hwt",
+  "name": "Jimmy Lawson",
+  "school": "Manchester"
+ },
+ {
+  "year": 2008,
+  "weight": 103,
+  "name": "Tyler Biscaha",
+  "school": "Jackson Memorial"
+ },
+ {
+  "year": 2008,
+  "weight": 112,
+  "name": "Joey Langel",
+  "school": "Howell"
+ },
+ {
+  "year": 2008,
+  "weight": 119,
+  "name": "Vinnie DelleFave",
+  "school": "Toms River East"
+ },
+ {
+  "year": 2008,
+  "weight": 125,
+  "name": "Jimmy Kirchner",
+  "school": "Somerville"
+ },
+ {
+  "year": 2008,
+  "weight": 130,
+  "name": "Derek Valenti",
+  "school": "Kittatinny"
+ },
+ {
+  "year": 2008,
+  "weight": 135,
+  "name": "Hank Stinson",
+  "school": "Eastern"
+ },
+ {
+  "year": 2008,
+  "weight": 140,
+  "name": "Anthony Baldosaro",
+  "school": "Delsea"
+ },
+ {
+  "year": 2008,
+  "weight": 145,
+  "name": "Sean Byrnes",
+  "school": "Jackson Memorial"
+ },
+ {
+  "year": 2008,
+  "weight": 152,
+  "name": "Nick Menditto",
+  "school": "Ocean Township"
+ },
+ {
+  "year": 2008,
+  "weight": 160,
+  "name": "Scott Winston",
+  "school": "Jackson Memorial"
+ },
+ {
+  "year": 2008,
+  "weight": 171,
+  "name": "Brendan Ard",
+  "school": "Watchung Hills"
+ },
+ {
+  "year": 2008,
+  "weight": 189,
+  "name": "Andrew Campolattano",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 2008,
+  "weight": 215,
+  "name": "Jesse Boyden",
+  "school": "Brearley"
+ },
+ {
+  "year": 2008,
+  "weight": "Hwt",
+  "name": "Jimmy Lawson",
+  "school": "Manchester"
+ },
+ {
+  "year": 2007,
+  "weight": 103,
+  "name": "Frank Cagnina",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2007,
+  "weight": 112,
+  "name": "Dan Kelly",
+  "school": "Deleware Valley"
+ },
+ {
+  "year": 2007,
+  "weight": 119,
+  "name": "Matt Oliver",
+  "school": "Toms River North"
+ },
+ {
+  "year": 2007,
+  "weight": 125,
+  "name": "Joe Trause",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2007,
+  "weight": 130,
+  "name": "Tyler Milonas",
+  "school": "Jefferson"
+ },
+ {
+  "year": 2007,
+  "weight": 135,
+  "name": "Trevor Melde",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2007,
+  "weight": 140,
+  "name": "Frank Molinaro",
+  "school": "Southern"
+ },
+ {
+  "year": 2007,
+  "weight": 145,
+  "name": "Nick Menditto",
+  "school": "Ocean Township"
+ },
+ {
+  "year": 2007,
+  "weight": 152,
+  "name": "Scott Winston",
+  "school": "Jackson"
+ },
+ {
+  "year": 2007,
+  "weight": 160,
+  "name": "Ken Carney",
+  "school": "Jackson"
+ },
+ {
+  "year": 2007,
+  "weight": 171,
+  "name": "Anthony Trongone",
+  "school": "Camden Catholic"
+ },
+ {
+  "year": 2007,
+  "weight": 189,
+  "name": "Mac Mancuso",
+  "school": "Holy Spirit"
+ },
+ {
+  "year": 2007,
+  "weight": 215,
+  "name": "Alex Silvestro",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 2007,
+  "weight": "Hwt",
+  "name": "Zac Rey",
+  "school": "Hopatcong"
+ },
+ {
+  "year": 2006,
+  "weight": 103,
+  "name": "Fred Santaite",
+  "school": "Northern Highlands"
+ },
+ {
+  "year": 2006,
+  "weight": 112,
+  "name": "Frank Perrelli",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2006,
+  "weight": 119,
+  "name": "Joe Trause",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 2006,
+  "weight": 125,
+  "name": "Mike Grey",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2006,
+  "weight": 130,
+  "name": "Will Livingston",
+  "school": "Kittatinny"
+ },
+ {
+  "year": 2006,
+  "weight": 135,
+  "name": "Jordon Burroughs",
+  "school": "Winslow"
+ },
+ {
+  "year": 2006,
+  "weight": 140,
+  "name": "Frank Molinaro",
+  "school": "Southern"
+ },
+ {
+  "year": 2006,
+  "weight": 145,
+  "name": "Scott Winston",
+  "school": "Jackson"
+ },
+ {
+  "year": 2006,
+  "weight": 152,
+  "name": "Darrion Caldwell",
+  "school": "Rahway"
+ },
+ {
+  "year": 2006,
+  "weight": 160,
+  "name": "Alex Caruso",
+  "school": "Watchung Hills"
+ },
+ {
+  "year": 2006,
+  "weight": 171,
+  "name": "Pat Hogan",
+  "school": "Cranford"
+ },
+ {
+  "year": 2006,
+  "weight": 189,
+  "name": "Keith Dobish",
+  "school": "Lodi"
+ },
+ {
+  "year": 2006,
+  "weight": 215,
+  "name": "Jack Corcoran",
+  "school": "St. Josephs"
+ },
+ {
+  "year": 2006,
+  "weight": 275,
+  "name": "Zack Rey",
+  "school": "Hopatcong"
+ },
+ {
+  "year": 2005,
+  "weight": 103,
+  "name": "Ryan Fikslin",
+  "school": "Roxbury"
+ },
+ {
+  "year": 2005,
+  "weight": 112,
+  "name": "Ryan Wilson",
+  "school": "Rahway"
+ },
+ {
+  "year": 2005,
+  "weight": 119,
+  "name": "Mike Grey",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2005,
+  "weight": 125,
+  "name": "Frank Molinaro",
+  "school": "Southern"
+ },
+ {
+  "year": 2005,
+  "weight": 130,
+  "name": "Darrion Caldwell",
+  "school": "Rahway"
+ },
+ {
+  "year": 2005,
+  "weight": 135,
+  "name": "Nick Orio",
+  "school": "Eastern"
+ },
+ {
+  "year": 2005,
+  "weight": 140,
+  "name": "Dan Vallimont",
+  "school": "Jefferson"
+ },
+ {
+  "year": 2005,
+  "weight": 145,
+  "name": "Tom Fazio",
+  "school": "Lakeland"
+ },
+ {
+  "year": 2005,
+  "weight": 152,
+  "name": "Andrew Flanagan",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 2005,
+  "weight": 160,
+  "name": "Scott Giffin",
+  "school": "Eastern"
+ },
+ {
+  "year": 2005,
+  "weight": 171,
+  "name": "Mark Peiffer",
+  "school": "Overbrook"
+ },
+ {
+  "year": 2005,
+  "weight": 189,
+  "name": "Vince Jones",
+  "school": "Winslow"
+ },
+ {
+  "year": 2005,
+  "weight": 215,
+  "name": "Dave Zabriskie",
+  "school": "High Point"
+ },
+ {
+  "year": 2005,
+  "weight": 275,
+  "name": "John Price",
+  "school": "Washington Twp"
+ },
+ {
+  "year": 2004,
+  "weight": 103,
+  "name": "Jimmy Conroy",
+  "school": "South Plainfield"
+ },
+ {
+  "year": 2004,
+  "weight": 112,
+  "name": "Mike Grey",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2004,
+  "weight": 119,
+  "name": "Darrion Caldwell",
+  "school": "Rahway"
+ },
+ {
+  "year": 2004,
+  "weight": 125,
+  "name": "Nick Bridge",
+  "school": "Absegami"
+ },
+ {
+  "year": 2004,
+  "weight": 130,
+  "name": "Mark Savino",
+  "school": "Lawrence"
+ },
+ {
+  "year": 2004,
+  "weight": 135,
+  "name": "Dan Vallimont",
+  "school": "Jefferson"
+ },
+ {
+  "year": 2004,
+  "weight": 140,
+  "name": "Rory O'Donnell",
+  "school": "St. Josephs"
+ },
+ {
+  "year": 2004,
+  "weight": 145,
+  "name": "Andrew Flanagan",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 2004,
+  "weight": 152,
+  "name": "Steve Martell",
+  "school": "Caldwell"
+ },
+ {
+  "year": 2004,
+  "weight": 160,
+  "name": "Mike Gatti",
+  "school": "Watchung Hills"
+ },
+ {
+  "year": 2004,
+  "weight": 171,
+  "name": "Vince Jones",
+  "school": "Winslow"
+ },
+ {
+  "year": 2004,
+  "weight": 189,
+  "name": "Ryan Goodman",
+  "school": "Absegami"
+ },
+ {
+  "year": 2004,
+  "weight": 215,
+  "name": "Anthony Orio",
+  "school": "Eastern"
+ },
+ {
+  "year": 2004,
+  "weight": 275,
+  "name": "Diego Crespo",
+  "school": "Paramus Catholic"
+ },
+ {
+  "year": 2003,
+  "weight": 103,
+  "name": "Mike Grey",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2003,
+  "weight": 112,
+  "name": "Dave Tomasette",
+  "school": "Washington Twp"
+ },
+ {
+  "year": 2003,
+  "weight": 119,
+  "name": "Steve Adamscik",
+  "school": "West Morris - Mendham"
+ },
+ {
+  "year": 2003,
+  "weight": 125,
+  "name": "Ed Giosa",
+  "school": "Camden Catholic"
+ },
+ {
+  "year": 2003,
+  "weight": 130,
+  "name": "Ryan Bridge",
+  "school": "Absegami"
+ },
+ {
+  "year": 2003,
+  "weight": 135,
+  "name": "Don Fisch",
+  "school": "Delsea"
+ },
+ {
+  "year": 2003,
+  "weight": 140,
+  "name": "Antonio Mangione",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2003,
+  "weight": 145,
+  "name": "Keros Cooper",
+  "school": "Pitman"
+ },
+ {
+  "year": 2003,
+  "weight": 152,
+  "name": "Ricky Frondorf",
+  "school": "North Hunterdon"
+ },
+ {
+  "year": 2003,
+  "weight": 160,
+  "name": "Vinnie Salek",
+  "school": "Toms River East"
+ },
+ {
+  "year": 2003,
+  "weight": 171,
+  "name": "Ryan Goodman",
+  "school": "Absegami"
+ },
+ {
+  "year": 2003,
+  "weight": 189,
+  "name": "Jerry Rinaldi",
+  "school": "Lodi"
+ },
+ {
+  "year": 2003,
+  "weight": 215,
+  "name": "Isaac Redman",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 2003,
+  "weight": 275,
+  "name": "Adam Cooney",
+  "school": "Holy Cross"
+ },
+ {
+  "year": 2002,
+  "weight": 103,
+  "name": "Patrick Dattalo",
+  "school": "Randolph"
+ },
+ {
+  "year": 2002,
+  "weight": 112,
+  "name": "Ivan Wiggins",
+  "school": "Sterling"
+ },
+ {
+  "year": 2002,
+  "weight": 119,
+  "name": "Matt Valenti",
+  "school": "Kittatinny"
+ },
+ {
+  "year": 2002,
+  "weight": 125,
+  "name": "Ryan Bridge",
+  "school": "Absegami"
+ },
+ {
+  "year": 2002,
+  "weight": 130,
+  "name": "Bob Stinson",
+  "school": "Camden Catholic"
+ },
+ {
+  "year": 2002,
+  "weight": 135,
+  "name": "Don Fisch",
+  "school": "Delsea"
+ },
+ {
+  "year": 2002,
+  "weight": 140,
+  "name": "Antonio Mangione",
+  "school": "Delbarton"
+ },
+ {
+  "year": 2002,
+  "weight": 145,
+  "name": "Brandon Becker",
+  "school": "Kingsway"
+ },
+ {
+  "year": 2002,
+  "weight": 152,
+  "name": "Ricky Frondorf",
+  "school": "North Hunterdon"
+ },
+ {
+  "year": 2002,
+  "weight": 160,
+  "name": "Ryan Cunningham",
+  "school": "Cherry Hill West"
+ },
+ {
+  "year": 2002,
+  "weight": 171,
+  "name": "Nick Roy",
+  "school": "Wall Twp"
+ },
+ {
+  "year": 2002,
+  "weight": 189,
+  "name": "Jeff Black",
+  "school": "Absegami"
+ },
+ {
+  "year": 2002,
+  "weight": 215,
+  "name": "Adam Cooney",
+  "school": "Holy Cross"
+ },
+ {
+  "year": 2002,
+  "weight": 275,
+  "name": "Tom Curl",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 2001,
+  "weight": 103,
+  "name": "Patrick Dattalo",
+  "school": "Randolph"
+ },
+ {
+  "year": 2001,
+  "weight": 112,
+  "name": "Matt Valenti",
+  "school": "Kittatinny"
+ },
+ {
+  "year": 2001,
+  "weight": 119,
+  "name": "Joe Dubuque",
+  "school": "Glen Ridge"
+ },
+ {
+  "year": 2001,
+  "weight": 125,
+  "name": "Ricky La Forge",
+  "school": "Indian Hills"
+ },
+ {
+  "year": 2001,
+  "weight": 130,
+  "name": "Ed Gutnik",
+  "school": "JFK-Iselin"
+ },
+ {
+  "year": 2001,
+  "weight": 135,
+  "name": "Mark Manchio",
+  "school": "Sterling"
+ },
+ {
+  "year": 2001,
+  "weight": 140,
+  "name": "Doug Withstandley",
+  "school": "Jackson"
+ },
+ {
+  "year": 2001,
+  "weight": 145,
+  "name": "Dave Miller",
+  "school": "Lenape"
+ },
+ {
+  "year": 2001,
+  "weight": 152,
+  "name": "Ryan Cunnigham",
+  "school": "Cherry Hill West"
+ },
+ {
+  "year": 2001,
+  "weight": 160,
+  "name": "Nick Roy",
+  "school": "Wall Twp"
+ },
+ {
+  "year": 2001,
+  "weight": 171,
+  "name": "Mike Massenzio",
+  "school": "St Joseph's - Montvale"
+ },
+ {
+  "year": 2001,
+  "weight": 189,
+  "name": "Morgan Horner",
+  "school": "Hasbrouck Heights"
+ },
+ {
+  "year": 2001,
+  "weight": 215,
+  "name": "Dan Garay",
+  "school": "Rahway"
+ },
+ {
+  "year": 2001,
+  "weight": 275,
+  "name": "Tom Curl",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 2000,
+  "weight": 103,
+  "name": "Matt Anderson",
+  "school": "South Plainfield"
+ },
+ {
+  "year": 2000,
+  "weight": 112,
+  "name": "Joe Dubuque",
+  "school": "Glen Ridge"
+ },
+ {
+  "year": 2000,
+  "weight": 119,
+  "name": "Clinton Hicks",
+  "school": "Eastern"
+ },
+ {
+  "year": 2000,
+  "weight": 125,
+  "name": "Billy Gibbs",
+  "school": "Clearview"
+ },
+ {
+  "year": 2000,
+  "weight": 130,
+  "name": "Mark Manchio",
+  "school": "Sterling"
+ },
+ {
+  "year": 2000,
+  "weight": 135,
+  "name": "Mike Booth",
+  "school": "Camden Catholic"
+ },
+ {
+  "year": 2000,
+  "weight": 140,
+  "name": "Dave Miller",
+  "school": "Lenape"
+ },
+ {
+  "year": 2000,
+  "weight": 145,
+  "name": "Erik Norgaard",
+  "school": "St Joseph's - Montvale"
+ },
+ {
+  "year": 2000,
+  "weight": 152,
+  "name": "Labe Black",
+  "school": "Absegami"
+ },
+ {
+  "year": 2000,
+  "weight": 160,
+  "name": "Mike Massenzio",
+  "school": "St Joseph's - Montvale"
+ },
+ {
+  "year": 2000,
+  "weight": 171,
+  "name": "Chris Skretkowicz",
+  "school": "Wallkill Valley"
+ },
+ {
+  "year": 2000,
+  "weight": 189,
+  "name": "Austin Wall",
+  "school": "Indian Hills"
+ },
+ {
+  "year": 2000,
+  "weight": 215,
+  "name": "Mike Carr",
+  "school": "Hunterdon Central"
+ },
+ {
+  "year": 2000,
+  "weight": 275,
+  "name": "Ali Hakim",
+  "school": "Randolph"
+ },
+ {
+  "year": 1999,
+  "weight": 103,
+  "name": "Terrence Clendenin",
+  "school": "Toms River North"
+ },
+ {
+  "year": 1999,
+  "weight": 112,
+  "name": "Tom Noto",
+  "school": "South River"
+ },
+ {
+  "year": 1999,
+  "weight": 119,
+  "name": "Mark Manchio",
+  "school": "Sterling"
+ },
+ {
+  "year": 1999,
+  "weight": 125,
+  "name": "Jeff Beverly",
+  "school": "Pt. Boro"
+ },
+ {
+  "year": 1999,
+  "weight": 130,
+  "name": "Dave Cordoba",
+  "school": "Kearny"
+ },
+ {
+  "year": 1999,
+  "weight": 135,
+  "name": "Chris Bitetto",
+  "school": "Hackensack"
+ },
+ {
+  "year": 1999,
+  "weight": 140,
+  "name": "Donnie DeFilippis",
+  "school": "New Prividence"
+ },
+ {
+  "year": 1999,
+  "weight": 145,
+  "name": "Mark Worthy",
+  "school": "Central"
+ },
+ {
+  "year": 1999,
+  "weight": 152,
+  "name": "Labe Black",
+  "school": "Absegami"
+ },
+ {
+  "year": 1999,
+  "weight": 160,
+  "name": "Scott Garron",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 1999,
+  "weight": 171,
+  "name": "Joe Mormile",
+  "school": "Toms River East"
+ },
+ {
+  "year": 1999,
+  "weight": 189,
+  "name": "Damion Hahn",
+  "school": "Lakewood"
+ },
+ {
+  "year": 1999,
+  "weight": 215,
+  "name": "Doug Easlick",
+  "school": "Cherokee"
+ },
+ {
+  "year": 1999,
+  "weight": 275,
+  "name": "Paul Devlin",
+  "school": "Livingston"
+ },
+ {
+  "year": 1998,
+  "weight": 103,
+  "name": "Tom Noto",
+  "school": "South River"
+ },
+ {
+  "year": 1998,
+  "weight": 112,
+  "name": "Joe Alexander",
+  "school": "Delsea"
+ },
+ {
+  "year": 1998,
+  "weight": 119,
+  "name": "Oliver Ruiz",
+  "school": "Cliffside Park"
+ },
+ {
+  "year": 1998,
+  "weight": 125,
+  "name": "Micah Khan",
+  "school": "Eastern"
+ },
+ {
+  "year": 1998,
+  "weight": 130,
+  "name": "John Brienza",
+  "school": "Voorhees"
+ },
+ {
+  "year": 1998,
+  "weight": 135,
+  "name": "James Lavalle",
+  "school": "Hanover Park"
+ },
+ {
+  "year": 1998,
+  "weight": 140,
+  "name": "Mark Worthy",
+  "school": "Central"
+ },
+ {
+  "year": 1998,
+  "weight": 145,
+  "name": "Larry Smashey",
+  "school": "Delsea"
+ },
+ {
+  "year": 1998,
+  "weight": 152,
+  "name": "Jake Cairns",
+  "school": "Pt. Beach"
+ },
+ {
+  "year": 1998,
+  "weight": 160,
+  "name": "Justin Colaluce",
+  "school": "Warren Hills"
+ },
+ {
+  "year": 1998,
+  "weight": 171,
+  "name": "Rich Gildner",
+  "school": "Southern"
+ },
+ {
+  "year": 1998,
+  "weight": 189,
+  "name": "Damion Hahn",
+  "school": "Lakewood"
+ },
+ {
+  "year": 1998,
+  "weight": 215,
+  "name": "Nick Lopez",
+  "school": "Washington Twp."
+ },
+ {
+  "year": 1998,
+  "weight": 275,
+  "name": "Antonio Garay",
+  "school": "Rahway"
+ },
+ {
+  "year": 1997,
+  "weight": 103,
+  "name": "Joe Alexander",
+  "school": "Delsea"
+ },
+ {
+  "year": 1997,
+  "weight": 112,
+  "name": "Kevin Rucci",
+  "school": "Eastern"
+ },
+ {
+  "year": 1997,
+  "weight": 119,
+  "name": "Russ Witt",
+  "school": "Lacey"
+ },
+ {
+  "year": 1997,
+  "weight": 125,
+  "name": "Micah Khan",
+  "school": "Eastern"
+ },
+ {
+  "year": 1997,
+  "weight": 130,
+  "name": "James LaValle",
+  "school": "Hanover Park"
+ },
+ {
+  "year": 1997,
+  "weight": 135,
+  "name": "Andy Chencharik",
+  "school": "Toms River East"
+ },
+ {
+  "year": 1997,
+  "weight": 140,
+  "name": "Labe Black",
+  "school": "Absegami"
+ },
+ {
+  "year": 1997,
+  "weight": 145,
+  "name": "Justin Colaluce",
+  "school": "Warren Hills"
+ },
+ {
+  "year": 1997,
+  "weight": 152,
+  "name": "Don Pritzlaff",
+  "school": "Lyndhurst"
+ },
+ {
+  "year": 1997,
+  "weight": 160,
+  "name": "Maurice Worthy",
+  "school": "Central"
+ },
+ {
+  "year": 1997,
+  "weight": 171,
+  "name": "Israel Cronk",
+  "school": "Montclair"
+ },
+ {
+  "year": 1997,
+  "weight": 189,
+  "name": "Damion Hahn",
+  "school": "Lakewood"
+ },
+ {
+  "year": 1997,
+  "weight": 215,
+  "name": "Shawn Laughlin",
+  "school": "Lower Cape May"
+ },
+ {
+  "year": 1997,
+  "weight": 275,
+  "name": "Jermaine Ruffin",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 1996,
+  "weight": 103,
+  "name": "Anthony Conte",
+  "school": "Belleville"
+ },
+ {
+  "year": 1996,
+  "weight": 112,
+  "name": "Mark Worthy",
+  "school": "Central"
+ },
+ {
+  "year": 1996,
+  "weight": 119,
+  "name": "Roman Fleszar",
+  "school": "Kittatinny"
+ },
+ {
+  "year": 1996,
+  "weight": 125,
+  "name": "Nick Angen",
+  "school": "Brick Memorial"
+ },
+ {
+  "year": 1996,
+  "weight": 130,
+  "name": "Tim Moore",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1996,
+  "weight": 135,
+  "name": "Damion Logan",
+  "school": "St Joseph's - Montvale"
+ },
+ {
+  "year": 1996,
+  "weight": 140,
+  "name": "Rich Bitetto",
+  "school": "Hackensack"
+ },
+ {
+  "year": 1996,
+  "weight": 145,
+  "name": "Don Pritzlaff",
+  "school": "Lyndhurst"
+ },
+ {
+  "year": 1996,
+  "weight": 152,
+  "name": "Maurice Worthy",
+  "school": "Central"
+ },
+ {
+  "year": 1996,
+  "weight": 160,
+  "name": "Mark Saul",
+  "school": "Millville"
+ },
+ {
+  "year": 1996,
+  "weight": 171,
+  "name": "Shawn Scannell",
+  "school": "Absegami"
+ },
+ {
+  "year": 1996,
+  "weight": 189,
+  "name": "Marc DeFrancesco",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1996,
+  "weight": 215,
+  "name": "Shawn Laughlin",
+  "school": "Lower Cape May"
+ },
+ {
+  "year": 1996,
+  "weight": 275,
+  "name": "Jermaine Ruffin",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 1995,
+  "weight": 100,
+  "name": "James LaValle",
+  "school": "Hanover Park"
+ },
+ {
+  "year": 1995,
+  "weight": 106,
+  "name": "Matt Tresslar",
+  "school": "Belvidere"
+ },
+ {
+  "year": 1995,
+  "weight": 112,
+  "name": "Pat McGrath",
+  "school": "Toms River East"
+ },
+ {
+  "year": 1995,
+  "weight": 119,
+  "name": "John Perna",
+  "school": "Belleville"
+ },
+ {
+  "year": 1995,
+  "weight": 126,
+  "name": "Damion Logan",
+  "school": "St Joseph's - Montvale"
+ },
+ {
+  "year": 1995,
+  "weight": 134,
+  "name": "Don Pritzlaff",
+  "school": "Lyndhurst"
+ },
+ {
+  "year": 1995,
+  "weight": 142,
+  "name": "Brett Matter",
+  "school": "Delran"
+ },
+ {
+  "year": 1995,
+  "weight": 151,
+  "name": "Dave Hughes",
+  "school": "Jefferson"
+ },
+ {
+  "year": 1995,
+  "weight": 160,
+  "name": "Mark Saul",
+  "school": "Millville"
+ },
+ {
+  "year": 1995,
+  "weight": 172,
+  "name": "Cory Bird",
+  "school": "Oakcrest"
+ },
+ {
+  "year": 1995,
+  "weight": 185,
+  "name": "Jim Finn",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 1995,
+  "weight": 215,
+  "name": "Frank Lodeserto",
+  "school": "St. Joseph's"
+ },
+ {
+  "year": 1995,
+  "weight": 275,
+  "name": "Mike Wariwanchik",
+  "school": "Pennsville"
+ },
+ {
+  "year": 1994,
+  "weight": 103,
+  "name": "Roman Fleszar",
+  "school": "Kittatinny"
+ },
+ {
+  "year": 1994,
+  "weight": 112,
+  "name": "Pete Poretta",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1994,
+  "weight": 119,
+  "name": "Mike Coyle",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1994,
+  "weight": 125,
+  "name": "Nick Angen",
+  "school": "Brick Memorial"
+ },
+ {
+  "year": 1994,
+  "weight": 130,
+  "name": "Jason Hernandez",
+  "school": "Bergen Catholic"
+ },
+ {
+  "year": 1994,
+  "weight": 135,
+  "name": "Brett Matter",
+  "school": "Delran"
+ },
+ {
+  "year": 1994,
+  "weight": 140,
+  "name": "Rusty Reed",
+  "school": "Hawthorne"
+ },
+ {
+  "year": 1994,
+  "weight": 145,
+  "name": "David Hughes",
+  "school": "Jefferson"
+ },
+ {
+  "year": 1994,
+  "weight": 152,
+  "name": "Brian P. Brady",
+  "school": "Madison Central"
+ },
+ {
+  "year": 1994,
+  "weight": 160,
+  "name": "Tim Hakim",
+  "school": "Randolph"
+ },
+ {
+  "year": 1994,
+  "weight": 171,
+  "name": "Glenn Pritzlaff",
+  "school": "Middletown South"
+ },
+ {
+  "year": 1994,
+  "weight": 189,
+  "name": "Steve Bruscino",
+  "school": "Brick Memorial"
+ },
+ {
+  "year": 1994,
+  "weight": "Hwt",
+  "name": "Kevin Landolt",
+  "school": "Holy Cross"
+ },
+ {
+  "year": 1993,
+  "weight": 103,
+  "name": "Damion Logan",
+  "school": "St Joseph's - Montvale"
+ },
+ {
+  "year": 1993,
+  "weight": 112,
+  "name": "Pete Poretta",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1993,
+  "weight": 119,
+  "name": "Brent Conly",
+  "school": "Deleware Valley"
+ },
+ {
+  "year": 1993,
+  "weight": 125,
+  "name": "Mike Sandelier",
+  "school": "Washington Twp."
+ },
+ {
+  "year": 1993,
+  "weight": 130,
+  "name": "Rick Ortega",
+  "school": "Governor Livingston"
+ },
+ {
+  "year": 1993,
+  "weight": 135,
+  "name": "Anthony Ialeggio",
+  "school": "Livingston"
+ },
+ {
+  "year": 1993,
+  "weight": 140,
+  "name": "Jeremy Bailer",
+  "school": "Jefferson"
+ },
+ {
+  "year": 1993,
+  "weight": 145,
+  "name": "Kevin Farnham",
+  "school": "Haddon Twp."
+ },
+ {
+  "year": 1993,
+  "weight": 152,
+  "name": "Matt Suter",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 1993,
+  "weight": 160,
+  "name": "Justin Bird",
+  "school": "Oakcrest"
+ },
+ {
+  "year": 1993,
+  "weight": 171,
+  "name": "Glenn Pritzlaff",
+  "school": "Middlewtown South"
+ },
+ {
+  "year": 1993,
+  "weight": 189,
+  "name": "Ricky Krieger",
+  "school": "Delaware Valley"
+ },
+ {
+  "year": 1993,
+  "weight": "Hwt",
+  "name": "Bill Duff",
+  "school": "Delran"
+ },
+ {
+  "year": 1992,
+  "weight": 103,
+  "name": "Indra Sulijoadikusumo",
+  "school": "Manalapan"
+ },
+ {
+  "year": 1992,
+  "weight": 112,
+  "name": "Brent Conly",
+  "school": "Delaware Valley"
+ },
+ {
+  "year": 1992,
+  "weight": 119,
+  "name": "Doug Detrick",
+  "school": "Warren Hills"
+ },
+ {
+  "year": 1992,
+  "weight": 125,
+  "name": "Scott Frinzi",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1992,
+  "weight": 130,
+  "name": "Emilio Nardone",
+  "school": "Belleville"
+ },
+ {
+  "year": 1992,
+  "weight": 135,
+  "name": "John Martin",
+  "school": "Absegami"
+ },
+ {
+  "year": 1992,
+  "weight": 140,
+  "name": "Francis Dunn",
+  "school": "Boonton"
+ },
+ {
+  "year": 1992,
+  "weight": 145,
+  "name": "Kip Covington",
+  "school": "Overbrook"
+ },
+ {
+  "year": 1992,
+  "weight": 152,
+  "name": "Ferman Crisco",
+  "school": "Perth Amboy"
+ },
+ {
+  "year": 1992,
+  "weight": 160,
+  "name": "Glenn Pritzlaff",
+  "school": "Middletown South"
+ },
+ {
+  "year": 1992,
+  "weight": 171,
+  "name": "John Koss",
+  "school": "Collingswood"
+ },
+ {
+  "year": 1992,
+  "weight": 189,
+  "name": "Bryan Stout",
+  "school": "Southern"
+ },
+ {
+  "year": 1992,
+  "weight": "Hwt",
+  "name": "Bill Duff",
+  "school": "Delran"
+ },
+ {
+  "year": 1991,
+  "weight": 103,
+  "name": "Rich Bustamante",
+  "school": "St. Benedicts"
+ },
+ {
+  "year": 1991,
+  "weight": 112,
+  "name": "Blake Maffei",
+  "school": "Caldwell"
+ },
+ {
+  "year": 1991,
+  "weight": 119,
+  "name": "Mike Mulrooney",
+  "school": "West Morris"
+ },
+ {
+  "year": 1991,
+  "weight": 125,
+  "name": "Emilio Nardone",
+  "school": "Belleville"
+ },
+ {
+  "year": 1991,
+  "weight": 130,
+  "name": "Marty White",
+  "school": "Warren Hills"
+ },
+ {
+  "year": 1991,
+  "weight": 135,
+  "name": "Kevin McCann",
+  "school": "South Plainfield"
+ },
+ {
+  "year": 1991,
+  "weight": 140,
+  "name": "Steve Dalling",
+  "school": "Kittatinny"
+ },
+ {
+  "year": 1991,
+  "weight": 145,
+  "name": "Matt Suter",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 1991,
+  "weight": 152,
+  "name": "Larry DeVault",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 1991,
+  "weight": 160,
+  "name": "John Koss",
+  "school": "Collingswood"
+ },
+ {
+  "year": 1991,
+  "weight": 171,
+  "name": "Rob Johnson",
+  "school": "Jackson"
+ },
+ {
+  "year": 1991,
+  "weight": 189,
+  "name": "Damien Covington",
+  "school": "Overbrook"
+ },
+ {
+  "year": 1991,
+  "weight": "Hwt",
+  "name": "Scott Kammerer",
+  "school": "East Brunswick"
+ },
+ {
+  "year": 1990,
+  "weight": 103,
+  "name": "Terrence Paul",
+  "school": "Irvington"
+ },
+ {
+  "year": 1990,
+  "weight": 112,
+  "name": "Willie Carpenter",
+  "school": "Cranford"
+ },
+ {
+  "year": 1990,
+  "weight": 119,
+  "name": "Ed Moore",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1990,
+  "weight": 125,
+  "name": "Jumel Kinchen",
+  "school": "Jackson"
+ },
+ {
+  "year": 1990,
+  "weight": 130,
+  "name": "Toby Fagan",
+  "school": "Millville"
+ },
+ {
+  "year": 1990,
+  "weight": 135,
+  "name": "Fran Durso",
+  "school": "Ridge"
+ },
+ {
+  "year": 1990,
+  "weight": 140,
+  "name": "Steve Dalling",
+  "school": "Kittatinny"
+ },
+ {
+  "year": 1990,
+  "weight": 145,
+  "name": "Brian Unkert",
+  "school": "Pope John"
+ },
+ {
+  "year": 1990,
+  "weight": 152,
+  "name": "Kemal Pegram",
+  "school": "Pemberton"
+ },
+ {
+  "year": 1990,
+  "weight": 160,
+  "name": "Rob Johnson",
+  "school": "Jackson"
+ },
+ {
+  "year": 1990,
+  "weight": 171,
+  "name": "Pat Lynch",
+  "school": "Ocean City"
+ },
+ {
+  "year": 1990,
+  "weight": 189,
+  "name": "Johnny Gardener",
+  "school": "High Point"
+ },
+ {
+  "year": 1990,
+  "weight": "Hwt",
+  "name": "Greg Troxell",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1989,
+  "weight": 103,
+  "name": "Hamid Chalileh",
+  "school": "Waldwick"
+ },
+ {
+  "year": 1989,
+  "weight": 112,
+  "name": "Ken Herishen",
+  "school": "Paul VI"
+ },
+ {
+  "year": 1989,
+  "weight": 119,
+  "name": "Joe Duhigg",
+  "school": "Edison"
+ },
+ {
+  "year": 1989,
+  "weight": 125,
+  "name": "Tom Walsh",
+  "school": "Paul VI"
+ },
+ {
+  "year": 1989,
+  "weight": 130,
+  "name": "John Barcelo",
+  "school": "Pitman"
+ },
+ {
+  "year": 1989,
+  "weight": 135,
+  "name": "Erik Saunders",
+  "school": "Overbrook"
+ },
+ {
+  "year": 1989,
+  "weight": 140,
+  "name": "Chad Cassidy",
+  "school": "Highland"
+ },
+ {
+  "year": 1989,
+  "weight": 145,
+  "name": "Steve Giordano",
+  "school": "South Plainfield"
+ },
+ {
+  "year": 1989,
+  "weight": 152,
+  "name": "Joe DiMario",
+  "school": "Manalapan"
+ },
+ {
+  "year": 1989,
+  "weight": 160,
+  "name": "Charles Moorer",
+  "school": "Penns Grove"
+ },
+ {
+  "year": 1989,
+  "weight": 171,
+  "name": "Pat Lynch",
+  "school": "Ocean City"
+ },
+ {
+  "year": 1989,
+  "weight": 189,
+  "name": "Kevin Kane",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1989,
+  "weight": "Hwt",
+  "name": "Greg Troxell",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1988,
+  "weight": 103,
+  "name": "John Pasterkiewicz",
+  "school": "Delaware Valley"
+ },
+ {
+  "year": 1988,
+  "weight": 112,
+  "name": "Brett Raimondo",
+  "school": "Mendham"
+ },
+ {
+  "year": 1988,
+  "weight": 119,
+  "name": "Eric Childs",
+  "school": "Rancocas Valley"
+ },
+ {
+  "year": 1988,
+  "weight": 125,
+  "name": "Brett DiNovi",
+  "school": "Williamstown"
+ },
+ {
+  "year": 1988,
+  "weight": 130,
+  "name": "Armando Nardone",
+  "school": "Belleville"
+ },
+ {
+  "year": 1988,
+  "weight": 135,
+  "name": "Mike Van Doren",
+  "school": "North Hunterdon"
+ },
+ {
+  "year": 1988,
+  "weight": 140,
+  "name": "Sam Laspata",
+  "school": "Glassboro"
+ },
+ {
+  "year": 1988,
+  "weight": 145,
+  "name": "Bill Lahanas",
+  "school": "Clifton"
+ },
+ {
+  "year": 1988,
+  "weight": 152,
+  "name": "Anthony Guidi",
+  "school": "Mt. Olive"
+ },
+ {
+  "year": 1988,
+  "weight": 160,
+  "name": "Pete Welch",
+  "school": "Ridge"
+ },
+ {
+  "year": 1988,
+  "weight": 171,
+  "name": "Jamie Wicks",
+  "school": "Delaware Valley"
+ },
+ {
+  "year": 1988,
+  "weight": 189,
+  "name": "Greg Casamento",
+  "school": "Cherry Hill East"
+ },
+ {
+  "year": 1988,
+  "weight": "Hwt",
+  "name": "Mike Ferroni",
+  "school": "Union"
+ },
+ {
+  "year": 1987,
+  "weight": 102,
+  "name": "Steve Rivera",
+  "school": "Manalapan"
+ },
+ {
+  "year": 1987,
+  "weight": 109,
+  "name": "Drew Black",
+  "school": "Mahwah"
+ },
+ {
+  "year": 1987,
+  "weight": 116,
+  "name": "George Chew",
+  "school": "Cumberland"
+ },
+ {
+  "year": 1987,
+  "weight": 123,
+  "name": "John Fagan",
+  "school": "Middletown South"
+ },
+ {
+  "year": 1987,
+  "weight": 130,
+  "name": "Todd Young",
+  "school": "Haddon Twp."
+ },
+ {
+  "year": 1987,
+  "weight": 136,
+  "name": "Art Cuffari",
+  "school": "Bloomfield"
+ },
+ {
+  "year": 1987,
+  "weight": 142,
+  "name": "Joe Mocco",
+  "school": "Fair Lawn"
+ },
+ {
+  "year": 1987,
+  "weight": 149,
+  "name": "Brian Wells",
+  "school": "Pascack Hills"
+ },
+ {
+  "year": 1987,
+  "weight": 159,
+  "name": "Andy Iliff",
+  "school": "Newton"
+ },
+ {
+  "year": 1987,
+  "weight": 171,
+  "name": "Jamie Wicks",
+  "school": "Delaware Valley"
+ },
+ {
+  "year": 1987,
+  "weight": 189,
+  "name": "Greg Van Brill",
+  "school": "Clearview"
+ },
+ {
+  "year": 1987,
+  "weight": "Hwt",
+  "name": "Doug Arena",
+  "school": "Paul VI"
+ },
+ {
+  "year": 1986,
+  "weight": 102,
+  "name": "John Doran",
+  "school": "Pennsville"
+ },
+ {
+  "year": 1986,
+  "weight": 109,
+  "name": "Adam Derengowski (Paul",
+  "school": "VI"
+ },
+ {
+  "year": 1986,
+  "weight": 116,
+  "name": "Sam Cole",
+  "school": "Long Branch"
+ },
+ {
+  "year": 1986,
+  "weight": 123,
+  "name": "Darren Schulman",
+  "school": "East Brunswick"
+ },
+ {
+  "year": 1986,
+  "weight": 130,
+  "name": "Joe Hollywood",
+  "school": "Deptford"
+ },
+ {
+  "year": 1986,
+  "weight": 136,
+  "name": "John Welch",
+  "school": "Ridge"
+ },
+ {
+  "year": 1986,
+  "weight": 142,
+  "name": "Brian Wells",
+  "school": "Pascack Hills"
+ },
+ {
+  "year": 1986,
+  "weight": 149,
+  "name": "Andy Iliff",
+  "school": "Newton"
+ },
+ {
+  "year": 1986,
+  "weight": 159,
+  "name": "Jason Suter",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 1986,
+  "weight": 171,
+  "name": "Bob Martin",
+  "school": "Brick Memorial"
+ },
+ {
+  "year": 1986,
+  "weight": 189,
+  "name": "Ben Oberly",
+  "school": "Warren Hills"
+ },
+ {
+  "year": 1986,
+  "weight": "Hwt",
+  "name": "Dave Szott",
+  "school": "Clifton"
+ },
+ {
+  "year": 1985,
+  "weight": 102,
+  "name": "Greg Griffith",
+  "school": "Pennsville"
+ },
+ {
+  "year": 1985,
+  "weight": 109,
+  "name": "Dave Boncher",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1985,
+  "weight": 116,
+  "name": "Dave Glawson",
+  "school": "Pemberton"
+ },
+ {
+  "year": 1985,
+  "weight": 123,
+  "name": "Bobby Malatesta",
+  "school": "St Augustine"
+ },
+ {
+  "year": 1985,
+  "weight": 130,
+  "name": "John Welch",
+  "school": "Ridge"
+ },
+ {
+  "year": 1985,
+  "weight": 136,
+  "name": "Karl Monaco",
+  "school": "Clifton"
+ },
+ {
+  "year": 1985,
+  "weight": 142,
+  "name": "Jerry Durso",
+  "school": "Ridge"
+ },
+ {
+  "year": 1985,
+  "weight": 149,
+  "name": "Enzo Catullo",
+  "school": "Summit"
+ },
+ {
+  "year": 1985,
+  "weight": 159,
+  "name": "Tom McGourty",
+  "school": "North Hunterdon"
+ },
+ {
+  "year": 1985,
+  "weight": 171,
+  "name": "Ben Oberly",
+  "school": "Warren Hills"
+ },
+ {
+  "year": 1985,
+  "weight": 189,
+  "name": "Darnell Myres",
+  "school": "Central"
+ },
+ {
+  "year": 1985,
+  "weight": "Hwt",
+  "name": "Tony Siragusa",
+  "school": "Kenilworth"
+ },
+ {
+  "year": 1984,
+  "weight": 102,
+  "name": "Dave Boncher",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1984,
+  "weight": 109,
+  "name": "Tony Van Horn",
+  "school": "Pascack Hills"
+ },
+ {
+  "year": 1984,
+  "weight": 116,
+  "name": "Tim Jacoutot",
+  "school": "Madison Central"
+ },
+ {
+  "year": 1984,
+  "weight": 123,
+  "name": "Joe Melchiore",
+  "school": "Highland"
+ },
+ {
+  "year": 1984,
+  "weight": 130,
+  "name": "John Viola",
+  "school": "Clifton"
+ },
+ {
+  "year": 1984,
+  "weight": 136,
+  "name": "Karl Monaco",
+  "school": "Clifton"
+ },
+ {
+  "year": 1984,
+  "weight": 142,
+  "name": "Enzo Catullo",
+  "school": "Summit"
+ },
+ {
+  "year": 1984,
+  "weight": 149,
+  "name": "Mike Barna",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1984,
+  "weight": 159,
+  "name": "Derek Campanna",
+  "school": "Bridgewater East"
+ },
+ {
+  "year": 1984,
+  "weight": 171,
+  "name": "Todd Patton",
+  "school": "Hunterdon Central"
+ },
+ {
+  "year": 1984,
+  "weight": 189,
+  "name": "Mike Lombardo",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 1984,
+  "weight": "Hwt",
+  "name": "Darnell Myres",
+  "school": "Toms River South"
+ },
+ {
+  "year": 1983,
+  "weight": 102,
+  "name": "Gary Bendel",
+  "school": "North Hunterdon"
+ },
+ {
+  "year": 1983,
+  "weight": 109,
+  "name": "Joe Melchiore",
+  "school": "Highland"
+ },
+ {
+  "year": 1983,
+  "weight": 116,
+  "name": "Pete Gonzalez",
+  "school": "Ridgefield Park"
+ },
+ {
+  "year": 1983,
+  "weight": 123,
+  "name": "Dan Moody",
+  "school": "Voorhees"
+ },
+ {
+  "year": 1983,
+  "weight": 130,
+  "name": "Jim Frick",
+  "school": "Pope John XXIII"
+ },
+ {
+  "year": 1983,
+  "weight": 136,
+  "name": "Andrew Skove",
+  "school": "Long Branch"
+ },
+ {
+  "year": 1983,
+  "weight": 142,
+  "name": "Mike Codella",
+  "school": "Parsippany"
+ },
+ {
+  "year": 1983,
+  "weight": 149,
+  "name": "Tom Nugent",
+  "school": "Cherry Hill East"
+ },
+ {
+  "year": 1983,
+  "weight": 159,
+  "name": "Ted Sliwinski",
+  "school": "East Brunswick"
+ },
+ {
+  "year": 1983,
+  "weight": 171,
+  "name": "John Bott",
+  "school": "North Bergen"
+ },
+ {
+  "year": 1983,
+  "weight": 189,
+  "name": "John Place",
+  "school": "Sparta"
+ },
+ {
+  "year": 1983,
+  "weight": "Hwt",
+  "name": "Rich Kuzy",
+  "school": "Holy Cross"
+ },
+ {
+  "year": 1982,
+  "weight": 102,
+  "name": "Joe Melchiore",
+  "school": "Highland"
+ },
+ {
+  "year": 1982,
+  "weight": 109,
+  "name": "Doug Taylor",
+  "school": "Millville"
+ },
+ {
+  "year": 1982,
+  "weight": 116,
+  "name": "John Barna",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1982,
+  "weight": 123,
+  "name": "Neil Hanley",
+  "school": "Paramus"
+ },
+ {
+  "year": 1982,
+  "weight": 130,
+  "name": "Steve DePetro",
+  "school": "DePaul"
+ },
+ {
+  "year": 1982,
+  "weight": 136,
+  "name": "John Parr",
+  "school": "Passaic Valley"
+ },
+ {
+  "year": 1982,
+  "weight": 142,
+  "name": "Guy Russo",
+  "school": "West Essex"
+ },
+ {
+  "year": 1982,
+  "weight": 149,
+  "name": "Kevin McCarthy",
+  "school": "Ridge"
+ },
+ {
+  "year": 1982,
+  "weight": 159,
+  "name": "John Stafford",
+  "school": "Highland"
+ },
+ {
+  "year": 1982,
+  "weight": 171,
+  "name": "John Monaco",
+  "school": "Clifton"
+ },
+ {
+  "year": 1982,
+  "weight": 189,
+  "name": "Tim Curry",
+  "school": "Paul VI-Haddonfield"
+ },
+ {
+  "year": 1982,
+  "weight": "Hwt",
+  "name": "Lee Getz",
+  "school": "Voorhees"
+ },
+ {
+  "year": 1981,
+  "weight": 101,
+  "name": "Glenn Hall",
+  "school": "Voorhees"
+ },
+ {
+  "year": 1981,
+  "weight": 108,
+  "name": "John Barna",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1981,
+  "weight": 115,
+  "name": "Sal La Corte",
+  "school": "DePaul"
+ },
+ {
+  "year": 1981,
+  "weight": 122,
+  "name": "Greg Rizzo",
+  "school": "Gateway"
+ },
+ {
+  "year": 1981,
+  "weight": 129,
+  "name": "Kevin Jacoutot",
+  "school": "Madison Central"
+ },
+ {
+  "year": 1981,
+  "weight": 135,
+  "name": "Cary Broad",
+  "school": "Manalapan"
+ },
+ {
+  "year": 1981,
+  "weight": 141,
+  "name": "Luke Skove",
+  "school": "Long Branch"
+ },
+ {
+  "year": 1981,
+  "weight": 148,
+  "name": "Rob Kuzy",
+  "school": "Holy Cross"
+ },
+ {
+  "year": 1981,
+  "weight": 158,
+  "name": "John Monaco",
+  "school": "Nutley"
+ },
+ {
+  "year": 1981,
+  "weight": 170,
+  "name": "Tom Gibble",
+  "school": "Hunterdon Central"
+ },
+ {
+  "year": 1981,
+  "weight": 188,
+  "name": "Jack Inserra",
+  "school": "Pascack Hills"
+ },
+ {
+  "year": 1981,
+  "weight": "Hwt",
+  "name": "Bill Hyman",
+  "school": "Saddle Brook"
+ },
+ {
+  "year": 1980,
+  "weight": 101,
+  "name": "John Barna",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1980,
+  "weight": 108,
+  "name": "Vinnie Levin",
+  "school": "Absegami"
+ },
+ {
+  "year": 1980,
+  "weight": 115,
+  "name": "Kevin Jacoutot",
+  "school": "Madison Central"
+ },
+ {
+  "year": 1980,
+  "weight": 122,
+  "name": "Orlando Caceres",
+  "school": "Pemberton"
+ },
+ {
+  "year": 1980,
+  "weight": 129,
+  "name": "Jude Skove",
+  "school": "Long Branch"
+ },
+ {
+  "year": 1980,
+  "weight": 135,
+  "name": "Luke Skove",
+  "school": "Long Branch"
+ },
+ {
+  "year": 1980,
+  "weight": 141,
+  "name": "James Ten Brook",
+  "school": "Millville"
+ },
+ {
+  "year": 1980,
+  "weight": 148,
+  "name": "Mark Cannon",
+  "school": "Ramapo"
+ },
+ {
+  "year": 1980,
+  "weight": 158,
+  "name": "Bill Dykeman",
+  "school": "Highland"
+ },
+ {
+  "year": 1980,
+  "weight": 170,
+  "name": "Chris Musmanno",
+  "school": "Belleville"
+ },
+ {
+  "year": 1980,
+  "weight": 188,
+  "name": "Rich Lovato",
+  "school": "Middletown South"
+ },
+ {
+  "year": 1980,
+  "weight": "Hwt",
+  "name": "Jack Wilson",
+  "school": "Middlesex"
+ },
+ {
+  "year": 1979,
+  "weight": 101,
+  "name": "Doug Kanach",
+  "school": "Hunterdon Central"
+ },
+ {
+  "year": 1979,
+  "weight": 108,
+  "name": "Joe Spinazzola",
+  "school": "Seton Hall Prep"
+ },
+ {
+  "year": 1979,
+  "weight": 115,
+  "name": "Orlando Caceres",
+  "school": "Pemberton"
+ },
+ {
+  "year": 1979,
+  "weight": 122,
+  "name": "Joe Duca",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 1979,
+  "weight": 129,
+  "name": "Luke Skove",
+  "school": "Long Branch"
+ },
+ {
+  "year": 1979,
+  "weight": 135,
+  "name": "Keith Alston",
+  "school": "Neptune"
+ },
+ {
+  "year": 1979,
+  "weight": 141,
+  "name": "Tom Gibble",
+  "school": "Hunterdon Central"
+ },
+ {
+  "year": 1979,
+  "weight": 148,
+  "name": "Jan Michaels",
+  "school": "Vernon"
+ },
+ {
+  "year": 1979,
+  "weight": 158,
+  "name": "Bill Dykeman",
+  "school": "Highland"
+ },
+ {
+  "year": 1979,
+  "weight": 170,
+  "name": "Clarence Richardson",
+  "school": "St. Benedict's"
+ },
+ {
+  "year": 1979,
+  "weight": 188,
+  "name": "Willie Crews",
+  "school": "Penns Grove"
+ },
+ {
+  "year": 1979,
+  "weight": "Hwt",
+  "name": "Matt Lauck",
+  "school": "Pitman"
+ },
+ {
+  "year": 1978,
+  "weight": 101,
+  "name": "Bill Nixon",
+  "school": "Hackensack"
+ },
+ {
+  "year": 1978,
+  "weight": 108,
+  "name": "Mike Dougherty",
+  "school": "Madison Central"
+ },
+ {
+  "year": 1978,
+  "weight": 115,
+  "name": "Jim Pagano",
+  "school": "Passaic Valley"
+ },
+ {
+  "year": 1978,
+  "weight": 122,
+  "name": "Lou Durant",
+  "school": "Jackson"
+ },
+ {
+  "year": 1978,
+  "weight": 129,
+  "name": "Darryl Burley",
+  "school": "Pemberton"
+ },
+ {
+  "year": 1978,
+  "weight": 135,
+  "name": "Jerry Miller",
+  "school": "Hunterdon Central"
+ },
+ {
+  "year": 1978,
+  "weight": 141,
+  "name": "Tony Surage",
+  "school": "Passaic Valley"
+ },
+ {
+  "year": 1978,
+  "weight": 148,
+  "name": "Rick Zandarski",
+  "school": "Newton"
+ },
+ {
+  "year": 1978,
+  "weight": 158,
+  "name": "Rich Zavali",
+  "school": "Clark"
+ },
+ {
+  "year": 1978,
+  "weight": 170,
+  "name": "Steve Bessette",
+  "school": "Pascack Hills"
+ },
+ {
+  "year": 1978,
+  "weight": 188,
+  "name": "Joe Wade",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 1978,
+  "weight": "Hwt",
+  "name": "Paul Finn",
+  "school": "Millburn"
+ },
+ {
+  "year": 1977,
+  "weight": 101,
+  "name": "Mike Weidenbush",
+  "school": "Toms River South"
+ },
+ {
+  "year": 1977,
+  "weight": 108,
+  "name": "Andy Zuckerman",
+  "school": "Northern Burlington"
+ },
+ {
+  "year": 1977,
+  "weight": 115,
+  "name": "Frank Major",
+  "school": "Toms River South"
+ },
+ {
+  "year": 1977,
+  "weight": 122,
+  "name": "Tom Husted",
+  "school": "Pascack Hills"
+ },
+ {
+  "year": 1977,
+  "weight": 129,
+  "name": "Peter Schuyler",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 1977,
+  "weight": 135,
+  "name": "Chris Catalfo",
+  "school": "Pascack Hills"
+ },
+ {
+  "year": 1977,
+  "weight": 141,
+  "name": "Bob Specian",
+  "school": "Manville"
+ },
+ {
+  "year": 1977,
+  "weight": 148,
+  "name": "Tim Catalfo",
+  "school": "Pascack Hills"
+ },
+ {
+  "year": 1977,
+  "weight": 158,
+  "name": "Joe Draina",
+  "school": "Colonia"
+ },
+ {
+  "year": 1977,
+  "weight": 170,
+  "name": "Jeff Parker",
+  "school": "Toms River South"
+ },
+ {
+  "year": 1977,
+  "weight": 188,
+  "name": "Craig Blackman",
+  "school": "Sparta"
+ },
+ {
+  "year": 1977,
+  "weight": "Hwt",
+  "name": "Dan Slack",
+  "school": "Warren Hills"
+ },
+ {
+  "year": 1976,
+  "weight": 101,
+  "name": "Toms Sloand",
+  "school": "Roxbury"
+ },
+ {
+  "year": 1976,
+  "weight": 108,
+  "name": "Gene Mills",
+  "school": "DePaul"
+ },
+ {
+  "year": 1976,
+  "weight": 115,
+  "name": "Tom Husted",
+  "school": "Pascack Hills"
+ },
+ {
+  "year": 1976,
+  "weight": 122,
+  "name": "Rich Billitz",
+  "school": "New Providence"
+ },
+ {
+  "year": 1976,
+  "weight": 129,
+  "name": "Scott Anderson",
+  "school": "Ridge"
+ },
+ {
+  "year": 1976,
+  "weight": 135,
+  "name": "Doug Parise",
+  "school": "Lakewood"
+ },
+ {
+  "year": 1976,
+  "weight": 141,
+  "name": "Buzz Wagenseller",
+  "school": "Millburn"
+ },
+ {
+  "year": 1976,
+  "weight": 148,
+  "name": "Chuck Cosenza",
+  "school": "Westfield"
+ },
+ {
+  "year": 1976,
+  "weight": 158,
+  "name": "Jeff Parker",
+  "school": "Toms River South"
+ },
+ {
+  "year": 1976,
+  "weight": 170,
+  "name": "Jim Popinko",
+  "school": "Warren Hills"
+ },
+ {
+  "year": 1976,
+  "weight": 188,
+  "name": "Bob Monica",
+  "school": "Madison Boro"
+ },
+ {
+  "year": 1976,
+  "weight": "Hwt",
+  "name": "Bill Spindler",
+  "school": "Hasbrouck Heights"
+ },
+ {
+  "year": 1975,
+  "weight": 101,
+  "name": "Barry Drill",
+  "school": "JP Stevens"
+ },
+ {
+  "year": 1975,
+  "weight": 108,
+  "name": "Joe Dougherty",
+  "school": "Madison Twp"
+ },
+ {
+  "year": 1975,
+  "weight": 115,
+  "name": "Lou Chapman",
+  "school": "Neptune"
+ },
+ {
+  "year": 1975,
+  "weight": 122,
+  "name": "Jeff Mase",
+  "school": "Bridgewater West"
+ },
+ {
+  "year": 1975,
+  "weight": 129,
+  "name": "Mark Preston",
+  "school": "Sparta"
+ },
+ {
+  "year": 1975,
+  "weight": 135,
+  "name": "Ed Rivera",
+  "school": "Jackson"
+ },
+ {
+  "year": 1975,
+  "weight": 141,
+  "name": "Tom Hoyt",
+  "school": "Wall"
+ },
+ {
+  "year": 1975,
+  "weight": 148,
+  "name": "Jeff Segreaves",
+  "school": "Deleware Valley"
+ },
+ {
+  "year": 1975,
+  "weight": 158,
+  "name": "Dom DiGioacchino",
+  "school": "Hanover Park"
+ },
+ {
+  "year": 1975,
+  "weight": 170,
+  "name": "Keith Stiehler",
+  "school": "Lyndhurst"
+ },
+ {
+  "year": 1975,
+  "weight": 188,
+  "name": "Carmel Morina",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 1975,
+  "weight": "Hwt",
+  "name": "Dan DeTullio",
+  "school": "Millville"
+ },
+ {
+  "year": 1974,
+  "weight": 101,
+  "name": "Tim Farrell",
+  "school": "Bernards"
+ },
+ {
+  "year": 1974,
+  "weight": 108,
+  "name": "Tom Seitz",
+  "school": "Red Bank Catholic"
+ },
+ {
+  "year": 1974,
+  "weight": 115,
+  "name": "Ken Hopfensperger",
+  "school": "Middletown"
+ },
+ {
+  "year": 1974,
+  "weight": 122,
+  "name": "Hector Rivera",
+  "school": "Jackson"
+ },
+ {
+  "year": 1974,
+  "weight": 129,
+  "name": "Ernie Van Ness",
+  "school": "Bridgewater West"
+ },
+ {
+  "year": 1974,
+  "weight": 135,
+  "name": "Ed Rivera",
+  "school": "Jackson"
+ },
+ {
+  "year": 1974,
+  "weight": 141,
+  "name": "Dave Specian",
+  "school": "Manville"
+ },
+ {
+  "year": 1974,
+  "weight": 148,
+  "name": "Ron Standridge",
+  "school": "Roxbury"
+ },
+ {
+  "year": 1974,
+  "weight": 158,
+  "name": "Brad Castner",
+  "school": "Warren Hills"
+ },
+ {
+  "year": 1974,
+  "weight": 170,
+  "name": "Howard Pendleton",
+  "school": "Woodbury"
+ },
+ {
+  "year": 1974,
+  "weight": 188,
+  "name": "Dan McCullough",
+  "school": "Brick Twp"
+ },
+ {
+  "year": 1974,
+  "weight": "Hwt",
+  "name": "Herb Calvert",
+  "school": "Clifton"
+ },
+ {
+  "year": 1973,
+  "weight": 98,
+  "name": "Tim Farrell",
+  "school": "Bernards"
+ },
+ {
+  "year": 1973,
+  "weight": 106,
+  "name": "Bill Cuff",
+  "school": "Randolph"
+ },
+ {
+  "year": 1973,
+  "weight": 115,
+  "name": "Rick Thompson",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1973,
+  "weight": 123,
+  "name": "Greg Cholish",
+  "school": "West Morris"
+ },
+ {
+  "year": 1973,
+  "weight": 130,
+  "name": "Dave Brandt",
+  "school": "Belvidere"
+ },
+ {
+  "year": 1973,
+  "weight": 136,
+  "name": "Dave Miller",
+  "school": "Shawnee"
+ },
+ {
+  "year": 1973,
+  "weight": 141,
+  "name": "Chris Ianacone",
+  "school": "Delsea"
+ },
+ {
+  "year": 1973,
+  "weight": 148,
+  "name": "Rich Gottlick",
+  "school": "Westfield"
+ },
+ {
+  "year": 1973,
+  "weight": 157,
+  "name": "Bill Miron",
+  "school": "Millburn"
+ },
+ {
+  "year": 1973,
+  "weight": 168,
+  "name": "Chris Campbell",
+  "school": "Westfield"
+ },
+ {
+  "year": 1973,
+  "weight": 178,
+  "name": "Dan McCullough",
+  "school": "Brick Twp"
+ },
+ {
+  "year": 1973,
+  "weight": "Hwt",
+  "name": "Bill Ellis",
+  "school": "Toms River North"
+ },
+ {
+  "year": 1972,
+  "weight": 98,
+  "name": "Scott Furman",
+  "school": "Pascack Hills"
+ },
+ {
+  "year": 1972,
+  "weight": 106,
+  "name": "Tom Armino (Seton",
+  "school": "Hall"
+ },
+ {
+  "year": 1972,
+  "weight": 115,
+  "name": "Joe Nisivociia",
+  "school": "JP Stevens"
+ },
+ {
+  "year": 1972,
+  "weight": 123,
+  "name": "Mike Frick",
+  "school": "Pope John"
+ },
+ {
+  "year": 1972,
+  "weight": 130,
+  "name": "Jeff Surenian",
+  "school": "Randolph"
+ },
+ {
+  "year": 1972,
+  "weight": 136,
+  "name": "Jay Stuart",
+  "school": "Piscataway"
+ },
+ {
+  "year": 1972,
+  "weight": 141,
+  "name": "Joel Raucci",
+  "school": "Leonia"
+ },
+ {
+  "year": 1972,
+  "weight": 148,
+  "name": "Joe Camel",
+  "school": "Dover"
+ },
+ {
+  "year": 1972,
+  "weight": 157,
+  "name": "Kurt Stiefken",
+  "school": "Westfield"
+ },
+ {
+  "year": 1972,
+  "weight": 168,
+  "name": "Jerry Villecco",
+  "school": "Deptford"
+ },
+ {
+  "year": 1972,
+  "weight": 178,
+  "name": "Mike Bennett",
+  "school": "Roxbury"
+ },
+ {
+  "year": 1972,
+  "weight": "Hwt",
+  "name": "Blair Miers",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1971,
+  "weight": 98,
+  "name": "Rick Thompson",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1971,
+  "weight": 106,
+  "name": "Joe LaSpada",
+  "school": "Bernards"
+ },
+ {
+  "year": 1971,
+  "weight": 115,
+  "name": "Mike Frick",
+  "school": "Pope John"
+ },
+ {
+  "year": 1971,
+  "weight": 123,
+  "name": "Gerald Nisivoccia",
+  "school": "JP Stevens"
+ },
+ {
+  "year": 1971,
+  "weight": 130,
+  "name": "Renard Haskins",
+  "school": "Morristown"
+ },
+ {
+  "year": 1971,
+  "weight": 136,
+  "name": "Joel Raucci",
+  "school": "Leonia"
+ },
+ {
+  "year": 1971,
+  "weight": 141,
+  "name": "Ray Sarinelli",
+  "school": "Dover"
+ },
+ {
+  "year": 1971,
+  "weight": 148,
+  "name": "Dante Caprio",
+  "school": "Seton Hall"
+ },
+ {
+  "year": 1971,
+  "weight": 157,
+  "name": "Jerry Villecco",
+  "school": "Deptford"
+ },
+ {
+  "year": 1971,
+  "weight": 168,
+  "name": "Dave Gaunt",
+  "school": "North Hunterdon"
+ },
+ {
+  "year": 1971,
+  "weight": 178,
+  "name": "Fred Swanson",
+  "school": "High Point"
+ },
+ {
+  "year": 1971,
+  "weight": "Hwt",
+  "name": "Doug Crawn",
+  "school": "Newton"
+ },
+ {
+  "year": 1970,
+  "weight": 98,
+  "name": "Irwin Swan",
+  "school": "Montclair"
+ },
+ {
+  "year": 1970,
+  "weight": 106,
+  "name": "John Laxton",
+  "school": "Pennsville"
+ },
+ {
+  "year": 1970,
+  "weight": 115,
+  "name": "Gerry Nisivoccia",
+  "school": "JP Stevens"
+ },
+ {
+  "year": 1970,
+  "weight": 123,
+  "name": "Renard Haskins",
+  "school": "Morristown"
+ },
+ {
+  "year": 1970,
+  "weight": 130,
+  "name": "Mario Ianni",
+  "school": "Edison"
+ },
+ {
+  "year": 1970,
+  "weight": 136,
+  "name": "William Estadt",
+  "school": "Pennsville"
+ },
+ {
+  "year": 1970,
+  "weight": 141,
+  "name": "Jack Thompson",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1970,
+  "weight": 148,
+  "name": "Gene Ashley",
+  "school": "Pascack Hills"
+ },
+ {
+  "year": 1970,
+  "weight": 157,
+  "name": "Dave Homiak",
+  "school": "Vineland"
+ },
+ {
+  "year": 1970,
+  "weight": 168,
+  "name": "Dave Gaunt",
+  "school": "North Hunterdon"
+ },
+ {
+  "year": 1970,
+  "weight": 178,
+  "name": "Frank Jackson",
+  "school": "Westfield"
+ },
+ {
+  "year": 1970,
+  "weight": "Hwt",
+  "name": "Roy Baker",
+  "school": "Parsippany"
+ },
+ {
+  "year": 1969,
+  "weight": 98,
+  "name": "Mike Frick",
+  "school": "Pope John"
+ },
+ {
+  "year": 1969,
+  "weight": 106,
+  "name": "John Ferrara",
+  "school": "New Providence"
+ },
+ {
+  "year": 1969,
+  "weight": 115,
+  "name": "Robert Ciarrocki",
+  "school": "Oakcrest"
+ },
+ {
+  "year": 1969,
+  "weight": 123,
+  "name": "Greg Surenian",
+  "school": "Randolph"
+ },
+ {
+  "year": 1969,
+  "weight": 130,
+  "name": "Len Pruzansky",
+  "school": "Passaic"
+ },
+ {
+  "year": 1969,
+  "weight": 136,
+  "name": "Gary DePatto",
+  "school": "Mahwah"
+ },
+ {
+  "year": 1969,
+  "weight": 141,
+  "name": "Pete Black",
+  "school": "CBA"
+ },
+ {
+  "year": 1969,
+  "weight": 148,
+  "name": "Don Jessamine",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1969,
+  "weight": 157,
+  "name": "John Villecco",
+  "school": "Deptford"
+ },
+ {
+  "year": 1969,
+  "weight": 168,
+  "name": "Robert Zaro",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1969,
+  "weight": 178,
+  "name": "Rich Starr",
+  "school": "Montclair"
+ },
+ {
+  "year": 1969,
+  "weight": "Hwt",
+  "name": "Dale Baldwin",
+  "school": "Warren Hills"
+ },
+ {
+  "year": 1968,
+  "weight": 98,
+  "name": "Robert Jiorle",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1968,
+  "weight": 106,
+  "name": "Dennis Smith",
+  "school": "Lenape"
+ },
+ {
+  "year": 1968,
+  "weight": 115,
+  "name": "Greg Surenian",
+  "school": "Randolph"
+ },
+ {
+  "year": 1968,
+  "weight": 123,
+  "name": "Ed Kochajki",
+  "school": "Bergenfield"
+ },
+ {
+  "year": 1968,
+  "weight": 130,
+  "name": "Ed Bailey",
+  "school": "Plainfield"
+ },
+ {
+  "year": 1968,
+  "weight": 136,
+  "name": "Herb Campbell",
+  "school": "Seton Hall"
+ },
+ {
+  "year": 1968,
+  "weight": 141,
+  "name": "Gregzie White",
+  "school": "Pennsville"
+ },
+ {
+  "year": 1968,
+  "weight": 148,
+  "name": "Gary Markowski",
+  "school": "Newton"
+ },
+ {
+  "year": 1968,
+  "weight": 157,
+  "name": "Robert Zaro",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1968,
+  "weight": 168,
+  "name": "Doug Blake",
+  "school": "Hackettstown"
+ },
+ {
+  "year": 1968,
+  "weight": 178,
+  "name": "James Hickey",
+  "school": "Essex Catholic"
+ },
+ {
+  "year": 1968,
+  "weight": "Hwt",
+  "name": "Ira Lubert",
+  "school": "Newton"
+ },
+ {
+  "year": 1967,
+  "weight": 98,
+  "name": "William Kenny",
+  "school": "Westfield"
+ },
+ {
+  "year": 1967,
+  "weight": 106,
+  "name": "James Colaneri",
+  "school": "Cliffside"
+ },
+ {
+  "year": 1967,
+  "weight": 115,
+  "name": "James Fiore",
+  "school": "St. Cecelia"
+ },
+ {
+  "year": 1967,
+  "weight": 123,
+  "name": "Ed Kochajki",
+  "school": "Bergenfield"
+ },
+ {
+  "year": 1967,
+  "weight": 130,
+  "name": "Kirk Edwards",
+  "school": "North Hunterdon"
+ },
+ {
+  "year": 1967,
+  "weight": 136,
+  "name": "Rudy Lanza",
+  "school": "Scotch Plains"
+ },
+ {
+  "year": 1967,
+  "weight": 141,
+  "name": "Robert Duckworth",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1967,
+  "weight": 148,
+  "name": "Buddy Morris",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1967,
+  "weight": 157,
+  "name": "Doug Blake",
+  "school": "Hackettstown"
+ },
+ {
+  "year": 1967,
+  "weight": 168,
+  "name": "Sam Muni",
+  "school": "Washington Twp."
+ },
+ {
+  "year": 1967,
+  "weight": 178,
+  "name": "Robert Willman",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1967,
+  "weight": "Hwt",
+  "name": "James McCue",
+  "school": "Bernards"
+ },
+ {
+  "year": 1966,
+  "weight": 98,
+  "name": "John Morgan",
+  "school": "Hunterdon Central"
+ },
+ {
+  "year": 1966,
+  "weight": 106,
+  "name": "Bruce Canfield",
+  "school": "Roxbury"
+ },
+ {
+  "year": 1966,
+  "weight": 115,
+  "name": "Ed Kochajki",
+  "school": "Bergenfield"
+ },
+ {
+  "year": 1966,
+  "weight": 123,
+  "name": "Ralph Manaker",
+  "school": "Irvington"
+ },
+ {
+  "year": 1966,
+  "weight": 130,
+  "name": "Leonard Cassidy",
+  "school": "East Brunswick"
+ },
+ {
+  "year": 1966,
+  "weight": 136,
+  "name": "Dan Halsey",
+  "school": "Rahway"
+ },
+ {
+  "year": 1966,
+  "weight": 141,
+  "name": "John Lucia",
+  "school": "Wayne"
+ },
+ {
+  "year": 1966,
+  "weight": 148,
+  "name": "Steve Parker",
+  "school": "Scotch Plains"
+ },
+ {
+  "year": 1966,
+  "weight": 157,
+  "name": "Arnie Thompson",
+  "school": "Washington"
+ },
+ {
+  "year": 1966,
+  "weight": 168,
+  "name": "Lee Castner",
+  "school": "Washington"
+ },
+ {
+  "year": 1966,
+  "weight": 178,
+  "name": "Al Detwiler",
+  "school": "North Hunterdon"
+ },
+ {
+  "year": 1966,
+  "weight": "Hwt",
+  "name": "Walter Hudnett",
+  "school": "North Hunterdon"
+ },
+ {
+  "year": 1965,
+  "weight": 98,
+  "name": "Bob Hurley",
+  "school": "Bergenfield"
+ },
+ {
+  "year": 1965,
+  "weight": 106,
+  "name": "Joe Lemmo",
+  "school": "South Plainfield"
+ },
+ {
+  "year": 1965,
+  "weight": 115,
+  "name": "Max Guidoboni",
+  "school": "East Brunswick"
+ },
+ {
+  "year": 1965,
+  "weight": 123,
+  "name": "Robert Whitaker",
+  "school": "Ridgewood"
+ },
+ {
+  "year": 1965,
+  "weight": 130,
+  "name": "Dave Pruzansky",
+  "school": "Passaic"
+ },
+ {
+  "year": 1965,
+  "weight": 136,
+  "name": "Carlos Fontanez",
+  "school": "South Freehold"
+ },
+ {
+  "year": 1965,
+  "weight": 141,
+  "name": "Harry Wowchuck",
+  "school": "Scotch Plains"
+ },
+ {
+  "year": 1965,
+  "weight": 148,
+  "name": "Arnie Thompson",
+  "school": "Washington"
+ },
+ {
+  "year": 1965,
+  "weight": 157,
+  "name": "Frank Zengel",
+  "school": "Hunterdon Central"
+ },
+ {
+  "year": 1965,
+  "weight": 168,
+  "name": "John Smith",
+  "school": "Piscataway"
+ },
+ {
+  "year": 1965,
+  "weight": 178,
+  "name": "Bill Henderson",
+  "school": "Roxbury"
+ },
+ {
+  "year": 1965,
+  "weight": "Hwt",
+  "name": "Pete Jilleba",
+  "school": "Madison"
+ },
+ {
+  "year": 1964,
+  "weight": 98,
+  "name": "Frank Pulio",
+  "school": "West Deptford"
+ },
+ {
+  "year": 1964,
+  "weight": 106,
+  "name": "Gene Kain",
+  "school": "Haddonfield"
+ },
+ {
+  "year": 1964,
+  "weight": 115,
+  "name": "James McCormick",
+  "school": "North Hunterdon"
+ },
+ {
+  "year": 1964,
+  "weight": 123,
+  "name": "George Shoemaker",
+  "school": "Washington"
+ },
+ {
+  "year": 1964,
+  "weight": 130,
+  "name": "Dave Pruzansky",
+  "school": "Passaic"
+ },
+ {
+  "year": 1964,
+  "weight": 136,
+  "name": "Vince Fitz",
+  "school": "Hunterdon Central"
+ },
+ {
+  "year": 1964,
+  "weight": 141,
+  "name": "Steve Povalac",
+  "school": "Edison"
+ },
+ {
+  "year": 1964,
+  "weight": 148,
+  "name": "Joe Wiendl",
+  "school": "Westfield"
+ },
+ {
+  "year": 1964,
+  "weight": 157,
+  "name": "Lee Castner",
+  "school": "Washington"
+ },
+ {
+  "year": 1964,
+  "weight": 168,
+  "name": "George Galler",
+  "school": "East Paterson"
+ },
+ {
+  "year": 1964,
+  "weight": 178,
+  "name": "Ed Tomkiewicz",
+  "school": "Edison"
+ },
+ {
+  "year": 1964,
+  "weight": "Hwt",
+  "name": "Pete Jilleba",
+  "school": "Madison"
+ },
+ {
+  "year": 1963,
+  "weight": 98,
+  "name": "Dick Lincoln",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1963,
+  "weight": 106,
+  "name": "Howie Metzger",
+  "school": "Newton"
+ },
+ {
+  "year": 1963,
+  "weight": 115,
+  "name": "Joe Hisko",
+  "school": "Hunterdon Central"
+ },
+ {
+  "year": 1963,
+  "weight": 123,
+  "name": "Kerin Raftery",
+  "school": "Fair Lawn"
+ },
+ {
+  "year": 1963,
+  "weight": 130,
+  "name": "Carlos Fontanez",
+  "school": "Freehold"
+ },
+ {
+  "year": 1963,
+  "weight": 136,
+  "name": "Fred Buechel",
+  "school": "Seton Hall"
+ },
+ {
+  "year": 1963,
+  "weight": 141,
+  "name": "Richard Aiello",
+  "school": "East Brunswick"
+ },
+ {
+  "year": 1963,
+  "weight": 148,
+  "name": "Lee Wagner",
+  "school": "Newton"
+ },
+ {
+  "year": 1963,
+  "weight": 157,
+  "name": "Craig Tomalo",
+  "school": "Union"
+ },
+ {
+  "year": 1963,
+  "weight": 168,
+  "name": "William Petties",
+  "school": "Plainfield"
+ },
+ {
+  "year": 1963,
+  "weight": 178,
+  "name": "Dave Morash",
+  "school": "Westfield"
+ },
+ {
+  "year": 1963,
+  "weight": "Hwt",
+  "name": "Paul Goble",
+  "school": "North Hunterdon"
+ },
+ {
+  "year": 1962,
+  "weight": 98,
+  "name": "Jim Robertson",
+  "school": "Collingswood"
+ },
+ {
+  "year": 1962,
+  "weight": 106,
+  "name": "Ken Carswell",
+  "school": "Washington"
+ },
+ {
+  "year": 1962,
+  "weight": 115,
+  "name": "Wayne Hicks",
+  "school": "Somerville"
+ },
+ {
+  "year": 1962,
+  "weight": 123,
+  "name": "Ken Cornell",
+  "school": "Westfield"
+ },
+ {
+  "year": 1962,
+  "weight": 130,
+  "name": "Don Milone",
+  "school": "Cliffside Park"
+ },
+ {
+  "year": 1962,
+  "weight": 136,
+  "name": "Roger Cassett",
+  "school": "Plainfield"
+ },
+ {
+  "year": 1962,
+  "weight": 141,
+  "name": "Henry Mack",
+  "school": "Piscataway"
+ },
+ {
+  "year": 1962,
+  "weight": 148,
+  "name": "Larry Vandermark",
+  "school": "Newton"
+ },
+ {
+  "year": 1962,
+  "weight": 157,
+  "name": "William Bachardy",
+  "school": "Hunterdon Central"
+ },
+ {
+  "year": 1962,
+  "weight": 168,
+  "name": "Dave Morash",
+  "school": "Westfield"
+ },
+ {
+  "year": 1962,
+  "weight": 178,
+  "name": "Ernie Howie",
+  "school": "Newton"
+ },
+ {
+  "year": 1962,
+  "weight": "Hwt",
+  "name": "Don McKenna",
+  "school": "North Plainfield"
+ },
+ {
+  "year": 1961,
+  "weight": 98,
+  "name": "Rocky Gilmore",
+  "school": "Fair Lawn"
+ },
+ {
+  "year": 1961,
+  "weight": 106,
+  "name": "Wayne Hicks",
+  "school": "Somerville"
+ },
+ {
+  "year": 1961,
+  "weight": 115,
+  "name": "Frank Arcidiacono",
+  "school": "Somerville"
+ },
+ {
+  "year": 1961,
+  "weight": 123,
+  "name": "Dick Prior",
+  "school": "Cranford"
+ },
+ {
+  "year": 1961,
+  "weight": 130,
+  "name": "Roger Cassett",
+  "school": "Plainfield"
+ },
+ {
+  "year": 1961,
+  "weight": 136,
+  "name": "Tom Bucchino",
+  "school": "Fair Lawn"
+ },
+ {
+  "year": 1961,
+  "weight": 141,
+  "name": "Sal Messina",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1961,
+  "weight": 148,
+  "name": "Larry Vandermark",
+  "school": "Newton"
+ },
+ {
+  "year": 1961,
+  "weight": 157,
+  "name": "Al Lilley",
+  "school": "Union"
+ },
+ {
+  "year": 1961,
+  "weight": 168,
+  "name": "Bob Vieira",
+  "school": "Union"
+ },
+ {
+  "year": 1961,
+  "weight": 178,
+  "name": "Dave Alter",
+  "school": "Somerville"
+ },
+ {
+  "year": 1961,
+  "weight": "Hwt",
+  "name": "Tony Barber",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 1960,
+  "weight": 98,
+  "name": "Lou Terranova",
+  "school": "Newton"
+ },
+ {
+  "year": 1960,
+  "weight": 106,
+  "name": "Roy Terranova",
+  "school": "Newton"
+ },
+ {
+  "year": 1960,
+  "weight": 115,
+  "name": "Joe Zelasny",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 1960,
+  "weight": 123,
+  "name": "Rich D'Orio",
+  "school": "Fair Lawn"
+ },
+ {
+  "year": 1960,
+  "weight": 130,
+  "name": "Dennis Powers",
+  "school": "Westfield"
+ },
+ {
+  "year": 1960,
+  "weight": 136,
+  "name": "Dom Sarinelli",
+  "school": "Dover"
+ },
+ {
+  "year": 1960,
+  "weight": 141,
+  "name": "Al Lilley",
+  "school": "Union"
+ },
+ {
+  "year": 1960,
+  "weight": 148,
+  "name": "George Reid",
+  "school": "Somerville"
+ },
+ {
+  "year": 1960,
+  "weight": 157,
+  "name": "Roger Olesen",
+  "school": "Washington"
+ },
+ {
+  "year": 1960,
+  "weight": 168,
+  "name": "Robert Vieira",
+  "school": "Union"
+ },
+ {
+  "year": 1960,
+  "weight": 178,
+  "name": "Fred Pauser",
+  "school": "Watchung Hills"
+ },
+ {
+  "year": 1960,
+  "weight": "Hwt",
+  "name": "Gary Wikander",
+  "school": "Morristown"
+ },
+ {
+  "year": 1959,
+  "weight": 98,
+  "name": "Robert Jalil",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1959,
+  "weight": 106,
+  "name": "John Leek",
+  "school": "Collingswood"
+ },
+ {
+  "year": 1959,
+  "weight": 115,
+  "name": "John DeSantis",
+  "school": "Vineland"
+ },
+ {
+  "year": 1959,
+  "weight": 123,
+  "name": "Dave Osmun",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1959,
+  "weight": 130,
+  "name": "Dom Sarinelli",
+  "school": "Dover"
+ },
+ {
+  "year": 1959,
+  "weight": 136,
+  "name": "Hank Mazzoni",
+  "school": "Vineland"
+ },
+ {
+  "year": 1959,
+  "weight": 141,
+  "name": "Mario Gentile",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 1959,
+  "weight": 148,
+  "name": "Dave Kinney",
+  "school": "Somerville"
+ },
+ {
+  "year": 1959,
+  "weight": 157,
+  "name": "Richard Guidi",
+  "school": "Washington"
+ },
+ {
+  "year": 1959,
+  "weight": 168,
+  "name": "Jon Bogert",
+  "school": "Leonia"
+ },
+ {
+  "year": 1959,
+  "weight": 178,
+  "name": "George Craft",
+  "school": "Cranford"
+ },
+ {
+  "year": 1959,
+  "weight": "Hwt",
+  "name": "Ed Scharer",
+  "school": "Dover"
+ },
+ {
+  "year": 1958,
+  "weight": 106,
+  "name": "Joe Zelasny",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 1958,
+  "weight": 115,
+  "name": "Robert Hogan",
+  "school": "Millville"
+ },
+ {
+  "year": 1958,
+  "weight": 123,
+  "name": "Carmine Rossi",
+  "school": "Roxbury"
+ },
+ {
+  "year": 1958,
+  "weight": 130,
+  "name": "James Balquist",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1958,
+  "weight": 136,
+  "name": "Mario Gentile",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 1958,
+  "weight": 141,
+  "name": "Richard Brauman",
+  "school": "Union"
+ },
+ {
+  "year": 1958,
+  "weight": 148,
+  "name": "Dave Kinney",
+  "school": "Somerville"
+ },
+ {
+  "year": 1958,
+  "weight": 157,
+  "name": "Amando Soto",
+  "school": "Union"
+ },
+ {
+  "year": 1958,
+  "weight": 168,
+  "name": "Robert Stem",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1958,
+  "weight": 178,
+  "name": "Dick England",
+  "school": "North Plainfield"
+ },
+ {
+  "year": 1958,
+  "weight": "Hwt",
+  "name": "Joe Sisia",
+  "school": "Clark"
+ },
+ {
+  "year": 1957,
+  "weight": 106,
+  "name": "John Haddock",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 1957,
+  "weight": 115,
+  "name": "Robert Hogan",
+  "school": "Millville"
+ },
+ {
+  "year": 1957,
+  "weight": 123,
+  "name": "Richard Janish",
+  "school": "Union"
+ },
+ {
+  "year": 1957,
+  "weight": 130,
+  "name": "Anthony Gentile",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 1957,
+  "weight": 136,
+  "name": "Michael Troiana",
+  "school": "Plainfield"
+ },
+ {
+  "year": 1957,
+  "weight": 141,
+  "name": "Richard Brauman",
+  "school": "Union"
+ },
+ {
+  "year": 1957,
+  "weight": 148,
+  "name": "Joe Grossi",
+  "school": "Newton"
+ },
+ {
+  "year": 1957,
+  "weight": 157,
+  "name": "Raymond Reichert",
+  "school": "Fair Lawn"
+ },
+ {
+  "year": 1957,
+  "weight": 168,
+  "name": "Ronald Biglin",
+  "school": "Haddonfield"
+ },
+ {
+  "year": 1957,
+  "weight": "Hwt",
+  "name": "Johnston Oberly",
+  "school": "Washington"
+ },
+ {
+  "year": 1956,
+  "weight": 106,
+  "name": "Jerry Sachsel",
+  "school": "Springfield Regional"
+ },
+ {
+  "year": 1956,
+  "weight": 115,
+  "name": "Ben Mollow",
+  "school": "Union"
+ },
+ {
+  "year": 1956,
+  "weight": 123,
+  "name": "Tom Gzifa",
+  "school": "Plainfield"
+ },
+ {
+  "year": 1956,
+  "weight": 130,
+  "name": "Manuel Veira",
+  "school": "Union"
+ },
+ {
+  "year": 1956,
+  "weight": 136,
+  "name": "Lou Turi",
+  "school": "Plainfield"
+ },
+ {
+  "year": 1956,
+  "weight": 141,
+  "name": "Steve Novaks",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 1956,
+  "weight": 148,
+  "name": "Richard Besnier",
+  "school": "Springfield Regional"
+ },
+ {
+  "year": 1956,
+  "weight": 157,
+  "name": "Charles Sherwood",
+  "school": "Haddonfield"
+ },
+ {
+  "year": 1956,
+  "weight": 168,
+  "name": "Art Marinelli",
+  "school": "Washington"
+ },
+ {
+  "year": 1956,
+  "weight": "Hwt",
+  "name": "Stanley Howard",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 1955,
+  "weight": 106,
+  "name": "Jerry Sachsel",
+  "school": "Springfield Regional"
+ },
+ {
+  "year": 1955,
+  "weight": 115,
+  "name": "Don Ridley",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 1955,
+  "weight": 123,
+  "name": "Warren Dixon",
+  "school": "Union"
+ },
+ {
+  "year": 1955,
+  "weight": 130,
+  "name": "Ray Bailey",
+  "school": "Springfield Regional"
+ },
+ {
+  "year": 1955,
+  "weight": 136,
+  "name": "Gus Rutledge",
+  "school": "Somerville"
+ },
+ {
+  "year": 1955,
+  "weight": 141,
+  "name": "Richard Scorese",
+  "school": "Springfield Regional"
+ },
+ {
+  "year": 1955,
+  "weight": 148,
+  "name": "Louis Garay",
+  "school": "Rahway"
+ },
+ {
+  "year": 1955,
+  "weight": 157,
+  "name": "George Gray",
+  "school": "Newton"
+ },
+ {
+  "year": 1955,
+  "weight": 168,
+  "name": "Art Marinelli",
+  "school": "Washington"
+ },
+ {
+  "year": 1955,
+  "weight": "Hwt",
+  "name": "Joe Forte",
+  "school": "Leonia"
+ },
+ {
+  "year": 1954,
+  "weight": 106,
+  "name": "Carlo Giovannitti",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 1954,
+  "weight": 115,
+  "name": "Elmer Roane",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 1954,
+  "weight": 123,
+  "name": "Ralph Scalzo",
+  "school": "Newton"
+ },
+ {
+  "year": 1954,
+  "weight": 130,
+  "name": "Leroy Kennedy",
+  "school": "Washington"
+ },
+ {
+  "year": 1954,
+  "weight": 136,
+  "name": "Allen Scharre",
+  "school": "Washington"
+ },
+ {
+  "year": 1954,
+  "weight": 141,
+  "name": "Nick Biondi",
+  "school": "Union"
+ },
+ {
+  "year": 1954,
+  "weight": 148,
+  "name": "Sal Amato",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 1954,
+  "weight": 157,
+  "name": "Sam Crosby",
+  "school": "Somerville"
+ },
+ {
+  "year": 1954,
+  "weight": 168,
+  "name": "Mike Vieira",
+  "school": "Union"
+ },
+ {
+  "year": 1954,
+  "weight": "Hwt",
+  "name": "Ted Rutsch",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1953,
+  "weight": 106,
+  "name": "Richard Laiacoma",
+  "school": "Leonia"
+ },
+ {
+  "year": 1953,
+  "weight": 115,
+  "name": "Harvey Weiss",
+  "school": "Union"
+ },
+ {
+  "year": 1953,
+  "weight": 123,
+  "name": "Allen Scharre",
+  "school": "Washington"
+ },
+ {
+  "year": 1953,
+  "weight": 130,
+  "name": "Dan Gray",
+  "school": "Newton"
+ },
+ {
+  "year": 1953,
+  "weight": 136,
+  "name": "Nick Biondi",
+  "school": "Union"
+ },
+ {
+  "year": 1953,
+  "weight": 141,
+  "name": "Richard Cornish",
+  "school": "Washington"
+ },
+ {
+  "year": 1953,
+  "weight": 148,
+  "name": "Sal Amato",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 1953,
+  "weight": 157,
+  "name": "Joe Yeats",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1953,
+  "weight": 168,
+  "name": "Jim Bronico",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1953,
+  "weight": "Hwt",
+  "name": "Mike Sandusky",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 1952,
+  "weight": 106,
+  "name": "Jack Heiss",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1952,
+  "weight": 115,
+  "name": "Sid Fowler",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1952,
+  "weight": 123,
+  "name": "Harvey Kirby",
+  "school": "Rahway"
+ },
+ {
+  "year": 1952,
+  "weight": 130,
+  "name": "Ben Fiore",
+  "school": "Washington"
+ },
+ {
+  "year": 1952,
+  "weight": 136,
+  "name": "Ron Marinelli",
+  "school": "Washington"
+ },
+ {
+  "year": 1952,
+  "weight": 141,
+  "name": "Tom Thompson",
+  "school": "Rahway"
+ },
+ {
+  "year": 1952,
+  "weight": 148,
+  "name": "Bill Shearer",
+  "school": "Somerville"
+ },
+ {
+  "year": 1952,
+  "weight": 157,
+  "name": "Dick Whited",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 1952,
+  "weight": 168,
+  "name": "Alan Bell",
+  "school": "Somerville"
+ },
+ {
+  "year": 1952,
+  "weight": "Hwt",
+  "name": "Bill Oberly",
+  "school": "Washington"
+ },
+ {
+  "year": 1951,
+  "weight": 104,
+  "name": "Sid Fowler",
+  "school": "Phillipsburg"
+ },
+ {
+  "year": 1951,
+  "weight": 113,
+  "name": "Harvey Kirby",
+  "school": "Rahway"
+ },
+ {
+  "year": 1951,
+  "weight": 121,
+  "name": "Dennis Sullivan",
+  "school": "Leonia"
+ },
+ {
+  "year": 1951,
+  "weight": 128,
+  "name": "Ken Miller",
+  "school": "Union"
+ },
+ {
+  "year": 1951,
+  "weight": 134,
+  "name": "Osborne Curry",
+  "school": "Union"
+ },
+ {
+  "year": 1951,
+  "weight": 139,
+  "name": "Ron Marinelli",
+  "school": "Washington"
+ },
+ {
+  "year": 1951,
+  "weight": 146,
+  "name": "Bob O'Bryon",
+  "school": "Washington"
+ },
+ {
+  "year": 1951,
+  "weight": 155,
+  "name": "Lowell Curtis",
+  "school": "Somerville"
+ },
+ {
+  "year": 1951,
+  "weight": 166,
+  "name": "Sal D'Amico",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1951,
+  "weight": "Hwt",
+  "name": "Bill Oberly",
+  "school": "Washingto"
+ },
+ {
+  "year": 1950,
+  "weight": 104,
+  "name": "Nunzio Laspata",
+  "school": "Jefferson"
+ },
+ {
+  "year": 1950,
+  "weight": 113,
+  "name": "John Pepe",
+  "school": "Plainfield"
+ },
+ {
+  "year": 1950,
+  "weight": 121,
+  "name": "George Fidelis",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1950,
+  "weight": 128,
+  "name": "Ken Miller",
+  "school": "Union"
+ },
+ {
+  "year": 1950,
+  "weight": 134,
+  "name": "Frank Capece",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1950,
+  "weight": 139,
+  "name": "Don Danz",
+  "school": "Union"
+ },
+ {
+  "year": 1950,
+  "weight": 146,
+  "name": "Joe Pope",
+  "school": "Plainfield"
+ },
+ {
+  "year": 1950,
+  "weight": 155,
+  "name": "John Fasciano",
+  "school": "Leonia"
+ },
+ {
+  "year": 1950,
+  "weight": 166,
+  "name": "Sal D'Amico",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1950,
+  "weight": "Hwt",
+  "name": "Ed Lanzi",
+  "school": "Newton"
+ },
+ {
+  "year": 1949,
+  "weight": 104,
+  "name": "Ralph Hutchison",
+  "school": "Newton"
+ },
+ {
+  "year": 1949,
+  "weight": 113,
+  "name": "Joe Giovannitti",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 1949,
+  "weight": 121,
+  "name": "Bill Dolan",
+  "school": "Newton"
+ },
+ {
+  "year": 1949,
+  "weight": 128,
+  "name": "Frank Mecsey",
+  "school": "Washington"
+ },
+ {
+  "year": 1949,
+  "weight": 134,
+  "name": "Tony Davis",
+  "school": "Dayton Regional"
+ },
+ {
+  "year": 1949,
+  "weight": 139,
+  "name": "Don Frey",
+  "school": "Newton"
+ },
+ {
+  "year": 1949,
+  "weight": 146,
+  "name": "Doug Frey",
+  "school": "Newton"
+ },
+ {
+  "year": 1949,
+  "weight": 155,
+  "name": "Allen Bernstorf",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1949,
+  "weight": 166,
+  "name": "Rich Cook",
+  "school": "Washington"
+ },
+ {
+  "year": 1949,
+  "weight": "Hwt",
+  "name": "Enzo Marinelli",
+  "school": "Washington"
+ },
+ {
+  "year": 1948,
+  "weight": 104,
+  "name": "Norman Buick",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1948,
+  "weight": 113,
+  "name": "Bill Dolan",
+  "school": "Newton"
+ },
+ {
+  "year": 1948,
+  "weight": 121,
+  "name": "Richard Fritts",
+  "school": "Washington"
+ },
+ {
+  "year": 1948,
+  "weight": 128,
+  "name": "Carl Branham",
+  "school": "Newton"
+ },
+ {
+  "year": 1948,
+  "weight": 134,
+  "name": "Vito Paragino",
+  "school": "Newton"
+ },
+ {
+  "year": 1948,
+  "weight": 139,
+  "name": "Carl Edolo",
+  "school": "Washington"
+ },
+ {
+  "year": 1948,
+  "weight": 146,
+  "name": "Don Frey",
+  "school": "Newton"
+ },
+ {
+  "year": 1948,
+  "weight": 155,
+  "name": "Doug Frey",
+  "school": "Newton"
+ },
+ {
+  "year": 1948,
+  "weight": 166,
+  "name": "Emil Perona",
+  "school": "Newton"
+ },
+ {
+  "year": 1948,
+  "weight": "Hwt",
+  "name": "Harry Lanzi",
+  "school": "Newton"
+ },
+ {
+  "year": 1947,
+  "weight": 104,
+  "name": "Dale Kobler",
+  "school": "Newton"
+ },
+ {
+  "year": 1947,
+  "weight": 113,
+  "name": "Bill Dolan",
+  "school": "Newton"
+ },
+ {
+  "year": 1947,
+  "weight": 121,
+  "name": "Richard Fritts",
+  "school": "Washington"
+ },
+ {
+  "year": 1947,
+  "weight": 128,
+  "name": "Earl Courtright",
+  "school": "Newton"
+ },
+ {
+  "year": 1947,
+  "weight": 134,
+  "name": "John Davis",
+  "school": "Newton"
+ },
+ {
+  "year": 1947,
+  "weight": 139,
+  "name": "Al Keepers",
+  "school": "Newton"
+ },
+ {
+  "year": 1947,
+  "weight": 146,
+  "name": "Don Frey",
+  "school": "Newton"
+ },
+ {
+  "year": 1947,
+  "weight": 155,
+  "name": "William Dietrick",
+  "school": "Washington"
+ },
+ {
+  "year": 1947,
+  "weight": 166,
+  "name": "William Leibe",
+  "school": "Newton"
+ },
+ {
+  "year": 1947,
+  "weight": "Hwt",
+  "name": "Harry Lanzi",
+  "school": "Newton"
+ },
+ {
+  "year": 1946,
+  "weight": 104,
+  "name": "Dale Kobler",
+  "school": "Newton"
+ },
+ {
+  "year": 1946,
+  "weight": 113,
+  "name": "Bob Carlin",
+  "school": "Newton"
+ },
+ {
+  "year": 1946,
+  "weight": 121,
+  "name": "Bill Gray",
+  "school": "Newton"
+ },
+ {
+  "year": 1946,
+  "weight": 128,
+  "name": "Al Keepers",
+  "school": "Newton"
+ },
+ {
+  "year": 1946,
+  "weight": 134,
+  "name": "Cal Wacker",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1946,
+  "weight": 139,
+  "name": "Russ Riegel",
+  "school": "Washington"
+ },
+ {
+  "year": 1946,
+  "weight": 146,
+  "name": "William Leibe",
+  "school": "Newton"
+ },
+ {
+  "year": 1946,
+  "weight": 155,
+  "name": "Louis Scalzo",
+  "school": "Newton"
+ },
+ {
+  "year": 1946,
+  "weight": 166,
+  "name": "Fred Klett",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1946,
+  "weight": "Hwt",
+  "name": "Harry Lanzi",
+  "school": "Newton"
+ },
+ {
+  "year": 1945,
+  "weight": 104,
+  "name": "Joe Colicelio",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1945,
+  "weight": 113,
+  "name": "Bill Gray",
+  "school": "Newton"
+ },
+ {
+  "year": 1945,
+  "weight": 121,
+  "name": "James Woods",
+  "school": "Newton"
+ },
+ {
+  "year": 1945,
+  "weight": 128,
+  "name": "Cal Wacker",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1945,
+  "weight": 134,
+  "name": "Andy Fortunato",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1945,
+  "weight": 139,
+  "name": "Mike Fucci",
+  "school": "Washington"
+ },
+ {
+  "year": 1945,
+  "weight": 146,
+  "name": "Howard Tice",
+  "school": "Washington"
+ },
+ {
+  "year": 1945,
+  "weight": 155,
+  "name": "Joe Lanzi",
+  "school": "Newton"
+ },
+ {
+  "year": 1945,
+  "weight": 166,
+  "name": "Fred Klett",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1945,
+  "weight": "Hwt",
+  "name": "Pete Perini",
+  "school": "Washington"
+ },
+ {
+  "year": 1944,
+  "weight": 96,
+  "name": "Bob Carlin",
+  "school": "Newton"
+ },
+ {
+  "year": 1944,
+  "weight": 104,
+  "name": "Pat Scorese",
+  "school": "Dayton Regional"
+ },
+ {
+  "year": 1944,
+  "weight": 113,
+  "name": "Al Sachsel",
+  "school": "Dayton Regional"
+ },
+ {
+  "year": 1944,
+  "weight": 121,
+  "name": "Russ Riegel",
+  "school": "Washington"
+ },
+ {
+  "year": 1944,
+  "weight": 128,
+  "name": "Al Buick",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1944,
+  "weight": 134,
+  "name": "Bill Brooks",
+  "school": "Newton"
+ },
+ {
+  "year": 1944,
+  "weight": 139,
+  "name": "Rick Sassman",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1944,
+  "weight": 146,
+  "name": "Howard Tice",
+  "school": "Washington"
+ },
+ {
+  "year": 1944,
+  "weight": 155,
+  "name": "Anthony Lascari",
+  "school": "Lodi"
+ },
+ {
+  "year": 1944,
+  "weight": 166,
+  "name": "Charlie Gunner",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1944,
+  "weight": 176,
+  "name": "Pete Perini",
+  "school": "Washington"
+ },
+ {
+  "year": 1944,
+  "weight": "Hwt",
+  "name": "George Erb",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1943,
+  "weight": 95,
+  "name": "Andy Fortunato",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1943,
+  "weight": 104,
+  "name": "Robert Venturo",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1943,
+  "weight": 113,
+  "name": "Al Buick",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1943,
+  "weight": 121,
+  "name": "Rob McKeeby",
+  "school": "Newton"
+ },
+ {
+  "year": 1943,
+  "weight": 128,
+  "name": "Everett Branham",
+  "school": "Newton"
+ },
+ {
+  "year": 1943,
+  "weight": 134,
+  "name": "George Brooks",
+  "school": "Newton"
+ },
+ {
+  "year": 1943,
+  "weight": 139,
+  "name": "Pasquale Paragino",
+  "school": "Newton"
+ },
+ {
+  "year": 1943,
+  "weight": 146,
+  "name": "Monroe Kahn",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1943,
+  "weight": 155,
+  "name": "Roger Snook",
+  "school": "Newton"
+ },
+ {
+  "year": 1943,
+  "weight": 166,
+  "name": "Charles Johnson",
+  "school": "Springfield"
+ },
+ {
+  "year": 1943,
+  "weight": 176,
+  "name": "Phil Krug",
+  "school": "Union"
+ },
+ {
+  "year": 1943,
+  "weight": "Hwt",
+  "name": "Herb Baptiste",
+  "school": "Woodbury"
+ },
+ {
+  "year": 1942,
+  "weight": 95,
+  "name": "Robert Venturo",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1942,
+  "weight": 103,
+  "name": "Pete Munyon",
+  "school": "Paulsboro"
+ },
+ {
+  "year": 1942,
+  "weight": 112,
+  "name": "Rob McKeeby",
+  "school": "Newton"
+ },
+ {
+  "year": 1942,
+  "weight": 120,
+  "name": "Joseph Errico",
+  "school": "Union"
+ },
+ {
+  "year": 1942,
+  "weight": 127,
+  "name": "Ed Gulick",
+  "school": "Union"
+ },
+ {
+  "year": 1942,
+  "weight": 133,
+  "name": "John Kozdeba",
+  "school": "Newton"
+ },
+ {
+  "year": 1942,
+  "weight": 138,
+  "name": "William Rettino",
+  "school": "Union"
+ },
+ {
+  "year": 1942,
+  "weight": 145,
+  "name": "Gilbert Hillman",
+  "school": "Woodbury"
+ },
+ {
+  "year": 1942,
+  "weight": 154,
+  "name": "Roger Snook",
+  "school": "Newton"
+ },
+ {
+  "year": 1942,
+  "weight": 165,
+  "name": "Phil Krug",
+  "school": "Union"
+ },
+ {
+  "year": 1942,
+  "weight": 175,
+  "name": "Harry Horan",
+  "school": "Union"
+ },
+ {
+  "year": 1942,
+  "weight": "Hwt",
+  "name": "Herb Baptiste",
+  "school": "Woodbury"
+ },
+ {
+  "year": 1941,
+  "weight": 95,
+  "name": "John Peters",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1941,
+  "weight": 105,
+  "name": "Rob McKeeby",
+  "school": "Newton"
+ },
+ {
+  "year": 1941,
+  "weight": 115,
+  "name": "Dan Valenti",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1941,
+  "weight": 125,
+  "name": "Nick Costa",
+  "school": "Newton"
+ },
+ {
+  "year": 1941,
+  "weight": 135,
+  "name": "Tom McLaughlin",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1941,
+  "weight": 145,
+  "name": "Robert Moone",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1941,
+  "weight": 155,
+  "name": "Joe Simon",
+  "school": "Thomas Jefferson"
+ },
+ {
+  "year": 1941,
+  "weight": 165,
+  "name": "Harry Horan",
+  "school": "Union"
+ },
+ {
+  "year": 1941,
+  "weight": 175,
+  "name": "Lawrence Mackey",
+  "school": "Somerville"
+ },
+ {
+  "year": 1941,
+  "weight": "Hwt",
+  "name": "Frank Perantoni",
+  "school": "Somerville"
+ },
+ {
+  "year": 1940,
+  "weight": 93,
+  "name": "Robert Harris",
+  "school": "Newton"
+ },
+ {
+  "year": 1940,
+  "weight": 103,
+  "name": "Harry Pambianchi",
+  "school": "Washington"
+ },
+ {
+  "year": 1940,
+  "weight": 115,
+  "name": "Ray Loh",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1940,
+  "weight": 125,
+  "name": "John Teicher",
+  "school": "Somerville"
+ },
+ {
+  "year": 1940,
+  "weight": 135,
+  "name": "Robert Moone",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1940,
+  "weight": 145,
+  "name": "Robert Adams",
+  "school": "Union"
+ },
+ {
+  "year": 1940,
+  "weight": 155,
+  "name": "Jonathan Campbell",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1940,
+  "weight": 165,
+  "name": "Tom Roselli",
+  "school": "Newton"
+ },
+ {
+  "year": 1940,
+  "weight": 175,
+  "name": "Peter Kassack",
+  "school": "Union"
+ },
+ {
+  "year": 1940,
+  "weight": "Hwt",
+  "name": "Robert Newman",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1939,
+  "weight": 95,
+  "name": "Richard Narducci",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1939,
+  "weight": 105,
+  "name": "Leland Strecker",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1939,
+  "weight": 115,
+  "name": "Herb Farrell",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1939,
+  "weight": 125,
+  "name": "Robert Moone",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1939,
+  "weight": 135,
+  "name": "Earl Major",
+  "school": "Newton"
+ },
+ {
+  "year": 1939,
+  "weight": 145,
+  "name": "Jonathan Campbell",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1939,
+  "weight": 155,
+  "name": "Jerry Hendershot",
+  "school": "Newton"
+ },
+ {
+  "year": 1939,
+  "weight": 165,
+  "name": "Peter Kassack",
+  "school": "Union"
+ },
+ {
+  "year": 1939,
+  "weight": 175,
+  "name": "Warren Wacker",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1939,
+  "weight": "Hwt",
+  "name": "William Medcraft",
+  "school": "Union"
+ },
+ {
+  "year": 1938,
+  "weight": 95,
+  "name": "Leland Strecker",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1938,
+  "weight": 105,
+  "name": "William Mackey",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1938,
+  "weight": 115,
+  "name": "George Smith",
+  "school": "Union"
+ },
+ {
+  "year": 1938,
+  "weight": 125,
+  "name": "Warren Bund",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1938,
+  "weight": 135,
+  "name": "Dom Lepore",
+  "school": "Thomas Jefferson"
+ },
+ {
+  "year": 1938,
+  "weight": 145,
+  "name": "Jerry Hendershot",
+  "school": "Newton"
+ },
+ {
+  "year": 1938,
+  "weight": 155,
+  "name": "Richard Seals",
+  "school": "Newton"
+ },
+ {
+  "year": 1938,
+  "weight": 165,
+  "name": "Ben Danik",
+  "school": "Thomas Jefferson"
+ },
+ {
+  "year": 1938,
+  "weight": 175,
+  "name": "Charley Kees",
+  "school": "Union"
+ },
+ {
+  "year": 1938,
+  "weight": "Hwt",
+  "name": "Fred Drotos",
+  "school": "Union"
+ },
+ {
+  "year": 1937,
+  "weight": 95,
+  "name": "Ralph Merola",
+  "school": "Freehold"
+ },
+ {
+  "year": 1937,
+  "weight": 105,
+  "name": "Warren Bund",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1937,
+  "weight": 115,
+  "name": "Harry Morgan",
+  "school": "Union"
+ },
+ {
+  "year": 1937,
+  "weight": 125,
+  "name": "Leon Moorman",
+  "school": "Union"
+ },
+ {
+  "year": 1937,
+  "weight": 135,
+  "name": "Anthony Cancro",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1937,
+  "weight": 145,
+  "name": "Ludlow Gibbons",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1937,
+  "weight": 155,
+  "name": "William Severson",
+  "school": "Union"
+ },
+ {
+  "year": 1937,
+  "weight": 165,
+  "name": "Don Stuart",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1937,
+  "weight": 175,
+  "name": "William Zydiak",
+  "school": "Bound Brook"
+ },
+ {
+  "year": 1937,
+  "weight": "Hwt",
+  "name": "Alex Schibanoff",
+  "school": "Freehold"
+ },
+ {
+  "year": 1936,
+  "weight": 95,
+  "name": "Herb Farrell",
+  "school": "Roselle Park"
+ },
+ {
+  "year": 1936,
+  "weight": 105,
+  "name": "Warren Taylor",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1936,
+  "weight": 115,
+  "name": "Ernest Tallman",
+  "school": "Newton"
+ },
+ {
+  "year": 1936,
+  "weight": 125,
+  "name": "Albert Lorenzo",
+  "school": "Newton"
+ },
+ {
+  "year": 1936,
+  "weight": 135,
+  "name": "Anthony Cancro",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1936,
+  "weight": 145,
+  "name": "Joe Scalzo",
+  "school": "Newton"
+ },
+ {
+  "year": 1936,
+  "weight": 155,
+  "name": "William Klingener",
+  "school": "Newton"
+ },
+ {
+  "year": 1936,
+  "weight": 165,
+  "name": "Tony Pikulik",
+  "school": "Freehold"
+ },
+ {
+  "year": 1936,
+  "weight": 175,
+  "name": "John Schultz",
+  "school": "Newton"
+ },
+ {
+  "year": 1936,
+  "weight": "Hwt",
+  "name": "Warren Marvin",
+  "school": "Newton"
+ },
+ {
+  "year": 1935,
+  "weight": 95,
+  "name": "Leon Moorman",
+  "school": "Union"
+ },
+ {
+  "year": 1935,
+  "weight": 105,
+  "name": "Ernest Tallman",
+  "school": "Newton"
+ },
+ {
+  "year": 1935,
+  "weight": 115,
+  "name": "Carlton Sprague",
+  "school": "Newton"
+ },
+ {
+  "year": 1935,
+  "weight": 125,
+  "name": "Ludlow Gibbons",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1935,
+  "weight": 135,
+  "name": "Robert Stierli",
+  "school": "Newton"
+ },
+ {
+  "year": 1935,
+  "weight": 145,
+  "name": "Elwood Cassidy",
+  "school": "Newton"
+ },
+ {
+  "year": 1935,
+  "weight": 155,
+  "name": "Edward Schultz",
+  "school": "Newton"
+ },
+ {
+  "year": 1935,
+  "weight": 165,
+  "name": "William Klingener",
+  "school": "Newton"
+ },
+ {
+  "year": 1935,
+  "weight": 175,
+  "name": "Norman Hansen",
+  "school": "Union"
+ },
+ {
+  "year": 1935,
+  "weight": "Hwt",
+  "name": "Ken Brown",
+  "school": "Teaneck"
+ },
+ {
+  "year": 1934,
+  "weight": 95,
+  "name": "Leo Snover",
+  "school": "Newton"
+ },
+ {
+  "year": 1934,
+  "weight": 105,
+  "name": "Carlton Sprague",
+  "school": "Newton"
+ },
+ {
+  "year": 1934,
+  "weight": 115,
+  "name": "Stanley Flicker",
+  "school": "Freehold"
+ },
+ {
+  "year": 1934,
+  "weight": 125,
+  "name": "Herbert Hunterdon",
+  "school": "Newton"
+ },
+ {
+  "year": 1934,
+  "weight": 135,
+  "name": "George Beban",
+  "school": "Blair"
+ },
+ {
+  "year": 1934,
+  "weight": 145,
+  "name": "Thomas Lorenzo",
+  "school": "Newton"
+ },
+ {
+  "year": 1934,
+  "weight": 155,
+  "name": "Louis Visco",
+  "school": "Freehold"
+ },
+ {
+  "year": 1934,
+  "weight": 165,
+  "name": "Edward Schultz",
+  "school": "Newton"
+ },
+ {
+  "year": 1934,
+  "weight": "Hwt",
+  "name": "Samuel Vail",
+  "school": "Blair Academy"
+ }
+]

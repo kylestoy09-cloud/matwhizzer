@@ -1,0 +1,5690 @@
+[
+ {
+  "group": "Group 5",
+  "year": 2015,
+  "section": "North 1",
+  "champion": "North Bergen"
+ },
+ {
+  "group": "Group 5",
+  "year": 2015,
+  "section": "North 2",
+  "champion": "North Hunterdon"
+ },
+ {
+  "group": "Group 5",
+  "year": 2015,
+  "section": "Central",
+  "champion": "Hunterdon Central"
+ },
+ {
+  "group": "Group 5",
+  "year": 2015,
+  "section": "South",
+  "champion": "Brick Memorial"
+ },
+ {
+  "group": "Group 5",
+  "year": 2016,
+  "section": "North 1",
+  "champion": "Clifton"
+ },
+ {
+  "group": "Group 5",
+  "year": 2016,
+  "section": "North 2",
+  "champion": "Bridgewater-Raritan"
+ },
+ {
+  "group": "Group 5",
+  "year": 2016,
+  "section": "Central",
+  "champion": "Howell"
+ },
+ {
+  "group": "Group 5",
+  "year": 2016,
+  "section": "South",
+  "champion": "Southern Regional"
+ },
+ {
+  "group": "Group 5",
+  "year": 2017,
+  "section": "North 1",
+  "champion": "Passaic Tech"
+ },
+ {
+  "group": "Group 5",
+  "year": 2017,
+  "section": "North 2",
+  "champion": "Piscataway"
+ },
+ {
+  "group": "Group 5",
+  "year": 2017,
+  "section": "Central",
+  "champion": "Hunterdon Central"
+ },
+ {
+  "group": "Group 5",
+  "year": 2017,
+  "section": "South",
+  "champion": "Howell"
+ },
+ {
+  "group": "Group 5",
+  "year": 2018,
+  "section": "North 1",
+  "champion": "West Orange"
+ },
+ {
+  "group": "Group 5",
+  "year": 2018,
+  "section": "North 2",
+  "champion": "Watchung Hills"
+ },
+ {
+  "group": "Group 5",
+  "year": 2018,
+  "section": "Central",
+  "champion": "Howell"
+ },
+ {
+  "group": "Group 5",
+  "year": 2018,
+  "section": "South",
+  "champion": "Southern Regional"
+ },
+ {
+  "group": "Group 5",
+  "year": 2019,
+  "section": "North 1",
+  "champion": "Passaic Tech"
+ },
+ {
+  "group": "Group 5",
+  "year": 2019,
+  "section": "North 2",
+  "champion": "Watchung Hills"
+ },
+ {
+  "group": "Group 5",
+  "year": 2019,
+  "section": "Central",
+  "champion": "Hunterdon Central"
+ },
+ {
+  "group": "Group 5",
+  "year": 2019,
+  "section": "South",
+  "champion": "Southern Regional"
+ },
+ {
+  "group": "Group 5",
+  "year": 2020,
+  "section": "North 1",
+  "champion": "Passaic Tech"
+ },
+ {
+  "group": "Group 5",
+  "year": 2020,
+  "section": "North 2",
+  "champion": "Watchung Hills"
+ },
+ {
+  "group": "Group 5",
+  "year": 2020,
+  "section": "Central",
+  "champion": "Manalapan"
+ },
+ {
+  "group": "Group 5",
+  "year": 2020,
+  "section": "South",
+  "champion": "Southern Regional"
+ },
+ {
+  "group": "Group 5",
+  "year": 2022,
+  "section": "North 1",
+  "champion": "Livingston"
+ },
+ {
+  "group": "Group 5",
+  "year": 2022,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 5",
+  "year": 2022,
+  "section": "Central",
+  "champion": "Howell"
+ },
+ {
+  "group": "Group 5",
+  "year": 2022,
+  "section": "South",
+  "champion": "Southern Regional"
+ },
+ {
+  "group": "Group 5",
+  "year": 2023,
+  "section": "North 1",
+  "champion": "Passaic Tech"
+ },
+ {
+  "group": "Group 5",
+  "year": 2023,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 5",
+  "year": 2023,
+  "section": "Central",
+  "champion": "Howell"
+ },
+ {
+  "group": "Group 5",
+  "year": 2023,
+  "section": "South",
+  "champion": "Southern Regional"
+ },
+ {
+  "group": "Group 5",
+  "year": 2024,
+  "section": "North 1",
+  "champion": "Clifton"
+ },
+ {
+  "group": "Group 5",
+  "year": 2024,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 5",
+  "year": 2024,
+  "section": "Central",
+  "champion": "Hunterdon Central"
+ },
+ {
+  "group": "Group 5",
+  "year": 2024,
+  "section": "South",
+  "champion": "Southern Regional"
+ },
+ {
+  "group": "Group 5",
+  "year": 2025,
+  "section": "North 1",
+  "champion": "Passaic Tech"
+ },
+ {
+  "group": "Group 5",
+  "year": 2025,
+  "section": "North 2",
+  "champion": "Bridgewater-Raritan"
+ },
+ {
+  "group": "Group 5",
+  "year": 2025,
+  "section": "Central",
+  "champion": "Monroe"
+ },
+ {
+  "group": "Group 5",
+  "year": 2025,
+  "section": "South",
+  "champion": "Southern Regional"
+ },
+ {
+  "group": "Group 5",
+  "year": 2026,
+  "section": "North 1",
+  "champion": "Passaic Tech"
+ },
+ {
+  "group": "Group 5",
+  "year": 2026,
+  "section": "North 2",
+  "champion": "Bridgewater-Raritan"
+ },
+ {
+  "group": "Group 5",
+  "year": 2026,
+  "section": "Central",
+  "champion": "Old Bridge"
+ },
+ {
+  "group": "Group 5",
+  "year": 2026,
+  "section": "South",
+  "champion": "Southern Regional"
+ },
+ {
+  "group": "Group 4",
+  "year": 1980,
+  "section": "North 1",
+  "champion": "Hackensack"
+ },
+ {
+  "group": "Group 4",
+  "year": 1980,
+  "section": "North 2",
+  "champion": "Westfield"
+ },
+ {
+  "group": "Group 4",
+  "year": 1980,
+  "section": "Central",
+  "champion": "Hunterdon Central"
+ },
+ {
+  "group": "Group 4",
+  "year": 1980,
+  "section": "South",
+  "champion": "Pemberton"
+ },
+ {
+  "group": "Group 4",
+  "year": 1981,
+  "section": "North 1",
+  "champion": "Passaic Valley"
+ },
+ {
+  "group": "Group 4",
+  "year": 1981,
+  "section": "North 2",
+  "champion": "West Essex"
+ },
+ {
+  "group": "Group 4",
+  "year": 1981,
+  "section": "Central",
+  "champion": "Hunterdon Central"
+ },
+ {
+  "group": "Group 4",
+  "year": 1981,
+  "section": "South",
+  "champion": "Highland"
+ },
+ {
+  "group": "Group 4",
+  "year": 1982,
+  "section": "North 1",
+  "champion": "Paramus"
+ },
+ {
+  "group": "Group 4",
+  "year": 1982,
+  "section": "North 2",
+  "champion": "West Essex"
+ },
+ {
+  "group": "Group 4",
+  "year": 1982,
+  "section": "Central",
+  "champion": "Hunterdon Central"
+ },
+ {
+  "group": "Group 4",
+  "year": 1982,
+  "section": "South",
+  "champion": "Highland"
+ },
+ {
+  "group": "Group 4",
+  "year": 1983,
+  "section": "North 1",
+  "champion": "North Bergen"
+ },
+ {
+  "group": "Group 4",
+  "year": 1983,
+  "section": "North 2",
+  "champion": "Roxbury"
+ },
+ {
+  "group": "Group 4",
+  "year": 1983,
+  "section": "Central",
+  "champion": "Hunterdon Central"
+ },
+ {
+  "group": "Group 4",
+  "year": 1983,
+  "section": "South",
+  "champion": "Highland"
+ },
+ {
+  "group": "Group 4",
+  "year": 1984,
+  "section": "North 1",
+  "champion": "Clifton"
+ },
+ {
+  "group": "Group 4",
+  "year": 1984,
+  "section": "North 2",
+  "champion": "West Essex"
+ },
+ {
+  "group": "Group 4",
+  "year": 1984,
+  "section": "Central",
+  "champion": "Hunterdon Central"
+ },
+ {
+  "group": "Group 4",
+  "year": 1984,
+  "section": "South",
+  "champion": "Highland"
+ },
+ {
+  "group": "Group 4",
+  "year": 1985,
+  "section": "North 1",
+  "champion": "Paramus"
+ },
+ {
+  "group": "Group 4",
+  "year": 1985,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 4",
+  "year": 1985,
+  "section": "Central",
+  "champion": "East Brunswick"
+ },
+ {
+  "group": "Group 4",
+  "year": 1985,
+  "section": "South",
+  "champion": "Highland"
+ },
+ {
+  "group": "Group 4",
+  "year": 1986,
+  "section": "North 1",
+  "champion": "Clifton"
+ },
+ {
+  "group": "Group 4",
+  "year": 1986,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 4",
+  "year": 1986,
+  "section": "Central",
+  "champion": "Manalapan"
+ },
+ {
+  "group": "Group 4",
+  "year": 1986,
+  "section": "South",
+  "champion": "Lenape"
+ },
+ {
+  "group": "Group 4",
+  "year": 1987,
+  "section": "North 1",
+  "champion": "Fair Lawn"
+ },
+ {
+  "group": "Group 4",
+  "year": 1987,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 4",
+  "year": 1987,
+  "section": "Central",
+  "champion": "Hunterdon Central"
+ },
+ {
+  "group": "Group 4",
+  "year": 1987,
+  "section": "South",
+  "champion": "Lenape"
+ },
+ {
+  "group": "Group 4",
+  "year": 1988,
+  "section": "North 1",
+  "champion": "Fair Lawn"
+ },
+ {
+  "group": "Group 4",
+  "year": 1988,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 4",
+  "year": 1988,
+  "section": "Central",
+  "champion": "Hunterdon Central"
+ },
+ {
+  "group": "Group 4",
+  "year": 1988,
+  "section": "South",
+  "champion": "Vineland"
+ },
+ {
+  "group": "Group 4",
+  "year": 1989,
+  "section": "North 1",
+  "champion": "Fair Lawn"
+ },
+ {
+  "group": "Group 4",
+  "year": 1989,
+  "section": "North 2",
+  "champion": "Columbia"
+ },
+ {
+  "group": "Group 4",
+  "year": 1989,
+  "section": "Central",
+  "champion": "Hunterdon Central"
+ },
+ {
+  "group": "Group 4",
+  "year": 1989,
+  "section": "South",
+  "champion": "Lenape"
+ },
+ {
+  "group": "Group 4",
+  "year": 1990,
+  "section": "North 1",
+  "champion": "Fair Lawn"
+ },
+ {
+  "group": "Group 4",
+  "year": 1990,
+  "section": "North 2",
+  "champion": "Westfield"
+ },
+ {
+  "group": "Group 4",
+  "year": 1990,
+  "section": "Central",
+  "champion": "Madison Central"
+ },
+ {
+  "group": "Group 4",
+  "year": 1990,
+  "section": "South",
+  "champion": "Toms River North"
+ },
+ {
+  "group": "Group 4",
+  "year": 1991,
+  "section": "North 1",
+  "champion": "North Bergen"
+ },
+ {
+  "group": "Group 4",
+  "year": 1991,
+  "section": "North 2",
+  "champion": "Randolph"
+ },
+ {
+  "group": "Group 4",
+  "year": 1991,
+  "section": "Central",
+  "champion": "Manalapan"
+ },
+ {
+  "group": "Group 4",
+  "year": 1991,
+  "section": "South",
+  "champion": "Highland"
+ },
+ {
+  "group": "Group 4",
+  "year": 1992,
+  "section": "North 1",
+  "champion": "Fair Lawn"
+ },
+ {
+  "group": "Group 4",
+  "year": 1992,
+  "section": "North 2",
+  "champion": "Randolph"
+ },
+ {
+  "group": "Group 4",
+  "year": 1992,
+  "section": "Central",
+  "champion": "Manalapan"
+ },
+ {
+  "group": "Group 4",
+  "year": 1992,
+  "section": "South",
+  "champion": "Highland"
+ },
+ {
+  "group": "Group 4",
+  "year": 1993,
+  "section": "North 1",
+  "champion": "North Bergen"
+ },
+ {
+  "group": "Group 4",
+  "year": 1993,
+  "section": "North 2",
+  "champion": "Randolph"
+ },
+ {
+  "group": "Group 4",
+  "year": 1993,
+  "section": "Central",
+  "champion": "Hunterdon Central"
+ },
+ {
+  "group": "Group 4",
+  "year": 1993,
+  "section": "South",
+  "champion": "Highland"
+ },
+ {
+  "group": "Group 4",
+  "year": 1994,
+  "section": "North 1",
+  "champion": "Passaic Tech"
+ },
+ {
+  "group": "Group 4",
+  "year": 1994,
+  "section": "North 2",
+  "champion": "Randolph"
+ },
+ {
+  "group": "Group 4",
+  "year": 1994,
+  "section": "Central",
+  "champion": "Hunterdon Central"
+ },
+ {
+  "group": "Group 4",
+  "year": 1994,
+  "section": "South",
+  "champion": "Highland"
+ },
+ {
+  "group": "Group 4",
+  "year": 1995,
+  "section": "North 1",
+  "champion": "Vernon"
+ },
+ {
+  "group": "Group 4",
+  "year": 1995,
+  "section": "North 2",
+  "champion": "Randolph"
+ },
+ {
+  "group": "Group 4",
+  "year": 1995,
+  "section": "Central",
+  "champion": "Hunterdon Central"
+ },
+ {
+  "group": "Group 4",
+  "year": 1995,
+  "section": "South",
+  "champion": "Highland"
+ },
+ {
+  "group": "Group 4",
+  "year": 1996,
+  "section": "North 1",
+  "champion": "West Milford"
+ },
+ {
+  "group": "Group 4",
+  "year": 1996,
+  "section": "North 2",
+  "champion": "Roxbury"
+ },
+ {
+  "group": "Group 4",
+  "year": 1996,
+  "section": "Central",
+  "champion": "Middletown North"
+ },
+ {
+  "group": "Group 4",
+  "year": 1996,
+  "section": "South",
+  "champion": "Highland"
+ },
+ {
+  "group": "Group 4",
+  "year": 1997,
+  "section": "North 1",
+  "champion": "West Milford"
+ },
+ {
+  "group": "Group 4",
+  "year": 1997,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 4",
+  "year": 1997,
+  "section": "Central",
+  "champion": "Hunterdon Central"
+ },
+ {
+  "group": "Group 4",
+  "year": 1997,
+  "section": "South",
+  "champion": "Southern Regional"
+ },
+ {
+  "group": "Group 4",
+  "year": 1998,
+  "section": "North 1",
+  "champion": "Paramus"
+ },
+ {
+  "group": "Group 4",
+  "year": 1998,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 4",
+  "year": 1998,
+  "section": "Central",
+  "champion": "Hunterdon Central"
+ },
+ {
+  "group": "Group 4",
+  "year": 1998,
+  "section": "South",
+  "champion": "Washington Twp."
+ },
+ {
+  "group": "Group 4",
+  "year": 1999,
+  "section": "North 1",
+  "champion": "Paramus"
+ },
+ {
+  "group": "Group 4",
+  "year": 1999,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 4",
+  "year": 1999,
+  "section": "Central",
+  "champion": "Hunterdon Central"
+ },
+ {
+  "group": "Group 4",
+  "year": 1999,
+  "section": "South",
+  "champion": "Absegami"
+ },
+ {
+  "group": "Group 4",
+  "year": 2000,
+  "section": "North 1",
+  "champion": "Fair Lawn"
+ },
+ {
+  "group": "Group 4",
+  "year": 2000,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 4",
+  "year": 2000,
+  "section": "Central",
+  "champion": "Hunterdon Central"
+ },
+ {
+  "group": "Group 4",
+  "year": 2000,
+  "section": "South",
+  "champion": "Washington Twp."
+ },
+ {
+  "group": "Group 4",
+  "year": 2001,
+  "section": "North 1",
+  "champion": "Fair Lawn"
+ },
+ {
+  "group": "Group 4",
+  "year": 2001,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 4",
+  "year": 2001,
+  "section": "Central",
+  "champion": "Old Bridge"
+ },
+ {
+  "group": "Group 4",
+  "year": 2001,
+  "section": "South",
+  "champion": "Absegami"
+ },
+ {
+  "group": "Group 4",
+  "year": 2002,
+  "section": "North 1",
+  "champion": "Vernon"
+ },
+ {
+  "group": "Group 4",
+  "year": 2002,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 4",
+  "year": 2002,
+  "section": "Central",
+  "champion": "Old Bridge"
+ },
+ {
+  "group": "Group 4",
+  "year": 2002,
+  "section": "South",
+  "champion": "Absegami"
+ },
+ {
+  "group": "Group 4",
+  "year": 2003,
+  "section": "North 1",
+  "champion": "West Milford"
+ },
+ {
+  "group": "Group 4",
+  "year": 2003,
+  "section": "North 2",
+  "champion": "Livingston"
+ },
+ {
+  "group": "Group 4",
+  "year": 2003,
+  "section": "Central",
+  "champion": "Hunterdon Central"
+ },
+ {
+  "group": "Group 4",
+  "year": 2003,
+  "section": "South",
+  "champion": "Absegami"
+ },
+ {
+  "group": "Group 4",
+  "year": 2004,
+  "section": "North 1",
+  "champion": "Randolph"
+ },
+ {
+  "group": "Group 4",
+  "year": 2004,
+  "section": "North 2",
+  "champion": "J.P. Stevens"
+ },
+ {
+  "group": "Group 4",
+  "year": 2004,
+  "section": "Central",
+  "champion": "Jackson Memorial"
+ },
+ {
+  "group": "Group 4",
+  "year": 2004,
+  "section": "South",
+  "champion": "Absegami"
+ },
+ {
+  "group": "Group 4",
+  "year": 2005,
+  "section": "North 1",
+  "champion": "Randolph"
+ },
+ {
+  "group": "Group 4",
+  "year": 2005,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 4",
+  "year": 2005,
+  "section": "Central",
+  "champion": "Jackson Memorial"
+ },
+ {
+  "group": "Group 4",
+  "year": 2005,
+  "section": "South",
+  "champion": "Southern Regional"
+ },
+ {
+  "group": "Group 4",
+  "year": 2006,
+  "section": "North 1",
+  "champion": "Morris Knolls"
+ },
+ {
+  "group": "Group 4",
+  "year": 2006,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 4",
+  "year": 2006,
+  "section": "Central",
+  "champion": "Jackson Memorial"
+ },
+ {
+  "group": "Group 4",
+  "year": 2006,
+  "section": "South",
+  "champion": "Southern Regional"
+ },
+ {
+  "group": "Group 4",
+  "year": 2007,
+  "section": "North 1",
+  "champion": "Bloomfield"
+ },
+ {
+  "group": "Group 4",
+  "year": 2007,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 4",
+  "year": 2007,
+  "section": "Central",
+  "champion": "Jackson Memorial"
+ },
+ {
+  "group": "Group 4",
+  "year": 2007,
+  "section": "South",
+  "champion": "Southern Regional"
+ },
+ {
+  "group": "Group 4",
+  "year": 2008,
+  "section": "North 1",
+  "champion": "Randolph"
+ },
+ {
+  "group": "Group 4",
+  "year": 2008,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 4",
+  "year": 2008,
+  "section": "Central",
+  "champion": "Brick Memorial"
+ },
+ {
+  "group": "Group 4",
+  "year": 2008,
+  "section": "South",
+  "champion": "Southern Regional"
+ },
+ {
+  "group": "Group 4",
+  "year": 2009,
+  "section": "North 1",
+  "champion": "Randolph"
+ },
+ {
+  "group": "Group 4",
+  "year": 2009,
+  "section": "North 2",
+  "champion": "North Hunterdon"
+ },
+ {
+  "group": "Group 4",
+  "year": 2009,
+  "section": "Central",
+  "champion": "Brick Memorial"
+ },
+ {
+  "group": "Group 4",
+  "year": 2009,
+  "section": "South",
+  "champion": "Southern Regional"
+ },
+ {
+  "group": "Group 4",
+  "year": 2010,
+  "section": "North 1",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 4",
+  "year": 2010,
+  "section": "North 2",
+  "champion": "Hunterdon Central"
+ },
+ {
+  "group": "Group 4",
+  "year": 2010,
+  "section": "Central",
+  "champion": "Jackson Memorial"
+ },
+ {
+  "group": "Group 4",
+  "year": 2010,
+  "section": "South",
+  "champion": "Washington Twp"
+ },
+ {
+  "group": "Group 4",
+  "year": 2011,
+  "section": "North 1",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 4",
+  "year": 2011,
+  "section": "North 2",
+  "champion": "Hunterdon Central"
+ },
+ {
+  "group": "Group 4",
+  "year": 2011,
+  "section": "Central",
+  "champion": "Jackson Memorial"
+ },
+ {
+  "group": "Group 4",
+  "year": 2011,
+  "section": "South",
+  "champion": "Southern Regional"
+ },
+ {
+  "group": "Group 4",
+  "year": 2012,
+  "section": "North 1",
+  "champion": "West Orange"
+ },
+ {
+  "group": "Group 4",
+  "year": 2012,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 4",
+  "year": 2012,
+  "section": "Central",
+  "champion": "Brick Memorial"
+ },
+ {
+  "group": "Group 4",
+  "year": 2012,
+  "section": "South",
+  "champion": "Southern Regional"
+ },
+ {
+  "group": "Group 4",
+  "year": 2013,
+  "section": "North 1",
+  "champion": "Hackensack"
+ },
+ {
+  "group": "Group 4",
+  "year": 2013,
+  "section": "North 2",
+  "champion": "Hunterdon Central"
+ },
+ {
+  "group": "Group 4",
+  "year": 2013,
+  "section": "Central",
+  "champion": "Brick Memorial"
+ },
+ {
+  "group": "Group 4",
+  "year": 2013,
+  "section": "South",
+  "champion": "Southern Regional"
+ },
+ {
+  "group": "Group 4",
+  "year": 2014,
+  "section": "North 1",
+  "champion": "Clifton"
+ },
+ {
+  "group": "Group 4",
+  "year": 2014,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 4",
+  "year": 2014,
+  "section": "Central",
+  "champion": "Howell"
+ },
+ {
+  "group": "Group 4",
+  "year": 2014,
+  "section": "South",
+  "champion": "Southern Regional"
+ },
+ {
+  "group": "Group 4",
+  "year": 2015,
+  "section": "North 1",
+  "champion": "Roxbury"
+ },
+ {
+  "group": "Group 4",
+  "year": 2015,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 4",
+  "year": 2015,
+  "section": "Central",
+  "champion": "Jackson Memorial"
+ },
+ {
+  "group": "Group 4",
+  "year": 2015,
+  "section": "South",
+  "champion": "Clearview"
+ },
+ {
+  "group": "Group 4",
+  "year": 2016,
+  "section": "North 1",
+  "champion": "Roxbury"
+ },
+ {
+  "group": "Group 4",
+  "year": 2016,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 4",
+  "year": 2016,
+  "section": "Central",
+  "champion": "Jackson Memorial"
+ },
+ {
+  "group": "Group 4",
+  "year": 2016,
+  "section": "South",
+  "champion": "Clearview"
+ },
+ {
+  "group": "Group 4",
+  "year": 2017,
+  "section": "North 1",
+  "champion": "Mendham"
+ },
+ {
+  "group": "Group 4",
+  "year": 2017,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 4",
+  "year": 2017,
+  "section": "Central",
+  "champion": "Jackson Memorial"
+ },
+ {
+  "group": "Group 4",
+  "year": 2017,
+  "section": "South",
+  "champion": "Kingsway"
+ },
+ {
+  "group": "Group 4",
+  "year": 2018,
+  "section": "North 1",
+  "champion": "Roxbury"
+ },
+ {
+  "group": "Group 4",
+  "year": 2018,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 4",
+  "year": 2018,
+  "section": "Central",
+  "champion": "Long Branch"
+ },
+ {
+  "group": "Group 4",
+  "year": 2018,
+  "section": "South",
+  "champion": "Highland"
+ },
+ {
+  "group": "Group 4",
+  "year": 2019,
+  "section": "North 1",
+  "champion": "Wayne Valley"
+ },
+ {
+  "group": "Group 4",
+  "year": 2019,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 4",
+  "year": 2019,
+  "section": "Central",
+  "champion": "Jackson Memorial"
+ },
+ {
+  "group": "Group 4",
+  "year": 2019,
+  "section": "South",
+  "champion": "Kingsway"
+ },
+ {
+  "group": "Group 4",
+  "year": 2020,
+  "section": "North 1",
+  "champion": "Mount Olive"
+ },
+ {
+  "group": "Group 4",
+  "year": 2020,
+  "section": "North 2",
+  "champion": "North Hunterdon"
+ },
+ {
+  "group": "Group 4",
+  "year": 2020,
+  "section": "Central",
+  "champion": "Brick Memorial"
+ },
+ {
+  "group": "Group 4",
+  "year": 2020,
+  "section": "South",
+  "champion": "Kingsway"
+ },
+ {
+  "group": "Group 4",
+  "year": 2022,
+  "section": "North 1",
+  "champion": "Mount Olive"
+ },
+ {
+  "group": "Group 4",
+  "year": 2022,
+  "section": "North 2",
+  "champion": "North Hunterdon"
+ },
+ {
+  "group": "Group 4",
+  "year": 2022,
+  "section": "Central",
+  "champion": "Brick Memorial"
+ },
+ {
+  "group": "Group 4",
+  "year": 2022,
+  "section": "South",
+  "champion": "Shawnee"
+ },
+ {
+  "group": "Group 4",
+  "year": 2023,
+  "section": "North 1",
+  "champion": "Mount Olive"
+ },
+ {
+  "group": "Group 4",
+  "year": 2023,
+  "section": "North 2",
+  "champion": "North Hunterdon"
+ },
+ {
+  "group": "Group 4",
+  "year": 2023,
+  "section": "Central",
+  "champion": "Jackson Memorial"
+ },
+ {
+  "group": "Group 4",
+  "year": 2023,
+  "section": "South",
+  "champion": "Shawnee"
+ },
+ {
+  "group": "Group 4",
+  "year": 2024,
+  "section": "North 1",
+  "champion": "Mount Olive"
+ },
+ {
+  "group": "Group 4",
+  "year": 2024,
+  "section": "North 2",
+  "champion": "Ridge"
+ },
+ {
+  "group": "Group 4",
+  "year": 2024,
+  "section": "Central",
+  "champion": "Brick Memorial"
+ },
+ {
+  "group": "Group 4",
+  "year": 2024,
+  "section": "South",
+  "champion": "Northern Burlington"
+ },
+ {
+  "group": "Group 4",
+  "year": 2025,
+  "section": "North 1",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 4",
+  "year": 2025,
+  "section": "North 2",
+  "champion": "North Hunterdon"
+ },
+ {
+  "group": "Group 4",
+  "year": 2025,
+  "section": "Central",
+  "champion": "Long Branch"
+ },
+ {
+  "group": "Group 4",
+  "year": 2025,
+  "section": "South",
+  "champion": "Toms River South"
+ },
+ {
+  "group": "Group 4",
+  "year": 2026,
+  "section": "North 1",
+  "champion": "Mount Olive"
+ },
+ {
+  "group": "Group 4",
+  "year": 2026,
+  "section": "North 2",
+  "champion": "North Hunterdon"
+ },
+ {
+  "group": "Group 4",
+  "year": 2026,
+  "section": "Central",
+  "champion": "Colts Neck"
+ },
+ {
+  "group": "Group 4",
+  "year": 2026,
+  "section": "South",
+  "champion": "Toms River East"
+ },
+ {
+  "group": "Group 3",
+  "year": 1980,
+  "section": "North 1",
+  "champion": "Pascack Hills"
+ },
+ {
+  "group": "Group 3",
+  "year": 1980,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 3",
+  "year": 1980,
+  "section": "Central",
+  "champion": "North Hunterdon"
+ },
+ {
+  "group": "Group 3",
+  "year": 1980,
+  "section": "South",
+  "champion": "Overbrook"
+ },
+ {
+  "group": "Group 3",
+  "year": 1981,
+  "section": "North 1",
+  "champion": "Pascack Hills"
+ },
+ {
+  "group": "Group 3",
+  "year": 1981,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 3",
+  "year": 1981,
+  "section": "Central",
+  "champion": "Bridgewater West"
+ },
+ {
+  "group": "Group 3",
+  "year": 1981,
+  "section": "South",
+  "champion": "Overbrook"
+ },
+ {
+  "group": "Group 3",
+  "year": 1982,
+  "section": "North 1",
+  "champion": "Pascack Hills"
+ },
+ {
+  "group": "Group 3",
+  "year": 1982,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 3",
+  "year": 1982,
+  "section": "Central",
+  "champion": "North Hunterdon"
+ },
+ {
+  "group": "Group 3",
+  "year": 1982,
+  "section": "South",
+  "champion": "Lower Cape May"
+ },
+ {
+  "group": "Group 3",
+  "year": 1983,
+  "section": "North 1",
+  "champion": "Bergenfield"
+ },
+ {
+  "group": "Group 3",
+  "year": 1983,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 3",
+  "year": 1983,
+  "section": "Central",
+  "champion": "Voorhees"
+ },
+ {
+  "group": "Group 3",
+  "year": 1983,
+  "section": "South",
+  "champion": "Eastern"
+ },
+ {
+  "group": "Group 3",
+  "year": 1984,
+  "section": "North 1",
+  "champion": "Pascack Hills"
+ },
+ {
+  "group": "Group 3",
+  "year": 1984,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 3",
+  "year": 1984,
+  "section": "Central",
+  "champion": "North Hunterdon"
+ },
+ {
+  "group": "Group 3",
+  "year": 1984,
+  "section": "South",
+  "champion": "Brick Memorial"
+ },
+ {
+  "group": "Group 3",
+  "year": 1985,
+  "section": "North 1",
+  "champion": "River Dell"
+ },
+ {
+  "group": "Group 3",
+  "year": 1985,
+  "section": "North 2",
+  "champion": "Cranford"
+ },
+ {
+  "group": "Group 3",
+  "year": 1985,
+  "section": "Central",
+  "champion": "Voorhees"
+ },
+ {
+  "group": "Group 3",
+  "year": 1985,
+  "section": "South",
+  "champion": "Eastern"
+ },
+ {
+  "group": "Group 3",
+  "year": 1986,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 3",
+  "year": 1986,
+  "section": "North 2",
+  "champion": "Cranford"
+ },
+ {
+  "group": "Group 3",
+  "year": 1986,
+  "section": "Central",
+  "champion": "Voorhees"
+ },
+ {
+  "group": "Group 3",
+  "year": 1986,
+  "section": "South",
+  "champion": "Brick Memorial"
+ },
+ {
+  "group": "Group 3",
+  "year": 1987,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 3",
+  "year": 1987,
+  "section": "North 2",
+  "champion": "Morris Hills"
+ },
+ {
+  "group": "Group 3",
+  "year": 1987,
+  "section": "Central",
+  "champion": "Voorhees"
+ },
+ {
+  "group": "Group 3",
+  "year": 1987,
+  "section": "South",
+  "champion": "Highland"
+ },
+ {
+  "group": "Group 3",
+  "year": 1988,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 3",
+  "year": 1988,
+  "section": "North 2",
+  "champion": "West Morris"
+ },
+ {
+  "group": "Group 3",
+  "year": 1988,
+  "section": "Central",
+  "champion": "Voorhees"
+ },
+ {
+  "group": "Group 3",
+  "year": 1988,
+  "section": "South",
+  "champion": "Brick Memorial"
+ },
+ {
+  "group": "Group 3",
+  "year": 1989,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 3",
+  "year": 1989,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 3",
+  "year": 1989,
+  "section": "Central",
+  "champion": "Voorhees"
+ },
+ {
+  "group": "Group 3",
+  "year": 1989,
+  "section": "South",
+  "champion": "Brick Memorial"
+ },
+ {
+  "group": "Group 3",
+  "year": 1990,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 3",
+  "year": 1990,
+  "section": "North 2",
+  "champion": "Warren Hills"
+ },
+ {
+  "group": "Group 3",
+  "year": 1990,
+  "section": "Central",
+  "champion": "Cedar Ridge"
+ },
+ {
+  "group": "Group 3",
+  "year": 1990,
+  "section": "South",
+  "champion": "Highland"
+ },
+ {
+  "group": "Group 3",
+  "year": 1991,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 3",
+  "year": 1991,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 3",
+  "year": 1991,
+  "section": "Central",
+  "champion": "Voorhees"
+ },
+ {
+  "group": "Group 3",
+  "year": 1991,
+  "section": "South",
+  "champion": "Brick Memorial"
+ },
+ {
+  "group": "Group 3",
+  "year": 1992,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 3",
+  "year": 1992,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 3",
+  "year": 1992,
+  "section": "Central",
+  "champion": "Hamilton North"
+ },
+ {
+  "group": "Group 3",
+  "year": 1992,
+  "section": "South",
+  "champion": "Oakcrest"
+ },
+ {
+  "group": "Group 3",
+  "year": 1993,
+  "section": "North 1",
+  "champion": "Paramus"
+ },
+ {
+  "group": "Group 3",
+  "year": 1993,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 3",
+  "year": 1993,
+  "section": "Central",
+  "champion": "North Hunterdon"
+ },
+ {
+  "group": "Group 3",
+  "year": 1993,
+  "section": "South",
+  "champion": "Oakcrest"
+ },
+ {
+  "group": "Group 3",
+  "year": 1994,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 3",
+  "year": 1994,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 3",
+  "year": 1994,
+  "section": "Central",
+  "champion": "North Hunterdon"
+ },
+ {
+  "group": "Group 3",
+  "year": 1994,
+  "section": "South",
+  "champion": "Brick Memorial"
+ },
+ {
+  "group": "Group 3",
+  "year": 1995,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 3",
+  "year": 1995,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 3",
+  "year": 1995,
+  "section": "Central",
+  "champion": "North Hunterdon"
+ },
+ {
+  "group": "Group 3",
+  "year": 1995,
+  "section": "South",
+  "champion": "Brick Memorial"
+ },
+ {
+  "group": "Group 3",
+  "year": 1996,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 3",
+  "year": 1996,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 3",
+  "year": 1996,
+  "section": "Central",
+  "champion": "North Hunterdon"
+ },
+ {
+  "group": "Group 3",
+  "year": 1996,
+  "section": "South",
+  "champion": "Brick Memorial"
+ },
+ {
+  "group": "Group 3",
+  "year": 1997,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 3",
+  "year": 1997,
+  "section": "North 2",
+  "champion": "Warren Hills"
+ },
+ {
+  "group": "Group 3",
+  "year": 1997,
+  "section": "Central",
+  "champion": "North Hunterdon"
+ },
+ {
+  "group": "Group 3",
+  "year": 1997,
+  "section": "South",
+  "champion": "Absegami"
+ },
+ {
+  "group": "Group 3",
+  "year": 1998,
+  "section": "North 1",
+  "champion": "Lenape Valley"
+ },
+ {
+  "group": "Group 3",
+  "year": 1998,
+  "section": "North 2",
+  "champion": "Warren Hills"
+ },
+ {
+  "group": "Group 3",
+  "year": 1998,
+  "section": "Central",
+  "champion": "South Plainfield"
+ },
+ {
+  "group": "Group 3",
+  "year": 1998,
+  "section": "South",
+  "champion": "Brick Memorial"
+ },
+ {
+  "group": "Group 3",
+  "year": 1999,
+  "section": "North 1",
+  "champion": "Lenape Valley"
+ },
+ {
+  "group": "Group 3",
+  "year": 1999,
+  "section": "North 2",
+  "champion": "Parsippany"
+ },
+ {
+  "group": "Group 3",
+  "year": 1999,
+  "section": "Central",
+  "champion": "North Hunterdon"
+ },
+ {
+  "group": "Group 3",
+  "year": 1999,
+  "section": "South",
+  "champion": "Brick Memorial"
+ },
+ {
+  "group": "Group 3",
+  "year": 2000,
+  "section": "North 1",
+  "champion": "Sparta"
+ },
+ {
+  "group": "Group 3",
+  "year": 2000,
+  "section": "North 2",
+  "champion": "Parsippany"
+ },
+ {
+  "group": "Group 3",
+  "year": 2000,
+  "section": "Central",
+  "champion": "North Hunterdon"
+ },
+ {
+  "group": "Group 3",
+  "year": 2000,
+  "section": "South",
+  "champion": "West Deptford"
+ },
+ {
+  "group": "Group 3",
+  "year": 2001,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 3",
+  "year": 2001,
+  "section": "North 2",
+  "champion": "Rahway"
+ },
+ {
+  "group": "Group 3",
+  "year": 2001,
+  "section": "Central",
+  "champion": "South Plainfield"
+ },
+ {
+  "group": "Group 3",
+  "year": 2001,
+  "section": "South",
+  "champion": "Egg Harbor"
+ },
+ {
+  "group": "Group 3",
+  "year": 2002,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 3",
+  "year": 2002,
+  "section": "North 2",
+  "champion": "Mount Olive"
+ },
+ {
+  "group": "Group 3",
+  "year": 2002,
+  "section": "Central",
+  "champion": "North Hunterdon"
+ },
+ {
+  "group": "Group 3",
+  "year": 2002,
+  "section": "South",
+  "champion": "Delsea"
+ },
+ {
+  "group": "Group 3",
+  "year": 2003,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 3",
+  "year": 2003,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 3",
+  "year": 2003,
+  "section": "Central",
+  "champion": "North Hunterdon"
+ },
+ {
+  "group": "Group 3",
+  "year": 2003,
+  "section": "South",
+  "champion": "Kingsway"
+ },
+ {
+  "group": "Group 3",
+  "year": 2004,
+  "section": "North 1",
+  "champion": "Roxbury"
+ },
+ {
+  "group": "Group 3",
+  "year": 2004,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 3",
+  "year": 2004,
+  "section": "Central",
+  "champion": "Ocean Township"
+ },
+ {
+  "group": "Group 3",
+  "year": 2004,
+  "section": "South",
+  "champion": "Kingsway"
+ },
+ {
+  "group": "Group 3",
+  "year": 2005,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 3",
+  "year": 2005,
+  "section": "North 2",
+  "champion": "South Plainfield"
+ },
+ {
+  "group": "Group 3",
+  "year": 2005,
+  "section": "Central",
+  "champion": "Ocean Township"
+ },
+ {
+  "group": "Group 3",
+  "year": 2005,
+  "section": "South",
+  "champion": "Central Regional"
+ },
+ {
+  "group": "Group 3",
+  "year": 2006,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 3",
+  "year": 2006,
+  "section": "North 2",
+  "champion": "South Plainfield"
+ },
+ {
+  "group": "Group 3",
+  "year": 2006,
+  "section": "Central",
+  "champion": "Ocean Township"
+ },
+ {
+  "group": "Group 3",
+  "year": 2006,
+  "section": "South",
+  "champion": "Central Regional"
+ },
+ {
+  "group": "Group 3",
+  "year": 2007,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 3",
+  "year": 2007,
+  "section": "North 2",
+  "champion": "Warren Hills"
+ },
+ {
+  "group": "Group 3",
+  "year": 2007,
+  "section": "Central",
+  "champion": "Ocean Township"
+ },
+ {
+  "group": "Group 3",
+  "year": 2007,
+  "section": "South",
+  "champion": "Kingsway"
+ },
+ {
+  "group": "Group 3",
+  "year": 2008,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 3",
+  "year": 2008,
+  "section": "North 2",
+  "champion": "Sayreville"
+ },
+ {
+  "group": "Group 3",
+  "year": 2008,
+  "section": "Central",
+  "champion": "Ocean Township"
+ },
+ {
+  "group": "Group 3",
+  "year": 2008,
+  "section": "South",
+  "champion": "Timber Creek"
+ },
+ {
+  "group": "Group 3",
+  "year": 2009,
+  "section": "North 1",
+  "champion": "Montville"
+ },
+ {
+  "group": "Group 3",
+  "year": 2009,
+  "section": "North 2",
+  "champion": "Phillipsburg"
+ },
+ {
+  "group": "Group 3",
+  "year": 2009,
+  "section": "Central",
+  "champion": "Brick Township"
+ },
+ {
+  "group": "Group 3",
+  "year": 2009,
+  "section": "South",
+  "champion": "Hammonton"
+ },
+ {
+  "group": "Group 3",
+  "year": 2010,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 3",
+  "year": 2010,
+  "section": "North 2",
+  "champion": "Passaic Valley"
+ },
+ {
+  "group": "Group 3",
+  "year": 2010,
+  "section": "Central",
+  "champion": "South Plainfield"
+ },
+ {
+  "group": "Group 3",
+  "year": 2010,
+  "section": "South",
+  "champion": "Timber Creek"
+ },
+ {
+  "group": "Group 3",
+  "year": 2011,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 3",
+  "year": 2011,
+  "section": "North 2",
+  "champion": "Roxbury"
+ },
+ {
+  "group": "Group 3",
+  "year": 2011,
+  "section": "Central",
+  "champion": "South Plainfield"
+ },
+ {
+  "group": "Group 3",
+  "year": 2011,
+  "section": "South",
+  "champion": "Timber Creek"
+ },
+ {
+  "group": "Group 3",
+  "year": 2012,
+  "section": "North 1",
+  "champion": "Paramus"
+ },
+ {
+  "group": "Group 3",
+  "year": 2012,
+  "section": "North 2",
+  "champion": "South Plainfield"
+ },
+ {
+  "group": "Group 3",
+  "year": 2012,
+  "section": "Central",
+  "champion": "Ocean Township"
+ },
+ {
+  "group": "Group 3",
+  "year": 2012,
+  "section": "South",
+  "champion": "Timber Creek"
+ },
+ {
+  "group": "Group 3",
+  "year": 2013,
+  "section": "North 1",
+  "champion": "Northern Highlands"
+ },
+ {
+  "group": "Group 3",
+  "year": 2013,
+  "section": "North 2",
+  "champion": "South Plainfield"
+ },
+ {
+  "group": "Group 3",
+  "year": 2013,
+  "section": "Central",
+  "champion": "Brick Township"
+ },
+ {
+  "group": "Group 3",
+  "year": 2013,
+  "section": "South",
+  "champion": "Toms River South"
+ },
+ {
+  "group": "Group 3",
+  "year": 2014,
+  "section": "North 1",
+  "champion": "Wayne Valley"
+ },
+ {
+  "group": "Group 3",
+  "year": 2014,
+  "section": "North 2",
+  "champion": "Roxbury"
+ },
+ {
+  "group": "Group 3",
+  "year": 2014,
+  "section": "Central",
+  "champion": "Brick Township"
+ },
+ {
+  "group": "Group 3",
+  "year": 2014,
+  "section": "South",
+  "champion": "Clearview"
+ },
+ {
+  "group": "Group 3",
+  "year": 2015,
+  "section": "North 1",
+  "champion": "Paramus"
+ },
+ {
+  "group": "Group 3",
+  "year": 2015,
+  "section": "North 2",
+  "champion": "Voorhees"
+ },
+ {
+  "group": "Group 3",
+  "year": 2015,
+  "section": "Central",
+  "champion": "South Plainfield"
+ },
+ {
+  "group": "Group 3",
+  "year": 2015,
+  "section": "South",
+  "champion": "Delsea"
+ },
+ {
+  "group": "Group 3",
+  "year": 2016,
+  "section": "North 1",
+  "champion": "Paramus"
+ },
+ {
+  "group": "Group 3",
+  "year": 2016,
+  "section": "North 2",
+  "champion": "Passaic Valley"
+ },
+ {
+  "group": "Group 3",
+  "year": 2016,
+  "section": "Central",
+  "champion": "South Plainfield"
+ },
+ {
+  "group": "Group 3",
+  "year": 2016,
+  "section": "South",
+  "champion": "Delsea"
+ },
+ {
+  "group": "Group 3",
+  "year": 2017,
+  "section": "North 1",
+  "champion": "Sparta"
+ },
+ {
+  "group": "Group 3",
+  "year": 2017,
+  "section": "North 2",
+  "champion": "Cranford"
+ },
+ {
+  "group": "Group 3",
+  "year": 2017,
+  "section": "Central",
+  "champion": "South Plainfield"
+ },
+ {
+  "group": "Group 3",
+  "year": 2017,
+  "section": "South",
+  "champion": "Delsea"
+ },
+ {
+  "group": "Group 3",
+  "year": 2018,
+  "section": "North 1",
+  "champion": "Pascack Valley"
+ },
+ {
+  "group": "Group 3",
+  "year": 2018,
+  "section": "North 2",
+  "champion": "Voorhees"
+ },
+ {
+  "group": "Group 3",
+  "year": 2018,
+  "section": "Central",
+  "champion": "South Plainfield"
+ },
+ {
+  "group": "Group 3",
+  "year": 2018,
+  "section": "South",
+  "champion": "Delsea"
+ },
+ {
+  "group": "Group 3",
+  "year": 2019,
+  "section": "North 1",
+  "champion": "Montville"
+ },
+ {
+  "group": "Group 3",
+  "year": 2019,
+  "section": "North 2",
+  "champion": "West Essex"
+ },
+ {
+  "group": "Group 3",
+  "year": 2019,
+  "section": "Central",
+  "champion": "Ocean Township"
+ },
+ {
+  "group": "Group 3",
+  "year": 2019,
+  "section": "South",
+  "champion": "Delsea"
+ },
+ {
+  "group": "Group 3",
+  "year": 2020,
+  "section": "North 1",
+  "champion": "Montville"
+ },
+ {
+  "group": "Group 3",
+  "year": 2020,
+  "section": "North 2",
+  "champion": "West Essex"
+ },
+ {
+  "group": "Group 3",
+  "year": 2020,
+  "section": "Central",
+  "champion": "Ocean Township"
+ },
+ {
+  "group": "Group 3",
+  "year": 2020,
+  "section": "South",
+  "champion": "Delsea"
+ },
+ {
+  "group": "Group 3",
+  "year": 2022,
+  "section": "North 1",
+  "champion": "Paramus"
+ },
+ {
+  "group": "Group 3",
+  "year": 2022,
+  "section": "North 2",
+  "champion": "Warren Hills"
+ },
+ {
+  "group": "Group 3",
+  "year": 2022,
+  "section": "Central",
+  "champion": "South Plainfield"
+ },
+ {
+  "group": "Group 3",
+  "year": 2022,
+  "section": "South",
+  "champion": "Delsea"
+ },
+ {
+  "group": "Group 3",
+  "year": 2023,
+  "section": "North 1",
+  "champion": "Old Tappan"
+ },
+ {
+  "group": "Group 3",
+  "year": 2023,
+  "section": "North 2",
+  "champion": "Warren Hills"
+ },
+ {
+  "group": "Group 3",
+  "year": 2023,
+  "section": "Central",
+  "champion": "South Plainfield"
+ },
+ {
+  "group": "Group 3",
+  "year": 2023,
+  "section": "South",
+  "champion": "Delsea"
+ },
+ {
+  "group": "Group 3",
+  "year": 2024,
+  "section": "North 1",
+  "champion": "Wayne Valley"
+ },
+ {
+  "group": "Group 3",
+  "year": 2024,
+  "section": "North 2",
+  "champion": "Cranford"
+ },
+ {
+  "group": "Group 3",
+  "year": 2024,
+  "section": "Central",
+  "champion": "Hopewell Valley"
+ },
+ {
+  "group": "Group 3",
+  "year": 2024,
+  "section": "South",
+  "champion": "Delsea"
+ },
+ {
+  "group": "Group 3",
+  "year": 2025,
+  "section": "North 1",
+  "champion": "Wayne Valley"
+ },
+ {
+  "group": "Group 3",
+  "year": 2025,
+  "section": "North 2",
+  "champion": "Cranford"
+ },
+ {
+  "group": "Group 3",
+  "year": 2025,
+  "section": "Central",
+  "champion": "Brick Memorial"
+ },
+ {
+  "group": "Group 3",
+  "year": 2025,
+  "section": "South",
+  "champion": "Delsea"
+ },
+ {
+  "group": "Group 3",
+  "year": 2026,
+  "section": "North 1",
+  "champion": "Ramapo"
+ },
+ {
+  "group": "Group 3",
+  "year": 2026,
+  "section": "North 2",
+  "champion": "West Essex"
+ },
+ {
+  "group": "Group 3",
+  "year": 2026,
+  "section": "Central",
+  "champion": "Brick Memorial"
+ },
+ {
+  "group": "Group 3",
+  "year": 2026,
+  "section": "South",
+  "champion": "Delsea"
+ },
+ {
+  "group": "Group 2",
+  "year": 1980,
+  "section": "North 1",
+  "champion": "Fort Lee"
+ },
+ {
+  "group": "Group 2",
+  "year": 1980,
+  "section": "North 2",
+  "champion": "Berkeley Heights"
+ },
+ {
+  "group": "Group 2",
+  "year": 1980,
+  "section": "Central",
+  "champion": "Voorhees"
+ },
+ {
+  "group": "Group 2",
+  "year": 1980,
+  "section": "South",
+  "champion": "Haddon Twp."
+ },
+ {
+  "group": "Group 2",
+  "year": 1981,
+  "section": "North 1",
+  "champion": "Saddle Brook"
+ },
+ {
+  "group": "Group 2",
+  "year": 1981,
+  "section": "North 2",
+  "champion": "Berkeley Heights"
+ },
+ {
+  "group": "Group 2",
+  "year": 1981,
+  "section": "Central",
+  "champion": "Voorhees"
+ },
+ {
+  "group": "Group 2",
+  "year": 1981,
+  "section": "South",
+  "champion": "Penns Grove"
+ },
+ {
+  "group": "Group 2",
+  "year": 1982,
+  "section": "North 1",
+  "champion": "Elmwood Park"
+ },
+ {
+  "group": "Group 2",
+  "year": 1982,
+  "section": "North 2",
+  "champion": "Warren Hills"
+ },
+ {
+  "group": "Group 2",
+  "year": 1982,
+  "section": "Central",
+  "champion": "Voorhees"
+ },
+ {
+  "group": "Group 2",
+  "year": 1982,
+  "section": "South",
+  "champion": "Pennsville"
+ },
+ {
+  "group": "Group 2",
+  "year": 1983,
+  "section": "North 1",
+  "champion": "Sparta"
+ },
+ {
+  "group": "Group 2",
+  "year": 1983,
+  "section": "North 2",
+  "champion": "Caldwell"
+ },
+ {
+  "group": "Group 2",
+  "year": 1983,
+  "section": "Central",
+  "champion": "Delaware Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 1983,
+  "section": "South",
+  "champion": "Pennsville"
+ },
+ {
+  "group": "Group 2",
+  "year": 1984,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 2",
+  "year": 1984,
+  "section": "North 2",
+  "champion": "Pequannock"
+ },
+ {
+  "group": "Group 2",
+  "year": 1984,
+  "section": "Central",
+  "champion": "Delaware Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 1984,
+  "section": "South",
+  "champion": "Delsea"
+ },
+ {
+  "group": "Group 2",
+  "year": 1985,
+  "section": "North 1",
+  "champion": "Lenape Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 1985,
+  "section": "North 2",
+  "champion": "Caldwell"
+ },
+ {
+  "group": "Group 2",
+  "year": 1985,
+  "section": "Central",
+  "champion": "Delaware Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 1985,
+  "section": "South",
+  "champion": "Delsea"
+ },
+ {
+  "group": "Group 2",
+  "year": 1986,
+  "section": "North 1",
+  "champion": "Elmwood Park"
+ },
+ {
+  "group": "Group 2",
+  "year": 1986,
+  "section": "North 2",
+  "champion": "Caldwell"
+ },
+ {
+  "group": "Group 2",
+  "year": 1986,
+  "section": "Central",
+  "champion": "Ridge"
+ },
+ {
+  "group": "Group 2",
+  "year": 1986,
+  "section": "South",
+  "champion": "Delran"
+ },
+ {
+  "group": "Group 2",
+  "year": 1987,
+  "section": "North 1",
+  "champion": "Wallkill Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 1987,
+  "section": "North 2",
+  "champion": "Millburn"
+ },
+ {
+  "group": "Group 2",
+  "year": 1987,
+  "section": "Central",
+  "champion": "Delaware Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 1987,
+  "section": "South",
+  "champion": "Haddon Twp"
+ },
+ {
+  "group": "Group 2",
+  "year": 1988,
+  "section": "North 1",
+  "champion": "Wallkill Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 1988,
+  "section": "North 2",
+  "champion": "Dover"
+ },
+ {
+  "group": "Group 2",
+  "year": 1988,
+  "section": "Central",
+  "champion": "Delaware Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 1988,
+  "section": "South",
+  "champion": "Pennsville"
+ },
+ {
+  "group": "Group 2",
+  "year": 1989,
+  "section": "North 1",
+  "champion": "Wallkill Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 1989,
+  "section": "North 2",
+  "champion": "Rahway"
+ },
+ {
+  "group": "Group 2",
+  "year": 1989,
+  "section": "Central",
+  "champion": "Delaware Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 1989,
+  "section": "South",
+  "champion": "Delsea"
+ },
+ {
+  "group": "Group 2",
+  "year": 1990,
+  "section": "North 1",
+  "champion": "Garfield"
+ },
+ {
+  "group": "Group 2",
+  "year": 1990,
+  "section": "North 2",
+  "champion": "Caldwell"
+ },
+ {
+  "group": "Group 2",
+  "year": 1990,
+  "section": "Central",
+  "champion": "Delaware Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 1990,
+  "section": "South",
+  "champion": "Delsea"
+ },
+ {
+  "group": "Group 2",
+  "year": 1991,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 2",
+  "year": 1991,
+  "section": "North 2",
+  "champion": "Jefferson"
+ },
+ {
+  "group": "Group 2",
+  "year": 1991,
+  "section": "Central",
+  "champion": "Somerville"
+ },
+ {
+  "group": "Group 2",
+  "year": 1991,
+  "section": "South",
+  "champion": "Delsea"
+ },
+ {
+  "group": "Group 2",
+  "year": 1992,
+  "section": "North 1",
+  "champion": "Garfield"
+ },
+ {
+  "group": "Group 2",
+  "year": 1992,
+  "section": "North 2",
+  "champion": "Jefferson"
+ },
+ {
+  "group": "Group 2",
+  "year": 1992,
+  "section": "Central",
+  "champion": "Somerville"
+ },
+ {
+  "group": "Group 2",
+  "year": 1992,
+  "section": "South",
+  "champion": "Delran"
+ },
+ {
+  "group": "Group 2",
+  "year": 1993,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 2",
+  "year": 1993,
+  "section": "North 2",
+  "champion": "Jefferson"
+ },
+ {
+  "group": "Group 2",
+  "year": 1993,
+  "section": "Central",
+  "champion": "Delaware Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 1993,
+  "section": "South",
+  "champion": "Pennsville"
+ },
+ {
+  "group": "Group 2",
+  "year": 1994,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 2",
+  "year": 1994,
+  "section": "North 2",
+  "champion": "Jefferson"
+ },
+ {
+  "group": "Group 2",
+  "year": 1994,
+  "section": "Central",
+  "champion": "Delaware Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 1994,
+  "section": "South",
+  "champion": "Buena"
+ },
+ {
+  "group": "Group 2",
+  "year": 1995,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 2",
+  "year": 1995,
+  "section": "North 2",
+  "champion": "Jefferson"
+ },
+ {
+  "group": "Group 2",
+  "year": 1995,
+  "section": "Central",
+  "champion": "Voorhees"
+ },
+ {
+  "group": "Group 2",
+  "year": 1995,
+  "section": "South",
+  "champion": "Buena"
+ },
+ {
+  "group": "Group 2",
+  "year": 1996,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 2",
+  "year": 1996,
+  "section": "North 2",
+  "champion": "Jefferson"
+ },
+ {
+  "group": "Group 2",
+  "year": 1996,
+  "section": "Central",
+  "champion": "Voorhees"
+ },
+ {
+  "group": "Group 2",
+  "year": 1996,
+  "section": "South",
+  "champion": "West Deptford"
+ },
+ {
+  "group": "Group 2",
+  "year": 1997,
+  "section": "North 1",
+  "champion": "Hopatcong"
+ },
+ {
+  "group": "Group 2",
+  "year": 1997,
+  "section": "North 2",
+  "champion": "Hanover Park"
+ },
+ {
+  "group": "Group 2",
+  "year": 1997,
+  "section": "Central",
+  "champion": "South Plainfield"
+ },
+ {
+  "group": "Group 2",
+  "year": 1997,
+  "section": "South",
+  "champion": "Kingsway"
+ },
+ {
+  "group": "Group 2",
+  "year": 1998,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 2",
+  "year": 1998,
+  "section": "North 2",
+  "champion": "Hanover Park"
+ },
+ {
+  "group": "Group 2",
+  "year": 1998,
+  "section": "Central",
+  "champion": "Voorhees"
+ },
+ {
+  "group": "Group 2",
+  "year": 1998,
+  "section": "South",
+  "champion": "Kingsway"
+ },
+ {
+  "group": "Group 2",
+  "year": 1999,
+  "section": "North 1",
+  "champion": "Pascack Hills"
+ },
+ {
+  "group": "Group 2",
+  "year": 1999,
+  "section": "North 2",
+  "champion": "Rahway"
+ },
+ {
+  "group": "Group 2",
+  "year": 1999,
+  "section": "Central",
+  "champion": "Delaware Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 1999,
+  "section": "South",
+  "champion": "Sterling"
+ },
+ {
+  "group": "Group 2",
+  "year": 2000,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 2",
+  "year": 2000,
+  "section": "North 2",
+  "champion": "Jefferson"
+ },
+ {
+  "group": "Group 2",
+  "year": 2000,
+  "section": "Central",
+  "champion": "South Plainfield"
+ },
+ {
+  "group": "Group 2",
+  "year": 2000,
+  "section": "South",
+  "champion": "Sterling"
+ },
+ {
+  "group": "Group 2",
+  "year": 2001,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 2",
+  "year": 2001,
+  "section": "North 2",
+  "champion": "Pequannock"
+ },
+ {
+  "group": "Group 2",
+  "year": 2001,
+  "section": "Central",
+  "champion": "Delaware Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 2001,
+  "section": "South",
+  "champion": "Kingsway"
+ },
+ {
+  "group": "Group 2",
+  "year": 2002,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 2",
+  "year": 2002,
+  "section": "North 2",
+  "champion": "Hanover Park"
+ },
+ {
+  "group": "Group 2",
+  "year": 2002,
+  "section": "Central",
+  "champion": "Delaware Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 2002,
+  "section": "South",
+  "champion": "Kingsway"
+ },
+ {
+  "group": "Group 2",
+  "year": 2003,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 2",
+  "year": 2003,
+  "section": "North 2",
+  "champion": "Pequannock"
+ },
+ {
+  "group": "Group 2",
+  "year": 2003,
+  "section": "Central",
+  "champion": "Somerville"
+ },
+ {
+  "group": "Group 2",
+  "year": 2003,
+  "section": "South",
+  "champion": "Buena"
+ },
+ {
+  "group": "Group 2",
+  "year": 2004,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 2",
+  "year": 2004,
+  "section": "North 2",
+  "champion": "Voorhees"
+ },
+ {
+  "group": "Group 2",
+  "year": 2004,
+  "section": "Central",
+  "champion": "Raritan"
+ },
+ {
+  "group": "Group 2",
+  "year": 2004,
+  "section": "South",
+  "champion": "Buena"
+ },
+ {
+  "group": "Group 2",
+  "year": 2005,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 2",
+  "year": 2005,
+  "section": "North 2",
+  "champion": "Passaic Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 2005,
+  "section": "Central",
+  "champion": "Delaware Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 2005,
+  "section": "South",
+  "champion": "Buena"
+ },
+ {
+  "group": "Group 2",
+  "year": 2006,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 2",
+  "year": 2006,
+  "section": "North 2",
+  "champion": "Hackettstown"
+ },
+ {
+  "group": "Group 2",
+  "year": 2006,
+  "section": "Central",
+  "champion": "Delaware Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 2006,
+  "section": "South",
+  "champion": "Collingswood"
+ },
+ {
+  "group": "Group 2",
+  "year": 2007,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 2",
+  "year": 2007,
+  "section": "North 2",
+  "champion": "Hackettstown"
+ },
+ {
+  "group": "Group 2",
+  "year": 2007,
+  "section": "Central",
+  "champion": "South Plainfield"
+ },
+ {
+  "group": "Group 2",
+  "year": 2007,
+  "section": "South",
+  "champion": "Pt. Pleasant Boro"
+ },
+ {
+  "group": "Group 2",
+  "year": 2008,
+  "section": "North 1",
+  "champion": "River Dell"
+ },
+ {
+  "group": "Group 2",
+  "year": 2008,
+  "section": "North 2",
+  "champion": "Brearley"
+ },
+ {
+  "group": "Group 2",
+  "year": 2008,
+  "section": "Central",
+  "champion": "Long Branch"
+ },
+ {
+  "group": "Group 2",
+  "year": 2008,
+  "section": "South",
+  "champion": "Delsea"
+ },
+ {
+  "group": "Group 2",
+  "year": 2009,
+  "section": "North 1",
+  "champion": "Parsippany"
+ },
+ {
+  "group": "Group 2",
+  "year": 2009,
+  "section": "North 2",
+  "champion": "Brealrey"
+ },
+ {
+  "group": "Group 2",
+  "year": 2009,
+  "section": "Central",
+  "champion": "Long Branch"
+ },
+ {
+  "group": "Group 2",
+  "year": 2009,
+  "section": "South",
+  "champion": "Delsea"
+ },
+ {
+  "group": "Group 2",
+  "year": 2010,
+  "section": "North 1",
+  "champion": "West Essex"
+ },
+ {
+  "group": "Group 2",
+  "year": 2010,
+  "section": "North 2",
+  "champion": "Brearley"
+ },
+ {
+  "group": "Group 2",
+  "year": 2010,
+  "section": "Central",
+  "champion": "Long Branch"
+ },
+ {
+  "group": "Group 2",
+  "year": 2010,
+  "section": "South",
+  "champion": "West Deptford"
+ },
+ {
+  "group": "Group 2",
+  "year": 2011,
+  "section": "North 1",
+  "champion": "West Essex"
+ },
+ {
+  "group": "Group 2",
+  "year": 2011,
+  "section": "North 2",
+  "champion": "Brearley"
+ },
+ {
+  "group": "Group 2",
+  "year": 2011,
+  "section": "Central",
+  "champion": "Long Branch"
+ },
+ {
+  "group": "Group 2",
+  "year": 2011,
+  "section": "South",
+  "champion": "Delsea"
+ },
+ {
+  "group": "Group 2",
+  "year": 2012,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 2",
+  "year": 2012,
+  "section": "North 2",
+  "champion": "Brearley"
+ },
+ {
+  "group": "Group 2",
+  "year": 2012,
+  "section": "Central",
+  "champion": "Raritan"
+ },
+ {
+  "group": "Group 2",
+  "year": 2012,
+  "section": "South",
+  "champion": "Delsea"
+ },
+ {
+  "group": "Group 2",
+  "year": 2013,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 2",
+  "year": 2013,
+  "section": "North 2",
+  "champion": "Voorhees"
+ },
+ {
+  "group": "Group 2",
+  "year": 2013,
+  "section": "Central",
+  "champion": "Long Branch"
+ },
+ {
+  "group": "Group 2",
+  "year": 2013,
+  "section": "South",
+  "champion": "Delsea"
+ },
+ {
+  "group": "Group 2",
+  "year": 2014,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 2",
+  "year": 2014,
+  "section": "North 2",
+  "champion": "Hanover Park"
+ },
+ {
+  "group": "Group 2",
+  "year": 2014,
+  "section": "Central",
+  "champion": "Wall"
+ },
+ {
+  "group": "Group 2",
+  "year": 2014,
+  "section": "South",
+  "champion": "Delsea"
+ },
+ {
+  "group": "Group 2",
+  "year": 2015,
+  "section": "North 1",
+  "champion": "Lenape Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 2015,
+  "section": "North 2",
+  "champion": "Hanover Park"
+ },
+ {
+  "group": "Group 2",
+  "year": 2015,
+  "section": "Central",
+  "champion": "Delaware Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 2015,
+  "section": "South",
+  "champion": "Buena"
+ },
+ {
+  "group": "Group 2",
+  "year": 2016,
+  "section": "North 1",
+  "champion": "Emerson"
+ },
+ {
+  "group": "Group 2",
+  "year": 2016,
+  "section": "North 2",
+  "champion": "Lenape Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 2016,
+  "section": "Central",
+  "champion": "Delaware Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 2016,
+  "section": "South",
+  "champion": "Collingswood"
+ },
+ {
+  "group": "Group 2",
+  "year": 2017,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 2",
+  "year": 2017,
+  "section": "North 2",
+  "champion": "Hanover Park"
+ },
+ {
+  "group": "Group 2",
+  "year": 2017,
+  "section": "Central",
+  "champion": "Delaware Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 2017,
+  "section": "South",
+  "champion": "Collingswood"
+ },
+ {
+  "group": "Group 2",
+  "year": 2018,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 2",
+  "year": 2018,
+  "section": "North 2",
+  "champion": "Hanover Park"
+ },
+ {
+  "group": "Group 2",
+  "year": 2018,
+  "section": "Central",
+  "champion": "Raritan"
+ },
+ {
+  "group": "Group 2",
+  "year": 2018,
+  "section": "South",
+  "champion": "Pt. Pleasant Boro"
+ },
+ {
+  "group": "Group 2",
+  "year": 2019,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 2",
+  "year": 2019,
+  "section": "North 2",
+  "champion": "Hanover Park"
+ },
+ {
+  "group": "Group 2",
+  "year": 2019,
+  "section": "Central",
+  "champion": "South Plainfield"
+ },
+ {
+  "group": "Group 2",
+  "year": 2019,
+  "section": "South",
+  "champion": "West Deptford"
+ },
+ {
+  "group": "Group 2",
+  "year": 2020,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 2",
+  "year": 2020,
+  "section": "North 2",
+  "champion": "Caldwell"
+ },
+ {
+  "group": "Group 2",
+  "year": 2020,
+  "section": "Central",
+  "champion": "South Plainfield"
+ },
+ {
+  "group": "Group 2",
+  "year": 2020,
+  "section": "South",
+  "champion": "West Deptford"
+ },
+ {
+  "group": "Group 2",
+  "year": 2022,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 2",
+  "year": 2022,
+  "section": "North 2",
+  "champion": "Hanover Park"
+ },
+ {
+  "group": "Group 2",
+  "year": 2022,
+  "section": "Central",
+  "champion": "Raritan"
+ },
+ {
+  "group": "Group 2",
+  "year": 2022,
+  "section": "South",
+  "champion": "Collingswood"
+ },
+ {
+  "group": "Group 2",
+  "year": 2023,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 2",
+  "year": 2023,
+  "section": "North 2",
+  "champion": "Governor Livingston"
+ },
+ {
+  "group": "Group 2",
+  "year": 2023,
+  "section": "Central",
+  "champion": "Raritan"
+ },
+ {
+  "group": "Group 2",
+  "year": 2023,
+  "section": "South",
+  "champion": "Haddonfield"
+ },
+ {
+  "group": "Group 2",
+  "year": 2024,
+  "section": "North 1",
+  "champion": "Caldwell"
+ },
+ {
+  "group": "Group 2",
+  "year": 2024,
+  "section": "North 2",
+  "champion": "Jefferson"
+ },
+ {
+  "group": "Group 2",
+  "year": 2024,
+  "section": "Central",
+  "champion": "Rumson"
+ },
+ {
+  "group": "Group 2",
+  "year": 2024,
+  "section": "South",
+  "champion": "Lower Cape May"
+ },
+ {
+  "group": "Group 2",
+  "year": 2025,
+  "section": "North 1",
+  "champion": "High Point"
+ },
+ {
+  "group": "Group 2",
+  "year": 2025,
+  "section": "North 2",
+  "champion": "Caldwell"
+ },
+ {
+  "group": "Group 2",
+  "year": 2025,
+  "section": "Central",
+  "champion": "Rumson"
+ },
+ {
+  "group": "Group 2",
+  "year": 2025,
+  "section": "South",
+  "champion": "Middle Twp"
+ },
+ {
+  "group": "Group 2",
+  "year": 2026,
+  "section": "North 1",
+  "champion": "Pascack Valley"
+ },
+ {
+  "group": "Group 2",
+  "year": 2026,
+  "section": "North 2",
+  "champion": "Caldwell"
+ },
+ {
+  "group": "Group 2",
+  "year": 2026,
+  "section": "Central",
+  "champion": "Rumson"
+ },
+ {
+  "group": "Group 2",
+  "year": 2026,
+  "section": "South",
+  "champion": "Lower Cape May"
+ },
+ {
+  "group": "Group 1",
+  "year": 1980,
+  "section": "North 1",
+  "champion": "Emerson"
+ },
+ {
+  "group": "Group 1",
+  "year": 1980,
+  "section": "North 2",
+  "champion": "Roselle Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 1980,
+  "section": "Central",
+  "champion": "Bound Brook"
+ },
+ {
+  "group": "Group 1",
+  "year": 1980,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 1981,
+  "section": "North 1",
+  "champion": "Palisades Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 1981,
+  "section": "North 2",
+  "champion": "Roselle Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 1981,
+  "section": "Central",
+  "champion": "Bound Brook"
+ },
+ {
+  "group": "Group 1",
+  "year": 1981,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 1982,
+  "section": "North 1",
+  "champion": "Palisades Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 1982,
+  "section": "North 2",
+  "champion": "Roselle Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 1982,
+  "section": "Central",
+  "champion": "Manville"
+ },
+ {
+  "group": "Group 1",
+  "year": 1982,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 1983,
+  "section": "North 1",
+  "champion": "Emerson"
+ },
+ {
+  "group": "Group 1",
+  "year": 1983,
+  "section": "North 2",
+  "champion": "New Providence"
+ },
+ {
+  "group": "Group 1",
+  "year": 1983,
+  "section": "Central",
+  "champion": "Keyport"
+ },
+ {
+  "group": "Group 1",
+  "year": 1983,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 1984,
+  "section": "North 1",
+  "champion": "Emerson"
+ },
+ {
+  "group": "Group 1",
+  "year": 1984,
+  "section": "North 2",
+  "champion": "Roselle Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 1984,
+  "section": "Central",
+  "champion": "Bound Brook"
+ },
+ {
+  "group": "Group 1",
+  "year": 1984,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 1985,
+  "section": "North 1",
+  "champion": "Emerson"
+ },
+ {
+  "group": "Group 1",
+  "year": 1985,
+  "section": "North 2",
+  "champion": "Roselle Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 1985,
+  "section": "Central",
+  "champion": "Middlesex"
+ },
+ {
+  "group": "Group 1",
+  "year": 1985,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 1986,
+  "section": "North 1",
+  "champion": "Emerson"
+ },
+ {
+  "group": "Group 1",
+  "year": 1986,
+  "section": "North 2",
+  "champion": "Roselle Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 1986,
+  "section": "Central",
+  "champion": "Middlesex"
+ },
+ {
+  "group": "Group 1",
+  "year": 1986,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 1987,
+  "section": "North 1",
+  "champion": "Emerson"
+ },
+ {
+  "group": "Group 1",
+  "year": 1987,
+  "section": "North 2",
+  "champion": "Roselle Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 1987,
+  "section": "Central",
+  "champion": "Bernards"
+ },
+ {
+  "group": "Group 1",
+  "year": 1987,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 1988,
+  "section": "North 1",
+  "champion": "Waldwick"
+ },
+ {
+  "group": "Group 1",
+  "year": 1988,
+  "section": "North 2",
+  "champion": "Roselle Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 1988,
+  "section": "Central",
+  "champion": "South River"
+ },
+ {
+  "group": "Group 1",
+  "year": 1988,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 1989,
+  "section": "North 1",
+  "champion": "Hasbrouck Heights"
+ },
+ {
+  "group": "Group 1",
+  "year": 1989,
+  "section": "North 2",
+  "champion": "Roselle Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 1989,
+  "section": "Central",
+  "champion": "Bernards"
+ },
+ {
+  "group": "Group 1",
+  "year": 1989,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 1990,
+  "section": "North 1",
+  "champion": "Hasbrouck Heights"
+ },
+ {
+  "group": "Group 1",
+  "year": 1990,
+  "section": "North 2",
+  "champion": "Roselle Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 1990,
+  "section": "Central",
+  "champion": "Bernards"
+ },
+ {
+  "group": "Group 1",
+  "year": 1990,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 1991,
+  "section": "North 1",
+  "champion": "Palisades Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 1991,
+  "section": "North 2",
+  "champion": "Roselle Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 1991,
+  "section": "Central",
+  "champion": "South River"
+ },
+ {
+  "group": "Group 1",
+  "year": 1991,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 1992,
+  "section": "North 1",
+  "champion": "Waldwick"
+ },
+ {
+  "group": "Group 1",
+  "year": 1992,
+  "section": "North 2",
+  "champion": "New Providence"
+ },
+ {
+  "group": "Group 1",
+  "year": 1992,
+  "section": "Central",
+  "champion": "Manville"
+ },
+ {
+  "group": "Group 1",
+  "year": 1992,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 1993,
+  "section": "North 1",
+  "champion": "Hasbrouck Heights"
+ },
+ {
+  "group": "Group 1",
+  "year": 1993,
+  "section": "North 2",
+  "champion": "Roselle Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 1993,
+  "section": "Central",
+  "champion": "Manville"
+ },
+ {
+  "group": "Group 1",
+  "year": 1993,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 1994,
+  "section": "North 1",
+  "champion": "Hawthorne"
+ },
+ {
+  "group": "Group 1",
+  "year": 1994,
+  "section": "North 2",
+  "champion": "New Providence"
+ },
+ {
+  "group": "Group 1",
+  "year": 1994,
+  "section": "Central",
+  "champion": "Manville"
+ },
+ {
+  "group": "Group 1",
+  "year": 1994,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 1995,
+  "section": "North 1",
+  "champion": "Hasbrouck Heights"
+ },
+ {
+  "group": "Group 1",
+  "year": 1995,
+  "section": "North 2",
+  "champion": "Pequannock"
+ },
+ {
+  "group": "Group 1",
+  "year": 1995,
+  "section": "Central",
+  "champion": "South River"
+ },
+ {
+  "group": "Group 1",
+  "year": 1995,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 1996,
+  "section": "North 1",
+  "champion": "Becton"
+ },
+ {
+  "group": "Group 1",
+  "year": 1996,
+  "section": "North 2",
+  "champion": "Belvidere"
+ },
+ {
+  "group": "Group 1",
+  "year": 1996,
+  "section": "Central",
+  "champion": "South River"
+ },
+ {
+  "group": "Group 1",
+  "year": 1996,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 1997,
+  "section": "North 1",
+  "champion": "Cresskill"
+ },
+ {
+  "group": "Group 1",
+  "year": 1997,
+  "section": "North 2",
+  "champion": "Roselle Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 1997,
+  "section": "Central",
+  "champion": "South River"
+ },
+ {
+  "group": "Group 1",
+  "year": 1997,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 1998,
+  "section": "North 1",
+  "champion": "Cresskill"
+ },
+ {
+  "group": "Group 1",
+  "year": 1998,
+  "section": "North 2",
+  "champion": "Roselle Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 1998,
+  "section": "Central",
+  "champion": "Bound Brook"
+ },
+ {
+  "group": "Group 1",
+  "year": 1998,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 1999,
+  "section": "North 1",
+  "champion": "Glen Rock"
+ },
+ {
+  "group": "Group 1",
+  "year": 1999,
+  "section": "North 2",
+  "champion": "Belvidere"
+ },
+ {
+  "group": "Group 1",
+  "year": 1999,
+  "section": "Central",
+  "champion": "Bound Brook"
+ },
+ {
+  "group": "Group 1",
+  "year": 1999,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2000,
+  "section": "North 1",
+  "champion": "Glen Rock"
+ },
+ {
+  "group": "Group 1",
+  "year": 2000,
+  "section": "North 2",
+  "champion": "Belvidere"
+ },
+ {
+  "group": "Group 1",
+  "year": 2000,
+  "section": "Central",
+  "champion": "Bound Brook"
+ },
+ {
+  "group": "Group 1",
+  "year": 2000,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2001,
+  "section": "North 1",
+  "champion": "Emerson"
+ },
+ {
+  "group": "Group 1",
+  "year": 2001,
+  "section": "North 2",
+  "champion": "Belvidere"
+ },
+ {
+  "group": "Group 1",
+  "year": 2001,
+  "section": "Central",
+  "champion": "Bound Brook"
+ },
+ {
+  "group": "Group 1",
+  "year": 2001,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2002,
+  "section": "North 1",
+  "champion": "Westwood"
+ },
+ {
+  "group": "Group 1",
+  "year": 2002,
+  "section": "North 2",
+  "champion": "Roselle Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 2002,
+  "section": "Central",
+  "champion": "South River"
+ },
+ {
+  "group": "Group 1",
+  "year": 2002,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2003,
+  "section": "North 1",
+  "champion": "Emerson"
+ },
+ {
+  "group": "Group 1",
+  "year": 2003,
+  "section": "North 2",
+  "champion": "Roselle Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 2003,
+  "section": "Central",
+  "champion": "Bound Brook"
+ },
+ {
+  "group": "Group 1",
+  "year": 2003,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2004,
+  "section": "North 1",
+  "champion": "Boonton"
+ },
+ {
+  "group": "Group 1",
+  "year": 2004,
+  "section": "North 2",
+  "champion": "Hanover Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 2004,
+  "section": "Central",
+  "champion": "Roselle Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 2004,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2005,
+  "section": "North 1",
+  "champion": "Pequannock"
+ },
+ {
+  "group": "Group 1",
+  "year": 2005,
+  "section": "North 2",
+  "champion": "Hanover Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 2005,
+  "section": "Central",
+  "champion": "New Providence"
+ },
+ {
+  "group": "Group 1",
+  "year": 2005,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2006,
+  "section": "North 1",
+  "champion": "North Warren"
+ },
+ {
+  "group": "Group 1",
+  "year": 2006,
+  "section": "North 2",
+  "champion": "Hasbrouck Heights"
+ },
+ {
+  "group": "Group 1",
+  "year": 2006,
+  "section": "Central",
+  "champion": "Brearley"
+ },
+ {
+  "group": "Group 1",
+  "year": 2006,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2007,
+  "section": "North 1",
+  "champion": "North Warren"
+ },
+ {
+  "group": "Group 1",
+  "year": 2007,
+  "section": "North 2",
+  "champion": "Hasbrouck Heights"
+ },
+ {
+  "group": "Group 1",
+  "year": 2007,
+  "section": "Central",
+  "champion": "Brearley"
+ },
+ {
+  "group": "Group 1",
+  "year": 2007,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2008,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 1",
+  "year": 2008,
+  "section": "North 2",
+  "champion": "Whippany Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 2008,
+  "section": "Central",
+  "champion": "Roselle Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 2008,
+  "section": "South",
+  "champion": "Collingswood"
+ },
+ {
+  "group": "Group 1",
+  "year": 2009,
+  "section": "North 1",
+  "champion": "Newton"
+ },
+ {
+  "group": "Group 1",
+  "year": 2009,
+  "section": "North 2",
+  "champion": "Lenape Valley"
+ },
+ {
+  "group": "Group 1",
+  "year": 2009,
+  "section": "Central",
+  "champion": "Roselle Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 2009,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2010,
+  "section": "North 1",
+  "champion": "Newton"
+ },
+ {
+  "group": "Group 1",
+  "year": 2010,
+  "section": "North 2",
+  "champion": "Roselle Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 2010,
+  "section": "Central",
+  "champion": "Robbinsville"
+ },
+ {
+  "group": "Group 1",
+  "year": 2010,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2011,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 1",
+  "year": 2011,
+  "section": "North 2",
+  "champion": "Caldwell"
+ },
+ {
+  "group": "Group 1",
+  "year": 2011,
+  "section": "Central",
+  "champion": "Roselle Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 2011,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2012,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 1",
+  "year": 2012,
+  "section": "North 2",
+  "champion": "Hanover Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 2012,
+  "section": "Central",
+  "champion": "Bound Brook"
+ },
+ {
+  "group": "Group 1",
+  "year": 2012,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2013,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 1",
+  "year": 2013,
+  "section": "North 2",
+  "champion": "Hanover Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 2013,
+  "section": "Central",
+  "champion": "Bound Brook"
+ },
+ {
+  "group": "Group 1",
+  "year": 2013,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2014,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 1",
+  "year": 2014,
+  "section": "North 2",
+  "champion": "Roselle Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 2014,
+  "section": "Central",
+  "champion": "Bound Brook"
+ },
+ {
+  "group": "Group 1",
+  "year": 2014,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2015,
+  "section": "North 1",
+  "champion": "Pompton Lakes"
+ },
+ {
+  "group": "Group 1",
+  "year": 2015,
+  "section": "North 2",
+  "champion": "Bound Brook"
+ },
+ {
+  "group": "Group 1",
+  "year": 2015,
+  "section": "Central",
+  "champion": "Cinnaminson"
+ },
+ {
+  "group": "Group 1",
+  "year": 2015,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2016,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 1",
+  "year": 2016,
+  "section": "North 2",
+  "champion": "Cedar Grove"
+ },
+ {
+  "group": "Group 1",
+  "year": 2016,
+  "section": "Central",
+  "champion": "Pt. Pleasant Beach"
+ },
+ {
+  "group": "Group 1",
+  "year": 2016,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2017,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 1",
+  "year": 2017,
+  "section": "North 2",
+  "champion": "Cedar Grove"
+ },
+ {
+  "group": "Group 1",
+  "year": 2017,
+  "section": "Central",
+  "champion": "Pt. Pleasant Beach"
+ },
+ {
+  "group": "Group 1",
+  "year": 2017,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2018,
+  "section": "North 1",
+  "champion": "Emerson"
+ },
+ {
+  "group": "Group 1",
+  "year": 2018,
+  "section": "North 2",
+  "champion": "Roselle Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 2018,
+  "section": "Central",
+  "champion": "Pt. Pleasant Beach"
+ },
+ {
+  "group": "Group 1",
+  "year": 2018,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2019,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 1",
+  "year": 2019,
+  "section": "North 2",
+  "champion": "Delaware Valley"
+ },
+ {
+  "group": "Group 1",
+  "year": 2019,
+  "section": "Central",
+  "champion": "Shore Regional"
+ },
+ {
+  "group": "Group 1",
+  "year": 2019,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2020,
+  "section": "North 1",
+  "champion": "Emerson"
+ },
+ {
+  "group": "Group 1",
+  "year": 2020,
+  "section": "North 2",
+  "champion": "Delaware Valley"
+ },
+ {
+  "group": "Group 1",
+  "year": 2020,
+  "section": "Central",
+  "champion": "Pt. Pleasant Beach"
+ },
+ {
+  "group": "Group 1",
+  "year": 2020,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2022,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 1",
+  "year": 2022,
+  "section": "North 2",
+  "champion": "Roselle Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 2022,
+  "section": "Central",
+  "champion": "Delaware Valley"
+ },
+ {
+  "group": "Group 1",
+  "year": 2022,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2023,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 1",
+  "year": 2023,
+  "section": "North 2",
+  "champion": "Hanover Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 2023,
+  "section": "Central",
+  "champion": "Delaware Valley"
+ },
+ {
+  "group": "Group 1",
+  "year": 2023,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2024,
+  "section": "North 1",
+  "champion": "Kittatinny"
+ },
+ {
+  "group": "Group 1",
+  "year": 2024,
+  "section": "North 2",
+  "champion": "Hanover Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 2024,
+  "section": "Central",
+  "champion": "Delaware Valley"
+ },
+ {
+  "group": "Group 1",
+  "year": 2024,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2025,
+  "section": "North 1",
+  "champion": "New Milford"
+ },
+ {
+  "group": "Group 1",
+  "year": 2025,
+  "section": "North 2",
+  "champion": "Hanover Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 2025,
+  "section": "Central",
+  "champion": "Delaware Valley"
+ },
+ {
+  "group": "Group 1",
+  "year": 2025,
+  "section": "South",
+  "champion": "Paulsboro"
+ },
+ {
+  "group": "Group 1",
+  "year": 2026,
+  "section": "North 1",
+  "champion": "Emerson"
+ },
+ {
+  "group": "Group 1",
+  "year": 2026,
+  "section": "North 2",
+  "champion": "Hanover Park"
+ },
+ {
+  "group": "Group 1",
+  "year": 2026,
+  "section": "Central",
+  "champion": "Delaware Valley"
+ },
+ {
+  "group": "Group 1",
+  "year": 2026,
+  "section": "South",
+  "champion": "Audubon"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1980,
+  "section": "North",
+  "champion": "DePaul"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1980,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1981,
+  "section": "North",
+  "champion": "Seton Hall Prep"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1981,
+  "section": "South",
+  "champion": "Paul VI-Haddonfield"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1982,
+  "section": "North",
+  "champion": "Seton Hall Prep"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1982,
+  "section": "South",
+  "champion": "Paul VI-Haddonfield"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1983,
+  "section": "North",
+  "champion": "Seton Hall Prep"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1983,
+  "section": "South",
+  "champion": "Paul VI-Haddonfield"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1984,
+  "section": "North",
+  "champion": "Essex Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1984,
+  "section": "South",
+  "champion": "Paul VI-Haddonfield"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1985,
+  "section": "North",
+  "champion": "Essex Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1985,
+  "section": "South",
+  "champion": "Paul VI-Haddonfield"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1986,
+  "section": "North",
+  "champion": "St. Joe's-Montvale"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1986,
+  "section": "South",
+  "champion": "Paul VI-Haddonfield"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1987,
+  "section": "North",
+  "champion": "Seton Hall Prep"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1987,
+  "section": "South",
+  "champion": "Paul VI-Haddonfield"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1988,
+  "section": "North",
+  "champion": "St. Joe's-Montvale"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1988,
+  "section": "South",
+  "champion": "Paul VI-Haddonfield"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1989,
+  "section": "North",
+  "champion": "Seton Hall Prep"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1989,
+  "section": "South",
+  "champion": "Paul VI-Haddonfield"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1990,
+  "section": "North",
+  "champion": "Bergen Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1990,
+  "section": "South",
+  "champion": "Paul VI-Haddonfield"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1991,
+  "section": "North",
+  "champion": "Bergen Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1991,
+  "section": "South",
+  "champion": "Paul VI-Haddonfield"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1992,
+  "section": "North",
+  "champion": "Bergen Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1992,
+  "section": "South",
+  "champion": "Paul VI-Haddonfield"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1993,
+  "section": "North",
+  "champion": "St. Joe's-Montvale"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1993,
+  "section": "South",
+  "champion": "Holy Cross"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1994,
+  "section": "North",
+  "champion": "Bergen Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1994,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1995,
+  "section": "North",
+  "champion": "Bergen Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1995,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1996,
+  "section": "North",
+  "champion": "Bergen Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1996,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1997,
+  "section": "North",
+  "champion": "St. Joe's-Montvale"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1997,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1998,
+  "section": "North",
+  "champion": "St. Joe's-Montvale"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1998,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1999,
+  "section": "North",
+  "champion": "St. Joe's-Montvale"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 1999,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2000,
+  "section": "North",
+  "champion": "St. Peter's Prep"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2000,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2001,
+  "section": "North",
+  "champion": "St. Peter's Prep"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2001,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2002,
+  "section": "North",
+  "champion": "Bergen Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2002,
+  "section": "South",
+  "champion": "CBA"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2003,
+  "section": "North",
+  "champion": "Bergen Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2003,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2004,
+  "section": "North",
+  "champion": "Bergen Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2004,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2005,
+  "section": "North",
+  "champion": "Bergen Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2005,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2006,
+  "section": "North",
+  "champion": "Bergen Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2006,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2007,
+  "section": "North",
+  "champion": "Don Bosco Prep"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2007,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2008,
+  "section": "North",
+  "champion": "Bergen Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2008,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2009,
+  "section": "North",
+  "champion": "Bergen Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2009,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2010,
+  "section": "North",
+  "champion": "Don Bosco Prep"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2010,
+  "section": "South",
+  "champion": "St. Augustine Prep"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2011,
+  "section": "North",
+  "champion": "Delbarton"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2011,
+  "section": "South",
+  "champion": "Bishop Ahr"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2012,
+  "section": "North",
+  "champion": "Bergen Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2012,
+  "section": "South",
+  "champion": "CBA"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2013,
+  "section": "North",
+  "champion": "Bergen Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2013,
+  "section": "South",
+  "champion": "CBA"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2014,
+  "section": "North",
+  "champion": "Bergen Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2014,
+  "section": "South",
+  "champion": "St. Augustine Prep"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2015,
+  "section": "North",
+  "champion": "Bergen Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2015,
+  "section": "South",
+  "champion": "St. Augustine Prep"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2016,
+  "section": "North",
+  "champion": "Bergen Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2016,
+  "section": "South",
+  "champion": "St. Augustine Prep"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2017,
+  "section": "North",
+  "champion": "Bergen Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2017,
+  "section": "South",
+  "champion": "St. Augustine Prep"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2018,
+  "section": "North",
+  "champion": "Bergen Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2018,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2019,
+  "section": "North",
+  "champion": "Bergen Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2019,
+  "section": "South",
+  "champion": "St. Augustine Prep"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2020,
+  "section": "North",
+  "champion": "Delbarton"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2020,
+  "section": "South",
+  "champion": "St. Augustine Prep"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2022,
+  "section": "North",
+  "champion": "Bergen Catholic"
+ },
+ {
+  "group": "Non-Public A",
+  "year": 2022,
+  "section": "South",
+  "champion": "CBA"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1980,
+  "section": "North",
+  "champion": "Pope John XXIII/St Benedicts"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1980,
+  "section": "South",
+  "champion": "Bishop Eustace"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1981,
+  "section": "North",
+  "champion": "Pope John XXIII"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1981,
+  "section": "South",
+  "champion": "Bishop Eustace"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1982,
+  "section": "North",
+  "champion": "Pope John XXIII"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1982,
+  "section": "South",
+  "champion": "Bishop Eustace"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1983,
+  "section": "North",
+  "champion": "Pope John XXIII"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1983,
+  "section": "South",
+  "champion": "St. Augustine Prep"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1984,
+  "section": "North",
+  "champion": "St. Benedict's"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1984,
+  "section": "South",
+  "champion": "St. Augustine Prep"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1985,
+  "section": "North",
+  "champion": "St. Benedict's"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1985,
+  "section": "South",
+  "champion": "St. Augustine Prep"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1986,
+  "section": "North",
+  "champion": "Pope John XXIII"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1986,
+  "section": "South",
+  "champion": "St. Augustine Prep"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1987,
+  "section": "North",
+  "champion": "St. Benedict's"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1987,
+  "section": "South",
+  "champion": "Bishop Eustace"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1988,
+  "section": "North",
+  "champion": "Pope John XXIII"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1988,
+  "section": "South",
+  "champion": "Bishop Eustace"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1989,
+  "section": "North",
+  "champion": "St. Benedict's"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1989,
+  "section": "South",
+  "champion": "St. James"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1990,
+  "section": "North",
+  "champion": "St. Benedict's"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1990,
+  "section": "South",
+  "champion": "St. James"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1991,
+  "section": "North",
+  "champion": "St. Benedict's"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1991,
+  "section": "South",
+  "champion": "St. Joe's-Montvale"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1992,
+  "section": "North",
+  "champion": "Pope John XXIII"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1992,
+  "section": "South",
+  "champion": "St. James"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1993,
+  "section": "North",
+  "champion": "DePaul"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1993,
+  "section": "South",
+  "champion": "Bishop Eustace"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1994,
+  "section": "North",
+  "champion": "Pope John XXIII"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1994,
+  "section": "South",
+  "champion": "None"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1995,
+  "section": "North",
+  "champion": "Bayley-Ellard"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1995,
+  "section": "South",
+  "champion": "St. John Vianney"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1996,
+  "section": "North",
+  "champion": "St. Joe's-Montvale"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1996,
+  "section": "South",
+  "champion": "St. John Vianney"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1997,
+  "section": "North",
+  "champion": "Newark Academy"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1997,
+  "section": "South",
+  "champion": "St. Joe's-Hammonton"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1998,
+  "section": "North",
+  "champion": "Pingry"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1998,
+  "section": "South",
+  "champion": "St. Joe's-Hammonton"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1999,
+  "section": "North",
+  "champion": "Dwight-Englewood"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 1999,
+  "section": "South",
+  "champion": "None"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2000,
+  "section": "North",
+  "champion": "None"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2000,
+  "section": "South",
+  "champion": "None"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2001,
+  "section": "North",
+  "champion": "None"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2001,
+  "section": "South",
+  "champion": "St. Augustine Prep"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2002,
+  "section": "North",
+  "champion": "St. Mary's-Rutherford"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2002,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2003,
+  "section": "North",
+  "champion": "St. Mary's-Rutherford"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2003,
+  "section": "South",
+  "champion": "St. Augustine Prep"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2004,
+  "section": "North",
+  "champion": "St. Mary's-Rutherford"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2004,
+  "section": "South",
+  "champion": "St. Augustine Prep"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2005,
+  "section": "North",
+  "champion": "St. Mary's-Rutherford"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2005,
+  "section": "South",
+  "champion": "Holy Cross"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2006,
+  "section": "North",
+  "champion": "St. Mary's-Rutherford"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2006,
+  "section": "South",
+  "champion": "St. Joe's-Hammonton"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2007,
+  "section": "North",
+  "champion": "St. Mary's-Rutherford"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2007,
+  "section": "South",
+  "champion": "Bishop Ahr"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2008,
+  "section": "North",
+  "champion": "Hudson Catholic"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2008,
+  "section": "South",
+  "champion": "Bishop Eustace"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2009,
+  "section": "North",
+  "champion": "Hudson Catholic"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2009,
+  "section": "South",
+  "champion": "Bishop Eustace"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2010,
+  "section": "North",
+  "champion": "DePaul Catholic"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2010,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2011,
+  "section": "North",
+  "champion": "DePaul Catholic"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2011,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2012,
+  "section": "North",
+  "champion": "DePaul Catholic"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2012,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2013,
+  "section": "North",
+  "champion": "DePaul Catholic"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2013,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2014,
+  "section": "North",
+  "champion": "DePaul Catholic"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2014,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2015,
+  "section": "North",
+  "champion": "DePaul Catholic"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2015,
+  "section": "South",
+  "champion": "Holy Cross"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2016,
+  "section": "North",
+  "champion": "DePaul Catholic"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2016,
+  "section": "South",
+  "champion": "Holy Spirit"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2017,
+  "section": "North",
+  "champion": "DePaul Catholic"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2017,
+  "section": "South",
+  "champion": "Holy Spirit"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2018,
+  "section": "North",
+  "champion": "Pope John"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2018,
+  "section": "South",
+  "champion": "Holy Spirit"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2019,
+  "section": "North",
+  "champion": "Pope John"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2019,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2020,
+  "section": "North",
+  "champion": "Pope John"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2020,
+  "section": "South",
+  "champion": "Camden Catholic"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2022,
+  "section": "North",
+  "champion": "Pope John"
+ },
+ {
+  "group": "Non-Public B",
+  "year": 2022,
+  "section": "South",
+  "champion": "Red Bank Catholic"
+ }
+]
