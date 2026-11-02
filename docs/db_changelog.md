@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-11-02 — Leaderboards list each wrestler at his rating weight
+
+**Migration file:** `docs/migrations/20261102_leaderboards_v2_weight.sql`
+
+**Purpose:** `lb_rs_wrestler.weight` was the most common regular-season weight, so a wrestler who moved up mid-season was filed at his old weight. Manny Gusfa had 15 bouts at 157 in December and 10 at 165 after, with districts, regions and state at 165, and showed on the 157 WRR board. Before the fix, 1,271 boys and 419 girls were listed at a different weight than their rating.
+
+**Changes:** `lb_rs_refresh` now lists each wrestler at `wrestler_hammer_scores.weight_class`: the postseason entry, else the last in-season tournament, else the most common dual weight. An unrated wrestler gets his most recent bout's weight, snapped to the gender's ladder.
+
+**APPLIED** — 2026-11-02, Supabase SQL editor. Tables refreshed for 2025-26 and 2026-27.
+
+**Reversible?** Yes — rollback note in the migration file
+**Verified?** Yes:
+- 0 of 7,436 boys and 0 of 2,410 girls rated wrestlers listed at a weight other than their rating weight
+- 0 weights off the ladder
+- Manny Gusfa on the live 165 board, not 157
+
+---
+
 ## 2026-11-02 — Leaderboards: average time across pins and techs
 
 **Migration file:** `docs/migrations/20261102_leaderboards_v2_pt_avg.sql`
