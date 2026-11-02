@@ -2,6 +2,27 @@
 
 ---
 
+## 2026-11-01 — Girls 2026-01-06: Bloomfield vs Delaware Valley separated from Mount Olive/Randolph vs Hunterdon Central
+
+**Script:** `scripts/fix_bloomfield_delval_20260106.mts`. Backup of the 6 moved rows: `docs/migrations/backups/20261101_mount_olive_hcr_extra_bouts.json`
+
+**Purpose:** The Bloomfield vs Delaware Valley dual (same day) was imported into the Mount Olive/Randolph vs Hunterdon Central meet. 6 of its bouts were credited to Mount Olive / Hunterdon Central, which made 12 girls look like they wrestled for two schools, and its 185 lb bout was missing. Checked against the Track pages for both meets.
+
+**Data changes:**
+- New girls dual: Bloomfield 12 – 29 Delaware Valley, 2026-01-06, `89cbcfde-0370-432b-a437-6000ca4bfbcc`. The score is the sum of the 7 bouts; Track's Delaware Valley team view showed no others.
+- 6 bouts moved into it, credited to Bloomfield / Delaware Valley, winners unchanged.
+- Added 185 lb: Emmy Rea Hotz (Delaware Valley) over Lesly Sanchez (Bloomfield), Fall 2:36.
+- Mount Olive/Randolph vs Hunterdon Central now has its 12 bouts, 45–24, matching Track.
+
+**APPLIED** — 2026-11-01 by script
+
+**Reversible?** Yes:
+- move the 6 rows back from the backup
+- delete the new meet and its 185 bout
+**Verified?** Yes — bout points per meet match the team scores (45–24, 12–29).
+
+---
+
 ## 2026-11-01 — 26 profiles that held two people split
 
 **Script:** `scripts/split_merged_wrestlers.mts`
