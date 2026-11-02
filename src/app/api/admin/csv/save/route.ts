@@ -14,6 +14,7 @@ import { matchWrestler, clearWrestlerCache } from '@/lib/matchWrestlers'
 import { boutResultToDb } from '@/lib/parseRtf'
 import { seasonIdForDate } from '@/lib/seasons'
 import type { SchoolOverride, WrestlerOverride } from '@/app/admin/[side]/import-rtf/types'
+import { nonNjSchools } from '@/lib/schoolIsOos'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 300
@@ -320,8 +321,9 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    const nonNj = await nonNjSchools(client as never, newWrestlers.map(w => w.school_id))
     for (const w of newWrestlers) {
-      const ins = await client.from('wrestlers').insert({ first_name: w.first_name, last_name: w.last_name, gender, is_oos: w.is_oos }).select('id').single()
+      const ins = await client.from('wrestlers').insert({ first_name: w.first_name, last_name: w.last_name, gender, is_oos: w.is_oos || nonNj.has(w.school_id) }).select('id').single()
       if (!ins.error && ins.data) {
         newWrestlerMap.set(`${w.name}|${w.school_id}`, ins.data.id)
       }

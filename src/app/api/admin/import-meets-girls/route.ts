@@ -15,6 +15,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { applyImportGrades } from '@/lib/applyImportGrades'
 import { findSameSchoolWrestlers, personKey } from '@/lib/sameSchoolWrestler'
+import { nonNjSchools } from '@/lib/schoolIsOos'
 import type { GradeChoice } from '@/lib/rosterGradeSuggest'
 import { createClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
@@ -366,6 +367,7 @@ export async function POST(req: NextRequest) {
     const trulyNew = uniqueNew.filter(w => !existingMap.has(personKey(w)))
 
     if (trulyNew.length > 0) {
+      const nonNj = await nonNjSchools(supabase as never, trulyNew.map(w => w.school_id))
       const { data: created, error: createErr } = await supabase
         .from('wrestlers')
         .insert(trulyNew.map(w => ({
@@ -374,6 +376,7 @@ export async function POST(req: NextRequest) {
           suffix:     w.suffix,
           gender:     w.gender,
           is_stub:    w.is_stub,
+          is_oos:     w.is_stub || (w.school_id != null && nonNj.has(w.school_id)),
         })))
         .select('id')
 

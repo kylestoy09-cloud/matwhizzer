@@ -10,6 +10,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { findSameSchoolWrestlers, personKey } from '@/lib/sameSchoolWrestler'
+import { nonNjSchools } from '@/lib/schoolIsOos'
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { getWorkingSeason } from '@/lib/season-context'
@@ -137,7 +138,8 @@ export async function POST(req: NextRequest) {
     const existing = await findSameSchoolWrestlers(supabase as never, gender,
       toCreate.map(w => ({ ...parseName(w.name), school_id: w.school_id })))
 
-    const toInsert: { first_name: string; last_name: string; gender: string }[] = []
+    const nonNj = await nonNjSchools(supabase as never, toCreate.map(w => w.school_id))
+    const toInsert: { first_name: string; last_name: string; gender: string; is_oos: boolean }[] = []
     const insertKeys: string[] = []  // parallel array: wrestler key
 
     for (const [i, w] of toCreate.entries()) {
@@ -147,7 +149,7 @@ export async function POST(req: NextRequest) {
       if (existing.has(existKey)) {
         newWrestlerMap.set(wrestlerKey, existing.get(existKey)!)
       } else {
-        toInsert.push({ ...parsed, gender })
+        toInsert.push({ ...parsed, gender, is_oos: nonNj.has(w.school_id) })
         insertKeys.push(wrestlerKey)
       }
     }

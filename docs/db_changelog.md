@@ -2,6 +2,39 @@
 
 ---
 
+## 2026-11-02 — Non-NJSIAA wrestlers flagged out-of-state; imports set the flag from the school
+
+**Decision (Kyle, 2026-11-02):** wrestlers at schools marked non-NJ get no NJ rating, ranking or seeding. That covers other states and NJ schools outside the NJSIAA (Lawrenceville, Peddie, Blair).
+
+**Code:** new `src/lib/schoolIsOos.ts` (`nonNjSchools`). A wrestler created at a non-NJ school is now `is_oos`:
+- **Dual imports (boys and girls):** the out-of-state value went only to `is_stub`, never `is_oos`.
+- **Tournament-bout import:** set neither.
+- **RTF and CSV:** only the matched-name OOS case.
+- **Unlinked duals:** was hard-coded false.
+
+**Script:** `scripts/flag_non_njsiaa_wrestlers.mts`. Backup and lists: `docs/migrations/backups/20261102_non_njsiaa_wrestlers_flagged.json`
+
+**Data changes:**
+- **182 wrestlers flagged `is_oos`** (158 boys, 24 girls): every dual bout, tournament bout and postseason entry is at a non-NJ school.
+  - Aliases are ignored. The dual import left stray aliases at a same-name NJ school: 12 Gloucester VA wrestlers were aliased at Gloucester City.
+  - Largest groups: Peddie 29, Lawrenceville 18, Blair 18, Easton 16.
+- **Ratings rebuilt:**
+  - boys 2025-26 (archive mode): 7,458 rows
+  - girls 2025-26: 2,403 rows
+  - 0 rows left at non-NJ schools, except Alexis Santiago (below)
+
+**Listed, not changed (21 mixed):**
+- **10 Dover, NJ wrestlers** have tournament bouts credited to "Dover, DE", the wrong Dover. These are NJ wrestlers; the school on those bouts needs fixing.
+- **10 look like an NJ wrestler merged with a same-name out-of-state wrestler from a national tournament** (the RTF/CSV name fallback, fixed 2026-11-01): Daniel Mendoza (Elizabeth / Victor Valley CA), Chase Young (Bergen Catholic / Del Oro CA), Jake Welsh (Butler / Hurricane WV), Alex Hall (Tenafly / St. Pius X KC), Aiden Peterson (Garfield / St Edward), Ryan Brown (WW-P North / Connellsville), Anthony Cruz (Phillipsburg / Folsom), Kevin Hernandez (Ridgefield Memorial / Oxford), Derek Rodriguez (Bloomfield / Whitehall), Joshua Perez (Long Branch / Xavier), Cole Wilson (Manchester Twp / St Paul VI).
+- **Alexis Santiago:** Easton bouts plus an Asbury Park record.
+
+**APPLIED** — 2026-11-02 by script
+
+**Reversible?** Yes — the backup lists the 182 ids (set `is_oos` back to false and rerun the ratings)
+**Verified?** Yes — a rerun finds 0 left to flag; rating counts above
+
+---
+
 ## 2026-11-02 — Rating recalc paged queries fixed; boys 2025-26 ratings rebuilt again
 
 **Code:**

@@ -8,6 +8,7 @@ import { createSupabaseAdmin } from '@/lib/supabase/service'
 import { fetchAllRows } from '@/lib/fetchAllRows'
 import { splitWrestlerAtSchool } from '@/lib/splitWrestler'
 import suggestions from '@/data/reviewSuggestions.json'
+import { nonNjSchools } from '@/lib/schoolIsOos'
 
 export const dynamic = 'force-dynamic'
 
@@ -170,8 +171,9 @@ export async function POST(req: NextRequest) {
         // Shared record aliased here — split this school's wrestler off it (also links these sides)
         ;({ newId: wrestlerId } = await splitWrestlerAtSchool(db, body.split_from, schoolId, person, { moveRecords: true }))
       } else {
+        const nonNj = await nonNjSchools(db as never, [schoolId])
         const { data: created, error: cErr } = await db.from('wrestlers').insert({
-          ...person, gender: 'M', is_oos: false,
+          ...person, gender: 'M', is_oos: nonNj.has(schoolId),
           grade_confirmed_at: person.grade ? new Date().toISOString() : null,
           grade_confirmed_source: person.grade ? 'roster_upload' : null,
         }).select('id').single()

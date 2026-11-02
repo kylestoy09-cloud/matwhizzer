@@ -10,6 +10,7 @@ import { matchWrestler, clearWrestlerCache, reloadAliases } from '@/lib/matchWre
 import { matchTournament } from '@/lib/matchTournaments'
 import { seasonIdForDate } from '@/lib/seasons'
 import type { SchoolFlag, ImportResult, SchoolOverride, WrestlerOverride, TournamentOverride, MsProfileLink } from '@/app/admin/[side]/import-rtf/types'
+import { nonNjSchools } from '@/lib/schoolIsOos'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 300
@@ -454,8 +455,9 @@ export async function POST(req: NextRequest) {
       const newWrestlerMap = new Map<string, string>()
       const aliasRows: Array<{ raw_name: string; school_id: number; wrestler_id: string }> = []
 
+      const nonNj = await nonNjSchools(client as never, newWrestlers.map(w => w.school_id))
       for (const w of newWrestlers) {
-        const ins = await client.from('wrestlers').insert({ first_name: w.first_name, last_name: w.last_name, gender, is_oos: w.is_oos }).select('id').single()
+        const ins = await client.from('wrestlers').insert({ first_name: w.first_name, last_name: w.last_name, gender, is_oos: w.is_oos || nonNj.has(w.school_id) }).select('id').single()
         if (!ins.error && ins.data) {
           newWrestlerMap.set(`${w.name}|${w.school_id}`, ins.data.id)
           aliasRows.push({ raw_name: w.name, school_id: w.school_id, wrestler_id: ins.data.id })
