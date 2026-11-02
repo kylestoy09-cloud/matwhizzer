@@ -22,12 +22,12 @@
 
 **Tables affected:** `roster_grade_import`, `dual_import_drafts`
 
-**PENDING** — run in the Supabase SQL editor, before the deploy (draft saving writes `grade_choices`)
+**APPLIED** — 2026-11-01, Supabase SQL editor
 
 **Reversible?** Yes:
 - drop `grade_choices`, and restore the old check (fails if any row is already `graduated`)
 - step 1: set the girls rows back to `pending` with `school_id` NULL
-**Verified?** Step 1: yes, 2,876 rows `school_matched` (Absegami's 5 → 276). Migration: pending.
+**Verified?** Step 1: yes, 2,876 rows `school_matched` (Absegami's 5 → 276). Migration: yes, the status check includes `graduated` and `dual_import_drafts.grade_choices` is readable.
 
 ---
 
