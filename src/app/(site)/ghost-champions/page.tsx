@@ -17,7 +17,8 @@ type GhostChamp = {
   seed: number
   wrestler_id: string
   wrestler_name: string
-  school: string
+  school: string | null
+  school_id: number | null
   weight: number
   gender: string
   tournament_name: string
@@ -92,7 +93,7 @@ export default async function GhostChampionsPage() {
                   <span className="text-2xl font-black text-amber-500 w-10 text-center shrink-0">
                     {g.seed}
                   </span>
-                  <SchoolLogoBadge {...logos.badge(g.school)} />
+                  <SchoolLogoBadge {...logos.badgeById(g.school_id)} />
                   <div className="flex-1 min-w-0">
                     <Link
                       href={`/wrestler/${g.wrestler_id}`}
@@ -101,7 +102,7 @@ export default async function GhostChampionsPage() {
                       {g.wrestler_name}
                     </Link>
                     <div className="text-xs text-slate-500">
-                      {g.school} · {g.weight}lb
+                      {g.school_id != null ? g.school : 'TBD'} · {g.weight}lb
                     </div>
                   </div>
                 </div>

@@ -1,0 +1,802 @@
+{
+ "note": "scripts/resolve_unlinked_bouts.mts --apply, 2026-11-02 ~20:39 UTC. Before: every changed side had wrestler id NULL (or school id NULL for \"school only\"). 137 sides linked, 48 profiles created, 1 split (Sebastian Soto: Hopewell Valley off Roxbury e6235560), 44 school ids set. Stale aliases moved to the new profiles: 14581 (Anthony Rodriguez, Lakeland, was 77d4fde3), 16672 (Anthony Flores, Pemberton, was 541f9509), 27505 (Christian Ramirez, Lakeland, was 69cab96d), 12030 (Aiden Brown, Scotch Plains-Fanwood, was 11ad2328), 18689 (Aiden Gonzalez, Somerville, was 234246be), 14942 (Youssef Adam, Raritan, was d5aa105b), 16615 (Cristian Garcia, Penns Grove, was 70900188), 25307 (Kevin Hernandez, Lyndhurst-North Arlington, was ae0c487d). Burlington County Tournament: 5 bouts had \"Name (BCIT | Westampton)\" split on the pipe (round = \"Name (BCIT\", name = \"Westampton)\"); now round UNK, name fixed, school Westampton Tech 256.",
+ "profiles_created": [
+  {
+   "id": "cf1a48ab-01eb-479c-8e7a-be43aec30c6b",
+   "first_name": "Aiden",
+   "last_name": "Gonzalez",
+   "gender": "M",
+   "is_oos": false,
+   "created_at": "2026-11-02T20:39:08.891372+00:00"
+  },
+  {
+   "id": "e241094a-4360-452d-8851-f299a999900a",
+   "first_name": "Abdul",
+   "last_name": "Aziz-Moore",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:39:57.795355+00:00"
+  },
+  {
+   "id": "5028df5e-a617-4789-a152-f106fbc7aecd",
+   "first_name": "Chase",
+   "last_name": "Lamotta",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:01.523232+00:00"
+  },
+  {
+   "id": "8769128c-d521-4559-bbd7-4428cba66e91",
+   "first_name": "Ezra",
+   "last_name": "Henning",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:05.297954+00:00"
+  },
+  {
+   "id": "531c8e60-16aa-4fcd-abe4-e128d35e5a97",
+   "first_name": "Kevin",
+   "last_name": "Hernandez",
+   "gender": "M",
+   "is_oos": false,
+   "created_at": "2026-11-02T20:39:09.896199+00:00"
+  },
+  {
+   "id": "6e28b7a2-fbcb-4580-acd8-014fe9db3bc9",
+   "first_name": "William",
+   "last_name": "Detar",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:39:57.316558+00:00"
+  },
+  {
+   "id": "96ecdc66-d1a6-47db-a0f5-0df5129d6c07",
+   "first_name": "Jake",
+   "last_name": "Lilley",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:00.144481+00:00"
+  },
+  {
+   "id": "a70f3393-e711-4cc6-b778-56b7efb568d9",
+   "first_name": "Bennett",
+   "last_name": "Brumbley",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:02.89278+00:00"
+  },
+  {
+   "id": "6ee9cfd3-1c3c-49bc-a237-2a0397f0bf9e",
+   "first_name": "Gabriel",
+   "last_name": "Yeager",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:03.333525+00:00"
+  },
+  {
+   "id": "04674eee-d599-4be7-a12d-d72ac176f9d2",
+   "first_name": "Youssef",
+   "last_name": "Adam",
+   "gender": "M",
+   "is_oos": false,
+   "created_at": "2026-11-02T20:39:09.403884+00:00"
+  },
+  {
+   "id": "0f94540f-2cd6-48d6-80f1-2319fccb1214",
+   "first_name": "Lawson",
+   "last_name": "Josefyk",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:04.957747+00:00"
+  },
+  {
+   "id": "057e70d6-b3e5-4d34-925e-a3df49995aff",
+   "first_name": "Odiase",
+   "last_name": "Anetor",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:06.396993+00:00"
+  },
+  {
+   "id": "0d417aab-179b-475f-8ffe-bdab8ce923e3",
+   "first_name": "Mason",
+   "last_name": "Eikenberry",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:39:59.063521+00:00"
+  },
+  {
+   "id": "3dc3d396-b1ad-422b-8e31-fdb4bc58fb1a",
+   "first_name": "Saadan",
+   "last_name": "Ahmad",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:03.758024+00:00"
+  },
+  {
+   "id": "749bcce0-2429-4074-90fa-2a821c9f9f5e",
+   "first_name": "Darryn",
+   "last_name": "Gross",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:04.207658+00:00"
+  },
+  {
+   "id": "a0e83fee-9fe2-4c1e-a4b9-ed50befe998e",
+   "first_name": "Landen",
+   "last_name": "Phy",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:05.948026+00:00"
+  },
+  {
+   "id": "36ed56a4-af58-49d4-ba27-051244eca4e7",
+   "first_name": "Anthony",
+   "last_name": "Rodriguez",
+   "gender": "M",
+   "is_oos": false,
+   "created_at": "2026-11-02T20:39:10.30557+00:00"
+  },
+  {
+   "id": "b114d5e7-e368-433c-96a2-96b28d4ac1dc",
+   "first_name": "Colton",
+   "last_name": "Brennan",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:06.122469+00:00"
+  },
+  {
+   "id": "9202a3e2-cb7e-4089-9cdc-b7d59c55f19c",
+   "first_name": "Ryland",
+   "last_name": "Vickers",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:06.568054+00:00"
+  },
+  {
+   "id": "c300f45c-9ee3-4235-9859-38c3513f1d63",
+   "first_name": "Sebastian",
+   "last_name": "Soto",
+   "gender": "M",
+   "is_oos": false,
+   "created_at": "2026-11-02T20:39:11.890925+00:00"
+  },
+  {
+   "id": "7e507f9d-cb49-46e3-9726-f06dad8eecdd",
+   "first_name": "Aiden",
+   "last_name": "Brown",
+   "gender": "M",
+   "is_oos": false,
+   "created_at": "2026-11-02T20:39:53.280446+00:00"
+  },
+  {
+   "id": "c777839c-b571-47b5-b80d-2bda8f164690",
+   "first_name": "Ryan",
+   "last_name": "Collingsworth",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:00.605134+00:00"
+  },
+  {
+   "id": "833169fc-c235-4eee-8aea-1fbf787c26da",
+   "first_name": "Andrew",
+   "last_name": "Telencio",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:01.891014+00:00"
+  },
+  {
+   "id": "8d6e6f88-01fc-4b59-aa7c-766c1536ac4e",
+   "first_name": "Ryder",
+   "last_name": "Linker",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:04.570589+00:00"
+  },
+  {
+   "id": "721aa9f8-ab71-483f-8fc4-9351df8161a4",
+   "first_name": "Kevin",
+   "last_name": "Hernandez-Gomez",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:05.600662+00:00"
+  },
+  {
+   "id": "06b06a57-a1a6-48b3-9d9e-2debd857a0a7",
+   "first_name": "Cristian",
+   "last_name": "Garcia",
+   "gender": "M",
+   "is_oos": false,
+   "created_at": "2026-11-02T20:39:51.403855+00:00"
+  },
+  {
+   "id": "a0fc070f-2779-4d43-b6c4-f4ec774ad2a1",
+   "first_name": "Evan",
+   "last_name": "Smith",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:39:58.64696+00:00"
+  },
+  {
+   "id": "6007fc74-172f-45ae-816d-f8bed2b5611a",
+   "first_name": "Abram",
+   "last_name": "Beard",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:00.787671+00:00"
+  },
+  {
+   "id": "d333b63f-f30f-4220-9d60-0340eb90118e",
+   "first_name": "Kaden",
+   "last_name": "Price",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:02.089015+00:00"
+  },
+  {
+   "id": "ff12156c-47b3-46f6-8257-bac8c4c5daa7",
+   "first_name": "Dominic",
+   "last_name": "Rhodes",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:04.71166+00:00"
+  },
+  {
+   "id": "914e2eb8-9a6e-4028-9d20-87b13d9e9d40",
+   "first_name": "Christian",
+   "last_name": "Ramirez",
+   "gender": "M",
+   "is_oos": false,
+   "created_at": "2026-11-02T20:39:52.026213+00:00"
+  },
+  {
+   "id": "86d81c41-02d0-4ff4-acaf-9199f2977860",
+   "first_name": "Chance",
+   "last_name": "Boose",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:01.708532+00:00"
+  },
+  {
+   "id": "be048ce2-1012-4ed6-9a84-2a7999704031",
+   "first_name": "Dylan",
+   "last_name": "Mummert",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:02.529937+00:00"
+  },
+  {
+   "id": "9bd9d346-f6a5-4ecf-9bf3-ee4bb1d913e3",
+   "first_name": "Tristan",
+   "last_name": "Lewis",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:05.457284+00:00"
+  },
+  {
+   "id": "2740b45d-c6d0-4661-a571-8ab64e9b82bb",
+   "first_name": "Anthony",
+   "last_name": "Flores",
+   "gender": "M",
+   "is_oos": false,
+   "created_at": "2026-11-02T20:39:55.678782+00:00"
+  },
+  {
+   "id": "1d4e57cc-eb4e-46f7-815e-784611ea74cd",
+   "first_name": "Theodore",
+   "last_name": "Egolf",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:39:58.079089+00:00"
+  },
+  {
+   "id": "21d3bbee-a71c-4394-8897-3a6f4cadae5c",
+   "first_name": "Jordan",
+   "last_name": "Manyette",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:39:59.285784+00:00"
+  },
+  {
+   "id": "bc23d464-196f-4436-83d7-39e57fe1e632",
+   "first_name": "Donovan",
+   "last_name": "Gomez",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:00.418081+00:00"
+  },
+  {
+   "id": "a9b9a66d-feea-49ee-94da-87e05c691caf",
+   "first_name": "Kaiden",
+   "last_name": "Pomraning",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:04.372236+00:00"
+  },
+  {
+   "id": "dac93984-4ef3-4c32-b02f-3d1fb03042d1",
+   "first_name": "Riley",
+   "last_name": "Carmean",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:07.009569+00:00"
+  },
+  {
+   "id": "e15d390d-b3e2-49df-8594-8ca0537eae6c",
+   "first_name": "Kade",
+   "last_name": "Wootten",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:01.340992+00:00"
+  },
+  {
+   "id": "67c249da-1ab2-4682-a43f-812beb5ab1ae",
+   "first_name": "Bryan",
+   "last_name": "Clafferty",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:39:58.398661+00:00"
+  },
+  {
+   "id": "29331342-8aa8-49dc-9236-1b5f1d0919a5",
+   "first_name": "Van",
+   "last_name": "Ferguson",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:05.099709+00:00"
+  },
+  {
+   "id": "069e75a4-930f-4e21-97e5-ca6599c7ae93",
+   "first_name": "Steven",
+   "last_name": "Cornish",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:05.765262+00:00"
+  },
+  {
+   "id": "9005432c-1b6c-4b75-8705-9481d7a589e7",
+   "first_name": "Brody",
+   "last_name": "Kelly",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:06.70849+00:00"
+  },
+  {
+   "id": "50a80d78-be36-43be-8c3b-d99c7ab50afc",
+   "first_name": "Alfonzo",
+   "last_name": "Rivera",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:39:59.939521+00:00"
+  },
+  {
+   "id": "3a993d33-7c55-4aae-bc95-ab493a5051c3",
+   "first_name": "Dominic",
+   "last_name": "Scalia",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:02.717693+00:00"
+  },
+  {
+   "id": "91c1d09c-1546-432d-8982-5099d19acff7",
+   "first_name": "Jimmy",
+   "last_name": "McLane",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:03.174474+00:00"
+  },
+  {
+   "id": "261f5ee8-3f0a-46c0-afc1-f47477d28e76",
+   "first_name": "Dauriel",
+   "last_name": "Jones",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:06.262248+00:00"
+  },
+  {
+   "id": "fbd71dcd-71ff-427a-ba10-aaa791f3220c",
+   "first_name": "Shrey",
+   "last_name": "Shah",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:00.956057+00:00"
+  },
+  {
+   "id": "ca164700-b22d-4144-8c2a-d61e9dc150db",
+   "first_name": "Dylan",
+   "last_name": "Lytle",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:02.277775+00:00"
+  },
+  {
+   "id": "32c1f806-8608-4dc2-8305-150ab6445f6e",
+   "first_name": "Storm",
+   "last_name": "Hoffman",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:03.610365+00:00"
+  },
+  {
+   "id": "4d8904a3-44e9-4e98-b5c5-531f555a083f",
+   "first_name": "Muthu",
+   "last_name": "Subhash-Muthu",
+   "gender": "M",
+   "is_oos": true,
+   "created_at": "2026-11-02T20:40:04.010713+00:00"
+  }
+ ],
+ "aliases": [
+  {
+   "id": 18689,
+   "raw_name": "Aiden Gonzalez",
+   "school_id": 145,
+   "wrestler_id": "cf1a48ab-01eb-479c-8e7a-be43aec30c6b",
+   "created_at": "2026-08-04T19:54:05.584471+00:00"
+  },
+  {
+   "id": 13458,
+   "raw_name": "Sebastian Soto",
+   "school_id": 170,
+   "wrestler_id": "c300f45c-9ee3-4235-9859-38c3513f1d63",
+   "created_at": "2026-08-02T23:42:28.4225+00:00"
+  },
+  {
+   "id": 16615,
+   "raw_name": "Cristian Garcia",
+   "school_id": 310,
+   "wrestler_id": "06b06a57-a1a6-48b3-9d9e-2debd857a0a7",
+   "created_at": "2026-08-04T19:54:05.584471+00:00"
+  },
+  {
+   "id": 27505,
+   "raw_name": "Christian Ramirez",
+   "school_id": 5,
+   "wrestler_id": "914e2eb8-9a6e-4028-9d20-87b13d9e9d40",
+   "created_at": "2026-08-06T03:26:27.984167+00:00"
+  },
+  {
+   "id": 14581,
+   "raw_name": "Anthony Rodriguez",
+   "school_id": 5,
+   "wrestler_id": "36ed56a4-af58-49d4-ba27-051244eca4e7",
+   "created_at": "2026-08-02T23:42:28.4225+00:00"
+  },
+  {
+   "id": 14942,
+   "raw_name": "Youssef Adam",
+   "school_id": 184,
+   "wrestler_id": "04674eee-d599-4be7-a12d-d72ac176f9d2",
+   "created_at": "2026-08-02T23:42:28.4225+00:00"
+  },
+  {
+   "id": 16672,
+   "raw_name": "Anthony Flores",
+   "school_id": 273,
+   "wrestler_id": "2740b45d-c6d0-4661-a571-8ab64e9b82bb",
+   "created_at": "2026-08-04T19:54:05.584471+00:00"
+  },
+  {
+   "id": 25307,
+   "raw_name": "Kevin Hernandez",
+   "school_id": 83,
+   "wrestler_id": "531c8e60-16aa-4fcd-abe4-e128d35e5a97",
+   "created_at": "2026-08-06T01:30:58.776395+00:00"
+  },
+  {
+   "id": 51759,
+   "raw_name": "Theodore Egolf",
+   "school_id": 814,
+   "wrestler_id": "1d4e57cc-eb4e-46f7-815e-784611ea74cd",
+   "created_at": "2026-11-02T20:39:58.209941+00:00"
+  },
+  {
+   "id": 51760,
+   "raw_name": "Bryan Clafferty",
+   "school_id": 865,
+   "wrestler_id": "67c249da-1ab2-4682-a43f-812beb5ab1ae",
+   "created_at": "2026-11-02T20:39:58.512158+00:00"
+  },
+  {
+   "id": 51766,
+   "raw_name": "Alfonzo Rivera",
+   "school_id": 874,
+   "wrestler_id": "50a80d78-be36-43be-8c3b-d99c7ab50afc",
+   "created_at": "2026-11-02T20:40:00.04019+00:00"
+  },
+  {
+   "id": 51779,
+   "raw_name": "Dominic Scalia",
+   "school_id": 824,
+   "wrestler_id": "3a993d33-7c55-4aae-bc95-ab493a5051c3",
+   "created_at": "2026-11-02T20:40:02.801115+00:00"
+  },
+  {
+   "id": 51781,
+   "raw_name": "Jimmy McLane",
+   "school_id": 652,
+   "wrestler_id": "91c1d09c-1546-432d-8982-5099d19acff7",
+   "created_at": "2026-11-02T20:40:03.25351+00:00"
+  },
+  {
+   "id": 12030,
+   "raw_name": "Aiden Brown",
+   "school_id": 126,
+   "wrestler_id": "7e507f9d-cb49-46e3-9726-f06dad8eecdd",
+   "created_at": "2026-08-02T23:42:28.4225+00:00"
+  },
+  {
+   "id": 51773,
+   "raw_name": "Chase Lamotta",
+   "school_id": 824,
+   "wrestler_id": "5028df5e-a617-4789-a152-f106fbc7aecd",
+   "created_at": "2026-11-02T20:40:01.604702+00:00"
+  },
+  {
+   "id": 51794,
+   "raw_name": "Ezra Henning",
+   "school_id": 874,
+   "wrestler_id": "8769128c-d521-4559-bbd7-4428cba66e91",
+   "created_at": "2026-11-02T20:40:05.365212+00:00"
+  },
+  {
+   "id": 51797,
+   "raw_name": "Steven Cornish",
+   "school_id": 606,
+   "wrestler_id": "069e75a4-930f-4e21-97e5-ca6599c7ae93",
+   "created_at": "2026-11-02T20:40:05.87502+00:00"
+  },
+  {
+   "id": 51756,
+   "raw_name": "William Detar",
+   "school_id": 758,
+   "wrestler_id": "6e28b7a2-fbcb-4580-acd8-014fe9db3bc9",
+   "created_at": "2026-11-02T20:39:57.434452+00:00"
+  },
+  {
+   "id": 51758,
+   "raw_name": "Abdul Aziz-Moore",
+   "school_id": 824,
+   "wrestler_id": "e241094a-4360-452d-8851-f299a999900a",
+   "created_at": "2026-11-02T20:39:57.915113+00:00"
+  },
+  {
+   "id": 51769,
+   "raw_name": "Ryan Collingsworth",
+   "school_id": 620,
+   "wrestler_id": "c777839c-b571-47b5-b80d-2bda8f164690",
+   "created_at": "2026-11-02T20:40:00.699106+00:00"
+  },
+  {
+   "id": 51775,
+   "raw_name": "Andrew Telencio",
+   "school_id": 874,
+   "wrestler_id": "833169fc-c235-4eee-8aea-1fbf787c26da",
+   "created_at": "2026-11-02T20:40:01.981+00:00"
+  },
+  {
+   "id": 51789,
+   "raw_name": "Ryder Linker",
+   "school_id": 874,
+   "wrestler_id": "8d6e6f88-01fc-4b59-aa7c-766c1536ac4e",
+   "created_at": "2026-11-02T20:40:04.641026+00:00"
+  },
+  {
+   "id": 51800,
+   "raw_name": "Dauriel Jones",
+   "school_id": 620,
+   "wrestler_id": "261f5ee8-3f0a-46c0-afc1-f47477d28e76",
+   "created_at": "2026-11-02T20:40:06.32296+00:00"
+  },
+  {
+   "id": 51778,
+   "raw_name": "Dylan Mummert",
+   "school_id": 874,
+   "wrestler_id": "be048ce2-1012-4ed6-9a84-2a7999704031",
+   "created_at": "2026-11-02T20:40:02.631082+00:00"
+  },
+  {
+   "id": 51805,
+   "raw_name": "Riley Carmean",
+   "school_id": 620,
+   "wrestler_id": "dac93984-4ef3-4c32-b02f-3d1fb03042d1",
+   "created_at": "2026-11-02T20:40:07.090362+00:00"
+  },
+  {
+   "id": 51761,
+   "raw_name": "Evan Smith",
+   "school_id": 865,
+   "wrestler_id": "a0fc070f-2779-4d43-b6c4-f4ec774ad2a1",
+   "created_at": "2026-11-02T20:39:58.739624+00:00"
+  },
+  {
+   "id": 51770,
+   "raw_name": "Abram Beard",
+   "school_id": 865,
+   "wrestler_id": "6007fc74-172f-45ae-816d-f8bed2b5611a",
+   "created_at": "2026-11-02T20:40:00.866363+00:00"
+  },
+  {
+   "id": 51776,
+   "raw_name": "Kaden Price",
+   "school_id": 611,
+   "wrestler_id": "d333b63f-f30f-4220-9d60-0340eb90118e",
+   "created_at": "2026-11-02T20:40:02.1808+00:00"
+  },
+  {
+   "id": 51790,
+   "raw_name": "Dominic Rhodes",
+   "school_id": 614,
+   "wrestler_id": "ff12156c-47b3-46f6-8257-bac8c4c5daa7",
+   "created_at": "2026-11-02T20:40:04.779678+00:00"
+  },
+  {
+   "id": 51802,
+   "raw_name": "Ryland Vickers",
+   "school_id": 814,
+   "wrestler_id": "9202a3e2-cb7e-4089-9cdc-b7d59c55f19c",
+   "created_at": "2026-11-02T20:40:06.639026+00:00"
+  },
+  {
+   "id": 51762,
+   "raw_name": "Mason Eikenberry",
+   "school_id": 652,
+   "wrestler_id": "0d417aab-179b-475f-8ffe-bdab8ce923e3",
+   "created_at": "2026-11-02T20:39:59.157226+00:00"
+  },
+  {
+   "id": 51785,
+   "raw_name": "Saadan Ahmad",
+   "school_id": 894,
+   "wrestler_id": "3dc3d396-b1ad-422b-8e31-fdb4bc58fb1a",
+   "created_at": "2026-11-02T20:40:03.829643+00:00"
+  },
+  {
+   "id": 51787,
+   "raw_name": "Darryn Gross",
+   "school_id": 874,
+   "wrestler_id": "749bcce0-2429-4074-90fa-2a821c9f9f5e",
+   "created_at": "2026-11-02T20:40:04.28839+00:00"
+  },
+  {
+   "id": 51799,
+   "raw_name": "Colton Brennan",
+   "school_id": 650,
+   "wrestler_id": "b114d5e7-e368-433c-96a2-96b28d4ac1dc",
+   "created_at": "2026-11-02T20:40:06.19444+00:00"
+  },
+  {
+   "id": 51763,
+   "raw_name": "Jordan Manyette",
+   "school_id": 758,
+   "wrestler_id": "21d3bbee-a71c-4394-8897-3a6f4cadae5c",
+   "created_at": "2026-11-02T20:39:59.373542+00:00"
+  },
+  {
+   "id": 51768,
+   "raw_name": "Donovan Gomez",
+   "school_id": 614,
+   "wrestler_id": "bc23d464-196f-4436-83d7-39e57fe1e632",
+   "created_at": "2026-11-02T20:40:00.500308+00:00"
+  },
+  {
+   "id": 51774,
+   "raw_name": "Chance Boose",
+   "school_id": 874,
+   "wrestler_id": "86d81c41-02d0-4ff4-acaf-9199f2977860",
+   "created_at": "2026-11-02T20:40:01.801341+00:00"
+  },
+  {
+   "id": 51788,
+   "raw_name": "Kaiden Pomraning",
+   "school_id": 865,
+   "wrestler_id": "a9b9a66d-feea-49ee-94da-87e05c691caf",
+   "created_at": "2026-11-02T20:40:04.446394+00:00"
+  },
+  {
+   "id": 51798,
+   "raw_name": "Landen Phy",
+   "school_id": 610,
+   "wrestler_id": "a0e83fee-9fe2-4c1e-a4b9-ed50befe998e",
+   "created_at": "2026-11-02T20:40:06.033208+00:00"
+  },
+  {
+   "id": 51803,
+   "raw_name": "Brody Kelly",
+   "school_id": 832,
+   "wrestler_id": "9005432c-1b6c-4b75-8705-9481d7a589e7",
+   "created_at": "2026-11-02T20:40:06.791327+00:00"
+  },
+  {
+   "id": 51767,
+   "raw_name": "Jake Lilley",
+   "school_id": 760,
+   "wrestler_id": "96ecdc66-d1a6-47db-a0f5-0df5129d6c07",
+   "created_at": "2026-11-02T20:40:00.236251+00:00"
+  },
+  {
+   "id": 51780,
+   "raw_name": "Bennett Brumbley",
+   "school_id": 650,
+   "wrestler_id": "a70f3393-e711-4cc6-b778-56b7efb568d9",
+   "created_at": "2026-11-02T20:40:02.98664+00:00"
+  },
+  {
+   "id": 51782,
+   "raw_name": "Gabriel Yeager",
+   "school_id": 614,
+   "wrestler_id": "6ee9cfd3-1c3c-49bc-a237-2a0397f0bf9e",
+   "created_at": "2026-11-02T20:40:03.417572+00:00"
+  },
+  {
+   "id": 51792,
+   "raw_name": "Lawson Josefyk",
+   "school_id": 611,
+   "wrestler_id": "0f94540f-2cd6-48d6-80f1-2319fccb1214",
+   "created_at": "2026-11-02T20:40:05.026912+00:00"
+  },
+  {
+   "id": 51796,
+   "raw_name": "Kevin Hernandez-Gomez",
+   "school_id": 611,
+   "wrestler_id": "721aa9f8-ab71-483f-8fc4-9351df8161a4",
+   "created_at": "2026-11-02T20:40:05.670925+00:00"
+  },
+  {
+   "id": 51771,
+   "raw_name": "Shrey Shah",
+   "school_id": 894,
+   "wrestler_id": "fbd71dcd-71ff-427a-ba10-aaa791f3220c",
+   "created_at": "2026-11-02T20:40:01.047769+00:00"
+  },
+  {
+   "id": 51777,
+   "raw_name": "Dylan Lytle",
+   "school_id": 760,
+   "wrestler_id": "ca164700-b22d-4144-8c2a-d61e9dc150db",
+   "created_at": "2026-11-02T20:40:02.362944+00:00"
+  },
+  {
+   "id": 51784,
+   "raw_name": "Storm Hoffman",
+   "school_id": 814,
+   "wrestler_id": "32c1f806-8608-4dc2-8305-150ab6445f6e",
+   "created_at": "2026-11-02T20:40:03.683832+00:00"
+  },
+  {
+   "id": 51786,
+   "raw_name": "Muthu Subhash-Muthu",
+   "school_id": 824,
+   "wrestler_id": "4d8904a3-44e9-4e98-b5c5-531f555a083f",
+   "created_at": "2026-11-02T20:40:04.089426+00:00"
+  },
+  {
+   "id": 51772,
+   "raw_name": "Kade Wootten",
+   "school_id": 606,
+   "wrestler_id": "e15d390d-b3e2-49df-8594-8ca0537eae6c",
+   "created_at": "2026-11-02T20:40:01.41744+00:00"
+  },
+  {
+   "id": 51793,
+   "raw_name": "Van Ferguson",
+   "school_id": 874,
+   "wrestler_id": "29331342-8aa8-49dc-9236-1b5f1d0919a5",
+   "created_at": "2026-11-02T20:40:05.222461+00:00"
+  },
+  {
+   "id": 51795,
+   "raw_name": "Tristan Lewis",
+   "school_id": 854,
+   "wrestler_id": "9bd9d346-f6a5-4ecf-9bf3-ee4bb1d913e3",
+   "created_at": "2026-11-02T20:40:05.527602+00:00"
+  },
+  {
+   "id": 51801,
+   "raw_name": "Odiase Anetor",
+   "school_id": 824,
+   "wrestler_id": "057e70d6-b3e5-4d34-925e-a3df49995aff",
+   "created_at": "2026-11-02T20:40:06.488828+00:00"
+  }
+ ]
+}

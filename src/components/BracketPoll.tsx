@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
+import { SchoolTagView, type SchoolBadge } from '@/components/SchoolTagView'
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -11,6 +12,8 @@ export type BracketEntry = {
   wrestler_name: string
   school: string
   school_name: string
+  school_id?: number | null
+  badge?: SchoolBadge | null
   seed: number | null
   grade: string | null
   wins: number | null
@@ -26,6 +29,8 @@ export type DistrictChamp = {
   wrestler_name: string
   wrestler_id: string
   school_name: string
+  school_id?: number | null
+  badge?: SchoolBadge | null
   annotation?: string
 }
 
@@ -292,7 +297,7 @@ export function BracketPoll({
 
 // ── Podium builder ──────────────────────────────────────────────────────────
 
-type PodiumEntry = { wrestler_name: string; wrestler_id: string; school: string; pct: number | null; isDefault: boolean }
+type PodiumEntry = { wrestler_name: string; wrestler_id: string; school: string | null; schoolId: number | null; badge: SchoolBadge | null; pct: number | null; isDefault: boolean }
 
 function buildPodium(
   results: PollResult[],
@@ -312,7 +317,7 @@ function buildPodium(
         podium.push({
           wrestler_name: leader.wrestler_name,
           wrestler_id: leader.wrestler_id,
-          school: entry?.school_name || entry?.school || '',
+          school: entry?.school_name ?? null, schoolId: entry?.school_id ?? null, badge: entry?.badge ?? null,
           pct: Math.round((leader[ck] / totalVoters) * 100),
           isDefault: false,
         })
@@ -326,7 +331,7 @@ function buildPodium(
   return seeded.slice(0, 8).map(e => ({
     wrestler_name: e.wrestler_name,
     wrestler_id: e.wrestler_id,
-    school: e.school_name || e.school,
+    school: e.school_name, schoolId: e.school_id ?? null, badge: e.badge ?? null,
     pct: null,
     isDefault: true,
   }))
@@ -359,7 +364,7 @@ function PodiumBar({ podium, totalVoters, loading }: { podium: PodiumEntry[]; to
             >
               {p.wrestler_name}
             </Link>
-            <span className="text-[9px] text-slate-400 truncate block">{p.school}</span>
+            <span className="flex justify-center"><SchoolTagView id={p.schoolId} name={p.school} badge={p.badge} maxWidth={90} className="text-[9px] text-slate-400" /></span>
             {p.pct != null && (
               <span className={`text-[9px] font-semibold ${PLACE_STYLES[i].labelColor}`}>{p.pct}%</span>
             )}
@@ -449,9 +454,7 @@ function EntryRow({
           {entry.wrestler_name}
         </Link>
         <div className="flex items-center gap-1.5 flex-wrap">
-          <span className="text-[10px] text-slate-400 truncate max-w-[100px]">
-            {entry.school_name || entry.school}
-          </span>
+          <SchoolTagView id={entry.school_id} name={entry.school_name} badge={entry.badge} maxWidth={100} />
           {record && <span className="text-[10px] text-slate-400 tabular-nums">{record}</span>}
           {provenance && (
             <span className="text-[10px] px-1 rounded bg-slate-100 text-slate-500 font-medium">
@@ -545,8 +548,8 @@ function DistrictPodiums({ champs }: { champs: DistrictChamp[] }) {
                       (Alternate)
                     </span>
                   )}
-                  <span className="text-[10px] text-slate-400 truncate ml-auto shrink-0">
-                    {dc.school_name}
+                  <span className="ml-auto shrink-0 flex items-center">
+                    <SchoolTagView id={dc.school_id} name={dc.school_name} badge={dc.badge} maxWidth={120} />
                   </span>
                 </div>
               ))}

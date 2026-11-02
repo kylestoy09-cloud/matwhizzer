@@ -7,7 +7,8 @@ type ChampionRow = {
   weight: number
   wrestler_id: string
   wrestler_name: string
-  school: string
+  school: string | null
+  school_id?: number | null
   seed: number | null
   logo_url?: string | null
   bg_color?: string | null
@@ -54,12 +55,12 @@ export function StateChampions({
                         </Link>
                         {isGhost && <span className="ml-1" title={`#${r.seed} seed — Ghost Champion`}>👻</span>}
                         <span className="sm:hidden text-xs text-slate-400 block">
-                          {r.school}
+                          {r.school_id != null ? r.school : 'TBD'}
                         </span>
                       </div>
                     </div>
                   </td>
-                  <td className="px-3 py-2 text-slate-500 hidden sm:table-cell">{r.school}</td>
+                  <td className="px-3 py-2 text-slate-500 hidden sm:table-cell">{r.school_id != null ? r.school : 'TBD'}</td>
                 </tr>
               )
             })}

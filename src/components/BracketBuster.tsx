@@ -8,11 +8,13 @@ type UpsetRow = {
   winner_name: string
   winner_school: string | null
   winner_school_name: string | null
+  winner_school_id: number | null
   winner_seed: number
   loser_id: string
   loser_name: string
   loser_school: string | null
   loser_school_name: string | null
+  loser_school_id: number | null
   loser_seed: number
   seed_gap: number
   win_type: string
@@ -107,24 +109,24 @@ export async function BracketBuster({
                 </td>
                 <td className="px-3 py-2">
                   <div className="flex items-center gap-1">
-                    <SchoolLogoBadge {...logos.badge(r.winner_school_name || r.winner_school)} />
+                    <SchoolLogoBadge {...logos.badgeById(r.winner_school_id)} />
                     <div>
                       <Link href={`/wrestler/${r.winner_id}`} className="font-medium text-slate-800 hover:underline text-sm truncate block max-w-[130px]">
                         {r.winner_name}
                       </Link>
-                      <span className="text-[10px] text-slate-400 truncate block max-w-[130px]">{r.winner_school_name || r.winner_school}</span>
+                      <span className="text-[10px] text-slate-400 truncate block max-w-[130px]">{r.winner_school_id != null ? r.winner_school_name : 'TBD'}</span>
                     </div>
                   </div>
                 </td>
                 <td className="px-2 py-2 text-center text-xs font-bold text-slate-700 tabular-nums">#{r.winner_seed}</td>
                 <td className="px-3 py-2">
                   <div className="flex items-center gap-1">
-                    <SchoolLogoBadge {...logos.badge(r.loser_school_name || r.loser_school)} />
+                    <SchoolLogoBadge {...logos.badgeById(r.loser_school_id)} />
                     <div>
                       <Link href={`/wrestler/${r.loser_id}`} className="text-slate-500 hover:underline text-sm truncate block max-w-[130px]">
                         {r.loser_name}
                       </Link>
-                      <span className="text-[10px] text-slate-400 truncate block max-w-[130px]">{r.loser_school_name || r.loser_school}</span>
+                      <span className="text-[10px] text-slate-400 truncate block max-w-[130px]">{r.loser_school_id != null ? r.loser_school_name : 'TBD'}</span>
                     </div>
                   </div>
                 </td>

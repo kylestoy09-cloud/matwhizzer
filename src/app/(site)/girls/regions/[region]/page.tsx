@@ -10,6 +10,7 @@ import RegionVideo from '@/components/RegionVideo'
 import { PageHeader } from '@/components/PageHeader'
 import { getSchoolLogos } from '@/lib/school-logos'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
+import { SchoolTag } from '@/components/SchoolTag'
 
 const WEIGHTS = [100, 107, 114, 120, 126, 132, 138, 145, 152, 165, 185, 235]
 
@@ -31,6 +32,7 @@ type PlacementRow = {
   wrestler_name: string
   school: string | null
   school_name: string | null
+  school_id?: number | null
 }
 
 type MatTimeRow = {
@@ -38,6 +40,7 @@ type MatTimeRow = {
   wrestler_name: string
   school: string | null
   school_name: string | null
+  school_id?: number | null
   total_seconds: number
   match_count: number
 }
@@ -47,6 +50,7 @@ type FastestPinRow = {
   wrestler_name: string
   school: string | null
   school_name: string | null
+  school_id?: number | null
   fall_time_seconds: number
   weight: number
 }
@@ -56,6 +60,7 @@ type FastestTfRow = {
   wrestler_name: string
   school: string | null
   school_name: string | null
+  school_id?: number | null
   fall_time_seconds: number
   weight: number
 }
@@ -73,6 +78,7 @@ type TeamPtsRow = {
   wrestler_name: string
   school: string | null
   school_name: string | null
+  school_id?: number | null
   weight: number
   district_pts: number
   region_pts: number
@@ -97,7 +103,7 @@ function fmtTime(secs: number): string {
 
 // ── Sub-components ────────────────────────────────────────────────────────────
 
-function StatCard<T extends { wrestler_id: string; wrestler_name: string; school: string | null; school_name: string | null; logo_url?: string | null; bg_color?: string | null }>({
+function StatCard<T extends { wrestler_id: string; wrestler_name: string; school: string | null; school_name: string | null; school_id?: number | null; logo_url?: string | null; bg_color?: string | null }>({
   title,
   rows,
   subtitle,
@@ -177,11 +183,11 @@ export default async function GirlsRegionSummaryPage({
     ])
 
   const placements    = (placementsRes.data    ?? []) as PlacementRow[]
-  const matTime       = ((matTimeRes.data   ?? []) as MatTimeRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
-  const fastPin       = ((fastPinRes.data   ?? []) as FastestPinRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
-  const fastTf        = ((fastTfRes.data    ?? []) as FastestTfRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
+  const matTime       = ((matTimeRes.data   ?? []) as MatTimeRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
+  const fastPin       = ((fastPinRes.data   ?? []) as FastestPinRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
+  const fastTf        = ((fastTfRes.data    ?? []) as FastestTfRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
   const teamScore     = ((teamScoreRes.data ?? []) as TeamScoreRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
-  const teamPts       = ((teamPtsRes.data   ?? []) as TeamPtsRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
+  const teamPts       = ((teamPtsRes.data   ?? []) as TeamPtsRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
   const regionSchools = (regionSchoolsRes.data ?? []) as RegionSchoolRow[]
   const youtubeUrl = (videoRes.data?.youtube_url as string | null) ?? null
 
@@ -324,7 +330,7 @@ export default async function GirlsRegionSummaryPage({
                             )}
                           </div>
                           <span className="text-xs text-slate-500 truncate block">
-                            {p.school_name || p.school}
+                            <SchoolTag id={p.school_id} name={p.school_name} className="text-xs text-slate-500" />
                           </span>
                         </td>
                       )
@@ -349,21 +355,21 @@ export default async function GirlsRegionSummaryPage({
             title="The Terminators"
             note="Total Postseason Mat Time"
             rows={matTime}
-            subtitle={r => `${r.school_name || r.school || '—'} · ${r.match_count} wins`}
+            subtitle={r => `${r.school_id != null ? r.school_name : 'TBD'} · ${r.match_count} wins`}
             value={r => fmtTime(r.total_seconds)}
           />
 
           <StatCard<FastestPinRow>
             title="Quickest Deck"
             rows={fastPin}
-            subtitle={r => `${r.school_name || r.school || '—'} · ${r.weight} lb`}
+            subtitle={r => `${r.school_id != null ? r.school_name : 'TBD'} · ${r.weight} lb`}
             value={r => fmtTime(r.fall_time_seconds)}
           />
 
           <StatCard<FastestTfRow>
             title="Quickest Tech"
             rows={fastTf}
-            subtitle={r => `${r.school_name || r.school || '—'} · ${r.weight} lb`}
+            subtitle={r => `${r.school_id != null ? r.school_name : 'TBD'} · ${r.weight} lb`}
             value={r => fmtTime(r.fall_time_seconds)}
           />
 
@@ -407,15 +413,15 @@ export default async function GirlsRegionSummaryPage({
                 <div className="flex flex-wrap gap-2">
                   {schools.map(s => s.school_id ? (
                     <Link
-                      key={s.school}
+                      key={s.school_id ?? s.school}
                       href={`/girls/schools/${s.school_id}`}
                       className="px-3 py-1.5 text-sm font-medium bg-white border border-rose-200 rounded-full hover:border-rose-400 hover:bg-rose-50 transition-colors shadow-none"
                     >
-                      {s.school_name || s.school}
+                      <SchoolTag id={s.school_id} name={s.school_name} className="text-sm font-medium" />
                     </Link>
                   ) : (
-                    <span key={s.school} className="px-3 py-1.5 text-sm font-medium bg-white border border-rose-200 rounded-full text-slate-500">
-                      {s.school_name || s.school}
+                    <span key={s.school_id ?? s.school} className="px-3 py-1.5 text-sm font-medium bg-white border border-rose-200 rounded-full text-slate-500">
+                      <SchoolTag id={s.school_id} name={s.school_name} className="text-sm font-medium" />
                     </span>
                   ))}
                 </div>

@@ -5,6 +5,7 @@ import { getActiveSeason } from '@/lib/get-season'
 import { PostseasonLeaders } from '@/components/PostseasonLeaders'
 import { StateChampions } from '@/components/StateChampions'
 import { getSchoolLogos } from '@/lib/school-logos'
+import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 
 type WrestlerRow = { id: string; first_name: string; last_name: string }
 type SchoolRow   = { school: string; school_name: string; school_id: number | null; total_points: number; wrestler_count: number }
@@ -58,8 +59,8 @@ export default async function GirlsPostseasonPage({
   const showLeaderboards = q.length < 2 && sq.length < 2
 
   let topTeamScores: TeamScoreRow[] = []
-  let podiumSchools: { school_name: string; count: number }[] = []
-  let stateChampions: { weight: number; wrestler_id: string; wrestler_name: string; school: string; seed: number | null; logo_url?: string | null; bg_color?: string | null }[] = []
+  let podiumSchools: { school_id: number; school_name: string; count: number; logo_url: string | null; bg_color: string | null }[] = []
+  let stateChampions: { weight: number; wrestler_id: string; wrestler_name: string; school: string | null; school_id: number | null; seed: number | null; logo_url?: string | null; bg_color?: string | null }[] = []
 
   if (showLeaderboards) {
     const [teamScoreRes, placementsRes, championsRes, logos] = await Promise.all([
@@ -75,18 +76,19 @@ export default async function GirlsPostseasonPage({
     }))
     stateChampions = ((championsRes.data ?? []) as typeof stateChampions).map(r => ({
       ...r,
-      logo_url: logos.byName.get(r.school) ?? null,
-      bg_color: logos.bgByName.get(r.school) ?? null,
+      logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null,
+      bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null,
     }))
 
-    const schoolCounts = new Map<string, number>()
-    for (const p of ((placementsRes.data ?? []) as { school_name: string; school: string }[])) {
-      const name = p.school_name || p.school || ''
-      if (!name) continue
-      schoolCounts.set(name, (schoolCounts.get(name) ?? 0) + 1)
+    const schoolCounts = new Map<number, { name: string; count: number }>()
+    for (const p of ((placementsRes.data ?? []) as { school_name: string | null; school_id: number | null }[])) {
+      if (p.school_id == null || !p.school_name) continue
+      const c = schoolCounts.get(p.school_id) ?? { name: p.school_name, count: 0 }
+      c.count++
+      schoolCounts.set(p.school_id, c)
     }
     podiumSchools = [...schoolCounts.entries()]
-      .map(([school_name, count]) => ({ school_name, count }))
+      .map(([school_id, { name, count }]) => ({ school_id, school_name: name, count, logo_url: logos.byId.get(school_id) ?? null, bg_color: logos.bgById.get(school_id) ?? null }))
       .sort((a, b) => b.count - a.count)
       .slice(0, 20)
   }
@@ -109,10 +111,13 @@ export default async function GirlsPostseasonPage({
               <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2">
                 {podiumSchools.map(s => (
                   <div
-                    key={s.school_name}
+                    key={s.school_id}
                     className="flex items-center justify-between px-3 py-2.5 rounded-none border border-black bg-white shadow-none"
                   >
-                    <span className="text-sm font-medium text-slate-800 truncate">{s.school_name}</span>
+                    <span className="flex items-center gap-1.5 min-w-0">
+                      <SchoolLogoBadge logoUrl={s.logo_url} bgColor={s.bg_color} />
+                      <span className="text-sm font-medium text-slate-800 truncate">{s.school_name}</span>
+                    </span>
                     <span className="text-xs font-semibold text-amber-600 ml-2 shrink-0">{s.count}</span>
                   </div>
                 ))}

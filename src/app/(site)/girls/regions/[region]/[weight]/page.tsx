@@ -8,6 +8,7 @@ import { PageHeader } from '@/components/PageHeader'
 import { orderChampMatchesBySeed } from '@/lib/bracketOrder'
 import { getSchoolLogos } from '@/lib/school-logos'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
+import { SchoolTag } from '@/components/SchoolTag'
 
 type LogoMap = Awaited<ReturnType<typeof getSchoolLogos>>
 
@@ -26,6 +27,7 @@ type MatchRow = {
   winner_name: string | null
   winner_school: string | null
   winner_school_name: string | null
+  winner_school_id?: number | null
   winner_seed: number | null
   winner_grade: string | null
   loser_entry_id: string | null
@@ -33,6 +35,7 @@ type MatchRow = {
   loser_name: string | null
   loser_school: string | null
   loser_school_name: string | null
+  loser_school_id?: number | null
   loser_seed: number | null
   loser_grade: string | null
 }
@@ -147,6 +150,7 @@ function WrestlerRow({
   wrestlerId,
   name,
   school,
+  schoolId,
   seed,
   isWinner,
   hasResult,
@@ -154,6 +158,7 @@ function WrestlerRow({
   wrestlerId: string | null
   name: string | null
   school: string | null
+  schoolId?: number | null
   seed: number | null
   isWinner: boolean
   hasResult?: boolean
@@ -187,8 +192,8 @@ function WrestlerRow({
         )}
       </span>
       {!isBye && (
-        <span className="text-[11px] text-slate-400 shrink-0 max-w-[100px] truncate">
-          {school ?? ''}
+        <span className="text-[11px] text-slate-400 shrink-0 flex items-center">
+          <SchoolTag id={schoolId} name={school} maxWidth={100} className="text-[11px] text-slate-400" />
         </span>
       )}
     </div>
@@ -206,11 +211,11 @@ function MatchCard({ m, entrySlot }: { m: MatchRow; entrySlot?: Map<string, numb
   }
 
   const top = topIsWinner
-    ? { id: m.winner_wrestler_id, name: m.winner_name, school: m.winner_school, seed: m.winner_seed, won: true }
-    : { id: m.loser_wrestler_id, name: m.loser_name, school: m.loser_school, seed: m.loser_seed, won: false }
+    ? { id: m.winner_wrestler_id, name: m.winner_name, school: m.winner_school_name, schoolId: m.winner_school_id, seed: m.winner_seed, won: true }
+    : { id: m.loser_wrestler_id, name: m.loser_name, school: m.loser_school_name, schoolId: m.loser_school_id, seed: m.loser_seed, won: false }
   const bot = topIsWinner
-    ? { id: m.loser_wrestler_id, name: m.loser_name, school: m.loser_school, seed: m.loser_seed, won: false }
-    : { id: m.winner_wrestler_id, name: m.winner_name, school: m.winner_school, seed: m.winner_seed, won: true }
+    ? { id: m.loser_wrestler_id, name: m.loser_name, school: m.loser_school_name, schoolId: m.loser_school_id, seed: m.loser_seed, won: false }
+    : { id: m.winner_wrestler_id, name: m.winner_name, school: m.winner_school_name, schoolId: m.winner_school_id, seed: m.winner_seed, won: true }
 
   return (
     <div
@@ -221,6 +226,7 @@ function MatchCard({ m, entrySlot }: { m: MatchRow; entrySlot?: Map<string, numb
         wrestlerId={top.id}
         name={top.name}
         school={top.school}
+        schoolId={top.schoolId}
         seed={top.seed}
         isWinner={top.won}
       />
@@ -229,6 +235,7 @@ function MatchCard({ m, entrySlot }: { m: MatchRow; entrySlot?: Map<string, numb
         wrestlerId={bot.id}
         name={bot.name}
         school={bot.school}
+        schoolId={bot.schoolId}
         seed={bot.seed}
         isWinner={bot.won}
         hasResult={!!m.win_type}
@@ -251,6 +258,7 @@ type EntryRow = {
   wrestler_name: string
   school: string
   school_name: string
+  school_id?: number | null
   seed: number | null
   grade: string | null
   wins: number | null
@@ -280,8 +288,8 @@ function EntryWrestlerRow({ entry }: { entry: EntryRow }) {
           {record && <span className="text-[10px] text-slate-400 tabular-nums">{record}</span>}
         </div>
       </div>
-      <span className="text-[10px] text-slate-400 shrink-0 max-w-[100px] truncate">
-        {entry.school}
+      <span className="text-[10px] text-slate-400 shrink-0 flex items-center">
+        <SchoolTag id={entry.school_id} name={entry.school_name} maxWidth={100} />
       </span>
     </div>
   )
@@ -329,6 +337,7 @@ type RosterItem = {
   name: string
   school: string | null
   school_name: string | null
+  school_id?: number | null
   seed: number | null
   grade: string | null
 }
@@ -341,7 +350,7 @@ function buildRosterFromMatches(matches: MatchRow[]): RosterItem[] {
       seen.add(m.winner_wrestler_id)
       roster.push({
         wrestler_id: m.winner_wrestler_id, name: m.winner_name ?? '—',
-        school: m.winner_school, school_name: m.winner_school_name,
+        school: m.winner_school, school_name: m.winner_school_name, school_id: m.winner_school_id,
         seed: m.winner_seed, grade: m.winner_grade,
       })
     }
@@ -349,7 +358,7 @@ function buildRosterFromMatches(matches: MatchRow[]): RosterItem[] {
       seen.add(m.loser_wrestler_id)
       roster.push({
         wrestler_id: m.loser_wrestler_id, name: m.loser_name ?? '—',
-        school: m.loser_school, school_name: m.loser_school_name,
+        school: m.loser_school, school_name: m.loser_school_name, school_id: m.loser_school_id,
         seed: m.loser_seed, grade: m.loser_grade,
       })
     }
@@ -366,7 +375,7 @@ function buildRosterFromMatches(matches: MatchRow[]): RosterItem[] {
 function buildRosterFromEntries(entries: EntryRow[]): RosterItem[] {
   return entries.map(e => ({
     wrestler_id: e.wrestler_id, name: e.wrestler_name,
-    school: e.school, school_name: e.school_name,
+    school: e.school, school_name: e.school_name, school_id: e.school_id,
     seed: e.seed, grade: e.grade,
   })).sort((a, b) => {
     if (a.seed != null && b.seed != null) return a.seed - b.seed
@@ -399,13 +408,13 @@ function RosterTable({ roster, logos }: { roster: RosterItem[]; logos: LogoMap }
                 <td className="px-3 py-1.5 text-slate-400 text-xs tabular-nums">{r.seed ?? ''}</td>
                 <td className="px-3 py-1.5">
                   <div className="flex items-center gap-1.5">
-                    <SchoolLogoBadge {...logos.badge(r.school_name || r.school)} />
+                    <SchoolLogoBadge {...logos.badgeById(r.school_id)} />
                     <Link href={`/girls/wrestler/${r.wrestler_id}`} className="font-medium text-slate-700 hover:underline">
                       {r.name}
                     </Link>
                   </div>
                 </td>
-                <td className="px-3 py-1.5 text-slate-500 text-xs">{r.school_name || r.school || '—'}</td>
+                <td className="px-3 py-1.5 text-slate-500 text-xs">{r.school_id != null ? r.school_name : 'TBD'}</td>
                 <td className="px-3 py-1.5 text-slate-400 text-xs">{r.grade ?? ''}</td>
               </tr>
             ))}
@@ -462,8 +471,8 @@ function DistrictQualifiers({ champs }: { champs: DistrictChamp[] }) {
                       WD
                     </span>
                   )}
-                  <span className="text-[10px] text-slate-400 truncate ml-auto shrink-0">
-                    {dc.school_name}
+                  <span className="text-[10px] text-slate-400 ml-auto shrink-0 flex items-center">
+                    <SchoolTag id={dc.school_id} name={dc.school_name} maxWidth={120} />
                   </span>
                 </div>
               ))}
@@ -574,8 +583,9 @@ export default async function GirlsRegionBracketPage({
   ])
 
   const matches = (matchData ?? []) as MatchRow[]
-  const entries = (entryData ?? []) as (BracketEntry & { tournament_id: number; weight_class_id: number })[]
-  const rawChamps = (champData ?? []) as DistrictChamp[]
+  const entries = ((entryData ?? []) as (BracketEntry & { tournament_id: number; weight_class_id: number })[])
+    .map(e => ({ ...e, badge: logos.badgeById(e.school_id) }))
+  const rawChamps = ((champData ?? []) as DistrictChamp[]).map(dc => ({ ...dc, badge: logos.badgeById(dc.school_id) }))
 
   // Annotate district placers who withdrew (not in region entries) and their replacements
   const entryWrestlerIds = new Set(entries.map(e => e.wrestler_id))

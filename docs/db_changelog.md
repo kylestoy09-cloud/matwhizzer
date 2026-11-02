@@ -2,6 +2,56 @@
 
 ---
 
+## 2026-11-02 — Site functions name schools by id (no bracket text on the site)
+
+**Migration file:** `docs/migrations/20261102_site_school_ids.sql`. Old definitions (rollback): `docs/migrations/backups/20261102_site_functions_before.sql`
+
+**Purpose:** The postseason pages showed `tournament_entries.school_context_raw`, the bracket's own text ("Northern Highlands Regional Sc", "Waldwick / Midland Park"), translated through `school_names` where a row existed. Raw imported text must never reach the site (Kyle), and the logo lookup by those names missed: 7 of 12 logos on /boys/regions/1/150.
+
+**Changes:** 27 functions return the school id (new columns at the end) and fill their school text columns with `school_display_name(school_id, season, gender)`, or NULL when the entry has no school (pages show TBD). None reads `school_context_raw` or `school_names` any more.
+- Brackets: `district_bracket`, `region_bracket`, `girls_region_bracket`, `state_bracket`
+- Bracket entries: `region_bracket_entries_v2`, `girls_region_bracket_entries_v2`, `state_bracket_entries_v2`
+- Placements: `district_placements`, `region_placements`, `girls_region_placements`, `state_placements(gender, season)`. State keeps its fallback to the region or district entry's school.
+- `region_district_champs`, `girls_region_district_champs`
+- Fastest pins and techs: `district_`, `region_`, `girls_region_fastest_pin` / `_tf`
+- `district_team_pts`, `district_schools`, `region_schools`, `girls_region_schools` (one row per school, not per bracket spelling)
+- `ghost_champions`, `state_champions`, `bracket_buster_detail`, `get_wrestler_revenge_wins` (the opponent's school is his entry in the revenge bout)
+- `ghost_champions` and `get_wrestler_ghost_championships`: each win on the path also carries `opponent_id` and `opponent_school_id`
+- Not changed: `state_placements(gender)` without a season (nothing calls it)
+
+**PENDING** — to run in the Supabase SQL editor
+
+**Reversible?** Yes — drop the new versions and run the backup file
+**Verified?** Pending
+
+---
+
+## 2026-11-02 — Every named bout side linked to a profile
+
+**Script:** `scripts/resolve_unlinked_bouts.mts`. Record: `docs/migrations/backups/20261102_unlinked_bouts_resolved.json` (before, every changed side's wrestler or school id was NULL)
+
+**Purpose:** Bout sides with a name but no wrestler id fell back to the imported name on the site, and their bouts were missing from the wrestler's record. Kyle: "we should be resolving bout data not letting it linger".
+
+**Data changes:**
+- **Links:** 137 sides linked (boys duals 136, boys in-season tournaments 86, girls in-season tournaments 14, counted before the run). A side links to a profile only when exactly one same-gender profile with that name already wrestles at that school.
+- **New profiles:** 48 created, mostly out-of-state opponents at King of the Castle (DE) and Escape the Rock (PA).
+- **Stale aliases:** for 8 wrestlers, the school's name alias pointed at a same-name profile from another school (same season, other weights, often bouts on the same day). Each got his own profile and the alias moved to it: Anthony Rodriguez (Lakeland), Christian Ramirez (Lakeland), Kevin Hernandez (Lyndhurst-North Arlington), Anthony Flores (Pemberton), Cristian Garcia (Penns Grove), Youssef Adam (Raritan), Aiden Brown (Scotch Plains-Fanwood), Aiden Gonzalez (Somerville).
+- **Split:** Sebastian Soto: Hopewell Valley (132) split off the Roxbury profile (144/150), with his 2 Robin Leff bouts.
+- **Schools:** 44 linked tournament sides got their school id from the bout's school text (Northern Valley Regional (Old Tappan), Eastside (Paterson), Delaware schools).
+- **Burlington County Tournament:** 5 bouts read "Name (BCIT | Westampton)" and were split on the pipe. Name, school (Westampton Tech) and round (UNK) fixed.
+- **Left empty:** 26 sides that aren't wrestlers ("Unknown", "Forfeit Forfeit", "Medical Forfeit").
+- **Afterwards:** boys 2025-26 ratings rebuilt (archive), girls 2025-26 ratings recalculated, leaderboard tables refreshed. Score backups: `20261102_{boys,girls}_2025-26_wrr_scores_before_relink.json.gz`.
+
+**APPLIED** — 2026-11-02 by script
+
+**Reversible?** Yes, from the record (unset the listed ids)
+**Verified?** Yes:
+- 0 unlinked named sides in boys and girls duals
+- 0 unlinked in girls tournaments; boys tournaments only the 26 non-wrestler sides
+- all 35 integrity rules at the same counts as before
+
+---
+
 ## 2026-11-02 — Leaderboards list each wrestler at his rating weight
 
 **Migration file:** `docs/migrations/20261102_leaderboards_v2_weight.sql`

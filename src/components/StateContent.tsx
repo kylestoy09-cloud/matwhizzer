@@ -6,28 +6,29 @@ import { TeamScoreCard } from '@/components/TeamScoreCard'
 import { IndividualTeamPoints } from '@/components/IndividualTeamPoints'
 import { getSchoolLogos } from '@/lib/school-logos'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
+import { SchoolTag } from '@/components/SchoolTag'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
 type PlacementRow = {
   weight: number; place: number; wrestler_id: string
-  wrestler_name: string; school: string | null; school_name: string | null
+  wrestler_name: string; school: string | null; school_name: string | null; school_id?: number | null
 }
 type MatTimeRow = {
   wrestler_id: string; wrestler_name: string
-  school: string | null; school_name: string | null
+  school: string | null; school_name: string | null; school_id?: number | null
   total_seconds: number; match_count: number
 }
 type FastestPinRow = {
   wrestler_id: string; wrestler_name: string
-  school: string | null; school_name: string | null
+  school: string | null; school_name: string | null; school_id?: number | null
   fall_time_seconds: number; weight: number
 }
 type FastestTfRow = FastestPinRow
 type TeamScoreRow = { school: string; school_name: string | null; school_id: number | null; total_points: number }
 type TeamPtsRow = {
   wrestler_id: string; wrestler_name: string;
-  school: string | null; school_name: string | null;
+  school: string | null; school_name: string | null; school_id?: number | null;
   weight: number; team_points: number
 }
 
@@ -42,7 +43,7 @@ function fmtTime(secs: number): string {
 
 // ── Sub-components ────────────────────────────────────────────────────────────
 
-function StatCard<T extends { wrestler_id: string; wrestler_name: string; school: string | null; school_name: string | null; logo_url?: string | null; bg_color?: string | null }>({
+function StatCard<T extends { wrestler_id: string; wrestler_name: string; school: string | null; school_name: string | null; school_id?: number | null; logo_url?: string | null; bg_color?: string | null }>({
   title, rows, subtitle, value, note,
 }: {
   title: string; rows: T[]
@@ -124,19 +125,19 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
     ])
 
   const placements     = (placementsRes.data     ?? []) as PlacementRow[]
-  const matTime        = ((matTimeRes.data ?? []) as MatTimeRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
-  const fastPin        = ((fastPinRes.data ?? []) as FastestPinRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
-  const fastTf         = ((fastTfRes.data ?? []) as FastestTfRow[]).map(r => ({ ...r, logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null }))
+  const matTime        = ((matTimeRes.data ?? []) as MatTimeRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
+  const fastPin        = ((fastPinRes.data ?? []) as FastestPinRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
+  const fastTf         = ((fastTfRes.data ?? []) as FastestTfRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
   const teamScore      = ((teamScoreRes.data ?? []) as TeamScoreRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
-  const teamPts        = ((teamPtsRes.data ?? []) as { wrestler_id: string; wrestler_name: string; school: string | null; school_name: string | null; total_points: number; win_count: number }[])
-    .map(r => ({ wrestler_id: r.wrestler_id, wrestler_name: r.wrestler_name, school: r.school, school_name: r.school_name, weight: 0, team_points: Number(r.total_points), logo_url: logos.byName.get(r.school_name || r.school || '') ?? null, bg_color: logos.bgByName.get(r.school_name || r.school || '') ?? null })) as TeamPtsRow[]
+  const teamPts        = ((teamPtsRes.data ?? []) as { wrestler_id: string; wrestler_name: string; school: string | null; school_name: string | null; school_id: number | null; total_points: number; win_count: number }[])
+    .map(r => ({ wrestler_id: r.wrestler_id, wrestler_name: r.wrestler_name, school: r.school, school_name: r.school_name, school_id: r.school_id, weight: 0, team_points: Number(r.total_points), logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null })) as TeamPtsRow[]
   const distStrength   = ((distStrengthRes.data   ?? []) as { district_name: string; wrestlers_advancing: number; state_qualifiers: number }[])
     .sort((a, b) => b.state_qualifiers - a.state_qualifiers)
   const podiumDist     = ((podiumDistRes.data ?? []) as { district_id: number; district_name: string; podium_count: number }[])
   const margins        = ((marginsRes.data ?? []) as { weight: number; avg_margin: number; match_count: number }[]).sort((a, b) => Number(a.avg_margin) - Number(b.avg_margin))
 
   type GhostChamp = {
-    seed: number; wrestler_id: string; wrestler_name: string; school: string
+    seed: number; wrestler_id: string; wrestler_name: string; school: string | null; school_id: number | null
     weight: number; gender: string; tournament_name: string; tournament_type: string
     wins_on_path: { round: string; opponent: string; opponent_seed: number | null; win_type: string; fall_time: number | null }[] | null
   }
@@ -223,7 +224,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
                             )}
                           </div>
                           <span className="text-xs text-slate-500 truncate block">
-                            {p.school_name || p.school}
+                            <SchoolTag id={p.school_id} name={p.school_name} className="text-xs text-slate-500" />
                           </span>
                         </td>
                       )
@@ -244,19 +245,19 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
             title="The Terminators"
             note="Total Tourney Mat Time"
             rows={matTime}
-            subtitle={r => `${r.school_name || r.school || '—'} · ${r.match_count} wins`}
+            subtitle={r => `${r.school_id != null ? r.school_name : 'TBD'} · ${r.match_count} wins`}
             value={r => fmtTime(r.total_seconds)}
           />
           <StatCard<FastestPinRow>
             title="Quickest Deck"
             rows={fastPin}
-            subtitle={r => `${r.school_name || r.school || '—'} · ${r.weight} lb`}
+            subtitle={r => `${r.school_id != null ? r.school_name : 'TBD'} · ${r.weight} lb`}
             value={r => fmtTime(r.fall_time_seconds)}
           />
           <StatCard<FastestTfRow>
             title="Quickest Tech"
             rows={fastTf}
-            subtitle={r => `${r.school_name || r.school || '—'} · ${r.weight} lb`}
+            subtitle={r => `${r.school_id != null ? r.school_name : 'TBD'} · ${r.weight} lb`}
             value={r => fmtTime(r.fall_time_seconds)}
           />
           <TeamScoreCard rows={teamScore} />
@@ -370,7 +371,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
                   <span className="text-2xl font-black text-amber-500 w-10 text-center shrink-0">
                     {gc.seed}
                   </span>
-                  <SchoolLogoBadge {...logos.badge(gc.school)} />
+                  <SchoolLogoBadge {...logos.badgeById(gc.school_id)} />
                   <div className="flex-1 min-w-0">
                     <Link
                       href={`/wrestler/${gc.wrestler_id}`}
@@ -378,7 +379,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
                     >
                       {gc.wrestler_name}
                     </Link>
-                    <div className="text-xs text-slate-500">{gc.school} · {gc.weight}lb</div>
+                    <div className="text-xs text-slate-500">{gc.school_id != null ? gc.school : 'TBD'} · {gc.weight}lb</div>
                   </div>
                 </div>
                 {gc.wins_on_path && gc.wins_on_path.length > 0 && (
