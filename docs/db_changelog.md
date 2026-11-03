@@ -2,26 +2,38 @@
 
 ---
 
-## 2026-11-02 — Three duplicate girls profiles merged; girls region placements to 6th
+## 2026-11-02 — Three duplicate girls profiles merged
 
-**Migration file:** `docs/migrations/20261102_merge_girls_duplicate_profiles.sql`. Backup: `docs/migrations/backups/20261102_girls_duplicate_profiles_before.json`
+**Script:** `scripts/merge_girls_duplicates_20261102.mts`. Backup: `docs/migrations/backups/20261102_girls_duplicate_profiles_before.json`
 
 **Purpose:** Completing the truncated names showed three girls with two profiles each (same school, same weight). Approved by Kyle.
 - Yuridia Figueroa → Yuridia Figueroa Bravo (Lakewood, 107)
 - Madison Garcia → Madison Garcia-Xoloc (Rahway, 132)
 - Ellis Beaumont-Torres 7d09c170 → 8b0b4c4e (Rahway, 126)
 
-Girls regions place six (5th place bouts in all four regions), but `girls_region_placements` read only the final and the 3rd place bout.
+A first try as one SQL file stopped on a foreign-key error and rolled back. The rating log's `opponent_wrestler_id` still named the duplicates (13 rows of other girls' bouts). Per the FK rule, nothing was deleted to get past it.
 
-**Changes:**
-- Moved to the kept profile: 1 entry, 6 duals, 7 tournament bouts, 2 name aliases.
-- Removed the duplicate's rating, rating-log and leaderboard rows. They're rebuilt by the next ratings run.
-- Deleted the 3 empty profiles, with the delete guard opened for that transaction.
-- `girls_region_placements` reads the 5th place bout too.
+**Data changes:** done in stages, as in `scripts/merge_duplicate_profiles.mts`:
+1. Moved 1 entry, 6 duals, 7 tournament bouts and 2 name aliases to the kept profile. Removed the duplicate's own derived rows (rating, rating log, snapshot streaks, leaderboard rows).
+2. Girls 2025-26 ratings rebuilt, which rewrote the opponent links (2,403 → 2,401 rated). Leaderboards refreshed.
+3. Recounted every reference (0), then deleted the 3 empty profiles.
+
+**APPLIED** — 2026-11-02 by script
+
+**Reversible?** Yes, from the backup
+**Verified?** Yes — 0 references left before each delete
+
+---
+
+## 2026-11-02 — Girls region placements to 6th
+
+**Migration file:** `docs/migrations/20261102_girls_region_placements_6th.sql`
+
+**Purpose:** Girls regions place six (5th place bouts in all four regions), but `girls_region_placements` read only the final and the 3rd place bout. The overview table now has six columns.
 
 **PENDING** — to run in the Supabase SQL editor
 
-**Reversible?** Yes, from the backup
+**Reversible?** Yes — the version in `20261102_site_school_ids.sql`
 **Verified?** Pending
 
 ---
