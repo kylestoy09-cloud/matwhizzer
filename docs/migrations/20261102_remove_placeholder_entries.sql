@@ -37,6 +37,10 @@ BEGIN
     'ec4aa6c8-fdac-4e6a-a6f8-0eaf43d02f89') AND school_id IS NULL;
   IF n <> 19 THEN RAISE EXCEPTION 'expected 19 filler entries, found %', n; END IF;
 
+  -- counted, backed up and approved (Kyle, 2026-11-02): open the protected-delete guard for
+  -- this transaction only (20261026_guard_protected_deletes.sql)
+  PERFORM set_config('matwhizzer.allow_protected_delete', 'on', true);
+
   UPDATE matches SET loser_entry_id = NULL, win_type = 'BYE' WHERE id IN (
     'eb48078a-91b6-41e3-b1c8-d6f4bd90accb',
     '9e2dc757-2b59-41ee-b633-05fefe440353',

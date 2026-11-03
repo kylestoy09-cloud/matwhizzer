@@ -47,10 +47,11 @@ export default async function TournamentDetailPage({
     id, weight_class, round, winner,
     result_type, result_detail, fall_time_seconds, result_time_estimated,
     winner_score, loser_score,
-    wrestler1_id, wrestler1_name_raw, wrestler1_school_raw,
-    wrestler2_id, wrestler2_name_raw, wrestler2_school_raw,
-    wrestler1_school:schools!wrestler1_school_id(id, display_name, is_nj),
-    wrestler2_school:schools!wrestler2_school_id(id, display_name, is_nj)
+    wrestler1_id, wrestler1_name_raw, wrestler2_id, wrestler2_name_raw,
+    w1:wrestlers!wrestler1_id(first_name, last_name),
+    w2:wrestlers!wrestler2_id(first_name, last_name),
+    wrestler1_school:schools!wrestler1_school_id(id, display_name, is_nj, logo_url, header_background),
+    wrestler2_school:schools!wrestler2_school_id(id, display_name, is_nj, logo_url, header_background)
   `
   const TOURN_SELECT = 'id, name, start_date, end_date, location, source_format, tournament_type, podium_depth'
   const PAGE = 1000
@@ -81,8 +82,9 @@ export default async function TournamentDetailPage({
     supabase
       .from('tournament_placements')
       .select(`
-        weight_class, place, wrestler_name_raw, school_name_raw, school_id, wrestler_id,
-        school:schools!school_id(display_name, is_nj)
+        weight_class, place, wrestler_name_raw, school_id, wrestler_id,
+        wrestler:wrestlers!wrestler_id(first_name, last_name),
+        school:schools!school_id(id, display_name, is_nj, logo_url, header_background)
       `)
       .eq('in_season_tournament_id', id)
       .lte('place', 8)
@@ -110,13 +112,28 @@ export default async function TournamentDetailPage({
       .single(),
     supabase
       .from('in_season_tournament_team_scores')
-      .select('place, school_name, school_id, score, school:schools!school_id(is_nj, display_name)')
+      .select('place, school_id, score, school:schools!school_id(id, is_nj, display_name, logo_url, header_background)')
       .eq('tournament_id', id)
-      .order('place')
-      .order('school_name'),
+      .order('place'),
   ])
 
   const tournData = { ...tournBase, ...(venueData ?? {}) }
+
+  // Names come from the wrestler's profile and schools from the school id; the imported text
+  // never reaches the page. A side with no wrestler is a forfeit slot or an unknown opponent.
+  type Person = { first_name: string; last_name: string } | null
+  const personName = (p: Person, raw: string | null) =>
+    p ? `${p.first_name} ${p.last_name}`.trim()
+      : !raw?.trim() ? ''
+      : /forf|forefit/i.test(raw) ? 'Forfeit' : 'Unknown'
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const bouts = (boutsData ?? []).map(({ wrestler1_name_raw, wrestler2_name_raw, w1, w2, ...b }: any) => ({
+    ...b, wrestler1_name: personName(w1, wrestler1_name_raw), wrestler2_name: personName(w2, wrestler2_name_raw),
+  }))
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const placements = (placementsData ?? []).map(({ wrestler_name_raw, wrestler, ...p }: any) => ({
+    ...p, wrestler_name: personName(wrestler, wrestler_name_raw),
+  }))
 
   // Compute banner colors server-side
   const t = tournData as any
@@ -141,8 +158,8 @@ export default async function TournamentDetailPage({
       </Link>
       <TournamentPageClient
         tournament={tournData as any}
-        allBouts={(boutsData ?? []) as any}
-        placements={(placementsData ?? []) as any}
+        allBouts={bouts as any}
+        placements={placements as any}
         teamScores={(teamScoresData ?? []) as any}
         bannerBg={bannerBg}
         bannerFg={bannerFg}

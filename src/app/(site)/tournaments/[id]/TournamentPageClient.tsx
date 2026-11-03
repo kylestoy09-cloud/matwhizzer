@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
+import { SchoolTagView, badgeOfSchool } from '@/components/SchoolTagView'
 import { Stardos_Stencil } from 'next/font/google'
 import { TournamentBoutList } from './TournamentBoutList'
 
@@ -9,7 +10,7 @@ const stardos = Stardos_Stencil({ weight: '700', subsets: ['latin'] })
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
-type School = { id: number; display_name: string; is_nj: boolean }
+type School = { id: number; display_name: string; is_nj: boolean; logo_url?: string | null; header_background?: string | null }
 
 type Bout = {
   id: string
@@ -23,23 +24,20 @@ type Bout = {
   winner_score: number | null
   loser_score: number | null
   wrestler1_id: string | null
-  wrestler1_name_raw: string
-  wrestler1_school_raw: string
+  wrestler1_name: string
   wrestler1_school: School | null
   wrestler2_id: string | null
-  wrestler2_name_raw: string
-  wrestler2_school_raw: string
+  wrestler2_name: string
   wrestler2_school: School | null
 }
 
 type Placement = {
   weight_class: number
   place: number
-  wrestler_name_raw: string
-  school_name_raw: string
+  wrestler_name: string
   school_id: number | null
   wrestler_id: string | null
-  school: { display_name: string; is_nj: boolean } | null
+  school: { id: number; display_name: string; is_nj: boolean; logo_url?: string | null; header_background?: string | null } | null
 }
 
 type Tournament = {
@@ -59,10 +57,9 @@ type Tournament = {
 
 type TeamScore = {
   place: number
-  school_name: string
   school_id: number | null
   score: number
-  school: { is_nj: boolean; display_name: string } | null
+  school: { id: number; is_nj: boolean; display_name: string; logo_url?: string | null; header_background?: string | null } | null
 }
 
 type TeamStat = {
@@ -193,10 +190,10 @@ function computeLeaders(teamStats: Map<number, TeamStat>, bouts: Bout[]): Leader
   const fastestPinBout = pinCandidates[0] ?? null
   const fastestPin = fastestPinBout ? {
     bout: fastestPinBout,
-    winnerName:   fastestPinBout.winner === 1 ? fastestPinBout.wrestler1_name_raw : fastestPinBout.wrestler2_name_raw,
+    winnerName:   fastestPinBout.winner === 1 ? fastestPinBout.wrestler1_name : fastestPinBout.wrestler2_name,
     winnerSchool: fastestPinBout.winner === 1
-      ? (fastestPinBout.wrestler1_school?.display_name ?? fastestPinBout.wrestler1_school_raw)
-      : (fastestPinBout.wrestler2_school?.display_name ?? fastestPinBout.wrestler2_school_raw),
+      ? (fastestPinBout.wrestler1_school?.display_name ?? 'TBD')
+      : (fastestPinBout.wrestler2_school?.display_name ?? 'TBD'),
   } : null
 
   const techCandidates = bouts
@@ -205,10 +202,10 @@ function computeLeaders(teamStats: Map<number, TeamStat>, bouts: Bout[]): Leader
   const fastestTechBout = techCandidates[0] ?? null
   const fastestTech = fastestTechBout ? {
     bout: fastestTechBout,
-    winnerName:   fastestTechBout.winner === 1 ? fastestTechBout.wrestler1_name_raw : fastestTechBout.wrestler2_name_raw,
+    winnerName:   fastestTechBout.winner === 1 ? fastestTechBout.wrestler1_name : fastestTechBout.wrestler2_name,
     winnerSchool: fastestTechBout.winner === 1
-      ? (fastestTechBout.wrestler1_school?.display_name ?? fastestTechBout.wrestler1_school_raw)
-      : (fastestTechBout.wrestler2_school?.display_name ?? fastestTechBout.wrestler2_school_raw),
+      ? (fastestTechBout.wrestler1_school?.display_name ?? 'TBD')
+      : (fastestTechBout.wrestler2_school?.display_name ?? 'TBD'),
   } : null
 
   return { mostWins, mostPins, mostTechs, highestBonus, fastestPin, fastestTech }
@@ -477,10 +474,10 @@ export function TournamentPageClient({
                             onClick={() => selectedSchool === s.school_id ? setSelectedSchool(null) : selectFromScores(s.school_id!)}
                             className={`text-left hover:underline ${selectedSchool === s.school_id ? 'text-white' : 'text-slate-800'}`}
                           >
-                            {s.school?.display_name ?? s.school_name}
+                            <SchoolTagView id={s.school?.id} name={s.school?.display_name} badge={badgeOfSchool(s.school)} className="" />
                           </button>
                         ) : (
-                          <span className="text-slate-800">{s.school_name}</span>
+                          <span className="text-slate-800"><SchoolTagView id={s.school?.id} name={s.school?.display_name} badge={badgeOfSchool(s.school)} className="" /></span>
                         )}
                         {isNjAtOos && selectedSchool !== s.school_id && (
                           <span className="ml-2 text-[10px] font-semibold text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded-full">NJSIAA</span>
@@ -588,12 +585,12 @@ export function TournamentPageClient({
                           <td className="px-3 py-1 text-xs font-semibold text-slate-400">{p.weight_class}</td>
                           <td className="px-3 py-1 text-xs font-medium">
                             {p.wrestler_id ? (
-                              <Link href={`/wrestler/${p.wrestler_id}`} className="text-slate-800 hover:underline">{p.wrestler_name_raw}</Link>
+                              <Link href={`/wrestler/${p.wrestler_id}`} className="text-slate-800 hover:underline">{p.wrestler_name}</Link>
                             ) : (
-                              <span className="text-slate-800">{p.wrestler_name_raw}</span>
+                              <span className="text-slate-800">{p.wrestler_name}</span>
                             )}
                           </td>
-                          <td className="px-3 py-1 text-xs text-slate-400">{p.school?.display_name ?? p.school_name_raw}</td>
+                          <td className="px-3 py-1 text-xs text-slate-400"><SchoolTagView id={p.school?.id} name={p.school?.display_name} badge={badgeOfSchool(p.school)} className="text-xs text-slate-400" /></td>
                           <td className="px-3 py-1 text-xs font-semibold text-slate-500">{PLACE_LABEL[p.place] ?? `${p.place}th`}</td>
                         </tr>
                       ))}
@@ -623,11 +620,11 @@ export function TournamentPageClient({
                           return p ? (
                             <span>
                               {p.wrestler_id ? (
-                                <Link href={`/wrestler/${p.wrestler_id}`} className="font-medium text-slate-800 hover:underline">{p.wrestler_name_raw}</Link>
+                                <Link href={`/wrestler/${p.wrestler_id}`} className="font-medium text-slate-800 hover:underline">{p.wrestler_name}</Link>
                               ) : (
-                                <span className="font-medium text-slate-800">{p.wrestler_name_raw}</span>
+                                <span className="font-medium text-slate-800">{p.wrestler_name}</span>
                               )}
-                              <span className="ml-1 text-slate-400">{p.school?.display_name ?? p.school_name_raw}</span>
+                              <span className="ml-1 inline-flex align-middle"><SchoolTagView id={p.school?.id} name={p.school?.display_name} badge={badgeOfSchool(p.school)} className="text-xs text-slate-400" /></span>
                             </span>
                           ) : <span className="text-slate-300">—</span>
                         }
@@ -657,11 +654,11 @@ export function TournamentPageClient({
                             <span className="text-[11px] font-semibold text-slate-400 w-7 shrink-0">{PLACE_LABEL[p.place] ?? `${p.place}th`}</span>
                             <span className="min-w-0">
                               {p.wrestler_id ? (
-                                <Link href={`/wrestler/${p.wrestler_id}`} className="font-medium text-slate-800 hover:underline">{p.wrestler_name_raw}</Link>
+                                <Link href={`/wrestler/${p.wrestler_id}`} className="font-medium text-slate-800 hover:underline">{p.wrestler_name}</Link>
                               ) : (
-                                <span className="font-medium text-slate-800">{p.wrestler_name_raw}</span>
+                                <span className="font-medium text-slate-800">{p.wrestler_name}</span>
                               )}
-                              <span className="ml-1 text-slate-400 text-[11px]">{p.school?.display_name ?? p.school_name_raw}</span>
+                              <span className="ml-1 inline-flex align-middle"><SchoolTagView id={p.school?.id} name={p.school?.display_name} badge={badgeOfSchool(p.school)} className="text-[11px] text-slate-400" /></span>
                             </span>
                           </div>
                         ))}

@@ -33,3 +33,8 @@ export function SchoolTagView({
     </span>
   )
 }
+
+// A school row fetched with its logo columns → the badge SchoolTagView takes
+export function badgeOfSchool(s: { logo_url?: string | null; header_background?: string | null } | null | undefined): SchoolBadge | null {
+  return s ? { logoUrl: s.logo_url ?? null, bgColor: s.header_background ?? null } : null
+}

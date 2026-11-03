@@ -1,8 +1,9 @@
 'use client'
 
 import Link from 'next/link'
+import { SchoolTagView, badgeOfSchool } from '@/components/SchoolTagView'
 
-type School = { id: number; display_name: string; is_nj: boolean }
+type School = { id: number; display_name: string; is_nj: boolean; logo_url?: string | null; header_background?: string | null }
 
 type Bout = {
   id: string
@@ -16,12 +17,10 @@ type Bout = {
   winner_score: number | null
   loser_score: number | null
   wrestler1_id: string | null
-  wrestler1_name_raw: string
-  wrestler1_school_raw: string
+  wrestler1_name: string
   wrestler1_school: School | null
   wrestler2_id: string | null
-  wrestler2_name_raw: string
-  wrestler2_school_raw: string
+  wrestler2_name: string
   wrestler2_school: School | null
 }
 
@@ -141,20 +140,22 @@ export function TournamentBoutList({
             const isBye = (b.result_type ?? '').toUpperCase() === 'BYE'
             const isDff = (b.result_type ?? '').toUpperCase() === 'DFF'
 
-            const winnerName   = b.winner === 1 ? b.wrestler1_name_raw : b.winner === 2 ? b.wrestler2_name_raw : null
+            const winnerName   = b.winner === 1 ? b.wrestler1_name : b.winner === 2 ? b.wrestler2_name : null
             const winnerId     = b.winner === 1 ? b.wrestler1_id        : b.winner === 2 ? b.wrestler2_id        : null
             const winnerSchool = b.winner === 1
-              ? (b.wrestler1_school?.display_name ?? b.wrestler1_school_raw)
+              ? (b.wrestler1_school?.display_name ?? 'TBD')
               : b.winner === 2
-              ? (b.wrestler2_school?.display_name ?? b.wrestler2_school_raw)
+              ? (b.wrestler2_school?.display_name ?? 'TBD')
               : null
+            const winnerSch    = b.winner === 1 ? b.wrestler1_school : b.winner === 2 ? b.wrestler2_school : null
+            const loserSch     = b.winner === 1 ? b.wrestler2_school : b.winner === 2 ? b.wrestler1_school : null
             const winnerIsNJ   = b.winner === 1 ? (b.wrestler1_school?.is_nj ?? true) : (b.wrestler2_school?.is_nj ?? true)
-            const loserName    = b.winner === 1 ? b.wrestler2_name_raw : b.winner === 2 ? b.wrestler1_name_raw : null
+            const loserName    = b.winner === 1 ? b.wrestler2_name : b.winner === 2 ? b.wrestler1_name : null
             const loserId      = b.winner === 1 ? b.wrestler2_id        : b.winner === 2 ? b.wrestler1_id        : null
             const loserSchool  = b.winner === 1
-              ? (b.wrestler2_school?.display_name ?? b.wrestler2_school_raw)
+              ? (b.wrestler2_school?.display_name ?? 'TBD')
               : b.winner === 2
-              ? (b.wrestler1_school?.display_name ?? b.wrestler1_school_raw)
+              ? (b.wrestler1_school?.display_name ?? 'TBD')
               : null
             const loserIsNJ    = b.winner === 1 ? (b.wrestler2_school?.is_nj ?? true) : (b.wrestler1_school?.is_nj ?? true)
 
@@ -169,8 +170,8 @@ export function TournamentBoutList({
                 <td className="px-3 py-1 text-xs font-medium">
                   {isBye ? (
                     b.wrestler1_id
-                      ? <Link href={`/wrestler/${b.wrestler1_id}`} className="text-slate-800 hover:underline">{b.wrestler1_name_raw}</Link>
-                      : <span className="text-slate-800">{b.wrestler1_name_raw}</span>
+                      ? <Link href={`/wrestler/${b.wrestler1_id}`} className="text-slate-800 hover:underline">{b.wrestler1_name}</Link>
+                      : <span className="text-slate-800">{b.wrestler1_name}</span>
                   ) : isDff || !winnerName ? (
                     <span className="text-slate-300">—</span>
                   ) : winnerId ? (
@@ -184,13 +185,13 @@ export function TournamentBoutList({
                 <td className="px-3 py-1 text-slate-400 text-xs whitespace-nowrap">
                   {isBye ? (
                     <>
-                      {b.wrestler1_school?.display_name ?? b.wrestler1_school_raw}
+                      <SchoolTagView id={b.wrestler1_school?.id} name={b.wrestler1_school?.display_name} badge={badgeOfSchool(b.wrestler1_school)} className="text-xs text-slate-400" />
                       {!isOutside && !(b.wrestler1_school?.is_nj ?? true) && <span className="ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full bg-blue-900 text-white">Non-NJSIAA</span>}
                       {isOutside && (b.wrestler1_school?.is_nj ?? false) && <span className="ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full bg-blue-900 text-white">NJSIAA</span>}
                     </>
                   ) : isDff ? '—' : (
                     <>
-                      {winnerSchool ?? '—'}
+                      {winnerName ? <SchoolTagView id={winnerSch?.id} name={winnerSch?.display_name} badge={badgeOfSchool(winnerSch)} className="text-xs text-slate-400" /> : '—'}
                       {!isOutside && winnerSchool && !winnerIsNJ && <span className="ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full bg-blue-900 text-white">Non-NJSIAA</span>}
                       {isOutside && winnerSchool && winnerIsNJ && <span className="ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full bg-blue-900 text-white">NJSIAA</span>}
                     </>
@@ -220,10 +221,10 @@ export function TournamentBoutList({
                     <span className="text-slate-300 italic">bye</span>
                   ) : isDff ? (
                     <span className="text-slate-400 text-xs">
-                      {b.wrestler1_name_raw}
+                      {b.wrestler1_name}
                       {b.wrestler1_school && <span className="ml-1 text-slate-300">{b.wrestler1_school.display_name}</span>}
                       <span className="mx-1 text-slate-300">/</span>
-                      {b.wrestler2_name_raw}
+                      {b.wrestler2_name}
                       {b.wrestler2_school && <span className="ml-1 text-slate-300">{b.wrestler2_school.display_name}</span>}
                     </span>
                   ) : loserName ? (
@@ -231,7 +232,7 @@ export function TournamentBoutList({
                       {loserId
                         ? <Link href={`/wrestler/${loserId}`} className="text-slate-700 hover:underline">{loserName}</Link>
                         : <span className="text-slate-700">{loserName}</span>}
-                      {loserSchool && <span className="ml-1.5 text-slate-400">{loserSchool}</span>}
+                      <span className="ml-1.5 inline-flex align-middle"><SchoolTagView id={loserSch?.id} name={loserSch?.display_name} badge={badgeOfSchool(loserSch)} className="text-xs text-slate-400" /></span>
                       {!isOutside && loserSchool && !loserIsNJ && <span className="ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full bg-blue-900 text-white">Non-NJSIAA</span>}
                       {isOutside && loserSchool && loserIsNJ && <span className="ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full bg-blue-900 text-white">NJSIAA</span>}
                     </span>
