@@ -21,6 +21,8 @@ const PLACE_LABEL: Record<number, string> = {
   2: 'Runner-Up',
   3: '3rd Place',
   4: '4th Place',
+  5: '5th Place',
+  6: '6th Place',
 }
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -271,13 +273,13 @@ export default async function GirlsRegionSummaryPage({
           <table className="min-w-full text-sm">
             <thead>
               <tr className="bg-slate-50 border-b border-slate-200">
-                <th className="px-4 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide w-14">
+                <th className="px-3 py-1 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide w-14">
                   Wt
                 </th>
-                {[1, 2, 3, 4].map(place => (
+                {[1, 2, 3, 4, 5, 6].map(place => (
                   <th
                     key={place}
-                    className="px-4 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide"
+                    className="px-3 py-1 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide"
                   >
                     {PLACE_LABEL[place]}
                   </th>
@@ -289,19 +291,19 @@ export default async function GirlsRegionSummaryPage({
                 const row = placementsByWeight.get(w) ?? new Map<number, PlacementRow>()
                 return (
                   <tr key={w} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
-                    <td className="px-4 py-2.5 font-bold text-slate-700">{w}</td>
-                    {[1, 2, 3, 4].map(place => {
+                    <td className="px-3 py-1 font-bold text-slate-700">{w}</td>
+                    {[1, 2, 3, 4, 5, 6].map(place => {
                       const p = row.get(place)
                       if (!p) {
                         return (
-                          <td key={place} className="px-4 py-2.5 text-slate-300 text-sm">—</td>
+                          <td key={place} className="px-3 py-1 text-slate-300 text-sm">—</td>
                         )
                       }
                       const seed = seedMap.get(p.wrestler_id)
                       const showUpset = seed != null && seed > 4
                       const statePlace = statePlaceMap.get(p.wrestler_id)
                       return (
-                        <td key={place} className="px-4 py-2.5">
+                        <td key={place} className="px-3 py-1">
                           <div className="flex items-center gap-1">
                             <Link
                               href={`/girls/wrestler/${p.wrestler_id}`}

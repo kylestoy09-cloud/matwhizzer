@@ -2,6 +2,30 @@
 
 ---
 
+## 2026-11-02 — Three duplicate girls profiles merged; girls region placements to 6th
+
+**Migration file:** `docs/migrations/20261102_merge_girls_duplicate_profiles.sql`. Backup: `docs/migrations/backups/20261102_girls_duplicate_profiles_before.json`
+
+**Purpose:** Completing the truncated names showed three girls with two profiles each (same school, same weight). Approved by Kyle.
+- Yuridia Figueroa → Yuridia Figueroa Bravo (Lakewood, 107)
+- Madison Garcia → Madison Garcia-Xoloc (Rahway, 132)
+- Ellis Beaumont-Torres 7d09c170 → 8b0b4c4e (Rahway, 126)
+
+Girls regions place six (5th place bouts in all four regions), but `girls_region_placements` read only the final and the 3rd place bout.
+
+**Changes:**
+- Moved to the kept profile: 1 entry, 6 duals, 7 tournament bouts, 2 name aliases.
+- Removed the duplicate's rating, rating-log and leaderboard rows. They're rebuilt by the next ratings run.
+- Deleted the 3 empty profiles, with the delete guard opened for that transaction.
+- `girls_region_placements` reads the 5th place bout too.
+
+**PENDING** — to run in the Supabase SQL editor
+
+**Reversible?** Yes, from the backup
+**Verified?** Pending
+
+---
+
 ## 2026-11-02 — Girls Region 1 (2025-26): final, consolation semis, 3rd and 5th place bouts
 
 **Migration file:** `docs/migrations/20261102_girls_region1_place_bouts.sql` (built by `scripts/build_girls_region1_place_bouts.mts`)
