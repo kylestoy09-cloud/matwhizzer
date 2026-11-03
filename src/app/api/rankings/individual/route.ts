@@ -110,16 +110,19 @@ export async function GET(req: NextRequest) {
   // ── Wrestler names ────────────────────────────────────────────────────────────
 
   const allIds = [...new Set([...currentRows.map(r => r.wrestler_id), ...prevRows.map(r => r.wrestler_id)])]
-  const nameMap = new Map<string, { name: string; school: string; grade: string | null }>()
+  const nameMap = new Map<string, { name: string; school: string; school_id: number | null; school_logo: string | null; school_bg: string | null; grade: string | null }>()
   for (const ids of chunk(allIds, 100)) {
     const { data } = await db
       .from('wrestlers')
-      .select('id, first_name, last_name, grade, schools(display_name)')
+      .select('id, first_name, last_name, grade, schools(id, display_name, logo_url, header_background)')
       .in('id', ids)
     for (const r of (data ?? []) as any[]) {
       nameMap.set(r.id, {
         name:   `${r.first_name ?? ''} ${r.last_name ?? ''}`.trim(),
         school: (r.schools as any)?.display_name ?? '',
+        school_id: (r.schools as any)?.id ?? null,
+        school_logo: (r.schools as any)?.logo_url ?? null,
+        school_bg: (r.schools as any)?.header_background ?? null,
         grade:  r.grade ?? null,
       })
     }
@@ -153,12 +156,15 @@ export async function GET(req: NextRequest) {
   for (const ids of chunk(upsetMissingIds, 100)) {
     const { data } = await db
       .from('wrestlers')
-      .select('id, first_name, last_name, grade, schools(display_name)')
+      .select('id, first_name, last_name, grade, schools(id, display_name, logo_url, header_background)')
       .in('id', ids)
     for (const r of (data ?? []) as any[]) {
       nameMap.set(r.id, {
         name:   `${r.first_name ?? ''} ${r.last_name ?? ''}`.trim(),
         school: (r.schools as any)?.display_name ?? '',
+        school_id: (r.schools as any)?.id ?? null,
+        school_logo: (r.schools as any)?.logo_url ?? null,
+        school_bg: (r.schools as any)?.header_background ?? null,
         grade:  r.grade ?? null,
       })
     }
@@ -171,6 +177,9 @@ export async function GET(req: NextRequest) {
     wrestler_id:           r.wrestler_id,
     name:                  nameMap.get(r.wrestler_id)?.name   ?? '—',
     school:                nameMap.get(r.wrestler_id)?.school ?? '',
+    school_id:             nameMap.get(r.wrestler_id)?.school_id ?? null,
+    school_logo:           nameMap.get(r.wrestler_id)?.school_logo ?? null,
+    school_bg:             nameMap.get(r.wrestler_id)?.school_bg ?? null,
     grade:                 nameMap.get(r.wrestler_id)?.grade  ?? null,
     hammer_score_snapshot: r.hammer_score_snapshot,
   }))

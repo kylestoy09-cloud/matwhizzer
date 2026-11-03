@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import Link from 'next/link'
+import { SchoolTagView, badgeOfSchool } from '@/components/SchoolTagView'
 import { useRouter } from 'next/navigation'
 import { createSupabaseBrowser } from '@/lib/supabase/client'
 import { getAllConferences } from '@/lib/conferences'
@@ -18,8 +19,8 @@ type DualMeet = {
   team2_score: number | null
   status: string
   is_playoff: boolean
-  team1: { id: number; display_name: string } | null
-  team2: { id: number; display_name: string } | null
+  team1: { id: number; display_name: string; logo_url: string | null; header_background: string | null } | null
+  team2: { id: number; display_name: string; logo_url: string | null; header_background: string | null } | null
 }
 
 type Tournament = {
@@ -31,7 +32,7 @@ type Tournament = {
 
 type TournamentWinner = {
   tournament_id: string
-  school_name: string
+  school: { id: number; display_name: string; logo_url: string | null; header_background: string | null } | null
 }
 
 type CalendarEvent = {
@@ -118,7 +119,7 @@ export function ScheduleClient({ gender = 'M' }: { gender?: 'M' | 'F' }) {
 
   // In-season tournaments
   const [tournaments, setTournaments]     = useState<Tournament[]>([])
-  const [tournWinners, setTournWinners]   = useState<Map<string, string>>(new Map())
+  const [tournWinners, setTournWinners]   = useState<Map<string, TournamentWinner['school']>>(new Map())
 
   // Dual meets (non-playoff)
   const [dualMeets, setDualMeets]         = useState<DualMeet[]>([])
@@ -223,8 +224,8 @@ export function ScheduleClient({ gender = 'M' }: { gender?: 'M' | 'F' }) {
         .from(dualTable)
         .select(`
           id, meet_date, team1_score, team2_score, status, is_playoff,
-          team1:schools!team1_school_id(id, display_name),
-          team2:schools!team2_school_id(id, display_name)
+          team1:schools!team1_school_id(id, display_name, logo_url, header_background),
+          team2:schools!team2_school_id(id, display_name, logo_url, header_background)
         `)
         .eq('meet_date', date)
         .order('meet_date')
@@ -335,12 +336,12 @@ export function ScheduleClient({ gender = 'M' }: { gender?: 'M' | 'F' }) {
       if (merged.length > 0) {
         const { data: wData } = await supabase
           .from('in_season_tournament_team_scores')
-          .select('tournament_id, school_name')
+          .select('tournament_id, school:schools!school_id(id, display_name, logo_url, header_background)')
           .in('tournament_id', merged.map(t => t.id))
           .eq('place', 1)
-        const wMap = new Map<string, string>()
-        for (const w of (wData ?? []) as TournamentWinner[]) {
-          wMap.set(w.tournament_id, w.school_name)
+        const wMap = new Map<string, TournamentWinner['school']>()
+        for (const w of (wData ?? []) as unknown as TournamentWinner[]) {
+          wMap.set(w.tournament_id, w.school)
         }
         setTournWinners(wMap)
       } else {
@@ -572,11 +573,11 @@ export function ScheduleClient({ gender = 'M' }: { gender?: 'M' | 'F' }) {
                       >
                         <td className="px-3 py-1 whitespace-nowrap">
                           <Link href={`/meets/${m.id}`} className="font-medium text-slate-800 hover:underline" onClick={e => e.stopPropagation()}>
-                            {t1}
+                            <SchoolTagView id={m.team1?.id} name={t1} badge={badgeOfSchool(m.team1)} className="" />
                           </Link>
                           <span className="text-slate-400 mx-1.5 text-xs">vs</span>
                           <Link href={`/meets/${m.id}`} className="font-medium text-slate-800 hover:underline" onClick={e => e.stopPropagation()}>
-                            {t2}
+                            <SchoolTagView id={m.team2?.id} name={t2} badge={badgeOfSchool(m.team2)} className="" />
                           </Link>
                         </td>
                         <td className="px-3 py-1 text-right font-mono text-slate-500 whitespace-nowrap tabular-nums">
@@ -605,7 +606,9 @@ export function ScheduleClient({ gender = 'M' }: { gender?: 'M' | 'F' }) {
                         </Link>
                       </td>
                       <td className="px-3 py-1 text-right text-slate-600 whitespace-nowrap">
-                        {tournWinners.get(t.id) ?? <span className="text-slate-300">—</span>}
+                        {tournWinners.get(t.id)
+                          ? <SchoolTagView id={tournWinners.get(t.id)!.id} name={tournWinners.get(t.id)!.display_name} badge={badgeOfSchool(tournWinners.get(t.id))} className="" />
+                          : <span className="text-slate-300">—</span>}
                       </td>
                       <td className="px-3 py-1 text-right text-slate-300 text-xs">→</td>
                     </tr>
@@ -629,11 +632,11 @@ export function ScheduleClient({ gender = 'M' }: { gender?: 'M' | 'F' }) {
                       >
                         <td className="px-3 py-1 whitespace-nowrap">
                           <Link href={`/meets/${m.id}`} className="font-medium text-slate-800 hover:underline" onClick={e => e.stopPropagation()}>
-                            {t1}
+                            <SchoolTagView id={m.team1?.id} name={t1} badge={badgeOfSchool(m.team1)} className="" />
                           </Link>
                           <span className="text-slate-400 mx-1.5 text-xs">vs</span>
                           <Link href={`/meets/${m.id}`} className="font-medium text-slate-800 hover:underline" onClick={e => e.stopPropagation()}>
-                            {t2}
+                            <SchoolTagView id={m.team2?.id} name={t2} badge={badgeOfSchool(m.team2)} className="" />
                           </Link>
                         </td>
                         <td className="px-3 py-1 text-right font-mono text-slate-500 whitespace-nowrap tabular-nums">

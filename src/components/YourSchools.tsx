@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 import { createSupabaseBrowser } from '@/lib/supabase/client'
 
 type SchoolInfo = {
@@ -9,6 +10,8 @@ type SchoolInfo = {
   display_name: string
   section: string | null
   classification: string | null
+  logo_url: string | null
+  header_background: string | null
 }
 
 export function YourSchools() {
@@ -43,7 +46,7 @@ export function YourSchools() {
 
       const { data: schoolsData } = await supabase
         .from('schools')
-        .select('id, display_name, section, classification')
+        .select('id, display_name, section, classification, logo_url, header_background')
         .in('id', allIds)
 
       if (!schoolsData || schoolsData.length === 0) { setLoaded(true); return }
@@ -53,6 +56,8 @@ export function YourSchools() {
         display_name: s.display_name,
         section: s.section,
         classification: s.classification,
+        logo_url: s.logo_url,
+        header_background: s.header_background,
       }]))
 
       if (p.primary_school_id && schoolMap.has(p.primary_school_id)) {
@@ -101,6 +106,7 @@ export function YourSchools() {
                   : 'border-black bg-white text-slate-800 hover:bg-slate-50'
               }`}
             >
+              <SchoolLogoBadge logoUrl={s.logo_url} bgColor={s.header_background} />
               {s.display_name}
               {label && <span className="text-[10px] text-slate-400 font-normal">{label}</span>}
               {s.isPrimary && (

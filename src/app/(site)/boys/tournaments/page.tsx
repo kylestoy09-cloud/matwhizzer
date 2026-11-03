@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase/public-cached'
+import { SchoolTag } from '@/components/SchoolTag'
 import Link from 'next/link'
 
 export const revalidate = 300
@@ -26,13 +27,14 @@ export default async function BoysTournamentsPage() {
       .order('start_date', { ascending: false }),
     supabase
       .from('in_season_tournament_team_scores')
-      .select('tournament_id, school_name, score')
+      .select('tournament_id, score, school:schools!school_id(id, display_name, logo_url, header_background)')
       .eq('place', 1),
   ])
 
   const rows = (tournsData ?? []) as { id: string; name: string; start_date: string; end_date: string | null; tournament_type: string | null }[]
-  const winnersMap = new Map<string, { school_name: string; score: number }>()
-  for (const w of (winnersData ?? []) as { tournament_id: string; school_name: string; score: number }[]) {
+  type Winner = { tournament_id: string; score: number; school: { id: number; display_name: string; logo_url: string | null; header_background: string | null } | null }
+  const winnersMap = new Map<string, Winner>()
+  for (const w of (winnersData ?? []) as unknown as Winner[]) {
     winnersMap.set(w.tournament_id, w)
   }
 
@@ -71,7 +73,7 @@ export default async function BoysTournamentsPage() {
                       {formatDateRange(t.start_date, t.end_date)}
                     </td>
                     <td className="px-3 py-1 text-slate-700 whitespace-nowrap">
-                      {winner ? winner.school_name : <span className="text-slate-300">—</span>}
+                      {winner?.school ? <SchoolTag id={winner.school.id} name={winner.school.display_name} className="" /> : <span className="text-slate-300">—</span>}
                     </td>
                   </tr>
                 )

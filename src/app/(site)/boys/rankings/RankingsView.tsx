@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { SchoolTagView } from '@/components/SchoolTagView'
 import { RATING_NAME, RATING_SHORT } from '@/lib/rating'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -16,6 +17,9 @@ type RankedWrestler = {
   wrestler_id: string
   name: string
   school: string
+  school_id: number | null
+  school_logo: string | null
+  school_bg: string | null
   grade: string | null
   hammer_score_snapshot: number
 }
@@ -465,10 +469,10 @@ export function RankingsView({ gender, weeks, districts, regions, wrestlerBasePa
                   <tbody className="divide-y divide-slate-100">
                     {data.rankings.map(w => (
                       <tr key={w.wrestler_id} className="hover:bg-slate-50/60 transition-colors">
-                        <td className="px-3 py-2 w-8 text-center">
+                        <td className="px-3 py-1 w-8 text-center">
                           <RankBadge rank={w.rank} />
                         </td>
-                        <td className="px-3 py-2">
+                        <td className="px-3 py-1">
                           <Link
                             href={`${wrestlerBasePath}/${w.wrestler_id}`}
                             className="text-sm font-semibold text-slate-800 hover:text-blue-600 hover:underline"
@@ -477,8 +481,8 @@ export function RankingsView({ gender, weeks, districts, regions, wrestlerBasePa
                           </Link>
                           {w.grade && <span className="text-xs text-slate-400 ml-1.5">{w.grade}</span>}
                         </td>
-                        <td className="px-3 py-2 text-xs text-slate-500">{w.school}</td>
-                        <td className="px-3 py-2 text-right">
+                        <td className="px-3 py-1 text-xs text-slate-500"><SchoolTagView id={w.school_id} name={w.school} badge={{ logoUrl: w.school_logo, bgColor: w.school_bg }} className="text-xs text-slate-500" /></td>
+                        <td className="px-3 py-1 text-right">
                           <span title={RATING_NAME} className="text-xs text-slate-400 tabular-nums font-mono">{RATING_SHORT} {w.hammer_score_snapshot.toFixed(1)}</span>
                         </td>
                       </tr>
