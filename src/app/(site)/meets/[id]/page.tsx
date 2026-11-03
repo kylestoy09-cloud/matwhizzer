@@ -89,15 +89,16 @@ function matchPoints(m: MatchRow): { a: number; b: number } {
   return { a: aWins ? pts : 0, b: aWins ? 0 : pts }
 }
 
+// label: personLabel() of the side — the profile name, or Forfeit / Unknown for an empty side
 function WrestlerName({
   wrestler,
-  nameRaw,
+  label,
 }: {
   wrestler: { id: string; first_name: string; last_name: string; is_stub: boolean } | null
-  nameRaw: string | null
+  label: string
 }) {
-  if (!wrestler && !nameRaw) return <span className="text-slate-300">—</span>
-  const name = personLabel(wrestler, nameRaw)
+  if (!label) return <span className="text-slate-300">—</span>
+  const name = label
   if (wrestler && !wrestler.is_stub) {
     return (
       <Link href={`/wrestler/${wrestler.id}`} className="font-medium text-slate-800 hover:underline">
@@ -342,7 +343,7 @@ export default async function DualMeetPage({
                       </td>
                       {/* Away wrestler */}
                       <td className="px-3 py-1 text-right whitespace-nowrap">
-                        <WrestlerName wrestler={m.wrestler_a as MatchRow['wrestler_a']} nameRaw={m.wrestler_a_name_raw} />
+                        <WrestlerName wrestler={m.wrestler_a as MatchRow['wrestler_a']} label={personLabel(m.wrestler_a as MatchRow['wrestler_a'], m.wrestler_a_name_raw)} />
                       </td>
                       {/* Wt (away side) */}
                       <td className="px-3 py-1 text-center font-mono text-xs text-slate-400 tabular-nums whitespace-nowrap">
@@ -362,7 +363,7 @@ export default async function DualMeetPage({
                       </td>
                       {/* Home wrestler */}
                       <td className="px-3 py-1 text-left whitespace-nowrap">
-                        <WrestlerName wrestler={m.wrestler_b as MatchRow['wrestler_b']} nameRaw={m.wrestler_b_name_raw} />
+                        <WrestlerName wrestler={m.wrestler_b as MatchRow['wrestler_b']} label={personLabel(m.wrestler_b as MatchRow['wrestler_b'], m.wrestler_b_name_raw)} />
                       </td>
                       {/* Home running score */}
                       <td className={`px-3 py-1 text-left font-bold tabular-nums whitespace-nowrap ${bWon ? 'text-emerald-700' : 'text-slate-400'}`}>

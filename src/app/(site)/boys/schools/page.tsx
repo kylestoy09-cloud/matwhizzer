@@ -50,8 +50,9 @@ export default async function BoysSchoolsPage({
 
   const all = ((data ?? []) as SchoolDirRow[]).map(r => ({
     ...r,
-    logo_url: r.school_id ? logos.byId.get(r.school_id) ?? null : logos.byName.get(r.school_name) ?? null,
-    bg_color: r.school_id ? logos.bgById.get(r.school_id) ?? null : logos.bgByName.get(r.school_name) ?? null,
+    // school_directory always returns the school id; logos come by id only
+    logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null,
+    bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null,
   }))
 
   const isFiltered = !!(q || conf || group || section)
