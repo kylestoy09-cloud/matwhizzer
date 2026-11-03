@@ -2,6 +2,46 @@
 
 ---
 
+## 2026-11-02 — Girls 2025-26 districts: 3rd and 5th place bouts added; placements to 6th
+
+**Migration files:** `docs/migrations/20261102_girls_district_place_bouts.sql` (built by `scripts/build_girls_district_place_bouts.mts`), `docs/migrations/20261102_district_placements_5th.sql`
+
+**Purpose:** Girls district pages showed no 3rd-6th places, and the consolation bracket stopped at C3 (the consolation semifinal). Kyle checked the original documents: every 3rd place match is listed. The TrackWrestling export (`gt_s2_girls_districts.txt`) has 144 "3rd Place Match" and 143 "5th Place Match" lines; the district import never loaded them.
+
+**Changes:**
+- 283 bouts inserted (`3rd_Place` / `5th_Place`, consolation side). Each wrestler is matched to her entry in that district at that weight.
+- 4 forfeit-vs-forfeit slots are not bouts and were skipped. A place won by a bye is stored as BYE; a win over a forfeit slot is FORF with no loser.
+- 31 names were matched loosely and checked. Most are profiles cut off at about 19 characters ("Ashley Romero-Tamay"); a few are one-letter spelling differences ("Cristell" / "Cristelle").
+- `district_placements` reads the 5th place bout too (places 5-6). Boys districts have none, so boys results are unchanged.
+
+**PENDING** — to run in the Supabase SQL editor
+
+**Reversible?** Yes — rollback notes in both files
+**Verified?** Pending
+
+---
+
+## 2026-11-02 — Girls 2025-26 districts: 117 duplicate bouts removed
+
+**Migration file:** `docs/migrations/20261102_girls_district_duplicate_bouts.sql`. Backup: `docs/migrations/backups/20261102_girls_district_duplicate_bouts_before.json`
+
+**Purpose:** 117 bouts were stored twice: District 7 44, District 9 73. They doubled those bouts in win counts, the postseason leaderboards and ratings. Approved by Kyle.
+
+**Data changes:**
+- Deleted each row that matched an earlier one on tournament, weight, round, side, winner, loser and result.
+- The earlier row stays.
+- Nothing references matches by foreign key.
+
+**APPLIED** — 2026-11-02, Supabase SQL editor
+
+**Reversible?** Yes, from the backup
+**Verified?** Yes:
+- 0 duplicate girls district bouts
+- girls 2025-26 ratings rebuilt (2,403 wrestlers)
+- girls leaderboards refreshed
+
+---
+
 ## 2026-11-02 — Bracket filler entries removed
 
 **Migration file:** `docs/migrations/20261102_remove_placeholder_entries.sql`. Backup: `docs/migrations/backups/20261102_placeholder_entries_before.json`

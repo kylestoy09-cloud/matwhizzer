@@ -50,6 +50,9 @@ const ROUND_LABEL: Record<string, string> = {
   QF: 'Quarters',
   SF: 'Semis',
   F: 'Finals',
+  C1: 'Cons. Round 1',
+  C2: 'Cons. Round 2',
+  C3: 'Cons. Semis',
   '3rd_Place': '3rd Place',
   '5th_Place': '5th Place',
   '7th_Place': '7th Place',
@@ -468,7 +471,8 @@ export default async function GirlsDistrictBracketPage({
   const baseCount = Math.max(byeMatches.length, qfCount, 1)
   const totalH = baseCount * CARD_H
 
-  const consolRounds = ['3rd_Place', '5th_Place', '7th_Place'].filter(r =>
+  // girls districts place six: cons. round 1 → cons. semis → 3rd and 5th place bouts
+  const consolRounds = ['C1', 'C2', 'C3', '3rd_Place', '5th_Place', '7th_Place'].filter(r =>
     consol.some(m => m.round === r)
   )
   const consolByRound = new Map<string, MatchRow[]>()
@@ -555,30 +559,35 @@ export default async function GirlsDistrictBracketPage({
                     <MatchCard m={m} entrySlot={entrySlot} />
                   </div>
                 ))}
-                {ri === champCols.length - 1 && consolRounds.length > 0 && (
-                  <div style={{ height: 16 }} />
-                )}
               </div>
             )
           })}
 
-          {consolRounds.length > 0 && (
-            <div className="flex flex-col shrink-0">
-              <div className="h-8 flex items-center justify-center px-4">
-                <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">
-                  {ROUND_LABEL[consolRounds[0]]}
-                </span>
-              </div>
-              <div
-                className="flex items-center justify-center px-2"
-                style={{ height: totalH }}
-              >
-                <MatchCard m={(consolByRound.get(consolRounds[0]) ?? [])[0]!} entrySlot={entrySlot} />
-              </div>
-            </div>
-          )}
         </div>
       </div>
+
+      {/* ── Consolation bracket and place bouts ── */}
+      {consolRounds.length > 0 && (
+        <div className="mt-8">
+          <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">Consolation</h2>
+          <div className="overflow-x-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
+            <div className="flex gap-4 items-start min-w-max">
+              {consolRounds.map(round => (
+                <div key={round} className="flex flex-col gap-3 shrink-0">
+                  <div className="h-6 flex items-center justify-center">
+                    <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest whitespace-nowrap">
+                      {ROUND_LABEL[round] ?? round}
+                    </span>
+                  </div>
+                  {(consolByRound.get(round) ?? []).map(m => (
+                    <MatchCard key={m.match_id} m={m} entrySlot={entrySlot} />
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       <EntryRoster roster={buildRoster(matches)} logos={logos} />
       <WeightNav weights={WEIGHTS} current={weight} base={`/girls/districts/${district}`} />
