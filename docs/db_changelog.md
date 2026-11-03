@@ -31,10 +31,13 @@ A first try as one SQL file stopped on a foreign-key error and rolled back. The 
 
 **Purpose:** Girls regions place six (5th place bouts in all four regions), but `girls_region_placements` read only the final and the 3rd place bout. The overview table now has six columns.
 
-**PENDING** — to run in the Supabase SQL editor
+**APPLIED** — 2026-11-02, Supabase SQL editor
 
 **Reversible?** Yes — the version in `20261102_site_school_ids.sql`
-**Verified?** Pending
+**Verified?** Yes:
+- Regions 1, 3, 4 have 72 placers and Region 2 has 70 (one 5th place won by a bye), all to 6th
+- R1 120 reads Changaris, Diaz Santos, Carmichael, Guzman Caban, Naddeo, Harrison
+- all 35 integrity rules at this morning's counts
 
 ---
 
