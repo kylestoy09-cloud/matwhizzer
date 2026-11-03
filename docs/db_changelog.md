@@ -2,6 +2,42 @@
 
 ---
 
+## 2026-11-02 — Girls Region 1 (2025-26): final, consolation semis, 3rd and 5th place bouts
+
+**Migration file:** `docs/migrations/20261102_girls_region1_place_bouts.sql` (built by `scripts/build_girls_region1_place_bouts.mts`)
+
+**Purpose:** Girls Region 1 had no bout after the semifinals and cons. round 2, so its pages showed no champion or placers. Regions 2-4 are complete. The TrackWrestling text export stops partway through Region 1 (and repeats sections), so the bouts are read from the final bracket PDFs (`2026_girls_region_final/Region 1/`).
+
+**Changes:**
+- 60 bouts inserted: 12 finals, 24 consolation semis (C4), 12 each of 3rd and 5th place.
+- Round names follow Regions 2-4.
+- Cross-checked against the stored bouts: each final pairs the two semifinal winners; each cons. semi pairs a semifinal loser with a cons. round 2 winner; 3rd and 5th pair the cons. semi winners and losers.
+
+**PENDING** — to run in the Supabase SQL editor
+
+**Reversible?** Yes — rollback note in the file
+**Verified?** Pending
+
+---
+
+## 2026-11-02 — 44 girls profile names completed
+
+**Script:** `scripts/fix_truncated_girls_names.mts`. Backup: `docs/migrations/backups/20261102_truncated_girls_names_before.json`
+
+**Purpose:** Girls profiles made from the district bracket PDFs had names cut off at about 19-20 characters ("Ashley Romero-Tamay", "Madison Garcia-Xolo"). The TrackWrestling exports carry the full names.
+
+**Data changes:**
+- `last_name` completed where exactly one full name in the girls 2025-26 exports starts with the profile's name and the first names agree.
+- Hyphen spacing and all-caps tidied ("CEPEDA - MOREL" → "Cepeda-Morel").
+- Two shorter profiles that also matched were not renamed. They look like duplicates: Yuridia Figueroa (2024-25 Region Central, Lakewood 107) of Yuridia Figueroa Bravo, and Madison Garcia (2 Union County bouts, Rahway 132) of Madison Garcia-Xoloc.
+
+**APPLIED** — 2026-11-02 by script
+
+**Reversible?** Yes, from the backup
+**Verified?** Yes — 44 profiles updated
+
+---
+
 ## 2026-11-02 — Girls 2025-26 districts: 3rd and 5th place bouts added; placements to 6th
 
 **Migration files:** `docs/migrations/20261102_girls_district_place_bouts.sql` (built by `scripts/build_girls_district_place_bouts.mts`), `docs/migrations/20261102_district_placements_5th.sql`
@@ -14,10 +50,14 @@
 - 31 names were matched loosely and checked. Most are profiles cut off at about 19 characters ("Ashley Romero-Tamay"); a few are one-letter spelling differences ("Cristell" / "Cristelle").
 - `district_placements` reads the 5th place bout too (places 5-6). Boys districts have none, so boys results are unchanged.
 
-**PENDING** — to run in the Supabase SQL editor
+**APPLIED** — 2026-11-02, Supabase SQL editor
 
 **Reversible?** Yes — rollback notes in both files
-**Verified?** Pending
+**Verified?** Yes:
+- 283 girls district place bouts
+- District 1 120 lists all six places
+- boys districts still place 4
+- girls leaderboards refreshed
 
 ---
 
