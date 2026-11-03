@@ -5,7 +5,7 @@ import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { BracketBuster } from '@/components/BracketBuster'
 import { TeamScoreCard } from '@/components/TeamScoreCard'
-import { IndividualTeamPoints } from '@/components/IndividualTeamPoints'
+import { getGirlsOfficialTeamScores } from '@/lib/girlsOfficialTeamScores'
 import RegionVideo from '@/components/RegionVideo'
 import { PageHeader } from '@/components/PageHeader'
 import { getSchoolLogos } from '@/lib/school-logos'
@@ -161,14 +161,13 @@ export default async function GirlsRegionSummaryPage({
 
   const season = await getActiveSeason('F')
 
-  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, teamScoreRes, teamPtsRes, regionSchoolsRes, videoRes, ghostRes, regionEntriesRes, statePlacementsRes, logos] =
+  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, teamScoreRows, regionSchoolsRes, videoRes, ghostRes, regionEntriesRes, statePlacementsRes, logos] =
     await Promise.all([
       supabase.rpc('girls_region_placements',  { p_region: region, p_season: season }),
       supabase.rpc('girls_region_mat_time',    { p_region: region, p_season: season }),
       supabase.rpc('girls_region_fastest_pin', { p_region: region, p_season: season }),
       supabase.rpc('girls_region_fastest_tf',  { p_region: region, p_season: season }),
-      supabase.rpc('girls_region_team_score',  { p_region: region, p_season: season }),
-      supabase.rpc('region_postseason_pts',     { p_region: Number(region), p_gender: 'F', p_season: season }),
+      getGirlsOfficialTeamScores(`Girl_s Regions r${region}`, season),
       supabase.rpc('girls_region_schools',     { p_region: region, p_season: season }),
       supabase.from('tournaments').select('youtube_url').eq('name', `Girl_s Regions r${region}`).eq('season_id', season).single(),
       supabase.rpc('ghost_champions', { p_season: season }),
@@ -186,8 +185,7 @@ export default async function GirlsRegionSummaryPage({
   const matTime       = ((matTimeRes.data   ?? []) as MatTimeRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
   const fastPin       = ((fastPinRes.data   ?? []) as FastestPinRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
   const fastTf        = ((fastTfRes.data    ?? []) as FastestTfRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
-  const teamScore     = ((teamScoreRes.data ?? []) as TeamScoreRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
-  const teamPts       = ((teamPtsRes.data   ?? []) as TeamPtsRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
+  const teamScore     = (teamScoreRows as TeamScoreRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
   const regionSchools = (regionSchoolsRes.data ?? []) as RegionSchoolRow[]
   const youtubeUrl = (videoRes.data?.youtube_url as string | null) ?? null
 
@@ -379,12 +377,6 @@ export default async function GirlsRegionSummaryPage({
         </div>
       </section>
 
-      {/* ── Individual Team Points ── */}
-      {teamPts.length > 0 && (
-        <section className="mb-10">
-          <IndividualTeamPoints rows={teamPts} title="Postseason Individual Points Leaders" />
-        </section>
-      )}
 
       {/* ── Bracket Buster ── */}
       <section className="mb-10">

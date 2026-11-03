@@ -3,6 +3,7 @@ import { getStateTournamentId } from '@/lib/seasons-server'
 import { supabase } from '@/lib/supabase/public-cached'
 import { BracketBuster } from '@/components/BracketBuster'
 import { TeamScoreCard } from '@/components/TeamScoreCard'
+import { getGirlsOfficialTeamScores } from '@/lib/girlsOfficialTeamScores'
 import { IndividualTeamPoints } from '@/components/IndividualTeamPoints'
 import { getSchoolLogos } from '@/lib/school-logos'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
@@ -110,8 +111,10 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
       supabase.rpc(`${poolRpc}_mat_time`,                 poolParams),
       supabase.rpc(`${poolRpc}_fastest_pin`,              poolParams),
       supabase.rpc(`${poolRpc}_fastest_tf`,               poolParams),
-      supabase.rpc(`${poolRpc}_team_points`,              poolParams),
-      supabase.rpc(`${poolRpc}_wrestler_points`,          poolParams),
+      // girls: TrackWrestling's official state totals (the formula doesn't match theirs)
+      isBoys ? supabase.rpc(`${poolRpc}_team_points`, poolParams) : getGirlsOfficialTeamScores('Girl_s States', season).then(data => ({ data })),
+      // girls: no per-wrestler team points (no official figures to match the totals)
+      isBoys ? supabase.rpc(`${poolRpc}_wrestler_points`, poolParams) : Promise.resolve({ data: [] }),
       supabase.rpc('lb_district_strength',                { p_gender: g, p_season: season }),
       supabase.rpc('lb_weight_competitiveness',           { p_gender: g, p_season: season }),
       supabase.rpc('lb_district_podium_placers',          { p_gender: g, p_season: season }),
@@ -260,7 +263,7 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
             subtitle={r => `${r.school_id != null ? r.school_name : 'TBD'} · ${r.weight} lb`}
             value={r => fmtTime(r.fall_time_seconds)}
           />
-          <TeamScoreCard rows={teamScore} />
+          <TeamScoreCard rows={teamScore} gender={isBoys ? 'boys' : 'girls'} />
         </div>
       </section>
 
