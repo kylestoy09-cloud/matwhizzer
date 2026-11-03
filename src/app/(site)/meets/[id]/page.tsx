@@ -2,6 +2,7 @@ export const revalidate = 300
 
 import { supabase } from '@/lib/supabase/public-cached'
 import Link from 'next/link'
+import { personLabel } from '@/lib/personName'
 import { notFound } from 'next/navigation'
 import { getSeasonLabel } from '@/lib/seasons-server'
 import { logoFlipStyle } from '@/lib/logo-direction'
@@ -96,7 +97,7 @@ function WrestlerName({
   nameRaw: string | null
 }) {
   if (!wrestler && !nameRaw) return <span className="text-slate-300">—</span>
-  const name = wrestler ? `${wrestler.first_name} ${wrestler.last_name}` : nameRaw!
+  const name = personLabel(wrestler, nameRaw)
   if (wrestler && !wrestler.is_stub) {
     return (
       <Link href={`/wrestler/${wrestler.id}`} className="font-medium text-slate-800 hover:underline">

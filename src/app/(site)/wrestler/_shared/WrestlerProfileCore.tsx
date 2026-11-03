@@ -1,6 +1,8 @@
 import { ROUND_ORDER, ROUND_LABEL, TOURNAMENT_TYPE_LABEL } from '@/lib/supabase'
 import { supabase } from '@/lib/supabase/public-cached'
 import Link from 'next/link'
+import { personLabel } from '@/lib/personName'
+import { SchoolTag } from '@/components/SchoolTag'
 import { notFound } from 'next/navigation'
 import { WrestlerHeader } from '@/components/WrestlerHeader'
 import { StatsTable } from '@/components/StatsTable'
@@ -24,7 +26,6 @@ type Match = {
   fall_time_seconds: number | null
   winner_entry_id: string | null
   loser_entry_id: string | null
-  winner_context_raw: string | null
   // Supabase may return nested joins as object or array depending on inference
   tournament: TournamentInfo | TournamentInfo[] | null
   weight_class: WeightClassInfo | WeightClassInfo[] | null
@@ -40,7 +41,7 @@ type MatchGroup = {
   tournament_type: string
   weight: number
   season_id: number
-  matches: (Match & { result: 'W' | 'L'; opponent: string; opponentSchool: string | null; opponentId: string | null })[]
+  matches: (Match & { result: 'W' | 'L'; opponent: string; opponentSchool: string | null; opponentSchoolId: number | null; opponentId: string | null })[]
 }
 
 // Short season tag for badges: season ids are the championship (end) year, e.g. 2026 → '26
@@ -236,7 +237,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
   // 2. All entries for this wrestler (include school, grade, season record, and season via tournament join)
   const { data: entries } = await supabase
     .from('tournament_entries')
-    .select('id, school_id, school:schools(id, display_name), school_context_raw, grade_label, wins, losses, tournament:tournaments(season_id, tournament_type)')
+    .select('id, school_id, school:schools(id, display_name), grade_label, wins, losses, tournament:tournaments(season_id, tournament_type)')
     .eq('wrestler_id', id)
 
   const entryIds = (entries ?? []).map((e: { id: string }) => e.id)
@@ -246,7 +247,6 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
     id: string
     school_id: number | null
     school: { id: number; display_name: string } | null
-    school_context_raw: string | null
     grade_label: string | null
     wins: number | null
     losses: number | null
@@ -287,7 +287,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
   const selectFields = `
     id, round, bracket_side, win_type,
     winner_score, loser_score, fall_time_seconds,
-    winner_entry_id, loser_entry_id, winner_context_raw,
+    winner_entry_id, loser_entry_id,
     tournament:tournaments(name, tournament_type, season_id),
     weight_class:weight_classes(weight)
   `
@@ -301,8 +301,9 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
         .select(`
           id, weight_class, round, winner,
           result_type, result_detail, fall_time_seconds,
-          wrestler1_id, wrestler1_name_raw, wrestler1_school_raw,
-          wrestler2_id, wrestler2_name_raw, wrestler2_school_raw,
+          wrestler1_id, wrestler1_name_raw, wrestler2_id, wrestler2_name_raw,
+          w1:wrestlers!wrestler1_id(first_name, last_name),
+          w2:wrestlers!wrestler2_id(first_name, last_name),
           wrestler1_school:schools!wrestler1_school_id(id, display_name, is_nj),
           wrestler2_school:schools!wrestler2_school_id(id, display_name, is_nj),
           event:${wrestler.gender === 'F' ? 'in_season_tournaments_girls' : 'in_season_tournaments'}!in_season_tournament_id(id, name, start_date, season)
@@ -434,14 +435,14 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
     )
   ]
 
-  const opponentMap: Record<string, { name: string; school: string | null; wrestlerId: string | null }> = {}
+  const opponentMap: Record<string, { name: string; school: string | null; schoolId: number | null; wrestlerId: string | null }> = {}
   if (opponentEntryIds.length > 0) {
     const { data: oppEntries } = await supabase
       .from('tournament_entries')
-      .select('id, school_id, school:schools(display_name), wrestler:wrestlers(id, first_name, last_name)')
+      .select('id, school_id, school:schools(id, display_name), wrestler:wrestlers(id, first_name, last_name)')
       .in('id', opponentEntryIds)
 
-    type OppEntry = { id: string; school_id: number | null; school: { display_name: string } | null; wrestler: { id: string; first_name: string; last_name: string } | { id: string; first_name: string; last_name: string }[] | null }
+    type OppEntry = { id: string; school_id: number | null; school: { id: number; display_name: string } | null; wrestler: { id: string; first_name: string; last_name: string } | { id: string; first_name: string; last_name: string }[] | null }
     const typedOppEntries = (oppEntries ?? []) as unknown as OppEntry[]
 
     // State entries have null school_id — find their school from other entries (district/region)
@@ -451,6 +452,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
       .filter((wid): wid is string => wid != null)
 
     const fallbackSchoolMap: Record<string, string> = {}  // wrestler_id → display_name
+    const fallbackSchoolIdMap: Record<string, number> = {}
     if (noSchoolWrestlerIds.length > 0) {
       const { data: altEntries } = await supabase
         .from('tournament_entries')
@@ -458,7 +460,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
         .in('wrestler_id', noSchoolWrestlerIds)
         .not('school_id', 'is', null)
       for (const e of (altEntries ?? []) as unknown as { wrestler_id: string; school_id: number | null; school: { display_name: string } | null }[]) {
-        if (!fallbackSchoolMap[e.wrestler_id]) fallbackSchoolMap[e.wrestler_id] = e.school?.display_name ?? ''
+        if (!fallbackSchoolMap[e.wrestler_id] && e.school_id != null) { fallbackSchoolMap[e.wrestler_id] = e.school?.display_name ?? ''; fallbackSchoolIdMap[e.wrestler_id] = e.school_id }
       }
     }
 
@@ -484,7 +486,8 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
       const grade = w?.id ? oppGradeMap[w.id] : null
       const name = w ? `${w.first_name} ${w.last_name}${grade ? `, ${grade}` : ''}`.trim() : '—'
       const oppSchool = e.school?.display_name ?? (w?.id ? fallbackSchoolMap[w.id] : null) ?? null
-      opponentMap[e.id] = { name, school: oppSchool, wrestlerId: w?.id ?? null }
+      const oppSchoolId = e.school_id ?? (w?.id ? fallbackSchoolIdMap[w.id] : null) ?? null
+      opponentMap[e.id] = { name, school: oppSchool, schoolId: oppSchoolId, wrestlerId: w?.id ?? null }
     }
   }
 
@@ -497,10 +500,11 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
     const oppData = opponentEntryId ? opponentMap[opponentEntryId] : null
     const opponent = isBye
       ? 'Bye'
-      : (oppData?.name ?? m.winner_context_raw ?? '—')
+      : (oppData?.name ?? '—')
     const opponentSchool = isBye ? null : (oppData?.school ?? null)
     const opponentId = isBye ? null : (oppData?.wrestlerId ?? null)
-    return { ...m, result: (isWinner ? 'W' : 'L') as 'W' | 'L', opponent, opponentSchool, opponentId }
+    const opponentSchoolId = isBye ? null : (oppData?.schoolId ?? null)
+    return { ...m, result: (isWinner ? 'W' : 'L') as 'W' | 'L', opponent, opponentSchool, opponentSchoolId, opponentId }
   })
 
   // 6. Group by season + tournament + weight
@@ -564,12 +568,12 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
     fall_time_seconds: number | null
     wrestler1_id: string | null
     wrestler1_name_raw: string
-    wrestler1_school_raw: string
-    wrestler1_school: { display_name: string; is_nj: boolean } | null
+    w1: { first_name: string; last_name: string } | null
+    wrestler1_school: { id: number; display_name: string; is_nj: boolean } | null
     wrestler2_id: string | null
     wrestler2_name_raw: string
-    wrestler2_school_raw: string
-    wrestler2_school: { display_name: string; is_nj: boolean } | null
+    w2: { first_name: string; last_name: string } | null
+    wrestler2_school: { id: number; display_name: string; is_nj: boolean } | null
     event: { id: string; name: string; start_date: string | null; season: string | null } | null
   }
   const allBouts = (boutData ?? []) as unknown as TournBout[]
@@ -614,6 +618,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
     meetDate: string
     seasonId: number
     oppSchoolName: string
+    oppSchoolId: number | null
     oppIsNJ: boolean
     myTeamScore: number | null
     oppTeamScore: number | null
@@ -646,6 +651,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
         meetDate: meet.meet_date,
         seasonId: meet.season_id,
         oppSchoolName: oppSchool?.display_name ?? '—',
+        oppSchoolId: oppSchool?.id ?? null,
         oppIsNJ: oppSchool?.is_nj ?? true,
         myTeamScore: myScore,
         oppTeamScore: oppScore,
@@ -718,7 +724,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
   // ── Unified match history ─────────────────────────────────────────────────────
   type UnifiedRow = {
     id: string; matchType: string; weight: number; round: string | null
-    result: 'W' | 'L' | null; opponentName: string; opponentSchool: string | null
+    result: 'W' | 'L' | null; opponentName: string; opponentSchool: string | null; opponentSchoolId: number | null
     opponentId: string | null; score: string; isBye: boolean
     date: string | null; eventName: string; opponentSchoolIsNJ: boolean
   }
@@ -744,7 +750,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
       rows: g.matches.map(m => ({
         id: m.id, matchType, weight: g.weight, round: m.round,
         result: m.opponent === 'Bye' ? null : m.result,
-        opponentName: m.opponent, opponentSchool: m.opponentSchool, opponentId: m.opponentId,
+        opponentName: m.opponent, opponentSchool: m.opponentSchool, opponentSchoolId: m.opponentSchoolId, opponentId: m.opponentId,
         score: m.opponent === 'Bye' ? '' : (m.win_type ? formatScore(m, m.result === 'W') : '—'),
         isBye: m.opponent === 'Bye',
         date: postseasonDateLabel(tt, g.season_id),
@@ -770,12 +776,13 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
         const isW1 = bout.wrestler1_id === id
         const result: 'W' | 'L' | null = bout.winner === null ? null
           : (isW1 && bout.winner === 1) || (!isW1 && bout.winner === 2) ? 'W' : 'L'
-        const oppName = isW1 ? bout.wrestler2_name_raw : bout.wrestler1_name_raw
+        // opponent's profile name; never the imported text (an empty side is a forfeit / unknown)
+        const oppName = isW1 ? personLabel(bout.w2, bout.wrestler2_name_raw) : personLabel(bout.w1, bout.wrestler1_name_raw)
         const oppId = isW1 ? bout.wrestler2_id : bout.wrestler1_id
         const oppSchoolJoin = isW1 ? bout.wrestler2_school : bout.wrestler1_school
-        const oppSchoolRaw = isW1 ? bout.wrestler2_school_raw : bout.wrestler1_school_raw
         const oppIsNJ = oppSchoolJoin?.is_nj ?? false
-        const oppSchoolName = oppSchoolJoin?.display_name ?? oppSchoolRaw ?? null
+        const oppSchoolName = oppSchoolJoin?.display_name ?? null
+        const oppSchoolId = oppSchoolJoin?.id ?? null
         const rt = bout.result_type?.toUpperCase() ?? null
         let scoreStr = '—'
         if (rt === 'FALL') {
@@ -794,7 +801,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
         }
         return {
           id: `bout-${bout.id}`, matchType: 'Tournament', weight, round: bout.round, result,
-          opponentName: oppName, opponentSchool: oppSchoolName,
+          opponentName: oppName, opponentSchool: oppSchoolName, opponentSchoolId: oppSchoolId,
           opponentId: (oppId && oppIsNJ) ? oppId : null, score: scoreStr, isBye: false,
           date: eventDateDisplay, eventName: name, opponentSchoolIsNJ: oppIsNJ,
         }
@@ -816,7 +823,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
       eventDateDisplay: dateDisplay, sortDate: dg.meetDate, seasonId: dg.seasonId,
       rows: dg.matches.map(m => ({
         id: `dual-${m.id}`, matchType: 'Dual', weight: m.weightClass, round: null,
-        result: m.result, opponentName: m.oppName, opponentSchool: dg.oppSchoolName,
+        result: m.result, opponentName: m.oppName, opponentSchool: dg.oppSchoolName, opponentSchoolId: dg.oppSchoolId,
         opponentId: (m.oppId && !m.oppIsStub) ? m.oppId : null, score: m.resultStr, isBye: false,
         date: dateDisplay, eventName: `vs. ${dg.oppSchoolName}`, opponentSchoolIsNJ: dg.oppIsNJ,
       })),
@@ -1332,7 +1339,8 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
                             ) : r.opponentName}
                           </td>
                           <td className="px-3 py-1 text-slate-500 text-xs whitespace-nowrap">
-                            {r.opponentSchool ?? '—'}
+                            {r.isBye || !r.opponentName || r.opponentName === '—' || r.opponentName === 'Forfeit' || r.opponentName === 'Unknown' ? '—'
+                              : <SchoolTag id={r.opponentSchoolId} name={r.opponentSchool} className="text-xs text-slate-500" />}
                           </td>
                           <td className="px-3 py-1 text-right text-slate-500 font-mono text-xs tabular-nums whitespace-nowrap">
                             {r.score}

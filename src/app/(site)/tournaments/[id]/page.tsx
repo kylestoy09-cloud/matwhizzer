@@ -3,6 +3,7 @@ import { createSupabaseServer } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { TournamentPageClient } from './TournamentPageClient'
+import { personLabel } from '@/lib/personName'
 
 export const dynamic = 'force-dynamic'
 
@@ -121,18 +122,13 @@ export default async function TournamentDetailPage({
 
   // Names come from the wrestler's profile and schools from the school id; the imported text
   // never reaches the page. A side with no wrestler is a forfeit slot or an unknown opponent.
-  type Person = { first_name: string; last_name: string } | null
-  const personName = (p: Person, raw: string | null) =>
-    p ? `${p.first_name} ${p.last_name}`.trim()
-      : !raw?.trim() ? ''
-      : /forf|forefit/i.test(raw) ? 'Forfeit' : 'Unknown'
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const bouts = (boutsData ?? []).map(({ wrestler1_name_raw, wrestler2_name_raw, w1, w2, ...b }: any) => ({
-    ...b, wrestler1_name: personName(w1, wrestler1_name_raw), wrestler2_name: personName(w2, wrestler2_name_raw),
+    ...b, wrestler1_name: personLabel(w1, wrestler1_name_raw), wrestler2_name: personLabel(w2, wrestler2_name_raw),
   }))
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const placements = (placementsData ?? []).map(({ wrestler_name_raw, wrestler, ...p }: any) => ({
-    ...p, wrestler_name: personName(wrestler, wrestler_name_raw),
+    ...p, wrestler_name: personLabel(wrestler, wrestler_name_raw),
   }))
 
   // Compute banner colors server-side

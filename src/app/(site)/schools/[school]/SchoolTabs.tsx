@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
+import { personLabel } from '@/lib/personName'
+import { SchoolTagView, badgeOfSchool } from '@/components/SchoolTagView'
 import { useRouter } from 'next/navigation'
 import { StatsTable } from '@/components/StatsTable'
 import { supabase } from '@/lib/supabase'
@@ -68,8 +70,8 @@ type MeetMatch = {
   wrestler_b_id: string | null
   school_a_id: number | null
   school_b_id: number | null
-  wrestler_a_name_raw: string | null
-  wrestler_b_name_raw: string | null
+  wrestler_a_name: string | null
+  wrestler_b_name: string | null
 }
 
 type TourBout = {
@@ -81,10 +83,12 @@ type TourBout = {
   fall_time_seconds: number | null
   winner_score: number | null
   loser_score: number | null
-  wrestler1_name_raw: string
-  wrestler2_name_raw: string
+  wrestler1_name: string
+  wrestler2_name: string
   wrestler1_school_id: number | null
   wrestler2_school_id: number | null
+  wrestler1_school: { id: number; display_name: string; logo_url: string | null; header_background: string | null } | null
+  wrestler2_school: { id: number; display_name: string; logo_url: string | null; header_background: string | null } | null
 }
 
 type SeasonStat = {
@@ -292,20 +296,28 @@ export function SchoolTabs({
       setExpandLoading(true)
       const { data } = await (supabase as any)
         .from(matchTable)
-        .select('id, weight_class, result_type, result_detail, fall_time_seconds, is_double_forfeit, is_forfeit_win, winner_id, wrestler_a_id, wrestler_b_id, school_a_id, school_b_id, wrestler_a_name_raw, wrestler_b_name_raw')
+        .select('id, weight_class, result_type, result_detail, fall_time_seconds, is_double_forfeit, is_forfeit_win, winner_id, wrestler_a_id, wrestler_b_id, school_a_id, school_b_id, wrestler_a_name_raw, wrestler_b_name_raw, wa:wrestlers!wrestler_a_id(first_name, last_name), wb:wrestlers!wrestler_b_id(first_name, last_name)')
         .eq('dual_meet_id', id)
         .order('order_index', { ascending: true })
-      setMeetMatchCache(prev => new Map(prev).set(id, (data ?? []) as MeetMatch[]))
+      // names from profiles, never the imported text; an empty side stays empty (forfeit)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const rows = (data ?? []).map(({ wrestler_a_name_raw, wrestler_b_name_raw, wa, wb, ...m }: any) => ({
+        ...m, wrestler_a_name: personLabel(wa, wrestler_a_name_raw) || null, wrestler_b_name: personLabel(wb, wrestler_b_name_raw) || null,
+      })) as MeetMatch[]
+      setMeetMatchCache(prev => new Map(prev).set(id, rows))
       setExpandLoading(false)
     } else if (kind === 'tournament' && !tourBoutCache.has(id)) {
       setExpandLoading(true)
       const { data } = await supabase
         .from(boutTable)
-        .select('id, weight_class, round, winner, result_type, fall_time_seconds, winner_score, loser_score, wrestler1_name_raw, wrestler2_name_raw, wrestler1_school_id, wrestler2_school_id')
+        .select('id, weight_class, round, winner, result_type, fall_time_seconds, winner_score, loser_score, wrestler1_name_raw, wrestler2_name_raw, wrestler1_school_id, wrestler2_school_id, w1:wrestlers!wrestler1_id(first_name, last_name), w2:wrestlers!wrestler2_id(first_name, last_name), wrestler1_school:schools!wrestler1_school_id(id, display_name, logo_url, header_background), wrestler2_school:schools!wrestler2_school_id(id, display_name, logo_url, header_background)')
         .eq('in_season_tournament_id', id)
         .or(`wrestler1_school_id.eq.${schoolIdNum},wrestler2_school_id.eq.${schoolIdNum}`)
         .order('weight_class').order('round')
-      const bouts = (data ?? []) as TourBout[]
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const bouts = (data ?? []).map(({ wrestler1_name_raw, wrestler2_name_raw, w1, w2, ...b }: any) => ({
+        ...b, wrestler1_name: personLabel(w1, wrestler1_name_raw), wrestler2_name: personLabel(w2, wrestler2_name_raw),
+      })) as TourBout[]
       setTourBoutCache(prev => new Map(prev).set(id, bouts))
       const firstWt = bouts[0]?.weight_class ?? null
       if (firstWt) setTourWeightSel(prev => new Map(prev).set(id, firstWt))
@@ -1380,8 +1392,9 @@ export function SchoolTabs({
                                         <tbody>
                                           {selBouts.map(b => {
                                             const weAre1 = b.wrestler1_school_id === schoolIdNum
-                                            const ourName  = weAre1 ? b.wrestler1_name_raw : b.wrestler2_name_raw
-                                            const oppName  = weAre1 ? b.wrestler2_name_raw : b.wrestler1_name_raw
+                                            const ourName  = weAre1 ? b.wrestler1_name : b.wrestler2_name
+                                            const oppName  = weAre1 ? b.wrestler2_name : b.wrestler1_name
+                                            const oppSch   = weAre1 ? b.wrestler2_school : b.wrestler1_school
                                             const weWon    = (weAre1 && b.winner === 1) || (!weAre1 && b.winner === 2)
                                             const resultStr = fmtBoutResult(b.result_type, b.fall_time_seconds, b.winner_score, b.loser_score)
                                             const isDff = (b.result_type ?? '').toUpperCase() === 'DFF'
@@ -1398,7 +1411,12 @@ export function SchoolTabs({
                                                     </span>
                                                   )}
                                                 </td>
-                                                <td className="py-1.5 text-slate-500">{oppName}</td>
+                                                <td className="py-1.5 text-slate-500">
+                                                  {oppName}
+                                                  {oppName && oppName !== 'Forfeit' && oppName !== 'Unknown' && (
+                                                    <span className="ml-1.5 inline-flex align-middle"><SchoolTagView id={oppSch?.id} name={oppSch?.display_name} badge={badgeOfSchool(oppSch)} className="text-[11px] text-slate-400" /></span>
+                                                  )}
+                                                </td>
                                               </tr>
                                             )
                                           })}
@@ -1500,8 +1518,8 @@ export function SchoolTabs({
                                         let runOur = 0, runTheir = 0
                                         return matches.map(m => {
                                           const weAreA   = m.school_a_id === schoolIdNum
-                                          const ourName  = weAreA ? m.wrestler_a_name_raw : m.wrestler_b_name_raw
-                                          const oppName  = weAreA ? m.wrestler_b_name_raw : m.wrestler_a_name_raw
+                                          const ourName  = weAreA ? m.wrestler_a_name : m.wrestler_b_name
+                                          const oppName  = weAreA ? m.wrestler_b_name : m.wrestler_a_name
                                           const dff      = m.is_double_forfeit
                                           const weWon    = !dff && m.winner_id !== null && (
                                             (weAreA && m.winner_id === m.wrestler_a_id) ||

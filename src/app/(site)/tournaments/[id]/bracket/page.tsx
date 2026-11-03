@@ -2,6 +2,7 @@ import { createSupabaseAdmin } from '@/lib/supabase/service'
 import { supabase } from '@/lib/supabase/public-cached'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import { personLabel } from '@/lib/personName'
 import { TournamentBracketClient } from './TournamentBracketClient'
 import type { PublicBracketSlot } from '@/components/bracket/BracketTree'
 
@@ -25,7 +26,7 @@ export default async function BracketPage({
   const [{ data: fullSlots }] = await Promise.all([
     db
       .from('tournament_bracket_slots')
-      .select('weight_class, slot_number, round_name, bracket_size, top_name_raw, top_seed, top_wrestler_id, bottom_name_raw, bottom_seed, bottom_wrestler_id, winner_position, result_type, result_detail')
+      .select('weight_class, slot_number, round_name, bracket_size, top_name_raw, top_seed, top_wrestler_id, bottom_name_raw, bottom_seed, bottom_wrestler_id, winner_position, result_type, result_detail, tw:wrestlers!top_wrestler_id(first_name, last_name), bw:wrestlers!bottom_wrestler_id(first_name, last_name)')
       .eq('in_season_tournament_id', id)
       .order('weight_class')
       .order('slot_number'),
@@ -33,7 +34,11 @@ export default async function BracketPage({
 
   if (!tournament) notFound()
 
-  const slots = (fullSlots ?? []) as (PublicBracketSlot & { weight_class: number })[]
+  // names from the wrestler's profile; the bracket's imported text never reaches the page
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const slots = (fullSlots ?? []).map(({ top_name_raw, bottom_name_raw, tw, bw, ...s }: any) => ({
+    ...s, top_name: personLabel(tw, top_name_raw) || null, bottom_name: personLabel(bw, bottom_name_raw) || null,
+  })) as (PublicBracketSlot & { weight_class: number })[]
 
   // Group by weight class
   const byWeight: Record<number, PublicBracketSlot[]> = {}

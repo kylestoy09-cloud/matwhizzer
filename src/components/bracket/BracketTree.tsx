@@ -6,10 +6,10 @@ export type PublicBracketSlot = {
   slot_number: number
   round_name: string
   bracket_size: number
-  top_name_raw: string | null
+  top_name: string | null
   top_seed: number | null
   top_wrestler_id: string | null
-  bottom_name_raw: string | null
+  bottom_name: string | null
   bottom_seed: number | null
   bottom_wrestler_id: string | null
   winner_position: 'top' | 'bottom' | null
@@ -52,7 +52,7 @@ function MatchCard({ slot }: { slot: PublicBracketSlot | null }) {
   const hasResult = !!s.winner_position
 
   function Row({ pos }: { pos: 'top' | 'bottom' }) {
-    const name = pos === 'top' ? s.top_name_raw : s.bottom_name_raw
+    const name = pos === 'top' ? s.top_name : s.bottom_name
     const seed = pos === 'top' ? s.top_seed     : s.bottom_seed
     const isWinner = hasResult && s.winner_position === pos
     const isLoser  = hasResult && s.winner_position !== pos
