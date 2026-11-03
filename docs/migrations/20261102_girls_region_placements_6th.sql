@@ -1,6 +1,6 @@
 -- Girls region placements to 6th (2026-11-02)
 --
-Girls regions place six (5th place bouts in all four regions); girls_region_placements read
+-- Girls regions place six (5th place bouts in all four regions); girls_region_placements read
 -- only the final and the 3rd place bout. ROLLBACK: the version in 20261102_site_school_ids.sql.
 CREATE OR REPLACE FUNCTION public.girls_region_placements(p_region text, p_season smallint DEFAULT 1)
  RETURNS TABLE(weight integer, place integer, wrestler_id uuid, wrestler_name text, school text, school_name text, school_id integer)
