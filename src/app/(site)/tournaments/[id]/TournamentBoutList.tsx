@@ -191,7 +191,7 @@ export function TournamentBoutList({
                     </>
                   ) : isDff ? '—' : (
                     <>
-                      {winnerName ? <SchoolTagView id={winnerSch?.id} name={winnerSch?.display_name} badge={badgeOfSchool(winnerSch)} className="text-xs text-slate-400" /> : '—'}
+                      {winnerId ? <SchoolTagView id={winnerSch?.id} name={winnerSch?.display_name} badge={badgeOfSchool(winnerSch)} className="text-xs text-slate-400" /> : '—'}
                       {!isOutside && winnerSchool && !winnerIsNJ && <span className="ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full bg-blue-900 text-white">Non-NJSIAA</span>}
                       {isOutside && winnerSchool && winnerIsNJ && <span className="ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full bg-blue-900 text-white">NJSIAA</span>}
                     </>
@@ -232,7 +232,7 @@ export function TournamentBoutList({
                       {loserId
                         ? <Link href={`/wrestler/${loserId}`} className="text-slate-700 hover:underline">{loserName}</Link>
                         : <span className="text-slate-700">{loserName}</span>}
-                      <span className="ml-1.5 inline-flex align-middle"><SchoolTagView id={loserSch?.id} name={loserSch?.display_name} badge={badgeOfSchool(loserSch)} className="text-xs text-slate-400" /></span>
+                      {loserId && <span className="ml-1.5 inline-flex align-middle"><SchoolTagView id={loserSch?.id} name={loserSch?.display_name} badge={badgeOfSchool(loserSch)} className="text-xs text-slate-400" /></span>}
                       {!isOutside && loserSchool && !loserIsNJ && <span className="ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full bg-blue-900 text-white">Non-NJSIAA</span>}
                       {isOutside && loserSchool && loserIsNJ && <span className="ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full bg-blue-900 text-white">NJSIAA</span>}
                     </span>

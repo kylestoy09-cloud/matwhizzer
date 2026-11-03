@@ -590,7 +590,7 @@ export function TournamentPageClient({
                               <span className="text-slate-800">{p.wrestler_name}</span>
                             )}
                           </td>
-                          <td className="px-3 py-1 text-xs text-slate-400"><SchoolTagView id={p.school?.id} name={p.school?.display_name} badge={badgeOfSchool(p.school)} className="text-xs text-slate-400" /></td>
+                          <td className="px-3 py-1 text-xs text-slate-400">{p.wrestler_id && <SchoolTagView id={p.school?.id} name={p.school?.display_name} badge={badgeOfSchool(p.school)} className="text-xs text-slate-400" />}</td>
                           <td className="px-3 py-1 text-xs font-semibold text-slate-500">{PLACE_LABEL[p.place] ?? `${p.place}th`}</td>
                         </tr>
                       ))}
@@ -624,7 +624,7 @@ export function TournamentPageClient({
                               ) : (
                                 <span className="font-medium text-slate-800">{p.wrestler_name}</span>
                               )}
-                              <span className="ml-1 inline-flex align-middle"><SchoolTagView id={p.school?.id} name={p.school?.display_name} badge={badgeOfSchool(p.school)} className="text-xs text-slate-400" /></span>
+                              {p.wrestler_id && <span className="ml-1 inline-flex align-middle"><SchoolTagView id={p.school?.id} name={p.school?.display_name} badge={badgeOfSchool(p.school)} className="text-xs text-slate-400" /></span>}
                             </span>
                           ) : <span className="text-slate-300">—</span>
                         }
@@ -658,7 +658,7 @@ export function TournamentPageClient({
                               ) : (
                                 <span className="font-medium text-slate-800">{p.wrestler_name}</span>
                               )}
-                              <span className="ml-1 inline-flex align-middle"><SchoolTagView id={p.school?.id} name={p.school?.display_name} badge={badgeOfSchool(p.school)} className="text-[11px] text-slate-400" /></span>
+                              {p.wrestler_id && <span className="ml-1 inline-flex align-middle"><SchoolTagView id={p.school?.id} name={p.school?.display_name} badge={badgeOfSchool(p.school)} className="text-[11px] text-slate-400" /></span>}
                             </span>
                           </div>
                         ))}

@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase/public-cached'
 import { createSupabaseServer } from '@/lib/supabase/server'
+import { isAdminUser } from '@/lib/auth/isAdminUser'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { TournamentPageClient } from './TournamentPageClient'
@@ -42,7 +43,8 @@ export default async function TournamentDetailPage({
 
   const authClient = await createSupabaseServer()
   const { data: { user } } = await authClient.auth.getUser()
-  const isAdmin = !!user
+  // edit links only for admins: fans have accounts too
+  const isAdmin = await isAdminUser(user?.id)
 
   const BOUT_SELECT = `
     id, weight_class, round, winner,

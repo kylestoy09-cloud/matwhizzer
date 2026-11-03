@@ -17,7 +17,7 @@ const RAW = /\b\w+_raw\b|\bnameRaw\b/
 // or the personLabel() call that replaces it
 const RAW_OK = [
   /\.select\(/,                                  // select('..., wrestler1_name_raw, ...')
-  /^\s*[\w\s,]*\b\w+_raw\b[\w\s,]*,?\s*$/,      // column list line inside a select template
+  /^\s*(?:\w+\s*,\s*)*\w+_raw\s*(?:,\s*\w+)*\s*,?\s*$/,  // column list line inside a select template ("id, x_raw, y,")
   /^\s*\w+_raw\??:\s/,                           // type field
   /^\s*nameRaw\??(:|,)/,                          // prop declaration
   /\(\{[^}]*\b\w+_raw\b[^}]*\.\.\.\w+\s*\}/,     // ({ x_raw, ...rest }) — dropped from the row
