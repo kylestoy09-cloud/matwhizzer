@@ -13,10 +13,14 @@
 - Round names follow Regions 2-4.
 - Cross-checked against the stored bouts: each final pairs the two semifinal winners; each cons. semi pairs a semifinal loser with a cons. round 2 winner; 3rd and 5th pair the cons. semi winners and losers.
 
-**PENDING** — to run in the Supabase SQL editor
+**APPLIED** — 2026-11-02, Supabase SQL editor
 
 **Reversible?** Yes — rollback note in the file
-**Verified?** Pending
+**Verified?** Yes:
+- Region 1 has F 12, C4 24, 3rd 12, 5th 12
+- live /girls/regions/1/120 shows Finals through 5th Place
+- girls 2025-26 ratings rebuilt; leaderboards refreshed
+- integrity rules unchanged except one more same-name pair at one school: Ellis Beaumont-Torres (Rahway), a duplicate the name fix made visible
 
 ---
 
