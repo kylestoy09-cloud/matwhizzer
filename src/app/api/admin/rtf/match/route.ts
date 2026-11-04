@@ -287,6 +287,30 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    // Out-of-state event, NJ match: are the wrestlers under this name known at the NJ school?
+    // (Lily Oh, Riverside VA, was filed under NJ Riverside from the Beast of the East.)
+    if (reviewAll) {
+      for (const [raw, f] of schoolFlagMap) {
+        if (f.confidence === 'oos' || f.school_id == null) continue
+        const names = [...new Set(dedupedBouts.flatMap(b => [
+          b.wrestler1_school === raw ? b.wrestler1_name : null,
+          b.wrestler2_school === raw ? b.wrestler2_name : null,
+        ]).filter((n): n is string => !!n && !isPlaceholderName(n)))]
+        if (!names.length) continue
+        const key = (n: string) => n.toLowerCase().replace(/[^a-z]/g, '')
+        const [al, ro] = await Promise.all([
+          client.from('wrestler_name_aliases').select('raw_name').eq('school_id', f.school_id),
+          client.from('roster_grade_import').select('first_name_raw, last_name_raw').eq('school_id', f.school_id).eq('gender', gender),
+        ])
+        const known = new Set([
+          ...((al.data ?? []) as { raw_name: string }[]).map(a => key(a.raw_name)),
+          ...((ro.data ?? []) as { first_name_raw: string; last_name_raw: string }[]).map(r => key(`${r.first_name_raw} ${r.last_name_raw}`)),
+        ])
+        const unknown = names.filter(n => !known.has(key(n)))
+        f.nj_known = { known: names.length - unknown.length, total: names.length, names: unknown }
+      }
+    }
+
     const teamScoreFlagMap = new Map<string, SchoolFlag>()
     for (const s of t.team_scores) {
       if (!s.school_name || teamScoreFlagMap.has(s.school_name)) continue

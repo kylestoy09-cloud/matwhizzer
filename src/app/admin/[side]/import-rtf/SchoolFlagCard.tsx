@@ -115,6 +115,17 @@ export function SchoolFlagCard({
           {flag.nj_lookalike && (
             <p className="text-xs text-red-600 mb-1">Name resembles an NJ school — check it carefully.</p>
           )}
+          {flag.nj_known && flag.nj_known.known === 0 && (
+            <p className="text-xs text-red-600 mb-1">
+              None of these wrestlers are known at {flag.display_name}: {flag.nj_known.names.join(', ')}.
+              Probably an out-of-state school with the same name.
+            </p>
+          )}
+          {flag.nj_known && flag.nj_known.known > 0 && flag.nj_known.known < flag.nj_known.total && (
+            <p className="text-xs text-amber-700 mb-1">
+              {flag.nj_known.known} of {flag.nj_known.total} wrestlers are known at {flag.display_name}; not known: {flag.nj_known.names.join(', ')}.
+            </p>
+          )}
           {flag.school_id != null && flag.display_name && (
             <button
               onClick={() => onOverride(flag.raw, flag.confidence === 'oos'

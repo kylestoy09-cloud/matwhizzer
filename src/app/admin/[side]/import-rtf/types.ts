@@ -22,6 +22,9 @@ export type SchoolFlag = {
   oos_event?: boolean  // out-of-state event: every school must be confirmed, even exact matches
   nj_lookalike?: boolean  // OOS school whose name resembles an NJ school — never bulk-confirmed
   bulk_ok?: boolean       // existing OOS school, distinct from every NJ name — can be bulk-confirmed
+  // out-of-state event, NJ match: how many of this name's wrestlers in the event are known at the
+  // NJ school (an alias there, or its Track roster). None known → probably an OOS namesake.
+  nj_known?: { known: number; total: number; names: string[] }
 }
 
 export type WrestlerFlag = {
