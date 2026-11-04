@@ -13,9 +13,9 @@
 - **Code:** the wrestler Delete Profile tool now saves the aliases, Track roster links, school history, transfers and followers it removes in the activity log, including on a failed delete. Before, a delete stopped by an unknown reference left those removed with no record.
 - Checked live: girls section and group pages show the season co-op names. Girls conference pages list no schools (there are no girls conference standings).
 
-**PENDING** — migration to run in the Supabase SQL editor
+**APPLIED** — 2026-11-04, Supabase SQL editor
 **Reversible?** Yes — the text definition is in `docs/migrations/backups/20261103_name_functions_before.sql`
-**Verified?** Pending
+**Verified?** Yes — `girls_region_mat_time` returns leaders for all four girls regions (Region 1: Ella Poalillo, High Point, 4 wins in 3:03)
 
 ---
 
