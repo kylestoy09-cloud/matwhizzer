@@ -30,6 +30,7 @@
   - The school stats board's Pins / Tech Falls / Bonus % add up the season stats of the full roster, so they now count every school bout. Checked against `lb_rs_team`: Dover girls 32 pins, Dover boys 134 / 6 techs, Jefferson-Sparta 137 / 10, Ramsey-NH girls 181 / 3, all equal. Before, they counted only postseason entrants.
   - Found: the roster listed the shared "Unknown" profiles (bouts at about 72 schools). Fixed: Unknown and placeholder names are left out.
   - Checked: no school is near the 5,000-row limit (largest sample under 200 tournament bouts). Only Keansburg's single non-counting 2025-26 girls bout sits on an inactive girls school.
+- **Preseason dashboard (later the same day):** Grade Reviews counted only schools that finished a microcheck roster task, and the girls school list had no season (girls have no preseason season yet), so it included the 14 inactive programs. Girls showed 19%. It now also counts schools marked complete in Roster Grade Import, and the program lists use the working season when there's no preseason season. Girls: 252 of 252 (100%). Boys unchanged (302 of 316). The other girls percentages on the dashboard no longer count inactive programs either.
 
 **APPLIED** — 2026-11-04
 **Reversible?** Yes — the backup holds the profile and both bouts; delete the five inactive rows
