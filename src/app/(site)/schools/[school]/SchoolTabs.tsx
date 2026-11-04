@@ -207,14 +207,16 @@ type SchoolData = {
 export function SchoolTabs({
   school, gender, activeTab, primaryColor,
   schoolData,
-  wrestlers, breakdown, leaders, teamScore,
+  wrestlers, roster, breakdown, leaders, teamScore,
   totalPts, totalWins, stateMedalists, tourneyLabel,
   activeSeason: activeSeason,
   basePath,
 }: {
   school: string; gender: string; activeTab: string; primaryColor: string
   schoolData: SchoolData
-  wrestlers: WrestlerRow[]; breakdown: BreakdownRow[]; leaders: LeaderRow[]
+  wrestlers: WrestlerRow[]
+  roster: WrestlerRow[]     // everyone who wrestled for the school that season (Roster tab, season leaders)
+  breakdown: BreakdownRow[]; leaders: LeaderRow[]
   teamScore: TeamScoreData
   totalPts: number; totalWins: number; stateMedalists: number
   tourneyLabel: Record<string, string>
@@ -486,7 +488,7 @@ export function SchoolTabs({
 
   // ── Roster records (W-L) — lazy-load on first roster tab visit ─────────────
   useEffect(() => {
-    if (activeTab !== 'roster' || rosterLoaded || wrestlers.length === 0) return
+    if (activeTab !== 'roster' || rosterLoaded || roster.length === 0) return
     let cancelled = false
     setRosterLoading(true)
     ;(async () => {
@@ -595,11 +597,11 @@ export function SchoolTabs({
       setRosterLoaded(true)
     })()
     return () => { cancelled = true }
-  }, [activeTab, rosterLoaded, schoolIdNum, genderCode, activeSeason, wrestlers])
+  }, [activeTab, rosterLoaded, schoolIdNum, genderCode, activeSeason, roster])
 
   // ── Season stats — loads on mount (also powers the stats board) ────────────
   useEffect(() => {
-    if (seasonLoaded || wrestlers.length === 0) return
+    if (seasonLoaded || roster.length === 0) return
     let cancelled = false
     setSeasonLoading(true)
     ;(async () => {
@@ -659,7 +661,7 @@ export function SchoolTabs({
       if (cancelled) return
 
       const stats = new Map<string, SeasonStat>()
-      for (const w of wrestlers) {
+      for (const w of roster) {
         stats.set(w.wrestler_id, {
           wrestlerName: w.wrestler_name, weight: w.primary_weight,
           wins: 0, losses: 0, pins: 0, pinTimeSecs: 0,
@@ -709,7 +711,7 @@ export function SchoolTabs({
       if (!cancelled) { setSeasonStatsMap(stats); setSeasonLoading(false); setSeasonLoaded(true) }
     })()
     return () => { cancelled = true }
-  }, [seasonLoaded, schoolIdNum, genderCode, activeSeason, wrestlers])
+  }, [seasonLoaded, schoolIdNum, genderCode, activeSeason, roster])
 
   const seasonTotals = useMemo(() => {
     let wins = 0, losses = 0, pins = 0, techs = 0, mds = 0
@@ -939,7 +941,7 @@ export function SchoolTabs({
       {/* ── Tab: Roster ── */}
       {activeTab === 'roster' && (
         <div>
-          {wrestlers.length === 0 ? (
+          {roster.length === 0 ? (
             <p className="text-sm text-slate-500 py-4">No roster data available.</p>
           ) : (
             <div className="border border-black overflow-hidden">
@@ -956,7 +958,7 @@ export function SchoolTabs({
                   {rosterLoading ? (
                     <tr><td colSpan={4} className="px-3 py-6 text-center text-slate-400">Loading records…</td></tr>
                   ) : (
-                    wrestlers
+                    roster
                       .slice()
                       .sort((a, b) => a.primary_weight - b.primary_weight)
                       .map((w, i) => {
@@ -1006,7 +1008,7 @@ export function SchoolTabs({
                 <p className="text-sm text-slate-400">Loading season stats...</p>
               </div>
             ) : (() => {
-              const rows = wrestlers
+              const rows = roster
                 .map(w => ({ w, s: seasonStatsMap.get(w.wrestler_id) }))
                 .filter((r): r is { w: WrestlerRow; s: SeasonStat } => r.s !== undefined)
 

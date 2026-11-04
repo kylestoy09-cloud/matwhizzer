@@ -283,6 +283,11 @@ export async function SchoolProfileCore({
 
   rows.sort((a, b) => a.primary_weight - b.primary_weight)
 
+  // The season roster: the postseason list (school_wrestlers) plus everyone who wrestled for the
+  // school that season in duals or in-season tournaments, at her most common weight. The Roster
+  // tab and season leaders use it; the postseason numbers keep `rows`.
+  const roster = await seasonRoster(dataSchoolId, genderCode, season, seasonLabel, rows)
+
   const medalPlaces = new Set(['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th'])
   const stateMedalists = rows.filter(w => w.state_placement && medalPlaces.has(w.state_placement)).length
 
@@ -392,6 +397,7 @@ export async function SchoolProfileCore({
             logo_url: profile.logo_url,
           }}
           wrestlers={rows}
+          roster={roster}
           breakdown={bdRows}
           leaders={leaderRows}
           teamScore={teamScore}
@@ -404,4 +410,51 @@ export async function SchoolProfileCore({
       </div>
     </>
   )
+}
+
+async function seasonRoster(schoolId: number, g: 'M' | 'F', season: number, seasonLabel: string, postseason: WrestlerRow[]): Promise<WrestlerRow[]> {
+  const meetTable = g === 'F' ? 'dual_meets_girls' : 'dual_meets'
+  const boutTable = g === 'F' ? 'dual_meet_matches_girls' : 'dual_meet_matches'
+  const tTable    = g === 'F' ? 'in_season_tournaments_girls' : 'in_season_tournaments'
+  const tbTable   = g === 'F' ? 'tournament_bouts_girls' : 'tournament_bouts'
+  const weights = new Map<string, Map<number, number>>()
+  const add = (id: string | null, wt: number | null) => {
+    if (!id || wt == null) return
+    const m = weights.get(id) ?? new Map<number, number>()
+    m.set(wt, (m.get(wt) ?? 0) + 1); weights.set(id, m)
+  }
+  let mq = supabase.from(meetTable).select('id').eq('season_id', season).or(`team1_school_id.eq.${schoolId},team2_school_id.eq.${schoolId}`)
+  if (g === 'M') mq = mq.eq('gender', 'M')
+  const [{ data: meets }, { data: tours }] = await Promise.all([mq, supabase.from(tTable).select('id').eq('season', seasonLabel)])
+  const meetIds = (meets ?? []).map(m => m.id as string)
+  const tourIds = new Set((tours ?? []).map(t => t.id as string))
+  const [{ data: dual }, { data: tb }] = await Promise.all([
+    meetIds.length
+      ? supabase.from(boutTable).select('weight_class, wrestler_a_id, wrestler_b_id, school_a_id, school_b_id').in('dual_meet_id', meetIds).limit(5000)
+      : Promise.resolve({ data: [] as { weight_class: number; wrestler_a_id: string | null; wrestler_b_id: string | null; school_a_id: number | null; school_b_id: number | null }[] }),
+    supabase.from(tbTable).select('in_season_tournament_id, weight_class, wrestler1_id, wrestler2_id, wrestler1_school_id, wrestler2_school_id')
+      .or(`wrestler1_school_id.eq.${schoolId},wrestler2_school_id.eq.${schoolId}`).limit(5000),
+  ])
+  for (const b of dual ?? []) {
+    if (b.school_a_id === schoolId) add(b.wrestler_a_id, b.weight_class)
+    if (b.school_b_id === schoolId) add(b.wrestler_b_id, b.weight_class)
+  }
+  for (const b of tb ?? []) {
+    if (!tourIds.has(b.in_season_tournament_id as string)) continue
+    if (b.wrestler1_school_id === schoolId) add(b.wrestler1_id, b.weight_class)
+    if (b.wrestler2_school_id === schoolId) add(b.wrestler2_id, b.weight_class)
+  }
+  const have = new Set(postseason.map(w => w.wrestler_id))
+  const extra = [...weights.keys()].filter(id => !have.has(id))
+  if (!extra.length) return postseason
+  const { data: people } = await supabase.from('wrestlers').select('id, first_name, last_name, gender').in('id', extra)
+  const more: WrestlerRow[] = (people ?? [])
+    .filter(p => p.gender === g)
+    .map(p => ({
+      wrestler_id: p.id as string,
+      wrestler_name: `${p.first_name ?? ''} ${p.last_name ?? ''}`.trim(),
+      primary_weight: [...weights.get(p.id as string)!].sort((a, b) => b[1] - a[1] || a[0] - b[0])[0][0],
+      districts_placement: null, districts_short: null, regions_placement: null, regions_short: null, state_placement: null,
+    }))
+  return [...postseason, ...more].sort((a, b) => a.primary_weight - b.primary_weight)
 }
