@@ -1,37 +1,13 @@
 import Link from 'next/link'
-import { getStateTournamentId } from '@/lib/seasons-server'
-import { supabase } from '@/lib/supabase/public-cached'
 import { BracketBuster } from '@/components/BracketBuster'
 import { TeamScoreCard } from '@/components/TeamScoreCard'
-import { getGirlsOfficialTeamScores } from '@/lib/girlsOfficialTeamScores'
 import { IndividualTeamPoints } from '@/components/IndividualTeamPoints'
-import { getSchoolLogos } from '@/lib/school-logos'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 import { SchoolTag } from '@/components/SchoolTag'
+import type { FastestPinRow, FastestTfRow, MatTimeRow, PlacementRow, StateData } from '@/lib/stateData/shared'
 
-// ── Types ─────────────────────────────────────────────────────────────────────
-
-type PlacementRow = {
-  weight: number; place: number; wrestler_id: string
-  wrestler_name: string; school: string | null; school_name: string | null; school_id?: number | null
-}
-type MatTimeRow = {
-  wrestler_id: string; wrestler_name: string
-  school: string | null; school_name: string | null; school_id?: number | null
-  total_seconds: number; match_count: number
-}
-type FastestPinRow = {
-  wrestler_id: string; wrestler_name: string
-  school: string | null; school_name: string | null; school_id?: number | null
-  fall_time_seconds: number; weight: number
-}
-type FastestTfRow = FastestPinRow
-type TeamScoreRow = { school: string; school_name: string | null; school_id: number | null; total_points: number }
-type TeamPtsRow = {
-  wrestler_id: string; wrestler_name: string;
-  school: string | null; school_name: string | null; school_id?: number | null;
-  weight: number; team_points: number
-}
+// The state section's display. Each side loads its own data under its own rules
+// (src/lib/stateData/boys.ts, girls.ts); this only lays it out.
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -78,12 +54,9 @@ function StatCard<T extends { wrestler_id: string; wrestler_name: string; school
 
 // ── Main exported component ───────────────────────────────────────────────────
 
-export async function StateContent({ gender, season }: { gender: 'M' | 'F', season: number }) {
+export function StateContent({ gender, season, data }: { gender: 'M' | 'F', season: number, data: StateData }) {
   const isBoys = gender === 'M'
-
-  const WEIGHTS = isBoys
-    ? [106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285]
-    : [100, 107, 114, 120, 126, 132, 138, 145, 152, 165, 185, 235]
+  const { weights: WEIGHTS, placements, matTime, fastPin, fastTf, teamScore, teamPts, distStrength, podiumDist, margins, ghostChamps, seedMap, logos } = data
 
   const PLACES = [1, 2, 3, 4, 5, 6, 7, 8]
 
@@ -94,70 +67,9 @@ export async function StateContent({ gender, season }: { gender: 'M' | 'F', seas
 
   const bracketBase  = isBoys ? '/boys/state' : '/girls/state'
   const schoolPrefix = '/schools'
-  const g = gender
 
-  // Use pool-based RPCs so leaders show cumulative data through all tournaments
-  const poolParams = isBoys
-    ? { p_gender: g, p_pool: 'state', p_season: season }
-    : { p_pool: 'state', p_season: season }
-  const poolRpc = isBoys ? 'lb_p' : 'lb_gp'
-
-  // Get state tournament ID for ghost champions
-  const stateTid = await getStateTournamentId(season, isBoys ? 'M' : 'F')
-
-  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, teamScoreRes, teamPtsRes, distStrengthRes, marginsRes, podiumDistRes, ghostRes, stateEntriesRes, logos] =
-    await Promise.all([
-      supabase.rpc('state_placements',                    { p_gender: g, p_season: season }),
-      supabase.rpc(`${poolRpc}_mat_time`,                 poolParams),
-      supabase.rpc(`${poolRpc}_fastest_pin`,              poolParams),
-      supabase.rpc(`${poolRpc}_fastest_tf`,               poolParams),
-      // girls: TrackWrestling's official state totals (the formula doesn't match theirs)
-      isBoys ? supabase.rpc(`${poolRpc}_team_points`, poolParams) : getGirlsOfficialTeamScores('Girl_s States', season).then(data => ({ data })),
-      // girls: no per-wrestler team points (no official figures to match the totals)
-      isBoys ? supabase.rpc(`${poolRpc}_wrestler_points`, poolParams) : Promise.resolve({ data: [] }),
-      supabase.rpc('lb_district_strength',                { p_gender: g, p_season: season }),
-      supabase.rpc('lb_weight_competitiveness',           { p_gender: g, p_season: season }),
-      supabase.rpc('lb_district_podium_placers',          { p_gender: g, p_season: season }),
-      supabase.rpc('ghost_champions',                     { p_season: season }),
-      supabase
-        .from('tournament_entries')
-        .select('wrestler_id, seed, tournaments!inner(tournament_type, season_id)')
-        .eq('tournaments.season_id', season)
-        .eq('tournaments.tournament_type', isBoys ? 'boys_state' : 'girls_state'),
-      getSchoolLogos(),
-    ])
-
-  const placements     = (placementsRes.data     ?? []) as PlacementRow[]
-  const matTime        = ((matTimeRes.data ?? []) as MatTimeRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
-  const fastPin        = ((fastPinRes.data ?? []) as FastestPinRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
-  const fastTf         = ((fastTfRes.data ?? []) as FastestTfRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
-  const teamScore      = ((teamScoreRes.data ?? []) as TeamScoreRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
-  const teamPts        = ((teamPtsRes.data ?? []) as { wrestler_id: string; wrestler_name: string; school: string | null; school_name: string | null; school_id: number | null; total_points: number; win_count: number }[])
-    .map(r => ({ wrestler_id: r.wrestler_id, wrestler_name: r.wrestler_name, school: r.school, school_name: r.school_name, school_id: r.school_id, weight: 0, team_points: Number(r.total_points), logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null })) as TeamPtsRow[]
-  const distStrength   = ((distStrengthRes.data   ?? []) as { district_name: string; wrestlers_advancing: number; state_qualifiers: number }[])
-    .sort((a, b) => b.state_qualifiers - a.state_qualifiers)
-  const podiumDist     = ((podiumDistRes.data ?? []) as { district_id: number; district_name: string; podium_count: number }[])
-  const margins        = ((marginsRes.data ?? []) as { weight: number; avg_margin: number; match_count: number }[]).sort((a, b) => Number(a.avg_margin) - Number(b.avg_margin))
-
-  type GhostChamp = {
-    seed: number; wrestler_id: string; wrestler_name: string; school: string | null; school_id: number | null
-    weight: number; gender: string; tournament_name: string; tournament_type: string
-    wins_on_path: { round: string; opponent: string; opponent_seed: number | null; win_type: string; fall_time: number | null }[] | null
-  }
-  const allGhostChamps = (ghostRes.data ?? []) as GhostChamp[]
-  const ghostChamps = allGhostChamps
-    .filter(gc => gc.tournament_type === (isBoys ? 'boys_state' : 'girls_state'))
-
-  // Ghost champion wrestler IDs — only state-level ghost champs on the state page
-  const ghostIds = new Set(
-    ghostChamps.map(gc => gc.wrestler_id)
-  )
-
-  // Seed map from state entries
-  const seedMap = new Map<string, number>()
-  for (const e of ((stateEntriesRes.data ?? []) as { wrestler_id: string; seed: number | null }[])) {
-    if (e.wrestler_id && e.seed) seedMap.set(e.wrestler_id, e.seed)
-  }
+  // Ghost champion wrestler IDs
+  const ghostIds = new Set(ghostChamps.map(gc => gc.wrestler_id))
 
   const placementsByWeight = new Map<number, Map<number, PlacementRow>>()
   for (const p of placements) {

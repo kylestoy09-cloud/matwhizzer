@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { StateContent } from '@/components/StateContent'
+import { loadBoysState } from '@/lib/stateData/boys'
 import { StateHeader } from '@/components/StateHeader'
 import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
@@ -18,7 +19,7 @@ export default async function StateBoysPage() {
           <span>· Atlantic City · 32-man double elimination</span>
         </div>
       </div>
-      <StateContent gender="M" season={season} />
+      <StateContent gender="M" season={season} data={await loadBoysState(season)} />
     </div>
   )
 }

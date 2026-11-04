@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { StateContent } from '@/components/StateContent'
+import { loadGirlsState } from '@/lib/stateData/girls'
 import { StateHeader } from '@/components/StateHeader'
 import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
@@ -18,7 +19,7 @@ export default async function GirlsStatePage() {
           <span>· Boardwalk Hall · double elimination</span>
         </div>
       </div>
-      <StateContent gender="F" season={season} />
+      <StateContent gender="F" season={season} data={await loadGirlsState(season)} />
     </div>
   )
 }
