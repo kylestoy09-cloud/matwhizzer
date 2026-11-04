@@ -2,6 +2,41 @@
 
 ---
 
+## 2026-11-03 — Girls co-ops finished; girls team totals from TrackWrestling
+
+**Scripts:** `scripts/fix_girls_coops_20261103.mts`, `scripts/build_girls_official_team_scores.mts`. Backups: `docs/migrations/backups/20261103_girls_coops_before.json`, `20261103_girls_team_scores_before.json`, `20261103_wwp_south_girls_entries_before.json`
+
+**Purpose:** An audit of the 2026-08-26 / 09-16 / 09-17 co-op work (Kyle) found moves left half done:
+- **Demarest-Old Tappan (314), 2025-26:** made the girls co-op on 2026-09-16, but Old Tappan's (6) girls records never moved. The TrackWrestling team-name alias "Northern Valley Regional-Demarest/Old Tappan" pointed at 6, so every girls import landed there.
+- **Newton/Kittatinny (24), 2024-25:** already a co-op that season; its entries and team totals sat on Kittatinny (315).
+- **Cherry Hill West (268):** 9 girls 2025-26 bout sides belonged to Cherry Hill East-West (267).
+- **The other seven co-ops** (Jefferson-Sparta, Ramsey-Northern Highlands, Buena-Vineland, Cherry Hill East-West, Morris Hills-Morris Knolls, Mt. Olive/Randolph, Parsippany Hills/Parsippany), Cliffside Park/Ridgefield Memorial and Lodi/Saddle Brook were correct.
+- **2024-25 girls splits** are correct: TrackWrestling lists those schools as separate teams that year.
+
+The stored girls team totals (`precomputed_team_scores`) were also wrong for some schools: District 1 High Point 147.5 vs TrackWrestling 202.5; some region rows held the site's own formula. 103 teams were missing, mostly co-ops.
+
+**Data changes:**
+- **Old Tappan → Demarest-Old Tappan (girls 2025-26):** 8 entries, 37 dual meets and their 233 bouts' school sides, 43 tournament bout sides, 18 roster rows, 17 girls wrestler aliases. The co-op alias now points at 314 for girls (`notes='gender:F'`).
+- **Kittatinny → Newton/Kittatinny (girls 2024-25):** 13 entries, 2 team-total rows, 12 girls wrestler aliases.
+- **Cherry Hill West → Cherry Hill East-West:** 9 bout sides.
+- **District / region assignments:** removed for Old Tappan and Kittatinny (girls 2025-26).
+- **Season names:** `school_season_names` girls co-op names for the seasons the co-op existed. Newton/Kittatinny 2024-25 and 2025-26; the others 2025-26.
+- **West Windsor-Plainsboro South:** 2 girls District 8 entries moved from North (176) to South (177). They were the only girls 2025-26 entries whose school disagreed with their school text.
+- **Girls 2025-26 team totals** for 12 districts, 4 regions and state replaced with TrackWrestling's standings: 440 rows → 542. Each team maps to its school through that tournament's own entries. Teams with 0 points that never entered, and the "Team Forfeit" filler, were skipped.
+- **Afterwards:** girls ratings rebuilt (2,401) and leaderboards refreshed.
+
+**APPLIED** — 2026-11-03 by script
+
+**Reversible?** Yes, from the backups
+**Verified?** Yes:
+- re-audit: Old Tappan, Kittatinny and Cherry Hill West hold no girls records for those seasons
+- District 1 reads Newton/Kittatinny 205.5, High Point 202.5, Ramsey-Northern Highlands 189, Jefferson-Sparta 181
+- District 9 Jackson Township 223
+
+**Still open:** the girls home leaderboard, mat-time boxes, state leader boxes and the leaderboards pages use `schools.display_name`, so they show "Newton", "Ramsey" etc. for girls co-ops.
+
+---
+
 ## 2026-11-02 — Three duplicate girls profiles merged
 
 **Script:** `scripts/merge_girls_duplicates_20261102.mts`. Backup: `docs/migrations/backups/20261102_girls_duplicate_profiles_before.json`

@@ -1,0 +1,38 @@
+[
+ {
+  "id": "b948a722-e479-4bdd-8d15-3825ec613d26",
+  "wrestler_id": "c087f602-8680-40e0-96bb-aeacc762e5d2",
+  "tournament_id": 193,
+  "school_id": 176,
+  "weight_class_id": 68,
+  "seed": null,
+  "grade": 11,
+  "grade_label": "Jr",
+  "wins": 0,
+  "losses": 0,
+  "record_snapshot": null,
+  "region_placement": null,
+  "school_context_raw": "West Windsor-Plainsboro South",
+  "bracket_position": null,
+  "seed_source": null,
+  "team_points": 0
+ },
+ {
+  "id": "e7c3585e-0fb4-4e6b-9ffe-63f9f5f9aee4",
+  "wrestler_id": "e4bc2fb1-e5b9-4966-9748-c3d58a088ab1",
+  "tournament_id": 193,
+  "school_id": 176,
+  "weight_class_id": 69,
+  "seed": null,
+  "grade": 12,
+  "grade_label": "Sr",
+  "wins": 0,
+  "losses": 0,
+  "record_snapshot": null,
+  "region_placement": null,
+  "school_context_raw": "West Windsor-Plainsboro South",
+  "bracket_position": null,
+  "seed_source": null,
+  "team_points": 0
+ }
+]
