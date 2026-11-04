@@ -56,23 +56,34 @@ export async function deletePreview(db: Db, id: string) {
   return { records, cleanup, blocked: records.length > 0 }
 }
 
+// What a delete removes that the next ratings run doesn't rebuild: kept for the activity log
+export type Removed = { aliases: unknown[]; roster: unknown[]; history: unknown[]; transfers: unknown[]; followers: string[] }
+
 /** Delete the profile. Refuses while records remain. */
-export async function deleteWrestler(db: Db, id: string): Promise<{ ok: true } | { ok: false; error: string }> {
+export async function deleteWrestler(db: Db, id: string): Promise<{ ok: true; removed: Removed } | { ok: false; error: string; removed?: Removed }> {
   const preview = await deletePreview(db, id)
   if (preview.blocked) return { ok: false, error: `Still has ${preview.records.map(r => `${r.count} ${r.label.toLowerCase()}`).join(', ')}. Merge it into the right profile instead.` }
+  const rows = async (t: string) => (await db.from(t).select('*').eq('wrestler_id', id)).data ?? []
+  const removed: Removed = {
+    aliases: await rows('wrestler_name_aliases'), roster: await rows('roster_grade_import'),
+    history: await rows('wrestler_school_history'), transfers: await rows('pending_wrestler_transfers'),
+    followers: ((await db.from('users').select('id').contains('followed_wrestler_ids', [id])).data ?? []).map(u => u.id as string),
+  }
   for (const [t, c] of CLEANUP) {
     const { error } = await db.from(t).delete().eq(c, id)
-    if (error) return { ok: false, error: `${t}: ${error.message}` }
+    if (error) return { ok: false, error: `${t}: ${error.message}`, removed }
   }
   const { error: rErr } = await db.from('roster_grade_import').update({ wrestler_id: null, status: 'no_match' }).eq('wrestler_id', id)
-  if (rErr) return { ok: false, error: `roster_grade_import: ${rErr.message}` }
+  if (rErr) return { ok: false, error: `roster_grade_import: ${rErr.message}`, removed }
   const { data: followers } = await db.from('users').select('id, followed_wrestler_ids').contains('followed_wrestler_ids', [id])
   for (const u of followers ?? []) {
     const { error } = await db.from('users').update({ followed_wrestler_ids: (u.followed_wrestler_ids as string[]).filter(x => x !== id) }).eq('id', u.id)
-    if (error) return { ok: false, error: `follows: ${error.message}` }
+    if (error) return { ok: false, error: `follows: ${error.message}`, removed }
   }
-  // a reference this list doesn't know about fails here (foreign key) and nothing is deleted
+  // A reference this list doesn't know about fails here (foreign key): the profile stays, but the
+  // cleanup above has run. Ratings come back on the next run; what doesn't (aliases, roster links,
+  // history, follows) is in `removed`, which the route writes to the activity log either way.
   const { error } = await db.from('wrestlers').delete().eq('id', id)
-  if (error) return { ok: false, error: `Not deleted: ${error.message}` }
-  return { ok: true }
+  if (error) return { ok: false, error: `Profile not deleted: ${error.message}. Its aliases and roster links were removed; they're saved in the activity log.`, removed }
+  return { ok: true, removed }
 }

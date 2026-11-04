@@ -2,6 +2,23 @@
 
 ---
 
+## 2026-11-04 — Review fixes: girls_region_mat_time duplicate, header team toggle, delete-tool log
+
+**Migration file:** `docs/migrations/20261104_drop_girls_region_mat_time_text.sql`
+
+**Found in review of 2026-11-03/04 changes:**
+- **`girls_region_mat_time` had two copies,** (integer, smallint) and (text, smallint DEFAULT 2), so every call failed with "could not choose the best candidate function". The girls region "The Terminators" box and the girls profile Terminator badge were empty. This predates the season-names migration, which updated both copies. The migration drops the text copy. The integer copy is the current rule, matching `district_mat_time` and `region_mat_time`.
+- A test of all 52 functions from `20261103_school_names_by_season.sql` (both genders where they take one): 88 calls OK, the only errors being this duplicate.
+- **Code:** the header Boys/Girls toggle on `/postseason/team/girls` went to `/postseason/team/boys` (404). It now moves between the two team pages, and `/postseason/team` always shows the boys header.
+- **Code:** the wrestler Delete Profile tool now saves the aliases, Track roster links, school history, transfers and followers it removes in the activity log, including on a failed delete. Before, a delete stopped by an unknown reference left those removed with no record.
+- Checked live: girls section and group pages show the season co-op names. Girls conference pages list no schools (there are no girls conference standings).
+
+**PENDING** — migration to run in the Supabase SQL editor
+**Reversible?** Yes — the text definition is in `docs/migrations/backups/20261103_name_functions_before.sql`
+**Verified?** Pending
+
+---
+
 ## 2026-11-04 — Merge four duplicate girls profiles; RTF review warns on unknown wrestlers at NJ-matched schools in out-of-state events
 
 **Script:** `scripts/merge_girls_duplicates_20261104_batch5.mts` (data only). Backup: `docs/migrations/backups/20261104_girls_duplicate_profiles_batch5_before.json`

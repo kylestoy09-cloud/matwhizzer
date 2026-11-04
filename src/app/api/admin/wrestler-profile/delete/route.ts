@@ -32,17 +32,21 @@ export async function DELETE(req: NextRequest) {
   if (!w) return NextResponse.json({ error: 'Wrestler not found' }, { status: 404 })
   if ((confirm ?? '').replace(/\s+/g, ' ').trim().toLowerCase() !== fullName(w).toLowerCase())
     return NextResponse.json({ error: 'The name typed doesn’t match this wrestler' }, { status: 400 })
+  let res: Awaited<ReturnType<typeof deleteWrestler>>
   try {
-    const res = await deleteWrestler(db, id)
-    if (!res.ok) return NextResponse.json({ error: res.error }, { status: 409 })
+    res = await deleteWrestler(db, id)
   } catch (e) {
     return NextResponse.json({ error: e instanceof Error ? e.message : String(e) }, { status: 500 })
   }
-  try {
-    await db.rpc('log_admin_activity', {
-      p_admin_email: user.email ?? '', p_action: 'delete_wrestler_profile', p_entity_type: 'wrestlers', p_entity_id: id,
-      p_details: { deleted: w },   // the whole row, so it can be put back
-    })
-  } catch { /* non-fatal */ }
+  // the deleted row and everything removed with it, so it can be put back (also on a failed delete)
+  if (res.removed) {
+    try {
+      await db.rpc('log_admin_activity', {
+        p_admin_email: user.email ?? '', p_action: res.ok ? 'delete_wrestler_profile' : 'delete_wrestler_profile_failed',
+        p_entity_type: 'wrestlers', p_entity_id: id, p_details: { deleted: w, removed: res.removed, error: res.ok ? null : res.error },
+      })
+    } catch { /* non-fatal */ }
+  }
+  if (!res.ok) return NextResponse.json({ error: res.error }, { status: 409 })
   return NextResponse.json({ ok: true })
 }

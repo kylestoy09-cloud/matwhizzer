@@ -11,9 +11,10 @@ import type { User } from '@supabase/supabase-js'
 function genderHref(pathname: string, target: 'boys' | 'girls'): string {
   const from = target === 'girls' ? '/boys' : '/girls'
   const to   = target === 'girls' ? '/girls' : '/boys'
+  // the two team postseason pages: the boys one has no gender in its path
+  if (pathname === '/postseason/team/girls' && target === 'boys') return '/postseason/team'
+  if (pathname === '/postseason/team' && target === 'girls') return '/postseason/team/girls'
   if (pathname.includes(from)) return pathname.replace(from, to)
-  // the boys team postseason page has no gender in its path
-  if (target === 'girls' && pathname === '/postseason/team') return '/postseason/team/girls'
   return `/${target}`
 }
 
@@ -68,6 +69,7 @@ export function HeaderNav() {
 
   const isBoys = pathname.includes('/boys') ? true
                : pathname.includes('/girls') ? false
+               : pathname === '/postseason/team' ? true   // the boys team bracket
                : savedGender === 'boys'
 
   // ── Colour tokens ────────────────────────────────────────────────────────
