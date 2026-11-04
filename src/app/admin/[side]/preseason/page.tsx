@@ -5,7 +5,7 @@ import { fetchAllRows } from '@/lib/fetchAllRows'
 import { boysRosterGradeCounts, girlsRosterGradeCounts } from '@/lib/rosterGrades'
 import { boysProgramSchoolIds, girlsProgramSchoolIds } from '@/lib/genderPrograms'
 import { PreseasonDashboard } from './PreseasonDashboard'
-import { getWorkingSeason } from '@/lib/season-context'
+import { getRosterImportSeason, getWorkingSeason } from '@/lib/season-context'
 import type { GenderPreseasonStats } from './PreseasonHeader'
 
 export const dynamic = 'force-dynamic'
@@ -41,9 +41,15 @@ export default async function PreseasonPage() {
 
   // Each gender's list is that gender's NJ programs for its preseason season —
   // never every NJ school (see src/lib/genderPrograms.ts).
+  // Without a preseason season yet (a gender still in its season), the working season decides
+  // which programs are active — else inactive ones (co-op members) count and the % never fills.
+  const [rosterSeasonM, rosterSeasonF] = await Promise.all([
+    preSeasonIdM ?? getWorkingSeason('M').then(s => s.id),
+    preSeasonIdF ?? getWorkingSeason('F').then(s => s.id),
+  ])
   const [boysIds, girlsIds] = await Promise.all([
-    boysProgramSchoolIds(db, preSeasonIdM),
-    girlsProgramSchoolIds(db, preSeasonIdF),
+    boysProgramSchoolIds(db, rosterSeasonM),
+    girlsProgramSchoolIds(db, rosterSeasonF),
   ])
   const schoolIds = [...new Set([...boysIds, ...girlsIds])]
 
@@ -67,6 +73,8 @@ export default async function PreseasonPage() {
     { data: girlsGradeReviewRows },
     boysGrades,
     girlsGrades,
+    { data: boysCompleteRows },
+    { data: girlsCompleteRows },
   ] = await Promise.all([
     db.from('boys_coaches').select('school_id').in('school_id', boysIds).not('name', 'is', null),
     db.from('girls_coaches').select('school_id').in('school_id', girlsIds).not('name', 'is', null),
@@ -89,13 +97,16 @@ export default async function PreseasonPage() {
     fetchAllRows<{ school_id: number }>((from, to) =>
       db.from('wrestler_name_aliases').select('school_id, wrestlers!inner(gender, is_active)')
         .in('school_id', girlsIds).eq('wrestlers.gender', 'F').eq('wrestlers.is_active', true).order('id').range(from, to)),
-    // Grade Reviews = schools that have completed a roster_match micro check
+    // Grade Reviews = schools marked complete in Roster Grade Import (below) or that
+    // completed a roster_match micro check
     fetchAllRows<{ school_id: number }>((from, to) =>
       db.from('microcheck_task_log').select('school_id').eq('gender', 'M').eq('field', 'roster_match').in('school_id', boysIds).order('id').range(from, to)),
     fetchAllRows<{ school_id: number }>((from, to) =>
       db.from('microcheck_task_log').select('school_id').eq('gender', 'F').eq('field', 'roster_match').in('school_id', girlsIds).order('id').range(from, to)),
     boysRosterGradeCounts(db, boysIds),
     girlsRosterGradeCounts(db, girlsIds),
+    getRosterImportSeason(db, 'M').then(s => db.from('roster_grade_school_complete').select('school_id').eq('gender', 'M').eq('season_id', s.id)),
+    getRosterImportSeason(db, 'F').then(s => db.from('roster_grade_school_complete').select('school_id').eq('gender', 'F').eq('season_id', s.id)),
   ])
 
   const ids = (rows: { school_id: number }[] | null) => new Set((rows ?? []).map(r => r.school_id))
@@ -139,10 +150,10 @@ export default async function PreseasonPage() {
     <PreseasonDashboard
       seasonLabelM={seasonLabelM}
       seasonLabelF={seasonLabelF}
-      statsM={buildStats(boysIds,  ids(boysCoachRows),  ids(boysEmailRows),  scheduleIds(boysScheduleRows),  ids(boysRosterRows),  ids(boysGradeReviewRows),  boysGrades)}
-      statsF={buildStats(girlsIds, ids(girlsCoachRows), ids(girlsEmailRows), scheduleIds(girlsScheduleRows), ids(girlsRosterRows), ids(girlsGradeReviewRows), girlsGrades)}
-      directorySeasonM={preSeasonIdM ?? (await getWorkingSeason('M')).id}
-      directorySeasonF={preSeasonIdF ?? (await getWorkingSeason('F')).id}
+      statsM={buildStats(boysIds,  ids(boysCoachRows),  ids(boysEmailRows),  scheduleIds(boysScheduleRows),  ids(boysRosterRows),  ids([...(boysGradeReviewRows ?? []), ...(boysCompleteRows ?? [])]),  boysGrades)}
+      statsF={buildStats(girlsIds, ids(girlsCoachRows), ids(girlsEmailRows), scheduleIds(girlsScheduleRows), ids(girlsRosterRows), ids([...(girlsGradeReviewRows ?? []), ...(girlsCompleteRows ?? [])]), girlsGrades)}
+      directorySeasonM={rosterSeasonM}
+      directorySeasonF={rosterSeasonF}
     />
   )
 }
