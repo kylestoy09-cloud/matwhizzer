@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
 import { getSchoolSeasonName } from '@/lib/schoolSeasonNames'
+import { isPlaceholderName } from '@/lib/personName'
 import { conferenceToSlug } from '@/lib/conferences'
 import { sectionToSlug, groupToSlug } from '@/lib/sections'
 import { SchoolTabs } from '../[school]/SchoolTabs'
@@ -448,8 +449,9 @@ async function seasonRoster(schoolId: number, g: 'M' | 'F', season: number, seas
   const extra = [...weights.keys()].filter(id => !have.has(id))
   if (!extra.length) return postseason
   const { data: people } = await supabase.from('wrestlers').select('id, first_name, last_name, gender').in('id', extra)
+  // the shared "Unknown" profiles stand in for opponents the source didn't name: not roster wrestlers
   const more: WrestlerRow[] = (people ?? [])
-    .filter(p => p.gender === g)
+    .filter(p => p.gender === g && p.first_name !== 'Unknown' && !isPlaceholderName(`${p.first_name ?? ''} ${p.last_name ?? ''}`))
     .map(p => ({
       wrestler_id: p.id as string,
       wrestler_name: `${p.first_name ?? ''} ${p.last_name ?? ''}`.trim(),
