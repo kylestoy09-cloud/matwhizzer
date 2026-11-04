@@ -2,6 +2,22 @@
 
 ---
 
+## 2026-11-04 — Merge two duplicate girls profiles at Manasquan
+
+**Script:** `scripts/merge_girls_duplicates_20261104_manasquan.mts` (data only). Backup: `docs/migrations/backups/20261104_girls_duplicate_profiles_manasquan_before.json`
+
+**Purpose:** Reported by Kyle. In each pair the kept profile has the Track roster name and the postseason entries. Neither pair ever appears in the same event.
+- "Chelsea Garay" (c246fadc; 6 tournament bouts, Track roster match) → "Chelsea Garay-Jiminez" (60c28b30)
+- "Lizzett Cordero" (40f46c72; 3 tournament bouts, Track roster match) → "Lizzet Cordero-Lopez" (5fed1f4b)
+
+**Steps:** records moved → girls ratings rebuilt (logged by hand) → references recounted (0) → duplicates deleted → girls leaderboards refreshed. The first recount and `lb_ps_refresh` timed out right after the ratings run (`wrestler_match_score_log.opponent_wrestler_id` has no index, about 7 s per count). Each passed on one retry a few minutes later.
+
+**APPLIED** — 2026-11-04
+**Reversible?** Partly — the backup holds the duplicates' rows and every moved reference
+**Verified?** Yes — 0 references left, both kept profiles rated, integrity check unchanged (35 rules)
+
+---
+
 ## 2026-11-04 — "Scratch Scratch" placeholder removed; Delete Profile in the wrestler edit tool
 
 **Script:** `scripts/fix_scratch_placeholder_20261104.mts` (data only). Backup: `docs/migrations/backups/20261104_scratch_placeholder_before.json`
