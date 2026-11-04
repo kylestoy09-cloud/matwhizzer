@@ -12,6 +12,8 @@ function genderHref(pathname: string, target: 'boys' | 'girls'): string {
   const from = target === 'girls' ? '/boys' : '/girls'
   const to   = target === 'girls' ? '/girls' : '/boys'
   if (pathname.includes(from)) return pathname.replace(from, to)
+  // the boys team postseason page has no gender in its path
+  if (target === 'girls' && pathname === '/postseason/team') return '/postseason/team/girls'
   return `/${target}`
 }
 
@@ -36,6 +38,8 @@ export function HeaderNav() {
   const [user, setUser]         = useState<User | null>(null)
   const [username, setUsername] = useState<string | null>(null)
   const [isAdmin, setIsAdmin]   = useState(false)
+  const [openMenu, setOpenMenu] = useState<string | null>(null)   // header menu opened by tap/click
+  const navRef = useRef<HTMLDivElement>(null)
 
   // ── Search state ─────────────────────────────────────────────────────────
   const [searchQuery, setSearchQuery] = useState('')
@@ -74,8 +78,8 @@ export function HeaderNav() {
 
   // ── Nav links (gender-aware) ─────────────────────────────────────────────
   const homeHref = '/'
-  // menu: shown on hover (desktop); on phones the link goes straight to the page
-  type NavItem = { href: string; label: string; menu?: { href: string | null; label: string }[] }
+  // menu: shown on hover (desktop) or tap. menuOnly: the label only opens the menu (no page of its own)
+  type NavItem = { href: string; label: string; menu?: { href: string; label: string }[]; menuOnly?: boolean }
   const standingsHref = isBoys ? '/boys/standings' : '/girls/standings'
   const navItems: NavItem[] = [
     { href: isBoys ? '/boys/schedule'    : '/girls/schedule',                    label: 'Schedule'     },
@@ -84,7 +88,7 @@ export function HeaderNav() {
     { href: isBoys ? '/boys/leaderboards': '/girls/leaderboards',                label: 'Leaderboards' },
     { href: isBoys ? '/boys/schools'     : '/girls/schools',                     label: 'Schools'      },
     { href: isBoys ? '/boys/tournaments' : '/girls/tournaments',                 label: 'Tournaments'  },
-    { href: isBoys ? '/boys/postseason'  : '/girls/postseason',                  label: 'Post Season',
+    { href: isBoys ? '/boys/postseason'  : '/girls/postseason',                  label: 'Post Season', menuOnly: true,
       menu: isBoys
         ? [{ href: '/postseason/team', label: 'Team' }, { href: '/postseason/individual/boys', label: 'Individual' }]
         : [{ href: '/postseason/team/girls', label: 'Team' }, { href: '/postseason/individual/girls', label: 'Individual' }] },
@@ -143,8 +147,19 @@ export function HeaderNav() {
     return () => document.removeEventListener('mousedown', onMouseDown)
   }, [userOpen])
 
+  // ── Close a tapped header menu on outside click ───────────────────────────
+  useEffect(() => {
+    if (!openMenu) return
+    function onDown(e: MouseEvent) {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) setOpenMenu(null)
+    }
+    document.addEventListener('mousedown', onDown)
+    return () => document.removeEventListener('mousedown', onDown)
+  }, [openMenu])
+
   // ── Close everything on route change ─────────────────────────────────────
   useEffect(() => {
+    setOpenMenu(null)
     setUserOpen(false)
     setSearchOpen(false)
     setSearchQuery('')
@@ -293,21 +308,35 @@ setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
       </div>
 
       {/* ── Row 2 — sub-nav ──────────────────────────────────────────────── */}
+      <div ref={navRef}>
       <div className={`${rowTwoBg} border-b border-black overflow-x-auto sm:overflow-visible`}>
         <div className="flex items-center gap-0.5 px-3 py-1.5 whitespace-nowrap min-w-max w-full">
 
           {/* Nav links */}
           {navItems.map(item => {
             const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
-            const link = (
+              || (item.menu ?? []).some(m => pathname === m.href.split('?')[0])
+            const itemClass = `px-3 py-1 text-sm transition-colors rounded-none ${
+              isActive
+                ? 'text-white font-semibold underline underline-offset-4'
+                : 'text-white/70 hover:text-white hover:bg-white/10'
+            }`
+            const link = item.menuOnly ? (
+              <button
+                key={item.href}
+                type="button"
+                aria-haspopup="menu"
+                aria-expanded={openMenu === item.label}
+                onClick={() => setOpenMenu(o => (o === item.label ? null : item.label))}
+                className={itemClass}
+              >
+                {item.label} <span className="text-[10px]">▾</span>
+              </button>
+            ) : (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`px-3 py-1 text-sm transition-colors rounded-none ${
-                  isActive
-                    ? 'text-white font-semibold underline underline-offset-4'
-                    : 'text-white/70 hover:text-white hover:bg-white/10'
-                }`}
+                className={itemClass}
               >
                 {item.label}
               </Link>
@@ -316,9 +345,9 @@ setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
             return (
               <div key={item.href} className="relative group">
                 {link}
-                <div className="hidden sm:group-hover:block sm:group-focus-within:block absolute left-0 top-full pt-1.5 z-50">
+                <div className={`hidden ${openMenu === item.label ? 'sm:block' : ''} sm:group-hover:block absolute left-0 top-full pt-1.5 z-50`}>
                   <div className={`w-44 rounded-none border border-black overflow-hidden ${dropdownBg}`}>
-                    {item.menu.map(m => m.href ? (
+                    {item.menu.map(m => (
                       <Link
                         key={m.label}
                         href={m.href}
@@ -326,8 +355,6 @@ setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
                       >
                         {m.label}
                       </Link>
-                    ) : (
-                      <span key={m.label} className="block px-4 py-2 text-sm text-white/40 cursor-default">{m.label}</span>
                     ))}
                   </div>
                 </div>
@@ -383,6 +410,18 @@ setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
             </button>
           </div>
         </div>
+      </div>
+
+      {/* Phones: a tapped menu opens as a strip under the nav row (the row scrolls sideways) */}
+      {navItems.filter(i => i.menu && openMenu === i.label).map(i => (
+        <div key={i.label} className={`sm:hidden ${rowTwoBg} border-b border-black flex`}>
+          {i.menu!.map(m => (
+            <Link key={m.label} href={m.href} className={`flex-1 text-center px-4 py-2 text-sm text-white ${dropdownHov}`}>
+              {m.label}
+            </Link>
+          ))}
+        </div>
+      ))}
       </div>
 
       {/* ── Row 3 — combined search ───────────────────────────────────────── */}
