@@ -15,10 +15,10 @@
 - Not changed: `school_directory` (uses the program names), `search_schools`, `get_coop_*`, `admin_region_seed_entries`, and the no-season overloads of `state_bonus_pct`, `state_mat_time` and `state_team_score`.
 - **Code:** the leaderboards pages (`src/lib/leaderboards/data.ts`) apply the season names to their rows and to the analytics school list.
 
-**PENDING** — to run in the Supabase SQL editor
+**APPLIED** — 2026-11-03, Supabase SQL editor
 
 **Reversible?** Yes — run the backup file
-**Verified?** Pending
+**Verified?** Yes — girls home leaderboard, District 1 mat time, state mat time and the state leader boxes show Newton/Kittatinny, Jefferson-Sparta, Ramsey-Northern Highlands etc.
 
 ---
 
