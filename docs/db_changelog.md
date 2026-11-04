@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-11-04 — Merge two duplicate girls profiles (Hightstown, Linden)
+
+**Script:** `scripts/merge_girls_duplicates_20261104.mts` (data only). Backup: `docs/migrations/backups/20261104_girls_duplicate_profiles_before.json`
+
+**Purpose:** Reported from the girls roster grade review. Neither pair ever appears in the same event.
+- Hightstown: "Jazmine Quisphe" (5caafa3a; 2 tournament bouts) → "Jazmin Quishpe Guzman" (7c681a47)
+- Linden: "Andrea Carire | Cruz" (b80eb800; 2 duals, 6 tournament bouts) → "Andrea | Carire Cruz" (84a51f26)
+
+**Steps:** records moved to the kept profile (bouts, aliases; derived rating/leaderboard rows dropped) → girls ratings rebuilt (logged by hand: the local run stops on `cookies()` after scoring) → every reference recounted (0) → duplicates deleted → `lb_rs_refresh` / `lb_ps_refresh` for girls 2026.
+
+**Not merged (checked, left as is):** Hillsborough Jana (235) and Judy (185) Abdalate are two wrestlers on the Track roster. Lenape Valley-Hopatcong "Jaylenn" and "Jalynn" Vazquez hold separate spots in the same 132 bracket at the NH Lady Lions Classic, so Kyle chose to leave them.
+
+**APPLIED** — 2026-11-04
+**Reversible?** Partly — the backup holds the duplicates' rows and every moved reference
+**Verified?** Yes — 0 references left, both kept profiles rated, integrity check unchanged (35 rules) against the morning run
+
+---
+
 ## 2026-11-04 — Roster grade import: mark a school complete
 
 **Migration file:** `docs/migrations/20261104_roster_grade_school_complete.sql`
