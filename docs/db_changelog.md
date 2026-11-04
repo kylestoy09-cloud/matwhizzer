@@ -15,6 +15,7 @@
   - A profile with real records (dual or tournament bouts, postseason entries, placements, bracket spots, seeds, rankings, upsets) can't be deleted: merge it instead.
   - Otherwise it removes ratings, rating log, leaderboard rows, streak snapshots, name aliases, school history, pending transfers and follows, and returns Track roster matches to `no_match`.
   - The admin confirms by typing the wrestler's full name. The deleted row is saved in the activity log.
+- **Code (import guard):** `isPlaceholderName` (`src/lib/personName.ts`) marks names such as "Scratch", "Forfeit", "Bye", "TBD" and "Vacant" as empty slots. The RTF review no longer flags them, and the RTF import never creates a profile for one, even if 'create' was picked. A forfeit over one is kept, with the winner credited and no loser. The site shows such a side as "Forfeit".
 
 **APPLIED** — 2026-11-04
 **Reversible?** Scratch: yes, from the backup. Tool deletes: the activity log holds the deleted row.

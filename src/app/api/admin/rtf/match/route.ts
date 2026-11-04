@@ -5,6 +5,7 @@ import { getWorkingSeason, parseGender } from '@/lib/season-context'
 import { parseRtfText, parseDateRange, boutResultToDb, normalizeRound } from '@/lib/parseRtf'
 import { matchSchoolNames, isNjLookalike } from '@/lib/matchSchools'
 import { matchWrestler, oosSchoolHasPrior, clearWrestlerCache, reloadAliases } from '@/lib/matchWrestlers'
+import { isPlaceholderName } from '@/lib/personName'
 import { matchTournament } from '@/lib/matchTournaments'
 import { findMsProfileCandidates, msSeasonsForHsSeason, type MsWrestlerRow } from '@/lib/matchMsWrestler'
 import type { SchoolFlag, WrestlerFlag, ReviewedTournament, SchoolOverride, TournamentType } from '@/app/admin/[side]/import-rtf/types'
@@ -303,6 +304,8 @@ export async function POST(req: NextRequest) {
           const s = schoolCache.get(school_raw)
           // Skip wrestlers at unknown schools or uncertain NJ matches — resolve school flags first
           if (!s?.school_id) continue
+          // "Scratch", "Forfeit", "Bye"...: an empty slot, never a wrestler to review or create
+          if (isPlaceholderName(name)) continue
           if (s.confidence !== 'exact' && s.confidence !== 'alias' && s.confidence !== 'high' && s.confidence !== 'oos') continue
           if (reviewAll && !schoolOverrides[school_raw]) continue
           const fkey = `${name}|${s.school_id}|${b.weight_class}`

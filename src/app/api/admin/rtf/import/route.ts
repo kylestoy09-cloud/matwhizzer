@@ -7,6 +7,7 @@ import { getWorkingSeason, parseGender } from '@/lib/season-context'
 import { parseRtfText, parseDateRange, boutResultToDb, normalizeRound } from '@/lib/parseRtf'
 import { matchSchoolNames, clearSchoolCache, isNjLookalike } from '@/lib/matchSchools'
 import { matchWrestler, clearWrestlerCache, reloadAliases } from '@/lib/matchWrestlers'
+import { isPlaceholderName } from '@/lib/personName'
 import { matchTournament } from '@/lib/matchTournaments'
 import { seasonIdForDate } from '@/lib/seasons'
 import type { SchoolFlag, ImportResult, SchoolOverride, WrestlerOverride, TournamentOverride, MsProfileLink } from '@/app/admin/[side]/import-rtf/types'
@@ -425,6 +426,7 @@ export async function POST(req: NextRequest) {
         for (const [name, school_raw] of [[b.wrestler1_name, b.wrestler1_school], [b.wrestler2_name, b.wrestler2_school]] as [string, string][]) {
           const s = schoolCache.get(school_raw)
           if (!s?.school_id) continue
+          if (isPlaceholderName(name)) continue   // an empty slot: never a profile, even if 'create' was picked
           const nkey = `${name}|${s.school_id}`
           if (seenNew.has(nkey) || overrideExistingMap.has(nkey)) continue
 
@@ -536,7 +538,7 @@ export async function POST(req: NextRequest) {
         const s1 = schoolCache.get(b.wrestler1_school)
         const s2 = schoolCache.get(b.wrestler2_school)
         const resolveId = async (name: string, school_id: number | null | undefined, wc: number) => {
-          if (!school_id) return null
+          if (!school_id || isPlaceholderName(name)) return null
           const nkey = `${name}|${school_id}`
           const flagKey = `${name}|${school_id}|${wc}`
           const ov = wrestlerOverrides[flagKey]
@@ -551,8 +553,11 @@ export async function POST(req: NextRequest) {
         }
         const w1 = await resolveId(b.wrestler1_name, s1?.school_id, b.weight_class)
         const w2 = await resolveId(b.wrestler2_name, s2?.school_id, b.weight_class)
-        // Never store a bout with a null wrestler ID — both sides must be resolved
-        if (b.result_type !== 'BYE' && (!w1 || !w2)) continue
+        // Never store a bout with a null wrestler ID — both sides must be resolved — except a
+        // forfeit over an empty slot ("Scratch"): the winner (always wrestler 1 here) keeps the
+        // win, the slot has no profile
+        const forfeitOverSlot = db_type === 'Forfeit' && winner === 1 && !!w1 && isPlaceholderName(b.wrestler2_name)
+        if (b.result_type !== 'BYE' && (!w1 || !w2) && !forfeitOverSlot) continue
         const bkey = b.result_type === 'BYE'
           ? `${b.weight_class}|bye|${b.wrestler1_name}|${b.wrestler1_school}`
           : `${b.weight_class}|${[`${b.wrestler1_name}|${b.wrestler1_school}`, `${b.wrestler2_name}|${b.wrestler2_school}`].sort().join('|')}`
