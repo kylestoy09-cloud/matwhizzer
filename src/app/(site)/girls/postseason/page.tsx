@@ -17,13 +17,15 @@ export default function GirlsPostSeasonPage() {
           <p className="text-xs text-slate-400 mt-3 group-hover:text-slate-600 transition-colors">View →</p>
         </Link>
 
-        {/* girls team postseason isn't built yet (/postseason/team is the boys bracket) */}
-        <div className="block border border-black bg-white p-8 opacity-60">
+        <Link
+          href="/postseason/team/girls"
+          className="group block border border-black bg-white hover:bg-slate-50 transition-colors p-8"
+        >
           <div className="text-3xl mb-3">🏆</div>
           <h2 className="text-lg font-bold text-slate-900 mb-1">Team</h2>
-          <p className="text-sm text-slate-500">Post-season team results and standings.</p>
-          <p className="text-xs text-slate-400 mt-3">Coming soon</p>
-        </div>
+          <p className="text-sm text-slate-500">North and South brackets and the state final.</p>
+          <p className="text-xs text-slate-400 mt-3 group-hover:text-slate-600 transition-colors">View →</p>
+        </Link>
       </div>
     </div>
   )

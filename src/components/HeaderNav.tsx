@@ -85,10 +85,9 @@ export function HeaderNav() {
     { href: isBoys ? '/boys/schools'     : '/girls/schools',                     label: 'Schools'      },
     { href: isBoys ? '/boys/tournaments' : '/girls/tournaments',                 label: 'Tournaments'  },
     { href: isBoys ? '/boys/postseason'  : '/girls/postseason',                  label: 'Post Season',
-      // girls team postseason isn't built yet
       menu: isBoys
         ? [{ href: '/postseason/team', label: 'Team' }, { href: '/postseason/individual/boys', label: 'Individual' }]
-        : [{ href: null, label: 'Team (coming soon)' }, { href: '/postseason/individual/girls', label: 'Individual' }] },
+        : [{ href: '/postseason/team/girls', label: 'Team' }, { href: '/postseason/individual/girls', label: 'Individual' }] },
     { href: isBoys ? '/boys/h2h'         : '/girls/h2h',                         label: 'H2H'          },
     { href: '/about',                                                             label: 'About'        },
   ]
