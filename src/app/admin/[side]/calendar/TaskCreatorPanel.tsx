@@ -6,11 +6,14 @@ import { createSupabaseBrowser } from '@/lib/supabase/client'
 import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import type { SeasonBounds } from './CalendarHeader'
 import type { ToolRegistryRow } from '@/app/api/admin/tool-registry/route'
+import { phaseOn, shortDate, type PhaseDates } from '@/lib/phaseDates'
 
 type TaskType = 'process' | 'flex'
 type Phase = 'offseason' | 'preseason' | 'season' | 'postseason'
 
-function detectPhase(bounds: SeasonBounds, date: string): Phase {
+// The dashboard a due date belongs to: the side's Season Dates when set, else the calendar's bounds
+function detectPhase(bounds: SeasonBounds, date: string, rows: PhaseDates[] = []): Phase {
+  if (rows.length) return phaseOn(rows, date).phase
   if (date >= bounds.postseason_start && date <= bounds.postseason_end) return 'postseason'
   if (date >= bounds.season_start     && date <  bounds.postseason_start) return 'season'
   if (date >= bounds.preseason_start  && date <  bounds.season_start)     return 'preseason'
@@ -35,10 +38,11 @@ type Props = {
   currentUser: string
   defaultDate?: string
   bounds: SeasonBounds
+  phaseDates?: PhaseDates[]
   onCreated?: () => void
 }
 
-export function TaskCreatorPanel({ currentUser, defaultDate, bounds, onCreated }: Props) {
+export function TaskCreatorPanel({ currentUser, defaultDate, bounds, phaseDates = [], onCreated }: Props) {
   const { gender } = useAdminGender()
   const today = new Date().toISOString().slice(0, 10)
   const [title,    setTitle]    = useState('')
@@ -49,9 +53,9 @@ export function TaskCreatorPanel({ currentUser, defaultDate, bounds, onCreated }
   const [flash,    setFlash]    = useState<{ msg: string; ok: boolean } | null>(null)
 
   // Phase derived from date
-  const [phase,    setPhase]    = useState<Phase>(() => detectPhase(bounds, defaultDate ?? today))
+  const [phase,    setPhase]    = useState<Phase>(() => detectPhase(bounds, defaultDate ?? today, phaseDates))
   // Dashboard can be overridden from auto-detected phase
-  const [dashboard, setDashboard] = useState<string>(detectPhase(bounds, defaultDate ?? today))
+  const [dashboard, setDashboard] = useState<string>(detectPhase(bounds, defaultDate ?? today, phaseDates))
 
   // Tool picker
   const [tools,       setTools]       = useState<ToolRegistryRow[]>([])
@@ -66,11 +70,19 @@ export function TaskCreatorPanel({ currentUser, defaultDate, bounds, onCreated }
   }, [defaultDate])
 
   useEffect(() => {
-    const detected = detectPhase(bounds, dueDate)
+    const detected = detectPhase(bounds, dueDate, phaseDates)
     setPhase(detected)
     setDashboard(detected)
     setToolKey('')
-  }, [dueDate, bounds])
+  }, [dueDate, bounds, phaseDates])
+
+  // "Goes on the Preseason dashboard (2026-27: Oct 1 – Dec 6)"
+  const where = (() => {
+    if (!dueDate || !phaseDates.length) return null
+    const p = phaseOn(phaseDates, dueDate)
+    const span = p.from && p.to ? `${shortDate(p.from)} – ${shortDate(p.to)}` : p.from ? `from ${shortDate(p.from)}` : p.to ? `until ${shortDate(p.to)}` : ''
+    return `${p.row ? `${p.row.label}: ` : ''}${span}`
+  })()
 
   // When dashboard or gender changes → load tools filtered by phase + gender
   const loadTools = useCallback(async (ph: string, g: 'M' | 'F') => {
@@ -182,6 +194,10 @@ export function TaskCreatorPanel({ currentUser, defaultDate, bounds, onCreated }
             auto: {PHASE_LABELS[phase]}
           </span>
         </div>
+        <p className="text-[11px] text-slate-600 mb-1">
+          Goes on the <strong>{PHASE_LABELS[phase]}</strong> dashboard{where ? ` (${where})` : ''}
+          {dashboard !== phase && <span className="text-amber-700"> · changed to {PHASE_LABELS[dashboard as Phase]}</span>}
+        </p>
         <select
           value={dashboard}
           onChange={e => setDashboard(e.target.value)}

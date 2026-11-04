@@ -2,6 +2,27 @@
 
 ---
 
+## 2026-11-04 — Admin phase dates per side (Calendar: Season Dates)
+
+**Migration file:** `docs/migrations/20261104_admin_phase_dates.sql`
+
+**Purpose:** The admin dashboards (Preseason / Season / Postseason / Off Season) follow dates, but there was no way to set them. Boys read one hand-made `admin_season_config` row. Girls had none: the calendar guessed from `season_calendar` events, and the admin home followed the season stage.
+
+**Changes:**
+- New table `admin_phase_dates` (season, gender: preseason_start, season_start, postseason_start, postseason_end; who and when; RLS on, service role only). Off season = after postseason_end until the next preseason_start. Seeded: boys 2026-27 from `admin_season_config`. Girls: none yet; girls keep today's behavior until their dates are entered.
+- **Code:**
+  - Calendar tool: a **Season Dates** button opens a per-season editor for that side (`SeasonDatesPanel`, `/api/admin/phase-dates`). It checks the order and that seasons don't overlap, and logs each change.
+  - The calendar header uses those dates.
+  - The task creator says which dashboard the due date puts the task on, e.g. "Goes on the Preseason dashboard (2026-27: Oct 1 – Dec 6)". It works for dates in any season and can still be overridden.
+  - The admin home opens today's phase from those dates for either side. Fixed on the way: the boys home stayed on Postseason after postseason ended.
+- Not changed: the public site's season (`season_gender_state`, set in the season lifecycle tool).
+
+**PENDING** — to run in the Supabase SQL editor
+**Reversible?** Yes — `DROP TABLE public.admin_phase_dates;` (the code falls back to the old behavior)
+**Verified?** Pending
+
+---
+
 ## 2026-11-04 — Five girls programs inactive for 2025-26; girls "Gabriel Grant" removed; microcheck and school page fixes
 
 **Script:** `scripts/fix_girls_inactive_and_gabriel_20261104.mts` (data only). Backup: `docs/migrations/backups/20261104_girls_inactive_and_gabriel_before.json`

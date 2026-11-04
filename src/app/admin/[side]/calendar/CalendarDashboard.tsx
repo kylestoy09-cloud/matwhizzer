@@ -5,17 +5,23 @@ import { CalendarHeader, type SeasonBounds } from './CalendarHeader'
 import { CalendarView } from './CalendarView'
 import { TaskCreatorPanel } from './TaskCreatorPanel'
 import { TodayTaskCard } from './TodayTaskCard'
+import { SeasonDatesPanel } from './SeasonDatesPanel'
+import type { PhaseDates } from '@/lib/phaseDates'
 
 export type { SeasonBounds }
 
 type Props = {
   bounds: SeasonBounds
+  phaseDates: PhaseDates[]
+  gender: 'M' | 'F'
   currentUser: string
 }
 
-export function CalendarDashboard({ bounds, currentUser }: Props) {
+export function CalendarDashboard({ bounds, phaseDates: initialDates, gender, currentUser }: Props) {
   const [selectedDate, setSelectedDate] = useState<string | undefined>()
   const [refreshKey,   setRefreshKey]   = useState(0)
+  const [phaseDates,   setPhaseDates]   = useState(initialDates)
+  const [editDates,    setEditDates]    = useState(false)
 
   return (
     /* Use explicit height (not min-height) so flex-1 propagates to the month grid */
@@ -25,7 +31,7 @@ export function CalendarDashboard({ bounds, currentUser }: Props) {
     >
       {/* Header card — thin, standard format, fixed height */}
       <div className="shrink-0 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-        <CalendarHeader bounds={bounds} />
+        <CalendarHeader bounds={bounds} onEditDates={() => setEditDates(true)} />
       </div>
 
       {/* Body: 3-column card row — fills remaining height */}
@@ -50,11 +56,20 @@ export function CalendarDashboard({ bounds, currentUser }: Props) {
             currentUser={currentUser}
             defaultDate={selectedDate}
             bounds={bounds}
+            phaseDates={phaseDates}
             onCreated={() => setRefreshKey(k => k + 1)}
           />
         </div>
 
       </div>
+
+      {editDates && (
+        <SeasonDatesPanel
+          gender={gender}
+          onClose={() => setEditDates(false)}
+          onSaved={rows => setPhaseDates(rows)}
+        />
+      )}
     </div>
   )
 }

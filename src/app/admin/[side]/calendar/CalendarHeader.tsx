@@ -2,7 +2,6 @@ export type SeasonBounds = {
   preseason_start:  string
   season_start:     string
   postseason_start: string
-  season_end:       string
   postseason_end:   string
   season_label:     string
 }
@@ -16,6 +15,7 @@ function daysBetween(a: string, b: string) {
 }
 
 function getPhase(b: SeasonBounds, t: string): Phase {
+  if (t > b.postseason_end)    return 'offseason'
   if (t >= b.postseason_start) return 'postseason'
   if (t >= b.season_start)     return 'season'
   if (t >= b.preseason_start)  return 'preseason'
@@ -60,9 +60,9 @@ const PHASE_LABEL: Record<Phase, string> = {
   postseason: 'Post-Season',
 }
 
-type Props = { bounds: SeasonBounds }
+type Props = { bounds: SeasonBounds; onEditDates?: () => void }
 
-export function CalendarHeader({ bounds }: Props) {
+export function CalendarHeader({ bounds, onEditDates }: Props) {
   const t         = today()
   const phase     = getPhase(bounds, t)
   const pct       = Math.round(yearProgress(bounds, t) * 100)
@@ -79,7 +79,14 @@ export function CalendarHeader({ bounds }: Props) {
       {/* Top row */}
       <div className="flex items-baseline justify-between mb-4">
         <p className="text-base font-bold text-slate-800">Calendar</p>
-        <p className="text-sm text-slate-500 font-medium">{bounds.season_label}</p>
+        <div className="flex items-baseline gap-3">
+          <p className="text-sm text-slate-500 font-medium">{bounds.season_label}</p>
+          {onEditDates && (
+            <button onClick={onEditDates} className="text-xs px-2.5 py-1 rounded border border-slate-300 text-slate-600 hover:bg-slate-50">
+              Season Dates
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Progress bar */}
