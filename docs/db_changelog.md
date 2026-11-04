@@ -26,6 +26,10 @@
 - **School pages:**
   - Tab links always name the tab. Girls pages open on Post Season, so the Schedule tab could never be opened.
   - The Roster tab and the Leaders "Season" view list everyone who wrestled for the school that season (duals, in-season tournaments, postseason). Before, they listed only postseason entrants: Dover girls 8 of 21, East Orange 0. Postseason numbers are unchanged.
+- **Review (same day):**
+  - The school stats board's Pins / Tech Falls / Bonus % add up the season stats of the full roster, so they now count every school bout. Checked against `lb_rs_team`: Dover girls 32 pins, Dover boys 134 / 6 techs, Jefferson-Sparta 137 / 10, Ramsey-NH girls 181 / 3, all equal. Before, they counted only postseason entrants.
+  - Found: the roster listed the shared "Unknown" profiles (bouts at about 72 schools). Fixed: Unknown and placeholder names are left out.
+  - Checked: no school is near the 5,000-row limit (largest sample under 200 tournament bouts). Only Keansburg's single non-counting 2025-26 girls bout sits on an inactive girls school.
 
 **APPLIED** — 2026-11-04
 **Reversible?** Yes — the backup holds the profile and both bouts; delete the five inactive rows
