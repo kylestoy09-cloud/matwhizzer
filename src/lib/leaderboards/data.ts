@@ -4,6 +4,7 @@
 // analytics call the lb_an_* functions. Every row carries its school's id and logo.
 
 import { supabase } from '@/lib/supabase/public-cached'
+import { getSchoolSeasonNames } from '@/lib/schoolSeasonNames'
 import {
   MIN_DUALS, MIN_PS_MATCHES, MIN_PS_TEAM_MATCHES, MIN_RS_MATCHES, MIN_RS_TEAM_CONTESTED,
   analyticsLevel, poolFor, type Gender, type Params,
@@ -54,6 +55,14 @@ async function run<T>(q: Q, n: number): Promise<{ rows: T[]; more: boolean; erro
   return { rows: rows.slice(0, n), more: rows.length > n, error: error?.message ?? null }
 }
 
+// A school's name follows the season (girls co-ops: "Ramsey-Northern Highlands" in 2025-26,
+// "Ramsey" in 2024-25); the embedded schools row carries only its own name.
+async function named<T extends { school: School | null }>(res: { rows: T[]; more: boolean; error: string | null }, gender: Gender, season: number) {
+  const names = await getSchoolSeasonNames(supabase as never, season, gender)
+  for (const r of res.rows) if (r.school && names.has(r.school.id)) r.school = { ...r.school, display_name: names.get(r.school.id)! }
+  return res
+}
+
 /** Shared individual sorting for regular season and postseason */
 function individualOrder(q: Q, p: Params, minMatches: number): Q {
   switch (p.cat) {
@@ -86,7 +95,7 @@ export async function rsIndividual(gender: Gender, season: number, p: Params) {
     .eq('gender', gender).eq('season_id', season)
   if (p.wt) q = q.eq('weight', p.wt)
   q = individualOrder(withSchoolFilters(q, p), p, MIN_RS_MATCHES).order('wrestler_id')
-  return run<WrestlerRow>(q, p.n)
+  return named(await run<WrestlerRow>(q, p.n), gender, season)
 }
 
 export async function rsTeam(gender: Gender, season: number, p: Params) {
@@ -104,7 +113,7 @@ export async function rsTeam(gender: Gender, season: number, p: Params) {
     case 'wrr':   q = q.gt('team_wrr', 0).order('team_wrr', DESC); break
     case 'ppd':   q = q.gte('duals', MIN_DUALS).not('points_per_dual', 'is', null).order('points_per_dual', DESC); break
   }
-  return run<TeamRow>(q.order('school_id'), p.n)
+  return named(await run<TeamRow>(q.order('school_id'), p.n), gender, season)
 }
 
 export async function psIndividual(gender: Gender, season: number, p: Params) {
@@ -113,7 +122,7 @@ export async function psIndividual(gender: Gender, season: number, p: Params) {
     .eq('gender', gender).eq('season_id', season).eq('pool', poolFor(p.level, p.scope))
   if (p.wt) q = q.eq('weight', p.wt)
   q = individualOrder(q, p, MIN_PS_MATCHES).order('wrestler_id')
-  return run<WrestlerRow>(q, p.n)
+  return named(await run<WrestlerRow>(q, p.n), gender, season)
 }
 
 export async function psTeam(gender: Gender, season: number, p: Params) {
@@ -126,15 +135,15 @@ export async function psTeam(gender: Gender, season: number, p: Params) {
     case 'techs':  q = q.gt('techs', 0).order('techs', DESC).order('matches'); break
     case 'bonus':  q = q.gte('matches', MIN_PS_TEAM_MATCHES).not('bonus_pct', 'is', null).order('bonus_pct', DESC); break
   }
-  return run<TeamRow>(q.order('school_id'), p.n)
+  return named(await run<TeamRow>(q.order('school_id'), p.n), gender, season)
 }
 
 // ── Analytics ─────────────────────────────────────────────────────────────────────────
 
-/** Every school's name and logo by id (analytics rows carry only school ids) */
-export async function schoolsById(): Promise<Map<number, School>> {
-  const { data } = await supabase.from('schools').select(SCHOOL).order('id')
-  return new Map(((data ?? []) as School[]).map(s => [s.id, s]))
+/** Every school's name (for that season) and logo by id (analytics rows carry only school ids) */
+export async function schoolsById(gender: Gender, season: number): Promise<Map<number, School>> {
+  const [{ data }, names] = await Promise.all([supabase.from('schools').select(SCHOOL).order('id'), getSchoolSeasonNames(supabase as never, season, gender)])
+  return new Map(((data ?? []) as School[]).map(s => [s.id, names.has(s.id) ? { ...s, display_name: names.get(s.id)! } : s]))
 }
 
 export type AnalyticsRow = Record<string, string | number | null>

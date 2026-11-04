@@ -232,7 +232,7 @@ async function AnalyticsView({ gender, season, p, base, L }: ViewArgs) {
   const catTabs = ANALYTICS.map(c => ({ key: c.key, label: c.label, href: L({ cat: c.key, ...fresh }) }))
   const levelTabs = [{ key: 'all', label: 'All Rounds', href: L({ alevel: null, n: null }) },
     ...LEVELS.map(l => ({ key: l.key, label: l.label, href: L({ alevel: l.key, n: null }) }))]
-  const [{ rows, more: has, error }, schools] = await Promise.all([analytics(gender, season, p), schoolsById()])
+  const [{ rows, more: has, error }, schools] = await Promise.all([analytics(gender, season, p), schoolsById(gender, season)])
   const sch = (id: unknown): School | null => (typeof id === 'number' ? schools.get(id) ?? null : null)
   const person = (id: unknown, name: unknown, schoolId: unknown) =>
     <WrestlerCell base={base} id={String(id)} name={String(name ?? '')} school={sch(schoolId)} />

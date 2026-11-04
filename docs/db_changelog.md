@@ -2,6 +2,26 @@
 
 ---
 
+## 2026-11-03 — Site functions name schools by season (girls co-op names everywhere)
+
+**Migration file:** `docs/migrations/20261103_school_names_by_season.sql`. Old definitions (rollback): `docs/migrations/backups/20261103_name_functions_before.sql`
+
+**Purpose:** 52 functions printed `schools.display_name`, the school's own name. On girls pages that gave "Ramsey", "Newton" and "Jefferson" for the girls co-ops: the home leaderboard, the mat-time, bonus, pin and team-point leaders, and the state leader boxes. The co-op names are `school_season_names` rows for the seasons each co-op existed (`scripts/fix_girls_coops_20261103.mts`).
+
+**Changes:**
+- Each function now prints `school_display_name(school_id, season, gender)` wherever it printed the school name; bodies are otherwise identical.
+- Boys output is unchanged: the only boys season name is Lodi 2024-25, already handled.
+- Drops the duplicate `lb_gp_team_points(text, integer)`. Two overloads made every call fail; the (text, smallint) version stays.
+- Not changed: `school_directory` (uses the program names), `search_schools`, `get_coop_*`, `admin_region_seed_entries`, and the no-season overloads of `state_bonus_pct`, `state_mat_time` and `state_team_score`.
+- **Code:** the leaderboards pages (`src/lib/leaderboards/data.ts`) apply the season names to their rows and to the analytics school list.
+
+**PENDING** — to run in the Supabase SQL editor
+
+**Reversible?** Yes — run the backup file
+**Verified?** Pending
+
+---
+
 ## 2026-11-03 — Girls co-ops finished; girls team totals from TrackWrestling
 
 **Scripts:** `scripts/fix_girls_coops_20261103.mts`, `scripts/build_girls_official_team_scores.mts`. Backups: `docs/migrations/backups/20261103_girls_coops_before.json`, `20261103_girls_team_scores_before.json`, `20261103_wwp_south_girls_entries_before.json`
