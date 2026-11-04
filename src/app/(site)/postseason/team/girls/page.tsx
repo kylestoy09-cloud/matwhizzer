@@ -15,12 +15,13 @@ export default async function GirlsTeamPostseasonPage() {
   const [bracket, seasonLabel, logos] = await Promise.all([getGirlsTeamBracket(season), getSeasonLabel(season), getSchoolLogos()])
 
   const ids = bracket?.schoolIds ?? []
-  const [{ data: girlsNames }, seasonNames] = await Promise.all([
-    ids.length ? supabase.from('girls_schools').select('school_id, display_name').in('school_id', ids) : Promise.resolve({ data: [] }),
+  // the season's name (girls co-ops), else the school's name
+  const [{ data: schoolRows }, seasonNames] = await Promise.all([
+    ids.length ? supabase.from('schools').select('id, display_name').in('id', ids) : Promise.resolve({ data: [] }),
     getSchoolSeasonNames(supabase as never, season, 'F', ids),
   ])
-  const programName = new Map((girlsNames ?? []).map(r => [r.school_id as number, r.display_name as string]))
-  const nameOf = (id: number) => seasonNames.get(id) ?? programName.get(id) ?? 'TBD'
+  const schoolName = new Map((schoolRows ?? []).map(r => [r.id as number, r.display_name as string]))
+  const nameOf = (id: number) => seasonNames.get(id) ?? schoolName.get(id) ?? 'TBD'
 
   function Match({ m, large }: { m: BracketMatch; large?: boolean }) {
     const rows = m.teams.map((t, i) => (
