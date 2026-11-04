@@ -682,6 +682,15 @@ export function RosterGradeImportClient({ gender }: { gender: 'M' | 'F' }) {
     const confirmCount = Object.values(rosterEdits).filter(e => !e.confirmed && !e.rejected && e.entryId).length
       + manualGradeEdits(rosterEdits, liveWrestlers).length
 
+    // Girls: once a school is complete, the next linked school still to do, in list order
+    // (after this one, wrapping to the top)
+    const nextSchool = (() => {
+      if (gender !== 'F' || !selectedSchool) return null
+      const todo = (s: School) => !!s.school_id && !s.complete && s.school_id !== selectedSchool.school_id
+      const at = schools.findIndex(s => s.school_name_raw === selectedSchool.school_name_raw)
+      return [...schools.slice(at + 1), ...schools.slice(0, Math.max(at, 0))].find(todo) ?? null
+    })()
+
     return (
       <div>
         {/* Header */}
@@ -714,6 +723,17 @@ export function RosterGradeImportClient({ gender }: { gender: 'M' | 'F' }) {
                 >
                   Reopen
                 </button>
+                {gender === 'F' && (nextSchool ? (
+                  <button
+                    disabled={markingComplete}
+                    onClick={() => openSchool(nextSchool)}
+                    className="px-3 py-1 rounded bg-slate-900 text-white text-sm font-medium disabled:opacity-40"
+                  >
+                    Next: {nextSchool.school_name ?? nextSchool.school_name_raw} →
+                  </button>
+                ) : (
+                  <span className="text-sm text-slate-500">All linked schools are complete</span>
+                ))}
               </>
             ) : (
               <button
