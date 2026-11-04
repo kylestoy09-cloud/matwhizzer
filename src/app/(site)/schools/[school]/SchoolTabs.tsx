@@ -225,9 +225,11 @@ export function SchoolTabs({
   const router = useRouter()
   const resolvedBase = basePath ?? `/schools/${school}`
 
+  // Always name the tab: the default differs by side (boys open on Schedule, girls on Post
+  // Season), so leaving it out sent girls' Schedule clicks back to Post Season
   function tabUrl(tabId: string) {
     const params = new URLSearchParams()
-    if (tabId !== 'schedule') params.set('tab', tabId)
+    params.set('tab', tabId)
     const qs = params.toString()
     return `${resolvedBase}${qs ? `?${qs}` : ''}`
   }
