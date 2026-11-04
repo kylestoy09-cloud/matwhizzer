@@ -3,6 +3,7 @@ import { getRosterImportSeason } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 import { matchSchoolNames } from '@/lib/matchSchools'
+import { completeSchoolIds } from '@/lib/rosterGradeComplete'
 
 export const dynamic = 'force-dynamic'
 
@@ -126,8 +127,10 @@ export async function GET(req: NextRequest) {
     : { data: [] }
   const nameById = new Map((linkedNames ?? []).map(r => [r.school_id as number, r.display_name as string]))
 
+  const complete = await completeSchoolIds('M')
   const result = schools.map(s => ({
     ...s,
+    complete: s.school_id != null && complete.has(s.school_id),
     school_name: s.school_id ? (nameById.get(s.school_id) ?? null) : null,
     proposal: s.school_id ? null : (proposalMap.get(s.school_name_raw) ?? null),
   }))

@@ -17,6 +17,7 @@ type School = {
   confirmed: number
   no_match: number
   skipped: number
+  complete: boolean               // the admin marked this school's review complete
   proposal: {
     schoolId: number
     displayName: string
@@ -208,6 +209,7 @@ export function RosterGradeImportClient({ gender }: { gender: 'M' | 'F' }) {
   const [searchWrestlerId, setSearchWrestlerId] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [confirmingRoster, setConfirmingRoster] = useState(false)
+  const [markingComplete, setMarkingComplete] = useState(false)
   const [rosterMessage, setRosterMessage] = useState<string | null>(null)
 
   // Confirm phase
@@ -232,7 +234,7 @@ export function RosterGradeImportClient({ gender }: { gender: 'M' | 'F' }) {
   }, [api, gender])
 
   // School filter
-  const [schoolFilter, setSchoolFilter] = useState<'all' | 'unmatched' | 'matched'>('all')
+  const [schoolFilter, setSchoolFilter] = useState<'all' | 'todo' | 'complete' | 'unmatched'>('all')
 
   // ── Load schools ─────────────────────────────────────────────────────────────
 
@@ -336,12 +338,12 @@ export function RosterGradeImportClient({ gender }: { gender: 'M' | 'F' }) {
   // Writes grades only for the live roster wrestlers the admin accepted; any
   // rejected proposal is written back to no_match instead of being confirmed.
 
-  async function confirmRoster() {
+  async function confirmRoster(): Promise<boolean> {
     const school = selectedSchool!
     const accept = Object.entries(rosterEdits).filter(([, e]) => !e.confirmed && !e.rejected && e.entryId)
     const revert = Object.entries(rosterEdits).filter(([, e]) => !e.confirmed && e.rejected && e.entryId)
     const manual = manualGradeEdits(rosterEdits, liveWrestlers)
-    if (accept.length === 0 && revert.length === 0 && manual.length === 0) return
+    if (accept.length === 0 && revert.length === 0 && manual.length === 0) return true
 
     setConfirmingRoster(true)
     setRosterMessage(null)
@@ -388,10 +390,38 @@ export function RosterGradeImportClient({ gender }: { gender: 'M' | 'F' }) {
       setLiveCount(data.liveCount)
       setRosterEdits(computeRosterEdits(data.entries, data.liveWrestlers ?? []))
       loadSchools()
+      return true
+    } catch (e: unknown) {
+      setRosterMessage(`Error: ${e instanceof Error ? e.message : String(e)}`)
+      return false
+    } finally {
+      setConfirmingRoster(false)
+    }
+  }
+
+  // ── Mark a school complete / reopen ───────────────────────────────────────────
+  // Track rows left unmatched stay on file as the grade pool, so "done" is the admin's call.
+  // Marking complete saves any unconfirmed grades first.
+
+  async function setSchoolComplete(complete: boolean) {
+    const school = selectedSchool!
+    setMarkingComplete(true)
+    try {
+      if (complete && !(await confirmRoster())) return
+      const res = await fetch(`${api}/complete`, {
+        method: complete ? 'POST' : 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ school_id: school.school_id }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error)
+      setSelectedSchool({ ...school, complete })
+      setRosterMessage(complete ? 'School marked complete.' : 'School reopened.')
+      loadSchools()
     } catch (e: unknown) {
       setRosterMessage(`Error: ${e instanceof Error ? e.message : String(e)}`)
     } finally {
-      setConfirmingRoster(false)
+      setMarkingComplete(false)
     }
   }
 
@@ -423,10 +453,12 @@ export function RosterGradeImportClient({ gender }: { gender: 'M' | 'F' }) {
   const matchedSchools     = schools.filter(s => s.school_id).length
   const skippedSchools     = schools.filter(s => s.skipped > 0 && !s.school_id).length
   const totalWrestlerMatched = schools.reduce((n, s) => n + s.wrestler_matched + s.confirmed, 0)
+  const completeSchools    = schools.filter(s => s.complete).length
 
   const visibleSchools = schools.filter(s => {
+    if (schoolFilter === 'todo')      return !!s.school_id && !s.complete
+    if (schoolFilter === 'complete')  return s.complete
     if (schoolFilter === 'unmatched') return !s.school_id
-    if (schoolFilter === 'matched')   return !!s.school_id
     return true
   })
 
@@ -450,6 +482,7 @@ export function RosterGradeImportClient({ gender }: { gender: 'M' | 'F' }) {
           <span><strong className="text-slate-900">{totalSchools}</strong> schools</span>
           <span><strong className="text-slate-900">{matchedSchools}</strong> matched</span>
           <span><strong className="text-slate-900">{totalSchools - matchedSchools - skippedSchools}</strong> unmatched</span>
+          <span><strong className="text-slate-900">{completeSchools}</strong> complete</span>
           <span><strong className="text-slate-900">{totalWrestlerMatched}</strong> wrestlers matched</span>
           <button
             className={`ml-auto px-3 py-1 rounded text-xs font-medium border ${unresolvedCount ? 'border-amber-400 text-amber-800 bg-amber-50' : 'border-slate-300 text-slate-600'}`}
@@ -475,13 +508,13 @@ export function RosterGradeImportClient({ gender }: { gender: 'M' | 'F' }) {
 
         {/* Filter tabs */}
         <div className="flex gap-2 mb-4">
-          {(['all', 'unmatched', 'matched'] as const).map(f => (
+          {([['all', 'All'], ['todo', 'To do'], ['complete', 'Complete'], ['unmatched', 'Unmatched']] as const).map(([f, label]) => (
             <button
               key={f}
               onClick={() => setSchoolFilter(f)}
               className={`px-3 py-1 rounded text-xs font-medium ${schoolFilter === f ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
             >
-              {f.charAt(0).toUpperCase() + f.slice(1)}
+              {label}
             </button>
           ))}
           {Object.keys(schoolEdits).length > 0 && (
@@ -525,7 +558,7 @@ export function RosterGradeImportClient({ gender }: { gender: 'M' | 'F' }) {
                   ].filter(Boolean).join(', ')
 
                   const isSkipped    = school.skipped === school.total && !school.school_id
-                  const isFullyDone  = school.school_id && school.pending === 0 && school.school_matched === 0
+                  const isFullyDone  = school.school_id && school.complete
 
                   return (
                     <tr
@@ -534,7 +567,10 @@ export function RosterGradeImportClient({ gender }: { gender: 'M' | 'F' }) {
                     >
                       <td className="px-3 py-1 font-mono text-xs text-slate-700">{school.school_name_raw}</td>
                       <td className="px-3 py-1 text-slate-600">{school.total}</td>
-                      <td className="px-3 py-1 text-slate-500 text-xs">{statusSummary}</td>
+                      <td className="px-3 py-1 text-slate-500 text-xs">
+                        {school.complete && <span className="mr-1.5 px-1.5 py-0.5 rounded bg-green-100 text-green-800 font-medium">✓ Complete</span>}
+                        {statusSummary}
+                      </td>
                       <td className="px-3 py-1">
                         {school.school_id ? (
                           <span className="text-green-700 text-xs">
@@ -658,15 +694,37 @@ export function RosterGradeImportClient({ gender }: { gender: 'M' | 'F' }) {
           </button>
           <h2 className="text-lg font-semibold text-slate-900">{selectedSchool?.school_name_raw}</h2>
           <span className="text-sm text-slate-500">{liveCount} on roster · {entries.length} import rows</span>
-          {confirmCount > 0 && (
-            <button
-              disabled={confirmingRoster}
-              onClick={confirmRoster}
-              className="ml-auto px-3 py-1 rounded bg-green-700 text-white text-sm font-medium disabled:opacity-40"
-            >
-              {confirmingRoster ? 'Confirming…' : `Confirm ${confirmCount} Grade${confirmCount !== 1 ? 's' : ''}`}
-            </button>
-          )}
+          <div className="ml-auto flex items-center gap-2">
+            {confirmCount > 0 && (
+              <button
+                disabled={confirmingRoster || markingComplete}
+                onClick={confirmRoster}
+                className="px-3 py-1 rounded bg-green-700 text-white text-sm font-medium disabled:opacity-40"
+              >
+                {confirmingRoster ? 'Confirming…' : `Confirm ${confirmCount} Grade${confirmCount !== 1 ? 's' : ''}`}
+              </button>
+            )}
+            {selectedSchool?.complete ? (
+              <>
+                <span className="px-2 py-1 rounded bg-green-100 text-green-800 text-sm font-medium">✓ Complete</span>
+                <button
+                  disabled={markingComplete}
+                  onClick={() => setSchoolComplete(false)}
+                  className="px-3 py-1 rounded border border-slate-300 text-slate-600 text-sm disabled:opacity-40"
+                >
+                  Reopen
+                </button>
+              </>
+            ) : (
+              <button
+                disabled={confirmingRoster || markingComplete}
+                onClick={() => setSchoolComplete(true)}
+                className="px-3 py-1 rounded bg-slate-900 text-white text-sm font-medium disabled:opacity-40"
+              >
+                {markingComplete ? 'Saving…' : confirmCount > 0 ? `Confirm ${confirmCount} & Mark Complete` : 'Mark Complete'}
+              </button>
+            )}
+          </div>
         </div>
 
         {rosterMessage && (

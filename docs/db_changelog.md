@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-11-04 — Roster grade import: mark a school complete
+
+**Migration file:** `docs/migrations/20261104_roster_grade_school_complete.sql`
+
+**Purpose:** The school list showed "Review" only when every Track roster row for the school had been matched. Track rosters list wrestlers with no profile here. Those rows can't be matched, and they stay `school_matched` as the grade pool (`src/lib/rosterPool.ts`), so many schools stayed on "Match Wrestlers" after the review was finished (girls: 182 of 253).
+
+**Changes:**
+- New table `roster_grade_school_complete` (school, roster season, gender; who and when; RLS on, service role only).
+- Backfill: schools with nothing left to match start out complete (297 boys, 71 girls).
+- **Code:** a "Mark Complete" button on the school's roster screen (it saves unconfirmed grades first) and "Reopen". The list shows "✓ Complete" and "Review" for marked schools and "Match Wrestlers" for the rest, with To do and Complete filters. Routes: `/api/admin/roster-grade-import{,-girls}/complete`. Roster rows are not touched.
+
+**APPLIED** — 2026-11-04, Supabase SQL editor
+
+**Reversible?** Yes — `DROP TABLE public.roster_grade_school_complete;`
+**Verified?** Yes — 297 boys and 71 girls schools marked complete after the backfill
+
+---
+
 ## 2026-11-04 — Girls program setup: two co-ops, eight missing programs, one name
 
 **Script:** `scripts/fix_girls_programs_20261104.mts` (data only, no schema change). Backup: `docs/migrations/backups/20261104_girls_programs_before.json`
