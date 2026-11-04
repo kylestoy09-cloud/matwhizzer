@@ -206,9 +206,10 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
         setLiveWrestlers(live)
         // Pre-populate decisions for every live wrestler
         // Priority: already saved in DB → auto-select top candidate (score ≥ 0.5)
+        // matched already: in the import review (wrestler_matched) or with the grade written (confirmed)
         const matchedByWrestler = new Map<string, string>()
         for (const e of entries) {
-          if (e.status === 'wrestler_matched' && e.wrestler_id)
+          if ((e.status === 'wrestler_matched' || e.status === 'confirmed') && e.wrestler_id)
             matchedByWrestler.set(e.wrestler_id, e.id)
         }
         const schoolMatchedEntries = entries.filter(e => e.status === 'school_matched')
@@ -283,10 +284,12 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
         // Build patch from decisions (wrestler_id → import entry)
         const claimedEntryIds = new Set<string>()
         const payload: { id: string; wrestler_id: string | null; status: string }[] = []
+        // rows already confirmed (grade written in the Roster Grade Import tool) are left as they are
+        const confirmedIds = new Set(rosterEntries.filter(e => e.status === 'confirmed').map(e => e.id))
         for (const [wrestlerId, d] of pendingDecisions.entries()) {
           if (d.status === 'wrestler_matched' && d.importEntryId) {
-            payload.push({ id: d.importEntryId, wrestler_id: wrestlerId, status: 'wrestler_matched' })
             claimedEntryIds.add(d.importEntryId)
+            if (!confirmedIds.has(d.importEntryId)) payload.push({ id: d.importEntryId, wrestler_id: wrestlerId, status: 'wrestler_matched' })
           }
         }
         // Mark unclaimed school_matched entries as no_match so the queue clears
@@ -304,11 +307,12 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
           if (patchData.error) { setError(patchData.error); return }
         }
         // Write the matched grades to the wrestlers (saving a match alone doesn't)
-        if (claimedEntryIds.size > 0) {
+        const toConfirm = [...claimedEntryIds].filter(id => !confirmedIds.has(id))
+        if (toConfirm.length > 0) {
           const confirmRes = await fetch(`${rosterApi(task.gender)}/confirm`, {
             method:  'POST',
             headers: { 'Content-Type': 'application/json' },
-            body:    JSON.stringify({ school_id: task.school_id, ids: [...claimedEntryIds] }),
+            body:    JSON.stringify({ school_id: task.school_id, ids: toConfirm }),
           })
           const confirmData = await confirmRes.json()
           if (confirmData.error) { setError(confirmData.error); return }

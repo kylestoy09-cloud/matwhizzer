@@ -6,7 +6,7 @@
 // limit). A type with a gender covers that gender's active programs; a shared type
 // (gender NULL) covers school data both programs use and is asked once per school.
 
-import { getNewestSeason, getWorkingSeason } from '@/lib/season-context'
+import { getNewestSeason, getRosterImportSeason, getWorkingSeason } from '@/lib/season-context'
 import type { createSupabaseAdmin } from '@/lib/supabase/service'
 import { FIELD_DEFS } from './_engine'
 
@@ -62,9 +62,11 @@ export function orderTypes(types: TaskType[]): TaskType[] {
 }
 
 export async function loadWorkload(db: Db): Promise<Workload> {
-  const [workingM, workingF, newest] = await Promise.all([getWorkingSeason('M'), getWorkingSeason('F'), getNewestSeason()])
+  const [workingM, workingF, newest, rosterM, rosterF] = await Promise.all([
+    getWorkingSeason('M'), getWorkingSeason('F'), getNewestSeason(), getRosterImportSeason(db, 'M'), getRosterImportSeason(db, 'F'),
+  ])
 
-  const [typesRes, boysRes, girlsRes, schoolsRes, logRes, flagRes, inactiveRes, coachM, coachF, queueRes, focusRes, importRes] = await Promise.all([
+  const [typesRes, boysRes, girlsRes, schoolsRes, logRes, flagRes, inactiveRes, coachM, coachF, queueRes, focusRes, importRes, completeRes] = await Promise.all([
     db.from('microcheck_task_types').select('*'),
     db.from('boys_schools').select('school_id, display_name'),
     db.from('girls_schools').select('school_id, display_name'),
@@ -78,8 +80,9 @@ export async function loadWorkload(db: Db): Promise<Workload> {
       .order('priority', { ascending: false }).order('created_at', { ascending: true }),
     db.from('microcheck_focus').select('id, task_key, school_id, created_at').order('created_at'),
     db.from('roster_grade_import').select('gender, school_id, status').limit(100000),
+    db.from('roster_grade_school_complete').select('school_id, gender, season_id').in('season_id', [rosterM.id, rosterF.id]),
   ])
-  for (const [name, r] of Object.entries({ typesRes, boysRes, girlsRes, schoolsRes, logRes, flagRes, inactiveRes, coachM, coachF, queueRes, focusRes, importRes })) {
+  for (const [name, r] of Object.entries({ typesRes, boysRes, girlsRes, schoolsRes, logRes, flagRes, inactiveRes, coachM, coachF, queueRes, focusRes, importRes, completeRes })) {
     if (r.error) throw new Error(`${name}: ${r.error.message}`)
   }
 
@@ -115,6 +118,11 @@ export async function loadWorkload(db: Db): Promise<Workload> {
     else if (r.school_id) importMatched.add(`${r.gender}|${r.school_id}`)
   }
 
+  // Schools marked complete in the Roster Grade Import tool (that gender's roster season)
+  const rosterComplete = new Set((completeRes.data ?? [])
+    .filter(r => (r.gender === 'M' && r.season_id === rosterM.id) || (r.gender === 'F' && r.season_id === rosterF.id))
+    .map(r => `${r.gender}|${r.school_id}`))
+
   const typeByKey = new Map(types.map(t => [t.key, t]))
   const cache = new Map<string, CellStatus>()
 
@@ -129,6 +137,8 @@ export async function loadWorkload(db: Db): Promise<Workload> {
     const fromLog = (st: string | undefined): CellStatus | null => st === 'completed' ? 'completed' : st === 'cant_find' ? 'cant_find' : null
 
     if (t.field === 'roster_match') {
+      // finished in the Roster Grade Import tool: nothing left for microcheck
+      if (rosterComplete.has(`${t.gender ?? 'M'}|${schoolId}`)) return 'done'
       if (flagged.has(`${t.gender}|${schoolId}`)) return 'flagged'
       const logged = fromLog(loggedAny)
       if (logged) return logged
