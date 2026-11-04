@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-11-04 — Lily Oh moved to Riverside, VA (out of state); "Liz Mejia" merged into Cristy Mejia
+
+**Scripts:** `scripts/fix_lily_oh_riverside_va_20261104.mts`, `scripts/merge_girls_duplicates_20261104_mejia.mts` (data only). Backups: `docs/migrations/backups/20261104_lily_oh_riverside_va_before.json`, `..._girls_duplicate_profiles_mejia_before.json`
+
+**Lily Oh:**
+- She's from Riverside High School, Leesburg, Virginia (2026 VHSL girls state champion), not NJ's Riverside (214).
+- Her only bouts are 4 at the 4th Annual Girls Beast of the East (Delaware, multi-state), whose bracket said just "Riverside". The RTF import matched that to the NJ school by name. She isn't on Riverside NJ's Track roster.
+- Fix: new out-of-state school "Riverside, VA" (1203, town Leesburg). Her 4 bouts' school and her name alias moved to it, and she's `is_oos` (her rating and leaderboard rows were removed). No "Riverside" school alias was added.
+
+**Mejia:** Robbinsville "Liz Mejia" (8a3357b3; 3 bouts at the CVC Girls Championships) → "Cristy Mejia" (a970435d). Kyle: same wrestler, and her name is Cristy. They never share an event.
+
+**Steps:** move/merge → girls ratings rebuilt (logged by hand) → references recounted (0) → duplicate deleted → girls leaderboards refreshed
+
+**APPLIED** — 2026-11-04
+**Reversible?** Yes (Lily Oh) / partly (merge) — from the backups
+**Verified?** Yes — Lily Oh has no rating or leaderboard rows; Cristy rated. Integrity check: one rule moved, "school names that collapse to the same name" 10 → 11, from the new Riverside / Riverside, VA pair. It's the same intended NJ-vs-out-of-state pattern as Dover / Dover, DE.
+
+---
+
 ## 2026-11-04 — Merge four duplicate girls profiles; Nutley Track roster links fixed
 
 **Script:** `scripts/merge_girls_duplicates_20261104_batch3.mts` (data only). Backup: `docs/migrations/backups/20261104_girls_duplicate_profiles_batch3_before.json`
