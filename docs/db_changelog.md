@@ -16,7 +16,8 @@
 **APPLIED** — 2026-11-04, Supabase SQL editor
 
 **Reversible?** Yes — `DROP TABLE public.roster_grade_school_complete;`
-**Verified?** Yes — 297 boys and 71 girls schools marked complete after the backfill
+**Grant fix:** `docs/migrations/20261104_roster_grade_school_complete_grant.sql`. The table was created without grants, so the service role got "permission denied" (APPLIED 2026-11-04).
+**Verified?** Yes — 297 boys and 71 girls schools complete; the routes' helper reads them; mark and reopen write test passed
 
 ---
 
