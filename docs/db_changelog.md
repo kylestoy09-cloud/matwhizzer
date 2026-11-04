@@ -2,6 +2,37 @@
 
 ---
 
+## 2026-11-04 — Five girls programs inactive for 2025-26; girls "Gabriel Grant" removed; microcheck and school page fixes
+
+**Script:** `scripts/fix_girls_inactive_and_gabriel_20261104.mts` (data only). Backup: `docs/migrations/backups/20261104_girls_inactive_and_gabriel_before.json`
+
+**Data (approved by Kyle):**
+- `inactive_school_seasons` (girls, 2026) for:
+  - Indian Hills 13, Hammonton 297, Toms River East 253 (girls only in 2024-25)
+  - Hackensack 43 (no girls activity in any season)
+  - Keansburg 191 (one non-counting dual with an unnamed wrestler)
+- All five had open microcheck roster tasks. Their official 0-0 lines no longer show in the girls standings Non-classified list, which hides inactive schools.
+- The girls "Gabriel Grant" profile (031c6969) was East Orange's boys Gabriel Grant (138), entered on two girls dual sheets (Belleville 12/19, Newark Academy 1/7).
+  - Both bouts stay, and the girls keep their falls. The East Orange side is unlinked (shown "Unknown").
+  - The profile was deleted with `deleteWrestler`; what it removed is in the activity log.
+  - Girls ratings rebuilt, leaderboards refreshed.
+
+**Code:**
+- **Microcheck roster tasks:**
+  - A school marked complete in Roster Grade Import is done.
+  - Confirmed import rows count as matched. Dover had shown "none in the import" because it ignored them.
+  - "Done" no longer rewrites confirmed rows.
+  - Girls roster tasks left: 1 (East Orange: wrestlers but no Track roster).
+- **School pages:**
+  - Tab links always name the tab. Girls pages open on Post Season, so the Schedule tab could never be opened.
+  - The Roster tab and the Leaders "Season" view list everyone who wrestled for the school that season (duals, in-season tournaments, postseason). Before, they listed only postseason entrants: Dover girls 8 of 21, East Orange 0. Postseason numbers are unchanged.
+
+**APPLIED** — 2026-11-04
+**Reversible?** Yes — the backup holds the profile and both bouts; delete the five inactive rows
+**Verified?** Yes — integrity check unchanged (35 rules); East Orange's Roster tab shows Youmie Azarre, Dover girls lists its regular-season wrestlers; microcheck girls roster open: East Orange only
+
+---
+
 ## 2026-11-04 — Review fixes: girls_region_mat_time duplicate, header team toggle, delete-tool log
 
 **Migration file:** `docs/migrations/20261104_drop_girls_region_mat_time_text.sql`
