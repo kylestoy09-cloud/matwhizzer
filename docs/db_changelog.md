@@ -2,6 +2,26 @@
 
 ---
 
+## 2026-11-04 — "Scratch Scratch" placeholder removed; Delete Profile in the wrestler edit tool
+
+**Script:** `scripts/fix_scratch_placeholder_20261104.mts` (data only). Backup: `docs/migrations/backups/20261104_scratch_placeholder_before.json`
+
+**Purpose:** "Scratch Scratch" (Mainland, girls) was a placeholder from the Overbrook Girls Winter Open 2025: 120 R1, Lea Gomez-Mares (Cumberland) won by forfeit over a scratched Mainland entry. It had been created through the RTF import review.
+
+**Changes:**
+- The bout stays a forfeit win for Lea, with no loser profile (`wrestler2_id` null, shown as "Forfeit"). The placeholder profile, its alias and its leaderboard row were deleted. A scan of all 14,894 profiles found no other new placeholders (the "Unknown" profiles are the pinned shared-Unknown item).
+- **Code:** the admin wrestler edit page has a **Delete Profile** section (`src/lib/wrestlerDelete.ts`, `/api/admin/wrestler-profile/delete`).
+  - It first lists what the delete would touch.
+  - A profile with real records (dual or tournament bouts, postseason entries, placements, bracket spots, seeds, rankings, upsets) can't be deleted: merge it instead.
+  - Otherwise it removes ratings, rating log, leaderboard rows, streak snapshots, name aliases, school history, pending transfers and follows, and returns Track roster matches to `no_match`.
+  - The admin confirms by typing the wrestler's full name. The deleted row is saved in the activity log.
+
+**APPLIED** — 2026-11-04
+**Reversible?** Scratch: yes, from the backup. Tool deletes: the activity log holds the deleted row.
+**Verified?** Yes — profile gone, bout kept as a forfeit; delete preview tested on profiles with and without records
+
+---
+
 ## 2026-11-04 — Merge two duplicate girls profiles (Hightstown, Linden)
 
 **Script:** `scripts/merge_girls_duplicates_20261104.mts` (data only). Backup: `docs/migrations/backups/20261104_girls_duplicate_profiles_before.json`

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 type School = { id: number; display_name: string }
 
@@ -294,6 +295,110 @@ export function WrestlerProfileClient({ wrestler, currentSchool, schoolHistory, 
           ← Back to Wrestlers
         </Link>
       </div>
+
+      <DeleteProfile wrestler={wrestler} />
     </div>
+  )
+}
+
+// ── Delete profile ────────────────────────────────────────────────────────────
+// Shows what the delete would touch first. A profile with real records (bouts, entries,
+// placements, rankings) can't be deleted here: merge it instead. Confirm by typing the name.
+
+type DeletePreview = { records: { label: string; count: number }[]; cleanup: { label: string; count: number }[]; blocked: boolean }
+
+function DeleteProfile({ wrestler }: { wrestler: Wrestler }) {
+  const router = useRouter()
+  const name = `${wrestler.first_name ?? ''} ${wrestler.last_name ?? ''}`.replace(/\s+/g, ' ').trim()
+  const [preview, setPreview]   = useState<DeletePreview | null>(null)
+  const [loading, setLoading]   = useState(false)
+  const [typed, setTyped]       = useState('')
+  const [deleting, setDeleting] = useState(false)
+  const [error, setError]       = useState<string | null>(null)
+
+  async function start() {
+    setLoading(true); setError(null)
+    try {
+      const res = await fetch(`/api/admin/wrestler-profile/delete?id=${wrestler.id}`)
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error)
+      setPreview(data)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : String(e))
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  async function confirmDelete() {
+    setDeleting(true); setError(null)
+    try {
+      const res = await fetch('/api/admin/wrestler-profile/delete', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: wrestler.id, confirm: typed }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error)
+      router.push('/admin/wrestlers')
+    } catch (e) {
+      setError(e instanceof Error ? e.message : String(e))
+      setDeleting(false)
+    }
+  }
+
+  const matches = typed.replace(/\s+/g, ' ').trim().toLowerCase() === name.toLowerCase()
+
+  return (
+    <section className="mt-12 border border-red-300 rounded p-5 max-w-xl">
+      <h2 className="text-sm font-bold text-red-700 uppercase tracking-wide mb-1">Delete Profile</h2>
+      <p className="text-sm text-slate-600 mb-4">Removes this wrestler from the site. This can’t be undone here.</p>
+
+      {!preview ? (
+        <button
+          onClick={start}
+          disabled={loading}
+          className="px-4 py-2 border border-red-600 text-red-700 text-sm rounded font-medium hover:bg-red-50 disabled:opacity-50"
+        >
+          {loading ? 'Checking…' : 'Delete this profile…'}
+        </button>
+      ) : preview.blocked ? (
+        <div className="text-sm">
+          <p className="text-red-700 font-medium mb-2">This profile can’t be deleted: it still has real records.</p>
+          <ul className="list-disc ml-5 text-slate-700 mb-3">
+            {preview.records.map(r => <li key={r.label}>{r.count} {r.label.toLowerCase()}</li>)}
+          </ul>
+          <p className="text-slate-500 mb-3">If it’s a duplicate, merge it into the right profile instead so those records aren’t lost.</p>
+          <button onClick={() => setPreview(null)} className="text-sm text-slate-500 hover:text-slate-800">Cancel</button>
+        </div>
+      ) : (
+        <div className="text-sm">
+          <p className="font-medium text-slate-800 mb-2">Are you sure? This will delete <strong>{name}</strong>{preview.cleanup.length > 0 ? ' and remove:' : '.'}</p>
+          {preview.cleanup.length > 0 && (
+            <ul className="list-disc ml-5 text-slate-700 mb-3">
+              {preview.cleanup.map(r => <li key={r.label}>{r.count} {r.label.toLowerCase()}</li>)}
+            </ul>
+          )}
+          <label className="block text-slate-600 mb-1">Type <strong>{name}</strong> to confirm:</label>
+          <input
+            value={typed}
+            onChange={e => setTyped(e.target.value)}
+            className="w-full max-w-sm border border-slate-300 rounded px-3 py-1.5 mb-3 focus:outline-none focus:ring-2 focus:ring-red-400"
+            autoComplete="off"
+          />
+          <div className="flex items-center gap-3">
+            <button
+              onClick={confirmDelete}
+              disabled={!matches || deleting}
+              className="px-4 py-2 bg-red-700 text-white text-sm rounded font-medium hover:bg-red-800 disabled:opacity-40"
+            >
+              {deleting ? 'Deleting…' : 'Yes, delete this profile'}
+            </button>
+            <button onClick={() => { setPreview(null); setTyped('') }} className="text-sm text-slate-500 hover:text-slate-800">Cancel</button>
+          </div>
+        </div>
+      )}
+      {error && <p className="mt-3 text-sm text-red-700">{error}</p>}
+    </section>
   )
 }

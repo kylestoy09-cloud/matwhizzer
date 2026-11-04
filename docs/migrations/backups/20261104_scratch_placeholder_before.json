@@ -1,0 +1,82 @@
+{
+ "wrestler": [
+  {
+   "id": "993438ab-aea0-45ae-acaa-4ea0480ca551",
+   "first_name": "Scratch",
+   "last_name": "Scratch",
+   "suffix": null,
+   "gender": "F",
+   "graduation_year": null,
+   "created_at": "2026-08-31T21:00:47.396395+00:00",
+   "tw_id": null,
+   "is_stub": false,
+   "is_oos": false,
+   "main_weight": "120",
+   "grade": null,
+   "grade_confirmed_at": null,
+   "grade_confirmed_source": null,
+   "projected_weight_class": null,
+   "confirmed_weight_class": null,
+   "is_active": true
+  }
+ ],
+ "bouts": [
+  {
+   "id": "cd87cb2c-7fc1-410c-a23e-a98e56fac1db",
+   "in_season_tournament_id": "be8fd6be-8418-4e02-87ab-a8aba50ee5a0",
+   "weight_class": 120,
+   "round": "R1",
+   "wrestler1_id": "88102571-79db-4f00-816f-0036df231a9a",
+   "wrestler1_name_raw": "Lea Gomez-Mares",
+   "wrestler1_school_id": 289,
+   "wrestler1_school_raw": "Cumberland",
+   "wrestler2_id": "993438ab-aea0-45ae-acaa-4ea0480ca551",
+   "wrestler2_name_raw": "Scratch Scratch",
+   "wrestler2_school_id": 282,
+   "wrestler2_school_raw": "Mainland",
+   "winner": 1,
+   "result_type": "Forfeit",
+   "result_detail": null,
+   "fall_time_seconds": null,
+   "winner_score": null,
+   "loser_score": null,
+   "result_time_estimated": false,
+   "source_format": "rtf",
+   "created_at": "2026-08-31T21:00:48.57707+00:00"
+  }
+ ],
+ "aliases": [
+  {
+   "id": 43419,
+   "raw_name": "Scratch Scratch",
+   "school_id": 282,
+   "wrestler_id": "993438ab-aea0-45ae-acaa-4ea0480ca551",
+   "created_at": "2026-08-31T21:00:48.37599+00:00"
+  }
+ ],
+ "lb_rs_wrestler": [
+  {
+   "gender": "F",
+   "season_id": 2026,
+   "wrestler_id": "993438ab-aea0-45ae-acaa-4ea0480ca551",
+   "school_id": 282,
+   "wrestler_name": "Scratch Scratch",
+   "weight": 120,
+   "pins": 0,
+   "fastest_pin": null,
+   "fastest_pin_wt": null,
+   "pin_avg": null,
+   "techs": 0,
+   "fastest_tf": null,
+   "fastest_tf_wt": null,
+   "tf_avg": null,
+   "pins_techs": 0,
+   "bonus_wins": 0,
+   "matches": 1,
+   "bonus_pct": 0,
+   "wrr": null,
+   "refreshed_at": "2026-11-04T20:33:00.89725+00:00",
+   "pt_avg": null
+  }
+ ]
+}
