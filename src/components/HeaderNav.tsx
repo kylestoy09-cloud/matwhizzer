@@ -74,13 +74,21 @@ export function HeaderNav() {
 
   // ── Nav links (gender-aware) ─────────────────────────────────────────────
   const homeHref = '/'
-  const navItems = [
+  // menu: shown on hover (desktop); on phones the link goes straight to the page
+  type NavItem = { href: string; label: string; menu?: { href: string | null; label: string }[] }
+  const standingsHref = isBoys ? '/boys/standings' : '/girls/standings'
+  const navItems: NavItem[] = [
     { href: isBoys ? '/boys/schedule'    : '/girls/schedule',                    label: 'Schedule'     },
-    { href: isBoys ? '/boys/standings'   : '/girls/standings',                   label: 'Standings'    },
+    { href: standingsHref,                                                        label: 'Standings',
+      menu: [{ href: `${standingsHref}?view=group`, label: 'Group' }, { href: `${standingsHref}?view=conference`, label: 'Conference' }] },
     { href: isBoys ? '/boys/leaderboards': '/girls/leaderboards',                label: 'Leaderboards' },
     { href: isBoys ? '/boys/schools'     : '/girls/schools',                     label: 'Schools'      },
     { href: isBoys ? '/boys/tournaments' : '/girls/tournaments',                 label: 'Tournaments'  },
-    { href: isBoys ? '/boys/postseason'  : '/girls/postseason',                  label: 'Post Season'  },
+    { href: isBoys ? '/boys/postseason'  : '/girls/postseason',                  label: 'Post Season',
+      // girls team postseason isn't built yet
+      menu: isBoys
+        ? [{ href: '/postseason/team', label: 'Team' }, { href: '/postseason/individual/boys', label: 'Individual' }]
+        : [{ href: null, label: 'Team (coming soon)' }, { href: '/postseason/individual/girls', label: 'Individual' }] },
     { href: isBoys ? '/boys/h2h'         : '/girls/h2h',                         label: 'H2H'          },
     { href: '/about',                                                             label: 'About'        },
   ]
@@ -286,13 +294,13 @@ setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
       </div>
 
       {/* ── Row 2 — sub-nav ──────────────────────────────────────────────── */}
-      <div className={`${rowTwoBg} border-b border-black overflow-x-auto`}>
+      <div className={`${rowTwoBg} border-b border-black overflow-x-auto sm:overflow-visible`}>
         <div className="flex items-center gap-0.5 px-3 py-1.5 whitespace-nowrap min-w-max w-full">
 
           {/* Nav links */}
           {navItems.map(item => {
             const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
-            return (
+            const link = (
               <Link
                 key={item.href}
                 href={item.href}
@@ -304,6 +312,27 @@ setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
               >
                 {item.label}
               </Link>
+            )
+            if (!item.menu) return link
+            return (
+              <div key={item.href} className="relative group">
+                {link}
+                <div className="hidden sm:group-hover:block sm:group-focus-within:block absolute left-0 top-full pt-1.5 z-50">
+                  <div className={`w-44 rounded-none border border-black overflow-hidden ${dropdownBg}`}>
+                    {item.menu.map(m => m.href ? (
+                      <Link
+                        key={m.label}
+                        href={m.href}
+                        className={`block px-4 py-2 text-sm text-slate-100 ${dropdownHov} hover:text-white transition-colors`}
+                      >
+                        {m.label}
+                      </Link>
+                    ) : (
+                      <span key={m.label} className="block px-4 py-2 text-sm text-white/40 cursor-default">{m.label}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
             )
           })}
 

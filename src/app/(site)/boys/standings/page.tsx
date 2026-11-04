@@ -1,7 +1,8 @@
 export const revalidate = 300
 
-import { StandingsContent } from '@/app/(site)/standings/StandingsContent'
+import { StandingsContent, standingsView } from '@/app/(site)/standings/StandingsContent'
 
-export default function BoysStandingsPage() {
-  return <StandingsContent gender="boys" />
+export default async function BoysStandingsPage({ searchParams }: { searchParams: Promise<{ view?: string }> }) {
+  const { view } = await searchParams
+  return <StandingsContent gender="boys" view={standingsView(view)} base="/boys/standings" />
 }

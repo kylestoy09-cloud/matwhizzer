@@ -8,6 +8,29 @@ const SECTIONS = ['North I', 'North II', 'Central', 'South'] as const
 const PUBLIC_GROUPS = ['1', '2', '3', '4', '5'] as const
 const NP_GROUPS = ['A', 'B'] as const
 
+export type StandingsView = 'group' | 'conference'
+export const standingsView = (v: string | undefined): StandingsView => (v === 'conference' ? 'conference' : 'group')
+
+// Group / Conference tabs at the top of the standings page (also the header's Standings menu)
+export function StandingsTabs({ base, view }: { base: string; view: StandingsView }) {
+  const tabs = [['group', 'Group'], ['conference', 'Conference']] as const
+  return (
+    <div className="flex border-b border-black mb-8">
+      {tabs.map(([v, label]) => (
+        <Link
+          key={v}
+          href={`${base}?view=${v}`}
+          className={`px-5 py-2 text-sm font-semibold -mb-px border-b-2 transition-colors ${
+            view === v ? 'border-slate-900 text-slate-900' : 'border-transparent text-slate-500 hover:text-slate-800'
+          }`}
+        >
+          {label}
+        </Link>
+      ))}
+    </div>
+  )
+}
+
 export async function ConferenceGrid({ gender }: { gender: 'boys' | 'girls' }) {
   const { data: confRows } = await supabase.from('conferences').select('slug, logo_url')
   const logoMap = new Map<string, string>()
@@ -47,11 +70,12 @@ export async function ConferenceGrid({ gender }: { gender: 'boys' | 'girls' }) {
   )
 }
 
-export async function StandingsContent({ gender }: { gender: 'boys' | 'girls' }) {
+export async function StandingsContent({ gender, view, base }: { gender: 'boys' | 'girls'; view: StandingsView; base: string }) {
   return (
-    <div className="max-w-5xl mx-auto px-4 py-10 space-y-12">
+    <div className="max-w-5xl mx-auto px-4 py-10">
+      <StandingsTabs base={base} view={view} />
 
-      {/* ── By Group ─────────────────────────────────────────────── */}
+      {view === 'conference' ? <ConferenceGrid gender={gender} /> : (
       <section>
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-slate-900">By Group</h2>
@@ -100,8 +124,7 @@ export async function StandingsContent({ gender }: { gender: 'boys' | 'girls' })
           ))}
         </div>
       </section>
-
-      <ConferenceGrid gender={gender} />
+      )}
 
     </div>
   )
