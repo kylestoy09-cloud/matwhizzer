@@ -53,8 +53,8 @@ export default async function GirlsTeamPostseasonPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
-      <Link href="/girls/postseason" className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 mb-6 transition-colors">
-        ← Girls Post Season
+      <Link href="/girls" className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 mb-6 transition-colors">
+        ← Girls Search
       </Link>
       <h1 className="text-2xl font-bold text-slate-900 mb-1">Girls Team Postseason</h1>
       <p className="text-sm text-slate-500 mb-8">NJSIAA Girls State Dual Championships{seasonLabel ? ` · ${seasonLabel}` : ''}</p>
