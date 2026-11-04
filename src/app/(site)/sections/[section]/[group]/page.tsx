@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase/public-cached'
+import { withSeasonNames } from '@/lib/schoolSeasonNames'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
@@ -35,7 +36,7 @@ export default async function SectionGroupPage({
     .eq('is_combined', false)
     .order('display_name')
 
-  const schools = (schoolsData ?? []) as { display_name: string; mascot: string | null; primary_color: string | null; logo_url: string | null; header_background: string | null }[]
+  const schools = await withSeasonNames(supabase as never, (schoolsData ?? []) as { display_name: string; mascot: string | null; primary_color: string | null; logo_url: string | null; header_background: string | null }[], season, gender === 'girls' ? 'F' : 'M')
   if (schools.length === 0) notFound()
 
   const standings = await buildPowerPointStandings(schools, gender, season)

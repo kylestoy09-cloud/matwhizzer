@@ -1,6 +1,7 @@
 export const revalidate = 3600
 
 import { supabase } from '@/lib/supabase/public-cached'
+import { withSeasonNames } from '@/lib/schoolSeasonNames'
 import Link from 'next/link'
 import Image from 'next/image'
 import { getActiveSeason } from '@/lib/get-season'
@@ -43,7 +44,7 @@ export default async function IndependentConferencePage({
     .select('id, display_name, section, classification, logo_url, header_background')
     .eq('athletic_conference', 'Independent')
     .order('display_name')
-  const independentSchools = (indData ?? []) as SchoolRow[]
+  const independentSchools = await withSeasonNames(supabase as never, (indData ?? []) as SchoolRow[], season, gender === 'girls' ? 'F' : 'M')
 
   const subtitle = `${independentSchools.length} school${independentSchools.length !== 1 ? 's' : ''} · No Conference Affiliation`
 

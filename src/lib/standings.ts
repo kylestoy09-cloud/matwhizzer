@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase/public-cached'
+import { getSchoolSeasonNames } from '@/lib/schoolSeasonNames'
 
 type SchoolRow = {
   id?: number
@@ -86,18 +87,26 @@ export async function buildPowerPointStandings(
 export type GirlsPPGroups = { north: PPStandingsRow[]; south: PPStandingsRow[]; non_classified: PPStandingsRow[] }
 
 export async function buildGirlsPowerPointGroups(season: number): Promise<GirlsPPGroups> {
-  const { data } = await supabase
+  // Schools inactive that season (their girls wrestle for a co-op, listed under the co-op's
+  // name) keep their official 0-0 rows in power_points but aren't shown.
+  const [{ data }, { data: inactive }, names] = await Promise.all([supabase
     .from('power_points')
     .select('school_id, power_points, frozen_power_points, overall_wins, overall_losses, overall_ties, pp_group, schools!inner(id, display_name, mascot, primary_color, logo_url, header_background)')
     .eq('season_id', season)
     .eq('gender', 'F')
     .not('pp_group', 'is', null)
     .order('power_points', { ascending: false })
-    .order('school_id')
+    .order('school_id'),
+    supabase.from('inactive_school_seasons').select('school_id').eq('season_id', season).eq('gender', 'F'),
+    getSchoolSeasonNames(supabase as never, season, 'F'),
+  ])
+  const out = new Set((inactive ?? []).map(r => r.school_id as number))
 
   const groups: GirlsPPGroups = { north: [], south: [], non_classified: [] }
   for (const r of data ?? []) {
-    const s = r.schools as unknown as SchoolRow
+    if (out.has(r.school_id)) continue
+    const school = r.schools as unknown as SchoolRow
+    const s = names.has(r.school_id) ? { ...school, display_name: names.get(r.school_id)! } : school
     const g = r.pp_group as keyof GirlsPPGroups
     if (!groups[g]) continue
     const ties = r.overall_ties ?? 0

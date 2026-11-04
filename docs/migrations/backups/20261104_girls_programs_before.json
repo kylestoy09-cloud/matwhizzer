@@ -1,0 +1,36 @@
+{
+ "girls_schools": [
+  {
+   "school_id": 78,
+   "display_name": "Parsippany Hills/Parsippany",
+   "is_combined": false
+  },
+  {
+   "school_id": 56,
+   "display_name": "Mt. Olive/Randolph",
+   "is_combined": false
+  }
+ ],
+ "inactive_school_seasons": [],
+ "wrestlers": [
+  {
+   "id": "b5140db1-94b9-4257-8396-d040f8f242c7",
+   "first_name": "William",
+   "last_name": "Jayden Ratz",
+   "suffix": null,
+   "gender": "M",
+   "graduation_year": null,
+   "created_at": "2026-03-20T13:59:15.745613+00:00",
+   "tw_id": null,
+   "is_stub": false,
+   "is_oos": false,
+   "main_weight": "106",
+   "grade": "Fr",
+   "grade_confirmed_at": "2026-09-22T02:37:19.690941+00:00",
+   "grade_confirmed_source": "roster_upload",
+   "projected_weight_class": null,
+   "confirmed_weight_class": null,
+   "is_active": true
+  }
+ ]
+}

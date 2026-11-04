@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase/public-cached'
+import { withSeasonNames } from '@/lib/schoolSeasonNames'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { groupFromSlugRaw, getSectionsForGroup, sectionToSlug } from '@/lib/sections'
@@ -51,7 +52,7 @@ export default async function GroupPage({
     .eq('is_nj', true)
     .order('display_name')
 
-  const schools = (schoolsData ?? []) as SchoolRow[]
+  const schools = await withSeasonNames(supabase as never, (schoolsData ?? []) as SchoolRow[], season, gender === 'girls' ? 'F' : 'M')
   if (schools.length === 0) notFound()
 
   const schoolIds = schools.map(s => s.id)

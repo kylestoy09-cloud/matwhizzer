@@ -2,6 +2,27 @@
 
 ---
 
+## 2026-11-04 — Girls program setup: two co-ops, eight missing programs, one name
+
+**Script:** `scripts/fix_girls_programs_20261104.mts` (data only, no schema change). Backup: `docs/migrations/backups/20261104_girls_programs_before.json`
+
+**Purpose:**
+- Mt. Olive/Randolph (56) and Parsippany Hills/Parsippany (78) were girls co-ops in 2025-26, going by the TrackWrestling team names (2024-25: Mt. Olive and Parsippany Hills alone), but were never marked as co-ops. All their girls records were already on 56 and 78. Randolph (87) and Parsippany (64) have no girls records in any table.
+- Eight schools with real girls records had no `girls_schools` row, so they were missing from the admin girls program lists (school review, preseason, season): Indian Hills, Hammonton and Toms River East (2024-25 postseason), Keansburg (a 2025-26 dual), and Sparta, Northern Highlands, Cherry Hill West and Vineland (own teams in 2024-25). The public girls school directory was not affected; it lists schools by postseason entries.
+
+**Changes:**
+- `girls_schools`: `is_combined = true` for 56 and 78; rows added for 13, 297, 253, 191, 26, 35, 268 and 294.
+- `inactive_school_seasons`: (87, 2026, F, merged into 56) and (64, 2026, F, merged into 78). 26, 35, 268 and 294 were already inactive for 2026.
+- `wrestlers`: William "Jayden Ratz" (Seton Hall Prep, boys) → first "William Jayden", last "Ratz", as in the source files.
+- **Code:** girls standings (`buildGirlsPowerPointGroups`) hide schools that are inactive that season. Sparta, Vineland, Cherry Hill West, Kittatinny and Penns Grove keep their official 0-0 rows but no longer show beside their co-ops. The girls standings, section, group, conference and independent pages now show season names (e.g. "Jefferson-Sparta", not "Jefferson").
+- Not changed: 51 other `girls_school_profiles` rows on schools with no girls records. They hold only section and classification, and nothing public reads them.
+
+**APPLIED** — 2026-11-04
+**Reversible?** Yes — from the backup file (delete the 8 added rows and the 2 inactive rows, reset is_combined and the name)
+**Verified?** Integrity check unchanged (35 rules). Girls school directory 2024-25 lists the seven schools that had girls teams then; 2025-26 shows none of the inactive members.
+
+---
+
 ## 2026-11-03 — Site functions name schools by season (girls co-op names everywhere)
 
 **Migration file:** `docs/migrations/20261103_school_names_by_season.sql`. Old definitions (rollback): `docs/migrations/backups/20261103_name_functions_before.sql`

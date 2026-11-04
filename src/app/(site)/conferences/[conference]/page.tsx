@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase/public-cached'
+import { getSchoolSeasonNames } from '@/lib/schoolSeasonNames'
 import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
@@ -76,7 +77,9 @@ export default async function ConferencePage({
     .eq('gender', gender === 'girls' ? 'F' : 'M')
     .order('division')
 
-  const rows = (standingsData ?? []) as unknown as StandingRow[]
+  const seasonNames = await getSchoolSeasonNames(supabase as never, season, gender === 'girls' ? 'F' : 'M')
+  const rows = ((standingsData ?? []) as unknown as StandingRow[])
+    .map(r => (r.school && seasonNames.has(r.school.id) ? { ...r, school: { ...r.school, display_name: seasonNames.get(r.school.id)! } } : r))
 
   // Group by division, sort rows within each division by div record desc
   const divisionNames = [...new Set(rows.map(r => r.division).filter(Boolean))]
