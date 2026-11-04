@@ -2,6 +2,28 @@
 
 ---
 
+## 2026-11-04 — Merge four duplicate girls profiles; RTF review warns on unknown wrestlers at NJ-matched schools in out-of-state events
+
+**Script:** `scripts/merge_girls_duplicates_20261104_batch5.mts` (data only). Backup: `docs/migrations/backups/20261104_girls_duplicate_profiles_batch5_before.json`
+
+**Merges** (reported by Kyle; kept profile has the Track roster name; no pair ever shares an event):
+- St. Benedict's Prep: "Eviana Herrera" (03505b14) → "Evianna Herrera" (4e65e291)
+- Toms River South: "Orly Walpla" (0b9270b0; the Track roster match) → "Orly Walpola" (39a811d5), grade So from the Track roster
+- Union: "Ariana Novo" (921e0ab3) → "Ariana Nova" (5e965f4c)
+- West Deptford: "Peyton Bennett" (2f55dabe) → "Peyton Bennet" (c33f3293)
+
+**Checked, not merged:** Vernon "Danielle Rodriguez" (Jr, 152) and "Daniella Rodriguez" (Fr, 165/185) are both on the Track roster: two wrestlers.
+
+**Steps:** records moved → girls ratings rebuilt (logged by hand) → references recounted (0) → duplicates deleted → girls leaderboards refreshed. The first integrity run after it timed out on the rating log; one retry a minute later passed.
+
+**Code:** the RTF import review (`/api/admin/rtf/match`, `SchoolFlagCard`) now checks, for an NJ-matched school in an out-of-state event, whether the event's wrestlers under that name are known at the NJ school (an alias there or its Track roster). If none are, it shows a red warning that it's probably an out-of-state school with the same name. If only some are, an amber note lists the unknown names. This is the Lily Oh / Riverside case, which was imported 2026-08-26, before out-of-state events required a confirm (10-24).
+
+**APPLIED** — 2026-11-04
+**Reversible?** Partly — the backup holds the duplicates and every moved reference
+**Verified?** Yes — 0 references left, all four kept profiles rated, integrity check unchanged (35 rules)
+
+---
+
 ## 2026-11-04 — Lily Oh moved to Riverside, VA (out of state); "Liz Mejia" merged into Cristy Mejia
 
 **Scripts:** `scripts/fix_lily_oh_riverside_va_20261104.mts`, `scripts/merge_girls_duplicates_20261104_mejia.mts` (data only). Backups: `docs/migrations/backups/20261104_lily_oh_riverside_va_before.json`, `..._girls_duplicate_profiles_mejia_before.json`
