@@ -2,6 +2,41 @@
 
 ---
 
+## 2026-11-04 — Merge four duplicate girls profiles; Nutley Track roster links fixed
+
+**Script:** `scripts/merge_girls_duplicates_20261104_batch3.mts` (data only). Backup: `docs/migrations/backups/20261104_girls_duplicate_profiles_batch3_before.json`
+
+**Purpose:** Reported by Kyle. In each pair the kept profile has the Track roster name and the most records. No pair ever appears in the same event.
+- North Hunterdon: "Reagan Fraber" (d3e218bb; 2 tournament bouts) → "Reagan Farber" (6da4fa41)
+- North Star Academy: "Khori Smith" (104693f0; 1 tournament bout, the Track roster match) → "Ihori Smith" (59b0f8c5)
+- Nutley: "Izzy Timonera" (f8ed474f; 2 tournament bouts) → "Izzabella Timonera" (63f2f295)
+- Nutley: "Janeeza Timonera" (f882b7f5; 3 tournament bouts) → "Janizza Timonera" (af9d4501)
+  - The two are sisters. Izzy beat Janeeza in the Essex County 2026 100 final. Izzabella and Janizza share 13 duals and tournaments.
+
+**Also:** Nutley's Track roster links were crossed. Izzabella's profile held Janizza's row, which had given it Fr. Janizza's row (9e9122f1) now points to Janizza. Grades follow the Track roster: Izzabella Sr, Ihori So (both `roster_upload`).
+
+**Steps:** records moved → girls ratings rebuilt (logged by hand) → references recounted (0) → duplicates deleted → girls leaderboards refreshed
+
+**APPLIED** — 2026-11-04
+**Reversible?** Partly — the backup holds the duplicates, the kept profiles and the roster row as they were
+**Verified?** Yes — 0 references left, all four kept profiles rated, roster rows on the right profiles, integrity check unchanged (35 rules)
+
+---
+
+## 2026-11-04 — Index the rating log's opponent column
+
+**Migration file:** `docs/migrations/20261104_score_log_opponent_index.sql`
+
+**Purpose:** `wrestler_match_score_log.opponent_wrestler_id` (about 204,000 rows) had no index, so each lookup read the whole table (about 7 s). Merges and the profile delete tool check it, and those checks timed out right after a ratings run.
+
+**Changes:** `idx_wrestler_match_score_log_opponent` (partial, `opponent_wrestler_id IS NOT NULL`), built CONCURRENTLY.
+
+**APPLIED** — 2026-11-04, Supabase SQL editor
+**Reversible?** Yes — `DROP INDEX CONCURRENTLY IF EXISTS public.idx_wrestler_match_score_log_opponent;`
+**Verified?** Yes — an opponent lookup went from 7.4 s to 0.7 s; the next merge's recount ran without a timeout
+
+---
+
 ## 2026-11-04 — Merge two duplicate girls profiles at Manasquan
 
 **Script:** `scripts/merge_girls_duplicates_20261104_manasquan.mts` (data only). Backup: `docs/migrations/backups/20261104_girls_duplicate_profiles_manasquan_before.json`
