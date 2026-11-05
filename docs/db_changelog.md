@@ -2,6 +2,45 @@
 
 ---
 
+## 2026-11-05 — Boys postseason team totals copied from TrackWrestling; boys pages show them
+
+**Rule (Kyle):** the copied TrackWrestling standings are the truth. The site's formula is kept so totals can be calculated one day, but only behind the scenes, never as the shown figure.
+
+**Why:**
+- `20260921_team_score_cache_auto_refresh.sql` had made boys totals recalculate from the formula. Fort Lee D8 2025-26 read 50.5: the formula without Ryan Kim's deleted bouts. TrackWrestling lists 76.5.
+- The boys district and region pages and the state page didn't read stored totals at all. They called the formula (`district_team_score`, `region_team_score`, `lb_p_team_points`).
+- The formula matches only 128 of 300 official 2025-26 district totals (official minus formula: −3 to +33, median +4).
+
+**Data** (`precomputed_team_scores`, boys):
+- **2025-26 districts:** `scripts/build_boys_official_district_team_scores.mts`, from the 32 "Team Scores" tables in `../2026 District Match Data.pages`.
+  - Exported via Pages to Word and saved to `data/official_team_scores/boys_2025_26_district_tables.json`.
+  - Tables 1–19 are each followed by their district's results (District 6 twice, identical). Tables 20–32 have no heading; each matched exactly one district by its entered schools.
+  - 300 totals: 167 changed, 19 new, 114 already equal. "Forfeit" filler rows skipped.
+  - **District 21 has no table in the doc:** its stored rows are unchanged and unverified.
+  - Backup: `backups/20261105_boys_district_team_scores_before.json`.
+- **2025-26 regions and state:** `scripts/build_boys_official_postseason_team_scores.mts`, from `../gt_s2_regions.txt` and `../gt_s2_state.txt`. 435 totals replace 369 rows. Backup: `backups/20261105_boys_postseason_team_scores_2026_before.json`.
+- **2024-25 districts, regions and state:** the same script with `--season 2025` (`gt_s1_*`). 747 totals replace 649 rows.
+  - The district export has no "District 21" line; D21's standings follow D20's, and every team matched D21's entries.
+  - **District 23 2024-25 has no standings in the export:** its 9 stored rows are kept and unverified.
+  - Backup: `backups/20261105_boys_postseason_team_scores_2025_before.json`.
+- 0-point teams with no entries are not stored. Each re-run finds 0 changes.
+
+**Code:**
+- New `src/lib/boysOfficialTeamScores.ts`.
+- Boys district and region pages and the boys state section (`src/lib/stateData/boys.ts`) now show the stored official totals.
+- Per-wrestler team points on those pages still come from the formula.
+- CLAUDE.md rule rewritten.
+
+**Still open:**
+- Whether the 9/21 triggers and cron job are live. If they are, a bout change would overwrite official totals with the formula. Kyle's live-state query is pending; then remove them by migration.
+- D21 2025-26 and D23 2024-25 official standings.
+
+**APPLIED** — 2026-11-05
+**Reversible?** Yes — backups above
+**Verified?** Re-runs: 0 changes for all three loads. Fort Lee D8 = 76.5. Integrity check: no rule changed.
+
+---
+
 ## 2026-11-05 — Lost district bouts restored (part 1); nickname names fixed; 8/21 split logged
 
 **1. Lost boys 2025-26 district bouts.** The 2026-03-21 export (`../source_of_truth_matches.csv`, `_entries.csv`, `_placements.csv`) lists every postseason bout with its database id. Compared with today, 10 boys 2025-26 district bouts and their 6 entries are gone, along with 2 placements.

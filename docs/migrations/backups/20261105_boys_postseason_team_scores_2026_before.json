@@ -1,0 +1,3323 @@
+[
+ {
+  "id": 3322,
+  "tournament_id": 172,
+  "school_name": "Butler",
+  "total_points": 2,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 30
+ },
+ {
+  "id": 3314,
+  "tournament_id": 172,
+  "school_name": "Demarest",
+  "total_points": 12,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 314
+ },
+ {
+  "id": 3290,
+  "tournament_id": 172,
+  "school_name": "Don Bosco Prep",
+  "total_points": 148,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 11
+ },
+ {
+  "id": 3299,
+  "tournament_id": 172,
+  "school_name": "Dumont",
+  "total_points": 33,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 2
+ },
+ {
+  "id": 3315,
+  "tournament_id": 172,
+  "school_name": "Emerson-Park Ridge",
+  "total_points": 11,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 3
+ },
+ {
+  "id": 3311,
+  "tournament_id": 172,
+  "school_name": "Glen Rock",
+  "total_points": 17,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 12
+ },
+ {
+  "id": 3309,
+  "tournament_id": 172,
+  "school_name": "Hawthorne",
+  "total_points": 20.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 31
+ },
+ {
+  "id": 3298,
+  "tournament_id": 172,
+  "school_name": "High Point",
+  "total_points": 37,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 32
+ },
+ {
+  "id": 3306,
+  "tournament_id": 172,
+  "school_name": "Indian Hills",
+  "total_points": 23,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 13
+ },
+ {
+  "id": 3300,
+  "tournament_id": 172,
+  "school_name": "Jefferson",
+  "total_points": 30.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 4
+ },
+ {
+  "id": 3294,
+  "tournament_id": 172,
+  "school_name": "Kinnelon",
+  "total_points": 60.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 33
+ },
+ {
+  "id": 3319,
+  "tournament_id": 172,
+  "school_name": "Kittatinny",
+  "total_points": 8,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 315
+ },
+ {
+  "id": 3310,
+  "tournament_id": 172,
+  "school_name": "Lakeland",
+  "total_points": 18.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 5
+ },
+ {
+  "id": 3321,
+  "tournament_id": 172,
+  "school_name": "Mahwah",
+  "total_points": 2,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 14
+ },
+ {
+  "id": 3312,
+  "tournament_id": 172,
+  "school_name": "Manchester Regional",
+  "total_points": 14,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 45
+ },
+ {
+  "id": 3317,
+  "tournament_id": 172,
+  "school_name": "Newton",
+  "total_points": 10,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 24
+ },
+ {
+  "id": 3307,
+  "tournament_id": 172,
+  "school_name": "North Warren",
+  "total_points": 22,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 25
+ },
+ {
+  "id": 3293,
+  "tournament_id": 172,
+  "school_name": "Northern Highlands",
+  "total_points": 73.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 35
+ },
+ {
+  "id": 3304,
+  "tournament_id": 172,
+  "school_name": "Old Tappan",
+  "total_points": 25.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 6
+ },
+ {
+  "id": 3297,
+  "tournament_id": 172,
+  "school_name": "Pascack Hills",
+  "total_points": 38.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 15
+ },
+ {
+  "id": 3291,
+  "tournament_id": 172,
+  "school_name": "Pascack Valley",
+  "total_points": 133,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 16
+ },
+ {
+  "id": 3323,
+  "tournament_id": 172,
+  "school_name": "Pequannock",
+  "total_points": 2,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 36
+ },
+ {
+  "id": 3292,
+  "tournament_id": 172,
+  "school_name": "Phillipsburg",
+  "total_points": 84,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 7
+ },
+ {
+  "id": 3296,
+  "tournament_id": 172,
+  "school_name": "Pompton Lakes",
+  "total_points": 39,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 37
+ },
+ {
+  "id": 3295,
+  "tournament_id": 172,
+  "school_name": "Ramapo",
+  "total_points": 51,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 17
+ },
+ {
+  "id": 3302,
+  "tournament_id": 172,
+  "school_name": "River Dell",
+  "total_points": 29,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 8
+ },
+ {
+  "id": 3303,
+  "tournament_id": 172,
+  "school_name": "Sparta",
+  "total_points": 27,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 26
+ },
+ {
+  "id": 3289,
+  "tournament_id": 172,
+  "school_name": "St Joseph (Montvale) HS",
+  "total_points": 263.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 394
+ },
+ {
+  "id": 3316,
+  "tournament_id": 172,
+  "school_name": "Tenafly",
+  "total_points": 11,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 49
+ },
+ {
+  "id": 3308,
+  "tournament_id": 172,
+  "school_name": "Vernon",
+  "total_points": 21,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 27
+ },
+ {
+  "id": 3313,
+  "tournament_id": 172,
+  "school_name": "Waldwick",
+  "total_points": 12.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 9
+ },
+ {
+  "id": 3320,
+  "tournament_id": 172,
+  "school_name": "Wallkill Valley",
+  "total_points": 6,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 28
+ },
+ {
+  "id": 3301,
+  "tournament_id": 172,
+  "school_name": "Wayne Hills",
+  "total_points": 30,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 38
+ },
+ {
+  "id": 3318,
+  "tournament_id": 172,
+  "school_name": "West Milford",
+  "total_points": 8,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 29
+ },
+ {
+  "id": 3305,
+  "tournament_id": 172,
+  "school_name": "Westwood",
+  "total_points": 24,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 10
+ },
+ {
+  "id": 3324,
+  "tournament_id": 173,
+  "school_name": "Bergen Catholic",
+  "total_points": 283.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 21
+ },
+ {
+  "id": 3334,
+  "tournament_id": 173,
+  "school_name": "Bergenfield",
+  "total_points": 30.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 40
+ },
+ {
+  "id": 3343,
+  "tournament_id": 173,
+  "school_name": "Boonton",
+  "total_points": 13,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 70
+ },
+ {
+  "id": 3329,
+  "tournament_id": 173,
+  "school_name": "Cedar Grove",
+  "total_points": 74.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 60
+ },
+ {
+  "id": 3342,
+  "tournament_id": 173,
+  "school_name": "Clifton",
+  "total_points": 13,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 50
+ },
+ {
+  "id": 3344,
+  "tournament_id": 173,
+  "school_name": "Dwight Morrow",
+  "total_points": 12,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 41
+ },
+ {
+  "id": 3348,
+  "tournament_id": 173,
+  "school_name": "Elmwood Park",
+  "total_points": 4,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 51
+ },
+ {
+  "id": 3339,
+  "tournament_id": 173,
+  "school_name": "Fair Lawn",
+  "total_points": 21,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 52
+ },
+ {
+  "id": 3347,
+  "tournament_id": 173,
+  "school_name": "Fort Lee",
+  "total_points": 4,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 42
+ },
+ {
+  "id": 3341,
+  "tournament_id": 173,
+  "school_name": "Garfield",
+  "total_points": 16,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 53
+ },
+ {
+  "id": 3335,
+  "tournament_id": 173,
+  "school_name": "Hasbrouck Heights",
+  "total_points": 28,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 54
+ },
+ {
+  "id": 3345,
+  "tournament_id": 173,
+  "school_name": "Leonia-Palisades",
+  "total_points": 11.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 44
+ },
+ {
+  "id": 3350,
+  "tournament_id": 173,
+  "school_name": "Lodi/Saddle Brook",
+  "total_points": 3,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 379
+ },
+ {
+  "id": 3330,
+  "tournament_id": 173,
+  "school_name": "Montville",
+  "total_points": 58.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 75
+ },
+ {
+  "id": 3332,
+  "tournament_id": 173,
+  "school_name": "Morris Hills",
+  "total_points": 47.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 76
+ },
+ {
+  "id": 3340,
+  "tournament_id": 173,
+  "school_name": "Morris Knolls",
+  "total_points": 19.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 77
+ },
+ {
+  "id": 3326,
+  "tournament_id": 173,
+  "school_name": "Mount Olive",
+  "total_points": 149.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 56
+ },
+ {
+  "id": 3349,
+  "tournament_id": 173,
+  "school_name": "Mountain Lakes",
+  "total_points": 3,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 63
+ },
+ {
+  "id": 3331,
+  "tournament_id": 173,
+  "school_name": "Paramus",
+  "total_points": 57,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 57
+ },
+ {
+  "id": 3325,
+  "tournament_id": 173,
+  "school_name": "Paramus Catholic",
+  "total_points": 237,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 153
+ },
+ {
+  "id": 3338,
+  "tournament_id": 173,
+  "school_name": "Parsippany Hills",
+  "total_points": 21.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 78
+ },
+ {
+  "id": 3346,
+  "tournament_id": 173,
+  "school_name": "Passaic",
+  "total_points": 4,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 58
+ },
+ {
+  "id": 3328,
+  "tournament_id": 173,
+  "school_name": "Passaic Tech",
+  "total_points": 92.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 391
+ },
+ {
+  "id": 3333,
+  "tournament_id": 173,
+  "school_name": "Passaic Valley",
+  "total_points": 32.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 46
+ },
+ {
+  "id": 3337,
+  "tournament_id": 173,
+  "school_name": "Roxbury",
+  "total_points": 23.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 66
+ },
+ {
+  "id": 3336,
+  "tournament_id": 173,
+  "school_name": "Wayne Valley",
+  "total_points": 28,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 68
+ },
+ {
+  "id": 3327,
+  "tournament_id": 173,
+  "school_name": "West Essex",
+  "total_points": 94,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 39
+ },
+ {
+  "id": 3377,
+  "tournament_id": 174,
+  "school_name": "Barringer",
+  "total_points": 4,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 80
+ },
+ {
+  "id": 3367,
+  "tournament_id": 174,
+  "school_name": "Becton-Wood-Ridge",
+  "total_points": 25,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 321
+ },
+ {
+  "id": 3374,
+  "tournament_id": 174,
+  "school_name": "Belleville",
+  "total_points": 8,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 100
+ },
+ {
+  "id": 3370,
+  "tournament_id": 174,
+  "school_name": "Bloomfield",
+  "total_points": 14,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 81
+ },
+ {
+  "id": 3353,
+  "tournament_id": 174,
+  "school_name": "Caldwell",
+  "total_points": 114.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 91
+ },
+ {
+  "id": 3351,
+  "tournament_id": 174,
+  "school_name": "Delbarton School",
+  "total_points": 330.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 82
+ },
+ {
+  "id": 3355,
+  "tournament_id": 174,
+  "school_name": "Depaul Catholic",
+  "total_points": 86.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 22
+ },
+ {
+  "id": 3378,
+  "tournament_id": 174,
+  "school_name": "Glen Ridge",
+  "total_points": 4,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 101
+ },
+ {
+  "id": 3359,
+  "tournament_id": 174,
+  "school_name": "Hackettstown",
+  "total_points": 52.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 112
+ },
+ {
+  "id": 3356,
+  "tournament_id": 174,
+  "school_name": "Hanover Park",
+  "total_points": 68.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 113
+ },
+ {
+  "id": 3365,
+  "tournament_id": 174,
+  "school_name": "Kearny",
+  "total_points": 27,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 103
+ },
+ {
+  "id": 3376,
+  "tournament_id": 174,
+  "school_name": "Livingston",
+  "total_points": 6,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 104
+ },
+ {
+  "id": 3381,
+  "tournament_id": 174,
+  "school_name": "Lyndhurst-North Arlington",
+  "total_points": 2,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 83
+ },
+ {
+  "id": 3364,
+  "tournament_id": 174,
+  "school_name": "Madison",
+  "total_points": 30.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 84
+ },
+ {
+  "id": 3372,
+  "tournament_id": 174,
+  "school_name": "Mendham",
+  "total_points": 12,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 89
+ },
+ {
+  "id": 3361,
+  "tournament_id": 174,
+  "school_name": "Morristown",
+  "total_points": 41.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 114
+ },
+ {
+  "id": 3380,
+  "tournament_id": 174,
+  "school_name": "Newark Collegiate",
+  "total_points": 2,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 85
+ },
+ {
+  "id": 3363,
+  "tournament_id": 174,
+  "school_name": "North Bergen",
+  "total_points": 31.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 95
+ },
+ {
+  "id": 3379,
+  "tournament_id": 174,
+  "school_name": "North Star Academy",
+  "total_points": 2,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 116
+ },
+ {
+  "id": 3357,
+  "tournament_id": 174,
+  "school_name": "Nutley",
+  "total_points": 62,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 106
+ },
+ {
+  "id": 3362,
+  "tournament_id": 174,
+  "school_name": "Randolph",
+  "total_points": 36.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 87
+ },
+ {
+  "id": 3354,
+  "tournament_id": 174,
+  "school_name": "Ridge",
+  "total_points": 98.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 156
+ },
+ {
+  "id": 3366,
+  "tournament_id": 174,
+  "school_name": "Rutherford",
+  "total_points": 25.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 96
+ },
+ {
+  "id": 3375,
+  "tournament_id": 174,
+  "school_name": "Secaucus",
+  "total_points": 7.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 97
+ },
+ {
+  "id": 3358,
+  "tournament_id": 174,
+  "school_name": "St. Benedicts Prep School",
+  "total_points": 58.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 118
+ },
+ {
+  "id": 3371,
+  "tournament_id": 174,
+  "school_name": "St. Mary High School (Rutherford)",
+  "total_points": 14,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 88
+ },
+ {
+  "id": 3373,
+  "tournament_id": 174,
+  "school_name": "Union City",
+  "total_points": 12,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 98
+ },
+ {
+  "id": 3360,
+  "tournament_id": 174,
+  "school_name": "Warren Hills",
+  "total_points": 48.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 67
+ },
+ {
+  "id": 3352,
+  "tournament_id": 174,
+  "school_name": "West Morris",
+  "total_points": 117,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 108
+ },
+ {
+  "id": 3368,
+  "tournament_id": 174,
+  "school_name": "West Orange",
+  "total_points": 23.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 109
+ },
+ {
+  "id": 3369,
+  "tournament_id": 174,
+  "school_name": "Whippany Park",
+  "total_points": 20,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 119
+ },
+ {
+  "id": 3403,
+  "tournament_id": 175,
+  "school_name": "Bayonne",
+  "total_points": 18.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 120
+ },
+ {
+  "id": 3401,
+  "tournament_id": 175,
+  "school_name": "Bernards",
+  "total_points": 20.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 139
+ },
+ {
+  "id": 3395,
+  "tournament_id": 175,
+  "school_name": "Bound Brook",
+  "total_points": 32.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 322
+ },
+ {
+  "id": 3407,
+  "tournament_id": 175,
+  "school_name": "Brearley-Dayton",
+  "total_points": 17,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 130
+ },
+ {
+  "id": 3388,
+  "tournament_id": 175,
+  "school_name": "Bridgewater-Raritan",
+  "total_points": 57.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 131
+ },
+ {
+  "id": 3405,
+  "tournament_id": 175,
+  "school_name": "Carteret",
+  "total_points": 17.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 148
+ },
+ {
+  "id": 3406,
+  "tournament_id": 175,
+  "school_name": "Colonia",
+  "total_points": 17.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 149
+ },
+ {
+  "id": 3413,
+  "tournament_id": 175,
+  "school_name": "Columbia",
+  "total_points": 4,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 121
+ },
+ {
+  "id": 3385,
+  "tournament_id": 175,
+  "school_name": "Cranford",
+  "total_points": 81.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 93
+ },
+ {
+  "id": 3394,
+  "tournament_id": 175,
+  "school_name": "Elizabeth",
+  "total_points": 35.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 123
+ },
+ {
+  "id": 3398,
+  "tournament_id": 175,
+  "school_name": "Iselin Kennedy",
+  "total_points": 29.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 150
+ },
+ {
+  "id": 3391,
+  "tournament_id": 175,
+  "school_name": "Johnson",
+  "total_points": 45,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 129
+ },
+ {
+  "id": 3410,
+  "tournament_id": 175,
+  "school_name": "Linden",
+  "total_points": 4,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 152
+ },
+ {
+  "id": 3409,
+  "tournament_id": 175,
+  "school_name": "Millburn",
+  "total_points": 8,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 133
+ },
+ {
+  "id": 3399,
+  "tournament_id": 175,
+  "school_name": "New Providence",
+  "total_points": 21,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 134
+ },
+ {
+  "id": 3412,
+  "tournament_id": 175,
+  "school_name": "Newark East Side",
+  "total_points": 4,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 122
+ },
+ {
+  "id": 3383,
+  "tournament_id": 175,
+  "school_name": "North Hunterdon",
+  "total_points": 153.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 135
+ },
+ {
+  "id": 3411,
+  "tournament_id": 175,
+  "school_name": "North Plainfield",
+  "total_points": 4,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 143
+ },
+ {
+  "id": 3396,
+  "tournament_id": 175,
+  "school_name": "Pingry",
+  "total_points": 31.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 144
+ },
+ {
+  "id": 3400,
+  "tournament_id": 175,
+  "school_name": "Plainfield",
+  "total_points": 21,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 154
+ },
+ {
+  "id": 3384,
+  "tournament_id": 175,
+  "school_name": "Pope John XXIII",
+  "total_points": 120.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 117
+ },
+ {
+  "id": 3389,
+  "tournament_id": 175,
+  "school_name": "Rahway",
+  "total_points": 48,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 155
+ },
+ {
+  "id": 3402,
+  "tournament_id": 175,
+  "school_name": "Roselle Park",
+  "total_points": 20,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 125
+ },
+ {
+  "id": 3392,
+  "tournament_id": 175,
+  "school_name": "Saint Thomas Aquinas",
+  "total_points": 41.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 234
+ },
+ {
+  "id": 3393,
+  "tournament_id": 175,
+  "school_name": "Scotch Plains-Fanwood",
+  "total_points": 37,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 126
+ },
+ {
+  "id": 3408,
+  "tournament_id": 175,
+  "school_name": "Somerville",
+  "total_points": 13.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 145
+ },
+ {
+  "id": 3390,
+  "tournament_id": 175,
+  "school_name": "South Plainfield",
+  "total_points": 46,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 157
+ },
+ {
+  "id": 3382,
+  "tournament_id": 175,
+  "school_name": "St. Peter's Prep",
+  "total_points": 257,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 167
+ },
+ {
+  "id": 3386,
+  "tournament_id": 175,
+  "school_name": "Union",
+  "total_points": 66,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 138
+ },
+ {
+  "id": 3404,
+  "tournament_id": 175,
+  "school_name": "Voorhees",
+  "total_points": 18.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 146
+ },
+ {
+  "id": 3387,
+  "tournament_id": 175,
+  "school_name": "Watchung Hills",
+  "total_points": 66,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 147
+ },
+ {
+  "id": 3397,
+  "tournament_id": 175,
+  "school_name": "Westfield",
+  "total_points": 31,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 128
+ },
+ {
+  "id": 3417,
+  "tournament_id": 176,
+  "school_name": "Delaware Valley",
+  "total_points": 110,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 141
+ },
+ {
+  "id": 3433,
+  "tournament_id": 176,
+  "school_name": "East Brunswick",
+  "total_points": 15,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 158
+ },
+ {
+  "id": 3424,
+  "tournament_id": 176,
+  "school_name": "Edison",
+  "total_points": 51.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 178
+ },
+ {
+  "id": 3434,
+  "tournament_id": 176,
+  "school_name": "Franklin",
+  "total_points": 14.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 169
+ },
+ {
+  "id": 3422,
+  "tournament_id": 176,
+  "school_name": "Hillsborough",
+  "total_points": 58.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 188
+ },
+ {
+  "id": 3420,
+  "tournament_id": 176,
+  "school_name": "Holmdel",
+  "total_points": 90.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 189
+ },
+ {
+  "id": 3426,
+  "tournament_id": 176,
+  "school_name": "Hopewell Valley",
+  "total_points": 38,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 170
+ },
+ {
+  "id": 3427,
+  "tournament_id": 176,
+  "school_name": "Hunterdon Central",
+  "total_points": 36,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 190
+ },
+ {
+  "id": 3428,
+  "tournament_id": 176,
+  "school_name": "Keansburg",
+  "total_points": 35,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 191
+ },
+ {
+  "id": 3429,
+  "tournament_id": 176,
+  "school_name": "Manville",
+  "total_points": 34.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 171
+ },
+ {
+  "id": 3423,
+  "tournament_id": 176,
+  "school_name": "Matawan",
+  "total_points": 53.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 382
+ },
+ {
+  "id": 3438,
+  "tournament_id": 176,
+  "school_name": "Metuchen",
+  "total_points": 8,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 180
+ },
+ {
+  "id": 3414,
+  "tournament_id": 176,
+  "school_name": "Middletown North",
+  "total_points": 144,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 159
+ },
+ {
+  "id": 3421,
+  "tournament_id": 176,
+  "school_name": "Middletown South",
+  "total_points": 70.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 160
+ },
+ {
+  "id": 3430,
+  "tournament_id": 176,
+  "school_name": "Montgomery",
+  "total_points": 21.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 173
+ },
+ {
+  "id": 3419,
+  "tournament_id": 176,
+  "school_name": "Old Bridge",
+  "total_points": 103.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 163
+ },
+ {
+  "id": 3432,
+  "tournament_id": 176,
+  "school_name": "Perth Amboy",
+  "total_points": 16,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 182
+ },
+ {
+  "id": 3431,
+  "tournament_id": 176,
+  "school_name": "Piscataway",
+  "total_points": 20,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 183
+ },
+ {
+  "id": 3425,
+  "tournament_id": 176,
+  "school_name": "Raritan",
+  "total_points": 44,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 184
+ },
+ {
+  "id": 3437,
+  "tournament_id": 176,
+  "school_name": "Red Bank Regional",
+  "total_points": 10.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 195
+ },
+ {
+  "id": 3415,
+  "tournament_id": 176,
+  "school_name": "Rumson-Fair Haven",
+  "total_points": 137.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 175
+ },
+ {
+  "id": 3416,
+  "tournament_id": 176,
+  "school_name": "Saint John Vianney",
+  "total_points": 117,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 243
+ },
+ {
+  "id": 3435,
+  "tournament_id": 176,
+  "school_name": "Sayreville War Memorial",
+  "total_points": 14,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 185
+ },
+ {
+  "id": 3439,
+  "tournament_id": 176,
+  "school_name": "Spotswood",
+  "total_points": 4,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 166
+ },
+ {
+  "id": 3418,
+  "tournament_id": 176,
+  "school_name": "St. Joseph Metuchen",
+  "total_points": 107,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 186
+ },
+ {
+  "id": 3436,
+  "tournament_id": 176,
+  "school_name": "Woodbridge",
+  "total_points": 13,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 187
+ },
+ {
+  "id": 3459,
+  "tournament_id": 177,
+  "school_name": "Allentown",
+  "total_points": 17,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 226
+ },
+ {
+  "id": 3455,
+  "tournament_id": 177,
+  "school_name": "Bordentown Regional/Florence",
+  "total_points": 30,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 227
+ },
+ {
+  "id": 3446,
+  "tournament_id": 177,
+  "school_name": "Brick Memorial",
+  "total_points": 47.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 207
+ },
+ {
+  "id": 3461,
+  "tournament_id": 177,
+  "school_name": "Brick Township",
+  "total_points": 14,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 218
+ },
+ {
+  "id": 3463,
+  "tournament_id": 177,
+  "school_name": "Burlington Township",
+  "total_points": 10,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 229
+ },
+ {
+  "id": 3440,
+  "tournament_id": 177,
+  "school_name": "Christian Brothers",
+  "total_points": 266.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 197
+ },
+ {
+  "id": 3450,
+  "tournament_id": 177,
+  "school_name": "Colts Neck",
+  "total_points": 41.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 198
+ },
+ {
+  "id": 3465,
+  "tournament_id": 177,
+  "school_name": "Ewing",
+  "total_points": 9,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 230
+ },
+ {
+  "id": 3467,
+  "tournament_id": 177,
+  "school_name": "Freehold Borough",
+  "total_points": 2,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 199
+ },
+ {
+  "id": 3464,
+  "tournament_id": 177,
+  "school_name": "Hightstown",
+  "total_points": 10,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 232
+ },
+ {
+  "id": 3441,
+  "tournament_id": 177,
+  "school_name": "Howell",
+  "total_points": 151,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 233
+ },
+ {
+  "id": 3443,
+  "tournament_id": 177,
+  "school_name": "Jackson Township",
+  "total_points": 92.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 370
+ },
+ {
+  "id": 3449,
+  "tournament_id": 177,
+  "school_name": "Lawrence",
+  "total_points": 42.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 210
+ },
+ {
+  "id": 3454,
+  "tournament_id": 177,
+  "school_name": "Long Branch",
+  "total_points": 31.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 211
+ },
+ {
+  "id": 3453,
+  "tournament_id": 177,
+  "school_name": "Manalapan",
+  "total_points": 33,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 204
+ },
+ {
+  "id": 3457,
+  "tournament_id": 177,
+  "school_name": "Manasquan",
+  "total_points": 22,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 220
+ },
+ {
+  "id": 3445,
+  "tournament_id": 177,
+  "school_name": "Monroe",
+  "total_points": 59,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 172
+ },
+ {
+  "id": 3456,
+  "tournament_id": 177,
+  "school_name": "Neptune",
+  "total_points": 24,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 221
+ },
+ {
+  "id": 3452,
+  "tournament_id": 177,
+  "school_name": "Northern Burlington",
+  "total_points": 33,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 388
+ },
+ {
+  "id": 3460,
+  "tournament_id": 177,
+  "school_name": "Notre Dame",
+  "total_points": 16,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 213
+ },
+ {
+  "id": 3444,
+  "tournament_id": 177,
+  "school_name": "Ocean Township",
+  "total_points": 72.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 222
+ },
+ {
+  "id": 3447,
+  "tournament_id": 177,
+  "school_name": "Point Pleasant Boro",
+  "total_points": 46.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 224
+ },
+ {
+  "id": 3462,
+  "tournament_id": 177,
+  "school_name": "Riverside",
+  "total_points": 12,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 214
+ },
+ {
+  "id": 3451,
+  "tournament_id": 177,
+  "school_name": "Robbinsville",
+  "total_points": 39,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 215
+ },
+ {
+  "id": 3442,
+  "tournament_id": 177,
+  "school_name": "Seton Hall Prep",
+  "total_points": 146.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 127
+ },
+ {
+  "id": 3458,
+  "tournament_id": 177,
+  "school_name": "Shore",
+  "total_points": 21,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 225
+ },
+ {
+  "id": 3466,
+  "tournament_id": 177,
+  "school_name": "Steinert",
+  "total_points": 8,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 208
+ },
+ {
+  "id": 3448,
+  "tournament_id": 177,
+  "school_name": "Wall",
+  "total_points": 43.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 235
+ },
+ {
+  "id": 3480,
+  "tournament_id": 178,
+  "school_name": "Audubon",
+  "total_points": 38,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 236
+ },
+ {
+  "id": 3493,
+  "tournament_id": 178,
+  "school_name": "Barnegat",
+  "total_points": 11,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 246
+ },
+ {
+  "id": 3468,
+  "tournament_id": 178,
+  "school_name": "Camden Catholic",
+  "total_points": 191.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 278
+ },
+ {
+  "id": 3491,
+  "tournament_id": 178,
+  "school_name": "Central Regional",
+  "total_points": 19,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 247
+ },
+ {
+  "id": 3490,
+  "tournament_id": 178,
+  "school_name": "Cherry Hill East",
+  "total_points": 20,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 267
+ },
+ {
+  "id": 3487,
+  "tournament_id": 178,
+  "school_name": "Cherry Hill West",
+  "total_points": 27,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 268
+ },
+ {
+  "id": 3482,
+  "tournament_id": 178,
+  "school_name": "Cinnaminson",
+  "total_points": 31.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 257
+ },
+ {
+  "id": 3488,
+  "tournament_id": 178,
+  "school_name": "Collingswood",
+  "total_points": 26,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 238
+ },
+ {
+  "id": 3477,
+  "tournament_id": 178,
+  "school_name": "Delran",
+  "total_points": 50,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 258
+ },
+ {
+  "id": 3479,
+  "tournament_id": 178,
+  "school_name": "Gloucester",
+  "total_points": 40.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 259
+ },
+ {
+  "id": 3494,
+  "tournament_id": 178,
+  "school_name": "Haddon Heights",
+  "total_points": 10.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 239
+ },
+ {
+  "id": 3492,
+  "tournament_id": 178,
+  "school_name": "Haddon Township",
+  "total_points": 13,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 240
+ },
+ {
+  "id": 3481,
+  "tournament_id": 178,
+  "school_name": "Haddonfield",
+  "total_points": 35,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 270
+ },
+ {
+  "id": 3469,
+  "tournament_id": 178,
+  "school_name": "Immaculata",
+  "total_points": 134.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 73
+ },
+ {
+  "id": 3470,
+  "tournament_id": 178,
+  "school_name": "Lacey",
+  "total_points": 98.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 249
+ },
+ {
+  "id": 3474,
+  "tournament_id": 178,
+  "school_name": "Lenape",
+  "total_points": 67,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 271
+ },
+ {
+  "id": 3496,
+  "tournament_id": 178,
+  "school_name": "Maple Shade",
+  "total_points": 4,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 272
+ },
+ {
+  "id": 3476,
+  "tournament_id": 178,
+  "school_name": "Moorestown",
+  "total_points": 56,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 261
+ },
+ {
+  "id": 3489,
+  "tournament_id": 178,
+  "school_name": "Paul VI",
+  "total_points": 24,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 241
+ },
+ {
+  "id": 3485,
+  "tournament_id": 178,
+  "school_name": "Pennsauken",
+  "total_points": 30,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 242
+ },
+ {
+  "id": 3475,
+  "tournament_id": 178,
+  "school_name": "Rancocas Valley",
+  "total_points": 56.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 263
+ },
+ {
+  "id": 3486,
+  "tournament_id": 178,
+  "school_name": "Seneca",
+  "total_points": 27,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 274
+ },
+ {
+  "id": 3483,
+  "tournament_id": 178,
+  "school_name": "Shawnee",
+  "total_points": 31,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 275
+ },
+ {
+  "id": 3484,
+  "tournament_id": 178,
+  "school_name": "Timber Creek",
+  "total_points": 30.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 301
+ },
+ {
+  "id": 3471,
+  "tournament_id": 178,
+  "school_name": "Toms River East",
+  "total_points": 76.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 253
+ },
+ {
+  "id": 3495,
+  "tournament_id": 178,
+  "school_name": "Toms River North",
+  "total_points": 9.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 254
+ },
+ {
+  "id": 3478,
+  "tournament_id": 178,
+  "school_name": "Toms River South",
+  "total_points": 49.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 255
+ },
+ {
+  "id": 3473,
+  "tournament_id": 178,
+  "school_name": "Washington Township",
+  "total_points": 67,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 302
+ },
+ {
+  "id": 3472,
+  "tournament_id": 178,
+  "school_name": "West Deptford",
+  "total_points": 68,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 245
+ },
+ {
+  "id": 3518,
+  "tournament_id": 179,
+  "school_name": "Absegami",
+  "total_points": 13,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 276
+ },
+ {
+  "id": 3515,
+  "tournament_id": 179,
+  "school_name": "Cedar Creek",
+  "total_points": 14,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 288
+ },
+ {
+  "id": 3520,
+  "tournament_id": 179,
+  "school_name": "Clayton/Glassboro",
+  "total_points": 10,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 305
+ },
+ {
+  "id": 3504,
+  "tournament_id": 179,
+  "school_name": "Clearview",
+  "total_points": 47.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 306
+ },
+ {
+  "id": 3498,
+  "tournament_id": 179,
+  "school_name": "Delsea",
+  "total_points": 175.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 290
+ },
+ {
+  "id": 3512,
+  "tournament_id": 179,
+  "school_name": "Deptford",
+  "total_points": 18,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 307
+ },
+ {
+  "id": 3509,
+  "tournament_id": 179,
+  "school_name": "Eastern",
+  "total_points": 25.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 296
+ },
+ {
+  "id": 3513,
+  "tournament_id": 179,
+  "school_name": "Egg Harbor",
+  "total_points": 16.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 279
+ },
+ {
+  "id": 3510,
+  "tournament_id": 179,
+  "school_name": "Gateway Reg/ Woodbury",
+  "total_points": 23,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 291
+ },
+ {
+  "id": 3508,
+  "tournament_id": 179,
+  "school_name": "Hammonton",
+  "total_points": 30,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 297
+ },
+ {
+  "id": 3511,
+  "tournament_id": 179,
+  "school_name": "Highland",
+  "total_points": 19,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 369
+ },
+ {
+  "id": 3521,
+  "tournament_id": 179,
+  "school_name": "Holy Spirit",
+  "total_points": 3.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 280
+ },
+ {
+  "id": 3501,
+  "tournament_id": 179,
+  "school_name": "Kingsway",
+  "total_points": 110,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 260
+ },
+ {
+  "id": 3500,
+  "tournament_id": 179,
+  "school_name": "Lower Cape May",
+  "total_points": 146,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 281
+ },
+ {
+  "id": 3517,
+  "tournament_id": 179,
+  "school_name": "Mainland",
+  "total_points": 13,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 282
+ },
+ {
+  "id": 3505,
+  "tournament_id": 179,
+  "school_name": "Middle Township",
+  "total_points": 40,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 283
+ },
+ {
+  "id": 3522,
+  "tournament_id": 179,
+  "school_name": "Millville",
+  "total_points": 3.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 292
+ },
+ {
+  "id": 3507,
+  "tournament_id": 179,
+  "school_name": "Ocean City",
+  "total_points": 30,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 285
+ },
+ {
+  "id": 3506,
+  "tournament_id": 179,
+  "school_name": "Paulsboro",
+  "total_points": 38,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 309
+ },
+ {
+  "id": 3519,
+  "tournament_id": 179,
+  "school_name": "Pennsville",
+  "total_points": 11,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 293
+ },
+ {
+  "id": 3516,
+  "tournament_id": 179,
+  "school_name": "Pinelands Regional",
+  "total_points": 13.5,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 251
+ },
+ {
+  "id": 3523,
+  "tournament_id": 179,
+  "school_name": "Pitman",
+  "total_points": 2,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 311
+ },
+ {
+  "id": 3502,
+  "tournament_id": 179,
+  "school_name": "Red Bank Catholic",
+  "total_points": 108,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 264
+ },
+ {
+  "id": 3524,
+  "tournament_id": 179,
+  "school_name": "Schalick",
+  "total_points": 2,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 286
+ },
+ {
+  "id": 3497,
+  "tournament_id": 179,
+  "school_name": "Southern Regional",
+  "total_points": 222,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 252
+ },
+ {
+  "id": 3499,
+  "tournament_id": 179,
+  "school_name": "St. Augustine",
+  "total_points": 157,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 313
+ },
+ {
+  "id": 3514,
+  "tournament_id": 179,
+  "school_name": "Williamstown",
+  "total_points": 16,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 303
+ },
+ {
+  "id": 3503,
+  "tournament_id": 179,
+  "school_name": "Woodstown",
+  "total_points": 54,
+  "season_id": 2026,
+  "tournament_type": "regions",
+  "school_id": 295
+ },
+ {
+  "id": 3595,
+  "tournament_id": 180,
+  "school_name": "Audubon",
+  "total_points": 6,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 236
+ },
+ {
+  "id": 3631,
+  "tournament_id": 180,
+  "school_name": "Becton-Wood-Ridge",
+  "total_points": 3,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 321
+ },
+ {
+  "id": 3528,
+  "tournament_id": 180,
+  "school_name": "Bergen Catholic",
+  "total_points": 136.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 21
+ },
+ {
+  "id": 3625,
+  "tournament_id": 180,
+  "school_name": "Bergenfield",
+  "total_points": 3,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 40
+ },
+ {
+  "id": 3594,
+  "tournament_id": 180,
+  "school_name": "Bound Brook",
+  "total_points": 6,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 322
+ },
+ {
+  "id": 3654,
+  "tournament_id": 180,
+  "school_name": "Brearley-Dayton",
+  "total_points": 1,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 130
+ },
+ {
+  "id": 3600,
+  "tournament_id": 180,
+  "school_name": "Brick Memorial",
+  "total_points": 5.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 207
+ },
+ {
+  "id": 3559,
+  "tournament_id": 180,
+  "school_name": "Bridgewater-Raritan",
+  "total_points": 21.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 131
+ },
+ {
+  "id": 3549,
+  "tournament_id": 180,
+  "school_name": "Caldwell",
+  "total_points": 29,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 91
+ },
+ {
+  "id": 3531,
+  "tournament_id": 180,
+  "school_name": "Camden Catholic",
+  "total_points": 89,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 278
+ },
+ {
+  "id": 3612,
+  "tournament_id": 180,
+  "school_name": "Cedar Grove",
+  "total_points": 4,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 60
+ },
+ {
+  "id": 3642,
+  "tournament_id": 180,
+  "school_name": "Cherry Hill East",
+  "total_points": 2,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 267
+ },
+ {
+  "id": 3623,
+  "tournament_id": 180,
+  "school_name": "Cherry Hill West",
+  "total_points": 3,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 268
+ },
+ {
+  "id": 3527,
+  "tournament_id": 180,
+  "school_name": "Christian Brothers",
+  "total_points": 172,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 197
+ },
+ {
+  "id": 3645,
+  "tournament_id": 180,
+  "school_name": "Cinnaminson",
+  "total_points": 1,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 257
+ },
+ {
+  "id": 3641,
+  "tournament_id": 180,
+  "school_name": "Clearview",
+  "total_points": 2,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 306
+ },
+ {
+  "id": 3628,
+  "tournament_id": 180,
+  "school_name": "Clifton",
+  "total_points": 3,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 50
+ },
+ {
+  "id": 3624,
+  "tournament_id": 180,
+  "school_name": "Collingswood",
+  "total_points": 3,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 238
+ },
+ {
+  "id": 3573,
+  "tournament_id": 180,
+  "school_name": "Colts Neck",
+  "total_points": 13,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 198
+ },
+ {
+  "id": 3567,
+  "tournament_id": 180,
+  "school_name": "Cranford",
+  "total_points": 16.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 93
+ },
+ {
+  "id": 3610,
+  "tournament_id": 180,
+  "school_name": "Delaware Valley",
+  "total_points": 4.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 141
+ },
+ {
+  "id": 3525,
+  "tournament_id": 180,
+  "school_name": "Delbarton School",
+  "total_points": 238,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 82
+ },
+ {
+  "id": 3552,
+  "tournament_id": 180,
+  "school_name": "Delran",
+  "total_points": 27,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 258
+ },
+ {
+  "id": 3530,
+  "tournament_id": 180,
+  "school_name": "Delsea",
+  "total_points": 106,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 290
+ },
+ {
+  "id": 3646,
+  "tournament_id": 180,
+  "school_name": "Demarest",
+  "total_points": 1,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 314
+ },
+ {
+  "id": 3568,
+  "tournament_id": 180,
+  "school_name": "Depaul Catholic",
+  "total_points": 16,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 22
+ },
+ {
+  "id": 3532,
+  "tournament_id": 180,
+  "school_name": "Don Bosco Prep",
+  "total_points": 81,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 11
+ },
+ {
+  "id": 3570,
+  "tournament_id": 180,
+  "school_name": "Dumont",
+  "total_points": 14.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 2
+ },
+ {
+  "id": 3611,
+  "tournament_id": 180,
+  "school_name": "Eastern",
+  "total_points": 4,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 296
+ },
+ {
+  "id": 3603,
+  "tournament_id": 180,
+  "school_name": "Edison",
+  "total_points": 5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 178
+ },
+ {
+  "id": 3585,
+  "tournament_id": 180,
+  "school_name": "Fair Lawn",
+  "total_points": 8,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 52
+ },
+ {
+  "id": 3650,
+  "tournament_id": 180,
+  "school_name": "Gloucester",
+  "total_points": 1,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 259
+ },
+ {
+  "id": 3579,
+  "tournament_id": 180,
+  "school_name": "Hackettstown",
+  "total_points": 10,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 112
+ },
+ {
+  "id": 3602,
+  "tournament_id": 180,
+  "school_name": "Haddonfield",
+  "total_points": 5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 270
+ },
+ {
+  "id": 3632,
+  "tournament_id": 180,
+  "school_name": "Hammonton",
+  "total_points": 3,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 297
+ },
+ {
+  "id": 3546,
+  "tournament_id": 180,
+  "school_name": "Hanover Park",
+  "total_points": 35,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 113
+ },
+ {
+  "id": 3618,
+  "tournament_id": 180,
+  "school_name": "Hawthorne",
+  "total_points": 3.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 31
+ },
+ {
+  "id": 3588,
+  "tournament_id": 180,
+  "school_name": "High Point",
+  "total_points": 7,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 32
+ },
+ {
+  "id": 3555,
+  "tournament_id": 180,
+  "school_name": "Hillsborough",
+  "total_points": 24,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 188
+ },
+ {
+  "id": 3551,
+  "tournament_id": 180,
+  "school_name": "Holmdel",
+  "total_points": 27,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 189
+ },
+ {
+  "id": 3648,
+  "tournament_id": 180,
+  "school_name": "Hopewell Valley",
+  "total_points": 1,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 170
+ },
+ {
+  "id": 3537,
+  "tournament_id": 180,
+  "school_name": "Howell",
+  "total_points": 59.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 233
+ },
+ {
+  "id": 3583,
+  "tournament_id": 180,
+  "school_name": "Hunterdon Central",
+  "total_points": 8.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 190
+ },
+ {
+  "id": 3541,
+  "tournament_id": 180,
+  "school_name": "Immaculata",
+  "total_points": 53,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 73
+ },
+ {
+  "id": 3564,
+  "tournament_id": 180,
+  "school_name": "Jackson Township",
+  "total_points": 19,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 370
+ },
+ {
+  "id": 3601,
+  "tournament_id": 180,
+  "school_name": "Johnson",
+  "total_points": 5.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 129
+ },
+ {
+  "id": 3607,
+  "tournament_id": 180,
+  "school_name": "Keansburg",
+  "total_points": 5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 191
+ },
+ {
+  "id": 3627,
+  "tournament_id": 180,
+  "school_name": "Kearny",
+  "total_points": 3,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 103
+ },
+ {
+  "id": 3598,
+  "tournament_id": 180,
+  "school_name": "Kingsway",
+  "total_points": 6,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 260
+ },
+ {
+  "id": 3590,
+  "tournament_id": 180,
+  "school_name": "Kinnelon",
+  "total_points": 7,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 33
+ },
+ {
+  "id": 3547,
+  "tournament_id": 180,
+  "school_name": "Lacey",
+  "total_points": 34.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 249
+ },
+ {
+  "id": 3622,
+  "tournament_id": 180,
+  "school_name": "Lakeland",
+  "total_points": 3,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 5
+ },
+ {
+  "id": 3635,
+  "tournament_id": 180,
+  "school_name": "Lawrence",
+  "total_points": 2,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 210
+ },
+ {
+  "id": 3589,
+  "tournament_id": 180,
+  "school_name": "Lenape",
+  "total_points": 7,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 271
+ },
+ {
+  "id": 3575,
+  "tournament_id": 180,
+  "school_name": "Leonia-Palisades",
+  "total_points": 11,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 44
+ },
+ {
+  "id": 3572,
+  "tournament_id": 180,
+  "school_name": "Long Branch",
+  "total_points": 13,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 211
+ },
+ {
+  "id": 3548,
+  "tournament_id": 180,
+  "school_name": "Lower Cape May",
+  "total_points": 31,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 281
+ },
+ {
+  "id": 3576,
+  "tournament_id": 180,
+  "school_name": "Matawan",
+  "total_points": 11,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 382
+ },
+ {
+  "id": 3621,
+  "tournament_id": 180,
+  "school_name": "Middle Township",
+  "total_points": 3,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 283
+ },
+ {
+  "id": 3538,
+  "tournament_id": 180,
+  "school_name": "Middletown North",
+  "total_points": 56,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 159
+ },
+ {
+  "id": 3560,
+  "tournament_id": 180,
+  "school_name": "Middletown South",
+  "total_points": 21,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 160
+ },
+ {
+  "id": 3604,
+  "tournament_id": 180,
+  "school_name": "Monroe",
+  "total_points": 5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 172
+ },
+ {
+  "id": 3643,
+  "tournament_id": 180,
+  "school_name": "Montville",
+  "total_points": 2,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 75
+ },
+ {
+  "id": 3606,
+  "tournament_id": 180,
+  "school_name": "Moorestown",
+  "total_points": 5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 261
+ },
+ {
+  "id": 3593,
+  "tournament_id": 180,
+  "school_name": "Morris Hills",
+  "total_points": 6.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 76
+ },
+ {
+  "id": 3656,
+  "tournament_id": 180,
+  "school_name": "Morristown",
+  "total_points": 1,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 114
+ },
+ {
+  "id": 3536,
+  "tournament_id": 180,
+  "school_name": "Mount Olive",
+  "total_points": 63.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 56
+ },
+ {
+  "id": 3640,
+  "tournament_id": 180,
+  "school_name": "Neptune",
+  "total_points": 2,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 221
+ },
+ {
+  "id": 3620,
+  "tournament_id": 180,
+  "school_name": "North Bergen",
+  "total_points": 3,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 95
+ },
+ {
+  "id": 3561,
+  "tournament_id": 180,
+  "school_name": "North Hunterdon",
+  "total_points": 20.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 135
+ },
+ {
+  "id": 3580,
+  "tournament_id": 180,
+  "school_name": "Northern Burlington",
+  "total_points": 9,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 388
+ },
+ {
+  "id": 3592,
+  "tournament_id": 180,
+  "school_name": "Northern Highlands",
+  "total_points": 6.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 35
+ },
+ {
+  "id": 3626,
+  "tournament_id": 180,
+  "school_name": "Notre Dame",
+  "total_points": 3,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 213
+ },
+ {
+  "id": 3629,
+  "tournament_id": 180,
+  "school_name": "Nutley",
+  "total_points": 3,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 106
+ },
+ {
+  "id": 3637,
+  "tournament_id": 180,
+  "school_name": "Ocean City",
+  "total_points": 2,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 285
+ },
+ {
+  "id": 3591,
+  "tournament_id": 180,
+  "school_name": "Ocean Township",
+  "total_points": 7,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 222
+ },
+ {
+  "id": 3653,
+  "tournament_id": 180,
+  "school_name": "Old Bridge",
+  "total_points": 1,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 163
+ },
+ {
+  "id": 3571,
+  "tournament_id": 180,
+  "school_name": "Old Tappan",
+  "total_points": 13.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 6
+ },
+ {
+  "id": 3581,
+  "tournament_id": 180,
+  "school_name": "Paramus",
+  "total_points": 8.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 57
+ },
+ {
+  "id": 3534,
+  "tournament_id": 180,
+  "school_name": "Paramus Catholic",
+  "total_points": 65.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 153
+ },
+ {
+  "id": 3582,
+  "tournament_id": 180,
+  "school_name": "Parsippany Hills",
+  "total_points": 8.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 78
+ },
+ {
+  "id": 3558,
+  "tournament_id": 180,
+  "school_name": "Pascack Valley",
+  "total_points": 23.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 16
+ },
+ {
+  "id": 3630,
+  "tournament_id": 180,
+  "school_name": "Passaic Tech",
+  "total_points": 3,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 391
+ },
+ {
+  "id": 3574,
+  "tournament_id": 180,
+  "school_name": "Passaic Valley",
+  "total_points": 12,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 46
+ },
+ {
+  "id": 3613,
+  "tournament_id": 180,
+  "school_name": "Paul VI",
+  "total_points": 4,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 241
+ },
+ {
+  "id": 3556,
+  "tournament_id": 180,
+  "school_name": "Paulsboro",
+  "total_points": 24,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 309
+ },
+ {
+  "id": 3565,
+  "tournament_id": 180,
+  "school_name": "Phillipsburg",
+  "total_points": 18,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 7
+ },
+ {
+  "id": 3617,
+  "tournament_id": 180,
+  "school_name": "Pingry",
+  "total_points": 4,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 144
+ },
+ {
+  "id": 3566,
+  "tournament_id": 180,
+  "school_name": "Piscataway",
+  "total_points": 17.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 183
+ },
+ {
+  "id": 3596,
+  "tournament_id": 180,
+  "school_name": "Plainfield",
+  "total_points": 6,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 154
+ },
+ {
+  "id": 3569,
+  "tournament_id": 180,
+  "school_name": "Point Pleasant Boro",
+  "total_points": 15.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 224
+ },
+ {
+  "id": 3587,
+  "tournament_id": 180,
+  "school_name": "Pompton Lakes",
+  "total_points": 7,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 37
+ },
+ {
+  "id": 3539,
+  "tournament_id": 180,
+  "school_name": "Pope John XXIII",
+  "total_points": 56,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 117
+ },
+ {
+  "id": 3615,
+  "tournament_id": 180,
+  "school_name": "Rahway",
+  "total_points": 4,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 155
+ },
+ {
+  "id": 3634,
+  "tournament_id": 180,
+  "school_name": "Ramapo",
+  "total_points": 2.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 17
+ },
+ {
+  "id": 3597,
+  "tournament_id": 180,
+  "school_name": "Rancocas Valley",
+  "total_points": 6,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 263
+ },
+ {
+  "id": 3652,
+  "tournament_id": 180,
+  "school_name": "Randolph",
+  "total_points": 1,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 87
+ },
+ {
+  "id": 3577,
+  "tournament_id": 180,
+  "school_name": "Red Bank Catholic",
+  "total_points": 10.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 264
+ },
+ {
+  "id": 3544,
+  "tournament_id": 180,
+  "school_name": "Ridge",
+  "total_points": 36.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 156
+ },
+ {
+  "id": 3651,
+  "tournament_id": 180,
+  "school_name": "River Dell",
+  "total_points": 1,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 8
+ },
+ {
+  "id": 3608,
+  "tournament_id": 180,
+  "school_name": "Robbinsville",
+  "total_points": 5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 215
+ },
+ {
+  "id": 3644,
+  "tournament_id": 180,
+  "school_name": "Roselle Park",
+  "total_points": 2,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 125
+ },
+ {
+  "id": 3614,
+  "tournament_id": 180,
+  "school_name": "Roxbury",
+  "total_points": 4,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 66
+ },
+ {
+  "id": 3533,
+  "tournament_id": 180,
+  "school_name": "Rumson-Fair Haven",
+  "total_points": 71,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 175
+ },
+ {
+  "id": 3542,
+  "tournament_id": 180,
+  "school_name": "Saint John Vianney",
+  "total_points": 41.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 243
+ },
+ {
+  "id": 3584,
+  "tournament_id": 180,
+  "school_name": "Saint Thomas Aquinas",
+  "total_points": 8,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 234
+ },
+ {
+  "id": 3636,
+  "tournament_id": 180,
+  "school_name": "Sayreville War Memorial",
+  "total_points": 2,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 185
+ },
+ {
+  "id": 3633,
+  "tournament_id": 180,
+  "school_name": "Seneca",
+  "total_points": 2.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 274
+ },
+ {
+  "id": 3545,
+  "tournament_id": 180,
+  "school_name": "Seton Hall Prep",
+  "total_points": 35,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 127
+ },
+ {
+  "id": 3638,
+  "tournament_id": 180,
+  "school_name": "Shawnee",
+  "total_points": 2,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 275
+ },
+ {
+  "id": 3655,
+  "tournament_id": 180,
+  "school_name": "Shore",
+  "total_points": 1,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 225
+ },
+ {
+  "id": 3535,
+  "tournament_id": 180,
+  "school_name": "Southern Regional",
+  "total_points": 64.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 252
+ },
+ {
+  "id": 3526,
+  "tournament_id": 180,
+  "school_name": "St Joseph (Montvale) HS",
+  "total_points": 173,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 394
+ },
+ {
+  "id": 3562,
+  "tournament_id": 180,
+  "school_name": "St. Augustine",
+  "total_points": 20,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 313
+ },
+ {
+  "id": 3619,
+  "tournament_id": 180,
+  "school_name": "St. Benedicts Prep School",
+  "total_points": 3.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 118
+ },
+ {
+  "id": 3540,
+  "tournament_id": 180,
+  "school_name": "St. Joseph Metuchen",
+  "total_points": 55.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 186
+ },
+ {
+  "id": 3529,
+  "tournament_id": 180,
+  "school_name": "St. Peter's Prep",
+  "total_points": 107,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 167
+ },
+ {
+  "id": 3647,
+  "tournament_id": 180,
+  "school_name": "Timber Creek",
+  "total_points": 1,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 301
+ },
+ {
+  "id": 3543,
+  "tournament_id": 180,
+  "school_name": "Toms River East",
+  "total_points": 37,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 253
+ },
+ {
+  "id": 3605,
+  "tournament_id": 180,
+  "school_name": "Toms River South",
+  "total_points": 5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 255
+ },
+ {
+  "id": 3599,
+  "tournament_id": 180,
+  "school_name": "Union",
+  "total_points": 6,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 138
+ },
+ {
+  "id": 3578,
+  "tournament_id": 180,
+  "school_name": "Vernon",
+  "total_points": 10.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 27
+ },
+ {
+  "id": 3609,
+  "tournament_id": 180,
+  "school_name": "Wall",
+  "total_points": 4.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 235
+ },
+ {
+  "id": 3639,
+  "tournament_id": 180,
+  "school_name": "Warren Hills",
+  "total_points": 2,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 67
+ },
+ {
+  "id": 3563,
+  "tournament_id": 180,
+  "school_name": "Washington Township",
+  "total_points": 19,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 302
+ },
+ {
+  "id": 3554,
+  "tournament_id": 180,
+  "school_name": "Watchung Hills",
+  "total_points": 25,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 147
+ },
+ {
+  "id": 3657,
+  "tournament_id": 180,
+  "school_name": "Wayne Hills",
+  "total_points": 1,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 38
+ },
+ {
+  "id": 3649,
+  "tournament_id": 180,
+  "school_name": "Wayne Valley",
+  "total_points": 1,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 68
+ },
+ {
+  "id": 3586,
+  "tournament_id": 180,
+  "school_name": "West Deptford",
+  "total_points": 7.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 245
+ },
+ {
+  "id": 3553,
+  "tournament_id": 180,
+  "school_name": "West Essex",
+  "total_points": 26,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 39
+ },
+ {
+  "id": 3557,
+  "tournament_id": 180,
+  "school_name": "West Morris",
+  "total_points": 24,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 108
+ },
+ {
+  "id": 3616,
+  "tournament_id": 180,
+  "school_name": "Westfield",
+  "total_points": 4,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 128
+ },
+ {
+  "id": 3550,
+  "tournament_id": 180,
+  "school_name": "Woodstown",
+  "total_points": 28.5,
+  "season_id": 2026,
+  "tournament_type": "boys_state",
+  "school_id": 295
+ }
+]

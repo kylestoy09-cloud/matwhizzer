@@ -2,7 +2,7 @@
 // official totals for girls tournaments (all 401 girls 2025-26 schools in
 // source_of_truth_team_scores.csv match). The site's own formula (district_team_score,
 // girls_region_team_score) matches only 23 of them, so girls pages read these totals and show
-// no per-wrestler team points (Kyle, 2026-11-02). Boys keep the formula, which matches theirs.
+// no per-wrestler team points (Kyle, 2026-11-02).
 import { supabase } from '@/lib/supabase/public-cached'
 import { getSchoolSeasonNames } from '@/lib/schoolSeasonNames'
 

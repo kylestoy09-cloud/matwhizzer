@@ -7,6 +7,7 @@ import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { IndividualTeamPoints } from '@/components/IndividualTeamPoints'
 import { BracketBuster } from '@/components/BracketBuster'
 import { TeamScoreCard } from '@/components/TeamScoreCard'
+import { getBoysOfficialTeamScores } from '@/lib/boysOfficialTeamScores'
 import { getSchoolLogos } from '@/lib/school-logos'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 import { SchoolTag } from '@/components/SchoolTag'
@@ -157,14 +158,15 @@ export default async function DistrictSummaryPage({
 
   const season = await getActiveSeason('M')
 
-  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, schoolsRes, teamScoreRes, teamPtsRes, stateEntRes, ghostRes, distEntriesRes, statePlacementsRes, logos] =
+  const [placementsRes, matTimeRes, fastPinRes, fastTfRes, schoolsRes, teamScoreRows, teamPtsRes, stateEntRes, ghostRes, distEntriesRes, statePlacementsRes, logos] =
     await Promise.all([
       supabase.rpc('district_placements',  { p_district: d, p_gender: 'M', p_season: season }),
       supabase.rpc('district_mat_time',    { p_district: d, p_gender: 'M', p_season: season }),
       supabase.rpc('district_fastest_pin', { p_district: d, p_gender: 'M', p_season: season }),
       supabase.rpc('district_fastest_tf',  { p_district: d, p_gender: 'M', p_season: season }),
       supabase.rpc('district_schools',     { p_district: d, p_gender: 'M', p_season: season }),
-      supabase.rpc('district_team_score',  { p_district: d, p_gender: 'M', p_season: season }),
+      // official TrackWrestling totals, not the site formula
+      getBoysOfficialTeamScores(`Boy_s Districts District ${d}`, season),
       supabase.rpc('district_team_pts',    { p_district: d, p_gender: 'M', p_season: season }),
       supabase
         .from('tournament_entries')
@@ -187,7 +189,7 @@ export default async function DistrictSummaryPage({
   const fastPin    = ((fastPinRes.data   ?? []) as FastestPinRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
   const fastTf     = ((fastTfRes.data    ?? []) as FastestTfRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
   const schools    = (schoolsRes.data    ?? []) as SchoolRow[]
-  const teamScore  = ((teamScoreRes.data ?? []) as TeamScoreRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
+  const teamScore  = (teamScoreRows as TeamScoreRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
   const teamPts    = ((teamPtsRes.data   ?? []) as TeamPtsRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
   const stateQualIds = new Set(
     ((stateEntRes.data ?? []) as { wrestler_id: string }[]).map(e => e.wrestler_id)
