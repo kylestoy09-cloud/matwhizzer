@@ -2,6 +2,26 @@
 
 ---
 
+## 2026-11-05 — Correction: the 2026-09-21 team-score auto-refresh was never live
+
+**Checked by Kyle in the Supabase SQL editor (2026-11-05):**
+- `cron.job` → `relation "cron.job" does not exist`, so pg_cron is not installed.
+- `pg_proc` / `pg_class` / `pg_trigger` for `refresh_boys_team_score_cache`, `refresh_dirty_team_score_caches`, `mark_team_score_cache_dirty`, `team_score_cache_dirty` and `%team_score_dirty%` → no rows.
+
+**Meaning:**
+- The 2026-09-21 entry's "APPLIED" and "Verified" were wrong.
+- Nothing recalculates boys team totals on its own, so nothing can overwrite the official TrackWrestling totals loaded today.
+- The calculated totals that had been stored were written by one-time runs. Which run is not proven; the 9/21 "boys cache re-audit vs RPCs" is the likely one.
+
+**Changes:**
+- `docs/migrations/20260921_team_score_cache_auto_refresh.sql` now opens with a DO NOT RUN header; the file is kept for the record.
+- The 9/21 changelog entry is marked NOT LIVE.
+- CLAUDE.md updated to match.
+
+**No database change.**
+
+---
+
 ## 2026-11-05 — Boys postseason team totals copied from TrackWrestling; boys pages show them
 
 **Rule (Kyle):** the copied TrackWrestling standings are the truth. The site's formula is kept so totals can be calculated one day, but only behind the scenes, never as the shown figure.
@@ -1890,10 +1910,7 @@ Sterling/Collingswood (01-16 / 01-17) was left alone because its copies differ. 
 
 **Tables affected:** `team_score_cache_dirty` (new), `precomputed_team_scores` (via refresh); triggers on `tournament_entries`, `matches`; pg_cron job `refresh-boys-team-score-cache`
 
-**APPLIED** — 2026-09-21 via Supabase SQL editor
-
-**Reversible?** Yes — rollback block in migration file
-**Verified?** Yes — 2026-09-21: `team_score_cache_dirty` present; boys cache re-audit vs RPCs 0 missing / 0 stale / 0 extra
+**NOT LIVE** (corrected 2026-11-05) — this entry said "APPLIED — 2026-09-21 via Supabase SQL editor" and "Verified: `team_score_cache_dirty` present". On 2026-11-05 the live database has none of it: no `cron` schema (pg_cron not installed), and no `refresh_boys_team_score_cache`, `refresh_dirty_team_score_caches`, `mark_team_score_cache_dirty`, `team_score_cache_dirty` or `%team_score_dirty%` triggers. It also contradicts the rule that team totals are copied from TrackWrestling. Do not run the migration file. See the 2026-11-05 correction entry.
 
 ---
 

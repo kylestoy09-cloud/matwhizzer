@@ -1,3 +1,9 @@
+-- ============================================================================================
+-- DO NOT RUN (2026-11-05). Never live: the database has none of these objects and no pg_cron.
+-- It recalculates boys postseason team totals with the site formula, which breaks the rule that
+-- team totals are copied from TrackWrestling (the copied standings are the truth; the formula
+-- runs behind the scenes only). Kept for the record. See docs/db_changelog.md 2026-11-05.
+-- ============================================================================================
 -- docs/migrations/20260921_team_score_cache_auto_refresh.sql
 --
 -- BOYS ONLY. Keeps precomputed_team_scores in step with the bracket data
