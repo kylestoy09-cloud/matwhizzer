@@ -11,7 +11,8 @@ A wrestler's team points = advancement + bonus + placement. A school's total = t
   - A forfeit over an **empty slot** ("over ()") does not.
 - **Bonus:**
   - fall, forfeit, injury default, DQ: 2
-  - tech fall: 1.5 (TrackWrestling's "tech. fall … (TF-1 …)" wording: 1)
+  - tech fall: 1.5. Every tech fall is worth the same (Kyle).
+  - 5 bouts in 2025-26 Districts 1–18 read "tech. fall … (TF-1 …)" and TrackWrestling counted them at 1: **TrackWrestling errors**. Riotto, Perrota (D7 113), Delacruz (D14 150), Romaniello (D14 175), Pincus (D16). They stay TF-1.5 here, so our calculated totals run 0.5 above TrackWrestling's for those wrestlers and schools; the official copied totals are unchanged.
   - major decision: 1
   - decision / sudden victory / tiebreakers: 0
   - A forfeit win, including over a filler entry or an empty slot, gets the 2.
@@ -33,7 +34,7 @@ A wrestler's team points = advancement + bonus + placement. A school's total = t
 ## District and 2024-25 region misses are stored-data gaps, not rules
 On stored bouts, 1,979 / 1,994 wrestlers match per wrestler (D1–18, 2025-26). The 15 misses:
 - **Placement-match forfeits (6):** the bout has no loser and there is no placement row, so the 4th-place points are missing.
-- **"Tech. fall" (5):** the wording isn't stored; every tech fall is TF-1.5.
+- **TrackWrestling's TF-1 errors (5):** see Rules; not a data gap.
 - **Empty-slot forfeits (2, Wright and Grant):** stored the same as filler forfeits (FORF, no opponent) since the 2026-11-02 filler cleanup.
 - **2 more:** not traced.
 
