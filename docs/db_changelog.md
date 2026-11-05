@@ -2,6 +2,27 @@
 
 ---
 
+## 2026-11-05 — Boys 2024-25 bracket repairs (part 1)
+
+**Script:** `scripts/fix_2025_brackets_20261105.mts`. **Migration file:** `docs/migrations/20261105_2025_bracket_repairs.sql` (SQL editor).
+**Backups:** `backups/20261105_2025_bracket_repairs_before.json`, `..._inserted.json`.
+
+**Source:** TrackWrestling's 2024-25 export, `../gt_s1_districts.txt`, identical to `../Match Data/2025 District Data.py`. Its quirks: no "District 21" heading (D21 follows D20), and the "District 23" block repeats District 22's finals.
+
+**26 district bouts the 2026-03-20 load never stored**, restored:
+- **13 shared-name bouts:** Sean Brown ×3 (Newton), Paretti, Davis, Joel Martinez, Jayden Williams, Youssef, Mulligan, Martin, Lopez, Jimenez. Their 2024-25 entries had been deleted at an unknown time and are recreated.
+  - **5 new profiles** (Youssef Kinnelon, Mulligan New Milford, Martin Dwight Morrow, Lopez Hamilton West, Jimenez Toms River North): inactive, grade blank, name link at the school. Kyle's rule: the only same-name profile wrestled 2024-25 for another school, so it is a different person.
+- **7 District 15 forfeits over "A FF" fillers** and **7 District 9 forfeits over "A Forfeit"… fillers**: not in the database. Stored as forfeit wins with `forfeit_opponent = 'filler'`.
+
+**Found, not fixable from our files:**
+- **District 10 and Region 2:** all 14 finals each are missing from the export itself. Their "3rd Place Match" lines are the real 3rd-place matches listed twice. In District 10 the database stored both copies (**14 duplicate bouts**). D10, R2 and R7 also have duplicate placement rows.
+- **Region 7:** the consolation rounds and 3rd-place matches are missing from the export; its 5th-place lines are listed twice.
+- These need TrackWrestling's pages. Deleting the duplicates needs approval (counts and backup first).
+
+**APPLIED** — profiles, entries and placements 2026-11-05; SQL pending
+
+---
+
 ## 2026-11-05 — Boys scoring formula = TrackWrestling's rules
 
 **Migration file:** `docs/migrations/20261105_tw_scoring_rules.sql` (SQL editor). The rules and their proof are in `docs/reviews/trackwrestling_team_scoring.md`.

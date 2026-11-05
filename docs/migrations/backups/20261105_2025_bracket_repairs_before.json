@@ -1,0 +1,676 @@
+{
+ "placements": [],
+ "relabel": [],
+ "toInsert": [
+  {
+   "label": "D3 285 QF: Quarterfinal - Sean Brown (Newton) 22-13 won by fall over Anthony Bua (Depaul Catholic) 6-13 (Fall 2:54)",
+   "row": {
+    "tournament_id": 95,
+    "weight_class_id": 66,
+    "bracket_side": "championship",
+    "round": "QF",
+    "winner_entry_id": "new:95|66|d79d98fa-d304-4e8e-b6d6-93158e7e4962",
+    "loser_entry_id": "bdd7b6e5-d5e3-4e0b-89ff-fc443e1a3133",
+    "win_type": "FALL",
+    "fall_time_seconds": 174,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": "Fall 2:54",
+    "validated": true,
+    "forfeit_opponent": null
+   }
+  },
+  {
+   "label": "D3 285 SF: Semifinal - Bradley Kearney (Kittatinny Regional Jr/Sr) 16-11 won by fall over Sean Brown (Newton) 22-13 (Fall",
+   "row": {
+    "tournament_id": 95,
+    "weight_class_id": 66,
+    "bracket_side": "championship",
+    "round": "SF",
+    "winner_entry_id": "3e6f8df7-d17d-4dfb-8332-5697a32e7f8a",
+    "loser_entry_id": "new:95|66|d79d98fa-d304-4e8e-b6d6-93158e7e4962",
+    "win_type": "FALL",
+    "fall_time_seconds": 298,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": "Fall 4:58",
+    "validated": true,
+    "forfeit_opponent": null
+   }
+  },
+  {
+   "label": "D3 285 3rd_Place: 3rd Place Match - Sean Brown (Newton) 22-13 won by fall over Zyon Taylor (Vernon Township) 10-9 (Fall 5:27)",
+   "row": {
+    "tournament_id": 95,
+    "weight_class_id": 66,
+    "bracket_side": "consolation",
+    "round": "3rd_Place",
+    "winner_entry_id": "new:95|66|d79d98fa-d304-4e8e-b6d6-93158e7e4962",
+    "loser_entry_id": "6b8f8fa7-b678-46a8-a946-0d5aa7ec48b5",
+    "win_type": "FALL",
+    "fall_time_seconds": 327,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": "Fall 5:27",
+    "validated": true,
+    "forfeit_opponent": null
+   }
+  },
+  {
+   "label": "D4 132 QF: Quarterfinal - Nick Bastante (West Essex Regional) 31-5 won by fall over Adam Youssef (Kinnelon) 2-13 (Fall 1:",
+   "row": {
+    "tournament_id": 96,
+    "weight_class_id": 57,
+    "bracket_side": "championship",
+    "round": "QF",
+    "winner_entry_id": "e8a7572b-de12-46af-bd9f-126c2c0bc08d",
+    "loser_entry_id": "new:96|57|newprof:Adam Youssef|33",
+    "win_type": "FALL",
+    "fall_time_seconds": 80,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": "Fall 1:20",
+    "validated": true,
+    "forfeit_opponent": null
+   }
+  },
+  {
+   "label": "D4 132 QF: Quarterfinal - Justin Iannelli (Northern Highlands Regional Sc) 21-12 won by major decision over Matthew Mulli",
+   "row": {
+    "tournament_id": 96,
+    "weight_class_id": 57,
+    "bracket_side": "championship",
+    "round": "QF",
+    "winner_entry_id": "769415ad-87fc-4d65-9ed6-5ad7af69bbfc",
+    "loser_entry_id": "new:96|57|newprof:Matthew Mulligan|34",
+    "win_type": "MD",
+    "fall_time_seconds": null,
+    "winner_score": 9,
+    "loser_score": 0,
+    "score_raw": "9-0",
+    "validated": true,
+    "forfeit_opponent": null
+   }
+  },
+  {
+   "label": "D5 132 R2: Champ. Round 1 - Alex Bowden (Leonia/Palisades Park) 4-8 won by fall over Andrew Martin (Dwight Morrow) 4-10 (",
+   "row": {
+    "tournament_id": 97,
+    "weight_class_id": 57,
+    "bracket_side": "championship",
+    "round": "R2",
+    "winner_entry_id": "25682996-d4de-4e19-bd90-b8f674c2a109",
+    "loser_entry_id": "new:97|57|newprof:Andrew Martin|41",
+    "win_type": "FALL",
+    "fall_time_seconds": 358,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": "Fall 5:58",
+    "validated": true,
+    "forfeit_opponent": null
+   }
+  },
+  {
+   "label": "D6 113 QF: Quarterfinal - Jack Bacigalupo (Mt. Olive) 16-17 won by tech fall over Joseph Paretti (Elmwood Park) 7-18 (TF-",
+   "row": {
+    "tournament_id": 98,
+    "weight_class_id": 54,
+    "bracket_side": "championship",
+    "round": "QF",
+    "winner_entry_id": "b6f73a4c-584c-458d-86a8-7f0128178d81",
+    "loser_entry_id": "new:98|54|89411bde-18db-4e82-bc04-8e4f491e6f78",
+    "win_type": "TF-1.5",
+    "fall_time_seconds": 152,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": null,
+    "validated": true,
+    "forfeit_opponent": null
+   }
+  },
+  {
+   "label": "D9 106 QF: Quarterfinal - Peter Terranova (Delbarton School) 26-6 won by forfeit over A Forfeit (Forfeit) 0-1 (For.)",
+   "row": {
+    "tournament_id": 101,
+    "weight_class_id": 53,
+    "bracket_side": "championship",
+    "round": "QF",
+    "winner_entry_id": "821541bf-6288-42e6-975d-7b426a324297",
+    "loser_entry_id": null,
+    "win_type": "FORF",
+    "fall_time_seconds": null,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": null,
+    "validated": true,
+    "forfeit_opponent": "filler"
+   }
+  },
+  {
+   "label": "D9 106 QF: Quarterfinal - Aidan Reilly (West Morris ( Mendham)) 29-6 won by forfeit over B Forfeit (Forfeit) 0-1 (For.)",
+   "row": {
+    "tournament_id": 101,
+    "weight_class_id": 53,
+    "bracket_side": "championship",
+    "round": "QF",
+    "winner_entry_id": "ab0ff596-7712-4d5a-9a6a-8ba56d871b50",
+    "loser_entry_id": null,
+    "win_type": "FORF",
+    "fall_time_seconds": null,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": null,
+    "validated": true,
+    "forfeit_opponent": "filler"
+   }
+  },
+  {
+   "label": "D9 113 QF: Quarterfinal - Cameron Sontz (Delbarton School) 31-0 won by forfeit over C Forfeit (Forfeit) 0-1 (For.)",
+   "row": {
+    "tournament_id": 101,
+    "weight_class_id": 54,
+    "bracket_side": "championship",
+    "round": "QF",
+    "winner_entry_id": "a4e2d85c-664b-4739-8151-a66547d9e356",
+    "loser_entry_id": null,
+    "win_type": "FORF",
+    "fall_time_seconds": null,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": null,
+    "validated": true,
+    "forfeit_opponent": "filler"
+   }
+  },
+  {
+   "label": "D9 120 QF: Quarterfinal - Tommy Marchetti (Delbarton School) 25-7 won by forfeit over G Forfeit (Forfeit) 0-1 (For.)",
+   "row": {
+    "tournament_id": 101,
+    "weight_class_id": 55,
+    "bracket_side": "championship",
+    "round": "QF",
+    "winner_entry_id": "62116e28-6e33-43eb-8897-a39fe3599688",
+    "loser_entry_id": null,
+    "win_type": "FORF",
+    "fall_time_seconds": null,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": null,
+    "validated": true,
+    "forfeit_opponent": "filler"
+   }
+  },
+  {
+   "label": "D9 138 QF: Quarterfinal - Chase Quenault (Delbarton School) 25-9 won by forfeit over D Forfeit (Forfeit) 0-1 (For.)",
+   "row": {
+    "tournament_id": 101,
+    "weight_class_id": 58,
+    "bracket_side": "championship",
+    "round": "QF",
+    "winner_entry_id": "ed3f0ec1-fcc7-4bc9-a007-b20f6c578287",
+    "loser_entry_id": null,
+    "win_type": "FORF",
+    "fall_time_seconds": null,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": null,
+    "validated": true,
+    "forfeit_opponent": "filler"
+   }
+  },
+  {
+   "label": "D9 138 QF: Quarterfinal - Mason Pierce (Randolph Hs) 21-11 won by forfeit over E Forfeit (Forfeit) 0-1 (For.)",
+   "row": {
+    "tournament_id": 101,
+    "weight_class_id": 58,
+    "bracket_side": "championship",
+    "round": "QF",
+    "winner_entry_id": "80e74059-9f51-4c2a-94a6-9a71404425b7",
+    "loser_entry_id": null,
+    "win_type": "FORF",
+    "fall_time_seconds": null,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": null,
+    "validated": true,
+    "forfeit_opponent": "filler"
+   }
+  },
+  {
+   "label": "D9 175 QF: Quarterfinal - Greg Dixon (Barringer Hs) 5-4 won by fall over Tyler Davis (Randolph Hs) 16-16 (Fall 2:53)",
+   "row": {
+    "tournament_id": 101,
+    "weight_class_id": 63,
+    "bracket_side": "championship",
+    "round": "QF",
+    "winner_entry_id": "cbddb146-6e01-46fa-8284-ea1f7cc504c4",
+    "loser_entry_id": "new:101|63|cc2c1d2a-df40-44c3-8f73-2ef0c4584431",
+    "win_type": "FALL",
+    "fall_time_seconds": 173,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": "Fall 2:53",
+    "validated": true,
+    "forfeit_opponent": null
+   }
+  },
+  {
+   "label": "D9 285 QF: Quarterfinal - Gabriel McCulloch (Bloomfield) 31-5 won by forfeit over F Forfeit (Forfeit) 0-1 (For.)",
+   "row": {
+    "tournament_id": 101,
+    "weight_class_id": 66,
+    "bracket_side": "championship",
+    "round": "QF",
+    "winner_entry_id": "58394170-6ac6-48b2-9807-97ab61fc9e28",
+    "loser_entry_id": null,
+    "win_type": "FORF",
+    "fall_time_seconds": null,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": null,
+    "validated": true,
+    "forfeit_opponent": "filler"
+   }
+  },
+  {
+   "label": "D12 157 R2: Champ. Round 1 - Sebastian Eaton (Newark Academy) 7-16 won by fall over Joel Martinez (East Orange Campus) 3-6",
+   "row": {
+    "tournament_id": 104,
+    "weight_class_id": 61,
+    "bracket_side": "championship",
+    "round": "R2",
+    "winner_entry_id": "044a753b-2f7f-4638-af2e-8ed8de47ca3e",
+    "loser_entry_id": "new:104|61|14b2d8fe-a309-4190-af89-2eb2ee0cb6c6",
+    "win_type": "FALL",
+    "fall_time_seconds": 86,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": "Fall 1:26",
+    "validated": true,
+    "forfeit_opponent": null
+   }
+  },
+  {
+   "label": "D15 113 QF: Quarterfinal - Jacob Richardson (Watchung Hills Regional) 4-2 won by forfeit over A FF () 0-1 (For.)",
+   "row": {
+    "tournament_id": 107,
+    "weight_class_id": 54,
+    "bracket_side": "championship",
+    "round": "QF",
+    "winner_entry_id": "45e02f50-070e-49e4-8844-d56bf9a6215d",
+    "loser_entry_id": null,
+    "win_type": "FORF",
+    "fall_time_seconds": null,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": null,
+    "validated": true,
+    "forfeit_opponent": "filler"
+   }
+  },
+  {
+   "label": "D15 138 QF: Quarterfinal - Michael Hasson (Delaware Valley Regional) 27-8 won by forfeit over a FF () 0-1 (For.)",
+   "row": {
+    "tournament_id": 107,
+    "weight_class_id": 58,
+    "bracket_side": "championship",
+    "round": "QF",
+    "winner_entry_id": "c2cfacb4-b9b2-4453-897a-ef5b0105957c",
+    "loser_entry_id": null,
+    "win_type": "FORF",
+    "fall_time_seconds": null,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": null,
+    "validated": true,
+    "forfeit_opponent": "filler"
+   }
+  },
+  {
+   "label": "D15 144 QF: Quarterfinal - Max Ventura (Pingry School) 26-12 won by forfeit over A FF () 0-1 (For.)",
+   "row": {
+    "tournament_id": 107,
+    "weight_class_id": 59,
+    "bracket_side": "championship",
+    "round": "QF",
+    "winner_entry_id": "dae4dd52-e0ce-4303-aaaf-626e25c5ba3e",
+    "loser_entry_id": null,
+    "win_type": "FORF",
+    "fall_time_seconds": null,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": null,
+    "validated": true,
+    "forfeit_opponent": "filler"
+   }
+  },
+  {
+   "label": "D15 157 QF: Quarterfinal - Luke Sinkewicz (Delaware Valley Regional) 27-5 won by forfeit over a FF () 0-1 (For.)",
+   "row": {
+    "tournament_id": 107,
+    "weight_class_id": 61,
+    "bracket_side": "championship",
+    "round": "QF",
+    "winner_entry_id": "5aa05ae8-aaa5-4ff6-a726-91e675735cdd",
+    "loser_entry_id": null,
+    "win_type": "FORF",
+    "fall_time_seconds": null,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": null,
+    "validated": true,
+    "forfeit_opponent": "filler"
+   }
+  },
+  {
+   "label": "D15 165 QF: Quarterfinal - Kwabena Morgan (Bound Brook HS) 26-8 won by forfeit over a FF () 0-1 (For.)",
+   "row": {
+    "tournament_id": 107,
+    "weight_class_id": 62,
+    "bracket_side": "championship",
+    "round": "QF",
+    "winner_entry_id": "dce11c3f-e960-440f-8fe1-2e61d467594f",
+    "loser_entry_id": null,
+    "win_type": "FORF",
+    "fall_time_seconds": null,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": null,
+    "validated": true,
+    "forfeit_opponent": "filler"
+   }
+  },
+  {
+   "label": "D15 175 QF: Quarterfinal - Jack Griffin (Middlesex/Dunellen) 27-9 won by forfeit over a FF () 0-1 (For.)",
+   "row": {
+    "tournament_id": 107,
+    "weight_class_id": 63,
+    "bracket_side": "championship",
+    "round": "QF",
+    "winner_entry_id": "1b181cce-4f54-4897-8ad3-59cc3cd5c644",
+    "loser_entry_id": null,
+    "win_type": "FORF",
+    "fall_time_seconds": null,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": null,
+    "validated": true,
+    "forfeit_opponent": "filler"
+   }
+  },
+  {
+   "label": "D15 190 QF: Quarterfinal - Sean O`Neill (Somerville) 25-4 won by forfeit over a FF () 0-1 (For.)",
+   "row": {
+    "tournament_id": 107,
+    "weight_class_id": 64,
+    "bracket_side": "championship",
+    "round": "QF",
+    "winner_entry_id": "939a360e-83e0-4f9f-8e59-3b5fe5475e58",
+    "loser_entry_id": null,
+    "win_type": "FORF",
+    "fall_time_seconds": null,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": null,
+    "validated": true,
+    "forfeit_opponent": "filler"
+   }
+  },
+  {
+   "label": "D17 175 QF: Quarterfinal - Daniel Benbrook (Middletown North) 33-2 won by tech fall over Jayden Williams (South Brunswick)",
+   "row": {
+    "tournament_id": 109,
+    "weight_class_id": 63,
+    "bracket_side": "championship",
+    "round": "QF",
+    "winner_entry_id": "d1234f6c-099e-4476-9577-7bbc36b3ac61",
+    "loser_entry_id": "new:109|63|e18a2bec-4e44-420c-a31b-a4a3ce44d4fa",
+    "win_type": "TF-1.5",
+    "fall_time_seconds": 115,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": null,
+    "validated": true,
+    "forfeit_opponent": null
+   }
+  },
+  {
+   "label": "D24 215 QF: Quarterfinal - Kaleb Fisher (Burlington Township) 20-14 won by fall over Christopher Lopez (Hamilton West) 12-",
+   "row": {
+    "tournament_id": 116,
+    "weight_class_id": 65,
+    "bracket_side": "championship",
+    "round": "QF",
+    "winner_entry_id": "866bf126-0dd0-4d90-9491-6052520d324e",
+    "loser_entry_id": "new:116|65|newprof:Christopher Lopez|231",
+    "win_type": "FALL",
+    "fall_time_seconds": 290,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": "Fall 4:50",
+    "validated": true,
+    "forfeit_opponent": null
+   }
+  },
+  {
+   "label": "D26 165 QF: Quarterfinal - Jacob Greenberg (Pinelands Regional) 31-4 won by tech fall over Daniel Jimenez (Toms River Nort",
+   "row": {
+    "tournament_id": 118,
+    "weight_class_id": 62,
+    "bracket_side": "championship",
+    "round": "QF",
+    "winner_entry_id": "98d3e682-d74a-481e-8ac8-834e82ef3ba7",
+    "loser_entry_id": "new:118|62|newprof:Daniel Jimenez|254",
+    "win_type": "TF-1.5",
+    "fall_time_seconds": 270,
+    "winner_score": null,
+    "loser_score": null,
+    "score_raw": null,
+    "validated": true,
+    "forfeit_opponent": null
+   }
+  }
+ ],
+ "newEntries": [
+  {
+   "key": "95|66|d79d98fa-d304-4e8e-b6d6-93158e7e4962",
+   "label": "Sean Brown (Newton) → profile d79d98fa",
+   "row": {
+    "wrestler_id": "d79d98fa-d304-4e8e-b6d6-93158e7e4962",
+    "tournament_id": 95,
+    "school_id": 24,
+    "weight_class_id": 66,
+    "seed": null,
+    "wins": 0,
+    "losses": 0,
+    "school_context_raw": "Newton",
+    "team_points": 0
+   }
+  },
+  {
+   "key": "96|57|newprof:Adam Youssef|33",
+   "label": "Adam Youssef (Kinnelon) → profile (new)",
+   "row": {
+    "wrestler_id": "newprof:Adam Youssef|33",
+    "tournament_id": 96,
+    "school_id": 33,
+    "weight_class_id": 57,
+    "seed": null,
+    "wins": 0,
+    "losses": 0,
+    "school_context_raw": "Kinnelon",
+    "team_points": 0
+   }
+  },
+  {
+   "key": "96|57|newprof:Matthew Mulligan|34",
+   "label": "Matthew Mulligan (New Milford) → profile (new)",
+   "row": {
+    "wrestler_id": "newprof:Matthew Mulligan|34",
+    "tournament_id": 96,
+    "school_id": 34,
+    "weight_class_id": 57,
+    "seed": null,
+    "wins": 0,
+    "losses": 0,
+    "school_context_raw": "New Milford",
+    "team_points": 0
+   }
+  },
+  {
+   "key": "97|57|newprof:Andrew Martin|41",
+   "label": "Andrew Martin (Dwight Morrow) → profile (new)",
+   "row": {
+    "wrestler_id": "newprof:Andrew Martin|41",
+    "tournament_id": 97,
+    "school_id": 41,
+    "weight_class_id": 57,
+    "seed": null,
+    "wins": 0,
+    "losses": 0,
+    "school_context_raw": "Dwight Morrow",
+    "team_points": 0
+   }
+  },
+  {
+   "key": "98|54|89411bde-18db-4e82-bc04-8e4f491e6f78",
+   "label": "Joseph Paretti (Elmwood Park) → profile 89411bde",
+   "row": {
+    "wrestler_id": "89411bde-18db-4e82-bc04-8e4f491e6f78",
+    "tournament_id": 98,
+    "school_id": 51,
+    "weight_class_id": 54,
+    "seed": null,
+    "wins": 0,
+    "losses": 0,
+    "school_context_raw": "Elmwood Park",
+    "team_points": 0
+   }
+  },
+  {
+   "key": "101|63|cc2c1d2a-df40-44c3-8f73-2ef0c4584431",
+   "label": "Tyler Davis (Randolph Hs) → profile cc2c1d2a",
+   "row": {
+    "wrestler_id": "cc2c1d2a-df40-44c3-8f73-2ef0c4584431",
+    "tournament_id": 101,
+    "school_id": 87,
+    "weight_class_id": 63,
+    "seed": null,
+    "wins": 0,
+    "losses": 0,
+    "school_context_raw": "Randolph Hs",
+    "team_points": 0
+   }
+  },
+  {
+   "key": "104|61|14b2d8fe-a309-4190-af89-2eb2ee0cb6c6",
+   "label": "Joel Martinez (East Orange Campus) → profile 14b2d8fe",
+   "row": {
+    "wrestler_id": "14b2d8fe-a309-4190-af89-2eb2ee0cb6c6",
+    "tournament_id": 104,
+    "school_id": 111,
+    "weight_class_id": 61,
+    "seed": null,
+    "wins": 0,
+    "losses": 0,
+    "school_context_raw": "East Orange Campus",
+    "team_points": 0
+   }
+  },
+  {
+   "key": "109|63|e18a2bec-4e44-420c-a31b-a4a3ce44d4fa",
+   "label": "Jayden Williams (South Brunswick) → profile e18a2bec",
+   "row": {
+    "wrestler_id": "e18a2bec-4e44-420c-a31b-a4a3ce44d4fa",
+    "tournament_id": 109,
+    "school_id": 164,
+    "weight_class_id": 63,
+    "seed": null,
+    "wins": 0,
+    "losses": 0,
+    "school_context_raw": "South Brunswick",
+    "team_points": 0
+   }
+  },
+  {
+   "key": "116|65|newprof:Christopher Lopez|231",
+   "label": "Christopher Lopez (Hamilton West) → profile (new)",
+   "row": {
+    "wrestler_id": "newprof:Christopher Lopez|231",
+    "tournament_id": 116,
+    "school_id": 231,
+    "weight_class_id": 65,
+    "seed": null,
+    "wins": 0,
+    "losses": 0,
+    "school_context_raw": "Hamilton West",
+    "team_points": 0
+   }
+  },
+  {
+   "key": "118|62|newprof:Daniel Jimenez|254",
+   "label": "Daniel Jimenez (Toms River North) → profile (new)",
+   "row": {
+    "wrestler_id": "newprof:Daniel Jimenez|254",
+    "tournament_id": 118,
+    "school_id": 254,
+    "weight_class_id": 62,
+    "seed": null,
+    "wins": 0,
+    "losses": 0,
+    "school_context_raw": "Toms River North",
+    "team_points": 0
+   }
+  }
+ ],
+ "newProfiles": [
+  {
+   "key": "newprof:Adam Youssef|33",
+   "first": "Adam",
+   "last": "Youssef",
+   "school_id": 33,
+   "raw": "Adam Youssef",
+   "label": "Adam Youssef (Kinnelon): the existing profile wrestled 2024-25 for another school → new profile"
+  },
+  {
+   "key": "newprof:Matthew Mulligan|34",
+   "first": "Matthew",
+   "last": "Mulligan",
+   "school_id": 34,
+   "raw": "Matthew Mulligan",
+   "label": "Matthew Mulligan (New Milford): the existing profile wrestled 2024-25 for another school → new profile"
+  },
+  {
+   "key": "newprof:Andrew Martin|41",
+   "first": "Andrew",
+   "last": "Martin",
+   "school_id": 41,
+   "raw": "Andrew Martin",
+   "label": "Andrew Martin (Dwight Morrow): the existing profile wrestled 2024-25 for another school → new profile"
+  },
+  {
+   "key": "newprof:Christopher Lopez|231",
+   "first": "Christopher",
+   "last": "Lopez",
+   "school_id": 231,
+   "raw": "Christopher Lopez",
+   "label": "Christopher Lopez (Hamilton West): the existing profile wrestled 2024-25 for another school → new profile"
+  },
+  {
+   "key": "newprof:Daniel Jimenez|254",
+   "first": "Daniel",
+   "last": "Jimenez",
+   "school_id": 254,
+   "raw": "Daniel Jimenez",
+   "label": "Daniel Jimenez (Toms River North): the existing profile wrestled 2024-25 for another school → new profile"
+  }
+ ],
+ "newPl": [
+  {
+   "tournament_id": 95,
+   "weight_class_id": 66,
+   "place": 3,
+   "entry_id": "new:95|66|d79d98fa-d304-4e8e-b6d6-93158e7e4962"
+  }
+ ]
+}

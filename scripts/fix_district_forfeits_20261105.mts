@@ -1,4 +1,4 @@
-// Boys 2025-26 district forfeits (2026-11-05, approved by Kyle).
+// Boys district forfeits (2026-11-05, approved by Kyle): 2025-26, and 2024-25 with --season 2025.
 // The 2026-03-20 load wrote the loser of every forfeit as the word "FORFEIT", so all 202 district
 // forfeit bouts were stored with no loser. TrackWrestling's text
 // (../Match Data/2026 District Match Data.py) still names every loser:
@@ -9,8 +9,8 @@
 // Placement rows missing for a bracket's 1st-4th are added from the bouts. Team deductions
 // (unsportsmanlike, -1 each) are official total minus the scoring rules' total when that is a whole
 // number of points short (docs/reviews/trackwrestling_team_scoring.md).
-//   npx tsx --tsconfig tsconfig.json scripts/fix_district_forfeits_20261105.mts            (dry run)
-//   npx tsx --tsconfig tsconfig.json scripts/fix_district_forfeits_20261105.mts --apply
+//   npx tsx --tsconfig tsconfig.json scripts/fix_district_forfeits_20261105.mts [--season 2025] [--apply]
+// --season 2025 (2024-25) reads ../Match Data/2025 District Data.py; default 2026 (2025-26).
 // --apply writes the entries and placements (service role) and the SQL file for the bouts, the
 // forfeit_opponent column and the deductions table (the service role can't write matches).
 import { createClient } from '@supabase/supabase-js'
@@ -19,7 +19,11 @@ const db = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPAB
 const APPLY = process.argv.includes('--apply')
 const chk = (r: any, w: string) => { if (r.error) throw new Error(`${w}: ${r.error.message}`); return r.data as any[] }
 async function all(q: (f: number, t: number) => any) { const o: any[] = []; for (let i = 0; ; i += 1000) { const d = chk(await q(i, i + 999), 'page'); o.push(...d); if (d.length < 1000) break } return o }
-const SQL = 'docs/migrations/20261105_district_forfeits_and_deductions.sql'
+const SEASON = process.argv.includes('--season') ? Number(process.argv[process.argv.indexOf('--season') + 1]) : 2026
+if (![2025, 2026].includes(SEASON)) throw new Error('--season 2025 or 2026')
+const SFX = SEASON === 2026 ? '' : `_${SEASON}`
+const SRC = SEASON === 2026 ? '../Match Data/2026 District Match Data.py' : '../Match Data/2025 District Data.py'
+const SQL = `docs/migrations/20261105_district_forfeits_and_deductions${SFX}.sql`
 const WCW: Record<number, number> = { 53: 106, 54: 113, 55: 120, 56: 126, 57: 132, 58: 138, 59: 144, 60: 150, 61: 157, 62: 165, 63: 175, 64: 190, 65: 215, 66: 285 }
 const RND: Record<string, string> = { 'Champ. Round 1': 'R2', Quarterfinal: 'QF', Semifinal: 'SF', '1st Place Match': 'F', '3rd Place Match': '3rd_Place' }
 const n = (s: string) => s.toLowerCase().replace(/\([^)]*\)/g, '').replace(/[^a-z]/g, '')
@@ -27,13 +31,13 @@ const n = (s: string) => s.toLowerCase().replace(/\([^)]*\)/g, '').replace(/[^a-
 // ── TrackWrestling forfeit lines, by weight|round|winner ──────────────────────────────────────────
 const tw = new Map<string, { loser: string; school: string }>()
 let w = 0
-for (const raw of fs.readFileSync('../Match Data/2026 District Match Data.py', 'utf8').replace(/\r/g, '').split('\n')) {
+for (const raw of fs.readFileSync(SRC, 'utf8').replace(/\r/g, '').split('\n')) {
   const l = raw.trim(); if (/^\d{3}$/.test(l)) { w = Number(l); continue }
-  const m = l.match(/^(Champ\. Round 1|Quarterfinal|Semifinal|1st Place Match|3rd Place Match) - (.+?) \(([^)]*(?:\([^)]*\)[^)]*)*)\) [\d-]+ won by (?:medical )?forfeit over (\(\)|.*?) \(([^)]*)\)/)
+  const m = l.match(/^(Champ\. Round 1|Quarterfinal|Semifinal|1st Place Match|3rd Place Match) - (.+?) \(([^)]*(?:\([^)]*\)[^)]*)*)\) [\d-]+ won by (?:medical forfeit|forfeit|injury default) over (\(\)|.*?) \(([^)]*)\)/)
   if (m) tw.set(`${w}|${RND[m[1]]}|${n(m[2])}`, { loser: m[4].trim(), school: m[5].trim() })
 }
 
-const tours = chk(await db.from('tournaments').select('id, name').eq('gender', 'M').eq('season_id', 2026).eq('tournament_type', 'districts'), 't')
+const tours = chk(await db.from('tournaments').select('id, name').eq('gender', 'M').eq('season_id', SEASON).eq('tournament_type', 'districts'), 't')
 const tids = tours.map(t => t.id)
 const ents = await all((f, t) => db.from('tournament_entries').select('id, tournament_id, weight_class_id, school_id, wrestlers(first_name, last_name)').in('tournament_id', tids).range(f, t))
 const ms = await all((f, t) => db.from('matches').select('id, tournament_id, weight_class_id, round, bracket_side, win_type, winner_entry_id, loser_entry_id, w:winner_entry_id(wrestlers(first_name, last_name))').in('tournament_id', tids).range(f, t))
@@ -43,7 +47,9 @@ const setLoser: { id: string; loser: string; label: string }[] = []
 const newEntries: { key: string; row: any; label: string }[] = []
 const opp = new Map<string, 'filler' | 'empty'>()
 const unknown: string[] = []
-for (const m of ms.filter(m => !m.loser_entry_id)) {
+// a bout with no winner either (an empty row) scores nothing: left as is and listed
+const emptyRows = ms.filter(m => !m.loser_entry_id && !m.winner_entry_id)
+for (const m of ms.filter(m => !m.loser_entry_id && m.winner_entry_id)) {
   const x = tw.get(`${WCW[m.weight_class_id]}|${m.round}|${n(`${m.w?.wrestlers?.first_name}${m.w?.wrestlers?.last_name}`)}`)
   const label = `${tours.find(t => t.id === m.tournament_id).name.replace('Boy_s Districts ', '')} ${WCW[m.weight_class_id]} ${m.round}`
   if (!x) { unknown.push(label); continue }
@@ -82,6 +88,7 @@ const PLACES: Record<number, number> = { 1: 14, 2: 10, 3: 7, 4: 4 }
 const ORDER = ['R2', 'QF', 'SF', 'F']
 const bonus = (t: string) => ['FALL', 'FORF', 'M-FORF', 'INJ', 'DQ'].includes(t) ? 2 : t.startsWith('TF') ? 1.5 : t === 'MD' ? 1 : 0
 const deductions: { tournament_id: number; school_id: number; points: number; label: string }[] = []
+const remaining: string[] = []
 const off = await all((f, t) => db.from('precomputed_team_scores').select('tournament_id, school_id, total_points').in('tournament_id', tids).range(f, t))
 for (const t of tours) {
   const tm = ms.filter(m => m.tournament_id === t.id).map(m => ({ ...m, loser_entry_id: m.loser_entry_id ?? (loserOf.get(m.id)?.startsWith('new:') ? null : loserOf.get(m.id)) ?? null, empty: opp.get(m.id) === 'empty' }))
@@ -103,30 +110,34 @@ for (const t of tours) {
   for (const o of off.filter(o => o.tournament_id === t.id)) {
     const calc = te.filter(e => e.school_id === o.school_id).reduce((a, e) => a + (pts.get(e.id) ?? 0), 0)
     const d = Number(o.total_points) - calc
+    if (Math.abs(d) >= 0.01 && !(d <= -1 && Number.isInteger(d))) remaining.push(`${t.name.replace('Boy_s Districts ', '')} school ${o.school_id}: official ${o.total_points}, rules ${calc}`)
     if (d <= -1 && Number.isInteger(d)) deductions.push({ tournament_id: t.id, school_id: o.school_id, points: d, label: `${t.name.replace('Boy_s Districts ', '')} school ${o.school_id}: official ${o.total_points}, rules ${calc}` })
   }
 }
 
-console.log(`no-loser forfeits: ${ms.filter(m => !m.loser_entry_id).length} — real loser ${setLoser.length} (new entries ${newEntries.length}), filler ${[...opp.values()].filter(v => v === 'filler').length}, empty slot ${[...opp.values()].filter(v => v === 'empty').length}`)
+if (emptyRows.length) console.log(`bouts with no winner and no loser (left as is): ${emptyRows.map(m => m.id).join(', ')}`)
+console.log(`no-loser forfeits: ${ms.filter(m => !m.loser_entry_id && m.winner_entry_id).length} — real loser ${setLoser.length} (new entries ${newEntries.length}), filler ${[...opp.values()].filter(v => v === 'filler').length}, empty slot ${[...opp.values()].filter(v => v === 'empty').length}`)
 for (const s of setLoser) console.log('  loser:', s.label)
 console.log(`placement rows to add: ${newPl.length}`, JSON.stringify(newPl.reduce((a: any, p) => (a[p.place] = (a[p.place] ?? 0) + 1, a), {})))
 console.log(`deductions: ${deductions.length}, total ${deductions.reduce((a, d) => a + d.points, 0)}`)
 for (const d of deductions) console.log('  ', d.label)
+console.log(`still off after this fix (not a deduction): ${remaining.length}`)
+for (const r of remaining) console.log('   ~', r)
 if (!APPLY) { console.log('DRY RUN'); process.exit(0) }
 
 // ── apply: entries, placements (service role), then the SQL file ──────────────────────────────────────
 const backup = { placementsBefore: pl, newEntries, newPl, setLoser, opp: [...opp.entries()], deductions }
-fs.writeFileSync('docs/migrations/backups/20261105_district_forfeits_before.json', JSON.stringify(backup, null, 1))
+fs.writeFileSync(`docs/migrations/backups/20261105_district_forfeits${SFX}_before.json`, JSON.stringify(backup, null, 1))
 const created = new Map<string, string>()
 for (const e of newEntries) created.set(e.key, chk(await db.from('tournament_entries').insert(e.row).select('id'), 'entry')[0].id)
 const resolve = (x: string) => x.startsWith('new:') ? created.get(x.slice(4))! : x
 const plRows = newPl.map(p => ({ ...p, entry_id: resolve(p.entry_id) }))
 if (plRows.length) chk(await db.from('placements').insert(plRows).select('id'), 'placements')
-fs.writeFileSync('docs/migrations/backups/20261105_district_forfeits_inserted.json', JSON.stringify({ entries: [...created.entries()], placements: plRows.length }, null, 1))
+fs.writeFileSync(`docs/migrations/backups/20261105_district_forfeits${SFX}_inserted.json`, JSON.stringify({ entries: [...created.entries()], placements: plRows.length }, null, 1))
 const q = (s: string) => `'${s.replace(/'/g, "''")}'`
 fs.writeFileSync(SQL, `-- docs/migrations/20261105_district_forfeits_and_deductions.sql
 --
--- Boys 2025-26 district forfeits and team deductions (scripts/fix_district_forfeits_20261105.mts).
+-- Boys ${SEASON - 1}-${String(SEASON).slice(2)} district forfeits and team deductions (scripts/fix_district_forfeits_20261105.mts).
 -- The 2026-03-20 load wrote every forfeit's loser as "FORFEIT", so 202 district forfeit bouts had
 -- no loser. From TrackWrestling's text: ${setLoser.length} real losers put back (3 got a new bracket entry:
 -- service role, ids in backups/20261105_district_forfeits_inserted.json), ${[...opp.values()].filter(v => v === 'filler').length} forfeits over a filler entry,
