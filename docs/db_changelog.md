@@ -28,7 +28,14 @@
 - **New profiles split off by school:** Aidan Johnson (Gloucester), Julian Sanchez (WW-P North), Ryan Kim (Fort Lee), Peter Terranova (Edison), Joseph Paretti (Elmwood Park), Lucas Ruiz (Kearny), Alexander Reyes (North Brunswick), Owen Williams (Manchester Twp), Christian Hernandez (Lyndhurst).
 - **What it moved:** dual bouts, in-season tournament bouts and placements by school. Postseason entries stayed on the original profile. No backup was taken.
 
-**APPLIED** — 2026-11-05 (bouts SQL and name checks: pending, SQL editor)
+**Follow-up 2026-11-05:**
+- Kyle ran the bouts SQL: 10 rows back.
+- Boys ratings rebuilt: 2025-26 archive, then 2026-27. Ryan Kim's 2025-26 rating now counts 36 bouts, including 3 postseason.
+- The two emptied profiles ("Charles", "Terrance") were deleted after a recount found 0 references.
+- `lb_ps_refresh` ok. `lb_rs_refresh` (boys, 2026) hit the API statement timeout twice; each attempt rolled back. Run `SELECT lb_rs_refresh('M', 2026);` in the SQL editor.
+- Name-check SQL: the first run stopped on its own guard (the 2 profiles above, not yet deleted then). Rerun it now.
+
+**APPLIED** — 2026-11-05 (bouts SQL by Kyle in the SQL editor; name checks pending)
 **Reversible?** Yes — backups and ROLLBACK notes in each file
 **Verified?** Restore dry run matches TrackWrestling (`../district_matches_2026.csv`), e.g. Kim 4:44 / 1:33 / 0:49. Name fix: no names with "(" remain; the merged profiles hold all their entries.
 
