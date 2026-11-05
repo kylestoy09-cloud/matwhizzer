@@ -8,6 +8,7 @@ import { IndividualTeamPoints } from '@/components/IndividualTeamPoints'
 import { BracketBuster } from '@/components/BracketBuster'
 import { TeamScoreCard } from '@/components/TeamScoreCard'
 import { getBoysOfficialTeamScores } from '@/lib/boysOfficialTeamScores'
+import { SHOW_WRESTLER_TEAM_POINTS } from '@/lib/wrestlerTeamPoints'
 import { getSchoolLogos } from '@/lib/school-logos'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 import { SchoolTag } from '@/components/SchoolTag'
@@ -167,7 +168,7 @@ export default async function DistrictSummaryPage({
       supabase.rpc('district_schools',     { p_district: d, p_gender: 'M', p_season: season }),
       // official TrackWrestling totals, not the site formula
       getBoysOfficialTeamScores(`Boy_s Districts District ${d}`, season),
-      supabase.rpc('district_team_pts',    { p_district: d, p_gender: 'M', p_season: season }),
+      SHOW_WRESTLER_TEAM_POINTS ? supabase.rpc('district_team_pts',    { p_district: d, p_gender: 'M', p_season: season }) : Promise.resolve({ data: [] }),
       supabase
         .from('tournament_entries')
         .select('wrestler_id, tournaments!inner(season_id, tournament_type)')
@@ -291,7 +292,7 @@ export default async function DistrictSummaryPage({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <TeamScoreCard rows={teamScore} gender="boys" />
 
-          <IndividualTeamPoints rows={teamPts} />
+          {SHOW_WRESTLER_TEAM_POINTS && <IndividualTeamPoints rows={teamPts} />}
         </div>
       </section>
 

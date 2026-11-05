@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { personLabel } from '@/lib/personName'
+import { SHOW_WRESTLER_TEAM_POINTS } from '@/lib/wrestlerTeamPoints'
 import { SchoolTagView, badgeOfSchool } from '@/components/SchoolTagView'
 import { useRouter } from 'next/navigation'
 import { StatsTable } from '@/components/StatsTable'
@@ -280,7 +281,7 @@ export function SchoolTabs({
   const [seasonLoaded,   setSeasonLoaded]   = useState(false)
   const [seasonSort,     setSeasonSort]     = useState<{ key: string; dir: 'asc' | 'desc' }>({ key: 'wins', dir: 'desc' })
   const [psSubTab,         setPsSubTab]         = useState<'individual' | 'team'>('individual')
-  const [psSort,           setPsSort]           = useState<{ key: string; dir: 'asc' | 'desc' }>({ key: 'total', dir: 'desc' })
+  const [psSort,           setPsSort]           = useState<{ key: string; dir: 'asc' | 'desc' }>({ key: SHOW_WRESTLER_TEAM_POINTS ? 'total' : 'wins', dir: 'desc' })
   const [postseasonSubTab, setPostseasonSubTab] = useState<'individual' | 'team'>('individual')
 
   // ── Stats board — dual meet team record + pts/dual + bonus stat state rankings
@@ -1172,10 +1173,13 @@ export function SchoolTabs({
                             <PsSortTh sortKey="falls"   label="Falls"    />
                             <PsSortTh sortKey="fastPin" label="Fast Pin" defaultDir="asc" />
                             <PsSortTh sortKey="bonus"   label="Bonus%"   />
+                            {/* per-wrestler team points: hidden (src/lib/wrestlerTeamPoints.ts) */}
+                            {SHOW_WRESTLER_TEAM_POINTS && <>
                             <PsSortTh sortKey="dist"    label="Dist"     />
                             <PsSortTh sortKey="reg"     label="Reg"      />
                             <PsSortTh sortKey="state"   label="State"    />
                             <PsSortTh sortKey="total"   label="Total"    />
+                            </>}
                           </tr>
                         </thead>
                         <tbody>
@@ -1192,15 +1196,17 @@ export function SchoolTabs({
                                 <td className="px-2 py-1 tabular-nums text-right text-slate-700">{r.fall_count   || '—'}</td>
                                 <td className="px-2 py-1 tabular-nums text-right text-slate-700">{fastPin}</td>
                                 <td className="px-2 py-1 tabular-nums text-right text-slate-700">{r.bonus_pct ? `${r.bonus_pct}%` : '—'}</td>
+                                {SHOW_WRESTLER_TEAM_POINTS && <>
                                 <td className="px-2 py-1 tabular-nums text-right text-slate-700">{r.district_points || '—'}</td>
                                 <td className="px-2 py-1 tabular-nums text-right text-slate-700">{r.region_points   || '—'}</td>
                                 <td className="px-2 py-1 tabular-nums text-right text-slate-700">{r.state_points    || '—'}</td>
                                 <td className="px-2 py-1 tabular-nums text-right text-slate-700 font-semibold">{r.total_points || '—'}</td>
+                                </>}
                               </tr>
                             )
                           })}
                         </tbody>
-                        <tfoot>
+                        {SHOW_WRESTLER_TEAM_POINTS && <tfoot>
                           <tr className="bg-slate-50 border-t-2 border-slate-200 font-semibold text-slate-700">
                             <td className="px-2 py-1" colSpan={2}></td>
                             <td className="px-2 py-1 tabular-nums text-right"></td>
@@ -1212,7 +1218,7 @@ export function SchoolTabs({
                             <td className="px-2 py-1 tabular-nums text-right">{leaders.reduce((s, r) => s + Number(r.state_points),    0) || '—'}</td>
                             <td className="px-2 py-1 tabular-nums text-right">{leaders.reduce((s, r) => s + Number(r.total_points),    0)}</td>
                           </tr>
-                        </tfoot>
+                        </tfoot>}
                       </table>
                     </div>
                   )

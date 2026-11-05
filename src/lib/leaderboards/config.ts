@@ -1,6 +1,7 @@
 // Leaderboards: what can be shown and how it is addressed. Every table has its own URL
 // (?tab=…&side=…&cat=…&wt=…&level=…&scope=…&sort=…&n=…) and the page reads only that
 // table's rows. Boys and girls each have their own page and data; only this layout is shared.
+import { SHOW_WRESTLER_TEAM_POINTS } from '@/lib/wrestlerTeamPoints'
 
 export type Gender = 'M' | 'F'
 export type Phase = 'regular' | 'postseason' | 'analytics'
@@ -49,7 +50,8 @@ export const PS_INDIVIDUAL: Category[] = [
   { key: 'quickest', label: 'Quickest',        weights: true },
   { key: 'most',     label: 'Most',            weights: true },
   { key: 'bonus',    label: 'Bonus Point %',   weights: true },
-  { key: 'points',   label: 'Wrestler Points', weights: true },
+  // per-wrestler team points: hidden (src/lib/wrestlerTeamPoints.ts)
+  ...(SHOW_WRESTLER_TEAM_POINTS ? [{ key: 'points', label: 'Wrestler Points', weights: true }] : []),
   { key: 'mattime',  label: 'Mat Time',        weights: true },
 ]
 // levels: which District / Region / State tabs a table offers (none = season-wide only)

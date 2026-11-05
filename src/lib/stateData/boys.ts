@@ -3,6 +3,7 @@
 import { supabase } from '@/lib/supabase/public-cached'
 import { loadStateCommon, withLogo, type StateData } from './shared'
 import { getBoysOfficialTeamScores } from '@/lib/boysOfficialTeamScores'
+import { SHOW_WRESTLER_TEAM_POINTS } from '@/lib/wrestlerTeamPoints'
 
 const WEIGHTS = [106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285]
 
@@ -15,7 +16,7 @@ export async function loadBoysState(season: number): Promise<StateData> {
     supabase.rpc('lb_p_fastest_pin', pool),
     supabase.rpc('lb_p_fastest_tf', pool),
     getBoysOfficialTeamScores('Boy_s States', season),
-    supabase.rpc('lb_p_wrestler_points', pool),
+    SHOW_WRESTLER_TEAM_POINTS ? supabase.rpc('lb_p_wrestler_points', pool) : Promise.resolve({ data: [] }),
   ])
   const { logos } = common
   const pts = (teamPts.data ?? []) as { wrestler_id: string; wrestler_name: string; school: string | null; school_name: string | null; school_id: number | null; total_points: number }[]

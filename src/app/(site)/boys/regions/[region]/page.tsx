@@ -7,6 +7,7 @@ import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { BracketBuster } from '@/components/BracketBuster'
 import { TeamScoreCard } from '@/components/TeamScoreCard'
 import { getBoysOfficialTeamScores } from '@/lib/boysOfficialTeamScores'
+import { SHOW_WRESTLER_TEAM_POINTS } from '@/lib/wrestlerTeamPoints'
 import { IndividualTeamPoints } from '@/components/IndividualTeamPoints'
 import RegionVideo from '@/components/RegionVideo'
 import { getSchoolLogos } from '@/lib/school-logos'
@@ -167,7 +168,7 @@ export default async function RegionSummaryPage({
       supabase.rpc('region_fastest_tf',  { p_region: r, p_gender: 'M', p_season: season }),
       // official TrackWrestling totals, not the site formula
       getBoysOfficialTeamScores(`Boy_s Regions r${r}`, season),
-      supabase.rpc('region_postseason_pts', { p_region: r, p_gender: 'M', p_season: season }),
+      SHOW_WRESTLER_TEAM_POINTS ? supabase.rpc('region_postseason_pts', { p_region: r, p_gender: 'M', p_season: season }) : Promise.resolve({ data: [] }),
       supabase.rpc('region_schools',     { p_region: r, p_gender: 'M', p_season: season }),
       supabase.from('tournaments').select('youtube_url').eq('name', `Boy_s Regions r${r}`).eq('season_id', season).single(),
       supabase.rpc('ghost_champions', { p_season: season }),

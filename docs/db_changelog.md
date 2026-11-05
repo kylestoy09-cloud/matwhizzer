@@ -2,6 +2,27 @@
 
 ---
 
+## 2026-11-05 — Per-wrestler postseason team points hidden (code only)
+
+**Why (Kyle):** "hide wrestler point value leaderboards - that's bad info … you can't reverse engineer it". Against TrackWrestling (Districts 1–18, 2025-26), 993 of 1,000 shown values match. 7 don't, and the causes aren't known or aren't fixable from the data (the TF-1 reading was wrong).
+
+**Change:** one switch, `SHOW_WRESTLER_TEAM_POINTS = false` in `src/lib/wrestlerTeamPoints.ts`. While it's off, pages don't load the data.
+- **Boys district page:** "Individual Team Points" (`district_team_pts`).
+- **Boys region page:** "Postseason Individual Points Leaders" (`region_postseason_pts`).
+- **Boys state section:** "Individual Team Points" (`lb_p_wrestler_points`).
+- **Leaderboards, postseason Individual:** the "Wrestler Points" tab (both sides; a link to it opens the first tab).
+- **School page, postseason Individual leaders table:** the per-wrestler Dist / Reg / State / Total columns and their footer (both sides); default sort is now Wins.
+
+**Unchanged:**
+- Team totals (official copied standings).
+- The school page's "Team Pts" per wrestler, which is dual-meet points (fall 6, tech 5, major 4, decision 3).
+
+**Noted:** the personalized home page shows a followed school's points from `school_points_breakdown`, which is calculated (live season only; empty until the 2026-27 postseason).
+
+**Verified:** snapshot shows only those blocks gone on `/boys/districts/1`, `/boys/regions/1`, `/boys/state`; the leaderboards Individual view loads without "Wrestler Points" on both sides.
+
+---
+
 ## 2026-11-05 — TF-1 tech falls: WITHDRAWN (never run)
 
 A migration (`20261105_tf1_tech_falls.sql`, now deleted) would have relabelled 6 TF-1.5 bouts as TF-1 and added TF-1 to 13 functions. It read the number after "TF" as bonus points.
