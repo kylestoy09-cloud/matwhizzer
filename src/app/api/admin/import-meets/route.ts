@@ -22,6 +22,7 @@ import { parseDualMeetText } from '@/lib/parseDualMeet'
 import { matchSchoolNames } from '@/lib/matchSchools'
 import { matchWrestler, reloadAliases, clearWrestlerCache } from '@/lib/matchWrestlers'
 import { boutResultToDb } from '@/lib/parseRtf'
+import { stripNickname } from '@/lib/personName'
 import {
   type SchoolOverride,
   type WrestlerOverride,
@@ -58,8 +59,9 @@ function toISODate(d: string): string {
 const SUFFIXES = new Set(['jr', 'sr', 'ii', 'iii', 'iv', 'v'])
 
 function parseName(raw: string): { first_name: string; last_name: string; suffix: string | null } {
-  const parts = raw.trim().split(/\s+/)
-  if (parts.length <= 1) return { first_name: raw.trim(), last_name: '', suffix: null }
+  const name = stripNickname(raw)
+  const parts = name.split(/\s+/)
+  if (parts.length <= 1) return { first_name: name, last_name: '', suffix: null }
 
   let suffix: string | null = null
   let lastIdx = parts.length - 1

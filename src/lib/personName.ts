@@ -12,6 +12,14 @@ export function isPlaceholderName(raw: string | null | undefined): boolean {
   return words.length > 0 && words.every(w => PLACEHOLDER.test(w))
 }
 
+// A nickname in parentheses is not part of the name: "Charles (CJ) Palmisano" is Charles
+// Palmisano. The 2026-03-20 postseason load split such names at the "(" and made profiles with
+// no last name (Charles, Terrance, Arjun); every importer that builds a profile name from raw
+// text runs it through this first. The raw text itself stays as the name link.
+export function stripNickname(raw: string | null | undefined): string {
+  return (raw ?? '').replace(/\([^)]*\)/g, ' ').replace(/[()]/g, ' ').replace(/\s+/g, ' ').trim()
+}
+
 export function personLabel(p: PersonRef, raw: string | null | undefined): string {
   if (p) return `${p.first_name} ${p.last_name}`.trim()
   if (!raw?.trim()) return ''

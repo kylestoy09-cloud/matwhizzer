@@ -7,7 +7,7 @@ import { getWorkingSeason, parseGender } from '@/lib/season-context'
 import { parseRtfText, parseDateRange, boutResultToDb, normalizeRound } from '@/lib/parseRtf'
 import { matchSchoolNames, clearSchoolCache, isNjLookalike } from '@/lib/matchSchools'
 import { matchWrestler, clearWrestlerCache, reloadAliases } from '@/lib/matchWrestlers'
-import { isPlaceholderName } from '@/lib/personName'
+import { isPlaceholderName, stripNickname } from '@/lib/personName'
 import { saveNameLinks } from '@/lib/nameLinks'
 import { matchTournament } from '@/lib/matchTournaments'
 import { seasonIdForDate } from '@/lib/seasons'
@@ -448,9 +448,9 @@ export async function POST(req: NextRequest) {
             if (wm.isNew) {
               if (!isOos) continue // NJ wrestlers require explicit 'create' override — never auto-create
               seenNew.add(nkey)
-              const parts = name.trim().split(/\s+/)
+              const parts = stripNickname(name).split(/\s+/)
               const last = parts.length > 1 ? parts[parts.length - 1] : ''
-              const first = parts.length > 1 ? parts.slice(0, -1).join(' ') : name
+              const first = parts.length > 1 ? parts.slice(0, -1).join(' ') : parts[0]
               newWrestlers.push({ name, school_id: s.school_id, first_name: first, last_name: last, is_oos: isOos })
             }
           }

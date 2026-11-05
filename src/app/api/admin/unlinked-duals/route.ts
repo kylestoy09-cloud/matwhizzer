@@ -9,6 +9,7 @@ import { fetchAllRows } from '@/lib/fetchAllRows'
 import { splitWrestlerAtSchool } from '@/lib/splitWrestler'
 import suggestions from '@/data/reviewSuggestions.json'
 import { nonNjSchools } from '@/lib/schoolIsOos'
+import { stripNickname } from '@/lib/personName'
 
 export const dynamic = 'force-dynamic'
 
@@ -163,7 +164,7 @@ export async function POST(req: NextRequest) {
       if (aErr) return NextResponse.json({ error: `alias: ${aErr.message}` }, { status: 500 })
     }
   } else {
-    const parts = name.split(/\s+/)
+    const parts = stripNickname(name).split(/\s+/)
     const tidy = (s: string) => s === s.toLowerCase() ? s.replace(/\b\w/g, c => c.toUpperCase()) : s
     const person = { first_name: tidy(parts[0]), last_name: tidy(parts.slice(1).join(' ')), grade: body.grade ?? null }
     try {

@@ -2,6 +2,38 @@
 
 ---
 
+## 2026-11-05 — Lost district bouts restored (part 1); nickname names fixed; 8/21 split logged
+
+**1. Lost boys 2025-26 district bouts.** The 2026-03-21 export (`../source_of_truth_matches.csv`, `_entries.csv`, `_placements.csv`) lists every postseason bout with its database id. Compared with today, 10 boys 2025-26 district bouts and their 6 entries are gone, along with 2 placements.
+- **Wrestlers:** Ryan Kim (Fort Lee, D8 165: QF, SF, 2nd), Peter Terranova (Edison, D18 126), Julian Sanchez (WW-P North, D19 215), Owen Williams (Manchester Twp, D26 106), Aidan Johnson (Gloucester City, D28 138), Anthony Russo (Red Bank Catholic, D32 150 seed 1: QF, SF, 2nd).
+- **Proven history:**
+  - 3/20: `../build_from_gt.py` matched wrestlers by name only and put each entry on the other same-name profile (`../gt_entry_map.csv`).
+  - 8/21: `../fix_merged_profiles.py` split those profiles (see 3); it moved duals and in-season bouts but not postseason entries.
+  - Later: the entries, their bouts and placements were deleted, and five of the six were re-entered with no bouts.
+- **Unproven:** what deleted them. No script, admin route, migration, backup or admin log entry refers to those ids.
+- **Restored:** `scripts/restore_lost_district_bouts_20261105.mts` (service role) inserted Anthony Russo's D32 entry and the 2 placements (Kim 2nd, Russo 2nd). The bouts are in `docs/migrations/20261105_restore_lost_district_bouts.sql` (original ids), because the service role can't write `matches`. Backups: `backups/20261105_restore_lost_district_bouts_before.json`, `..._inserted.json`.
+- **Not restored yet:**
+  - 13 boys 2024-25 bouts with the same pattern (Joel Martinez D12, Jayden Williams D17, Christopher Lopez D24, Daniel Jimenez D26, Sean Brown D3 ×3 + R1, Adam Youssef and Matthew Mulligan D4, Andrew Martin D5, Joseph Paretti D6, Tyler Davis D9). Each one's entry is gone, and the correct profile for each must be settled first.
+  - 14 District 23 2024-25 finals, from before the D23 re-import (`../reimport_d23_v2.py`).
+- 6 more 2024-25 bouts (Caponegro D18, Matthew Miller D20) exist under new ids: nothing lost.
+
+**2. Names cut at a nickname** (`scripts/merge_paren_names_20261105.mts`, backup `backups/20261105_paren_names_before.json`). The 3/20 load split "Charles (CJ) Palmisano", "Terrance (James) Fearon" and "Arjun (Danny) Monga" at the "(" and left the last name blank.
+- **Merged:** "Charles" (Whippany Park; 2024-25 D12 and R3, 2025-26 R3) into Charles Palmisano; "Terrance" (Hunterdon Central; 2025-26 R5) into Terrance Fearon. Neither pair has an event in common.
+- **Renamed:** "Arjun" to Arjun Monga (Princeton, 2024-25). "Pinhao (Alex)" Xu (8/06 dual import) to Pinhao Xu.
+- **Code:** `stripNickname()` (`src/lib/personName.ts`) now runs before a profile name is built, in `import-tournament-bouts`, `import-meets`, `import-meets-girls`, `rtf/import` and `unlinked-duals`. The raw text stays as the name link.
+- **Migration:** `docs/migrations/20261105_wrestler_name_checks.sql`: a profile needs a first and last name with no parentheses ("Unknown" is the exception). Run it after the two emptied profiles are deleted.
+
+**3. RECONSTRUCTED: 2026-08-21 `../fix_merged_profiles.py`.** It had no changelog entry; reconstructed from the script and the profiles' `created_at` (2026-08-21 02:15:07, one transaction).
+- **Ghost IDs merged:** Malcolm→Malcom Ballard, Sebianast→Sebastian Santos, Kaden Velazquez→Kayden Valasquez.
+- **New profiles split off by school:** Aidan Johnson (Gloucester), Julian Sanchez (WW-P North), Ryan Kim (Fort Lee), Peter Terranova (Edison), Joseph Paretti (Elmwood Park), Lucas Ruiz (Kearny), Alexander Reyes (North Brunswick), Owen Williams (Manchester Twp), Christian Hernandez (Lyndhurst).
+- **What it moved:** dual bouts, in-season tournament bouts and placements by school. Postseason entries stayed on the original profile. No backup was taken.
+
+**APPLIED** — 2026-11-05 (bouts SQL and name checks: pending, SQL editor)
+**Reversible?** Yes — backups and ROLLBACK notes in each file
+**Verified?** Restore dry run matches TrackWrestling (`../district_matches_2026.csv`), e.g. Kim 4:44 / 1:33 / 0:49. Name fix: no names with "(" remain; the merged profiles hold all their entries.
+
+---
+
 ## 2026-11-05 — The 2026-09-14 rule replaced; 11 senior profiles split; three name links repointed
 
 **Scripts:** `scripts/fix_split_five_and_links_20261105.mts`, `scripts/fix_split_six_20261105.mts`, `scripts/fix_boys_active_rule_20261105.mts` (data only). Backups: `docs/migrations/backups/20261105_split_five_and_links_before.json`, `..._split_six_before.json`, `..._boys_active_rule_before.json`, `..._tyler_ffrench_row_before.json`

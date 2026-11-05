@@ -1,0 +1,1807 @@
+{
+ "before": {
+  "Boy_s Districts District 8 165: Ryan Kim (Fort Lee)": {
+   "entries": [
+    {
+     "id": "d3e8a854-4f2c-47f9-9371-8dd9efa5e053",
+     "wrestler_id": "ce3511b1-94fe-4ae9-81e4-88513db19185",
+     "seed": 2,
+     "grade": null,
+     "grade_label": null,
+     "wrestlers": {
+      "last_name": "Kim",
+      "first_name": "Ryan"
+     }
+    },
+    {
+     "id": "2e8dcc2b-c743-4627-b3ee-49ea8a4f0059",
+     "wrestler_id": "dc2f4864-9ee6-42fe-933d-7feee6727e59",
+     "seed": 8,
+     "grade": null,
+     "grade_label": null,
+     "wrestlers": {
+      "last_name": "Warrick",
+      "first_name": "Devon"
+     }
+    },
+    {
+     "id": "5686562b-24ea-49ee-9f2a-b3122a8996a3",
+     "wrestler_id": "3eb74852-f567-43c7-aa99-0f9effbfac7c",
+     "seed": 6,
+     "grade": 11,
+     "grade_label": "Jr",
+     "wrestlers": {
+      "last_name": "Di Blasio",
+      "first_name": "Angelo"
+     }
+    },
+    {
+     "id": "c507fcb0-89cd-440b-998e-de5b84ec80ca",
+     "wrestler_id": "012942a5-2d1f-4494-a67e-d53d48c7331a",
+     "seed": 5,
+     "grade": 12,
+     "grade_label": "Sr",
+     "wrestlers": {
+      "last_name": "Castillo",
+      "first_name": "Gianny"
+     }
+    },
+    {
+     "id": "4a1eb024-2a14-446a-85d1-8c7e58a11ba9",
+     "wrestler_id": "e5607bce-988d-4aa3-8c6a-d0104af992a0",
+     "seed": 7,
+     "grade": 10,
+     "grade_label": "So",
+     "wrestlers": {
+      "last_name": "Abdulkadr",
+      "first_name": "Huzafia"
+     }
+    },
+    {
+     "id": "7ac0df03-f344-469d-a865-f10ee270887d",
+     "wrestler_id": "bda2ed99-cfd8-40ea-be92-64d57c404c4d",
+     "seed": 4,
+     "grade": 11,
+     "grade_label": "Jr",
+     "wrestlers": {
+      "last_name": "Walsh",
+      "first_name": "Jack"
+     }
+    },
+    {
+     "id": "fdfb4a28-e7a3-48ef-8b31-bda0182d1b7d",
+     "wrestler_id": "ec11ca08-7898-4d70-9ab1-cebe94906a8d",
+     "seed": 1,
+     "grade": 11,
+     "grade_label": "Jr",
+     "wrestlers": {
+      "last_name": "Clausi",
+      "first_name": "Reid"
+     }
+    },
+    {
+     "id": "fa501f53-538d-4e19-8369-8d36d7c4fe4e",
+     "wrestler_id": "c86459b3-0d88-480b-b461-ad823e2414e8",
+     "seed": 9,
+     "grade": 11,
+     "grade_label": "Jr",
+     "wrestlers": {
+      "last_name": "Mansour",
+      "first_name": "Youssef"
+     }
+    },
+    {
+     "id": "1a4dba64-1e01-47ca-8fbb-39617e7f9fa1",
+     "wrestler_id": "84e5b591-92f8-4e5e-8a58-cb7ec357da88",
+     "seed": 3,
+     "grade": 12,
+     "grade_label": "Sr",
+     "wrestlers": {
+      "last_name": "Bonner",
+      "first_name": "Kwesi"
+     }
+    }
+   ],
+   "matches": [
+    {
+     "id": "85f7bd2c-f696-4c06-ae4b-bd9bc2338131",
+     "tournament_id": 147,
+     "weight_class_id": 62,
+     "bracket_side": "championship",
+     "round": "R2",
+     "winner_entry_id": "fa501f53-538d-4e19-8369-8d36d7c4fe4e",
+     "loser_entry_id": "2e8dcc2b-c743-4627-b3ee-49ea8a4f0059",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 234,
+     "score_raw": "Fall 3:54",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "0de46aa9-296f-43e7-98bf-5d2da78a033d",
+     "tournament_id": 147,
+     "weight_class_id": 62,
+     "bracket_side": "championship",
+     "round": "QF",
+     "winner_entry_id": "c507fcb0-89cd-440b-998e-de5b84ec80ca",
+     "loser_entry_id": "7ac0df03-f344-469d-a865-f10ee270887d",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 323,
+     "score_raw": "Fall 5:23",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "dc7a7a45-0377-4cfb-ade4-ecf71bcb391b",
+     "tournament_id": 147,
+     "weight_class_id": 62,
+     "bracket_side": "championship",
+     "round": "QF",
+     "winner_entry_id": "5686562b-24ea-49ee-9f2a-b3122a8996a3",
+     "loser_entry_id": "1a4dba64-1e01-47ca-8fbb-39617e7f9fa1",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 327,
+     "score_raw": "Fall 5:27",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "66ca021a-b457-4e0a-8c0b-9cae2256236b",
+     "tournament_id": 147,
+     "weight_class_id": 62,
+     "bracket_side": "championship",
+     "round": "QF",
+     "winner_entry_id": "fdfb4a28-e7a3-48ef-8b31-bda0182d1b7d",
+     "loser_entry_id": "fa501f53-538d-4e19-8369-8d36d7c4fe4e",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 64,
+     "score_raw": "Fall 1:04",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "8788a36b-892e-4eae-be03-c5050dbeff73",
+     "tournament_id": 147,
+     "weight_class_id": 62,
+     "bracket_side": "championship",
+     "round": "SF",
+     "winner_entry_id": "fdfb4a28-e7a3-48ef-8b31-bda0182d1b7d",
+     "loser_entry_id": "c507fcb0-89cd-440b-998e-de5b84ec80ca",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 76,
+     "score_raw": "Fall 1:16",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "be1a16b9-abe2-48ce-9c0a-ee545ae31700",
+     "tournament_id": 147,
+     "weight_class_id": 62,
+     "bracket_side": "consolation",
+     "round": "3rd_Place",
+     "winner_entry_id": "5686562b-24ea-49ee-9f2a-b3122a8996a3",
+     "loser_entry_id": "c507fcb0-89cd-440b-998e-de5b84ec80ca",
+     "win_type": "DEC",
+     "winner_score": 9,
+     "loser_score": 5,
+     "fall_time_seconds": null,
+     "score_raw": "9-5",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    }
+   ],
+   "placements": [
+    {
+     "id": "7d334152-53af-4342-81bb-e108ca25d5b5",
+     "tournament_id": 147,
+     "weight_class_id": 62,
+     "place": 1,
+     "entry_id": "fdfb4a28-e7a3-48ef-8b31-bda0182d1b7d",
+     "wrestler_name_raw": "Reid Clausi"
+    },
+    {
+     "id": "190d1065-a82f-4c02-beaa-dd7ea0056738",
+     "tournament_id": 147,
+     "weight_class_id": 62,
+     "place": 3,
+     "entry_id": "5686562b-24ea-49ee-9f2a-b3122a8996a3",
+     "wrestler_name_raw": "Angelo Di Blasio"
+    },
+    {
+     "id": "e3988f43-6eff-420a-a744-995facdc8f9f",
+     "tournament_id": 147,
+     "weight_class_id": 62,
+     "place": 4,
+     "entry_id": "c507fcb0-89cd-440b-998e-de5b84ec80ca",
+     "wrestler_name_raw": "Gianny Castillo"
+    }
+   ]
+  },
+  "Boy_s Districts District 18 126: Peter Terranova (Edison)": {
+   "entries": [
+    {
+     "id": "d78cd7e2-df0f-4653-89a6-3730c2dc64f8",
+     "wrestler_id": "a7427d2e-3ea3-45fa-8be0-145db8849bb6",
+     "seed": 6,
+     "grade": null,
+     "grade_label": null,
+     "wrestlers": {
+      "last_name": "Terranova",
+      "first_name": "Peter"
+     }
+    },
+    {
+     "id": "4ec953c7-cee2-433c-81e5-c531de849b65",
+     "wrestler_id": "55e31c7d-0823-4273-93d7-533dd71693dc",
+     "seed": 10,
+     "grade": 9,
+     "grade_label": "Fr",
+     "wrestlers": {
+      "last_name": "Rada Al-Hraishawi",
+      "first_name": "Ali"
+     }
+    },
+    {
+     "id": "3e0947df-5215-402e-98e3-8290349df83a",
+     "wrestler_id": "25b51121-e383-4c44-b3b1-202b42edb87d",
+     "seed": 8,
+     "grade": 11,
+     "grade_label": "Jr",
+     "wrestlers": {
+      "last_name": "Diamondstein",
+      "first_name": "Eric"
+     }
+    },
+    {
+     "id": "971662f2-df8c-4df5-9a39-cdbc665afff9",
+     "wrestler_id": "bf7e64c2-9ef9-4a92-9978-c119cb9e262e",
+     "seed": 7,
+     "grade": 11,
+     "grade_label": "Jr",
+     "wrestlers": {
+      "last_name": "Martinez",
+      "first_name": "Ivan"
+     }
+    },
+    {
+     "id": "90003286-ec82-4365-91d4-8e4f2643838d",
+     "wrestler_id": "96678bd5-f4f0-45f5-9c93-e907d75c65f8",
+     "seed": 9,
+     "grade": 12,
+     "grade_label": "Sr",
+     "wrestlers": {
+      "last_name": "Munoz",
+      "first_name": "Jayden"
+     }
+    },
+    {
+     "id": "c9d883c5-d26a-47a5-9ba1-40fc08c5df3e",
+     "wrestler_id": "34a1b4c2-3b61-4422-bf26-a604cf790a4f",
+     "seed": 2,
+     "grade": 11,
+     "grade_label": "Jr",
+     "wrestlers": {
+      "last_name": "Zapata",
+      "first_name": "Jorge"
+     }
+    },
+    {
+     "id": "4f6261ed-cc12-4bc6-824e-2c7f95294f91",
+     "wrestler_id": "14ab116e-8d68-4072-b1fb-6f289417eaf8",
+     "seed": 3,
+     "grade": 10,
+     "grade_label": "So",
+     "wrestlers": {
+      "last_name": "Hernandez",
+      "first_name": "Michael"
+     }
+    },
+    {
+     "id": "11bf5824-bcfe-4777-8507-fd7de1a2f413",
+     "wrestler_id": "4b95e0d8-6958-4472-933e-5c065f2c49aa",
+     "seed": 5,
+     "grade": 10,
+     "grade_label": "So",
+     "wrestlers": {
+      "last_name": "Paulino",
+      "first_name": "Michael"
+     }
+    },
+    {
+     "id": "707cae82-e2f1-4ed2-903d-4c48a37a0060",
+     "wrestler_id": "97b7e53e-8c8f-408e-b6bf-90cb60051d92",
+     "seed": 1,
+     "grade": 11,
+     "grade_label": "Jr",
+     "wrestlers": {
+      "last_name": "DeRado",
+      "first_name": "Nico"
+     }
+    },
+    {
+     "id": "c529b749-63d3-4b58-9093-379f66cd3a0a",
+     "wrestler_id": "e1a1573f-d516-4e66-9cf0-c8f6ecaafec8",
+     "seed": 4,
+     "grade": 11,
+     "grade_label": "Jr",
+     "wrestlers": {
+      "last_name": "Hodes",
+      "first_name": "Ronald"
+     }
+    }
+   ],
+   "matches": [
+    {
+     "id": "a77de71e-2a7f-4959-a654-bbbf1539b5c3",
+     "tournament_id": 157,
+     "weight_class_id": 56,
+     "bracket_side": "championship",
+     "round": "R2",
+     "winner_entry_id": "90003286-ec82-4365-91d4-8e4f2643838d",
+     "loser_entry_id": "3e0947df-5215-402e-98e3-8290349df83a",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 120,
+     "score_raw": "Fall 2:00",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "ac8e2571-284e-4dd3-8602-b7da1c35efb9",
+     "tournament_id": 157,
+     "weight_class_id": 56,
+     "bracket_side": "championship",
+     "round": "R2",
+     "winner_entry_id": "4ec953c7-cee2-433c-81e5-c531de849b65",
+     "loser_entry_id": "971662f2-df8c-4df5-9a39-cdbc665afff9",
+     "win_type": "DEC",
+     "winner_score": 10,
+     "loser_score": 9,
+     "fall_time_seconds": null,
+     "score_raw": "10-9",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "b6f8a4cc-6292-4759-b48b-82757abf72b2",
+     "tournament_id": 157,
+     "weight_class_id": 56,
+     "bracket_side": "championship",
+     "round": "QF",
+     "winner_entry_id": "11bf5824-bcfe-4777-8507-fd7de1a2f413",
+     "loser_entry_id": "c529b749-63d3-4b58-9093-379f66cd3a0a",
+     "win_type": "DEC",
+     "winner_score": 8,
+     "loser_score": 7,
+     "fall_time_seconds": null,
+     "score_raw": "8-7",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "cf2cedbc-ea2b-4d85-9651-68f21037ecaf",
+     "tournament_id": 157,
+     "weight_class_id": 56,
+     "bracket_side": "championship",
+     "round": "QF",
+     "winner_entry_id": "707cae82-e2f1-4ed2-903d-4c48a37a0060",
+     "loser_entry_id": "90003286-ec82-4365-91d4-8e4f2643838d",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 39,
+     "score_raw": "Fall 0:39",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "3426d8c7-2a40-4125-9def-5c939dcfafd1",
+     "tournament_id": 157,
+     "weight_class_id": 56,
+     "bracket_side": "championship",
+     "round": "QF",
+     "winner_entry_id": "c9d883c5-d26a-47a5-9ba1-40fc08c5df3e",
+     "loser_entry_id": "4ec953c7-cee2-433c-81e5-c531de849b65",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 23,
+     "score_raw": "Fall 0:23",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "8470a63e-7556-4f4b-bd73-f7ed254ada08",
+     "tournament_id": 157,
+     "weight_class_id": 56,
+     "bracket_side": "championship",
+     "round": "SF",
+     "winner_entry_id": "707cae82-e2f1-4ed2-903d-4c48a37a0060",
+     "loser_entry_id": "11bf5824-bcfe-4777-8507-fd7de1a2f413",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 148,
+     "score_raw": "Fall 2:28",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "d66236fa-9f0b-4d0e-9e48-7c19b8f68dda",
+     "tournament_id": 157,
+     "weight_class_id": 56,
+     "bracket_side": "championship",
+     "round": "SF",
+     "winner_entry_id": "c9d883c5-d26a-47a5-9ba1-40fc08c5df3e",
+     "loser_entry_id": "4f6261ed-cc12-4bc6-824e-2c7f95294f91",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 219,
+     "score_raw": "Fall 3:39",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "6e0b42ec-2e24-448a-ae81-27cc666f3e15",
+     "tournament_id": 157,
+     "weight_class_id": 56,
+     "bracket_side": "championship",
+     "round": "F",
+     "winner_entry_id": "707cae82-e2f1-4ed2-903d-4c48a37a0060",
+     "loser_entry_id": "c9d883c5-d26a-47a5-9ba1-40fc08c5df3e",
+     "win_type": "TF-1.5",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 0,
+     "score_raw": null,
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "602a9709-a35e-4e1e-8ec4-0b3125464755",
+     "tournament_id": 157,
+     "weight_class_id": 56,
+     "bracket_side": "consolation",
+     "round": "3rd_Place",
+     "winner_entry_id": "4f6261ed-cc12-4bc6-824e-2c7f95294f91",
+     "loser_entry_id": "11bf5824-bcfe-4777-8507-fd7de1a2f413",
+     "win_type": "SV-1",
+     "winner_score": 16,
+     "loser_score": 13,
+     "fall_time_seconds": null,
+     "score_raw": "16-13",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    }
+   ],
+   "placements": [
+    {
+     "id": "2ce12315-fdb0-41ec-b2d7-1871d69bdbf1",
+     "tournament_id": 157,
+     "weight_class_id": 56,
+     "place": 1,
+     "entry_id": "707cae82-e2f1-4ed2-903d-4c48a37a0060",
+     "wrestler_name_raw": "Nico DeRado"
+    },
+    {
+     "id": "bbf4ce29-642c-4c88-9c45-1df044c34d8b",
+     "tournament_id": 157,
+     "weight_class_id": 56,
+     "place": 2,
+     "entry_id": "c9d883c5-d26a-47a5-9ba1-40fc08c5df3e",
+     "wrestler_name_raw": "Jorge Zapata"
+    },
+    {
+     "id": "7e653737-ef68-4cd9-a699-b8923cd8164f",
+     "tournament_id": 157,
+     "weight_class_id": 56,
+     "place": 3,
+     "entry_id": "4f6261ed-cc12-4bc6-824e-2c7f95294f91",
+     "wrestler_name_raw": "Michael Hernandez"
+    },
+    {
+     "id": "cd74188e-328e-458e-adc2-4c832a12721a",
+     "tournament_id": 157,
+     "weight_class_id": 56,
+     "place": 4,
+     "entry_id": "11bf5824-bcfe-4777-8507-fd7de1a2f413",
+     "wrestler_name_raw": "Michael Paulino"
+    }
+   ]
+  },
+  "Boy_s Districts District 19 215: Julian Sanchez (West Windsor-Plainsboro N)": {
+   "entries": [
+    {
+     "id": "7baaa515-e4dd-4397-888f-00dc9f14a1c6",
+     "wrestler_id": "611450e8-3bc0-4ec4-965b-b3d457fd4ad5",
+     "seed": 6,
+     "grade": null,
+     "grade_label": null,
+     "wrestlers": {
+      "last_name": "Sanchez",
+      "first_name": "Julian"
+     }
+    },
+    {
+     "id": "a8eec176-38f8-4ccb-93b2-36c453e9d51b",
+     "wrestler_id": "6cecb44c-8832-4b80-a617-657ea671d899",
+     "seed": 4,
+     "grade": 12,
+     "grade_label": "Sr",
+     "wrestlers": {
+      "last_name": "Ahmad",
+      "first_name": "Aryan"
+     }
+    },
+    {
+     "id": "bae9e0a3-a29c-4a81-9e49-bd21ab472b7f",
+     "wrestler_id": "1332324d-fb8f-44c4-b461-6122065cbc80",
+     "seed": 3,
+     "grade": 12,
+     "grade_label": "Sr",
+     "wrestlers": {
+      "last_name": "Canica",
+      "first_name": "Evan"
+     }
+    },
+    {
+     "id": "e4bd081b-c0c5-4190-9159-7ae67ce10377",
+     "wrestler_id": "f4ed033c-88d8-45ce-9bc0-40afbf0f81e7",
+     "seed": 10,
+     "grade": 11,
+     "grade_label": "Jr",
+     "wrestlers": {
+      "last_name": "Wicinski",
+      "first_name": "Jakub"
+     }
+    },
+    {
+     "id": "0fabff90-9ed5-4de9-81d7-ae414977f1d7",
+     "wrestler_id": "584f36e2-1025-4c6b-b67d-67b58422b7c8",
+     "seed": 2,
+     "grade": 12,
+     "grade_label": "Sr",
+     "wrestlers": {
+      "last_name": "Peters",
+      "first_name": "Jason"
+     }
+    },
+    {
+     "id": "4f6b557d-961f-4021-a41c-42753a4ece82",
+     "wrestler_id": "e44c81d5-72f1-47ed-a7cb-8cfc994d103d",
+     "seed": 8,
+     "grade": 9,
+     "grade_label": "Fr",
+     "wrestlers": {
+      "last_name": "Atte",
+      "first_name": "Jayadeep"
+     }
+    },
+    {
+     "id": "bb4e67ea-b1e0-48f5-9858-c0b7a207088e",
+     "wrestler_id": "f2046af5-2c17-4da3-929d-230bb132f5d8",
+     "seed": 7,
+     "grade": 12,
+     "grade_label": "Sr",
+     "wrestlers": {
+      "last_name": "Passalaqua",
+      "first_name": "Luke"
+     }
+    },
+    {
+     "id": "bd3a700d-44be-4012-b6d6-4682cd3950ff",
+     "wrestler_id": "21a9a2de-a00b-4d07-9b92-42ccc1dae5bf",
+     "seed": 5,
+     "grade": 12,
+     "grade_label": "Sr",
+     "wrestlers": {
+      "last_name": "Rampel",
+      "first_name": "Parker"
+     }
+    },
+    {
+     "id": "5422cd93-1f09-457d-81c9-764840bfead7",
+     "wrestler_id": "e75dac1a-14b1-4224-ad42-a8cde965e09e",
+     "seed": 9,
+     "grade": 9,
+     "grade_label": "Fr",
+     "wrestlers": {
+      "last_name": "Pierre",
+      "first_name": "Wilens"
+     }
+    },
+    {
+     "id": "5942681f-d99d-4d40-a74a-1a3835a3fd6f",
+     "wrestler_id": "9320a1ad-9052-43d0-af5d-4e8b70837420",
+     "seed": 1,
+     "grade": 12,
+     "grade_label": "Sr",
+     "wrestlers": {
+      "last_name": "Florio",
+      "first_name": "Zachary"
+     }
+    }
+   ],
+   "matches": [
+    {
+     "id": "65821f2a-8961-48d9-9acd-906d02547e5b",
+     "tournament_id": 158,
+     "weight_class_id": 65,
+     "bracket_side": "championship",
+     "round": "R2",
+     "winner_entry_id": "5422cd93-1f09-457d-81c9-764840bfead7",
+     "loser_entry_id": "4f6b557d-961f-4021-a41c-42753a4ece82",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 186,
+     "score_raw": "Fall 3:06",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "1065b432-395d-41a4-b3fa-d74675541979",
+     "tournament_id": 158,
+     "weight_class_id": 65,
+     "bracket_side": "championship",
+     "round": "R2",
+     "winner_entry_id": "bb4e67ea-b1e0-48f5-9858-c0b7a207088e",
+     "loser_entry_id": "e4bd081b-c0c5-4190-9159-7ae67ce10377",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 83,
+     "score_raw": "Fall 1:23",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "b575ff15-0ca4-41a1-b828-2c73a1503dc8",
+     "tournament_id": 158,
+     "weight_class_id": 65,
+     "bracket_side": "championship",
+     "round": "QF",
+     "winner_entry_id": "5942681f-d99d-4d40-a74a-1a3835a3fd6f",
+     "loser_entry_id": "5422cd93-1f09-457d-81c9-764840bfead7",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 29,
+     "score_raw": "Fall 0:29",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "3fb115be-95a5-4e89-9325-a0e048fecaca",
+     "tournament_id": 158,
+     "weight_class_id": 65,
+     "bracket_side": "championship",
+     "round": "QF",
+     "winner_entry_id": "a8eec176-38f8-4ccb-93b2-36c453e9d51b",
+     "loser_entry_id": "bd3a700d-44be-4012-b6d6-4682cd3950ff",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 154,
+     "score_raw": "Fall 2:34",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "9fa340ec-b7d7-4d05-bdcb-167d29929f68",
+     "tournament_id": 158,
+     "weight_class_id": 65,
+     "bracket_side": "championship",
+     "round": "QF",
+     "winner_entry_id": "0fabff90-9ed5-4de9-81d7-ae414977f1d7",
+     "loser_entry_id": "bb4e67ea-b1e0-48f5-9858-c0b7a207088e",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 181,
+     "score_raw": "Fall 3:01",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "3cfa5c8e-15b4-4b6c-98d5-7b609420ad5b",
+     "tournament_id": 158,
+     "weight_class_id": 65,
+     "bracket_side": "championship",
+     "round": "SF",
+     "winner_entry_id": "5942681f-d99d-4d40-a74a-1a3835a3fd6f",
+     "loser_entry_id": "a8eec176-38f8-4ccb-93b2-36c453e9d51b",
+     "win_type": "TF-1.5",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 127,
+     "score_raw": null,
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "cbcf6d03-2aa4-46a1-a3e4-7b1fe5095a05",
+     "tournament_id": 158,
+     "weight_class_id": 65,
+     "bracket_side": "championship",
+     "round": "SF",
+     "winner_entry_id": "0fabff90-9ed5-4de9-81d7-ae414977f1d7",
+     "loser_entry_id": "bae9e0a3-a29c-4a81-9e49-bd21ab472b7f",
+     "win_type": "DEC",
+     "winner_score": 4,
+     "loser_score": 3,
+     "fall_time_seconds": null,
+     "score_raw": "4-3",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "afa6888d-9694-4e35-9022-314ce07e429b",
+     "tournament_id": 158,
+     "weight_class_id": 65,
+     "bracket_side": "championship",
+     "round": "F",
+     "winner_entry_id": "5942681f-d99d-4d40-a74a-1a3835a3fd6f",
+     "loser_entry_id": "0fabff90-9ed5-4de9-81d7-ae414977f1d7",
+     "win_type": "TF-1.5",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 147,
+     "score_raw": null,
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "20b024b5-e566-464a-9dc1-9ca69321bd9e",
+     "tournament_id": 158,
+     "weight_class_id": 65,
+     "bracket_side": "consolation",
+     "round": "3rd_Place",
+     "winner_entry_id": "bae9e0a3-a29c-4a81-9e49-bd21ab472b7f",
+     "loser_entry_id": "a8eec176-38f8-4ccb-93b2-36c453e9d51b",
+     "win_type": "DEC",
+     "winner_score": 3,
+     "loser_score": 1,
+     "fall_time_seconds": null,
+     "score_raw": "3-1",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    }
+   ],
+   "placements": [
+    {
+     "id": "08664bb7-50d8-4357-b65f-79ede02dea14",
+     "tournament_id": 158,
+     "weight_class_id": 65,
+     "place": 1,
+     "entry_id": "5942681f-d99d-4d40-a74a-1a3835a3fd6f",
+     "wrestler_name_raw": "Zachary Florio"
+    },
+    {
+     "id": "74dda5db-4722-4e8d-a20e-6dc82b786843",
+     "tournament_id": 158,
+     "weight_class_id": 65,
+     "place": 2,
+     "entry_id": "0fabff90-9ed5-4de9-81d7-ae414977f1d7",
+     "wrestler_name_raw": "Jason Peters"
+    },
+    {
+     "id": "e0654acb-8cce-4a82-b1fd-3de50cd6c15a",
+     "tournament_id": 158,
+     "weight_class_id": 65,
+     "place": 3,
+     "entry_id": "bae9e0a3-a29c-4a81-9e49-bd21ab472b7f",
+     "wrestler_name_raw": "Evan Canica"
+    },
+    {
+     "id": "87ae3470-fdfd-4ce8-aa25-cfa8e530d0e9",
+     "tournament_id": 158,
+     "weight_class_id": 65,
+     "place": 4,
+     "entry_id": "a8eec176-38f8-4ccb-93b2-36c453e9d51b",
+     "wrestler_name_raw": "Aryan Ahmad"
+    }
+   ]
+  },
+  "Boy_s Districts District 26 106: Owen Williams (Manchester Township)": {
+   "entries": [
+    {
+     "id": "18f1eb6d-2789-49e8-89ed-adec7b319feb",
+     "wrestler_id": "0670a0fe-6cfb-4ab8-88c0-909c96b0271d",
+     "seed": 7,
+     "grade": null,
+     "grade_label": null,
+     "wrestlers": {
+      "last_name": "Williams",
+      "first_name": "Owen"
+     }
+    },
+    {
+     "id": "8fdee6ee-58b4-418c-8885-9b090ddae64b",
+     "wrestler_id": "0f53309c-a657-488e-8f94-95aef2a9f4a7",
+     "seed": 1,
+     "grade": 9,
+     "grade_label": "Fr",
+     "wrestlers": {
+      "last_name": "Taylor",
+      "first_name": "Carson"
+     }
+    },
+    {
+     "id": "987b4a28-5cda-4c0c-bee2-89e77045d903",
+     "wrestler_id": "4e09156e-0c37-4942-bb72-1926d56b46de",
+     "seed": 3,
+     "grade": 9,
+     "grade_label": "Fr",
+     "wrestlers": {
+      "last_name": "Hingston",
+      "first_name": "Christopher"
+     }
+    },
+    {
+     "id": "b697708e-02b7-4360-aaac-5c79b7602840",
+     "wrestler_id": "af126a22-8899-4ce0-9964-6f88dfde8946",
+     "seed": 2,
+     "grade": 11,
+     "grade_label": "Jr",
+     "wrestlers": {
+      "last_name": "Ruhland",
+      "first_name": "Greyson"
+     }
+    },
+    {
+     "id": "861c4e2a-e1c9-4704-be8f-36e50e53ae81",
+     "wrestler_id": "c4324c4c-988e-4c7e-9d88-a5b03c04c7c3",
+     "seed": 5,
+     "grade": 12,
+     "grade_label": "Sr",
+     "wrestlers": {
+      "last_name": "Donald",
+      "first_name": "Harley"
+     }
+    },
+    {
+     "id": "ad86f27d-adfa-4eba-b0c7-912faaddc91a",
+     "wrestler_id": "83631384-c78e-41f4-a34a-288a70aed1c0",
+     "seed": 6,
+     "grade": 9,
+     "grade_label": "Fr",
+     "wrestlers": {
+      "last_name": "Maestrey",
+      "first_name": "Logan"
+     }
+    },
+    {
+     "id": "f6d7290c-4265-4159-b60c-166af775b2ca",
+     "wrestler_id": "58a60edf-dec8-4daf-8fe4-454d207b911a",
+     "seed": 4,
+     "grade": 9,
+     "grade_label": "Fr",
+     "wrestlers": {
+      "last_name": "Stauffer",
+      "first_name": "Timothy"
+     }
+    }
+   ],
+   "matches": [
+    {
+     "id": "4bab7cbe-2c40-4594-8832-66ad713b5f84",
+     "tournament_id": 165,
+     "weight_class_id": 53,
+     "bracket_side": "championship",
+     "round": "QF",
+     "winner_entry_id": "f6d7290c-4265-4159-b60c-166af775b2ca",
+     "loser_entry_id": "861c4e2a-e1c9-4704-be8f-36e50e53ae81",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 167,
+     "score_raw": "Fall 2:47",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "25526e35-bc55-4543-8230-383789bcceaf",
+     "tournament_id": 165,
+     "weight_class_id": 53,
+     "bracket_side": "championship",
+     "round": "QF",
+     "winner_entry_id": "987b4a28-5cda-4c0c-bee2-89e77045d903",
+     "loser_entry_id": "ad86f27d-adfa-4eba-b0c7-912faaddc91a",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 76,
+     "score_raw": "Fall 1:16",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "8e4a669b-2c70-4225-8f48-622280667c60",
+     "tournament_id": 165,
+     "weight_class_id": 53,
+     "bracket_side": "championship",
+     "round": "SF",
+     "winner_entry_id": "8fdee6ee-58b4-418c-8885-9b090ddae64b",
+     "loser_entry_id": "f6d7290c-4265-4159-b60c-166af775b2ca",
+     "win_type": "TF-1.5",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 221,
+     "score_raw": null,
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "5d05103d-e0cc-4678-ad9a-c3708e4b5d73",
+     "tournament_id": 165,
+     "weight_class_id": 53,
+     "bracket_side": "championship",
+     "round": "SF",
+     "winner_entry_id": "987b4a28-5cda-4c0c-bee2-89e77045d903",
+     "loser_entry_id": "b697708e-02b7-4360-aaac-5c79b7602840",
+     "win_type": "DEC",
+     "winner_score": 10,
+     "loser_score": 4,
+     "fall_time_seconds": null,
+     "score_raw": "10-4",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "72788965-1a4a-43cf-a98e-dc517b2bcf5d",
+     "tournament_id": 165,
+     "weight_class_id": 53,
+     "bracket_side": "championship",
+     "round": "F",
+     "winner_entry_id": "987b4a28-5cda-4c0c-bee2-89e77045d903",
+     "loser_entry_id": "8fdee6ee-58b4-418c-8885-9b090ddae64b",
+     "win_type": "DEC",
+     "winner_score": 6,
+     "loser_score": 4,
+     "fall_time_seconds": null,
+     "score_raw": "6-4",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "c4561822-e354-4758-92cb-aeaf7707ff87",
+     "tournament_id": 165,
+     "weight_class_id": 53,
+     "bracket_side": "consolation",
+     "round": "3rd_Place",
+     "winner_entry_id": "b697708e-02b7-4360-aaac-5c79b7602840",
+     "loser_entry_id": "f6d7290c-4265-4159-b60c-166af775b2ca",
+     "win_type": "MD",
+     "winner_score": 8,
+     "loser_score": 0,
+     "fall_time_seconds": null,
+     "score_raw": "8-0",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "404a170b-e9f1-4708-9fa6-e0cc3aac06c8",
+     "tournament_id": 165,
+     "weight_class_id": 53,
+     "bracket_side": "championship",
+     "round": "QF",
+     "winner_entry_id": "8fdee6ee-58b4-418c-8885-9b090ddae64b",
+     "loser_entry_id": null,
+     "win_type": "FORF",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": null,
+     "score_raw": null,
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    }
+   ],
+   "placements": [
+    {
+     "id": "00dc6e82-46a7-43ff-8118-e14239a7cf8d",
+     "tournament_id": 165,
+     "weight_class_id": 53,
+     "place": 1,
+     "entry_id": "987b4a28-5cda-4c0c-bee2-89e77045d903",
+     "wrestler_name_raw": "Christopher Hingston"
+    },
+    {
+     "id": "3dd5f99d-0398-4e58-b5be-66ef3e7286fe",
+     "tournament_id": 165,
+     "weight_class_id": 53,
+     "place": 2,
+     "entry_id": "8fdee6ee-58b4-418c-8885-9b090ddae64b",
+     "wrestler_name_raw": "Carson Taylor"
+    },
+    {
+     "id": "42b0d2b5-f857-4244-a006-f5998221b928",
+     "tournament_id": 165,
+     "weight_class_id": 53,
+     "place": 3,
+     "entry_id": "b697708e-02b7-4360-aaac-5c79b7602840",
+     "wrestler_name_raw": "Greyson Ruhland"
+    },
+    {
+     "id": "9c1e4441-422d-48e9-b409-21e1c769d91f",
+     "tournament_id": 165,
+     "weight_class_id": 53,
+     "place": 4,
+     "entry_id": "f6d7290c-4265-4159-b60c-166af775b2ca",
+     "wrestler_name_raw": "Timothy Stauffer"
+    }
+   ]
+  },
+  "Boy_s Districts District 28 138: Aidan Johnson (Gloucester City JR/SR)": {
+   "entries": [
+    {
+     "id": "0582439b-86ce-4394-bbf7-781fe8fb0f38",
+     "wrestler_id": "632f2798-b131-4c2a-be69-512d2f2e5be4",
+     "seed": 6,
+     "grade": null,
+     "grade_label": null,
+     "wrestlers": {
+      "last_name": "Johnson",
+      "first_name": "Aidan"
+     }
+    },
+    {
+     "id": "f4f09a90-8c4e-47ae-a1bd-fe4fe05f74dc",
+     "wrestler_id": "8c356b33-ea2a-46ea-9a42-d97bd35b6873",
+     "seed": 7,
+     "grade": 11,
+     "grade_label": "Jr",
+     "wrestlers": {
+      "last_name": "Eachus",
+      "first_name": "Jacob"
+     }
+    },
+    {
+     "id": "1cfaa491-1dcf-4091-94b2-9d4e103a6bb7",
+     "wrestler_id": "009653dd-c6f6-4117-a242-4049e3c318a1",
+     "seed": 5,
+     "grade": 11,
+     "grade_label": "Jr",
+     "wrestlers": {
+      "last_name": "Gluszek",
+      "first_name": "Jake"
+     }
+    },
+    {
+     "id": "f0c9bd15-63ba-444a-a162-ad8f567a8527",
+     "wrestler_id": "c47f5278-f6a2-41c3-a8cd-888ed1216581",
+     "seed": 1,
+     "grade": 12,
+     "grade_label": "Sr",
+     "wrestlers": {
+      "last_name": "Segal",
+      "first_name": "Jordan"
+     }
+    },
+    {
+     "id": "93453f6c-1644-40e3-943c-8a287599a871",
+     "wrestler_id": "5306bcd7-9ab3-4884-ade7-9ed6711d6348",
+     "seed": 8,
+     "grade": 12,
+     "grade_label": "Sr",
+     "wrestlers": {
+      "last_name": "Fennell Drummond",
+      "first_name": "Justice"
+     }
+    },
+    {
+     "id": "8673ba4a-14ab-473b-baae-12f6acfcc151",
+     "wrestler_id": "c243e545-fe6f-428b-804a-a71525fd70b8",
+     "seed": 2,
+     "grade": 10,
+     "grade_label": "So",
+     "wrestlers": {
+      "last_name": "Riddell",
+      "first_name": "Landan"
+     }
+    },
+    {
+     "id": "53aae8cf-38d9-4720-9baa-00696c0b570f",
+     "wrestler_id": "b64c8e24-1f0a-434e-9ec7-478036541405",
+     "seed": 4,
+     "grade": 10,
+     "grade_label": "So",
+     "wrestlers": {
+      "last_name": "Mahan",
+      "first_name": "Mason"
+     }
+    },
+    {
+     "id": "c89dacb6-5eb9-429b-947c-c01b6d2d8863",
+     "wrestler_id": "d0530bd1-6ebb-417b-a0e9-dff9959ec8be",
+     "seed": 5,
+     "grade": 10,
+     "grade_label": "So",
+     "wrestlers": {
+      "last_name": "Lyons",
+      "first_name": "Samii"
+     }
+    },
+    {
+     "id": "aafda517-efc3-4858-a48d-c319e09009b0",
+     "wrestler_id": "e342fd0f-5b06-4632-81fe-0ee23ff1706a",
+     "seed": 3,
+     "grade": 10,
+     "grade_label": "So",
+     "wrestlers": {
+      "last_name": "Landell",
+      "first_name": "Trenton"
+     }
+    }
+   ],
+   "matches": [
+    {
+     "id": "28ca10d7-fe08-44ce-b7c2-63919e612a29",
+     "tournament_id": 167,
+     "weight_class_id": 58,
+     "bracket_side": "championship",
+     "round": "R2",
+     "winner_entry_id": "93453f6c-1644-40e3-943c-8a287599a871",
+     "loser_entry_id": "c89dacb6-5eb9-429b-947c-c01b6d2d8863",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 93,
+     "score_raw": "Fall 1:33",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "6aa7ea20-2237-4b1d-9483-e86e1d93ec76",
+     "tournament_id": 167,
+     "weight_class_id": 58,
+     "bracket_side": "championship",
+     "round": "QF",
+     "winner_entry_id": "f0c9bd15-63ba-444a-a162-ad8f567a8527",
+     "loser_entry_id": "93453f6c-1644-40e3-943c-8a287599a871",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 72,
+     "score_raw": "Fall 1:12",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "44abacd8-7c85-473b-a5ee-904eb7ac7f8b",
+     "tournament_id": 167,
+     "weight_class_id": 58,
+     "bracket_side": "championship",
+     "round": "QF",
+     "winner_entry_id": "53aae8cf-38d9-4720-9baa-00696c0b570f",
+     "loser_entry_id": "1cfaa491-1dcf-4091-94b2-9d4e103a6bb7",
+     "win_type": "DEC",
+     "winner_score": 11,
+     "loser_score": 10,
+     "fall_time_seconds": null,
+     "score_raw": "11-10",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "9327f011-11d4-4a68-b7c1-f34869953aed",
+     "tournament_id": 167,
+     "weight_class_id": 58,
+     "bracket_side": "championship",
+     "round": "QF",
+     "winner_entry_id": "8673ba4a-14ab-473b-baae-12f6acfcc151",
+     "loser_entry_id": "f4f09a90-8c4e-47ae-a1bd-fe4fe05f74dc",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 82,
+     "score_raw": "Fall 1:22",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "41f1a9fc-55eb-434e-91ad-98a19466c11a",
+     "tournament_id": 167,
+     "weight_class_id": 58,
+     "bracket_side": "championship",
+     "round": "SF",
+     "winner_entry_id": "f0c9bd15-63ba-444a-a162-ad8f567a8527",
+     "loser_entry_id": "53aae8cf-38d9-4720-9baa-00696c0b570f",
+     "win_type": "TF-1.5",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 110,
+     "score_raw": null,
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "7e253601-0d58-4371-aa16-a7ad7d26c66d",
+     "tournament_id": 167,
+     "weight_class_id": 58,
+     "bracket_side": "championship",
+     "round": "SF",
+     "winner_entry_id": "8673ba4a-14ab-473b-baae-12f6acfcc151",
+     "loser_entry_id": "aafda517-efc3-4858-a48d-c319e09009b0",
+     "win_type": "DEC",
+     "winner_score": 6,
+     "loser_score": 0,
+     "fall_time_seconds": null,
+     "score_raw": "6-0",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "d8b82525-6b1d-42d2-b377-10e2fed7e238",
+     "tournament_id": 167,
+     "weight_class_id": 58,
+     "bracket_side": "championship",
+     "round": "F",
+     "winner_entry_id": "f0c9bd15-63ba-444a-a162-ad8f567a8527",
+     "loser_entry_id": "8673ba4a-14ab-473b-baae-12f6acfcc151",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 280,
+     "score_raw": "Fall 4:40",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "64c78419-760e-4ef2-b12c-380e973b6238",
+     "tournament_id": 167,
+     "weight_class_id": 58,
+     "bracket_side": "consolation",
+     "round": "3rd_Place",
+     "winner_entry_id": "aafda517-efc3-4858-a48d-c319e09009b0",
+     "loser_entry_id": "53aae8cf-38d9-4720-9baa-00696c0b570f",
+     "win_type": "MD",
+     "winner_score": 16,
+     "loser_score": 2,
+     "fall_time_seconds": null,
+     "score_raw": "16-2",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    }
+   ],
+   "placements": [
+    {
+     "id": "6472a136-aec6-4204-a903-90959b5170ab",
+     "tournament_id": 167,
+     "weight_class_id": 58,
+     "place": 1,
+     "entry_id": "f0c9bd15-63ba-444a-a162-ad8f567a8527",
+     "wrestler_name_raw": "Jordan Segal"
+    },
+    {
+     "id": "4552816b-e64c-4dfa-83ca-3bf85dacad07",
+     "tournament_id": 167,
+     "weight_class_id": 58,
+     "place": 2,
+     "entry_id": "8673ba4a-14ab-473b-baae-12f6acfcc151",
+     "wrestler_name_raw": "Landan Riddell"
+    },
+    {
+     "id": "eb11afce-edc6-4461-b635-998b8afbb1f8",
+     "tournament_id": 167,
+     "weight_class_id": 58,
+     "place": 3,
+     "entry_id": "aafda517-efc3-4858-a48d-c319e09009b0",
+     "wrestler_name_raw": "Trenton Landell"
+    },
+    {
+     "id": "103fbc51-0a3f-4f59-9b67-d0a32ee72b8a",
+     "tournament_id": 167,
+     "weight_class_id": 58,
+     "place": 4,
+     "entry_id": "53aae8cf-38d9-4720-9baa-00696c0b570f",
+     "wrestler_name_raw": "Mason Mahan"
+    }
+   ]
+  },
+  "Boy_s Districts District 32 150: Anthony Russo (Red Bank Catholic Hs)": {
+   "entries": [
+    {
+     "id": "d4d9f3fe-0ec0-465f-ad3d-f48199112761",
+     "wrestler_id": "a170069d-48b4-42e9-9ec8-1208c49c48da",
+     "seed": 4,
+     "grade": 12,
+     "grade_label": "Sr",
+     "wrestlers": {
+      "last_name": "Upham",
+      "first_name": "Aidan"
+     }
+    },
+    {
+     "id": "8f80f013-c03e-4d6c-9222-7d9a9719c90c",
+     "wrestler_id": "7d085f41-4c22-4169-ac44-113d4323715d",
+     "seed": 2,
+     "grade": 11,
+     "grade_label": "Jr",
+     "wrestlers": {
+      "last_name": "Tosto",
+      "first_name": "Gabe"
+     }
+    },
+    {
+     "id": "e12ab40d-6ea6-4361-b67a-638acf45702e",
+     "wrestler_id": "0f90f5d0-71e7-4753-b0a7-4406e5b36f75",
+     "seed": 5,
+     "grade": 12,
+     "grade_label": "Sr",
+     "wrestlers": {
+      "last_name": "Henderson",
+      "first_name": "Gavyn"
+     }
+    },
+    {
+     "id": "090d1ce2-96e1-43cb-9035-562f4c61076b",
+     "wrestler_id": "308b9aee-a51b-42b4-b276-f9ff3dd28271",
+     "seed": 6,
+     "grade": 11,
+     "grade_label": "Jr",
+     "wrestlers": {
+      "last_name": "Lane",
+      "first_name": "Grayson"
+     }
+    },
+    {
+     "id": "c4fe4fd6-c700-4634-b75d-57de4a35c029",
+     "wrestler_id": "4129cba0-b9ff-4172-b3c7-ff20b9ab4ebf",
+     "seed": 3,
+     "grade": 12,
+     "grade_label": "Sr",
+     "wrestlers": {
+      "last_name": "Benkert",
+      "first_name": "Steven"
+     }
+    },
+    {
+     "id": "8ee59f95-a443-4767-b6d2-f370610404c4",
+     "wrestler_id": "5a6001ed-d9ad-4394-934b-08aec85c5e9f",
+     "seed": 7,
+     "grade": 12,
+     "grade_label": "Sr",
+     "wrestlers": {
+      "last_name": "Hyatt",
+      "first_name": "William"
+     }
+    },
+    {
+     "id": "5fc0f89c-95b2-43e6-baa7-f58d38d5b303",
+     "wrestler_id": "31ebb611-4aec-47c3-950c-bd72c5f57db8",
+     "seed": 8,
+     "grade": 12,
+     "grade_label": "Sr",
+     "wrestlers": {
+      "last_name": "Moore",
+      "first_name": "Ziyon"
+     }
+    }
+   ],
+   "matches": [
+    {
+     "id": "5116e34f-7567-4106-ab7e-511ee2758de6",
+     "tournament_id": 171,
+     "weight_class_id": 60,
+     "bracket_side": "championship",
+     "round": "QF",
+     "winner_entry_id": "e12ab40d-6ea6-4361-b67a-638acf45702e",
+     "loser_entry_id": "d4d9f3fe-0ec0-465f-ad3d-f48199112761",
+     "win_type": "DEC",
+     "winner_score": 5,
+     "loser_score": 3,
+     "fall_time_seconds": null,
+     "score_raw": "5-3",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "f69a77eb-4b9b-4b6a-81e6-15df26937bc3",
+     "tournament_id": 171,
+     "weight_class_id": 60,
+     "bracket_side": "championship",
+     "round": "QF",
+     "winner_entry_id": "c4fe4fd6-c700-4634-b75d-57de4a35c029",
+     "loser_entry_id": "090d1ce2-96e1-43cb-9035-562f4c61076b",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 174,
+     "score_raw": "Fall 2:54",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "dea4a719-6350-405f-8a95-748e8a55cce0",
+     "tournament_id": 171,
+     "weight_class_id": 60,
+     "bracket_side": "championship",
+     "round": "QF",
+     "winner_entry_id": "8f80f013-c03e-4d6c-9222-7d9a9719c90c",
+     "loser_entry_id": "8ee59f95-a443-4767-b6d2-f370610404c4",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 102,
+     "score_raw": "Fall 1:42",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "fc880bc9-0cc9-4ced-a008-db16b0116df3",
+     "tournament_id": 171,
+     "weight_class_id": 60,
+     "bracket_side": "championship",
+     "round": "SF",
+     "winner_entry_id": "8f80f013-c03e-4d6c-9222-7d9a9719c90c",
+     "loser_entry_id": "c4fe4fd6-c700-4634-b75d-57de4a35c029",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 59,
+     "score_raw": "Fall 0:59",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    },
+    {
+     "id": "33bbd199-2944-47c7-ad56-d607a0f77677",
+     "tournament_id": 171,
+     "weight_class_id": 60,
+     "bracket_side": "consolation",
+     "round": "3rd_Place",
+     "winner_entry_id": "c4fe4fd6-c700-4634-b75d-57de4a35c029",
+     "loser_entry_id": "e12ab40d-6ea6-4361-b67a-638acf45702e",
+     "win_type": "MD",
+     "winner_score": 10,
+     "loser_score": 0,
+     "fall_time_seconds": null,
+     "score_raw": "10-0",
+     "winner_context_raw": null,
+     "validated": true,
+     "bout_number": null
+    }
+   ],
+   "placements": [
+    {
+     "id": "ad748527-c831-428c-afae-8cd4eb1cbdcc",
+     "tournament_id": 171,
+     "weight_class_id": 60,
+     "place": 1,
+     "entry_id": "8f80f013-c03e-4d6c-9222-7d9a9719c90c",
+     "wrestler_name_raw": "Gabe Tosto"
+    },
+    {
+     "id": "47a0e479-eb3b-47ed-b6b6-cba3f687a945",
+     "tournament_id": 171,
+     "weight_class_id": 60,
+     "place": 3,
+     "entry_id": "c4fe4fd6-c700-4634-b75d-57de4a35c029",
+     "wrestler_name_raw": "Steven Benkert"
+    },
+    {
+     "id": "900ff7db-8e84-4fb4-a11e-c05416b986db",
+     "tournament_id": 171,
+     "weight_class_id": 60,
+     "place": 4,
+     "entry_id": "e12ab40d-6ea6-4361-b67a-638acf45702e",
+     "wrestler_name_raw": "Gavyn Henderson"
+    }
+   ]
+  }
+ },
+ "plan": [
+  {
+   "matches": [
+    {
+     "id": "62acc552-4f86-44bd-9e17-f605e3de5dd1",
+     "tournament_id": 147,
+     "weight_class_id": 62,
+     "bracket_side": "championship",
+     "round": "QF",
+     "winner_entry_id": "d3e8a854-4f2c-47f9-9371-8dd9efa5e053",
+     "loser_entry_id": "4a1eb024-2a14-446a-85d1-8c7e58a11ba9",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 284,
+     "score_raw": "Fall 4:44",
+     "validated": true,
+     "_names": "Ryan Kim over Huzafia Abdulkadr"
+    },
+    {
+     "id": "ada6a31d-d66d-4f5f-ab34-02149ec998c4",
+     "tournament_id": 147,
+     "weight_class_id": 62,
+     "bracket_side": "championship",
+     "round": "SF",
+     "winner_entry_id": "d3e8a854-4f2c-47f9-9371-8dd9efa5e053",
+     "loser_entry_id": "5686562b-24ea-49ee-9f2a-b3122a8996a3",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 93,
+     "score_raw": "Fall 1:33",
+     "validated": true,
+     "_names": "Ryan Kim over Angelo Di Blasio"
+    },
+    {
+     "id": "9972db3a-c532-4907-954d-44ac3e8aeb9f",
+     "tournament_id": 147,
+     "weight_class_id": 62,
+     "bracket_side": "championship",
+     "round": "F",
+     "winner_entry_id": "fdfb4a28-e7a3-48ef-8b31-bda0182d1b7d",
+     "loser_entry_id": "d3e8a854-4f2c-47f9-9371-8dd9efa5e053",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 49,
+     "score_raw": "Fall 0:49",
+     "validated": true,
+     "_names": "Reid Clausi over Ryan Kim"
+    }
+   ],
+   "placements": [
+    {
+     "tournament_id": 147,
+     "weight_class_id": 62,
+     "place": 2,
+     "entry_id": "d3e8a854-4f2c-47f9-9371-8dd9efa5e053",
+     "wrestler_name_raw": "Ryan Kim"
+    }
+   ],
+   "label": "Boy_s Districts District 8 165: Ryan Kim (Fort Lee)",
+   "target": "d3e8a854-4f2c-47f9-9371-8dd9efa5e053",
+   "c": {
+    "old": "b9e1b254-a0c2-484f-87b6-86f08f96df84",
+    "now": "d3e8a854"
+   }
+  },
+  {
+   "matches": [
+    {
+     "id": "58c4a8c8-758a-4eb3-b191-50d1a367ac4b",
+     "tournament_id": 157,
+     "weight_class_id": 56,
+     "bracket_side": "championship",
+     "round": "QF",
+     "winner_entry_id": "4f6261ed-cc12-4bc6-824e-2c7f95294f91",
+     "loser_entry_id": "d78cd7e2-df0f-4653-89a6-3730c2dc64f8",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 169,
+     "score_raw": "Fall 2:49",
+     "validated": true,
+     "_names": "Michael Hernandez over Peter Terranova"
+    }
+   ],
+   "placements": [],
+   "label": "Boy_s Districts District 18 126: Peter Terranova (Edison)",
+   "target": "d78cd7e2-df0f-4653-89a6-3730c2dc64f8",
+   "c": {
+    "old": "4bde699a",
+    "now": "d78cd7e2"
+   }
+  },
+  {
+   "matches": [
+    {
+     "id": "9066296e-85ae-4300-a1c6-d551f418b6bc",
+     "tournament_id": 158,
+     "weight_class_id": 65,
+     "bracket_side": "championship",
+     "round": "QF",
+     "winner_entry_id": "bae9e0a3-a29c-4a81-9e49-bd21ab472b7f",
+     "loser_entry_id": "7baaa515-e4dd-4397-888f-00dc9f14a1c6",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 294,
+     "score_raw": "Fall 4:54",
+     "validated": true,
+     "_names": "Evan Canica over Julian Sanchez"
+    }
+   ],
+   "placements": [],
+   "label": "Boy_s Districts District 19 215: Julian Sanchez (West Windsor-Plainsboro N)",
+   "target": "7baaa515-e4dd-4397-888f-00dc9f14a1c6",
+   "c": {
+    "old": "bd4d2049",
+    "now": "7baaa515"
+   }
+  },
+  {
+   "matches": [
+    {
+     "id": "244c6e83-383a-41b2-bee2-31e4b704a53f",
+     "tournament_id": 165,
+     "weight_class_id": 53,
+     "bracket_side": "championship",
+     "round": "QF",
+     "winner_entry_id": "b697708e-02b7-4360-aaac-5c79b7602840",
+     "loser_entry_id": "18f1eb6d-2789-49e8-89ed-adec7b319feb",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 51,
+     "score_raw": "Fall 0:51",
+     "validated": true,
+     "_names": "Greyson Ruhland over Owen Williams"
+    }
+   ],
+   "placements": [],
+   "label": "Boy_s Districts District 26 106: Owen Williams (Manchester Township)",
+   "target": "18f1eb6d-2789-49e8-89ed-adec7b319feb",
+   "c": {
+    "old": "e70b6c28",
+    "now": "18f1eb6d"
+   }
+  },
+  {
+   "matches": [
+    {
+     "id": "f2681bdb-631a-4073-a63d-4e1de285b3c4",
+     "tournament_id": 167,
+     "weight_class_id": 58,
+     "bracket_side": "championship",
+     "round": "QF",
+     "winner_entry_id": "aafda517-efc3-4858-a48d-c319e09009b0",
+     "loser_entry_id": "0582439b-86ce-4394-bbf7-781fe8fb0f38",
+     "win_type": "FALL",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 111,
+     "score_raw": "Fall 1:51",
+     "validated": true,
+     "_names": "Trenton Landell over Aidan Johnson"
+    }
+   ],
+   "placements": [],
+   "label": "Boy_s Districts District 28 138: Aidan Johnson (Gloucester City JR/SR)",
+   "target": "0582439b-86ce-4394-bbf7-781fe8fb0f38",
+   "c": {
+    "old": "c00220c0",
+    "now": "0582439b"
+   }
+  },
+  {
+   "entry": {
+    "wrestler_id": "99e50f31-1de0-4686-9108-cac8e45a615d",
+    "tournament_id": 171,
+    "school_id": 264,
+    "weight_class_id": 60,
+    "seed": 1,
+    "grade": 11,
+    "grade_label": "Jr",
+    "wins": 0,
+    "losses": 0,
+    "school_context_raw": "Red Bank Catholic Hs",
+    "team_points": 0
+   },
+   "matches": [
+    {
+     "id": "7ae5eb4d-3a0b-4ee7-aea8-4defbdca046e",
+     "tournament_id": 171,
+     "weight_class_id": 60,
+     "bracket_side": "championship",
+     "round": "QF",
+     "winner_entry_id": "(new entry)",
+     "loser_entry_id": "5fc0f89c-95b2-43e6-baa7-f58d38d5b303",
+     "win_type": "TF-1.5",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 77,
+     "score_raw": null,
+     "validated": true,
+     "_names": "Anthony Russo over Ziyon Moore"
+    },
+    {
+     "id": "2c55d02c-c798-4824-a92a-b8b4a4a12447",
+     "tournament_id": 171,
+     "weight_class_id": 60,
+     "bracket_side": "championship",
+     "round": "SF",
+     "winner_entry_id": "(new entry)",
+     "loser_entry_id": "e12ab40d-6ea6-4361-b67a-638acf45702e",
+     "win_type": "TF-1.5",
+     "winner_score": null,
+     "loser_score": null,
+     "fall_time_seconds": 163,
+     "score_raw": null,
+     "validated": true,
+     "_names": "Anthony Russo over Gavyn Henderson"
+    },
+    {
+     "id": "b40a60ad-fa96-4783-a4fb-7bfe3cc18361",
+     "tournament_id": 171,
+     "weight_class_id": 60,
+     "bracket_side": "championship",
+     "round": "F",
+     "winner_entry_id": "8f80f013-c03e-4d6c-9222-7d9a9719c90c",
+     "loser_entry_id": "(new entry)",
+     "win_type": "DEC",
+     "winner_score": 5,
+     "loser_score": 1,
+     "fall_time_seconds": null,
+     "score_raw": "5-1",
+     "validated": true,
+     "_names": "Gabe Tosto over Anthony Russo"
+    }
+   ],
+   "placements": [
+    {
+     "tournament_id": 171,
+     "weight_class_id": 60,
+     "place": 2,
+     "entry_id": "(new entry)",
+     "wrestler_name_raw": "Anthony Russo"
+    }
+   ],
+   "label": "Boy_s Districts District 32 150: Anthony Russo (Red Bank Catholic Hs)",
+   "target": null,
+   "c": {
+    "old": "9e4bab48",
+    "now": null,
+    "wrestler": "99e50f31",
+    "school": 264
+   }
+  }
+ ]
+}

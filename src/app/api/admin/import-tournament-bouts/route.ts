@@ -17,6 +17,7 @@ import { getWorkingSeason } from '@/lib/season-context'
 import type { SeasonInfo } from '@/lib/seasons'
 import type { PipeImportJSON, SchoolOverride, WrestlerOverride, BoutRow } from '@/lib/pipeImportTypes'
 import { isAdminUser } from '@/lib/auth/isAdminUser'
+import { stripNickname } from '@/lib/personName'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnySupabase = SupabaseClient<any, any, any>
@@ -26,8 +27,9 @@ export const dynamic = 'force-dynamic'
 const CHUNK  = 500
 
 function parseName(full: string): { first_name: string; last_name: string } {
-  const parts = full.trim().split(/\s+/)
-  if (parts.length === 1) return { first_name: full.trim(), last_name: '' }
+  const name = stripNickname(full)
+  const parts = name.split(/\s+/)
+  if (parts.length === 1) return { first_name: name, last_name: '' }
   const suffixes = new Set(['jr', 'sr', 'ii', 'iii', 'iv', 'v', 'jr.', 'sr.'])
   let lastIdx = parts.length - 1
   if (suffixes.has(parts[lastIdx].toLowerCase())) lastIdx--
