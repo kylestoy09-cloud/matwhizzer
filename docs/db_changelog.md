@@ -41,7 +41,7 @@
 - **2025-26 regions and state:** `scripts/build_boys_official_postseason_team_scores.mts`, from `../gt_s2_regions.txt` and `../gt_s2_state.txt`. 435 totals replace 369 rows. Backup: `backups/20261105_boys_postseason_team_scores_2026_before.json`.
 - **2024-25 districts, regions and state:** the same script with `--season 2025` (`gt_s1_*`). 747 totals replace 649 rows.
   - The district export has no "District 21" line; D21's standings follow D20's, and every team matched D21's entries.
-  - **District 23 2024-25 has no standings in the export:** its 9 stored rows are kept and unverified.
+  - **District 23 2024-25 has no standings in the export:** its block (line 6994) holds only District 22's finals. Its 9 stored rows are kept and unverified.
   - Backup: `backups/20261105_boys_postseason_team_scores_2025_before.json`.
 - 0-point teams with no entries are not stored. Each re-run finds 0 changes.
 
@@ -73,7 +73,7 @@
 - **Restored:** `scripts/restore_lost_district_bouts_20261105.mts` (service role) inserted Anthony Russo's D32 entry and the 2 placements (Kim 2nd, Russo 2nd). The bouts are in `docs/migrations/20261105_restore_lost_district_bouts.sql` (original ids), because the service role can't write `matches`. Backups: `backups/20261105_restore_lost_district_bouts_before.json`, `..._inserted.json`.
 - **Not restored yet:**
   - 13 boys 2024-25 bouts with the same pattern (Joel Martinez D12, Jayden Williams D17, Christopher Lopez D24, Daniel Jimenez D26, Sean Brown D3 ×3 + R1, Adam Youssef and Matthew Mulligan D4, Andrew Martin D5, Joseph Paretti D6, Tyler Davis D9). Each one's entry is gone, and the correct profile for each must be settled first.
-  - 14 District 23 2024-25 finals, from before the D23 re-import (`../reimport_d23_v2.py`).
+  - ~~14 District 23 2024-25 finals~~ — not lost (checked 2026-11-05). The 2024-25 export's "District 23" block (`../gt_s1_districts.txt` line 6994) is a list of District 22's finals (Brick Memorial vs Robbinsville); all 14 are in the database as D22 finals. The 3/21 D23 copies were duplicates, removed by the D23 re-import.
 - 6 more 2024-25 bouts (Caponegro D18, Matthew Miller D20) exist under new ids: nothing lost.
 
 **2. Names cut at a nickname** (`scripts/merge_paren_names_20261105.mts`, backup `backups/20261105_paren_names_before.json`). The 3/20 load split "Charles (CJ) Palmisano", "Terrance (James) Fearon" and "Arjun (Danny) Monga" at the "(" and left the last name blank.
