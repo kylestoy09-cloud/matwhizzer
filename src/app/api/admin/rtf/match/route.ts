@@ -5,7 +5,7 @@ import { getWorkingSeason, parseGender } from '@/lib/season-context'
 import { parseRtfText, parseDateRange, boutResultToDb, normalizeRound } from '@/lib/parseRtf'
 import { matchSchoolNames, isNjLookalike } from '@/lib/matchSchools'
 import { matchWrestler, oosSchoolHasPrior, clearWrestlerCache, reloadAliases } from '@/lib/matchWrestlers'
-import { isPlaceholderName } from '@/lib/personName'
+import { isPlaceholderName, stripNickname } from '@/lib/personName'
 import { matchTournament } from '@/lib/matchTournaments'
 import { findMsProfileCandidates, msSeasonsForHsSeason, type MsWrestlerRow } from '@/lib/matchMsWrestler'
 import type { SchoolFlag, WrestlerFlag, ReviewedTournament, SchoolOverride, TournamentType } from '@/app/admin/[side]/import-rtf/types'
@@ -341,9 +341,12 @@ export async function POST(req: NextRequest) {
           // First-import OOS schools (no prior wrestlers) auto-create silently — no review needed.
           // NJ wrestlers: flag both new and low-confidence as before.
           const oosNewAtKnownSchool = isOos && wm.isNew && await oosSchoolHasPrior(s.school_id)
-          const shouldFlag = isOos
+          // a new wrestler with a one-word name can't be created (wrestlers_name_present): always
+          // flag it so the review gives a full name or skips it
+          const oneWordNew = wm.isNew && stripNickname(name).split(/\s+/).filter(Boolean).length < 2
+          const shouldFlag = oneWordNew || (isOos
             ? (wm.confidence === 'low' || oosNewAtKnownSchool)
-            : (wm.confidence === 'low' || wm.confidence === 'none')
+            : (wm.confidence === 'low' || wm.confidence === 'none'))
           if (shouldFlag) {
             const ms_candidates = (!isOos && wm.isNew)
               ? findMsProfileCandidates(name, msWrestlersFlat)

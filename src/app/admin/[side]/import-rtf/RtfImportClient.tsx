@@ -1143,6 +1143,7 @@ export function RtfImportClient() {
                         : <span className="text-xs text-green-700 font-medium">✓ imported</span>}
                       {r.pl_error && <div className="text-xs text-red-600 mt-1">placement error: {r.pl_error}</div>}
                       {r.ts_error && <div className="text-xs text-red-600 mt-1">team score error: {r.ts_error}</div>}
+                      {r.wr_error && <div className="text-xs text-red-600 mt-1">{r.wr_error}</div>}
                     </td>
                   </tr>
                 ))}

@@ -18,6 +18,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { createClient } from '@supabase/supabase-js'
+import { stripNickname } from '@/lib/personName'
 
 export type WrestlerMatch = {
   rawName: string
@@ -328,11 +329,14 @@ export async function matchWrestler(
   const atSchool = [...(schoolIndex.get(schoolId)?.values() ?? [])].filter(r => r.gender === gender)
   // letters only: "Aaliyah Gordon Burke" is the same name as "Aaliyah | Gordon Burke" or
   // "Perla Huerta-Vasquez" — imports split names differently (2026-09-10 duplicates)
+  // a nickname in parentheses is not part of the name: "Terrance (James) Fearon" is Terrance Fearon
   const compact = (s: string) => s.toLowerCase().replace(/[^a-z]/g, '')
-  const rawCompact = compact(raw)
+  const rawCompact = compact(raw), plainCompact = compact(stripNickname(raw))
   const sameName = (rec: { displayName: string }) => {
     const recNorm = normalizeInitials(rec.displayName).toLowerCase()
-    return rec.displayName.toLowerCase() === nameLower || recNorm === normLower || (rawCompact.length >= 4 && compact(rec.displayName) === rawCompact)
+    const c = compact(rec.displayName)
+    return rec.displayName.toLowerCase() === nameLower || recNorm === normLower
+      || (rawCompact.length >= 4 && c === rawCompact) || (plainCompact.length >= 4 && c === plainCompact)
   }
 
   // ── 1. Exact name + exact weight ─────────────────────────────────────────────

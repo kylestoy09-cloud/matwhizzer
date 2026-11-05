@@ -158,6 +158,19 @@ for (const g of ['M', 'F'] as const) {
   rule(`${L} 2025-26: scoreable dual bout missing from the rating log`, miss)
 }
 
+// Team totals: the row label must be the one the readers use (SchoolProfileCore.tsx, standings.ts);
+// a load that copied the tournament's own type ("districts") hid district points (2026-11-05)
+{
+  const LABEL: Record<string, Record<string, string>> = {
+    M: { districts: 'boys_districts', regions: 'regions', boys_state: 'boys_state' },
+    F: { districts: 'girls_districts', girls_regions: 'girls_regions', girls_state: 'girls_state' },
+  }
+  const TT = new Map((await all('tournaments', 'id, name, gender, season_id, tournament_type')).map((t: any) => [t.id, t]))
+  const pts = await all('precomputed_team_scores', 'id, tournament_id, school_id, tournament_type')
+  rule('team totals: row label is not the one the pages read', pts.filter((r: any) => { const t: any = TT.get(r.tournament_id); return !t || LABEL[t.gender]?.[t.tournament_type] !== r.tournament_type })
+    .map((r: any) => { const t: any = TT.get(r.tournament_id); return `${t?.name ?? r.tournament_id} s${t?.season_id} school ${r.school_id}: ${r.tournament_type}` }))
+}
+
 const failing = results.filter(r => r.count > 0)
 console.log(`\n${results.length} rules checked, ${failing.length} failing\n`)
 for (const r of results) console.log(`${r.count ? 'FAIL' : ' ok '}  ${String(r.count).padStart(5)}  ${r.rule}${r.count ? '\n' + r.examples.map(e => '              ' + e).join('\n') : ''}`)

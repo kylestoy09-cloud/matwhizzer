@@ -2,6 +2,37 @@
 
 ---
 
+## 2026-11-05 — Review of the day's changes: team-total labels, name links, refused profiles
+
+**1. Team-total row labels** (`scripts/fix_team_score_labels_20261105.mts`, backup `backups/20261105_team_score_labels_before.json`).
+- **The problem:** the school-page team card (`SchoolProfileCore.tsx`) and `src/lib/standings.ts` read `precomputed_team_scores.tournament_type` as `boys_districts` / `regions` / `boys_state` and `girls_districts` / `girls_regions` / `girls_state`. The official-totals loads copied the tournament's own type instead.
+- **Wrong rows:**
+  - 314 boys 2024-25 district rows written `districts` by today's load.
+  - 234 girls 2025-26 district rows written `districts` by the 2026-11-03 load.
+  - 66 girls 2024-25 state rows labelled `girls_regions`, older (cause not traced).
+- **Effect:** those district points were missing from school pages and standings, and those state points were counted as region points.
+- **Fix:** every row relabelled from its tournament (614). Both loaders (`build_boys_official_postseason_team_scores.mts`, `build_girls_official_team_scores.mts`) now write the reader label. New integrity rule "team totals: row label is not the one the pages read" (0).
+
+**2. Name links from guesses** (`rtf/import`, `csv/save`). Since this morning these imports save a name link for every bout side, and the bout-time lookup accepts the matcher's result at any confidence. A low-confidence guess (fuzzy 0.6–0.85, or same last name, e.g. a brother) would have become a permanent link. Links are now saved only for review picks, created wrestlers and exact/high matches. No import ran today, so none was saved.
+
+**3. Refused profiles** (`rtf/import`, `csv/save`). With `wrestlers_name_*` in place, a one-word name fails to insert. Both imports ignored a failed insert, so that wrestler's bouts would be dropped silently.
+- The result screen now shows a red line listing each wrestler not created and that their bouts were not saved.
+- The review (`rtf/match`) always flags a new wrestler with a one-word name.
+
+**4. Matcher** (`src/lib/matchWrestlers.ts`): a nickname in parentheses is ignored when comparing names ("Terrance (Jim) Fearon" → Terrance Fearon, exact). Tested: both Ryan Kims resolve to the right profile by school.
+
+**Checked, no issue:**
+- No boy/girl same-name link clash at a school (name links are unique on name + school with no gender: a design limit).
+- All 82 boys 2024-25/2025-26 postseason tournaments have official totals.
+- Restored bouts in place.
+- No profile without a last name; the name check rejects one.
+
+**APPLIED** — 2026-11-05
+**Reversible?** Yes — backup for the labels; code via git
+**Verified?** Label rule 0; integrity unchanged otherwise; typecheck clean; deployed.
+
+---
+
 ## 2026-11-05 — Correction: the 2026-09-21 team-score auto-refresh was never live
 
 **Checked by Kyle in the Supabase SQL editor (2026-11-05):**

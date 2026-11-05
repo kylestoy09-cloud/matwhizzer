@@ -53,6 +53,9 @@ for (const [id, n] of schools) put(n, id)
 for (const a of aliases) put(a.alias, a.school_id)
 for (const s of snames) put(s.school_name, s.school_id)
 
+// the label readers use (SchoolProfileCore.tsx, src/lib/standings.ts), not the tournament's own type
+// (2026-11-05: copying the tournament type wrote "districts" and hid district points)
+const ROW_LABEL: Record<string, string> = { districts: 'boys_districts', regions: 'regions', boys_state: 'boys_state' }
 const tourns = chk(await db.from('tournaments').select('id, name, tournament_type').eq('gender', 'M').eq('season_id', SEASON).in('tournament_type', SEASON === 2025 ? ['districts', 'regions', 'boys_state'] : ['regions', 'boys_state']), 't')
 const rows: any[] = [], review: string[] = [], newRows: any[] = []
 let changed = 0, same = 0, added = 0
@@ -79,7 +82,7 @@ for (const t of tourns.sort((a, b) => a.name.localeCompare(b.name, undefined, { 
     if (id != null) used.add(id)
     if (status === 'same') same++; else if (status === 'new row') added++; else if (id != null) changed++
     if (how !== 'entries' || status !== 'same') review.push(`- ${tm.team} — ${tm.pts} → ${id == null ? '**not matched**' : `${sname} [${id}]`} (${how || '—'}; ${status})`)
-    if (id != null) newRows.push({ tournament_id: t.id, school_id: id, school_name: sname, total_points: tm.pts, season_id: SEASON, tournament_type: t.tournament_type })
+    if (id != null) newRows.push({ tournament_id: t.id, school_id: id, school_name: sname, total_points: tm.pts, season_id: SEASON, tournament_type: ROW_LABEL[t.tournament_type] })
     rows.push({ t: t.name, ...tm, id, how, status })
   }
   // stored rows for schools TrackWrestling doesn't list (or that no team mapped to)

@@ -127,4 +127,6 @@ export type ImportResult = {
   error?: string
   pl_error?: string
   ts_error?: string
+  // wrestlers whose profile could not be created (e.g. no last name): their bouts were not saved
+  wr_error?: string
 }

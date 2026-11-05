@@ -2,7 +2,8 @@
 // The roster tools (grade %, Roster Grade Import, microcheck) list a school's wrestlers from these,
 // and imports use them to recognize a wrestler next time. Every import that records a bout for a
 // wrestler at a school saves the link, whether the wrestler was created, picked in the review or
-// matched automatically. (Before 2026-11-05 the tournament imports saved it only for created or
+// matched automatically at exact or high confidence (a low-confidence guess is left out by the
+// caller, so it can't become a permanent link). (Before 2026-11-05 the tournament imports saved it only for created or
 // picked wrestlers, so automatic matches left wrestlers missing from their school's roster.)
 // A link already pointing at a different wrestler is never replaced here: changing who a name
 // belongs to is done on purpose, in the review ('existing'), not by an automatic match.

@@ -33,6 +33,7 @@ type SaveResult = {
   bouts_inserted: number
   seeds_inserted: number
   wrestlers_created: number
+  wr_error?: string
   seeds_only?: boolean
   rounds_updated?: number
   rounds_skipped_oos?: number
@@ -384,6 +385,7 @@ export function CsvImportClient() {
                   {saveResult.seeds_only && (saveResult.rounds_skipped_oos ?? 0) > 0 && (
                     <p className="text-amber-600">{saveResult.rounds_skipped_oos} bouts skipped (OOS vs OOS — round unknown)</p>
                   )}
+                  {saveResult.wr_error && <p className="text-red-600">{saveResult.wr_error}</p>}
                   {saveResult.wrestlers_created > 0 && (
                     <p>{saveResult.wrestlers_created} new wrestlers created</p>
                   )}

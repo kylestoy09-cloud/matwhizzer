@@ -461,12 +461,15 @@ export async function POST(req: NextRequest) {
       const aliasRows: Array<{ raw_name: string; school_id: number; wrestler_id: string }> = []
 
       const nonNj = await nonNjSchools(client as never, newWrestlers.map(w => w.school_id))
+      // a profile the database refuses (wrestlers_name_* checks: no last name, parentheses) is
+      // reported, never dropped silently: its bouts can't be saved without a profile
+      const notCreated: string[] = []
       for (const w of newWrestlers) {
         const ins = await client.from('wrestlers').insert({ first_name: w.first_name, last_name: w.last_name, gender, is_oos: w.is_oos || nonNj.has(w.school_id) }).select('id').single()
         if (!ins.error && ins.data) {
           newWrestlerMap.set(`${w.name}|${w.school_id}`, ins.data.id)
           aliasRows.push({ raw_name: w.name, school_id: w.school_id, wrestler_id: ins.data.id })
-        }
+        } else notCreated.push(`${w.name}: ${ins.error?.message ?? 'not created'}`)
       }
 
       // Grades for the new NJ wrestlers, as settled in the review (the create choice's
@@ -534,6 +537,7 @@ export async function POST(req: NextRequest) {
 
       const boutRows = []
       const boutLinks: Parameters<typeof saveNameLinks>[1] = []
+      const lowGuess = new Set<string>()  // name|school matched only at low confidence
       for (const b of dedupedBouts) {
         const { db_type, db_detail, fall_time_seconds, result_time_estimated, winner_score, loser_score, winner } = boutResultToDb(b.result_type, b.result_detail)
         if (db_type === null && winner === null) continue
@@ -551,12 +555,14 @@ export async function POST(req: NextRequest) {
           if (cached) return cached
           if (newWrestlerMap.has(nkey)) return newWrestlerMap.get(nkey)!
           const wm = await matchWrestler(name, school_id, wc, gender)
+          // a low-confidence guess (fuzzy name, same last name) is not saved as a name link
+          if (wm.confidence === 'low') lowGuess.add(nkey)
           return wm.wrestlerId ?? null
         }
         const w1 = await resolveId(b.wrestler1_name, s1?.school_id, b.weight_class)
         const w2 = await resolveId(b.wrestler2_name, s2?.school_id, b.weight_class)
-        boutLinks.push({ raw_name: b.wrestler1_name, school_id: s1?.school_id ?? undefined, wrestler_id: w1 ?? undefined },
-                       { raw_name: b.wrestler2_name, school_id: s2?.school_id ?? undefined, wrestler_id: w2 ?? undefined })
+        if (!lowGuess.has(`${b.wrestler1_name}|${s1?.school_id}`)) boutLinks.push({ raw_name: b.wrestler1_name, school_id: s1?.school_id ?? undefined, wrestler_id: w1 ?? undefined })
+        if (!lowGuess.has(`${b.wrestler2_name}|${s2?.school_id}`)) boutLinks.push({ raw_name: b.wrestler2_name, school_id: s2?.school_id ?? undefined, wrestler_id: w2 ?? undefined })
         // Never store a bout with a null wrestler ID — both sides must be resolved — except a
         // forfeit over an empty slot ("Scratch"): the winner (always wrestler 1 here) keeps the
         // win, the slot has no profile
@@ -648,7 +654,7 @@ export async function POST(req: NextRequest) {
         if (tsRes.error) ts_error = tsRes.error.message
       }
 
-      results.push({ tournament: t.name, bouts_inserted, placements_upserted: pl_count, placements_parsed, team_scores_inserted: ts_count, wrestlers_created: newWrestlerMap.size, skipped: false, ...(pl_error ? { pl_error } : {}), ...(ts_error ? { ts_error } : {}) })
+      results.push({ tournament: t.name, bouts_inserted, placements_upserted: pl_count, placements_parsed, team_scores_inserted: ts_count, wrestlers_created: newWrestlerMap.size, skipped: false, ...(pl_error ? { pl_error } : {}), ...(ts_error ? { ts_error } : {}), ...(notCreated.length ? { wr_error: `${notCreated.length} wrestler(s) not created, their bouts not saved — ${notCreated.join('; ')}` } : {}) })
     } catch (err) {
       results.push({ tournament: t.name, bouts_inserted: 0, placements_upserted: 0, team_scores_inserted: 0, wrestlers_created: 0, skipped: false, error: String(err) })
     }

@@ -277,6 +277,7 @@ export async function POST(req: NextRequest) {
   // Bout rows are still built below for the round-merge pass, but no new wrestlers are created.
   type NewWrestler = { name: string; school_id: number; first_name: string; last_name: string; is_oos: boolean }
   const newWrestlers: NewWrestler[] = []
+  const notCreated: string[] = []  // profiles the database refused: their bouts are not saved
   const seenNew = new Set<string>()
   const overrideExistingMap = new Map<string, string>()  // `${name}|${school_id}` → wrestler_id or '__skip__'
   const newWrestlerMap = new Map<string, string>()
@@ -325,11 +326,12 @@ export async function POST(req: NextRequest) {
     }
 
     const nonNj = await nonNjSchools(client as never, newWrestlers.map(w => w.school_id))
+    // a profile the database refuses (wrestlers_name_* checks) is reported, never dropped silently
     for (const w of newWrestlers) {
       const ins = await client.from('wrestlers').insert({ first_name: w.first_name, last_name: w.last_name, gender, is_oos: w.is_oos || nonNj.has(w.school_id) }).select('id').single()
       if (!ins.error && ins.data) {
         newWrestlerMap.set(`${w.name}|${w.school_id}`, ins.data.id)
-      }
+      } else notCreated.push(`${w.name}: ${ins.error?.message ?? 'not created'}`)
     }
     // Grades for the new NJ wrestlers, as settled in the review (the create choice's
     // grade, else the single exact Track roster match)
@@ -362,8 +364,11 @@ export async function POST(req: NextRequest) {
     if (cached) return cached
     if (newWrestlerMap.has(nkey)) return newWrestlerMap.get(nkey)!
     const wm = await matchWrestler(name, school_id, weight, gender)
+    // a low-confidence guess (fuzzy name, same last name) is not saved as a name link
+    if (wm.confidence === 'low') lowGuess.add(nkey)
     return wm.wrestlerId ?? null
   }
+  const lowGuess = new Set<string>()  // name|school matched only at low confidence
 
   // Build a proper name map for all resolved wrestler IDs so we store the clean
   // site name in name_raw instead of the ugly import format ("A. Spina" → "Anthony Spina").
@@ -394,8 +399,8 @@ export async function POST(req: NextRequest) {
 
     const w1id = await resolveWrestlerId(b.winner_name, s1?.school_id ?? null, b.weight)
     const w2id = await resolveWrestlerId(b.loser_name, s2?.school_id ?? null, b.weight)
-    boutLinks.push({ raw_name: b.winner_name, school_id: s1?.school_id ?? undefined, wrestler_id: w1id ?? undefined },
-                   { raw_name: b.loser_name, school_id: s2?.school_id ?? undefined, wrestler_id: w2id ?? undefined })
+    if (!lowGuess.has(`${b.winner_name}|${s1?.school_id ?? null}`)) boutLinks.push({ raw_name: b.winner_name, school_id: s1?.school_id ?? undefined, wrestler_id: w1id ?? undefined })
+    if (!lowGuess.has(`${b.loser_name}|${s2?.school_id ?? null}`)) boutLinks.push({ raw_name: b.loser_name, school_id: s2?.school_id ?? undefined, wrestler_id: w2id ?? undefined })
 
     // Dedup by ID pair (catches same wrestler under different name spellings)
     if (w1id && w2id) {
@@ -517,6 +522,7 @@ export async function POST(req: NextRequest) {
     bouts_inserted,
     seeds_inserted,
     wrestlers_created: newWrestlerMap.size,
+    ...(notCreated.length ? { wr_error: `${notCreated.length} wrestler(s) not created, their bouts not saved — ${notCreated.join('; ')}` } : {}),
     seeds_only: seedsOnly,
     rounds_updated,
     rounds_skipped_oos,
