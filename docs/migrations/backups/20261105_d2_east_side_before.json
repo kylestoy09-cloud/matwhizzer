@@ -1,0 +1,51 @@
+{
+ "entries": [
+  {
+   "id": "be346e0a-c718-4efa-a512-1cd6ab121c34",
+   "wrestler_id": "3c99f426-cd1d-47a7-a725-8823065391f8",
+   "tournament_id": 187,
+   "school_id": 122,
+   "weight_class_id": 69,
+   "seed": null,
+   "grade": 10,
+   "grade_label": "So",
+   "wins": 0,
+   "losses": 0,
+   "record_snapshot": null,
+   "region_placement": null,
+   "school_context_raw": "East Side",
+   "bracket_position": null,
+   "seed_source": null,
+   "team_points": 0
+  },
+  {
+   "id": "301a7906-f1ed-49bb-85c9-d04d0d96d9eb",
+   "wrestler_id": "fabd9fb9-f3e0-4f72-9c88-b7db67b5990a",
+   "tournament_id": 187,
+   "school_id": 122,
+   "weight_class_id": 74,
+   "seed": null,
+   "grade": 12,
+   "grade_label": "Sr",
+   "wins": 0,
+   "losses": 0,
+   "record_snapshot": null,
+   "region_placement": null,
+   "school_context_raw": "East Side",
+   "bracket_position": null,
+   "seed_source": null,
+   "team_points": 0
+  }
+ ],
+ "team": [
+  {
+   "id": 3702,
+   "tournament_id": 187,
+   "school_name": "Newark East Side",
+   "total_points": 15,
+   "season_id": 2026,
+   "tournament_type": "districts",
+   "school_id": 122
+  }
+ ]
+}

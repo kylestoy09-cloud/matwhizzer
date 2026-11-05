@@ -131,8 +131,9 @@ rule('school names that collapse to the same name (possible duplicate records)',
 
 // one person on two profiles: same name, same school, both with bouts
 const keyOf = new Map<string, string[]>()
-for (const [w, m] of rec) { const ww = W.get(w); if (!ww) continue; for (const s of m.keys()) { const k = `${ww.gender}|${ww.first_name.trim().toLowerCase()}|${ww.last_name.trim().toLowerCase()}|${s}`; (keyOf.get(k) ?? keyOf.set(k, []).get(k)!).push(w) } }
-rule('two profiles with the same name at the same school', [...keyOf].filter(([, v]) => new Set(v).size > 1).map(([k, v]) => `${k.split('|').slice(0, 3).join(' ')} @ ${sn(Number(k.split('|')[3]))} (${new Set(v).size} profiles)`))
+for (const [w, m] of rec) { const ww = W.get(w); if (!ww) continue; for (const s of m.keys()) { const k = `${ww.gender}|${`${ww.first_name}${ww.last_name}`.toLowerCase().replace(/[^a-z]/g, '')}|${s}`; (keyOf.get(k) ?? keyOf.set(k, []).get(k)!).push(w) } }
+// letters only, so a name split differently ("Aaliyah Gordon | Burke" / "Aaliyah | Gordon Burke") counts
+rule('two profiles with the same name at the same school', [...keyOf].filter(([, v]) => new Set(v).size > 1).map(([k, v]) => `${k.split('|')[0]} ${[...new Set(v)].map(wn).join(' = ')} @ ${sn(Number(k.split('|')[2]))} (${new Set(v).size} profiles)`))
 
 // ratings: each 2025-26 log is one set; no rated out-of-state wrestler
 for (const g of ['M', 'F'] as const) {

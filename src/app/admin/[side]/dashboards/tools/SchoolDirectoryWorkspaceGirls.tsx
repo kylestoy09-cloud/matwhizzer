@@ -116,7 +116,8 @@ export function SchoolDirectoryWorkspaceGirls({ seasonId }: Props) {
     }
     if (col.key === 'active') return row.active ? 'Active' : 'Inactive'
     if (col.key === 'grade_pct') {
-      if (!row.roster_count) return ''
+      // no wrestlers linked to the school: say so instead of leaving the cell blank
+      if (!row.roster_count) return 'No wrestlers'
       return `${Math.round(row.graded_count / row.roster_count * 100)}% (${row.graded_count}/${row.roster_count})`
     }
     return (raw as string | null) ?? ''

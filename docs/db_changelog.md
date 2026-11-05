@@ -2,6 +2,38 @@
 
 ---
 
+## 2026-11-05 — District 2 "East Side" fixed; 27 duplicate profiles merged; matcher compares names letters-only; "No wrestlers" label
+
+**Scripts:** `scripts/fix_d2_east_side_20261105.mts`, `scripts/merge_duplicates_20261105.mts` (data only). Backups: `docs/migrations/backups/20261105_d2_east_side_before.json`, `..._duplicates_before.json`
+
+**5. Girls District 2 "East Side" = Paterson Eastside (72), not Newark East Side (122).**
+- **Evidence:** Paterson Eastside is the District 2 school, and Newark East Side is District 4. Ashley Coronel's 16 regular-season bouts are for Paterson Eastside.
+- **Moved:** the 2 District 2 entries (Ashley Coronel, Kassandra Lucero) and the District 2 team total (15 pts).
+- **Alias kept:** "East Side" → 122 is right for Newark's own girls results (9 duals vs Essex schools).
+
+**4 + 3. 27 duplicate profiles merged (13 girls, 14 boys).**
+- **Broken names:** "Kassandr Lucero" → Kassandra Lucero and "Niah" → Niah Lopez. The source sheet reads "Kassandra Lucero" and "Niah (Kim) Lopez"; the March load truncated one name and dropped the parenthesized nickname.
+- **The other 25:** every pair that passed the checks: same gender, a school in common, no event in common, weights within 20 lb, grades at most one apart.
+- **Cause, proven:** the 2026-09-10 Essex County and Union County imports created 199 profiles, 186 of them for wrestlers who already had one at that school. The 2026-11-02 merge compared names as typed, so names split differently ("Aaliyah | Gordon Burke" / "Aaliyah Gordon | Burke") survived.
+- **Not proven:** why that review saw them as new; the code that ran on 9/10 isn't in the history.
+- **Rules:** kept the profile with more records. Grade: the Track roster grade from either profile, else the kept one's, else the other's. Active if either was. Mariana CEPEDA - MOREL renamed "Mariana Cepeda-Morel".
+- **Steps:** moved 220 records → girls 2025-26, boys 2025-26 (archive) and boys 2026-27 ratings rebuilt (logged by hand) → recounted (0 each) → deleted → leaderboards refreshed.
+- **Held as different people:** Ryan Kim (Fort Lee: same event, 27 lb apart), Dan Vargas (110 lb), Alexander Reyes (25 lb), Joseph Paretti (27 lb).
+- The Kassandr profile's link at Newark East Side was deleted (wrong school).
+
+**Code:**
+- `src/lib/matchWrestlers.ts`: the exact-name steps also compare names letters-only, so a name split or hyphenated differently matches the existing wrestler at the school.
+- Integrity check: "two profiles with the same name at the same school" now compares letters-only.
+- School directory Grade %: a school with no linked wrestlers shows "No wrestlers" instead of a blank.
+
+**APPLIED** — 2026-11-05
+**Reversible?** Yes / partly — the backups hold every changed row and the merged profiles
+**Verified?** Yes:
+- 27 of 27 merges pass row by row; 24 of 27 kept profiles rated (the 3 others are out of state).
+- Integrity: same-name-same-school 4 → 2; unlinked 2025-26 wrestlers 17 → 3 (the held same-name pairs).
+
+---
+
 ## 2026-11-05 — Boys wrestlers reactivated; missing name links backfilled; imports always save name links
 
 **Scripts:** `scripts/fix_reactivate_boys_20261105.mts`, `scripts/fix_name_links_backfill_20261105.mts` (data only). Backups: `docs/migrations/backups/20261105_reactivate_boys_before.json`, `..._name_links_backfill_added.json`

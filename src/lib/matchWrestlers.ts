@@ -326,19 +326,25 @@ export async function matchWrestler(
   }
 
   const atSchool = [...(schoolIndex.get(schoolId)?.values() ?? [])].filter(r => r.gender === gender)
+  // letters only: "Aaliyah Gordon Burke" is the same name as "Aaliyah | Gordon Burke" or
+  // "Perla Huerta-Vasquez" — imports split names differently (2026-09-10 duplicates)
+  const compact = (s: string) => s.toLowerCase().replace(/[^a-z]/g, '')
+  const rawCompact = compact(raw)
+  const sameName = (rec: { displayName: string }) => {
+    const recNorm = normalizeInitials(rec.displayName).toLowerCase()
+    return rec.displayName.toLowerCase() === nameLower || recNorm === normLower || (rawCompact.length >= 4 && compact(rec.displayName) === rawCompact)
+  }
 
   // ── 1. Exact name + exact weight ─────────────────────────────────────────────
   for (const rec of atSchool) {
-    const recNorm = normalizeInitials(rec.displayName).toLowerCase()
-    if ((rec.displayName.toLowerCase() === nameLower || recNorm === normLower) && rec.weights.includes(weightClass)) {
+    if (sameName(rec) && rec.weights.includes(weightClass)) {
       return match(raw, schoolId, weightClass, rec, 'exact', [])
     }
   }
 
   // ── 2. Exact name, any weight at same school ──────────────────────────────────
   for (const rec of atSchool) {
-    const recNorm = normalizeInitials(rec.displayName).toLowerCase()
-    if (rec.displayName.toLowerCase() === nameLower || recNorm === normLower) {
+    if (sameName(rec)) {
       return match(raw, schoolId, weightClass, rec, 'high', [])
     }
   }
