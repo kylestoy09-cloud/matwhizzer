@@ -1,0 +1,10 @@
+import { createClient } from '@supabase/supabase-js'
+const db = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+const anon = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
+const { data } = await anon.rpc('district_bracket', { p_district: 4, p_weight: 100, p_gender: 'F', p_season: 2026 })
+for (const r of data as any[]) console.log(r.bracket_side, r.round, r.winner_name, '|', r.winner_school_id, r.winner_school_name, '| beat', r.loser_name, '|', r.loser_school_id, r.loser_school_name)
+const { data: t } = await db.from('tournaments').select('id').eq('name', 'Girl_s Districts District 4').eq('season_id', 2026).single()
+const { data: wc } = await db.from('weight_classes').select('id, weight, gender').eq('weight', 100)
+console.log('weight classes 100:', wc)
+const { data: e } = await db.from('tournament_entries').select('id, school_id, school_context_raw, wrestler_id, weight_class_id').eq('tournament_id', t!.id).in('weight_class_id', wc!.map(w => w.id))
+console.log('entries', e)

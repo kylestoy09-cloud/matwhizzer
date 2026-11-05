@@ -2,6 +2,36 @@
 
 ---
 
+## 2026-11-05 — Boys wrestlers reactivated; missing name links backfilled; imports always save name links
+
+**Scripts:** `scripts/fix_reactivate_boys_20261105.mts`, `scripts/fix_name_links_backfill_20261105.mts` (data only). Backups: `docs/migrations/backups/20261105_reactivate_boys_before.json`, `..._name_links_backfill_added.json`
+
+**1. Boys reactivated (442).**
+- **Cause:** the 2026-09-14 "season 1 orphans" cleanup set `is_active = false` for every boys wrestler with a 2024-25 district entry and no 2025-26 one, assuming their 2025-26 records were on new profiles. 457 have 2025-26 bouts on the same profile, e.g. Luke Goss (Gloucester Catholic, 6-1).
+- **Effects:** inactive wrestlers are left out of the grade %, Roster Grade Import (so their Track rows stayed unmatched) and microcheck.
+- **Grades:** the Track roster grade is one year above the 2024-25 district grade for 417 of them, so the Track upload holds 2025-26 grades. 427 had exactly one unmatched same-name Track row at their school; it was matched, and its grade written (`roster_upload`).
+- **Held, 15, not changed:**
+  - 10 who were 2024-25 seniors yet have 2025-26 bouts
+  - 3 whose Track grade is lower than their profile's
+  - 2 whose Track row is confirmed to another profile
+
+**2. Name links backfilled (182: 20 girls, 162 boys).**
+- **Cause:** the roster tools list a school's wrestlers from `wrestler_name_aliases`. The tournament imports (RTF, CSV) saved a link only for created or picked wrestlers, never for automatic matches, and the 2026-07-25 backfill read dual bouts only.
+- **What was added:** a link for each active NJ wrestler with 2025-26 bouts or entries at an NJ school and no link anywhere, using the name as written on those bouts.
+- **Held, 19:** that name at the school is already linked to another profile (duplicates, steps 3–4), or the wrestler is linked at another school (Ashley Coronel, step 5).
+- **Code:** `src/lib/nameLinks.ts` (`saveNameLinks`). The RTF and CSV tournament imports save a link for every bout side they record. An existing link pointing at someone else is never replaced.
+- **Integrity check:** new rule, "active wrestler with 2025-26 bouts at an NJ school but no name link anywhere". It shows 17, the held duplicates.
+- Not changed: 292 active wrestlers whose only records are 2024-25 postseason entries.
+
+**APPLIED** — 2026-11-05
+**Reversible?** Yes — the backups list every changed row
+**Verified?**
+- 442 of 442 active; 427 of 427 Track rows confirmed, with grades equal to Track.
+- 182 of 182 links present and pointing at the right wrestler.
+- Timber Creek, Pequannock, Hanover Park and Gloucester Catholic now have grade %.
+
+---
+
 ## 2026-11-04 — Admin phase dates per side (Calendar: Season Dates)
 
 **Migration file:** `docs/migrations/20261104_admin_phase_dates.sql`
@@ -17,9 +47,9 @@
   - The admin home opens today's phase from those dates for either side. Fixed on the way: the boys home stayed on Postseason after postseason ended.
 - Not changed: the public site's season (`season_gender_state`, set in the season lifecycle tool).
 
-**PENDING** — to run in the Supabase SQL editor
+**APPLIED** — 2026-11-04, Supabase SQL editor
 **Reversible?** Yes — `DROP TABLE public.admin_phase_dates;` (the code falls back to the old behavior)
-**Verified?** Pending
+**Verified?** Yes — boys 2026-27 copied (Oct 1 / Dec 7 / Jan 25 / Mar 15); table readable by the service role
 
 ---
 

@@ -1,0 +1,10 @@
+import { createClient } from '@supabase/supabase-js'
+const db = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+const ps = await db.from('playoff_seeds').select('*').limit(1)
+console.log('playoff_seeds cols', ps.error?.message ?? Object.keys(ps.data?.[0] ?? {}).join(','))
+const g = await db.from('playoff_seeds').select('gender, season_id', { count: 'exact' }).eq('gender', 'F')
+console.log('girls seeds', g.count, g.error?.message ?? '', [...new Set((g.data ?? []).map((r: any) => r.season_id))])
+const m = await db.from('dual_meets_girls').select('meet_type', { count: 'exact' }).neq('meet_type', 'regular').limit(2000)
+console.log('girls non-regular duals', m.count, m.error?.message ?? '', JSON.stringify(Object.entries((m.data ?? []).reduce((a: any, r: any) => { a[r.meet_type] = (a[r.meet_type] ?? 0) + 1; return a }, {}))))
+const cal = await db.from('season_calendar').select('*').eq('gender', 'F')
+console.log('girls calendar', cal.error?.message ?? JSON.stringify(cal.data?.map((r: any) => [r.season_id, r.event_type, r.start_date])))

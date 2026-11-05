@@ -20,7 +20,7 @@ const rule = (name: string, items: string[]) => { results.push({ rule: name, cou
 const schools = await all('schools', 'id, display_name, is_nj')
 const sch = new Map(schools.map(s => [s.id, s]))
 const sn = (id: number | null) => (id == null ? 'null' : sch.get(id)?.display_name ?? `#${id}`)
-const wrestlers = await all('wrestlers', 'id, first_name, last_name, gender, is_oos')
+const wrestlers = await all('wrestlers', 'id, first_name, last_name, gender, is_oos, is_active')
 const W = new Map(wrestlers.map(w => [w.id, w]))
 const wn = (id: string) => { const w = W.get(id); return w ? `${w.first_name} ${w.last_name}` : id.slice(0, 8) }
 
@@ -106,6 +106,22 @@ rule('wrestles for both NJ and non-NJ schools (* = non-NJ)', mixed)
     if (stray.length) off.push(`${W.get(w)?.gender} ${wn(w)}: alias at ${[...al].map(sn).join('/')}; records at ${stray.map(x => `${sn(x)} ${m.get(x)}`).join(', ')}`)
   }
   rule('records at a school where the wrestler has no alias (but has one elsewhere)', off)
+  // An active NJ wrestler who wrestled for an NJ school in 2025-26 with no name link anywhere is
+  // missing from every roster tool (grade %, Roster Grade Import, microcheck), which list a
+  // school's wrestlers from links. Imports save a link for every bout (src/lib/nameLinks.ts).
+  const cur = new Map<string, Set<number>>()
+  const addCur = (w: string | null, s: number | null) => { if (w && s) (cur.get(w) ?? cur.set(w, new Set()).get(w)!).add(s) }
+  const curMeets = new Set([...(await all('dual_meets', 'id, season_id')), ...(await all('dual_meets_girls', 'id, season_id'))].filter((m: any) => m.season_id === 2026).map((m: any) => m.id))
+  for (const t of ['dual_meet_matches', 'dual_meet_matches_girls']) for (const b of await all(t, 'id, dual_meet_id, wrestler_a_id, wrestler_b_id, school_a_id, school_b_id')) if (curMeets.has(b.dual_meet_id)) { addCur(b.wrestler_a_id, b.school_a_id); addCur(b.wrestler_b_id, b.school_b_id) }
+  const curIst = new Set([...(await all('in_season_tournaments', 'id, season')), ...(await all('in_season_tournaments_girls', 'id, season'))].filter((t: any) => t.season === '2025-26').map((t: any) => t.id))
+  for (const t of ['tournament_bouts', 'tournament_bouts_girls']) for (const b of await all(t, 'id, in_season_tournament_id, wrestler1_id, wrestler2_id, wrestler1_school_id, wrestler2_school_id')) if (curIst.has(b.in_season_tournament_id)) { addCur(b.wrestler1_id, b.wrestler1_school_id); addCur(b.wrestler2_id, b.wrestler2_school_id) }
+  const unlinked: string[] = []
+  for (const [w, ss] of cur) {
+    const ww = W.get(w); if (!ww || ww.is_oos || ww.is_active === false || ww.first_name === 'Unknown' || aliasAt.get(w)?.size) continue
+    const nj = [...ss].filter(s => sch.get(s)?.is_nj === true)
+    if (nj.length) unlinked.push(`${ww.gender} ${wn(w)}: 2025-26 bouts at ${nj.map(sn).join(', ')}`)
+  }
+  rule('active wrestler with 2025-26 bouts at an NJ school but no name link anywhere', unlinked)
 }
 
 // same school twice under two records

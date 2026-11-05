@@ -11,6 +11,7 @@ import { getWorkingSeason, parseGender } from '@/lib/season-context'
 import { parseCsvBouts } from '@/lib/parseCsvBouts'
 import { matchSchoolNames, clearSchoolCache } from '@/lib/matchSchools'
 import { matchWrestler, clearWrestlerCache } from '@/lib/matchWrestlers'
+import { saveNameLinks } from '@/lib/nameLinks'
 import { boutResultToDb } from '@/lib/parseRtf'
 import { seasonIdForDate } from '@/lib/seasons'
 import type { SchoolOverride, WrestlerOverride } from '@/app/admin/[side]/import-rtf/types'
@@ -381,6 +382,7 @@ export async function POST(req: NextRequest) {
   }
 
   const boutRows = []
+  const boutLinks: Parameters<typeof saveNameLinks>[1] = []
   const seenBout = new Set<string>()
 
   for (const b of bouts) {
@@ -392,6 +394,8 @@ export async function POST(req: NextRequest) {
 
     const w1id = await resolveWrestlerId(b.winner_name, s1?.school_id ?? null, b.weight)
     const w2id = await resolveWrestlerId(b.loser_name, s2?.school_id ?? null, b.weight)
+    boutLinks.push({ raw_name: b.winner_name, school_id: s1?.school_id ?? undefined, wrestler_id: w1id ?? undefined },
+                   { raw_name: b.loser_name, school_id: s2?.school_id ?? undefined, wrestler_id: w2id ?? undefined })
 
     // Dedup by ID pair (catches same wrestler under different name spellings)
     if (w1id && w2id) {
@@ -435,6 +439,8 @@ export async function POST(req: NextRequest) {
       if (res.error) return NextResponse.json({ error: `Bout insert failed: ${res.error.message}` }, { status: 500 })
       bouts_inserted += boutRows.slice(i, i + CHUNK).length
     }
+    // a name link for every bout side recorded (src/lib/nameLinks.ts)
+    await saveNameLinks(client, boutLinks)
   }
 
   // ── Round-merge pass (when existing RTF bouts need rounds from CSV) ──────────

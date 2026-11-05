@@ -8,6 +8,7 @@ import { parseRtfText, parseDateRange, boutResultToDb, normalizeRound } from '@/
 import { matchSchoolNames, clearSchoolCache, isNjLookalike } from '@/lib/matchSchools'
 import { matchWrestler, clearWrestlerCache, reloadAliases } from '@/lib/matchWrestlers'
 import { isPlaceholderName } from '@/lib/personName'
+import { saveNameLinks } from '@/lib/nameLinks'
 import { matchTournament } from '@/lib/matchTournaments'
 import { seasonIdForDate } from '@/lib/seasons'
 import type { SchoolFlag, ImportResult, SchoolOverride, WrestlerOverride, TournamentOverride, MsProfileLink } from '@/app/admin/[side]/import-rtf/types'
@@ -532,6 +533,7 @@ export async function POST(req: NextRequest) {
       const tBoutReview = boutReview[tkey] ?? {}
 
       const boutRows = []
+      const boutLinks: Parameters<typeof saveNameLinks>[1] = []
       for (const b of dedupedBouts) {
         const { db_type, db_detail, fall_time_seconds, result_time_estimated, winner_score, loser_score, winner } = boutResultToDb(b.result_type, b.result_detail)
         if (db_type === null && winner === null) continue
@@ -553,6 +555,8 @@ export async function POST(req: NextRequest) {
         }
         const w1 = await resolveId(b.wrestler1_name, s1?.school_id, b.weight_class)
         const w2 = await resolveId(b.wrestler2_name, s2?.school_id, b.weight_class)
+        boutLinks.push({ raw_name: b.wrestler1_name, school_id: s1?.school_id ?? undefined, wrestler_id: w1 ?? undefined },
+                       { raw_name: b.wrestler2_name, school_id: s2?.school_id ?? undefined, wrestler_id: w2 ?? undefined })
         // Never store a bout with a null wrestler ID — both sides must be resolved — except a
         // forfeit over an empty slot ("Scratch"): the winner (always wrestler 1 here) keeps the
         // win, the slot has no profile
@@ -606,6 +610,9 @@ export async function POST(req: NextRequest) {
         if (res.error) throw new Error(`bout insert: ${res.error.message}`)
         bouts_inserted += finalBoutRows.slice(i, i + CHUNK).length
       }
+
+      // a name link for every bout side recorded, automatic matches included (src/lib/nameLinks.ts)
+      await saveNameLinks(client, boutLinks)
 
       const plRowsRaw = []
       for (const p of t.placements) {
