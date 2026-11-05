@@ -53,7 +53,7 @@
 
 **Still open:**
 - Whether the 9/21 triggers and cron job are live. If they are, a bout change would overwrite official totals with the formula. Kyle's live-state query is pending; then remove them by migration.
-- D23 2024-25 official standings (`../Match Data/2025 District Data.py` is identical to `gt_s1_districts.txt`; its D23 block holds only D22's finals).
+- ~~D23 2024-25 official standings~~ — done (follow-up, same day). Kyle supplied them from TrackWrestling. They are added under "District 23" in `../Match Data/2025 District Data.py` (rank / team / points, as the other districts) and copied to `../gt_s1_districts.txt`, which stays identical; pre-edit copy in the session scratchpad. Loaded: 9 teams, 4 changed (Point Pleasant Boro 248, Jackson Liberty 142, Brick Township 60, Point Pleasant Beach 48.5), 5 already equal. Backup: `backups/20261105_boys_postseason_team_scores_2025_before_2.json`. Re-run: 0 changes. **All boys 2024-25 and 2025-26 postseason team totals are now official.**
 
 **APPLIED** — 2026-11-05
 **Reversible?** Yes — backups above

@@ -97,7 +97,10 @@ if (real.length) throw new Error(`unmatched teams with points: ${real.map(r => r
 // only tournaments with official standings: one without (2024-25 D23) keeps its stored rows
 const ids = tourns.filter(t => (stand.get(t.name) ?? []).length).map(t => t.id)
 const before = chk(await db.from('precomputed_team_scores').select('*').in('tournament_id', ids), 'before')
-fs.writeFileSync(`docs/migrations/backups/20261105_boys_postseason_team_scores_${SEASON}_before.json`, JSON.stringify(before, null, 1))
+// never overwrite an earlier backup
+let bk = `docs/migrations/backups/20261105_boys_postseason_team_scores_${SEASON}_before.json`
+for (let n = 2; fs.existsSync(bk); n++) bk = `docs/migrations/backups/20261105_boys_postseason_team_scores_${SEASON}_before_${n}.json`
+fs.writeFileSync(bk, JSON.stringify(before, null, 1)); console.log('backup:', bk)
 chk(await db.from('precomputed_team_scores').delete().in('tournament_id', ids).select('id'), 'delete')
 for (let i = 0; i < newRows.length; i += 200) chk(await db.from('precomputed_team_scores').insert(newRows.slice(i, i + 200)).select('id'), 'insert')
 console.log(`APPLIED: ${before.length} rows replaced by ${newRows.length}`)
