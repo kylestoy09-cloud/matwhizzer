@@ -2,6 +2,18 @@
 
 ---
 
+## 2026-11-05 — School data spreadsheet: frozen header row; Active is editable (code only)
+
+**Where:** preseason dashboard, `SchoolDirectoryWorkspace.tsx` / `SchoolDirectoryWorkspaceGirls.tsx`, API `school-directory` / `school-directory-girls`.
+
+**Changes:**
+- **Header row frozen.** The table's box now has a height cap (window height minus the dashboard chrome), so the table scrolls inside it and every header cell sticks. Before, the box grew with its content, so the page scrolled and carried the header away. The School column stays frozen.
+- **Active is editable** (Active / Inactive picker; marking inactive asks to confirm). The new PATCH `field: 'active'` only adds or removes the school's `inactive_school_seasons` row for that gender and season.
+  - District, region and conference assignments are kept, so reactivating undoes it fully. The older `school-season-status` deactivate deletes those assignments; it is not used here.
+- **Microcheck:** already drops a school inactive in its gender's working season. Every school task, focus items included, gets "not applicable" unless the program is active. The spreadsheet's season (`directorySeason`) is the same season today: boys 2026-27, girls 2025-26.
+
+---
+
 ## 2026-11-05 — Per-wrestler postseason team points hidden (code only)
 
 **Why (Kyle):** "hide wrestler point value leaderboards - that's bad info … you can't reverse engineer it". Against TrackWrestling (Districts 1–18, 2025-26), 993 of 1,000 shown values match. 7 don't, and the causes aren't known or aren't fixable from the data (the TF-1 reading was wrong).

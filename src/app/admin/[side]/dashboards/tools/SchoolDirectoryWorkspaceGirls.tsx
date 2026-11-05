@@ -36,13 +36,13 @@ type Options = {
 type ColDef = {
   key:        string
   label:      string
-  type:       'readonly' | 'text' | 'url' | 'email' | 'conference' | 'district' | 'region' | 'group' | 'section'
+  type:       'readonly' | 'text' | 'url' | 'email' | 'conference' | 'district' | 'region' | 'group' | 'section' | 'active'
   width:      number
 }
 
 const COLUMNS: ColDef[] = [
   { key: 'display_name',   label: 'School',        type: 'readonly',    width: 160 },
-  { key: 'active',         label: 'Active',         type: 'readonly',    width: 80  },
+  { key: 'active',         label: 'Active',         type: 'active',      width: 90  },
   { key: 'grade_pct',      label: 'Grade %',        type: 'readonly',    width: 110 },
   { key: 'address',        label: 'Address',        type: 'text',        width: 200 },
   { key: 'website_url',    label: 'Website',        type: 'url',         width: 160 },
@@ -59,7 +59,7 @@ const COLUMNS: ColDef[] = [
   { key: 'section',        label: 'Section',        type: 'section',     width: 90  },
 ]
 
-const DROPDOWN_TYPES = new Set(['conference', 'district', 'region', 'group', 'section'])
+const DROPDOWN_TYPES = new Set(['conference', 'district', 'region', 'group', 'section', 'active'])
 
 type Props = { seasonId: number }
 
@@ -135,9 +135,12 @@ export function SchoolDirectoryWorkspaceGirls({ seasonId }: Props) {
   async function save(row: SchoolRow, col: ColDef, value: string) {
     const key = `${row.id}_${col.key}`
     setEditCell(null)
-    if (value === displayValue(row, col) && col.type !== 'district' && col.type !== 'region') return
+    if (col.type === 'active' ? value === String(row.active) || !value
+        : value === displayValue(row, col) && col.type !== 'district' && col.type !== 'region') return
     const oldVal = row[col.key as keyof SchoolRow]
     if (String(oldVal ?? '') === value.trim()) return
+    if (col.type === 'active' && value === 'false' &&
+        !confirm(`Mark ${row.display_name} inactive for this season? It drops out of microcheck and the program lists until it is marked active again.`)) return
 
     setSaving(p => new Set(p).add(key))
     try {
@@ -152,7 +155,7 @@ export function SchoolDirectoryWorkspaceGirls({ seasonId }: Props) {
       // Update local row
       setRows(prev => prev.map(r => {
         if (r.id !== row.id) return r
-        const updated = { ...r, [col.key]: value.trim() || null }
+        const updated = { ...r, [col.key]: col.type === 'active' ? value === 'true' : (value.trim() || null) }
         // If district/region changed, the ID is already set correctly
         return updated
       }))
@@ -225,14 +228,16 @@ export function SchoolDirectoryWorkspaceGirls({ seasonId }: Props) {
       {loading ? (
         <div className="flex-1 flex items-center justify-center text-sm text-slate-400">Loading…</div>
       ) : (
-        <div className="flex-1 overflow-auto">
-          <table className="text-xs border-collapse w-max min-w-full">
-            <thead className="sticky top-0 z-10 bg-slate-50">
+        // capped to the window so the table, not the page, scrolls: the header row and the School
+        // column both stay in view
+        <div className="flex-1 overflow-auto max-h-[calc(100vh-13rem)]">
+          <table className="text-xs border-separate border-spacing-0 w-max min-w-full">
+            <thead>
               <tr>
                 {COLUMNS.map((col, i) => (
                   <th
                     key={col.key}
-                    className={`px-3 py-2 text-left font-semibold text-slate-500 border-b border-slate-200 whitespace-nowrap ${i === 0 ? 'sticky left-0 z-20 bg-slate-50' : ''}`}
+                    className={`sticky top-0 bg-slate-50 px-3 py-2 text-left font-semibold text-slate-500 border-b border-slate-200 whitespace-nowrap ${i === 0 ? 'left-0 z-30' : 'z-20'}`}
                     style={{ minWidth: col.width, maxWidth: col.width }}
                   >
                     {col.label}
@@ -251,7 +256,7 @@ export function SchoolDirectoryWorkspaceGirls({ seasonId }: Props) {
                     const dispVal    = displayValue(row, col)
 
                     const cfKey     = `${row.id}:${col.key}`
-                    const isCantFind = col.type !== 'readonly' && cantFind.has(cfKey) && !dispVal
+                    const isCantFind = col.type !== 'readonly' && col.type !== 'active' && cantFind.has(cfKey) && !dispVal
 
                     const baseCls = `px-3 py-1.5 border-b border-slate-100 ${ci === 0 ? 'sticky left-0 z-10 font-medium text-slate-800' : 'text-slate-600 cursor-pointer'}`
                     const rowBg   = ci === 0 ? (ri % 2 === 0 ? 'bg-white' : 'bg-slate-50') : ''
@@ -279,6 +284,7 @@ export function SchoolDirectoryWorkspaceGirls({ seasonId }: Props) {
                                    : col.type === 'region'      ? options.regions.map(r => ({ id: String(r.id), label: r.name }))
                                    : col.type === 'conference'  ? options.conferences.map(c => ({ id: c, label: c }))
                                    : col.type === 'group'       ? options.groups.map(g => ({ id: g, label: g }))
+                                   : col.type === 'active'      ? [{ id: 'true', label: 'Active' }, { id: 'false', label: 'Inactive' }]
                                    : options.sections.map(s => ({ id: s, label: s }))
                         return (
                           <td key={col.key} className={`${baseCls} ${rowBg} !p-0`} style={{ minWidth: col.width }}>
@@ -289,7 +295,7 @@ export function SchoolDirectoryWorkspaceGirls({ seasonId }: Props) {
                               onBlur={() => save(row, col, editValue)}
                               className="w-full px-2 py-1.5 text-xs border-0 bg-blue-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-400"
                             >
-                              <option value="">— clear —</option>
+                              {col.type !== 'active' && <option value="">— clear —</option>}
                               {opts.map(o => <option key={o.id} value={o.id}>{o.label}</option>)}
                             </select>
                           </td>
@@ -317,7 +323,7 @@ export function SchoolDirectoryWorkspaceGirls({ seasonId }: Props) {
                     return (
                       <td
                         key={col.key}
-                        className={`${baseCls} ${rowBg} ${flashCls} ${savingCls} hover:bg-blue-50/60`}
+                        className={`${baseCls} ${rowBg} ${flashCls} ${savingCls} hover:bg-blue-50/60 ${col.key === 'active' ? (row.active ? '!text-green-700' : '!text-slate-400') : ''}`}
                         style={{ minWidth: col.width, maxWidth: col.width }}
                         onClick={() => { startEdit(row, col); setEditValue(String(row[col.key as keyof SchoolRow] ?? '')) }}
                       >

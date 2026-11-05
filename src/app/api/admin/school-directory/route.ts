@@ -159,7 +159,18 @@ export async function PATCH(req: NextRequest) {
   const db  = createSupabaseAdmin()
   const val = value?.trim() || null
 
-  if (['address', 'website_url', 'twitter_handle', 'facebook_url', 'ad_name', 'ad_email'].includes(field)) {
+  if (field === 'active') {
+    // Active / Inactive for this season: only the inactive mark changes (inactive_school_seasons,
+    // which microcheck, program lists and standings read). District, region and conference
+    // assignments are kept, so reactivating undoes it fully.
+    if (!season_id) return NextResponse.json({ error: 'Missing season' }, { status: 400 })
+    if (val !== 'true' && val !== 'false') return NextResponse.json({ error: 'active must be true or false' }, { status: 400 })
+    const { error } = val === 'false'
+      ? await db.from('inactive_school_seasons').upsert({ school_id, season_id, gender: 'M' }, { onConflict: 'school_id,season_id,gender' })
+      : await db.from('inactive_school_seasons').delete().eq('school_id', school_id).eq('season_id', season_id).eq('gender', 'M')
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+
+  } else if (['address', 'website_url', 'twitter_handle', 'facebook_url', 'ad_name', 'ad_email'].includes(field)) {
     const { error } = await db.from('schools').update({ [field]: val }).eq('id', school_id)
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
 
