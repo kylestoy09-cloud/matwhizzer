@@ -2,6 +2,31 @@
 
 ---
 
+## 2026-11-05 — Boys 2025-26 district forfeits: losers back, forfeit marks, team deductions
+
+**Script:** `scripts/fix_district_forfeits_20261105.mts`. **Migration file:** `docs/migrations/20261105_district_forfeits_and_deductions.sql` (SQL editor).
+**Backups:** `backups/20261105_district_forfeits_before.json`, `..._inserted.json`.
+
+**Cause:** the 2026-03-20 load (`../parsed_s2_districts.csv`) wrote every forfeit's loser as the word "FORFEIT" (e.g. `3rd_Place, John Pratt, …, FORFEIT, ,`). `build_from_gt.py` matched it to no one, so all **202** district forfeit bouts were stored with no loser. TrackWrestling's text (`../Match Data/2026 District Match Data.py`) names them all:
+- **23 real wrestlers:** the loser goes back on the bout. Mostly medical forfeits in SF / 3rd / F: Graeber, Boruta, Kithcart, Siguenza, Rodriguez and others. Cloos (D26), Roche and Nocelotl (D9) had no bracket entry and get one (service role, no seed).
+- **150 filler entries** ("Forfeit", "D Forfeit", D17's coaches' names): `matches.forfeit_opponent = 'filler'`. Counts as a contested match for bye points.
+- **29 empty slots** ("over () (For.)"): `forfeit_opponent = 'empty'`. A forfeit win, not a contested match.
+
+**Placements:** 27 missing rows added (1st 2, 2nd 2, 3rd 11, 4th 12).
+
+**Deductions:** new table `team_point_deductions` (service role only). 19 rows, −22 total: official total minus the scoring rules' total where that is a whole number of points short.
+
+**Check, simulated before applying:** after these fixes, 285 of 310 district schools match the rules exactly.
+- 19 are short by whole points (the deductions).
+- 5 are 0.5 off: TrackWrestling's TF-1 errors (Kyle: every tech fall is 1.5).
+- 1 is unexplained: Montville D5, official 2 higher; its team page is missing from the file.
+- Regions 273/273 and state 162/162 were already exact.
+
+**APPLIED** — entries and placements 2026-11-05; SQL pending (SQL editor)
+**Reversible?** Yes — ROLLBACK in the SQL file; backups for the service-role rows
+
+---
+
 ## 2026-11-05 — School data spreadsheet: frozen header row; Active is editable (code only)
 
 **Where:** preseason dashboard, `SchoolDirectoryWorkspace.tsx` / `SchoolDirectoryWorkspaceGirls.tsx`, API `school-directory` / `school-directory-girls`.
