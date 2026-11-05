@@ -2,6 +2,28 @@
 
 ---
 
+## 2026-11-05 — Boys scoring formula = TrackWrestling's rules
+
+**Migration file:** `docs/migrations/20261105_tw_scoring_rules.sql` (SQL editor). The rules and their proof are in `docs/reviews/trackwrestling_team_scoring.md`.
+
+**Changes:**
+- `tw_wrestler_points` keeps its inputs; for boys tournaments it now returns the proven rules. The previous code is kept as `tw_wrestler_points_legacy` for girls, whose scoring is unverified and unchanged. It was dashboard-made: its live definition is reconstructed from Kyle's `pg_get_functiondef`, and is what the rename preserves.
+- New: `tw_boys_entry_points(entry)` and `tw_boys_school_points(tournament)` (deductions included).
+- `lb_p_wrestler_points` (state section) rebuilt on the rules: same columns, order and limit 25.
+
+**Old formula's errors, now fixed:**
+- districts scored only placers (Marra's round-1 pin earned 0; TrackWrestling gives 4)
+- 4th place got 6 instead of 4
+- region placement used the district table
+- advancement and "loss" points were given for finals and 3rd-place matches
+- region round values were fixed numbers
+
+**After:** the per-wrestler leaderboards are still hidden (`SHOW_WRESTLER_TEAM_POINTS`). Re-run `scripts/check_team_scoring_rules.mts` against the database function before showing them.
+
+**Pending:** SQL editor run.
+
+---
+
 ## 2026-11-05 — Boys 2025-26 district forfeits: losers back, forfeit marks, team deductions
 
 **Script:** `scripts/fix_district_forfeits_20261105.mts`. **Migration file:** `docs/migrations/20261105_district_forfeits_and_deductions.sql` (SQL editor).
