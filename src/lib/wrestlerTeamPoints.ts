@@ -1,6 +1,6 @@
-// Per-wrestler postseason team points ("Individual Team Points" leaderboards) are hidden
-// (Kyle, 2026-11-05): the site's formula can't be matched to how TrackWrestling scores wrestlers
-// (e.g. 4 District 7/14 wrestlers 0.5 off with no known cause), so the numbers are bad info.
-// Set to true to show them again once the scoring is understood. Pages skip loading the data
-// while hidden. Team totals are unaffected: they are the copied official standings.
-export const SHOW_WRESTLER_TEAM_POINTS = false
+// Per-wrestler postseason team points ("Individual Team Points" leaderboards).
+// Hidden 2026-11-05 (the old formula didn't match TrackWrestling); shown again the same day once the
+// boys formula was rebuilt on TrackWrestling's proven rules (20261105_tw_scoring_rules.sql;
+// docs/reviews/trackwrestling_team_scoring.md: 2025-26 state and regions exact, districts 304/310).
+// Set to false to hide them again. Pages skip loading the data while hidden.
+export const SHOW_WRESTLER_TEAM_POINTS = true
