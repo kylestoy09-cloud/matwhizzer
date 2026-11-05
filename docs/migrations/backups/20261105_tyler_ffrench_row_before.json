@@ -1,0 +1,18 @@
+{
+ "id": "33344f2f-e6dd-48ca-801b-6f878a2e7d31",
+ "school_name_raw": "Waldwick / Midland Park",
+ "first_name_raw": "Tyler",
+ "last_name_raw": "FFrench",
+ "weight_class": 150,
+ "grade": "Jr",
+ "school_id": 9,
+ "wrestler_id": "5ba107fa-8f6d-48fe-8e8b-104c9b884ad0",
+ "status": "confirmed",
+ "import_batch": "2026-09-15_track_master",
+ "confirmed_by": "backfill: microcheck roster_match",
+ "confirmed_at": "2026-09-22T15:24:35.210548+00:00",
+ "created_at": "2026-09-15T14:21:20.586587+00:00",
+ "updated_at": "2026-10-30T02:37:30.360391+00:00",
+ "season_id": 2026,
+ "gender": "M"
+}

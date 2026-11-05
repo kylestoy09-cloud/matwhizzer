@@ -2,6 +2,44 @@
 
 ---
 
+## 2026-11-05 — The 2026-09-14 rule replaced; 11 senior profiles split; three name links repointed
+
+**Scripts:** `scripts/fix_split_five_and_links_20261105.mts`, `scripts/fix_split_six_20261105.mts`, `scripts/fix_boys_active_rule_20261105.mts` (data only). Backups: `docs/migrations/backups/20261105_split_five_and_links_before.json`, `..._split_six_before.json`, `..._boys_active_rule_before.json`, `..._tyler_ffrench_row_before.json`
+
+**Kyle's rule** (replaces `20260914_deactivate_season1_orphans.sql`, a one-time migration that no code re-runs):
+- A boys wrestler with a 2024-25 district entry is inactive **only** if he has zero 2025-26 information: no 2025-26 dual bout, in-season tournament bout, postseason entry or Track roster row (linked, or his exact name at a school he is linked to).
+- One record keeps him active. A Track row with a lower grade than his profile is a younger boy with the same name, not evidence.
+
+**Changes:**
+- **Corrects the same-day `fix_held_boys` part A for five boys.** The profiles were 2024-25 seniors (Somerville, Clearview, Wayne Valley, Cedar Creek, Ridgefield Park). The 2025-26 wrestlers with those names at Ramapo, Raritan, Lakewood, Newark East Side and Bloomfield are different boys.
+  - Each now has his own profile: Track grade, active, with his 2025-26 bouts, name link and Track row (46 bouts).
+  - The seniors went back to inactive, grade Sr.
+- **Six more** 2024-25 senior profiles carried 2025-26 records at another school: Gabriel Rodriguez (→ Westwood), Jayden Rodriguez (→ River Dell), Jose Rodriguez (→ Raritan), Joel Martinez (→ East Orange), James Cook (→ Schalick), Tyler French (→ Waldwick). Split the same way, 142 records.
+  - Tyler's Waldwick Track row is spelled "Tyler FFrench" (Jr). It had been confirmed to the Lacey senior and was moved to the Waldwick boy.
+- **Name links repointed to the boy who wrestles at that school** (each pair is two boys at two schools, not two on one team):
+  - "Joseph Paretti"@Elmwood Park
+  - "Alexander Reyes"@North Brunswick
+  - "Ryan Kim"@Fort Lee. His one 2024-25 Fort Lee entry (157, Jr) stays on the Northern Highlands profile, unresolved.
+- **The rule applied to 3,686 boys:**
+  - 127 activated (125 by a Track row, 2 by a 2025-26 postseason entry)
+  - 5 deactivated (created 2026-11-02, 2024-25 entries only)
+  - 189 single exact-name Track rows matched with their grade
+  - Matheus Da Costa's Track row (Fr vs his Sr) ignored
+  - A rerun finds 0 to change.
+- **Lerrod Smalls:** the Bridgewater-Raritan profile was out of state because of `20260803_fix_oos_wrestler_flags.sql` (flags wrestlers whose name links are all non-NJ). The 8/1 dual import had given it one link, at NY Military Academy. The flag was cleared when that bout moved to the new NYMA profile.
+- Boys 2025-26 (archive) and 2026-27 ratings rebuilt; boys leaderboards refreshed.
+
+**Flagged, not changed:** "Charles" (Whippany Park, Fr) has no last name.
+
+**APPLIED** — 2026-11-05
+**Reversible?** Yes — the backups hold every changed row
+**Verified?** Yes:
+- 11 of 11 splits: every moved record on the new profile, each senior inactive Sr with no 2025-26 records or Track rows.
+- 11 of 11 new wrestlers rated, 0 of 11 seniors.
+- Integrity: unlinked 2025-26 wrestlers 3 → 0; "no alias at this school" 92 → 82.
+
+---
+
 ## 2026-11-05 — The 15 held boys resolved; Kson Young merged; Jackson Clarke Goss renamed
 
 **Scripts:** `scripts/fix_held_boys_20261105.mts`, `scripts/merge_kson_young_20261105.mts` (data only). Backups: `docs/migrations/backups/20261105_held_boys_before.json`, `..._kson_young_before.json`, `..._jackson_clarke_goss_before.json`
