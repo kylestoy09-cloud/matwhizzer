@@ -2,6 +2,32 @@
 
 ---
 
+## 2026-11-05 — TF-1 tech falls
+
+**Migration file:** `docs/migrations/20261105_tf1_tech_falls.sql` (SQL editor; the service role can't write `matches`).
+
+**Why:** the per-wrestler team-point check against TrackWrestling (Districts 1–18, 2025-26) found 993 of 1,000 shown values equal. 4 of the 7 that differ are 0.5 high. TrackWrestling lists one of each of those wrestlers' wins as **TF-1** (1 bonus point), but the 3/20 load mapped every "Tech Fall" to TF-1.5.
+
+**Bouts:**
+- **All TF-1 lines in the exports:** 7 unique bouts.
+- **Changed:** 6 stored as TF-1.5 → TF-1 (Riotto, Perrota, Romaniello, Delacruz, Pincus in 2025-26 districts; Borrometi, 2024-25 region final).
+- **Times:** TrackWrestling itself lists 0:00 for 3 of them, as stored.
+- **Not in the database:** the girls 2024-25 North 2 bout Reist over Wagner. Hayden Wagner has no profile; left with the girls work on hold.
+
+**Functions:** edited in place from their live definitions (listed by Kyle's `pg_proc` query); only the tech-fall text changes.
+- **Lists and counts given TF-1:** `district_leaders`, `lb_bonus_wins`, `lb_most_techfalls`, `school_leaderboard`, `dual_meet_bonus_ranks`, `lb_rs_individual_stats`, `lb_rs_team_stats` (dual TF = 5).
+- **Pricing CASEs given TF-1** (1.0 bonus; 2.0 / 1.5 where TF is 2.5 / 2.0): `district_wrestler_points`, `lb_p_wrestler_points`, `lb_team_points`, `school_directory`, `school_points_breakdown`, `state_team_score`.
+- The shown per-wrestler points already use `tw_win_bonus`, which priced TF-1 at 1.0.
+
+**Not changed (noted):**
+- `tw_win_bonus` gives plain "TF" 1.0, while the CASE functions give it 1.5.
+- The 2 forfeits over an empty slot counted as wins (Wright, Grant, D16).
+- Jack Wans (D5 165): site 6 vs TrackWrestling 4, cause not proven.
+
+**Pending:** run in the SQL editor. Then refresh the boys postseason leaderboards and re-check the 4 wrestlers' points.
+
+---
+
 ## 2026-11-05 — Review of the day's changes: team-total labels, name links, refused profiles
 
 **1. Team-total row labels** (`scripts/fix_team_score_labels_20261105.mts`, backup `backups/20261105_team_score_labels_before.json`).
