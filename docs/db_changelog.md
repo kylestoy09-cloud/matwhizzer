@@ -2,6 +2,39 @@
 
 ---
 
+## 2026-11-05 — The 15 held boys resolved; Kson Young merged; Jackson Clarke Goss renamed
+
+**Scripts:** `scripts/fix_held_boys_20261105.mts`, `scripts/merge_kson_young_20261105.mts` (data only). Backups: `docs/migrations/backups/20261105_held_boys_before.json`, `..._kson_young_before.json`, `..._jackson_clarke_goss_before.json`
+
+**Corrections from Kyle:**
+- Sean O'Neill, Anthony Morales, Alexander Perez, Antonio Cruz and Derek Rodriguez wrestled in 2025-26 and are on the 2026 Track roster.
+- Lucas Almonte, Jonathan Leon, Joel Kim and Aiden Roman graduated in 2025.
+- The 2026-09-14 rule (a 2024-25 district entry and none in 2025-26 = graduated or inactive) is not evidence and is not used.
+
+**Changes:**
+- **Activated and graded from their exact-name Track row at the 2025-26 school; row linked:** Sean O'Neill (Ramapo, Sr), Anthony Morales (Raritan, So), Alexander Perez (Lakewood, Jr), Antonio Cruz (Newark East Side, Sr — row stored as "Antonio Cruz | Jr"), Derek Rodriguez (Bloomfield, Jr), Ryan Rodriguez (Clifton, Fr), Jayden Johnson (Manchester Twp, Fr), Rocco Randazzo (Howell, Fr).
+- **Bouts moved to the wrestler the sheet names:**
+  - 3 "Benjamin Almonte" from Lucas Almonte
+  - 2 "Adrian Leon" from Jonathan Leon
+  - 4 "Paul Kim" from Joel Kim (existing profiles)
+  - 1 "Romeo Roman" from Aiden Roman (profile created, So, Track row linked)
+- **Lerrod Smalls:** the one 2025-26 bout (12/13/25, NY Military Academy vs St. Peter's Prep, forfeit win) moved to a new out-of-state NYMA profile. The Bridgewater-Raritan 2024-25 profile is no longer flagged out of state (the import had set it because of that bout).
+- **Kson Young (Neptune):** "Ksan Young" (3 tournament bouts) merged into "Kson Young" (4 duals; Track spelling, Sr). Same school and weight, no shared events.
+- **Jackson Clarke Goss:** last name "ClarkeGoss" → "Clarke Goss", per Kyle.
+- Boys 2025-26 (archive) and 2026-27 ratings rebuilt; boys leaderboards refreshed.
+
+**Open, not changed:**
+- The 2024-25 "Sr" district entries on Sean O'Neill's, Anthony Morales's, Alexander Perez's, Antonio Cruz's and Derek Rodriguez's profiles are at other schools (Anthony is a So on the 2025-26 Track roster), so they likely belong to other wrestlers.
+- How these 2025-26 bouts landed on the wrong profiles is not proven.
+
+**APPLIED** — 2026-11-05
+**Reversible?** Yes — the backups hold every changed row
+**Verified?** Yes:
+- Each of the 8: active, Track grade, Track row linked. 11 of 11 moved bouts on the named profile. Ksan gone (0 references).
+- Integrity: "NJ and non-NJ schools" 2 → 1; "no alias at this school" 93 → 92.
+
+---
+
 ## 2026-11-05 — District 2 "East Side" fixed; 27 duplicate profiles merged; matcher compares names letters-only; "No wrestlers" label
 
 **Scripts:** `scripts/fix_d2_east_side_20261105.mts`, `scripts/merge_duplicates_20261105.mts` (data only). Backups: `docs/migrations/backups/20261105_d2_east_side_before.json`, `..._duplicates_before.json`

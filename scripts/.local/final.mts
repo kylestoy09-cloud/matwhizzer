@@ -1,8 +1,14 @@
-import { createClient } from '@supabase/supabase-js'
-const db = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
-const c = async (t: string, f: (q: any) => any) => (await f(db.from(t).select('*', { count: 'exact', head: true }))).count
-console.log('postseason entries with no school:', await c('tournament_entries', q => q.is('school_id', null)))
-console.log('placements with no wrestler:', await c('tournament_placements', q => q.is('wrestler_id', null)), '| no school:', await c('tournament_placements', q => q.is('school_id', null)))
-console.log('bracket slots named but unlinked:', (await c('tournament_bracket_slots', q => q.is('top_wrestler_id', null).not('top_name_raw', 'is', null).neq('top_name_raw', ''))) + (await c('tournament_bracket_slots', q => q.is('bottom_wrestler_id', null).not('bottom_name_raw', 'is', null).neq('bottom_name_raw', ''))))
-for (const t of ['dual_meet_matches', 'dual_meet_matches_girls']) console.log(t, 'named sides unlinked:', (await c(t, q => q.is('wrestler_a_id', null).not('wrestler_a_name_raw', 'is', null).neq('wrestler_a_name_raw', '').eq('is_double_forfeit', false))) + (await c(t, q => q.is('wrestler_b_id', null).not('wrestler_b_name_raw', 'is', null).neq('wrestler_b_name_raw', '').eq('is_double_forfeit', false))))
-for (const t of ['tournament_bouts', 'tournament_bouts_girls']) console.log(t, 'named sides unlinked:', (await c(t, q => q.is('wrestler1_id', null).not('wrestler1_name_raw', 'is', null).neq('wrestler1_name_raw', ''))) + (await c(t, q => q.is('wrestler2_id', null).not('wrestler2_name_raw', 'is', null).neq('wrestler2_name_raw', ''))))
+import { matchWrestler } from '../../src/lib/matchWrestlers'
+import { createSupabaseAdmin } from '../../src/lib/supabase/service'
+import { girlsProgramSchoolIds, boysProgramSchoolIds } from '../../src/lib/genderPrograms'
+import { girlsRosterGradeCounts, boysRosterGradeCounts } from '../../src/lib/rosterGrades'
+const db = createSupabaseAdmin()
+for (const [n, s, w] of [['Aaliyah Gordon Burke', 132, 138], ['Perla Huerta Vasquez', 155, 152], ['Hunter Sedita Lott', 109, 185], ['Sabrina Jean-Baptiste', 105, 126]] as const) {
+  const m = await matchWrestler(n, s, w, 'F'); console.log(`match "${n}": ${m.confidence} → ${m.displayName} (${m.wrestlerId?.slice(0, 8)})`)
+}
+const names = new Map((await db.from('schools').select('id, display_name')).data!.map((r: any) => [r.id, r.display_name]))
+for (const [g, season] of [['F', 2026], ['M', 2027]] as const) {
+  const ids = g === 'F' ? await girlsProgramSchoolIds(db, season) : await boysProgramSchoolIds(db, season)
+  const c = g === 'F' ? await girlsRosterGradeCounts(db, ids) : await boysRosterGradeCounts(db, ids)
+  console.log(`${g}: ${ids.length} programs; "No wrestlers": ${ids.filter(id => !c.bySchool.has(id)).map(id => names.get(id)).join(', ')}`)
+}
