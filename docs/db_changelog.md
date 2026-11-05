@@ -18,9 +18,13 @@
 - advancement and "loss" points were given for finals and 3rd-place matches
 - region round values were fixed numbers
 
-**After:** the per-wrestler leaderboards are still hidden (`SHOW_WRESTLER_TEAM_POINTS`). Re-run `scripts/check_team_scoring_rules.mts` against the database function before showing them.
+**APPLIED** — 2026-11-05 by Kyle in the SQL editor (Fort Lee D8 = 76.5).
 
-**Pending:** SQL editor run.
+**Verified:** `scripts/check_team_scoring_db.mts`, database scoring vs official totals:
+- **2025-26:** state 162/162, regions 273/273, districts 304/310. The 6 off are TrackWrestling's 5 TF-1 errors (0.5 each) and Montville D5 (+2), as expected.
+- **2024-25:** state 167/167, regions 240/275, districts 272/314. Those seasons still have the forfeit-loser problem and the missing region bouts; that pass is not done.
+
+The per-wrestler leaderboards are still hidden (`SHOW_WRESTLER_TEAM_POINTS`), pending Kyle.
 
 ---
 
