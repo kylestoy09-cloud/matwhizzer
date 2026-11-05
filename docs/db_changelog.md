@@ -36,7 +36,7 @@
   - Exported via Pages to Word and saved to `data/official_team_scores/boys_2025_26_district_tables.json`.
   - Tables 1–19 are each followed by their district's results (District 6 twice, identical). Tables 20–32 have no heading; each matched exactly one district by its entered schools.
   - 300 totals: 167 changed, 19 new, 114 already equal. "Forfeit" filler rows skipped.
-  - **District 21 has no table in the doc:** its stored rows are unchanged and unverified.
+  - **District 21 (follow-up, same day):** Kyle pointed to the labelled D1–D32 rankings at the end of `../Match Data/2026 District Match Data.py` (saved 2026-04-03; the `.pages` copy is from 03-19 and has no D21 table). The load now reads that file (`data/official_team_scores/boys_2025_26_districts.json`). 31 lists are identical to the tables already loaded; D21 is new: 5 totals changed, Holy Cross added. All 32 labels agree with the entered schools. Backup: `backups/20261105_boys_district_team_scores_before_2.json`. Re-run: 310 equal, 0 changes.
   - Backup: `backups/20261105_boys_district_team_scores_before.json`.
 - **2025-26 regions and state:** `scripts/build_boys_official_postseason_team_scores.mts`, from `../gt_s2_regions.txt` and `../gt_s2_state.txt`. 435 totals replace 369 rows. Backup: `backups/20261105_boys_postseason_team_scores_2026_before.json`.
 - **2024-25 districts, regions and state:** the same script with `--season 2025` (`gt_s1_*`). 747 totals replace 649 rows.
@@ -53,7 +53,7 @@
 
 **Still open:**
 - Whether the 9/21 triggers and cron job are live. If they are, a bout change would overwrite official totals with the formula. Kyle's live-state query is pending; then remove them by migration.
-- D21 2025-26 and D23 2024-25 official standings.
+- D23 2024-25 official standings (`../Match Data/2025 District Data.py` is identical to `gt_s1_districts.txt`; its D23 block holds only D22's finals).
 
 **APPLIED** — 2026-11-05
 **Reversible?** Yes — backups above

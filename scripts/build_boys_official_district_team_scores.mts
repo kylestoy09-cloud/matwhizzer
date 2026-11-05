@@ -19,7 +19,12 @@ async function all(t: string, cols: string) { const out: any[] = []; for (let i 
 const key = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, ' ').trim()
 const loose = (s: string) => key(s).replace(/\(.*?\)/g, ' ').replace(/\b(regional|reg|high school|h\.?s\.?|hs|school|township|twp|senior|jr\/sr|central)\b/g, ' ').replace(/[^a-z0-9/ ]/g, ' ').replace(/\s+/g, ' ').trim()
 type Team = { rank: number; team: string; points: number }
-const SRC = JSON.parse(fs.readFileSync('data/official_team_scores/boys_2025_26_district_tables.json', 'utf8')).tables as { order: number; district_heading_after: number | null; teams: Team[] }[]
+// Source: the labelled D1-D32 rankings at the end of ../Match Data/2026 District Match Data.py
+// (saved 2026-04-03), in data/official_team_scores/boys_2025_26_districts.json. 31 of them are
+// identical to the earlier source's tables; it adds District 21. Each label must still agree with
+// the schools entered in that district.
+const SRC = Object.entries(JSON.parse(fs.readFileSync('data/official_team_scores/boys_2025_26_districts.json', 'utf8')).districts as Record<string, Team[]>)
+  .map(([d, teams], i) => ({ order: i + 1, district_heading_after: Number(d) as number | null, teams }))
 
 const schools = new Map(chk(await db.from('schools').select('id, display_name'), 's').map(s => [s.id, s.display_name]))
 const byName = new Map<string, Set<number>>()
@@ -89,7 +94,10 @@ if (unmatched) throw new Error('unmatched teams: fix the mapping first')
 // Only the listed teams are replaced; a stored row for a team TrackWrestling doesn't list is kept as is.
 const ids = [...assigned.keys()].map(d => dist.get(d)!.id)
 const before = chk(await db.from('precomputed_team_scores').select('*').in('tournament_id', ids), 'before')
-fs.writeFileSync('docs/migrations/backups/20261105_boys_district_team_scores_before.json', JSON.stringify(before, null, 1))
+// never overwrite an earlier backup
+let bk = 'docs/migrations/backups/20261105_boys_district_team_scores_before.json'
+for (let n = 2; fs.existsSync(bk); n++) bk = `docs/migrations/backups/20261105_boys_district_team_scores_before_${n}.json`
+fs.writeFileSync(bk, JSON.stringify(before, null, 1)); console.log('backup:', bk)
 for (const r of newRows) {
   const ex = before.find(b => b.tournament_id === r.tournament_id && b.school_id === r.school_id)
   if (ex) chk(await db.from('precomputed_team_scores').update({ total_points: r.total_points }).eq('id', ex.id).select('id'), 'update')

@@ -1,0 +1,1624 @@
+{
+ "source": "../Match Data/2026 District Match Data.py (Kyle's TrackWrestling copy, saved 2026-04-03): rankings D1-D32 at the end of the file",
+ "districts": {
+  "1": [
+   {
+    "rank": 1,
+    "team": "St Joseph (Montvale) HS",
+    "points": 291.5
+   },
+   {
+    "rank": 2,
+    "team": "River Dell",
+    "points": 162.5
+   },
+   {
+    "rank": 3,
+    "team": "Dumont",
+    "points": 124.5
+   },
+   {
+    "rank": 4,
+    "team": "Waldwick / Midland Park",
+    "points": 92.5
+   },
+   {
+    "rank": 5,
+    "team": "Northern Valley Regional (Old Tappan) HS",
+    "points": 73.0
+   },
+   {
+    "rank": 6,
+    "team": "Tenafly",
+    "points": 68.0
+   },
+   {
+    "rank": 7,
+    "team": "Emerson/Park Ridge",
+    "points": 67.5
+   },
+   {
+    "rank": 8,
+    "team": "Northern Valley Regional (Demarest) HS",
+    "points": 39.5
+   },
+   {
+    "rank": 9,
+    "team": "Cresskill",
+    "points": 38.0
+   },
+   {
+    "rank": 10,
+    "team": "New Milford",
+    "points": 32.0
+   }
+  ],
+  "2": [
+   {
+    "rank": 1,
+    "team": "Don Bosco Prep School",
+    "points": 247.5
+   },
+   {
+    "rank": 2,
+    "team": "Newton",
+    "points": 125.5
+   },
+   {
+    "rank": 3,
+    "team": "Sparta",
+    "points": 119.5
+   },
+   {
+    "rank": 4,
+    "team": "Kittatinny Regional Jr/Sr",
+    "points": 105.5
+   },
+   {
+    "rank": 5,
+    "team": "Lakeland Reg",
+    "points": 93.0
+   },
+   {
+    "rank": 6,
+    "team": "Jefferson TWP",
+    "points": 68.5
+   },
+   {
+    "rank": 7,
+    "team": "Wallkill Valley Regional",
+    "points": 62.0
+   },
+   {
+    "rank": 8,
+    "team": "West Milford Township",
+    "points": 56.5
+   },
+   {
+    "rank": 9,
+    "team": "Vernon Township",
+    "points": 48.0
+   },
+   {
+    "rank": 10,
+    "team": "North Warren Reg",
+    "points": 44.0
+   }
+  ],
+  "3": [
+   {
+    "rank": 1,
+    "team": "Phillipsburg",
+    "points": 211.5
+   },
+   {
+    "rank": 2,
+    "team": "Northern Highlands Regional Sc",
+    "points": 160.0
+   },
+   {
+    "rank": 3,
+    "team": "Pompton Lakes",
+    "points": 138.5
+   },
+   {
+    "rank": 4,
+    "team": "Kinnelon",
+    "points": 123.5
+   },
+   {
+    "rank": 5,
+    "team": "Wayne Hills",
+    "points": 89.5
+   },
+   {
+    "rank": 6,
+    "team": "Manchester Regional",
+    "points": 76.0
+   },
+   {
+    "rank": 7,
+    "team": "Butler",
+    "points": 59.0
+   },
+   {
+    "rank": 8,
+    "team": "Pequannock Township",
+    "points": 58.0
+   },
+   {
+    "rank": 9,
+    "team": "Hawthorne",
+    "points": 25.5
+   },
+   {
+    "rank": 10,
+    "team": "Saddle River Day",
+    "points": 7.5
+   }
+  ],
+  "4": [
+   {
+    "rank": 1,
+    "team": "Pascack Valley School",
+    "points": 221.0
+   },
+   {
+    "rank": 2,
+    "team": "High Point Regional",
+    "points": 164.0
+   },
+   {
+    "rank": 3,
+    "team": "Ramapo",
+    "points": 134.0
+   },
+   {
+    "rank": 4,
+    "team": "Westwood",
+    "points": 110.0
+   },
+   {
+    "rank": 5,
+    "team": "Mahwah",
+    "points": 97.5
+   },
+   {
+    "rank": 6,
+    "team": "Pascack Hills",
+    "points": 93.5
+   },
+   {
+    "rank": 7,
+    "team": "Glen Rock",
+    "points": 74.0
+   },
+   {
+    "rank": 8,
+    "team": "Indian Hills",
+    "points": 54.0
+   },
+   {
+    "rank": 9,
+    "team": "Ramsey",
+    "points": 39.5
+   },
+   {
+    "rank": 10,
+    "team": "Ridgewood",
+    "points": 29.5
+   }
+  ],
+  "5": [
+   {
+    "rank": 1,
+    "team": "Mt. Olive",
+    "points": 288.5
+   },
+   {
+    "rank": 2,
+    "team": "Cedar Grove",
+    "points": 165.5
+   },
+   {
+    "rank": 3,
+    "team": "Morris Hills",
+    "points": 163.5
+   },
+   {
+    "rank": 4,
+    "team": "Montville",
+    "points": 157.0
+   },
+   {
+    "rank": 5,
+    "team": "Morris Knolls Hs",
+    "points": 89.5
+   },
+   {
+    "rank": 6,
+    "team": "Mountain Lakes",
+    "points": 43.0
+   },
+   {
+    "rank": 7,
+    "team": "Parsippany",
+    "points": 30.0
+   },
+   {
+    "rank": 8,
+    "team": "John F. Kennedy",
+    "points": 8.0
+   },
+   {
+    "rank": 9,
+    "team": "Eastside ( Paterson)",
+    "points": 0.0
+   }
+  ],
+  "6": [
+   {
+    "rank": 1,
+    "team": "Paramus Catholic",
+    "points": 323.0
+   },
+   {
+    "rank": 2,
+    "team": "Wayne Valley",
+    "points": 136.5
+   },
+   {
+    "rank": 3,
+    "team": "Roxbury",
+    "points": 110.0
+   },
+   {
+    "rank": 4,
+    "team": "Parsippany Hills",
+    "points": 86.5
+   },
+   {
+    "rank": 5,
+    "team": "Lenape Valley/Hopatcong",
+    "points": 82.0
+   },
+   {
+    "rank": 6,
+    "team": "Dover",
+    "points": 80.0
+   },
+   {
+    "rank": 7,
+    "team": "Passaic",
+    "points": 75.0
+   },
+   {
+    "rank": 8,
+    "team": "Boonton",
+    "points": 70.5
+   },
+   {
+    "rank": 9,
+    "team": "College Achieve Paterson Charter",
+    "points": 0.0
+   },
+   {
+    "rank": 9,
+    "team": "Pioneer Academy",
+    "points": 0.0
+   }
+  ],
+  "7": [
+   {
+    "rank": 1,
+    "team": "Bergen Catholic",
+    "points": 345.0
+   },
+   {
+    "rank": 2,
+    "team": "Passaic Co Tech-Voc",
+    "points": 177.5
+   },
+   {
+    "rank": 3,
+    "team": "Hasbrouck Heights",
+    "points": 143.5
+   },
+   {
+    "rank": 4,
+    "team": "Fair Lawn",
+    "points": 132.0
+   },
+   {
+    "rank": 5,
+    "team": "Garfield",
+    "points": 68.5
+   },
+   {
+    "rank": 6,
+    "team": "Elmwood Park",
+    "points": 59.0
+   },
+   {
+    "rank": 7,
+    "team": "Lodi/Saddle Brook High School",
+    "points": 21.5
+   },
+   {
+    "rank": 8,
+    "team": "Bergen Charter",
+    "points": 0.0
+   },
+   {
+    "rank": 8,
+    "team": "Ridgefield Memorial",
+    "points": 0.0
+   },
+   {
+    "rank": 8,
+    "team": "Ridgefield Park/Bogota",
+    "points": 0.0
+   }
+  ],
+  "8": [
+   {
+    "rank": 1,
+    "team": "West Essex Regional",
+    "points": 190.5
+   },
+   {
+    "rank": 2,
+    "team": "Paramus",
+    "points": 184.0
+   },
+   {
+    "rank": 3,
+    "team": "Passaic Valley",
+    "points": 182.5
+   },
+   {
+    "rank": 4,
+    "team": "Leonia/Palisades Park",
+    "points": 136.5
+   },
+   {
+    "rank": 5,
+    "team": "Fort Lee",
+    "points": 76.5
+   },
+   {
+    "rank": 6,
+    "team": "Bergenfield HS",
+    "points": 74.0
+   },
+   {
+    "rank": 7,
+    "team": "Clifton",
+    "points": 63.0
+   },
+   {
+    "rank": 8,
+    "team": "Teaneck",
+    "points": 43.0
+   },
+   {
+    "rank": 9,
+    "team": "Hackensack",
+    "points": 14.0
+   },
+   {
+    "rank": 10,
+    "team": "Dwight Morrow",
+    "points": 13.0
+   }
+  ],
+  "9": [
+   {
+    "rank": 1,
+    "team": "Delbarton School",
+    "points": 336.0
+   },
+   {
+    "rank": 2,
+    "team": "Hanover Park Hs",
+    "points": 173.5
+   },
+   {
+    "rank": 3,
+    "team": "Union City",
+    "points": 117.5
+   },
+   {
+    "rank": 4,
+    "team": "Kearny",
+    "points": 106.0
+   },
+   {
+    "rank": 5,
+    "team": "West Orange",
+    "points": 105.0
+   },
+   {
+    "rank": 6,
+    "team": "Becton Regional/Wood-Ridge",
+    "points": 71.5
+   },
+   {
+    "rank": 7,
+    "team": "Secaucus",
+    "points": 40.5
+   },
+   {
+    "rank": 8,
+    "team": "Hoboken High School",
+    "points": 1.0
+   },
+   {
+    "rank": 9,
+    "team": "Cliffside Park",
+    "points": 0.0
+   }
+  ],
+  "10": [
+   {
+    "rank": 1,
+    "team": "Ridge",
+    "points": 228.0
+   },
+   {
+    "rank": 2,
+    "team": "Nutley",
+    "points": 213.0
+   },
+   {
+    "rank": 3,
+    "team": "Bloomfield",
+    "points": 115.0
+   },
+   {
+    "rank": 4,
+    "team": "Livingston",
+    "points": 104.0
+   },
+   {
+    "rank": 5,
+    "team": "Verona",
+    "points": 77.5
+   },
+   {
+    "rank": 6,
+    "team": "Belleville",
+    "points": 71.0
+   },
+   {
+    "rank": 7,
+    "team": "Montclair",
+    "points": 50.0
+   },
+   {
+    "rank": 8,
+    "team": "East Orange Campus",
+    "points": 42.0
+   },
+   {
+    "rank": 9,
+    "team": "Glen Ridge",
+    "points": 39.5
+   },
+   {
+    "rank": 10,
+    "team": "Orange",
+    "points": 23.5
+   }
+  ],
+  "11": [
+   {
+    "rank": 1,
+    "team": "Caldwell",
+    "points": 223.5
+   },
+   {
+    "rank": 2,
+    "team": "Depaul Catholic",
+    "points": 202.0
+   },
+   {
+    "rank": 3,
+    "team": "North Bergen",
+    "points": 143.5
+   },
+   {
+    "rank": 4,
+    "team": "Morristown",
+    "points": 119.5
+   },
+   {
+    "rank": 5,
+    "team": "Lyndhurst/North Arlington",
+    "points": 84.0
+   },
+   {
+    "rank": 6,
+    "team": "Rutherford",
+    "points": 54.0
+   },
+   {
+    "rank": 7,
+    "team": "Barringer Hs",
+    "points": 53.0
+   },
+   {
+    "rank": 8,
+    "team": "Newark Collegiate Charter",
+    "points": 45.0
+   },
+   {
+    "rank": 9,
+    "team": "North Star Academy",
+    "points": 25.0
+   },
+   {
+    "rank": 10,
+    "team": "St. Mary High School (Rutherford)",
+    "points": 15.0
+   }
+  ],
+  "12": [
+   {
+    "rank": 1,
+    "team": "West Morris Central",
+    "points": 225.5
+   },
+   {
+    "rank": 2,
+    "team": "Hackettstown",
+    "points": 149.5
+   },
+   {
+    "rank": 3,
+    "team": "St. Benedict`s Prep",
+    "points": 128.5
+   },
+   {
+    "rank": 4,
+    "team": "Warren Hills",
+    "points": 113.0
+   },
+   {
+    "rank": 5,
+    "team": "Randolph Hs",
+    "points": 110.5
+   },
+   {
+    "rank": 6,
+    "team": "Whippany Park",
+    "points": 83.0
+   },
+   {
+    "rank": 7,
+    "team": "Belvidere",
+    "points": 66.5
+   },
+   {
+    "rank": 8,
+    "team": "Madison",
+    "points": 59.0
+   },
+   {
+    "rank": 9,
+    "team": "West Morris ( Mendham)",
+    "points": 35.0
+   },
+   {
+    "rank": 10,
+    "team": "Newark Academy/Morris Catholic",
+    "points": 4.0
+   },
+   {
+    "rank": 11,
+    "team": "Forfeit",
+    "points": 0.0
+   }
+  ],
+  "13": [
+   {
+    "rank": 1,
+    "team": "St Peters Preparatory School",
+    "points": 288.0
+   },
+   {
+    "rank": 2,
+    "team": "Union",
+    "points": 126.5
+   },
+   {
+    "rank": 3,
+    "team": "Arthur Johnson",
+    "points": 108.5
+   },
+   {
+    "rank": 4,
+    "team": "Brearley/Dayton",
+    "points": 98.0
+   },
+   {
+    "rank": 5,
+    "team": "Westfield",
+    "points": 84.5
+   },
+   {
+    "rank": 6,
+    "team": "Millburn",
+    "points": 82.0
+   },
+   {
+    "rank": 7,
+    "team": "Irvington",
+    "points": 72.5
+   },
+   {
+    "rank": 8,
+    "team": "Roselle Park",
+    "points": 49.0
+   },
+   {
+    "rank": 9,
+    "team": "Summit/Chatham",
+    "points": 44.0
+   },
+   {
+    "rank": 10,
+    "team": "New Providence",
+    "points": 34.0
+   }
+  ],
+  "14": [
+   {
+    "rank": 1,
+    "team": "North Hunterdon",
+    "points": 252.0
+   },
+   {
+    "rank": 2,
+    "team": "South Plainfield",
+    "points": 146.0
+   },
+   {
+    "rank": 3,
+    "team": "Bridgewater-Raritan",
+    "points": 138.5
+   },
+   {
+    "rank": 4,
+    "team": "Bernards",
+    "points": 96.0
+   },
+   {
+    "rank": 5,
+    "team": "Voorhees (Glen Gardner)",
+    "points": 81.5
+   },
+   {
+    "rank": 6,
+    "team": "Middlesex/Dunellen",
+    "points": 75.0
+   },
+   {
+    "rank": 7,
+    "team": "Bound Brook HS",
+    "points": 72.5
+   },
+   {
+    "rank": 8,
+    "team": "Somerville",
+    "points": 57.5
+   },
+   {
+    "rank": 9,
+    "team": "North Plainfield",
+    "points": 29.0
+   }
+  ],
+  "15": [
+   {
+    "rank": 1,
+    "team": "Pope John Xxiii",
+    "points": 248.5
+   },
+   {
+    "rank": 2,
+    "team": "Watchung Hills Regional",
+    "points": 169.0
+   },
+   {
+    "rank": 3,
+    "team": "Colonia",
+    "points": 98.5
+   },
+   {
+    "rank": 3,
+    "team": "Linden",
+    "points": 98.5
+   },
+   {
+    "rank": 5,
+    "team": "JFK-Iselin",
+    "points": 87.5
+   },
+   {
+    "rank": 6,
+    "team": "Pingry School",
+    "points": 79.5
+   },
+   {
+    "rank": 7,
+    "team": "Columbia",
+    "points": 76.5
+   },
+   {
+    "rank": 8,
+    "team": "Plainfield",
+    "points": 57.0
+   },
+   {
+    "rank": 9,
+    "team": "Carteret",
+    "points": 49.0
+   },
+   {
+    "rank": 10,
+    "team": "John P. Stevens",
+    "points": 18.0
+   }
+  ],
+  "16": [
+   {
+    "rank": 1,
+    "team": "Rahway",
+    "points": 210.5
+   },
+   {
+    "rank": 2,
+    "team": "Cranford",
+    "points": 199.5
+   },
+   {
+    "rank": 3,
+    "team": "Elizabeth",
+    "points": 116.0
+   },
+   {
+    "rank": 4,
+    "team": "Bayonne",
+    "points": 110.5
+   },
+   {
+    "rank": 5,
+    "team": "Scotch Plains-Fanwood",
+    "points": 96.0
+   },
+   {
+    "rank": 6,
+    "team": "Governor Livingston Regional Hs",
+    "points": 86.0
+   },
+   {
+    "rank": 7,
+    "team": "Saint Thomas Aquinas",
+    "points": 85.5
+   },
+   {
+    "rank": 8,
+    "team": "East Side",
+    "points": 46.0
+   },
+   {
+    "rank": 9,
+    "team": "Hillside High School",
+    "points": 0.0
+   }
+  ],
+  "17": [
+   {
+    "rank": 1,
+    "team": "Middletown South",
+    "points": 213.0
+   },
+   {
+    "rank": 2,
+    "team": "Saint John Vianney",
+    "points": 187.5
+   },
+   {
+    "rank": 3,
+    "team": "Raritan",
+    "points": 150.5
+   },
+   {
+    "rank": 4,
+    "team": "Marlboro",
+    "points": 146.0
+   },
+   {
+    "rank": 5,
+    "team": "Hillsborough",
+    "points": 92.5
+   },
+   {
+    "rank": 6,
+    "team": "Keansburg/Henry Hudson",
+    "points": 79.5
+   },
+   {
+    "rank": 7,
+    "team": "Red Bank Regional",
+    "points": 57.0
+   },
+   {
+    "rank": 8,
+    "team": "Keyport",
+    "points": 22.0
+   },
+   {
+    "rank": 9,
+    "team": "Rutgers Prep School",
+    "points": 6.0
+   },
+   {
+    "rank": 10,
+    "team": "Central Jersey College Prep",
+    "points": 4.0
+   }
+  ],
+  "18": [
+   {
+    "rank": 1,
+    "team": "St. Joseph Metuchen",
+    "points": 229.0
+   },
+   {
+    "rank": 2,
+    "team": "Holmdel",
+    "points": 164.5
+   },
+   {
+    "rank": 3,
+    "team": "Piscataway",
+    "points": 99.5
+   },
+   {
+    "rank": 4,
+    "team": "Sayreville War Memorial",
+    "points": 96.5
+   },
+   {
+    "rank": 5,
+    "team": "Edison",
+    "points": 79.5
+   },
+   {
+    "rank": 5,
+    "team": "Woodbridge",
+    "points": 79.5
+   },
+   {
+    "rank": 7,
+    "team": "Perth Amboy",
+    "points": 78.5
+   },
+   {
+    "rank": 8,
+    "team": "Highland Park",
+    "points": 67.5
+   },
+   {
+    "rank": 9,
+    "team": "Metuchen",
+    "points": 33.0
+   },
+   {
+    "rank": 10,
+    "team": "New Brunswick",
+    "points": 31.0
+   }
+  ],
+  "19": [
+   {
+    "rank": 1,
+    "team": "Rumson-Fair Haven Regional",
+    "points": 234.5
+   },
+   {
+    "rank": 2,
+    "team": "Old Bridge",
+    "points": 224.0
+   },
+   {
+    "rank": 3,
+    "team": "Manville Hs",
+    "points": 153.5
+   },
+   {
+    "rank": 4,
+    "team": "Hunterdon Central Reg",
+    "points": 108.0
+   },
+   {
+    "rank": 5,
+    "team": "Montgomery",
+    "points": 64.0
+   },
+   {
+    "rank": 6,
+    "team": "Franklin",
+    "points": 62.0
+   },
+   {
+    "rank": 7,
+    "team": "West Windsor-Plainsboro South",
+    "points": 48.5
+   },
+   {
+    "rank": 8,
+    "team": "Princeton",
+    "points": 40.5
+   },
+   {
+    "rank": 9,
+    "team": "West Windsor-Plainsboro North",
+    "points": 38.0
+   },
+   {
+    "rank": 10,
+    "team": "South Hunterdon",
+    "points": 6.0
+   }
+  ],
+  "20": [
+   {
+    "rank": 1,
+    "team": "Delaware Valley Regional",
+    "points": 249.5
+   },
+   {
+    "rank": 2,
+    "team": "Middletown North",
+    "points": 231.5
+   },
+   {
+    "rank": 3,
+    "team": "Hopewell Valley Hs",
+    "points": 156.5
+   },
+   {
+    "rank": 4,
+    "team": "Matawan Reg",
+    "points": 127.0
+   },
+   {
+    "rank": 5,
+    "team": "East Brunswick H.S.",
+    "points": 69.0
+   },
+   {
+    "rank": 6,
+    "team": "Spotswood",
+    "points": 61.0
+   },
+   {
+    "rank": 7,
+    "team": "North Brunswick Township",
+    "points": 25.5
+   },
+   {
+    "rank": 8,
+    "team": "South Brunswick Hs",
+    "points": 19.0
+   },
+   {
+    "rank": 9,
+    "team": "South River",
+    "points": 9.5
+   }
+  ],
+  "21": [
+   {
+    "rank": 1,
+    "team": "Christian Brothers Academy",
+    "points": 310.5
+   },
+   {
+    "rank": 2,
+    "team": "Jackson Township H.S.",
+    "points": 217.0
+   },
+   {
+    "rank": 3,
+    "team": "Hamilton East-Steinert",
+    "points": 113.0
+   },
+   {
+    "rank": 4,
+    "team": "Robbinsville",
+    "points": 108.0
+   },
+   {
+    "rank": 5,
+    "team": "Lawrence Senior",
+    "points": 92.0
+   },
+   {
+    "rank": 6,
+    "team": "Hamilton North- Nottingham",
+    "points": 51.5
+   },
+   {
+    "rank": 7,
+    "team": "Notre Dame",
+    "points": 32.5
+   },
+   {
+    "rank": 8,
+    "team": "Riverside",
+    "points": 32.0
+   },
+   {
+    "rank": 9,
+    "team": "Trenton Central",
+    "points": 14.0
+   },
+   {
+    "rank": 10,
+    "team": "Holy Cross",
+    "points": 6.0
+   }
+  ],
+  "22": [
+   {
+    "rank": 1,
+    "team": "Howell",
+    "points": 245.5
+   },
+   {
+    "rank": 2,
+    "team": "Colts Neck",
+    "points": 171.0
+   },
+   {
+    "rank": 3,
+    "team": "Wall Hs",
+    "points": 160.5
+   },
+   {
+    "rank": 4,
+    "team": "Manasquan",
+    "points": 130.5
+   },
+   {
+    "rank": 5,
+    "team": "Brick Township",
+    "points": 65.0
+   },
+   {
+    "rank": 6,
+    "team": "Shore Regional",
+    "points": 52.5
+   },
+   {
+    "rank": 7,
+    "team": "Point Pleasant Beach Hs",
+    "points": 51.5
+   },
+   {
+    "rank": 8,
+    "team": "Asbury Park",
+    "points": 41.5
+   },
+   {
+    "rank": 9,
+    "team": "Neptune",
+    "points": 27.0
+   }
+  ],
+  "23": [
+   {
+    "rank": 1,
+    "team": "Ocean Township",
+    "points": 221.0
+   },
+   {
+    "rank": 2,
+    "team": "Monroe Township",
+    "points": 165.5
+   },
+   {
+    "rank": 3,
+    "team": "Brick Memorial",
+    "points": 161.0
+   },
+   {
+    "rank": 4,
+    "team": "Northern Burlington ( Columbus)",
+    "points": 124.0
+   },
+   {
+    "rank": 5,
+    "team": "Burlington Township",
+    "points": 89.0
+   },
+   {
+    "rank": 6,
+    "team": "Hightstown",
+    "points": 75.5
+   },
+   {
+    "rank": 7,
+    "team": "Bordentown Regional/Florence Township",
+    "points": 56.0
+   },
+   {
+    "rank": 8,
+    "team": "Ewing",
+    "points": 36.0
+   },
+   {
+    "rank": 9,
+    "team": "Hamilton West",
+    "points": 34.0
+   },
+   {
+    "rank": 10,
+    "team": "Burlington City",
+    "points": 8.0
+   }
+  ],
+  "24": [
+   {
+    "rank": 1,
+    "team": "Seton Hall Prep School",
+    "points": 232.0
+   },
+   {
+    "rank": 2,
+    "team": "Point Pleasant Boro",
+    "points": 188.5
+   },
+   {
+    "rank": 3,
+    "team": "Allentown",
+    "points": 150.5
+   },
+   {
+    "rank": 4,
+    "team": "Long Branch",
+    "points": 130.0
+   },
+   {
+    "rank": 5,
+    "team": "Manalapan",
+    "points": 128.0
+   },
+   {
+    "rank": 6,
+    "team": "Freehold Borough",
+    "points": 56.0
+   },
+   {
+    "rank": 7,
+    "team": "Freehold Township",
+    "points": 50.0
+   },
+   {
+    "rank": 8,
+    "team": "Lakewood",
+    "points": 30.5
+   },
+   {
+    "rank": 9,
+    "team": "New Egypt",
+    "points": 27.0
+   },
+   {
+    "rank": 10,
+    "team": "Monmouth Reg",
+    "points": 6.0
+   }
+  ],
+  "25": [
+   {
+    "rank": 1,
+    "team": "Camden Catholic",
+    "points": 278.5
+   },
+   {
+    "rank": 2,
+    "team": "Haddonfield High Schol",
+    "points": 142.5
+   },
+   {
+    "rank": 3,
+    "team": "Collingswood",
+    "points": 129.0
+   },
+   {
+    "rank": 4,
+    "team": "Rancocas Valley Regional",
+    "points": 116.0
+   },
+   {
+    "rank": 5,
+    "team": "Timber Creek",
+    "points": 74.5
+   },
+   {
+    "rank": 6,
+    "team": "Paul Vi",
+    "points": 74.0
+   },
+   {
+    "rank": 7,
+    "team": "Sterling",
+    "points": 53.5
+   },
+   {
+    "rank": 8,
+    "team": "Haddon Heights",
+    "points": 48.5
+   },
+   {
+    "rank": 9,
+    "team": "Haddon Twp Hgh School",
+    "points": 46.5
+   },
+   {
+    "rank": 10,
+    "team": "Camden/Camden Eastside",
+    "points": 6.0
+   }
+  ],
+  "26": [
+   {
+    "rank": 1,
+    "team": "Lacey Township",
+    "points": 167.5
+   },
+   {
+    "rank": 2,
+    "team": "Toms River East H.S.",
+    "points": 153.5
+   },
+   {
+    "rank": 3,
+    "team": "Seneca",
+    "points": 152.5
+   },
+   {
+    "rank": 4,
+    "team": "Toms River South",
+    "points": 127.5
+   },
+   {
+    "rank": 5,
+    "team": "Central Regional",
+    "points": 108.0
+   },
+   {
+    "rank": 6,
+    "team": "Toms River North",
+    "points": 105.5
+   },
+   {
+    "rank": 7,
+    "team": "Barnegat",
+    "points": 73.0
+   },
+   {
+    "rank": 8,
+    "team": "Pemberton Township",
+    "points": 51.0
+   },
+   {
+    "rank": 9,
+    "team": "Manchester Township",
+    "points": 30.0
+   }
+  ],
+  "27": [
+   {
+    "rank": 1,
+    "team": "Washington Township",
+    "points": 198.0
+   },
+   {
+    "rank": 2,
+    "team": "Delran",
+    "points": 180.0
+   },
+   {
+    "rank": 3,
+    "team": "Cinnaminson",
+    "points": 145.0
+   },
+   {
+    "rank": 4,
+    "team": "Audubon",
+    "points": 134.0
+   },
+   {
+    "rank": 5,
+    "team": "Moorestown",
+    "points": 122.0
+   },
+   {
+    "rank": 6,
+    "team": "Pennsauken",
+    "points": 93.0
+   },
+   {
+    "rank": 7,
+    "team": "BCIT - Westampton",
+    "points": 38.0
+   },
+   {
+    "rank": 8,
+    "team": "Willingboro",
+    "points": 25.0
+   },
+   {
+    "rank": 9,
+    "team": "Palmyra",
+    "points": 12.5
+   }
+  ],
+  "28": [
+   {
+    "rank": 1,
+    "team": "Immaculata",
+    "points": 215.0
+   },
+   {
+    "rank": 2,
+    "team": "Lenape",
+    "points": 143.0
+   },
+   {
+    "rank": 3,
+    "team": "Gloucester City JR/SR",
+    "points": 131.0
+   },
+   {
+    "rank": 4,
+    "team": "West Deptford",
+    "points": 127.0
+   },
+   {
+    "rank": 5,
+    "team": "Cherry Hill West",
+    "points": 109.0
+   },
+   {
+    "rank": 6,
+    "team": "Shawnee",
+    "points": 78.5
+   },
+   {
+    "rank": 7,
+    "team": "Cherokee",
+    "points": 61.0
+   },
+   {
+    "rank": 8,
+    "team": "Cherry Hill East",
+    "points": 46.0
+   },
+   {
+    "rank": 9,
+    "team": "Maple Shade",
+    "points": 41.0
+   }
+  ],
+  "29": [
+   {
+    "rank": 1,
+    "team": "St. Augustine Prep School",
+    "points": 292.0
+   },
+   {
+    "rank": 2,
+    "team": "Williamstown",
+    "points": 124.0
+   },
+   {
+    "rank": 3,
+    "team": "Gateway Reg/ Woodbury",
+    "points": 117.0
+   },
+   {
+    "rank": 4,
+    "team": "Highland Regional/Triton",
+    "points": 115.5
+   },
+   {
+    "rank": 5,
+    "team": "Hammonton",
+    "points": 108.0
+   },
+   {
+    "rank": 6,
+    "team": "Eastern",
+    "points": 85.5
+   },
+   {
+    "rank": 7,
+    "team": "Overbrook Reg Senior",
+    "points": 31.5
+   },
+   {
+    "rank": 8,
+    "team": "Winslow Twp ( Edgewood)",
+    "points": 23.0
+   },
+   {
+    "rank": 9,
+    "team": "St Joseph (Hammonton) HS",
+    "points": 13.5
+   },
+   {
+    "rank": 10,
+    "team": "Lindenwold",
+    "points": 0.0
+   }
+  ],
+  "30": [
+   {
+    "rank": 1,
+    "team": "Southern Regional",
+    "points": 288.5
+   },
+   {
+    "rank": 2,
+    "team": "Kingsway Regional",
+    "points": 210.0
+   },
+   {
+    "rank": 3,
+    "team": "Middle Township",
+    "points": 145.0
+   },
+   {
+    "rank": 4,
+    "team": "Ocean City",
+    "points": 96.5
+   },
+   {
+    "rank": 5,
+    "team": "Absegami",
+    "points": 67.0
+   },
+   {
+    "rank": 6,
+    "team": "Pinelands Regional",
+    "points": 54.0
+   },
+   {
+    "rank": 7,
+    "team": "Mainland Regional",
+    "points": 39.0
+   },
+   {
+    "rank": 8,
+    "team": "Oakcrest",
+    "points": 37.0
+   },
+   {
+    "rank": 9,
+    "team": "Holy Spirit",
+    "points": 14.0
+   },
+   {
+    "rank": 10,
+    "team": "Atlantic City",
+    "points": 0.0
+   }
+  ],
+  "31": [
+   {
+    "rank": 1,
+    "team": "Delsea",
+    "points": 262.0
+   },
+   {
+    "rank": 2,
+    "team": "Pennsville Memorial",
+    "points": 122.0
+   },
+   {
+    "rank": 3,
+    "team": "A.P. Schalick",
+    "points": 120.0
+   },
+   {
+    "rank": 4,
+    "team": "Egg Harbor",
+    "points": 113.5
+   },
+   {
+    "rank": 5,
+    "team": "Woodstown",
+    "points": 102.5
+   },
+   {
+    "rank": 6,
+    "team": "Cumberland Regional",
+    "points": 96.0
+   },
+   {
+    "rank": 7,
+    "team": "Millville",
+    "points": 78.0
+   },
+   {
+    "rank": 8,
+    "team": "Buena Regional",
+    "points": 43.0
+   },
+   {
+    "rank": 9,
+    "team": "Cedar Creek",
+    "points": 34.0
+   },
+   {
+    "rank": 10,
+    "team": "Vineland",
+    "points": 27.0
+   }
+  ],
+  "32": [
+   {
+    "rank": 1,
+    "team": "Lower Cape May Reg",
+    "points": 231.0
+   },
+   {
+    "rank": 2,
+    "team": "Red Bank Catholic Hs",
+    "points": 225.5
+   },
+   {
+    "rank": 3,
+    "team": "Clearview Regional",
+    "points": 159.0
+   },
+   {
+    "rank": 4,
+    "team": "Deptford",
+    "points": 122.0
+   },
+   {
+    "rank": 5,
+    "team": "Paulsboro H.S.",
+    "points": 81.5
+   },
+   {
+    "rank": 6,
+    "team": "Clayton/Glassboro",
+    "points": 60.0
+   },
+   {
+    "rank": 7,
+    "team": "Pitman",
+    "points": 31.0
+   },
+   {
+    "rank": 8,
+    "team": "Salem",
+    "points": 18.0
+   },
+   {
+    "rank": 9,
+    "team": "Penns Grove",
+    "points": 10.0
+   }
+  ]
+ }
+}
