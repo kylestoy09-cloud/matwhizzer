@@ -197,6 +197,14 @@ function computeMatchMatTime(winType: string | null, fallTime: number | null, is
 
 // ── Component ──────────────────────────────────────────────────────────────────
 
+// A wrestler's class in a season, from their graduation year (seasons are keyed by end year: class of
+// 2027 is a Sophomore in 2024-25, season 2025). Outside high school years: none.
+const CLASS_NAMES: Record<number, [string, string]> = { 9: ['Freshman', 'Fr'], 10: ['Sophomore', 'So'], 11: ['Junior', 'Jr'], 12: ['Senior', 'Sr'] }
+function classInSeason(graduationYear: number | null | undefined, seasonId: number): [string, string] | null {
+  if (!graduationYear) return null
+  return CLASS_NAMES[12 - (graduationYear - seasonId)] ?? null
+}
+
 export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }) {
   const [allSeasons, calendarRes] = await Promise.all([
     getSeasons(),
@@ -228,7 +236,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
   // 1. Wrestler
   const { data: wrestler } = await supabase
     .from('wrestlers')
-    .select('id, first_name, last_name, gender, suffix')
+    .select('id, first_name, last_name, gender, suffix, graduation_year')
     .eq('id', id)
     .single()
 
@@ -871,6 +879,14 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
   const wins   = nonBye.filter(m => m.result === 'W').length
   const losses = nonBye.filter(m => m.result === 'L').length
 
+  // The first season on file has postseason results only (★ on profiles); a wrestler who was a
+  // sophomore or older then has earlier high school seasons we have no records for
+  const firstSeasonId = Math.min(...allSeasons.map(s => s.id))
+  const gradYear = (wrestler as { graduation_year?: number | null }).graduation_year ?? null
+  const firstSeasonClass = classInSeason(gradYear, firstSeasonId)
+  const olderThanRecords = !!firstSeasonClass && firstSeasonClass[1] !== 'Fr'
+  const star = (seasonId: number) => (seasonId === firstSeasonId ? ' ★' : '')
+
   // Career stats computation
   type SeasonStat = {
     seasonId: number; wins: number; losses: number; pins: number; tfs: number; mds: number
@@ -1238,7 +1254,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
                     { key: 'avgTf',     label: 'Avg TF',   align: 'center', numeric: false },
                   ]}
                   rows={seasonStats.map(s => ({
-                    season:    lookupSeasonLabel(allSeasons, s.seasonId) ?? `S${s.seasonId}`,
+                    season:    `${lookupSeasonLabel(allSeasons, s.seasonId) ?? `S${s.seasonId}`}${classInSeason(gradYear, s.seasonId) ? ` · ${classInSeason(gradYear, s.seasonId)![1]}` : ''}${star(s.seasonId)}`,
                     wl:        `${s.wins}-${s.losses}`,
                     pins:      s.pins,
                     tfs:       s.tfs,
@@ -1256,6 +1272,16 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
                     avgTf:     careerTotals.tfs  > 0 ? formatPinTimeStat(Math.round(careerTotals.tfTimeSecs  / careerTotals.tfs))  : '—',
                   } : undefined}
                 />
+                {(seasonStats.some(s => s.seasonId === firstSeasonId) || olderThanRecords) && (
+                  <div className="mt-2 space-y-0.5 text-xs text-slate-500">
+                    {seasonStats.some(s => s.seasonId === firstSeasonId) && (
+                      <p>★ {lookupSeasonLabel(allSeasons, firstSeasonId)}: postseason results only.</p>
+                    )}
+                    {olderThanRecords && (
+                      <p>Records begin with the {lookupSeasonLabel(allSeasons, firstSeasonId)} season; earlier seasons aren&apos;t included.</p>
+                    )}
+                  </div>
+                )}
               </div>
             ) : null
 
@@ -1271,9 +1297,12 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
                   return (
                     <div key={seasonId} className="rounded-lg border border-slate-200 overflow-hidden">
                       <div className="px-4 py-2 bg-slate-50 border-b border-slate-200 flex items-center gap-2">
-                        <span className="text-xs font-semibold text-slate-700 uppercase tracking-widest">{label}</span>
+                        <span className="text-xs font-semibold text-slate-700 uppercase tracking-widest">{label}{star(seasonId)}</span>
                         {schoolBySeason.get(seasonId) && (
                           <span className="text-xs text-slate-400 font-medium">— {schoolBySeason.get(seasonId)}</span>
+                        )}
+                        {classInSeason(gradYear, seasonId) && (
+                          <span className="text-xs text-slate-400 font-medium">— {classInSeason(gradYear, seasonId)![0]}</span>
                         )}
                         <span className="ml-auto text-xs text-slate-500 font-medium">{seasonWins}W – {seasonLosses}L</span>
                       </div>

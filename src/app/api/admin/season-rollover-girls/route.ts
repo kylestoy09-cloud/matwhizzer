@@ -152,6 +152,15 @@ export async function POST(req: NextRequest) {
 
   const errors: string[] = []
 
+  // The grade column now describes the next season: move grade_season first, so the database keeps
+  // each advanced wrestler's graduation_year (20261106_graduation_year_from_grade.sql)
+  {
+    const { data: gs, error: gsErr } = await supabase.from('grade_season').select('season_end').eq('gender', 'F').single()
+    if (gsErr || !gs) return NextResponse.json({ error: `grade_season: ${gsErr?.message ?? 'missing'}` }, { status: 500 })
+    const { error: upErr } = await supabase.from('grade_season').update({ season_end: gs.season_end + 1, updated_at: new Date().toISOString() }).eq('gender', 'F').eq('season_end', gs.season_end)
+    if (upErr) return NextResponse.json({ error: `grade_season: ${upErr.message}` }, { status: 500 })
+  }
+
   // Advance grade for each group (Fr→So, So→Jr, Jr→Sr) in batch
   for (const g of ['So', 'Jr', 'Sr'] as Grade[]) {
     const ids = toAdvance.filter(r => r.grade === g).map(r => r.id)

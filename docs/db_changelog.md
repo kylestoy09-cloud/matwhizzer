@@ -2,6 +2,15 @@
 
 ---
 
+## 2026-11-06 — Graduation years; class per season on profiles
+
+- **Backfill:** `scripts/backfill_graduation_year_20261106.mts` set `wrestlers.graduation_year` for 11,175 NJ wrestlers from their grade. A grade from the Track roster upload or a manual edit is a 2025-26 class; a grade from a district entry belongs to that entry's season. A year is set only when every tournament entry's own grade gives the same class. 30 conflicts are left blank: `docs/reviews/grade_conflicts_20261106.md`. Backup: `backups/20261106_graduation_year_before.json`.
+- **Boys (Kyle):** the 232 boys whose only record is 2024-25, underclassmen then and marked inactive, are still in school, like the 87 girls. They're now active and advanced to their 2025-26 class (55 Fr→So, 72 So→Jr, 105 Jr→Sr). "Active" now means still in high school; a season's roster comes from that season's matches.
+- **Kept in step:** **Migration file:** `docs/migrations/20261106_graduation_year_from_grade.sql`. A trigger on `wrestlers` sets `graduation_year` when a grade is set or changed and the write doesn't set it itself. `grade_season` holds the season the grade column describes, 2025-26 for both programs. **Code:** both Season Rollover routes advance `grade_season` by one before advancing grades.
+- **Profiles:** `WrestlerProfileCore.tsx`. Each season's heading reads "2024-25 — Collingswood — Freshman", and the Career Stats season column reads "2024-25 · Fr", both from the graduation year. The first season on file gets a ★ and the note "postseason results only". A wrestler who was a sophomore or older that season gets the note that records begin with that season.
+
+---
+
 ## 2026-11-06 — The 292 girls (2024-25-only profiles)
 
 **Script:** `scripts/fix_girls_2025_only_20261106.mts` (service role). **Backup:** `backups/20261106_girls_2025_only_before.json`. The girls marked active with only a 2024-25 postseason entry (no name link, no 2025-26 match) have their grade from that 2024-25 entry. Kyle ruled:
