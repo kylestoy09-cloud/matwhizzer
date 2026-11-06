@@ -2,6 +2,18 @@
 
 ---
 
+## 2026-11-05 — Boys 2024-25 district forfeits, deductions, mid-bracket byes
+
+**Script:** `scripts/fix_district_forfeits_20261105.mts --season 2025`. **Migration files:** `docs/migrations/20261105_district_forfeits_and_deductions_2025.sql` and `docs/migrations/20261105_tw_scoring_midbracket_bye.sql` (both run in the SQL editor). **Backups:** `backups/20261105_district_forfeits_2025_before.json`, `..._inserted.json`.
+
+- **Forfeits:** 124 district forfeits with no loser get `forfeit_opponent` set: 95 `filler`, 29 `empty`. None had a real loser to put back. The service role added 2 placement rows.
+- **Deductions:** 9 deductions of −1 each. These are the schools exactly 1 point over their official total under the scoring rules: D2 school 12, D3 315, D7 62, D11 109, D14 138, D16 153, D24 227, D25 245, D27 258.
+- **Scoring rule:** a bye in the middle of the bracket now earns its 2 points when the wrestler wins the bout after it (`tw_boys_entry_points`). Only two wrestlers in either season have one: Gonzalez and Garriques, Phillipsburg, District 1 2024-25. With the rule, Phillipsburg's total matches the official 258 (it was 254). No 2025-26 total changes.
+- **Still off, cause unproven:** Lower Cape May (D29), 155 vs the official 157; Clearview (D32), 129.5 vs 133.5. Every wrestler of both schools is stored, and every bout matches TrackWrestling's text.
+- **Source file:** `../Match Data/2025 District Data.py`, District 10's second "3rd Place" block became "First Place". It was built from NJSIAADistrict10.csv, with records taken from the same file. Before: scratchpad copy. `../gt_s1_districts.txt` (the old identical copy) is unchanged.
+
+---
+
 ## 2026-11-05 — Boys 2024-25 bracket repairs (part 2): District 10, Region 2, Region 7
 
 **Script:** `scripts/fix_2025_csv_brackets_20261105.mts`. **Migration file:** `docs/migrations/20261105_2025_csv_brackets.sql` (SQL editor). **Backup:** `backups/20261105_2025_csv_brackets_before.json`.

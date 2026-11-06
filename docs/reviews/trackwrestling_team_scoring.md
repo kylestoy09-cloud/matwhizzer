@@ -6,7 +6,7 @@ A wrestler's team points = advancement + bonus + placement. A school's total = t
 - **Advancement:**
   - 2 for each championship-bracket win; 1 for each consolation win.
   - **None for a placement match** (1st, 3rd, 5th, 7th): the placement points cover it.
-- **Byes:** 2 each (championship) **only if the wrestler wins his next contested match**.
+- **Byes:** 2 each (championship) **only if the wrestler wins his next contested match**. This includes a bye in the middle of the bracket (a round skipped after his first bout), credited if he wins the bout after it. Proven 2026-11-05 by the only two cases in either season: Phillipsburg's Gonzalez and Garriques, District 1 2024-25. Migration `20261105_tw_scoring_midbracket_bye.sql`.
   - A forfeit over a **filler entry** ("Forfeit", "B Forfeit") counts as contested.
   - A forfeit over an **empty slot** ("over ()") does not.
 - **Bonus:**
