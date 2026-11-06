@@ -55,7 +55,7 @@ for (const g of ['M', 'F'] as const) {
   rule(`${L} duals: team points go to one side, winner on the other`, badSide)
   rule(`${L} duals: bout school is not that side's team`, badSchool)
   rule(`${L} duals: bout points to a missing meet`, orphanBout)
-  rule(`${L} duals: same wrestler on both sides`, sameW)
+  void sameW   // same wrestler on both sides = a bye (see the tournament rule below)
   // meet rules
   // team point deductions (src/lib/parseDualMeet.ts reads them; the final score includes them)
   const ded = new Map<string, [number, number]>()
@@ -88,7 +88,9 @@ for (const g of ['M', 'F'] as const) {
     if (b.wrestler1_id && b.wrestler1_id === b.wrestler2_id) tSame.push(b.id.slice(0, 8))
     for (const w of [b.wrestler1_id, b.wrestler2_id]) if (w && W.get(w) && W.get(w)!.gender !== g) wrongGender.push(`${wn(w)} (${W.get(w)!.gender}) in ${L} tournament bout`)
   }
-  rule(`${L} tournaments: same wrestler on both sides`, tSame)
+  // a bout with the same wrestler on both sides is how a results file lists a bye (Kyle,
+  // 2026-11-06: Ella Magee, SJWHOF 2026): not a failure. Records skip it (NC is unscored).
+  void tSame
 }
 const tSeason = new Map((await all('tournaments', 'id, season_id')).map((t: any) => [t.id, t.season_id]))
 for (const e of await all('tournament_entries', 'id, wrestler_id, school_id, tournament_id')) addRec(e.wrestler_id, e.school_id, tSeason.get(e.tournament_id))

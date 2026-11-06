@@ -2,6 +2,21 @@
 
 ---
 
+## 2026-11-06 — Out-of-state duplicate profiles; out-of-state name links; self-bouts are byes
+
+- **Name links:** `scripts/backfill_oos_name_links_20261106.mts` added 882 name links for out-of-state profiles. 880 profiles created in July–August 2026, before imports saved links, had none, so a later import couldn't find them and made a second profile (Dan Vargas, Easton Area). The links come from each profile's own bouts. Two Peddie names (Addison Collins, Riley Allen) are already linked to their boys profiles; their girls profiles are left separate.
+- **Duplicate profiles:** **Migration file:** `docs/migrations/20261106_merge_oos_duplicate_profiles.sql`. It merges 8 out-of-state duplicates into the kept profile (every foreign key to `wrestlers`, from the catalog) and deletes the empty duplicate:
+  - Dan Vargas
+  - Michael Romero, Jesse Grajeda, Jorge Rios (St. John Bosco)
+  - Theodore Egolf, Storm Hoffman (Delmar / Delmar Junior-Senior)
+  - Luca Cenatiempo (Blair Academy / B Team)
+  - Brody Kelly (Immaculate Conception IL / IC Catholic Prep)
+  The service role had already moved Dan Vargas's one dual bout and added his link. Backups: `backups/20261106_dan_vargas_merge_before.json`, `backups/20261106_oos_profile_merges_before.json`.
+- **Integrity check:** a bout with the same wrestler on both sides is a bye (Kyle), not a failure (Ella Magee, SJWHOF 2026, result NC, unscored).
+- **Review sheet:** `../Dual score gaps 2025-26.xlsx` lists the 32 duals (26 boys, 6 girls) whose bouts plus deductions don't equal the final, compared against the source files.
+
+---
+
 ## 2026-11-05 — Dual team point deductions; Ryan Kim 2024-25 entry; William Penn Charter merge
 
 **Dual deductions.** **Migration file:** `docs/migrations/20261105_dual_meet_deductions.sql` (new tables `dual_meet_deductions` and `dual_meet_deductions_girls`). **Backfill:** `scripts/backfill_dual_deductions_20261105.mts`.
