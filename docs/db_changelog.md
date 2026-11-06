@@ -2,6 +2,14 @@
 
 ---
 
+## 2026-11-06 — Review fixes
+
+- **Loaders keep the TF-1 corrections:** `src/lib/officialTeamScoreCorrections.ts` lists the six approved +0.5 corrections. Both official-totals loaders (`build_boys_official_district_team_scores.mts`, `build_boys_official_postseason_team_scores.mts`) apply them before writing, so a reload no longer reverts them. A loader stops if TrackWrestling's figure for a corrected school ever changes.
+- **Integrity check:** the "same wrestler on both sides" rule is back for duals (boys and girls; both pass). Kyle's bye rule was about tournament bouts, and the 2026-11-06 change had wrongly turned the dual rule off too.
+- **Parser regression test:** every source dual file was parsed with the pre-2026-11-05 parser and with today's. None of the 4,794 duals lost a bout, had a bout's points change, or had its listed score change, and 148 bouts were gained. The only differences are weights mapped from non-NJ weight sets.
+
+---
+
 ## 2026-11-06 — Dual adjustments that add points; girls typos
 
 - **Run (Kyle ran the migration):** `backfill_dual_deductions_20261105.mts` added 17 boys and 15 girls adjustments. Morris Hills v West Morris Central 2/4 got a "157" −1 for WMC from Kyle's pasted page, so it now adds up to 25-43. A second run of `backfill_mapped_weight_bouts_20261106.mts` added West Deptford v Buena's 9 bouts and its "wrong score" ±48 pair (net 0); backups `..._inserted_run1.json` / `_run2.json`. The first run had added one girls double forfeit twice (dual 4f531491, 126, 0-0). The script now skips a no-name bout when that weight already has one, Kyle approved deleting the extra row: `scripts/fix_duplicate_df_20261106.mts` deleted it (6803335c; the September original 3a8c449f is kept). Backup: `backups/20261106_duplicate_df_before.json`.

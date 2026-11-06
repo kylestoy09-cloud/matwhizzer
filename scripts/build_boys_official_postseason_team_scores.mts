@@ -10,6 +10,7 @@
 // table, the school's display name, then a loose name match among the schools entered there.
 import { createClient } from '@supabase/supabase-js'
 import fs from 'fs'
+import { applyTeamScoreCorrections, OFFICIAL_TEAM_SCORE_CORRECTIONS } from '@/lib/officialTeamScoreCorrections'
 const db = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
 const APPLY = process.argv.includes('--apply')
 const SEASON = process.argv.includes('--season') ? Number(process.argv[process.argv.indexOf('--season') + 1]) : 2026
@@ -93,6 +94,7 @@ const head = `# Boys ${SEASON - 1}-${String(SEASON).slice(2)} postseason team to
 fs.writeFileSync(`/private/tmp/claude-501/-Users-thebrain/a5d8edbf-83df-4831-93df-b8b0113fff98/scratchpad/boys_postseason_team_mapping_${SEASON}.md`, head + review.join('\n') + '\n')
 console.log(head)
 console.log(review.filter(l => /not matched|LOOSE|⚠|stored only|stored \d/.test(l)).join('\n'))
+console.log(`(${OFFICIAL_TEAM_SCORE_CORRECTIONS.filter(c => newRows.some(r => r.tournament_id === c.tournament_id && r.school_id === c.school_id)).length} of the totals counted as "would change" are TrackWrestling figures with an approved correction: written corrected, so unchanged on the site)`)
 if (!APPLY) process.exit(0)
 // 0-point teams that never entered, and filler ("Team Forfeit", "-") are not schools
 const real = unmatched.filter(r => r.pts > 0 && !/^(team forfeit|-+)$/i.test(r.team))
@@ -104,6 +106,8 @@ const before = chk(await db.from('precomputed_team_scores').select('*').in('tour
 let bk = `docs/migrations/backups/20261105_boys_postseason_team_scores_${SEASON}_before.json`
 for (let n = 2; fs.existsSync(bk); n++) bk = `docs/migrations/backups/20261105_boys_postseason_team_scores_${SEASON}_before_${n}.json`
 fs.writeFileSync(bk, JSON.stringify(before, null, 1)); console.log('backup:', bk)
+// approved corrections to TrackWrestling's figures (TF-1 tech falls), kept on every reload
+applyTeamScoreCorrections(newRows)
 chk(await db.from('precomputed_team_scores').delete().in('tournament_id', ids).select('id'), 'delete')
 for (let i = 0; i < newRows.length; i += 200) chk(await db.from('precomputed_team_scores').insert(newRows.slice(i, i + 200)).select('id'), 'insert')
 console.log(`APPLIED: ${before.length} rows replaced by ${newRows.length}`)

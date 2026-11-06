@@ -12,6 +12,7 @@
 // the schools entered there. --apply backs up and replaces the stored totals of those districts.
 import { createClient } from '@supabase/supabase-js'
 import fs from 'fs'
+import { applyTeamScoreCorrections, OFFICIAL_TEAM_SCORE_CORRECTIONS } from '@/lib/officialTeamScoreCorrections'
 const db = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
 const APPLY = process.argv.includes('--apply')
 const chk = (r: any, w: string) => { if (r.error) throw new Error(`${w}: ${r.error.message}`); return r.data as any[] }
@@ -89,6 +90,7 @@ for (const d of [...assigned.keys()].sort((a, b) => a - b)) {
 const head = `# Boys 2025-26 district team totals: TrackWrestling → stored\n\nDistricts with an official table: ${assigned.size}/32. No table: ${missing.length ? missing.map(d => `D${d}`).join(', ') : 'none'}.\nTeams mapped ${newRows.length}, not matched ${unmatched}. Stored already equal ${same}; would change ${changed}; new rows ${added}.\n\n### Tables\n${review.join('\n')}\n\n`
 fs.writeFileSync('/private/tmp/claude-501/-Users-thebrain/a5d8edbf-83df-4831-93df-b8b0113fff98/scratchpad/boys_district_team_mapping.md', head + lines.join('\n') + '\n')
 console.log(head); console.log(lines.filter(l => /not matched|LOOSE|⚠|stored only|stored \d|new row/.test(l)).slice(0, 60).join('\n'))
+console.log(`(${OFFICIAL_TEAM_SCORE_CORRECTIONS.filter(c => newRows.some(r => r.tournament_id === c.tournament_id && r.school_id === c.school_id)).length} of the totals counted as "would change" are TrackWrestling figures with an approved correction: written corrected, so unchanged on the site)`)
 if (!APPLY) process.exit(0)
 if (unmatched) throw new Error('unmatched teams: fix the mapping first')
 // Only the listed teams are replaced; a stored row for a team TrackWrestling doesn't list is kept as is.
@@ -98,6 +100,8 @@ const before = chk(await db.from('precomputed_team_scores').select('*').in('tour
 let bk = 'docs/migrations/backups/20261105_boys_district_team_scores_before.json'
 for (let n = 2; fs.existsSync(bk); n++) bk = `docs/migrations/backups/20261105_boys_district_team_scores_before_${n}.json`
 fs.writeFileSync(bk, JSON.stringify(before, null, 1)); console.log('backup:', bk)
+// approved corrections to TrackWrestling's figures (TF-1 tech falls), kept on every reload
+applyTeamScoreCorrections(newRows)
 for (const r of newRows) {
   const ex = before.find(b => b.tournament_id === r.tournament_id && b.school_id === r.school_id)
   if (ex) chk(await db.from('precomputed_team_scores').update({ total_points: r.total_points }).eq('id', ex.id).select('id'), 'update')

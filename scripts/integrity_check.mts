@@ -55,7 +55,7 @@ for (const g of ['M', 'F'] as const) {
   rule(`${L} duals: team points go to one side, winner on the other`, badSide)
   rule(`${L} duals: bout school is not that side's team`, badSchool)
   rule(`${L} duals: bout points to a missing meet`, orphanBout)
-  void sameW   // same wrestler on both sides = a bye (see the tournament rule below)
+  rule(`${L} duals: same wrestler on both sides`, sameW)   // a dual has no byes (the bye rule is tournaments only)
   // meet rules
   // team point deductions (src/lib/parseDualMeet.ts reads them; the final score includes them)
   const ded = new Map<string, [number, number]>()
