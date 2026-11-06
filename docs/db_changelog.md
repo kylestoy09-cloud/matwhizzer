@@ -9,7 +9,7 @@
 - **One weight listed twice on TrackWrestling, the other missing:**
   - Paramus v Jefferson 12/17: Donoghue over San Lucas is added at 126 (listed 120; San Lucas wrestled 126 in all 21 other bouts).
   - Cherry Hill West v Red Bank Catholic 2/7: the stored Ramos over Ubarry moves 150 → 144 (Ramos: 144 in 20 of 24), and Russo over Aumiller is added at 150.
-- **Not changed:** girls West Orange v Elizabeth 2/13. TrackWrestling's two pages disagree on the 165 bout: West Orange's says MD 13-5 with a final of 34-33, Elizabeth's says Dec 9-6 with 33-33. The stored bout is from one and the final from the other. Waiting on Kyle.
+- **Not changed:** girls West Orange v Elizabeth 2/13. TrackWrestling's two pages disagree on the 165 bout: West Orange's says MD 13-5 with a final of 34-33, Elizabeth's says Dec 9-6 with 33-33. The stored bout is from one and the final from the other. Kyle ruled that West Orange won on the results, so the final is now 34-33 (`scripts/fix_west_orange_elizabeth_20261106.mts`, service role; backup `backups/20261106_west_orange_elizabeth_before.json`).
 
 ---
 
