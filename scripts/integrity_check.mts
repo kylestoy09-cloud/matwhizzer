@@ -58,7 +58,9 @@ for (const g of ['M', 'F'] as const) {
   for (const [id, bs] of byMeet) {
     const m = meets.get(id)!
     const p1 = bs.reduce((a, b) => a + (b.team1_points ?? 0), 0), p2 = bs.reduce((a, b) => a + (b.team2_points ?? 0), 0)
-    if (m.status === 'final' && (m.meet_kind ?? 'dual') === 'dual' && m.team1_score != null && (p1 !== m.team1_score || p2 !== m.team2_score)) scoreOff.push(`${m.meet_date} ${sn(m.team1_school_id)} ${m.team1_score}-${m.team2_score} ${sn(m.team2_school_id)} (bouts ${p1}-${p2})`)
+    // a dual tied on bouts is settled by criteria: the winner's score carries 1 extra point
+    const tiebreak = p1 === p2 && ((m.team1_score === p1 + 1 && m.team2_score === p2) || (m.team2_score === p2 + 1 && m.team1_score === p1))
+    if (m.status === 'final' && (m.meet_kind ?? 'dual') === 'dual' && m.team1_score != null && !tiebreak && (p1 !== m.team1_score || p2 !== m.team2_score)) scoreOff.push(`${m.meet_date} ${sn(m.team1_school_id)} ${m.team1_score}-${m.team2_score} ${sn(m.team2_school_id)} (bouts ${p1}-${p2})`)
     const real = bs.filter(b => b.wrestler_a_id || b.wrestler_b_id)
     const s = `${m.meet_date}|` + real.map(b => `${b.weight_class}:${b.wrestler_a_name_raw}/${b.wrestler_b_name_raw}/${b.result_type}`).sort().join('|')
     if (real.length >= 3) { if (sig.has(s)) dupMeet.push(`${m.meet_date} ${sn(m.team1_school_id)} v ${sn(m.team2_school_id)} = ${sig.get(s)}`); else sig.set(s, `${sn(m.team1_school_id)} v ${sn(m.team2_school_id)}`) }
