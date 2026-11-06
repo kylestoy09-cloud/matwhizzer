@@ -2,6 +2,7 @@ import { supabase } from '@/lib/supabase/public-cached'
 import { getSeasons } from '@/lib/seasons-server'
 import Link from 'next/link'
 import { getActiveSeason } from '@/lib/get-season'
+import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { PostseasonLeaders } from '@/components/PostseasonLeaders'
 import { StateChampions } from '@/components/StateChampions'
 import { getSchoolLogos } from '@/lib/school-logos'
@@ -95,6 +96,12 @@ export default async function GirlsPostseasonPage({
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-10">
+
+      {/* season picker: every section below follows the picked season */}
+      <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mb-6">
+        <span>Season</span>
+        <InlineSeasonPicker gender="F" activeSeason={season} />
+      </div>
 
       {/* ── Leaderboards ── */}
       {showLeaderboards && (
