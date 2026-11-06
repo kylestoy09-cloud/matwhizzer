@@ -5,12 +5,12 @@
 export type TeamScoreCorrection = { tournament_id: number; school_id: number; trackwrestling: number; add: number; why: string }
 
 export const OFFICIAL_TEAM_SCORE_CORRECTIONS: TeamScoreCorrection[] = [
-  { tournament_id: 146, school_id: 21,  trackwrestling: 345,  add: 0.5, why: '2025-26 D7: Anthony Riotto (Bergen Catholic) TF-1 over Chuck Willoe' },
-  { tournament_id: 146, school_id: 52,  trackwrestling: 132,  add: 0.5, why: '2025-26 D7: Tommy Perrota (Fair Lawn) TF-1 over Xavian Robinson' },
-  { tournament_id: 153, school_id: 322, trackwrestling: 72.5, add: 0.5, why: '2025-26 D14: Ethan Delacruz (Bound Brook) TF-1 over Matthew Vazquez' },
-  { tournament_id: 153, school_id: 135, trackwrestling: 252,  add: 0.5, why: '2025-26 D14: Nicholas Romaniello (North Hunterdon) TF-1 over Oscar Casas' },
-  { tournament_id: 155, school_id: 126, trackwrestling: 96,   add: 0.5, why: '2025-26 D16: Yehuda Pincus (Scotch Plains-Fanwood) TF-1 over Selah Davis' },
-  { tournament_id: 129, school_id: 167, trackwrestling: 250,  add: 0.5, why: '2024-25 R5: Salvatore Borrometi (St. Peter\'s Prep) TF-1 over Joaquin Duque' },
+  { tournament_id: 146, school_id: 21,  trackwrestling: 345,  add: 0.5, why: '2025-26 D7: Anthony Riotto (Bergen Catholic) TF-1 over Chuck Willoe' },   // season-literal-ok: a past event
+  { tournament_id: 146, school_id: 52,  trackwrestling: 132,  add: 0.5, why: '2025-26 D7: Tommy Perrota (Fair Lawn) TF-1 over Xavian Robinson' },   // season-literal-ok: a past event
+  { tournament_id: 153, school_id: 322, trackwrestling: 72.5, add: 0.5, why: '2025-26 D14: Ethan Delacruz (Bound Brook) TF-1 over Matthew Vazquez' },   // season-literal-ok: a past event
+  { tournament_id: 153, school_id: 135, trackwrestling: 252,  add: 0.5, why: '2025-26 D14: Nicholas Romaniello (North Hunterdon) TF-1 over Oscar Casas' },   // season-literal-ok: a past event
+  { tournament_id: 155, school_id: 126, trackwrestling: 96,   add: 0.5, why: '2025-26 D16: Yehuda Pincus (Scotch Plains-Fanwood) TF-1 over Selah Davis' },   // season-literal-ok: a past event
+  { tournament_id: 129, school_id: 167, trackwrestling: 250,  add: 0.5, why: '2024-25 R5: Salvatore Borrometi (St. Peter\'s Prep) TF-1 over Joaquin Duque' },   // season-literal-ok: a past event
 ]
 
 // Rows about to be written: each correction's school gets its added points, when the copied total is
