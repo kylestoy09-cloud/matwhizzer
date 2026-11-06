@@ -1,5 +1,7 @@
 # Grade conflicts (2026-11-06)
 
+**Resolved 2026-11-06.** 20 were settled by majority of independent records (`scripts/resolve_grade_conflicts_20261106.mts`) and 10 by Kyle (`scripts/fix_grade_ties_20261106.mts`), including the Silva split. Every one now has a graduation year. The list below is as it stood before resolution.
+
 Wrestlers whose profile grade and the grades on their own tournament entries point to different graduation years. No graduation year is set for these; review each one.
 
 **How to read a line:** `grade Jr [roster_upload] → class of 2027; entries say 2026` means the profile says Junior, from a roster upload. As a 2025-26 Junior that's the class of 2027. But the grade printed on the wrestler's district/region/state entries implies the class of 2026.
