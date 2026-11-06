@@ -4,7 +4,7 @@
 
 ## 2026-11-06 — School profiles show the address
 
-**Code only:** `SchoolProfileCore.tsx` reads `schools.address` (all 318 NJ schools have one), and `SchoolHeader.tsx` shows it under the head coach as a Google Maps link, on boys and girls school pages.
+**Code only:** `SchoolProfileCore.tsx` reads `schools.address` (all 318 NJ schools have one), and `SchoolHeader.tsx` shows it under the mascot, in the name box, as a Google Maps link, on boys and girls school pages.
 
 ---
 

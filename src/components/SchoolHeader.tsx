@@ -83,7 +83,7 @@ export interface SchoolHeaderProps {
   websiteUrl: string | null
   twitterHandle: string | null
   headCoach?: string | null
-  address?: string | null      // street address, under the head coach
+  address?: string | null      // street address, under the mascot
   otherGenderHasProgram?: boolean
 }
 
@@ -134,7 +134,7 @@ export function SchoolHeader({
   // page height rather than being capped by a short wrapper div.
   return (
     <>
-      {/* ── STICKY: logo + name + mascot only ────────────────────────────────── */}
+      {/* ── STICKY: logo + name + mascot + address ───────────────────────────── */}
       <div data-school-bar className="sticky z-20 w-full shadow-md" style={{ top: '139px', backgroundColor: bgColor }}>
         <div className="px-4 sm:px-6 py-3 sm:py-4 flex items-center gap-4">
           <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white/10 flex items-center justify-center shrink-0 p-1.5">
@@ -157,6 +157,17 @@ export function SchoolHeader({
               >
                 {mascotLine}
               </p>
+            )}
+            {address && (
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-xs mt-1 hover:underline"
+                style={{ color: textColor, opacity: 0.75 }}
+              >
+                {address}
+              </a>
             )}
           </div>
         </div>
@@ -192,28 +203,13 @@ export function SchoolHeader({
         ))}
       </div>
 
-      {/* ── SCROLLS AWAY: head coach + address lines ────────────────────────── */}
-      {(headCoach || address) && (
+      {/* ── SCROLLS AWAY: head coach line ────────────────────────────────────── */}
+      {headCoach && (
         <div
-          className="px-4 py-1.5 text-xs border-t space-y-0.5"
+          className="px-4 py-1.5 text-xs border-t"
           style={{ borderColor: `${textColor}20`, backgroundColor: bgColor, color: `${textColor}99` }}
         >
-          {headCoach && (
-            <div>Head Coach: <span style={{ color: textColor }} className="font-medium">{headCoach}</span></div>
-          )}
-          {address && (
-            <div>
-              <a
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:underline"
-                style={{ color: textColor }}
-              >
-                {address}
-              </a>
-            </div>
-          )}
+          Head Coach: <span style={{ color: textColor }} className="font-medium">{headCoach}</span>
         </div>
       )}
 
