@@ -47,6 +47,7 @@ type SchoolProfile = {
   classification: string | null
   founded_year: number | null
   website_url: string | null
+  address: string | null
   twitter_handle: string | null
   athletic_conference: string | null
   logo_url: string | null
@@ -108,7 +109,7 @@ export async function SchoolProfileCore({
 
   const { data: profileData, error: profileError } = await supabase
     .from('schools')
-    .select('id, display_name, short_name, mascot, nickname, primary_color, secondary_color, tertiary_color, color_primary, color_secondary, color_tertiary, header_background, town, county, section, classification, founded_year, website_url, twitter_handle, athletic_conference, logo_url, is_nj')
+    .select('id, display_name, short_name, mascot, nickname, primary_color, secondary_color, tertiary_color, color_primary, color_secondary, color_tertiary, header_background, town, county, section, classification, founded_year, website_url, twitter_handle, athletic_conference, logo_url, is_nj, address')
     .eq('id', schoolId)
     .maybeSingle()
 
@@ -323,6 +324,7 @@ export async function SchoolProfileCore({
         websiteUrl={profile.website_url}
         twitterHandle={profile.twitter_handle}
         headCoach={headCoachName}
+        address={profile.address}
       />
 
       <div className="max-w-4xl mx-auto px-4 py-6">

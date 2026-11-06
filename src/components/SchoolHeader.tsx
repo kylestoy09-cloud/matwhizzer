@@ -83,6 +83,7 @@ export interface SchoolHeaderProps {
   websiteUrl: string | null
   twitterHandle: string | null
   headCoach?: string | null
+  address?: string | null      // street address, under the head coach
   otherGenderHasProgram?: boolean
 }
 
@@ -114,6 +115,7 @@ export function SchoolHeader({
   websiteUrl,
   twitterHandle,
   headCoach,
+  address,
   otherGenderHasProgram = true,
 }: SchoolHeaderProps) {
   const bgColor    = headerBackground ?? colorSecondary ?? '#1a1a2e'
@@ -190,13 +192,28 @@ export function SchoolHeader({
         ))}
       </div>
 
-      {/* ── SCROLLS AWAY: head coach line ────────────────────────────────────── */}
-      {headCoach && (
+      {/* ── SCROLLS AWAY: head coach + address lines ────────────────────────── */}
+      {(headCoach || address) && (
         <div
-          className="px-4 py-1.5 text-xs border-t"
+          className="px-4 py-1.5 text-xs border-t space-y-0.5"
           style={{ borderColor: `${textColor}20`, backgroundColor: bgColor, color: `${textColor}99` }}
         >
-          Head Coach: <span style={{ color: textColor }} className="font-medium">{headCoach}</span>
+          {headCoach && (
+            <div>Head Coach: <span style={{ color: textColor }} className="font-medium">{headCoach}</span></div>
+          )}
+          {address && (
+            <div>
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+                style={{ color: textColor }}
+              >
+                {address}
+              </a>
+            </div>
+          )}
         </div>
       )}
 

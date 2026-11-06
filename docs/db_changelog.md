@@ -2,6 +2,12 @@
 
 ---
 
+## 2026-11-06 — School profiles show the address
+
+**Code only:** `SchoolProfileCore.tsx` reads `schools.address` (all 318 NJ schools have one), and `SchoolHeader.tsx` shows it under the head coach as a Google Maps link, on boys and girls school pages.
+
+---
+
 ## 2026-11-06 — Dual bouts missing their winner; dual page uses stored team points
 
 - **Data:** `scripts/fix_dual_missing_winner_20261106.mts` (service role; backup `backups/20261106_dual_missing_winner_before.json`). 15 boys dual bouts had team points for one side but no `winner_id`. All were imported 2026-08 and involve four wrestlers (Jayden Cruz, Sebastian Soto, Joshua Martinez, Tyler Davis); the cause is unproven, since the 2026-11-05 merge script does move `winner_id`. The winner is now the wrestler on the side with the points, so the wins count in their records and ratings.
