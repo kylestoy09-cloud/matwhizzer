@@ -26,6 +26,8 @@ export type ParsedMatchGirls = {
   team2Points: number
   isDoubleForfeit: boolean
   isForfeitWin: boolean
+  // the weight TrackWrestling printed, when it isn't one of ours (weightClass is then the NJ weight)
+  listedWeight?: number
 }
 
 // A team point deduction listed after the bouts ("Coach Misconduct  0  -1.0"):
@@ -52,6 +54,37 @@ export type ParsedMeetGirls = {
 
 const WEIGHT_LIST = [100, 107, 114, 120, 126, 132, 138, 145, 152, 165, 185, 235] as const
 const WEIGHT_ALT = WEIGHT_LIST.join('|')
+// Some duals are listed at other weights (Lodi/Saddle Brook's 145, 152, 160, 170, 182, 195, 220;
+// Pennsylvania's 107, 114, 121...). Line-based formats accept any weight line; the meet's weights
+// are then mapped to ours (mapToNjWeights). Before 2026-11-06 such bouts were dropped.
+const ANY_WEIGHT = '\\d{3}'
+const isAnyWeight = (w: number) => w >= 90 && w <= 300
+
+// The dual's listed weights, in order, are matched to ours in order: a weight that is one of ours
+// stays, and each other weight becomes an NJ weight between its neighbours, as close to the listed
+// number as possible (Lodi/Saddle Brook's 145 → 144, 160 → 157, 170 → 165, 220 → 215; PA's 107 → 106,
+// 172 → 175). Kyle, 2026-11-06: map to the NJ weight.
+function mapToNjWeights<T extends { weightClass: number; listedWeight?: number }>(matches: T[]): T[] {
+  const std = WEIGHT_LIST as unknown as number[]
+  const listed = [...new Set(matches.map(m => m.weightClass))].sort((a, b) => a - b)
+  if (listed.every(w => std.includes(w))) return matches
+  // cost[i][j]: best total distance placing listed[0..i] with listed[i] on std[j]
+  const n = listed.length, k = std.length, INF = 1e9
+  const cost = listed.map(() => std.map(() => INF)), from = listed.map(() => std.map(() => -1))
+  const fit = (i: number, j: number) => (std.includes(listed[i]) ? (std[j] === listed[i] ? 0 : INF) : Math.abs(std[j] - listed[i]))
+  for (let j = 0; j < k; j++) cost[0][j] = fit(0, j)
+  for (let i = 1; i < n; i++) for (let j = i; j < k; j++) {
+    const f = fit(i, j); if (f >= INF) continue
+    for (let q = 0; q < j; q++) if (cost[i - 1][q] + f < cost[i][j]) { cost[i][j] = cost[i - 1][q] + f; from[i][j] = q }
+  }
+  let j = -1, best = INF
+  for (let q = 0; q < k; q++) if (cost[n - 1][q] < best) { best = cost[n - 1][q]; j = q }
+  if (j < 0) return matches.filter(m => std.includes(m.weightClass))   // more weights than ours
+  const map = new Map<number, number>()
+  for (let i = n - 1; i >= 0; i--) { map.set(listed[i], std[j]); j = from[i][j] }
+  for (const m of matches) { const to = map.get(m.weightClass)!; if (to !== m.weightClass) { m.listedWeight = m.weightClass; m.weightClass = to } }
+  return matches
+}
 
 // ── Header / score helpers ─────────────────────────────────────────────────────
 
@@ -267,8 +300,8 @@ function isFormatC(chunk: string): boolean {
 
 function parseMatchLine(line: string): { weight: number; summary: string; t1: number; t2: number } | null {
   const t = line.trim()
-  const weightM = t.match(new RegExp(`^(${WEIGHT_ALT})\\s+`))
-  if (!weightM) return null
+  const weightM = t.match(new RegExp(`^(${ANY_WEIGHT})\\s+`))
+  if (!weightM || !isAnyWeight(parseInt(weightM[1]))) return null
 
   const weight = parseInt(weightM[1])
   const rest   = t.slice(weightM[0].length)
@@ -333,7 +366,8 @@ function parseFormatC(chunk: string): ParsedMatchGirls[] {
     if (!lines[i]) { i++; continue }
 
     const weight = parseInt(lines[i])
-    if (!weightSet.has(weight)) { i++; continue }
+    // a weight class line: one of ours, or another weight followed by a bout summary
+    if (!weightSet.has(weight) && !(isAnyWeight(weight) && /^\d{3}$/.test(lines[i]) && /\sover\s|Double\s*Forfeit/i.test(lines[i + 1] ?? ''))) { i++; continue }
 
     const summary = lines[i + 1] ?? ''
     const t1      = parseInt(lines[i + 2] ?? '')
@@ -396,9 +430,9 @@ export function parseDualMeetGirlsText(raw: string): ParsedMeetGirls[] {
     if (!header) continue
 
     const score   = parseTeamScore(chunk)
-    const matches = isFormatA(chunk) ? parseFormatA(chunk)
+    const matches = mapToNjWeights(isFormatA(chunk) ? parseFormatA(chunk)
                   : isFormatC(chunk) ? parseFormatC(chunk)
-                  : parseFormatB(chunk)
+                  : parseFormatB(chunk))
 
     const key         = `${header.team1}|${header.team2}|${header.date}`
     const isDuplicate = seen.has(key)

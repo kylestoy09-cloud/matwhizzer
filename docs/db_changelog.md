@@ -2,6 +2,19 @@
 
 ---
 
+## 2026-11-06 — Dual bouts at non-NJ weights (Lodi/Saddle Brook, Pennsylvania, Don Bosco, girls)
+
+- **Why:** some duals are listed at other weights. Lodi/Saddle Brook uses 145, 152, 160, 170, 182, 195, 220. Pennsylvania schools use 107…189, Don Bosco's national duals 103, 110, 118, and some girls duals 121, 128, 135, 143… The dual parsers only accepted our 14 (boys) or 12 (girls) weights, so those bouts were silently dropped: about 90 bouts in 25 duals. My 2026-11-06 spreadsheet wrongly called these "source copy incomplete" (Kyle caught it on Lodi v Manchester).
+- **Code:** `parseDualMeet.ts` and `parseDualMeetGirls.ts` (line-based formats) accept any weight line followed by a bout. `mapToNjWeights` maps the dual's weights, in order, to ours (Kyle: map to the NJ weight). A standard weight stays, and each other weight goes to the closest NJ weight that keeps the order: Lodi's 145 → 144, 160 → 157, 170 → 165, 220 → 215; PA's 107 → 106, 172 → 175. The printed weight is kept on the parsed bout as `listedWeight`. The matching also treats TrackWrestling's non-breaking space around "over" as a space.
+- **Backfill:** `scripts/backfill_mapped_weight_bouts_20261106.mts` (service role) added 112 bouts (89 boys, 23 girls) and Iona Prep's −1 deduction, which hadn't loaded because the dual didn't add up then. It created 40 profiles (mostly Pennsylvania and other out-of-state wrestlers, none already existing under that name) and 143 name links. Taim Rahmoun's existing unlinked profile was reused. Every changed dual now adds up to its final score. Four were left unchanged and listed instead: Delsea v Council Rock North (two bouts at 285), the girls Schalick v Delran and Manchester Twp v Lakewood (each matches more than one stored dual), and West Deptford v Buena ("wrong score" line). Backup: `backups/20261106_mapped_weight_bouts_inserted.json`.
+- **Leilani Matias** (girls, linked at Freedom HS, PA, since August) set `is_oos = true`.
+- **Ratings:**
+  - Girls 2025-26 (working season) rebuilt.
+  - Boys 2025-26 archive rebuild failed: statement timeout inserting the log at row 9,500. The previous log was kept and there are no duplicates. Other queries were running at the same time, a likely but unproven cause. Waiting on Kyle before a rerun.
+  - Girls leaderboard refreshes timed out once through the API.
+
+---
+
 ## 2026-11-06 — Dual bouts the import dropped (boys 2025-26)
 
 **Script:** `scripts/fix_dual_dropped_bouts_20261106.mts` (service role). **Backups:** `backups/20261106_dual_dropped_bouts_before.json`, `..._inserted.json`. Four boys duals now add up to their final scores:
