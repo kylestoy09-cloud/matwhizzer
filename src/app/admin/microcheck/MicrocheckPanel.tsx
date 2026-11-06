@@ -95,9 +95,10 @@ const FIELD_LABELS: Record<string, string> = {
   ad_name: 'AD Name', ad_email: 'AD Email', roster_match: 'Roster Match',
 }
 
-const FIELD_SEARCH: Record<string, (school: string) => string> = {
-  coach_name:   s => `${s} high school NJ boys wrestling coach`,
-  coach_email:  s => `${s} high school NJ boys wrestling coach email`,
+// Coach tasks belong to one program: search for that program's coach
+const FIELD_SEARCH: Record<string, (school: string, program: string) => string> = {
+  coach_name:   (s, p) => `${s} high school NJ ${p} wrestling coach`,
+  coach_email:  (s, p) => `${s} high school NJ ${p} wrestling coach email`,
   ad_name:      s => `${s} high school NJ athletic director`,
   ad_email:     s => `${s} high school NJ athletic director email`,
   website_url:  s => `${s} high school NJ wrestling`,
@@ -106,10 +107,10 @@ const FIELD_SEARCH: Record<string, (school: string) => string> = {
   address:      s => `${s} high school NJ address`,
 }
 
-function SearchButton({ field, schoolName }: { field: string; schoolName: string }) {
+function SearchButton({ field, schoolName, gender }: { field: string; schoolName: string; gender: 'M' | 'F' }) {
   const queryFn = FIELD_SEARCH[field]
   if (!queryFn) return null
-  const query = queryFn(schoolName)
+  const query = queryFn(schoolName, gender === 'F' ? 'girls' : 'boys')
   return (
     <button
       type="button"
@@ -463,7 +464,7 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
                     <>
                       <div className="flex items-center justify-between mb-3">
                         <p className="text-sm text-slate-500">Find their {task.label}</p>
-                        <SearchButton field={task.field} schoolName={task.school_name} />
+                        <SearchButton field={task.field} schoolName={task.school_name} gender={task.gender} />
                       </div>
                       <input
                         key={task.school_id + task.field}
