@@ -4,7 +4,9 @@
 
 ## 2026-11-06 — Montville District 5 2025-26: Manieri's quarterfinal forfeit
 
-**Migration file:** `docs/migrations/20261106_manieri_qf_forfeit.sql`. Luke Manieri (113) won his quarterfinal by forfeit "over Unknown (For.)", per TrackWrestling's Montville team page (Kyle). The season export left the line out, so the bout was never stored and the scoring rules treated it as a bye (155 vs the official 157). It is stored as a forfeit over a filler entry, which makes Montville exactly 157. This was the only unexplained 2025-26 total.
+**Migration file:** `docs/migrations/20261106_manieri_qf_forfeit.sql`. Luke Manieri (113) won his quarterfinal by forfeit "over Unknown (For.)", per TrackWrestling's Montville team page (Kyle). The season export left the line out, so the bout was never stored and the scoring rules treated it as a bye (155 vs the official 157). It is stored as a forfeit over a filler entry, which makes Montville exactly 157. This was the only unexplained 2025-26 total. Kyle ran it: 157.
+
+**Run 2026-11-06:** profile merge (kept 8, duplicates left 0) and school merge (#522, #689, #923 remain). Afterwards the integrity check has 3 failing rules: dual score gaps (26 boys, 6 girls, in `Dual score gaps 2025-26.xlsx`) and the pinned no-name-link list (81). The 2025-26 team scores match except the five TF-1 half points. The snapshot is unchanged.
 
 ---
 
