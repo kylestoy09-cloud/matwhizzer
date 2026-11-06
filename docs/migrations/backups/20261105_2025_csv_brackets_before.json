@@ -1,0 +1,930 @@
+{
+ "matches": [
+  {
+   "id": "1511c158-ca8f-4d75-ac56-9b0744ddf515",
+   "tournament_id": 102,
+   "weight_class_id": 53,
+   "bracket_side": "consolation",
+   "round": "3rd_Place",
+   "winner_entry_id": "08d93d1e-8c7b-4b23-b836-f684a20b94d0",
+   "loser_entry_id": "cdcf6f5c-2c0b-48e8-85f5-6f74c432563f",
+   "win_type": "FALL",
+   "winner_score": null,
+   "loser_score": null,
+   "fall_time_seconds": 220,
+   "score_raw": "Fall 3:40",
+   "winner_context_raw": null,
+   "validated": true,
+   "bout_number": null,
+   "forfeit_opponent": null
+  },
+  {
+   "id": "212dd8ba-58ac-4e9e-a539-8d80612af7e8",
+   "tournament_id": 102,
+   "weight_class_id": 54,
+   "bracket_side": "consolation",
+   "round": "3rd_Place",
+   "winner_entry_id": "89159246-22b3-48b0-ac85-1c297cecc4c0",
+   "loser_entry_id": "fb4e129a-792b-40da-850d-ee01c355bf87",
+   "win_type": "FALL",
+   "winner_score": null,
+   "loser_score": null,
+   "fall_time_seconds": 266,
+   "score_raw": "Fall 4:26",
+   "winner_context_raw": null,
+   "validated": true,
+   "bout_number": null,
+   "forfeit_opponent": null
+  },
+  {
+   "id": "64a58e1a-7ccb-4c41-810f-54d11536cd0e",
+   "tournament_id": 102,
+   "weight_class_id": 55,
+   "bracket_side": "consolation",
+   "round": "3rd_Place",
+   "winner_entry_id": "65544afb-b227-472a-870a-73bf42504703",
+   "loser_entry_id": "8df3666f-debb-413e-942a-08a90c38726b",
+   "win_type": "FALL",
+   "winner_score": null,
+   "loser_score": null,
+   "fall_time_seconds": 170,
+   "score_raw": "Fall 2:50",
+   "winner_context_raw": null,
+   "validated": true,
+   "bout_number": null,
+   "forfeit_opponent": null
+  },
+  {
+   "id": "efa6a3c6-f9c0-4468-8a98-b1fe7b9c78dc",
+   "tournament_id": 102,
+   "weight_class_id": 56,
+   "bracket_side": "consolation",
+   "round": "3rd_Place",
+   "winner_entry_id": "27c148ca-19b1-4ac8-8c4a-5e419f80a9ac",
+   "loser_entry_id": "95a6cab5-08a3-4aa9-8514-c78e0ee76970",
+   "win_type": "DEC",
+   "winner_score": 14,
+   "loser_score": 8,
+   "fall_time_seconds": null,
+   "score_raw": "14-8",
+   "winner_context_raw": null,
+   "validated": true,
+   "bout_number": null,
+   "forfeit_opponent": null
+  },
+  {
+   "id": "5200edc0-50cc-46bb-a501-7391fec67c96",
+   "tournament_id": 102,
+   "weight_class_id": 57,
+   "bracket_side": "consolation",
+   "round": "3rd_Place",
+   "winner_entry_id": "3b0e1604-c3f7-4f0e-ac5a-ccd4bb9062c8",
+   "loser_entry_id": "188f6708-cb31-4486-b63d-807f0365d83a",
+   "win_type": "FALL",
+   "winner_score": null,
+   "loser_score": null,
+   "fall_time_seconds": 262,
+   "score_raw": "Fall 4:22",
+   "winner_context_raw": null,
+   "validated": true,
+   "bout_number": null,
+   "forfeit_opponent": null
+  },
+  {
+   "id": "b1aae427-00c4-4ecb-b58e-83ad8e40b1b9",
+   "tournament_id": 102,
+   "weight_class_id": 58,
+   "bracket_side": "consolation",
+   "round": "3rd_Place",
+   "winner_entry_id": "8e7c7660-a3be-46e2-bc48-700d05e4937d",
+   "loser_entry_id": "caff104c-0056-4664-9e66-4cf8d2f1866f",
+   "win_type": "DEC",
+   "winner_score": 10,
+   "loser_score": 9,
+   "fall_time_seconds": null,
+   "score_raw": "10-9",
+   "winner_context_raw": null,
+   "validated": true,
+   "bout_number": null,
+   "forfeit_opponent": null
+  },
+  {
+   "id": "324f1580-f3d1-4579-9736-dc9a206be0ba",
+   "tournament_id": 102,
+   "weight_class_id": 59,
+   "bracket_side": "consolation",
+   "round": "3rd_Place",
+   "winner_entry_id": "78caf805-8001-4241-8bf4-3ba0703612de",
+   "loser_entry_id": "a9e59361-bb45-4641-bbe0-b92352a80dcf",
+   "win_type": "DEC",
+   "winner_score": 8,
+   "loser_score": 6,
+   "fall_time_seconds": null,
+   "score_raw": "8-6",
+   "winner_context_raw": null,
+   "validated": true,
+   "bout_number": null,
+   "forfeit_opponent": null
+  },
+  {
+   "id": "5b4444ea-3a42-48db-a9b0-3244720f2a8c",
+   "tournament_id": 102,
+   "weight_class_id": 60,
+   "bracket_side": "consolation",
+   "round": "3rd_Place",
+   "winner_entry_id": "be2e04c3-317b-4ee1-8317-4bbce68c0161",
+   "loser_entry_id": "0fd1676e-db5c-4f3a-92fa-93b45ef5e8a7",
+   "win_type": "FALL",
+   "winner_score": null,
+   "loser_score": null,
+   "fall_time_seconds": 270,
+   "score_raw": "Fall 4:30",
+   "winner_context_raw": null,
+   "validated": true,
+   "bout_number": null,
+   "forfeit_opponent": null
+  },
+  {
+   "id": "ed229afb-77bb-4f65-8648-05b42692f978",
+   "tournament_id": 102,
+   "weight_class_id": 61,
+   "bracket_side": "consolation",
+   "round": "3rd_Place",
+   "winner_entry_id": "056a021f-b254-46e4-b0e2-b87ee289dbb8",
+   "loser_entry_id": "be9764fd-e542-4850-b9b7-80f2e468e219",
+   "win_type": "FALL",
+   "winner_score": null,
+   "loser_score": null,
+   "fall_time_seconds": 218,
+   "score_raw": "Fall 3:38",
+   "winner_context_raw": null,
+   "validated": true,
+   "bout_number": null,
+   "forfeit_opponent": null
+  },
+  {
+   "id": "3d80cc47-4504-46b7-a2ca-ab110b816b56",
+   "tournament_id": 102,
+   "weight_class_id": 62,
+   "bracket_side": "consolation",
+   "round": "3rd_Place",
+   "winner_entry_id": "faad18ca-6363-4b28-8e83-f9a9d0e06805",
+   "loser_entry_id": "14c6aeca-952a-4579-a3b3-11ec2338cb29",
+   "win_type": "MD",
+   "winner_score": 17,
+   "loser_score": 5,
+   "fall_time_seconds": null,
+   "score_raw": "17-5",
+   "winner_context_raw": null,
+   "validated": true,
+   "bout_number": null,
+   "forfeit_opponent": null
+  },
+  {
+   "id": "46a22b94-d5c2-40db-ad66-532990f4916e",
+   "tournament_id": 102,
+   "weight_class_id": 63,
+   "bracket_side": "consolation",
+   "round": "3rd_Place",
+   "winner_entry_id": "9b3142c8-3dd1-447f-98d1-f2f045f2d0ca",
+   "loser_entry_id": "0e655eb3-5bca-4eec-8492-e1ac064ffc86",
+   "win_type": "DEC",
+   "winner_score": 18,
+   "loser_score": 14,
+   "fall_time_seconds": null,
+   "score_raw": "18-14",
+   "winner_context_raw": null,
+   "validated": true,
+   "bout_number": null,
+   "forfeit_opponent": null
+  },
+  {
+   "id": "361c4c4c-a4db-4685-bde5-467270e7fea8",
+   "tournament_id": 102,
+   "weight_class_id": 64,
+   "bracket_side": "consolation",
+   "round": "3rd_Place",
+   "winner_entry_id": "69d62f9c-5d48-4856-be92-13dda5a156a1",
+   "loser_entry_id": "e8a49024-1b7f-4415-9766-be911e2c47a9",
+   "win_type": "FALL",
+   "winner_score": null,
+   "loser_score": null,
+   "fall_time_seconds": 152,
+   "score_raw": "Fall 2:32",
+   "winner_context_raw": null,
+   "validated": true,
+   "bout_number": null,
+   "forfeit_opponent": null
+  },
+  {
+   "id": "1cf279de-2bb9-4431-96b3-3e71c46bf4c0",
+   "tournament_id": 102,
+   "weight_class_id": 65,
+   "bracket_side": "consolation",
+   "round": "3rd_Place",
+   "winner_entry_id": "f44c5599-30e1-4b24-a6b9-8860acba3fdb",
+   "loser_entry_id": "be14be70-d0f9-41b2-8252-e46f99f2cc2e",
+   "win_type": "DEC",
+   "winner_score": 8,
+   "loser_score": 4,
+   "fall_time_seconds": null,
+   "score_raw": "8-4",
+   "winner_context_raw": null,
+   "validated": true,
+   "bout_number": null,
+   "forfeit_opponent": null
+  },
+  {
+   "id": "de05715c-4535-496c-8de1-92620b64f7f6",
+   "tournament_id": 102,
+   "weight_class_id": 66,
+   "bracket_side": "consolation",
+   "round": "3rd_Place",
+   "winner_entry_id": "b3fac410-b191-46ec-9a50-7f6c32caabdd",
+   "loser_entry_id": "469bc64d-eb25-455f-b80d-ab9603021f8f",
+   "win_type": "SV-1",
+   "winner_score": 4,
+   "loser_score": 2,
+   "fall_time_seconds": null,
+   "score_raw": "4-2",
+   "winner_context_raw": null,
+   "validated": true,
+   "bout_number": null,
+   "forfeit_opponent": null
+  }
+ ],
+ "placements": [
+  {
+   "id": "36f62948-3b5a-47b3-b831-0ac92911e4fe",
+   "weight_class_id": 54,
+   "place": 3,
+   "entry_id": "89159246-22b3-48b0-ac85-1c297cecc4c0",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "2372461e-2a96-40e0-b90a-5c5a48b2361b"
+  },
+  {
+   "id": "3ad6681d-af25-4c9b-88b9-0d7c1bf78caf",
+   "weight_class_id": 58,
+   "place": 3,
+   "entry_id": "8e7c7660-a3be-46e2-bc48-700d05e4937d",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "1e925342-91eb-4638-9d95-61563a6ac5e8"
+  },
+  {
+   "id": "3e2229ca-8614-4a31-80ee-ec8c95420ba3",
+   "weight_class_id": 60,
+   "place": 3,
+   "entry_id": "be2e04c3-317b-4ee1-8317-4bbce68c0161",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "316a7b28-f0e9-4cbb-80ac-3f5d672a59e0"
+  },
+  {
+   "id": "51704301-62ae-4921-a664-9803d6b233b6",
+   "weight_class_id": 64,
+   "place": 4,
+   "entry_id": "e8a49024-1b7f-4415-9766-be911e2c47a9",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "41f1b38d-3609-4c76-a4da-b27ef43b731b"
+  },
+  {
+   "id": "5c0f4c04-95d3-44b9-ab71-6474afafc9ef",
+   "weight_class_id": 59,
+   "place": 3,
+   "entry_id": "78caf805-8001-4241-8bf4-3ba0703612de",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "130008d9-8211-4744-96b7-e36f86d79e05"
+  },
+  {
+   "id": "7fc1ca7d-4d77-4eb4-a27f-df2a383688bc",
+   "weight_class_id": 64,
+   "place": 3,
+   "entry_id": "69d62f9c-5d48-4856-be92-13dda5a156a1",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "0b158652-aa32-4f78-9f5c-527dce6bbf5d"
+  },
+  {
+   "id": "82d49590-c142-46c8-8237-8b5ef38121b0",
+   "weight_class_id": 55,
+   "place": 3,
+   "entry_id": "65544afb-b227-472a-870a-73bf42504703",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "5999cde1-fbf1-43b8-a2c9-2d459ea49f51"
+  },
+  {
+   "id": "89aad9af-0e57-4d8b-96da-f87b085aacae",
+   "weight_class_id": 66,
+   "place": 4,
+   "entry_id": "469bc64d-eb25-455f-b80d-ab9603021f8f",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "0a20f34a-74c6-47bf-bc82-c31ae7a9a547"
+  },
+  {
+   "id": "8f1cd8f5-0566-4824-ba66-0e4edca3558f",
+   "weight_class_id": 53,
+   "place": 3,
+   "entry_id": "08d93d1e-8c7b-4b23-b836-f684a20b94d0",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "12985322-d2f3-42c0-a73f-a860345ad289"
+  },
+  {
+   "id": "a80607ac-eb38-460d-b036-a011ac8b5858",
+   "weight_class_id": 66,
+   "place": 3,
+   "entry_id": "b3fac410-b191-46ec-9a50-7f6c32caabdd",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "8bf9bd58-a539-42cf-81b7-0569ab76d481"
+  },
+  {
+   "id": "ac0fb84b-bea3-4bf2-85f3-1f0eba4a1022",
+   "weight_class_id": 53,
+   "place": 4,
+   "entry_id": "cdcf6f5c-2c0b-48e8-85f5-6f74c432563f",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "6e2aba5e-73b4-449b-8b38-ca83a34609a2"
+  },
+  {
+   "id": "b4e489ee-e333-4448-8ec7-87d8f4433d7b",
+   "weight_class_id": 62,
+   "place": 4,
+   "entry_id": "14c6aeca-952a-4579-a3b3-11ec2338cb29",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "4cc23f5d-25e7-4485-9268-a1861cd1894e"
+  },
+  {
+   "id": "b85a9017-b93f-4b6e-aaf6-dd70e3478bcf",
+   "weight_class_id": 57,
+   "place": 3,
+   "entry_id": "3b0e1604-c3f7-4f0e-ac5a-ccd4bb9062c8",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "57278c7d-2865-4ba0-bb6c-765b0b301ced"
+  },
+  {
+   "id": "bba39775-e944-4dde-87a5-242727e717e6",
+   "weight_class_id": 61,
+   "place": 3,
+   "entry_id": "056a021f-b254-46e4-b0e2-b87ee289dbb8",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "a70af720-5f63-473b-970a-d84419edd318"
+  },
+  {
+   "id": "bd816144-3584-4634-ad67-bf1cc065beb9",
+   "weight_class_id": 57,
+   "place": 4,
+   "entry_id": "188f6708-cb31-4486-b63d-807f0365d83a",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "5661cba6-65e5-4f5d-8b8c-671a8577de36"
+  },
+  {
+   "id": "c6ff31c7-c5f6-4b7c-86f3-205479a43222",
+   "weight_class_id": 63,
+   "place": 4,
+   "entry_id": "0e655eb3-5bca-4eec-8492-e1ac064ffc86",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "905fccf7-197d-44be-82d7-a4e479511a9c"
+  },
+  {
+   "id": "c8b14129-5175-4bb3-b88c-599e6c6e2907",
+   "weight_class_id": 55,
+   "place": 4,
+   "entry_id": "8df3666f-debb-413e-942a-08a90c38726b",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "09dbedc5-75ee-4cf7-8066-88afdc77bbc0"
+  },
+  {
+   "id": "d15e2756-d37b-435f-89a7-8909993d380f",
+   "weight_class_id": 60,
+   "place": 4,
+   "entry_id": "0fd1676e-db5c-4f3a-92fa-93b45ef5e8a7",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "c85bc782-a992-45ba-a1d6-4d2951a5f27c"
+  },
+  {
+   "id": "d2b802aa-1062-4ce9-86f6-2fecdc26157a",
+   "weight_class_id": 65,
+   "place": 3,
+   "entry_id": "f44c5599-30e1-4b24-a6b9-8860acba3fdb",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "0ab8f594-4f32-4769-a00f-6a4c22c66706"
+  },
+  {
+   "id": "d3624246-318f-4261-af9f-4d283251b9bc",
+   "weight_class_id": 63,
+   "place": 3,
+   "entry_id": "9b3142c8-3dd1-447f-98d1-f2f045f2d0ca",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "93c34296-6ab0-412d-a219-6a3c6da06436"
+  },
+  {
+   "id": "dc182206-256f-484e-b24b-44490922ace3",
+   "weight_class_id": 56,
+   "place": 3,
+   "entry_id": "27c148ca-19b1-4ac8-8c4a-5e419f80a9ac",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "89039ce6-e44f-4018-a4d7-b13b8c913104"
+  },
+  {
+   "id": "de4cfd50-712e-4304-beb3-50805892931e",
+   "weight_class_id": 59,
+   "place": 4,
+   "entry_id": "a9e59361-bb45-4641-bbe0-b92352a80dcf",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "91bec6b3-852c-4002-97a7-227b0e1d139b"
+  },
+  {
+   "id": "e055a287-56c9-4177-8224-0e3e1a471124",
+   "weight_class_id": 58,
+   "place": 4,
+   "entry_id": "caff104c-0056-4664-9e66-4cf8d2f1866f",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "98e90d7b-cb59-47c0-aeb4-740b6d92aa20"
+  },
+  {
+   "id": "e4db9889-c726-4f8d-abe9-c081a97c9ad9",
+   "weight_class_id": 65,
+   "place": 4,
+   "entry_id": "be14be70-d0f9-41b2-8252-e46f99f2cc2e",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "b1dd31a7-6074-4806-9eb0-18fbd6c09fe7"
+  },
+  {
+   "id": "eb4b3f12-ed61-4953-9f34-df1e4a0905d1",
+   "weight_class_id": 61,
+   "place": 4,
+   "entry_id": "be9764fd-e542-4850-b9b7-80f2e468e219",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "2e84a225-e8d6-4279-b1c9-3719f903a3db"
+  },
+  {
+   "id": "f1fb6b18-8851-4aed-bab0-c926820b0667",
+   "weight_class_id": 62,
+   "place": 3,
+   "entry_id": "faad18ca-6363-4b28-8e83-f9a9d0e06805",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "1f3ccfb6-acd0-46cc-a35f-f2394acb7a04"
+  },
+  {
+   "id": "f3cc2771-fe34-4d57-8f8f-d50a587cb140",
+   "weight_class_id": 56,
+   "place": 4,
+   "entry_id": "95a6cab5-08a3-4aa9-8514-c78e0ee76970",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "c3331114-197f-4197-8ea9-db3cfa7e644c"
+  },
+  {
+   "id": "fbec60b3-4328-49f7-b58c-15ad432f2501",
+   "weight_class_id": 54,
+   "place": 4,
+   "entry_id": "fb4e129a-792b-40da-850d-ee01c355bf87",
+   "tournament": "Boy_s Districts District 10",
+   "keeps": "a203a121-2364-4d1f-b630-8f969f06adfc"
+  },
+  {
+   "id": "189fb47a-7d12-4f60-b7c8-cf8b8cdf83bb",
+   "weight_class_id": 65,
+   "place": 4,
+   "entry_id": "94ce3243-8d39-4a6e-85df-cb575b66f622",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "12af13ec-8191-4f8d-9e9d-8e1ba966a726"
+  },
+  {
+   "id": "4931bb5b-60a1-4801-8f3e-d03b6dd1f6a5",
+   "weight_class_id": 60,
+   "place": 4,
+   "entry_id": "76fdc577-2e8c-41a6-a932-8d1d480b891c",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "10dafd21-af80-4bc2-8ed4-efe5426ab862"
+  },
+  {
+   "id": "5b325e10-ca79-4b84-b676-41d0a15f656d",
+   "weight_class_id": 59,
+   "place": 4,
+   "entry_id": "e748c6b9-19d8-48cb-8b6d-48a5bbc45841",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "13d81f62-2d5d-4467-a769-b7899b3d93c3"
+  },
+  {
+   "id": "6588b9b2-8a48-4cf2-a07a-d02e47b2b849",
+   "weight_class_id": 53,
+   "place": 4,
+   "entry_id": "3f0a4c08-11bc-4e5e-bce6-e4e0f54849a6",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "1dd68966-0fed-4e65-9688-b2afefc36d3d"
+  },
+  {
+   "id": "7d98651c-c63e-4a90-a982-a9cb282efbed",
+   "weight_class_id": 64,
+   "place": 3,
+   "entry_id": "34c666fe-b87b-4cd3-91ae-04d35941f7e8",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "3b43283f-8a0a-428c-9f30-64bbe0937b3f"
+  },
+  {
+   "id": "7f67fef7-f744-4802-b592-8ceb93082a42",
+   "weight_class_id": 66,
+   "place": 3,
+   "entry_id": "de65fb38-83d2-454f-81e7-5af6dd0a317a",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "48b3f213-d152-421e-84f7-1688ee26b3f5"
+  },
+  {
+   "id": "a5924960-7fc6-4bd7-ac3a-b1c23afd0adc",
+   "weight_class_id": 57,
+   "place": 4,
+   "entry_id": "95845ab5-d973-45ea-8d7a-129eff8fc595",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "7e569eeb-ecf3-40cf-ae03-a82cfba7c823"
+  },
+  {
+   "id": "a5f13bac-1d88-4a6a-a861-f7f10b262387",
+   "weight_class_id": 57,
+   "place": 3,
+   "entry_id": "a787a1e7-3a6a-469b-b20b-e1aeae847266",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "24f0c064-987f-472e-b601-c7fad0c674e8"
+  },
+  {
+   "id": "ab97b069-a1f2-4e3e-97a3-b4f24751e504",
+   "weight_class_id": 60,
+   "place": 3,
+   "entry_id": "723982f7-5674-4aa6-bd1b-e4fdc5276016",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "3a4bbf23-4f97-4221-99a8-7690566004fa"
+  },
+  {
+   "id": "badb2bcc-9551-4a4b-833d-685b0bd9b165",
+   "weight_class_id": 66,
+   "place": 4,
+   "entry_id": "1402d9a1-f498-4b91-9f75-738f0058f32f",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "1b236e53-4de6-40d3-9852-7e9c114d7cec"
+  },
+  {
+   "id": "bc313e62-a511-4012-a55a-19fc882f1698",
+   "weight_class_id": 55,
+   "place": 3,
+   "entry_id": "cb729988-8a73-48f6-a39b-286d274d6d47",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "2bba6830-c57d-483c-8e92-cc20373f9851"
+  },
+  {
+   "id": "bf4ef027-1790-42ca-b1be-193aae1c35cd",
+   "weight_class_id": 53,
+   "place": 3,
+   "entry_id": "ec555222-b860-4bcd-8468-cef7939c0aff",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "a9953b3c-9d74-4c1b-8b4b-f07311984a4e"
+  },
+  {
+   "id": "c073368a-d4a1-4d14-9caf-5959a402793d",
+   "weight_class_id": 63,
+   "place": 4,
+   "entry_id": "c948f97b-c87d-4bde-991f-702783509fdf",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "24b5eede-b125-45cb-8862-e385fa203229"
+  },
+  {
+   "id": "c6215a31-bbd4-4610-a83c-28d6dbb45d61",
+   "weight_class_id": 61,
+   "place": 4,
+   "entry_id": "03c93b7d-3bb0-4a72-84ce-06c85e800e65",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "89cbf83c-8183-4786-9319-268046e5ad3d"
+  },
+  {
+   "id": "cb4ec490-62ea-4340-868b-b4422dbd4592",
+   "weight_class_id": 58,
+   "place": 4,
+   "entry_id": "e595abdd-f3ba-4611-ba25-5b93883b0706",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "396b293c-72e0-4c87-8b57-f2dab756d690"
+  },
+  {
+   "id": "cc2bee5b-39c2-4f1a-a70e-f1d9137dd948",
+   "weight_class_id": 62,
+   "place": 4,
+   "entry_id": "3b8f183b-651b-4d7a-9885-e5979056981a",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "bccb3fc8-a3a1-429f-963b-443d09e638d7"
+  },
+  {
+   "id": "ccaed805-8056-420a-a54d-024361aed1b6",
+   "weight_class_id": 58,
+   "place": 3,
+   "entry_id": "c68a5cc0-603e-46a5-80ce-6262ae29e404",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "651124ef-4c73-4855-bddd-4dd7c1cbc08a"
+  },
+  {
+   "id": "d2827f38-9bbb-42d2-a453-d7a740e6c793",
+   "weight_class_id": 56,
+   "place": 3,
+   "entry_id": "b4744ae3-ff98-4a7f-9d9f-b37873e7e280",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "70ce51e1-f1c4-4eed-a7f1-e945a6e992a9"
+  },
+  {
+   "id": "dbbc18cf-263f-439c-9161-94c2c62f5868",
+   "weight_class_id": 63,
+   "place": 3,
+   "entry_id": "e7f2a53e-8f32-417e-ada6-3f245f98fe69",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "d38aa396-53a8-4334-a0bf-3278ddc130aa"
+  },
+  {
+   "id": "e3093fd5-f0a8-4f13-96cc-2d7fc4bcf9a6",
+   "weight_class_id": 64,
+   "place": 4,
+   "entry_id": "7ae5d44d-70a9-465f-839d-8c957654ec5a",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "5e705963-126c-44db-aeea-0ad8d72659a0"
+  },
+  {
+   "id": "e412ec97-2734-4914-b4ae-1b2396bf1c8e",
+   "weight_class_id": 65,
+   "place": 3,
+   "entry_id": "097a21f2-4a84-4d13-b9d0-75ae6fa1fb75",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "3d66e2f3-a21c-4966-ad8a-fd8377bc5282"
+  },
+  {
+   "id": "e582a855-44a4-4877-9c3c-1935877074c0",
+   "weight_class_id": 55,
+   "place": 4,
+   "entry_id": "1d6a9cf8-3afa-424e-b180-4ab6c98370f8",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "4b532d88-9a8c-4645-b400-1792370915ba"
+  },
+  {
+   "id": "e92ce355-39fa-4bf9-bf36-97f1b3ae36d8",
+   "weight_class_id": 61,
+   "place": 3,
+   "entry_id": "6a7a5db0-325c-4d89-a738-4c5c283457e3",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "c4d16c7e-bcbe-4218-bded-5c3a7f2813fd"
+  },
+  {
+   "id": "ee38c42f-8612-4382-a845-5904cb21cf0c",
+   "weight_class_id": 56,
+   "place": 4,
+   "entry_id": "7aea5346-1c32-4063-a6a7-891ace019df1",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "99b0450a-3a58-4362-8102-0bac51f51863"
+  },
+  {
+   "id": "ef0dfabb-f90d-4240-93e4-035a0a8e1e28",
+   "weight_class_id": 54,
+   "place": 3,
+   "entry_id": "c2455d00-d3a1-499c-aa46-57e63cc99add",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "2a08fabb-ae42-4f07-8ded-3848370beb1e"
+  },
+  {
+   "id": "f9834217-bef6-4f4c-b8b7-f4567c667111",
+   "weight_class_id": 62,
+   "place": 3,
+   "entry_id": "e96be87f-5b95-4063-9e1c-fdf7e96fb25d",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "e9deb3ac-1093-471a-bede-9f3276ef2b69"
+  },
+  {
+   "id": "fbab5d75-d217-435c-9cc2-42d4a342090a",
+   "weight_class_id": 54,
+   "place": 4,
+   "entry_id": "47b66c9c-0973-475c-a347-0820e0674d22",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "798a9340-be70-4149-a14a-31206f2f3622"
+  },
+  {
+   "id": "fd94e128-ffb8-4e56-bf24-44dec750426b",
+   "weight_class_id": 59,
+   "place": 3,
+   "entry_id": "d2243e93-edfa-437c-9d56-d5547b6e57aa",
+   "tournament": "Boy_s Regions r2",
+   "keeps": "d90f9be3-b8d9-4f18-92cc-cfaea54b5d49"
+  },
+  {
+   "id": "1a7ee6fa-f7a1-48c3-805c-9703686814d8",
+   "weight_class_id": 57,
+   "place": 6,
+   "entry_id": "4bc15e3c-5857-4f80-aa4a-f7c60ef380d7",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "09bbd500-884b-4267-a60b-25776a3b7f55"
+  },
+  {
+   "id": "20d5bd62-d2c5-4fa6-9c55-f49dc91be8c0",
+   "weight_class_id": 53,
+   "place": 5,
+   "entry_id": "8bac90ad-30c4-439a-b64f-d0c2d718ad3f",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "02130e69-849d-4e09-8b1e-aafe009b531c"
+  },
+  {
+   "id": "2fb97637-84ae-4c53-8725-af3ed3153fae",
+   "weight_class_id": 54,
+   "place": 6,
+   "entry_id": "e97e3c3c-f8a4-46d3-958e-b21dcf79afa7",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "2ef561cd-e80e-461a-baa3-8612be11c8a0"
+  },
+  {
+   "id": "52c83d3b-f768-4821-811d-4025c57e6996",
+   "weight_class_id": 58,
+   "place": 5,
+   "entry_id": "cc98c8c4-ba27-4e55-9c5d-65fea3ac5b11",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "159dfa23-4836-465e-becc-bdc314bb3931"
+  },
+  {
+   "id": "708fffd3-15bf-4385-aa1c-0ee2dbc775eb",
+   "weight_class_id": 54,
+   "place": 5,
+   "entry_id": "4e8caba0-77d2-48c8-b5b7-21c33fad5ffb",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "56e448ec-86d9-4b3f-9762-9e897def7561"
+  },
+  {
+   "id": "74090a2b-9739-4633-87a2-036729e3d54d",
+   "weight_class_id": 65,
+   "place": 5,
+   "entry_id": "1208c16e-7466-44fb-b4d6-f5470c9aaed1",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "4a2b14f9-4d16-4ea0-9a7d-c70b63a11e5a"
+  },
+  {
+   "id": "7ecda908-e9c5-49c5-aeb4-d6396f1bc48d",
+   "weight_class_id": 66,
+   "place": 6,
+   "entry_id": "697678fd-f423-415d-82e3-9913a2d601d3",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "4a301ad0-1a90-4789-9b5a-fb8190ea6a65"
+  },
+  {
+   "id": "80478d74-a06f-4914-ad26-0346dfbfebf5",
+   "weight_class_id": 66,
+   "place": 5,
+   "entry_id": "fff4a278-93d5-46d7-8a4d-569667ae082a",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "7b2acf45-d244-4d9f-829c-e3e404bbcb53"
+  },
+  {
+   "id": "82c6058f-f389-4856-baf1-e871738a8780",
+   "weight_class_id": 59,
+   "place": 6,
+   "entry_id": "140f1a12-048f-4830-a13b-f48517c92d98",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "7c885bc3-cd77-4178-a573-2249cb2504fd"
+  },
+  {
+   "id": "8a4d86c0-c21f-4e57-b07e-2fd036963f85",
+   "weight_class_id": 63,
+   "place": 6,
+   "entry_id": "221709cb-d55c-45a1-b86a-44c7a822c106",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "59837d8c-a5ce-4474-ac22-929e917daaf4"
+  },
+  {
+   "id": "97907436-2df1-4886-98e8-180066d48d13",
+   "weight_class_id": 53,
+   "place": 6,
+   "entry_id": "391469d9-d466-489e-871c-ed6bd3293cec",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "3957dbf1-8076-4d91-bcbe-01871120c5fa"
+  },
+  {
+   "id": "995e85e9-cb1d-4f69-bfa3-64b936ba91f8",
+   "weight_class_id": 65,
+   "place": 6,
+   "entry_id": "04a51df0-aae0-46ca-ab59-b1d89637f7fe",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "5c610379-71a9-488c-bf74-b44aa0da6f40"
+  },
+  {
+   "id": "9f1684c7-eab6-44bc-8428-0c5486db6c68",
+   "weight_class_id": 61,
+   "place": 6,
+   "entry_id": "3e6455ed-65ce-4317-8bb7-0a530901f233",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "61094a5e-4122-4b81-ab3a-e8327e8a69b8"
+  },
+  {
+   "id": "a419fa7a-3691-48b0-a8cb-350b15fa4f14",
+   "weight_class_id": 56,
+   "place": 5,
+   "entry_id": "c8d1553f-e729-489d-a923-9dee1abf93de",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "6566633f-910c-401c-a481-31f0369015d0"
+  },
+  {
+   "id": "ad416676-1b78-4bd1-943c-35963e6b3386",
+   "weight_class_id": 62,
+   "place": 5,
+   "entry_id": "7bfc3ac9-ce17-4b6e-9517-4aa0918a8562",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "60819ec9-dff4-4cbe-9553-678ba98bf617"
+  },
+  {
+   "id": "c3df4e54-7f47-4cac-991b-1daf54b9f11e",
+   "weight_class_id": 59,
+   "place": 5,
+   "entry_id": "f3640997-208b-4343-a290-72cdf93d3854",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "01f91e1a-e6e8-4d99-b931-9e091923be62"
+  },
+  {
+   "id": "c756c0fa-f2e4-457c-b4af-36ec86ef02c3",
+   "weight_class_id": 57,
+   "place": 5,
+   "entry_id": "b5c646f7-6784-4c9e-ad69-cb7a7669dda5",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "c6932b68-26b7-4595-8c74-b7fd338ac872"
+  },
+  {
+   "id": "d830042c-f602-42f6-a4ed-80e64f2c51c4",
+   "weight_class_id": 56,
+   "place": 6,
+   "entry_id": "984f87f3-103d-4cf1-88ee-2b682fdab74f",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "219e3f0e-3320-4a35-aa78-5f91ffe00ea0"
+  },
+  {
+   "id": "d99bebc1-9a26-4024-b0a5-095929ea54af",
+   "weight_class_id": 55,
+   "place": 5,
+   "entry_id": "b4ddbe42-0f30-45d2-8fee-31d8b1eb4d4a",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "76b4918b-ac07-41d4-8455-c38c65af2a6f"
+  },
+  {
+   "id": "dc86a652-61d2-43e2-9d54-dbbb546bf5e5",
+   "weight_class_id": 58,
+   "place": 6,
+   "entry_id": "d4e7af39-20bc-46b6-a788-582efb7ff743",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "51a2fb14-04a5-42a4-8b0e-09c29d1d184b"
+  },
+  {
+   "id": "dcf1ef27-a1c0-4671-8c34-48517520389e",
+   "weight_class_id": 60,
+   "place": 5,
+   "entry_id": "6df597c9-1d33-4561-b74f-ea1ff36faf4a",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "13cf45d9-fe9f-4789-84c0-683c9b939b63"
+  },
+  {
+   "id": "dd51f5e5-5591-4c9e-8503-1b5c2902a97d",
+   "weight_class_id": 62,
+   "place": 6,
+   "entry_id": "8477498d-867b-48dc-b94d-b9736ea5bb9c",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "01a3da17-97b3-4730-9660-c2351d08ff35"
+  },
+  {
+   "id": "df97393f-d70a-4a74-ab65-245b6f49243a",
+   "weight_class_id": 64,
+   "place": 5,
+   "entry_id": "745dd4a6-40f7-4c54-a8ed-68b76611d9ab",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "aded1b07-1a7d-40e9-9f5e-3ea2cae9eef3"
+  },
+  {
+   "id": "e5979671-39a9-4223-adad-e4ad01ed326c",
+   "weight_class_id": 63,
+   "place": 5,
+   "entry_id": "04c83af6-a07e-458e-a94c-7663f7b6645c",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "81be8bb2-0d69-4433-9e1c-9f67be15e1e4"
+  },
+  {
+   "id": "ea68b1ba-612b-4893-b2bf-96f2fc61aad8",
+   "weight_class_id": 60,
+   "place": 6,
+   "entry_id": "7538d868-df12-4e0b-8e55-d7277f6668a3",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "7cc5ec3f-674d-4f41-a869-c8135f8e41d0"
+  },
+  {
+   "id": "eb0b8f6b-ef80-4f2a-b01d-95a76cb6271c",
+   "weight_class_id": 55,
+   "place": 6,
+   "entry_id": "8c7f9bc8-9d10-4ff2-acee-2ffc804488cf",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "2dbbb21c-a4df-4142-95a4-eeb9bc95c161"
+  },
+  {
+   "id": "f26a0c59-d692-499c-bc87-48eb33809bd1",
+   "weight_class_id": 64,
+   "place": 6,
+   "entry_id": "d79d74c1-3ad1-47a6-ba34-6334f0c60710",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "c436b198-d5f6-46dc-8659-a71d926c7c6b"
+  },
+  {
+   "id": "fd0a227c-fbf9-4bf7-a1cb-31a3bbc3869b",
+   "weight_class_id": 61,
+   "place": 5,
+   "entry_id": "33bfdb65-0925-44cb-b4c0-1f6c20e7dd31",
+   "tournament": "Boy_s Regions r7",
+   "keeps": "c494a971-55d0-46e6-ae81-1b3781c0b18c"
+  }
+ ]
+}

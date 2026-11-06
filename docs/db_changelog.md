@@ -2,6 +2,22 @@
 
 ---
 
+## 2026-11-05 — Boys 2024-25 bracket repairs (part 2): District 10, Region 2, Region 7
+
+**Script:** `scripts/fix_2025_csv_brackets_20261105.mts`. **Migration file:** `docs/migrations/20261105_2025_csv_brackets.sql` (SQL editor). **Backup:** `backups/20261105_2025_csv_brackets_before.json`.
+
+**Source:** TrackWrestling's per-tournament CSV exports, added by Kyle: `../Match Data/NJSIAADistrict10.csv`, `NJSIAARegion2.csv`, `NJSIAARegion7.csv`. The season export lacked District 10's finals (its 3rd-place matches were copied twice in their place, and both copies were stored), Region 2's finals, and Region 7's Cons. Round 1, Cons. Semi and 3rd-place matches.
+
+**Checked first:** every stored bout in the three tournaments matched the CSV (District 10 82, Region 2 223, Region 7 168), with the same winner, loser and result. The one spelling difference was "Karam" in the CSV vs "Kareem" stored (Abuali). Each of the 84 duplicate placement rows (28 per tournament) was an exact copy of a kept row, and every kept row agreed with the CSV.
+
+**Changes:**
+- District 10: the 14 duplicate 3rd-place bouts become the 14 finals (same ids; their 28 rating-log rows are replaced when the 2024-25 ratings are rebuilt).
+- Region 2: 14 finals added. Region 7: 70 bouts added (28 Cons. Round 1, 28 Cons. Semi, 14 3rd place).
+- Placements (service role): the 84 duplicate rows now hold the missing places. District 10 and Region 2 get 1st/2nd; Region 7 gets 3rd/4th. Nothing is deleted.
+- `../Match Data/2025 District Data.py`: District 10's second "3rd Place" block becomes the "First Place" block, from the CSV.
+
+---
+
 ## 2026-11-05 — Boys 2024-25 bracket repairs (part 1)
 
 **Script:** `scripts/fix_2025_brackets_20261105.mts`. **Migration file:** `docs/migrations/20261105_2025_bracket_repairs.sql` (SQL editor).
