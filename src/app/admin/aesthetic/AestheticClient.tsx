@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { Stardos_Stencil, Saira_Stencil_One, Big_Shoulders_Stencil, Allerta_Stencil } from 'next/font/google'
 import { SitePageHeader } from '@/components/site/SitePageHeader'
 import { MockSite } from './MockSite'
+import { SiteTabs } from '@/components/site/SiteTabs'
 import { NumberTileGrid, type NumberTile } from '@/components/site/NumberTileGrid'
 import { BOYS_REGION_BG, GIRLS_REGION_BG, regionTile, boysRegionOfDistrict, girlsRegionOfDistrict, STENCIL_FONTS, type StencilFont } from '@/lib/siteTheme'
 
@@ -73,13 +74,8 @@ export function AestheticClient() {
   const settingsJson = JSON.stringify({ ...s, fontFamilyNote: s.font }, null, 2)
   const copy = async () => { try { await navigator.clipboard.writeText(settingsJson); setCopied(true); setTimeout(() => setCopied(false), 1500) } catch { /* clipboard blocked */ } }
 
-  const seasonRow = (
-    <>
-      <select className="bg-amber-50 border border-amber-300 font-semibold text-amber-800 text-sm py-0.5 pl-2 pr-2"><option>Current season</option><option>Previous season</option></select>
-      <span className="text-slate-400">·</span>
-      <span className="px-2 py-0.5 text-xs font-semibold border border-slate-900 bg-slate-900 text-white">Group</span>
-      <span className="px-2 py-0.5 text-xs font-semibold border border-slate-300">Conference</span>
-    </>
+  const seasonPicker = (
+    <select className="bg-amber-50 border border-amber-300 font-semibold text-amber-800 text-sm py-0.5 pl-2 pr-2"><option>Current season</option><option>Previous season</option></select>
   )
 
   return (
@@ -137,12 +133,12 @@ export function AestheticClient() {
       ) : (
       <div className="space-y-10 border border-slate-200 bg-white p-6">
         <section>
-          <SitePageHeader title="Boys Region Brackets" subtitle="NJSIAA · select a region" seasonRow={seasonRow} showLogo={s.showLogo} titleFontFamily={s.titleStencil ? fontFamily : undefined} />
+          <SitePageHeader title="Boys Region Brackets" picker={seasonPicker} summary="NJSIAA · select a region" tabs={<SiteTabs items={[{ key: 'group', label: 'Group' }, { key: 'conference', label: 'Conference' }]} active="group" />} showLogo={s.showLogo} titleFontFamily={s.titleStencil ? fontFamily : undefined} />
           <NumberTileGrid tiles={boysRegions} fontFamily={fontFamily} size={s.size} radius={s.radius} border={border} minWidth={s.size} />
         </section>
         <section>
           <h3 className="mb-3 text-sm font-bold uppercase tracking-wide text-slate-700">Boys districts (by region)</h3>
-          <NumberTileGrid tiles={boysDistricts} fontFamily={fontFamily} size={Math.round(s.size * 0.75)} radius={s.radius} border={border} minWidth={Math.round(s.size * 0.75)} />
+          <NumberTileGrid tiles={boysDistricts} fontFamily={fontFamily} size={Math.round(s.size * 0.75)} radius={s.radius} border={border} groupSize={4} />
         </section>
         <section className="grid gap-8 md:grid-cols-2">
           <div>
@@ -151,7 +147,7 @@ export function AestheticClient() {
           </div>
           <div>
             <h3 className="mb-3 text-sm font-bold uppercase tracking-wide text-slate-700">Girls districts (by region)</h3>
-            <NumberTileGrid tiles={girlsDistricts} fontFamily={fontFamily} size={Math.round(s.size * 0.75)} radius={s.radius} border={border} minWidth={Math.round(s.size * 0.75)} />
+            <NumberTileGrid tiles={girlsDistricts} fontFamily={fontFamily} size={Math.round(s.size * 0.75)} radius={s.radius} border={border} groupSize={3} />
           </div>
         </section>
         <section>
