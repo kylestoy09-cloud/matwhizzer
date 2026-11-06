@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-11-05 — Dual team point deductions; Ryan Kim 2024-25 entry; William Penn Charter merge
+
+**Dual deductions.** **Migration file:** `docs/migrations/20261105_dual_meet_deductions.sql` (new tables `dual_meet_deductions` and `dual_meet_deductions_girls`). **Backfill:** `scripts/backfill_dual_deductions_20261105.mts`.
+- **Why:** TrackWrestling lists deductions after the bouts and before "Team Score:", for example "Coach Misconduct 0 -1.0". The labels vary: unsportsmanlike, misconduct, headgear, singlet straps, team point and others. `parseDualMeet.ts` and `parseDualMeetGirls.ts` skipped those lines, so about 160 boys and 7 girls duals had bouts that didn't add up to the final score.
+- **Code:** both parsers now read deductions into `ParsedMeet.deductions`, and `import-meets` / `import-meets-girls` save them.
+- **Backfill (2025-26 source files):** boys 148 duals / 161 deductions, girls 6 / 6. Each one matches its stored dual, and the stored bouts plus deductions equal the final score, or are tied with the +1 criteria point. Five boys duals have a deduction but no stored bouts; the deduction is added, and their bouts are a separate gap.
+- **Not used:**
+  - Iona Prep v Don Bosco 12/23: stored bouts 22-38, final 33-41, so bouts are missing.
+  - WW-P North v Lawrence 1/17: the source says −6 but the score shows −1.
+  - Girls West Deptford v Buena/Vineland 1/14: a "wrong score −48" line, which is a correction, not a deduction.
+- **Integrity check:** a dual's score now includes its deductions. A dual tied on bouts and won on criteria (+1) is not a mismatch. Girls duals may wrestle a weight twice (Kyle). A wrestler is flagged for NJ and non-NJ schools only within one season (a transfer is fine).
+
+**Ryan Kim.** His 2024-25 District 5 entry for Fort Lee (157; entry 667efa21) was on the Northern Highlands Ryan Kim's profile (b2731464). It moved to the Fort Lee Ryan Kim (ce3511b1), who wrestled 165 for Fort Lee in 2025-26 (Kyle: same person). This was done by the service role. Backup: `backups/20261105_ryan_kim_entry_before.json`. Its 3 rating-log rows move at the next ratings rebuild.
+
+**William Penn Charter.** **Migration file:** `docs/migrations/20261105_merge_william_penn_charter.sql`. #1202 "William Penn Charter School" is merged into #899 "William Penn Charter" (Kyle: one school). Every foreign key to `schools` is re-pointed from the catalog, then #1202 is deleted. Backup: `backups/20261105_merge_william_penn_charter_before.json`.
+
+---
+
 ## 2026-11-05 — Boys 2024-25 district forfeits, deductions, mid-bracket byes
 
 **Script:** `scripts/fix_district_forfeits_20261105.mts --season 2025`. **Migration files:** `docs/migrations/20261105_district_forfeits_and_deductions_2025.sql` and `docs/migrations/20261105_tw_scoring_midbracket_bye.sql` (both run in the SQL editor). **Backups:** `backups/20261105_district_forfeits_2025_before.json`, `..._inserted.json`.

@@ -295,6 +295,7 @@ function buildMeets(bouts: RawBout[], date: string): ParsedMeetGirls[] {
 
     results.push({
       rawText:    `${team1Name} vs. ${team2Name} — jamboree ${date}`,
+      deductions: [],   // jamboree pairings carry no team point deductions
       date,
       team1Name,
       team2Name,

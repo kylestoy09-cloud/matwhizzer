@@ -26,7 +26,11 @@ const wn = (id: string) => { const w = W.get(id); return w ? `${w.first_name} ${
 
 // where each wrestler has wrestled (bouts and postseason entries), per gender table
 const rec = new Map<string, Map<number, number>>()
-const addRec = (w: string | null, s: number | null) => { if (!w || s == null) return; const m = rec.get(w) ?? new Map(); m.set(s, (m.get(s) ?? 0) + 1); rec.set(w, m) }
+// seasons each wrestler wrestled for each school (end year: 2025-26 = 2026)
+const recSeason = new Map<string, Map<number, Set<number>>>()
+const addRec = (w: string | null, s: number | null, season?: number | null) => { if (!w || s == null) return; const m = rec.get(w) ?? new Map(); m.set(s, (m.get(s) ?? 0) + 1); rec.set(w, m)
+  if (season) { const ms = recSeason.get(w) ?? new Map<number, Set<number>>(); (ms.get(s) ?? ms.set(s, new Set()).get(s)!).add(season); recSeason.set(w, ms) } }
+const seasonEnd = (label: string | null | undefined) => (label && /^\d{4}-\d{2}$/.test(label) ? Number(label.slice(0, 4)) + 1 : null)
 const wrongGender: string[] = []
 for (const g of ['M', 'F'] as const) {
   const mt = g === 'F' ? 'dual_meets_girls' : 'dual_meets', bt = g === 'F' ? 'dual_meet_matches_girls' : 'dual_meet_matches'
@@ -45,7 +49,7 @@ for (const g of ['M', 'F'] as const) {
     if ((b.school_a_id != null && b.school_a_id !== m.team1_school_id) || (b.school_b_id != null && b.school_b_id !== m.team2_school_id)) badSchool.push(`${m.meet_date} ${sn(m.team1_school_id)} v ${sn(m.team2_school_id)}: bout ${sn(b.school_a_id)} v ${sn(b.school_b_id)}`)
     if (b.wrestler_a_id && b.wrestler_a_id === b.wrestler_b_id) sameW.push(b.id.slice(0, 8))
     for (const w of [b.wrestler_a_id, b.wrestler_b_id]) if (w && W.get(w) && W.get(w)!.gender !== g) wrongGender.push(`${wn(w)} (${W.get(w)!.gender}) in ${L} dual ${m.meet_date}`)
-    addRec(b.wrestler_a_id, b.school_a_id); addRec(b.wrestler_b_id, b.school_b_id)
+    addRec(b.wrestler_a_id, b.school_a_id, m.season_id); addRec(b.wrestler_b_id, b.school_b_id, m.season_id)
   }
   rule(`${L} duals: winner is not one of the two wrestlers`, badWinner)
   rule(`${L} duals: team points go to one side, winner on the other`, badSide)
@@ -53,33 +57,41 @@ for (const g of ['M', 'F'] as const) {
   rule(`${L} duals: bout points to a missing meet`, orphanBout)
   rule(`${L} duals: same wrestler on both sides`, sameW)
   // meet rules
+  // team point deductions (src/lib/parseDualMeet.ts reads them; the final score includes them)
+  const ded = new Map<string, [number, number]>()
+  for (const d of await all(g === 'F' ? 'dual_meet_deductions_girls' : 'dual_meet_deductions', 'id, dual_meet_id, team1_points, team2_points')) { const x = ded.get(d.dual_meet_id) ?? [0, 0]; x[0] += Number(d.team1_points); x[1] += Number(d.team2_points); ded.set(d.dual_meet_id, x) }
   const scoreOff: string[] = [], dupMeet: string[] = [], dupWeight: string[] = []
   const sig = new Map<string, string>()
   for (const [id, bs] of byMeet) {
     const m = meets.get(id)!
-    const p1 = bs.reduce((a, b) => a + (b.team1_points ?? 0), 0), p2 = bs.reduce((a, b) => a + (b.team2_points ?? 0), 0)
+    const dd = ded.get(id) ?? [0, 0]
+    const p1 = bs.reduce((a, b) => a + (b.team1_points ?? 0), 0) + dd[0], p2 = bs.reduce((a, b) => a + (b.team2_points ?? 0), 0) + dd[1]
     // a dual tied on bouts is settled by criteria: the winner's score carries 1 extra point
     const tiebreak = p1 === p2 && ((m.team1_score === p1 + 1 && m.team2_score === p2) || (m.team2_score === p2 + 1 && m.team1_score === p1))
     if (m.status === 'final' && (m.meet_kind ?? 'dual') === 'dual' && m.team1_score != null && !tiebreak && (p1 !== m.team1_score || p2 !== m.team2_score)) scoreOff.push(`${m.meet_date} ${sn(m.team1_school_id)} ${m.team1_score}-${m.team2_score} ${sn(m.team2_school_id)} (bouts ${p1}-${p2})`)
     const real = bs.filter(b => b.wrestler_a_id || b.wrestler_b_id)
     const s = `${m.meet_date}|` + real.map(b => `${b.weight_class}:${b.wrestler_a_name_raw}/${b.wrestler_b_name_raw}/${b.result_type}`).sort().join('|')
     if (real.length >= 3) { if (sig.has(s)) dupMeet.push(`${m.meet_date} ${sn(m.team1_school_id)} v ${sn(m.team2_school_id)} = ${sig.get(s)}`); else sig.set(s, `${sn(m.team1_school_id)} v ${sn(m.team2_school_id)}`) }
-    const wc = real.map(b => b.weight_class); if ((m.meet_kind ?? 'dual') === 'dual' && new Set(wc).size !== wc.length) dupWeight.push(`${m.meet_date} ${sn(m.team1_school_id)} v ${sn(m.team2_school_id)}`)
+    // girls duals may wrestle a weight twice (Kyle, 2026-11-05): boys only
+    const wc = real.map(b => b.weight_class); if (g === 'M' && new Set(wc).size !== wc.length) dupWeight.push(`${m.meet_date} ${sn(m.team1_school_id)} v ${sn(m.team2_school_id)}`)
   }
   rule(`${L} duals: final score differs from bout points`, scoreOff)
   rule(`${L} duals: same meet imported twice`, dupMeet)
-  rule(`${L} duals: a weight wrestled twice in one dual`, dupWeight)
+  if (g === 'M') rule(`${L} duals: a weight wrestled twice in one dual`, dupWeight)
   // tournament bouts
+  const istSeason = new Map((await all(it, 'id, season')).map((t: any) => [t.id, seasonEnd(t.season)]))
   const tbs = await all(tb, 'id, in_season_tournament_id, wrestler1_id, wrestler2_id, wrestler1_school_id, wrestler2_school_id, winner')
   const tSame: string[] = []
   for (const b of tbs) {
-    addRec(b.wrestler1_id, b.wrestler1_school_id); addRec(b.wrestler2_id, b.wrestler2_school_id)
+    const se = istSeason.get(b.in_season_tournament_id) ?? null
+    addRec(b.wrestler1_id, b.wrestler1_school_id, se); addRec(b.wrestler2_id, b.wrestler2_school_id, se)
     if (b.wrestler1_id && b.wrestler1_id === b.wrestler2_id) tSame.push(b.id.slice(0, 8))
     for (const w of [b.wrestler1_id, b.wrestler2_id]) if (w && W.get(w) && W.get(w)!.gender !== g) wrongGender.push(`${wn(w)} (${W.get(w)!.gender}) in ${L} tournament bout`)
   }
   rule(`${L} tournaments: same wrestler on both sides`, tSame)
 }
-for (const e of await all('tournament_entries', 'id, wrestler_id, school_id')) addRec(e.wrestler_id, e.school_id)
+const tSeason = new Map((await all('tournaments', 'id, season_id')).map((t: any) => [t.id, t.season_id]))
+for (const e of await all('tournament_entries', 'id, wrestler_id, school_id, tournament_id')) addRec(e.wrestler_id, e.school_id, tSeason.get(e.tournament_id))
 rule('wrestler of one gender in the other gender\'s bouts', wrongGender)
 
 // out-of-state flag, both directions
@@ -88,7 +100,10 @@ for (const [w, m] of rec) {
   const ww = W.get(w); if (!ww) continue
   const s = [...m.keys()], non = s.filter(x => sch.get(x)?.is_nj === false), nj = s.filter(x => sch.get(x)?.is_nj === true)
   const desc = `${ww.gender} ${wn(w)}: ${s.map(x => `${sn(x)}${sch.get(x)?.is_nj === false ? '*' : ''} ${m.get(x)}`).join(' / ')}`
-  if (non.length && nj.length) mixed.push(desc)
+  // a transfer between seasons is fine (August Cassidy: Nottingham 2024-25, Peddie 2025-26)
+  const ms = recSeason.get(w), seasonsOf = (xs: number[]) => new Set(xs.flatMap(x => [...(ms?.get(x) ?? [])]))
+  const nonS = seasonsOf(non), sameSeason = [...seasonsOf(nj)].some(y => nonS.has(y)) || !ms
+  if (non.length && nj.length && sameSeason) mixed.push(desc)
   else if (non.length && !ww.is_oos) notFlaggedNonNj.push(desc)
   else if (nj.length && !non.length && ww.is_oos) flaggedNj.push(desc)
 }

@@ -487,6 +487,14 @@ export async function POST(req: NextRequest) {
     const dualMeetId = meetRow.id as string
     meetsImported++
 
+    // Team point deductions listed after the bouts (the final score includes them)
+    if (meet.deductions?.length) {
+      const { error: dedErr } = await supabase.from('dual_meet_deductions').insert(
+        meet.deductions.map(d => ({ dual_meet_id: dualMeetId, label: d.label, team1_points: d.team1Points, team2_points: d.team2Points }))
+      )
+      if (dedErr) errors.push(`Meet ${i + 1} deductions: ${dedErr.message}`)
+    }
+
     // Build match rows
     const matchRows = []
     for (let matchIdx = 0; matchIdx < meet.matches.length; matchIdx++) {

@@ -25,6 +25,14 @@ export type ParsedMatch = {
   isForfeitWin: boolean
 }
 
+// A team point deduction listed after the bouts ("Coach Misconduct  0  -1.0",
+// "unsportsmanlike conduct 157  -1.0  0"): one side's points are negative.
+export type ParsedDeduction = {
+  label: string
+  team1Points: number
+  team2Points: number
+}
+
 export type ParsedMeet = {
   rawText: string
   date: string          // 'MM/DD/YYYY'
@@ -33,6 +41,7 @@ export type ParsedMeet = {
   team1Score: number
   team2Score: number
   matches: ParsedMatch[]
+  deductions: ParsedDeduction[]
   isDuplicate?: true
 }
 
@@ -411,6 +420,39 @@ function parseFormatC(chunk: string): ParsedMatch[] {
   return matches
 }
 
+// ── Team point deductions ──────────────────────────────────────────────────────
+// Listed after the bouts, before "Team Score:": a label and the two sides' points,
+// one of them negative (bout points never are). Cells come one per line (Format C),
+// tab / multi-space separated (Format A), or jammed together (Format B).
+
+const NUM = /^-?\d+(?:\.\d+)?$/
+
+function parseDeductions(chunk: string): ParsedDeduction[] {
+  const scoreIdx = chunk.search(/Team\s+Score:/i)
+  const body = scoreIdx > 0 ? chunk.slice(0, scoreIdx) : chunk
+  const out: ParsedDeduction[] = []
+  if (body.includes('\n')) {
+    const cells = body.split('\n').flatMap(l => l.split(/\t|\s{2,}/)).map(c => c.trim()).filter(Boolean)
+    for (let i = 0; i + 2 < cells.length; i++) {
+      const [label, a, b] = [cells[i], cells[i + 1], cells[i + 2]]
+      if (!/[A-Za-z]/.test(label) || / over /i.test(label) || !NUM.test(a) || !NUM.test(b)) continue
+      const t1 = parseFloat(a), t2 = parseFloat(b)
+      if (t1 >= 0 && t2 >= 0) continue
+      out.push({ label, team1Points: t1, team2Points: t2 })
+      i += 2
+    }
+    return out
+  }
+  // jammed text: deductions are the last entries before "Team Score:"
+  const re = /([A-Za-z][A-Za-z ()@`'\/:.-]*?)\s*(0|-?\d+\.\d+)\s*(0|-?\d+\.\d+)$/
+  let rest = body.trimEnd(), m: RegExpMatchArray | null
+  while ((m = rest.match(re)) && (m[2].startsWith('-') || m[3].startsWith('-'))) {
+    out.unshift({ label: m[1].trim(), team1Points: parseFloat(m[2]), team2Points: parseFloat(m[3]) })
+    rest = rest.slice(0, m.index).trimEnd()
+  }
+  return out
+}
+
 // ── Public API ─────────────────────────────────────────────────────────────────
 
 export function parseDualMeetText(raw: string): ParsedMeet[] {
@@ -457,6 +499,7 @@ export function parseDualMeetText(raw: string): ParsedMeet[] {
       team1Score: score?.t1 ?? 0,
       team2Score: score?.t2 ?? 0,
       matches,
+      deductions: parseDeductions(chunk),
     }
     if (isDuplicate) meet.isDuplicate = true
 
