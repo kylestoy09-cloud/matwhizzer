@@ -88,7 +88,6 @@ export function HeaderNav() {
     { href: standingsHref,                                                        label: 'Standings',
       menu: [{ href: `${standingsHref}?view=group`, label: 'Group' }, { href: `${standingsHref}?view=conference`, label: 'Conference' }] },
     { href: isBoys ? '/boys/leaderboards': '/girls/leaderboards',                label: 'Leaderboards' },
-    { href: isBoys ? '/boys/schools'     : '/girls/schools',                     label: 'Schools'      },
     { href: isBoys ? '/boys/tournaments' : '/girls/tournaments',                 label: 'Tournaments'  },
     { href: isBoys ? '/boys/postseason'  : '/girls/postseason',                  label: 'Post Season', menuOnly: true,
       menu: isBoys

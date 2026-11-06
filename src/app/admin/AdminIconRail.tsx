@@ -79,6 +79,7 @@ function buildUniversal(side: AdminSide, onChatClick?: () => void, onMicrocheckC
       { label: 'Data Browser',   href: '/admin/data-browser' },
       { label: 'Data Health',    href: '/admin/data-health' },
       { label: 'Page Layout',    href: '/admin/page-layout' },
+      { label: 'Aesthetic Tool', href: '/admin/aesthetic' },
       { label: 'Home Page Test', href: '/admin/homepage-test' },
     ]},
     { heading: 'Microcheck', items: [

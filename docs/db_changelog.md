@@ -2,6 +2,20 @@
 
 ---
 
+## 2026-11-06 — Site look: shared page frame, region colors, Aesthetic Tool (step 1)
+
+**Code only (Kyle's plan, agreed):**
+- **`src/lib/siteTheme.ts`:** the site theme.
+  - Boys region colors: odd regions are four navy shades, 1 lightest to 7 darkest; even regions are four light grays, 2 nearly white to 8 a regular gray. Numbers on navy use region 8's gray; numbers on gray use region 7's navy.
+  - Girls: the same pattern in rose and gray.
+  - District to region: boys ceil(d/4), girls ceil(d/3). District buttons take their region's color.
+  - The stencil font options.
+- **Shared components:** `src/components/site/SitePageHeader.tsx` (title, subtitle, season row in a fixed place, optional small logo) and `src/components/site/NumberTileGrid.tsx` (the standard button grid). Every public page moves onto these next, one page at a time.
+- **Aesthetic Tool:** `/admin/aesthetic` (Admin Settings). A live preview built from those same components, with controls for colors, stencil font, tile size, corners and header options. Preview only: approved settings are copied out and written into the theme.
+- **Nav:** the top-nav "Schools" link is removed for boys and girls (Kyle: redundant with search). The schools list pages remain.
+
+---
+
 ## 2026-11-06 — State page heading follows the picked season
 
 Also: the Post Season → Individual pages (`postseason/individual/boys|girls/page.tsx`) show the season picker at the top (Kyle). They already followed the picked season but had no picker on the page.
