@@ -28,11 +28,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Mat Whizzer',
     description: 'NJSIAA Wrestling Results',
-    images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'Mat Whizzer — NJSIAA Wrestling' }],
+    // current logo (2026-11-06); a new file name so text-message apps don't reuse the old preview
+    images: [{ url: '/og-image-2026.jpg', width: 1200, height: 630, alt: 'Mat Whizzer — NJSIAA Wrestling' }],
   },
   twitter: {
     card: 'summary_large_image',
-    images: ['/og-image.jpg'],
+    images: ['/og-image-2026.jpg'],
   },
 }
 

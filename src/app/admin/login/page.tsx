@@ -41,10 +41,10 @@ export default function LoginPage() {
         <div className="flex justify-center mb-8">
           <div className="bg-white rounded-full p-3 shadow-none border-2 border-blue-900">
             <Image
-              src="/mwl-word.png"
+              src="/images/Mat Whizzer Logo Navy - No Outline.png"
               alt="Mat Whizzer"
               width={160}
-              height={70}
+              height={160}
               className="h-12 w-auto"
               priority
             />
