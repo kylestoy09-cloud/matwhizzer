@@ -2,6 +2,19 @@
 
 ---
 
+## 2026-11-06 — TF-1 team totals corrected; Mericle Region 1 bout; "Bye Bye" bye rule found
+
+- **TF-1 totals (Kyle: put the correct score on the site):** `scripts/fix_tf1_team_totals_20261106.mts` adds +0.5 in `precomputed_team_scores` for each 2025-26 district school whose wrestler won a "TF-1" tech fall. TrackWrestling gave those a 1-point bonus instead of 1.5:
+  - Bergen Catholic 345 → 345.5, Fair Lawn 132 → 132.5 (D7)
+  - Bound Brook 72.5 → 73, North Hunterdon 252 → 252.5 (D14)
+  - Scotch Plains-Fanwood 96 → 96.5 (D16)
+  No team changes places. Backup: `backups/20261106_tf1_team_totals_before.json`. 2025-26 is now exact everywhere: districts 310/310, regions 273/273, state 162/162. CLAUDE.md notes this as the one approved correction.
+- **Mericle:** **Migration file:** `docs/migrations/20261106_mericle_region1_r1.sql`. 2024-25 Region 1, 285, Champ. Round 1: Gavin Mericle (High Point) won by fall over Sean Brown (Newton). The bout was never stored because Newton's Sean Brown had no region entry (the shared-name loss). The service role recreated his entry. With the bout, High Point is 105, the official total.
+- **"Bye Bye" (Lower Cape May, D29 2024-25, 155 vs 157):** TrackWrestling sometimes lists a quarterfinal bye as "received a bye Bye Bye () 0-1", a placeholder opponent. It earns no points, but TrackWrestling counts it as a win when crediting the bye before it. Dennis Serra (Champ. Round 1 bye, "Bye Bye" quarterfinal, lost the semifinal) gets his first bye's 2 points. This fits all 11 cases: the 10 "Bye Bye" cases, plus Martorano (D10) with a plain bye and no credit. Not yet in the scoring rules.
+- **Still unexplained:** Clearview (D32 2024-25), 129.5 vs 133.5. Kyle's team page matches every stored bout.
+
+---
+
 ## 2026-11-06 — Montville District 5 2025-26: Manieri's quarterfinal forfeit
 
 **Migration file:** `docs/migrations/20261106_manieri_qf_forfeit.sql`. Luke Manieri (113) won his quarterfinal by forfeit "over Unknown (For.)", per TrackWrestling's Montville team page (Kyle). The season export left the line out, so the bout was never stored and the scoring rules treated it as a bye (155 vs the official 157). It is stored as a forfeit over a filler entry, which makes Montville exactly 157. This was the only unexplained 2025-26 total. Kyle ran it: 157.
