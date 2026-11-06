@@ -2,6 +2,12 @@
 
 ---
 
+## 2026-11-06 — Montville District 5 2025-26: Manieri's quarterfinal forfeit
+
+**Migration file:** `docs/migrations/20261106_manieri_qf_forfeit.sql`. Luke Manieri (113) won his quarterfinal by forfeit "over Unknown (For.)", per TrackWrestling's Montville team page (Kyle). The season export left the line out, so the bout was never stored and the scoring rules treated it as a bye (155 vs the official 157). It is stored as a forfeit over a filler entry, which makes Montville exactly 157. This was the only unexplained 2025-26 total.
+
+---
+
 ## 2026-11-06 — Out-of-state duplicate profiles; out-of-state name links; self-bouts are byes
 
 - **Name links:** `scripts/backfill_oos_name_links_20261106.mts` added 882 name links for out-of-state profiles. 880 profiles created in July–August 2026, before imports saved links, had none, so a later import couldn't find them and made a second profile (Dan Vargas, Easton Area). The links come from each profile's own bouts. Two Peddie names (Addison Collins, Riley Allen) are already linked to their boys profiles; their girls profiles are left separate.
