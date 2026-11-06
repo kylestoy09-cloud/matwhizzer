@@ -2,6 +2,17 @@
 
 ---
 
+## 2026-11-06 — The 292 girls (2024-25-only profiles)
+
+**Script:** `scripts/fix_girls_2025_only_20261106.mts` (service role). **Backup:** `backups/20261106_girls_2025_only_before.json`. The girls marked active with only a 2024-25 postseason entry (no name link, no 2025-26 match) have their grade from that 2024-25 entry. Kyle ruled:
+- **204 seniors** graduated in 2025: `is_active = false`, `graduation_year = 2025`.
+- **87 underclassmen** are still in school (they may just not have come out for the team). They stay active, take their 2025-26 class (+1: 23 Fr→So, 31 So→Jr, 33 Jr→Sr) and get a `graduation_year`, so they keep rolling over. They're on no 2025-26 roster, since rosters come from matches.
+- **1** with no grade is unchanged.
+
+The integrity check is unchanged (34 rules, the same 3 known failures).
+
+---
+
 ## 2026-11-06 — Dual page shows team-point adjustments
 
 **Migration file:** `docs/migrations/20261106_dual_adjustments_public_read.sql` (read grant + policy for anon/authenticated on `dual_meet_deductions` / `_girls`). **Code:** `src/app/(site)/meets/[id]/page.tsx`. A dual's adjustments (deductions, tie-breaker criteria points, corrections) are listed under its bouts, and the running score carries through them, so the last row equals the final score. A label that's just a weight reads "Team point deduction (157)". A set netting to zero for both teams (a "wrong score" line and its reversal) is not shown.
