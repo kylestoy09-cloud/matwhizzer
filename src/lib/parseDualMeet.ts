@@ -478,7 +478,8 @@ function parseDeductions(chunk: string): ParsedDeduction[] {
       // on track  0  18.0") and its label can be just a weight ("157  0  -1.0")
       const decimal = a.includes('.') || b.includes('.')
       if ((t1 >= 0 && t2 >= 0 && !decimal) || (t1 === 0 && t2 === 0)) continue
-      if (!/[A-Za-z]/.test(label) && !(decimal && /^\d{3}$/.test(label))) continue
+      // label: words, or (with a decimal amount) a weight ("157") or punctuation only (".")
+      if (!/[A-Za-z]/.test(label) && !(decimal && (/^\d{3}$/.test(label) || !/\d/.test(label)))) continue
       out.push({ label, team1Points: t1, team2Points: t2 })
       i += 2
     }

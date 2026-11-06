@@ -1,0 +1,282 @@
+{
+ "profiles": [
+  [
+   "M|Allen Rivas|379",
+   "e44fca3a-6059-48b5-a018-59cf518042f9"
+  ],
+  [
+   "M|Adrian Martinez|11",
+   "f655389a-3e75-4498-b188-55ac8bdd7533"
+  ],
+  [
+   "M|Michael Owens|744",
+   "a28f30c5-9505-4035-8261-c253df143fa3"
+  ],
+  [
+   "M|Andrew Grath|750",
+   "776fd662-e5e1-4b15-b840-52c4b62bc206"
+  ],
+  [
+   "M|Vincent Bouvin|750",
+   "89feac58-33ae-4bec-a2fd-e0cc22e10188"
+  ],
+  [
+   "M|Luke Kaminskey|750",
+   "55dc052b-b1f9-42c1-ad5a-4a091554b8a5"
+  ],
+  [
+   "M|Patrick Davis|746",
+   "a6f25f45-8325-4766-b2f7-fa3441816b53"
+  ],
+  [
+   "M|Ethan Vaquero|746",
+   "283d8f7d-11e1-41f1-9d9b-e8441d910787"
+  ],
+  [
+   "M|Dorian Hidalgo|746",
+   "13fe0740-e2ff-405e-b56b-6c4420d087b8"
+  ],
+  [
+   "M|Zachary Metzgar|1012",
+   "08b684ef-5d6a-48c6-851c-07dddc9aed8b"
+  ],
+  [
+   "M|Jace Adam|1012",
+   "2d387c93-671c-48e7-bc60-9f73f4364d6a"
+  ],
+  [
+   "M|Elijah Adams|1012",
+   "6c24ad46-290c-4952-80ed-cdc8bfb63a64"
+  ],
+  [
+   "M|Bo Yeakel|1012",
+   "0da1ead8-9ca0-488c-9198-4003d5373909"
+  ],
+  [
+   "M|Mason Ramsay|1012",
+   "edbbd61b-62e9-4ecc-8805-f19025208082"
+  ],
+  [
+   "M|Isaiah Adams|1012",
+   "aa42ec3a-8ef9-4c70-85fc-4a0989821f0e"
+  ],
+  [
+   "M|Jacob Policelli|1012",
+   "d1a9959a-93c5-427d-8d85-94ef9d188ee8"
+  ],
+  [
+   "M|Blayke Lacey|1012",
+   "4a7f9ce5-24aa-430a-b63e-1e08ffd5d497"
+  ],
+  [
+   "M|Collin Ramsay|1012",
+   "af564649-c483-4715-8bc9-d75cbb7bf7bd"
+  ],
+  [
+   "M|Chase Lambert|1012",
+   "f1b33e5e-b54a-4a6e-8da3-cf32c46d7dfe"
+  ],
+  [
+   "M|Luca Albanese|1012",
+   "dbc24e08-5ced-4d25-853f-de38f327399c"
+  ],
+  [
+   "M|Christ M`Balla|901",
+   "0c0a6025-860b-4cfd-9d4a-5ad2c2b623b0"
+  ],
+  [
+   "M|Justin Hetrick|901",
+   "3e1fc0a6-417a-4944-abf1-ba30e0e96cc7"
+  ],
+  [
+   "M|Emediong Emediong|901",
+   "8802b33d-1403-4535-8c14-cebb12890356"
+  ],
+  [
+   "M|Ryan Bonham|901",
+   "a21db99e-c80c-40b0-aa9f-bf89634b5927"
+  ],
+  [
+   "M|Max Milia|585",
+   "f39a6068-c5b9-46c5-a926-5b3c1c48c709"
+  ],
+  [
+   "M|Joseph Miller|585",
+   "80ca7999-c22f-40cc-a454-c5b09b06bdfe"
+  ],
+  [
+   "M|John Solano|585",
+   "1f12fb18-ccd4-4a27-b680-09e9c5577c99"
+  ],
+  [
+   "M|Benjamin Miller|585",
+   "41ac0035-902a-412c-82b1-51fa72bf88aa"
+  ],
+  [
+   "M|Desean Knight|585",
+   "ae752052-29f9-4ee4-b2c1-a802b6ff1164"
+  ],
+  [
+   "M|Elijah Williams|585",
+   "018325c1-dc8a-49d0-b337-516ea4f44df5"
+  ],
+  [
+   "M|Benjamin Reid|585",
+   "25ea88d6-9bf7-4d3f-9154-05898a77356a"
+  ],
+  [
+   "M|Daniel Rivera|585",
+   "cc9632f0-e7f8-413d-a57c-dcc9721be4ce"
+  ],
+  [
+   "M|Ethan Estojak|585",
+   "1b2eaab1-8d67-4ffc-a9b0-703111bf49a4"
+  ],
+  [
+   "M|Kaedon Hall|585",
+   "13ac7988-2987-4d2a-92be-f0f283b92cda"
+  ],
+  [
+   "F|Ava Wickemeyer|594",
+   "8a15112f-b09e-4c50-862c-eadea55addb5"
+  ],
+  [
+   "F|Lilliana Nelson|594",
+   "13fabe72-8f83-42f9-89bb-250e44efd696"
+  ],
+  [
+   "F|Jedah Canty|594",
+   "a09989bd-be0e-4c7e-9762-d728748a2952"
+  ],
+  [
+   "F|Emma Lewis|594",
+   "477f87d7-b84a-445b-bd3a-a2f5999e80a4"
+  ],
+  [
+   "F|Alexis Horvath|594",
+   "30ce71c0-7dae-4d92-8de8-7b8ad8c4ef81"
+  ],
+  [
+   "F|Jaslin Plaza|594",
+   "b8999419-a050-4e8e-a3ed-bcdd6cc42699"
+  ]
+ ],
+ "bouts": {
+  "": [
+   "a6568b72-9068-41fb-8615-104b8444dd61",
+   "1c6f86d6-d1a6-401e-a6b5-aec749d9935a",
+   "001b7387-b825-4ff7-ae74-039b011b3530",
+   "1cc0b96b-7588-424f-aeed-9a086873b5ca",
+   "f98e5d42-eedf-4e46-b1f2-aa79110fd2b5",
+   "ba8f538d-a0d5-4403-af18-6d8c04da9912",
+   "1bc1d79e-9feb-4c45-bcae-bc8b782ec68a",
+   "697a0655-66d8-4c71-a685-56738acb1720",
+   "27b27550-4f42-495c-aaff-687f08308faf",
+   "cb32e30b-eaa3-4015-b61c-a89bf758b1a0",
+   "5440b8b2-f857-46f8-b83c-fc60fcc899e6",
+   "9b595a34-e372-42b2-bb86-72231de368d5",
+   "1192efc3-4ed2-45ba-9f8c-5aee0a1036b2",
+   "e9073502-109b-4787-a660-a48bd836ef71",
+   "bc1126cb-b8fe-44cc-8762-b6c3323edf44",
+   "a1da625e-dab7-432c-a5b3-25ece3dd8ae3",
+   "e4f3663b-fad5-430a-b621-d0e5ddfab4b4",
+   "bdd6d3f4-c097-4adb-8a76-e6504b4135d3",
+   "33c71f90-889f-4f99-91e1-c0e1eb285e2a",
+   "359aedf1-1566-4e7f-a5e1-fe9185a0d834",
+   "14424a07-490d-4f6b-be3d-c021042a12ad",
+   "88dfea51-b0b1-4e4d-93cb-60b3772922f9",
+   "a0494196-56ee-4364-b93b-d6a328620a08",
+   "ecd9c254-53ee-4b8b-bc70-f0adcb5a1c33",
+   "4e184543-73cb-40cd-95ae-24071106236e",
+   "26c37aa5-6dcc-4e51-9c33-24287722da29",
+   "95bdcba2-e5ce-456a-9dd4-eea2a2a29e27",
+   "e91d4b8e-6aa3-4d60-9cd5-08f753ea5a23",
+   "54d0d8a9-9142-442d-a8c4-e5c7ab6cc300",
+   "04fde651-32a6-410d-81de-aaa8347be530",
+   "10dc8638-1725-424d-835e-de13088485ab",
+   "3750e268-7a8f-42f4-b830-19a2924f83e2",
+   "d4525cf6-088f-4f5c-b318-f7deb4414e2c",
+   "94c311ef-7f77-4779-838a-4f11dfed6268",
+   "fafd3e5d-3c51-439b-84b4-5580378c75c2",
+   "ddb1a12c-85b8-4c68-ba29-0a57da31465c",
+   "0227c393-2e7b-4588-b165-c9b2dd320698",
+   "7f1a0e9a-3601-4b72-8367-5c317638d685",
+   "93f3fb44-74fa-40fb-915b-b29c344cf0b4",
+   "d1d17f7d-cabb-4c39-a90c-fb1494090f20",
+   "522dff4b-a3ae-426a-ba1e-bc0c14936224",
+   "7342bf70-cfff-4e4b-a721-0d68256c5f03",
+   "82a485ee-df1e-4ab6-a371-b2f603f060b3",
+   "da21b35d-878d-4336-8260-676dad3c1991",
+   "e6ac2999-18ca-40e2-a1f1-f46d95fb6f9c",
+   "00d89efb-7aef-43e6-b3df-12502ac55e09",
+   "6565eb0c-8b6e-40ae-9e01-2999505c8f8d",
+   "123da60a-07a0-4b18-828d-467eb495868d",
+   "d9120083-05f5-43be-8f47-89dd6e2c4d09",
+   "fca2531a-d87e-445a-a582-09ff98856b83",
+   "d9677c2b-91d7-42e1-bce2-b5853c3ba316",
+   "53efe462-1ddd-4970-be5f-c5734b07063c",
+   "a3de5ad1-5358-43d8-95e0-e0c335a4b0a3",
+   "3fdfdd12-8ab0-451b-92c9-edcbb96c5adf",
+   "926a9be7-b147-4652-ae6a-b879052091fe",
+   "56913354-a219-424d-bbc0-e65816513e5a",
+   "4772212b-c185-4d8c-b233-0cfca3a437e0",
+   "03afb9fa-3b81-405b-8af8-8a2196e3d8db",
+   "8d55a684-7295-4d2c-a4b8-2bc80ffb4620",
+   "e7b2b6cd-b499-4252-b8d2-6e4258504725",
+   "892b220a-0a16-49ca-86fc-65d6582b0d3b",
+   "df18d7c4-d0b2-42b6-9452-ed472a64a822",
+   "c1a36b9c-4101-46aa-a324-402b0b6ae779",
+   "607c92ae-80a5-48c5-99d1-87ef2ca76983",
+   "847b0d10-0f9b-46c8-b781-e9f8a4e09723",
+   "148e59d2-680d-42ec-bc78-d2c7c1f9bb4c",
+   "4dad6b82-9ff0-416c-a85c-695842a1412a",
+   "f1f6da32-0d01-48a1-b83e-b7cec40ab78f",
+   "4b624bcf-b8d4-49e6-aaab-ae918ece606c",
+   "14810674-47ea-407b-ba1c-25fb576e0d33",
+   "3c6cb28d-4e73-4fbe-8c09-9a33e6a29c68",
+   "5fd02fe6-72f1-41c4-a1ed-68bf6ee583e7",
+   "b080b114-8f44-4845-8de7-7b05352009a6",
+   "8e4fbba7-d94c-4bc7-96a1-3c01f18089e4",
+   "f8d5dcb7-4177-4130-b2bf-6d8124bcee2c",
+   "a99df6b8-5cb8-4267-814f-2dc9ed512a57",
+   "52928873-6e7e-4c61-9fa2-58634fdf7549",
+   "1ff4b162-fd38-467f-afc7-c7e9e901aa7f",
+   "c3a0a1a8-2456-49d7-b316-a9456ffa6a71",
+   "13d0bda5-c7f5-4dd5-aed2-b264891ab8a7",
+   "36e15df0-0479-47b7-b7b4-fea5efc35a63",
+   "a61d0fe1-4dc0-4259-a7d1-7c5de4d11a30",
+   "9b83330a-1220-4255-a95c-a595217198a7",
+   "ff4b0597-8fac-4b26-9478-d8e0adedf33b",
+   "d02793dc-8cd4-4415-8fca-ffb7e5d615c8",
+   "1f844ee2-8496-4448-81ba-576c2526434e",
+   "e9b89761-fb9d-4e81-a855-196261c86154",
+   "ffb04da2-7b0d-42a4-87bb-40ebade31580",
+   "c0a78a3f-e732-4725-8089-2b4cc8480ca9"
+  ],
+  "_girls": [
+   "6803335c-6272-4d2b-9697-c9daa824819e",
+   "f2ab1e82-a27b-4566-b3bc-9aa0422bd108",
+   "4ac3f791-b004-40e8-9a68-42f5f3163e9d",
+   "6284ce9c-4b87-4239-82bd-ba998163c4cb",
+   "a0093685-fdf9-4427-a847-81ba6d23ace7",
+   "588a2e77-1fa9-4f70-b5f7-17465fd408bb",
+   "bb1cc7e1-0d95-4d07-8652-62e5e926ebc7",
+   "09878d35-671d-49dd-b875-8625ff577fd6",
+   "b586dfda-db0b-41bf-a88f-2f000d465c45",
+   "68fb1adf-b21c-46e5-89d6-bd860bcf127d",
+   "2096faab-cb4e-41b4-95bb-92e81010531e",
+   "a5a947ff-3b44-474a-a872-4465db0edb04",
+   "525fc5f3-1dd3-41e6-a320-07b03b5fc64a",
+   "3f0cf308-0efc-446e-83f0-356558c415c3",
+   "399b976a-b370-41bf-9007-fe182bc1a7ec",
+   "6312e21a-5ecd-4af5-9aea-6019dc2957a5",
+   "32c12fe5-8e3a-4874-92ff-35e6c74ebf93",
+   "0e2703ef-5678-43cb-be43-e42712d13bf9",
+   "fcb01754-5956-4511-8563-52f32a2f3e0e",
+   "c1f49b76-4584-4037-ae47-dc624f0d276f",
+   "adb3cc4d-284b-408a-a878-2495e24588ed",
+   "598c7916-81a0-421c-bb90-4cbf19a047e6",
+   "9708f040-61d6-409a-9d0b-fba247670085"
+  ]
+ }
+}

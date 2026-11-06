@@ -4,6 +4,11 @@
 
 ## 2026-11-06 — Dual adjustments that add points; girls typos
 
+- **Run (Kyle ran the migration):** `backfill_dual_deductions_20261105.mts` added 17 boys and 15 girls adjustments. Morris Hills v West Morris Central 2/4 got a "157" −1 for WMC from Kyle's pasted page, so it now adds up to 25-43. A second run of `backfill_mapped_weight_bouts_20261106.mts` added West Deptford v Buena's 9 bouts and its "wrong score" ±48 pair (net 0); backups `..._inserted_run1.json` / `_run2.json`. The first run had added one girls double forfeit twice (dual 4f531491, 126, 0-0). The script now skips a no-name bout when that weight already has one, and deleting the extra row waits on Kyle.
+- **JV copies (Kyle: only varsity counts):** `scripts/fix_jv_duals_20261106.mts`. Collingswood v Paulsboro 1/14 and Highland/Triton v Williamstown 1/28 were stored from the JV copy, with repeated weights. Their 13 JV bouts (7 + 6) were replaced by the 28 varsity bouts, and the finals set to 44-22 and 36-33. Backup: `backups/20261106_jv_duals_before.json`.
+- **Parser:** an adjustment label may also be punctuation only (Highland's ". 0 36.0", cancelled by "wrong sc0re 0 −36.0").
+- **Left:** Delsea v Council Rock North (two bouts at 285; Kyle: leave), and Schalick v Delran 1/19 (girls; the file has several Schalick–Delran duals that day, and the copy matching our final lists 9 of 12 weights).
+
 - **Adjustments:** TrackWrestling's lines after a dual's bouts aren't all deductions. They also include tie-breaker criteria points, which are often listed explicitly ("Criteria F: Least amount of forfeits 1.0 0"), a point to the opponent ("Steinert Wrestler Throwing Headgear 1.0 0"), corrections ("kids not present on track 0 18.0", WW-P North's −6 then +5), and labels that are just a weight ("157 0 −1.0").
   - **Code:** both parsers now read any line with a decimal amount or a negative one.
   - **Migration file:** `docs/migrations/20261106_dual_adjustments_positive.sql` drops the "≤ 0" checks on `dual_meet_deductions` (_girls).

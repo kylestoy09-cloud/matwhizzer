@@ -43,6 +43,8 @@ for (const [g, dir, sfx] of [['M', '2025-26 Boys Data', ''], ['F', '2025-26 Girl
       if (!x.listedWeight) continue
       const names = [n(x.winnerName), n(x.loserName)].filter(Boolean)
       if (have.some(h => [n(h.wrestler_a_name_raw), n(h.wrestler_b_name_raw)].some(v => names.includes(v)) && (h.weight_class === x.weightClass || h.weight_class === x.listedWeight))) continue
+      // a bout with no names (double forfeit) is stored when that weight already has a no-name bout
+      if (!names.length && have.some(h => !h.wrestler_a_name_raw && !h.wrestler_b_name_raw && h.weight_class === x.weightClass)) continue
       const t1 = swap ? x.team2Points : x.team1Points, t2 = swap ? x.team1Points : x.team2Points
       const winnerSide = x.winnerSchoolRaw ? (n(x.winnerSchoolRaw) === n(s.team1_school_name_raw) ? 'A' : n(x.winnerSchoolRaw) === n(s.team2_school_name_raw) ? 'B' : null) : null
       if (!x.isDoubleForfeit && !winnerSide) { report.push(`${g} ${m.date} ${m.team1Name} v ${m.team2Name} ${x.listedWeight}: winner school "${x.winnerSchoolRaw}" is neither team`); continue }
