@@ -1,5 +1,5 @@
 // 2025-26 dual team point deductions from the source files (Whizzer Upload/2025-26 Boys Data,
-// 2025-26 Girls Data: the dual results .rtf / .rtfd files Kyle imported). The dual parser skipped
+// 2025-26 Girls Data: every .rtf / .rtfd results file Kyle imported duals from). The dual parser skipped
 // them until 2026-11-05 (docs/migrations/20261105_dual_meet_deductions.sql). Each deduction is
 // matched to its stored dual (date + the two raw team names, either order) and kept when the stored
 // bouts plus the deductions equal the stored final score, or are tied and the winner has the +1
@@ -16,7 +16,8 @@ const APPLY = process.argv.includes('--apply')
 const chk = (r: any, w: string) => { if (r.error) throw new Error(`${w}: ${r.error.message}`); return r.data as any[] }
 async function all(t: string, c: string) { const o: any[] = []; for (let i = 0; ; i += 1000) { const d = chk(await db.from(t).select(c).order('id').range(i, i + 999), t); o.push(...d); if (d.length < 1000) break } return o }
 const ROOT = '../Whizzer Upload'
-const files = (dir: string) => fs.readdirSync(path.join(ROOT, dir)).filter(f => /dual/i.test(f) && !/tournament/i.test(f))
+// every results file with duals: dual results, gap / extra matches, team playoffs, "other"
+const files = (dir: string) => fs.readdirSync(path.join(ROOT, dir)).filter(f => /\.rtfd?$/.test(f) && !/tournament|power|ranking|roster|hammer|standings/i.test(f))
   .map(f => path.join(ROOT, dir, f, f.endsWith('.rtfd') ? 'TXT.rtf' : '')).filter(f => fs.existsSync(f))
 const text = (f: string) => execFileSync('textutil', ['-convert', 'txt', '-stdout', f], { maxBuffer: 1 << 28 }).toString()
 const n = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '')
@@ -51,8 +52,11 @@ for (const [g, dir, meetT, boutT, dedT] of [['M', '2025-26 Boys Data', 'dual_mee
   for (const s of skipped) console.log('   not used:', s)
   for (const s of noBoutDuals) console.log('   added, but the dual has no stored bouts:', s)
   if (!APPLY) continue
-  const have = await all(dedT, 'id, dual_meet_id')
-  if (have.length) throw new Error(`${dedT} already has ${have.length} rows`)
+  // re-runnable: a dual that already has deductions is left as is
+  const have = new Set((await all(dedT, 'id, dual_meet_id')).map(d => d.dual_meet_id))
+  const add = rows.filter(r => !have.has(r.dual_meet_id))
+  console.log(`   already stored for ${rows.length - add.length} of these rows' duals; adding ${add.length}`)
+  rows.length = 0; rows.push(...add)
   for (let i = 0; i < rows.length; i += 200) chk(await db.from(dedT).insert(rows.slice(i, i + 200)).select('id'), dedT)
   console.log(`   APPLIED: ${rows.length} rows in ${dedT}`)
 }

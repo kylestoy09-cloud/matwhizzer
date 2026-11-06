@@ -144,7 +144,13 @@ rule('wrestles for both NJ and non-NJ schools (* = non-NJ)', mixed)
 // same school twice under two records
 const norm = (n: string) => n.toLowerCase().replace(/,\s*[a-z]{2}$/, '').replace(/\b(high school|hs|school|regional|reg)\b/g, '').replace(/[^a-z0-9]/g, '')
 const byNorm = new Map<string, any[]>(); for (const s of schools) (byNorm.get(norm(s.display_name)) ?? byNorm.set(norm(s.display_name), []).get(norm(s.display_name))!).push(s)
-rule('school names that collapse to the same name (possible duplicate records)', [...byNorm.values()].filter(v => v.length > 1).map(v => v.map(s => `${s.display_name}#${s.id}${s.is_nj === false ? '*' : ''}`).join(' = ')))
+// An NJ school and an out-of-state namesake (Dover / Dover, DE) are different schools, as are the
+// out-of-state pairs Kyle confirmed (2026-11-05): flag only two NJ records, or two out-of-state ones
+// not on that list.
+const DISTINCT_OOS = [[566, 1024], [766, 1181]]   // Cleveland HS / Cleveland, TN; Westfield, VA / West Field HS
+const suspect = (v: any[]) => { const nj = v.filter(s => s.is_nj !== false), oos = v.filter(s => s.is_nj === false)
+  return nj.length > 1 || (oos.length > 1 && !DISTINCT_OOS.some(p => oos.every(s => p.includes(s.id)))) }
+rule('school names that collapse to the same name (possible duplicate records)', [...byNorm.values()].filter(v => v.length > 1 && suspect(v)).map(v => v.map(s => `${s.display_name}#${s.id}${s.is_nj === false ? '*' : ''}`).join(' = ')))
 
 // one person on two profiles: same name, same school, both with bouts
 const keyOf = new Map<string, string[]>()
