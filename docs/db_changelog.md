@@ -13,6 +13,7 @@
 - **Shared components:** `src/components/site/SitePageHeader.tsx` (title, subtitle, season row in a fixed place, optional small logo) and `src/components/site/NumberTileGrid.tsx` (the standard button grid). Every public page moves onto these next, one page at a time.
 - **Aesthetic Tool:** `/admin/aesthetic` (Admin Settings). A live preview built from those same components, with controls for colors, stencil font, tile size, corners and header options. Preview only: approved settings are copied out and written into the theme.
 - **Fix, same day:** the tool first redirected to a missing page, because a top-level admin folder has to be listed in `UNIVERSAL_ADMIN_SEGMENTS` (`src/lib/admin-side.ts`). It's listed now, and `scripts/check-admin-routes.mjs` fails the build if any admin page folder isn't.
+- **Mock site (Kyle):** `src/app/admin/aesthetic/MockSite.tsx`, the tool's default view. A copy of the public top nav, with a Boys/Girls switch, Schedule, Standings, Leaderboards, Tournaments, Post Season (Team, Individual, Districts, Regions, State), H2H and About. Each link opens that page in the standard frame with sample content, all following the tool's settings.
 - **Nav:** the top-nav "Schools" link is removed for boys and girls (Kyle: redundant with search). The schools list pages remain.
 
 ---

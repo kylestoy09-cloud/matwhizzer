@@ -6,6 +6,7 @@
 import { useState } from 'react'
 import { Stardos_Stencil, Saira_Stencil_One, Big_Shoulders_Stencil, Allerta_Stencil } from 'next/font/google'
 import { SitePageHeader } from '@/components/site/SitePageHeader'
+import { MockSite } from './MockSite'
 import { NumberTileGrid, type NumberTile } from '@/components/site/NumberTileGrid'
 import { BOYS_REGION_BG, GIRLS_REGION_BG, regionTile, boysRegionOfDistrict, girlsRegionOfDistrict, STENCIL_FONTS, type StencilFont } from '@/lib/siteTheme'
 
@@ -52,6 +53,7 @@ function Swatch({ label, value, onChange }: { label: string; value: string; onCh
 export function AestheticClient() {
   const [s, setS] = useState<Settings>(DEFAULTS)
   const [copied, setCopied] = useState(false)
+  const [view, setView] = useState<'site' | 'components'>('site')
   const set = <K extends keyof Settings>(k: K, v: Settings[K]) => setS(p => ({ ...p, [k]: v }))
   const fontFamily = FONT_FAMILY[s.font]
   const border = s.border ? '1px solid #0f172a' : 'none'
@@ -123,7 +125,16 @@ export function AestheticClient() {
         </div>
       </aside>
 
-      {/* ── Preview ── */}
+      {/* ── Preview: the mock site (default) or the component sheet ── */}
+      <div>
+      <div className="mb-3 inline-flex border border-slate-300">
+        {([['site', 'Mock site'], ['components', 'Components']] as const).map(([k, l]) => (
+          <button key={k} onClick={() => setView(k)} className={`px-3 py-1 text-xs font-semibold ${view === k ? 'bg-slate-900 text-white' : 'text-slate-700 hover:bg-slate-50'}`}>{l}</button>
+        ))}
+      </div>
+      {view === 'site' ? (
+        <MockSite look={{ fontFamily, titleFontFamily: s.titleStencil ? fontFamily : undefined, size: s.size, radius: s.radius, border, showLogo: s.showLogo, boysTile, girlsTile }} />
+      ) : (
       <div className="space-y-10 border border-slate-200 bg-white p-6">
         <section>
           <SitePageHeader title="Boys Region Brackets" subtitle="NJSIAA · select a region" seasonRow={seasonRow} showLogo={s.showLogo} titleFontFamily={s.titleStencil ? fontFamily : undefined} />
@@ -160,6 +171,8 @@ export function AestheticClient() {
             </table>
           </div>
         </section>
+      </div>
+      )}
       </div>
     </div>
   )
