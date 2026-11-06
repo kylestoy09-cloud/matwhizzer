@@ -1,0 +1,99 @@
+{
+ "school": [
+  {
+   "id": 1202,
+   "display_name": "William Penn Charter School",
+   "short_name": null,
+   "is_combined": false,
+   "section": null,
+   "classification": null,
+   "mascot": null,
+   "primary_color": null,
+   "secondary_color": null,
+   "tertiary_color": null,
+   "nickname": null,
+   "town": null,
+   "county": null,
+   "founded_year": null,
+   "website_url": null,
+   "athletic_conference": null,
+   "twitter_handle": null,
+   "logo_url": null,
+   "color_primary": null,
+   "color_secondary": null,
+   "color_tertiary": null,
+   "header_background": null,
+   "is_nj": false,
+   "logo_direction": null,
+   "locale_section": null,
+   "ad_name": null,
+   "ad_email": null,
+   "address": null,
+   "facebook_url": null
+  }
+ ],
+ "duals": [],
+ "bouts": [],
+ "aliases": [
+  {
+   "id": 51724,
+   "raw_name": "Arden Steinbock",
+   "school_id": 1202,
+   "wrestler_id": "fc80251c-ca95-409e-9642-30e776a6d821",
+   "created_at": "2026-10-27T01:16:32.012203+00:00"
+  }
+ ],
+ "duals_girls": [
+  {
+   "id": "4f512e44-6579-4654-8756-de88387cf7d1",
+   "season_id": 2026,
+   "team1_school_id": 302,
+   "team2_school_id": 1202,
+   "team1_school_name_raw": "Washington Township",
+   "team2_school_name_raw": "William Penn Charter School",
+   "meet_date": "2026-02-10",
+   "team1_score": 0,
+   "team2_score": 6,
+   "status": "final",
+   "is_playoff": false,
+   "criteria_winner_school_id": null,
+   "confirmed_by_both_schools": false,
+   "schedule_source": null,
+   "meet_time": null,
+   "is_complete": false,
+   "created_at": "2026-10-27T01:16:31.140725+00:00",
+   "tiebreaker_pending": false,
+   "meet_kind": "jamboree",
+   "counts_toward_record": false
+  }
+ ],
+ "bouts_girls": [
+  {
+   "id": "fba02545-bc91-4f1b-b602-ac17a38e6b8f",
+   "dual_meet_id": "4f512e44-6579-4654-8756-de88387cf7d1",
+   "weight_class": 132,
+   "order_index": 0,
+   "wrestler_a_id": "164c5e28-be4f-4fcb-b6dc-1de2ff051810",
+   "wrestler_b_id": "fc80251c-ca95-409e-9642-30e776a6d821",
+   "wrestler_a_name_raw": "Madeline Rosenbaum",
+   "wrestler_b_name_raw": "Arden Steinbock",
+   "school_a_id": 302,
+   "school_b_id": 1202,
+   "winner_id": "fc80251c-ca95-409e-9642-30e776a6d821",
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 25,
+   "result_time_estimated": false,
+   "winner_score": null,
+   "loser_score": null,
+   "team1_points": 0,
+   "team2_points": 6,
+   "is_double_forfeit": false,
+   "is_forfeit_win": false,
+   "validated": false,
+   "created_at": "2026-10-27T01:16:31.181847+00:00"
+  }
+ ],
+ "tbouts": [],
+ "tbouts_girls": []
+}

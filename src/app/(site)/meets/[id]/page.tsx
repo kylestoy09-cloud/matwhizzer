@@ -138,6 +138,17 @@ function SchoolLogo({
   )
 }
 
+// "-1" / "+1" for an adjustment's points
+const fmtAdj = (n: number) => (n > 0 ? `+${n}` : String(n))
+
+// The label as the scorer typed it, tidied: a bare weight ("157") reads as a deduction at that weight
+function adjLabel(raw: string): string {
+  const t = (raw ?? '').trim()
+  if (/^\d{3}$/.test(t)) return `Team point deduction (${t})`
+  if (!/[A-Za-z]/.test(t)) return 'Team score adjustment'
+  return t.charAt(0).toUpperCase() + t.slice(1)
+}
+
 export default async function DualMeetPage({
   params,
 }: {
@@ -158,9 +169,14 @@ export default async function DualMeetPage({
     wrestler_b:wrestlers!wrestler_b_id(id, first_name, last_name, is_stub)
   `
 
+
+  const ADJ_SELECT = 'id, label, team1_points, team2_points'
+
   // Try boys table first; fall back to girls table (IDs are stable UUIDs across tables)
   let data: any = null
   let matchData: any[] | null = null
+  // team-point adjustments listed after the bouts: deductions, tie-breaker criteria points, corrections
+  let adjData: { id: number; label: string; team1_points: number | string; team2_points: number | string }[] | null = null
   let meetGender: 'M' | 'F' = 'M'
 
   const { data: boysData } = await supabase
@@ -173,6 +189,8 @@ export default async function DualMeetPage({
     data = boysData
     const { data: md } = await supabase.from('dual_meet_matches').select(MATCH_SELECT).eq('dual_meet_id', id).order('order_index', { ascending: true })
     matchData = md
+    const { data: ad } = await supabase.from('dual_meet_deductions').select(ADJ_SELECT).eq('dual_meet_id', id).order('id')
+    adjData = ad
   } else {
     const { data: girlsData } = await supabase.from('dual_meets_girls').select(MEET_SELECT).eq('id', id).maybeSingle()
     if (girlsData) {
@@ -180,6 +198,8 @@ export default async function DualMeetPage({
       meetGender = 'F'
       const { data: md } = await supabase.from('dual_meet_matches_girls').select(MATCH_SELECT).eq('dual_meet_id', id).order('order_index', { ascending: true })
       matchData = md
+      const { data: ad } = await supabase.from('dual_meet_deductions_girls').select(ADJ_SELECT).eq('dual_meet_id', id).order('id')
+      adjData = ad
     }
   }
 
@@ -214,6 +234,16 @@ export default async function DualMeetPage({
     runA += pts.a
     runB += pts.b
     return { match: m, scoreA: runA, scoreB: runB }
+  })
+  // adjustments continue the running score, so the last row equals the final. A set that nets to
+  // zero for both teams (a "wrong score" line and its reversal) changes nothing and isn't shown.
+  const adjNet = (adjData ?? []).reduce((t, d) => [t[0] + Number(d.team1_points), t[1] + Number(d.team2_points)], [0, 0])
+  const adjShown = adjNet[0] === 0 && adjNet[1] === 0 ? [] : (adjData ?? [])
+  const adjRows = adjShown.map(d => {
+    const a = Number(d.team1_points), b = Number(d.team2_points)
+    runA += a
+    runB += b
+    return { id: d.id, label: adjLabel(d.label), a, b, scoreA: runA, scoreB: runB }
   })
 
   return (
@@ -372,6 +402,15 @@ export default async function DualMeetPage({
                     </tr>
                   )
                 })}
+                {adjRows.map(r => (
+                  <tr key={`adj-${r.id}`} className="border-t border-slate-300 bg-amber-50">
+                    <td className="px-3 py-1 text-right font-bold tabular-nums whitespace-nowrap text-slate-400">{r.scoreA}</td>
+                    <td className="px-3 py-1 text-right tabular-nums whitespace-nowrap text-slate-700">{r.a ? fmtAdj(r.a) : ''}</td>
+                    <td colSpan={4} className="px-3 py-1 text-center text-slate-600 whitespace-nowrap">{r.label}</td>
+                    <td className="px-3 py-1 text-left tabular-nums whitespace-nowrap text-slate-700">{r.b ? fmtAdj(r.b) : ''}</td>
+                    <td className="px-3 py-1 text-left font-bold tabular-nums whitespace-nowrap text-slate-400">{r.scoreB}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

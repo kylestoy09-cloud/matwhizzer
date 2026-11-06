@@ -2,6 +2,12 @@
 
 ---
 
+## 2026-11-06 — Dual page shows team-point adjustments
+
+**Migration file:** `docs/migrations/20261106_dual_adjustments_public_read.sql` (read grant + policy for anon/authenticated on `dual_meet_deductions` / `_girls`). **Code:** `src/app/(site)/meets/[id]/page.tsx`. A dual's adjustments (deductions, tie-breaker criteria points, corrections) are listed under its bouts, and the running score carries through them, so the last row equals the final score. A label that's just a weight reads "Team point deduction (157)". A set netting to zero for both teams (a "wrong score" line and its reversal) is not shown.
+
+---
+
 ## 2026-11-06 — Review fixes
 
 - **Loaders keep the TF-1 corrections:** `src/lib/officialTeamScoreCorrections.ts` lists the six approved +0.5 corrections. Both official-totals loaders (`build_boys_official_district_team_scores.mts`, `build_boys_official_postseason_team_scores.mts`) apply them before writing, so a reload no longer reverts them. A loader stops if TrackWrestling's figure for a corrected school ever changes.
