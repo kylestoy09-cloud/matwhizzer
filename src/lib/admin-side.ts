@@ -22,6 +22,7 @@ export const UNIVERSAL_ADMIN_SEGMENTS = [
   'data-health',
   'page-layout',
   'homepage-test',
+  'aesthetic',
 ] as const
 
 export const sideOfGender = (g: AdminGenderCode): AdminSide => (g === 'F' ? 'girls' : 'boys')
