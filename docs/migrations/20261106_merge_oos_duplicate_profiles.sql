@@ -6,7 +6,8 @@
 -- Delmar Junior-Senior, Blair Academy / Blair Academy (B Team), Immaculate Conception (IL) / IC
 -- Catholic Prep). For each pair, every column with a foreign key to wrestlers(id) is moved from the
 -- duplicate to the kept profile (found from the catalog, so no table is missed), a name link the kept
--- profile already has is dropped instead of duplicated, and the empty duplicate is deleted.
+-- profile already has is dropped instead of duplicated, computed snapshot_* rows of the duplicate are
+-- dropped, and the empty duplicate is deleted.
 -- Before: backups/20261106_oos_profile_merges_before.json. Dan Vargas's one dual bout was moved by
 -- the service role already. Run in the Supabase SQL editor; all or nothing.
 
@@ -32,6 +33,15 @@ BEGIN
       FROM pg_constraint c JOIN pg_attribute a ON a.attrelid = c.conrelid AND a.attnum = ANY (c.conkey)
       WHERE c.contype = 'f' AND c.confrelid = 'public.wrestlers'::regclass
     LOOP
+      -- snapshot_* tables are computed (streaks, season highs): the duplicate's rows are dropped,
+      -- not moved, as in 20260917_wrestler_merges_camden_delbarton.sql; the next snapshot run
+      -- rebuilds the kept profile's
+      IF r.tbl::text LIKE 'snapshot\_%' THEN
+        EXECUTE format('DELETE FROM %s WHERE %I = $1', r.tbl, r.col) USING p.dup_id;
+        GET DIAGNOSTICS n = ROW_COUNT;
+        IF n > 0 THEN RAISE NOTICE '%: dropped % computed rows from %', p.dup_id, n, r.tbl; END IF;
+        CONTINUE;
+      END IF;
       EXECUTE format('UPDATE %s SET %I = $1 WHERE %I = $2', r.tbl, r.col, r.col) USING p.keep_id, p.dup_id;
       GET DIAGNOSTICS n = ROW_COUNT;
       IF n > 0 THEN RAISE NOTICE '% → %: %.% % rows', p.dup_id, p.keep_id, r.tbl, r.col, n; END IF;
