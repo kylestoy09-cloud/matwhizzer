@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabase/public-cached'
-import { getSeasons } from '@/lib/seasons-server'
+import { getSeasons, getStateTournamentId } from '@/lib/seasons-server'
 import Link from 'next/link'
 import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
@@ -21,6 +21,7 @@ export default async function GirlsPostseasonPage({
   const q  = rawQ?.trim()  ?? ''
   const sq = rawSq?.trim() ?? ''
   const season = await getActiveSeason('F')
+  const stateTid = await getStateTournamentId(season, 'F')
   const seasonEndYear = (await getSeasons()).find(x => x.id === season)?.end_year ?? 0
 
   const [wrestlerRes, schoolDirRes] = await Promise.all([
@@ -67,7 +68,7 @@ export default async function GirlsPostseasonPage({
     const [teamScoreRes, placementsRes, championsRes, logos] = await Promise.all([
       supabase.rpc('top_postseason_team_scores', { p_gender: 'F', p_season: season, p_limit: 25 }),
       supabase.rpc('state_placements', { p_gender: 'F', p_season: season }),
-      supabase.rpc('state_champions', { p_tournament_id: 185 }),
+      stateTid !== null ? supabase.rpc('state_champions', { p_tournament_id: stateTid }) : Promise.resolve({ data: [] }),
       getSchoolLogos(),
     ])
     topTeamScores = ((teamScoreRes.data ?? []) as TeamScoreRow[]).map(r => ({
