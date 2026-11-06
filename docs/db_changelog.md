@@ -2,6 +2,18 @@
 
 ---
 
+## 2026-11-06 — Dual adjustments that add points; girls typos
+
+- **Adjustments:** TrackWrestling's lines after a dual's bouts aren't all deductions. They also include tie-breaker criteria points, which are often listed explicitly ("Criteria F: Least amount of forfeits 1.0 0"), a point to the opponent ("Steinert Wrestler Throwing Headgear 1.0 0"), corrections ("kids not present on track 0 18.0", WW-P North's −6 then +5), and labels that are just a weight ("157 0 −1.0").
+  - **Code:** both parsers now read any line with a decimal amount or a negative one.
+  - **Migration file:** `docs/migrations/20261106_dual_adjustments_positive.sql` drops the "≤ 0" checks on `dual_meet_deductions` (_girls).
+  - **Dry run:** 205 boys / 21 girls adjustments in duals that add up (was 187 / 6). Every newly found line adds up to its dual's listed score.
+- **Girls typos** (`scripts/fix_girls_dual_typos_20261106.mts`, backups `backups/20261106_girls_dual_typos_*`):
+  - Scotch Plains-Fanwood v North Plainfield 2/11: the 138 bout was listed with weight "S" (Costello over Manuel-Corona, Fall 1:37) and is added.
+  - Pemberton v Lakewood 12/13: a tech fall listed as 11 team points is stored as 5.
+
+---
+
 ## 2026-11-06 — Dual bouts at non-NJ weights (Lodi/Saddle Brook, Pennsylvania, Don Bosco, girls)
 
 - **Why:** some duals are listed at other weights. Lodi/Saddle Brook uses 145, 152, 160, 170, 182, 195, 220. Pennsylvania schools use 107…189, Don Bosco's national duals 103, 110, 118, and some girls duals 121, 128, 135, 143… The dual parsers only accepted our 14 (boys) or 12 (girls) weights, so those bouts were silently dropped: about 90 bouts in 25 duals. My 2026-11-06 spreadsheet wrongly called these "source copy incomplete" (Kyle caught it on Lodi v Manchester).

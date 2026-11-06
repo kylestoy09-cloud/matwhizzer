@@ -27,7 +27,7 @@ export type ParsedMatch = {
   listedWeight?: number
 }
 
-// A team point deduction listed after the bouts ("Coach Misconduct  0  -1.0",
+// A team point adjustment listed after the bouts (usually a deduction; sometimes points awarded) ("Coach Misconduct  0  -1.0",
 // "unsportsmanlike conduct 157  -1.0  0"): one side's points are negative.
 export type ParsedDeduction = {
   label: string
@@ -471,9 +471,14 @@ function parseDeductions(chunk: string): ParsedDeduction[] {
     const cells = body.split('\n').flatMap(l => l.split(/\t|\s{2,}/)).map(c => c.trim()).filter(Boolean)
     for (let i = 0; i + 2 < cells.length; i++) {
       const [label, a, b] = [cells[i], cells[i + 1], cells[i + 2]]
-      if (!/[A-Za-z]/.test(label) || / over /i.test(label) || !NUM.test(a) || !NUM.test(b)) continue
+      if (/\sover\s/i.test(label) || !NUM.test(a) || !NUM.test(b)) continue
       const t1 = parseFloat(a), t2 = parseFloat(b)
-      if (t1 >= 0 && t2 >= 0) continue
+      // an adjustment is written with a decimal ("-1.0", "18.0"; bout points never are) or is
+      // negative; it can add points ("Steinert Wrestler Throwing Headgear  1.0  0", "kids not present
+      // on track  0  18.0") and its label can be just a weight ("157  0  -1.0")
+      const decimal = a.includes('.') || b.includes('.')
+      if ((t1 >= 0 && t2 >= 0 && !decimal) || (t1 === 0 && t2 === 0)) continue
+      if (!/[A-Za-z]/.test(label) && !(decimal && /^\d{3}$/.test(label))) continue
       out.push({ label, team1Points: t1, team2Points: t2 })
       i += 2
     }

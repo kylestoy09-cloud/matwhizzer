@@ -1,4 +1,4 @@
-// 2025-26 dual team point deductions from the source files (Whizzer Upload/2025-26 Boys Data,
+// 2025-26 dual team point adjustments (deductions, criteria points, corrections) from the source files (Whizzer Upload/2025-26 Boys Data,
 // 2025-26 Girls Data: every .rtf / .rtfd results file Kyle imported duals from). The dual parser skipped
 // them until 2026-11-05 (docs/migrations/20261105_dual_meet_deductions.sql). Each deduction is
 // matched to its stored dual (date + the two raw team names, either order) and kept when the stored
