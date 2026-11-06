@@ -233,7 +233,9 @@ function parseMatchSummary(summary: string, t1Pts: number, t2Pts: number, weight
   const { name: _lName, school: loserSchoolRaw } = splitNameSchool(loserAndSchool)
   const loserNameRaw = loserAndSchool ? normalizeName(_lName) : null
 
-  const loserIsUnknown = /^unknown$/i.test((loserNameRaw ?? '').trim())
+  // ...as is a blank name ("over (Camden/Camden Eastside)"): a bout against an unnamed opponent,
+  // kept with no wrestler on that side instead of being dropped for an unmatched wrestler
+  const loserIsUnknown = /^unknown$/i.test((loserNameRaw ?? '').trim()) || (!!loserAndSchool && !(loserNameRaw ?? '').trim())
   const isForfeitWin   = resultType === 'For'
   const isDoubleForfeit = resultType === 'Double Forfeit'
 
@@ -241,7 +243,7 @@ function parseMatchSummary(summary: string, t1Pts: number, t2Pts: number, weight
     weightClass: weight,
     winnerName:      isDoubleForfeit ? null : winnerName,
     winnerSchoolRaw: isDoubleForfeit ? null : winnerSchoolRaw,
-    loserName:       (isForfeitWin || isDoubleForfeit) ? null : loserNameRaw,
+    loserName:       (isForfeitWin || isDoubleForfeit || !(loserNameRaw ?? '').trim()) ? null : loserNameRaw,
     loserSchoolRaw:  (isForfeitWin || loserIsUnknown || isDoubleForfeit) ? null : loserSchoolRaw,
     resultType, resultDetail,
     team1Points: t1Pts, team2Points: t2Pts,

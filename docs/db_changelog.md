@@ -2,6 +2,17 @@
 
 ---
 
+## 2026-11-06 — Dual bouts the import dropped (boys 2025-26)
+
+**Script:** `scripts/fix_dual_dropped_bouts_20261106.mts` (service role). **Backups:** `backups/20261106_dual_dropped_bouts_before.json`, `..._inserted.json`. Four boys duals now add up to their final scores:
+- **Unnamed opponent:** Woodstown and Toms River East v Camden 1/3, 138, "Luke Woronicak / Michael Hinton over (Camden/Camden Eastside)". The parser kept the school with a blank name, and the importer then found no wrestler there and skipped the bout. **Code:** `parseDualMeet.ts` / `parseDualMeetGirls.ts` now treat a blank name like "Unknown" (no school, no wrestler), so the bout is kept.
+- **One weight listed twice on TrackWrestling, the other missing:**
+  - Paramus v Jefferson 12/17: Donoghue over San Lucas is added at 126 (listed 120; San Lucas wrestled 126 in all 21 other bouts).
+  - Cherry Hill West v Red Bank Catholic 2/7: the stored Ramos over Ubarry moves 150 → 144 (Ramos: 144 in 20 of 24), and Russo over Aumiller is added at 150.
+- **Not changed:** girls West Orange v Elizabeth 2/13. TrackWrestling's two pages disagree on the 165 bout: West Orange's says MD 13-5 with a final of 34-33, Elizabeth's says Dec 9-6 with 33-33. The stored bout is from one and the final from the other. Waiting on Kyle.
+
+---
+
 ## 2026-11-06 — TF-1 team totals corrected; Mericle Region 1 bout; "Bye Bye" bye rule found
 
 - **TF-1 totals (Kyle: put the correct score on the site):** `scripts/fix_tf1_team_totals_20261106.mts` adds +0.5 in `precomputed_team_scores` for each 2025-26 district school whose wrestler won a "TF-1" tech fall. TrackWrestling gave those a 1-point bonus instead of 1.5:

@@ -263,7 +263,9 @@ function parseMatchSummary(summary: string, t1Pts: number, t2Pts: number, weight
 
   // "Unknown" in the loser slot = medical forfeit or similar.
   // Null it out so no stub wrestler profile is created.
-  const loserIsUnknown = /^unknown$/i.test((loserNameRaw ?? '').trim())
+  // ...as is a blank name ("over (Camden/Camden Eastside)"): a bout against an unnamed opponent,
+  // kept with no wrestler on that side instead of being dropped for an unmatched wrestler
+  const loserIsUnknown = /^unknown$/i.test((loserNameRaw ?? '').trim()) || (!!loserAndSchool && !(loserNameRaw ?? '').trim())
 
   // Treat any 'For' result as a forfeit win regardless of what TW put in the
   // loser slot (e.g. "Unknown (For.)" vs "Unknown (School) (For.)").
@@ -279,7 +281,7 @@ function parseMatchSummary(summary: string, t1Pts: number, t2Pts: number, weight
     winnerSchoolRaw: isDoubleForfeit ? null : winnerSchoolRaw,
     // Keep 'Unknown' as a string so MeetCard can display it as text.
     // Null the school so no resolution is attempted for a non-wrestler.
-    loserName:       (isForfeitWin || isDoubleForfeit) ? null : loserNameRaw,
+    loserName:       (isForfeitWin || isDoubleForfeit || !(loserNameRaw ?? '').trim()) ? null : loserNameRaw,
     loserSchoolRaw:  (isForfeitWin || loserIsUnknown || isDoubleForfeit) ? null : loserSchoolRaw,
     resultType, resultDetail,
     team1Points: t1Pts, team2Points: t2Pts,
