@@ -12,6 +12,7 @@
   - Luca Cenatiempo (Blair Academy / B Team)
   - Brody Kelly (Immaculate Conception IL / IC Catholic Prep)
   The service role had already moved Dan Vargas's one dual bout and added his link. Backups: `backups/20261106_dan_vargas_merge_before.json`, `backups/20261106_oos_profile_merges_before.json`.
+- **Duplicate schools (Kyle: merge):** **Migration file:** `docs/migrations/20261106_merge_oos_duplicate_schools.sql`, run after the profile merge. #814 Delmar Junior-Senior → #689 Delmar; #749 Blair Academy (B Team) → #522 Blair Academy; #832 IC Catholic Prep → #923 Immaculate Conception (IL). Backup: `backups/20261106_merge_oos_duplicate_schools_before.json`. (The first version of the profile merge failed on a syntax error, a comma placed after a comment; nothing ran.)
 - **Integrity check:** a bout with the same wrestler on both sides is a bye (Kyle), not a failure (Ella Magee, SJWHOF 2026, result NC, unscored).
 - **Review sheet:** `../Dual score gaps 2025-26.xlsx` lists the 32 duals (26 boys, 6 girls) whose bouts plus deductions don't equal the final, compared against the source files.
 

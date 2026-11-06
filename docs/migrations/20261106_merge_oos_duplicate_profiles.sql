@@ -15,13 +15,13 @@ DECLARE
   p record; r record; n integer;
 BEGIN
   FOR p IN SELECT * FROM (VALUES
-    ('0cc679a1-e3b8-4eaa-89f6-354968e04320'::uuid, 'fb40c6eb-f7be-424f-8e06-b2d647820d5c'::uuid)   -- Dan Vargas (Easton Area),
-    ('e7aead9b-f179-4f89-bae3-2cbcb675d649'::uuid, '116da31b-1a49-48ea-a571-3dd1b023b245'::uuid)   -- Michael Romero (St. John Bosco),
-    ('7b545495-aa95-48b4-8a98-1e067c190652'::uuid, '7395bc73-0512-4575-a19c-4c8b5613cca0'::uuid)   -- Jesse Grajeda (St. John Bosco),
-    ('d2f8395b-c424-475f-94b9-e587170fcd6f'::uuid, 'b1bedf51-7da1-433b-9780-4e7ca084b74a'::uuid)   -- Jorge Rios (St. John Bosco),
-    ('9f6ce19b-3fbf-4772-bd4f-de1a5089940c'::uuid, '1d4e57cc-eb4e-46f7-815e-784611ea74cd'::uuid)   -- Theodore Egolf (Delmar),
-    ('23e1d2cc-7d44-4904-b667-fff02cbf5d47'::uuid, '32c1f806-8608-4dc2-8305-150ab6445f6e'::uuid)   -- Storm Hoffman (Delmar),
-    ('9b5b70c7-ff9b-4a57-94c0-5bd7809a67cc'::uuid, '823b6bbd-f364-4011-bd47-f58206dd52c9'::uuid)   -- Luca Cenatiempo (Blair Academy),
+    ('0cc679a1-e3b8-4eaa-89f6-354968e04320'::uuid, 'fb40c6eb-f7be-424f-8e06-b2d647820d5c'::uuid),   -- Dan Vargas (Easton Area)
+    ('e7aead9b-f179-4f89-bae3-2cbcb675d649'::uuid, '116da31b-1a49-48ea-a571-3dd1b023b245'::uuid),   -- Michael Romero (St. John Bosco)
+    ('7b545495-aa95-48b4-8a98-1e067c190652'::uuid, '7395bc73-0512-4575-a19c-4c8b5613cca0'::uuid),   -- Jesse Grajeda (St. John Bosco)
+    ('d2f8395b-c424-475f-94b9-e587170fcd6f'::uuid, 'b1bedf51-7da1-433b-9780-4e7ca084b74a'::uuid),   -- Jorge Rios (St. John Bosco)
+    ('9f6ce19b-3fbf-4772-bd4f-de1a5089940c'::uuid, '1d4e57cc-eb4e-46f7-815e-784611ea74cd'::uuid),   -- Theodore Egolf (Delmar)
+    ('23e1d2cc-7d44-4904-b667-fff02cbf5d47'::uuid, '32c1f806-8608-4dc2-8305-150ab6445f6e'::uuid),   -- Storm Hoffman (Delmar)
+    ('9b5b70c7-ff9b-4a57-94c0-5bd7809a67cc'::uuid, '823b6bbd-f364-4011-bd47-f58206dd52c9'::uuid),   -- Luca Cenatiempo (Blair Academy)
     ('d27da4be-0604-48a8-9a83-edf2f4b2e6b3'::uuid, '9005432c-1b6c-4b75-8705-9481d7a589e7'::uuid)   -- Brody Kelly (Immaculate Conception IL)
   ) AS v(keep_id, dup_id) LOOP
     IF (SELECT count(*) FROM wrestlers WHERE id IN (p.keep_id, p.dup_id)) <> 2 THEN RAISE EXCEPTION 'missing profile %', p.dup_id; END IF;
