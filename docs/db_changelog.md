@@ -10,7 +10,7 @@
 - **Deductions:** 9 deductions of −1 each. These are the schools exactly 1 point over their official total under the scoring rules: D2 school 12, D3 315, D7 62, D11 109, D14 138, D16 153, D24 227, D25 245, D27 258.
 - **Scoring rule:** a bye in the middle of the bracket now earns its 2 points when the wrestler wins the bout after it (`tw_boys_entry_points`). Only two wrestlers in either season have one: Gonzalez and Garriques, Phillipsburg, District 1 2024-25. With the rule, Phillipsburg's total matches the official 258 (it was 254). No 2025-26 total changes.
 - **Still off, cause unproven:** Lower Cape May (D29), 155 vs the official 157; Clearview (D32), 129.5 vs 133.5. Every wrestler of both schools is stored, and every bout matches TrackWrestling's text.
-- **Source file:** `../Match Data/2025 District Data.py`, District 10's second "3rd Place" block became "First Place". It was built from NJSIAADistrict10.csv, with records taken from the same file. Before: scratchpad copy. `../gt_s1_districts.txt` (the old identical copy) is unchanged.
+- **Source file:** `../Match Data/2025 District Data.py`, District 10's second "3rd Place" block became "First Place". It was built from NJSIAADistrict10.csv, with records taken from the same file. The previous version is still in `../gt_s1_districts.txt`, which was an identical copy and was not changed.
 
 ---
 
