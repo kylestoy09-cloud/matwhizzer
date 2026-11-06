@@ -13,7 +13,7 @@ export default async function StateBoysPage() {
         ← Boys Search
       </Link>
       <div className="mb-8 text-center">
-        <StateHeader gender="M" />
+        <StateHeader gender="M" year={season} />
         <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-2">
           <InlineSeasonPicker gender="M" activeSeason={season} />
           <span>· Atlantic City · 32-man double elimination</span>

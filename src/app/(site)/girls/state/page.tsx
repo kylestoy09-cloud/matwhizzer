@@ -13,7 +13,7 @@ export default async function GirlsStatePage() {
         ← Girls Search
       </Link>
       <div className="mb-8 text-center">
-        <StateHeader gender="F" />
+        <StateHeader gender="F" year={season} />
         <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-2">
           <InlineSeasonPicker gender="F" activeSeason={season} />
           <span>· Boardwalk Hall · double elimination</span>

@@ -2,9 +2,10 @@ import Image from 'next/image'
 
 interface StateHeaderProps {
   gender: 'M' | 'F'
+  year: number   // the season's championship year (seasons are keyed by end year: 2024-25 = 2025)
 }
 
-export function StateHeader({ gender }: StateHeaderProps) {
+export function StateHeader({ gender, year }: StateHeaderProps) {
   const label = gender === 'M' ? "Boy's" : "Girl's"
 
   return (
@@ -25,7 +26,7 @@ export function StateHeader({ gender }: StateHeaderProps) {
         State Tournament
       </p>
       <p className="page-header-text text-3xl sm:text-4xl font-extrabold mt-0.5">
-        2026
+        {year}
       </p>
       <style>{`
         .page-header-text {
