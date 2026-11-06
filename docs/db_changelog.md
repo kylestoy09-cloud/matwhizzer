@@ -9,6 +9,11 @@
 - **Forfeits:** 124 district forfeits with no loser get `forfeit_opponent` set: 95 `filler`, 29 `empty`. None had a real loser to put back. The service role added 2 placement rows.
 - **Deductions:** 9 deductions of −1 each. These are the schools exactly 1 point over their official total under the scoring rules: D2 school 12, D3 315, D7 62, D11 109, D14 138, D16 153, D24 227, D25 245, D27 258.
 - **Scoring rule:** a bye in the middle of the bracket now earns its 2 points when the wrestler wins the bout after it (`tw_boys_entry_points`). Only two wrestlers in either season have one: Gonzalez and Garriques, Phillipsburg, District 1 2024-25. With the rule, Phillipsburg's total matches the official 258 (it was 254). No 2025-26 total changes.
+- **Run and checked (same day):** Kyle ran both SQL files (9 deductions, −9; Phillipsburg 258). Boys 2025-26 ratings were rebuilt (`{"gender":"M","season":"2025-26","archive":true}`): 7,438 rows. Of the 571 bouts in District 10, Region 2 and Region 7, 561 are in the match log; the other 10 are forfeits and one injury default, which ratings never count. The local run stops after its writes at the admin activity log, because it reads the signed-in user. `lb_ps_refresh` ran for 2025 and 2026, and `lb_rs_refresh` for 2026.
+- **Team scores vs official, 2024-25:** state 167/167. Districts 312/314 (was 272). Regions 272/275 (was 240). The three regions still off:
+  - R5 St. Peter's Prep, +0.5: TrackWrestling's "TF-1" label on Salvatore Borrometi's final, a TrackWrestling error.
+  - R7 Toms River South, +1: matches the deduction pattern; not recorded.
+  - R1 High Point, −2: cause unproven.
 - **Still off, cause unproven:** Lower Cape May (D29), 155 vs the official 157; Clearview (D32), 129.5 vs 133.5. Every wrestler of both schools is stored, and every bout matches TrackWrestling's text.
 - **Source file:** `../Match Data/2025 District Data.py`, District 10's second "3rd Place" block became "First Place". It was built from NJSIAADistrict10.csv, with records taken from the same file. The previous version is still in `../gt_s1_districts.txt`, which was an identical copy and was not changed.
 
