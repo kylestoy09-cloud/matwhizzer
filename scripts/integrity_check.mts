@@ -36,7 +36,7 @@ for (const g of ['M', 'F'] as const) {
   const mt = g === 'F' ? 'dual_meets_girls' : 'dual_meets', bt = g === 'F' ? 'dual_meet_matches_girls' : 'dual_meet_matches'
   const it = g === 'F' ? 'in_season_tournaments_girls' : 'in_season_tournaments', tb = g === 'F' ? 'tournament_bouts_girls' : 'tournament_bouts'
   const meets = new Map((await all(mt, `id, meet_date, season_id, team1_school_id, team2_school_id, team1_score, team2_score, status${g === 'F' ? ', meet_kind' : ''}`)).map(m => [m.id, m]))
-  const bouts = await all(bt, 'id, dual_meet_id, weight_class, wrestler_a_id, wrestler_b_id, wrestler_a_name_raw, wrestler_b_name_raw, school_a_id, school_b_id, winner_id, result_type, team1_points, team2_points')
+  const bouts = await all(bt, 'id, dual_meet_id, weight_class, wrestler_a_id, wrestler_b_id, wrestler_a_name_raw, wrestler_b_name_raw, school_a_id, school_b_id, winner_id, result_type, team1_points, team2_points, is_double_forfeit')
   const L = g === 'F' ? 'girls' : 'boys'
   // dual bout rules
   const badWinner: string[] = [], badSide: string[] = [], badSchool: string[] = [], orphanBout: string[] = [], sameW: string[] = []
@@ -53,6 +53,9 @@ for (const g of ['M', 'F'] as const) {
   }
   rule(`${L} duals: winner is not one of the two wrestlers`, badWinner)
   rule(`${L} duals: team points go to one side, winner on the other`, badSide)
+  // a bout with points for one side but no winner: the win is missing from records and the dual page
+  // (15 boys bouts, imported 2026-08, fixed 2026-11-06)
+  rule(`${L} duals: team points but no winner`, bouts.filter(b => !b.winner_id && !b.is_double_forfeit && ((b.team1_points > 0 && b.wrestler_a_id) || (b.team2_points > 0 && b.wrestler_b_id))).map(b => `${meets.get(b.dual_meet_id)?.meet_date} ${b.weight_class} ${b.id.slice(0, 8)}`))
   rule(`${L} duals: bout school is not that side's team`, badSchool)
   rule(`${L} duals: bout points to a missing meet`, orphanBout)
   rule(`${L} duals: same wrestler on both sides`, sameW)   // a dual has no byes (the bye rule is tournaments only)

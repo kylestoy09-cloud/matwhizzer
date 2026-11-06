@@ -37,6 +37,8 @@ type MatchRow = {
   fall_time_seconds: number | null
   is_double_forfeit: boolean
   is_forfeit_win: boolean
+  team1_points: number | null
+  team2_points: number | null
   winner_id: string | null
   wrestler_a_id: string | null
   wrestler_b_id: string | null
@@ -79,6 +81,8 @@ function resultScore(m: MatchRow): string {
 
 function matchPoints(m: MatchRow): { a: number; b: number } {
   if (m.is_double_forfeit) return { a: 0, b: 0 }
+  // the team points the result sheet gave each side (team1 = side A); worked out only when missing
+  if (m.team1_points != null && m.team2_points != null) return { a: m.team1_points, b: m.team2_points }
   const rt = (m.result_type ?? '').toLowerCase()
   const pts = m.is_forfeit_win ? 6
     : rt === 'fall' || rt === 'f' ? 6
@@ -163,7 +167,7 @@ export default async function DualMeetPage({
   `
   const MATCH_SELECT = `
     id, weight_class, result_type, result_detail, fall_time_seconds,
-    is_double_forfeit, is_forfeit_win, winner_id,
+    is_double_forfeit, is_forfeit_win, winner_id, team1_points, team2_points,
     wrestler_a_id, wrestler_b_id, wrestler_a_name_raw, wrestler_b_name_raw,
     wrestler_a:wrestlers!wrestler_a_id(id, first_name, last_name, is_stub),
     wrestler_b:wrestlers!wrestler_b_id(id, first_name, last_name, is_stub)

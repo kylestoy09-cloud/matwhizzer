@@ -2,6 +2,14 @@
 
 ---
 
+## 2026-11-06 — Dual bouts missing their winner; dual page uses stored team points
+
+- **Data:** `scripts/fix_dual_missing_winner_20261106.mts` (service role; backup `backups/20261106_dual_missing_winner_before.json`). 15 boys dual bouts had team points for one side but no `winner_id`. All were imported 2026-08 and involve four wrestlers (Jayden Cruz, Sebastian Soto, Joshua Martinez, Tyler Davis); the cause is unproven, since the 2026-11-05 merge script does move `winner_id`. The winner is now the wrestler on the side with the points, so the wins count in their records and ratings.
+- **Integrity check:** new rule "duals: team points but no winner" (boys and girls).
+- **Code:** `src/app/(site)/meets/[id]/page.tsx` runs the score from each bout's stored `team1_points` / `team2_points`, the source's own points, instead of re-deriving them from the result and `winner_id`. It falls back to the old calculation only when those are missing. Shawnee v West Deptford had shown 38-32 because of Tyler Davis's missing winner; it now shows 43-27 through the "Coach Misconduct −1" row. Kyle ran `20261106_dual_adjustments_public_read.sql` (anon count 206).
+
+---
+
 ## 2026-11-06 — Graduation years; class per season on profiles
 
 - **Backfill:** `scripts/backfill_graduation_year_20261106.mts` set `wrestlers.graduation_year` for 11,175 NJ wrestlers from their grade. A grade from the Track roster upload or a manual edit is a 2025-26 class; a grade from a district entry belongs to that entry's season. A year is set only when every tournament entry's own grade gives the same class. 30 conflicts were left blank (`docs/reviews/grade_conflicts_20261106.md`). `scripts/resolve_grade_conflicts_20261106.mts` (Kyle: try it) settled 20 by majority of independent records: each bracket entry's grade, the profile grade, and the Track roster row, with the roster row counted once when the profile grade was copied from it. The settled 20 got their graduation year, and their grade was set to that class's 2025-26 grade, which changed 14 profile grades that had been a year behind (all hand-entered). Backup: `backups/20261106_grade_conflicts_before.json`. The 10 ties were settled by Kyle the same day (`scripts/fix_grade_ties_20261106.mts`; backups `backups/20261106_grade_ties_*`):
