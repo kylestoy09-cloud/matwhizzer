@@ -2,6 +2,12 @@
 
 ---
 
+## 2026-11-06 — State page heading follows the picked season
+
+**Code only:** `StateHeader.tsx` had the year typed in as "2026", so the boys and girls state pages read "State Tournament 2026" even with 2024-25 picked (Kyle thought girls 2024-25 wasn't on the site). It now shows the picked season's championship year. Also added two read-only scripts: `scripts/check_girls_team_scoring.mts` (girls totals vs official) and `scripts/compare_girls_brackets_20261106.mts` (girls source brackets vs stored bouts). They found the girls brackets incomplete: District 7 and 9, Regions 1 and 2 (2025-26), all four 2024-25 regions and 2024-25 state.
+
+---
+
 ## 2026-11-06 — School profiles show the address
 
 **Code only:** `SchoolProfileCore.tsx` reads `schools.address` (all 318 NJ schools have one), and `SchoolHeader.tsx` shows it under the mascot, in the name box, as a Google Maps link, on boys and girls school pages.
