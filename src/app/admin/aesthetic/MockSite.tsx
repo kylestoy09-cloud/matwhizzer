@@ -12,6 +12,7 @@ import { boysRegionOfDistrict, girlsRegionOfDistrict, type TileColors } from '@/
 
 // each page's summary line, editable in the tool
 export const SUMMARY_DEFAULTS = {
+  schedule: 'Dual meets and tournaments by date',
   standings: 'NJSIAA power points and records',
   leaderboards: 'Season leaders by category',
   tournaments: 'In-season tournaments and their winners',
@@ -175,6 +176,31 @@ function MockLbFilters() {
   )
 }
 
+// Schedule controls: the live box (date, then filters, My Schools, Clear), but Conference, Group and
+// Section are three dropdowns instead of checkboxes that open lists. Conference alone; Group and Section
+// can be used together (Kyle, 2026-11-06).
+function MockScheduleControls() {
+  const [c, setC] = useState<Set<string>>(new Set())
+  const [g, setG] = useState<Set<string>>(new Set())
+  const [sec, setSec] = useState<Set<string>>(new Set())
+  const [open, setOpen] = useState<string | null>(null)
+  const confOn = c.size > 0, sgOn = sec.size > 0 || g.size > 0
+  return (
+    <div className="border border-slate-200 bg-slate-50 p-4 mb-6 space-y-3">
+      <div className="flex flex-col sm:flex-row sm:items-start gap-3">
+        <input type="date" className="border border-black px-3 py-2 text-sm rounded-none shrink-0" />
+        <FilterDrop label="Conference" options={F_CONFS} picked={c} setPicked={setC} disabled={sgOn} open={open === 'c'} setOpen={v => setOpen(v ? 'c' : null)} />
+        <FilterDrop label="Group" options={F_GROUPS} picked={g} setPicked={setG} disabled={confOn} open={open === 'g'} setOpen={v => setOpen(v ? 'g' : null)} />
+        <FilterDrop label="Section" options={F_SECS} picked={sec} setPicked={setSec} disabled={confOn} open={open === 's'} setOpen={v => setOpen(v ? 's' : null)} />
+      </div>
+      <div className="flex items-center justify-between">
+        <label className="flex items-center gap-2"><input type="checkbox" className="accent-slate-800" /><span className="text-sm font-medium text-slate-700">My Schools</span></label>
+        {(confOn || sgOn) && <button onClick={() => { setC(new Set()); setG(new Set()); setSec(new Set()); setOpen(null) }} className="text-xs text-slate-400 hover:text-slate-700 underline ml-auto">Clear — show all NJSIAA</button>}
+      </div>
+    </div>
+  )
+}
+
 // sortable table (the leaderboard keeps click-to-sort headers): numbers sort high to low first
 function SortTable({ cols, rows }: { cols: string[]; rows: (string | number)[][] }) {
   const [sort, setSort] = useState<{ i: number; desc: boolean }>({ i: cols.length - 1, desc: true })
@@ -237,12 +263,21 @@ export function MockSite({ look }: { look: MockLook }) {
     : [['wins', 'Wins'], ['pins', 'Pins'], ['tf', 'Tech Falls'], ['bonus', 'Bonus %'], ['fast', 'Fastest Pin']]
 
   const body: Record<Page, ReactNode> = {
-    schedule: (
-      <div className="border border-dashed border-slate-300 bg-slate-50 p-6 text-sm text-slate-600">
-        <p className="font-semibold text-slate-800">The Schedule keeps its current page.</p>
-        <p className="mt-1">Calendars work differently, so it stays as it is on the live site.</p>
+    schedule: <>
+      {header(`${P} Schedule`, 'schedule')}
+      <MockScheduleControls />
+      <div className="overflow-x-auto border border-black">
+        <table className="w-full text-[13px]">
+          <tbody>
+            <tr className="border-t border-slate-200 bg-slate-100"><td colSpan={3} className="px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-slate-500">Post Season Tournaments — 1</td></tr>
+            <tr className="bg-white"><td className="px-3 py-1">All day</td><td className="px-3 py-1">District 7</td><td className="px-3 py-1">Ridgefield Park</td></tr>
+            <tr className="border-t border-slate-200 bg-slate-100"><td colSpan={3} className="px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-slate-500">Dual Meets — 2</td></tr>
+            <tr className="bg-white"><td className="px-3 py-1">10:00</td><td className="px-3 py-1">Bergen Catholic 42 — 21 Delbarton</td><td className="px-3 py-1">Final</td></tr>
+            <tr className="bg-slate-50"><td className="px-3 py-1">11:30</td><td className="px-3 py-1">Phillipsburg vs Hunterdon Central</td><td className="px-3 py-1">7:00 PM</td></tr>
+          </tbody>
+        </table>
       </div>
-    ),
+    </>,
     standings: <>
       {header(`${P} Standings`, 'standings',
         <SiteTabs items={[['group', 'Group'], ['conference', 'Conference']].map(([k, l]) => ({ key: k, label: l, onClick: () => setStandView(k) }))} active={standView} />)}
