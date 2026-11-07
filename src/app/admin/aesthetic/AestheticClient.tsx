@@ -4,9 +4,9 @@
 // settings are copied out and written into src/lib/siteTheme.ts.
 
 import { useState } from 'react'
-import { Stardos_Stencil, Saira_Stencil_One, Big_Shoulders_Stencil, Allerta_Stencil } from 'next/font/google'
+import { Stardos_Stencil, Saira_Stencil_One, Big_Shoulders_Stencil, Allerta_Stencil, Oswald, Bebas_Neue, Barlow_Condensed, Archivo_Black, Roboto_Condensed } from 'next/font/google'
 import { SitePageHeader } from '@/components/site/SitePageHeader'
-import { MockSite } from './MockSite'
+import { MockSite, SUMMARY_DEFAULTS, type SummaryKey } from './MockSite'
 import { SiteTabs } from '@/components/site/SiteTabs'
 import { NumberTileGrid, type NumberTile } from '@/components/site/NumberTileGrid'
 import { BOYS_REGION_BG, GIRLS_REGION_BG, regionTile, boysRegionOfDistrict, girlsRegionOfDistrict, STENCIL_FONTS, type StencilFont } from '@/lib/siteTheme'
@@ -15,6 +15,24 @@ const stardos = Stardos_Stencil({ subsets: ['latin'], weight: ['400', '700'] })
 const saira = Saira_Stencil_One({ subsets: ['latin'], weight: '400' })
 const bigShoulders = Big_Shoulders_Stencil({ subsets: ['latin'], weight: ['700'] })
 const allerta = Allerta_Stencil({ subsets: ['latin'], weight: '400' })
+const oswald = Oswald({ subsets: ['latin'], weight: ['600', '700'] })
+const bebas = Bebas_Neue({ subsets: ['latin'], weight: '400' })
+const barlow = Barlow_Condensed({ subsets: ['latin'], weight: ['600', '700'] })
+const archivo = Archivo_Black({ subsets: ['latin'], weight: '400' })
+const robotoCond = Roboto_Condensed({ subsets: ['latin'], weight: ['700'] })
+// every font the tool can use for page titles: the site's default plus the stencils and display fonts
+const TITLE_FONTS: Record<string, string | undefined> = {
+  'Site default': undefined,
+  'Stardos Stencil': stardos.style.fontFamily,
+  'Saira Stencil One': saira.style.fontFamily,
+  'Big Shoulders Stencil': bigShoulders.style.fontFamily,
+  'Allerta Stencil': allerta.style.fontFamily,
+  'Oswald': oswald.style.fontFamily,
+  'Bebas Neue': bebas.style.fontFamily,
+  'Barlow Condensed': barlow.style.fontFamily,
+  'Archivo Black': archivo.style.fontFamily,
+  'Roboto Condensed': robotoCond.style.fontFamily,
+}
 const FONT_FAMILY: Record<StencilFont, string> = {
   'Stardos Stencil': stardos.style.fontFamily,
   'Saira Stencil One': saira.style.fontFamily,
@@ -28,7 +46,9 @@ type Settings = {
   boysOddFg: string | null    // null = the rule (region 8's gray / region 7's navy)
   boysEvenFg: string | null
   font: StencilFont
-  titleStencil: boolean
+  titleFont: string
+  titleSize: number
+  summaries: Record<SummaryKey, string>
   size: number
   radius: number
   border: boolean
@@ -38,7 +58,7 @@ type Settings = {
 const DEFAULTS: Settings = {
   boys: { ...BOYS_REGION_BG }, girls: { ...GIRLS_REGION_BG },
   boysOddFg: null, boysEvenFg: null,
-  font: 'Saira Stencil One', titleStencil: false, size: 72, radius: 0, border: true, showLogo: false,
+  font: 'Saira Stencil One', titleFont: 'Site default', titleSize: 24, summaries: { ...SUMMARY_DEFAULTS }, size: 72, radius: 0, border: true, showLogo: false,
 }
 
 function Swatch({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
@@ -113,8 +133,23 @@ export function AestheticClient() {
         <div className="space-y-2 text-xs text-slate-600">
           <h2 className="text-xs font-bold uppercase tracking-wide text-slate-500">Page header</h2>
           <label className="flex items-center gap-2"><input type="checkbox" checked={s.showLogo} onChange={e => set('showLogo', e.target.checked)} /> Small logo above the title</label>
-          <label className="flex items-center gap-2"><input type="checkbox" checked={s.titleStencil} onChange={e => set('titleStencil', e.target.checked)} /> Title in the stencil font</label>
+          <label className="block">Title font
+            <select value={s.titleFont} onChange={e => set('titleFont', e.target.value)} className="mt-1 block w-full border border-slate-300 px-1 py-1">
+              {Object.keys(TITLE_FONTS).map(f => <option key={f}>{f}</option>)}
+            </select>
+          </label>
+          <label className="block">Title size: {s.titleSize}px<input type="range" min={16} max={48} value={s.titleSize} onChange={e => set('titleSize', Number(e.target.value))} className="block w-full" /></label>
         </div>
+        <details className="text-xs text-slate-600">
+          <summary className="cursor-pointer text-xs font-bold uppercase tracking-wide text-slate-500">Page summaries</summary>
+          <div className="mt-2 space-y-2">
+            {(Object.keys(SUMMARY_DEFAULTS) as SummaryKey[]).map(k => (
+              <label key={k} className="block">{k}
+                <textarea value={s.summaries[k]} rows={2} onChange={e => set('summaries', { ...s.summaries, [k]: e.target.value })} className="mt-0.5 block w-full border border-slate-300 px-1 py-0.5" />
+              </label>
+            ))}
+          </div>
+        </details>
         <div className="flex gap-2">
           <button onClick={copy} className="flex-1 bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-slate-700">{copied ? 'Copied' : 'Copy settings'}</button>
           <button onClick={() => setS(DEFAULTS)} className="border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50">Reset</button>
@@ -129,11 +164,11 @@ export function AestheticClient() {
         ))}
       </div>
       {view === 'site' ? (
-        <MockSite look={{ fontFamily, titleFontFamily: s.titleStencil ? fontFamily : undefined, size: s.size, radius: s.radius, border, showLogo: s.showLogo, boysTile, girlsTile }} />
+        <MockSite look={{ fontFamily, titleFontFamily: TITLE_FONTS[s.titleFont], titleSize: s.titleSize, summaries: s.summaries, size: s.size, radius: s.radius, border, showLogo: s.showLogo, boysTile, girlsTile }} />
       ) : (
       <div className="space-y-10 border border-slate-200 bg-white p-6">
         <section>
-          <SitePageHeader title="Boys Region Brackets" picker={seasonPicker} summary="NJSIAA · select a region" tabs={<SiteTabs items={[{ key: 'group', label: 'Group' }, { key: 'conference', label: 'Conference' }]} active="group" />} showLogo={s.showLogo} titleFontFamily={s.titleStencil ? fontFamily : undefined} />
+          <SitePageHeader title="Boys Region Brackets" picker={seasonPicker} summary="NJSIAA · select a region" tabs={<SiteTabs items={[{ key: 'group', label: 'Group' }, { key: 'conference', label: 'Conference' }]} active="group" />} showLogo={s.showLogo} titleFontFamily={TITLE_FONTS[s.titleFont]} titleSize={s.titleSize} />
           <NumberTileGrid tiles={boysRegions} fontFamily={fontFamily} size={s.size} radius={s.radius} border={border} minWidth={s.size} />
         </section>
         <section>

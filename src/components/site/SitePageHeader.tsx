@@ -13,14 +13,15 @@ export type SitePageHeaderProps = {
   showLogo?: boolean         // a small logo to the left of the title
   titleFontFamily?: string   // set by the Aesthetic Tool preview; pages use the default
   titleColor?: string
+  titleSize?: number         // px; default text-2xl (24px), the live page title size
 }
 
-export function SitePageHeader({ title, picker, summary, tabs, showLogo = false, titleFontFamily, titleColor = '#1b2a4a' }: SitePageHeaderProps) {
+export function SitePageHeader({ title, picker, summary, tabs, showLogo = false, titleFontFamily, titleColor = '#1b2a4a', titleSize }: SitePageHeaderProps) {
   return (
     <header className="mb-6 select-none">
       <div className="flex items-center gap-3 border-b-2 pb-2" style={{ borderColor: titleColor }}>
         {showLogo && <Image src="/images/Mat Whizzer Logo Navy - No Outline.png" alt="" width={40} height={40} priority />}
-        <h1 className="text-2xl font-bold leading-tight" style={{ color: titleColor, fontFamily: titleFontFamily }}>{title}</h1>
+        <h1 className="text-2xl font-bold leading-tight" style={{ color: titleColor, fontFamily: titleFontFamily, fontSize: titleSize }}>{title}</h1>
       </div>
       {picker && <div className="mt-3 flex items-center gap-2 text-sm text-slate-600">{picker}</div>}
       {summary && <p className="mt-2 text-sm text-slate-500">{summary}</p>}

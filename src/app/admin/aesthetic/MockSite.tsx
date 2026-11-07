@@ -10,9 +10,26 @@ import { SiteTabs } from '@/components/site/SiteTabs'
 import { NumberTileGrid, type NumberTile } from '@/components/site/NumberTileGrid'
 import { boysRegionOfDistrict, girlsRegionOfDistrict, type TileColors } from '@/lib/siteTheme'
 
+// each page's summary line, editable in the tool
+export const SUMMARY_DEFAULTS = {
+  standings: 'NJSIAA power points and records',
+  leaderboards: 'Season leaders by category',
+  tournaments: 'In-season tournaments and their winners',
+  'ps-team': 'Team tournament brackets by section and group',
+  'ps-individual': 'State champions, podium schools, point leaders, and every bracket',
+  region: 'Brackets, placewinners and team scores',
+  district: 'Brackets, placewinners and team scores',
+  state: 'Boardwalk Hall · double elimination',
+  h2h: 'Compare two wrestlers',
+  about: 'How the site works',
+}
+export type SummaryKey = keyof typeof SUMMARY_DEFAULTS
+
 export type MockLook = {
   fontFamily: string
   titleFontFamily?: string
+  titleSize?: number
+  summaries: Record<SummaryKey, string>
   size: number
   radius: number
   border: string
@@ -104,6 +121,81 @@ function Pills({ items, active, onPick }: { items: { key: number; label: string 
   )
 }
 
+// Leaderboard "Filter by": the live box and checklists, but each list is a dropdown that starts at
+// All and shows what's picked under its label. Conference, or Section + Group: picking one side turns
+// the other off (Kyle, 2026-11-06).
+const F_CONFS = ['Big North', 'NJIC', 'Super Essex', 'Union County', 'Skyland', 'Shore', 'Colonial Valley', 'Cape-Atlantic']
+const F_SECS = ['North I', 'North II', 'Central', 'South']
+const F_GROUPS = ['Group 1', 'Group 2', 'Group 3', 'Group 4', 'Group 5', 'Non-Public A', 'Non-Public B']
+function FilterDrop({ label, options, picked, setPicked, disabled, open, setOpen }: {
+  label: string; options: string[]; picked: Set<string>; setPicked: (v: Set<string>) => void; disabled: boolean; open: boolean; setOpen: (v: boolean) => void
+}) {
+  const shown = picked.size === 0 ? 'All' : [...picked].join(', ')
+  return (
+    <div className={`flex-1 min-w-[160px] ${disabled ? 'opacity-40' : ''}`}>
+      <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">{label}</span>
+      <div className="mb-1 truncate text-xs font-semibold text-slate-800" title={shown}>{disabled ? 'Off' : shown}</div>
+      <button type="button" disabled={disabled} onClick={() => setOpen(!open)}
+        className="flex w-full items-center justify-between border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-700 disabled:cursor-not-allowed">
+        <span>{picked.size === 0 ? 'All' : `${picked.size} selected`}</span><span className="text-slate-400">{open ? '▴' : '▾'}</span>
+      </button>
+      {open && !disabled && (
+        <div className="border border-t-0 border-slate-200 bg-white max-h-40 overflow-y-auto divide-y divide-slate-100">
+          {options.map(o => (
+            <label key={o} className="flex items-center gap-2 px-3 py-1.5 hover:bg-slate-50 cursor-pointer">
+              <input type="checkbox" checked={picked.has(o)} className="accent-slate-800 shrink-0"
+                onChange={() => { const n = new Set(picked); if (n.has(o)) n.delete(o); else n.add(o); setPicked(n) }} />
+              <span className="text-xs text-slate-700">{o}</span>
+            </label>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+function MockLbFilters() {
+  const [c, setC] = useState<Set<string>>(new Set())
+  const [sec, setSec] = useState<Set<string>>(new Set())
+  const [g, setG] = useState<Set<string>>(new Set())
+  const [open, setOpen] = useState<string | null>(null)
+  const confOn = c.size > 0, sgOn = sec.size > 0 || g.size > 0
+  const filtered = confOn || sgOn
+  return (
+    <div className="border border-slate-200 bg-slate-50 p-4">
+      <div className="flex items-center justify-between mb-3">
+        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Filter by</span>
+        {filtered && <button onClick={() => { setC(new Set()); setSec(new Set()); setG(new Set()); setOpen(null) }} className="text-xs text-slate-400 hover:text-slate-700 underline">Reset — show all</button>}
+      </div>
+      <div className="flex flex-col sm:flex-row gap-4">
+        <FilterDrop label="Conference" options={F_CONFS} picked={c} setPicked={setC} disabled={sgOn} open={open === 'c'} setOpen={v => setOpen(v ? 'c' : null)} />
+        <FilterDrop label="Section" options={F_SECS} picked={sec} setPicked={setSec} disabled={confOn} open={open === 's'} setOpen={v => setOpen(v ? 's' : null)} />
+        <FilterDrop label="Group" options={F_GROUPS} picked={g} setPicked={setG} disabled={confOn} open={open === 'g'} setOpen={v => setOpen(v ? 'g' : null)} />
+      </div>
+    </div>
+  )
+}
+
+// sortable table (the leaderboard keeps click-to-sort headers): numbers sort high to low first
+function SortTable({ cols, rows }: { cols: string[]; rows: (string | number)[][] }) {
+  const [sort, setSort] = useState<{ i: number; desc: boolean }>({ i: cols.length - 1, desc: true })
+  const sorted = [...rows].sort((a, b) => { const x = a[sort.i], y = b[sort.i]; const d = typeof x === 'number' && typeof y === 'number' ? x - y : String(x).localeCompare(String(y)); return sort.desc ? -d : d })
+  return (
+    <div className="overflow-x-auto border border-black">
+      <table className="w-full text-[13px]">
+        <thead><tr className="bg-slate-900 text-white">
+          <th className="px-3 py-1 text-left text-xs font-bold uppercase tracking-wide">#</th>
+          {cols.map((c, i) => (
+            <th key={c} className="px-3 py-1 text-left text-xs font-bold uppercase tracking-wide whitespace-nowrap">
+              <button onClick={() => setSort(p => ({ i, desc: p.i === i ? !p.desc : true }))} className="uppercase hover:underline">{c}{sort.i === i ? (sort.desc ? ' ▾' : ' ▴') : ''}</button>
+            </th>
+          ))}
+        </tr></thead>
+        <tbody>{sorted.map((r, k) => <tr key={k} className={k % 2 ? 'bg-slate-50' : 'bg-white'}><td className="px-3 py-1">{k + 1}</td>{r.map((c, j) => <td key={j} className="px-3 py-1 whitespace-nowrap">{c}</td>)}</tr>)}</tbody>
+      </table>
+    </div>
+  )
+}
+
 const TOURNAMENTS: Record<string, (string | number)[][]> = {
   December: [['12/19', 'Beast of the East', 'Univ. of Delaware', 64, 'Bergen Catholic'], ['12/27', 'Sam Cali Invitational', 'Brick', 24, 'Southern Regional'], ['12/29', 'Escape the Rock', 'Mount Olive', 32, 'Phillipsburg']],
   January: [['1/3', 'Holiday Classic', 'Pope John', 16, 'Delbarton'], ['1/10', 'Morris County', 'Morristown', 18, 'Delbarton'], ['1/17', 'Sussex County', 'High Point', 12, 'Kittatinny']],
@@ -137,8 +229,8 @@ export function MockSite({ look }: { look: MockLook }) {
   const standTiles: NumberTile[] = standView === 'group'
     ? sections.flatMap((sec, si) => (girls ? [''] : ['G1', 'G2', 'G3', 'G4', 'G5']).map(g => ({ key: `${sec}${g}`, label: g ? `${sec} ${g}` : sec, ...tile(si + 1) })))
     : ['Big North', 'NJIC', 'Super Essex', 'Union County', 'Skyland', 'Shore', 'Colonial Valley', 'Cape-Atlantic'].map(c => ({ key: c, label: c, ...accent }))
-  const header = (title: string, summary: ReactNode, tabs?: ReactNode) => (
-    <SitePageHeader title={title} picker={<SeasonPick />} summary={summary} tabs={tabs} showLogo={look.showLogo} titleFontFamily={look.titleFontFamily} />
+  const header = (title: string, key: SummaryKey, tabs?: ReactNode) => (
+    <SitePageHeader title={title} picker={<SeasonPick />} summary={look.summaries[key]} tabs={tabs} showLogo={look.showLogo} titleFontFamily={look.titleFontFamily} titleSize={look.titleSize} />
   )
   const cats = lbSide === 'team'
     ? [['wins', 'Dual Wins'], ['pp', 'Power Points'], ['bonus', 'Bonus %']]
@@ -152,36 +244,37 @@ export function MockSite({ look }: { look: MockLook }) {
       </div>
     ),
     standings: <>
-      {header(`${P} Standings`, 'NJSIAA power points and records',
+      {header(`${P} Standings`, 'standings',
         <SiteTabs items={[['group', 'Group'], ['conference', 'Conference']].map(([k, l]) => ({ key: k, label: l, onClick: () => setStandView(k) }))} active={standView} />)}
       {grid(standTiles, 0.7, { minWidth: 120 })}
       <Section title={standView === 'group' ? (girls ? 'North' : 'North I Group 5') : 'Big North'}><Table cols={['#', 'School', 'W-L', 'PP']} rows={[[1, 'Phillipsburg', '18-2', '64.2'], [2, 'Hunterdon Central', '15-4', '58.9'], [3, 'Ridgewood', '14-6', '55.1']]} /></Section>
     </>,
     leaderboards: <>
-      {header(`${P} Leaderboards`, 'Season leaders by category',
+      {header(`${P} Leaderboards`, 'leaderboards',
         <>
           <SiteTabs items={[['team', 'Team'], ['individual', 'Individual']].map(([k, l]) => ({ key: k, label: l, onClick: () => { setLbSide(k); setLbCat('wins') } }))} active={lbSide} />
           <SiteTabs level={2} items={cats.map(([k, l]) => ({ key: k, label: l, onClick: () => setLbCat(k) }))} active={lbCat} />
         </>)}
-      <div className="pt-2">
+      <div className="mt-3"><MockLbFilters /></div>
+      <div className="pt-3">
         {lbSide === 'team'
-          ? <Table cols={['#', 'School', 'W-L', 'PP']} rows={[[1, 'Bergen Catholic', '18-0', '64.2'], [2, 'St Joseph Regional', '16-2', '61.9'], [3, 'Delbarton', '15-3', '58.0']]} />
-          : <Table cols={['#', 'Wrestler', 'School', 'Wt', 'W']} rows={[[1, 'Cristian Alvarez', 'St Joseph Regional', 285, 40], [2, 'Nick Clayton', 'High Point', 150, 38], [3, 'Luke Geleta', 'Phillipsburg', 144, 37]]} />}
+          ? <SortTable cols={['School', 'W-L', 'PP']} rows={[['Bergen Catholic', '18-0', 64.2], ['St Joseph Regional', '16-2', 61.9], ['Delbarton', '15-3', 58.0]]} />
+          : <SortTable cols={['Wrestler', 'School', 'Wt', 'W']} rows={[['Cristian Alvarez', 'St Joseph Regional', 285, 40], ['Nick Clayton', 'High Point', 150, 38], ['Luke Geleta', 'Phillipsburg', 144, 37]]} />}
       </div>
     </>,
     tournaments: <>
-      {header(`${P} Tournaments`, 'In-season tournaments and their winners',
+      {header(`${P} Tournaments`, 'tournaments',
         <SiteTabs items={Object.keys(TOURNAMENTS).map(m => ({ key: m, label: m, onClick: () => setMonth(m) }))} active={month} />)}
       <div className="pt-2"><Table cols={['Date', 'Tournament', 'Host', 'Teams', 'Winner']} rows={TOURNAMENTS[month]} /></div>
     </>,
     'ps-team': <>
-      {header(`${P} Team Post Season`, 'Team tournament brackets by section and group',
+      {header(`${P} Team Post Season`, 'ps-team',
         <SiteTabs items={sections.map(s => ({ key: s, label: s }))} active={sections[0]} />)}
       {grid(girls ? [{ key: 'b', label: 'Bracket', ...accent }] : ['G1', 'G2', 'G3', 'G4', 'G5'].map(g => ({ key: g, label: g, ...accent })), 0.8, { minWidth: 90 })}
       <Section title={girls ? 'North' : 'North I Group 5'}><Table cols={['Seed', 'School', 'Rd 1', 'Semi', 'Final']} rows={[[1, 'Phillipsburg', 'W 42-21', 'W 35-30', 'W 31-28'], [2, 'Hunterdon Central', 'W 50-12', 'W 33-27', 'L 28-31']]} /></Section>
     </>,
     'ps-individual': <>
-      {header(`${P} Individual Post Season`, 'State champions, podium schools, point leaders, and every bracket')}
+      {header(`${P} Individual Post Season`, 'ps-individual')}
       <Section title="State Champions"><Table cols={['Wt', 'Wrestler', 'School']} rows={[[106, 'Thomas Blewett, Jr', 'Middletown North'], [113, 'Charles Esposito, Sr', 'St Joseph Regional'], [120, 'Johnathon McGinty, Sr', 'St Joseph Regional']]} /></Section>
       <Section title="On the Podium"><p className="mb-3 text-xs text-slate-500">Schools ranked by wrestlers finishing 1st–8th at States. Click a school for its placers.</p><PodiumTable /></Section>
       <Section title="Team Point Leaders"><Table cols={['#', 'School', 'Dist', 'Reg', 'State', 'Total']} rows={[[1, 'Bergen Catholic', 345.5, 210, 168, 723.5], [2, 'Delbarton', 290, 198, 120, 608]]} /></Section>
@@ -190,30 +283,30 @@ export function MockSite({ look }: { look: MockLook }) {
       <Section title="Districts" center>{grid(districtTiles, 0.75, { groupSize: girls ? 3 : 4, center: true })}</Section>
     </>,
     region: <>
-      {header(`${P} Region ${regionNum}`, 'Brackets, placewinners and team scores')}
+      {header(`${P} Region ${regionNum}`, 'region')}
       <Pills items={Array.from({ length: nRegions }, (_, i) => ({ key: i + 1, label: `R${i + 1}` }))} active={regionNum} onPick={setRegionNum} />
       <div className="mt-6">{grid(weightTiles, 0.7)}</div>
       <Section title="Team Scores"><Table cols={['#', 'School', 'Points']} rows={[[1, 'St Joseph Regional', 250], [2, 'Bergen Catholic', 214.5], [3, 'Delbarton', 160]]} /></Section>
     </>,
     district: <>
-      {header(`${P} District ${districtNum}`, 'Brackets, placewinners and team scores')}
+      {header(`${P} District ${districtNum}`, 'district')}
       <Pills items={Array.from({ length: nDistricts }, (_, i) => ({ key: i + 1, label: `D${i + 1}` }))} active={districtNum} onPick={setDistrictNum} />
       <div className="mt-6">{grid(weightTiles, 0.7)}</div>
       <Section title="Team Scores"><Table cols={['#', 'School', 'Points']} rows={[[1, 'Phillipsburg', 258], [2, 'Hunterdon Central', 201], [3, 'Voorhees', 140]]} /></Section>
     </>,
     state: <>
-      {header(`${P} State Tournament`, 'Boardwalk Hall · double elimination')}
+      {header(`${P} State Tournament`, 'state')}
       {grid(weightTiles, 0.7)}
       <Section title="On the Podium"><PodiumTable /></Section>
       <Section title="State Placewinners"><Table cols={['Wt', 'Champion', 'Runner-up', '3rd', '4th']} rows={[[106, 'Blewett', 'Burke', 'Ruane', 'Daly'], [113, 'Esposito', 'Szamreta', 'Sipper', 'Reyes']]} /></Section>
     </>,
     h2h: <>
-      {header(`${P} Head to Head`, 'Compare two wrestlers')}
+      {header(`${P} Head to Head`, 'h2h')}
       <div className="grid gap-3 sm:grid-cols-2">{['Wrestler 1', 'Wrestler 2'].map(p => <input key={p} placeholder={p} className="border border-slate-300 px-3 py-2 text-sm" />)}</div>
       <Section title="Common Opponents"><Table cols={['Opponent', 'Wrestler 1', 'Wrestler 2']} rows={[['Nick Clayton', 'W Dec 7-6', 'L MD 13-4'], ['Luke Geleta', 'L Fall 3:10', 'W Dec 2-1']]} /></Section>
     </>,
     about: <>
-      {header('About Mat Whizzer', 'How the site works', <SiteTabs items={['Summary', 'Q&A', 'Rules'].map(k => ({ key: k, label: k }))} active="Summary" />)}
+      {header('About Mat Whizzer', 'about', <SiteTabs items={['Summary', 'Q&A', 'Rules'].map(k => ({ key: k, label: k }))} active="Summary" />)}
       <div className="space-y-3 text-sm text-slate-700 max-w-2xl"><p>Mat Whizzer covers NJSIAA wrestling: duals, tournaments, the postseason and ratings for every wrestler.</p><p>Each section below explains where the numbers come from.</p></div>
     </>,
   }

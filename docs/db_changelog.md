@@ -27,6 +27,10 @@
   - **Region and district pages:** the standard header, the live R1–R8 / D pill switcher, and standard weight buttons.
   - **Accent color:** weight, conference and State buttons use boys region 7 or girls region 3.
   - **Tile grid:** `NumberTileGrid` gained `onClick` and `center`.
+- **Round 4 (Kyle's notes):**
+  - **Header controls:** the tool picks the title font from every loaded font (the site default, four stencils, and Oswald, Bebas Neue, Barlow Condensed, Archivo Black, Roboto Condensed) and sets the title size. `SitePageHeader` gained `titleSize`.
+  - **Summaries:** every page's summary line is editable in the tool.
+  - **Leaderboards mock:** the "Filter by" box sits under the tabs with the live look, but each list is a dropdown that starts at All, with what's picked shown under its label. Picking a conference turns Section and Group off, and the reverse. The table keeps click-to-sort headers.
 - **Nav:** the top-nav "Schools" link is removed for boys and girls (Kyle: redundant with search). The schools list pages remain.
 
 ---
