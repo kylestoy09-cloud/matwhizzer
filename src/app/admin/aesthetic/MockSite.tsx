@@ -312,8 +312,8 @@ export function MockSite({ look }: { look: MockLook }) {
     'ps-team': <>
       {header(`${P} Team Post Season`, 'ps-team',
         <>
-          {!girls && <SiteTabs items={TEAM_GROUPS.map(g => ({ key: g, label: g, onClick: () => setTeamGroup(t => (t === g ? '' : g)) }))} active={teamGroup} />}
-          <SiteTabs level={girls ? 1 : 2} items={(girls ? ['North', 'South'] : sections).map(sec => ({ key: sec, label: sec, onClick: () => setTeamSection(t => (t === sec ? '' : sec)) }))} active={teamSection} />
+          {!girls && <SiteTabs items={TEAM_GROUPS.map(g => ({ key: g, label: g, onClick: () => { setTeamGroup(t => (t === g ? '' : g)); setTeamSection('') } }))} active={teamGroup} />}
+          <SiteTabs level={girls ? 1 : 2} items={(girls ? ['North', 'South'] : teamGroup === 'Non-Public' ? ['A', 'B'] : sections).map(sec => ({ key: sec, label: sec, onClick: () => setTeamSection(t => (t === sec ? '' : sec)) }))} active={teamSection} />
         </>)}
       <p className="text-xs text-slate-500">Click a {girls ? 'section' : 'group, a section, or one of each'} (click again to clear). Showing: <span className="font-semibold text-slate-800">{[girls ? '' : teamGroup, teamSection].filter(Boolean).join(' · ') || 'everything'}</span></p>
       <Section title={[girls ? '' : teamGroup, teamSection].filter(Boolean).join(' · ') || 'All brackets'}><Table cols={['Seed', 'School', 'Rd 1', 'Semi', 'Final']} rows={[[1, 'Phillipsburg', 'W 42-21', 'W 35-30', 'W 31-28'], [2, 'Hunterdon Central', 'W 50-12', 'W 33-27', 'L 28-31']]} /></Section>
