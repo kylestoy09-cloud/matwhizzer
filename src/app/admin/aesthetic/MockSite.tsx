@@ -51,6 +51,8 @@ const NAV: { key: Page | 'postseason'; label: string; menuOnly?: boolean; menu?:
   { key: 'h2h', label: 'H2H' },
   { key: 'about', label: 'About' },
 ]
+// the live team bracket's group tabs (TeamBracketClient.tsx)
+const TEAM_GROUPS = ['Group 1', 'Group 2', 'Group 3', 'Group 4', 'Group 5', 'Non-Public']
 const BOYS_WEIGHTS = [106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285]
 const GIRLS_WEIGHTS = [100, 107, 114, 120, 126, 132, 138, 145, 152, 165, 185, 235]
 
@@ -240,6 +242,8 @@ export function MockSite({ look }: { look: MockLook }) {
   const [month, setMonth] = useState('December')
   const [regionNum, setRegionNum] = useState(2)
   const [districtNum, setDistrictNum] = useState(5)
+  const [teamGroup, setTeamGroup] = useState('')
+  const [teamSection, setTeamSection] = useState('')
   const P = girls ? 'Girls' : 'Boys'
   const tile = (r: number) => (girls ? look.girlsTile(r) : look.boysTile(r))
   const accent = tile(girls ? 3 : 7)          // weight, conference and State buttons: boys region 7, girls region 3
@@ -307,18 +311,22 @@ export function MockSite({ look }: { look: MockLook }) {
     </>,
     'ps-team': <>
       {header(`${P} Team Post Season`, 'ps-team',
-        <SiteTabs items={sections.map(s => ({ key: s, label: s }))} active={sections[0]} />)}
-      {grid(girls ? [{ key: 'b', label: 'Bracket', ...accent }] : ['G1', 'G2', 'G3', 'G4', 'G5'].map(g => ({ key: g, label: g, ...accent })), 0.8, { minWidth: 90 })}
-      <Section title={girls ? 'North' : 'North I Group 5'}><Table cols={['Seed', 'School', 'Rd 1', 'Semi', 'Final']} rows={[[1, 'Phillipsburg', 'W 42-21', 'W 35-30', 'W 31-28'], [2, 'Hunterdon Central', 'W 50-12', 'W 33-27', 'L 28-31']]} /></Section>
+        <>
+          {!girls && <SiteTabs items={TEAM_GROUPS.map(g => ({ key: g, label: g, onClick: () => setTeamGroup(t => (t === g ? '' : g)) }))} active={teamGroup} />}
+          <SiteTabs level={girls ? 1 : 2} items={(girls ? ['North', 'South'] : sections).map(sec => ({ key: sec, label: sec, onClick: () => setTeamSection(t => (t === sec ? '' : sec)) }))} active={teamSection} />
+        </>)}
+      <p className="text-xs text-slate-500">Click a {girls ? 'section' : 'group, a section, or one of each'} (click again to clear). Showing: <span className="font-semibold text-slate-800">{[girls ? '' : teamGroup, teamSection].filter(Boolean).join(' · ') || 'everything'}</span></p>
+      <Section title={[girls ? '' : teamGroup, teamSection].filter(Boolean).join(' · ') || 'All brackets'}><Table cols={['Seed', 'School', 'Rd 1', 'Semi', 'Final']} rows={[[1, 'Phillipsburg', 'W 42-21', 'W 35-30', 'W 31-28'], [2, 'Hunterdon Central', 'W 50-12', 'W 33-27', 'L 28-31']]} /></Section>
     </>,
     'ps-individual': <>
       {header(`${P} Individual Post Season`, 'ps-individual')}
+      {/* the tournament buttons first (Kyle), then the live order */}
+      <section>{grid([{ key: 'state', label: `${P} State Tournament →`, ...accent, onClick: () => setPage('state') }], 0.8, { minWidth: 280, center: true })}</section>
+      <Section title="Regions" center>{grid(regionTiles, 1, { groupSize: 4, center: true })}</Section>
+      <Section title="Districts" center>{grid(districtTiles, 0.75, { groupSize: girls ? 3 : 4, center: true })}</Section>
       <Section title="State Champions"><Table cols={['Wt', 'Wrestler', 'School']} rows={[[106, 'Thomas Blewett, Jr', 'Middletown North'], [113, 'Charles Esposito, Sr', 'St Joseph Regional'], [120, 'Johnathon McGinty, Sr', 'St Joseph Regional']]} /></Section>
       <Section title="On the Podium"><p className="mb-3 text-xs text-slate-500">Schools ranked by wrestlers finishing 1st–8th at States. Click a school for its placers.</p><PodiumTable /></Section>
       <Section title="Team Point Leaders"><Table cols={['#', 'School', 'Dist', 'Reg', 'State', 'Total']} rows={[[1, 'Bergen Catholic', 345.5, 210, 168, 723.5], [2, 'Delbarton', 290, 198, 120, 608]]} /></Section>
-      <section className="mt-8">{grid([{ key: 'state', label: `${P} State Tournament →`, ...accent, onClick: () => setPage('state') }], 0.8, { minWidth: 280, center: true })}</section>
-      <Section title="Regions" center>{grid(regionTiles, 1, { groupSize: 4, center: true })}</Section>
-      <Section title="Districts" center>{grid(districtTiles, 0.75, { groupSize: girls ? 3 : 4, center: true })}</Section>
     </>,
     region: <>
       {header(`${P} Region ${regionNum}`, 'region')}
