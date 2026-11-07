@@ -124,7 +124,7 @@ export function StateContent({ gender, season, data }: { gender: 'M' | 'F', seas
                               <IconHint hint={seed ? `Ghost champion: won the state title as the #${seed} seed (seeded 5th or lower)` : 'Ghost champion: won the state title seeded 5th or lower'}>👻</IconHint>
                             )}
                             {outperform > 5 && (
-                              <IconHint hint={`Seeded #${seed}, finished ${place}${place === 1 ? 'st' : place === 2 ? 'nd' : place === 3 ? 'rd' : 'th'}: ${outperform} spots better than seeded`} className="text-[10px] font-bold text-emerald-600">
+                              <IconHint hint={`Seeded #${seed}, finished ${place}${place === 1 ? 'st' : place === 2 ? 'nd' : place === 3 ? 'rd' : 'th'}: ${outperform} spot${outperform === 1 ? '' : 's'} better than seeded`} className="text-[10px] font-bold text-emerald-600">
                                 ↑{outperform}
                               </IconHint>
                             )}

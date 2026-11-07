@@ -327,7 +327,7 @@ function Podium({ matches, ghostIds, seedMap, logos }: { matches: MatchRow[]; gh
                 {p.place === 1 && <IconHint hint="State champion">👑</IconHint>}
                 {p.wrestlerId && ghostIds.has(p.wrestlerId) && <IconHint hint={seed ? `Ghost champion: won the state title as the #${seed} seed (seeded 5th or lower)` : 'Ghost champion: won the state title seeded 5th or lower'}>👻</IconHint>}
                 {outperform > 5 && (
-                  <IconHint hint={`Seeded #${seed}, finished ${p.place}${p.place === 1 ? 'st' : p.place === 2 ? 'nd' : p.place === 3 ? 'rd' : 'th'}: ${outperform} spots better than seeded`} className="text-[10px] font-bold text-emerald-600">↑{outperform}</IconHint>
+                  <IconHint hint={`Seeded #${seed}, finished ${p.place}${p.place === 1 ? 'st' : p.place === 2 ? 'nd' : p.place === 3 ? 'rd' : 'th'}: ${outperform} spot${outperform === 1 ? '' : 's'} better than seeded`} className="text-[10px] font-bold text-emerald-600">↑{outperform}</IconHint>
                 )}
               </span>
               <span className="text-[11px] text-slate-400 shrink-0">{p.school_id != null ? p.school : 'TBD'}</span>

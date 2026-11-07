@@ -12,6 +12,8 @@
 - SQ state qualifier;
 - 🏆 on the girls team state champion.
 
+**Fix found while checking:** girls region pages list places 1–6, so the ↑ upset marker showed ↑0 and ↑−1 for 5th and 6th seeds who finished at or below their seed. It now shows only when a wrestler finished better than their seed (all four region and district pages).
+
 Pages: region and district overviews, state overview (`StateContent`), state weight pages, State Champions, and girls team post season (both sides where they apply).
 
 ---

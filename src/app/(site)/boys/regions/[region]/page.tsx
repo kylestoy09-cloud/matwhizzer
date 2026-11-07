@@ -271,7 +271,7 @@ export default async function RegionSummaryPage({
                         )
                       }
                       const seed = seedMap.get(p.wrestler_id)
-                      const showUpset = seed != null && seed > 4
+                      const showUpset = seed != null && seed > 4 && seed > place   // only when they finished better than their seed
                       const statePlace = statePlaceMap.get(p.wrestler_id)
                       return (
                         <td key={place} className="px-4 py-2.5">
@@ -297,7 +297,7 @@ export default async function RegionSummaryPage({
                             )}
                             {ghostIds.has(p.wrestler_id) && <IconHint hint={seed ? `Ghost champion: won this region as the #${seed} seed (seeded 5th or lower)` : 'Ghost champion: won this region seeded 5th or lower'}>👻</IconHint>}
                             {showUpset && (
-                              <IconHint hint={`Seeded #${seed}, finished ${place}${place === 1 ? 'st' : place === 2 ? 'nd' : place === 3 ? 'rd' : 'th'}: ${seed - place} spots better than seeded`} className="text-[10px] font-bold text-emerald-600">↑{seed - place}</IconHint>
+                              <IconHint hint={`Seeded #${seed}, finished ${place}${place === 1 ? 'st' : place === 2 ? 'nd' : place === 3 ? 'rd' : 'th'}: ${seed - place} spot${seed - place === 1 ? '' : 's'} better than seeded`} className="text-[10px] font-bold text-emerald-600">↑{seed - place}</IconHint>
                             )}
                           </div>
                           <span className="text-xs text-slate-500 truncate block">
