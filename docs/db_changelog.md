@@ -19,6 +19,14 @@
   - **Tabs:** `src/components/site/SiteTabs.tsx` uses the Leaderboards underline style, now the one tab style for every page.
   - **Grouped tiles:** `NumberTileGrid` keeps tiles in fixed blocks (4 boys districts per region, 3 girls), so a region's districts never split across lines.
   - **Mock pages:** they keep each live page's layout. Standings has Group/Conference tabs, Leaderboards Team/Individual plus category tabs, and Tournaments month tabs with a Winner column. The Post Season menu has Team and Individual only. Individual keeps its order (State Champions, On the Podium, Team Point Leaders, the State button, Regions, Districts) with the new buttons.
+- **Round 3 (Kyle's notes):**
+  - **Header:** the title is the live size (text-2xl bold).
+  - **Schedule:** keeps its live page.
+  - **On the Podium:** a table on the Individual and State pages; click a school to list its placers (weight, wrestler, place).
+  - **Individual page:** the State, Regions and Districts buttons are centered, and region/district buttons open the mock region and district pages.
+  - **Region and district pages:** the standard header, the live R1–R8 / D pill switcher, and standard weight buttons.
+  - **Accent color:** weight, conference and State buttons use boys region 7 or girls region 3.
+  - **Tile grid:** `NumberTileGrid` gained `onClick` and `center`.
 - **Nav:** the top-nav "Schools" link is removed for boys and girls (Kyle: redundant with search). The schools list pages remain.
 
 ---

@@ -4,7 +4,7 @@
 // districts of a region, the three girls districts), so a region is never split across lines.
 import Link from 'next/link'
 
-export type NumberTile = { key: string | number; label: string; href?: string; bg: string; fg: string; caption?: string }
+export type NumberTile = { key: string | number; label: string; href?: string; onClick?: () => void; bg: string; fg: string; caption?: string }
 
 export type NumberTileGridProps = {
   tiles: NumberTile[]
@@ -13,6 +13,7 @@ export type NumberTileGridProps = {
   radius?: number            // corner radius in px
   minWidth?: number          // narrowest a tile gets before the grid wraps (ungrouped)
   groupSize?: number         // tiles per block that stays on one line
+  center?: boolean           // center the blocks (Regions / Districts / State on the Individual page)
   border?: string
 }
 
@@ -24,18 +25,26 @@ function Tile({ t, fontFamily, size, radius, border, width }: { t: NumberTile; f
       {t.caption && <span className="mt-1 text-[10px] uppercase tracking-wide opacity-80">{t.caption}</span>}
     </div>
   )
-  return t.href ? <Link href={t.href} className="block">{inner}</Link> : inner
+  if (t.href) return <Link href={t.href} className="block">{inner}</Link>
+  return t.onClick ? <button type="button" onClick={t.onClick} className="block text-left">{inner}</button> : inner
 }
 
-export function NumberTileGrid({ tiles, fontFamily, size = 72, radius = 0, minWidth = 72, groupSize, border = '1px solid #0f172a' }: NumberTileGridProps) {
+export function NumberTileGrid({ tiles, fontFamily, size = 72, radius = 0, minWidth = 72, groupSize, center = false, border = '1px solid #0f172a' }: NumberTileGridProps) {
   if (groupSize) {
     const groups: NumberTile[][] = []
     for (let i = 0; i < tiles.length; i += groupSize) groups.push(tiles.slice(i, i + groupSize))
     return (
-      <div className="flex flex-wrap gap-x-5 gap-y-2">
+      <div className={`flex flex-wrap gap-x-5 gap-y-2 ${center ? 'justify-center' : ''}`}>
         {groups.map((g, i) => (
           <div key={i} className="flex gap-2">{g.map(t => <Tile key={t.key} t={t} fontFamily={fontFamily} size={size} radius={radius} border={border} width={size} />)}</div>
         ))}
+      </div>
+    )
+  }
+  if (center) {
+    return (
+      <div className="flex flex-wrap justify-center gap-2">
+        {tiles.map(t => <Tile key={t.key} t={t} fontFamily={fontFamily} size={size} radius={radius} border={border} width={minWidth} />)}
       </div>
     )
   }
