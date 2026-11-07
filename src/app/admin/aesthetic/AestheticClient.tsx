@@ -71,7 +71,6 @@ export function AestheticClient() {
   const [s, setS] = useState<Settings>(DEFAULTS)
   const [copied, setCopied] = useState(false)
   const [view, setView] = useState<'site' | 'components'>('site')
-  const [phone, setPhone] = useState(false)
   const set = <K extends keyof Settings>(k: K, v: Settings[K]) => setS(p => ({ ...p, [k]: v }))
 
   // saved looks: the newest is in effect; a saved look is merged over the defaults, so settings added
@@ -224,13 +223,8 @@ export function AestheticClient() {
           <button key={k} onClick={() => setView(k)} className={`px-3 py-1 text-xs font-semibold ${view === k ? 'bg-slate-900 text-white' : 'text-slate-700 hover:bg-slate-50'}`}>{l}</button>
         ))}
       </div>
-      {view === 'site' && (
-        <label className="ml-3 inline-flex items-center gap-1 text-xs text-slate-600"><input type="checkbox" checked={phone} onChange={e => setPhone(e.target.checked)} /> Phone width (390px)</label>
-      )}
       {view === 'site' ? (
-        <div style={{ maxWidth: phone ? 390 : undefined }}>
         <MockSite look={{ fontFamily, titleFontFamily: TITLE_FONTS[s.titleFont], titleSize: s.titleSize, summaries: s.summaries, size: s.size, radius: s.radius, border, showLogo: s.showLogo, headerLayout: s.headerLayout, boysTile, girlsTile }} />
-        </div>
       ) : (
       <div className="space-y-10 border border-slate-200 bg-white p-6">
         <section>
