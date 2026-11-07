@@ -27,7 +27,7 @@ export type MockLook = {
   girlsTile: (region: number) => TileColors
 }
 
-type Page = 'home' | 'schedule' | 'standings' | 'leaderboards' | 'tournaments' | 'ps-team' | 'ps-individual' | 'region' | 'district' | 'state' | 'h2h' | 'about'
+type Page = 'main' | 'home' | 'schedule' | 'standings' | 'leaderboards' | 'tournaments' | 'ps-team' | 'ps-individual' | 'region' | 'district' | 'state' | 'h2h' | 'about'
 // as in HeaderNav: Standings opens on click and has a Group / Conference menu; Post Season is menu only
 const NAV: { key: Page | 'postseason'; label: string; menuOnly?: boolean; menu?: { key: Page; label: string; view?: string }[] }[] = [
   { key: 'schedule', label: 'Scores' },
@@ -260,8 +260,20 @@ export function MockSite({ look }: { look: MockLook }) {
     : [['wins', 'Wins'], ['pins', 'Pins'], ['tf', 'Tech Falls'], ['bonus', 'Bonus %'], ['fast', 'Fastest Pin']]
 
   const body: Record<Page, ReactNode> = {
+    main: (
+      // the main home page (matwhizzer.com), as live: the logo animation, then Boys / Girls. The header logo lands here
+      <section className="flex flex-col items-center gap-6 py-12">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/images/Mat Whizzer Logo Navy - No Outline.png" alt="" className="h-40 w-auto" />
+        <p className="text-xs text-slate-400">(the logo animation plays here)</p>
+        <div className="flex gap-4">
+          <button onClick={() => { setGirls(false); setPage('home') }} className="bg-blue-600 px-8 py-3 font-bold text-white">Boys</button>
+          <button onClick={() => { setGirls(true); setPage('home') }} className="bg-rose-800 px-8 py-3 font-bold text-white">Girls</button>
+        </div>
+      </section>
+    ),
     home: (
-      // the side's home page stays as live; the logo and the Boys / Girls toggle land here
+      // the side's home page stays as live; the Boys / Girls toggle lands here
       <section className="border border-slate-200 bg-slate-50 px-6 py-12 text-center">
         <p className="text-xs font-bold uppercase tracking-widest text-slate-400">{P} home page</p>
         <p className="mt-2 text-sm text-slate-600">The {P.toLowerCase()} home page, as it is on the site now.</p>
@@ -379,13 +391,13 @@ export function MockSite({ look }: { look: MockLook }) {
   return (
     <div className="border border-black">
       {/* the public header, copied from src/components/HeaderNav.tsx (logo + account menu, nav row, search row).
-          Proposed changes live behind look.headerLayout; Boys / Girls (and the logo) always go to that side's
-          home page, even from the side you're on (Kyle, 2026-11-07). */}
+          Proposed changes live behind look.headerLayout. Boys / Girls always go to that side's home page, even
+          from the side you're on; the logo goes to the main home page (Kyle, 2026-11-07). */}
       <header className={girls ? 'bg-rose-900' : 'bg-slate-900'}>
         <div className={`px-4 py-2 flex items-center border-b border-black/30 ${proposed ? 'gap-2' : 'justify-between'}`}>
           {proposed && hamburger}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/Mat Whizzer Header Logo.png" alt="Mat Whizzer" className="h-10 w-auto cursor-pointer" onClick={() => { setPage('home'); setMenu(null) }} />
+          <img src="/images/Mat Whizzer Header Logo.png" alt="Mat Whizzer" className="h-10 w-auto cursor-pointer" onClick={() => { setPage('main'); setMenu(null) }} />
           {!proposed && hamburger}
         </div>
         <div className={`${girls ? 'bg-rose-800' : 'bg-slate-800'} border-b border-black overflow-x-auto sm:overflow-visible`}>
