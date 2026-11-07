@@ -40,7 +40,7 @@ export type MockLook = {
   girlsTile: (region: number) => TileColors
 }
 
-type Page = 'schedule' | 'standings' | 'leaderboards' | 'tournaments' | 'ps-team' | 'ps-individual' | 'region' | 'district' | 'state' | 'h2h' | 'about'
+type Page = 'home' | 'schedule' | 'standings' | 'leaderboards' | 'tournaments' | 'ps-team' | 'ps-individual' | 'region' | 'district' | 'state' | 'h2h' | 'about'
 // as in HeaderNav: Standings opens on click and has a Group / Conference menu; Post Season is menu only
 const NAV: { key: Page | 'postseason'; label: string; menuOnly?: boolean; menu?: { key: Page; label: string; view?: string }[] }[] = [
   { key: 'schedule', label: 'Scores' },
@@ -273,6 +273,13 @@ export function MockSite({ look }: { look: MockLook }) {
     : [['wins', 'Wins'], ['pins', 'Pins'], ['tf', 'Tech Falls'], ['bonus', 'Bonus %'], ['fast', 'Fastest Pin']]
 
   const body: Record<Page, ReactNode> = {
+    home: (
+      // the side's home page stays as live; the logo and the Boys / Girls toggle land here
+      <section className="border border-slate-200 bg-slate-50 px-6 py-12 text-center">
+        <p className="text-xs font-bold uppercase tracking-widest text-slate-400">{P} home page</p>
+        <p className="mt-2 text-sm text-slate-600">The {P.toLowerCase()} home page, as it is on the site now.</p>
+      </section>
+    ),
     schedule: <>
       {header(`${P} Scores`, 'schedule')}
       <MockScheduleControls />
@@ -377,20 +384,21 @@ export function MockSite({ look }: { look: MockLook }) {
   )
   const genderToggle = (
     <div className="flex border border-white/30 flex-shrink-0">
-      <button onClick={() => { setGirls(false); setRegionNum(1); setDistrictNum(1) }} className={`px-4 py-1 text-xs font-bold tracking-wide transition-colors ${!girls ? 'bg-white text-slate-900' : 'text-white/60 hover:text-white hover:bg-white/10'}`}>Boys</button>
-      <button onClick={() => { setGirls(true); setRegionNum(1); setDistrictNum(1) }} className={`px-4 py-1 text-xs font-bold tracking-wide transition-colors border-l border-white/30 ${girls ? 'bg-rose-200 text-rose-900' : 'text-white/60 hover:text-white hover:bg-white/10'}`}>Girls</button>
+      <button onClick={() => { setGirls(false); setRegionNum(1); setDistrictNum(1); setPage('home'); setMenu(null) }} className={`px-4 py-1 text-xs font-bold tracking-wide transition-colors ${!girls ? 'bg-white text-slate-900' : 'text-white/60 hover:text-white hover:bg-white/10'}`}>Boys</button>
+      <button onClick={() => { setGirls(true); setRegionNum(1); setDistrictNum(1); setPage('home'); setMenu(null) }} className={`px-4 py-1 text-xs font-bold tracking-wide transition-colors border-l border-white/30 ${girls ? 'bg-rose-200 text-rose-900' : 'text-white/60 hover:text-white hover:bg-white/10'}`}>Girls</button>
     </div>
   )
 
   return (
     <div className="border border-black">
-      {/* the public header, copied from src/components/HeaderNav.tsx (logo + account menu, nav row with the
-          Boys / Girls toggle at the right, search row). Not part of the redesign: it stays as live. */}
+      {/* the public header, copied from src/components/HeaderNav.tsx (logo + account menu, nav row, search row).
+          Proposed changes live behind look.headerLayout; Boys / Girls (and the logo) always go to that side's
+          home page, even from the side you're on (Kyle, 2026-11-07). */}
       <header className={girls ? 'bg-rose-900' : 'bg-slate-900'}>
         <div className={`px-4 py-2 flex items-center border-b border-black/30 ${proposed ? 'gap-2' : 'justify-between'}`}>
           {proposed && hamburger}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/Mat Whizzer Header Logo.png" alt="Mat Whizzer" className="h-10 w-auto" />
+          <img src="/images/Mat Whizzer Header Logo.png" alt="Mat Whizzer" className="h-10 w-auto cursor-pointer" onClick={() => { setPage('home'); setMenu(null) }} />
           {!proposed && hamburger}
         </div>
         <div className={`${girls ? 'bg-rose-800' : 'bg-slate-800'} border-b border-black overflow-x-auto sm:overflow-visible`}>

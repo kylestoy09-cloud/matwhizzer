@@ -5,40 +5,34 @@
 // here on open and read by the public pages once the standard look goes live.
 
 import { useEffect, useState } from 'react'
-import { Stardos_Stencil, Saira_Stencil_One, Big_Shoulders_Stencil, Allerta_Stencil, Oswald, Bebas_Neue, Barlow_Condensed, Archivo_Black, Roboto_Condensed } from 'next/font/google'
 import { SitePageHeader } from '@/components/site/SitePageHeader'
 import { MockSite, SUMMARY_DEFAULTS, type SummaryKey } from './MockSite'
 import { SiteTabs } from '@/components/site/SiteTabs'
 import { NumberTileGrid, type NumberTile } from '@/components/site/NumberTileGrid'
 import { BOYS_REGION_BG, GIRLS_REGION_BG, regionTile, boysRegionOfDistrict, girlsRegionOfDistrict, STENCIL_FONTS, type StencilFont } from '@/lib/siteTheme'
 
-const stardos = Stardos_Stencil({ subsets: ['latin'], weight: ['400', '700'] })
-const saira = Saira_Stencil_One({ subsets: ['latin'], weight: '400' })
-const bigShoulders = Big_Shoulders_Stencil({ subsets: ['latin'], weight: ['700'] })
-const allerta = Allerta_Stencil({ subsets: ['latin'], weight: '400' })
-const oswald = Oswald({ subsets: ['latin'], weight: ['600', '700'] })
-const bebas = Bebas_Neue({ subsets: ['latin'], weight: '400' })
-const barlow = Barlow_Condensed({ subsets: ['latin'], weight: ['600', '700'] })
-const archivo = Archivo_Black({ subsets: ['latin'], weight: '400' })
-const robotoCond = Roboto_Condensed({ subsets: ['latin'], weight: ['700'] })
+// The tool's fonts load in the browser from Google Fonts when the page opens (not next/font, which
+// downloads them during the build: a failed download there broke a site deploy on 2026-11-07).
+const FONTS_CSS = 'https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&family=Saira+Stencil+One&family=Big+Shoulders+Stencil:wght@700&family=Allerta+Stencil&family=Oswald:wght@600;700&family=Bebas+Neue&family=Barlow+Condensed:wght@600;700&family=Archivo+Black&family=Roboto+Condensed:wght@700&display=swap'
+const fam = (name: string) => `'${name}', sans-serif`
 // every font the tool can use for page titles: the site's default plus the stencils and display fonts
 const TITLE_FONTS: Record<string, string | undefined> = {
   'Site default': undefined,
-  'Stardos Stencil': stardos.style.fontFamily,
-  'Saira Stencil One': saira.style.fontFamily,
-  'Big Shoulders Stencil': bigShoulders.style.fontFamily,
-  'Allerta Stencil': allerta.style.fontFamily,
-  'Oswald': oswald.style.fontFamily,
-  'Bebas Neue': bebas.style.fontFamily,
-  'Barlow Condensed': barlow.style.fontFamily,
-  'Archivo Black': archivo.style.fontFamily,
-  'Roboto Condensed': robotoCond.style.fontFamily,
+  'Stardos Stencil': fam('Stardos Stencil'),
+  'Saira Stencil One': fam('Saira Stencil One'),
+  'Big Shoulders Stencil': fam('Big Shoulders Stencil'),
+  'Allerta Stencil': fam('Allerta Stencil'),
+  'Oswald': fam('Oswald'),
+  'Bebas Neue': fam('Bebas Neue'),
+  'Barlow Condensed': fam('Barlow Condensed'),
+  'Archivo Black': fam('Archivo Black'),
+  'Roboto Condensed': fam('Roboto Condensed'),
 }
 const FONT_FAMILY: Record<StencilFont, string> = {
-  'Stardos Stencil': stardos.style.fontFamily,
-  'Saira Stencil One': saira.style.fontFamily,
-  'Big Shoulders Stencil': bigShoulders.style.fontFamily,
-  'Allerta Stencil': allerta.style.fontFamily,
+  'Stardos Stencil': fam('Stardos Stencil'),
+  'Saira Stencil One': fam('Saira Stencil One'),
+  'Big Shoulders Stencil': fam('Big Shoulders Stencil'),
+  'Allerta Stencil': fam('Allerta Stencil'),
 }
 
 type Settings = {
@@ -137,6 +131,7 @@ export function AestheticClient() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
+      <link rel="stylesheet" href={FONTS_CSS} precedence="default" />
       {/* ── Controls ── */}
       <aside className="space-y-5 lg:sticky lg:top-4 self-start border border-slate-200 bg-white p-4">
         <div className="space-y-2 border-b border-slate-200 pb-4">
