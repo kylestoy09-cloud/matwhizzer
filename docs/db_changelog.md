@@ -2,6 +2,34 @@
 
 ---
 
+## 2026-11-07 — Standard site look goes live (Kyle approved the mock)
+
+**No database changes.** The live site now follows the Aesthetic Tool's saved look.
+
+**How the look is applied:**
+- **Shared definition:** `src/lib/siteLook.ts`, used by both the tool and the site.
+- **Loader:** `siteLookServer.ts` reads the newest `site_aesthetic_versions` row, cached 5 minutes under the `site-look` tag. A Save in the tool clears that cache.
+- **Site layout:** loads the look, loads the chosen fonts from Google Fonts, and passes the look to the pages (`SiteLookProvider`).
+- **Shared pieces:** `StdHeader` and `StdTiles` (`components/site/StdPage.tsx`), `FilterDrop`, `PostseasonParts` (weight tiles, R/D pills), `ComingSoon`.
+
+**Header (`HeaderNav.tsx`):**
+- **Labels:** Scores (was Schedule), Leaders (was Leaderboards), Insight (was About).
+- **Proposed layout:** the account menu sits left of the logo, and Boys/Girls sits left of a search box that shortens on phones.
+- **Toggle:** Boys/Girls always goes to that side's home page.
+
+**Pages:**
+- **Insight:** five tabs; see the Insight entry.
+- **Scores:** the standard header; Conference, Group and Section are dropdowns. Conference works on its own; Group and Section now narrow together (before, the query matched either one).
+- **Leaders:** the standard header with the season picker, phase tabs in the header, Individual first and now the default (`config.ts`), and the filter under the tabs. Each pick applies at once; Conference and Section/Group switch each other off.
+- **Standings:** the standard header with a picker, Group/Conference tabs, sections × groups as tiles in region colors, conferences as accent tiles (no logos), and the girls lists as tiles.
+- **Tournaments:** one shared page (`TournamentsList.tsx`) filtered by the picked season (it used to show every season), with month tabs; it opens on the month of the latest started tournament.
+- **Head to Head:** the standard header, no picker.
+- **Team Post Season:** the season picker (it used to show the live season only). Boys has group tabs (Group 1–5, Non-Public) and section tabs (A/B under Non-Public); they toggle, alone or together, and nothing picked shows every bracket. Girls has North/South tabs. With no seeds yet: "Brackets coming soon".
+- **Individual Post Season:** one shared page (`IndividualPostseason.tsx`). The State, Regions and Districts buttons come first, each shown only once its bracket is set (the season's tournament has entries), with "Brackets coming soon" otherwise. Then State Champions, On the Podium (a table where a school opens to its placers) and Team Point Leaders, once they have results. The unused search code is removed.
+- **Region / District / State:** the standard header with the picker. Region pages keep the R pills; district pages get D pills. Weights are accent tiles. The logo banners, back links and logo lookups are removed.
+
+---
+
 ## 2026-11-07 — Aesthetic Tool saves
 
 **Migration file:** `docs/migrations/20261107_site_aesthetic_versions.sql` (Kyle ran it 2026-11-07; new table `site_aesthetic_versions`: settings jsonb, note, saved_by, created_at; service role writes, public read for the live pages later). **API:** `src/app/api/admin/aesthetic/route.ts` (admin only). It returns the look in effect, which is the newest save, plus the last 20 saves and any earlier save by id, and adds a new save.

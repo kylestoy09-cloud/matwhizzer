@@ -1,7 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
+import { SiteTabs } from '@/components/site/SiteTabs'
+import { StdHeader } from '@/components/site/StdPage'
+import { ComingSoon } from '@/components/site/ComingSoon'
 import type { GroupBracket, SeedEntry, MeetResult, LeaderStats, LeaderEntry } from './page'
 
 // ── Result helpers ────────────────────────────────────────────────────────────
@@ -555,110 +558,87 @@ function LeaderDashboard({ stats }: { stats: LeaderStats }) {
 
 // ── Main client ───────────────────────────────────────────────────────────────
 
-const GROUP_TABS = [
-  { key: 'g1', label: 'Group 1' },
-  { key: 'g2', label: 'Group 2' },
-  { key: 'g3', label: 'Group 3' },
-  { key: 'g4', label: 'Group 4' },
-  { key: 'g5', label: 'Group 5' },
-  { key: 'np', label: 'Non-Public' },
-]
+// Two tab rows in the standard header (2026-11-07, Kyle): groups, then sections. Each tab toggles
+// (click again to clear); use one, or one of each. Nothing picked shows every bracket. Non-Public's
+// second row is A / B. A group with no section picked shows its state bracket and its four sections.
+const GROUP_TABS = ['1', '2', '3', '4', '5'].map(g => ({ key: g, label: `Group ${g}` })).concat({ key: 'np', label: 'Non-Public' })
+const SECTION_NAMES = ['North I', 'North II', 'Central', 'South']
+
+function Card({ title, note, children }: { title: string; note?: string; children: ReactNode }) {
+  return (
+    <div className="bg-white rounded-xl border border-slate-200 p-5">
+      <h2 className="text-lg font-bold text-slate-900 mb-1">{title}</h2>
+      {note && <p className="text-xs text-slate-400 mb-4">{note}</p>}
+      {children}
+    </div>
+  )
+}
 
 export function TeamBracketClient({
-  regularGroups, npGroups, leaderStats, meetResults, stateDates,
+  regularGroups, npGroups, leaderStats, meetResults, stateDates, picker,
 }: {
   regularGroups: GroupBracket[]
   npGroups:      GroupBracket[]
   leaderStats:   LeaderStats
   meetResults:   MeetResult[]
   stateDates:    StateDates
+  picker:        ReactNode
 }) {
-  const [activeGroup,   setActiveGroup]   = useState(0)
-  const [activeSectionByGroup, setActiveSectionByGroup] = useState<number[]>(
-    () => Array(GROUP_TABS.length).fill(0),
-  )
+  const [group, setGroup] = useState('')
+  const [section, setSection] = useState('')
+  const seeded = [...regularGroups, ...npGroups].some(g => g.sections.some(s => s.seeds.length > 0))
 
-  const isNP           = activeGroup === 5
-  const currentGroup   = isNP ? null : regularGroups[activeGroup]
-  const activeSection  = activeSectionByGroup[activeGroup]
+  const sectionTabs = group === 'np' ? ['A', 'B'] : SECTION_NAMES
+  const tabs = seeded ? (
+    <>
+      <SiteTabs items={GROUP_TABS.map(g => ({ key: g.key, label: g.label, onClick: () => { setGroup(x => (x === g.key ? '' : g.key)); setSection('') } }))} active={group} />
+      <SiteTabs level={2} items={sectionTabs.map(sec => ({ key: sec, label: sec, onClick: () => setSection(x => (x === sec ? '' : sec)) }))} active={section} />
+    </>
+  ) : undefined
 
-  function setSection(idx: number) {
-    setActiveSectionByGroup(prev => {
-      const next = [...prev]; next[activeGroup] = idx; return next
-    })
+  const cards: ReactNode[] = []
+  const showNP = group === 'np' || (!group && !section)
+  if (group !== 'np') {
+    for (const g of regularGroups) {
+      if (group && g.classification !== group) continue
+      if (!section) {
+        cards.push(
+          <Card key={`${g.classification}-state`} title={`Group ${g.classification} — State Bracket`} note={`NJSIAA Group ${g.classification} State Championship`}>
+            <StateBracket sections={g.sections} meetResults={meetResults} stateDates={stateDates} />
+          </Card>,
+        )
+      }
+      for (const sec of g.sections) {
+        if (section && sec.section !== section) continue
+        cards.push(
+          <Card key={`${g.classification}-${sec.section}`} title={`${sec.section} Group ${g.classification} Bracket`} note="8-team single elimination — click a matchup to view match results">
+            <Bracket8 seeds={sec.seeds} meetResults={meetResults} />
+          </Card>,
+        )
+      }
+    }
   }
-
-  const subTabs = isNP
-    ? npGroups.map(g => g.label)
-    : ['State', 'North I', 'North II', 'Central', 'South']
+  if (showNP) {
+    for (const g of npGroups) {
+      if (section && section !== g.classification) continue
+      const seeds = g.sections[0]?.seeds ?? []
+      cards.push(
+        <Card key={`np-${g.classification}`} title={`Non-Public Group ${g.classification} Bracket`}>
+          {g.isNPA ? <BracketNPA seeds={seeds} meetResults={meetResults} /> : <BracketNPB seeds={seeds} meetResults={meetResults} />}
+        </Card>,
+      )
+    }
+  }
 
   return (
     <div>
-      <LeaderDashboard stats={leaderStats} />
-
-      {/* Group tabs */}
-      <div className="flex flex-wrap gap-1 border-b border-slate-200 pb-2 mb-5">
-        {GROUP_TABS.map((g, i) => (
-          <button key={g.key} onClick={() => setActiveGroup(i)}
-            className={`px-3 py-1.5 text-sm rounded font-medium transition-colors ${
-              activeGroup === i ? 'bg-slate-900 text-white' : 'text-slate-600 hover:bg-slate-100'
-            }`}>
-            {g.label}
-          </button>
-        ))}
-      </div>
-
-      {/* Section sub-tabs */}
-      <div className="flex flex-wrap gap-1 mb-5">
-        {subTabs.map((label, i) => (
-          <button key={label} onClick={() => setSection(i)}
-            className={`px-3 py-1 text-xs rounded font-medium transition-colors ${
-              activeSection === i ? 'bg-blue-600 text-white' : 'text-slate-500 border border-slate-200 hover:bg-slate-50'
-            }`}>
-            {label}
-          </button>
-        ))}
-      </div>
-
-      {/* Content */}
-      <div className="bg-white rounded-xl border border-slate-200 p-5">
-        {isNP ? (() => {
-          const g = npGroups[activeSection]
-          if (!g) return null
-          const seeds = g.sections[0]?.seeds ?? []
-          return (
-            <div>
-              <h2 className="text-lg font-bold text-slate-900 mb-4">Non-Public Group {g.classification} Bracket</h2>
-              {g.isNPA
-                ? <BracketNPA seeds={seeds} meetResults={meetResults} />
-                : <BracketNPB seeds={seeds} meetResults={meetResults} />
-              }
-            </div>
-          )
-        })() : activeSection === 0 ? (
-          <div>
-            <h2 className="text-lg font-bold text-slate-900 mb-1">
-              Group {currentGroup?.classification} — State Bracket
-            </h2>
-            <p className="text-xs text-slate-400 mb-4">NJSIAA Group {currentGroup?.classification} State Championship</p>
-            {currentGroup && (
-              <StateBracket sections={currentGroup.sections} meetResults={meetResults} stateDates={stateDates} />
-            )}
-          </div>
-        ) : (() => {
-          const sectionName = ['North I', 'North II', 'Central', 'South'][activeSection - 1]
-          const sectionData = currentGroup?.sections.find(s => s.section === sectionName)
-          return (
-            <div>
-              <h2 className="text-lg font-bold text-slate-900 mb-1">
-                {sectionName} Group {currentGroup?.classification} Bracket
-              </h2>
-              <p className="text-xs text-slate-400 mb-4">8-team single elimination — click a matchup to view match results</p>
-              <Bracket8 seeds={sectionData?.seeds ?? []} meetResults={meetResults} />
-            </div>
-          )
-        })()}
-      </div>
+      <StdHeader title="Boys Team Post Season" summaryKey="ps-team" picker={picker} tabs={tabs} />
+      {!seeded ? <ComingSoon what="Brackets" /> : (
+        <>
+          <LeaderDashboard stats={leaderStats} />
+          <div className="space-y-6">{cards}</div>
+        </>
+      )}
     </div>
   )
 }

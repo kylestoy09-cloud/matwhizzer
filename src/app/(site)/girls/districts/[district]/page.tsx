@@ -1,10 +1,11 @@
 import Link from 'next/link'
 import { getSeasonIdsWithTournamentType } from '@/lib/seasons-server'
-import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { supabase } from '@/lib/supabase/public-cached'
 import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
+import { StdHeader } from '@/components/site/StdPage'
+import { WeightTiles, NumberPills } from '@/components/site/PostseasonParts'
 import { getGirlsOfficialTeamScores } from '@/lib/girlsOfficialTeamScores'
 import { BracketBuster } from '@/components/BracketBuster'
 import { TeamScoreCard } from '@/components/TeamScoreCard'
@@ -213,75 +214,16 @@ export default async function GirlsDistrictSummaryPage({
     placementsByWeight.get(p.weight)!.set(p.place, p)
   }
 
-  const { data: logoData } = await supabase.from('districts').select('logo_url').eq('id', d).maybeSingle()
-  const logoUrl = (logoData as { logo_url: string | null } | null)?.logo_url ?? null
-
   return (
     <div>
 
-      <Link
-        href="/girls/districts"
-        className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 transition-colors px-4 pt-6 block"
-      >
-        ← District Index
-      </Link>
-
-      {/* ── Mobile: logo banner + info bar ── */}
-      <div className="md:hidden sticky top-0 z-20">
-        {logoUrl ? (
-          <Image src={logoUrl} alt={`District ${d}`} width={1022} height={518} className="w-full h-auto" />
-        ) : (
-          <div className="w-full aspect-video flex items-center justify-center text-6xl font-bold bg-rose-900 text-white">{d}</div>
-        )}
-        <div className="bg-white border-b border-black shadow-none px-4 py-3" style={{ borderTop: '3px solid #881337' }}>
-          <div className="flex items-center justify-between gap-3">
-            <div className="min-w-0">
-              <h1 className="text-lg font-bold text-slate-900 truncate">District {d}</h1>
-              <div className="flex items-center gap-1 text-xs text-slate-500 truncate">
-                <span>NJSIAA</span>
-                <InlineSeasonPicker gender="F" activeSeason={season} seasons={districtSeasons} />
-                <span>· Girls Postseason</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Desktop: sticky header with logo left + info right ── */}
-      <div className="hidden md:block sticky top-0 z-20 bg-white border border-black rounded-none shadow-none mb-8" style={{ borderTop: '3px solid #881337' }}>
-        <div className="flex items-center gap-5 p-4">
-          <div className="shrink-0">
-            {logoUrl ? (
-              <Image src={logoUrl} alt={`District ${d}`} width={1022} height={518} className="w-[240px] h-auto rounded-none" />
-            ) : (
-              <div className="w-[160px] h-[96px] rounded-none flex items-center justify-center text-4xl font-bold bg-rose-900 text-white">{d}</div>
-            )}
-          </div>
-          <div className="flex-1 min-w-0">
-            <h1 className="text-2xl font-bold text-slate-900 truncate">District {d}</h1>
-            <p className="text-sm text-slate-500 mt-0.5">NJSIAA · Girls Postseason</p>
-            <div className="flex items-center text-xs text-slate-400 mt-1">
-              <InlineSeasonPicker gender="F" activeSeason={season} seasons={districtSeasons} />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="max-w-5xl mx-auto px-4 py-4">
+      <div className="max-w-5xl mx-auto px-4 py-10">
+      <StdHeader title={`Girls District ${d}`} summaryKey="district"
+        picker={<InlineSeasonPicker gender="F" activeSeason={season} seasons={districtSeasons} />}
+        tabs={<NumberPills items={Array.from({ length: 12 }, (_, i) => i + 1).map(dn => ({ key: dn, label: `D${dn}`, href: `/girls/districts/${dn}` }))} active={d} />} />
 
       {/* ── Bracket grid ── */}
-      <div className="grid grid-cols-4 sm:grid-cols-6 gap-2 mb-8">
-        {WEIGHTS.map(w => (
-          <Link
-            key={w}
-            href={`/girls/districts/${d}/${w}`}
-            className="flex flex-col items-center justify-center py-4 rounded-none border border-black bg-white hover:bg-rose-50 hover:border-rose-400 transition-colors shadow-none"
-          >
-            <span className="text-base font-bold text-slate-800">{w}</span>
-            <span className="text-[10px] text-slate-400 font-medium tracking-wide">lbs</span>
-          </Link>
-        ))}
-      </div>
+      <div className="mb-8"><WeightTiles side="girls" hrefBase={`/girls/districts/${d}`} weights={WEIGHTS} /></div>
 
       {/* ── Team Results ── */}
       <section className="mb-10">

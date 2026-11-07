@@ -97,7 +97,7 @@ const list = (v: string | string[] | undefined) => one(v).split(',').map(s => s.
 export function readParams(raw: Raw, gender: Gender): Params {
   const t = one(raw.tab)
   const tab: Phase = t === 'postseason' || t === 'wrestlers' ? 'postseason' : t === 'analytics' ? 'analytics' : 'regular'
-  const side: Side = one(raw.side) === 'individual' ? 'individual' : 'team'
+  const side: Side = one(raw.side) === 'team' ? 'team' : 'individual'   // Individual by default (Kyle, 2026-11-07)
   const cats = tab === 'analytics' ? ANALYTICS : tab === 'regular' ? (side === 'team' ? RS_TEAM : RS_INDIVIDUAL) : (side === 'team' ? PS_TEAM : PS_INDIVIDUAL)
   const cat = cats.find(c => c.key === one(raw.cat))?.key ?? cats[0].key
   const w = Number(one(raw.wt))

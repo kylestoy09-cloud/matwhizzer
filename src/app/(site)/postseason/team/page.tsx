@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
-import { getLiveSeason } from '@/lib/seasons-server'
+import { getActiveSeason } from '@/lib/get-season'
+import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { TeamBracketClient } from './TeamBracketClient'
 
 export const revalidate = 300
@@ -48,8 +49,8 @@ export type MeetResult = {
 }
 
 export default async function PostseasonTeamPage() {
-  const liveSeason = await getLiveSeason('M')
-  const SEASON_ID = liveSeason.id
+  // the picked season (season picker in the header); the live season by default
+  const SEASON_ID = await getActiveSeason('M')
   const db = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
@@ -236,11 +237,8 @@ export default async function PostseasonTeamPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-slate-900">Postseason — Team Brackets</h1>
-        <p className="text-sm text-slate-500 mt-1">{liveSeason.label} NJSIAA Boys Wrestling Team Playoffs</p>
-      </div>
       <TeamBracketClient
+        picker={<InlineSeasonPicker gender="M" activeSeason={SEASON_ID} />}
         regularGroups={regularGroups}
         npGroups={npGroups}
         leaderStats={leaderStats}

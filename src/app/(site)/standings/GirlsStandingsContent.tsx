@@ -2,8 +2,8 @@ import { getActiveSeason } from '@/lib/get-season'
 import { getSeasonLabel } from '@/lib/seasons-server'
 import { buildGirlsPowerPointGroups } from '@/lib/standings'
 import { PowerPointTable } from '@/components/StandingsTable'
-import Link from 'next/link'
-import { ConferenceGrid, StandingsTabs, type StandingsView } from './StandingsContent'
+import { ConferenceGrid, StandingsHeader, type StandingsView } from './StandingsContent'
+import { GirlsListButtons } from './StandingsButtons'
 
 // Girls standings follow the official girls Power Points lists, not the boys
 // section / group structure: North and South (schools competing for team
@@ -21,7 +21,7 @@ export async function GirlsStandingsContent({ view, group }: { view: StandingsVi
   if (view === 'conference') {
     return (
       <div className="max-w-5xl mx-auto px-4 py-10">
-        <StandingsTabs base={base} view={view} />
+        <StandingsHeader gender="girls" view={view} base={base} />
         <ConferenceGrid gender="girls" />
       </div>
     )
@@ -33,7 +33,7 @@ export async function GirlsStandingsContent({ view, group }: { view: StandingsVi
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-10">
-      <StandingsTabs base={base} view={view} />
+      <StandingsHeader gender="girls" view={view} base={base} />
       <section>
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-slate-900">Power Points</h2>
@@ -43,19 +43,7 @@ export async function GirlsStandingsContent({ view, group }: { view: StandingsVi
           <p className="text-sm text-slate-500">Power Points have not been released for this season yet.</p>
         ) : (
           <>
-            <div className="flex flex-wrap gap-2 mb-6">
-              {GROUPS.map(g => (
-                <Link
-                  key={g.key}
-                  href={`${base}?view=group&group=${g.key}`}
-                  className={`px-4 py-1.5 border border-black text-sm font-semibold transition-colors ${
-                    selected === g.key ? 'bg-rose-800 text-white' : 'bg-white text-slate-800 hover:bg-slate-50'
-                  }`}
-                >
-                  {g.title}
-                </Link>
-              ))}
-            </div>
+            <div className="mb-6"><GirlsListButtons buttons={GROUPS.map(g => ({ key: g.key, label: g.title, href: `${base}?view=group&group=${g.key}` }))} /></div>
             {GROUPS.filter(g => g.key === selected).map(g => (
               <div key={g.key}>
                 <h3 className="text-lg font-bold text-slate-900">{g.title}</h3>

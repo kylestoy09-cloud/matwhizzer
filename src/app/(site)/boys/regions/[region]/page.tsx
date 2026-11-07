@@ -1,9 +1,10 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { supabase } from '@/lib/supabase/public-cached'
 import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
+import { StdHeader } from '@/components/site/StdPage'
+import { WeightTiles, NumberPills } from '@/components/site/PostseasonParts'
 import { BracketBuster } from '@/components/BracketBuster'
 import { TeamScoreCard } from '@/components/TeamScoreCard'
 import { getBoysOfficialTeamScores } from '@/lib/boysOfficialTeamScores'
@@ -224,91 +225,16 @@ export default async function RegionSummaryPage({
     placementsByWeight.get(p.weight)!.set(p.place, p)
   }
 
-  const { data: logoData } = await supabase.from('regions').select('logo_url').eq('id', r).maybeSingle()
-  const logoUrl = (logoData as { logo_url: string | null } | null)?.logo_url ?? null
-
   return (
     <div>
 
-      <Link
-        href="/boys/regions"
-        className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 transition-colors px-4 pt-6 block"
-      >
-        ← Region Index
-      </Link>
-
-      {/* ── Mobile: logo banner + info bar ── */}
-      <div className="md:hidden sticky top-0 z-20">
-        {logoUrl ? (
-          <Image src={logoUrl} alt={`Region ${r}`} width={1022} height={518} className="w-full h-auto" />
-        ) : (
-          <div className="w-full aspect-video flex items-center justify-center text-6xl font-bold bg-slate-900 text-white">{r}</div>
-        )}
-        <div className="bg-white border-b border-black shadow-none px-4 py-3" style={{ borderTop: '3px solid #0f172a' }}>
-          <div className="flex items-center justify-between gap-3">
-            <div className="min-w-0">
-              <h1 className="text-lg font-bold text-slate-900 truncate">Region {r}</h1>
-              <div className="flex items-center gap-1 text-xs text-slate-500 truncate">
-                <InlineSeasonPicker gender="M" activeSeason={season} />
-                <span>· Boys Postseason · Top 4 Advance</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Desktop: sticky header with logo left + info right ── */}
-      <div className="hidden md:block sticky top-0 z-20 bg-white border border-black rounded-none shadow-none mb-8" style={{ borderTop: '3px solid #0f172a' }}>
-        <div className="flex items-center gap-5 p-4">
-          <div className="shrink-0">
-            {logoUrl ? (
-              <Image src={logoUrl} alt={`Region ${r}`} width={1022} height={518} className="w-[240px] h-auto rounded-none" />
-            ) : (
-              <div className="w-[160px] h-[96px] rounded-none flex items-center justify-center text-4xl font-bold bg-slate-900 text-white">{r}</div>
-            )}
-          </div>
-          <div className="flex-1 min-w-0">
-            <h1 className="text-2xl font-bold text-slate-900 truncate">Region {r}</h1>
-            <p className="text-sm text-slate-500 mt-0.5">Boys Postseason · Top 4 Advance</p>
-            <div className="flex items-center text-xs text-slate-400 mt-1">
-              <InlineSeasonPicker gender="M" activeSeason={season} />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="max-w-5xl mx-auto px-4 py-4">
-
-      {/* Region navigation */}
-      <div className="flex gap-1.5 mb-8">
-        {[1, 2, 3, 4, 5, 6, 7, 8].map(rn => (
-          <Link
-            key={rn}
-            href={`/boys/regions/${rn}`}
-            className={`px-3 py-1.5 rounded-full text-sm font-semibold transition-colors ${
-              rn === r
-                ? 'bg-slate-800 text-white'
-                : 'bg-white border border-black text-slate-700 hover:bg-slate-50 hover:border-slate-400'
-            }`}
-          >
-            R{rn}
-          </Link>
-        ))}
-      </div>
+      <div className="max-w-5xl mx-auto px-4 py-10">
+      <StdHeader title={`Boys Region ${r}`} summaryKey="region"
+        picker={<InlineSeasonPicker gender="M" activeSeason={season} />}
+        tabs={<NumberPills items={[1, 2, 3, 4, 5, 6, 7, 8].map(rn => ({ key: rn, label: `R${rn}`, href: `/boys/regions/${rn}` }))} active={r} />} />
 
       {/* ── Bracket grid ── */}
-      <div className="grid grid-cols-4 sm:grid-cols-7 gap-2 mb-8">
-        {WEIGHTS.map(w => (
-          <Link
-            key={w}
-            href={`/boys/regions/${r}/${w}`}
-            className="flex flex-col items-center justify-center py-4 rounded-none border border-black bg-white hover:bg-slate-50 hover:border-slate-400 transition-colors shadow-none"
-          >
-            <span className="text-base font-bold text-slate-800">{w}</span>
-            <span className="text-[10px] text-slate-400 font-medium tracking-wide">lbs</span>
-          </Link>
-        ))}
-      </div>
+      <div className="mb-8"><WeightTiles side="boys" hrefBase={`/boys/regions/${r}`} weights={WEIGHTS} /></div>
 
       {/* ── Placements ── */}
       <section className="mb-10">

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { WeightTiles } from '@/components/site/PostseasonParts'
 import { BracketBuster } from '@/components/BracketBuster'
 import { TeamScoreCard } from '@/components/TeamScoreCard'
 import { IndividualTeamPoints } from '@/components/IndividualTeamPoints'
@@ -80,18 +81,7 @@ export function StateContent({ gender, season, data }: { gender: 'M' | 'F', seas
   return (
     <>
       {/* ── Bracket grid ── */}
-      <div className={`grid gap-2 mb-8 ${isBoys ? 'grid-cols-4 sm:grid-cols-7' : 'grid-cols-4 sm:grid-cols-6'}`}>
-        {WEIGHTS.map(w => (
-          <Link
-            key={w}
-            href={`${bracketBase}/${w}`}
-            className="flex flex-col items-center justify-center py-4 rounded-none border border-black bg-white hover:bg-slate-50 hover:border-slate-400 transition-colors shadow-none"
-          >
-            <span className="text-base font-bold text-slate-800">{w}</span>
-            <span className="text-[10px] text-slate-400 font-medium tracking-wide">lbs</span>
-          </Link>
-        ))}
-      </div>
+      <div className="mb-8"><WeightTiles side={isBoys ? 'boys' : 'girls'} hrefBase={bracketBase} weights={WEIGHTS} /></div>
 
       {/* ── Placewinners ── */}
       <section className="mb-10">

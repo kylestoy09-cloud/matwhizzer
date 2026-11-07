@@ -3,11 +3,12 @@ import { notFound } from 'next/navigation'
 import { supabase } from '@/lib/supabase/public-cached'
 import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
+import { StdHeader } from '@/components/site/StdPage'
+import { WeightTiles, NumberPills } from '@/components/site/PostseasonParts'
 import { BracketBuster } from '@/components/BracketBuster'
 import { TeamScoreCard } from '@/components/TeamScoreCard'
 import { getGirlsOfficialTeamScores } from '@/lib/girlsOfficialTeamScores'
 import RegionVideo from '@/components/RegionVideo'
-import { PageHeader } from '@/components/PageHeader'
 import { getSchoolLogos } from '@/lib/school-logos'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 import { SchoolTag } from '@/components/SchoolTag'
@@ -224,47 +225,13 @@ export default async function GirlsRegionSummaryPage({
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8">
-
-      {/* Region navigation */}
-      <div className="flex gap-1.5 mb-4">
-        {['1', '2', '3', '4'].map(rn => (
-          <Link
-            key={rn}
-            href={`/girls/regions/${rn}`}
-            className={`px-3 py-1.5 rounded-none text-sm font-semibold transition-colors ${
-              rn === region
-                ? 'bg-rose-800 text-white'
-                : 'bg-white border border-black text-slate-700 hover:bg-rose-50 hover:border-rose-400 shadow-none'
-            }`}
-          >
-            R{rn}
-          </Link>
-        ))}
-      </div>
-
-      {/* Header */}
-      <div className="mb-8 text-center">
-        <PageHeader title={`Girls ${displayName}`} />
-        <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
-          <InlineSeasonPicker gender="F" activeSeason={season} />
-          <span>· Girls Postseason — Top 4 Advance</span>
-        </div>
-      </div>
+    <div className="max-w-5xl mx-auto px-4 py-10">
+      <StdHeader title={`Girls ${displayName}`} summaryKey="region"
+        picker={<InlineSeasonPicker gender="F" activeSeason={season} />}
+        tabs={<NumberPills items={[1, 2, 3, 4].map(rn => ({ key: rn, label: `R${rn}`, href: `/girls/regions/${rn}` }))} active={Number(region)} />} />
 
       {/* ── Bracket grid ── */}
-      <div className="grid grid-cols-4 sm:grid-cols-6 gap-2 mb-8">
-        {WEIGHTS.map(w => (
-          <Link
-            key={w}
-            href={`/girls/regions/${region}/${w}`}
-            className="flex flex-col items-center justify-center py-4 rounded-none border border-black bg-white hover:bg-rose-50 hover:border-rose-300 transition-colors shadow-none"
-          >
-            <span className="text-base font-bold text-slate-800">{w}</span>
-            <span className="text-[10px] text-slate-400 font-medium tracking-wide">lbs</span>
-          </Link>
-        ))}
-      </div>
+      <div className="mb-8"><WeightTiles side="girls" hrefBase={`/girls/regions/${region}`} weights={WEIGHTS} /></div>
 
       {/* ── Placements ── */}
       <section className="mb-10">

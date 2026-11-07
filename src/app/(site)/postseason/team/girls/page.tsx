@@ -1,18 +1,25 @@
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase/public-cached'
 import { getActiveSeason } from '@/lib/get-season'
-import { getSeasonLabel } from '@/lib/seasons-server'
 import { getSchoolLogos } from '@/lib/school-logos'
 import { getSchoolSeasonNames } from '@/lib/schoolSeasonNames'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 import { getGirlsTeamBracket, type BracketMatch } from '@/lib/girlsTeamBracket'
+import { InlineSeasonPicker } from '@/components/SeasonPicker'
+import { SiteTabs } from '@/components/site/SiteTabs'
+import { StdHeader } from '@/components/site/StdPage'
+import { ComingSoon } from '@/components/site/ComingSoon'
+
+const BASE = '/postseason/team/girls'
 
 export const revalidate = 300
 
 // Girls team postseason: North and South brackets, then the state final (src/lib/girlsTeamBracket.ts)
-export default async function GirlsTeamPostseasonPage() {
+export default async function GirlsTeamPostseasonPage({ searchParams }: { searchParams: Promise<{ section?: string }> }) {
+  const { section: sectionParam } = await searchParams
+  const section = sectionParam === 'north' || sectionParam === 'south' ? sectionParam : ''
   const season = await getActiveSeason('F')
-  const [bracket, seasonLabel, logos] = await Promise.all([getGirlsTeamBracket(season), getSeasonLabel(season), getSchoolLogos()])
+  const [bracket, logos] = await Promise.all([getGirlsTeamBracket(season), getSchoolLogos()])
 
   const ids = bracket?.schoolIds ?? []
   // the season's name (girls co-ops), else the school's name
@@ -53,17 +60,16 @@ export default async function GirlsTeamPostseasonPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
-      <Link href="/girls" className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 mb-6 transition-colors">
-        ← Girls Search
-      </Link>
-      <h1 className="text-2xl font-bold text-slate-900 mb-1">Girls Team Postseason</h1>
-      <p className="text-sm text-slate-500 mb-8">NJSIAA Girls State Dual Championships{seasonLabel ? ` · ${seasonLabel}` : ''}</p>
+      {/* the standard header; North / South tabs toggle (click again to show both) */}
+      <StdHeader title="Girls Team Post Season" summaryKey="ps-team"
+        picker={<InlineSeasonPicker gender="F" activeSeason={season} />}
+        tabs={bracket ? <SiteTabs items={[['north', 'North'], ['south', 'South']].map(([k, l]) => ({ key: k, label: l, href: section === k ? BASE : `${BASE}?section=${k}` }))} active={section} /> : undefined} />
 
       {!bracket ? (
-        <p className="text-sm text-slate-500">The team brackets for this season aren&apos;t out yet.</p>
+        <ComingSoon what="Brackets" />
       ) : (
         <>
-          {bracket.stateFinal && (
+          {bracket.stateFinal && !section && (
             <section className="mb-10 max-w-md">
               <h2 className="text-base font-semibold text-slate-800 mb-3">
                 State Final{bracket.champion != null && <span className="ml-2 text-sm font-normal text-slate-500">🏆 {nameOf(bracket.champion)}</span>}
@@ -72,7 +78,7 @@ export default async function GirlsTeamPostseasonPage() {
             </section>
           )}
 
-          {bracket.regions.map(r => (
+          {bracket.regions.filter(r => !section || r.key === section).map(r => (
             <section key={r.key} className="mb-12">
               <h2 className="text-lg font-bold text-slate-900 mb-4">{r.title}</h2>
               <div className="overflow-x-auto">

@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation'
 import { createSupabaseBrowser } from '@/lib/supabase/client'
 import { getAllConferences } from '@/lib/conferences'
 import { getAllSections, getAllGroups } from '@/lib/sections'
+import { StdHeader } from '@/components/site/StdPage'
+import { FilterDrop } from '@/components/site/FilterDrop'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -59,44 +61,6 @@ function todayLocal(): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 }
 
-// ── Filter panel ──────────────────────────────────────────────────────────────
-
-function MultiSelect({
-  label,
-  options,
-  selected,
-  onChange,
-}: {
-  label: string
-  options: { value: string; label: string }[]
-  selected: Set<string>
-  onChange: (v: Set<string>) => void
-}) {
-  const toggle = (v: string) => {
-    const next = new Set(selected)
-    next.has(v) ? next.delete(v) : next.add(v)
-    onChange(next)
-  }
-
-  return (
-    <div className="mt-1.5">
-      <div className="border border-slate-200 bg-white max-h-44 overflow-y-auto divide-y divide-slate-100">
-        {options.map(o => (
-          <label key={o.value} className="flex items-center gap-2 px-3 py-1.5 hover:bg-slate-50 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={selected.has(o.value)}
-              onChange={() => toggle(o.value)}
-              className="accent-slate-800"
-            />
-            <span className="text-xs text-slate-700">{o.label}</span>
-          </label>
-        ))}
-      </div>
-    </div>
-  )
-}
-
 // ── Section header row ────────────────────────────────────────────────────────
 
 function SectionHeader({ label, count }: { label: string; count: number }) {
@@ -130,9 +94,7 @@ export function ScheduleClient({ gender = 'M' }: { gender?: 'M' | 'F' }) {
   const [postseasonTourneys, setPostseasonTourneys] = useState<PostseasonTourney[]>([])
 
   // Filter state
-  const [confChecked,    setConfChecked]    = useState(false)
-  const [groupChecked,   setGroupChecked]   = useState(false)
-  const [sectionChecked, setSectionChecked] = useState(false)
+  const [openDrop, setOpenDrop] = useState<string | null>(null)
   const [selConfs,    setSelConfs]    = useState<Set<string>>(new Set())
   const [selGroups,   setSelGroups]   = useState<Set<string>>(new Set())
   const [selSections, setSelSections] = useState<Set<string>>(new Set())
@@ -174,25 +136,19 @@ export function ScheduleClient({ gender = 'M' }: { gender?: 'M' | 'F' }) {
   const resolveSchoolIds = useCallback(async (): Promise<number[] | null> => {
     if (useMySchools && mySchoolIds) return mySchoolIds
 
-    const hasConf    = confChecked    && selConfs.size > 0
-    const hasGroup   = groupChecked   && selGroups.size > 0
-    const hasSection = sectionChecked && selSections.size > 0
+    // Conference on its own; Group and Section narrow together (Group 3 + North II = North II's Group 3)
+    if (!selConfs.size && !selGroups.size && !selSections.size) return null
 
-    if (!hasConf && !hasGroup && !hasSection) return null
-
-    const parts: string[] = []
-    for (const c of selConfs)    parts.push(`athletic_conference.eq.${c}`)
-    for (const g of selGroups)   parts.push(`classification.eq.${g}`)
-    for (const s of selSections) parts.push(`section.eq.${s}`)
-
-    const { data } = await supabase
-      .from('schools')
-      .select('id')
-      .eq('is_nj', true)
-      .or(parts.join(','))
+    let q = supabase.from('schools').select('id').eq('is_nj', true)
+    if (selConfs.size) q = q.in('athletic_conference', [...selConfs])
+    else {
+      if (selGroups.size)   q = q.in('classification', [...selGroups])
+      if (selSections.size) q = q.in('section', [...selSections])
+    }
+    const { data } = await q
 
     return (data ?? []).map((r: { id: number }) => r.id)
-  }, [useMySchools, mySchoolIds, confChecked, selConfs, groupChecked, selGroups, sectionChecked, selSections, supabase])
+  }, [useMySchools, mySchoolIds, selConfs, selGroups, selSections, supabase])
 
   // Fetch events
   const fetchEvents = useCallback(async () => {
@@ -354,11 +310,9 @@ export function ScheduleClient({ gender = 'M' }: { gender?: 'M' | 'F' }) {
 
   useEffect(() => { fetchEvents() }, [fetchEvents])
 
-  useEffect(() => { if (!confChecked)    setSelConfs(new Set())    }, [confChecked])
-  useEffect(() => { if (!groupChecked)   setSelGroups(new Set())   }, [groupChecked])
-  useEffect(() => { if (!sectionChecked) setSelSections(new Set()) }, [sectionChecked])
 
-  const activeFilterCount = (confChecked ? selConfs.size : 0) + (groupChecked ? selGroups.size : 0) + (sectionChecked ? selSections.size : 0)
+  const activeFilterCount = selConfs.size + selGroups.size + selSections.size
+  const clearFilters = () => { setSelConfs(new Set()); setSelGroups(new Set()); setSelSections(new Set()); setOpenDrop(null) }
   const isFiltered = useMySchools || activeFilterCount > 0
 
   const router = useRouter()
@@ -367,8 +321,7 @@ export function ScheduleClient({ gender = 'M' }: { gender?: 'M' | 'F' }) {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
-      <h1 className="text-2xl font-bold text-slate-900 mb-1">Schedule</h1>
-      <p className="text-slate-500 text-sm mb-6">Dual meets and tournaments by date.</p>
+      <StdHeader title={`${gender === 'F' ? 'Girls' : 'Boys'} Scores`} summaryKey="schedule" />
 
       {/* Controls box */}
       <div className="border border-slate-200 bg-slate-50 p-4 mb-6 space-y-3">
@@ -381,79 +334,17 @@ export function ScheduleClient({ gender = 'M' }: { gender?: 'M' | 'F' }) {
             className="border border-black px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 rounded-none shrink-0"
           />
 
+          {/* Conference, Group, Section: three dropdowns (Kyle, 2026-11-06). Conference alone; Group and
+              Section together */}
           {!useMySchools && (
             <>
-              {/* Conference */}
-              <div className="flex-1 min-w-0">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={confChecked}
-                    onChange={e => setConfChecked(e.target.checked)}
-                    className="accent-slate-800"
-                  />
-                  <span className="text-sm font-medium text-slate-700">Conference</span>
-                  {selConfs.size > 0 && (
-                    <span className="text-xs text-slate-400">({selConfs.size})</span>
-                  )}
-                </label>
-                {confChecked && (
-                  <MultiSelect
-                    label="Conference"
-                    options={CONFERENCES.map(c => ({ value: c, label: c }))}
-                    selected={selConfs}
-                    onChange={setSelConfs}
-                  />
-                )}
-              </div>
-
-              {/* Group */}
-              <div className="flex-1 min-w-0">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={groupChecked}
-                    onChange={e => setGroupChecked(e.target.checked)}
-                    className="accent-slate-800"
-                  />
-                  <span className="text-sm font-medium text-slate-700">Group</span>
-                  {selGroups.size > 0 && (
-                    <span className="text-xs text-slate-400">({selGroups.size})</span>
-                  )}
-                </label>
-                {groupChecked && (
-                  <MultiSelect
-                    label="Group"
-                    options={GROUPS.map(g => ({ value: g.value, label: g.label }))}
-                    selected={selGroups}
-                    onChange={setSelGroups}
-                  />
-                )}
-              </div>
-
-              {/* Section */}
-              <div className="flex-1 min-w-0">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={sectionChecked}
-                    onChange={e => setSectionChecked(e.target.checked)}
-                    className="accent-slate-800"
-                  />
-                  <span className="text-sm font-medium text-slate-700">Section</span>
-                  {selSections.size > 0 && (
-                    <span className="text-xs text-slate-400">({selSections.size})</span>
-                  )}
-                </label>
-                {sectionChecked && (
-                  <MultiSelect
-                    label="Section"
-                    options={SECTIONS.map(s => ({ value: s, label: s }))}
-                    selected={selSections}
-                    onChange={setSelSections}
-                  />
-                )}
-              </div>
+              <FilterDrop label="Conference" options={CONFERENCES.map(c => ({ value: c, label: c }))} picked={selConfs}
+                onChange={v => { setSelConfs(v); setSelGroups(new Set()); setSelSections(new Set()) }}
+                disabled={selGroups.size + selSections.size > 0} open={openDrop === 'c'} setOpen={v => setOpenDrop(v ? 'c' : null)} />
+              <FilterDrop label="Group" options={GROUPS} picked={selGroups} onChange={setSelGroups}
+                disabled={selConfs.size > 0} open={openDrop === 'g'} setOpen={v => setOpenDrop(v ? 'g' : null)} />
+              <FilterDrop label="Section" options={SECTIONS.map(x => ({ value: x, label: x }))} picked={selSections} onChange={setSelSections}
+                disabled={selConfs.size > 0} open={openDrop === 's'} setOpen={v => setOpenDrop(v ? 's' : null)} />
             </>
           )}
         </div>
@@ -468,11 +359,7 @@ export function ScheduleClient({ gender = 'M' }: { gender?: 'M' | 'F' }) {
                   checked={useMySchools}
                   onChange={e => {
                     setUseMySchools(e.target.checked)
-                    if (e.target.checked) {
-                      setConfChecked(false)
-                      setGroupChecked(false)
-                      setSectionChecked(false)
-                    }
+                    if (e.target.checked) clearFilters()
                   }}
                   className="accent-slate-800"
                 />
@@ -486,9 +373,7 @@ export function ScheduleClient({ gender = 'M' }: { gender?: 'M' | 'F' }) {
               <button
                 onClick={() => {
                   setUseMySchools(false)
-                  setConfChecked(false)
-                  setGroupChecked(false)
-                  setSectionChecked(false)
+                  clearFilters()
                 }}
                 className="text-xs text-slate-400 hover:text-slate-700 underline ml-auto"
               >

@@ -4,7 +4,7 @@
 // own rows (src/lib/leaderboards/data.ts).
 
 import Link from 'next/link'
-import { PageHeader } from '@/components/PageHeader'
+import { StdHeader } from '@/components/site/StdPage'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { getActiveSeason } from '@/lib/get-season'
 import { getRatingBlurb } from '@/lib/rating-server'
@@ -46,22 +46,17 @@ export async function LeaderboardsPage({ gender, searchParams }: { gender: Gende
     { key: 'postseason', label: 'Leaderboards',       href: L({ tab: 'postseason', cat: null, wt: null, ...fresh }) },
     { key: 'analytics',  label: 'Advanced Analytics', href: L({ tab: 'analytics', cat: null, wt: null, ...fresh }) },
   ]
-  const subtitle = p.tab === 'regular' ? 'regular season — duals & in-season tournaments' : 'postseason — districts, regions & state'
-
+  // the standard frame (2026-11-07): title, season picker, summary, then the tabs
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
-      <div className="mb-6 text-center">
-        <PageHeader title="NJSIAA Leaderboard" />
-        <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
-          <span>NJSIAA</span>
-          <InlineSeasonPicker gender={gender} activeSeason={season} />
-          <span>{gender === 'M' ? 'boys' : 'girls'} {subtitle}</span>
-        </div>
-      </div>
+      <StdHeader title={`${gender === 'M' ? 'Boys' : 'Girls'} Leaders`} summaryKey="leaderboards"
+        picker={<InlineSeasonPicker gender={gender} activeSeason={season} />}
+        tabs={<>
+          <TabRow items={phaseTabs} active={p.tab === 'regular' ? 'regular' : 'postseason'} />
+          {p.tab !== 'regular' && <TabRow items={postseasonTabs} active={p.tab} level={2} />}
+        </>} />
 
       <div className="space-y-4">
-        <TabRow items={phaseTabs} active={p.tab === 'regular' ? 'regular' : 'postseason'} />
-        {p.tab !== 'regular' && <TabRow items={postseasonTabs} active={p.tab} level={2} />}
         {p.tab === 'analytics'
           ? await AnalyticsView({ gender, season, p, base, L })
           : await TableView({ gender, season, p, base, L, path })}
@@ -78,7 +73,8 @@ async function TableView({ gender, season, p, base, L, path }: ViewArgs & { path
   const cat = cats.find(c => c.key === p.cat) ?? cats[0]
   const fresh = { sort: null, n: null }
 
-  const sideTabs = (['team', 'individual'] as const).map(s => ({ key: s, label: s === 'team' ? 'Team' : 'Individual', href: L({ side: s, cat: null, wt: null, ...fresh }) }))
+  // Individual first: it's the default
+  const sideTabs = (['individual', 'team'] as const).map(s => ({ key: s, label: s === 'team' ? 'Team' : 'Individual', href: L({ side: s, cat: null, wt: null, ...fresh }) }))
   const catTabs = cats.map(c => ({ key: c.key, label: c.label, href: L({ cat: c.key, ...fresh }) }))
   const wtTabs = [{ key: 'all', label: 'All Weights', href: L({ wt: null, n: null }) },
     ...WEIGHTS[gender].map(w => ({ key: String(w), label: String(w), href: L({ wt: w, n: null }) }))]
@@ -93,10 +89,11 @@ async function TableView({ gender, season, p, base, L, path }: ViewArgs & { path
     <>
       {!rs && <TabRow items={levelTabs} active={p.level} level={2} />}
       {!rs && p.level !== 'district' && <TabRow items={scopeTabs} active={p.scope} level={3} />}
-      {rs && <LbFilters hrefBase={L({ conf: null, sec: null, grp: null, n: null })} conf={p.conf} sec={p.sec} grp={p.grp} />}
       <TabRow items={sideTabs} active={p.side} level={2} />
       <TabRow items={catTabs} active={cat.key} level={2} />
       {cat.weights && <TabRow items={wtTabs} active={p.wt ? String(p.wt) : 'all'} level={3} />}
+      {/* the filter sits under the tabs, over the table (Kyle, 2026-11-06) */}
+      {rs && <LbFilters hrefBase={L({ conf: null, sec: null, grp: null, n: null })} conf={p.conf} sec={p.sec} grp={p.grp} />}
       <div className="pt-2">
         {p.side === 'individual'
           ? await IndividualTable({ gender, season, p, base, L, rs })

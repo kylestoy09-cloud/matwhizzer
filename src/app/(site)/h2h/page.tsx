@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import { createSupabaseBrowser } from '@/lib/supabase/client'
+import { StdHeader } from '@/components/site/StdPage'
 import type { H2HResponse, DirectMatch, OpponentRecord, MatchDetail, PredictionResult } from '@/app/api/h2h/route'
 
 type WrestlerOption = { id: string; first_name: string; last_name: string }
@@ -331,8 +332,8 @@ export default function H2HPage({ gender = 'M' }: { gender?: 'M' | 'F' }) {
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-10">
-      <h1 className="text-2xl font-bold text-slate-900 mb-1">Head-to-Head</h1>
-      <p className="text-sm text-slate-500 mb-8">Compare two wrestlers — direct matchups and common opponents.</p>
+      {/* the standard header, no season picker: head to head spans seasons */}
+      <StdHeader title={`${gender === 'F' ? 'Girls' : 'Boys'} Head to Head`} summaryKey="h2h" />
 
       {/* Wrestler pickers — B left, A right */}
       <div className="grid grid-cols-3 items-start mb-10">
