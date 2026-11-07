@@ -2,19 +2,6 @@
 
 ---
 
-## 2026-11-07 — Insight (was About)
-
-**Nav:** "About" is now **Insight**, per side: `/boys/insight` and `/girls/insight` (`HeaderNav.tsx`).
-
-**Pages:** `src/app/(site)/{boys,girls}/insight/`, framed by `src/components/insight/InsightShell.tsx`. It has the standard header and five tabs; the bare `/insight` address opens Daily Report.
-- **Daily Report:** two tabs, 7 Things (the default) and Report (`?tab=report`), both "Coming soon" for now.
-- **Rankings, Daily Challenge, Polls:** "Coming soon" (`ComingSoon.tsx`).
-- **About:** the current About page, shown without its own frame (`AboutClient` gained `embedded`; the data loader moved to `about/loadAbout.ts`).
-
-`/about` still works for old links. The older `/boys/rankings` and `/girls/rankings` pages are untouched, and the nav doesn't link them. **Mock:** the Aesthetic Tool's nav and page match.
-
----
-
 ## 2026-11-07 — Aesthetic Tool saves
 
 **Migration file:** `docs/migrations/20261107_site_aesthetic_versions.sql` (Kyle ran it 2026-11-07; new table `site_aesthetic_versions`: settings jsonb, note, saved_by, created_at; service role writes, public read for the live pages later). **API:** `src/app/api/admin/aesthetic/route.ts` (admin only). It returns the look in effect, which is the newest save, plus the last 20 saves and any earlier save by id, and adds a new save.
@@ -63,6 +50,7 @@ A saved look is merged over the defaults, so settings added later get their defa
 - **Round 5:** the Schedule mock uses the standard header and keeps the live body (the controls box and the date table). Conference, Group and Section are three dropdowns instead of checkboxes that open lists: Conference on its own, Group and Section together.
 - **Fix (Kyle caught it):** the mock's header had been approximated, which dropped the hamburger account menu, moved the Boys/Girls toggle and left out the Standings dropdown. It's now copied from `HeaderNav.tsx`: logo and account menu, the nav row with the toggle at the right end, Standings opening on hover (Group, Conference), Post Season as a menu, and the search row.
 - **Round 6 (mock only):** the nav says Scores (was Schedule) and Leaders (was Leaderboards). A "Site header" switch shows a proposed header (hamburger left of the logo, Boys/Girls left of a search bar that shortens to fit) or the live one, and a Phone width option previews it at 390px.
+- **2026-11-07, Insight (mock only):** About becomes Insight, with tabs Daily Report (7 Things, Report), Rankings, Daily Challenge, Polls and About. I first pushed it to the live site by mistake; it was reverted the same day, so the live site still has About.
 - **2026-11-07:** Team Post Season mock: a group tab row (Group 1–5, Non-Public, as live) and a section tab row (girls: North, South). Each tab toggles, alone or one of each. Individual mock: the State, Regions and Districts buttons are above State Champions.
 - **2026-11-07:** the Head to Head mock has no season picker, since the feature spans seasons (Kyle).
 - **Nav:** the top-nav "Schools" link is removed for boys and girls (Kyle: redundant with search). The schools list pages remain.

@@ -256,8 +256,7 @@ function Collapsible({
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 
-// embedded: inside Insight, which supplies the page frame and title
-export function AboutClient({ calendarRows, dbError, rowCount, embedded = false }: { calendarRows: CalendarRow[]; dbError?: string | null; rowCount?: number; embedded?: boolean }) {
+export function AboutClient({ calendarRows, dbError, rowCount }: { calendarRows: CalendarRow[]; dbError?: string | null; rowCount?: number }) {
   const [activeTopTab, setActiveTopTab] = useState<'matwhizzer' | 'njsiaa'>('njsiaa')
   const [activeDoc, setActiveDoc]       = useState(0)  // 0 = dates, 1-3 = doc tabs
   const [summaryOpen, setSummaryOpen]   = useState([false, false, false])
@@ -280,8 +279,8 @@ export function AboutClient({ calendarRows, dbError, rowCount, embedded = false 
   const docTab = activeDoc > 0 ? DOC_TABS[activeDoc - 1] : null
 
   return (
-    <div className={embedded ? 'max-w-3xl' : 'max-w-3xl mx-auto px-4 py-10'}>
-      {!embedded && <h1 className="text-2xl font-bold text-slate-900 mb-6">About</h1>}
+    <div className="max-w-3xl mx-auto px-4 py-10">
+      <h1 className="text-2xl font-bold text-slate-900 mb-6">About</h1>
 
       {/* Top-level tabs */}
       <div className="flex border-b border-slate-200 mb-8">
