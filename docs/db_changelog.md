@@ -50,6 +50,7 @@ A saved look is merged over the defaults, so settings added later get their defa
 - **Round 5:** the Schedule mock uses the standard header and keeps the live body (the controls box and the date table). Conference, Group and Section are three dropdowns instead of checkboxes that open lists: Conference on its own, Group and Section together.
 - **Fix (Kyle caught it):** the mock's header had been approximated, which dropped the hamburger account menu, moved the Boys/Girls toggle and left out the Standings dropdown. It's now copied from `HeaderNav.tsx`: logo and account menu, the nav row with the toggle at the right end, Standings opening on hover (Group, Conference), Post Season as a menu, and the search row.
 - **Round 6 (mock only):** the nav says Scores (was Schedule) and Leaders (was Leaderboards). A "Site header" switch shows a proposed header (hamburger left of the logo, Boys/Girls left of a search bar that shortens to fit) or the live one, and a Phone width option previews it at 390px.
+- **2026-11-07:** the Head to Head mock has no season picker, since the feature spans seasons (Kyle).
 - **Nav:** the top-nav "Schools" link is removed for boys and girls (Kyle: redundant with search). The schools list pages remain.
 
 ---

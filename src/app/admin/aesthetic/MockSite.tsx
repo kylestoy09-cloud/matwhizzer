@@ -257,8 +257,9 @@ export function MockSite({ look }: { look: MockLook }) {
   const standTiles: NumberTile[] = standView === 'group'
     ? sections.flatMap((sec, si) => (girls ? [''] : ['G1', 'G2', 'G3', 'G4', 'G5']).map(g => ({ key: `${sec}${g}`, label: g ? `${sec} ${g}` : sec, ...tile(si + 1) })))
     : ['Big North', 'NJIC', 'Super Essex', 'Union County', 'Skyland', 'Shore', 'Colonial Valley', 'Cape-Atlantic'].map(c => ({ key: c, label: c, ...accent }))
-  const header = (title: string, key: SummaryKey, tabs?: ReactNode) => (
-    <SitePageHeader title={title} picker={<SeasonPick />} summary={look.summaries[key]} tabs={tabs} showLogo={look.showLogo} titleFontFamily={look.titleFontFamily} titleSize={look.titleSize} />
+  // pages that span seasons (Head to Head) have no season picker
+  const header = (title: string, key: SummaryKey, tabs?: ReactNode, noPicker = false) => (
+    <SitePageHeader title={title} picker={noPicker ? undefined : <SeasonPick />} summary={look.summaries[key]} tabs={tabs} showLogo={look.showLogo} titleFontFamily={look.titleFontFamily} titleSize={look.titleSize} />
   )
   const cats = lbSide === 'team'
     ? [['wins', 'Dual Wins'], ['pp', 'Power Points'], ['bonus', 'Bonus %']]
@@ -338,7 +339,7 @@ export function MockSite({ look }: { look: MockLook }) {
       <Section title="State Placewinners"><Table cols={['Wt', 'Champion', 'Runner-up', '3rd', '4th']} rows={[[106, 'Blewett', 'Burke', 'Ruane', 'Daly'], [113, 'Esposito', 'Szamreta', 'Sipper', 'Reyes']]} /></Section>
     </>,
     h2h: <>
-      {header(`${P} Head to Head`, 'h2h')}
+      {header(`${P} Head to Head`, 'h2h', undefined, true)}
       <div className="grid gap-3 sm:grid-cols-2">{['Wrestler 1', 'Wrestler 2'].map(p => <input key={p} placeholder={p} className="border border-slate-300 px-3 py-2 text-sm" />)}</div>
       <Section title="Common Opponents"><Table cols={['Opponent', 'Wrestler 1', 'Wrestler 2']} rows={[['Nick Clayton', 'W Dec 7-6', 'L MD 13-4'], ['Luke Geleta', 'L Fall 3:10', 'W Dec 2-1']]} /></Section>
     </>,
