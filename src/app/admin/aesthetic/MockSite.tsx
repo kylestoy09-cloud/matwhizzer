@@ -35,6 +35,7 @@ export type MockLook = {
   radius: number
   border: string
   showLogo: boolean
+  headerLayout: 'live' | 'proposed'   // proposed: hamburger left of the logo, Boys / Girls left of the search
   boysTile: (region: number) => TileColors
   girlsTile: (region: number) => TileColors
 }
@@ -42,9 +43,9 @@ export type MockLook = {
 type Page = 'schedule' | 'standings' | 'leaderboards' | 'tournaments' | 'ps-team' | 'ps-individual' | 'region' | 'district' | 'state' | 'h2h' | 'about'
 // as in HeaderNav: Standings opens on click and has a Group / Conference menu; Post Season is menu only
 const NAV: { key: Page | 'postseason'; label: string; menuOnly?: boolean; menu?: { key: Page; label: string; view?: string }[] }[] = [
-  { key: 'schedule', label: 'Schedule' },
+  { key: 'schedule', label: 'Scores' },
   { key: 'standings', label: 'Standings', menu: [{ key: 'standings', label: 'Group', view: 'group' }, { key: 'standings', label: 'Conference', view: 'conference' }] },
-  { key: 'leaderboards', label: 'Leaderboards' },
+  { key: 'leaderboards', label: 'Leaders' },
   { key: 'tournaments', label: 'Tournaments' },
   { key: 'postseason', label: 'Post Season', menuOnly: true, menu: [{ key: 'ps-team', label: 'Team' }, { key: 'ps-individual', label: 'Individual' }] },
   { key: 'h2h', label: 'H2H' },
@@ -265,7 +266,7 @@ export function MockSite({ look }: { look: MockLook }) {
 
   const body: Record<Page, ReactNode> = {
     schedule: <>
-      {header(`${P} Schedule`, 'schedule')}
+      {header(`${P} Scores`, 'schedule')}
       <MockScheduleControls />
       <div className="overflow-x-auto border border-black">
         <table className="w-full text-[13px]">
@@ -286,7 +287,7 @@ export function MockSite({ look }: { look: MockLook }) {
       <Section title={standView === 'group' ? (girls ? 'North' : 'North I Group 5') : 'Big North'}><Table cols={['#', 'School', 'W-L', 'PP']} rows={[[1, 'Phillipsburg', '18-2', '64.2'], [2, 'Hunterdon Central', '15-4', '58.9'], [3, 'Ridgewood', '14-6', '55.1']]} /></Section>
     </>,
     leaderboards: <>
-      {header(`${P} Leaderboards`, 'leaderboards',
+      {header(`${P} Leaders`, 'leaderboards',
         <>
           <SiteTabs items={[['team', 'Team'], ['individual', 'Individual']].map(([k, l]) => ({ key: k, label: l, onClick: () => { setLbSide(k); setLbCat('wins') } }))} active={lbSide} />
           <SiteTabs level={2} items={cats.map(([k, l]) => ({ key: k, label: l, onClick: () => setLbCat(k) }))} active={lbCat} />
@@ -347,20 +348,32 @@ export function MockSite({ look }: { look: MockLook }) {
     </>,
   }
 
+  const proposed = look.headerLayout === 'proposed'
+  const hamburger = (
+    <button className="flex items-center gap-1.5 text-sm text-slate-300 hover:text-white transition-colors px-2 py-1 rounded-none hover:bg-white/10">
+      <span className="w-7 h-7 rounded-none bg-white/20 flex items-center justify-center">
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
+      </span>
+      {!proposed && <span className="hidden sm:inline text-sm">admin</span>}
+    </button>
+  )
+  const genderToggle = (
+    <div className="flex border border-white/30 flex-shrink-0">
+      <button onClick={() => { setGirls(false); setRegionNum(1); setDistrictNum(1) }} className={`px-4 py-1 text-xs font-bold tracking-wide transition-colors ${!girls ? 'bg-white text-slate-900' : 'text-white/60 hover:text-white hover:bg-white/10'}`}>Boys</button>
+      <button onClick={() => { setGirls(true); setRegionNum(1); setDistrictNum(1) }} className={`px-4 py-1 text-xs font-bold tracking-wide transition-colors border-l border-white/30 ${girls ? 'bg-rose-200 text-rose-900' : 'text-white/60 hover:text-white hover:bg-white/10'}`}>Girls</button>
+    </div>
+  )
+
   return (
     <div className="border border-black">
       {/* the public header, copied from src/components/HeaderNav.tsx (logo + account menu, nav row with the
           Boys / Girls toggle at the right, search row). Not part of the redesign: it stays as live. */}
       <header className={girls ? 'bg-rose-900' : 'bg-slate-900'}>
-        <div className="px-4 py-2 flex items-center justify-between border-b border-black/30">
+        <div className={`px-4 py-2 flex items-center border-b border-black/30 ${proposed ? 'gap-2' : 'justify-between'}`}>
+          {proposed && hamburger}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/images/Mat Whizzer Header Logo.png" alt="Mat Whizzer" className="h-10 w-auto" />
-          <button className="flex items-center gap-1.5 text-sm text-slate-300 hover:text-white transition-colors px-2 py-1 rounded-none hover:bg-white/10">
-            <span className="w-7 h-7 rounded-none bg-white/20 flex items-center justify-center">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
-            </span>
-            <span className="hidden sm:inline text-sm">admin</span>
-          </button>
+          {!proposed && hamburger}
         </div>
         <div className={`${girls ? 'bg-rose-800' : 'bg-slate-800'} border-b border-black overflow-x-auto sm:overflow-visible`}>
           <div className="flex items-center gap-0.5 px-3 py-1.5 whitespace-nowrap min-w-max w-full">
@@ -383,15 +396,13 @@ export function MockSite({ look }: { look: MockLook }) {
                 </div>
               )
             })}
-            <div className="flex border border-white/30 ml-auto flex-shrink-0">
-              <button onClick={() => { setGirls(false); setRegionNum(1); setDistrictNum(1) }} className={`px-4 py-1 text-xs font-bold tracking-wide transition-colors ${!girls ? 'bg-white text-slate-900' : 'text-white/60 hover:text-white hover:bg-white/10'}`}>Boys</button>
-              <button onClick={() => { setGirls(true); setRegionNum(1); setDistrictNum(1) }} className={`px-4 py-1 text-xs font-bold tracking-wide transition-colors border-l border-white/30 ${girls ? 'bg-rose-200 text-rose-900' : 'text-white/60 hover:text-white hover:bg-white/10'}`}>Girls</button>
-            </div>
+            {!proposed && <div className="ml-auto">{genderToggle}</div>}
           </div>
         </div>
         <div className={`${girls ? 'bg-rose-800' : 'bg-slate-800'} border-b border-black/60`}>
-          <div className="px-4 py-1">
-            <div className="relative w-full max-w-lg">
+          <div className={`px-4 py-1 ${proposed ? 'flex items-center gap-2' : ''}`}>
+            {proposed && genderToggle}
+            <div className={`relative ${proposed ? 'min-w-0 flex-1 max-w-lg' : 'w-full max-w-lg'}`}>
               <input type="text" placeholder="Search wrestlers or schools…" autoComplete="off" className="w-full border border-slate-300 rounded-none px-4 py-1.5 text-sm shadow-none bg-white text-slate-900 placeholder-slate-400" />
             </div>
           </div>

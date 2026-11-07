@@ -53,12 +53,13 @@ type Settings = {
   radius: number
   border: boolean
   showLogo: boolean
+  headerLayout: 'live' | 'proposed'
 }
 
 const DEFAULTS: Settings = {
   boys: { ...BOYS_REGION_BG }, girls: { ...GIRLS_REGION_BG },
   boysOddFg: null, boysEvenFg: null,
-  font: 'Saira Stencil One', titleFont: 'Site default', titleSize: 24, summaries: { ...SUMMARY_DEFAULTS }, size: 72, radius: 0, border: true, showLogo: false,
+  font: 'Saira Stencil One', titleFont: 'Site default', titleSize: 24, summaries: { ...SUMMARY_DEFAULTS }, size: 72, radius: 0, border: true, showLogo: false, headerLayout: 'proposed',
 }
 
 function Swatch({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
@@ -75,6 +76,7 @@ export function AestheticClient() {
   const [s, setS] = useState<Settings>(DEFAULTS)
   const [copied, setCopied] = useState(false)
   const [view, setView] = useState<'site' | 'components'>('site')
+  const [phone, setPhone] = useState(false)
   const set = <K extends keyof Settings>(k: K, v: Settings[K]) => setS(p => ({ ...p, [k]: v }))
   const fontFamily = FONT_FAMILY[s.font]
   const border = s.border ? '1px solid #0f172a' : 'none'
@@ -133,6 +135,12 @@ export function AestheticClient() {
         <div className="space-y-2 text-xs text-slate-600">
           <h2 className="text-xs font-bold uppercase tracking-wide text-slate-500">Page header</h2>
           <label className="flex items-center gap-2"><input type="checkbox" checked={s.showLogo} onChange={e => set('showLogo', e.target.checked)} /> Small logo above the title</label>
+          <label className="block">Site header
+            <select value={s.headerLayout} onChange={e => set('headerLayout', e.target.value as Settings['headerLayout'])} className="mt-1 block w-full border border-slate-300 px-1 py-1">
+              <option value="proposed">Proposed: hamburger left of logo, Boys / Girls left of search</option>
+              <option value="live">Live: as on the site now</option>
+            </select>
+          </label>
           <label className="block">Title font
             <select value={s.titleFont} onChange={e => set('titleFont', e.target.value)} className="mt-1 block w-full border border-slate-300 px-1 py-1">
               {Object.keys(TITLE_FONTS).map(f => <option key={f}>{f}</option>)}
@@ -163,8 +171,13 @@ export function AestheticClient() {
           <button key={k} onClick={() => setView(k)} className={`px-3 py-1 text-xs font-semibold ${view === k ? 'bg-slate-900 text-white' : 'text-slate-700 hover:bg-slate-50'}`}>{l}</button>
         ))}
       </div>
+      {view === 'site' && (
+        <label className="ml-3 inline-flex items-center gap-1 text-xs text-slate-600"><input type="checkbox" checked={phone} onChange={e => setPhone(e.target.checked)} /> Phone width (390px)</label>
+      )}
       {view === 'site' ? (
-        <MockSite look={{ fontFamily, titleFontFamily: TITLE_FONTS[s.titleFont], titleSize: s.titleSize, summaries: s.summaries, size: s.size, radius: s.radius, border, showLogo: s.showLogo, boysTile, girlsTile }} />
+        <div style={{ maxWidth: phone ? 390 : undefined }}>
+        <MockSite look={{ fontFamily, titleFontFamily: TITLE_FONTS[s.titleFont], titleSize: s.titleSize, summaries: s.summaries, size: s.size, radius: s.radius, border, showLogo: s.showLogo, headerLayout: s.headerLayout, boysTile, girlsTile }} />
+        </div>
       ) : (
       <div className="space-y-10 border border-slate-200 bg-white p-6">
         <section>
