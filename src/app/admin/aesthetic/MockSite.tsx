@@ -40,12 +40,13 @@ export type MockLook = {
 }
 
 type Page = 'schedule' | 'standings' | 'leaderboards' | 'tournaments' | 'ps-team' | 'ps-individual' | 'region' | 'district' | 'state' | 'h2h' | 'about'
-const NAV: { key: Page | 'postseason'; label: string; menu?: { key: Page; label: string }[] }[] = [
+// as in HeaderNav: Standings opens on click and has a Group / Conference menu; Post Season is menu only
+const NAV: { key: Page | 'postseason'; label: string; menuOnly?: boolean; menu?: { key: Page; label: string; view?: string }[] }[] = [
   { key: 'schedule', label: 'Schedule' },
-  { key: 'standings', label: 'Standings' },
+  { key: 'standings', label: 'Standings', menu: [{ key: 'standings', label: 'Group', view: 'group' }, { key: 'standings', label: 'Conference', view: 'conference' }] },
   { key: 'leaderboards', label: 'Leaderboards' },
   { key: 'tournaments', label: 'Tournaments' },
-  { key: 'postseason', label: 'Post Season', menu: [{ key: 'ps-team', label: 'Team' }, { key: 'ps-individual', label: 'Individual' }] },
+  { key: 'postseason', label: 'Post Season', menuOnly: true, menu: [{ key: 'ps-team', label: 'Team' }, { key: 'ps-individual', label: 'Individual' }] },
   { key: 'h2h', label: 'H2H' },
   { key: 'about', label: 'About' },
 ]
@@ -231,7 +232,7 @@ const TOURNAMENTS: Record<string, (string | number)[][]> = {
 export function MockSite({ look }: { look: MockLook }) {
   const [page, setPage] = useState<Page>('ps-individual')
   const [girls, setGirls] = useState(false)
-  const [menu, setMenu] = useState(false)
+  const [menu, setMenu] = useState<string | null>(null)
   const [standView, setStandView] = useState('group')
   const [lbSide, setLbSide] = useState('individual')
   const [lbCat, setLbCat] = useState('wins')
@@ -348,30 +349,54 @@ export function MockSite({ look }: { look: MockLook }) {
 
   return (
     <div className="border border-black">
-      {/* mock of the public top nav */}
-      <nav className={`${girls ? 'bg-rose-900' : 'bg-slate-900'} text-white`}>
-        <div className="flex items-center justify-between px-4 py-2 border-b border-black/30">
+      {/* the public header, copied from src/components/HeaderNav.tsx (logo + account menu, nav row with the
+          Boys / Girls toggle at the right, search row). Not part of the redesign: it stays as live. */}
+      <header className={girls ? 'bg-rose-900' : 'bg-slate-900'}>
+        <div className="px-4 py-2 flex items-center justify-between border-b border-black/30">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/Mat Whizzer Header Logo.png" alt="Mat Whizzer" className="h-7 w-auto" />
-          <span className="inline-flex border border-white/30">
-            {['Boys', 'Girls'].map(g => <button key={g} onClick={() => { setGirls(g === 'Girls'); setRegionNum(1); setDistrictNum(1) }} className={`px-3 py-0.5 text-xs font-semibold ${(g === 'Girls') === girls ? 'bg-white text-slate-900' : 'text-white'}`}>{g}</button>)}
-          </span>
+          <img src="/images/Mat Whizzer Header Logo.png" alt="Mat Whizzer" className="h-10 w-auto" />
+          <button className="flex items-center gap-1.5 text-sm text-slate-300 hover:text-white transition-colors px-2 py-1 rounded-none hover:bg-white/10">
+            <span className="w-7 h-7 rounded-none bg-white/20 flex items-center justify-center">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
+            </span>
+            <span className="hidden sm:inline text-sm">admin</span>
+          </button>
         </div>
-        <div className="flex flex-wrap items-center gap-1 px-3 py-1.5 text-sm">
-          {NAV.map(n => n.menu ? (
-            <div key={n.key} className="relative">
-              <button onClick={() => setMenu(m => !m)} className={`px-2 py-1 hover:bg-white/10 ${['ps-team', 'ps-individual', 'region', 'district', 'state'].includes(page) ? 'bg-white/15' : ''}`}>{n.label} ▾</button>
-              {menu && (
-                <div className="absolute z-10 mt-1 min-w-[140px] border border-black bg-white text-slate-800 shadow">
-                  {n.menu.map(m => <button key={m.key} onClick={() => { setPage(m.key); setMenu(false) }} className="block w-full px-3 py-1 text-left text-sm hover:bg-slate-100">{m.label}</button>)}
+        <div className={`${girls ? 'bg-rose-800' : 'bg-slate-800'} border-b border-black overflow-x-auto sm:overflow-visible`}>
+          <div className="flex items-center gap-0.5 px-3 py-1.5 whitespace-nowrap min-w-max w-full">
+            {NAV.map(n => {
+              const active = n.key === 'postseason' ? ['ps-team', 'ps-individual', 'region', 'district', 'state'].includes(page) : page === n.key
+              const cls = `px-3 py-1 text-sm transition-colors rounded-none ${active ? 'text-white font-semibold underline underline-offset-4' : 'text-white/70 hover:text-white hover:bg-white/10'}`
+              if (!n.menu) return <button key={n.key} onClick={() => { setPage(n.key as Page); setMenu(null) }} className={cls}>{n.label}</button>
+              return (
+                <div key={n.key} className="relative" onMouseEnter={() => setMenu(n.key)} onMouseLeave={() => setMenu(null)}>
+                  <button onClick={() => (n.menuOnly ? setMenu(m => (m === n.key ? null : n.key)) : (setPage(n.key as Page), setMenu(null)))} className={cls}>
+                    {n.label}{n.menuOnly && <> <span className="text-[10px]">▾</span></>}
+                  </button>
+                  {menu === n.key && (
+                    <div className="absolute left-0 top-full pt-1.5 z-50">
+                      <div className={`w-44 rounded-none border border-black overflow-hidden ${girls ? 'bg-rose-800 border-rose-700' : 'bg-slate-800 border-slate-700'}`}>
+                        {n.menu.map(m => <button key={m.label} onClick={() => { setPage(m.key); if (m.view) setStandView(m.view); setMenu(null) }} className={`block w-full text-left px-4 py-2 text-sm text-slate-100 ${girls ? 'hover:bg-rose-700' : 'hover:bg-slate-700'} hover:text-white transition-colors`}>{m.label}</button>)}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              )}
+              )
+            })}
+            <div className="flex border border-white/30 ml-auto flex-shrink-0">
+              <button onClick={() => { setGirls(false); setRegionNum(1); setDistrictNum(1) }} className={`px-4 py-1 text-xs font-bold tracking-wide transition-colors ${!girls ? 'bg-white text-slate-900' : 'text-white/60 hover:text-white hover:bg-white/10'}`}>Boys</button>
+              <button onClick={() => { setGirls(true); setRegionNum(1); setDistrictNum(1) }} className={`px-4 py-1 text-xs font-bold tracking-wide transition-colors border-l border-white/30 ${girls ? 'bg-rose-200 text-rose-900' : 'text-white/60 hover:text-white hover:bg-white/10'}`}>Girls</button>
             </div>
-          ) : (
-            <button key={n.key} onClick={() => { setPage(n.key as Page); setMenu(false) }} className={`px-2 py-1 hover:bg-white/10 ${page === n.key ? 'bg-white/15' : ''}`}>{n.label}</button>
-          ))}
+          </div>
         </div>
-      </nav>
+        <div className={`${girls ? 'bg-rose-800' : 'bg-slate-800'} border-b border-black/60`}>
+          <div className="px-4 py-1">
+            <div className="relative w-full max-w-lg">
+              <input type="text" placeholder="Search wrestlers or schools…" autoComplete="off" className="w-full border border-slate-300 rounded-none px-4 py-1.5 text-sm shadow-none bg-white text-slate-900 placeholder-slate-400" />
+            </div>
+          </div>
+        </div>
+      </header>
       <div className="bg-white px-4 sm:px-8 py-8">{body[page]}</div>
     </div>
   )
