@@ -2,6 +2,23 @@
 
 ---
 
+## 2026-11-07 — Account emails through Resend; reset links fixed
+
+**No database changes.**
+
+**What was wrong:**
+- **Reset link:** Supabase's link sent people to the site with the login details after a `#` in the address (`#access_token=…`), which the site's sign-in code doesn't read. Public resets reached the set-password page but couldn't save, and the admin "send reset" button's link went to `/auth/confirm`, which can't see past the `#`, so it fell through to the sign-in page.
+- **Supabase's mailer:** sign-up confirmations, admin invites and admin resets went out through it; only the public reset used Resend.
+
+**Now:** `src/lib/authEmail.ts` creates the link with `generateLink` (and, for sign-up, the account) and emails it through Resend. The link comes back to `/auth/confirm?token_hash=…&type=…`, which checks the token on the server, signs the person in and opens `/auth/reset-password` (reset and invite) or `/email-confirmed` (sign-up). Used by:
+- `/api/auth/forgot-password`, which now gives the same answer whether or not the address has an account;
+- the new `/api/auth/signup`, which the sign-up page now calls;
+- the admin profiles invite and reset in `api/admin/admin-profiles`.
+
+The set-password page shows "This link has expired" with a button to send a new one when the link is used or out of date, and goes home after saving.
+
+---
+
 ## 2026-11-07 — Icons next to names explain themselves
 
 **No database changes.** There's a new `src/components/site/IconHint.tsx`: its note shows on mouse hover, or on a tap on a phone, and it's placed on the page so table scrolling can't cut it off. It's on:

@@ -89,26 +89,15 @@ export default function SignUpPage() {
     if (password.length < 6) { setError('Password must be at least 6 characters'); return }
     if (username.length < 3) { setError('Username must be at least 3 characters'); return }
     setLoading(true)
-    const supabase = createSupabaseBrowser()
 
-    // Check username availability
-    const { data: existing } = await supabase
-      .from('users').select('id').eq('username', username).maybeSingle()
-    if (existing) { setError('Username is already taken'); setLoading(false); return }
-
-    // Sign up — trigger creates public.users row with school from metadata
-    const { error: authError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://matwhizzer.com'}/auth/confirm`,
-        data: {
-          username,
-          ...(school ? { primary_school_id: String(school.id) } : {}),
-          wrestling_preference: preference,
-        },
-      },
+    // Create the account; the confirmation email goes out through Resend (/api/auth/signup)
+    const res = await fetch('/api/auth/signup', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ email, password, username, wrestling_preference: preference, primary_school_id: school?.id ?? null }),
     })
+    const out = await res.json().catch(() => ({}))
+    const authError = res.ok ? null : { message: out.error ?? 'Something went wrong. Please try again.' }
 
     if (authError) { setError(authError.message); setLoading(false); return }
 

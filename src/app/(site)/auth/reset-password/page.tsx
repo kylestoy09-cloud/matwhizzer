@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createSupabaseBrowser } from '@/lib/supabase/client'
 import Link from 'next/link'
@@ -11,6 +11,12 @@ export default function ResetPasswordPage() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+  // signed in by the emailed link (/auth/confirm)? If not, the link was used, expired or never opened
+  const [linkOk, setLinkOk] = useState<boolean | null>(null)
+  useEffect(() => {
+    const expired = new URLSearchParams(window.location.search).has('expired')
+    ;(expired ? Promise.resolve(false) : createSupabaseBrowser().auth.getUser().then(({ data }) => !!data.user)).then(setLinkOk)
+  }, [])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -29,7 +35,17 @@ export default function ResetPasswordPage() {
       return
     }
 
-    router.push('/signin')
+    router.push('/')   // already signed in by the link
+  }
+
+  if (linkOk === false) {
+    return (
+      <div className="max-w-sm mx-auto px-4 py-20 text-center">
+        <h1 className="text-xl font-bold text-slate-900 mb-4">This link has expired</h1>
+        <p className="text-sm text-slate-600 mb-6">Password links work once and expire after a while. Request a new one and use the newest email.</p>
+        <Link href="/forgot-password" className="inline-block bg-slate-900 text-white px-5 py-2.5 text-sm font-medium hover:bg-slate-800">Send a new link</Link>
+      </div>
+    )
   }
 
   return (

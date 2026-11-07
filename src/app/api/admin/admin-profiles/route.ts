@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 import { isAdminUser } from '@/lib/auth/isAdminUser'
+import { sendAuthEmail } from '@/lib/authEmail'
 
 export const dynamic = 'force-dynamic'
 
@@ -92,9 +93,10 @@ export async function PUT(req: NextRequest) {
 
   const db = createSupabaseAdmin()
 
-  // Invite the user — creates auth record and sends invite email
-  const { data: invited, error: inviteErr } = await db.auth.admin.inviteUserByEmail(email)
-  if (inviteErr) return NextResponse.json({ error: inviteErr.message }, { status: 500 })
+  // Invite the user: creates the account and emails a set-your-password link through Resend
+  const { userId, error: inviteErr } = await sendAuthEmail({ type: 'invite', email: String(email).trim().toLowerCase() })
+  if (inviteErr || !userId) return NextResponse.json({ error: inviteErr ?? 'Could not create the account' }, { status: 500 })
+  const invited = { user: { id: userId } }
 
   // Upsert app_users row — trigger may have already inserted a 'fan' row on auth user creation
   const { error: insertErr } = await db.from('app_users').upsert({
@@ -125,12 +127,9 @@ export async function POST(req: NextRequest) {
   const { email } = await req.json()
   if (!email) return NextResponse.json({ error: 'email is required' }, { status: 400 })
 
-  const supabase = await createSupabaseServer()
-  const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: 'https://matwhizzer.com/auth/confirm',
-  })
-
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  // the reset link goes out through Resend and comes back to /auth/confirm (src/lib/authEmail.ts)
+  const { error } = await sendAuthEmail({ type: 'recovery', email: String(email).trim().toLowerCase() })
+  if (error) return NextResponse.json({ error }, { status: 500 })
 
   const db = createSupabaseAdmin()
   try {
