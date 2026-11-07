@@ -94,7 +94,7 @@ export function HeaderNav() {
         ? [{ href: '/postseason/team', label: 'Team' }, { href: '/postseason/individual/boys', label: 'Individual' }]
         : [{ href: '/postseason/team/girls', label: 'Team' }, { href: '/postseason/individual/girls', label: 'Individual' }] },
     { href: isBoys ? '/boys/h2h'         : '/girls/h2h',                         label: 'H2H'          },
-    { href: '/about',                                                             label: 'About'        },
+    { href: isBoys ? '/boys/insight'     : '/girls/insight',                     label: 'Insight'      },
   ]
 
   // ── Auth ─────────────────────────────────────────────────────────────────

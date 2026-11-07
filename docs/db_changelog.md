@@ -2,6 +2,19 @@
 
 ---
 
+## 2026-11-07 — Insight (was About)
+
+**Nav:** "About" is now **Insight**, per side: `/boys/insight` and `/girls/insight` (`HeaderNav.tsx`).
+
+**Pages:** `src/app/(site)/{boys,girls}/insight/`, framed by `src/components/insight/InsightShell.tsx`. It has the standard header and five tabs; the bare `/insight` address opens Daily Report.
+- **Daily Report:** two tabs, 7 Things (the default) and Report (`?tab=report`), both "Coming soon" for now.
+- **Rankings, Daily Challenge, Polls:** "Coming soon" (`ComingSoon.tsx`).
+- **About:** the current About page, shown without its own frame (`AboutClient` gained `embedded`; the data loader moved to `about/loadAbout.ts`).
+
+`/about` still works for old links. The older `/boys/rankings` and `/girls/rankings` pages are untouched, and the nav doesn't link them. **Mock:** the Aesthetic Tool's nav and page match.
+
+---
+
 ## 2026-11-07 — Aesthetic Tool saves
 
 **Migration file:** `docs/migrations/20261107_site_aesthetic_versions.sql` (Kyle ran it 2026-11-07; new table `site_aesthetic_versions`: settings jsonb, note, saved_by, created_at; service role writes, public read for the live pages later). **API:** `src/app/api/admin/aesthetic/route.ts` (admin only). It returns the look in effect, which is the newest save, plus the last 20 saves and any earlier save by id, and adds a new save.

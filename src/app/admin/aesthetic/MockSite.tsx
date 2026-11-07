@@ -22,7 +22,7 @@ export const SUMMARY_DEFAULTS = {
   district: 'Brackets, placewinners and team scores',
   state: 'Boardwalk Hall · double elimination',
   h2h: 'Compare two wrestlers',
-  about: 'How the site works',
+  about: 'Reports, rankings, the daily challenge, polls, and how the site works',
 }
 export type SummaryKey = keyof typeof SUMMARY_DEFAULTS
 
@@ -49,9 +49,10 @@ const NAV: { key: Page | 'postseason'; label: string; menuOnly?: boolean; menu?:
   { key: 'tournaments', label: 'Tournaments' },
   { key: 'postseason', label: 'Post Season', menuOnly: true, menu: [{ key: 'ps-team', label: 'Team' }, { key: 'ps-individual', label: 'Individual' }] },
   { key: 'h2h', label: 'H2H' },
-  { key: 'about', label: 'About' },
+  { key: 'about', label: 'Insight' },
 ]
 // the live team bracket's group tabs (TeamBracketClient.tsx)
+const INSIGHT_TABS = ['Daily Report', 'Rankings', 'Daily Challenge', 'Polls', 'About']
 const TEAM_GROUPS = ['Group 1', 'Group 2', 'Group 3', 'Group 4', 'Group 5', 'Non-Public']
 const BOYS_WEIGHTS = [106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285]
 const GIRLS_WEIGHTS = [100, 107, 114, 120, 126, 132, 138, 145, 152, 165, 185, 235]
@@ -243,6 +244,8 @@ export function MockSite({ look }: { look: MockLook }) {
   const [regionNum, setRegionNum] = useState(2)
   const [districtNum, setDistrictNum] = useState(5)
   const [teamGroup, setTeamGroup] = useState('')
+  const [insightTab, setInsightTab] = useState('Daily Report')
+  const [reportTab, setReportTab] = useState('7 Things')
   const [teamSection, setTeamSection] = useState('')
   const P = girls ? 'Girls' : 'Boys'
   const tile = (r: number) => (girls ? look.girlsTile(r) : look.boysTile(r))
@@ -352,8 +355,14 @@ export function MockSite({ look }: { look: MockLook }) {
       <Section title="Common Opponents"><Table cols={['Opponent', 'Wrestler 1', 'Wrestler 2']} rows={[['Nick Clayton', 'W Dec 7-6', 'L MD 13-4'], ['Luke Geleta', 'L Fall 3:10', 'W Dec 2-1']]} /></Section>
     </>,
     about: <>
-      {header('About Mat Whizzer', 'about', <SiteTabs items={['Summary', 'Q&A', 'Rules'].map(k => ({ key: k, label: k }))} active="Summary" />)}
-      <div className="space-y-3 text-sm text-slate-700 max-w-2xl"><p>Mat Whizzer covers NJSIAA wrestling: duals, tournaments, the postseason and ratings for every wrestler.</p><p>Each section below explains where the numbers come from.</p></div>
+      {/* Insight (was About): five tabs; Daily Report has 7 Things / Report */}
+      {header(`${P} Insight`, 'about', <>
+        <SiteTabs items={INSIGHT_TABS.map(k => ({ key: k, label: k, onClick: () => setInsightTab(k) }))} active={insightTab} />
+        {insightTab === 'Daily Report' && <SiteTabs level={2} items={['7 Things', 'Report'].map(k => ({ key: k, label: k, onClick: () => setReportTab(k) }))} active={reportTab} />}
+      </>, true)}
+      {insightTab === 'About'
+        ? <div className="space-y-3 text-sm text-slate-700 max-w-2xl"><p>The current About page (Mat Whizzer and NJSIAA tabs, dates and rules) sits here as it is.</p></div>
+        : <section className="border border-slate-200 bg-slate-50 px-6 py-12 text-center"><p className="text-xs font-bold uppercase tracking-widest text-slate-400">Coming soon</p><p className="mt-2 text-sm text-slate-600">{insightTab === 'Daily Report' ? reportTab : insightTab} is on its way.</p></section>}
     </>,
   }
 
