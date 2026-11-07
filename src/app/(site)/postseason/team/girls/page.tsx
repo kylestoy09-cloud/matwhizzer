@@ -9,6 +9,7 @@ import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { SiteTabs } from '@/components/site/SiteTabs'
 import { StdHeader } from '@/components/site/StdPage'
 import { ComingSoon } from '@/components/site/ComingSoon'
+import { IconHint } from '@/components/site/IconHint'
 
 const BASE = '/postseason/team/girls'
 
@@ -72,7 +73,7 @@ export default async function GirlsTeamPostseasonPage({ searchParams }: { search
           {bracket.stateFinal && !section && (
             <section className="mb-10 max-w-md">
               <h2 className="text-base font-semibold text-slate-800 mb-3">
-                State Final{bracket.champion != null && <span className="ml-2 text-sm font-normal text-slate-500">🏆 {nameOf(bracket.champion)}</span>}
+                State Final{bracket.champion != null && <span className="ml-2 text-sm font-normal text-slate-500"><IconHint hint="Team state champion">🏆</IconHint> {nameOf(bracket.champion)}</span>}
               </h2>
               <Match m={bracket.stateFinal} large />
             </section>

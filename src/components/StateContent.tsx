@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { WeightTiles } from '@/components/site/PostseasonParts'
+import { IconHint } from '@/components/site/IconHint'
 import { BracketBuster } from '@/components/BracketBuster'
 import { TeamScoreCard } from '@/components/TeamScoreCard'
 import { IndividualTeamPoints } from '@/components/IndividualTeamPoints'
@@ -118,14 +119,14 @@ export function StateContent({ gender, season, data }: { gender: 'M' | 'F', seas
                             >
                               {p.wrestler_name}
                             </Link>
-                            {place === 1 && <span title="State Champion" className="shrink-0">👑</span>}
+                            {place === 1 && <IconHint hint="State champion">👑</IconHint>}
                             {ghostIds.has(p.wrestler_id) && (
-                              <span title="Ghost Champion" className="shrink-0">👻</span>
+                              <IconHint hint={seed ? `Ghost champion: won the state title as the #${seed} seed (seeded 5th or lower)` : 'Ghost champion: won the state title seeded 5th or lower'}>👻</IconHint>
                             )}
                             {outperform > 5 && (
-                              <span className="text-[10px] font-bold text-emerald-600 shrink-0" title={`Seed #${seed} → ${place}${place === 1 ? 'st' : place === 2 ? 'nd' : place === 3 ? 'rd' : 'th'}`}>
+                              <IconHint hint={`Seeded #${seed}, finished ${place}${place === 1 ? 'st' : place === 2 ? 'nd' : place === 3 ? 'rd' : 'th'}: ${outperform} spots better than seeded`} className="text-[10px] font-bold text-emerald-600">
                                 ↑{outperform}
-                              </span>
+                              </IconHint>
                             )}
                           </div>
                           <span className="text-xs text-slate-500 truncate block">

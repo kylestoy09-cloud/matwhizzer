@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase/public-cached'
+import { IconHint } from '@/components/site/IconHint'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
@@ -323,10 +324,10 @@ function Podium({ matches, ghostIds, seedMap, logos }: { matches: MatchRow[]; gh
                 ) : (
                   <span className="text-sm font-medium text-slate-700">{p.name}</span>
                 )}
-                {p.place === 1 && <span title="State Champion" className="shrink-0">👑</span>}
-                {p.wrestlerId && ghostIds.has(p.wrestlerId) && <span title="Ghost Champion" className="shrink-0">👻</span>}
+                {p.place === 1 && <IconHint hint="State champion">👑</IconHint>}
+                {p.wrestlerId && ghostIds.has(p.wrestlerId) && <IconHint hint={seed ? `Ghost champion: won the state title as the #${seed} seed (seeded 5th or lower)` : 'Ghost champion: won the state title seeded 5th or lower'}>👻</IconHint>}
                 {outperform > 5 && (
-                  <span className="text-[10px] font-bold text-emerald-600 shrink-0" title={`Seed #${seed}`}>↑{outperform}</span>
+                  <IconHint hint={`Seeded #${seed}, finished ${p.place}${p.place === 1 ? 'st' : p.place === 2 ? 'nd' : p.place === 3 ? 'rd' : 'th'}: ${outperform} spots better than seeded`} className="text-[10px] font-bold text-emerald-600">↑{outperform}</IconHint>
                 )}
               </span>
               <span className="text-[11px] text-slate-400 shrink-0">{p.school_id != null ? p.school : 'TBD'}</span>

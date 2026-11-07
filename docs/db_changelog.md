@@ -2,6 +2,20 @@
 
 ---
 
+## 2026-11-07 — Icons next to names explain themselves
+
+**No database changes.** There's a new `src/components/site/IconHint.tsx`: its note shows on mouse hover, or on a tap on a phone, and it's placed on the page so table scrolling can't cut it off. It's on:
+- 👑 state champion;
+- 🥈/🥉 and S4–S8 state places;
+- 👻 ghost champion: won the tournament seeded 5th or lower, with the seed when known;
+- the green ↑N upset ("Seeded #7, finished 2nd: 5 spots better than seeded");
+- SQ state qualifier;
+- 🏆 on the girls team state champion.
+
+Pages: region and district overviews, state overview (`StateContent`), state weight pages, State Champions, and girls team post season (both sides where they apply).
+
+---
+
 ## 2026-11-07 — Standard site look goes live (Kyle approved the mock)
 
 **No database changes.** The live site now follows the Aesthetic Tool's saved look.

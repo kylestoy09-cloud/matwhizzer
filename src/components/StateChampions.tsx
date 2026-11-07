@@ -1,5 +1,6 @@
 'use client'
 
+import { IconHint } from '@/components/site/IconHint'
 import Link from 'next/link'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 
@@ -53,7 +54,7 @@ export function StateChampions({
                         >
                           {r.wrestler_name}
                         </Link>
-                        {isGhost && <span className="ml-1" title={`#${r.seed} seed — Ghost Champion`}>👻</span>}
+                        {isGhost && <IconHint className="ml-1" hint={`Ghost champion: won the state title as the #${r.seed} seed (seeded 5th or lower)`}>👻</IconHint>}
                         <span className="sm:hidden text-xs text-slate-400 block">
                           {r.school_id != null ? r.school : 'TBD'}
                         </span>

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { IconHint } from '@/components/site/IconHint'
 import { notFound } from 'next/navigation'
 import { supabase } from '@/lib/supabase/public-cached'
 import { getActiveSeason } from '@/lib/get-season'
@@ -283,20 +284,20 @@ export default async function RegionSummaryPage({
                             >
                               {p.wrestler_name}
                             </Link>
-                            {statePlace === 1 && <span title="State Champion" className="shrink-0">👑</span>}
+                            {statePlace === 1 && <IconHint hint="State champion this season">👑</IconHint>}
                             {statePlace != null && statePlace >= 2 && statePlace <= 3 && (
-                              <span className="text-[10px] font-bold text-amber-600 bg-amber-50 border border-amber-200 px-1 rounded shrink-0" title={`State ${statePlace}${statePlace === 2 ? 'nd' : 'rd'}`}>
+                              <IconHint hint={`Placed ${statePlace === 2 ? '2nd' : '3rd'} at the state tournament this season`} className="text-[10px] font-bold text-amber-600 bg-amber-50 border border-amber-200 px-1 rounded">
                                 {statePlace === 2 ? '🥈' : '🥉'}
-                              </span>
+                              </IconHint>
                             )}
                             {statePlace != null && statePlace >= 4 && statePlace <= 8 && (
-                              <span className="text-[10px] font-bold text-slate-500 bg-slate-100 border border-slate-200 px-1 rounded shrink-0" title={`State ${statePlace}th`}>
+                              <IconHint hint={`Placed ${statePlace}th at the state tournament this season`} className="text-[10px] font-bold text-slate-500 bg-slate-100 border border-slate-200 px-1 rounded">
                                 S{statePlace}
-                              </span>
+                              </IconHint>
                             )}
-                            {ghostIds.has(p.wrestler_id) && <span title="Ghost Champion" className="shrink-0">👻</span>}
+                            {ghostIds.has(p.wrestler_id) && <IconHint hint={seed ? `Ghost champion: won this region as the #${seed} seed (seeded 5th or lower)` : 'Ghost champion: won this region seeded 5th or lower'}>👻</IconHint>}
                             {showUpset && (
-                              <span className="text-[10px] font-bold text-emerald-600 shrink-0" title={`Seed #${seed}`}>↑{seed - place}</span>
+                              <IconHint hint={`Seeded #${seed}, finished ${place}${place === 1 ? 'st' : place === 2 ? 'nd' : place === 3 ? 'rd' : 'th'}: ${seed - place} spots better than seeded`} className="text-[10px] font-bold text-emerald-600">↑{seed - place}</IconHint>
                             )}
                           </div>
                           <span className="text-xs text-slate-500 truncate block">
