@@ -2,6 +2,22 @@
 
 ---
 
+## 2026-11-07 — Aesthetic Tool saves
+
+**Migration file:** `docs/migrations/20261107_site_aesthetic_versions.sql` (new table `site_aesthetic_versions`: settings jsonb, note, saved_by, created_at; service role writes, public read for the live pages later). **API:** `src/app/api/admin/aesthetic/route.ts` (admin only). It returns the look in effect, which is the newest save, plus the last 20 saves and any earlier save by id, and adds a new save.
+
+**Tool:** a "Saved look" panel.
+- **Loading:** the look in effect loads when the tool opens.
+- **Save:** takes an optional note.
+- **Unsaved changes:** a marker shows when something differs from the saved look.
+- **Revert:** goes back to the saved look.
+- **History:** loads an earlier save back into the tool; saving it makes it the look in effect.
+- **Defaults:** returns to the starting look.
+
+A saved look is merged over the defaults, so settings added later get their default until saved. Next: the public pages read the look in effect when the standard look goes live.
+
+---
+
 ## 2026-11-06 — Site look: shared page frame, region colors, Aesthetic Tool (step 1)
 
 **Code only (Kyle's plan, agreed):**

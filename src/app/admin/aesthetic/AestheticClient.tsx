@@ -1,9 +1,10 @@
 'use client'
 // Aesthetic Tool: a live preview of the standard page frame using the real shared components
 // (SitePageHeader, NumberTileGrid) with adjustable colors, font and sizes. Preview only: approved
-// settings are copied out and written into src/lib/siteTheme.ts.
+// settings are saved (Save → site_aesthetic_versions); the newest save is the look in effect, loaded
+// here on open and read by the public pages once the standard look goes live.
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Stardos_Stencil, Saira_Stencil_One, Big_Shoulders_Stencil, Allerta_Stencil, Oswald, Bebas_Neue, Barlow_Condensed, Archivo_Black, Roboto_Condensed } from 'next/font/google'
 import { SitePageHeader } from '@/components/site/SitePageHeader'
 import { MockSite, SUMMARY_DEFAULTS, type SummaryKey } from './MockSite'
@@ -78,6 +79,40 @@ export function AestheticClient() {
   const [view, setView] = useState<'site' | 'components'>('site')
   const [phone, setPhone] = useState(false)
   const set = <K extends keyof Settings>(k: K, v: Settings[K]) => setS(p => ({ ...p, [k]: v }))
+
+  // saved looks: the newest is in effect; a saved look is merged over the defaults, so settings added
+  // to the tool later get their default until saved
+  type Saved = { id: number; note: string | null; saved_by: string | null; created_at: string }
+  const [saved, setSaved] = useState<Settings | null>(null)
+  const [savedMeta, setSavedMeta] = useState<Saved | null>(null)
+  const [history, setHistory] = useState<Saved[]>([])
+  const [note, setNote] = useState('')
+  const [status, setStatus] = useState<string | null>(null)
+  const merge = (x: Partial<Settings> | null | undefined): Settings => ({ ...DEFAULTS, ...(x ?? {}), summaries: { ...DEFAULTS.summaries, ...(x?.summaries ?? {}) } })
+  const apply = (ok: boolean, j: { error?: string; history?: Saved[]; current?: (Saved & { settings: Partial<Settings> }) | null }) => {
+    if (!ok) { setStatus(j.error ?? 'Could not load the saved look'); return }
+    setHistory(j.history ?? [])
+    if (j.current) { const m = merge(j.current.settings); setSaved(m); setS(m); setSavedMeta(j.current) } else { setSaved(null); setSavedMeta(null) }
+  }
+  const fetchSaved = () => fetch('/api/admin/aesthetic').then(r => r.json().then(j => ({ ok: r.ok, j })))
+  const load = async () => { const { ok, j } = await fetchSaved(); apply(ok, j) }
+  useEffect(() => {
+    let alive = true
+    fetchSaved().then(({ ok, j }) => { if (alive) apply(ok, j) })
+    return () => { alive = false }
+  }, [])   // eslint-disable-line react-hooks/exhaustive-deps
+  const dirty = JSON.stringify(s) !== JSON.stringify(saved ?? DEFAULTS)
+  const save = async () => {
+    setStatus('Saving…')
+    const r = await fetch('/api/admin/aesthetic', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ settings: s, note }) })
+    const j = await r.json()
+    if (!r.ok) { setStatus(j.error ?? 'Save failed'); return }
+    setNote(''); setStatus('Saved'); await load()
+  }
+  const loadVersion = async (id: number) => {
+    const r = await fetch(`/api/admin/aesthetic?id=${id}`); const j = await r.json()
+    if (r.ok && j.version) { setS(merge(j.version.settings)); setStatus(`Loaded the save from ${new Date(j.version.created_at).toLocaleString()} — Save to make it the look in effect`) }
+  }
   const fontFamily = FONT_FAMILY[s.font]
   const border = s.border ? '1px solid #0f172a' : 'none'
 
@@ -104,6 +139,29 @@ export function AestheticClient() {
     <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
       {/* ── Controls ── */}
       <aside className="space-y-5 lg:sticky lg:top-4 self-start border border-slate-200 bg-white p-4">
+        <div className="space-y-2 border-b border-slate-200 pb-4">
+          <div className="flex items-center justify-between text-xs">
+            <span className="font-bold uppercase tracking-wide text-slate-500">Saved look</span>
+            <span className={dirty ? 'font-semibold text-amber-700' : 'text-emerald-700'}>{dirty ? 'Unsaved changes' : 'Saved'}</span>
+          </div>
+          <p className="text-[11px] text-slate-500">{savedMeta ? `In effect: saved ${new Date(savedMeta.created_at).toLocaleString()}${savedMeta.saved_by ? ` by ${savedMeta.saved_by}` : ''}${savedMeta.note ? ` — ${savedMeta.note}` : ''}` : 'Nothing saved yet: showing the starting look.'}</p>
+          <input value={note} onChange={e => setNote(e.target.value)} placeholder="Note for this save (optional)" className="block w-full border border-slate-300 px-2 py-1 text-xs" />
+          <div className="flex gap-2">
+            <button onClick={save} disabled={!dirty} className="flex-1 bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-slate-700 disabled:opacity-40">Save</button>
+            <button onClick={() => setS(saved ?? DEFAULTS)} disabled={!dirty} className="border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 disabled:opacity-40">Revert</button>
+          </div>
+          {status && <p className="text-[11px] text-slate-600">{status}</p>}
+          {history.length > 1 && (
+            <details className="text-[11px] text-slate-600">
+              <summary className="cursor-pointer">History ({history.length})</summary>
+              <ul className="mt-1 space-y-0.5">
+                {history.map(h => (
+                  <li key={h.id}><button onClick={() => loadVersion(h.id)} className="text-left hover:underline">{new Date(h.created_at).toLocaleString()}{h.note ? ` — ${h.note}` : ''}</button></li>
+                ))}
+              </ul>
+            </details>
+          )}
+        </div>
         <div>
           <h2 className="text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Boys regions</h2>
           <div className="space-y-1">
@@ -159,8 +217,8 @@ export function AestheticClient() {
           </div>
         </details>
         <div className="flex gap-2">
-          <button onClick={copy} className="flex-1 bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-slate-700">{copied ? 'Copied' : 'Copy settings'}</button>
-          <button onClick={() => setS(DEFAULTS)} className="border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50">Reset</button>
+          <button onClick={copy} className="flex-1 border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50">{copied ? 'Copied' : 'Copy settings'}</button>
+          <button onClick={() => setS(DEFAULTS)} className="border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50">Defaults</button>
         </div>
       </aside>
 
