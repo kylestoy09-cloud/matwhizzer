@@ -4,7 +4,7 @@
 
 ## 2026-11-07 — Aesthetic Tool saves
 
-**Migration file:** `docs/migrations/20261107_site_aesthetic_versions.sql` (new table `site_aesthetic_versions`: settings jsonb, note, saved_by, created_at; service role writes, public read for the live pages later). **API:** `src/app/api/admin/aesthetic/route.ts` (admin only). It returns the look in effect, which is the newest save, plus the last 20 saves and any earlier save by id, and adds a new save.
+**Migration file:** `docs/migrations/20261107_site_aesthetic_versions.sql` (Kyle ran it 2026-11-07; new table `site_aesthetic_versions`: settings jsonb, note, saved_by, created_at; service role writes, public read for the live pages later). **API:** `src/app/api/admin/aesthetic/route.ts` (admin only). It returns the look in effect, which is the newest save, plus the last 20 saves and any earlier save by id, and adds a new save.
 
 **Tool:** a "Saved look" panel.
 - **Loading:** the look in effect loads when the tool opens.
