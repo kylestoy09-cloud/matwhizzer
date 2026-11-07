@@ -297,7 +297,7 @@ export function MockSite({ look }: { look: MockLook }) {
     leaderboards: <>
       {header(`${P} Leaders`, 'leaderboards',
         <>
-          <SiteTabs items={[['team', 'Team'], ['individual', 'Individual']].map(([k, l]) => ({ key: k, label: l, onClick: () => { setLbSide(k); setLbCat('wins') } }))} active={lbSide} />
+          <SiteTabs items={[['individual', 'Individual'], ['team', 'Team']].map(([k, l]) => ({ key: k, label: l, onClick: () => { setLbSide(k); setLbCat('wins') } }))} active={lbSide} />
           <SiteTabs level={2} items={cats.map(([k, l]) => ({ key: k, label: l, onClick: () => setLbCat(k) }))} active={lbCat} />
         </>)}
       <div className="mt-3"><MockLbFilters /></div>
