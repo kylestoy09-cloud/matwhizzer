@@ -1,8 +1,10 @@
 // Aesthetic Tool saves (docs/migrations/20261107_site_aesthetic_versions.sql). Admin only.
 //   GET               the saved look in effect (newest) and the last 20 saves (no settings)
 //   GET ?id=<id>      one earlier save, with its settings
-//   POST { settings, note? }   save a new version; it becomes the look in effect
+//   POST { settings, note? }   save a new version; it becomes the look in effect on the live site
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidateTag } from 'next/cache'
+import { SITE_LOOK_TAG } from '@/lib/siteLookServer'
 import { getAdminUser } from '@/lib/auth/isAdminUser'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 
@@ -35,5 +37,6 @@ export async function POST(req: NextRequest) {
     .insert({ settings: body.settings, note: typeof body.note === 'string' && body.note.trim() ? body.note.trim().slice(0, 200) : null, saved_by: user.email ?? null })
     .select('id, note, saved_by, created_at').single()
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  revalidateTag(SITE_LOOK_TAG, { expire: 0 })   // the site shows the new look on the next page load
   return NextResponse.json({ saved: data })
 }

@@ -1,61 +1,25 @@
 'use client'
 // Aesthetic Tool: a live preview of the standard page frame using the real shared components
 // (SitePageHeader, NumberTileGrid) with adjustable colors, font and sizes. Preview only: approved
-// settings are saved (Save → site_aesthetic_versions); the newest save is the look in effect, loaded
-// here on open and read by the public pages once the standard look goes live.
+// settings are saved (Save → site_aesthetic_versions); the newest save is the look in effect on the
+// live site (src/lib/siteLook.ts) and loads here on open.
 
 import { useEffect, useState } from 'react'
 import { SitePageHeader } from '@/components/site/SitePageHeader'
-import { MockSite, SUMMARY_DEFAULTS, type SummaryKey } from './MockSite'
+import { MockSite } from './MockSite'
+import { DEFAULT_LOOK, LOOK_FONTS, SUMMARY_DEFAULTS, TITLE_FONT_NAMES, fontStack, fontsCss, mergeLook, type SiteLook, type SummaryKey } from '@/lib/siteLook'
 import { SiteTabs } from '@/components/site/SiteTabs'
 import { NumberTileGrid, type NumberTile } from '@/components/site/NumberTileGrid'
-import { BOYS_REGION_BG, GIRLS_REGION_BG, regionTile, boysRegionOfDistrict, girlsRegionOfDistrict, STENCIL_FONTS, type StencilFont } from '@/lib/siteTheme'
+import { regionTile, boysRegionOfDistrict, girlsRegionOfDistrict, STENCIL_FONTS, type StencilFont } from '@/lib/siteTheme'
 
-// The tool's fonts load in the browser from Google Fonts when the page opens (not next/font, which
-// downloads them during the build: a failed download there broke a site deploy on 2026-11-07).
-const FONTS_CSS = 'https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&family=Saira+Stencil+One&family=Big+Shoulders+Stencil:wght@700&family=Allerta+Stencil&family=Oswald:wght@600;700&family=Bebas+Neue&family=Barlow+Condensed:wght@600;700&family=Archivo+Black&family=Roboto+Condensed:wght@700&display=swap'
-const fam = (name: string) => `'${name}', sans-serif`
-// every font the tool can use for page titles: the site's default plus the stencils and display fonts
-const TITLE_FONTS: Record<string, string | undefined> = {
-  'Site default': undefined,
-  'Stardos Stencil': fam('Stardos Stencil'),
-  'Saira Stencil One': fam('Saira Stencil One'),
-  'Big Shoulders Stencil': fam('Big Shoulders Stencil'),
-  'Allerta Stencil': fam('Allerta Stencil'),
-  'Oswald': fam('Oswald'),
-  'Bebas Neue': fam('Bebas Neue'),
-  'Barlow Condensed': fam('Barlow Condensed'),
-  'Archivo Black': fam('Archivo Black'),
-  'Roboto Condensed': fam('Roboto Condensed'),
-}
-const FONT_FAMILY: Record<StencilFont, string> = {
-  'Stardos Stencil': fam('Stardos Stencil'),
-  'Saira Stencil One': fam('Saira Stencil One'),
-  'Big Shoulders Stencil': fam('Big Shoulders Stencil'),
-  'Allerta Stencil': fam('Allerta Stencil'),
-}
+// the tool's fonts load in the browser from Google Fonts (src/lib/siteLook.ts), like the live site's
+const FONTS_CSS = fontsCss(Object.keys(LOOK_FONTS))!
+const TITLE_FONTS: Record<string, string | undefined> = Object.fromEntries(TITLE_FONT_NAMES.map(n => [n, fontStack(n)]))
+const FONT_FAMILY = Object.fromEntries(STENCIL_FONTS.map(n => [n, fontStack(n)!])) as Record<StencilFont, string>
 
-type Settings = {
-  boys: Record<number, string>
-  girls: Record<number, string>
-  boysOddFg: string | null    // null = the rule (region 8's gray / region 7's navy)
-  boysEvenFg: string | null
-  font: StencilFont
-  titleFont: string
-  titleSize: number
-  summaries: Record<SummaryKey, string>
-  size: number
-  radius: number
-  border: boolean
-  showLogo: boolean
-  headerLayout: 'live' | 'proposed'
-}
-
-const DEFAULTS: Settings = {
-  boys: { ...BOYS_REGION_BG }, girls: { ...GIRLS_REGION_BG },
-  boysOddFg: null, boysEvenFg: null,
-  font: 'Saira Stencil One', titleFont: 'Site default', titleSize: 24, summaries: { ...SUMMARY_DEFAULTS }, size: 72, radius: 0, border: true, showLogo: false, headerLayout: 'proposed',
-}
+// the settings and their defaults are the site look's (one definition for the tool and the site)
+type Settings = SiteLook
+const DEFAULTS = DEFAULT_LOOK
 
 function Swatch({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
   return (
@@ -81,7 +45,7 @@ export function AestheticClient() {
   const [history, setHistory] = useState<Saved[]>([])
   const [note, setNote] = useState('')
   const [status, setStatus] = useState<string | null>(null)
-  const merge = (x: Partial<Settings> | null | undefined): Settings => ({ ...DEFAULTS, ...(x ?? {}), summaries: { ...DEFAULTS.summaries, ...(x?.summaries ?? {}) } })
+  const merge = mergeLook
   const apply = (ok: boolean, j: { error?: string; history?: Saved[]; current?: (Saved & { settings: Partial<Settings> }) | null }) => {
     if (!ok) { setStatus(j.error ?? 'Could not load the saved look'); return }
     setHistory(j.history ?? [])

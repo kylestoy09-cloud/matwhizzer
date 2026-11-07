@@ -10,21 +10,8 @@ import { SiteTabs } from '@/components/site/SiteTabs'
 import { NumberTileGrid, type NumberTile } from '@/components/site/NumberTileGrid'
 import { boysRegionOfDistrict, girlsRegionOfDistrict, type TileColors } from '@/lib/siteTheme'
 
-// each page's summary line, editable in the tool
-export const SUMMARY_DEFAULTS = {
-  schedule: 'Dual meets and tournaments by date',
-  standings: 'NJSIAA power points and records',
-  leaderboards: 'Season leaders by category',
-  tournaments: 'In-season tournaments and their winners',
-  'ps-team': 'Team tournament brackets by section and group',
-  'ps-individual': 'State champions, podium schools, point leaders, and every bracket',
-  region: 'Brackets, placewinners and team scores',
-  district: 'Brackets, placewinners and team scores',
-  state: 'Boardwalk Hall · double elimination',
-  h2h: 'Compare two wrestlers',
-  about: 'Reports, rankings, the daily challenge, polls, and how the site works',
-}
-export type SummaryKey = keyof typeof SUMMARY_DEFAULTS
+import { SUMMARY_DEFAULTS, type SummaryKey } from '@/lib/siteLook'
+export { SUMMARY_DEFAULTS, type SummaryKey }
 
 export type MockLook = {
   fontFamily: string

@@ -7,16 +7,8 @@ import Image from 'next/image'
 import { createSupabaseBrowser } from '@/lib/supabase/client'
 import type { User } from '@supabase/supabase-js'
 
-// Swap /boys ↔ /girls anywhere in the current path, falling back to the gender root.
-function genderHref(pathname: string, target: 'boys' | 'girls'): string {
-  const from = target === 'girls' ? '/boys' : '/girls'
-  const to   = target === 'girls' ? '/girls' : '/boys'
-  // the two team postseason pages: the boys one has no gender in its path
-  if (pathname === '/postseason/team/girls' && target === 'boys') return '/postseason/team'
-  if (pathname === '/postseason/team' && target === 'girls') return '/postseason/team/girls'
-  if (pathname.includes(from)) return pathname.replace(from, to)
-  return `/${target}`
-}
+// Boys / Girls always goes to that side's home page, even from the side you're on (Kyle, 2026-11-07)
+const genderHome = (target: 'boys' | 'girls') => `/${target}`
 
 type WrestlerResult = {
   id: string
@@ -30,7 +22,10 @@ type SchoolResult = {
   logo_url: string | null
 }
 
-export function HeaderNav() {
+// layout (the saved site look): 'proposed' puts the account menu left of the logo and Boys / Girls left
+// of the search box (the search box shortens to fit on phones); 'live' is the earlier layout
+export function HeaderNav({ layout = 'proposed' }: { layout?: 'live' | 'proposed' }) {
+  const proposed = layout === 'proposed'
   const pathname  = usePathname()
   const router    = useRouter()
   const userMenuRef = useRef<HTMLDivElement>(null)
@@ -84,17 +79,17 @@ export function HeaderNav() {
   type NavItem = { href: string; label: string; menu?: { href: string; label: string }[]; menuOnly?: boolean }
   const standingsHref = isBoys ? '/boys/standings' : '/girls/standings'
   const navItems: NavItem[] = [
-    { href: isBoys ? '/boys/schedule'    : '/girls/schedule',                    label: 'Schedule'     },
+    { href: isBoys ? '/boys/schedule'    : '/girls/schedule',                    label: 'Scores'       },
     { href: standingsHref,                                                        label: 'Standings',
       menu: [{ href: `${standingsHref}?view=group`, label: 'Group' }, { href: `${standingsHref}?view=conference`, label: 'Conference' }] },
-    { href: isBoys ? '/boys/leaderboards': '/girls/leaderboards',                label: 'Leaderboards' },
+    { href: isBoys ? '/boys/leaderboards': '/girls/leaderboards',                label: 'Leaders'      },
     { href: isBoys ? '/boys/tournaments' : '/girls/tournaments',                 label: 'Tournaments'  },
     { href: isBoys ? '/boys/postseason'  : '/girls/postseason',                  label: 'Post Season', menuOnly: true,
       menu: isBoys
         ? [{ href: '/postseason/team', label: 'Team' }, { href: '/postseason/individual/boys', label: 'Individual' }]
         : [{ href: '/postseason/team/girls', label: 'Team' }, { href: '/postseason/individual/girls', label: 'Individual' }] },
     { href: isBoys ? '/boys/h2h'         : '/girls/h2h',                         label: 'H2H'          },
-    { href: '/about',                                                             label: 'About'        },
+    { href: isBoys ? '/boys/insight'     : '/girls/insight',                     label: 'Insight'      },
   ]
 
   // ── Auth ─────────────────────────────────────────────────────────────────
@@ -233,11 +228,36 @@ setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
   const hasWrestlers   = wrestlers.length > 0
   const hasSchools     = schools.length > 0
 
+  const genderToggle = (
+    <div className="flex border border-white/30 flex-shrink-0">
+      <button
+        onClick={() => router.push(genderHome('boys'))}
+        className={`px-4 py-1 text-xs font-bold tracking-wide transition-colors ${
+          isBoys
+            ? 'bg-white text-slate-900'
+            : 'text-white/60 hover:text-white hover:bg-white/10'
+        }`}
+      >
+        Boys
+      </button>
+      <button
+        onClick={() => router.push(genderHome('girls'))}
+        className={`px-4 py-1 text-xs font-bold tracking-wide transition-colors border-l border-white/30 ${
+          !isBoys
+            ? 'bg-rose-200 text-rose-900'
+            : 'text-white/60 hover:text-white hover:bg-white/10'
+        }`}
+      >
+        Girls
+      </button>
+    </div>
+  )
+
   return (
     <header className={`${rowOneBg} sticky top-0 z-40 shadow-none`}>
 
       {/* ── Row 1 — logo + auth ──────────────────────────────────────────── */}
-      <div className="px-4 py-2 flex items-center justify-between border-b border-black/30">
+      <div className={`px-4 py-2 flex items-center border-b border-black/30 ${proposed ? 'justify-start gap-2' : 'justify-between'}`}>
 
         {/* Logo */}
         <Link href={homeHref} className="flex items-center hover:opacity-90 transition-opacity">
@@ -251,8 +271,8 @@ setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
           />
         </Link>
 
-        {/* Auth */}
-        <div className="flex items-center gap-3">
+        {/* Auth (proposed layout: left of the logo) */}
+        <div className={`flex items-center gap-3 ${proposed ? 'order-first' : ''}`}>
           {user ? (
             <div ref={userMenuRef} className="relative">
               <button
@@ -264,10 +284,10 @@ setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                   </svg>
                 </span>
-                {username && <span className="hidden sm:inline text-sm">{username}</span>}
+                {username && !proposed && <span className="hidden sm:inline text-sm">{username}</span>}
               </button>
               {userOpen && (
-                <div className={`absolute right-0 top-full mt-1 w-44 rounded-none shadow-none border border-black z-50 overflow-hidden ${dropdownBg}`}>
+                <div className={`absolute ${proposed ? 'left-0' : 'right-0'} top-full mt-1 w-44 rounded-none shadow-none border border-black z-50 overflow-hidden ${dropdownBg}`}>
                   <div className="px-4 py-2 border-b border-white/10">
                     <p className="text-xs text-slate-400">Signed in as</p>
                     <p className="text-sm text-white font-medium truncate">{username ?? user?.email ?? ''}</p>
@@ -363,53 +383,11 @@ setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
             )
           })}
 
-          {/* Boys / Girls toggle — desktop only, right-aligned */}
-          <div className="hidden sm:flex border border-white/30 ml-auto flex-shrink-0">
-            <button
-              onClick={() => router.push(genderHref(pathname, 'boys'))}
-              className={`px-4 py-1 text-xs font-bold tracking-wide transition-colors ${
-                isBoys
-                  ? 'bg-white text-slate-900'
-                  : 'text-white/60 hover:text-white hover:bg-white/10'
-              }`}
-            >
-              Boys
-            </button>
-            <button
-              onClick={() => router.push(genderHref(pathname, 'girls'))}
-              className={`px-4 py-1 text-xs font-bold tracking-wide transition-colors border-l border-white/30 ${
-                !isBoys
-                  ? 'bg-rose-200 text-rose-900'
-                  : 'text-white/60 hover:text-white hover:bg-white/10'
-              }`}
-            >
-              Girls
-            </button>
-          </div>
-
-          {/* Boys / Girls toggle — mobile only, after Feedback */}
-          <div className="sm:hidden flex border border-white/30 ml-4 flex-shrink-0">
-            <button
-              onClick={() => router.push(genderHref(pathname, 'boys'))}
-              className={`px-4 py-1 text-xs font-bold tracking-wide transition-colors ${
-                isBoys
-                  ? 'bg-white text-slate-900'
-                  : 'text-white/60 hover:text-white hover:bg-white/10'
-              }`}
-            >
-              Boys
-            </button>
-            <button
-              onClick={() => router.push(genderHref(pathname, 'girls'))}
-              className={`px-4 py-1 text-xs font-bold tracking-wide transition-colors border-l border-white/30 ${
-                !isBoys
-                  ? 'bg-rose-200 text-rose-900'
-                  : 'text-white/60 hover:text-white hover:bg-white/10'
-              }`}
-            >
-              Girls
-            </button>
-          </div>
+          {/* Boys / Girls in the nav row: the 'live' layout only (desktop right-aligned, phones after the links) */}
+          {!proposed && <>
+            <div className="hidden sm:flex ml-auto">{genderToggle}</div>
+            <div className="sm:hidden flex ml-4">{genderToggle}</div>
+          </>}
         </div>
       </div>
 
@@ -427,8 +405,10 @@ setWrestlers((wrestlerRes.data ?? []) as WrestlerResult[])
 
       {/* ── Row 3 — combined search ───────────────────────────────────────── */}
       <div className={`${rowTwoBg} border-b border-black/60`}>
-        <div className="px-4 py-1">
-          <div ref={searchRef} className="relative w-full max-w-lg">
+        <div className={`px-4 py-1 ${proposed ? 'flex items-center gap-2' : ''}`}>
+          {/* proposed layout: Boys / Girls left of the search box, which takes the rest of the row */}
+          {proposed && genderToggle}
+          <div ref={searchRef} className={`relative ${proposed ? 'min-w-0 flex-1 max-w-lg' : 'w-full max-w-lg'}`}>
             <input
               type="text"
               value={searchQuery}
