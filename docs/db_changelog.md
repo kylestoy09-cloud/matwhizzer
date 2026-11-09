@@ -2,6 +2,34 @@
 
 ---
 
+## 2026-11-09 — Girls 2024-25 postseason, step 2: the region Round 1 losers
+
+**Script:** `scripts/apply_girls_2025_region_r1.mts` (service role), from the plan in `docs/reviews/girls_2025_region_r1_plan.json` (`scripts/plan_girls_2025_region_r1.mts`). **Migration file:** `docs/migrations/20261109_girls_2025_r1_bouts.sql`. **Backup (every new row's id):** `docs/migrations/backups/20261109_girls_2025_r1_created.json`
+
+**Purpose:** The 2024-25 girls region Round 1 losers were never entered, so their 255 Round 1 bouts (and 3 step-1 bouts) couldn't be stored.
+
+**How each wrestler was settled (rules already set; Kyle's calls where noted):**
+- **Existing profile (172):** her name linked at her school. For the co-op, a link at any member school counts.
+- **New profile (94):** no girl by that name anywhere (92), or the same name only at another school (Kyle's 2026-11-05 rule: Jessica Calle, Belleville; Savanah Valliere, Paulsboro, flagged to Kyle as a likely transfer).
+- **Kyle's call:** Alexis Dozier = Lexi Dozier (Leonia-Palisades).
+- **Obvious matches:** Adelaide Matta Arvo = Adelaide Arvo (Collingswood). Maria Rivera Perez and Genesis Martinez are new (their same-last-name schoolmates have other first names).
+
+**Changes:**
+- **New profiles:** 95, inactive, gender F, no grade (none has 2025-26 records), each with a name link at her school.
+- **Name links:** 97 in all (the 95 new profiles' links, Dozier and Arvo).
+- **Entries:** 263.
+  - 4 girls already entered under shortened or variant names keep their entry: "Layla Lubrano-Lava", "Emily Valencia Var", "Alexandra Chase", "Christin Johnston".
+  - Victoria Kidd-Maxey (co-op, linked at Iselin Kennedy) also got a link at Colonia.
+- **Bouts:** 258, in the migration; one tech fall is stored "TF-1" as printed.
+
+**Mistake, caught:** Keyra Huastitlan Reyes was in the plan twice (Central and State), each time as "new profile". The run made her profile at Central, then a second, empty one at State, and stopped on the name link. Her State entry is on her real profile (00e0295e). The duplicate (4b9a9152) has no entries, links, duals or ratings; **its delete is waiting on Kyle's approval.**
+
+Integrity check: unchanged (the no-alias list 79, as before step 2).
+
+**Status:** bouts waiting for Kyle to run them. **Reversible?** Yes (delete by the ids in the backup).
+
+---
+
 ## 2026-11-09 — Girls 2024-25: six WW-P South entries stored at North
 
 **Migration file:** `docs/migrations/20261109_girls_2025_wwp_south_entries.sql`
