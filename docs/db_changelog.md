@@ -2,6 +2,23 @@
 
 ---
 
+## 2026-11-09 — Girls 2024-25: the JFK/Woodbridge/Colonia co-op under Colonia
+
+**Migration file:** `docs/migrations/20261109_girls_2025_jfk_woodbridge_colonia_coop.sql`
+
+**Purpose:** In 2024-25 Iselin Kennedy (150), Woodbridge (187) and Colonia (149) wrestled girls as one co-op, "JFK/Woodbridge/Colonia". Every 2024-25 postseason bout of its girls lists that name, and TrackWrestling scored it as one team (North 2, 12th, 53.5). In 2025-26 they are three separate teams. Kyle: the co-op season goes under Colonia; the other two are inactive that season; everything else stays.
+
+**Changes (2024-25 girls only):**
+- Colonia's season name becomes "JFK/Woodbridge/Colonia".
+- Iselin Kennedy and Woodbridge are marked inactive (girls; their boys and other seasons are unchanged).
+- Kotsonis's and Cruz's region entries move to Colonia, joining the co-op's other four.
+
+The co-op's official 53.5 goes on Colonia with the missing 2024-25 standings rows (next).
+
+**Status:** waiting for Kyle to run it. **Reversible?** Yes (rollback note in the file).
+
+---
+
 ## 2026-11-09 — Girls 2024-25 postseason, step 1: State Round 1 and region 3rd place bouts
 
 **Migration file:** `docs/migrations/20261109_girls_2025_state_r1_region_thirds.sql` (built by `scripts/build_girls_2025_r1_and_thirds.mts`)
