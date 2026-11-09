@@ -2,6 +2,19 @@
 
 ---
 
+## 2026-11-09 — Crawlers: robots.txt, one address, firewall block
+
+**No database changes.**
+
+**Why:** On 2026-11-09 Vercel paused the account (Hobby fair-use limit, CPU time); Kyle upgraded to Pro. Traffic had jumped from about 9k to 45k requests a day on 2026-10-25 (no change on our side that day). The first request logs available (3 hours, 2026-11-09) show about 75% crawlers: Amazonbot 1,851 of 3,304 requests, ElevenlabsCrawler 440, PetalBot 142, MJ12bot, OpenAI and others. 92% were full server builds (cache MISS), mostly wrestler profiles, and the crawlers read both matwhizzer.com and matwhizzer.vercel.app.
+
+**Changes (Kyle: allow Google, Bing and Apple search; block OpenAI and the AI / data crawlers):**
+- **`src/app/robots.ts`:** allows Googlebot, Bingbot and Applebot (not /admin, /api, /auth, /settings, /profile) and the link-preview fetchers (Facebook, X, Slack, Discord, LinkedIn, WhatsApp, Telegram). It opts out of Google-Extended and Applebot-Extended (AI training; search unaffected) and disallows everyone else.
+- **`next.config.ts`:** matwhizzer.vercel.app permanently redirects to matwhizzer.com.
+- **Vercel firewall rule "Block AI and data crawlers"** (project firewall, published with the CLI): deny when the user agent matches Amazonbot, ElevenlabsCrawler, PetalBot, MJ12bot, GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, PerplexityBot, Bytespider, CCBot, meta-externalagent, AhrefsBot, SemrushBot, YandexBot, Baiduspider and others. Exact names, case-sensitive: the firewall rejects the (?i) flag. Checked: Googlebot, Bingbot, Applebot, Facebook previews and browsers pass; it would have stopped 2,481 of the 3,304 requests in the sample.
+
+---
+
 ## 2026-11-09 — Girls Region 1 (2025-26) placement rows
 
 **Migration file:** `docs/migrations/20261109_girls_region1_placements.sql`
