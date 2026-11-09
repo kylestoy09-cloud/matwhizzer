@@ -13,7 +13,10 @@ export async function GET(request: NextRequest) {
   const dest = (type === 'recovery' || type === 'invite') ? '/auth/reset-password' : '/email-confirmed'
   const redirectResponse = NextResponse.redirect(new URL(dest, origin))
   // a used or expired reset / invite link: say so on the set-a-password page, with a way to get a new one
-  const failResponse     = NextResponse.redirect(new URL((type === 'recovery' || type === 'invite') ? '/auth/reset-password?expired=1' : '/signin?error=confirmation-failed', origin))
+  // An old-style link (sent before 2026-11-07) carries its details after a '#', which never reaches the server,
+  // so it arrives with no code, token or type: treat it as an expired password link, not a sign-in error.
+  const passwordLink = type === 'recovery' || type === 'invite' || (!code && !token_hash)
+  const failResponse     = NextResponse.redirect(new URL(passwordLink ? '/auth/reset-password?expired=1' : '/signin?error=confirmation-failed', origin))
 
   // Supabase client that writes session cookies onto the redirect response
   const supabase = createServerClient(
