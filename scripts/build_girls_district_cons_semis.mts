@@ -17,7 +17,8 @@ import fs from 'fs'
 const db = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
 const chk = (r: any, w: string) => { if (r.error) throw new Error(`${w}: ${r.error.message}`); return r.data as any[] }
 const BASE = '../Whizzer Upload/2025-26 Postseason Brackets/2026 Girls'
-const DISTRICTS = [5, 6]
+// districts to build: argv (default 5 6, the first run; District 7 added 2026-11-09)
+const DISTRICTS = process.argv.slice(2).map(Number).filter(Boolean).length ? process.argv.slice(2).map(Number).filter(Boolean) : [5, 6]
 const WEIGHTS = [100, 107, 114, 120, 126, 132, 138, 145, 152, 165, 185, 235]
 type Word = { x: number; y: number; t: string }
 const PY = `
@@ -64,12 +65,12 @@ for (const d of DISTRICTS) {
     // (a cons. semi winner wrestled the 3rd place bout, a loser the 5th)
     const entry = (label: string, mustBeIn?: Set<string>) => {
       const last = norm(label.split(',')[0])
-      let c = ents.filter(e => { const l = norm(`${e.wrestlers?.last_name ?? ''}`); return l && (l.startsWith(last) || last.startsWith(l)) })
+      let c = ents.filter(e => { const l = norm(`${e.wrestlers?.last_name ?? ''}`); return l && (l.startsWith(last) || last.startsWith(l) || l.endsWith(` ${last}`)) })   // "Marie Soto" (D7 165)
       if (c.length > 1) { const exact = c.filter(e => norm(`${e.wrestlers?.last_name ?? ''}`) === last); if (exact.length) c = exact }   // "Karp" vs "Karpew"
       if (c.length > 1 && mustBeIn) c = c.filter(e => mustBeIn.has(e.id))
       return c.length === 1 ? c[0] : null
     }
-    const stored = chk(await db.from('matches').select('round, winner_entry_id, loser_entry_id').eq('tournament_id', tourn).eq('weight_class_id', wc).in('round', ['SF', 'C1', '3rd_Place', '5th_Place']), 'm')
+    const stored = chk(await db.from('matches').select('round, winner_entry_id, loser_entry_id').eq('tournament_id', tourn).eq('weight_class_id', wc).in('round', ['QF', 'SF', 'C1', '3rd_Place', '5th_Place']), 'm')
     const file = `${BASE}/District ${d}/${w} Bracket.pdf`
     if (!fs.existsSync(file)) { problems.push(`D${d} ${w}: no PDF`); continue }
     const ws = words(file)
@@ -86,6 +87,8 @@ for (const d of DISTRICTS) {
       const win = colB.filter(b => near(b.y, n.y, 8)).sort((p, q) => Math.abs(p.y - n.y) - Math.abs(q.y - n.y))[0]
       const above = colA.filter(a => a.y < n.y).sort((p, q) => q.y - p.y)[0], below = colA.filter(a => a.y > n.y).sort((p, q) => p.y - q.y)[0]
       const res = ws.filter(x => isResult(x.t) && x.x > 435 && x.x < 480 && x.y > n.y - 2 && x.y < n.y + 14)[0]
+      // no opponent: the result reads "Bye" (D7 235 bout 131): not a bout
+      if (ws.some(x => x.t === 'Bye' && x.x > 435 && x.x < 480 && x.y > n.y - 2 && x.y < n.y + 14)) { console.log(`D${d} ${w} bout ${n.t}: a bye, skipped`); continue }
       const lose = win && above && below ? (norm(above.t) === norm(win.t) ? below : norm(below.t) === norm(win.t) ? above : undefined) : undefined
       const W = win ? entry(win.t, in3) : null, L = lose ? entry(lose.t, in5) : null, r = res ? result(res.t) : null
       const src = `D${d} ${w} bout ${num}: ${win?.t} over ${lose?.t} (${res?.t})`
@@ -100,14 +103,17 @@ for (const d of DISTRICTS) {
       mine.push({ tournament_id: tourn, weight_class_id: wc, bracket_side: 'consolation', round: 'C3', winner_entry_id: W.id, loser_entry_id: L.id, ...r, _src: src })
     }
     // checks against the stored bouts
-    const sfL = stored.filter(m => m.round === 'SF').map(m => m.loser_entry_id), c1W = stored.filter(m => m.round === 'C1').map(m => m.winner_entry_id)
+    // the other side is a quarterfinal loser: usually the cons. round 1 winner, or one who moved up on a bye
+    // when her cons. round 1 slot was empty (District 7)
+    const sfL = stored.filter(m => m.round === 'SF').map(m => m.loser_entry_id)
+    const c1W = stored.filter(m => m.round === 'QF').map(m => m.loser_entry_id).filter(x => x && !sfL.includes(x))
     const t3 = stored.find(m => m.round === '3rd_Place'), t5 = stored.find(m => m.round === '5th_Place')
     const set = (a: (string | null)[]) => new Set(a.filter(Boolean) as string[])
     const same = (a: Set<string>, b: Set<string>) => a.size === b.size && [...a].every(x => b.has(x))
     for (const c of mine) {
-      if (!c.loser_entry_id) { if (!sfL.includes(c.winner_entry_id) && !c1W.includes(c.winner_entry_id)) problems.push(`${c._src}: winner is not a semifinal loser or cons. round 1 winner`); continue }
+      if (!c.loser_entry_id) { if (!sfL.includes(c.winner_entry_id) && !c1W.includes(c.winner_entry_id)) problems.push(`${c._src}: winner is not a semifinal or quarterfinal loser`); continue }
       const p = [c.winner_entry_id, c.loser_entry_id]
-      if (p.filter(x => sfL.includes(x)).length !== 1 || p.filter(x => c1W.includes(x)).length !== 1) problems.push(`${c._src}: not a semifinal loser vs a cons. round 1 winner`)
+      if (p.filter(x => sfL.includes(x)).length !== 1 || p.filter(x => c1W.includes(x)).length !== 1) problems.push(`${c._src}: not a semifinal loser vs a quarterfinal loser`)
     }
     if (mine.length === 2 && mine.every(c => c.loser_entry_id)) {
       if (t3 && !same(set([t3.winner_entry_id, t3.loser_entry_id]), set(mine.map(c => c.winner_entry_id)))) problems.push(`D${d} ${w}: the cons. semi winners are not the 3rd place bout's wrestlers`)
@@ -121,15 +127,15 @@ console.log(`\n${rows.length} bouts; problems ${problems.length}`)
 if (problems.length) console.log(problems.join('\n'))
 
 const q = (v: any) => v == null ? 'NULL' : typeof v === 'number' ? String(v) : `'${String(v).replace(/'/g, "''")}'`
-const OUT = 'docs/migrations/20261109_girls_d5_d6_cons_semis.sql'
-const sql = `-- Girls 2025-26 Districts 5 and 6: add the consolation semifinals (2026-11-09)
+const OUT = `docs/migrations/20261109_girls_d${DISTRICTS.join('_d')}_cons_semis.sql`
+const sql = `-- Girls 2025-26 District${DISTRICTS.length > 1 ? 's' : ''} ${DISTRICTS.join(' and ')}: add the consolation semifinals (2026-11-09)
 --
--- The TrackWrestling text export has no "Cons Semis" section for these two districts, so these bouts
+-- The TrackWrestling text export has no "Cons Semis" section for ${DISTRICTS.length > 1 ? 'these districts' : 'this district'}, so these bouts
 -- were never loaded (the other ten districts have theirs, stored as round C3). Read from the final
 -- bracket PDFs by scripts/build_girls_district_cons_semis.mts (the two bouts below the 5TH label) and
 -- checked against the stored bouts: each pairs a semifinal loser with a cons. round 1 winner, the winners
 -- are the 3rd place bout's wrestlers and the losers the 5th place bout's.
--- Expected: ${rows.length} bouts (2 districts x 12 weights x 2, less District 6 235, a one-wrestler bracket).
+-- Expected: ${rows.length} bouts (2 per weight, less brackets whose consolation side is empty slots only).
 -- Forfeit wins over an empty bracket slot are stored like the other districts' (FORF, no loser).
 -- ROLLBACK: DELETE FROM matches WHERE tournament_id IN (${tids.join(', ')}) AND round = 'C3';
 
@@ -137,7 +143,7 @@ DO $$
 DECLARE n integer;
 BEGIN
   IF EXISTS (SELECT 1 FROM matches WHERE tournament_id IN (${tids.join(', ')}) AND round = 'C3') THEN
-    RAISE EXCEPTION 'Districts 5 / 6 already have cons. semifinals; migration already applied?';
+    RAISE EXCEPTION 'cons. semifinals already exist; migration already applied?';
   END IF;
 
   INSERT INTO matches (tournament_id, weight_class_id, bracket_side, round, winner_entry_id, loser_entry_id, win_type, winner_score, loser_score, fall_time_seconds, validated)
@@ -147,10 +153,9 @@ ${rows.map(r => `  -- ${r._src}\n  (${r.tournament_id}, ${r.weight_class_id}, '$
   IF n <> ${rows.length} THEN RAISE EXCEPTION 'expected ${rows.length} bouts, got %', n; END IF;
 END $$;
 
--- Verify: District 5 24, District 6 22 (its 235 bracket has one wrestler)
+-- Verify: the count per district
 SELECT t.name, count(*) FROM matches m JOIN tournaments t ON t.id = m.tournament_id
 WHERE m.tournament_id IN (${tids.join(', ')}) AND m.round = 'C3' GROUP BY t.name ORDER BY t.name;
 `
-// 48 less District 6 235 (one wrestler: empty slots only)
-if (problems.length === 0 && rows.length === 46) { fs.writeFileSync(OUT, sql); console.log(`wrote ${OUT}`) }
+if (problems.length === 0 && rows.length) { fs.writeFileSync(OUT, sql); console.log(`wrote ${OUT}`) }
 else console.log('not written: fix the problems first')

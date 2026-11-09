@@ -2,6 +2,23 @@
 
 ---
 
+## 2026-11-09 — Girls District 7 (2025-26): consolation semifinals
+
+**Migration file:** `docs/migrations/20261109_girls_d7_cons_semis.sql` (built by `scripts/build_girls_district_cons_semis.mts 7`)
+
+**Purpose:** Same gap as Districts 5 and 6: the export has no "Cons Semis" section for District 7, and none are stored. With the other fixes in, District 7's schools were short in steps of 3 (and 2), the value of cons. semis.
+
+**Changes:** 23 bouts from the bracket PDFs. 235 bout 131 was a bye (Erlich, no opponent), so it is skipped.
+
+**Checks (stricter build script):**
+- Each bout pairs a semifinal loser with a quarterfinal loser. The QF loser is usually the cons. round 1 winner; in District 7 some moved up on a bye when their cons. round 1 slot was empty.
+- The winners are the 3rd place bout's wrestlers and the losers the 5th place bout's.
+- Names now also match on the end of a last name: Faith "Marie Soto" (D7 165), a first/last split to tidy later.
+
+**Status:** waiting for Kyle to run it. **Reversible?** Yes (rollback line in the file).
+
+---
+
 ## 2026-11-09 — Girls Districts 7 and 8 (2025-26): forfeit wins over filler entries
 
 **Migration file:** `docs/migrations/20261109_girls_d7_d8_forfeit_wins.sql` (built by `scripts/build_girls_district_forfeits.mts`)
@@ -10,7 +27,7 @@
 
 **Also checked, all 12 districts:** no stored forfeit win is a bye in the export. District 4's 66 Round 2 forfeit wins read "won by forfeit over ()", a forfeit over an empty slot, so they are correct. I first flagged them as byes because `compare_girls_bracket_counts.mts` couldn't read the "over ()" form; that is fixed, and District 4 matches the export, 231 = 231.
 
-**Status:** waiting for Kyle to run it. **Reversible?** Yes (rollback note in the file).
+**APPLIED** — 2026-11-09, Supabase SQL editor. **Reversible?** Yes (rollback note in the file). **Verified?** Yes: District 7 4, District 8 14; both districts now match the export. Every District 8 school equals its official total.
 
 ---
 
