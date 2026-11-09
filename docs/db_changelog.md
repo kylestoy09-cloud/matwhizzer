@@ -2,6 +2,18 @@
 
 ---
 
+## 2026-11-09 — Girls 2024-25: six WW-P South entries stored at North
+
+**Migration file:** `docs/migrations/20261109_girls_2025_wwp_south_entries.sql`
+
+**Purpose:** Six West Windsor-Plainsboro South girls at the 2024-25 Central region were stored at WW-P North (176): Gupta, Xu, Kang, Reyes De Leon, Rochkind, McKoy. TrackWrestling labels them South, five are linked by name at South, and Xu is entered at South in 2025-26. Found while matching the 2024-25 standings. A new check, `scripts/audit_entry_school_labels.mts`, compares every entry's TrackWrestling label with its school: these six are the only real mismatches across both genders and both seasons. The two 2025-26 "East Side" girls it flags in District 2 are correctly Paterson Eastside.
+
+**Changes:** the six entries move to WW-P South (177).
+
+**Status:** waiting for Kyle to run it. **Reversible?** Yes.
+
+---
+
 ## 2026-11-09 — Girls 2024-25: the JFK/Woodbridge/Colonia co-op under Colonia
 
 **Migration file:** `docs/migrations/20261109_girls_2025_jfk_woodbridge_colonia_coop.sql`
