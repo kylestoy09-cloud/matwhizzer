@@ -44,9 +44,11 @@ function parse(file: string): Section[] {
     if (!cur) { cur = { head: '(whole file)', cells: new Map(), names: new Set() }; out.push(cur) }
     if (/^\d{3}$/.test(l)) { weight = Number(l); continue }
     const r = ROUND.find(([re]) => re.test(l)); if (!r) continue
-    const m = l.match(/^[^-]+ - (.*?) \((.*?)\) [\d-]+ won (?:by|in) .*? over (.*?) \((.*?)\)(?: [\d-]+)? \((.*)\)$/)
+    // "over ()" is a forfeit over an empty slot (no name): the loser part is optional
+    const m = l.match(/^[^-]+ - (.*?) \((.*?)\) [\d-]+ won (?:by|in) .*? over (?:(.*?) )?\((.*?)\)(?: [\d-]+)? \((.*)\)$/)
     if (!m) continue                                    // byes ("received a bye") and anything unreadable
-    const [, win, , lose, , result] = m
+    const [, win, , loseRaw, , result] = m
+    const lose = loseRaw ?? ''
     if (/^NC\b/.test(result) || FILLER.test(win.trim()) && FILLER.test(lose.trim())) continue
     if (FILLER.test(win.trim())) continue
     const key = `${weight}|${l}`; if (seen.has(key)) continue; seen.add(key)

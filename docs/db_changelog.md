@@ -2,6 +2,18 @@
 
 ---
 
+## 2026-11-09 — Girls Districts 7 and 8 (2025-26): forfeit wins over filler entries
+
+**Migration file:** `docs/migrations/20261109_girls_d7_d8_forfeit_wins.sql` (built by `scripts/build_girls_district_forfeits.mts`)
+
+**Purpose:** The TrackWrestling export lists 18 wins like "Tanvi Madisetti (Lawrence Senior) won by forfeit over E Forfeit (Team Forfeit)" with no stored bout: District 7 4 (QF), District 8 14 (QF 8, C1 4, cons. semi 2). A forfeit over a filler entry is a contested win (advancement plus 2 bonus); the other districts store theirs as FORF with no loser, and these follow.
+
+**Also checked, all 12 districts:** no stored forfeit win is a bye in the export. District 4's 66 Round 2 forfeit wins read "won by forfeit over ()", a forfeit over an empty slot, so they are correct. I first flagged them as byes because `compare_girls_bracket_counts.mts` couldn't read the "over ()" form; that is fixed, and District 4 matches the export, 231 = 231.
+
+**Status:** waiting for Kyle to run it. **Reversible?** Yes (rollback note in the file).
+
+---
+
 ## 2026-11-09 — Girls District 2 (2025-26): Isabella Jimenez's entry and bouts
 
 **Migration file:** `docs/migrations/20261109_girls_d2_jimenez_entry.sql`
