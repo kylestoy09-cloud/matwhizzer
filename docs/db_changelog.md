@@ -10,7 +10,7 @@
 
 **Changes:** the six entries move to WW-P South (177).
 
-**Status:** waiting for Kyle to run it. **Reversible?** Yes.
+**APPLIED** — 2026-11-09, Supabase SQL editor. **Verified?** Yes: 6 at school 177. **Reversible?** Yes.
 
 ---
 
@@ -27,7 +27,7 @@
 
 The co-op's official 53.5 goes on Colonia with the missing 2024-25 standings rows (next).
 
-**Status:** waiting for Kyle to run it. **Reversible?** Yes (rollback note in the file).
+**APPLIED** — 2026-11-09, Supabase SQL editor. **Verified?** Yes: 6 entries at Colonia; season name "JFK/Woodbridge/Colonia"; 150 and 187 inactive (2024-25 girls). **Reversible?** Yes (rollback note in the file).
 
 ---
 
