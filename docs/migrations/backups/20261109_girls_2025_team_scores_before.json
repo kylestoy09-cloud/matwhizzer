@@ -1,0 +1,2180 @@
+[
+ {
+  "id": 2012,
+  "tournament_id": 134,
+  "school_name": "Bordentown Regional/Florence",
+  "total_points": 24,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 227
+ },
+ {
+  "id": 2009,
+  "tournament_id": 134,
+  "school_name": "Brick Township",
+  "total_points": 35.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 218
+ },
+ {
+  "id": 2027,
+  "tournament_id": 134,
+  "school_name": "Colts Neck",
+  "total_points": 4,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 198
+ },
+ {
+  "id": 1999,
+  "tournament_id": 134,
+  "school_name": "Ewing",
+  "total_points": 62.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 230
+ },
+ {
+  "id": 2019,
+  "tournament_id": 134,
+  "school_name": "Freehold Borough",
+  "total_points": 15,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 199
+ },
+ {
+  "id": 2002,
+  "tournament_id": 134,
+  "school_name": "Freehold Township",
+  "total_points": 52,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 200
+ },
+ {
+  "id": 2006,
+  "tournament_id": 134,
+  "school_name": "Hamilton East-Steinert",
+  "total_points": 48,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 208
+ },
+ {
+  "id": 2028,
+  "tournament_id": 134,
+  "school_name": "Hamilton North-Nottingham",
+  "total_points": 4,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 209
+ },
+ {
+  "id": 2000,
+  "tournament_id": 134,
+  "school_name": "Hamilton West",
+  "total_points": 58,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 231
+ },
+ {
+  "id": 2007,
+  "tournament_id": 134,
+  "school_name": "Hightstown",
+  "total_points": 42,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 232
+ },
+ {
+  "id": 2004,
+  "tournament_id": 134,
+  "school_name": "Hillsborough",
+  "total_points": 49,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 188
+ },
+ {
+  "id": 2026,
+  "tournament_id": 134,
+  "school_name": "Holmdel",
+  "total_points": 6,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 189
+ },
+ {
+  "id": 2005,
+  "tournament_id": 134,
+  "school_name": "Hopewell Valley Hs",
+  "total_points": 49,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 170
+ },
+ {
+  "id": 1993,
+  "tournament_id": 134,
+  "school_name": "Howell",
+  "total_points": 89,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 233
+ },
+ {
+  "id": 1992,
+  "tournament_id": 134,
+  "school_name": "Lakewood",
+  "total_points": 90,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 203
+ },
+ {
+  "id": 1996,
+  "tournament_id": 134,
+  "school_name": "Lawrence Senior",
+  "total_points": 68.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 210
+ },
+ {
+  "id": 2014,
+  "tournament_id": 134,
+  "school_name": "Long Branch",
+  "total_points": 21,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 211
+ },
+ {
+  "id": 2003,
+  "tournament_id": 134,
+  "school_name": "Manalapan",
+  "total_points": 50,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 204
+ },
+ {
+  "id": 2001,
+  "tournament_id": 134,
+  "school_name": "Marlboro",
+  "total_points": 57,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 193
+ },
+ {
+  "id": 1998,
+  "tournament_id": 134,
+  "school_name": "Middletown South",
+  "total_points": 63,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 160
+ },
+ {
+  "id": 2010,
+  "tournament_id": 134,
+  "school_name": "Monroe Township",
+  "total_points": 30,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 172
+ },
+ {
+  "id": 2018,
+  "tournament_id": 134,
+  "school_name": "Montgomery",
+  "total_points": 16,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 173
+ },
+ {
+  "id": 2017,
+  "tournament_id": 134,
+  "school_name": "New Brunswick",
+  "total_points": 18,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 181
+ },
+ {
+  "id": 2021,
+  "tournament_id": 134,
+  "school_name": "Northern Burlington ( Columbus)",
+  "total_points": 13,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 388
+ },
+ {
+  "id": 2024,
+  "tournament_id": 134,
+  "school_name": "Notre Dame",
+  "total_points": 8,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 213
+ },
+ {
+  "id": 2029,
+  "tournament_id": 134,
+  "school_name": "Ocean Township",
+  "total_points": 4,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 222
+ },
+ {
+  "id": 1994,
+  "tournament_id": 134,
+  "school_name": "Old Bridge",
+  "total_points": 78,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 163
+ },
+ {
+  "id": 2015,
+  "tournament_id": 134,
+  "school_name": "Point Pleasant Beach Hs",
+  "total_points": 20,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 223
+ },
+ {
+  "id": 1995,
+  "tournament_id": 134,
+  "school_name": "Point Pleasant Boro",
+  "total_points": 77.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 224
+ },
+ {
+  "id": 2020,
+  "tournament_id": 134,
+  "school_name": "Princeton",
+  "total_points": 14,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 174
+ },
+ {
+  "id": 2011,
+  "tournament_id": 134,
+  "school_name": "Raritan",
+  "total_points": 30,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 184
+ },
+ {
+  "id": 2030,
+  "tournament_id": 134,
+  "school_name": "Red Bank Regional",
+  "total_points": 4,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 195
+ },
+ {
+  "id": 2025,
+  "tournament_id": 134,
+  "school_name": "Riverside",
+  "total_points": 8,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 214
+ },
+ {
+  "id": 2008,
+  "tournament_id": 134,
+  "school_name": "Robbinsville",
+  "total_points": 38,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 215
+ },
+ {
+  "id": 2013,
+  "tournament_id": 134,
+  "school_name": "South Brunswick",
+  "total_points": 22,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 164
+ },
+ {
+  "id": 2022,
+  "tournament_id": 134,
+  "school_name": "Spotswood",
+  "total_points": 12,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 166
+ },
+ {
+  "id": 1991,
+  "tournament_id": 134,
+  "school_name": "Trenton Central",
+  "total_points": 101.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 216
+ },
+ {
+  "id": 2023,
+  "tournament_id": 134,
+  "school_name": "West Windsor-Plainsboro North",
+  "total_points": 10,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 176
+ },
+ {
+  "id": 2016,
+  "tournament_id": 134,
+  "school_name": "West Windsor-Plainsboro S",
+  "total_points": 20,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 177
+ },
+ {
+  "id": 1928,
+  "tournament_id": 135,
+  "school_name": "Belvidere",
+  "total_points": 13.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 110
+ },
+ {
+  "id": 1931,
+  "tournament_id": 135,
+  "school_name": "Bergenfield",
+  "total_points": 12,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 40
+ },
+ {
+  "id": 1895,
+  "tournament_id": 135,
+  "school_name": "Boonton",
+  "total_points": 75,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 70
+ },
+ {
+  "id": 1940,
+  "tournament_id": 135,
+  "school_name": "Clifton",
+  "total_points": 4,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 50
+ },
+ {
+  "id": 1941,
+  "tournament_id": 135,
+  "school_name": "Cresskill",
+  "total_points": 4,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 1
+ },
+ {
+  "id": 1893,
+  "tournament_id": 135,
+  "school_name": "Depaul Catholic",
+  "total_points": 86,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 22
+ },
+ {
+  "id": 1936,
+  "tournament_id": 135,
+  "school_name": "Dwight Morrow",
+  "total_points": 6,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 41
+ },
+ {
+  "id": 1932,
+  "tournament_id": 135,
+  "school_name": "Eastside ( Paterson)",
+  "total_points": 12,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 72
+ },
+ {
+  "id": 1908,
+  "tournament_id": 135,
+  "school_name": "Elmwood Park",
+  "total_points": 34,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 51
+ },
+ {
+  "id": 1899,
+  "tournament_id": 135,
+  "school_name": "Fair Lawn",
+  "total_points": 54,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 52
+ },
+ {
+  "id": 1933,
+  "tournament_id": 135,
+  "school_name": "Fort Lee",
+  "total_points": 12,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 42
+ },
+ {
+  "id": 1942,
+  "tournament_id": 135,
+  "school_name": "Garfield",
+  "total_points": 4,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 53
+ },
+ {
+  "id": 1929,
+  "tournament_id": 135,
+  "school_name": "Hawthorne",
+  "total_points": 13,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 31
+ },
+ {
+  "id": 1892,
+  "tournament_id": 135,
+  "school_name": "High Point Regional",
+  "total_points": 106,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 32
+ },
+ {
+  "id": 1918,
+  "tournament_id": 135,
+  "school_name": "Indian Hills",
+  "total_points": 22,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 13
+ },
+ {
+  "id": 1912,
+  "tournament_id": 135,
+  "school_name": "John F. Kennedy Patterson",
+  "total_points": 26,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 74
+ },
+ {
+  "id": 1910,
+  "tournament_id": 135,
+  "school_name": "Kinnelon",
+  "total_points": 30,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 33
+ },
+ {
+  "id": 1896,
+  "tournament_id": 135,
+  "school_name": "Lenape Valley H.S.",
+  "total_points": 65.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 62
+ },
+ {
+  "id": 1943,
+  "tournament_id": 135,
+  "school_name": "Leonia/Palisades Park",
+  "total_points": 4,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 44
+ },
+ {
+  "id": 1944,
+  "tournament_id": 135,
+  "school_name": "Lyndhurst/North Arlington",
+  "total_points": 4,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 83
+ },
+ {
+  "id": 1906,
+  "tournament_id": 135,
+  "school_name": "Mahwah",
+  "total_points": 41,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 14
+ },
+ {
+  "id": 1919,
+  "tournament_id": 135,
+  "school_name": "Manchester Regional",
+  "total_points": 22,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 45
+ },
+ {
+  "id": 3658,
+  "tournament_id": 135,
+  "school_name": "Mary Help of Christians Academy",
+  "total_points": 20,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 381
+ },
+ {
+  "id": 1915,
+  "tournament_id": 135,
+  "school_name": "Montclair",
+  "total_points": 24,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 105
+ },
+ {
+  "id": 1894,
+  "tournament_id": 135,
+  "school_name": "Morris Hills",
+  "total_points": 77,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 76
+ },
+ {
+  "id": 1902,
+  "tournament_id": 135,
+  "school_name": "Mt. Olive",
+  "total_points": 45,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 56
+ },
+ {
+  "id": 1890,
+  "tournament_id": 135,
+  "school_name": "Newton/Kittatinny",
+  "total_points": 138,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 24
+ },
+ {
+  "id": 1934,
+  "tournament_id": 135,
+  "school_name": "North Warren Regional",
+  "total_points": 12,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 25
+ },
+ {
+  "id": 1924,
+  "tournament_id": 135,
+  "school_name": "Northern Valley Regional at Demarest",
+  "total_points": 16,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 314
+ },
+ {
+  "id": 1945,
+  "tournament_id": 135,
+  "school_name": "Northern Valley Regional at Old Tappan",
+  "total_points": 4,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 6
+ },
+ {
+  "id": 1903,
+  "tournament_id": 135,
+  "school_name": "Nutley",
+  "total_points": 44.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 106
+ },
+ {
+  "id": 1905,
+  "tournament_id": 135,
+  "school_name": "Paramus",
+  "total_points": 42,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 57
+ },
+ {
+  "id": 1907,
+  "tournament_id": 135,
+  "school_name": "Paramus Catholic",
+  "total_points": 39.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 153
+ },
+ {
+  "id": 1930,
+  "tournament_id": 135,
+  "school_name": "Pascack Hills",
+  "total_points": 13,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 15
+ },
+ {
+  "id": 1925,
+  "tournament_id": 135,
+  "school_name": "Passaic",
+  "total_points": 16,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 58
+ },
+ {
+  "id": 1901,
+  "tournament_id": 135,
+  "school_name": "Passaic Co Tech-Voc",
+  "total_points": 47,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 391
+ },
+ {
+  "id": 1916,
+  "tournament_id": 135,
+  "school_name": "Pequannock Township",
+  "total_points": 24,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 36
+ },
+ {
+  "id": 1904,
+  "tournament_id": 135,
+  "school_name": "Ramsey",
+  "total_points": 44,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 18
+ },
+ {
+  "id": 1897,
+  "tournament_id": 135,
+  "school_name": "Ridgewood",
+  "total_points": 60.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 19
+ },
+ {
+  "id": 1913,
+  "tournament_id": 135,
+  "school_name": "River Dell",
+  "total_points": 25.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 8
+ },
+ {
+  "id": 1935,
+  "tournament_id": 135,
+  "school_name": "Roxbury",
+  "total_points": 11,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 66
+ },
+ {
+  "id": 1909,
+  "tournament_id": 135,
+  "school_name": "Sparta",
+  "total_points": 32,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 26
+ },
+ {
+  "id": 1917,
+  "tournament_id": 135,
+  "school_name": "St. Mary High School (Rutherford)",
+  "total_points": 23,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 88
+ },
+ {
+  "id": 1891,
+  "tournament_id": 135,
+  "school_name": "Vernon Township",
+  "total_points": 110,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 27
+ },
+ {
+  "id": 1900,
+  "tournament_id": 135,
+  "school_name": "Wallkill Valley Regional",
+  "total_points": 49,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 28
+ },
+ {
+  "id": 1923,
+  "tournament_id": 135,
+  "school_name": "Wayne Valley",
+  "total_points": 20,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 68
+ },
+ {
+  "id": 1926,
+  "tournament_id": 135,
+  "school_name": "West Milford Township",
+  "total_points": 15,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 29
+ },
+ {
+  "id": 1927,
+  "tournament_id": 135,
+  "school_name": "Westwood",
+  "total_points": 15,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 10
+ },
+ {
+  "id": 1959,
+  "tournament_id": 136,
+  "school_name": "Bayonne",
+  "total_points": 50.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 120
+ },
+ {
+  "id": 1971,
+  "tournament_id": 136,
+  "school_name": "Belleville",
+  "total_points": 24,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 100
+ },
+ {
+  "id": 1984,
+  "tournament_id": 136,
+  "school_name": "Bernards",
+  "total_points": 6,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 139
+ },
+ {
+  "id": 1947,
+  "tournament_id": 136,
+  "school_name": "Bloomfield",
+  "total_points": 124,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 81
+ },
+ {
+  "id": 1973,
+  "tournament_id": 136,
+  "school_name": "Carteret",
+  "total_points": 20,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 148
+ },
+ {
+  "id": 1979,
+  "tournament_id": 136,
+  "school_name": "Columbia",
+  "total_points": 12,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 121
+ },
+ {
+  "id": 1954,
+  "tournament_id": 136,
+  "school_name": "Delaware Valley Regional",
+  "total_points": 65,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 141
+ },
+ {
+  "id": 1949,
+  "tournament_id": 136,
+  "school_name": "Elizabeth",
+  "total_points": 85,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 123
+ },
+ {
+  "id": 1976,
+  "tournament_id": 136,
+  "school_name": "Franklin",
+  "total_points": 15.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 169
+ },
+ {
+  "id": 1966,
+  "tournament_id": 136,
+  "school_name": "Hanover Park Hs",
+  "total_points": 31,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 113
+ },
+ {
+  "id": 1951,
+  "tournament_id": 136,
+  "school_name": "Hunterdon Central Regional",
+  "total_points": 80,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 190
+ },
+ {
+  "id": 1978,
+  "tournament_id": 136,
+  "school_name": "Immaculata",
+  "total_points": 13,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 73
+ },
+ {
+  "id": 1963,
+  "tournament_id": 136,
+  "school_name": "Irvington",
+  "total_points": 40,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 132
+ },
+ {
+  "id": 1985,
+  "tournament_id": 136,
+  "school_name": "John P. Stevens",
+  "total_points": 4,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 151
+ },
+ {
+  "id": 1982,
+  "tournament_id": 136,
+  "school_name": "Kearny",
+  "total_points": 10,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 103
+ },
+ {
+  "id": 1980,
+  "tournament_id": 136,
+  "school_name": "Linden",
+  "total_points": 12,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 152
+ },
+ {
+  "id": 1975,
+  "tournament_id": 136,
+  "school_name": "Madison",
+  "total_points": 17,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 84
+ },
+ {
+  "id": 1986,
+  "tournament_id": 136,
+  "school_name": "Manville Hs",
+  "total_points": 4,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 171
+ },
+ {
+  "id": 1961,
+  "tournament_id": 136,
+  "school_name": "Metuchen",
+  "total_points": 47,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 180
+ },
+ {
+  "id": 1987,
+  "tournament_id": 136,
+  "school_name": "Millburn",
+  "total_points": 4,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 133
+ },
+ {
+  "id": 1970,
+  "tournament_id": 136,
+  "school_name": "Morristown",
+  "total_points": 26,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 114
+ },
+ {
+  "id": 1988,
+  "tournament_id": 136,
+  "school_name": "New Providence",
+  "total_points": 2,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 134
+ },
+ {
+  "id": 1952,
+  "tournament_id": 136,
+  "school_name": "North Hunterdon",
+  "total_points": 78,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 135
+ },
+ {
+  "id": 1977,
+  "tournament_id": 136,
+  "school_name": "North Plainfield",
+  "total_points": 14,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 143
+ },
+ {
+  "id": 1983,
+  "tournament_id": 136,
+  "school_name": "North Star Academy",
+  "total_points": 10,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 116
+ },
+ {
+  "id": 1958,
+  "tournament_id": 136,
+  "school_name": "Perth Amboy",
+  "total_points": 53,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 182
+ },
+ {
+  "id": 1960,
+  "tournament_id": 136,
+  "school_name": "Phillipsburg",
+  "total_points": 49,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 7
+ },
+ {
+  "id": 1969,
+  "tournament_id": 136,
+  "school_name": "Plainfield",
+  "total_points": 29,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 154
+ },
+ {
+  "id": 1950,
+  "tournament_id": 136,
+  "school_name": "Rahway",
+  "total_points": 81.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 155
+ },
+ {
+  "id": 1956,
+  "tournament_id": 136,
+  "school_name": "Roselle Park",
+  "total_points": 62.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 125
+ },
+ {
+  "id": 1948,
+  "tournament_id": 136,
+  "school_name": "Saint Thomas Aquinas",
+  "total_points": 96,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 234
+ },
+ {
+  "id": 1953,
+  "tournament_id": 136,
+  "school_name": "Scotch Plains-Fanwood",
+  "total_points": 69.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 126
+ },
+ {
+  "id": 1946,
+  "tournament_id": 136,
+  "school_name": "Somerville",
+  "total_points": 127,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 145
+ },
+ {
+  "id": 1967,
+  "tournament_id": 136,
+  "school_name": "South Plainfield",
+  "total_points": 31,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 157
+ },
+ {
+  "id": 1981,
+  "tournament_id": 136,
+  "school_name": "Voorhees (Glen Gardner)",
+  "total_points": 12,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 146
+ },
+ {
+  "id": 1955,
+  "tournament_id": 136,
+  "school_name": "Warren Hills",
+  "total_points": 64.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 67
+ },
+ {
+  "id": 1964,
+  "tournament_id": 136,
+  "school_name": "Watchung Hills Regional",
+  "total_points": 39,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 147
+ },
+ {
+  "id": 1968,
+  "tournament_id": 136,
+  "school_name": "West Orange",
+  "total_points": 31,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 109
+ },
+ {
+  "id": 1972,
+  "tournament_id": 136,
+  "school_name": "Westfield",
+  "total_points": 22,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 128
+ },
+ {
+  "id": 2060,
+  "tournament_id": 137,
+  "school_name": "A.P. Schalick",
+  "total_points": 19,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 286
+ },
+ {
+  "id": 2043,
+  "tournament_id": 137,
+  "school_name": "Absegami",
+  "total_points": 51,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 276
+ },
+ {
+  "id": 2056,
+  "tournament_id": 137,
+  "school_name": "Audubon",
+  "total_points": 26.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 236
+ },
+ {
+  "id": 2057,
+  "tournament_id": 137,
+  "school_name": "BCIT - Westampton",
+  "total_points": 24,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 256
+ },
+ {
+  "id": 2065,
+  "tournament_id": 137,
+  "school_name": "Buena Regional",
+  "total_points": 17,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 287
+ },
+ {
+  "id": 2081,
+  "tournament_id": 137,
+  "school_name": "Cedar Creek",
+  "total_points": 3,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 288
+ },
+ {
+  "id": 2033,
+  "tournament_id": 137,
+  "school_name": "Central Regional",
+  "total_points": 105.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 247
+ },
+ {
+  "id": 2048,
+  "tournament_id": 137,
+  "school_name": "Cherry Hill East",
+  "total_points": 35.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 267
+ },
+ {
+  "id": 2051,
+  "tournament_id": 137,
+  "school_name": "Cherry Hill West",
+  "total_points": 32,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 268
+ },
+ {
+  "id": 2062,
+  "tournament_id": 137,
+  "school_name": "Cinnaminson",
+  "total_points": 18,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 257
+ },
+ {
+  "id": 2040,
+  "tournament_id": 137,
+  "school_name": "Clayton/Glassboro",
+  "total_points": 56,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 305
+ },
+ {
+  "id": 2073,
+  "tournament_id": 137,
+  "school_name": "Clearview Regional",
+  "total_points": 6,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 306
+ },
+ {
+  "id": 2055,
+  "tournament_id": 137,
+  "school_name": "Collingswood",
+  "total_points": 27,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 238
+ },
+ {
+  "id": 2038,
+  "tournament_id": 137,
+  "school_name": "Delran",
+  "total_points": 59.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 258
+ },
+ {
+  "id": 2044,
+  "tournament_id": 137,
+  "school_name": "Delsea",
+  "total_points": 49,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 290
+ },
+ {
+  "id": 2068,
+  "tournament_id": 137,
+  "school_name": "Deptford",
+  "total_points": 12,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 307
+ },
+ {
+  "id": 2036,
+  "tournament_id": 137,
+  "school_name": "Eastern",
+  "total_points": 70.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 296
+ },
+ {
+  "id": 2037,
+  "tournament_id": 137,
+  "school_name": "Egg Harbor",
+  "total_points": 70,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 279
+ },
+ {
+  "id": 2042,
+  "tournament_id": 137,
+  "school_name": "Gateway Reg/ Woodbury",
+  "total_points": 54,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 291
+ },
+ {
+  "id": 2034,
+  "tournament_id": 137,
+  "school_name": "Gloucester City JR/SR",
+  "total_points": 95.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 259
+ },
+ {
+  "id": 2076,
+  "tournament_id": 137,
+  "school_name": "Haddon Heights",
+  "total_points": 4,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 239
+ },
+ {
+  "id": 2058,
+  "tournament_id": 137,
+  "school_name": "Haddon Township",
+  "total_points": 21,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 240
+ },
+ {
+  "id": 2072,
+  "tournament_id": 137,
+  "school_name": "Hammonton",
+  "total_points": 7.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 297
+ },
+ {
+  "id": 2061,
+  "tournament_id": 137,
+  "school_name": "Holy Spirit",
+  "total_points": 19,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 280
+ },
+ {
+  "id": 2035,
+  "tournament_id": 137,
+  "school_name": "Kingsway Regional",
+  "total_points": 81,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 260
+ },
+ {
+  "id": 2041,
+  "tournament_id": 137,
+  "school_name": "Lenape",
+  "total_points": 55.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 271
+ },
+ {
+  "id": 2069,
+  "tournament_id": 137,
+  "school_name": "Lindenwold",
+  "total_points": 10,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 308
+ },
+ {
+  "id": 2054,
+  "tournament_id": 137,
+  "school_name": "Mainland Regional",
+  "total_points": 27.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 282
+ },
+ {
+  "id": 2047,
+  "tournament_id": 137,
+  "school_name": "Manchester Township",
+  "total_points": 38,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 250
+ },
+ {
+  "id": 2059,
+  "tournament_id": 137,
+  "school_name": "Maple Shade",
+  "total_points": 20,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 272
+ },
+ {
+  "id": 2066,
+  "tournament_id": 137,
+  "school_name": "Middle Township",
+  "total_points": 14,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 283
+ },
+ {
+  "id": 2078,
+  "tournament_id": 137,
+  "school_name": "Moorestown",
+  "total_points": 4,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 261
+ },
+ {
+  "id": 2053,
+  "tournament_id": 137,
+  "school_name": "Ocean City",
+  "total_points": 31.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 285
+ },
+ {
+  "id": 2063,
+  "tournament_id": 137,
+  "school_name": "Palmyra",
+  "total_points": 18,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 262
+ },
+ {
+  "id": 2052,
+  "tournament_id": 137,
+  "school_name": "Paulsboro H.S.",
+  "total_points": 32,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 309
+ },
+ {
+  "id": 2045,
+  "tournament_id": 137,
+  "school_name": "Pemberton Township",
+  "total_points": 44,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 273
+ },
+ {
+  "id": 2032,
+  "tournament_id": 137,
+  "school_name": "Pennsauken",
+  "total_points": 122,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 242
+ },
+ {
+  "id": 2050,
+  "tournament_id": 137,
+  "school_name": "Pennsville Memorial",
+  "total_points": 34,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 293
+ },
+ {
+  "id": 2070,
+  "tournament_id": 137,
+  "school_name": "Pinelands Regional",
+  "total_points": 10,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 251
+ },
+ {
+  "id": 2074,
+  "tournament_id": 137,
+  "school_name": "Pitman",
+  "total_points": 6,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 311
+ },
+ {
+  "id": 2031,
+  "tournament_id": 137,
+  "school_name": "Rancocas Valley Regional",
+  "total_points": 147,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 263
+ },
+ {
+  "id": 2079,
+  "tournament_id": 137,
+  "school_name": "Salem",
+  "total_points": 4,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 312
+ },
+ {
+  "id": 2049,
+  "tournament_id": 137,
+  "school_name": "Seneca",
+  "total_points": 35.5,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 274
+ },
+ {
+  "id": 2039,
+  "tournament_id": 137,
+  "school_name": "Southern Regional",
+  "total_points": 57,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 252
+ },
+ {
+  "id": 2064,
+  "tournament_id": 137,
+  "school_name": "Toms River East",
+  "total_points": 18,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 253
+ },
+ {
+  "id": 2080,
+  "tournament_id": 137,
+  "school_name": "Toms River North",
+  "total_points": 4,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 254
+ },
+ {
+  "id": 2082,
+  "tournament_id": 137,
+  "school_name": "Washington Township",
+  "total_points": 2,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 302
+ },
+ {
+  "id": 2075,
+  "tournament_id": 137,
+  "school_name": "West Deptford",
+  "total_points": 6,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 245
+ },
+ {
+  "id": 2046,
+  "tournament_id": 137,
+  "school_name": "Williamstown",
+  "total_points": 42,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 303
+ },
+ {
+  "id": 2067,
+  "tournament_id": 137,
+  "school_name": "Winslow Twp ( Edgewood)",
+  "total_points": 14,
+  "season_id": 2025,
+  "tournament_type": "girls_regions",
+  "school_id": 304
+ },
+ {
+  "id": 2101,
+  "tournament_id": 138,
+  "school_name": "Absegami",
+  "total_points": 24,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 276
+ },
+ {
+  "id": 2108,
+  "tournament_id": 138,
+  "school_name": "Bayonne",
+  "total_points": 20,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 120
+ },
+ {
+  "id": 2088,
+  "tournament_id": 138,
+  "school_name": "Bloomfield",
+  "total_points": 48.5,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 81
+ },
+ {
+  "id": 2092,
+  "tournament_id": 138,
+  "school_name": "Boonton",
+  "total_points": 35.5,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 70
+ },
+ {
+  "id": 2134,
+  "tournament_id": 138,
+  "school_name": "Bordentown Regional/Florence",
+  "total_points": 9,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 227
+ },
+ {
+  "id": 2136,
+  "tournament_id": 138,
+  "school_name": "Brick Township",
+  "total_points": 8,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 218
+ },
+ {
+  "id": 2093,
+  "tournament_id": 138,
+  "school_name": "Central Regional",
+  "total_points": 35.5,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 247
+ },
+ {
+  "id": 2109,
+  "tournament_id": 138,
+  "school_name": "Cherry Hill East",
+  "total_points": 20,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 267
+ },
+ {
+  "id": 2118,
+  "tournament_id": 138,
+  "school_name": "Cherry Hill West",
+  "total_points": 16,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 268
+ },
+ {
+  "id": 2114,
+  "tournament_id": 138,
+  "school_name": "Clayton/Glassboro",
+  "total_points": 18,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 305
+ },
+ {
+  "id": 2113,
+  "tournament_id": 138,
+  "school_name": "Delaware Valley Regional",
+  "total_points": 18.5,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 141
+ },
+ {
+  "id": 2137,
+  "tournament_id": 138,
+  "school_name": "Delran",
+  "total_points": 8,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 258
+ },
+ {
+  "id": 2083,
+  "tournament_id": 138,
+  "school_name": "Depaul Catholic",
+  "total_points": 74,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 22
+ },
+ {
+  "id": 2102,
+  "tournament_id": 138,
+  "school_name": "Egg Harbor",
+  "total_points": 24,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 279
+ },
+ {
+  "id": 2135,
+  "tournament_id": 138,
+  "school_name": "Elizabeth",
+  "total_points": 9,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 123
+ },
+ {
+  "id": 2128,
+  "tournament_id": 138,
+  "school_name": "Elmwood Park",
+  "total_points": 13,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 51
+ },
+ {
+  "id": 2119,
+  "tournament_id": 138,
+  "school_name": "Fair Lawn",
+  "total_points": 16,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 52
+ },
+ {
+  "id": 2089,
+  "tournament_id": 138,
+  "school_name": "Gateway Reg/ Woodbury",
+  "total_points": 47.5,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 291
+ },
+ {
+  "id": 2110,
+  "tournament_id": 138,
+  "school_name": "Gloucester City JR/SR",
+  "total_points": 20,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 259
+ },
+ {
+  "id": 2149,
+  "tournament_id": 138,
+  "school_name": "Hamilton West",
+  "total_points": 2,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 231
+ },
+ {
+  "id": 2097,
+  "tournament_id": 138,
+  "school_name": "Hanover Park Hs",
+  "total_points": 27,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 113
+ },
+ {
+  "id": 2087,
+  "tournament_id": 138,
+  "school_name": "High Point Regional",
+  "total_points": 53,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 32
+ },
+ {
+  "id": 2090,
+  "tournament_id": 138,
+  "school_name": "Howell",
+  "total_points": 37.5,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 233
+ },
+ {
+  "id": 2117,
+  "tournament_id": 138,
+  "school_name": "Hunterdon Central Regional",
+  "total_points": 17,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 190
+ },
+ {
+  "id": 2125,
+  "tournament_id": 138,
+  "school_name": "Indian Hills",
+  "total_points": 14,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 13
+ },
+ {
+  "id": 2103,
+  "tournament_id": 138,
+  "school_name": "John F. Kennedy Patterson",
+  "total_points": 24,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 74
+ },
+ {
+  "id": 2104,
+  "tournament_id": 138,
+  "school_name": "Kingsway Regional",
+  "total_points": 24,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 260
+ },
+ {
+  "id": 2143,
+  "tournament_id": 138,
+  "school_name": "Kinnelon",
+  "total_points": 6.5,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 33
+ },
+ {
+  "id": 2115,
+  "tournament_id": 138,
+  "school_name": "Lakewood",
+  "total_points": 18,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 203
+ },
+ {
+  "id": 2141,
+  "tournament_id": 138,
+  "school_name": "Lenape",
+  "total_points": 7,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 271
+ },
+ {
+  "id": 2124,
+  "tournament_id": 138,
+  "school_name": "Lenape Valley H.S.",
+  "total_points": 15,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 62
+ },
+ {
+  "id": 2150,
+  "tournament_id": 138,
+  "school_name": "Manalapan",
+  "total_points": 2,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 204
+ },
+ {
+  "id": 2151,
+  "tournament_id": 138,
+  "school_name": "Manchester Regional",
+  "total_points": 2,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 45
+ },
+ {
+  "id": 2126,
+  "tournament_id": 138,
+  "school_name": "Marlboro",
+  "total_points": 14,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 193
+ },
+ {
+  "id": 2138,
+  "tournament_id": 138,
+  "school_name": "Metuchen",
+  "total_points": 8,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 180
+ },
+ {
+  "id": 2099,
+  "tournament_id": 138,
+  "school_name": "Middletown South",
+  "total_points": 25,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 160
+ },
+ {
+  "id": 2152,
+  "tournament_id": 138,
+  "school_name": "Monroe Township",
+  "total_points": 2,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 172
+ },
+ {
+  "id": 2112,
+  "tournament_id": 138,
+  "school_name": "Morris Hills",
+  "total_points": 19,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 76
+ },
+ {
+  "id": 2142,
+  "tournament_id": 138,
+  "school_name": "Mt. Olive",
+  "total_points": 7,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 56
+ },
+ {
+  "id": 2086,
+  "tournament_id": 138,
+  "school_name": "Newton/Kittatinny",
+  "total_points": 56,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 24
+ },
+ {
+  "id": 2146,
+  "tournament_id": 138,
+  "school_name": "Nutley",
+  "total_points": 4,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 106
+ },
+ {
+  "id": 2131,
+  "tournament_id": 138,
+  "school_name": "Ocean City",
+  "total_points": 12,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 285
+ },
+ {
+  "id": 2133,
+  "tournament_id": 138,
+  "school_name": "Old Bridge",
+  "total_points": 11,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 163
+ },
+ {
+  "id": 2107,
+  "tournament_id": 138,
+  "school_name": "Paramus",
+  "total_points": 21,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 57
+ },
+ {
+  "id": 2139,
+  "tournament_id": 138,
+  "school_name": "Paulsboro H.S.",
+  "total_points": 8,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 309
+ },
+ {
+  "id": 2094,
+  "tournament_id": 138,
+  "school_name": "Pennsauken",
+  "total_points": 31,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 242
+ },
+ {
+  "id": 2130,
+  "tournament_id": 138,
+  "school_name": "Pequannock Township",
+  "total_points": 12.5,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 36
+ },
+ {
+  "id": 2121,
+  "tournament_id": 138,
+  "school_name": "Phillipsburg",
+  "total_points": 16,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 7
+ },
+ {
+  "id": 2148,
+  "tournament_id": 138,
+  "school_name": "Plainfield",
+  "total_points": 3,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 154
+ },
+ {
+  "id": 2100,
+  "tournament_id": 138,
+  "school_name": "Point Pleasant Boro",
+  "total_points": 25,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 224
+ },
+ {
+  "id": 2111,
+  "tournament_id": 138,
+  "school_name": "Rahway",
+  "total_points": 20,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 155
+ },
+ {
+  "id": 2085,
+  "tournament_id": 138,
+  "school_name": "Rancocas Valley Regional",
+  "total_points": 57.5,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 263
+ },
+ {
+  "id": 2091,
+  "tournament_id": 138,
+  "school_name": "Ridgewood",
+  "total_points": 37,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 19
+ },
+ {
+  "id": 2106,
+  "tournament_id": 138,
+  "school_name": "River Dell",
+  "total_points": 22,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 8
+ },
+ {
+  "id": 2147,
+  "tournament_id": 138,
+  "school_name": "Robbinsville",
+  "total_points": 4,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 215
+ },
+ {
+  "id": 2116,
+  "tournament_id": 138,
+  "school_name": "Roselle Park",
+  "total_points": 18,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 125
+ },
+ {
+  "id": 2098,
+  "tournament_id": 138,
+  "school_name": "Saint Thomas Aquinas",
+  "total_points": 25.5,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 234
+ },
+ {
+  "id": 2140,
+  "tournament_id": 138,
+  "school_name": "Scotch Plains-Fanwood",
+  "total_points": 8,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 126
+ },
+ {
+  "id": 2127,
+  "tournament_id": 138,
+  "school_name": "Seneca",
+  "total_points": 14,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 274
+ },
+ {
+  "id": 2129,
+  "tournament_id": 138,
+  "school_name": "Somerville",
+  "total_points": 13,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 145
+ },
+ {
+  "id": 2153,
+  "tournament_id": 138,
+  "school_name": "South Plainfield",
+  "total_points": 2,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 157
+ },
+ {
+  "id": 2122,
+  "tournament_id": 138,
+  "school_name": "Sparta",
+  "total_points": 16,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 26
+ },
+ {
+  "id": 2096,
+  "tournament_id": 138,
+  "school_name": "Trenton Central",
+  "total_points": 27.5,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 216
+ },
+ {
+  "id": 2105,
+  "tournament_id": 138,
+  "school_name": "Vernon Township",
+  "total_points": 24,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 27
+ },
+ {
+  "id": 2145,
+  "tournament_id": 138,
+  "school_name": "Watchung Hills Regional",
+  "total_points": 6,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 147
+ },
+ {
+  "id": 2132,
+  "tournament_id": 138,
+  "school_name": "Williamstown",
+  "total_points": 12,
+  "season_id": 2025,
+  "tournament_type": "girls_state",
+  "school_id": 303
+ }
+]

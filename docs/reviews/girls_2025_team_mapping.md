@@ -1,20 +1,17 @@
 # Girls 2024-25 team totals: TrackWrestling standings → schools
 
-323 teams: 284 mapped (0 by loose name — check those), 39 not matched.
-Stored total already equal: 240; would change: 1; new rows: 43.
+324 teams: 300 mapped (0 by loose name — check those), 24 not matched.
+Stored total already equal: 242; would change: 0; new rows: 58.
 Lines shown: every team not mapped through the tournament's own entries, and every total that would change.
 
 ## Regions Central
 - Jackson Memorial Hs — 180 → Jackson Township [370] (entries; new row)
 - North Brunswick Township — 119.5 → North Brunswick [162] (entries; new row)
 - East Brunswick H.S. — 67.5 → East Brunswick [158] (entries; new row)
-- West Windsor-Plainsboro South — 20 → West Windsor-Plainsboro North [176] (entries; stored 10)
-- ⚠ West Windsor-Plainsboro North (10) → West Windsor-Plainsboro North [176] already used by another team
-- Matawan Reg — 0 → **not matched** (—; UNMATCHED)
-- Neptune — 0 → **not matched** (—; UNMATCHED)
-- South River — 0 → **not matched** (—; UNMATCHED)
+- Matawan Reg — 0 → Matawan [382] (entries; new row)
+- Neptune — 0 → Neptune [221] (entries; new row)
+- South River — 0 → South River [165] (entries; new row)
 - Wall Hs — 0 → Wall [235] (entries; new row)
-- (stored only) West Windsor-Plainsboro South [177] 20 — no TrackWrestling team maps here
 ## Regions North 1
 - Montville Township High School — 59.5 → Montville [75] (entries; new row)
 - Parsippany Hills High School — 30 → Parsippany Hills/Parsippany [78] (entries; new row)
@@ -24,32 +21,32 @@ Lines shown: every team not mapped through the tournament's own entries, and eve
 - Jefferson TWP — 6 → Jefferson-Sparta [4] (entries; new row)
 - Lodi — 6 → Lodi/Saddle Brook [379] (entries; new row)
 - Cliffside Park/Ridgefield Memorial — 4 → Cliffside Park [364] (entries; new row)
-- College Achieve Paterson Charter — 0 → **not matched** (—; UNMATCHED)
-- Dover — 0 → **not matched** (—; UNMATCHED)
-- Mountain Lakes — 0 → **not matched** (—; UNMATCHED)
+- College Achieve Paterson Charter — 0 → College Achieve Paterson [71] (entries; new row)
+- Dover — 0 → Dover [61] (entries; new row)
+- Mountain Lakes — 0 → Mountain Lakes [63] (entries; new row)
 - Northern Highlands Regional Sc — 0 → Northern Highlands [35] (entries; new row)
-- Pascack Valley School — 0 → **not matched** (—; UNMATCHED)
+- Pascack Valley School — 0 → Pascack Valley [16] (entries; new row)
 ## Regions North 2
 - JFK/Woodbridge/Colonia — 53.5 → Colonia [149] (entries; new row)
 - Bound Brook HS — 43.5 → Bound Brook [322] (entries; new row)
 - Piscataway High School — 32 → Piscataway [183] (entries; new row)
 - Middlesex/Dunellen — 18 → Middlesex-Dunellen [383] (entries; new row)
-- Bridgewater-Raritan — 0 → **not matched** (—; UNMATCHED)
-- Highland Park — 0 → **not matched** (—; UNMATCHED)
-- Newark Academy — 0 → **not matched** (—; UNMATCHED)
+- Bridgewater-Raritan — 0 → Bridgewater-Raritan [131] (entries; new row)
+- Highland Park — 0 → Highland Park [179] (entries; new row)
+- Newark Academy — 0 → Newark Academy [115] (entries; new row)
 - Newark Collegiate Charter — 0 → Newark Collegiate [85] (entries; new row)
 - Orange — 0 → Orange [86] (entries; new row)
-- Union — 0 → **not matched** (—; UNMATCHED)
+- Union — 0 → Union [138] (entries; new row)
 ## Regions South
 - Haddon Twp Hgh School — 21 → Haddon Township [240] (name; same)
 - Toms River East H.S. — 18 → Toms River East [253] (name; same)
 - Willingboro High School — 10 → Willingboro [265] (entries; new row)
 - Highland Regional High School — 4 → Highland [369] (entries; new row)
-- Cherokee — 0 → **not matched** (—; UNMATCHED)
+- Cherokee — 0 → Cherokee [266] (entries; new row)
 - Cumberland Regional — 0 → **not matched** (—; UNMATCHED)
-- Oakcrest — 0 → **not matched** (—; UNMATCHED)
-- Overbrook Reg Senior — 0 → **not matched** (—; UNMATCHED)
-- Sterling — 0 → **not matched** (—; UNMATCHED)
+- Oakcrest — 0 → Oakcrest [284] (entries; new row)
+- Overbrook Reg Senior — 0 → Overbrook [299] (entries; new row)
+- Sterling — 0 → Sterling [244] (entries; new row)
 - Vineland — 0 → Vineland [294] (entries; new row)
 ## States
 - Jackson Memorial Hs — 74 → Jackson Township [370] (entries; new row)

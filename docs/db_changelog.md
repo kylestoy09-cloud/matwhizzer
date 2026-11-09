@@ -2,6 +2,26 @@
 
 ---
 
+## 2026-11-09 — Girls 2024-25 postseason: standings rows, 3rd / 4th placements, leaderboards
+
+**Scripts (service role):** `scripts/build_girls_2025_official_team_scores.mts --apply` (adapted from the 2025-26 builder; add-only) and `scripts/add_girls_2025_region_thirds_placements.mts --apply`. **Backups:** `docs/migrations/backups/20261109_girls_2025_team_scores_before.json` (the 242 stored rows, unchanged) and `..._girls_2025_region_placements_added.json` (the new ids).
+
+**Changes:**
+- **Official team rows:** 58 TrackWrestling standings rows added; no stored total changed.
+  - Including Jackson Township 180 (Central's top team), North Brunswick 119.5, East Brunswick 67.5, Montville 59.5 and the co-op's 53.5 on Colonia.
+  - Central 46, North 1 61, North 2 49 now equal TrackWrestling's team counts.
+  - South 57 of 58: Cumberland Regional (0) had no wrestler there.
+  - State 87 of 110: the 24 left out all scored 0 with no wrestler at State, as in the 2025-26 load.
+- **Placements:** 96 new (3rd and 4th at every weight in the four regions), from the 3rd place bouts; the regions had only 1st and 2nd.
+- **Leaderboards:** `lb_ps_refresh` (F, 2025): 3,179 wrestler rows, 726 team rows.
+- **Ratings:** none. The rebuild stops with "No season before 2024-25"; girls 2024-25 never had ratings (0 rows before and after). Not retried.
+
+Integrity check unchanged (3 known).
+
+**2024-25 girls postseason: done.** Every region and the State match the export bout for bout; standings and placements are complete.
+
+---
+
 ## 2026-11-09 — Girls 2024-25 postseason, step 2: the region Round 1 losers
 
 **Script:** `scripts/apply_girls_2025_region_r1.mts` (service role), from the plan in `docs/reviews/girls_2025_region_r1_plan.json` (`scripts/plan_girls_2025_region_r1.mts`). **Migration file:** `docs/migrations/20261109_girls_2025_r1_bouts.sql`. **Backup (every new row's id):** `docs/migrations/backups/20261109_girls_2025_r1_created.json`
