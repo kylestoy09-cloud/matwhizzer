@@ -14,7 +14,7 @@
 - **Districts 227 / 234:** boys rules, with byes counted from Round 1 of the 32-man bracket and places 16/12/9/7/5/3.
   - North Brunswick −2, Red Bank Regional −1 and Freehold Township −2 look like unlisted team deductions.
   - Raritan, Howell, Hamilton West and Cherry Hill are +1 each, unexplained.
-- **Regions: not settled.** The brackets are complete, but no standard rule set fits. The best found, 165 / 191, has no advancement points, 1 per bye and places 19/15/11/9/6/4. Parked until TrackWrestling's scoring setup for those events is known.
+- **Regions 190 / 191 (settled the same day with Jackson Township's per-wrestler points from Kyle):** 1 point per championship win from the QF on, no consolation advancement, no bye points, places 18/14/11/9/6/4. The double forfeit in Region 2's 152 5th place bout gives both wrestlers 6th. Delran +1, unexplained. Written up in `docs/reviews/trackwrestling_team_scoring.md`.
 
 The official copied totals on the site were never affected.
 

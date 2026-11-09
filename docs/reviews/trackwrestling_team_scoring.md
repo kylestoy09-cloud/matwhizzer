@@ -39,3 +39,24 @@ On stored bouts, 1,979 / 1,994 wrestlers match per wrestler (D1–18, 2025-26). 
 - **2 more:** not traced.
 
 The school-level −1s are deductions. The 2024-25 region misses are large (up to 76) and fit the known missing 2024-25 region bouts (3rd/5th-place matches absent in R2 and R7); not checked one by one.
+
+# Girls (2025-26), worked out 2026-11-09
+
+How TrackWrestling scored the 2025-26 girls postseason, from the official team totals
+(`precomputed_team_scores`) and, for the regions, one school's per-wrestler points (Jackson Township,
+Region 3, from Kyle). Checked with `scripts/check_girls_team_scoring.mts` after the brackets were completed
+against the exports (`scripts/compare_girls_bracket_counts.mts`, the 2026-11-09 migrations).
+
+| Level | Rules | Schools exact |
+|---|---|---|
+| **State** | The boys state rules: advancement 2 / 1, byes 2 if the next contested bout is won, places 16/12/9/7/5/3/2/1 | 117 / 117 |
+| **Districts** | The boys rules, with two differences: byes count from Round 1 of the 32-man bracket (Round 1 is all byes and isn't stored), and places are 16/12/9/7/5/3 | 227 / 234 |
+| **Regions** | **Different:** 1 point for each championship win from the quarterfinal on (a Round 1 win earns nothing); no consolation advancement; no bye points; places 18/14/11/9/6/4 | 190 / 191 |
+
+- **Bonus everywhere:** as the boys (fall, forfeit, injury default, DQ 2; tech fall 1.5; major 1). An overtime bout that ends by a fall ("won in SV-1 by fall") is a fall.
+- **Forfeits with no loser:** `forfeit_opponent` 'filler' (over an entry such as "A Forfeit") counts as contested for bye points; 'empty' ("over ()") does not. Marked for the girls districts 2026-11-09.
+- **Double forfeit in a place bout** ("Genesis Cruz and Celeste Falkovich (DFF)", Region 2, 152, 5th place): no bout is stored, and both wrestlers get the lower place's points (6th, 4). Metuchen and Woodbridge.
+- **Regions proof, per wrestler (Jackson Township, Region 3):** all 9 match: Bonilla 26, Briana Dugo 26, Rucci 25.5, Donato 20, Ariana Dugo 19, Tandari 17, Thorne 8, Feraria 2, Curatola 0. For example Bonilla: falls 2+2+2, QF and SF wins 1+1, 1st 18 = 26.
+- **Not explained:**
+  - **Districts:** North Brunswick −2, Red Bank Regional −1 and Freehold Township −2 (official lower: likely unlisted team deductions); Raritan, Howell, Hamilton West and Cherry Hill +1 each.
+  - **Regions:** Delran +1.
