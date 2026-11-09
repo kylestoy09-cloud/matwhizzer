@@ -2,6 +2,18 @@
 
 ---
 
+## 2026-11-09 — Girls State (2025-26): two overtime bouts that ended by a fall
+
+**Migration file:** `docs/migrations/20261109_girls_state_overtime_falls.sql`
+
+**Purpose:** Gyssell Andrade (Morristown) "won in SV-1 by fall" (6:11) and Jeveah Turner (Rancocas Valley) "won in TB-1 by fall" (7:41), but they were stored as SV-1 and UTB with no time, so the 2-point fall bonus was missing. Morristown and Rancocas Valley were each 2 below their official totals. These are the only overtime-by-fall results in any TrackWrestling export, boys or girls.
+
+**Changes:** both set to FALL with the export's time.
+
+**Status:** waiting for Kyle to run it. **Reversible?** Yes (rollback lines in the file).
+
+---
+
 ## 2026-11-09 — Girls State (2025-26): duplicate consolation semifinals; Coletta's 7th place bout
 
 **Migration file:** `docs/migrations/20261109_girls_state_dup_cons_semis_and_7th.sql` (built by `scripts/build_girls_state_fix_20261109.mts`). Backup: `docs/migrations/backups/20261109_girls_state_duplicate_cons_semis_before.json`
