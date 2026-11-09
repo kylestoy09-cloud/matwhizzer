@@ -2,6 +2,22 @@
 
 ---
 
+## 2026-11-09 — Girls 2024-25 postseason, step 1: State Round 1 and region 3rd place bouts
+
+**Migration file:** `docs/migrations/20261109_girls_2025_state_r1_region_thirds.sql` (built by `scripts/build_girls_2025_r1_and_thirds.mts`)
+
+**Purpose:** The 2024-25 girls regions (Central 134, North 1 135, North 2 136, South 137) and State (138) were loaded from Round 2 on: no Round 1 bouts and no region 3rd place bouts, so those region pages show only 1st and 2nd. Found by `scripts/compare_girls_bracket_counts.mts` and `scripts/audit_girls_2025_regions.mts` against the TrackWrestling exports.
+
+**Changes:** 92 bouts whose two wrestlers already have entries: State Round 1 46, region 3rd place 46. Each is checked not already stored.
+
+**Left for step 2:**
+- 3 bouts with a wrestler who has no entry: Keyra Huastitlan Reyes ×2, Franchesca Edouard.
+- The 255 region Round 1 bouts. Every one has a wrestler with no region entry: 265 wrestlers, 171 linked by name at their school, 94 not.
+
+**Status:** waiting for Kyle to run it. **Reversible?** Yes (no such rows existed before).
+
+---
+
 ## 2026-11-09 — Girls 2025-26 postseason brackets: where they stand
 
 **Bouts vs the TrackWrestling export** (`scripts/compare_girls_bracket_counts.mts`):
