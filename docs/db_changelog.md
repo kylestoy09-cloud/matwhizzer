@@ -26,7 +26,7 @@
 
 Integrity check: unchanged (the no-alias list 79, as before step 2).
 
-**Status:** bouts waiting for Kyle to run them. **Reversible?** Yes (delete by the ids in the backup).
+**Bouts APPLIED** — 2026-11-09, Supabase SQL editor: R1 Central 74, North 1 74, North 2 41, South 66; State R1 47; Central 3rd place 12. **Verified?** Yes: every 2024-25 girls region and the State now match the TrackWrestling export bout for bout (308 / 279 / 314 / 295 / 262). Integrity check unchanged. **Reversible?** Yes (delete by the ids in the backup).
 
 ---
 
