@@ -2,6 +2,18 @@
 
 ---
 
+## 2026-11-09 — Girls District 2 (2025-26): Isabella Jimenez's entry and bouts
+
+**Migration file:** `docs/migrations/20261109_girls_d2_jimenez_entry.sql`
+
+**Purpose:** Isabella Jimenez (Fair Lawn, profile 999466eb) had no District 2 120 entry, so three bouts were missing: her Round 2 win over Maya Espinosa (fall 3:11) and her losses to Noelanii Guzman Caban (QF, fall 1:00) and Cristelle Fiestas (cons. R1, fall 5:14). Source: the TrackWrestling export. Two girls share the name; the other wrestles for East Brunswick (District 7 138). The 2026-11-01 split moved no District 2 entry, so none existed then.
+
+**Changes:** 1 entry (Fair Lawn, grade 9 / Fr, no seed, like the bracket's other entries) and 3 bouts.
+
+**Status:** waiting for Kyle to run it. **Reversible?** Yes (rollback note in the file).
+
+---
+
 ## 2026-11-09 — Girls Districts 5 and 6 (2025-26): consolation semifinals
 
 **Migration file:** `docs/migrations/20261109_girls_d5_d6_cons_semis.sql` (built by `scripts/build_girls_district_cons_semis.mts`)
