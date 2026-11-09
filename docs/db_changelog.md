@@ -2,6 +2,23 @@
 
 ---
 
+## 2026-11-09 — Girls Districts 5 and 6 (2025-26): consolation semifinals
+
+**Migration file:** `docs/migrations/20261109_girls_d5_d6_cons_semis.sql` (built by `scripts/build_girls_district_cons_semis.mts`)
+
+**Purpose:** The TrackWrestling text export has no "Cons Semis" section for Districts 5 and 6, so those bouts were never loaded; the other ten girls districts have theirs (round C3). Found by `scripts/compare_girls_bracket_counts.mts` and the girls scoring check: with the scoring rules settled (Round 1 byes counted; places 16/12/9/7/5/3), these two districts' schools came up short in steps of 3 points, the value of a cons. semi won by fall.
+
+**Changes:** 46 bouts read from the final bracket PDFs (`Whizzer Upload/2025-26 Postseason Brackets/2026 Girls/District 5|6/`):
+- 43 contested;
+- 3 forfeit wins over an empty bracket slot, stored like the other districts' (FORF, no loser): Adjogble D5 235, Rios and Alvardo-Martinez D6 185;
+- District 6 235 (one wrestler) has only empty slots, so nothing is added there.
+
+**Checks before writing:** every bout pairs a semifinal loser with a cons. round 1 winner; the winners are exactly the stored 3rd place bout's wrestlers and the losers the 5th place bout's.
+
+**Status:** waiting for Kyle to run it. **Reversible?** Yes (rollback line in the file).
+
+---
+
 ## 2026-11-09 — Crawlers: robots.txt, one address, firewall block
 
 **No database changes.**
