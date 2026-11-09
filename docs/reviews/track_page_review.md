@@ -69,7 +69,7 @@ the row backed up), or leave it.
 ## 5. Before the 2026-27 season (pinned 2026-11-02)
 
 - **Nightly jobs have never run.** CRON_SECRET isn't set in Vercel, so the 4 crons (ratings 06:00/06:30 UTC, leaderboards 07:00/07:15 UTC) get a 401 every night. Off-season that costs nothing. Before the first bouts: set CRON_SECRET in Vercel (Production), add a skip when no bouts were added since the last run, and confirm one night's run in `admin_activity_log` (entries by 'cron').
-- **Girls Region 1, 2025-26:** no finals or 3rd-place bouts on file, so the region page has no placements. Needs the bracket results.
+- ~~**Girls Region 1, 2025-26:** no finals or 3rd-place bouts on file~~ — the bouts were loaded 2026-11-02 from the bracket PDFs (this note was never updated). The `placements` rows were still missing: `20261109_girls_region1_placements.sql`.
 
 ## 6. Follow-ups from the 2026-11-02 logo / no-raw-text work
 

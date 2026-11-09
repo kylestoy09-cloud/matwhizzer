@@ -2,6 +2,18 @@
 
 ---
 
+## 2026-11-09 — Girls Region 1 (2025-26) placement rows
+
+**Migration file:** `docs/migrations/20261109_girls_region1_placements.sql`
+
+**Purpose:** The `placements` table had no Girls Region 1 rows; Regions 2-4 have 70, 72 and 72. The bouts were complete (place bouts loaded 2026-11-02 from the bracket PDFs) and the region pages read places from the bouts, so they were right. What reads this table and was missing Region 1: postseason wrestler points (`district_wrestler_points`, `lb_p_wrestler_points`), the personalized home page, and ghost champions (none of Region 1's champions was seeded 5th or lower, so none were actually missing).
+
+**Changes:** 72 rows built from the final, 3rd and 5th place bouts, the same way Regions 2-4's are. Checked 2026-11-09: their stored rows equal their bouts exactly.
+
+**Status:** waiting for Kyle to run it. **Reversible?** Yes (delete Region 1's rows). **Verified?** The query at the bottom of the file.
+
+---
+
 ## 2026-11-07 — Account emails through Resend; reset links fixed
 
 **No database changes.**
