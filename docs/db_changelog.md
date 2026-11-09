@@ -2,6 +2,26 @@
 
 ---
 
+## 2026-11-09 — Girls 2025-26 postseason brackets: where they stand
+
+**Bouts vs the TrackWrestling export** (`scripts/compare_girls_bracket_counts.mts`):
+- All 12 districts, Regions 2–4 and State match bout for bout.
+- Districts 5, 6 and 7 also carry the cons. semifinals taken from the PDFs, which the export never had.
+- Region 1's export stops partway; its stored bouts came from the PDFs (2026-11-02).
+
+**Team scoring vs official totals** (`scripts/check_girls_team_scoring.mts`):
+- **State 117 / 117:** boys state rules.
+- **Districts 227 / 234:** boys rules, with byes counted from Round 1 of the 32-man bracket and places 16/12/9/7/5/3.
+  - North Brunswick −2, Red Bank Regional −1 and Freehold Township −2 look like unlisted team deductions.
+  - Raritan, Howell, Hamilton West and Cherry Hill are +1 each, unexplained.
+- **Regions: not settled.** The brackets are complete, but no standard rule set fits. The best found, 165 / 191, has no advancement points, 1 per bye and places 19/15/11/9/6/4. Parked until TrackWrestling's scoring setup for those events is known.
+
+The official copied totals on the site were never affected.
+
+**Afterwards:** girls 2025-26 ratings rebuilt (`scripts/.local/run.mts`, RUN_BODY {"gender":"F"}; it ends with the known harmless "cookies outside request scope" error after the writes; it was run twice, the second time unnecessarily, with the same result); `lb_rs_refresh` (2,403 wrestlers, 249 teams) and `lb_ps_refresh` (4,519 wrestler rows, 1,011 team rows) for F / 2026. Integrity check unchanged (3 known).
+
+---
+
 ## 2026-11-09 — Girls State (2025-26): two overtime bouts that ended by a fall
 
 **Migration file:** `docs/migrations/20261109_girls_state_overtime_falls.sql`
@@ -10,7 +30,7 @@
 
 **Changes:** both set to FALL with the export's time.
 
-**Status:** waiting for Kyle to run it. **Reversible?** Yes (rollback lines in the file).
+**APPLIED** — 2026-11-09, Supabase SQL editor. **Verified?** Yes: both FALL (371, 461 s). Every 2025-26 girls state school now matches its official total (117 / 117).
 
 ---
 
