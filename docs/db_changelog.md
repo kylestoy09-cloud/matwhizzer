@@ -12,7 +12,7 @@
 
 **Changes:** delete 24 duplicate rows (the copy with the larger id; the twin stays); add the 7th place bout. Nothing references a match row by id.
 
-**Status:** delete approved by Kyle 2026-11-09. The first run was stopped by the protected-delete guard (nothing changed); the file now opens the guard for its own transaction. Waiting for the re-run. **Reversible?** Yes (re-insert from the backup).
+**APPLIED** — 2026-11-09, Supabase SQL editor (delete approved by Kyle; the first run was stopped by the protected-delete guard and changed nothing). **Verified?** Yes: C4 24, 7th_Place 12. State matches the export bout for bout (360 = 360), and the girls state scoring check has 115 / 117 schools exact (was 93). Integrity check unchanged (3 known). **Reversible?** Yes (re-insert from the backup).
 
 ---
 
