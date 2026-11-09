@@ -12,7 +12,7 @@
 
 **Changes:** delete 24 duplicate rows (the copy with the larger id; the twin stays); add the 7th place bout. Nothing references a match row by id.
 
-**Status:** awaiting Kyle's approval for the delete (counts and backup above), then his run. **Reversible?** Yes (re-insert from the backup).
+**Status:** delete approved by Kyle 2026-11-09. The first run was stopped by the protected-delete guard (nothing changed); the file now opens the guard for its own transaction. Waiting for the re-run. **Reversible?** Yes (re-insert from the backup).
 
 ---
 

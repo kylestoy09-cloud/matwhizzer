@@ -28,7 +28,7 @@ const sql = `-- Girls 2025-26 State (tournament ${T}): remove 24 duplicate conso
 --
 -- 1. The 24 cons. semifinals (round C4) are each stored twice, identical (same wrestlers, result, score, time):
 --    48 rows where the TrackWrestling export has 24. Each wrestler's record counts the bout twice. Deletes one
---    copy of each (the larger id); the other stays. Delete approval: pending (Kyle). Backup of every deleted
+--    copy of each (the larger id); the other stays. Delete approved by Kyle 2026-11-09. Backup of every deleted
 --    row and its kept twin: ${BACKUP}. Nothing references a match row by id.
 -- 2. The 107 7th place bout: Olivia Mitchell (East Brunswick) won by tech fall over Kayla Coletta (Mary Help of
 --    Christians Academy), TF-1.5 2:10 (18-3), from the export. The 2026-10-26 Coletta restore
@@ -43,6 +43,8 @@ BEGIN
   SELECT count(*) INTO n FROM matches WHERE tournament_id = ${T} AND round = 'C4';
   IF n <> 48 THEN RAISE EXCEPTION 'expected 48 cons. semifinals before, found %', n; END IF;
 
+  -- counted, backed up and approved (Kyle, 2026-11-09): open the protected-delete guard for this transaction only
+  PERFORM set_config('matwhizzer.allow_protected_delete', 'on', true);
   DELETE FROM matches WHERE tournament_id = ${T} AND round = 'C4' AND id IN (
 ${del.map(m => `    '${m.id}'`).join(',\n')}
   );
