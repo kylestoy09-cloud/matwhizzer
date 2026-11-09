@@ -10,11 +10,11 @@ async function all(q: (f: number, t: number) => any) { const o: any[] = []; for 
 const n = (s: string) => s.toLowerCase().replace(/\([^)]*\)/g, '').replace(/[^a-z]/g, '')
 const RND: [RegExp, string][] = [[/^Champ\. Round 1/, 'R1'], [/^Champ\. Round 2/, 'R2'], [/^Quarterfinal/, 'QF'], [/^Semifinal/, 'SF'], [/^1st Place/, 'F'], [/^3rd Place/, '3rd_Place'], [/^5th Place/, '5th_Place'], [/^7th Place/, '7th_Place'], [/^Cons\. Round 1/, 'C1'], [/^Cons\. Round 2/, 'C2'], [/^Cons\. Round 3/, 'C3'], [/^Cons\. Round 4/, 'C4'], [/^Cons\. Round 5/, 'C5'], [/^Cons\. Semi/, 'CS'], [/^Quarterfinal/, 'QF']]
 const FILES: [string, number, string, (h: string) => string | null][] = [
-  ['../Match Data/2026 Girls District Data.py', 2026, 'districts', h => (h.match(/^District (\d+)$/) ? `Girl_s Districts District ${h.match(/\d+/)![0]}` : null)],
-  ['../Match Data/2026 Girls Region Data.py', 2026, 'girls_regions', h => (h.match(/^Region (\d+)$/) ? `Girl_s Regions r${h.match(/\d+/)![0]}` : null)],
-  ['../Match Data/2026 Girls State Data.py', 2026, 'girls_state', () => null],
-  ['../Match Data/2025 Girls Region Data.py', 2025, 'girls_regions', h => (h.match(/^(Region|District) (\d+)$/) ? `#${h.match(/\d+/)![0]}` : null)],
-  ['../Match Data/2025 Girls State Data.py', 2025, 'girls_state', () => null],
+  ['../Whizzer Upload/Match Data/2026 Girls District Data.py', 2026, 'districts', h => (h.match(/^District (\d+)$/) ? `Girl_s Districts District ${h.match(/\d+/)![0]}` : null)],
+  ['../Whizzer Upload/Match Data/2026 Girls Region Data.py', 2026, 'girls_regions', h => (h.match(/^Region (\d+)$/) ? `Girl_s Regions r${h.match(/\d+/)![0]}` : null)],
+  ['../Whizzer Upload/Match Data/2026 Girls State Data.py', 2026, 'girls_state', () => null],
+  ['../Whizzer Upload/Match Data/2025 Girls Region Data.py', 2025, 'girls_regions', h => (h.match(/^(Region|District) (\d+)$/) ? `#${h.match(/\d+/)![0]}` : null)],
+  ['../Whizzer Upload/Match Data/2025 Girls State Data.py', 2025, 'girls_state', () => null],
 ]
 const tours = (await db.from('tournaments').select('id, name, tournament_type, season_id').eq('gender', 'F')).data!
 let grand = 0

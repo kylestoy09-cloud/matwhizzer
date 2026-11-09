@@ -9,10 +9,15 @@ async function all(q: (f: number, t: number) => any) { const o: any[] = []; for 
 const DETAIL = process.argv.includes('--detail') ? Number(process.argv[process.argv.indexOf('--detail') + 1]) : null
 const TABLES: Record<string, number[]> = {
   '16/12/9/7/5/3/2/1': [16, 12, 9, 7, 5, 3, 2, 1], '16/12/9/7/5/3': [16, 12, 9, 7, 5, 3], '14/10/7/4': [14, 10, 7, 4],
-  '12/9/7/5/3/1': [12, 9, 7, 5, 3, 1], '14/10/7/5/3/1': [14, 10, 7, 5, 3, 1], '16/12/10/8/6/4': [16, 12, 10, 8, 6, 4], '20/16/12/10/8/6/4/2': [20, 16, 12, 10, 8, 6, 4, 2],
+  '12/9/7/5/3/1': [12, 9, 7, 5, 3, 1],
+  // NFHS-style tables, tried for the girls districts (2026-11-09)
+  '16/12/10/9/7/6': [16, 12, 10, 9, 7, 6], '16/12/11/9/7/5': [16, 12, 11, 9, 7, 5], '17/13/11/9/7/5': [17, 13, 11, 9, 7, 5], '16/12/10/9/7/6/4/3': [16, 12, 10, 9, 7, 6, 4, 3], '14/10/7/5/3/1': [14, 10, 7, 5, 3, 1], '16/12/10/8/6/4': [16, 12, 10, 8, 6, 4], '20/16/12/10/8/6/4/2': [20, 16, 12, 10, 8, 6, 4, 2],
 }
 const PLACE_OF: Record<string, [number, number]> = { F: [1, 2], '3rd_Place': [3, 4], '5th_Place': [5, 6], '7th_Place': [7, 8] }
 const tours = (await db.from('tournaments').select('id, name, tournament_type, season_id').eq('gender', 'F').order('id')).data!
+// --only 1,2,3: just these tournament ids (e.g. the brackets that match the export exactly)
+const ONLY = process.argv.includes('--only') ? new Set(process.argv[process.argv.indexOf('--only') + 1].split(',').map(Number)) : null
+if (ONLY) tours.splice(0, tours.length, ...tours.filter(t => ONLY.has(t.id)))
 type T = { t: any; ents: any[]; ms: any[]; pl: Map<string, number>; off: any[]; ord: string[] }
 const data: T[] = []
 for (const t of tours) {
@@ -21,7 +26,9 @@ for (const t of tours) {
   const pl = new Map((await all((f, to) => db.from('placements').select('entry_id, place').eq('tournament_id', t.id).range(f, to))).map((p: any) => [p.entry_id, p.place]))
   const off = (await db.from('precomputed_team_scores').select('school_id, school_name, total_points').eq('tournament_id', t.id)).data!
   const present = new Set(ms.filter((m: any) => m.bracket_side === 'championship').map((m: any) => m.round))
-  const ord = ['R1', 'R2', 'QF', 'SF', 'F'].filter(r => present.has(r))
+  // the 2025-26 girls districts are 32-wrestler brackets whose first round is all byes (not stored): count
+  // from Round 1 so a bye there is credited like any other (2026-11-09)
+  const ord = t.tournament_type === 'districts' && t.season_id === 2026 ? ['R1', 'R2', 'QF', 'SF', 'F'] : ['R1', 'R2', 'QF', 'SF', 'F'].filter(r => present.has(r))
   data.push({ t, ents, ms, pl, off, ord })
 }
 function entryPoints(d: T, e: any, table: number[]) {
