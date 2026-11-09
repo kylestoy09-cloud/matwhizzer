@@ -15,7 +15,7 @@
 
 **Checks before writing:** every bout pairs a semifinal loser with a cons. round 1 winner; the winners are exactly the stored 3rd place bout's wrestlers and the losers the 5th place bout's.
 
-**Status:** waiting for Kyle to run it. **Reversible?** Yes (rollback line in the file).
+**APPLIED** — 2026-11-09, Supabase SQL editor. **Reversible?** Yes (rollback line in the file). **Verified?** Yes: District 5 24, District 6 22. Every school in both districts now equals its official total (the scoring check, exact-bracket districts: 124 → 149 of 153). Integrity check unchanged (3 known).
 
 ---
 
