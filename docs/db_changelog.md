@@ -14,7 +14,9 @@
 - 3 bouts with a wrestler who has no entry: Keyra Huastitlan Reyes ×2, Franchesca Edouard.
 - The 255 region Round 1 bouts. Every one has a wrestler with no region entry: 265 wrestlers, 171 linked by name at their school, 94 not.
 
-**Status:** waiting for Kyle to run it. **Reversible?** Yes (no such rows existed before).
+**APPLIED** — 2026-11-09, Supabase SQL editor. **Reversible?** Yes (no such rows existed before). **Verified?** Yes: State R1 46; 3rd place: Central 10, North 1 12, North 2 12, South 12.
+
+**Also found:** 82 teams in the 2024-25 girls TrackWrestling standings have no official row (Central 7 including Jackson Memorial 180, North 1 13, North 2 10, South 8, State 44); their names weren't matched at load. Among them is JFK/Woodbridge/Colonia, a 2024-25-only girls co-op with no school record (2025-26: Colonia, Woodbridge and Iselin Kennedy compete separately). Every 2024-25 postseason bout of its girls lists the co-op name. How to record the co-op is waiting on Kyle.
 
 ---
 
