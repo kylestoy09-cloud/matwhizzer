@@ -10,7 +10,7 @@
 
 **Changes:** 72 rows built from the final, 3rd and 5th place bouts, the same way Regions 2-4's are. Checked 2026-11-09: their stored rows equal their bouts exactly.
 
-**Status:** waiting for Kyle to run it. **Reversible?** Yes (delete Region 1's rows). **Verified?** The query at the bottom of the file.
+**APPLIED** — 2026-11-09, Supabase SQL editor. **Reversible?** Yes (delete Region 1's rows). **Verified?** Yes: 12 weights with places 1-6; Region 1 stored 72 = from bouts 72 (Regions 2-4 unchanged); integrity check unchanged (3 known).
 
 ---
 
