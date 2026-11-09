@@ -2,6 +2,20 @@
 
 ---
 
+## 2026-11-09 — Girls State (2025-26): duplicate consolation semifinals; Coletta's 7th place bout
+
+**Migration file:** `docs/migrations/20261109_girls_state_dup_cons_semis_and_7th.sql` (built by `scripts/build_girls_state_fix_20261109.mts`). Backup: `docs/migrations/backups/20261109_girls_state_duplicate_cons_semis_before.json`
+
+**Purpose:**
+- **Duplicates:** the 24 cons. semifinals (C4) are each stored twice, identical; the export has 24. Two at every weight, so each of those 48 wrestlers' records counts the bout twice.
+- **Missing bout:** the 107 7th place bout is missing: Olivia Mitchell (East Brunswick) over Kayla Coletta (Mary Help of Christians), TF-1.5 2:10 (18-3). The 2026-10-26 Coletta restore missed it; both placement rows are stored.
+
+**Changes:** delete 24 duplicate rows (the copy with the larger id; the twin stays); add the 7th place bout. Nothing references a match row by id.
+
+**Status:** awaiting Kyle's approval for the delete (counts and backup above), then his run. **Reversible?** Yes (re-insert from the backup).
+
+---
+
 ## 2026-11-09 — Girls districts (2025-26): forfeits marked as over a filler entry or an empty slot
 
 **Migration file:** `docs/migrations/20261109_girls_district_forfeit_opponents.sql` (built by `scripts/build_girls_forfeit_opponents.mts`)
