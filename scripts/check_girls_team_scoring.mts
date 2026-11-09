@@ -6,6 +6,7 @@
 import { createClient } from '@supabase/supabase-js'
 const db = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
 async function all(q: (f: number, t: number) => any) { const o: any[] = []; for (let i = 0; ; i += 1000) { const { data, error } = await q(i, i + 999); if (error) throw error; o.push(...data); if (data.length < 1000) break } return o }
+const LABELS: Record<string, string> | null = process.argv.includes('--labels') ? JSON.parse((await import('fs')).readFileSync(process.argv[process.argv.indexOf('--labels') + 1], 'utf8')) : null
 const DETAIL = process.argv.includes('--detail') ? Number(process.argv[process.argv.indexOf('--detail') + 1]) : null
 const TABLES: Record<string, number[]> = {
   '16/12/9/7/5/3/2/1': [16, 12, 9, 7, 5, 3, 2, 1], '16/12/9/7/5/3': [16, 12, 9, 7, 5, 3], '14/10/7/4': [14, 10, 7, 4],
@@ -22,7 +23,9 @@ type T = { t: any; ents: any[]; ms: any[]; pl: Map<string, number>; off: any[]; 
 const data: T[] = []
 for (const t of tours) {
   const ents = await all((f, to) => db.from('tournament_entries').select('id, school_id, weight_class_id, wrestlers(first_name, last_name)').eq('tournament_id', t.id).range(f, to))
-  const ms = (await all((f, to) => db.from('matches').select('round, bracket_side, winner_entry_id, loser_entry_id, win_type, forfeit_opponent, validated').eq('tournament_id', t.id).range(f, to))).filter((m: any) => m.validated !== false)
+  const ms = (await all((f, to) => db.from('matches').select('id, round, bracket_side, winner_entry_id, loser_entry_id, win_type, forfeit_opponent, validated').eq('tournament_id', t.id).range(f, to))).filter((m: any) => m.validated !== false)
+  // --labels <file.json>: forfeit_opponent values to try before a migration sets them ({ match id: 'filler' | 'empty' })
+  if (LABELS) for (const m of ms) if (LABELS[m.id]) m.forfeit_opponent = LABELS[m.id]
   const pl = new Map((await all((f, to) => db.from('placements').select('entry_id, place').eq('tournament_id', t.id).range(f, to))).map((p: any) => [p.entry_id, p.place]))
   const off = (await db.from('precomputed_team_scores').select('school_id, school_name, total_points').eq('tournament_id', t.id)).data!
   const present = new Set(ms.filter((m: any) => m.bracket_side === 'championship').map((m: any) => m.round))

@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-11-09 — Girls districts (2025-26): forfeits marked as over a filler entry or an empty slot
+
+**Migration file:** `docs/migrations/20261109_girls_district_forfeit_opponents.sql` (built by `scripts/build_girls_forfeit_opponents.mts`)
+
+**Purpose:** `matches.forfeit_opponent` tells the scoring rules what a forfeit win with no loser was over. A filler entry ("over A Forfeit (Team Forfeit)") counts as a contested match for bye points; an empty slot ("over ()") does not; both earn the win and the 2 bonus. The boys districts were marked on 2026-11-05; the girls never were, so the rules credited byes TrackWrestling doesn't. That is why District 4 was over by 2 per such case.
+
+**Changes:** 190 girls district forfeits marked from the export: 116 filler, 74 empty (73 in District 4). How each kind is recognised:
+- A loser named with no school ("Josephine Lemke ()") is a 2026-11-02 filler name, so filler.
+- The cons. semifinal forfeits added from the PDFs (Districts 5 and 6) show a "Forfeit" entry, so filler.
+- One spelling fallback, "La`Niyah" vs "Niyah" Hercules: the one wrestler at the weight with that last name.
+
+No result, record or official total changes.
+
+**Proof before running:** the girls scoring check with these labels applied in memory (`--labels`): every District 4 school matches; 12 districts 219 / 234. Of the 15 left, 11 are District 7 (cons. semis pending) and 4 are in Districts 9 and 11.
+
+**Status:** waiting for Kyle to run it. **Reversible?** Yes (set back to NULL).
+
+---
+
 ## 2026-11-09 — Girls District 7 (2025-26): consolation semifinals
 
 **Migration file:** `docs/migrations/20261109_girls_d7_cons_semis.sql` (built by `scripts/build_girls_district_cons_semis.mts 7`)
