@@ -17,7 +17,7 @@ No result, record or official total changes.
 
 **Proof before running:** the girls scoring check with these labels applied in memory (`--labels`): every District 4 school matches; 12 districts 219 / 234. Of the 15 left, 11 are District 7 (cons. semis pending) and 4 are in Districts 9 and 11.
 
-**Status:** waiting for Kyle to run it. **Reversible?** Yes (set back to NULL).
+**APPLIED** — 2026-11-09, Supabase SQL editor (filler 116, empty 74). **Reversible?** Yes (set back to NULL). **Verified?** Yes: the girls scoring check on stored data gives 227 / 234 girls district schools exact; every District 4 school matches.
 
 ---
 
@@ -34,7 +34,13 @@ No result, record or official total changes.
 - The winners are the 3rd place bout's wrestlers and the losers the 5th place bout's.
 - Names now also match on the end of a last name: Faith "Marie Soto" (D7 165), a first/last split to tidy later.
 
-**Status:** waiting for Kyle to run it. **Reversible?** Yes (rollback line in the file).
+**APPLIED** — 2026-11-09, Supabase SQL editor (District 7: 23). **Reversible?** Yes (rollback line in the file).
+
+**Girls districts after all of today's fixes: 227 / 234 schools exact.**
+- **3 lower officially (likely team deductions, which TrackWrestling folds into the total unlisted):** North Brunswick −2, Red Bank Regional −1, Freehold Township −2.
+- **4 one point higher officially, not explained:** Raritan, Howell, Hamilton West, Cherry Hill.
+- Every bout matched to the export in Districts 7, 9 and 11 (444) has the same result type.
+- Integrity check unchanged (3 known).
 
 ---
 
