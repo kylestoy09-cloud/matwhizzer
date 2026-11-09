@@ -10,7 +10,7 @@
 
 **Changes:** 1 entry (Fair Lawn, grade 9 / Fr, no seed, like the bracket's other entries) and 3 bouts.
 
-**Status:** waiting for Kyle to run it. **Reversible?** Yes (rollback note in the file).
+**APPLIED** — 2026-11-09, Supabase SQL editor. **Reversible?** Yes (rollback note in the file). **Verified?** Yes: R2 W Espinosa (191 s), QF L Guzman Caban (60 s), C1 L Fiestas (314 s); District 2 matches the export.
 
 ---
 
