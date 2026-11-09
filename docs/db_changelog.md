@@ -15,9 +15,9 @@
 - **Obvious matches:** Adelaide Matta Arvo = Adelaide Arvo (Collingswood). Maria Rivera Perez and Genesis Martinez are new (their same-last-name schoolmates have other first names).
 
 **Changes:**
-- **New profiles:** 95, inactive, gender F, no grade (none has 2025-26 records), each with a name link at her school.
-- **Name links:** 97 in all (the 95 new profiles' links, Dozier and Arvo).
-- **Entries:** 263.
+- **New profiles:** 93, inactive, gender F, no grade (none has 2025-26 records), each with a name link at her school. The backup lists 94: the 94th is the duplicate below.
+- **Name links:** 96 (the 93 new profiles, Dozier, Arvo, and Kidd-Maxey at Colonia).
+- **Entries:** 262 new; with the 4 reused, all 266 planned.
   - 4 girls already entered under shortened or variant names keep their entry: "Layla Lubrano-Lava", "Emily Valencia Var", "Alexandra Chase", "Christin Johnston".
   - Victoria Kidd-Maxey (co-op, linked at Iselin Kennedy) also got a link at Colonia.
 - **Bouts:** 258, in the migration; one tech fall is stored "TF-1" as printed.
