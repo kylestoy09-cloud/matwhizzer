@@ -45,8 +45,16 @@ for (const g of ['boys', 'girls'] as const) {
   // 4. bracket bouts never stored
   if (p.adds.length) {
     sql.push(`  INSERT INTO ${B} (in_season_tournament_id, weight_class, round, wrestler1_id, wrestler1_name_raw, wrestler1_school_id, wrestler2_id, wrestler2_name_raw, wrestler2_school_id, winner, result_type, result_detail, fall_time_seconds, winner_score, loser_score, source_format) VALUES`)
-    sql.push(p.adds.map((a: any) => `    (${tid}, ${a.weight_class}, ${q(a.round)}, ${q(a.wrestler1_id)}, ${q(a.wrestler1_name_raw)}, ${q(a.wrestler1_school_id)}, ${q(a.wrestler2_id)}, ${q(a.wrestler2_name_raw)}, ${q(a.wrestler2_school_id)}, ${a.winner}, ${q(a.result_type)}, ${q(a.result_detail)}, ${q(a.fall_time_seconds)}, ${q(a.winner_score)}, ${q(a.loser_score)}, 'pdf')  -- ${a._label.replace(/\n/g, ' ')}`).join(',\n') + ';')
+    sql.push(p.adds.map((a: any, i: number) => `    (${tid}, ${a.weight_class}, ${q(a.round)}, ${q(a.wrestler1_id)}, ${q(a.wrestler1_name_raw)}, ${q(a.wrestler1_school_id)}, ${q(a.wrestler2_id)}, ${q(a.wrestler2_name_raw)}, ${q(a.wrestler2_school_id)}, ${a.winner}, ${q(a.result_type)}, ${q(a.result_detail)}, ${q(a.fall_time_seconds)}, ${q(a.winner_score)}, ${q(a.loser_score)}, 'pdf')${i === p.adds.length - 1 ? ';' : ','}  -- ${a._label.replace(/\n/g, ' ')}`).join('\n'))
     sql.push(`  GET DIAGNOSTICS n = ROW_COUNT; IF n <> ${p.adds.length} THEN RAISE EXCEPTION '${g} bouts added: %', n; END IF;`)
+  }
+  // 4b. extra matches wrestled outside the bracket: consolation (Kyle 2026-11-09), "C1" (Cons. R1)
+  const extra = p.storedOnly.filter((x: any) => x.round !== 'C1')
+  counts[`${g}_extra`] = extra.length
+  if (extra.length) {
+    sql.push(`  -- extra matches outside the bracket → consolation (Kyle)`)
+    sql.push(`  UPDATE ${B} b SET round = 'C1' FROM (VALUES\n${extra.map((x: any) => `    (${q(x.id)}::uuid, ${q(x.round)})`).join(',\n')}\n  ) v(id, old) WHERE b.id = v.id AND b.round = v.old AND b.in_season_tournament_id = ${tid};`)
+    sql.push(`  GET DIAGNOSTICS n = ROW_COUNT; IF n <> ${extra.length} THEN RAISE EXCEPTION '${g} extra matches: % of ${extra.length}', n; END IF;`)
   }
   // 5. seeds: the bracket's full set (boys: replaces the 366 entered earlier, 8 of them linked to the wrong person)
   if (seeds!.length) { sql.push(`  DELETE FROM ${ST[g]} WHERE in_season_tournament_id = ${tid};`); sql.push(`  GET DIAGNOSTICS n = ROW_COUNT; IF n <> ${seeds!.length} THEN RAISE EXCEPTION '${g} seeds removed: %', n; END IF;`) }
@@ -83,7 +91,7 @@ const head = `-- docs/migrations/20261109_sam_cali_brackets.sql
 --   boys:  ${counts.boys_relabel} round labels (almost all were stored as "R1"); ${counts.boys_adds} bracket bouts never stored (mostly out-of-state
 --          teams against each other); seeds replaced, ${counts.boys_seeds_old} → ${counts.boys_seeds_new} (8 of the old ones linked to the wrong person,
 --          e.g. "A. Dyki" → Ryan Dyki for Alexander Dyki); ${counts.boys_places} placements added (1st-6th, 18 were stored).
---          The 84 stored bouts outside the bracket (extra matches) are not touched.
+--          The ${counts.boys_extra} stored bouts outside the bracket (extra matches) become consolation, "C1" (Kyle).
 --   girls: ${counts.girls_relabel} round labels; ${counts.girls_moves} bout moved 152 → 185 (the 185 semifinal Sandoval / Vilela Armijos);
 --          ${counts.girls_winner} winner corrected (152 consolation semi: Gwen Silipena pinned Alexa Nunez, as the bracket and
 --          her 3rd place match show; TrackWrestling lists "Nunez over Silipena (Fall 0:00)"); ${counts.girls_adds} bracket bouts added;

@@ -6,7 +6,7 @@
 --   boys:  270 round labels (almost all were stored as "R1"); 10 bracket bouts never stored (mostly out-of-state
 --          teams against each other); seeds replaced, 366 → 402 (8 of the old ones linked to the wrong person,
 --          e.g. "A. Dyki" → Ryan Dyki for Alexander Dyki); 66 placements added (1st-6th, 18 were stored).
---          The 84 stored bouts outside the bracket (extra matches) are not touched.
+--          The 75 stored bouts outside the bracket (extra matches) become consolation, "C1" (Kyle).
 --   girls: 43 round labels; 1 bout moved 152 → 185 (the 185 semifinal Sandoval / Vilela Armijos);
 --          1 winner corrected (152 consolation semi: Gwen Silipena pinned Alexa Nunez, as the bracket and
 --          her 3rd place match show; TrackWrestling lists "Nunez over Silipena (Fall 0:00)"); 31 bracket bouts added;
@@ -295,17 +295,96 @@ BEGIN
   ) v(id, old, r) WHERE b.id = v.id AND b.round = v.old AND b.in_season_tournament_id = 'd046f392-9128-4755-8584-528ca5336281';
   GET DIAGNOSTICS n = ROW_COUNT; IF n <> 270 THEN RAISE EXCEPTION 'boys round labels: % of 270', n; END IF;
   INSERT INTO tournament_bouts (in_season_tournament_id, weight_class, round, wrestler1_id, wrestler1_name_raw, wrestler1_school_id, wrestler2_id, wrestler2_name_raw, wrestler2_school_id, winner, result_type, result_detail, fall_time_seconds, winner_score, loser_score, source_format) VALUES
-    ('d046f392-9128-4755-8584-528ca5336281', 106, 'QF', '7df79753-db6b-4342-a1b3-917171b5a684', 'Calvin Parke', 283, 'd1fd1390-1cc6-4d2d-9d7f-98e51cefc11b', 'Logan Bailey', 600, 1, 'SV-1', '12-9', NULL, 12, 9, 'pdf')  -- 106 Quarter-Finals: 1 Calvin Parke (MDTWP) vs 8 Logan Bailey (GFA), DEC SV 12-9,
-    ('d046f392-9128-4755-8584-528ca5336281', 120, 'R2', 'd3ddd0b3-f898-4a5b-b2c2-b39fbdb33a51', 'David Vazquez', 95, '421fad9d-c8a7-4fb5-8e4e-4e99031c0869', 'Jax Sgrulletta', 147, 1, 'SV-1', '11-8', NULL, 11, 8, 'pdf')  -- 120 Round of 16: 7 David Vazquez (NBGN) vs 10 Jax Sgrulletta (GFA), DEC SV 11-8,
-    ('d046f392-9128-4755-8584-528ca5336281', 120, '3rd_Place', 'eb23448f-96a2-4dca-a44e-d35fb6a20138', 'Chase Kastner', 600, 'ebe5d8a2-17df-4ac3-b64b-c01551e95bba', 'Muhammad Abuhadba', 391, 1, 'SV-1', '4-1', NULL, 4, 1, 'pdf')  -- 120 3rd Place: 6 Chase Kastner (GFA) vs 4 Muhammad Abuhadba (PSCT), DEC SV 4-1,
-    ('d046f392-9128-4755-8584-528ca5336281', 132, 'QF', '65c8695a-4522-47ce-aa4e-7a8c009f6d8d', 'AJ Stover', 603, '549b645c-0771-48c8-b473-693736c7e8a4', 'Jack Francis', 600, 1, 'MD', '10-2', NULL, 10, 2, 'pdf')  -- 132 Quarter-Finals: 12 AJ Stover (PEDD) vs 13 Jack Francis (GFA), MD 10-2,
-    ('d046f392-9128-4755-8584-528ca5336281', 144, 'R1', '50c5d5fd-a4e2-4ba1-bfa1-a0c374392f17', 'Ilias Konstantinidis', 600, '1efca6d1-5db9-4083-a4ca-b100fe10fcae', 'John Owen', 602, 1, 'Fall', NULL, 154, NULL, NULL, 'pdf')  -- 144 Round of 64: 33 Ilias Konstantinidis (GFA) vs 32 John Owen (MSCA), F 2:34,
-    ('d046f392-9128-4755-8584-528ca5336281', 157, 'R1', 'c5292330-2374-483b-87cc-7d7a3e6d27cb', 'Lucas Meisenholder', 599, 'add28b3f-20b3-4f2f-b760-cea561a06ec4', 'Jacob Jones', 600, 2, 'TF', NULL, 229, NULL, NULL, 'pdf')  -- 157 Round of 32: 25 Lucas Meisenholder (CHAM) vs 8 Jacob Jones (GFA), TF 3:49,
-    ('d046f392-9128-4755-8584-528ca5336281', 165, 'R2', '9d521d4b-250a-4ee9-bf32-69d764378116', 'Blake Watkins', 600, '99e3e4d0-cc61-41b2-a1af-028eccc75a73', 'Jayden Soy', 602, 1, 'Dec', '12-8', NULL, 12, 8, 'pdf')  -- 165 Round of 16: 28 Blake Watkins (GFA) vs 21 Jayden Soy (MSCA), DEC 12-8,
-    ('d046f392-9128-4755-8584-528ca5336281', 165, 'QF', '9d521d4b-250a-4ee9-bf32-69d764378116', 'Blake Watkins', 600, '43343bf1-7a01-4d74-aa38-fdb8880c5140', 'Colby Vital', 601, 2, 'TF', NULL, 208, NULL, NULL, 'pdf')  -- 165 Quarter-Finals: 28 Blake Watkins (GFA) vs 4 Colby Vital (PNGT), TF 3:28,
-    ('d046f392-9128-4755-8584-528ca5336281', 190, 'R1', '7f28e0d7-8ec1-4957-be6a-eec6f38e44ad', 'Rocky Penny', 600, '58f66647-d48c-4a0e-8512-bf435dcd97f0', 'Landon Fitzsimmons', 602, 2, 'TF', NULL, 246, NULL, NULL, 'pdf')  -- 190 Round of 32: 21 Rocky Penny (GFA) vs 12 Landon Fitzsimmons (MSCA), TF 4:06,
-    ('d046f392-9128-4755-8584-528ca5336281', 190, 'R2', '4b667ee8-403a-493b-bc79-c874e17d7c98', 'John Sammartano', 599, 'e30136ac-85b6-4cb0-9a83-eece796f3415', 'Tyler Neiva', 600, 2, 'Fall', NULL, 313, NULL, NULL, 'pdf')  -- 190 Round of 16: 20 John Sammartano (CHAM) vs 4 Tyler Neiva (GFA), F 5:13;
+    ('d046f392-9128-4755-8584-528ca5336281', 106, 'QF', '7df79753-db6b-4342-a1b3-917171b5a684', 'Calvin Parke', 283, 'd1fd1390-1cc6-4d2d-9d7f-98e51cefc11b', 'Logan Bailey', 600, 1, 'SV-1', '12-9', NULL, 12, 9, 'pdf'),  -- 106 Quarter-Finals: 1 Calvin Parke (MDTWP) vs 8 Logan Bailey (GFA), DEC SV 12-9
+    ('d046f392-9128-4755-8584-528ca5336281', 120, 'R2', 'd3ddd0b3-f898-4a5b-b2c2-b39fbdb33a51', 'David Vazquez', 95, '421fad9d-c8a7-4fb5-8e4e-4e99031c0869', 'Jax Sgrulletta', 147, 1, 'SV-1', '11-8', NULL, 11, 8, 'pdf'),  -- 120 Round of 16: 7 David Vazquez (NBGN) vs 10 Jax Sgrulletta (GFA), DEC SV 11-8
+    ('d046f392-9128-4755-8584-528ca5336281', 120, '3rd_Place', 'eb23448f-96a2-4dca-a44e-d35fb6a20138', 'Chase Kastner', 600, 'ebe5d8a2-17df-4ac3-b64b-c01551e95bba', 'Muhammad Abuhadba', 391, 1, 'SV-1', '4-1', NULL, 4, 1, 'pdf'),  -- 120 3rd Place: 6 Chase Kastner (GFA) vs 4 Muhammad Abuhadba (PSCT), DEC SV 4-1
+    ('d046f392-9128-4755-8584-528ca5336281', 132, 'QF', '65c8695a-4522-47ce-aa4e-7a8c009f6d8d', 'AJ Stover', 603, '549b645c-0771-48c8-b473-693736c7e8a4', 'Jack Francis', 600, 1, 'MD', '10-2', NULL, 10, 2, 'pdf'),  -- 132 Quarter-Finals: 12 AJ Stover (PEDD) vs 13 Jack Francis (GFA), MD 10-2
+    ('d046f392-9128-4755-8584-528ca5336281', 144, 'R1', '50c5d5fd-a4e2-4ba1-bfa1-a0c374392f17', 'Ilias Konstantinidis', 600, '1efca6d1-5db9-4083-a4ca-b100fe10fcae', 'John Owen', 602, 1, 'Fall', NULL, 154, NULL, NULL, 'pdf'),  -- 144 Round of 64: 33 Ilias Konstantinidis (GFA) vs 32 John Owen (MSCA), F 2:34
+    ('d046f392-9128-4755-8584-528ca5336281', 157, 'R1', 'c5292330-2374-483b-87cc-7d7a3e6d27cb', 'Lucas Meisenholder', 599, 'add28b3f-20b3-4f2f-b760-cea561a06ec4', 'Jacob Jones', 600, 2, 'TF', NULL, 229, NULL, NULL, 'pdf'),  -- 157 Round of 32: 25 Lucas Meisenholder (CHAM) vs 8 Jacob Jones (GFA), TF 3:49
+    ('d046f392-9128-4755-8584-528ca5336281', 165, 'R2', '9d521d4b-250a-4ee9-bf32-69d764378116', 'Blake Watkins', 600, '99e3e4d0-cc61-41b2-a1af-028eccc75a73', 'Jayden Soy', 602, 1, 'Dec', '12-8', NULL, 12, 8, 'pdf'),  -- 165 Round of 16: 28 Blake Watkins (GFA) vs 21 Jayden Soy (MSCA), DEC 12-8
+    ('d046f392-9128-4755-8584-528ca5336281', 165, 'QF', '9d521d4b-250a-4ee9-bf32-69d764378116', 'Blake Watkins', 600, '43343bf1-7a01-4d74-aa38-fdb8880c5140', 'Colby Vital', 601, 2, 'TF', NULL, 208, NULL, NULL, 'pdf'),  -- 165 Quarter-Finals: 28 Blake Watkins (GFA) vs 4 Colby Vital (PNGT), TF 3:28
+    ('d046f392-9128-4755-8584-528ca5336281', 190, 'R1', '7f28e0d7-8ec1-4957-be6a-eec6f38e44ad', 'Rocky Penny', 600, '58f66647-d48c-4a0e-8512-bf435dcd97f0', 'Landon Fitzsimmons', 602, 2, 'TF', NULL, 246, NULL, NULL, 'pdf'),  -- 190 Round of 32: 21 Rocky Penny (GFA) vs 12 Landon Fitzsimmons (MSCA), TF 4:06
+    ('d046f392-9128-4755-8584-528ca5336281', 190, 'R2', '4b667ee8-403a-493b-bc79-c874e17d7c98', 'John Sammartano', 599, 'e30136ac-85b6-4cb0-9a83-eece796f3415', 'Tyler Neiva', 600, 2, 'Fall', NULL, 313, NULL, NULL, 'pdf');  -- 190 Round of 16: 20 John Sammartano (CHAM) vs 4 Tyler Neiva (GFA), F 5:13
   GET DIAGNOSTICS n = ROW_COUNT; IF n <> 10 THEN RAISE EXCEPTION 'boys bouts added: %', n; END IF;
+  -- extra matches outside the bracket → consolation (Kyle)
+  UPDATE tournament_bouts b SET round = 'C1' FROM (VALUES
+    ('ca894703-5c89-4b73-8353-64443fd40157'::uuid, 'R1'),
+    ('88c4e667-c6ed-403d-bd66-79d16084d5a3'::uuid, 'R1'),
+    ('f8bef3b1-51ff-4e06-87c8-995c687653c7'::uuid, 'R1'),
+    ('3826b5ba-27e7-4de3-b606-d6083bae852e'::uuid, 'R1'),
+    ('e3b7d781-4130-48e8-889a-eaf770a4c08a'::uuid, 'R1'),
+    ('e9b074ae-b493-42e7-8c23-b6ce499a266b'::uuid, 'R1'),
+    ('ee17297c-f8df-4ff7-811f-de0ceec42538'::uuid, 'R1'),
+    ('57bb31f8-5e8b-4ba6-bba7-898beacfea75'::uuid, 'R1'),
+    ('71de0187-e6cb-43fa-8530-720936acf462'::uuid, 'R1'),
+    ('f3f6201d-3678-4848-abf4-6b3a0b6a1da0'::uuid, 'R1'),
+    ('6199b675-a3b4-4577-81ad-1d240db4b60a'::uuid, 'R1'),
+    ('871cca4a-29ac-425d-881d-8e9daa1feec0'::uuid, 'R1'),
+    ('c14a70ce-4927-4f08-902f-6153434213b9'::uuid, 'R1'),
+    ('a814c59b-f0c9-43a3-8854-a06e27f42e49'::uuid, 'R1'),
+    ('febfc0ff-1c37-4cb2-959a-935bff3542c8'::uuid, 'R1'),
+    ('0c406e55-7ada-46d8-a8d6-727666c3b04a'::uuid, 'R1'),
+    ('29a051b5-57df-4083-9bf9-faf84c42ae04'::uuid, 'R1'),
+    ('8f171147-2b83-4143-b294-fa6f5dc14fa3'::uuid, 'R1'),
+    ('b1ffcdc5-347e-4bd4-9b75-82f763b368b7'::uuid, 'R1'),
+    ('21e32b6a-0724-4651-a7e5-8afa8cccad7e'::uuid, 'R1'),
+    ('2ad2aed9-2ae2-4cd8-b8a6-dc0caa70cd26'::uuid, 'R1'),
+    ('87ac06bd-dffb-44c5-8d70-2f000d459bde'::uuid, 'R1'),
+    ('b39c19df-2dd2-4474-8f74-86fa42e73697'::uuid, 'R1'),
+    ('bf48fd02-f461-4828-9352-4750445779e0'::uuid, 'R1'),
+    ('f9e79cbe-18e7-4c5f-953e-d902e3d6040a'::uuid, 'R1'),
+    ('90222078-c209-4438-8cea-a73a0cf98809'::uuid, 'R1'),
+    ('bbcdfaad-64e7-4e30-baa5-6c3d62868611'::uuid, 'R1'),
+    ('7b37a866-f7bc-45bf-92cf-b95aeb1b8df5'::uuid, 'R1'),
+    ('e098c574-4506-40b6-9485-ad03a6742285'::uuid, 'R1'),
+    ('21c6865c-91fe-41da-bba5-3cc84f498694'::uuid, 'R1'),
+    ('5c8d2e9e-3a43-443f-9fcf-7b101b18b65f'::uuid, 'R1'),
+    ('ce8dd7d8-49cd-4661-9ccc-905f2e72dd62'::uuid, 'R1'),
+    ('031ca6d2-a782-4f0f-b900-db6ee92c92a1'::uuid, 'R1'),
+    ('09f3ba83-ee7a-493e-97e9-7b504dfa4449'::uuid, 'R1'),
+    ('e2abe159-7a12-4b23-bcc2-c8f4ad0c6fa3'::uuid, 'R1'),
+    ('98ff5820-6cc3-4a10-a81d-7591a9a0bb51'::uuid, 'R1'),
+    ('09f27608-a4d5-47bd-9d99-afc2e6d973c4'::uuid, 'C2'),
+    ('4f26742a-b766-450f-8b81-6ea569539334'::uuid, 'R1'),
+    ('056666c6-ecc3-4aaf-86d3-9a55bc76fab9'::uuid, 'R1'),
+    ('811a8570-c756-4cc4-a462-3d94a0436e45'::uuid, 'R1'),
+    ('6dbd0574-7556-4899-b94f-7bd1cd673611'::uuid, 'R1'),
+    ('d80ada82-cb40-4c21-89c7-ac7722810133'::uuid, 'R1'),
+    ('d4b4b226-c654-48ba-b0dc-6d9752fa77e4'::uuid, 'R1'),
+    ('0dc6844a-7539-43a7-b512-144d74d05ee7'::uuid, 'R1'),
+    ('d0f9c535-bf5f-4478-9bb1-ada3306dafae'::uuid, 'R1'),
+    ('19bc64fc-bf9c-4b85-8b0a-7d6f24d889f9'::uuid, 'R1'),
+    ('4c45b161-f49f-4f65-80a9-ad7502b6c025'::uuid, 'R1'),
+    ('ab5e2c95-6d0f-453c-a495-34fee21cca90'::uuid, 'R1'),
+    ('cdeb1ee3-e353-4d83-b529-91088029f11e'::uuid, 'R1'),
+    ('361d06b2-7daa-455a-a6b6-c68f0dde81fa'::uuid, 'R1'),
+    ('6f2f661f-f007-404d-a89b-14e46f54fb38'::uuid, 'R1'),
+    ('223f72f3-b133-4a6e-b963-6795cf634ab4'::uuid, 'R1'),
+    ('c52ab6d4-0ff5-4bf6-b4a6-bf5ba607dfb8'::uuid, 'R1'),
+    ('993f96b7-2e7d-42fa-9a20-ec190674e6ee'::uuid, 'R1'),
+    ('caf2efad-bea4-41a3-bd18-a24798e2f425'::uuid, 'R1'),
+    ('6cd28a84-3a10-4b1c-a5ec-0201147b94c6'::uuid, 'R1'),
+    ('1405c30f-a907-43da-b060-986435c4220b'::uuid, 'R1'),
+    ('a54f5f35-59d8-4149-b9e0-65ff893c96c0'::uuid, 'R1'),
+    ('0bc31924-a1d1-4b49-bbc3-c3acbca1cd8b'::uuid, 'R1'),
+    ('9bdebd6e-6d9c-4484-ad0e-5d9751553936'::uuid, 'R1'),
+    ('a700ebeb-03b9-4b26-a5b4-d7378b80006f'::uuid, 'R1'),
+    ('e65bbe0f-f639-4833-a3fd-91a829e234a4'::uuid, 'R1'),
+    ('b9d4fdcb-91a9-45d1-85c4-d1b75abe1be4'::uuid, 'R1'),
+    ('068881ec-3484-4d7a-aaa0-b0a4bc9dbc7c'::uuid, 'R1'),
+    ('e9b676db-812f-4f09-a097-d9954e7a7039'::uuid, 'R1'),
+    ('6c3ee18d-b285-41be-a94f-d215a12e4cfd'::uuid, 'R1'),
+    ('9366ad3c-4539-4da4-842b-1a72cb588d28'::uuid, 'R1'),
+    ('f34d7aa6-afe2-4a2b-b828-248119f0125f'::uuid, 'R1'),
+    ('6a08fbf0-a0b2-4c3d-acee-fbfcafe83366'::uuid, 'R1'),
+    ('f2d75174-9567-4d45-936d-d151a0f3b96f'::uuid, 'R1'),
+    ('3434ce9a-da7e-41d0-9756-d39166c91e59'::uuid, 'R1'),
+    ('019bc8df-8db1-41e5-bda4-10c00d7e9061'::uuid, 'R1'),
+    ('a3b318f7-f1ad-44b2-be4d-69d36af3ee32'::uuid, 'R1'),
+    ('67dc5a58-08dc-4552-b99d-5b51744c26f1'::uuid, 'R1'),
+    ('97b747fa-fa74-4682-a729-59119fa0133f'::uuid, 'R1')
+  ) v(id, old) WHERE b.id = v.id AND b.round = v.old AND b.in_season_tournament_id = 'd046f392-9128-4755-8584-528ca5336281';
+  GET DIAGNOSTICS n = ROW_COUNT; IF n <> 75 THEN RAISE EXCEPTION 'boys extra matches: % of 75', n; END IF;
   DELETE FROM in_season_tournament_seeds WHERE in_season_tournament_id = 'd046f392-9128-4755-8584-528ca5336281';
   GET DIAGNOSTICS n = ROW_COUNT; IF n <> 366 THEN RAISE EXCEPTION 'boys seeds removed: %', n; END IF;
   INSERT INTO in_season_tournament_seeds (in_season_tournament_id, weight_class, seed, wrestler_name_raw, school_name_raw, wrestler_id, school_id) VALUES
@@ -833,37 +912,37 @@ BEGIN
   UPDATE tournament_bouts_girls SET winner = 2, result_type = 'Fall', result_detail = NULL, fall_time_seconds = 146 WHERE id = 'c1f47ead-97f2-49db-84ce-cc06d8b30e05' AND winner = 1;
   GET DIAGNOSTICS n = ROW_COUNT; IF n <> 1 THEN RAISE EXCEPTION 'girls winner fix c1f47ead-97f2-49db-84ce-cc06d8b30e05'; END IF;
   INSERT INTO tournament_bouts_girls (in_season_tournament_id, weight_class, round, wrestler1_id, wrestler1_name_raw, wrestler1_school_id, wrestler2_id, wrestler2_name_raw, wrestler2_school_id, winner, result_type, result_detail, fall_time_seconds, winner_score, loser_score, source_format) VALUES
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 100, '5th_Place', 'f673e569-e298-4f0a-9f7e-82e49b232875', 'Addison Petersen', 24, '3432d1ad-db13-448e-9fd3-3888c8fd1269', 'Belinda Minervini', 56, 2, 'MFF', NULL, NULL, NULL, NULL, 'pdf')  -- 100 5th Place: 4 Addison Petersen (NWTN) vs 5 Belinda Minervini (MO), M FOR,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 100, 'CSF', 'd3f2e77b-e3ef-4ec3-b50c-e08c9c7ffd02', 'Mya Bush', 76, '3432d1ad-db13-448e-9fd3-3888c8fd1269', 'Belinda Minervini', 56, 1, 'Fall', NULL, 265, NULL, NULL, 'pdf')  -- 100 Consi-Semis: 6 Mya Bush (MH) vs 5 Belinda Minervini (MO), F 4:25,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 100, 'CSF', 'f673e569-e298-4f0a-9f7e-82e49b232875', 'Addison Petersen', 24, 'a6db5f08-b20a-44b0-b7ec-6a5acd21ff9c', 'Kiara Chac', 322, 2, 'Fall', NULL, 54, NULL, NULL, 'pdf')  -- 100 Consi-Semis: 4 Addison Petersen (NWTN) vs 3 Kiara Chac (BBRK), F 0:54,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 100, 'QF', '3432d1ad-db13-448e-9fd3-3888c8fd1269', 'Belinda Minervini', 56, 'f673e569-e298-4f0a-9f7e-82e49b232875', 'Addison Petersen', 24, 1, 'SV-1', '11-8', NULL, 11, 8, 'pdf')  -- 100 Quarter-Finals: 5 Belinda Minervini (MO) vs 4 Addison Petersen (NWTN), DEC SV 11-8,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 100, 'QF', 'a6db5f08-b20a-44b0-b7ec-6a5acd21ff9c', 'Kiara Chac', 322, 'd3f2e77b-e3ef-4ec3-b50c-e08c9c7ffd02', 'Mya Bush', 76, 1, 'Fall', NULL, 240, NULL, NULL, 'pdf')  -- 100 Quarter-Finals: 3 Kiara Chac (BBRK) vs 6 Mya Bush (MH), F 4:00,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 107, '5th_Place', 'ce58029f-feda-4a8e-af6c-e5aaa0c1b0bf', 'Cayce Wang', 121, '4c4d6991-e2f5-4436-973f-e193544031a9', 'Mariella Nieves', 391, 2, 'Fall', NULL, 271, NULL, NULL, 'pdf')  -- 107 5th Place: 4 Cayce Wang (COLU) vs 9 Mariella Nieves (PCT), F 4:31,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 114, 'R1', 'a4938c74-409a-42b5-a14e-be2ff15fc066', 'Abigail Bloxham', 24, '01b0f8e8-5dfb-4507-9746-8ffee3a8c97c', 'Reilly Callan', 4, 1, 'Fall', NULL, 25, NULL, NULL, 'pdf')  -- 114 Round of 16: 7 Abigail Bloxham (NWTN) vs 10 Reilly Callan (JS), F 0:25,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 114, 'QF', 'c7baaee9-758a-4c3e-a599-c63c26f45ee2', 'Sophia Salazar', 76, 'f3f0f2e7-c126-4838-8fce-687440f32272', 'Mia Capone', 56, 1, 'Fall', NULL, 97, NULL, NULL, 'pdf')  -- 114 Quarter-Finals: 3 Sophia Salazar (MH) vs 6 Mia Capone (MO), F 1:37,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 114, 'QF', 'a4938c74-409a-42b5-a14e-be2ff15fc066', 'Abigail Bloxham', 24, 'b1cdf052-99c4-4763-8816-7f71c15d52c6', 'Adrianna Digregorio', 303, 2, 'Fall', NULL, 47, NULL, NULL, 'pdf')  -- 114 Quarter-Finals: 7 Abigail Bloxham (NWTN) vs 2 Adrianna Digregorio (WILL), F 0:47,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 114, '3rd_Place', 'f3f0f2e7-c126-4838-8fce-687440f32272', 'Mia Capone', 56, 'c7baaee9-758a-4c3e-a599-c63c26f45ee2', 'Sophia Salazar', 76, 2, 'Fall', NULL, 235, NULL, NULL, 'pdf')  -- 114 3rd Place: 6 Mia Capone (MO) vs 3 Sophia Salazar (MH), F 3:55,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 114, 'C3', 'a4938c74-409a-42b5-a14e-be2ff15fc066', 'Abigail Bloxham', 24, 'f3f0f2e7-c126-4838-8fce-687440f32272', 'Mia Capone', 56, 2, 'Fall', NULL, 97, NULL, NULL, 'pdf')  -- 114 Consi of 4: 7 Abigail Bloxham (NWTN) vs 6 Mia Capone (MO), F 1:37,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 114, 'C2', '034f52cc-4d8f-4131-a841-72fd12217b61', 'Sophia Meehan', 12, 'f3f0f2e7-c126-4838-8fce-687440f32272', 'Mia Capone', 56, 2, 'Fall', NULL, 51, NULL, NULL, 'pdf')  -- 114 Consi of 8 #2: 12 Sophia Meehan (GLRK) vs 6 Mia Capone (MO), F 0:51,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 126, 'R1', 'a2e75ddd-ea82-42e8-97bf-6419efb2356c', 'Isabella Grippo', 76, 'a8b4726b-81b7-4584-a683-984819dc1cdb', 'Molly Smyth', 56, 2, 'Fall', NULL, 188, NULL, NULL, 'pdf')  -- 126 Round of 16: 15 Isabella Grippo (MH) vs 2 Molly Smyth (MO), F 3:08,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 126, 'QF', '71929e39-78d6-4cf7-9dfd-7bf4c6ca7610', 'Hannah Harrison', 24, 'a8b4726b-81b7-4584-a683-984819dc1cdb', 'Molly Smyth', 56, 2, 'Dec', '8-1', NULL, 8, 1, 'pdf')  -- 126 Quarter-Finals: 10 Hannah Harrison (NWTN) vs 2 Molly Smyth (MO), DEC 8-1,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 126, 'C2', '7b281cce-6879-4ed9-8833-792b6d1fbba8', 'Layla Dadzie', 188, '71929e39-78d6-4cf7-9dfd-7bf4c6ca7610', 'Hannah Harrison', 24, 2, 'Fall', NULL, 153, NULL, NULL, 'pdf')  -- 126 Consi of 8 #2: 9 Layla Dadzie (HILL) vs 10 Hannah Harrison (NWTN), F 2:33,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 138, '5th_Place', 'f0893eb7-0d84-454c-86f2-6be57af7cd92', 'Genesis Perez', 76, '892d4f26-8e86-4743-95b1-24152496deef', 'Jayla Hidalgo', 188, 1, 'MFF', NULL, NULL, NULL, NULL, 'pdf')  -- 138 5th Place: 5 Genesis Perez (MH) vs 6 Jayla Hidalgo (HILL), M FOR,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 138, 'CSF', 'f0893eb7-0d84-454c-86f2-6be57af7cd92', 'Genesis Perez', 76, '327ff287-615c-4cf6-9037-3431a9d2de49', 'Alyssa Aiello', 4, 2, 'TF', NULL, 185, NULL, NULL, 'pdf')  -- 138 Consi-Semis: 5 Genesis Perez (MH) vs 3 Alyssa Aiello (JS), TF 3:05,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 138, 'QF', '327ff287-615c-4cf6-9037-3431a9d2de49', 'Alyssa Aiello', 4, '892d4f26-8e86-4743-95b1-24152496deef', 'Jayla Hidalgo', 188, 1, 'Dec', '8-4', NULL, 8, 4, 'pdf')  -- 138 Quarter-Finals: 3 Alyssa Aiello (JS) vs 6 Jayla Hidalgo (HILL), DEC 8-4,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 145, '5th_Place', 'b81740ec-22fe-4991-87f4-5da352d4d4eb', 'Victoria Frias', 391, '40a83eee-0338-44de-aabb-64425403903b', 'Ruby Meagher', 121, 2, 'Fall', NULL, 169, NULL, NULL, 'pdf')  -- 145 5th Place: 7 Victoria Frias (PCT) vs 5 Ruby Meagher (COLU), F 2:49,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 152, 'QF', '1244fea4-75b1-4f9d-8d73-b5446a17e505', 'Maria Imhauser', 188, '15c1b85a-ca2f-4535-94f8-f52bb18084a3', 'Nadia Bibi', 12, 1, 'Fall', NULL, 11, NULL, NULL, 'pdf')  -- 152 Quarter-Finals: 1 Maria Imhauser (HILL) vs 8 Nadia Bibi (GLRK), F 0:11,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 152, 'QF', '98a9cda0-0ba0-430f-969d-f37fedd8b74c', 'Gwen Silipena', 4, '71fb9630-e8ff-444d-b314-8c8c4b7df8e4', 'Nora Shemon', 76, 1, 'Fall', NULL, 112, NULL, NULL, 'pdf')  -- 152 Quarter-Finals: 7 Gwen Silipena (JS) vs 2 Nora Shemon (MH), F 1:52,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 185, '3rd_Place', '198ca7a8-18ff-49aa-aa42-8482aa0720b6', 'Kalli Battaglia', 24, 'bd7b3a71-ada2-41a8-a5b5-da47434dc60f', 'Brianna Murray', 24, 2, 'Fall', NULL, 25, NULL, NULL, 'pdf')  -- 185 3rd Place: 5 Kalli Battaglia (NWTN) vs 1 Brianna Murray (NWTN), F 0:25,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 185, 'CSF', '198ca7a8-18ff-49aa-aa42-8482aa0720b6', 'Kalli Battaglia', 24, '87fe546d-99c6-4bbe-a0e6-37a6a96d43bb', 'Ashley Vilela Armijos', 393, 1, 'Fall', NULL, 60, NULL, NULL, 'pdf')  -- 185 Consi-Semis: 5 Kalli Battaglia (NWTN) vs 3 Ashley Vilela Armijos (B/), F 1:00,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 185, 'C1', 'b562ee74-e5eb-45a8-a592-9251ad208868', 'Janayla Corum', 4, '198ca7a8-18ff-49aa-aa42-8482aa0720b6', 'Kalli Battaglia', 24, 2, 'Fall', NULL, 17, NULL, NULL, 'pdf')  -- 185 Consi of 4: 8 Janayla Corum (JS) vs 5 Kalli Battaglia (NWTN), F 0:17,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 185, 'QF', 'bd7b3a71-ada2-41a8-a5b5-da47434dc60f', 'Brianna Murray', 24, 'b562ee74-e5eb-45a8-a592-9251ad208868', 'Janayla Corum', 4, 1, 'Fall', NULL, 90, NULL, NULL, 'pdf')  -- 185 Quarter-Finals: 1 Brianna Murray (NWTN) vs 8 Janayla Corum (JS), F 1:30,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 185, 'QF', '198ca7a8-18ff-49aa-aa42-8482aa0720b6', 'Kalli Battaglia', 24, '5d3def1a-d6e3-4aa9-96d6-b636b25b5b2c', 'Maggie Armstrong', 303, 2, 'Fall', NULL, 31, NULL, NULL, 'pdf')  -- 185 Quarter-Finals: 5 Kalli Battaglia (NWTN) vs 4 Maggie Armstrong (WILL), F 0:31,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 185, 'SF', 'bd7b3a71-ada2-41a8-a5b5-da47434dc60f', 'Brianna Murray', 24, '5d3def1a-d6e3-4aa9-96d6-b636b25b5b2c', 'Maggie Armstrong', 303, 2, 'Fall', NULL, 82, NULL, NULL, 'pdf')  -- 185 Semi-Finals: 1 Brianna Murray (NWTN) vs 4 Maggie Armstrong (WILL), F 1:22,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 185, 'F', '5d3def1a-d6e3-4aa9-96d6-b636b25b5b2c', 'Maggie Armstrong', 303, 'e4f82b16-dc3e-499b-8cf1-b4de4d0d6d86', 'Brianna Sandoval', 322, 2, 'Fall', NULL, 64, NULL, NULL, 'pdf')  -- 185 Finals: 4 Maggie Armstrong (WILL) vs 2 Brianna Sandoval (BBRK), F 1:04,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 235, 'QF', 'c4d9bc50-ce7e-4dca-9b5c-68fa1c9e4ba0', 'Ayonna Campbell', 56, 'deb6aa5f-ef2a-4e4f-82dd-f770a172c362', 'Jasmine Grande', 76, 1, 'Fall', NULL, 91, NULL, NULL, 'pdf')  -- 235 Quarter-Finals: 5 Ayonna Campbell (MO) vs 4 Jasmine Grande (MH), F 1:31,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 235, 'SF', '38c0fd3c-8327-4a07-9b31-600c18e5904a', 'Abigail Paglia', 24, 'c4d9bc50-ce7e-4dca-9b5c-68fa1c9e4ba0', 'Ayonna Campbell', 56, 1, 'Fall', NULL, 89, NULL, NULL, 'pdf')  -- 235 Semi-Finals: 1 Abigail Paglia (NWTN) vs 5 Ayonna Campbell (MO), F 1:29,
-    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 235, 'F', '38c0fd3c-8327-4a07-9b31-600c18e5904a', 'Abigail Paglia', 24, 'ff2b332c-1330-483b-b1bd-1c443151ddfe', 'Jana Abdalate', 188, 1, 'Dec', '4-1', NULL, 4, 1, 'pdf')  -- 235 Finals: 1 Abigail Paglia (NWTN) vs 2 Jana Abdalate (HILL), DEC 4-1;
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 100, '5th_Place', 'f673e569-e298-4f0a-9f7e-82e49b232875', 'Addison Petersen', 24, '3432d1ad-db13-448e-9fd3-3888c8fd1269', 'Belinda Minervini', 56, 2, 'MFF', NULL, NULL, NULL, NULL, 'pdf'),  -- 100 5th Place: 4 Addison Petersen (NWTN) vs 5 Belinda Minervini (MO), M FOR
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 100, 'CSF', 'd3f2e77b-e3ef-4ec3-b50c-e08c9c7ffd02', 'Mya Bush', 76, '3432d1ad-db13-448e-9fd3-3888c8fd1269', 'Belinda Minervini', 56, 1, 'Fall', NULL, 265, NULL, NULL, 'pdf'),  -- 100 Consi-Semis: 6 Mya Bush (MH) vs 5 Belinda Minervini (MO), F 4:25
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 100, 'CSF', 'f673e569-e298-4f0a-9f7e-82e49b232875', 'Addison Petersen', 24, 'a6db5f08-b20a-44b0-b7ec-6a5acd21ff9c', 'Kiara Chac', 322, 2, 'Fall', NULL, 54, NULL, NULL, 'pdf'),  -- 100 Consi-Semis: 4 Addison Petersen (NWTN) vs 3 Kiara Chac (BBRK), F 0:54
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 100, 'QF', '3432d1ad-db13-448e-9fd3-3888c8fd1269', 'Belinda Minervini', 56, 'f673e569-e298-4f0a-9f7e-82e49b232875', 'Addison Petersen', 24, 1, 'SV-1', '11-8', NULL, 11, 8, 'pdf'),  -- 100 Quarter-Finals: 5 Belinda Minervini (MO) vs 4 Addison Petersen (NWTN), DEC SV 11-8
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 100, 'QF', 'a6db5f08-b20a-44b0-b7ec-6a5acd21ff9c', 'Kiara Chac', 322, 'd3f2e77b-e3ef-4ec3-b50c-e08c9c7ffd02', 'Mya Bush', 76, 1, 'Fall', NULL, 240, NULL, NULL, 'pdf'),  -- 100 Quarter-Finals: 3 Kiara Chac (BBRK) vs 6 Mya Bush (MH), F 4:00
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 107, '5th_Place', 'ce58029f-feda-4a8e-af6c-e5aaa0c1b0bf', 'Cayce Wang', 121, '4c4d6991-e2f5-4436-973f-e193544031a9', 'Mariella Nieves', 391, 2, 'Fall', NULL, 271, NULL, NULL, 'pdf'),  -- 107 5th Place: 4 Cayce Wang (COLU) vs 9 Mariella Nieves (PCT), F 4:31
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 114, 'R1', 'a4938c74-409a-42b5-a14e-be2ff15fc066', 'Abigail Bloxham', 24, '01b0f8e8-5dfb-4507-9746-8ffee3a8c97c', 'Reilly Callan', 4, 1, 'Fall', NULL, 25, NULL, NULL, 'pdf'),  -- 114 Round of 16: 7 Abigail Bloxham (NWTN) vs 10 Reilly Callan (JS), F 0:25
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 114, 'QF', 'c7baaee9-758a-4c3e-a599-c63c26f45ee2', 'Sophia Salazar', 76, 'f3f0f2e7-c126-4838-8fce-687440f32272', 'Mia Capone', 56, 1, 'Fall', NULL, 97, NULL, NULL, 'pdf'),  -- 114 Quarter-Finals: 3 Sophia Salazar (MH) vs 6 Mia Capone (MO), F 1:37
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 114, 'QF', 'a4938c74-409a-42b5-a14e-be2ff15fc066', 'Abigail Bloxham', 24, 'b1cdf052-99c4-4763-8816-7f71c15d52c6', 'Adrianna Digregorio', 303, 2, 'Fall', NULL, 47, NULL, NULL, 'pdf'),  -- 114 Quarter-Finals: 7 Abigail Bloxham (NWTN) vs 2 Adrianna Digregorio (WILL), F 0:47
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 114, '3rd_Place', 'f3f0f2e7-c126-4838-8fce-687440f32272', 'Mia Capone', 56, 'c7baaee9-758a-4c3e-a599-c63c26f45ee2', 'Sophia Salazar', 76, 2, 'Fall', NULL, 235, NULL, NULL, 'pdf'),  -- 114 3rd Place: 6 Mia Capone (MO) vs 3 Sophia Salazar (MH), F 3:55
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 114, 'C3', 'a4938c74-409a-42b5-a14e-be2ff15fc066', 'Abigail Bloxham', 24, 'f3f0f2e7-c126-4838-8fce-687440f32272', 'Mia Capone', 56, 2, 'Fall', NULL, 97, NULL, NULL, 'pdf'),  -- 114 Consi of 4: 7 Abigail Bloxham (NWTN) vs 6 Mia Capone (MO), F 1:37
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 114, 'C2', '034f52cc-4d8f-4131-a841-72fd12217b61', 'Sophia Meehan', 12, 'f3f0f2e7-c126-4838-8fce-687440f32272', 'Mia Capone', 56, 2, 'Fall', NULL, 51, NULL, NULL, 'pdf'),  -- 114 Consi of 8 #2: 12 Sophia Meehan (GLRK) vs 6 Mia Capone (MO), F 0:51
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 126, 'R1', 'a2e75ddd-ea82-42e8-97bf-6419efb2356c', 'Isabella Grippo', 76, 'a8b4726b-81b7-4584-a683-984819dc1cdb', 'Molly Smyth', 56, 2, 'Fall', NULL, 188, NULL, NULL, 'pdf'),  -- 126 Round of 16: 15 Isabella Grippo (MH) vs 2 Molly Smyth (MO), F 3:08
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 126, 'QF', '71929e39-78d6-4cf7-9dfd-7bf4c6ca7610', 'Hannah Harrison', 24, 'a8b4726b-81b7-4584-a683-984819dc1cdb', 'Molly Smyth', 56, 2, 'Dec', '8-1', NULL, 8, 1, 'pdf'),  -- 126 Quarter-Finals: 10 Hannah Harrison (NWTN) vs 2 Molly Smyth (MO), DEC 8-1
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 126, 'C2', '7b281cce-6879-4ed9-8833-792b6d1fbba8', 'Layla Dadzie', 188, '71929e39-78d6-4cf7-9dfd-7bf4c6ca7610', 'Hannah Harrison', 24, 2, 'Fall', NULL, 153, NULL, NULL, 'pdf'),  -- 126 Consi of 8 #2: 9 Layla Dadzie (HILL) vs 10 Hannah Harrison (NWTN), F 2:33
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 138, '5th_Place', 'f0893eb7-0d84-454c-86f2-6be57af7cd92', 'Genesis Perez', 76, '892d4f26-8e86-4743-95b1-24152496deef', 'Jayla Hidalgo', 188, 1, 'MFF', NULL, NULL, NULL, NULL, 'pdf'),  -- 138 5th Place: 5 Genesis Perez (MH) vs 6 Jayla Hidalgo (HILL), M FOR
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 138, 'CSF', 'f0893eb7-0d84-454c-86f2-6be57af7cd92', 'Genesis Perez', 76, '327ff287-615c-4cf6-9037-3431a9d2de49', 'Alyssa Aiello', 4, 2, 'TF', NULL, 185, NULL, NULL, 'pdf'),  -- 138 Consi-Semis: 5 Genesis Perez (MH) vs 3 Alyssa Aiello (JS), TF 3:05
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 138, 'QF', '327ff287-615c-4cf6-9037-3431a9d2de49', 'Alyssa Aiello', 4, '892d4f26-8e86-4743-95b1-24152496deef', 'Jayla Hidalgo', 188, 1, 'Dec', '8-4', NULL, 8, 4, 'pdf'),  -- 138 Quarter-Finals: 3 Alyssa Aiello (JS) vs 6 Jayla Hidalgo (HILL), DEC 8-4
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 145, '5th_Place', 'b81740ec-22fe-4991-87f4-5da352d4d4eb', 'Victoria Frias', 391, '40a83eee-0338-44de-aabb-64425403903b', 'Ruby Meagher', 121, 2, 'Fall', NULL, 169, NULL, NULL, 'pdf'),  -- 145 5th Place: 7 Victoria Frias (PCT) vs 5 Ruby Meagher (COLU), F 2:49
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 152, 'QF', '1244fea4-75b1-4f9d-8d73-b5446a17e505', 'Maria Imhauser', 188, '15c1b85a-ca2f-4535-94f8-f52bb18084a3', 'Nadia Bibi', 12, 1, 'Fall', NULL, 11, NULL, NULL, 'pdf'),  -- 152 Quarter-Finals: 1 Maria Imhauser (HILL) vs 8 Nadia Bibi (GLRK), F 0:11
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 152, 'QF', '98a9cda0-0ba0-430f-969d-f37fedd8b74c', 'Gwen Silipena', 4, '71fb9630-e8ff-444d-b314-8c8c4b7df8e4', 'Nora Shemon', 76, 1, 'Fall', NULL, 112, NULL, NULL, 'pdf'),  -- 152 Quarter-Finals: 7 Gwen Silipena (JS) vs 2 Nora Shemon (MH), F 1:52
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 185, '3rd_Place', '198ca7a8-18ff-49aa-aa42-8482aa0720b6', 'Kalli Battaglia', 24, 'bd7b3a71-ada2-41a8-a5b5-da47434dc60f', 'Brianna Murray', 24, 2, 'Fall', NULL, 25, NULL, NULL, 'pdf'),  -- 185 3rd Place: 5 Kalli Battaglia (NWTN) vs 1 Brianna Murray (NWTN), F 0:25
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 185, 'CSF', '198ca7a8-18ff-49aa-aa42-8482aa0720b6', 'Kalli Battaglia', 24, '87fe546d-99c6-4bbe-a0e6-37a6a96d43bb', 'Ashley Vilela Armijos', 393, 1, 'Fall', NULL, 60, NULL, NULL, 'pdf'),  -- 185 Consi-Semis: 5 Kalli Battaglia (NWTN) vs 3 Ashley Vilela Armijos (B/), F 1:00
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 185, 'C1', 'b562ee74-e5eb-45a8-a592-9251ad208868', 'Janayla Corum', 4, '198ca7a8-18ff-49aa-aa42-8482aa0720b6', 'Kalli Battaglia', 24, 2, 'Fall', NULL, 17, NULL, NULL, 'pdf'),  -- 185 Consi of 4: 8 Janayla Corum (JS) vs 5 Kalli Battaglia (NWTN), F 0:17
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 185, 'QF', 'bd7b3a71-ada2-41a8-a5b5-da47434dc60f', 'Brianna Murray', 24, 'b562ee74-e5eb-45a8-a592-9251ad208868', 'Janayla Corum', 4, 1, 'Fall', NULL, 90, NULL, NULL, 'pdf'),  -- 185 Quarter-Finals: 1 Brianna Murray (NWTN) vs 8 Janayla Corum (JS), F 1:30
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 185, 'QF', '198ca7a8-18ff-49aa-aa42-8482aa0720b6', 'Kalli Battaglia', 24, '5d3def1a-d6e3-4aa9-96d6-b636b25b5b2c', 'Maggie Armstrong', 303, 2, 'Fall', NULL, 31, NULL, NULL, 'pdf'),  -- 185 Quarter-Finals: 5 Kalli Battaglia (NWTN) vs 4 Maggie Armstrong (WILL), F 0:31
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 185, 'SF', 'bd7b3a71-ada2-41a8-a5b5-da47434dc60f', 'Brianna Murray', 24, '5d3def1a-d6e3-4aa9-96d6-b636b25b5b2c', 'Maggie Armstrong', 303, 2, 'Fall', NULL, 82, NULL, NULL, 'pdf'),  -- 185 Semi-Finals: 1 Brianna Murray (NWTN) vs 4 Maggie Armstrong (WILL), F 1:22
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 185, 'F', '5d3def1a-d6e3-4aa9-96d6-b636b25b5b2c', 'Maggie Armstrong', 303, 'e4f82b16-dc3e-499b-8cf1-b4de4d0d6d86', 'Brianna Sandoval', 322, 2, 'Fall', NULL, 64, NULL, NULL, 'pdf'),  -- 185 Finals: 4 Maggie Armstrong (WILL) vs 2 Brianna Sandoval (BBRK), F 1:04
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 235, 'QF', 'c4d9bc50-ce7e-4dca-9b5c-68fa1c9e4ba0', 'Ayonna Campbell', 56, 'deb6aa5f-ef2a-4e4f-82dd-f770a172c362', 'Jasmine Grande', 76, 1, 'Fall', NULL, 91, NULL, NULL, 'pdf'),  -- 235 Quarter-Finals: 5 Ayonna Campbell (MO) vs 4 Jasmine Grande (MH), F 1:31
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 235, 'SF', '38c0fd3c-8327-4a07-9b31-600c18e5904a', 'Abigail Paglia', 24, 'c4d9bc50-ce7e-4dca-9b5c-68fa1c9e4ba0', 'Ayonna Campbell', 56, 1, 'Fall', NULL, 89, NULL, NULL, 'pdf'),  -- 235 Semi-Finals: 1 Abigail Paglia (NWTN) vs 5 Ayonna Campbell (MO), F 1:29
+    ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 235, 'F', '38c0fd3c-8327-4a07-9b31-600c18e5904a', 'Abigail Paglia', 24, 'ff2b332c-1330-483b-b1bd-1c443151ddfe', 'Jana Abdalate', 188, 1, 'Dec', '4-1', NULL, 4, 1, 'pdf');  -- 235 Finals: 1 Abigail Paglia (NWTN) vs 2 Jana Abdalate (HILL), DEC 4-1
   GET DIAGNOSTICS n = ROW_COUNT; IF n <> 31 THEN RAISE EXCEPTION 'girls bouts added: %', n; END IF;
   INSERT INTO in_season_tournament_seeds_girls (in_season_tournament_id, weight_class, seed, wrestler_name_raw, school_name_raw, wrestler_id, school_id) VALUES
     ('ca6174aa-a4e2-4092-be6f-774813d2e6bb', 100, 1, 'Alysa Patel', '', 'f11fd2e7-761b-4d50-adaa-a6a0c03d25f8', 153),
