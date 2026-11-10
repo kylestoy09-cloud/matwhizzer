@@ -2,6 +2,23 @@
 
 ---
 
+## 2026-11-09 — Tournament team scores accept girls tournaments
+
+**Migration file:** `docs/migrations/20261109_tournament_team_scores_both_genders.sql`
+
+**Purpose:** `in_season_tournament_team_scores` serves both genders (the RTF import and every reader use it for boys and girls), but `tournament_id` had a foreign key to the boys tournament table only. Every girls standings insert was refused. That is why none of the 41 girls 2025-26 tournaments had a winner. Found when loading the girls standings: the insert failed whole, nothing written.
+
+**Changes:**
+- The boys-only foreign key is replaced by a trigger: the tournament must exist in the boys or the girls table.
+- Delete triggers on both tournament tables keep the cascade: deleting a tournament removes its team scores.
+- No data changes.
+
+**Next:** `scripts/build_girls_tournament_team_scores.mts --apply` adds 743 girls team score rows across 20 tournaments, read from the TrackWrestling result files. One row is held: Canyon View, Beast of the East, with two possible records (AZ, UT).
+
+**Status:** waiting for Kyle to run it. **Reversible?** Yes (rollback note in the file).
+
+---
+
 ## 2026-11-09 — Girls 2024-25 regions numbered; Valliere merged; Keyra's duplicate removed
 
 **Migration file:** `docs/migrations/20261109_girls_2025_regions_numbered_and_merges.sql`. **Backup:** `docs/migrations/backups/20261109_girls_2025_regions_rename_merges_before.json`
