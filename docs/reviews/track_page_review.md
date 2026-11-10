@@ -77,5 +77,5 @@ the row backed up), or leave it.
 - **Out-of-state school names** read like bracket text: "Delcastle H S", "Laurel H S", "Palisades Hs", and others. Tidy schools.display_name for is_nj = false schools.
 - **`lb_gp_team_points`** exists twice (p_season smallint and integer), so every call fails ("could not choose the best candidate"). The girls state page no longer uses it; drop one copy.
 - **Girls District 9 2025-26, Jackson Township:** stored official total 257.5; source_of_truth_team_scores.csv has "Jackson Township H.S." 223. Check the official sheet.
-- **Girls tournaments have no team results:** none of the 41 girls in-season tournaments has a 1st-place team on file, so the tournament list's Winner column is empty.
+- ~~**Girls tournaments have no team results**~~ — resolved 2026-11-09: the tables' boys-only foreign key had refused every girls row (`20261109_tournament_team_scores_both_genders.sql`); standings loaded for 21 of 41. The rest have no standings in the files: `docs/reviews/tournaments_without_team_standings.md`.
 - **Profile name split:** William "Jayden Ratz" (first name William, last name "Jayden Ratz"), probably first "William Jayden" or last "Ratz".
