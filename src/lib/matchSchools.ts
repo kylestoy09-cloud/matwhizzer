@@ -119,7 +119,7 @@ function tokenOverlap(query: string, target: string): number {
 // Scaled so a full token-overlap match (~0.9) auto-resolves while a partial one
 // shows as a high-confidence alternate.
 function oosScore(query: string, oos: OosSchoolRow): number {
-  const strippedName = stripSuffixes(oos.display_name)
+  const strippedName = stripSuffixes(untagState(oos.display_name))
   const trig = Math.max(
     trigramSimilarity(query, oos.display_name),
     trigramSimilarity(query, strippedName),
@@ -135,6 +135,12 @@ const STRIP_SUFFIXES = [
   ' regional', ' jr/sr', ' jr-sr', ' sr', ' jr',
   ' academy', ' charter', ' school',
 ]
+
+// Out-of-state names carry a state tag (2026-11-10): "Saucon Valley (PA)", "Perry (Massillon, OH)". Imports print
+// the school without it, so OOS names are compared with the tag removed.
+function untagState(name: string): string {
+  return name.replace(/\s*\(\s*[A-Z]{2}\s*\)\s*$/, '').replace(/,\s*[A-Z]{2}\s*\)\s*$/, ')').trim()
+}
 
 function stripSuffixes(name: string): string {
   const lower = name.toLowerCase().trimEnd()
@@ -313,19 +319,22 @@ export async function matchSchoolNames(
     }
   }
 
-  // ── 4. Exact OOS display_name ────────────────────────────────────────────────
+  // ── 4. Exact OOS display_name (with or without its state tag) ────────────────
   const exactOos = oosSchools.find(s => s.display_name.toLowerCase() === raw.toLowerCase())
+    ?? oosSchools.find(s => untagState(s.display_name).toLowerCase() === raw.toLowerCase())
+    // "Dover, DE" as printed by imports = "Dover (DE)" as stored
+    ?? (/,\s*[A-Za-z]{2}$/.test(raw.trim()) ? oosSchools.find(s => s.display_name.toLowerCase() === raw.trim().replace(/,\s*([A-Za-z]{2})$/, (_, st) => ` (${st.toUpperCase()})`).toLowerCase()) : undefined)
   if (exactOos) return oosExactResult(raw, exactOos)
 
   // ── 5. Suffix-stripped exact OOS ─────────────────────────────────────────────
   // 5a. Strip raw → match against OOS names
   if (stripped !== raw && stripped.length > 0) {
-    const strippedOos = oosSchools.find(s => s.display_name.toLowerCase() === stripped.toLowerCase())
+    const strippedOos = oosSchools.find(s => untagState(s.display_name).toLowerCase() === stripped.toLowerCase())
     if (strippedOos) return oosExactResult(raw, strippedOos)
   }
   // 5b. Strip OOS name → match against raw and stripped raw
   for (const oos of oosSchools) {
-    const sOos = stripSuffixes(oos.display_name).toLowerCase()
+    const sOos = stripSuffixes(untagState(oos.display_name)).toLowerCase()
     if (sOos === raw.toLowerCase() || (stripped.length > 0 && sOos === stripped.toLowerCase())) {
       return oosExactResult(raw, oos)
     }

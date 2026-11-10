@@ -2,6 +2,29 @@
 
 ---
 
+## 2026-11-10 — Out-of-state schools carry a state tag
+
+**No migration** (data; service role, `scripts/oos_state_tags_20261110.mts --apply`).
+
+**Purpose:** Kyle wants a state on every out-of-state school, including non-NJSIAA NJ schools as (NJ), so non-NJSIAA programs are easy to spot.
+
+**Changes:**
+- **513 schools tagged:** 506 high-confidence states, plus 7 whose state was already known from an alias.
+  - Formats: "Name (ST)"; "Name, ST" becomes "Name (ST)"; "Name (note)" becomes "Name (note, ST)".
+  - Frisch, Kushner, Torah Academy, Lawrenceville, Peddie and Blair are tagged (NJ).
+- **Old names kept as aliases:** 508 added (4 existed already). "Pitman" was skipped because it is already NJ Pitman's alias.
+- **Matcher (`src/lib/matchSchools.ts`)** compares out-of-state names with the tag removed, and reads "Name, ST" as "Name (ST)". Imports printing the plain name still match. Checked: Saucon Valley, Blair, Dover DE, Perry (Massillon); NJ Pitman, Woodbridge and Delaware Valley still match NJ.
+
+**Not tagged:**
+- 74 medium/low guesses with bouts on file, sent to Kyle: `docs/reviews/oos_states_to_review.csv`.
+- Schools with no bouts on file (Kyle: settle them when they show up in bouts).
+
+**Duplicates:** 8 pairs (`docs/reviews/oos_duplicate_schools.csv`). In each, one record has no bouts.
+
+**Backups:** `backups/20261110_oos_state_tags_before.json`, `backups/20261110_oos_state_tag_aliases_added.json`.
+
+---
+
 ## 2026-11-10 — Bout-time rules on every write; Hodgson merge; "Unknown" profiles removed
 
 **Migration files:** `docs/migrations/20261110_bout_time_rules.sql`, `docs/migrations/20261110_merge_hodgson.sql`
