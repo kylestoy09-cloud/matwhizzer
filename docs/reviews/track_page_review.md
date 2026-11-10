@@ -62,7 +62,7 @@ the row backed up), or leave it.
 
 - ~~8 girls whose 2025-26 postseason entries have no school~~ — resolved 2026-11-02: bracket filler names, not wrestlers (only forfeit losses, no duals). Removed with 11 other filler entries (`20261102_remove_placeholder_entries.sql`).
 
-- ~~Falls under 10 seconds~~ — Kyle 2026-11-10: under 10 s can happen; only 0:00–0:02 are wrong → set to 6:00 (`20261110_falls_under_3s_to_6_00.sql`, 30 falls).
+- ~~Falls under 10 seconds~~ — Kyle 2026-11-10: under 10 s can happen; only 0:00–0:02 falls are wrong; tech falls under 0:13 and tech falls / injury defaults with no time likewise → 6:00 (`20261110_bout_times_to_6_00.sql`, 432 bouts).
 - 229 boys / 42 girls duals where the final score differs from the bout points, mostly by 1 point (likely team deductions; not verified).
 - Duplicate school records for one school: "Blair Academy" / "Blair Academy (B Team)", "Hodgson" / "Hodgson Vo Tech School".
 
