@@ -11,7 +11,13 @@
 2. **Savanah Valliere** is one girl (Lindenwold 2024-25, Paulsboro 2025-26). Today's 2024-25 profile (b6292eb7) merges into ee6626b7: 1 entry and 1 name link move; the emptied profile is deleted.
 3. **Keyra Huastitlan Reyes's duplicate** (4b9a9152, made by mistake today, no references) is deleted.
 
-**Status:** waiting for Kyle to run it (deletes approved). **Reversible?** Yes (backup).
+**APPLIED** — 2026-11-09, Supabase SQL editor. **Verified?** Yes:
+- 134 r3, 135 r1, 136 r2, 137 r4.
+- Valliere has 3 entries on one profile; the deleted profiles are gone.
+- Live 2024-25 girls region pages 1–4 show their brackets and placers (48 per region from `girls_region_placements`; Region 2 was serving a 5-minute cached empty result and refreshed).
+- Integrity check unchanged.
+
+**Reversible?** Yes (backup).
 
 ---
 
