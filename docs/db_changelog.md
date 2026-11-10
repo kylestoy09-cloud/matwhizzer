@@ -2,6 +2,30 @@
 
 ---
 
+## 2026-11-10 — Falls timed 0:00–0:02 set to 6:00
+
+**Migration file:** `docs/migrations/20261110_falls_under_3s_to_6_00.sql`
+
+**Purpose:** pinned list. A fall can't take 0, 1 or 2 seconds. Kyle: 0:00 means the time was never entered, so set it and 0:01 / 0:02 to 6:00; 0:03 and up can happen and stay.
+
+**Changes:** 30 falls, all seasons:
+- boys duals 8;
+- girls duals 3;
+- girls tournaments 1;
+- postseason 18.
+
+**Not changed:**
+- Tech falls and injury defaults with a 0 time; the postseason table stores 0 for "no time".
+- Any score text.
+
+**Backup:** `backups/20261110_falls_under_3s_before.json`
+
+**Afterwards:** refresh the leaderboards; Quickest Deck reads fall times.
+
+**Status:** waiting for Kyle to run it.
+
+---
+
 ## 2026-11-10 — Ella Magee self-bout deleted
 
 **Migration file:** `docs/migrations/20261110_delete_magee_self_bout.sql`
@@ -10,7 +34,7 @@
 
 **Counts and backup:** 1 row. No score-log row, because NC bouts aren't rated. Backup: `backups/20261110_magee_self_bout.json`.
 
-**Status:** waiting for Kyle to run it.
+**APPLIED:** 2026-11-10. Check: 0 self-bouts left.
 
 ---
 

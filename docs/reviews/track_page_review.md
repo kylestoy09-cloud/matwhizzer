@@ -42,7 +42,7 @@ Likely several meets from the same day combined into one record. Need each meet'
 | 2026-02-21 | Bergenfield vs West Windsor-Plainsboro South | 1 |
 | 2026-02-21 | Hightstown vs Bordentown Regional/Florence | 2 |
 
-## 2. Ella Magee vs Ella Magee
+## 2. ~~Ella Magee vs Ella Magee~~ — deleted 2026-11-10 (Kyle; `20261110_delete_magee_self_bout.sql`)
 
 2026 SJWHOF Girls Varsity (2026-01-04), 107, placement round, result NC: the source lists the
 same wrestler on both sides. Not rated (NC). Decision: delete the bout (needs approval with
@@ -52,9 +52,9 @@ the row backed up), or leave it.
 
 | Wrestler | Records | Question |
 |---|---|---|
-| Finley Pazinko | Jackson Township 2025-26; Jackson Liberty 2024-25 (4 weight classes apart) | Transfer who grew, or two people? |
-| Jake Valeri | Red Bank Catholic 2025-26; Point Pleasant Beach 2024-25 (5 classes apart) | Same |
-| Aidan Thompson | Immaculata 2025-26; Hunterdon Central 2024-25 (5 classes apart) | Same |
+| ~~Finley Pazinko~~ | Kyle 2026-11-10: same person (Jackson Liberty folded into Jackson Township) | |
+| ~~Jake Valeri~~ | Kyle 2026-11-10: same person | |
+| ~~Aidan Thompson~~ | Kyle 2026-11-10: same person | |
 | ~~Ashley Coronel (girls)~~ | resolved: every record is Paterson Eastside now (checked 2026-11-10) | |
 | ~~Antonio Cruz~~ | resolved: three separate profiles (Cedar Creek class of 2025 at 126; Newark East Side 190-285; Plainfield 113) | |
 
@@ -62,7 +62,7 @@ the row backed up), or leave it.
 
 - ~~8 girls whose 2025-26 postseason entries have no school~~ — resolved 2026-11-02: bracket filler names, not wrestlers (only forfeit losses, no duals). Removed with 11 other filler entries (`20261102_remove_placeholder_entries.sql`).
 
-- About 100 2025-26 falls recorded under 10 seconds (88 boys duals, 12 boys tournaments) — possible typos; they top the Quickest Deck boards.
+- ~~Falls under 10 seconds~~ — Kyle 2026-11-10: under 10 s can happen; only 0:00–0:02 are wrong → set to 6:00 (`20261110_falls_under_3s_to_6_00.sql`, 30 falls).
 - 229 boys / 42 girls duals where the final score differs from the bout points, mostly by 1 point (likely team deductions; not verified).
 - Duplicate school records for one school: "Blair Academy" / "Blair Academy (B Team)", "Hodgson" / "Hodgson Vo Tech School".
 
