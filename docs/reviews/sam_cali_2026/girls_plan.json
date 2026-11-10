@@ -1,0 +1,1969 @@
+{
+ "relabel": [
+  {
+   "id": "e0ff82e9-c767-4da1-9c9e-60677fe4f7ee",
+   "from": "QF",
+   "to": "3rd_Place"
+  },
+  {
+   "id": "9273b41b-b7f0-4328-84c8-6d734ee1ba23",
+   "from": "C4",
+   "to": "C1"
+  },
+  {
+   "id": "10792a9a-7103-43fa-adcc-ecab79188d63",
+   "from": "R3",
+   "to": "CSF"
+  },
+  {
+   "id": "8c3eaa19-d9c2-4a73-8b49-693fc5e19e77",
+   "from": "Cons. Semis",
+   "to": "CSF"
+  },
+  {
+   "id": "3bf4234a-8389-4e25-91bd-bc79cd336ccd",
+   "from": "C2",
+   "to": "C3"
+  },
+  {
+   "id": "4bc5320c-542e-43fe-a993-15cbd49da116",
+   "from": "C2",
+   "to": "C3"
+  },
+  {
+   "id": "bc2fc6d2-78d4-426a-a01f-850952a9d122",
+   "from": "C1",
+   "to": "C2"
+  },
+  {
+   "id": "0602ec54-be99-41b5-a98b-00a6532fc3d4",
+   "from": "C1",
+   "to": "C2"
+  },
+  {
+   "id": "8c616331-dcf2-47cf-80ce-79e54220574e",
+   "from": "R1",
+   "to": "C2"
+  },
+  {
+   "id": "ceb3747d-1a0a-4cba-9b5f-b3645d2954f6",
+   "from": "Cons. Semis",
+   "to": "CSF"
+  },
+  {
+   "id": "adc7a88f-1147-4906-8e12-b6ab2ec63475",
+   "from": "Cons. Semis",
+   "to": "CSF"
+  },
+  {
+   "id": "a521b352-0df8-4cb0-9d0f-b5cdf0b0510f",
+   "from": "C1",
+   "to": "C2"
+  },
+  {
+   "id": "743e0047-20ab-4f57-9de1-df0408bde3a8",
+   "from": "Cons. Semis",
+   "to": "CSF"
+  },
+  {
+   "id": "f0ecc076-b285-477e-a8b1-fa48d69e6d56",
+   "from": "Cons. Semis",
+   "to": "CSF"
+  },
+  {
+   "id": "db8a99f0-a50b-4625-a1c4-97e1e846ce44",
+   "from": "C2",
+   "to": "C1"
+  },
+  {
+   "id": "99f70dfe-68bd-4223-b678-26392da41a47",
+   "from": "Cons. Quarters",
+   "to": "C1"
+  },
+  {
+   "id": "115721b2-9759-49fe-a350-7dbbe698ac7c",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "a22d4d51-a5ac-4a3c-af34-4d06a120a917",
+   "from": "Cons. Semis",
+   "to": "CSF"
+  },
+  {
+   "id": "3031b8ac-e36c-4438-b403-02767f3d8036",
+   "from": "Cons. Semis",
+   "to": "CSF"
+  },
+  {
+   "id": "5041193d-9600-4048-9254-631ebaade3e8",
+   "from": "Cons. Quarters",
+   "to": "C3"
+  },
+  {
+   "id": "d2d76aa5-b03a-4aee-9aac-4e9b3c13e617",
+   "from": "Cons. Quarters",
+   "to": "C3"
+  },
+  {
+   "id": "80e45027-3160-4679-be92-ec9f189feed9",
+   "from": "C1",
+   "to": "C2"
+  },
+  {
+   "id": "659b6ebb-b06c-4580-80c4-5c11df3471d4",
+   "from": "R2",
+   "to": "QF"
+  },
+  {
+   "id": "0d8e0d84-dc55-43fb-81e4-6f86496d54ec",
+   "from": "R3",
+   "to": "SF"
+  },
+  {
+   "id": "83fc72a4-e866-488b-a7dc-665789ebb4bb",
+   "from": "Cons. Semis",
+   "to": "CSF"
+  },
+  {
+   "id": "399bcaa4-cf55-4cc9-8e4d-8875703f43d5",
+   "from": "Cons. Semis",
+   "to": "CSF"
+  },
+  {
+   "id": "493d6b6b-3496-4e20-9d3c-535ab217e44f",
+   "from": "Cons. Quarters",
+   "to": "C3"
+  },
+  {
+   "id": "fe26f855-3cfc-4995-af64-c0678e586d0d",
+   "from": "Cons. Quarters",
+   "to": "C3"
+  },
+  {
+   "id": "879040c2-7825-4800-8e62-f1da8e2aa42f",
+   "from": "Cons. Semis",
+   "to": "CSF"
+  },
+  {
+   "id": "2badb8e8-ffef-4951-89d5-6998981efd35",
+   "from": "R2",
+   "to": "QF"
+  },
+  {
+   "id": "08392e14-a4cf-4af3-9386-451ccd251f95",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "c6cfc8ce-252b-4bb4-9137-a48ade429849",
+   "from": "Cons. Semis",
+   "to": "CSF"
+  },
+  {
+   "id": "d934bf2a-05f8-4b27-934c-eb62f30fbcd4",
+   "from": "R1",
+   "to": "CSF"
+  },
+  {
+   "id": "a9e4b17d-da0d-421f-9215-c54aaeac8b67",
+   "from": "C2",
+   "to": "C3"
+  },
+  {
+   "id": "3bfc5c9b-b800-4f79-8c33-9a412a6e62cb",
+   "from": "C1",
+   "to": "C3"
+  },
+  {
+   "id": "28916c63-df4b-4955-b01a-5090e3d59286",
+   "from": "C1",
+   "to": "C2"
+  },
+  {
+   "id": "a1e99b75-7142-43e7-be07-65b4078938a8",
+   "from": "QF",
+   "to": "5th_Place"
+  },
+  {
+   "id": "52dab837-1bd8-4dca-8f5d-151a5feb7360",
+   "from": "C1",
+   "to": "CSF"
+  },
+  {
+   "id": "c1f47ead-97f2-49db-84ce-cc06d8b30e05",
+   "from": "R1",
+   "to": "CSF"
+  },
+  {
+   "id": "5e959fb0-0669-4326-bf83-4e0d8723e4ad",
+   "from": "Cons. Semis",
+   "to": "CSF"
+  },
+  {
+   "id": "608c9cb6-3d9e-4da8-a70d-012bcc61b494",
+   "from": "Cons. Semis",
+   "to": "CSF"
+  },
+  {
+   "id": "31dc0411-7a88-4e74-a68c-1c712d5204b9",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "2f3813aa-2d17-48d1-8f37-0f66cd2f7ae6",
+   "from": "Cons. Semis",
+   "to": "CSF"
+  }
+ ],
+ "moves": [
+  {
+   "id": "a8ed32a4-b66d-4d60-a928-5a3ff4ee4ac5",
+   "from": 152,
+   "to": 185,
+   "round": "SF",
+   "winnerOk": true,
+   "label": "185 Semi-Finals: 3 Ashley Vilela Armijos (B/) vs 2 Brianna Sandoval (BBRK)"
+  }
+ ],
+ "adds": [
+  {
+   "weight_class": 100,
+   "round": "5th_Place",
+   "wrestler1_id": "f673e569-e298-4f0a-9f7e-82e49b232875",
+   "wrestler1_name_raw": "Addison Petersen",
+   "wrestler1_school_id": 24,
+   "wrestler2_id": "3432d1ad-db13-448e-9fd3-3888c8fd1269",
+   "wrestler2_name_raw": "Belinda Minervini",
+   "wrestler2_school_id": 56,
+   "winner": 2,
+   "result_type": "MFF",
+   "result_detail": null,
+   "fall_time_seconds": null,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "100 5th Place: 4 Addison Petersen (NWTN) vs 5 Belinda Minervini (MO), M FOR"
+  },
+  {
+   "weight_class": 100,
+   "round": "CSF",
+   "wrestler1_id": "d3f2e77b-e3ef-4ec3-b50c-e08c9c7ffd02",
+   "wrestler1_name_raw": "Mya Bush",
+   "wrestler1_school_id": 76,
+   "wrestler2_id": "3432d1ad-db13-448e-9fd3-3888c8fd1269",
+   "wrestler2_name_raw": "Belinda Minervini",
+   "wrestler2_school_id": 56,
+   "winner": 1,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 265,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "100 Consi-Semis: 6 Mya Bush (MH) vs 5 Belinda Minervini (MO), F 4:25"
+  },
+  {
+   "weight_class": 100,
+   "round": "CSF",
+   "wrestler1_id": "f673e569-e298-4f0a-9f7e-82e49b232875",
+   "wrestler1_name_raw": "Addison Petersen",
+   "wrestler1_school_id": 24,
+   "wrestler2_id": "a6db5f08-b20a-44b0-b7ec-6a5acd21ff9c",
+   "wrestler2_name_raw": "Kiara Chac",
+   "wrestler2_school_id": 322,
+   "winner": 2,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 54,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "100 Consi-Semis: 4 Addison Petersen (NWTN) vs 3 Kiara Chac (BBRK), F 0:54"
+  },
+  {
+   "weight_class": 100,
+   "round": "QF",
+   "wrestler1_id": "3432d1ad-db13-448e-9fd3-3888c8fd1269",
+   "wrestler1_name_raw": "Belinda Minervini",
+   "wrestler1_school_id": 56,
+   "wrestler2_id": "f673e569-e298-4f0a-9f7e-82e49b232875",
+   "wrestler2_name_raw": "Addison Petersen",
+   "wrestler2_school_id": 24,
+   "winner": 1,
+   "result_type": "SV-1",
+   "result_detail": "11-8",
+   "fall_time_seconds": null,
+   "winner_score": 11,
+   "loser_score": 8,
+   "_label": "100 Quarter-Finals: 5 Belinda Minervini (MO) vs 4 Addison Petersen (NWTN), DEC SV 11-8"
+  },
+  {
+   "weight_class": 100,
+   "round": "QF",
+   "wrestler1_id": "a6db5f08-b20a-44b0-b7ec-6a5acd21ff9c",
+   "wrestler1_name_raw": "Kiara Chac",
+   "wrestler1_school_id": 322,
+   "wrestler2_id": "d3f2e77b-e3ef-4ec3-b50c-e08c9c7ffd02",
+   "wrestler2_name_raw": "Mya Bush",
+   "wrestler2_school_id": 76,
+   "winner": 1,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 240,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "100 Quarter-Finals: 3 Kiara Chac (BBRK) vs 6 Mya Bush (MH), F 4:00"
+  },
+  {
+   "weight_class": 107,
+   "round": "5th_Place",
+   "wrestler1_id": "ce58029f-feda-4a8e-af6c-e5aaa0c1b0bf",
+   "wrestler1_name_raw": "Cayce Wang",
+   "wrestler1_school_id": 121,
+   "wrestler2_id": "4c4d6991-e2f5-4436-973f-e193544031a9",
+   "wrestler2_name_raw": "Mariella Nieves",
+   "wrestler2_school_id": 391,
+   "winner": 2,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 271,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "107 5th Place: 4 Cayce Wang (COLU) vs 9 Mariella Nieves (PCT), F 4:31"
+  },
+  {
+   "weight_class": 114,
+   "round": "R1",
+   "wrestler1_id": "a4938c74-409a-42b5-a14e-be2ff15fc066",
+   "wrestler1_name_raw": "Abigail Bloxham",
+   "wrestler1_school_id": 24,
+   "wrestler2_id": "01b0f8e8-5dfb-4507-9746-8ffee3a8c97c",
+   "wrestler2_name_raw": "Reilly Callan",
+   "wrestler2_school_id": 4,
+   "winner": 1,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 25,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "114 Round of 16: 7 Abigail Bloxham (NWTN) vs 10 Reilly Callan (JS), F 0:25"
+  },
+  {
+   "weight_class": 114,
+   "round": "QF",
+   "wrestler1_id": "c7baaee9-758a-4c3e-a599-c63c26f45ee2",
+   "wrestler1_name_raw": "Sophia Salazar",
+   "wrestler1_school_id": 76,
+   "wrestler2_id": "f3f0f2e7-c126-4838-8fce-687440f32272",
+   "wrestler2_name_raw": "Mia Capone",
+   "wrestler2_school_id": 56,
+   "winner": 1,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 97,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "114 Quarter-Finals: 3 Sophia Salazar (MH) vs 6 Mia Capone (MO), F 1:37"
+  },
+  {
+   "weight_class": 114,
+   "round": "QF",
+   "wrestler1_id": "a4938c74-409a-42b5-a14e-be2ff15fc066",
+   "wrestler1_name_raw": "Abigail Bloxham",
+   "wrestler1_school_id": 24,
+   "wrestler2_id": "b1cdf052-99c4-4763-8816-7f71c15d52c6",
+   "wrestler2_name_raw": "Adrianna Digregorio",
+   "wrestler2_school_id": 303,
+   "winner": 2,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 47,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "114 Quarter-Finals: 7 Abigail Bloxham (NWTN) vs 2 Adrianna Digregorio (WILL), F 0:47"
+  },
+  {
+   "weight_class": 114,
+   "round": "3rd_Place",
+   "wrestler1_id": "f3f0f2e7-c126-4838-8fce-687440f32272",
+   "wrestler1_name_raw": "Mia Capone",
+   "wrestler1_school_id": 56,
+   "wrestler2_id": "c7baaee9-758a-4c3e-a599-c63c26f45ee2",
+   "wrestler2_name_raw": "Sophia Salazar",
+   "wrestler2_school_id": 76,
+   "winner": 2,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 235,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "114 3rd Place: 6 Mia Capone (MO) vs 3 Sophia Salazar (MH), F 3:55"
+  },
+  {
+   "weight_class": 114,
+   "round": "C3",
+   "wrestler1_id": "a4938c74-409a-42b5-a14e-be2ff15fc066",
+   "wrestler1_name_raw": "Abigail Bloxham",
+   "wrestler1_school_id": 24,
+   "wrestler2_id": "f3f0f2e7-c126-4838-8fce-687440f32272",
+   "wrestler2_name_raw": "Mia Capone",
+   "wrestler2_school_id": 56,
+   "winner": 2,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 97,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "114 Consi of 4: 7 Abigail Bloxham (NWTN) vs 6 Mia Capone (MO), F 1:37"
+  },
+  {
+   "weight_class": 114,
+   "round": "C2",
+   "wrestler1_id": "034f52cc-4d8f-4131-a841-72fd12217b61",
+   "wrestler1_name_raw": "Sophia Meehan",
+   "wrestler1_school_id": 12,
+   "wrestler2_id": "f3f0f2e7-c126-4838-8fce-687440f32272",
+   "wrestler2_name_raw": "Mia Capone",
+   "wrestler2_school_id": 56,
+   "winner": 2,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 51,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "114 Consi of 8 #2: 12 Sophia Meehan (GLRK) vs 6 Mia Capone (MO), F 0:51"
+  },
+  {
+   "weight_class": 126,
+   "round": "R1",
+   "wrestler1_id": "a2e75ddd-ea82-42e8-97bf-6419efb2356c",
+   "wrestler1_name_raw": "Isabella Grippo",
+   "wrestler1_school_id": 76,
+   "wrestler2_id": "a8b4726b-81b7-4584-a683-984819dc1cdb",
+   "wrestler2_name_raw": "Molly Smyth",
+   "wrestler2_school_id": 56,
+   "winner": 2,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 188,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "126 Round of 16: 15 Isabella Grippo (MH) vs 2 Molly Smyth (MO), F 3:08"
+  },
+  {
+   "weight_class": 126,
+   "round": "QF",
+   "wrestler1_id": "71929e39-78d6-4cf7-9dfd-7bf4c6ca7610",
+   "wrestler1_name_raw": "Hannah Harrison",
+   "wrestler1_school_id": 24,
+   "wrestler2_id": "a8b4726b-81b7-4584-a683-984819dc1cdb",
+   "wrestler2_name_raw": "Molly Smyth",
+   "wrestler2_school_id": 56,
+   "winner": 2,
+   "result_type": "Dec",
+   "result_detail": "8-1",
+   "fall_time_seconds": null,
+   "winner_score": 8,
+   "loser_score": 1,
+   "_label": "126 Quarter-Finals: 10 Hannah Harrison (NWTN) vs 2 Molly Smyth (MO), DEC 8-1"
+  },
+  {
+   "weight_class": 126,
+   "round": "C2",
+   "wrestler1_id": "7b281cce-6879-4ed9-8833-792b6d1fbba8",
+   "wrestler1_name_raw": "Layla Dadzie",
+   "wrestler1_school_id": 188,
+   "wrestler2_id": "71929e39-78d6-4cf7-9dfd-7bf4c6ca7610",
+   "wrestler2_name_raw": "Hannah Harrison",
+   "wrestler2_school_id": 24,
+   "winner": 2,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 153,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "126 Consi of 8 #2: 9 Layla Dadzie (HILL) vs 10 Hannah Harrison (NWTN), F 2:33"
+  },
+  {
+   "weight_class": 138,
+   "round": "5th_Place",
+   "wrestler1_id": "f0893eb7-0d84-454c-86f2-6be57af7cd92",
+   "wrestler1_name_raw": "Genesis Perez",
+   "wrestler1_school_id": 76,
+   "wrestler2_id": "892d4f26-8e86-4743-95b1-24152496deef",
+   "wrestler2_name_raw": "Jayla Hidalgo",
+   "wrestler2_school_id": 188,
+   "winner": 1,
+   "result_type": "MFF",
+   "result_detail": null,
+   "fall_time_seconds": null,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "138 5th Place: 5 Genesis Perez (MH) vs 6 Jayla Hidalgo (HILL), M FOR"
+  },
+  {
+   "weight_class": 138,
+   "round": "CSF",
+   "wrestler1_id": "f0893eb7-0d84-454c-86f2-6be57af7cd92",
+   "wrestler1_name_raw": "Genesis Perez",
+   "wrestler1_school_id": 76,
+   "wrestler2_id": "327ff287-615c-4cf6-9037-3431a9d2de49",
+   "wrestler2_name_raw": "Alyssa Aiello",
+   "wrestler2_school_id": 4,
+   "winner": 2,
+   "result_type": "TF",
+   "result_detail": null,
+   "fall_time_seconds": 185,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "138 Consi-Semis: 5 Genesis Perez (MH) vs 3 Alyssa Aiello (JS), TF 3:05"
+  },
+  {
+   "weight_class": 138,
+   "round": "QF",
+   "wrestler1_id": "327ff287-615c-4cf6-9037-3431a9d2de49",
+   "wrestler1_name_raw": "Alyssa Aiello",
+   "wrestler1_school_id": 4,
+   "wrestler2_id": "892d4f26-8e86-4743-95b1-24152496deef",
+   "wrestler2_name_raw": "Jayla Hidalgo",
+   "wrestler2_school_id": 188,
+   "winner": 1,
+   "result_type": "Dec",
+   "result_detail": "8-4",
+   "fall_time_seconds": null,
+   "winner_score": 8,
+   "loser_score": 4,
+   "_label": "138 Quarter-Finals: 3 Alyssa Aiello (JS) vs 6 Jayla Hidalgo (HILL), DEC 8-4"
+  },
+  {
+   "weight_class": 145,
+   "round": "5th_Place",
+   "wrestler1_id": "b81740ec-22fe-4991-87f4-5da352d4d4eb",
+   "wrestler1_name_raw": "Victoria Frias",
+   "wrestler1_school_id": 391,
+   "wrestler2_id": "40a83eee-0338-44de-aabb-64425403903b",
+   "wrestler2_name_raw": "Ruby Meagher",
+   "wrestler2_school_id": 121,
+   "winner": 2,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 169,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "145 5th Place: 7 Victoria Frias (PCT) vs 5 Ruby Meagher (COLU), F 2:49"
+  },
+  {
+   "weight_class": 152,
+   "round": "QF",
+   "wrestler1_id": "1244fea4-75b1-4f9d-8d73-b5446a17e505",
+   "wrestler1_name_raw": "Maria Imhauser",
+   "wrestler1_school_id": 188,
+   "wrestler2_id": "15c1b85a-ca2f-4535-94f8-f52bb18084a3",
+   "wrestler2_name_raw": "Nadia Bibi",
+   "wrestler2_school_id": 12,
+   "winner": 1,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 11,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "152 Quarter-Finals: 1 Maria Imhauser (HILL) vs 8 Nadia Bibi (GLRK), F 0:11"
+  },
+  {
+   "weight_class": 152,
+   "round": "QF",
+   "wrestler1_id": "98a9cda0-0ba0-430f-969d-f37fedd8b74c",
+   "wrestler1_name_raw": "Gwen Silipena",
+   "wrestler1_school_id": 4,
+   "wrestler2_id": "71fb9630-e8ff-444d-b314-8c8c4b7df8e4",
+   "wrestler2_name_raw": "Nora Shemon",
+   "wrestler2_school_id": 76,
+   "winner": 1,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 112,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "152 Quarter-Finals: 7 Gwen Silipena (JS) vs 2 Nora Shemon (MH), F 1:52"
+  },
+  {
+   "weight_class": 185,
+   "round": "3rd_Place",
+   "wrestler1_id": "198ca7a8-18ff-49aa-aa42-8482aa0720b6",
+   "wrestler1_name_raw": "Kalli Battaglia",
+   "wrestler1_school_id": 24,
+   "wrestler2_id": "bd7b3a71-ada2-41a8-a5b5-da47434dc60f",
+   "wrestler2_name_raw": "Brianna Murray",
+   "wrestler2_school_id": 24,
+   "winner": 2,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 25,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "185 3rd Place: 5 Kalli Battaglia (NWTN) vs 1 Brianna Murray (NWTN), F 0:25"
+  },
+  {
+   "weight_class": 185,
+   "round": "CSF",
+   "wrestler1_id": "198ca7a8-18ff-49aa-aa42-8482aa0720b6",
+   "wrestler1_name_raw": "Kalli Battaglia",
+   "wrestler1_school_id": 24,
+   "wrestler2_id": "87fe546d-99c6-4bbe-a0e6-37a6a96d43bb",
+   "wrestler2_name_raw": "Ashley Vilela Armijos",
+   "wrestler2_school_id": 393,
+   "winner": 1,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 60,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "185 Consi-Semis: 5 Kalli Battaglia (NWTN) vs 3 Ashley Vilela Armijos (B/), F 1:00"
+  },
+  {
+   "weight_class": 185,
+   "round": "C1",
+   "wrestler1_id": "b562ee74-e5eb-45a8-a592-9251ad208868",
+   "wrestler1_name_raw": "Janayla Corum",
+   "wrestler1_school_id": 4,
+   "wrestler2_id": "198ca7a8-18ff-49aa-aa42-8482aa0720b6",
+   "wrestler2_name_raw": "Kalli Battaglia",
+   "wrestler2_school_id": 24,
+   "winner": 2,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 17,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "185 Consi of 4: 8 Janayla Corum (JS) vs 5 Kalli Battaglia (NWTN), F 0:17"
+  },
+  {
+   "weight_class": 185,
+   "round": "QF",
+   "wrestler1_id": "bd7b3a71-ada2-41a8-a5b5-da47434dc60f",
+   "wrestler1_name_raw": "Brianna Murray",
+   "wrestler1_school_id": 24,
+   "wrestler2_id": "b562ee74-e5eb-45a8-a592-9251ad208868",
+   "wrestler2_name_raw": "Janayla Corum",
+   "wrestler2_school_id": 4,
+   "winner": 1,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 90,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "185 Quarter-Finals: 1 Brianna Murray (NWTN) vs 8 Janayla Corum (JS), F 1:30"
+  },
+  {
+   "weight_class": 185,
+   "round": "QF",
+   "wrestler1_id": "198ca7a8-18ff-49aa-aa42-8482aa0720b6",
+   "wrestler1_name_raw": "Kalli Battaglia",
+   "wrestler1_school_id": 24,
+   "wrestler2_id": "5d3def1a-d6e3-4aa9-96d6-b636b25b5b2c",
+   "wrestler2_name_raw": "Maggie Armstrong",
+   "wrestler2_school_id": 303,
+   "winner": 2,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 31,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "185 Quarter-Finals: 5 Kalli Battaglia (NWTN) vs 4 Maggie Armstrong (WILL), F 0:31"
+  },
+  {
+   "weight_class": 185,
+   "round": "SF",
+   "wrestler1_id": "bd7b3a71-ada2-41a8-a5b5-da47434dc60f",
+   "wrestler1_name_raw": "Brianna Murray",
+   "wrestler1_school_id": 24,
+   "wrestler2_id": "5d3def1a-d6e3-4aa9-96d6-b636b25b5b2c",
+   "wrestler2_name_raw": "Maggie Armstrong",
+   "wrestler2_school_id": 303,
+   "winner": 2,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 82,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "185 Semi-Finals: 1 Brianna Murray (NWTN) vs 4 Maggie Armstrong (WILL), F 1:22"
+  },
+  {
+   "weight_class": 185,
+   "round": "F",
+   "wrestler1_id": "5d3def1a-d6e3-4aa9-96d6-b636b25b5b2c",
+   "wrestler1_name_raw": "Maggie Armstrong",
+   "wrestler1_school_id": 303,
+   "wrestler2_id": "e4f82b16-dc3e-499b-8cf1-b4de4d0d6d86",
+   "wrestler2_name_raw": "Brianna Sandoval",
+   "wrestler2_school_id": 322,
+   "winner": 2,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 64,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "185 Finals: 4 Maggie Armstrong (WILL) vs 2 Brianna Sandoval (BBRK), F 1:04"
+  },
+  {
+   "weight_class": 235,
+   "round": "QF",
+   "wrestler1_id": "c4d9bc50-ce7e-4dca-9b5c-68fa1c9e4ba0",
+   "wrestler1_name_raw": "Ayonna Campbell",
+   "wrestler1_school_id": 56,
+   "wrestler2_id": "deb6aa5f-ef2a-4e4f-82dd-f770a172c362",
+   "wrestler2_name_raw": "Jasmine Grande",
+   "wrestler2_school_id": 76,
+   "winner": 1,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 91,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "235 Quarter-Finals: 5 Ayonna Campbell (MO) vs 4 Jasmine Grande (MH), F 1:31"
+  },
+  {
+   "weight_class": 235,
+   "round": "SF",
+   "wrestler1_id": "38c0fd3c-8327-4a07-9b31-600c18e5904a",
+   "wrestler1_name_raw": "Abigail Paglia",
+   "wrestler1_school_id": 24,
+   "wrestler2_id": "c4d9bc50-ce7e-4dca-9b5c-68fa1c9e4ba0",
+   "wrestler2_name_raw": "Ayonna Campbell",
+   "wrestler2_school_id": 56,
+   "winner": 1,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 89,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "235 Semi-Finals: 1 Abigail Paglia (NWTN) vs 5 Ayonna Campbell (MO), F 1:29"
+  },
+  {
+   "weight_class": 235,
+   "round": "F",
+   "wrestler1_id": "38c0fd3c-8327-4a07-9b31-600c18e5904a",
+   "wrestler1_name_raw": "Abigail Paglia",
+   "wrestler1_school_id": 24,
+   "wrestler2_id": "ff2b332c-1330-483b-b1bd-1c443151ddfe",
+   "wrestler2_name_raw": "Jana Abdalate",
+   "wrestler2_school_id": 188,
+   "winner": 1,
+   "result_type": "Dec",
+   "result_detail": "4-1",
+   "fall_time_seconds": null,
+   "winner_score": 4,
+   "loser_score": 1,
+   "_label": "235 Finals: 1 Abigail Paglia (NWTN) vs 2 Jana Abdalate (HILL), DEC 4-1"
+  }
+ ],
+ "addProblems": [],
+ "seeds": [
+  {
+   "weight_class": 100,
+   "seed": 1,
+   "wrestler_name_raw": "Alysa Patel",
+   "wrestler_id": "f11fd2e7-761b-4d50-adaa-a6a0c03d25f8",
+   "school_id": 153
+  },
+  {
+   "weight_class": 100,
+   "seed": 5,
+   "wrestler_name_raw": "Belinda Minervini",
+   "wrestler_id": "3432d1ad-db13-448e-9fd3-3888c8fd1269",
+   "school_id": 56
+  },
+  {
+   "weight_class": 100,
+   "seed": 4,
+   "wrestler_name_raw": "Addison Petersen",
+   "wrestler_id": "f673e569-e298-4f0a-9f7e-82e49b232875",
+   "school_id": 24
+  },
+  {
+   "weight_class": 100,
+   "seed": 3,
+   "wrestler_name_raw": "Kiara Chac",
+   "wrestler_id": "a6db5f08-b20a-44b0-b7ec-6a5acd21ff9c",
+   "school_id": 322
+  },
+  {
+   "weight_class": 100,
+   "seed": 6,
+   "wrestler_name_raw": "Mya Bush",
+   "wrestler_id": "d3f2e77b-e3ef-4ec3-b50c-e08c9c7ffd02",
+   "school_id": 76
+  },
+  {
+   "weight_class": 100,
+   "seed": 7,
+   "wrestler_name_raw": "Kaylee Rodriguez",
+   "wrestler_id": "25d8dd77-188b-4d28-9393-449842d9a2c2",
+   "school_id": 391
+  },
+  {
+   "weight_class": 100,
+   "seed": 2,
+   "wrestler_name_raw": "Izzy Timonera",
+   "wrestler_id": "63f2f295-c752-4317-8f52-4456328bd1db",
+   "school_id": 106
+  },
+  {
+   "weight_class": 107,
+   "seed": 1,
+   "wrestler_name_raw": "Nathaly Diaz Santos",
+   "wrestler_id": "b20adbbb-8ea6-4ab8-bef1-572b03552c69",
+   "school_id": 76
+  },
+  {
+   "weight_class": 107,
+   "seed": 9,
+   "wrestler_name_raw": "Mariella Nieves",
+   "wrestler_id": "4c4d6991-e2f5-4436-973f-e193544031a9",
+   "school_id": 391
+  },
+  {
+   "weight_class": 107,
+   "seed": 8,
+   "wrestler_name_raw": "Eva Denne",
+   "wrestler_id": "f91dbe1a-4738-4b86-91ed-00c5e18acda5",
+   "school_id": 24
+  },
+  {
+   "weight_class": 107,
+   "seed": 5,
+   "wrestler_name_raw": "Genevieve Maruhom",
+   "wrestler_id": "a118f74f-8445-44a6-9189-1813a170979f",
+   "school_id": 303
+  },
+  {
+   "weight_class": 107,
+   "seed": 4,
+   "wrestler_name_raw": "Cayce Wang",
+   "wrestler_id": "ce58029f-feda-4a8e-af6c-e5aaa0c1b0bf",
+   "school_id": 121
+  },
+  {
+   "weight_class": 107,
+   "seed": 3,
+   "wrestler_name_raw": "Kelsey Hartman",
+   "wrestler_id": "f8bf6c06-7a15-4044-8b0c-8ff89690eccb",
+   "school_id": 258
+  },
+  {
+   "weight_class": 107,
+   "seed": 6,
+   "wrestler_name_raw": "Perjia Dupont",
+   "wrestler_id": "ec661ce9-6df0-4430-b6e0-a8696fe15763",
+   "school_id": 153
+  },
+  {
+   "weight_class": 107,
+   "seed": 7,
+   "wrestler_name_raw": "Gabrielle Ruedy",
+   "wrestler_id": "8ddf1384-d9f3-4cc1-911e-cfeb110c014c",
+   "school_id": 139
+  },
+  {
+   "weight_class": 107,
+   "seed": 10,
+   "wrestler_name_raw": "Alexa Scholz",
+   "wrestler_id": "8a805ec7-0c79-47f8-a48d-e645b7350e10",
+   "school_id": 4
+  },
+  {
+   "weight_class": 107,
+   "seed": 2,
+   "wrestler_name_raw": "Chastelyn Hechavarria Vasquez",
+   "wrestler_id": "39d395dc-08a9-4e60-9c19-aef277de958d",
+   "school_id": 393
+  },
+  {
+   "weight_class": 114,
+   "seed": 1,
+   "wrestler_name_raw": "Emelly Diaz Santos",
+   "wrestler_id": "3c782d9d-3174-41b1-ba92-898b96cb3a68",
+   "school_id": 76
+  },
+  {
+   "weight_class": 114,
+   "seed": 9,
+   "wrestler_name_raw": "Camryn Pipher",
+   "wrestler_id": "ed763dc7-f1a0-4619-a711-8c1165c1ed64",
+   "school_id": 120
+  },
+  {
+   "weight_class": 114,
+   "seed": 8,
+   "wrestler_name_raw": "Nicolette Vivas",
+   "wrestler_id": "ac3dc74f-690a-4969-9621-6086c5f5ed34",
+   "school_id": 40
+  },
+  {
+   "weight_class": 114,
+   "seed": 5,
+   "wrestler_name_raw": "Isabelle Yukselen",
+   "wrestler_id": "bec2ae42-6869-408d-aad7-1f3464e32186",
+   "school_id": 57
+  },
+  {
+   "weight_class": 114,
+   "seed": 12,
+   "wrestler_name_raw": "Sophia Meehan",
+   "wrestler_id": "034f52cc-4d8f-4131-a841-72fd12217b61",
+   "school_id": 12
+  },
+  {
+   "weight_class": 114,
+   "seed": 13,
+   "wrestler_name_raw": "Sanaa Prescott",
+   "wrestler_id": "cfa61e19-e2a0-45f7-bc89-b5da77fbedc0",
+   "school_id": 120
+  },
+  {
+   "weight_class": 114,
+   "seed": 4,
+   "wrestler_name_raw": "Isabel Diehl",
+   "wrestler_id": "5ad8248d-2226-4b71-85c3-aeeb680c9fbd",
+   "school_id": 258
+  },
+  {
+   "weight_class": 114,
+   "seed": 3,
+   "wrestler_name_raw": "Sophia Salazar",
+   "wrestler_id": "c7baaee9-758a-4c3e-a599-c63c26f45ee2",
+   "school_id": 76
+  },
+  {
+   "weight_class": 114,
+   "seed": 11,
+   "wrestler_name_raw": "Ashanty Ruiz Santana",
+   "wrestler_id": "3cb30046-454f-4646-9bbd-a28874fe55b5",
+   "school_id": 391
+  },
+  {
+   "weight_class": 114,
+   "seed": 6,
+   "wrestler_name_raw": "Mia Capone",
+   "wrestler_id": "f3f0f2e7-c126-4838-8fce-687440f32272",
+   "school_id": 56
+  },
+  {
+   "weight_class": 114,
+   "seed": 7,
+   "wrestler_name_raw": "Abigail Bloxham",
+   "wrestler_id": "a4938c74-409a-42b5-a14e-be2ff15fc066",
+   "school_id": 24
+  },
+  {
+   "weight_class": 114,
+   "seed": 10,
+   "wrestler_name_raw": "Reilly Callan",
+   "wrestler_id": "01b0f8e8-5dfb-4507-9746-8ffee3a8c97c",
+   "school_id": 4
+  },
+  {
+   "weight_class": 114,
+   "seed": 2,
+   "wrestler_name_raw": "Adrianna Digregorio",
+   "wrestler_id": "b1cdf052-99c4-4763-8816-7f71c15d52c6",
+   "school_id": 303
+  },
+  {
+   "weight_class": 120,
+   "seed": 1,
+   "wrestler_name_raw": "Abigail Naddeo",
+   "wrestler_id": "17f47079-9ad4-4c41-9f74-101024c009d4",
+   "school_id": 153
+  },
+  {
+   "weight_class": 120,
+   "seed": 8,
+   "wrestler_name_raw": "Ava Drew",
+   "wrestler_id": "ccbaf2db-b5fb-4679-8624-d99cbab06b67",
+   "school_id": 56
+  },
+  {
+   "weight_class": 120,
+   "seed": 5,
+   "wrestler_name_raw": "Gianna Powell",
+   "wrestler_id": "1ac04b62-bde9-4cbf-b6de-8ea7f4aadc17",
+   "school_id": 258
+  },
+  {
+   "weight_class": 120,
+   "seed": 4,
+   "wrestler_name_raw": "LIly Zwillinger",
+   "wrestler_id": "fd39982a-d5b1-4acf-9eb3-3d5f48152c15",
+   "school_id": 303
+  },
+  {
+   "weight_class": 120,
+   "seed": 3,
+   "wrestler_name_raw": "Reese Rotonde",
+   "wrestler_id": "54c8585c-1dd7-49fe-91db-fb86b7e8df8a",
+   "school_id": 18
+  },
+  {
+   "weight_class": 120,
+   "seed": 6,
+   "wrestler_name_raw": "Charlize Hayes",
+   "wrestler_id": "6b3f2124-041e-4334-9548-09204e6608eb",
+   "school_id": 120
+  },
+  {
+   "weight_class": 120,
+   "seed": 7,
+   "wrestler_name_raw": "Cristelle Fiestas",
+   "wrestler_id": "16cb38cc-d4ac-439a-b34d-851ec1b86ccc",
+   "school_id": 391
+  },
+  {
+   "weight_class": 120,
+   "seed": 2,
+   "wrestler_name_raw": "Isabella Santanocito",
+   "wrestler_id": "7db93d5a-1779-4062-8280-9451bda473aa",
+   "school_id": 18
+  },
+  {
+   "weight_class": 126,
+   "seed": 1,
+   "wrestler_name_raw": "Lucia Ranieri",
+   "wrestler_id": "ecd2ec96-8219-451c-81bf-e4a6cd78f2cf",
+   "school_id": 125
+  },
+  {
+   "weight_class": 126,
+   "seed": 9,
+   "wrestler_name_raw": "Layla Dadzie",
+   "wrestler_id": "7b281cce-6879-4ed9-8833-792b6d1fbba8",
+   "school_id": 188
+  },
+  {
+   "weight_class": 126,
+   "seed": 8,
+   "wrestler_name_raw": "Tania Ayala Rosas",
+   "wrestler_id": "5f83edfb-28fb-45da-a10b-82865cfb4a75",
+   "school_id": 391
+  },
+  {
+   "weight_class": 126,
+   "seed": 5,
+   "wrestler_name_raw": "Sua Jeong",
+   "wrestler_id": "a3856a05-bb40-4340-8bab-aa2f67dfa349",
+   "school_id": 314
+  },
+  {
+   "weight_class": 126,
+   "seed": 12,
+   "wrestler_name_raw": "Chloe Lloyd",
+   "wrestler_id": "e15464af-fc2e-4e90-a95d-c90a20668ad3",
+   "school_id": 303
+  },
+  {
+   "weight_class": 126,
+   "seed": 13,
+   "wrestler_name_raw": "Yulie Harada",
+   "wrestler_id": "a4a1632b-fdfd-4f9c-90f5-f3eb04f46fb2",
+   "school_id": 18
+  },
+  {
+   "weight_class": 126,
+   "seed": 4,
+   "wrestler_name_raw": "Isabella Vargas",
+   "wrestler_id": "c95f8529-cb5a-4d61-8b68-df7ac63f04c0",
+   "school_id": 393
+  },
+  {
+   "weight_class": 126,
+   "seed": 3,
+   "wrestler_name_raw": "Elizabeth Panuccio",
+   "wrestler_id": "5095e687-c210-4ff7-8d02-83d5b8582e82",
+   "school_id": 18
+  },
+  {
+   "weight_class": 126,
+   "seed": 14,
+   "wrestler_name_raw": "Brooklyn Hocko",
+   "wrestler_id": "89fd181a-d804-497c-a0b8-2a4cb0fa697e",
+   "school_id": 303
+  },
+  {
+   "weight_class": 126,
+   "seed": 11,
+   "wrestler_name_raw": "Jasmine Rodriguez",
+   "wrestler_id": "d12194b6-6886-4911-8939-52452096d018",
+   "school_id": 153
+  },
+  {
+   "weight_class": 126,
+   "seed": 6,
+   "wrestler_name_raw": "Kamryn Hansen",
+   "wrestler_id": "d8b44be2-d76f-4619-b31d-c285f3dc9288",
+   "school_id": 120
+  },
+  {
+   "weight_class": 126,
+   "seed": 7,
+   "wrestler_name_raw": "Rebecca Garcia",
+   "wrestler_id": "c3c1d2c3-2afd-45fe-adfb-e3ede020cb74",
+   "school_id": 314
+  },
+  {
+   "weight_class": 126,
+   "seed": 10,
+   "wrestler_name_raw": "Hannah Harrison",
+   "wrestler_id": "71929e39-78d6-4cf7-9dfd-7bf4c6ca7610",
+   "school_id": 24
+  },
+  {
+   "weight_class": 126,
+   "seed": 15,
+   "wrestler_name_raw": "Isabella Grippo",
+   "wrestler_id": "a2e75ddd-ea82-42e8-97bf-6419efb2356c",
+   "school_id": 76
+  },
+  {
+   "weight_class": 126,
+   "seed": 2,
+   "wrestler_name_raw": "Molly Smyth",
+   "wrestler_id": "a8b4726b-81b7-4584-a683-984819dc1cdb",
+   "school_id": 56
+  },
+  {
+   "weight_class": 132,
+   "seed": 1,
+   "wrestler_name_raw": "Paige Weiss",
+   "wrestler_id": "774516b1-572e-4b78-bf1a-7ed89bcc0f92",
+   "school_id": 4
+  },
+  {
+   "weight_class": 132,
+   "seed": 9,
+   "wrestler_name_raw": "Bria Beshada",
+   "wrestler_id": "7aa63a2d-5e4f-423c-89bd-e282b0e98432",
+   "school_id": 24
+  },
+  {
+   "weight_class": 132,
+   "seed": 8,
+   "wrestler_name_raw": "Melanny Salas",
+   "wrestler_id": "cc5c165c-45ef-4e62-ad6b-0088f7134b63",
+   "school_id": 120
+  },
+  {
+   "weight_class": 132,
+   "seed": 5,
+   "wrestler_name_raw": "Tiana Diaz",
+   "wrestler_id": "f90f0841-90b0-40be-84fa-c792577c9ab4",
+   "school_id": 391
+  },
+  {
+   "weight_class": 132,
+   "seed": 4,
+   "wrestler_name_raw": "Daniela Fasca-Morales",
+   "wrestler_id": "c70aec53-6bd6-4627-ba8c-d5c0bc506963",
+   "school_id": 120
+  },
+  {
+   "weight_class": 132,
+   "seed": 3,
+   "wrestler_name_raw": "Ester Teixiera",
+   "wrestler_id": "8be26e89-48df-4b99-a604-a2d2f8b4a72d",
+   "school_id": 76
+  },
+  {
+   "weight_class": 132,
+   "seed": 6,
+   "wrestler_name_raw": "Sared Mata",
+   "wrestler_id": "40cd96e3-6444-4709-935f-9dbf3d74e7af",
+   "school_id": 121
+  },
+  {
+   "weight_class": 132,
+   "seed": 7,
+   "wrestler_name_raw": "Erica Vasquez",
+   "wrestler_id": "f590b1c8-168c-4127-8b97-74cd408f8b86",
+   "school_id": 153
+  },
+  {
+   "weight_class": 132,
+   "seed": 2,
+   "wrestler_name_raw": "Everleigh Whitham-Mandarakas",
+   "wrestler_id": "148156f6-cdbb-49b9-9d6e-ecbfd4c8c340",
+   "school_id": 258
+  },
+  {
+   "weight_class": 138,
+   "seed": 1,
+   "wrestler_name_raw": "Mia Spadavecchia",
+   "wrestler_id": "c91513a5-94bd-4b54-b4a2-a989b29e8370",
+   "school_id": 10
+  },
+  {
+   "weight_class": 138,
+   "seed": 5,
+   "wrestler_name_raw": "Genesis Perez",
+   "wrestler_id": "f0893eb7-0d84-454c-86f2-6be57af7cd92",
+   "school_id": 76
+  },
+  {
+   "weight_class": 138,
+   "seed": 4,
+   "wrestler_name_raw": "Ecrin Haliloglu",
+   "wrestler_id": "c42d466c-53e9-4c97-b9ee-6c55fd017d5e",
+   "school_id": 258
+  },
+  {
+   "weight_class": 138,
+   "seed": 3,
+   "wrestler_name_raw": "Alyssa Aiello",
+   "wrestler_id": "327ff287-615c-4cf6-9037-3431a9d2de49",
+   "school_id": 4
+  },
+  {
+   "weight_class": 138,
+   "seed": 6,
+   "wrestler_name_raw": "Jayla Hidalgo",
+   "wrestler_id": "892d4f26-8e86-4743-95b1-24152496deef",
+   "school_id": 188
+  },
+  {
+   "weight_class": 138,
+   "seed": 2,
+   "wrestler_name_raw": "Mariana Puzycki",
+   "wrestler_id": "613768dd-bf38-4c97-810e-78cf0190e163",
+   "school_id": 120
+  },
+  {
+   "weight_class": 145,
+   "seed": 1,
+   "wrestler_name_raw": "Taylor Thiele",
+   "wrestler_id": "61188e66-fec3-458b-9c71-85a07203ca35",
+   "school_id": 73
+  },
+  {
+   "weight_class": 145,
+   "seed": 9,
+   "wrestler_name_raw": "Mia Truncellito",
+   "wrestler_id": "1c255876-b34c-493c-9fa8-9d59944f88f6",
+   "school_id": 120
+  },
+  {
+   "weight_class": 145,
+   "seed": 8,
+   "wrestler_name_raw": "Karina Ortiz",
+   "wrestler_id": "ab39b37d-f443-4017-91df-d84582c907e5",
+   "school_id": 303
+  },
+  {
+   "weight_class": 145,
+   "seed": 5,
+   "wrestler_name_raw": "Ruby Meagher",
+   "wrestler_id": "40a83eee-0338-44de-aabb-64425403903b",
+   "school_id": 121
+  },
+  {
+   "weight_class": 145,
+   "seed": 4,
+   "wrestler_name_raw": "Olyvia Bowie",
+   "wrestler_id": "3fca1802-1269-46eb-8061-8e6e807c0a05",
+   "school_id": 40
+  },
+  {
+   "weight_class": 145,
+   "seed": 3,
+   "wrestler_name_raw": "Paige Berger",
+   "wrestler_id": "f4a94f43-b847-4409-8375-2c07adc74062",
+   "school_id": 18
+  },
+  {
+   "weight_class": 145,
+   "seed": 6,
+   "wrestler_name_raw": "Aubree Pusey",
+   "wrestler_id": "c352152c-1f65-4785-beff-194b67f322a1",
+   "school_id": 303
+  },
+  {
+   "weight_class": 145,
+   "seed": 7,
+   "wrestler_name_raw": "Victoria Frias",
+   "wrestler_id": "b81740ec-22fe-4991-87f4-5da352d4d4eb",
+   "school_id": 391
+  },
+  {
+   "weight_class": 145,
+   "seed": 2,
+   "wrestler_name_raw": "Michelle Gavilanes",
+   "wrestler_id": "23ace2f5-5924-4048-8982-c196dbbe23a8",
+   "school_id": 106
+  },
+  {
+   "weight_class": 152,
+   "seed": 1,
+   "wrestler_name_raw": "Maria Imhauser",
+   "wrestler_id": "1244fea4-75b1-4f9d-8d73-b5446a17e505",
+   "school_id": 188
+  },
+  {
+   "weight_class": 152,
+   "seed": 8,
+   "wrestler_name_raw": "Nadia Bibi",
+   "wrestler_id": "15c1b85a-ca2f-4535-94f8-f52bb18084a3",
+   "school_id": 12
+  },
+  {
+   "weight_class": 152,
+   "seed": 5,
+   "wrestler_name_raw": "Alexa Nunez",
+   "wrestler_id": "c7076283-aab3-420d-a1f8-06747706a91f",
+   "school_id": 391
+  },
+  {
+   "weight_class": 152,
+   "seed": 4,
+   "wrestler_name_raw": "Francesca Muia",
+   "wrestler_id": "7f5cb101-893d-4172-858d-8c65cb6228d6",
+   "school_id": 18
+  },
+  {
+   "weight_class": 152,
+   "seed": 3,
+   "wrestler_name_raw": "Gabriella Correa",
+   "wrestler_id": "95a2e112-5434-421b-94b1-7dc8a4efbe32",
+   "school_id": 393
+  },
+  {
+   "weight_class": 152,
+   "seed": 6,
+   "wrestler_name_raw": "Alina Williams",
+   "wrestler_id": "b38f29ca-092b-43bc-a50f-e6b61a221dae",
+   "school_id": 303
+  },
+  {
+   "weight_class": 152,
+   "seed": 7,
+   "wrestler_name_raw": "Gwen Silipena",
+   "wrestler_id": "98a9cda0-0ba0-430f-969d-f37fedd8b74c",
+   "school_id": 4
+  },
+  {
+   "weight_class": 152,
+   "seed": 2,
+   "wrestler_name_raw": "Nora Shemon",
+   "wrestler_id": "71fb9630-e8ff-444d-b314-8c8c4b7df8e4",
+   "school_id": 76
+  },
+  {
+   "weight_class": 165,
+   "seed": 1,
+   "wrestler_name_raw": "Ariana Soto",
+   "wrestler_id": "1563b0f7-5054-4886-98e5-badd98a404f7",
+   "school_id": 15
+  },
+  {
+   "weight_class": 165,
+   "seed": 5,
+   "wrestler_name_raw": "Camilla Melendez",
+   "wrestler_id": "3cdd66d4-088b-4f61-b303-8b7ca5f43eb4",
+   "school_id": 303
+  },
+  {
+   "weight_class": 165,
+   "seed": 4,
+   "wrestler_name_raw": "Athena Galindo",
+   "wrestler_id": "733e2ced-7736-43c4-a5ba-d86f3e4520da",
+   "school_id": 391
+  },
+  {
+   "weight_class": 165,
+   "seed": 3,
+   "wrestler_name_raw": "Chelsea Pinto",
+   "wrestler_id": "d17f001a-8cb7-4297-b8f2-01d64a7d3b8e",
+   "school_id": 76
+  },
+  {
+   "weight_class": 165,
+   "seed": 2,
+   "wrestler_name_raw": "emma cabrera",
+   "wrestler_id": "4da5fade-6f57-40e7-a085-53de056dc240",
+   "school_id": 18
+  },
+  {
+   "weight_class": 185,
+   "seed": 1,
+   "wrestler_name_raw": "Brianna Murray",
+   "wrestler_id": "bd7b3a71-ada2-41a8-a5b5-da47434dc60f",
+   "school_id": 24
+  },
+  {
+   "weight_class": 185,
+   "seed": 8,
+   "wrestler_name_raw": "Janayla Corum",
+   "wrestler_id": "b562ee74-e5eb-45a8-a592-9251ad208868",
+   "school_id": 4
+  },
+  {
+   "weight_class": 185,
+   "seed": 5,
+   "wrestler_name_raw": "Kalli Battaglia",
+   "wrestler_id": "198ca7a8-18ff-49aa-aa42-8482aa0720b6",
+   "school_id": 24
+  },
+  {
+   "weight_class": 185,
+   "seed": 4,
+   "wrestler_name_raw": "Maggie Armstrong",
+   "wrestler_id": "5d3def1a-d6e3-4aa9-96d6-b636b25b5b2c",
+   "school_id": 303
+  },
+  {
+   "weight_class": 185,
+   "seed": 3,
+   "wrestler_name_raw": "Ashley Vilela Armijos",
+   "wrestler_id": "87fe546d-99c6-4bbe-a0e6-37a6a96d43bb",
+   "school_id": 393
+  },
+  {
+   "weight_class": 185,
+   "seed": 6,
+   "wrestler_name_raw": "Aya Hassan",
+   "wrestler_id": "c4866261-6cf6-4de5-b160-f2037a3e112a",
+   "school_id": 120
+  },
+  {
+   "weight_class": 185,
+   "seed": 7,
+   "wrestler_name_raw": "Savannah Bottino",
+   "wrestler_id": "46fdc254-ba1c-4330-a52b-740b5f711580",
+   "school_id": 120
+  },
+  {
+   "weight_class": 185,
+   "seed": 2,
+   "wrestler_name_raw": "Brianna Sandoval",
+   "wrestler_id": "e4f82b16-dc3e-499b-8cf1-b4de4d0d6d86",
+   "school_id": 322
+  },
+  {
+   "weight_class": 235,
+   "seed": 1,
+   "wrestler_name_raw": "Abigail Paglia",
+   "wrestler_id": "38c0fd3c-8327-4a07-9b31-600c18e5904a",
+   "school_id": 24
+  },
+  {
+   "weight_class": 235,
+   "seed": 5,
+   "wrestler_name_raw": "Ayonna Campbell",
+   "wrestler_id": "c4d9bc50-ce7e-4dca-9b5c-68fa1c9e4ba0",
+   "school_id": 56
+  },
+  {
+   "weight_class": 235,
+   "seed": 4,
+   "wrestler_name_raw": "Jasmine Grande",
+   "wrestler_id": "deb6aa5f-ef2a-4e4f-82dd-f770a172c362",
+   "school_id": 76
+  },
+  {
+   "weight_class": 235,
+   "seed": 3,
+   "wrestler_name_raw": "Mia Jimenez",
+   "wrestler_id": "5472c680-477b-4572-a0e2-e3895337c115",
+   "school_id": 120
+  },
+  {
+   "weight_class": 235,
+   "seed": 2,
+   "wrestler_name_raw": "Jana Abdalate",
+   "wrestler_id": "ff2b332c-1330-483b-b1bd-1c443151ddfe",
+   "school_id": 188
+  }
+ ],
+ "places": [
+  {
+   "weight_class": 100,
+   "place": 1,
+   "wrestler_name_raw": "Alysa Patel",
+   "wrestler_id": "f11fd2e7-761b-4d50-adaa-a6a0c03d25f8",
+   "school_id": 153
+  },
+  {
+   "weight_class": 100,
+   "place": 2,
+   "wrestler_name_raw": "Izzy Timonera",
+   "wrestler_id": "63f2f295-c752-4317-8f52-4456328bd1db",
+   "school_id": 106
+  },
+  {
+   "weight_class": 100,
+   "place": 3,
+   "wrestler_name_raw": "Kiara Chac",
+   "wrestler_id": "a6db5f08-b20a-44b0-b7ec-6a5acd21ff9c",
+   "school_id": 322
+  },
+  {
+   "weight_class": 100,
+   "place": 4,
+   "wrestler_name_raw": "Mya Bush",
+   "wrestler_id": "d3f2e77b-e3ef-4ec3-b50c-e08c9c7ffd02",
+   "school_id": 76
+  },
+  {
+   "weight_class": 100,
+   "place": 5,
+   "wrestler_name_raw": "Belinda Minervini",
+   "wrestler_id": "3432d1ad-db13-448e-9fd3-3888c8fd1269",
+   "school_id": 56
+  },
+  {
+   "weight_class": 100,
+   "place": 6,
+   "wrestler_name_raw": "Addison Petersen",
+   "wrestler_id": "f673e569-e298-4f0a-9f7e-82e49b232875",
+   "school_id": 24
+  },
+  {
+   "weight_class": 107,
+   "place": 1,
+   "wrestler_name_raw": "Gabrielle Ruedy",
+   "wrestler_id": "8ddf1384-d9f3-4cc1-911e-cfeb110c014c",
+   "school_id": 139
+  },
+  {
+   "weight_class": 107,
+   "place": 2,
+   "wrestler_name_raw": "Nathaly Diaz Santos",
+   "wrestler_id": "b20adbbb-8ea6-4ab8-bef1-572b03552c69",
+   "school_id": 76
+  },
+  {
+   "weight_class": 107,
+   "place": 3,
+   "wrestler_name_raw": "Perjia Dupont",
+   "wrestler_id": "ec661ce9-6df0-4430-b6e0-a8696fe15763",
+   "school_id": 153
+  },
+  {
+   "weight_class": 107,
+   "place": 4,
+   "wrestler_name_raw": "Chastelyn Hechavarria Vasquez",
+   "wrestler_id": "39d395dc-08a9-4e60-9c19-aef277de958d",
+   "school_id": 393
+  },
+  {
+   "weight_class": 107,
+   "place": 5,
+   "wrestler_name_raw": "Mariella Nieves",
+   "wrestler_id": "4c4d6991-e2f5-4436-973f-e193544031a9",
+   "school_id": 391
+  },
+  {
+   "weight_class": 107,
+   "place": 6,
+   "wrestler_name_raw": "Cayce Wang",
+   "wrestler_id": "ce58029f-feda-4a8e-af6c-e5aaa0c1b0bf",
+   "school_id": 121
+  },
+  {
+   "weight_class": 114,
+   "place": 1,
+   "wrestler_name_raw": "Emelly Diaz Santos",
+   "wrestler_id": "3c782d9d-3174-41b1-ba92-898b96cb3a68",
+   "school_id": 76
+  },
+  {
+   "weight_class": 114,
+   "place": 2,
+   "wrestler_name_raw": "Adrianna Digregorio",
+   "wrestler_id": "b1cdf052-99c4-4763-8816-7f71c15d52c6",
+   "school_id": 303
+  },
+  {
+   "weight_class": 114,
+   "place": 3,
+   "wrestler_name_raw": "Sophia Salazar",
+   "wrestler_id": "c7baaee9-758a-4c3e-a599-c63c26f45ee2",
+   "school_id": 76
+  },
+  {
+   "weight_class": 114,
+   "place": 4,
+   "wrestler_name_raw": "Mia Capone",
+   "wrestler_id": "f3f0f2e7-c126-4838-8fce-687440f32272",
+   "school_id": 56
+  },
+  {
+   "weight_class": 114,
+   "place": 5,
+   "wrestler_name_raw": "Isabelle Yukselen",
+   "wrestler_id": "bec2ae42-6869-408d-aad7-1f3464e32186",
+   "school_id": 57
+  },
+  {
+   "weight_class": 114,
+   "place": 6,
+   "wrestler_name_raw": "Nicolette Vivas",
+   "wrestler_id": "ac3dc74f-690a-4969-9621-6086c5f5ed34",
+   "school_id": 40
+  },
+  {
+   "weight_class": 120,
+   "place": 1,
+   "wrestler_name_raw": "Abigail Naddeo",
+   "wrestler_id": "17f47079-9ad4-4c41-9f74-101024c009d4",
+   "school_id": 153
+  },
+  {
+   "weight_class": 120,
+   "place": 2,
+   "wrestler_name_raw": "Reese Rotonde",
+   "wrestler_id": "54c8585c-1dd7-49fe-91db-fb86b7e8df8a",
+   "school_id": 18
+  },
+  {
+   "weight_class": 120,
+   "place": 3,
+   "wrestler_name_raw": "LIly Zwillinger",
+   "wrestler_id": "fd39982a-d5b1-4acf-9eb3-3d5f48152c15",
+   "school_id": 303
+  },
+  {
+   "weight_class": 120,
+   "place": 4,
+   "wrestler_name_raw": "Ava Drew",
+   "wrestler_id": "ccbaf2db-b5fb-4679-8624-d99cbab06b67",
+   "school_id": 56
+  },
+  {
+   "weight_class": 120,
+   "place": 5,
+   "wrestler_name_raw": "Charlize Hayes",
+   "wrestler_id": "6b3f2124-041e-4334-9548-09204e6608eb",
+   "school_id": 120
+  },
+  {
+   "weight_class": 120,
+   "place": 6,
+   "wrestler_name_raw": "Cristelle Fiestas",
+   "wrestler_id": "16cb38cc-d4ac-439a-b34d-851ec1b86ccc",
+   "school_id": 391
+  },
+  {
+   "weight_class": 126,
+   "place": 1,
+   "wrestler_name_raw": "Lucia Ranieri",
+   "wrestler_id": "ecd2ec96-8219-451c-81bf-e4a6cd78f2cf",
+   "school_id": 125
+  },
+  {
+   "weight_class": 126,
+   "place": 2,
+   "wrestler_name_raw": "Elizabeth Panuccio",
+   "wrestler_id": "5095e687-c210-4ff7-8d02-83d5b8582e82",
+   "school_id": 18
+  },
+  {
+   "weight_class": 126,
+   "place": 3,
+   "wrestler_name_raw": "Molly Smyth",
+   "wrestler_id": "a8b4726b-81b7-4584-a683-984819dc1cdb",
+   "school_id": 56
+  },
+  {
+   "weight_class": 126,
+   "place": 4,
+   "wrestler_name_raw": "Kamryn Hansen",
+   "wrestler_id": "d8b44be2-d76f-4619-b31d-c285f3dc9288",
+   "school_id": 120
+  },
+  {
+   "weight_class": 126,
+   "place": 5,
+   "wrestler_name_raw": "Isabella Vargas",
+   "wrestler_id": "c95f8529-cb5a-4d61-8b68-df7ac63f04c0",
+   "school_id": 393
+  },
+  {
+   "weight_class": 126,
+   "place": 6,
+   "wrestler_name_raw": "Tania Ayala Rosas",
+   "wrestler_id": "5f83edfb-28fb-45da-a10b-82865cfb4a75",
+   "school_id": 391
+  },
+  {
+   "weight_class": 132,
+   "place": 1,
+   "wrestler_name_raw": "Paige Weiss",
+   "wrestler_id": "774516b1-572e-4b78-bf1a-7ed89bcc0f92",
+   "school_id": 4
+  },
+  {
+   "weight_class": 132,
+   "place": 2,
+   "wrestler_name_raw": "Everleigh Whitham-Mandarakas",
+   "wrestler_id": "148156f6-cdbb-49b9-9d6e-ecbfd4c8c340",
+   "school_id": 258
+  },
+  {
+   "weight_class": 132,
+   "place": 3,
+   "wrestler_name_raw": "Erica Vasquez",
+   "wrestler_id": "f590b1c8-168c-4127-8b97-74cd408f8b86",
+   "school_id": 153
+  },
+  {
+   "weight_class": 132,
+   "place": 4,
+   "wrestler_name_raw": "Ester Teixiera",
+   "wrestler_id": "8be26e89-48df-4b99-a604-a2d2f8b4a72d",
+   "school_id": 76
+  },
+  {
+   "weight_class": 132,
+   "place": 5,
+   "wrestler_name_raw": "Daniela Fasca-Morales",
+   "wrestler_id": "c70aec53-6bd6-4627-ba8c-d5c0bc506963",
+   "school_id": 120
+  },
+  {
+   "weight_class": 132,
+   "place": 6,
+   "wrestler_name_raw": "Melanny Salas",
+   "wrestler_id": "cc5c165c-45ef-4e62-ad6b-0088f7134b63",
+   "school_id": 120
+  },
+  {
+   "weight_class": 138,
+   "place": 1,
+   "wrestler_name_raw": "Mia Spadavecchia",
+   "wrestler_id": "c91513a5-94bd-4b54-b4a2-a989b29e8370",
+   "school_id": 10
+  },
+  {
+   "weight_class": 138,
+   "place": 2,
+   "wrestler_name_raw": "Mariana Puzycki",
+   "wrestler_id": "613768dd-bf38-4c97-810e-78cf0190e163",
+   "school_id": 120
+  },
+  {
+   "weight_class": 138,
+   "place": 3,
+   "wrestler_name_raw": "Ecrin Haliloglu",
+   "wrestler_id": "c42d466c-53e9-4c97-b9ee-6c55fd017d5e",
+   "school_id": 258
+  },
+  {
+   "weight_class": 138,
+   "place": 4,
+   "wrestler_name_raw": "Alyssa Aiello",
+   "wrestler_id": "327ff287-615c-4cf6-9037-3431a9d2de49",
+   "school_id": 4
+  },
+  {
+   "weight_class": 138,
+   "place": 5,
+   "wrestler_name_raw": "Genesis Perez",
+   "wrestler_id": "f0893eb7-0d84-454c-86f2-6be57af7cd92",
+   "school_id": 76
+  },
+  {
+   "weight_class": 138,
+   "place": 6,
+   "wrestler_name_raw": "Jayla Hidalgo",
+   "wrestler_id": "892d4f26-8e86-4743-95b1-24152496deef",
+   "school_id": 188
+  },
+  {
+   "weight_class": 145,
+   "place": 1,
+   "wrestler_name_raw": "Michelle Gavilanes",
+   "wrestler_id": "23ace2f5-5924-4048-8982-c196dbbe23a8",
+   "school_id": 106
+  },
+  {
+   "weight_class": 145,
+   "place": 2,
+   "wrestler_name_raw": "Taylor Thiele",
+   "wrestler_id": "61188e66-fec3-458b-9c71-85a07203ca35",
+   "school_id": 73
+  },
+  {
+   "weight_class": 145,
+   "place": 3,
+   "wrestler_name_raw": "Olyvia Bowie",
+   "wrestler_id": "3fca1802-1269-46eb-8061-8e6e807c0a05",
+   "school_id": 40
+  },
+  {
+   "weight_class": 145,
+   "place": 4,
+   "wrestler_name_raw": "Paige Berger",
+   "wrestler_id": "f4a94f43-b847-4409-8375-2c07adc74062",
+   "school_id": 18
+  },
+  {
+   "weight_class": 145,
+   "place": 5,
+   "wrestler_name_raw": "Ruby Meagher",
+   "wrestler_id": "40a83eee-0338-44de-aabb-64425403903b",
+   "school_id": 121
+  },
+  {
+   "weight_class": 145,
+   "place": 6,
+   "wrestler_name_raw": "Victoria Frias",
+   "wrestler_id": "b81740ec-22fe-4991-87f4-5da352d4d4eb",
+   "school_id": 391
+  },
+  {
+   "weight_class": 152,
+   "place": 1,
+   "wrestler_name_raw": "Maria Imhauser",
+   "wrestler_id": "1244fea4-75b1-4f9d-8d73-b5446a17e505",
+   "school_id": 188
+  },
+  {
+   "weight_class": 152,
+   "place": 2,
+   "wrestler_name_raw": "Alina Williams",
+   "wrestler_id": "b38f29ca-092b-43bc-a50f-e6b61a221dae",
+   "school_id": 303
+  },
+  {
+   "weight_class": 152,
+   "place": 3,
+   "wrestler_name_raw": "Gabriella Correa",
+   "wrestler_id": "95a2e112-5434-421b-94b1-7dc8a4efbe32",
+   "school_id": 393
+  },
+  {
+   "weight_class": 152,
+   "place": 4,
+   "wrestler_name_raw": "Gwen Silipena",
+   "wrestler_id": "98a9cda0-0ba0-430f-969d-f37fedd8b74c",
+   "school_id": 4
+  },
+  {
+   "weight_class": 152,
+   "place": 5,
+   "wrestler_name_raw": "Francesca Muia",
+   "wrestler_id": "7f5cb101-893d-4172-858d-8c65cb6228d6",
+   "school_id": 18
+  },
+  {
+   "weight_class": 152,
+   "place": 6,
+   "wrestler_name_raw": "Alexa Nunez",
+   "wrestler_id": "c7076283-aab3-420d-a1f8-06747706a91f",
+   "school_id": 391
+  },
+  {
+   "weight_class": 165,
+   "place": 1,
+   "wrestler_name_raw": "Ariana Soto",
+   "wrestler_id": "1563b0f7-5054-4886-98e5-badd98a404f7",
+   "school_id": 15
+  },
+  {
+   "weight_class": 165,
+   "place": 2,
+   "wrestler_name_raw": "emma cabrera",
+   "wrestler_id": "4da5fade-6f57-40e7-a085-53de056dc240",
+   "school_id": 18
+  },
+  {
+   "weight_class": 165,
+   "place": 3,
+   "wrestler_name_raw": "Athena Galindo",
+   "wrestler_id": "733e2ced-7736-43c4-a5ba-d86f3e4520da",
+   "school_id": 391
+  },
+  {
+   "weight_class": 165,
+   "place": 4,
+   "wrestler_name_raw": "Chelsea Pinto",
+   "wrestler_id": "d17f001a-8cb7-4297-b8f2-01d64a7d3b8e",
+   "school_id": 76
+  },
+  {
+   "weight_class": 185,
+   "place": 1,
+   "wrestler_name_raw": "Brianna Sandoval",
+   "wrestler_id": "e4f82b16-dc3e-499b-8cf1-b4de4d0d6d86",
+   "school_id": 322
+  },
+  {
+   "weight_class": 185,
+   "place": 2,
+   "wrestler_name_raw": "Maggie Armstrong",
+   "wrestler_id": "5d3def1a-d6e3-4aa9-96d6-b636b25b5b2c",
+   "school_id": 303
+  },
+  {
+   "weight_class": 185,
+   "place": 3,
+   "wrestler_name_raw": "Brianna Murray",
+   "wrestler_id": "bd7b3a71-ada2-41a8-a5b5-da47434dc60f",
+   "school_id": 24
+  },
+  {
+   "weight_class": 185,
+   "place": 4,
+   "wrestler_name_raw": "Kalli Battaglia",
+   "wrestler_id": "198ca7a8-18ff-49aa-aa42-8482aa0720b6",
+   "school_id": 24
+  },
+  {
+   "weight_class": 185,
+   "place": 5,
+   "wrestler_name_raw": "Ashley Vilela Armijos",
+   "wrestler_id": "87fe546d-99c6-4bbe-a0e6-37a6a96d43bb",
+   "school_id": 393
+  },
+  {
+   "weight_class": 185,
+   "place": 6,
+   "wrestler_name_raw": "Savannah Bottino",
+   "wrestler_id": "46fdc254-ba1c-4330-a52b-740b5f711580",
+   "school_id": 120
+  },
+  {
+   "weight_class": 235,
+   "place": 1,
+   "wrestler_name_raw": "Abigail Paglia",
+   "wrestler_id": "38c0fd3c-8327-4a07-9b31-600c18e5904a",
+   "school_id": 24
+  },
+  {
+   "weight_class": 235,
+   "place": 2,
+   "wrestler_name_raw": "Jana Abdalate",
+   "wrestler_id": "ff2b332c-1330-483b-b1bd-1c443151ddfe",
+   "school_id": 188
+  },
+  {
+   "weight_class": 235,
+   "place": 3,
+   "wrestler_name_raw": "Mia Jimenez",
+   "wrestler_id": "5472c680-477b-4572-a0e2-e3895337c115",
+   "school_id": 120
+  },
+  {
+   "weight_class": 235,
+   "place": 4,
+   "wrestler_name_raw": "Ayonna Campbell",
+   "wrestler_id": "c4d9bc50-ce7e-4dca-9b5c-68fa1c9e4ba0",
+   "school_id": 56
+  }
+ ],
+ "unresolved": [],
+ "winnerFix": [
+  {
+   "id": "c1f47ead-97f2-49db-84ce-cc06d8b30e05",
+   "label": "152 Consi-Semis: 5 Alexa Nunez (PCT) vs 7 Gwen Silipena (JS), Flo: Gwen Silipena F 2:26; stored winner Alexa Nunez Fall  360"
+  }
+ ],
+ "storedOnly": [],
+ "ncMatched": []
+}

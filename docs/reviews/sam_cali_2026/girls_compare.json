@@ -1,0 +1,2785 @@
+{
+ "matched": [
+  {
+   "weight": 100,
+   "round": "3rd Place",
+   "match": "633",
+   "top": "3 Kiara Chac (BBRK)",
+   "bottom": "6 Mya Bush (MH)",
+   "win": "Kiara Chac",
+   "result": "F 4:20",
+   "id": "e0ff82e9-c767-4da1-9c9e-60677fe4f7ee",
+   "storedRound": "QF",
+   "storedWin": "Kiara Chac",
+   "storedResult": "Fall  140",
+   "winnerOk": true
+  },
+  {
+   "weight": 100,
+   "round": "Consi of 4",
+   "match": "573",
+   "top": "6 Mya Bush (MH)",
+   "bottom": "7 Kaylee Rodriguez (PCT)",
+   "win": "Mya Bush",
+   "result": "FOR",
+   "id": "9273b41b-b7f0-4328-84c8-6d734ee1ba23",
+   "storedRound": "C4",
+   "storedWin": "Mya Bush",
+   "storedResult": "Forfeit",
+   "winnerOk": true
+  },
+  {
+   "weight": 100,
+   "round": "Quarter-Finals",
+   "match": "519",
+   "top": "7 Kaylee Rodriguez (PCT)",
+   "bottom": "2 Izzy Timonera (Nut)",
+   "win": "Izzy Timonera",
+   "result": "F 0:08",
+   "id": "9a796c1b-392f-4b1d-83f5-74c70db03d9b",
+   "storedRound": "QF",
+   "storedWin": "Izzabella Timonera",
+   "storedResult": "Fall  8",
+   "winnerOk": true
+  },
+  {
+   "weight": 100,
+   "round": "Semi-Finals",
+   "match": "571",
+   "top": "1 Alysa Patel (PRMC)",
+   "bottom": "5 Belinda Minervini (MO)",
+   "win": "Alysa Patel",
+   "result": "F 1:17",
+   "id": "acc718ae-6a51-4480-98a5-f635b34193ea",
+   "storedRound": "SF",
+   "storedWin": "Alysa Patel",
+   "storedResult": "Fall  77",
+   "winnerOk": true
+  },
+  {
+   "weight": 100,
+   "round": "Semi-Finals",
+   "match": "572",
+   "top": "3 Kiara Chac (BBRK)",
+   "bottom": "2 Izzy Timonera (Nut)",
+   "win": "Izzy Timonera",
+   "result": "TF 4:56",
+   "id": "2f2bbaf5-38a7-4884-82a3-740a0db9402d",
+   "storedRound": "SF",
+   "storedWin": "Izzabella Timonera",
+   "storedResult": "TF 18-1 296",
+   "winnerOk": true
+  },
+  {
+   "weight": 100,
+   "round": "Finals",
+   "match": "635",
+   "top": "1 Alysa Patel (PRMC)",
+   "bottom": "2 Izzy Timonera (Nut)",
+   "win": "Alysa Patel",
+   "result": "MD 10-0",
+   "id": "fc559139-ee41-41d7-a975-60fef387d9f9",
+   "storedRound": "F",
+   "storedWin": "Alysa Patel",
+   "storedResult": "MD 10-0",
+   "winnerOk": true
+  },
+  {
+   "weight": 107,
+   "round": "Round of 16",
+   "match": "501",
+   "top": "9 Mariella Nieves (PCT)",
+   "bottom": "8 Eva Denne (NWTN)",
+   "win": "Mariella Nieves",
+   "result": "DEC 8-1",
+   "id": "60dc5a6e-de4d-4321-a7bd-7dd336116ae0",
+   "storedRound": "R1",
+   "storedWin": "Mariella Nieves",
+   "storedResult": "Dec 8-1",
+   "winnerOk": true
+  },
+  {
+   "weight": 107,
+   "round": "Round of 16",
+   "match": "501A",
+   "top": "- Zoe Mullane (BAYO)",
+   "bottom": "6 Perjia Dupont (PRMC)",
+   "win": "Perjia Dupont",
+   "result": "F 0:54",
+   "id": "cfb97cfd-e0f4-403e-89f5-a9e579b18870",
+   "storedRound": "R1",
+   "storedWin": "Perjia Dupont",
+   "storedResult": "Fall  54",
+   "winnerOk": true
+  },
+  {
+   "weight": 107,
+   "round": "Round of 16",
+   "match": "502",
+   "top": "7 Gabrielle Ruedy (BERN)",
+   "bottom": "10 Alexa Scholz (JS)",
+   "win": "Gabrielle Ruedy",
+   "result": "F 1:18",
+   "id": "fbc9addd-df0e-45a9-9246-4f07c5043762",
+   "storedRound": "R1",
+   "storedWin": "Gabrielle Ruedy",
+   "storedResult": "Fall  76",
+   "winnerOk": true
+  },
+  {
+   "weight": 107,
+   "round": "Quarter-Finals",
+   "match": "520",
+   "top": "1 Nathaly Diaz Santos (MH)",
+   "bottom": "9 Mariella Nieves (PCT)",
+   "win": "Nathaly Diaz Santos",
+   "result": "F 1:56",
+   "id": "66f6fda7-bea9-49b5-9ea9-74293f992328",
+   "storedRound": "QF",
+   "storedWin": "Nathaly Diaz Santos",
+   "storedResult": "Fall  116",
+   "winnerOk": true
+  },
+  {
+   "weight": 107,
+   "round": "Quarter-Finals",
+   "match": "521",
+   "top": "5 Genevieve Maruhom (WILL)",
+   "bottom": "4 Cayce Wang (COLU)",
+   "win": "Cayce Wang",
+   "result": "F 3:00",
+   "id": "44617760-de82-4b7f-944f-4ed5bcca30f4",
+   "storedRound": "QF",
+   "storedWin": "Cayce Wang",
+   "storedResult": "Fall  180",
+   "winnerOk": true
+  },
+  {
+   "weight": 107,
+   "round": "Quarter-Finals",
+   "match": "522",
+   "top": "3 Kelsey Hartman (DELR)",
+   "bottom": "6 Perjia Dupont (PRMC)",
+   "win": "Perjia Dupont",
+   "result": "MD 13-3",
+   "id": "136c4f19-6ac5-4c08-ab38-3b5474cd4869",
+   "storedRound": "QF",
+   "storedWin": "Perjia Dupont",
+   "storedResult": "MD 13-3",
+   "winnerOk": true
+  },
+  {
+   "weight": 107,
+   "round": "Quarter-Finals",
+   "match": "523",
+   "top": "7 Gabrielle Ruedy (BERN)",
+   "bottom": "2 Chastelyn Hechavarria Vasquez ()",
+   "win": "Gabrielle Ruedy",
+   "result": "F 1:53",
+   "id": "eb92b8ea-e0e3-446e-807a-c4394d23f870",
+   "storedRound": "QF",
+   "storedWin": "Gabrielle Ruedy",
+   "storedResult": "Fall  113",
+   "winnerOk": true
+  },
+  {
+   "weight": 107,
+   "round": "Semi-Finals",
+   "match": "574",
+   "top": "1 Nathaly Diaz Santos (MH)",
+   "bottom": "4 Cayce Wang (COLU)",
+   "win": "Nathaly Diaz Santos",
+   "result": "F 0:26",
+   "id": "a7f61f17-9b7c-4942-88e4-492aa8e00dee",
+   "storedRound": "SF",
+   "storedWin": "Nathaly Diaz Santos",
+   "storedResult": "Fall  26",
+   "winnerOk": true
+  },
+  {
+   "weight": 107,
+   "round": "Semi-Finals",
+   "match": "575",
+   "top": "6 Perjia Dupont (PRMC)",
+   "bottom": "7 Gabrielle Ruedy (BERN)",
+   "win": "Gabrielle Ruedy",
+   "result": "F 0:33",
+   "id": "53018045-a024-412b-ba53-9c0372159225",
+   "storedRound": "SF",
+   "storedWin": "Gabrielle Ruedy",
+   "storedResult": "Fall  33",
+   "winnerOk": true
+  },
+  {
+   "weight": 107,
+   "round": "Finals",
+   "match": "638",
+   "top": "1 Nathaly Diaz Santos (MH)",
+   "bottom": "7 Gabrielle Ruedy (BERN)",
+   "win": "Gabrielle Ruedy",
+   "result": "F 1:23",
+   "id": "33f59834-a9cc-4b50-b0fd-03bd4ff17322",
+   "storedRound": "F",
+   "storedWin": "Gabrielle Ruedy",
+   "storedResult": "Fall  83",
+   "winnerOk": true
+  },
+  {
+   "weight": 107,
+   "round": "3rd Place",
+   "match": "636",
+   "top": "2 Chastelyn Hechavarria Vasquez ()",
+   "bottom": "6 Perjia Dupont (PRMC)",
+   "win": "Perjia Dupont",
+   "result": "DEC 4-1",
+   "id": "90266613-c9fa-43fe-88c7-d08d5487254f",
+   "storedRound": "3rd_Place",
+   "storedWin": "Perjia Dupont",
+   "storedResult": "Dec 4-1",
+   "winnerOk": true
+  },
+  {
+   "weight": 107,
+   "round": "Consi-Semis",
+   "match": "613",
+   "top": "2 Chastelyn Hechavarria Vasquez ()",
+   "bottom": "4 Cayce Wang (COLU)",
+   "win": "Chastelyn Hechavarria Vasquez",
+   "result": "F 1:45",
+   "id": "10792a9a-7103-43fa-adcc-ecab79188d63",
+   "storedRound": "R3",
+   "storedWin": "Chastelyn Hechavarria Vasquez",
+   "storedResult": "Fall  105",
+   "winnerOk": true
+  },
+  {
+   "weight": 107,
+   "round": "Consi-Semis",
+   "match": "614",
+   "top": "9 Mariella Nieves (PCT)",
+   "bottom": "6 Perjia Dupont (PRMC)",
+   "win": "Perjia Dupont",
+   "result": "F 3:54",
+   "id": "8c3eaa19-d9c2-4a73-8b49-693fc5e19e77",
+   "storedRound": "Cons. Semis",
+   "storedWin": "Perjia Dupont",
+   "storedResult": "Fall  234",
+   "winnerOk": true
+  },
+  {
+   "weight": 107,
+   "round": "Consi of 4",
+   "match": "576",
+   "top": "2 Chastelyn Hechavarria Vasquez ()",
+   "bottom": "3 Kelsey Hartman (DELR)",
+   "win": "Chastelyn Hechavarria Vasquez",
+   "result": "F 0:41",
+   "id": "3bf4234a-8389-4e25-91bd-bc79cd336ccd",
+   "storedRound": "C2",
+   "storedWin": "Chastelyn Hechavarria Vasquez",
+   "storedResult": "Fall  41",
+   "winnerOk": true
+  },
+  {
+   "weight": 107,
+   "round": "Consi of 4",
+   "match": "577",
+   "top": "5 Genevieve Maruhom (WILL)",
+   "bottom": "9 Mariella Nieves (PCT)",
+   "win": "Mariella Nieves",
+   "result": "F 4:22",
+   "id": "4bc5320c-542e-43fe-a993-15cbd49da116",
+   "storedRound": "C2",
+   "storedWin": "Mariella Nieves",
+   "storedResult": "Fall  284",
+   "winnerOk": true
+  },
+  {
+   "weight": 107,
+   "round": "Consi of 8 #2",
+   "match": "559",
+   "top": "8 Eva Denne (NWTN)",
+   "bottom": "2 Chastelyn Hechavarria Vasquez ()",
+   "win": "Chastelyn Hechavarria Vasquez",
+   "result": "F 0:22",
+   "id": "bc2fc6d2-78d4-426a-a01f-850952a9d122",
+   "storedRound": "C1",
+   "storedWin": "Chastelyn Hechavarria Vasquez",
+   "storedResult": "Fall  22",
+   "winnerOk": true
+  },
+  {
+   "weight": 107,
+   "round": "Consi of 8 #2",
+   "match": "559A",
+   "top": "- Zoe Mullane (BAYO)",
+   "bottom": "5 Genevieve Maruhom (WILL)",
+   "win": "Genevieve Maruhom",
+   "result": "F 2:21",
+   "id": "0602ec54-be99-41b5-a98b-00a6532fc3d4",
+   "storedRound": "C1",
+   "storedWin": "Genevieve Maruhom",
+   "storedResult": "Fall  141",
+   "winnerOk": true
+  },
+  {
+   "weight": 107,
+   "round": "Consi of 8 #2",
+   "match": "560",
+   "top": "10 Alexa Scholz (JS)",
+   "bottom": "9 Mariella Nieves (PCT)",
+   "win": "Mariella Nieves",
+   "result": "F 2:52",
+   "id": "8c616331-dcf2-47cf-80ce-79e54220574e",
+   "storedRound": "R1",
+   "storedWin": "Mariella Nieves",
+   "storedResult": "Fall  172",
+   "winnerOk": true
+  },
+  {
+   "weight": 114,
+   "round": "Round of 16",
+   "match": "503",
+   "top": "9 Camryn Pipher (BAYO)",
+   "bottom": "8 Nicolette Vivas (BRGF)",
+   "win": "Nicolette Vivas",
+   "result": "F 1:24",
+   "id": "0d7e5843-3986-431f-9576-f3e40c3f24bc",
+   "storedRound": "R1",
+   "storedWin": "Nicolette Vivas",
+   "storedResult": "Fall  84",
+   "winnerOk": true
+  },
+  {
+   "weight": 114,
+   "round": "Round of 16",
+   "match": "504",
+   "top": "5 Isabelle Yukselen (PARA)",
+   "bottom": "12 Sophia Meehan (GLRK)",
+   "win": "Isabelle Yukselen",
+   "result": "MD 16-8",
+   "id": "35780387-dd59-4b14-86fc-7e6a98948538",
+   "storedRound": "R1",
+   "storedWin": "Isabelle Yukselen",
+   "storedResult": "MD 16-8",
+   "winnerOk": true
+  },
+  {
+   "weight": 114,
+   "round": "Round of 16",
+   "match": "505",
+   "top": "13 Sanaa Prescott (BAYO)",
+   "bottom": "4 Isabel Diehl (DELR)",
+   "win": "Isabel Diehl",
+   "result": "F 2:42",
+   "id": "992c17a2-7375-4d86-ad1f-8c8e11809610",
+   "storedRound": "R1",
+   "storedWin": "Isabel Diehl",
+   "storedResult": "Fall  162",
+   "winnerOk": true
+  },
+  {
+   "weight": 114,
+   "round": "Round of 16",
+   "match": "506",
+   "top": "11 Ashanty Ruiz Santana (PCT)",
+   "bottom": "6 Mia Capone (MO)",
+   "win": "Mia Capone",
+   "result": "F 0:27",
+   "id": "9a754b12-be15-43ad-9af9-56e1e5bc124b",
+   "storedRound": "R1",
+   "storedWin": "Mia Capone",
+   "storedResult": "Fall  27",
+   "winnerOk": true
+  },
+  {
+   "weight": 114,
+   "round": "Quarter-Finals",
+   "match": "524",
+   "top": "1 Emelly Diaz Santos (MH)",
+   "bottom": "8 Nicolette Vivas (BRGF)",
+   "win": "Emelly Diaz Santos",
+   "result": "F 0:50",
+   "id": "f055f1d0-213c-470d-ba7f-15bc8a5cb08d",
+   "storedRound": "QF",
+   "storedWin": "Emelly Diaz Santos",
+   "storedResult": "Fall  50",
+   "winnerOk": true
+  },
+  {
+   "weight": 114,
+   "round": "Quarter-Finals",
+   "match": "525",
+   "top": "5 Isabelle Yukselen (PARA)",
+   "bottom": "4 Isabel Diehl (DELR)",
+   "win": "Isabelle Yukselen",
+   "result": "DEC 15-10",
+   "id": "7c05ab50-037a-4cf8-a2df-ad462cacd9b6",
+   "storedRound": "QF",
+   "storedWin": "Isabelle Yukselen",
+   "storedResult": "Dec 15-10",
+   "winnerOk": true
+  },
+  {
+   "weight": 114,
+   "round": "Semi-Finals",
+   "match": "578",
+   "top": "1 Emelly Diaz Santos (MH)",
+   "bottom": "5 Isabelle Yukselen (PARA)",
+   "win": "Emelly Diaz Santos",
+   "result": "F 0:42",
+   "id": "8f7bf29e-4d16-42e7-b0f2-9c6cad4f8b23",
+   "storedRound": "SF",
+   "storedWin": "Emelly Diaz Santos",
+   "storedResult": "Fall  42",
+   "winnerOk": true
+  },
+  {
+   "weight": 114,
+   "round": "Semi-Finals",
+   "match": "579",
+   "top": "3 Sophia Salazar (MH)",
+   "bottom": "2 Adrianna Digregorio (WILL)",
+   "win": "Adrianna Digregorio",
+   "result": "F 3:57",
+   "id": "c676e648-0fb4-4372-aa3f-fa7ab13a5e6c",
+   "storedRound": "SF",
+   "storedWin": "Adrianna DiGregorio",
+   "storedResult": "Fall  237",
+   "winnerOk": true
+  },
+  {
+   "weight": 114,
+   "round": "Finals",
+   "match": "641",
+   "top": "1 Emelly Diaz Santos (MH)",
+   "bottom": "2 Adrianna Digregorio (WILL)",
+   "win": "Emelly Diaz Santos",
+   "result": "MD 9-0",
+   "id": "83fc527b-2989-4b74-9887-e137784e64c6",
+   "storedRound": "F",
+   "storedWin": "Emelly Diaz Santos",
+   "storedResult": "MD 9-0",
+   "winnerOk": true
+  },
+  {
+   "weight": 114,
+   "round": "5th Place",
+   "match": "640",
+   "top": "5 Isabelle Yukselen (PARA)",
+   "bottom": "8 Nicolette Vivas (BRGF)",
+   "win": "Isabelle Yukselen",
+   "result": "F 2:07",
+   "id": "39b3b483-de17-41ed-93cc-e85501674993",
+   "storedRound": "5th_Place",
+   "storedWin": "Isabelle Yukselen",
+   "storedResult": "Fall  127",
+   "winnerOk": true
+  },
+  {
+   "weight": 114,
+   "round": "Consi-Semis",
+   "match": "615",
+   "top": "6 Mia Capone (MO)",
+   "bottom": "5 Isabelle Yukselen (PARA)",
+   "win": "Mia Capone",
+   "result": "TF 4:01",
+   "id": "ceb3747d-1a0a-4cba-9b5f-b3645d2954f6",
+   "storedRound": "Cons. Semis",
+   "storedWin": "Mia Capone",
+   "storedResult": "TF 15-0 300",
+   "winnerOk": true
+  },
+  {
+   "weight": 114,
+   "round": "Consi-Semis",
+   "match": "616",
+   "top": "8 Nicolette Vivas (BRGF)",
+   "bottom": "3 Sophia Salazar (MH)",
+   "win": "Sophia Salazar",
+   "result": "F 3:56",
+   "id": "adc7a88f-1147-4906-8e12-b6ab2ec63475",
+   "storedRound": "Cons. Semis",
+   "storedWin": "Sophia Salazar",
+   "storedResult": "Fall  236",
+   "winnerOk": true
+  },
+  {
+   "weight": 114,
+   "round": "Consi of 4",
+   "match": "581",
+   "top": "4 Isabel Diehl (DELR)",
+   "bottom": "8 Nicolette Vivas (BRGF)",
+   "win": "Nicolette Vivas",
+   "result": "F 0:49",
+   "id": "d1748ab5-9b72-4f6e-b899-71122269c079",
+   "storedRound": "C3",
+   "storedWin": "Nicolette Vivas",
+   "storedResult": "Fall  49",
+   "winnerOk": true
+  },
+  {
+   "weight": 114,
+   "round": "Consi of 8 #2",
+   "match": "561",
+   "top": "9 Camryn Pipher (BAYO)",
+   "bottom": "7 Abigail Bloxham (NWTN)",
+   "win": "Abigail Bloxham",
+   "result": "F 2:39",
+   "id": "a521b352-0df8-4cb0-9d0f-b5cdf0b0510f",
+   "storedRound": "C1",
+   "storedWin": "Abigail Bloxham",
+   "storedResult": "Fall  159",
+   "winnerOk": true
+  },
+  {
+   "weight": 114,
+   "round": "Consi of 8 #2",
+   "match": "563",
+   "top": "11 Ashanty Ruiz Santana (PCT)",
+   "bottom": "4 Isabel Diehl (DELR)",
+   "win": "Isabel Diehl",
+   "result": "F 0:49",
+   "id": "54273a46-b6b5-4927-bbff-1811df9eb81d",
+   "storedRound": "C2",
+   "storedWin": "Isabel Diehl",
+   "storedResult": "Fall  49",
+   "winnerOk": true
+  },
+  {
+   "weight": 114,
+   "round": "Consi of 8 #2",
+   "match": "564",
+   "top": "10 Reilly Callan (JS)",
+   "bottom": "8 Nicolette Vivas (BRGF)",
+   "win": "Nicolette Vivas",
+   "result": "F 0:51",
+   "id": "0e33b28f-4fc9-464e-8ff7-c75c174f88cf",
+   "storedRound": "C2",
+   "storedWin": "Nicolette Vivas",
+   "storedResult": "Fall  51",
+   "winnerOk": true
+  },
+  {
+   "weight": 114,
+   "round": "Consi of 8 #1",
+   "match": "528",
+   "top": "12 Sophia Meehan (GLRK)",
+   "bottom": "13 Sanaa Prescott (BAYO)",
+   "win": "Sophia Meehan",
+   "result": "M FOR 1:32",
+   "id": "43f574c9-ac07-499f-af16-ccb2f10b2d7e",
+   "storedRound": "C1",
+   "storedWin": "Sophia Meehan",
+   "storedResult": "Inj. [time]",
+   "winnerOk": true
+  },
+  {
+   "weight": 120,
+   "round": "3rd Place",
+   "match": "642",
+   "top": "8 Ava Drew (MO)",
+   "bottom": "4 LIly Zwillinger (WILL)",
+   "win": "LIly Zwillinger",
+   "result": "F 2:28",
+   "id": "bb85f379-d522-45ab-a471-119290d46318",
+   "storedRound": "3rd_Place",
+   "storedWin": "Lilyana Zwillinger",
+   "storedResult": "Fall  148",
+   "winnerOk": true
+  },
+  {
+   "weight": 120,
+   "round": "5th Place",
+   "match": "643",
+   "top": "7 Cristelle Fiestas (PCT)",
+   "bottom": "6 Charlize Hayes (BAYO)",
+   "win": "Charlize Hayes",
+   "result": "DEC 8-5",
+   "id": "55067cc2-4e64-4680-8f43-0f93ae70e3c7",
+   "storedRound": "5th_Place",
+   "storedWin": "Charlize Hayes",
+   "storedResult": "Dec 8-5",
+   "winnerOk": true
+  },
+  {
+   "weight": 120,
+   "round": "Consi-Semis",
+   "match": "617",
+   "top": "8 Ava Drew (MO)",
+   "bottom": "7 Cristelle Fiestas (PCT)",
+   "win": "Ava Drew",
+   "result": "MD 10-1",
+   "id": "743e0047-20ab-4f57-9de1-df0408bde3a8",
+   "storedRound": "Cons. Semis",
+   "storedWin": "Ava Drew",
+   "storedResult": "MD 10-1",
+   "winnerOk": true
+  },
+  {
+   "weight": 120,
+   "round": "Consi-Semis",
+   "match": "618",
+   "top": "6 Charlize Hayes (BAYO)",
+   "bottom": "4 LIly Zwillinger (WILL)",
+   "win": "LIly Zwillinger",
+   "result": "F 3:49",
+   "id": "f0ecc076-b285-477e-a8b1-fa48d69e6d56",
+   "storedRound": "Cons. Semis",
+   "storedWin": "Lilyana Zwillinger",
+   "storedResult": "Fall  229",
+   "winnerOk": true
+  },
+  {
+   "weight": 120,
+   "round": "Consi of 4",
+   "match": "584A",
+   "top": "8 Ava Drew (MO)",
+   "bottom": "5 Gianna Powell (DELR)",
+   "win": "Ava Drew",
+   "result": "F 2:55",
+   "id": "db8a99f0-a50b-4625-a1c4-97e1e846ce44",
+   "storedRound": "C2",
+   "storedWin": "Ava Drew",
+   "storedResult": "Fall  175",
+   "winnerOk": true
+  },
+  {
+   "weight": 120,
+   "round": "Consi of 4",
+   "match": "584",
+   "top": "6 Charlize Hayes (BAYO)",
+   "bottom": "2 Isabella Santanocito (RMS)",
+   "win": "Charlize Hayes",
+   "result": "DEC 3-0",
+   "id": "99f70dfe-68bd-4223-b678-26392da41a47",
+   "storedRound": "Cons. Quarters",
+   "storedWin": "Charlize Hayes",
+   "storedResult": "Dec 3-0",
+   "winnerOk": true
+  },
+  {
+   "weight": 120,
+   "round": "Quarter-Finals",
+   "match": "529A",
+   "top": "1 Abigail Naddeo (PRMC)",
+   "bottom": "8 Ava Drew (MO)",
+   "win": "Abigail Naddeo",
+   "result": "F 0:23",
+   "id": "cb091eb9-f771-433d-902c-4c64a9c3a48d",
+   "storedRound": "QF",
+   "storedWin": "Abigail Naddeo",
+   "storedResult": "Fall  23",
+   "winnerOk": true
+  },
+  {
+   "weight": 120,
+   "round": "Quarter-Finals",
+   "match": "529",
+   "top": "5 Gianna Powell (DELR)",
+   "bottom": "4 LIly Zwillinger (WILL)",
+   "win": "LIly Zwillinger",
+   "result": "F 0:54",
+   "id": "3503065c-a1db-4d95-b225-0b09ff4c42e4",
+   "storedRound": "QF",
+   "storedWin": "Lilyana Zwillinger",
+   "storedResult": "Fall  54",
+   "winnerOk": true
+  },
+  {
+   "weight": 120,
+   "round": "Quarter-Finals",
+   "match": "530",
+   "top": "3 Reese Rotonde (RMSY)",
+   "bottom": "6 Charlize Hayes (BAYO)",
+   "win": "Reese Rotonde",
+   "result": "F 3:16",
+   "id": "115721b2-9759-49fe-a350-7dbbe698ac7c",
+   "storedRound": "R1",
+   "storedWin": "Reese Rotonde",
+   "storedResult": "Fall  196",
+   "winnerOk": true
+  },
+  {
+   "weight": 120,
+   "round": "Quarter-Finals",
+   "match": "531",
+   "top": "7 Cristelle Fiestas (PCT)",
+   "bottom": "2 Isabella Santanocito (RMS)",
+   "win": "Cristelle Fiestas",
+   "result": "F 4:21",
+   "id": "baab8623-6293-4cbf-abe2-5d481fc461d0",
+   "storedRound": "QF",
+   "storedWin": "Cristell Fiestas",
+   "storedResult": "Fall  261",
+   "winnerOk": true
+  },
+  {
+   "weight": 120,
+   "round": "Semi-Finals",
+   "match": "582",
+   "top": "1 Abigail Naddeo (PRMC)",
+   "bottom": "4 LIly Zwillinger (WILL)",
+   "win": "Abigail Naddeo",
+   "result": "TF 5:16",
+   "id": "7b81a876-e7e1-42a4-b4e3-8e088dbf64c1",
+   "storedRound": "SF",
+   "storedWin": "Abigail Naddeo",
+   "storedResult": "TF 23-8 316",
+   "winnerOk": true
+  },
+  {
+   "weight": 120,
+   "round": "Semi-Finals",
+   "match": "583",
+   "top": "3 Reese Rotonde (RMSY)",
+   "bottom": "7 Cristelle Fiestas (PCT)",
+   "win": "Reese Rotonde",
+   "result": "F 2:50",
+   "id": "5e340972-33b0-47fe-8637-1dd7bcdc56ea",
+   "storedRound": "SF",
+   "storedWin": "Reese Rotonde",
+   "storedResult": "Fall  170",
+   "winnerOk": true
+  },
+  {
+   "weight": 120,
+   "round": "Finals",
+   "match": "644",
+   "top": "1 Abigail Naddeo (PRMC)",
+   "bottom": "3 Reese Rotonde (RMSY)",
+   "win": "Abigail Naddeo",
+   "result": "MD 15-6",
+   "id": "15518ae7-7cd5-4360-9e73-6e3917efdb47",
+   "storedRound": "F",
+   "storedWin": "Abigail Naddeo",
+   "storedResult": "MD 15-6",
+   "winnerOk": true
+  },
+  {
+   "weight": 126,
+   "round": "Round of 16",
+   "match": "508",
+   "top": "9 Layla Dadzie (HILL)",
+   "bottom": "8 Tania Ayala Rosas (PCT)",
+   "win": "Tania Ayala Rosas",
+   "result": "F 3:59",
+   "id": "20b08ed2-8a1b-434b-bb93-4386eedc7c9b",
+   "storedRound": "R1",
+   "storedWin": "Tania Ayala Rosas",
+   "storedResult": "Fall  239",
+   "winnerOk": true
+  },
+  {
+   "weight": 126,
+   "round": "Round of 16",
+   "match": "509",
+   "top": "5 Sua Jeong (DEMA)",
+   "bottom": "12 Chloe Lloyd (WILL)",
+   "win": "Sua Jeong",
+   "result": "F 3:11",
+   "id": "f921958d-4830-455a-a997-ecbe2046a973",
+   "storedRound": "R1",
+   "storedWin": "Sua Jeong",
+   "storedResult": "Fall  191",
+   "winnerOk": true
+  },
+  {
+   "weight": 126,
+   "round": "Round of 16",
+   "match": "510",
+   "top": "13 Yulie Harada (RMSY)",
+   "bottom": "4 Isabella Vargas (B/RP)",
+   "win": "Isabella Vargas",
+   "result": "F 1:54",
+   "id": "20d1cc9b-aee0-4d7c-930f-4fb9384d598d",
+   "storedRound": "R1",
+   "storedWin": "Isabella Vargas",
+   "storedResult": "Fall  114",
+   "winnerOk": true
+  },
+  {
+   "weight": 126,
+   "round": "Round of 16",
+   "match": "511",
+   "top": "3 Elizabeth Panuccio (RMSY)",
+   "bottom": "14 Brooklyn Hocko (WILL)",
+   "win": "Elizabeth Panuccio",
+   "result": "F 0:00",
+   "id": "54b6c874-04d7-44f8-8b86-2020e695c2de",
+   "storedRound": "R1",
+   "storedWin": "Elizabeth Panuccio",
+   "storedResult": "Fall  360",
+   "winnerOk": true
+  },
+  {
+   "weight": 126,
+   "round": "Round of 16",
+   "match": "512",
+   "top": "11 Jasmine Rodriguez (PRMC)",
+   "bottom": "6 Kamryn Hansen (BAYO)",
+   "win": "Kamryn Hansen",
+   "result": "F 0:25",
+   "id": "4d708d7d-2daf-4571-a806-4ffe780fa91a",
+   "storedRound": "R1",
+   "storedWin": "Kamryn Hansen",
+   "storedResult": "Fall  25",
+   "winnerOk": true
+  },
+  {
+   "weight": 126,
+   "round": "Round of 16",
+   "match": "513",
+   "top": "7 Rebecca Garcia (DEMA)",
+   "bottom": "10 Hannah Harrison (NWTN)",
+   "win": "Hannah Harrison",
+   "result": "F 0:55",
+   "id": "af83bf23-6fe6-4143-9825-bbae94ee9c29",
+   "storedRound": "R1",
+   "storedWin": "Hannah Harrison",
+   "storedResult": "Fall  360",
+   "winnerOk": true
+  },
+  {
+   "weight": 126,
+   "round": "Quarter-Finals",
+   "match": "532",
+   "top": "1 Lucia Ranieri (RP)",
+   "bottom": "8 Tania Ayala Rosas (PCT)",
+   "win": "Lucia Ranieri",
+   "result": "F 2:21",
+   "id": "b546411f-214a-40bf-909f-82f943cb30b2",
+   "storedRound": "QF",
+   "storedWin": "Lucia Ranieri",
+   "storedResult": "Fall  141",
+   "winnerOk": true
+  },
+  {
+   "weight": 126,
+   "round": "Quarter-Finals",
+   "match": "533",
+   "top": "5 Sua Jeong (DEMA)",
+   "bottom": "4 Isabella Vargas (B/RP)",
+   "win": "Isabella Vargas",
+   "result": "F 2:57",
+   "id": "9139b517-eb00-4947-be18-24160ecdd11c",
+   "storedRound": "QF",
+   "storedWin": "Isabella Vargas",
+   "storedResult": "Fall  360",
+   "winnerOk": true
+  },
+  {
+   "weight": 126,
+   "round": "Quarter-Finals",
+   "match": "534",
+   "top": "3 Elizabeth Panuccio (RMSY)",
+   "bottom": "6 Kamryn Hansen (BAYO)",
+   "win": "Elizabeth Panuccio",
+   "result": "F 1:48",
+   "id": "31c53617-79e3-465f-b21d-2b51ec05544d",
+   "storedRound": "QF",
+   "storedWin": "Elizabeth Panuccio",
+   "storedResult": "Fall  108",
+   "winnerOk": true
+  },
+  {
+   "weight": 126,
+   "round": "Semi-Finals",
+   "match": "585",
+   "top": "1 Lucia Ranieri (RP)",
+   "bottom": "4 Isabella Vargas (B/RP)",
+   "win": "Lucia Ranieri",
+   "result": "TF 1:33",
+   "id": "fbf7c693-88b3-4e34-8de7-062f49eb62ae",
+   "storedRound": "SF",
+   "storedWin": "Lucia Ranieri",
+   "storedResult": "TF 21-6 93",
+   "winnerOk": true
+  },
+  {
+   "weight": 126,
+   "round": "Semi-Finals",
+   "match": "586",
+   "top": "3 Elizabeth Panuccio (RMSY)",
+   "bottom": "2 Molly Smyth (MO)",
+   "win": "Elizabeth Panuccio",
+   "result": "DEC 8-7",
+   "id": "b67ff308-31fe-4f01-8cb4-6d8a5cf77568",
+   "storedRound": "SF",
+   "storedWin": "Elizabeth Panuccio",
+   "storedResult": "Dec 8-7",
+   "winnerOk": true
+  },
+  {
+   "weight": 126,
+   "round": "Finals",
+   "match": "647",
+   "top": "1 Lucia Ranieri (RP)",
+   "bottom": "3 Elizabeth Panuccio (RMSY)",
+   "win": "Lucia Ranieri",
+   "result": "TF 2:17",
+   "id": "c62bccec-d945-4bcd-a5cc-7c7bdb39756e",
+   "storedRound": "F",
+   "storedWin": "Lucia Ranieri",
+   "storedResult": "TF 19-3 137",
+   "winnerOk": true
+  },
+  {
+   "weight": 126,
+   "round": "3rd Place",
+   "match": "645",
+   "top": "6 Kamryn Hansen (BAYO)",
+   "bottom": "2 Molly Smyth (MO)",
+   "win": "Molly Smyth",
+   "result": "F 2:51",
+   "id": "1404243f-d670-48b8-90eb-cbc1d079b789",
+   "storedRound": "3rd_Place",
+   "storedWin": "Molly Smyth",
+   "storedResult": "Fall  171",
+   "winnerOk": true
+  },
+  {
+   "weight": 126,
+   "round": "5th Place",
+   "match": "646",
+   "top": "4 Isabella Vargas (B/RP)",
+   "bottom": "8 Tania Ayala Rosas (PCT)",
+   "win": "Isabella Vargas",
+   "result": "F 1:26",
+   "id": "9a1ac05e-8ee4-480f-a9fe-29630980254f",
+   "storedRound": "5th_Place",
+   "storedWin": "Isabella Vargas",
+   "storedResult": "Fall  87",
+   "winnerOk": true
+  },
+  {
+   "weight": 126,
+   "round": "Consi-Semis",
+   "match": "619",
+   "top": "6 Kamryn Hansen (BAYO)",
+   "bottom": "4 Isabella Vargas (B/RP)",
+   "win": "Kamryn Hansen",
+   "result": "DEC 10-3",
+   "id": "a22d4d51-a5ac-4a3c-af34-4d06a120a917",
+   "storedRound": "Cons. Semis",
+   "storedWin": "Kamryn Hansen",
+   "storedResult": "Dec 8-3",
+   "winnerOk": true
+  },
+  {
+   "weight": 126,
+   "round": "Consi-Semis",
+   "match": "620",
+   "top": "8 Tania Ayala Rosas (PCT)",
+   "bottom": "2 Molly Smyth (MO)",
+   "win": "Molly Smyth",
+   "result": "DEC 10-3",
+   "id": "3031b8ac-e36c-4438-b403-02767f3d8036",
+   "storedRound": "Cons. Semis",
+   "storedWin": "Molly Smyth",
+   "storedResult": "Dec 10-3",
+   "winnerOk": true
+  },
+  {
+   "weight": 126,
+   "round": "Consi of 4",
+   "match": "587",
+   "top": "10 Hannah Harrison (NWTN)",
+   "bottom": "6 Kamryn Hansen (BAYO)",
+   "win": "Kamryn Hansen",
+   "result": "F 1:48",
+   "id": "5041193d-9600-4048-9254-631ebaade3e8",
+   "storedRound": "Cons. Quarters",
+   "storedWin": "Kamryn Hansen",
+   "storedResult": "Fall  108",
+   "winnerOk": true
+  },
+  {
+   "weight": 126,
+   "round": "Consi of 4",
+   "match": "588",
+   "top": "11 Jasmine Rodriguez (PRMC)",
+   "bottom": "8 Tania Ayala Rosas (PCT)",
+   "win": "Tania Ayala Rosas",
+   "result": "F 0:25",
+   "id": "d2d76aa5-b03a-4aee-9aac-4e9b3c13e617",
+   "storedRound": "Cons. Quarters",
+   "storedWin": "Tania Ayala Rosas",
+   "storedResult": "Fall  25",
+   "winnerOk": true
+  },
+  {
+   "weight": 126,
+   "round": "Consi of 8 #2",
+   "match": "566",
+   "top": "13 Yulie Harada (RMSY)",
+   "bottom": "6 Kamryn Hansen (BAYO)",
+   "win": "Kamryn Hansen",
+   "result": "F 2:31",
+   "id": "80e45027-3160-4679-be92-ec9f189feed9",
+   "storedRound": "C1",
+   "storedWin": "Kamryn Hansen",
+   "storedResult": "Fall  151",
+   "winnerOk": true
+  },
+  {
+   "weight": 126,
+   "round": "Consi of 8 #2",
+   "match": "567",
+   "top": "11 Jasmine Rodriguez (PRMC)",
+   "bottom": "5 Sua Jeong (DEMA)",
+   "win": "Jasmine Rodriguez",
+   "result": "F 0:18",
+   "id": "6633753a-964d-455a-9e41-59d923ca57f4",
+   "storedRound": "C2",
+   "storedWin": "Jasmine Rodriguez",
+   "storedResult": "Fall  360",
+   "winnerOk": true
+  },
+  {
+   "weight": 126,
+   "round": "Consi of 8 #2",
+   "match": "568",
+   "top": "7 Rebecca Garcia (DEMA)",
+   "bottom": "8 Tania Ayala Rosas (PCT)",
+   "win": "Tania Ayala Rosas",
+   "result": "F 2:28",
+   "id": "a4edb879-75b5-44b8-9b41-86317a8d7a5c",
+   "storedRound": "C2",
+   "storedWin": "Tania Ayala Rosas",
+   "storedResult": "Fall  360",
+   "winnerOk": true
+  },
+  {
+   "weight": 126,
+   "round": "Consi of 8 #1",
+   "match": "536",
+   "top": "12 Chloe Lloyd (WILL)",
+   "bottom": "13 Yulie Harada (RMSY)",
+   "win": "Yulie Harada",
+   "result": "DEC 7-3",
+   "id": "29c1ff4f-8324-4de5-9e40-706a229ecf47",
+   "storedRound": "C1",
+   "storedWin": "Yulie Harada",
+   "storedResult": "Dec 7-3",
+   "winnerOk": true
+  },
+  {
+   "weight": 126,
+   "round": "Consi of 8 #1",
+   "match": "537",
+   "top": "14 Brooklyn Hocko (WILL)",
+   "bottom": "11 Jasmine Rodriguez (PRMC)",
+   "win": "Jasmine Rodriguez",
+   "result": "F 0:13",
+   "id": "2677ab0d-c8b0-41a3-80ea-c82ff5ea71b2",
+   "storedRound": "C1",
+   "storedWin": "Jasmine Rodriguez",
+   "storedResult": "Fall  13",
+   "winnerOk": true
+  },
+  {
+   "weight": 126,
+   "round": "Consi of 8 #1",
+   "match": "538",
+   "top": "7 Rebecca Garcia (DEMA)",
+   "bottom": "15 Isabella Grippo (MH)",
+   "win": "Rebecca Garcia",
+   "result": "DEC 4-1",
+   "id": "2fa3ca06-089b-47f5-a4d9-6ca388c08bc4",
+   "storedRound": "C1",
+   "storedWin": "Rebecca Garcia",
+   "storedResult": "Dec 4-1",
+   "winnerOk": true
+  },
+  {
+   "weight": 132,
+   "round": "Round of 16",
+   "match": "515",
+   "top": "9 Bria Beshada (NWTN)",
+   "bottom": "8 Melanny Salas (BAYO)",
+   "win": "Melanny Salas",
+   "result": "F 5:23",
+   "id": "72e2a11d-9ee9-4279-9d37-4bb714b5ac21",
+   "storedRound": "R1",
+   "storedWin": "Melanny Salas",
+   "storedResult": "Fall  323",
+   "winnerOk": true
+  },
+  {
+   "weight": 132,
+   "round": "Quarter-Finals",
+   "match": "539",
+   "top": "1 Paige Weiss (JS)",
+   "bottom": "8 Melanny Salas (BAYO)",
+   "win": "Paige Weiss",
+   "result": "F 0:26",
+   "id": "16e44c2c-cf6f-4137-bce6-a8694c955eb7",
+   "storedRound": "QF",
+   "storedWin": "Paige Weiss",
+   "storedResult": "Fall  26",
+   "winnerOk": true
+  },
+  {
+   "weight": 132,
+   "round": "Quarter-Finals",
+   "match": "540",
+   "top": "5 Tiana Diaz (PCT)",
+   "bottom": "4 Daniela Fasca-Morales (BAYO)",
+   "win": "Daniela Fasca-Morales",
+   "result": "F 1:12",
+   "id": "ebeade74-f4ed-414b-813d-d640603503f1",
+   "storedRound": "QF",
+   "storedWin": "Daniela Fasca-Morales",
+   "storedResult": "Fall  72",
+   "winnerOk": true
+  },
+  {
+   "weight": 132,
+   "round": "Quarter-Finals",
+   "match": "541",
+   "top": "3 Ester Teixiera (MH)",
+   "bottom": "6 Sared Mata (COLU)",
+   "win": "Ester Teixiera",
+   "result": "F 1:31",
+   "id": "659b6ebb-b06c-4580-80c4-5c11df3471d4",
+   "storedRound": "R2",
+   "storedWin": "Ester Teixiera",
+   "storedResult": "Fall  91",
+   "winnerOk": true
+  },
+  {
+   "weight": 132,
+   "round": "Quarter-Finals",
+   "match": "542",
+   "top": "7 Erica Vasquez (PRMC)",
+   "bottom": "2 Everleigh Whitham-Mandarakas ()",
+   "win": "Everleigh Whitham-Mandarakas",
+   "result": "F 1:38",
+   "id": "38ab5da0-8130-4983-a97e-0c870f0faaf2",
+   "storedRound": "QF",
+   "storedWin": "Everleigh Whitham",
+   "storedResult": "Fall  98",
+   "winnerOk": true
+  },
+  {
+   "weight": 132,
+   "round": "Semi-Finals",
+   "match": "589",
+   "top": "1 Paige Weiss (JS)",
+   "bottom": "4 Daniela Fasca-Morales (BAYO)",
+   "win": "Paige Weiss",
+   "result": "F 0:23",
+   "id": "06ddee46-aff1-4f2e-94c7-e9f07fe2c190",
+   "storedRound": "SF",
+   "storedWin": "Paige Weiss",
+   "storedResult": "Fall  23",
+   "winnerOk": true
+  },
+  {
+   "weight": 132,
+   "round": "Semi-Finals",
+   "match": "590",
+   "top": "3 Ester Teixiera (MH)",
+   "bottom": "2 Everleigh Whitham-Mandarakas ()",
+   "win": "Everleigh Whitham-Mandarakas",
+   "result": "F 2:26",
+   "id": "0d8e0d84-dc55-43fb-81e4-6f86496d54ec",
+   "storedRound": "R3",
+   "storedWin": "Everleigh Whitham",
+   "storedResult": "Fall  146",
+   "winnerOk": true
+  },
+  {
+   "weight": 132,
+   "round": "Finals",
+   "match": "650",
+   "top": "1 Paige Weiss (JS)",
+   "bottom": "2 Everleigh Whitham-Mandarakas ()",
+   "win": "Paige Weiss",
+   "result": "F 1:46",
+   "id": "5911d717-96c7-4e50-9d56-7516eb75d567",
+   "storedRound": "F",
+   "storedWin": "Paige Weiss",
+   "storedResult": "Fall  106",
+   "winnerOk": true
+  },
+  {
+   "weight": 132,
+   "round": "3rd Place",
+   "match": "648",
+   "top": "7 Erica Vasquez (PRMC)",
+   "bottom": "3 Ester Teixiera (MH)",
+   "win": "Erica Vasquez",
+   "result": "F 3:30",
+   "id": "d4538f20-7e90-41cf-afdf-a506553ef746",
+   "storedRound": "3rd_Place",
+   "storedWin": "Erica Vasquez",
+   "storedResult": "Fall  210",
+   "winnerOk": true
+  },
+  {
+   "weight": 132,
+   "round": "5th Place",
+   "match": "649",
+   "top": "4 Daniela Fasca-Morales (BAYO)",
+   "bottom": "8 Melanny Salas (BAYO)",
+   "win": "Daniela Fasca-Morales",
+   "result": "F 0:15",
+   "id": "52622f0e-f28c-4a1c-9169-2b5e291dcbdc",
+   "storedRound": "5th_Place",
+   "storedWin": "Daniela Fasca-Morales",
+   "storedResult": "Fall  15",
+   "winnerOk": true
+  },
+  {
+   "weight": 132,
+   "round": "Consi-Semis",
+   "match": "621",
+   "top": "7 Erica Vasquez (PRMC)",
+   "bottom": "4 Daniela Fasca-Morales (BAYO)",
+   "win": "Erica Vasquez",
+   "result": "F 2:59",
+   "id": "83fc72a4-e866-488b-a7dc-665789ebb4bb",
+   "storedRound": "Cons. Semis",
+   "storedWin": "Erica Vasquez",
+   "storedResult": "Fall  179",
+   "winnerOk": true
+  },
+  {
+   "weight": 132,
+   "round": "Consi-Semis",
+   "match": "622",
+   "top": "8 Melanny Salas (BAYO)",
+   "bottom": "3 Ester Teixiera (MH)",
+   "win": "Ester Teixiera",
+   "result": "F 1:28",
+   "id": "399bcaa4-cf55-4cc9-8e4d-8875703f43d5",
+   "storedRound": "Cons. Semis",
+   "storedWin": "Ester Teixiera",
+   "storedResult": "Fall  88",
+   "winnerOk": true
+  },
+  {
+   "weight": 132,
+   "round": "Consi of 4",
+   "match": "591",
+   "top": "7 Erica Vasquez (PRMC)",
+   "bottom": "6 Sared Mata (COLU)",
+   "win": "Erica Vasquez",
+   "result": "F 1:29",
+   "id": "493d6b6b-3496-4e20-9d3c-535ab217e44f",
+   "storedRound": "Cons. Quarters",
+   "storedWin": "Erica Vasquez",
+   "storedResult": "Fall  89",
+   "winnerOk": true
+  },
+  {
+   "weight": 132,
+   "round": "Consi of 4",
+   "match": "592",
+   "top": "5 Tiana Diaz (PCT)",
+   "bottom": "8 Melanny Salas (BAYO)",
+   "win": "Melanny Salas",
+   "result": "DEC 10-7",
+   "id": "fe26f855-3cfc-4995-af64-c0678e586d0d",
+   "storedRound": "Cons. Quarters",
+   "storedWin": "Melanny Salas",
+   "storedResult": "Dec 10-3",
+   "winnerOk": true
+  },
+  {
+   "weight": 132,
+   "round": "Consi of 8 #2",
+   "match": "569",
+   "top": "9 Bria Beshada (NWTN)",
+   "bottom": "7 Erica Vasquez (PRMC)",
+   "win": "Erica Vasquez",
+   "result": "F 3:56",
+   "id": "441ae65d-01b3-411c-a598-ef25df823783",
+   "storedRound": "C2",
+   "storedWin": "Erica Vasquez",
+   "storedResult": "Fall  236",
+   "winnerOk": true
+  },
+  {
+   "weight": 138,
+   "round": "3rd Place",
+   "match": "651",
+   "top": "3 Alyssa Aiello (JS)",
+   "bottom": "4 Ecrin Haliloglu (DELR)",
+   "win": "Ecrin Haliloglu",
+   "result": "DEC 5-2",
+   "id": "51904dd7-77eb-477c-9259-4fecc0aa367b",
+   "storedRound": "3rd_Place",
+   "storedWin": "Ecrin Haliloglu",
+   "storedResult": "Dec 5-2",
+   "winnerOk": true
+  },
+  {
+   "weight": 138,
+   "round": "Consi-Semis",
+   "match": "624",
+   "top": "6 Jayla Hidalgo (HILL)",
+   "bottom": "4 Ecrin Haliloglu (DELR)",
+   "win": "Ecrin Haliloglu",
+   "result": "DQ 3:44",
+   "id": "879040c2-7825-4800-8e62-f1da8e2aa42f",
+   "storedRound": "Cons. Semis",
+   "storedWin": "Ecrin Haliloglu",
+   "storedResult": "DQ",
+   "winnerOk": true
+  },
+  {
+   "weight": 138,
+   "round": "Quarter-Finals",
+   "match": "543",
+   "top": "5 Genesis Perez (MH)",
+   "bottom": "4 Ecrin Haliloglu (DELR)",
+   "win": "Ecrin Haliloglu",
+   "result": "F 0:45",
+   "id": "2badb8e8-ffef-4951-89d5-6998981efd35",
+   "storedRound": "R2",
+   "storedWin": "Ecrin Haliloglu",
+   "storedResult": "Fall  45",
+   "winnerOk": true
+  },
+  {
+   "weight": 138,
+   "round": "Semi-Finals",
+   "match": "593",
+   "top": "1 Mia Spadavecchia (WW)",
+   "bottom": "4 Ecrin Haliloglu (DELR)",
+   "win": "Mia Spadavecchia",
+   "result": "F 5:55",
+   "id": "4ba4adc9-f522-43dd-9182-c54a62fc19f1",
+   "storedRound": "SF",
+   "storedWin": "Mia Spadavecchia",
+   "storedResult": "Fall  355",
+   "winnerOk": true
+  },
+  {
+   "weight": 138,
+   "round": "Semi-Finals",
+   "match": "594",
+   "top": "3 Alyssa Aiello (JS)",
+   "bottom": "2 Mariana Puzycki (BAYO)",
+   "win": "Mariana Puzycki",
+   "result": "MD 12-2",
+   "id": "f7e61a27-fc99-4669-819c-df9c5d4b757d",
+   "storedRound": "SF",
+   "storedWin": "Mariana Puzycki",
+   "storedResult": "MD 12-2",
+   "winnerOk": true
+  },
+  {
+   "weight": 138,
+   "round": "Finals",
+   "match": "653",
+   "top": "1 Mia Spadavecchia (WW)",
+   "bottom": "2 Mariana Puzycki (BAYO)",
+   "win": "Mia Spadavecchia",
+   "result": "DEC SV 9-6",
+   "id": "424e01a9-fc23-4203-ba8c-751d3022b21f",
+   "storedRound": "F",
+   "storedWin": "Mia Spadavecchia",
+   "storedResult": "SV-1 9-6",
+   "winnerOk": true
+  },
+  {
+   "weight": 145,
+   "round": "Round of 16",
+   "match": "516",
+   "top": "9 Mia Truncellito (BAYO)",
+   "bottom": "8 Karina Ortiz (WILL)",
+   "win": "Mia Truncellito",
+   "result": "F 1:37",
+   "id": "c0734c04-834f-44a8-9a5e-ee861148fa99",
+   "storedRound": "R1",
+   "storedWin": "Mia Truncellito",
+   "storedResult": "Fall  97",
+   "winnerOk": true
+  },
+  {
+   "weight": 145,
+   "round": "Quarter-Finals",
+   "match": "545",
+   "top": "1 Taylor Thiele (IHS)",
+   "bottom": "9 Mia Truncellito (BAYO)",
+   "win": "Taylor Thiele",
+   "result": "F 0:32",
+   "id": "4372ca3f-cdf9-4cbd-a575-4ade75f60b68",
+   "storedRound": "QF",
+   "storedWin": "Taylor Thiele",
+   "storedResult": "Fall  32",
+   "winnerOk": true
+  },
+  {
+   "weight": 145,
+   "round": "Quarter-Finals",
+   "match": "546",
+   "top": "5 Ruby Meagher (COLU)",
+   "bottom": "4 Olyvia Bowie (BRGF)",
+   "win": "Olyvia Bowie",
+   "result": "F 1:01",
+   "id": "10891222-b843-4bb3-a909-3ec3651d9a87",
+   "storedRound": "QF",
+   "storedWin": "Olyvia Bowie",
+   "storedResult": "Fall  61",
+   "winnerOk": true
+  },
+  {
+   "weight": 145,
+   "round": "Quarter-Finals",
+   "match": "547",
+   "top": "3 Paige Berger (RMSY)",
+   "bottom": "6 Aubree Pusey (WILL)",
+   "win": "Paige Berger",
+   "result": "F 1:32",
+   "id": "08392e14-a4cf-4af3-9386-451ccd251f95",
+   "storedRound": "R1",
+   "storedWin": "Paige Berger",
+   "storedResult": "Fall  92",
+   "winnerOk": true
+  },
+  {
+   "weight": 145,
+   "round": "Quarter-Finals",
+   "match": "548",
+   "top": "7 Victoria Frias (PCT)",
+   "bottom": "2 Michelle Gavilanes (Nut)",
+   "win": "Michelle Gavilanes",
+   "result": "TF 2:59",
+   "id": "c5b7a407-21dc-4ea8-90dd-8ba39856e9c3",
+   "storedRound": "QF",
+   "storedWin": "Michelle Gavilanes",
+   "storedResult": "TF 17-0 179",
+   "winnerOk": true
+  },
+  {
+   "weight": 145,
+   "round": "Semi-Finals",
+   "match": "595",
+   "top": "1 Taylor Thiele (IHS)",
+   "bottom": "4 Olyvia Bowie (BRGF)",
+   "win": "Taylor Thiele",
+   "result": "F 3:16",
+   "id": "917ae9dc-d0d4-4c40-9560-7e26b6dacdac",
+   "storedRound": "SF",
+   "storedWin": "Taylor Thiele",
+   "storedResult": "Fall  196",
+   "winnerOk": true
+  },
+  {
+   "weight": 145,
+   "round": "Semi-Finals",
+   "match": "596",
+   "top": "3 Paige Berger (RMSY)",
+   "bottom": "2 Michelle Gavilanes (Nut)",
+   "win": "Michelle Gavilanes",
+   "result": "F 1:23",
+   "id": "1e125ec4-f774-4b42-b171-8fab136208be",
+   "storedRound": "SF",
+   "storedWin": "Michelle Gavilanes",
+   "storedResult": "Fall  83",
+   "winnerOk": true
+  },
+  {
+   "weight": 145,
+   "round": "Finals",
+   "match": "656",
+   "top": "1 Taylor Thiele (IHS)",
+   "bottom": "2 Michelle Gavilanes (Nut)",
+   "win": "Michelle Gavilanes",
+   "result": "F 4:00",
+   "id": "abbef16c-6854-4b57-8aeb-b0eda3bf69b6",
+   "storedRound": "F",
+   "storedWin": "Michelle Gavilanes",
+   "storedResult": "Dec 4-0",
+   "winnerOk": true
+  },
+  {
+   "weight": 145,
+   "round": "3rd Place",
+   "match": "654",
+   "top": "4 Olyvia Bowie (BRGF)",
+   "bottom": "3 Paige Berger (RMSY)",
+   "win": "Olyvia Bowie",
+   "result": "F 0:52",
+   "id": "32f76377-4117-44c4-a757-c50a99a3f2dd",
+   "storedRound": "3rd_Place",
+   "storedWin": "Olyvia Bowie",
+   "storedResult": "Fall  52",
+   "winnerOk": true
+  },
+  {
+   "weight": 145,
+   "round": "Consi-Semis",
+   "match": "625",
+   "top": "7 Victoria Frias (PCT)",
+   "bottom": "4 Olyvia Bowie (BRGF)",
+   "win": "Olyvia Bowie",
+   "result": "F 2:13",
+   "id": "c6cfc8ce-252b-4bb4-9137-a48ade429849",
+   "storedRound": "Cons. Semis",
+   "storedWin": "Olyvia Bowie",
+   "storedResult": "Fall  133",
+   "winnerOk": true
+  },
+  {
+   "weight": 145,
+   "round": "Consi-Semis",
+   "match": "626",
+   "top": "5 Ruby Meagher (COLU)",
+   "bottom": "3 Paige Berger (RMSY)",
+   "win": "Paige Berger",
+   "result": "F 3:51",
+   "id": "d934bf2a-05f8-4b27-934c-eb62f30fbcd4",
+   "storedRound": "R1",
+   "storedWin": "Paige Berger",
+   "storedResult": "Fall  231",
+   "winnerOk": true
+  },
+  {
+   "weight": 145,
+   "round": "Consi of 4",
+   "match": "597",
+   "top": "7 Victoria Frias (PCT)",
+   "bottom": "6 Aubree Pusey (WILL)",
+   "win": "Victoria Frias",
+   "result": "F 3:28",
+   "id": "a9e4b17d-da0d-421f-9215-c54aaeac8b67",
+   "storedRound": "C2",
+   "storedWin": "Victoria Frias",
+   "storedResult": "Fall  208",
+   "winnerOk": true
+  },
+  {
+   "weight": 145,
+   "round": "Consi of 4",
+   "match": "598",
+   "top": "5 Ruby Meagher (COLU)",
+   "bottom": "9 Mia Truncellito (BAYO)",
+   "win": "Ruby Meagher",
+   "result": "F 0:59",
+   "id": "3bfc5c9b-b800-4f79-8c33-9a412a6e62cb",
+   "storedRound": "C1",
+   "storedWin": "Ruby Meagher",
+   "storedResult": "Fall  59",
+   "winnerOk": true
+  },
+  {
+   "weight": 145,
+   "round": "Consi of 8 #2",
+   "match": "570",
+   "top": "8 Karina Ortiz (WILL)",
+   "bottom": "7 Victoria Frias (PCT)",
+   "win": "Victoria Frias",
+   "result": "F 0:47",
+   "id": "28916c63-df4b-4955-b01a-5090e3d59286",
+   "storedRound": "C1",
+   "storedWin": "Victoria Frias",
+   "storedResult": "Fall  47",
+   "winnerOk": true
+  },
+  {
+   "weight": 152,
+   "round": "3rd Place",
+   "match": "657",
+   "top": "7 Gwen Silipena (JS)",
+   "bottom": "3 Gabriella Correa (B/RP)",
+   "win": "Gabriella Correa",
+   "result": "F 1:21",
+   "id": "5d786684-0c23-4487-a356-3583681dbba1",
+   "storedRound": "3rd_Place",
+   "storedWin": "Gabriella Correa",
+   "storedResult": "Fall  81",
+   "winnerOk": true
+  },
+  {
+   "weight": 152,
+   "round": "5th Place",
+   "match": "658",
+   "top": "5 Alexa Nunez (PCT)",
+   "bottom": "4 Francesca Muia (RMSY)",
+   "win": "Francesca Muia",
+   "result": "F 1:37",
+   "id": "a1e99b75-7142-43e7-be07-65b4078938a8",
+   "storedRound": "QF",
+   "storedWin": "Francesca Muia",
+   "storedResult": "Dec 10-3",
+   "winnerOk": true
+  },
+  {
+   "weight": 152,
+   "round": "Consi-Semis",
+   "match": "628",
+   "top": "3 Gabriella Correa (B/RP)",
+   "bottom": "4 Francesca Muia (RMSY)",
+   "win": "Gabriella Correa",
+   "result": "F 1:18",
+   "id": "52dab837-1bd8-4dca-8f5d-151a5feb7360",
+   "storedRound": "C1",
+   "storedWin": "Gabriella Correa",
+   "storedResult": "Fall  78",
+   "winnerOk": true
+  },
+  {
+   "weight": 152,
+   "round": "Consi-Semis",
+   "match": "627",
+   "top": "5 Alexa Nunez (PCT)",
+   "bottom": "7 Gwen Silipena (JS)",
+   "win": "Gwen Silipena",
+   "result": "F 2:26",
+   "id": "c1f47ead-97f2-49db-84ce-cc06d8b30e05",
+   "storedRound": "R1",
+   "storedWin": "Alexa Nunez",
+   "storedResult": "Fall  360",
+   "winnerOk": false
+  },
+  {
+   "weight": 152,
+   "round": "Consi of 4",
+   "match": "601",
+   "top": "8 Nadia Bibi (GLRK)",
+   "bottom": "5 Alexa Nunez (PCT)",
+   "win": "Alexa Nunez",
+   "result": "F 0:33",
+   "id": "680bd461-591b-4282-96d2-f393c083866e",
+   "storedRound": "C1",
+   "storedWin": "Alexa Nunez",
+   "storedResult": "Fall  33",
+   "winnerOk": true
+  },
+  {
+   "weight": 152,
+   "round": "Consi of 4",
+   "match": "602",
+   "top": "3 Gabriella Correa (B/RP)",
+   "bottom": "2 Nora Shemon (MH)",
+   "win": "Gabriella Correa",
+   "result": "FOR",
+   "id": "6a43c7a6-bedc-4f56-a993-8c0f295b63bb",
+   "storedRound": "C1",
+   "storedWin": "Gabriella Correa",
+   "storedResult": "Forfeit",
+   "winnerOk": true
+  },
+  {
+   "weight": 152,
+   "round": "Quarter-Finals",
+   "match": "550",
+   "top": "5 Alexa Nunez (PCT)",
+   "bottom": "4 Francesca Muia (RMSY)",
+   "win": "Francesca Muia",
+   "result": "DEC 10-3",
+   "id": "154d21d0-0cc9-467d-a3fe-555f6a7a6df3",
+   "storedRound": "QF",
+   "storedWin": "Francesca Muia",
+   "storedResult": "Fall  97",
+   "winnerOk": true
+  },
+  {
+   "weight": 152,
+   "round": "Quarter-Finals",
+   "match": "551",
+   "top": "3 Gabriella Correa (B/RP)",
+   "bottom": "6 Alina Williams (WILL)",
+   "win": "Alina Williams",
+   "result": "F 1:47",
+   "id": "b114e35b-3b69-4155-ad39-b92d7fc0fda3",
+   "storedRound": "QF",
+   "storedWin": "Alina Williams",
+   "storedResult": "Fall  107",
+   "winnerOk": true
+  },
+  {
+   "weight": 152,
+   "round": "Semi-Finals",
+   "match": "599",
+   "top": "1 Maria Imhauser (HILL)",
+   "bottom": "4 Francesca Muia (RMSY)",
+   "win": "Maria Imhauser",
+   "result": "F 1:52",
+   "id": "05ae130c-f712-4193-bb2d-827b2cf45402",
+   "storedRound": "SF",
+   "storedWin": "Maria Imhauser",
+   "storedResult": "Fall  112",
+   "winnerOk": true
+  },
+  {
+   "weight": 152,
+   "round": "Semi-Finals",
+   "match": "600",
+   "top": "6 Alina Williams (WILL)",
+   "bottom": "7 Gwen Silipena (JS)",
+   "win": "Alina Williams",
+   "result": "F 0:49",
+   "id": "2f4bc593-540d-41be-90e7-b017e3e789cc",
+   "storedRound": "SF",
+   "storedWin": "Alina Williams",
+   "storedResult": "Fall  49",
+   "winnerOk": true
+  },
+  {
+   "weight": 152,
+   "round": "Finals",
+   "match": "659",
+   "top": "1 Maria Imhauser (HILL)",
+   "bottom": "6 Alina Williams (WILL)",
+   "win": "Maria Imhauser",
+   "result": "MD 22-10",
+   "id": "680dd989-e771-497e-976a-8492f44d2115",
+   "storedRound": "F",
+   "storedWin": "Maria Imhauser",
+   "storedResult": "MD 22-10",
+   "winnerOk": true
+  },
+  {
+   "weight": 165,
+   "round": "3rd Place",
+   "match": "660",
+   "top": "3 Chelsea Pinto (MH)",
+   "bottom": "4 Athena Galindo (PCT)",
+   "win": "Athena Galindo",
+   "result": "F 4:31",
+   "id": "4b4593b0-c755-4136-a494-d4aaaa9739f8",
+   "storedRound": "3rd_Place",
+   "storedWin": "Athena Galindo",
+   "storedResult": "Fall  271",
+   "winnerOk": true
+  },
+  {
+   "weight": 165,
+   "round": "Consi-Semis",
+   "match": "629",
+   "top": "5 Camilla Melendez (WILL)",
+   "bottom": "3 Chelsea Pinto (MH)",
+   "win": "Chelsea Pinto",
+   "result": "F 1:16",
+   "id": "5e959fb0-0669-4326-bf83-4e0d8723e4ad",
+   "storedRound": "Cons. Semis",
+   "storedWin": "Chelsea Pinto",
+   "storedResult": "Fall  76",
+   "winnerOk": true
+  },
+  {
+   "weight": 165,
+   "round": "Quarter-Finals",
+   "match": "553",
+   "top": "5 Camilla Melendez (WILL)",
+   "bottom": "4 Athena Galindo (PCT)",
+   "win": "Athena Galindo",
+   "result": "DEC 3-0",
+   "id": "6a4161f4-5e51-4ea9-8a25-fe2bdb15cd47",
+   "storedRound": "QF",
+   "storedWin": "Athena Galindo",
+   "storedResult": "Dec 3-0",
+   "winnerOk": true
+  },
+  {
+   "weight": 165,
+   "round": "Semi-Finals",
+   "match": "603",
+   "top": "1 Ariana Soto (PSKH)",
+   "bottom": "4 Athena Galindo (PCT)",
+   "win": "Ariana Soto",
+   "result": "F 2:20",
+   "id": "68ed87ce-9d28-46ff-8dfd-efd387211c55",
+   "storedRound": "SF",
+   "storedWin": "Arianna Soto",
+   "storedResult": "Fall  140",
+   "winnerOk": true
+  },
+  {
+   "weight": 165,
+   "round": "Semi-Finals",
+   "match": "604",
+   "top": "3 Chelsea Pinto (MH)",
+   "bottom": "2 emma cabrera (RMSY)",
+   "win": "emma cabrera",
+   "result": "F 2:53",
+   "id": "d3ec4f87-896b-495d-8085-c248fefe7871",
+   "storedRound": "SF",
+   "storedWin": "Emma Cabrera",
+   "storedResult": "Fall  173",
+   "winnerOk": true
+  },
+  {
+   "weight": 165,
+   "round": "Finals",
+   "match": "662",
+   "top": "1 Ariana Soto (PSKH)",
+   "bottom": "2 emma cabrera (RMSY)",
+   "win": "Ariana Soto",
+   "result": "F 2:57",
+   "id": "f217063c-7bce-4011-97fb-76c93838c6cc",
+   "storedRound": "F",
+   "storedWin": "Arianna Soto",
+   "storedResult": "Fall  177",
+   "winnerOk": true
+  },
+  {
+   "weight": 185,
+   "round": "5th Place",
+   "match": "664",
+   "top": "3 Ashley Vilela Armijos (B/)",
+   "bottom": "7 Savannah Bottino (BAYO)",
+   "win": "Ashley Vilela Armijos",
+   "result": "F 2:15",
+   "id": "72f63de1-cd5f-4e50-ae4e-78781f40262f",
+   "storedRound": "5th_Place",
+   "storedWin": "Ashley Vilela Armijos",
+   "storedResult": "Fall  135",
+   "winnerOk": true
+  },
+  {
+   "weight": 185,
+   "round": "Consi-Semis",
+   "match": "631",
+   "top": "7 Savannah Bottino (BAYO)",
+   "bottom": "1 Brianna Murray (NWTN)",
+   "win": "Brianna Murray",
+   "result": "F 2:04",
+   "id": "608c9cb6-3d9e-4da8-a70d-012bcc61b494",
+   "storedRound": "Cons. Semis",
+   "storedWin": "Brianna Murray",
+   "storedResult": "Fall  124",
+   "winnerOk": true
+  },
+  {
+   "weight": 185,
+   "round": "Consi of 4",
+   "match": "608",
+   "top": "6 Aya Hassan (BAYO)",
+   "bottom": "7 Savannah Bottino (BAYO)",
+   "win": "Savannah Bottino",
+   "result": "F 4:22",
+   "id": "070a31e3-0e33-4d51-acb0-224e08f27b86",
+   "storedRound": "C1",
+   "storedWin": "Savannah Bottino",
+   "storedResult": "Fall  262",
+   "winnerOk": true
+  },
+  {
+   "weight": 185,
+   "round": "Quarter-Finals",
+   "match": "556",
+   "top": "3 Ashley Vilela Armijos (B/)",
+   "bottom": "6 Aya Hassan (BAYO)",
+   "win": "Ashley Vilela Armijos",
+   "result": "F 1:19",
+   "id": "48f7d8d1-c522-468f-a4ed-60f861faf7dd",
+   "storedRound": "QF",
+   "storedWin": "Ashley Vilela Armijos",
+   "storedResult": "Fall  79",
+   "winnerOk": true
+  },
+  {
+   "weight": 185,
+   "round": "Quarter-Finals",
+   "match": "557",
+   "top": "7 Savannah Bottino (BAYO)",
+   "bottom": "2 Brianna Sandoval (BBRK)",
+   "win": "Brianna Sandoval",
+   "result": "F 0:55",
+   "id": "31dc0411-7a88-4e74-a68c-1c712d5204b9",
+   "storedRound": "R1",
+   "storedWin": "Brianna Sandoval",
+   "storedResult": "Fall  55",
+   "winnerOk": true
+  },
+  {
+   "weight": 235,
+   "round": "3rd Place",
+   "match": "666",
+   "top": "3 Mia Jimenez (BAYO)",
+   "bottom": "5 Ayonna Campbell (MO)",
+   "win": "Mia Jimenez",
+   "result": "F 3:41",
+   "id": "9587057f-f523-49c0-8bf9-41e7f2c3d98f",
+   "storedRound": "3rd_Place",
+   "storedWin": "MIa Jimenez",
+   "storedResult": "Fall  221",
+   "winnerOk": true
+  },
+  {
+   "weight": 235,
+   "round": "Consi-Semis",
+   "match": "632",
+   "top": "4 Jasmine Grande (MH)",
+   "bottom": "3 Mia Jimenez (BAYO)",
+   "win": "Mia Jimenez",
+   "result": "F 4:13",
+   "id": "2f3813aa-2d17-48d1-8f37-0f66cd2f7ae6",
+   "storedRound": "Cons. Semis",
+   "storedWin": "MIa Jimenez",
+   "storedResult": "Fall  253",
+   "winnerOk": true
+  },
+  {
+   "weight": 235,
+   "round": "Semi-Finals",
+   "match": "610",
+   "top": "3 Mia Jimenez (BAYO)",
+   "bottom": "2 Jana Abdalate (HILL)",
+   "win": "Jana Abdalate",
+   "result": "F 5:25",
+   "id": "347072a6-1d09-4bbb-ba95-a40d93618182",
+   "storedRound": "SF",
+   "storedWin": "Jana Abdalate",
+   "storedResult": "Fall  325",
+   "winnerOk": true
+  }
+ ],
+ "pdfOnly": [
+  {
+   "weight": 100,
+   "round": "5th Place",
+   "match": "634",
+   "top": "4 Addison Petersen (NWTN)",
+   "bottom": "5 Belinda Minervini (MO)",
+   "win": "Belinda Minervini",
+   "result": "M FOR"
+  },
+  {
+   "weight": 100,
+   "round": "Consi-Semis",
+   "match": "612",
+   "top": "6 Mya Bush (MH)",
+   "bottom": "5 Belinda Minervini (MO)",
+   "win": "Mya Bush",
+   "result": "F 4:25"
+  },
+  {
+   "weight": 100,
+   "round": "Consi-Semis",
+   "match": "611",
+   "top": "4 Addison Petersen (NWTN)",
+   "bottom": "3 Kiara Chac (BBRK)",
+   "win": "Kiara Chac",
+   "result": "F 0:54"
+  },
+  {
+   "weight": 100,
+   "round": "Quarter-Finals",
+   "match": "517",
+   "top": "5 Belinda Minervini (MO)",
+   "bottom": "4 Addison Petersen (NWTN)",
+   "win": "Belinda Minervini",
+   "result": "DEC SV 11-8"
+  },
+  {
+   "weight": 100,
+   "round": "Quarter-Finals",
+   "match": "518",
+   "top": "3 Kiara Chac (BBRK)",
+   "bottom": "6 Mya Bush (MH)",
+   "win": "Kiara Chac",
+   "result": "F 4:00"
+  },
+  {
+   "weight": 107,
+   "round": "5th Place",
+   "match": "637",
+   "top": "4 Cayce Wang (COLU)",
+   "bottom": "9 Mariella Nieves (PCT)",
+   "win": "Mariella Nieves",
+   "result": "F 4:31"
+  },
+  {
+   "weight": 114,
+   "round": "Round of 16",
+   "match": "507",
+   "top": "7 Abigail Bloxham (NWTN)",
+   "bottom": "10 Reilly Callan (JS)",
+   "win": "Abigail Bloxham",
+   "result": "F 0:25"
+  },
+  {
+   "weight": 114,
+   "round": "Quarter-Finals",
+   "match": "526",
+   "top": "3 Sophia Salazar (MH)",
+   "bottom": "6 Mia Capone (MO)",
+   "win": "Sophia Salazar",
+   "result": "F 1:37"
+  },
+  {
+   "weight": 114,
+   "round": "Quarter-Finals",
+   "match": "527",
+   "top": "7 Abigail Bloxham (NWTN)",
+   "bottom": "2 Adrianna Digregorio (WILL)",
+   "win": "Adrianna Digregorio",
+   "result": "F 0:47"
+  },
+  {
+   "weight": 114,
+   "round": "3rd Place",
+   "match": "639",
+   "top": "6 Mia Capone (MO)",
+   "bottom": "3 Sophia Salazar (MH)",
+   "win": "Sophia Salazar",
+   "result": "F 3:55"
+  },
+  {
+   "weight": 114,
+   "round": "Consi of 4",
+   "match": "580",
+   "top": "7 Abigail Bloxham (NWTN)",
+   "bottom": "6 Mia Capone (MO)",
+   "win": "Mia Capone",
+   "result": "F 1:37"
+  },
+  {
+   "weight": 114,
+   "round": "Consi of 8 #2",
+   "match": "562",
+   "top": "12 Sophia Meehan (GLRK)",
+   "bottom": "6 Mia Capone (MO)",
+   "win": "Mia Capone",
+   "result": "F 0:51"
+  },
+  {
+   "weight": 126,
+   "round": "Round of 16",
+   "match": "514",
+   "top": "15 Isabella Grippo (MH)",
+   "bottom": "2 Molly Smyth (MO)",
+   "win": "Molly Smyth",
+   "result": "F 3:08"
+  },
+  {
+   "weight": 126,
+   "round": "Quarter-Finals",
+   "match": "535",
+   "top": "10 Hannah Harrison (NWTN)",
+   "bottom": "2 Molly Smyth (MO)",
+   "win": "Molly Smyth",
+   "result": "DEC 8-1"
+  },
+  {
+   "weight": 126,
+   "round": "Consi of 8 #2",
+   "match": "565",
+   "top": "9 Layla Dadzie (HILL)",
+   "bottom": "10 Hannah Harrison (NWTN)",
+   "win": "Hannah Harrison",
+   "result": "F 2:33"
+  },
+  {
+   "weight": 138,
+   "round": "5th Place",
+   "match": "652",
+   "top": "5 Genesis Perez (MH)",
+   "bottom": "6 Jayla Hidalgo (HILL)",
+   "win": "Genesis Perez",
+   "result": "M FOR"
+  },
+  {
+   "weight": 138,
+   "round": "Consi-Semis",
+   "match": "623",
+   "top": "5 Genesis Perez (MH)",
+   "bottom": "3 Alyssa Aiello (JS)",
+   "win": "Alyssa Aiello",
+   "result": "TF 3:05"
+  },
+  {
+   "weight": 138,
+   "round": "Quarter-Finals",
+   "match": "544",
+   "top": "3 Alyssa Aiello (JS)",
+   "bottom": "6 Jayla Hidalgo (HILL)",
+   "win": "Alyssa Aiello",
+   "result": "DEC 8-4"
+  },
+  {
+   "weight": 145,
+   "round": "5th Place",
+   "match": "655",
+   "top": "7 Victoria Frias (PCT)",
+   "bottom": "5 Ruby Meagher (COLU)",
+   "win": "Ruby Meagher",
+   "result": "F 2:49"
+  },
+  {
+   "weight": 152,
+   "round": "Quarter-Finals",
+   "match": "549",
+   "top": "1 Maria Imhauser (HILL)",
+   "bottom": "8 Nadia Bibi (GLRK)",
+   "win": "Maria Imhauser",
+   "result": "F 0:11"
+  },
+  {
+   "weight": 152,
+   "round": "Quarter-Finals",
+   "match": "552",
+   "top": "7 Gwen Silipena (JS)",
+   "bottom": "2 Nora Shemon (MH)",
+   "win": "Gwen Silipena",
+   "result": "F 1:52"
+  },
+  {
+   "weight": 185,
+   "round": "3rd Place",
+   "match": "663",
+   "top": "5 Kalli Battaglia (NWTN)",
+   "bottom": "1 Brianna Murray (NWTN)",
+   "win": "Brianna Murray",
+   "result": "F 0:25"
+  },
+  {
+   "weight": 185,
+   "round": "Consi-Semis",
+   "match": "630",
+   "top": "5 Kalli Battaglia (NWTN)",
+   "bottom": "3 Ashley Vilela Armijos (B/)",
+   "win": "Kalli Battaglia",
+   "result": "F 1:00"
+  },
+  {
+   "weight": 185,
+   "round": "Consi of 4",
+   "match": "607",
+   "top": "8 Janayla Corum (JS)",
+   "bottom": "5 Kalli Battaglia (NWTN)",
+   "win": "Kalli Battaglia",
+   "result": "F 0:17"
+  },
+  {
+   "weight": 185,
+   "round": "Quarter-Finals",
+   "match": "554",
+   "top": "1 Brianna Murray (NWTN)",
+   "bottom": "8 Janayla Corum (JS)",
+   "win": "Brianna Murray",
+   "result": "F 1:30"
+  },
+  {
+   "weight": 185,
+   "round": "Quarter-Finals",
+   "match": "555",
+   "top": "5 Kalli Battaglia (NWTN)",
+   "bottom": "4 Maggie Armstrong (WILL)",
+   "win": "Maggie Armstrong",
+   "result": "F 0:31"
+  },
+  {
+   "weight": 185,
+   "round": "Semi-Finals",
+   "match": "605",
+   "top": "1 Brianna Murray (NWTN)",
+   "bottom": "4 Maggie Armstrong (WILL)",
+   "win": "Maggie Armstrong",
+   "result": "F 1:22"
+  },
+  {
+   "weight": 185,
+   "round": "Semi-Finals",
+   "match": "606",
+   "top": "3 Ashley Vilela Armijos (B/)",
+   "bottom": "2 Brianna Sandoval (BBRK)",
+   "win": "Brianna Sandoval",
+   "result": "F 0:19"
+  },
+  {
+   "weight": 185,
+   "round": "Finals",
+   "match": "665",
+   "top": "4 Maggie Armstrong (WILL)",
+   "bottom": "2 Brianna Sandoval (BBRK)",
+   "win": "Brianna Sandoval",
+   "result": "F 1:04"
+  },
+  {
+   "weight": 235,
+   "round": "Quarter-Finals",
+   "match": "558",
+   "top": "5 Ayonna Campbell (MO)",
+   "bottom": "4 Jasmine Grande (MH)",
+   "win": "Ayonna Campbell",
+   "result": "F 1:31"
+  },
+  {
+   "weight": 235,
+   "round": "Semi-Finals",
+   "match": "609",
+   "top": "1 Abigail Paglia (NWTN)",
+   "bottom": "5 Ayonna Campbell (MO)",
+   "win": "Abigail Paglia",
+   "result": "F 1:29"
+  },
+  {
+   "weight": 235,
+   "round": "Finals",
+   "match": "668",
+   "top": "1 Abigail Paglia (NWTN)",
+   "bottom": "2 Jana Abdalate (HILL)",
+   "win": "Abigail Paglia",
+   "result": "DEC 4-1"
+  }
+ ],
+ "storedOnly": [
+  {
+   "id": "a8ed32a4-b66d-4d60-a928-5a3ff4ee4ac5",
+   "weight": 152,
+   "round": "SF",
+   "a": "Brianna Sandoval",
+   "as": "Bound Brook",
+   "b": "Ashley Vilela Armijos",
+   "bs": "Ridgefield Park/Bogota",
+   "winner": 1,
+   "res": "Fall "
+  }
+ ],
+ "roster": {
+  "100": [
+   {
+    "name": "Alysa Patel",
+    "team": "PRMC",
+    "seed": 1
+   },
+   {
+    "name": "Belinda Minervini",
+    "team": "MO",
+    "seed": 5
+   },
+   {
+    "name": "Addison Petersen",
+    "team": "NWTN",
+    "seed": 4
+   },
+   {
+    "name": "Kiara Chac",
+    "team": "BBRK",
+    "seed": 3
+   },
+   {
+    "name": "Mya Bush",
+    "team": "MH",
+    "seed": 6
+   },
+   {
+    "name": "Kaylee Rodriguez",
+    "team": "PCT",
+    "seed": 7
+   },
+   {
+    "name": "Izzy Timonera",
+    "team": "Nut",
+    "seed": 2
+   }
+  ],
+  "107": [
+   {
+    "name": "Nathaly Diaz Santos",
+    "team": "MH",
+    "seed": 1
+   },
+   {
+    "name": "Mariella Nieves",
+    "team": "PCT",
+    "seed": 9
+   },
+   {
+    "name": "Eva Denne",
+    "team": "NWTN",
+    "seed": 8
+   },
+   {
+    "name": "Genevieve Maruhom",
+    "team": "WILL",
+    "seed": 5
+   },
+   {
+    "name": "Cayce Wang",
+    "team": "COLU",
+    "seed": 4
+   },
+   {
+    "name": "Kelsey Hartman",
+    "team": "DELR",
+    "seed": 3
+   },
+   {
+    "name": "Zoe Mullane",
+    "team": "BAYO",
+    "seed": null
+   },
+   {
+    "name": "Perjia Dupont",
+    "team": "PRMC",
+    "seed": 6
+   },
+   {
+    "name": "Gabrielle Ruedy",
+    "team": "BERN",
+    "seed": 7
+   },
+   {
+    "name": "Alexa Scholz",
+    "team": "JS",
+    "seed": 10
+   },
+   {
+    "name": "Chastelyn Hechavarria Vasquez",
+    "team": "",
+    "seed": 2
+   }
+  ],
+  "114": [
+   {
+    "name": "Emelly Diaz Santos",
+    "team": "MH",
+    "seed": 1
+   },
+   {
+    "name": "Camryn Pipher",
+    "team": "BAYO",
+    "seed": 9
+   },
+   {
+    "name": "Nicolette Vivas",
+    "team": "BRGF",
+    "seed": 8
+   },
+   {
+    "name": "Isabelle Yukselen",
+    "team": "PARA",
+    "seed": 5
+   },
+   {
+    "name": "Sophia Meehan",
+    "team": "GLRK",
+    "seed": 12
+   },
+   {
+    "name": "Sanaa Prescott",
+    "team": "BAYO",
+    "seed": 13
+   },
+   {
+    "name": "Isabel Diehl",
+    "team": "DELR",
+    "seed": 4
+   },
+   {
+    "name": "Sophia Salazar",
+    "team": "MH",
+    "seed": 3
+   },
+   {
+    "name": "Ashanty Ruiz Santana",
+    "team": "PCT",
+    "seed": 11
+   },
+   {
+    "name": "Mia Capone",
+    "team": "MO",
+    "seed": 6
+   },
+   {
+    "name": "Abigail Bloxham",
+    "team": "NWTN",
+    "seed": 7
+   },
+   {
+    "name": "Reilly Callan",
+    "team": "JS",
+    "seed": 10
+   },
+   {
+    "name": "Adrianna Digregorio",
+    "team": "WILL",
+    "seed": 2
+   }
+  ],
+  "120": [
+   {
+    "name": "Abigail Naddeo",
+    "team": "PRMC",
+    "seed": 1
+   },
+   {
+    "name": "Ava Drew",
+    "team": "MO",
+    "seed": 8
+   },
+   {
+    "name": "Gianna Powell",
+    "team": "DELR",
+    "seed": 5
+   },
+   {
+    "name": "LIly Zwillinger",
+    "team": "WILL",
+    "seed": 4
+   },
+   {
+    "name": "Reese Rotonde",
+    "team": "RMSY",
+    "seed": 3
+   },
+   {
+    "name": "Charlize Hayes",
+    "team": "BAYO",
+    "seed": 6
+   },
+   {
+    "name": "Cristelle Fiestas",
+    "team": "PCT",
+    "seed": 7
+   },
+   {
+    "name": "Isabella Santanocito",
+    "team": "RMS",
+    "seed": 2
+   }
+  ],
+  "126": [
+   {
+    "name": "Lucia Ranieri",
+    "team": "RP",
+    "seed": 1
+   },
+   {
+    "name": "Layla Dadzie",
+    "team": "HILL",
+    "seed": 9
+   },
+   {
+    "name": "Tania Ayala Rosas",
+    "team": "PCT",
+    "seed": 8
+   },
+   {
+    "name": "Sua Jeong",
+    "team": "DEMA",
+    "seed": 5
+   },
+   {
+    "name": "Chloe Lloyd",
+    "team": "WILL",
+    "seed": 12
+   },
+   {
+    "name": "Yulie Harada",
+    "team": "RMSY",
+    "seed": 13
+   },
+   {
+    "name": "Isabella Vargas",
+    "team": "B/RP",
+    "seed": 4
+   },
+   {
+    "name": "Elizabeth Panuccio",
+    "team": "RMSY",
+    "seed": 3
+   },
+   {
+    "name": "Brooklyn Hocko",
+    "team": "WILL",
+    "seed": 14
+   },
+   {
+    "name": "Jasmine Rodriguez",
+    "team": "PRMC",
+    "seed": 11
+   },
+   {
+    "name": "Kamryn Hansen",
+    "team": "BAYO",
+    "seed": 6
+   },
+   {
+    "name": "Rebecca Garcia",
+    "team": "DEMA",
+    "seed": 7
+   },
+   {
+    "name": "Hannah Harrison",
+    "team": "NWTN",
+    "seed": 10
+   },
+   {
+    "name": "Isabella Grippo",
+    "team": "MH",
+    "seed": 15
+   },
+   {
+    "name": "Molly Smyth",
+    "team": "MO",
+    "seed": 2
+   }
+  ],
+  "132": [
+   {
+    "name": "Paige Weiss",
+    "team": "JS",
+    "seed": 1
+   },
+   {
+    "name": "Bria Beshada",
+    "team": "NWTN",
+    "seed": 9
+   },
+   {
+    "name": "Melanny Salas",
+    "team": "BAYO",
+    "seed": 8
+   },
+   {
+    "name": "Tiana Diaz",
+    "team": "PCT",
+    "seed": 5
+   },
+   {
+    "name": "Daniela Fasca-Morales",
+    "team": "BAYO",
+    "seed": 4
+   },
+   {
+    "name": "Ester Teixiera",
+    "team": "MH",
+    "seed": 3
+   },
+   {
+    "name": "Sared Mata",
+    "team": "COLU",
+    "seed": 6
+   },
+   {
+    "name": "Erica Vasquez",
+    "team": "PRMC",
+    "seed": 7
+   },
+   {
+    "name": "Everleigh Whitham-Mandarakas",
+    "team": "",
+    "seed": 2
+   }
+  ],
+  "138": [
+   {
+    "name": "Mia Spadavecchia",
+    "team": "WW",
+    "seed": 1
+   },
+   {
+    "name": "Genesis Perez",
+    "team": "MH",
+    "seed": 5
+   },
+   {
+    "name": "Ecrin Haliloglu",
+    "team": "DELR",
+    "seed": 4
+   },
+   {
+    "name": "Alyssa Aiello",
+    "team": "JS",
+    "seed": 3
+   },
+   {
+    "name": "Jayla Hidalgo",
+    "team": "HILL",
+    "seed": 6
+   },
+   {
+    "name": "Mariana Puzycki",
+    "team": "BAYO",
+    "seed": 2
+   }
+  ],
+  "145": [
+   {
+    "name": "Taylor Thiele",
+    "team": "IHS",
+    "seed": 1
+   },
+   {
+    "name": "Mia Truncellito",
+    "team": "BAYO",
+    "seed": 9
+   },
+   {
+    "name": "Karina Ortiz",
+    "team": "WILL",
+    "seed": 8
+   },
+   {
+    "name": "Ruby Meagher",
+    "team": "COLU",
+    "seed": 5
+   },
+   {
+    "name": "Olyvia Bowie",
+    "team": "BRGF",
+    "seed": 4
+   },
+   {
+    "name": "Paige Berger",
+    "team": "RMSY",
+    "seed": 3
+   },
+   {
+    "name": "Aubree Pusey",
+    "team": "WILL",
+    "seed": 6
+   },
+   {
+    "name": "Victoria Frias",
+    "team": "PCT",
+    "seed": 7
+   },
+   {
+    "name": "Michelle Gavilanes",
+    "team": "Nut",
+    "seed": 2
+   }
+  ],
+  "152": [
+   {
+    "name": "Maria Imhauser",
+    "team": "HILL",
+    "seed": 1
+   },
+   {
+    "name": "Nadia Bibi",
+    "team": "GLRK",
+    "seed": 8
+   },
+   {
+    "name": "Alexa Nunez",
+    "team": "PCT",
+    "seed": 5
+   },
+   {
+    "name": "Francesca Muia",
+    "team": "RMSY",
+    "seed": 4
+   },
+   {
+    "name": "Gabriella Correa",
+    "team": "B/RP",
+    "seed": 3
+   },
+   {
+    "name": "Alina Williams",
+    "team": "WILL",
+    "seed": 6
+   },
+   {
+    "name": "Gwen Silipena",
+    "team": "JS",
+    "seed": 7
+   },
+   {
+    "name": "Nora Shemon",
+    "team": "MH",
+    "seed": 2
+   }
+  ],
+  "165": [
+   {
+    "name": "Ariana Soto",
+    "team": "PSKH",
+    "seed": 1
+   },
+   {
+    "name": "Camilla Melendez",
+    "team": "WILL",
+    "seed": 5
+   },
+   {
+    "name": "Athena Galindo",
+    "team": "PCT",
+    "seed": 4
+   },
+   {
+    "name": "Chelsea Pinto",
+    "team": "MH",
+    "seed": 3
+   },
+   {
+    "name": "emma cabrera",
+    "team": "RMSY",
+    "seed": 2
+   }
+  ],
+  "185": [
+   {
+    "name": "Brianna Murray",
+    "team": "NWTN",
+    "seed": 1
+   },
+   {
+    "name": "Janayla Corum",
+    "team": "JS",
+    "seed": 8
+   },
+   {
+    "name": "Kalli Battaglia",
+    "team": "NWTN",
+    "seed": 5
+   },
+   {
+    "name": "Maggie Armstrong",
+    "team": "WILL",
+    "seed": 4
+   },
+   {
+    "name": "Ashley Vilela Armijos",
+    "team": "B/",
+    "seed": 3
+   },
+   {
+    "name": "Aya Hassan",
+    "team": "BAYO",
+    "seed": 6
+   },
+   {
+    "name": "Savannah Bottino",
+    "team": "BAYO",
+    "seed": 7
+   },
+   {
+    "name": "Brianna Sandoval",
+    "team": "BBRK",
+    "seed": 2
+   }
+  ],
+  "235": [
+   {
+    "name": "Abigail Paglia",
+    "team": "NWTN",
+    "seed": 1
+   },
+   {
+    "name": "Ayonna Campbell",
+    "team": "MO",
+    "seed": 5
+   },
+   {
+    "name": "Jasmine Grande",
+    "team": "MH",
+    "seed": 4
+   },
+   {
+    "name": "Mia Jimenez",
+    "team": "BAYO",
+    "seed": 3
+   },
+   {
+    "name": "Jana Abdalate",
+    "team": "HILL",
+    "seed": 2
+   }
+  ]
+ }
+}

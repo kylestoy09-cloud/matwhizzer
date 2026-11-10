@@ -1,0 +1,11076 @@
+{
+ "106": {
+  "bouts": [
+   {
+    "page": 0,
+    "round": "Round of 32",
+    "match": "17",
+    "top": {
+     "name": "Calvin Parke",
+     "team": "MDTWP",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 0,
+    "round": "Round of 32",
+    "match": "77",
+    "top": {
+     "name": "Hunter Karp",
+     "team": "B-R",
+     "seed": 17,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Niko Raggazzone",
+     "team": "CHER",
+     "seed": 16,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 3:49"
+   },
+   {
+    "page": 0,
+    "round": "Round of 32",
+    "match": "8",
+    "top": {
+     "name": "Jake Appello",
+     "team": "RP",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Jordan Martin",
+     "team": "PSKV",
+     "seed": 24,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:16"
+   },
+   {
+    "page": 0,
+    "round": "Round of 32",
+    "match": "9",
+    "top": {
+     "name": "Jaxon Weber",
+     "team": "PJ23",
+     "seed": 25,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Logan Bailey",
+     "team": "GFA",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 5:10"
+   },
+   {
+    "page": 0,
+    "round": "Round of 32",
+    "match": "10",
+    "top": {
+     "name": "Dominick Malfitano",
+     "team": "KINN",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Valen Delaney",
+     "team": "Nut",
+     "seed": 28,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 13-0"
+   },
+   {
+    "page": 0,
+    "round": "Round of 32",
+    "match": "11",
+    "top": {
+     "name": "John Tarantino",
+     "team": "RBC",
+     "seed": 21,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Anthony Lopera",
+     "team": "DEL",
+     "seed": 12,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 16-2"
+   },
+   {
+    "page": 0,
+    "round": "Round of 32",
+    "match": "12",
+    "top": {
+     "name": "Luke Rivara",
+     "team": "RMPO",
+     "seed": 13,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Ronnie Rodriguez",
+     "team": "SPP",
+     "seed": 20,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 7-2"
+   },
+   {
+    "page": 0,
+    "round": "Round of 32",
+    "match": "13",
+    "top": {
+     "name": "Rafael Torres",
+     "team": "LAKE",
+     "seed": 29,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Maxim Gaft",
+     "team": "PSKH",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:00"
+   },
+   {
+    "page": 0,
+    "round": "Round of 32",
+    "match": "19",
+    "top": {
+     "name": "Nicholas Nguyen",
+     "team": "PSCT",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 0,
+    "round": "Round of 32",
+    "match": "14",
+    "top": {
+     "name": "Mikey Olivieri",
+     "team": "HILL",
+     "seed": 19,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Vincent Petriello",
+     "team": "DMNT",
+     "seed": 14,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:36"
+   },
+   {
+    "page": 0,
+    "round": "Round of 32",
+    "match": "15",
+    "top": {
+     "name": "Sebastian Cantarero",
+     "team": "CHAM",
+     "seed": 11,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Carson Taylor",
+     "team": "TRE",
+     "seed": 22,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 6-3"
+   },
+   {
+    "page": 0,
+    "round": "Round of 32",
+    "match": "16",
+    "top": {
+     "name": "William Jayden Ratz",
+     "team": "SHP",
+     "seed": 27,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Finn Andersen",
+     "team": "DEL",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:25"
+   },
+   {
+    "page": 0,
+    "round": "Round of 32",
+    "match": "17",
+    "top": {
+     "name": "Eli Shea",
+     "team": "GFA",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Seamus Hanley",
+     "team": "DBP",
+     "seed": 26,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:22"
+   },
+   {
+    "page": 0,
+    "round": "Round of 32",
+    "match": "18",
+    "top": {
+     "name": "Nicholas Mateus",
+     "team": "MOKN",
+     "seed": 23,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Alexander Dyki",
+     "team": "NHGH",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 2:41"
+   },
+   {
+    "page": 0,
+    "round": "Round of 32",
+    "match": "19",
+    "top": {
+     "name": "Jake Mazzurco",
+     "team": "WHLS",
+     "seed": 15,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Samuel Mazin",
+     "team": "PRMC",
+     "seed": 18,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 4-1"
+   },
+   {
+    "page": 0,
+    "round": "Round of 32",
+    "match": "1",
+    "top": null,
+    "bottom": {
+     "name": "Steven Vidal",
+     "team": "HTWN",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 0,
+    "round": "Round of 16",
+    "match": "179",
+    "top": {
+     "name": "Parke",
+     "team": "MDTWP",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Karp",
+     "team": "B-R",
+     "seed": 17,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:17"
+   },
+   {
+    "page": 0,
+    "round": "Round of 16",
+    "match": "180",
+    "top": {
+     "name": "Appello",
+     "team": "RP",
+     "seed": 9,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Bailey",
+     "team": "GFA",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 15-8"
+   },
+   {
+    "page": 0,
+    "round": "Round of 16",
+    "match": "181",
+    "top": {
+     "name": "Malfitano",
+     "team": "KINN",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Tarantino",
+     "team": "RBC",
+     "seed": 21,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 13-0"
+   },
+   {
+    "page": 0,
+    "round": "Round of 16",
+    "match": "182",
+    "top": {
+     "name": "Rodriguez",
+     "team": "SPP",
+     "seed": 20,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Gaft",
+     "team": "PSKH",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 14-2"
+   },
+   {
+    "page": 0,
+    "round": "Round of 16",
+    "match": "183",
+    "top": {
+     "name": "Nguyen",
+     "team": "PSCT",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Petriello",
+     "team": "DMNT",
+     "seed": 14,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 3:08"
+   },
+   {
+    "page": 0,
+    "round": "Round of 16",
+    "match": "184",
+    "top": {
+     "name": "Taylor",
+     "team": "TRE",
+     "seed": 22,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Andersen",
+     "team": "DEL",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 4:44"
+   },
+   {
+    "page": 0,
+    "round": "Round of 16",
+    "match": "185",
+    "top": {
+     "name": "Shea",
+     "team": "GFA",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Dyki",
+     "team": "NHGH",
+     "seed": 10,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:28"
+   },
+   {
+    "page": 0,
+    "round": "Round of 16",
+    "match": "186",
+    "top": {
+     "name": "Mazin",
+     "team": "PRMC",
+     "seed": 18,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Vidal",
+     "team": "HTWN",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 2:17"
+   },
+   {
+    "page": 0,
+    "round": "Quarter-Finals",
+    "match": "291",
+    "top": {
+     "name": "Parke",
+     "team": "MDTWP",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Bailey",
+     "team": "GFA",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC SV 12-9"
+   },
+   {
+    "page": 0,
+    "round": "Quarter-Finals",
+    "match": "292",
+    "top": {
+     "name": "Tarantino",
+     "team": "RBC",
+     "seed": 21,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Rodriguez",
+     "team": "SPP",
+     "seed": 20,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:00"
+   },
+   {
+    "page": 0,
+    "round": "Quarter-Finals",
+    "match": "293",
+    "top": {
+     "name": "Nguyen",
+     "team": "PSCT",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Andersen",
+     "team": "DEL",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 3:39"
+   },
+   {
+    "page": 0,
+    "round": "Quarter-Finals",
+    "match": "294",
+    "top": {
+     "name": "Shea",
+     "team": "GFA",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Vidal",
+     "team": "HTWN",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 9-4"
+   },
+   {
+    "page": 0,
+    "round": "Semi-Finals",
+    "match": "347",
+    "top": {
+     "name": "Parke",
+     "team": "MDTWP",
+     "seed": 1,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Tarantino",
+     "team": "RBC",
+     "seed": 21,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 11-1"
+   },
+   {
+    "page": 0,
+    "round": "Semi-Finals",
+    "match": "348",
+    "top": {
+     "name": "Andersen",
+     "team": "DEL",
+     "seed": 6,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Vidal",
+     "team": "HTWN",
+     "seed": 2,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 4:34"
+   },
+   {
+    "page": 0,
+    "round": "Finals",
+    "match": "433",
+    "top": {
+     "name": "Tarantino",
+     "team": "RBC",
+     "seed": 21,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Andersen",
+     "team": "DEL",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 4-0"
+   },
+   {
+    "page": 1,
+    "round": "3rd Place",
+    "match": "431",
+    "top": {
+     "name": "Vidal",
+     "team": "HTWN",
+     "seed": 2,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Parke",
+     "team": "MDTWP",
+     "seed": 1,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:59"
+   },
+   {
+    "page": 1,
+    "round": "5th Place",
+    "match": "432",
+    "top": {
+     "name": "Rodriguez",
+     "team": "SPP",
+     "seed": 20,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Shea",
+     "team": "GFA",
+     "seed": 7,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 10-5"
+   },
+   {
+    "page": 1,
+    "round": "Consi-Semis",
+    "match": "403",
+    "top": {
+     "name": "Rodriguez",
+     "team": "SPP",
+     "seed": 20,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Vidal",
+     "team": "HTWN",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 1,
+    "round": "Consi-Semis",
+    "match": "404",
+    "top": {
+     "name": "Shea",
+     "team": "GFA",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Parke",
+     "team": "MDTWP",
+     "seed": 1,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 1,
+    "round": "Consi of 4",
+    "match": "349",
+    "top": {
+     "name": "Bailey",
+     "team": "GFA",
+     "seed": 8,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Rodriguez",
+     "team": "SPP",
+     "seed": 20,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:19"
+   },
+   {
+    "page": 1,
+    "round": "Consi of 4",
+    "match": "350",
+    "top": {
+     "name": "Nguyen",
+     "team": "PSCT",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Shea",
+     "team": "GFA",
+     "seed": 7,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 17-9"
+   }
+  ],
+  "pages": [
+   0,
+   1
+  ]
+ },
+ "113": {
+  "bouts": [
+   {
+    "page": 2,
+    "round": "Round of 32",
+    "match": "17",
+    "top": {
+     "name": "Tristan Rosemeyer",
+     "team": "LCM",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 2,
+    "round": "Round of 32",
+    "match": "20",
+    "top": {
+     "name": "Alessandro Camargo",
+     "team": "PRMC",
+     "seed": 17,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "DJ Torsone",
+     "team": "CRAN",
+     "seed": 16,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 5:10"
+   },
+   {
+    "page": 2,
+    "round": "Round of 32",
+    "match": "21",
+    "top": {
+     "name": "Dominic Litterio",
+     "team": "MOKN",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Vin Iaquinto",
+     "team": "DBP",
+     "seed": 24,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 10-3"
+   },
+   {
+    "page": 2,
+    "round": "Round of 32",
+    "match": "22",
+    "top": {
+     "name": "Dominic Coppola",
+     "team": "DPLC",
+     "seed": 25,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Preston Nitche",
+     "team": "SHP",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 15-2"
+   },
+   {
+    "page": 2,
+    "round": "Round of 32",
+    "match": "23",
+    "top": {
+     "name": "Connor DePersis",
+     "team": "RMPO",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Dominic Petulla",
+     "team": "CHER",
+     "seed": 28,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:22"
+   },
+   {
+    "page": 2,
+    "round": "Round of 32",
+    "match": "24",
+    "top": {
+     "name": "Chase Berkowitz",
+     "team": "CHAM",
+     "seed": 21,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Maxwell Emmert",
+     "team": "NHGH",
+     "seed": 12,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 7-1"
+   },
+   {
+    "page": 2,
+    "round": "Round of 32",
+    "match": "25",
+    "top": {
+     "name": "Marco Barra",
+     "team": "PSCT",
+     "seed": 13,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Julius Feliciano",
+     "team": "TRE",
+     "seed": 20,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:22"
+   },
+   {
+    "page": 2,
+    "round": "Round of 32",
+    "match": "26",
+    "top": {
+     "name": "Christopher Powell",
+     "team": "DEL",
+     "seed": 29,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Omar Carrillo-Solano",
+     "team": "WALL",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 3:06"
+   },
+   {
+    "page": 2,
+    "round": "Round of 32",
+    "match": "19",
+    "top": {
+     "name": "Noah Perez",
+     "team": "Woodbridge",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 2,
+    "round": "Round of 32",
+    "match": "27",
+    "top": {
+     "name": "Joseph Gallagher",
+     "team": "RBC",
+     "seed": 19,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Ben Chacko",
+     "team": "RHS",
+     "seed": 14,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 7-5"
+   },
+   {
+    "page": 2,
+    "round": "Round of 32",
+    "match": "28",
+    "top": {
+     "name": "Drew Adell",
+     "team": "B-R",
+     "seed": 11,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "David Bubnowski",
+     "team": "WHLS",
+     "seed": 22,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:41"
+   },
+   {
+    "page": 2,
+    "round": "Round of 32",
+    "match": "29",
+    "top": {
+     "name": "Caleb Pacor",
+     "team": "PSKV",
+     "seed": 27,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Shea Tracey",
+     "team": "MANA",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:31"
+   },
+   {
+    "page": 2,
+    "round": "Round of 32",
+    "match": "30",
+    "top": {
+     "name": "Jacob Cambell",
+     "team": "PJ23",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Braedan Ruiz",
+     "team": "SPP",
+     "seed": 26,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 1:58"
+   },
+   {
+    "page": 2,
+    "round": "Round of 32",
+    "match": "31",
+    "top": {
+     "name": "Aidan Meehan",
+     "team": "LAKE",
+     "seed": 23,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Dylan Sierra",
+     "team": "MAT",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 1:23"
+   },
+   {
+    "page": 2,
+    "round": "Round of 32",
+    "match": "32",
+    "top": {
+     "name": "Zane Shama",
+     "team": "PEDD",
+     "seed": 15,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Danny D'Arcy",
+     "team": "SBP",
+     "seed": 18,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 8-0"
+   },
+   {
+    "page": 2,
+    "round": "Round of 32",
+    "match": "1",
+    "top": null,
+    "bottom": {
+     "name": "Tanner Connelly",
+     "team": "RHS",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 2,
+    "round": "Round of 16",
+    "match": "187",
+    "top": {
+     "name": "Rosemeyer",
+     "team": "LCM",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Torsone",
+     "team": "CRAN",
+     "seed": 16,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:10"
+   },
+   {
+    "page": 2,
+    "round": "Round of 16",
+    "match": "188",
+    "top": {
+     "name": "Litterio",
+     "team": "MOKN",
+     "seed": 9,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Coppola",
+     "team": "DPLC",
+     "seed": 25,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 5:13"
+   },
+   {
+    "page": 2,
+    "round": "Round of 16",
+    "match": "189",
+    "top": {
+     "name": "DePersis",
+     "team": "RMPO",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Berkowitz",
+     "team": "CHAM",
+     "seed": 21,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:36"
+   },
+   {
+    "page": 2,
+    "round": "Round of 16",
+    "match": "190",
+    "top": {
+     "name": "Feliciano",
+     "team": "TRE",
+     "seed": 20,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Carrillo-Solano",
+     "team": "WALL",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 4:00"
+   },
+   {
+    "page": 2,
+    "round": "Round of 16",
+    "match": "191",
+    "top": {
+     "name": "Perez",
+     "team": "Woodbridge",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Chacko",
+     "team": "RHS",
+     "seed": 14,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 5:09"
+   },
+   {
+    "page": 2,
+    "round": "Round of 16",
+    "match": "192",
+    "top": {
+     "name": "Adell",
+     "team": "B-R",
+     "seed": 11,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Tracey",
+     "team": "MANA",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 13-7"
+   },
+   {
+    "page": 2,
+    "round": "Round of 16",
+    "match": "193",
+    "top": {
+     "name": "Cambell",
+     "team": "PJ23",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Sierra",
+     "team": "MAT",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 3-0"
+   },
+   {
+    "page": 2,
+    "round": "Round of 16",
+    "match": "194",
+    "top": {
+     "name": "D'Arcy",
+     "team": "SBP",
+     "seed": 18,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Connelly",
+     "team": "RHS",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 9-5"
+   },
+   {
+    "page": 2,
+    "round": "Quarter-Finals",
+    "match": "295",
+    "top": {
+     "name": "Rosemeyer",
+     "team": "LCM",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Coppola",
+     "team": "DPLC",
+     "seed": 25,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 5:05"
+   },
+   {
+    "page": 2,
+    "round": "Quarter-Finals",
+    "match": "296",
+    "top": {
+     "name": "Berkowitz",
+     "team": "CHAM",
+     "seed": 21,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Feliciano",
+     "team": "TRE",
+     "seed": 20,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "M FOR"
+   },
+   {
+    "page": 2,
+    "round": "Quarter-Finals",
+    "match": "297",
+    "top": {
+     "name": "Perez",
+     "team": "Woodbridge",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Tracey",
+     "team": "MANA",
+     "seed": 6,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 4:52"
+   },
+   {
+    "page": 2,
+    "round": "Quarter-Finals",
+    "match": "298",
+    "top": {
+     "name": "Sierra",
+     "team": "MAT",
+     "seed": 10,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Connelly",
+     "team": "RHS",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 7-1"
+   },
+   {
+    "page": 2,
+    "round": "Semi-Finals",
+    "match": "351",
+    "top": {
+     "name": "Rosemeyer",
+     "team": "LCM",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Feliciano",
+     "team": "TRE",
+     "seed": 20,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 10-5"
+   },
+   {
+    "page": 2,
+    "round": "Semi-Finals",
+    "match": "352",
+    "top": {
+     "name": "Perez",
+     "team": "Woodbridge",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Connelly",
+     "team": "RHS",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 10-1"
+   },
+   {
+    "page": 2,
+    "round": "Finals",
+    "match": "436",
+    "top": {
+     "name": "Rosemeyer",
+     "team": "LCM",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Connelly",
+     "team": "RHS",
+     "seed": 2,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 11-6"
+   },
+   {
+    "page": 3,
+    "round": "3rd Place",
+    "match": "434",
+    "top": {
+     "name": "Perez",
+     "team": "Woodbridge",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Feliciano",
+     "team": "TRE",
+     "seed": 20,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 12-4"
+   },
+   {
+    "page": 3,
+    "round": "5th Place",
+    "match": "435",
+    "top": {
+     "name": "Coppola",
+     "team": "DPLC",
+     "seed": 25,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Sierra",
+     "team": "MAT",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:14"
+   },
+   {
+    "page": 3,
+    "round": "Consi-Semis",
+    "match": "405",
+    "top": {
+     "name": "Coppola",
+     "team": "DPLC",
+     "seed": 25,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Perez",
+     "team": "Woodbridge",
+     "seed": 3,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 3,
+    "round": "Consi-Semis",
+    "match": "406",
+    "top": {
+     "name": "Sierra",
+     "team": "MAT",
+     "seed": 10,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Feliciano",
+     "team": "TRE",
+     "seed": 20,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 3,
+    "round": "Consi of 4",
+    "match": "353",
+    "top": {
+     "name": "Coppola",
+     "team": "DPLC",
+     "seed": 25,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Berkowitz",
+     "team": "CHAM",
+     "seed": 21,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "M FOR"
+   },
+   {
+    "page": 3,
+    "round": "Consi of 4",
+    "match": "354",
+    "top": {
+     "name": "Tracey",
+     "team": "MANA",
+     "seed": 6,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Sierra",
+     "team": "MAT",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 1-0"
+   }
+  ],
+  "pages": [
+   2,
+   3
+  ]
+ },
+ "120": {
+  "bouts": [
+   {
+    "page": 4,
+    "round": "Round of 32",
+    "match": "33",
+    "top": {
+     "name": "Michael Daly",
+     "team": "CRAN",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Joseph Ciullo",
+     "team": "SHP",
+     "seed": 32,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:19"
+   },
+   {
+    "page": 4,
+    "round": "Round of 32",
+    "match": "34",
+    "top": {
+     "name": "Benjamin Banks",
+     "team": "MDTWP",
+     "seed": 17,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Jack Finkelstein",
+     "team": "DPLC",
+     "seed": 16,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:55"
+   },
+   {
+    "page": 4,
+    "round": "Round of 32",
+    "match": "35",
+    "top": {
+     "name": "Alec Murado",
+     "team": "DEMA",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Dan Montalvan",
+     "team": "CHAM",
+     "seed": 24,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 11-1"
+   },
+   {
+    "page": 4,
+    "round": "Round of 32",
+    "match": "36",
+    "top": {
+     "name": "Gavin Stempkowski",
+     "team": "PSKV",
+     "seed": 25,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "John Barron",
+     "team": "SPP",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 2:00"
+   },
+   {
+    "page": 4,
+    "round": "Round of 32",
+    "match": "37",
+    "top": {
+     "name": "Joseph Rowinski",
+     "team": "HTWN",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Nicholas Gallo",
+     "team": "NHGH",
+     "seed": 28,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 1:37"
+   },
+   {
+    "page": 4,
+    "round": "Round of 32",
+    "match": "38",
+    "top": {
+     "name": "Demitri DeLuca",
+     "team": "HILL",
+     "seed": 21,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Aidan Matias",
+     "team": "BLOM",
+     "seed": 12,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:41"
+   },
+   {
+    "page": 4,
+    "round": "Round of 32",
+    "match": "39",
+    "top": {
+     "name": "Noah Hernandez",
+     "team": "SHP",
+     "seed": 13,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Jayden Leneus",
+     "team": "SBP",
+     "seed": 20,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:16"
+   },
+   {
+    "page": 4,
+    "round": "Round of 32",
+    "match": "40",
+    "top": {
+     "name": "Mason Romero",
+     "team": "LAKE",
+     "seed": 29,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Muhammad Abuhadba",
+     "team": "PSCT",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:45"
+   },
+   {
+    "page": 4,
+    "round": "Round of 32",
+    "match": "41",
+    "top": {
+     "name": "Peter Trezza",
+     "team": "MS",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Luca Perillo",
+     "team": "DBP",
+     "seed": 30,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:36"
+   },
+   {
+    "page": 4,
+    "round": "Round of 32",
+    "match": "42",
+    "top": {
+     "name": "Bryson Jarosz",
+     "team": "WALL",
+     "seed": 19,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Lucas Perez",
+     "team": "Woodbridge",
+     "seed": 14,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 8-4"
+   },
+   {
+    "page": 4,
+    "round": "Round of 32",
+    "match": "43",
+    "top": {
+     "name": "Reid Lightfoot",
+     "team": "DEL",
+     "seed": 11,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Steven Malfitano",
+     "team": "KINN",
+     "seed": 22,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:07"
+   },
+   {
+    "page": 4,
+    "round": "Round of 32",
+    "match": "44",
+    "top": {
+     "name": "Julian Polanco",
+     "team": "PRMC",
+     "seed": 27,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Chase Kastner",
+     "team": "GFA",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:28"
+   },
+   {
+    "page": 4,
+    "round": "Round of 32",
+    "match": "45",
+    "top": {
+     "name": "David Vazquez",
+     "team": "NBGN",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Benjamin Cole",
+     "team": "CHER",
+     "seed": 26,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:43"
+   },
+   {
+    "page": 4,
+    "round": "Round of 32",
+    "match": "46",
+    "top": {
+     "name": "Morgan Torres",
+     "team": "WHLS",
+     "seed": 23,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Jax Sgrulletta",
+     "team": "GFA",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 5-3"
+   },
+   {
+    "page": 4,
+    "round": "Round of 32",
+    "match": "47",
+    "top": {
+     "name": "Lucas Pelc",
+     "team": "B-R",
+     "seed": 15,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Camilo Sampedro",
+     "team": "DWMO",
+     "seed": 18,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:28"
+   },
+   {
+    "page": 4,
+    "round": "Round of 32",
+    "match": "48",
+    "top": {
+     "name": "Evan Blanchard",
+     "team": "Nut",
+     "seed": 31,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Robby Rodriguez",
+     "team": "SPP",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 4:50"
+   },
+   {
+    "page": 4,
+    "round": "Round of 16",
+    "match": "195",
+    "top": {
+     "name": "Daly",
+     "team": "CRAN",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Finkelstein",
+     "team": "DPLC",
+     "seed": 16,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 5:03"
+   },
+   {
+    "page": 4,
+    "round": "Round of 16",
+    "match": "196",
+    "top": {
+     "name": "Murado",
+     "team": "DEMA",
+     "seed": 9,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Barron",
+     "team": "SPP",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 15-6"
+   },
+   {
+    "page": 4,
+    "round": "Round of 16",
+    "match": "197",
+    "top": {
+     "name": "Rowinski",
+     "team": "HTWN",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Matias",
+     "team": "BLOM",
+     "seed": 12,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 5:19"
+   },
+   {
+    "page": 4,
+    "round": "Round of 16",
+    "match": "198",
+    "top": {
+     "name": "Hernandez",
+     "team": "SHP",
+     "seed": 13,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Abuhadba",
+     "team": "PSCT",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 6-5"
+   },
+   {
+    "page": 4,
+    "round": "Round of 16",
+    "match": "199",
+    "top": {
+     "name": "Trezza",
+     "team": "MS",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Jarosz",
+     "team": "WALL",
+     "seed": 19,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 2:20"
+   },
+   {
+    "page": 4,
+    "round": "Round of 16",
+    "match": "200",
+    "top": {
+     "name": "Malfitano",
+     "team": "KINN",
+     "seed": 22,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Kastner",
+     "team": "GFA",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:18"
+   },
+   {
+    "page": 4,
+    "round": "Round of 16",
+    "match": "201",
+    "top": {
+     "name": "Vazquez",
+     "team": "NBGN",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Sgrulletta",
+     "team": "GFA",
+     "seed": 10,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC SV 11-8"
+   },
+   {
+    "page": 4,
+    "round": "Round of 16",
+    "match": "202",
+    "top": {
+     "name": "Sampedro",
+     "team": "DWMO",
+     "seed": 18,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Rodriguez",
+     "team": "SPP",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 5:54"
+   },
+   {
+    "page": 4,
+    "round": "Quarter-Finals",
+    "match": "299",
+    "top": {
+     "name": "Daly",
+     "team": "CRAN",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Barron",
+     "team": "SPP",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 11-5"
+   },
+   {
+    "page": 4,
+    "round": "Quarter-Finals",
+    "match": "300",
+    "top": {
+     "name": "Rowinski",
+     "team": "HTWN",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Abuhadba",
+     "team": "PSCT",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 4-3"
+   },
+   {
+    "page": 4,
+    "round": "Quarter-Finals",
+    "match": "301",
+    "top": {
+     "name": "Trezza",
+     "team": "MS",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Kastner",
+     "team": "GFA",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:54"
+   },
+   {
+    "page": 4,
+    "round": "Quarter-Finals",
+    "match": "302",
+    "top": {
+     "name": "Vazquez",
+     "team": "NBGN",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Rodriguez",
+     "team": "SPP",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 17-3"
+   },
+   {
+    "page": 4,
+    "round": "Semi-Finals",
+    "match": "355",
+    "top": {
+     "name": "Daly",
+     "team": "CRAN",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Abuhadba",
+     "team": "PSCT",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 13-5"
+   },
+   {
+    "page": 4,
+    "round": "Semi-Finals",
+    "match": "356",
+    "top": {
+     "name": "Kastner",
+     "team": "GFA",
+     "seed": 6,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Rodriguez",
+     "team": "SPP",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 10-2"
+   },
+   {
+    "page": 4,
+    "round": "Finals",
+    "match": "439",
+    "top": {
+     "name": "Daly",
+     "team": "CRAN",
+     "seed": 1,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Rodriguez",
+     "team": "SPP",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC SV 11-8"
+   },
+   {
+    "page": 5,
+    "round": "3rd Place",
+    "match": "437",
+    "top": {
+     "name": "Kastner",
+     "team": "GFA",
+     "seed": 6,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Abuhadba",
+     "team": "PSCT",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC SV 4-1"
+   },
+   {
+    "page": 5,
+    "round": "5th Place",
+    "match": "438",
+    "top": {
+     "name": "Barron",
+     "team": "SPP",
+     "seed": 8,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Vazquez",
+     "team": "NBGN",
+     "seed": 7,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 10-3"
+   },
+   {
+    "page": 5,
+    "round": "Consi-Semis",
+    "match": "407",
+    "top": {
+     "name": "Barron",
+     "team": "SPP",
+     "seed": 8,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Kastner",
+     "team": "GFA",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 5,
+    "round": "Consi-Semis",
+    "match": "408",
+    "top": {
+     "name": "Vazquez",
+     "team": "NBGN",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Abuhadba",
+     "team": "PSCT",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 5,
+    "round": "Consi of 4",
+    "match": "357",
+    "top": {
+     "name": "Barron",
+     "team": "SPP",
+     "seed": 8,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Rowinski",
+     "team": "HTWN",
+     "seed": 5,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 1-0"
+   },
+   {
+    "page": 5,
+    "round": "Consi of 4",
+    "match": "358",
+    "top": {
+     "name": "Trezza",
+     "team": "MS",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Vazquez",
+     "team": "NBGN",
+     "seed": 7,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 8-6"
+   }
+  ],
+  "pages": [
+   4,
+   5
+  ]
+ },
+ "126": {
+  "bouts": [
+   {
+    "page": 6,
+    "round": "Round of 32",
+    "match": "17",
+    "top": {
+     "name": "Cameron Sontz",
+     "team": "DEL",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 6,
+    "round": "Round of 32",
+    "match": "49",
+    "top": {
+     "name": "Vincent DeSomma",
+     "team": "MOKN",
+     "seed": 17,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Max Graeber",
+     "team": "DEMA",
+     "seed": 16,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:42"
+   },
+   {
+    "page": 6,
+    "round": "Round of 32",
+    "match": "50",
+    "top": {
+     "name": "Giovanni Gutierrez",
+     "team": "HTWN",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Michael Kleynshvag",
+     "team": "SHP",
+     "seed": 24,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 5:31"
+   },
+   {
+    "page": 6,
+    "round": "Round of 32",
+    "match": "51",
+    "top": {
+     "name": "Collin O\u2019Connor",
+     "team": "DPLC",
+     "seed": 25,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Jacob Richardson",
+     "team": "WHLS",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:11"
+   },
+   {
+    "page": 6,
+    "round": "Round of 32",
+    "match": "52",
+    "top": {
+     "name": "Chase Severs",
+     "team": "LAKE",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Jax Bucco",
+     "team": "RBC",
+     "seed": 28,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:41"
+   },
+   {
+    "page": 6,
+    "round": "Round of 32",
+    "match": "53",
+    "top": {
+     "name": "Braydon Housel",
+     "team": "CHER",
+     "seed": 21,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Jaydon Sulca",
+     "team": "BRGF",
+     "seed": 12,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 2:38"
+   },
+   {
+    "page": 6,
+    "round": "Round of 32",
+    "match": "54",
+    "top": {
+     "name": "Sal D'Arco",
+     "team": "PJ23",
+     "seed": 13,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Jayden Cruz",
+     "team": "DPLC",
+     "seed": 20,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:39"
+   },
+   {
+    "page": 6,
+    "round": "Round of 32",
+    "match": "3",
+    "top": null,
+    "bottom": {
+     "name": "Joseph Viola",
+     "team": "SHP",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 6,
+    "round": "Round of 32",
+    "match": "19",
+    "top": {
+     "name": "Owen O'Leary",
+     "team": "RHS",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 6,
+    "round": "Round of 32",
+    "match": "55",
+    "top": {
+     "name": "Nate O'Sullivan",
+     "team": "CHAM",
+     "seed": 19,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Mariano Droz",
+     "team": "DMNT",
+     "seed": 14,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:42"
+   },
+   {
+    "page": 6,
+    "round": "Round of 32",
+    "match": "56",
+    "top": {
+     "name": "Rohi Hubert",
+     "team": "GLRK",
+     "seed": 11,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Cassen Coreggio",
+     "team": "DBP",
+     "seed": 22,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 9-6"
+   },
+   {
+    "page": 6,
+    "round": "Round of 32",
+    "match": "57",
+    "top": {
+     "name": "Andre Martin",
+     "team": "PSKV",
+     "seed": 27,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Michael Echeverri",
+     "team": "NHGH",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:21"
+   },
+   {
+    "page": 6,
+    "round": "Round of 32",
+    "match": "58",
+    "top": {
+     "name": "Ryan Horner",
+     "team": "PEDD",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Khuchuleg Battulga",
+     "team": "SBP",
+     "seed": 26,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:15"
+   },
+   {
+    "page": 6,
+    "round": "Round of 32",
+    "match": "59",
+    "top": {
+     "name": "Connor Klein",
+     "team": "PARA",
+     "seed": 23,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Ryan Spinelli",
+     "team": "HILL",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 2:26"
+   },
+   {
+    "page": 6,
+    "round": "Round of 32",
+    "match": "60",
+    "top": {
+     "name": "Lucas Churpakovich",
+     "team": "B-R",
+     "seed": 15,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Dan Rosen",
+     "team": "DEMA",
+     "seed": 18,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 4:48"
+   },
+   {
+    "page": 6,
+    "round": "Round of 32",
+    "match": "1",
+    "top": null,
+    "bottom": {
+     "name": "Joseph Pellicci",
+     "team": "PRMC",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 6,
+    "round": "Round of 16",
+    "match": "203",
+    "top": {
+     "name": "Sontz",
+     "team": "DEL",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "DeSomma",
+     "team": "MOKN",
+     "seed": 17,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 2:59"
+   },
+   {
+    "page": 6,
+    "round": "Round of 16",
+    "match": "204",
+    "top": {
+     "name": "Gutierrez",
+     "team": "HTWN",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Richardson",
+     "team": "WHLS",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 14-1"
+   },
+   {
+    "page": 6,
+    "round": "Round of 16",
+    "match": "205",
+    "top": {
+     "name": "Severs",
+     "team": "LAKE",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Sulca",
+     "team": "BRGF",
+     "seed": 12,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:43"
+   },
+   {
+    "page": 6,
+    "round": "Round of 16",
+    "match": "206",
+    "top": {
+     "name": "D'Arco",
+     "team": "PJ23",
+     "seed": 13,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Viola",
+     "team": "SHP",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 4-0"
+   },
+   {
+    "page": 6,
+    "round": "Round of 16",
+    "match": "207",
+    "top": {
+     "name": "O'Leary",
+     "team": "RHS",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Droz",
+     "team": "DMNT",
+     "seed": 14,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:18"
+   },
+   {
+    "page": 6,
+    "round": "Round of 16",
+    "match": "208",
+    "top": {
+     "name": "Coreggio",
+     "team": "DBP",
+     "seed": 22,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Echeverri",
+     "team": "NHGH",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 10-3"
+   },
+   {
+    "page": 6,
+    "round": "Round of 16",
+    "match": "209",
+    "top": {
+     "name": "Horner",
+     "team": "PEDD",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Spinelli",
+     "team": "HILL",
+     "seed": 10,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 4-2"
+   },
+   {
+    "page": 6,
+    "round": "Round of 16",
+    "match": "210",
+    "top": {
+     "name": "Churpakovich",
+     "team": "B-R",
+     "seed": 15,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Pellicci",
+     "team": "PRMC",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 3:47"
+   },
+   {
+    "page": 6,
+    "round": "Quarter-Finals",
+    "match": "303",
+    "top": {
+     "name": "Sontz",
+     "team": "DEL",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Gutierrez",
+     "team": "HTWN",
+     "seed": 9,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 2:20"
+   },
+   {
+    "page": 6,
+    "round": "Quarter-Finals",
+    "match": "304",
+    "top": {
+     "name": "Severs",
+     "team": "LAKE",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Viola",
+     "team": "SHP",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 11-1"
+   },
+   {
+    "page": 6,
+    "round": "Quarter-Finals",
+    "match": "305",
+    "top": {
+     "name": "O'Leary",
+     "team": "RHS",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Echeverri",
+     "team": "NHGH",
+     "seed": 6,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:02"
+   },
+   {
+    "page": 6,
+    "round": "Quarter-Finals",
+    "match": "306",
+    "top": {
+     "name": "Horner",
+     "team": "PEDD",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Pellicci",
+     "team": "PRMC",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 9-0"
+   },
+   {
+    "page": 6,
+    "round": "Semi-Finals",
+    "match": "359",
+    "top": {
+     "name": "Sontz",
+     "team": "DEL",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Severs",
+     "team": "LAKE",
+     "seed": 5,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 2:13"
+   },
+   {
+    "page": 6,
+    "round": "Semi-Finals",
+    "match": "360",
+    "top": {
+     "name": "O'Leary",
+     "team": "RHS",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Pellicci",
+     "team": "PRMC",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 13-0"
+   },
+   {
+    "page": 6,
+    "round": "Finals",
+    "match": "442",
+    "top": {
+     "name": "Sontz",
+     "team": "DEL",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Pellicci",
+     "team": "PRMC",
+     "seed": 2,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 20-9"
+   },
+   {
+    "page": 7,
+    "round": "3rd Place",
+    "match": "440",
+    "top": {
+     "name": "O'Leary",
+     "team": "RHS",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Severs",
+     "team": "LAKE",
+     "seed": 5,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 13-3"
+   },
+   {
+    "page": 7,
+    "round": "5th Place",
+    "match": "441",
+    "top": {
+     "name": "Gutierrez",
+     "team": "HTWN",
+     "seed": 9,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Echeverri",
+     "team": "NHGH",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 3:48"
+   },
+   {
+    "page": 7,
+    "round": "Consi-Semis",
+    "match": "409",
+    "top": {
+     "name": "Gutierrez",
+     "team": "HTWN",
+     "seed": 9,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "O'Leary",
+     "team": "RHS",
+     "seed": 3,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 7,
+    "round": "Consi-Semis",
+    "match": "410",
+    "top": {
+     "name": "Echeverri",
+     "team": "NHGH",
+     "seed": 6,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Severs",
+     "team": "LAKE",
+     "seed": 5,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 7,
+    "round": "Consi of 4",
+    "match": "361",
+    "top": {
+     "name": "Gutierrez",
+     "team": "HTWN",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Viola",
+     "team": "SHP",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "M FOR"
+   },
+   {
+    "page": 7,
+    "round": "Consi of 4",
+    "match": "362",
+    "top": {
+     "name": "Echeverri",
+     "team": "NHGH",
+     "seed": 6,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Horner",
+     "team": "PEDD",
+     "seed": 7,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 13-2"
+   }
+  ],
+  "pages": [
+   6,
+   7
+  ]
+ },
+ "132": {
+  "bouts": [
+   {
+    "page": 8,
+    "round": "Round of 64",
+    "match": "33",
+    "top": {
+     "name": "Dalton Weber",
+     "team": "PJ23",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 8,
+    "round": "Round of 64",
+    "match": "11",
+    "top": {
+     "name": "David Butenewicz",
+     "team": "DEL",
+     "seed": 33,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Antonio Spina",
+     "team": "SHP",
+     "seed": 32,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 3:25"
+   },
+   {
+    "page": 8,
+    "round": "Round of 64",
+    "match": "16",
+    "top": {
+     "name": "Rayan Mohammed",
+     "team": "PSCT",
+     "seed": 17,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 8,
+    "round": "Round of 64",
+    "match": "9",
+    "top": null,
+    "bottom": {
+     "name": "Jack Corelli",
+     "team": "CHER",
+     "seed": 16,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 8,
+    "round": "Round of 64",
+    "match": "24",
+    "top": {
+     "name": "Adan Cedeno",
+     "team": "PSKV",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 8,
+    "round": "Round of 64",
+    "match": "25",
+    "top": null,
+    "bottom": {
+     "name": "Cole DeAngelo",
+     "team": "RBC",
+     "seed": 24,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 8,
+    "round": "Round of 64",
+    "match": "8",
+    "top": {
+     "name": "Rocco Fontanelli",
+     "team": "CHAM",
+     "seed": 25,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 8,
+    "round": "Round of 64",
+    "match": "5",
+    "top": null,
+    "bottom": {
+     "name": "Andre Morero",
+     "team": "SHP",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 8,
+    "round": "Round of 64",
+    "match": "28",
+    "top": {
+     "name": "River Hibler",
+     "team": "PRMC",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 8,
+    "round": "Round of 64",
+    "match": "21",
+    "top": null,
+    "bottom": {
+     "name": "Joe Monto",
+     "team": "LAKE",
+     "seed": 28,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 8,
+    "round": "Round of 64",
+    "match": "12",
+    "top": {
+     "name": "Knox Landell",
+     "team": "CHER",
+     "seed": 21,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 8,
+    "round": "Round of 64",
+    "match": "13",
+    "top": null,
+    "bottom": {
+     "name": "AJ Stover",
+     "team": "PEDD",
+     "seed": 12,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 8,
+    "round": "Round of 64",
+    "match": "20",
+    "top": {
+     "name": "Jack Francis",
+     "team": "GFA",
+     "seed": 13,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 8,
+    "round": "Round of 64",
+    "match": "29",
+    "top": null,
+    "bottom": {
+     "name": "Ryan Dyki",
+     "team": "NHGH",
+     "seed": 20,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 8,
+    "round": "Round of 64",
+    "match": "4",
+    "top": {
+     "name": "Connor Glory",
+     "team": "DEL",
+     "seed": 29,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 8,
+    "round": "Round of 64",
+    "match": "1",
+    "top": null,
+    "bottom": {
+     "name": "Joey Rizzuto",
+     "team": "DPLC",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 8,
+    "round": "Round of 32",
+    "match": "61",
+    "top": {
+     "name": "Weber",
+     "team": "PJ23",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Spina",
+     "team": "SHP",
+     "seed": 32,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:12"
+   },
+   {
+    "page": 8,
+    "round": "Round of 32",
+    "match": "62",
+    "top": {
+     "name": "Mohammed",
+     "team": "PSCT",
+     "seed": 17,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Corelli",
+     "team": "CHER",
+     "seed": 16,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 8-0"
+   },
+   {
+    "page": 8,
+    "round": "Round of 32",
+    "match": "63",
+    "top": {
+     "name": "Cedeno",
+     "team": "PSKV",
+     "seed": 9,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "DeAngelo",
+     "team": "RBC",
+     "seed": 24,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 10-9"
+   },
+   {
+    "page": 8,
+    "round": "Round of 32",
+    "match": "64",
+    "top": {
+     "name": "Fontanelli",
+     "team": "CHAM",
+     "seed": 25,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Morero",
+     "team": "SHP",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 1:46"
+   },
+   {
+    "page": 8,
+    "round": "Round of 32",
+    "match": "65",
+    "top": {
+     "name": "Hibler",
+     "team": "PRMC",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Monto",
+     "team": "LAKE",
+     "seed": 28,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 4:24"
+   },
+   {
+    "page": 8,
+    "round": "Round of 32",
+    "match": "66",
+    "top": {
+     "name": "Landell",
+     "team": "CHER",
+     "seed": 21,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Stover",
+     "team": "PEDD",
+     "seed": 12,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 6-4"
+   },
+   {
+    "page": 8,
+    "round": "Round of 32",
+    "match": "67",
+    "top": {
+     "name": "Francis",
+     "team": "GFA",
+     "seed": 13,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Dyki",
+     "team": "NHGH",
+     "seed": 20,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 5:21"
+   },
+   {
+    "page": 8,
+    "round": "Round of 32",
+    "match": "68",
+    "top": {
+     "name": "Glory",
+     "team": "DEL",
+     "seed": 29,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Rizzuto",
+     "team": "DPLC",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 5:00"
+   },
+   {
+    "page": 8,
+    "round": "Round of 16",
+    "match": "211",
+    "top": {
+     "name": "Weber",
+     "team": "PJ23",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Corelli",
+     "team": "CHER",
+     "seed": 16,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 1:30"
+   },
+   {
+    "page": 8,
+    "round": "Round of 16",
+    "match": "212",
+    "top": {
+     "name": "DeAngelo",
+     "team": "RBC",
+     "seed": 24,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Morero",
+     "team": "SHP",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 10-0"
+   },
+   {
+    "page": 8,
+    "round": "Round of 16",
+    "match": "213",
+    "top": {
+     "name": "Hibler",
+     "team": "PRMC",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Stover",
+     "team": "PEDD",
+     "seed": 12,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 5-3"
+   },
+   {
+    "page": 8,
+    "round": "Round of 16",
+    "match": "214",
+    "top": {
+     "name": "Francis",
+     "team": "GFA",
+     "seed": 13,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Rizzuto",
+     "team": "DPLC",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 6-5"
+   },
+   {
+    "page": 8,
+    "round": "Quarter-Finals",
+    "match": "307",
+    "top": {
+     "name": "Weber",
+     "team": "PJ23",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Morero",
+     "team": "SHP",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 10-3"
+   },
+   {
+    "page": 8,
+    "round": "Quarter-Finals",
+    "match": "308",
+    "top": {
+     "name": "Stover",
+     "team": "PEDD",
+     "seed": 12,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Francis",
+     "team": "GFA",
+     "seed": 13,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 10-2"
+   },
+   {
+    "page": 8,
+    "round": "Semi-Finals",
+    "match": "363",
+    "top": {
+     "name": "Weber",
+     "team": "PJ23",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Stover",
+     "team": "PEDD",
+     "seed": 12,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 5:26"
+   },
+   {
+    "page": 9,
+    "round": "Round of 64",
+    "match": "30",
+    "top": {
+     "name": "PJ Terranova",
+     "team": "DEL",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 9,
+    "round": "Round of 64",
+    "match": "19",
+    "top": null,
+    "bottom": {
+     "name": "Michael Oliveri",
+     "team": "DEL",
+     "seed": 30,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 9,
+    "round": "Round of 64",
+    "match": "14",
+    "top": {
+     "name": "Matt Velez",
+     "team": "PSKH",
+     "seed": 19,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 9,
+    "round": "Round of 64",
+    "match": "11",
+    "top": null,
+    "bottom": {
+     "name": "Dontae Kelly",
+     "team": "MDTWP",
+     "seed": 14,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 9,
+    "round": "Round of 64",
+    "match": "22",
+    "top": {
+     "name": "Andrew Bonita",
+     "team": "DBP",
+     "seed": 11,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 9,
+    "round": "Round of 64",
+    "match": "27",
+    "top": null,
+    "bottom": {
+     "name": "Michael Garcia",
+     "team": "B-R",
+     "seed": 22,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 9,
+    "round": "Round of 64",
+    "match": "6",
+    "top": {
+     "name": "Mike Hamdeh",
+     "team": "HILL",
+     "seed": 27,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 9,
+    "round": "Round of 64",
+    "match": "7",
+    "top": null,
+    "bottom": {
+     "name": "Eli Glover",
+     "team": "LCM",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 9,
+    "round": "Round of 64",
+    "match": "26",
+    "top": {
+     "name": "Greyson Pettit",
+     "team": "DEL",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 9,
+    "round": "Round of 64",
+    "match": "23",
+    "top": null,
+    "bottom": {
+     "name": "Cooper Gill",
+     "team": "GLRK",
+     "seed": 26,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 9,
+    "round": "Round of 64",
+    "match": "10",
+    "top": {
+     "name": "Jake Piotrowsky",
+     "team": "PJ23",
+     "seed": 23,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 9,
+    "round": "Round of 64",
+    "match": "15",
+    "top": null,
+    "bottom": {
+     "name": "Gennaro Marzocca",
+     "team": "PRMC",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 9,
+    "round": "Round of 64",
+    "match": "18",
+    "top": {
+     "name": "Nate Gomes",
+     "team": "MOKN",
+     "seed": 15,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 9,
+    "round": "Round of 64",
+    "match": "31",
+    "top": null,
+    "bottom": {
+     "name": "Dmytro Bohdan",
+     "team": "PARA",
+     "seed": 18,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 9,
+    "round": "Round of 64",
+    "match": "22",
+    "top": {
+     "name": "Conor Raveis",
+     "team": "GFA",
+     "seed": 31,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Paul Tsocanos",
+     "team": "RMPO",
+     "seed": 34,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 8-3"
+   },
+   {
+    "page": 9,
+    "round": "Round of 64",
+    "match": "3",
+    "top": null,
+    "bottom": {
+     "name": "Richard DeLorenzo II",
+     "team": "TRE",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 9,
+    "round": "Round of 32",
+    "match": "69",
+    "top": {
+     "name": "Terranova",
+     "team": "DEL",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Oliveri",
+     "team": "DEL",
+     "seed": 30,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:46"
+   },
+   {
+    "page": 9,
+    "round": "Round of 32",
+    "match": "70",
+    "top": {
+     "name": "Velez",
+     "team": "PSKH",
+     "seed": 19,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Kelly",
+     "team": "MDTWP",
+     "seed": 14,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 8-7"
+   },
+   {
+    "page": 9,
+    "round": "Round of 32",
+    "match": "71",
+    "top": {
+     "name": "Bonita",
+     "team": "DBP",
+     "seed": 11,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Garcia",
+     "team": "B-R",
+     "seed": 22,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:44"
+   },
+   {
+    "page": 9,
+    "round": "Round of 32",
+    "match": "72",
+    "top": {
+     "name": "Hamdeh",
+     "team": "HILL",
+     "seed": 27,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Glover",
+     "team": "LCM",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:32"
+   },
+   {
+    "page": 9,
+    "round": "Round of 32",
+    "match": "73",
+    "top": {
+     "name": "Pettit",
+     "team": "DEL",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Gill",
+     "team": "GLRK",
+     "seed": 26,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 1:53"
+   },
+   {
+    "page": 9,
+    "round": "Round of 32",
+    "match": "74",
+    "top": {
+     "name": "Piotrowsky",
+     "team": "PJ23",
+     "seed": 23,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Marzocca",
+     "team": "PRMC",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 2:36"
+   },
+   {
+    "page": 9,
+    "round": "Round of 32",
+    "match": "75",
+    "top": {
+     "name": "Gomes",
+     "team": "MOKN",
+     "seed": 15,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Bohdan",
+     "team": "PARA",
+     "seed": 18,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 13-3"
+   },
+   {
+    "page": 9,
+    "round": "Round of 32",
+    "match": "76",
+    "top": {
+     "name": "Raveis",
+     "team": "GFA",
+     "seed": 31,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "DeLorenzo II",
+     "team": "TRE",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 1:39"
+   },
+   {
+    "page": 9,
+    "round": "Round of 16",
+    "match": "215",
+    "top": {
+     "name": "Terranova",
+     "team": "DEL",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Velez",
+     "team": "PSKH",
+     "seed": 19,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 8-2"
+   },
+   {
+    "page": 9,
+    "round": "Round of 16",
+    "match": "216",
+    "top": {
+     "name": "Bonita",
+     "team": "DBP",
+     "seed": 11,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Glover",
+     "team": "LCM",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 12-2"
+   },
+   {
+    "page": 9,
+    "round": "Round of 16",
+    "match": "217",
+    "top": {
+     "name": "Pettit",
+     "team": "DEL",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Marzocca",
+     "team": "PRMC",
+     "seed": 10,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 8-1"
+   },
+   {
+    "page": 9,
+    "round": "Round of 16",
+    "match": "218",
+    "top": {
+     "name": "Bohdan",
+     "team": "PARA",
+     "seed": 18,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "DeLorenzo II",
+     "team": "TRE",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:58"
+   },
+   {
+    "page": 9,
+    "round": "Quarter-Finals",
+    "match": "309",
+    "top": {
+     "name": "Terranova",
+     "team": "DEL",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Glover",
+     "team": "LCM",
+     "seed": 6,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 5:20"
+   },
+   {
+    "page": 9,
+    "round": "Quarter-Finals",
+    "match": "310",
+    "top": {
+     "name": "Pettit",
+     "team": "DEL",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "DeLorenzo II",
+     "team": "TRE",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC SV 11-8"
+   },
+   {
+    "page": 9,
+    "round": "Semi-Finals",
+    "match": "364",
+    "top": {
+     "name": "Terranova",
+     "team": "DEL",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "DeLorenzo II",
+     "team": "TRE",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 7-6"
+   },
+   {
+    "page": 10,
+    "round": "Finals",
+    "match": "445",
+    "top": {
+     "name": "Weber",
+     "team": "PJ23",
+     "seed": 1,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "DeLorenzo II",
+     "team": "TRE",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 5-2"
+   },
+   {
+    "page": 11,
+    "round": "3rd Place",
+    "match": "443",
+    "top": {
+     "name": "Terranova",
+     "team": "DEL",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Stover",
+     "team": "PEDD",
+     "seed": 12,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 4-2"
+   },
+   {
+    "page": 11,
+    "round": "5th Place",
+    "match": "444",
+    "top": {
+     "name": "Morero",
+     "team": "SHP",
+     "seed": 8,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Pettit",
+     "team": "DEL",
+     "seed": 7,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 4:31"
+   },
+   {
+    "page": 11,
+    "round": "Consi-Semis",
+    "match": "411",
+    "top": {
+     "name": "Morero",
+     "team": "SHP",
+     "seed": 8,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Terranova",
+     "team": "DEL",
+     "seed": 3,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 11,
+    "round": "Consi-Semis",
+    "match": "412",
+    "top": {
+     "name": "Pettit",
+     "team": "DEL",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Stover",
+     "team": "PEDD",
+     "seed": 12,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 11,
+    "round": "Consi of 4",
+    "match": "365",
+    "top": {
+     "name": "Morero",
+     "team": "SHP",
+     "seed": 8,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Francis",
+     "team": "GFA",
+     "seed": 13,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:39"
+   },
+   {
+    "page": 11,
+    "round": "Consi of 4",
+    "match": "366",
+    "top": {
+     "name": "Glover",
+     "team": "LCM",
+     "seed": 6,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Pettit",
+     "team": "DEL",
+     "seed": 7,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 4:09"
+   }
+  ],
+  "pages": [
+   8,
+   9,
+   10,
+   11
+  ]
+ },
+ "138": {
+  "bouts": [
+   {
+    "page": 12,
+    "round": "Round of 64",
+    "match": "33",
+    "top": {
+     "name": "Robert Douangmala",
+     "team": "MSCA",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 12,
+    "round": "Round of 64",
+    "match": "33",
+    "top": {
+     "name": "David Sawyer",
+     "team": "DEL",
+     "seed": 33,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Nico Marchetti",
+     "team": "DEL",
+     "seed": 32,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:29"
+   },
+   {
+    "page": 12,
+    "round": "Round of 64",
+    "match": "16",
+    "top": {
+     "name": "Liam Williams",
+     "team": "MTWN",
+     "seed": 17,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 12,
+    "round": "Round of 64",
+    "match": "9",
+    "top": null,
+    "bottom": {
+     "name": "Bryan Dougherty",
+     "team": "HTWN",
+     "seed": 16,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 12,
+    "round": "Round of 64",
+    "match": "24",
+    "top": {
+     "name": "Sean Brown",
+     "team": "SPAR",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 12,
+    "round": "Round of 64",
+    "match": "25",
+    "top": null,
+    "bottom": {
+     "name": "Nick Pugliese",
+     "team": "CHAM",
+     "seed": 24,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 12,
+    "round": "Round of 64",
+    "match": "8",
+    "top": {
+     "name": "Rhys KOZUBAL",
+     "team": "B-R",
+     "seed": 25,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 12,
+    "round": "Round of 64",
+    "match": "5",
+    "top": null,
+    "bottom": {
+     "name": "Ryder connors",
+     "team": "CRAN",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 12,
+    "round": "Round of 64",
+    "match": "28",
+    "top": {
+     "name": "Isaias Hernandez",
+     "team": "DPLC",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 12,
+    "round": "Round of 64",
+    "match": "21",
+    "top": null,
+    "bottom": {
+     "name": "Matthew Miller",
+     "team": "BLOM",
+     "seed": 28,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 12,
+    "round": "Round of 64",
+    "match": "12",
+    "top": {
+     "name": "Chris Kelesidis",
+     "team": "RBC",
+     "seed": 21,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 12,
+    "round": "Round of 64",
+    "match": "13",
+    "top": null,
+    "bottom": {
+     "name": "Christopher Cifelli",
+     "team": "Nut",
+     "seed": 12,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 12,
+    "round": "Round of 64",
+    "match": "20",
+    "top": {
+     "name": "Dylan cerciello",
+     "team": "SBW",
+     "seed": 13,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 12,
+    "round": "Round of 64",
+    "match": "29",
+    "top": null,
+    "bottom": {
+     "name": "Alex Zelna",
+     "team": "DMNT",
+     "seed": 20,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 12,
+    "round": "Round of 64",
+    "match": "4",
+    "top": {
+     "name": "Lucas Rafeh",
+     "team": "SHP",
+     "seed": 29,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 12,
+    "round": "Round of 64",
+    "match": "1",
+    "top": null,
+    "bottom": {
+     "name": "Amari Vann",
+     "team": "DEL",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 12,
+    "round": "Round of 32",
+    "match": "77",
+    "top": {
+     "name": "Douangmala",
+     "team": "MSCA",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Marchetti",
+     "team": "DEL",
+     "seed": 32,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 5-3"
+   },
+   {
+    "page": 12,
+    "round": "Round of 32",
+    "match": "78",
+    "top": {
+     "name": "Williams",
+     "team": "MTWN",
+     "seed": 17,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Dougherty",
+     "team": "HTWN",
+     "seed": 16,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC TB2"
+   },
+   {
+    "page": 12,
+    "round": "Round of 32",
+    "match": "79",
+    "top": {
+     "name": "Brown",
+     "team": "SPAR",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Pugliese",
+     "team": "CHAM",
+     "seed": 24,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:48"
+   },
+   {
+    "page": 12,
+    "round": "Round of 32",
+    "match": "80",
+    "top": {
+     "name": "KOZUBAL",
+     "team": "B-R",
+     "seed": 25,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "connors",
+     "team": "CRAN",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 1:55"
+   },
+   {
+    "page": 12,
+    "round": "Round of 32",
+    "match": "81",
+    "top": {
+     "name": "Hernandez",
+     "team": "DPLC",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Miller",
+     "team": "BLOM",
+     "seed": 28,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:48"
+   },
+   {
+    "page": 12,
+    "round": "Round of 32",
+    "match": "82",
+    "top": {
+     "name": "Kelesidis",
+     "team": "RBC",
+     "seed": 21,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Cifelli",
+     "team": "Nut",
+     "seed": 12,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 3:29"
+   },
+   {
+    "page": 12,
+    "round": "Round of 32",
+    "match": "83",
+    "top": {
+     "name": "cerciello",
+     "team": "SBW",
+     "seed": 13,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Zelna",
+     "team": "DMNT",
+     "seed": 20,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 12-11"
+   },
+   {
+    "page": 12,
+    "round": "Round of 32",
+    "match": "84",
+    "top": {
+     "name": "Rafeh",
+     "team": "SHP",
+     "seed": 29,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Vann",
+     "team": "DEL",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:26"
+   },
+   {
+    "page": 12,
+    "round": "Round of 16",
+    "match": "219",
+    "top": {
+     "name": "Douangmala",
+     "team": "MSCA",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Dougherty",
+     "team": "HTWN",
+     "seed": 16,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 7-1"
+   },
+   {
+    "page": 12,
+    "round": "Round of 16",
+    "match": "220",
+    "top": {
+     "name": "Brown",
+     "team": "SPAR",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "connors",
+     "team": "CRAN",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 8-7"
+   },
+   {
+    "page": 12,
+    "round": "Round of 16",
+    "match": "221",
+    "top": {
+     "name": "Hernandez",
+     "team": "DPLC",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Cifelli",
+     "team": "Nut",
+     "seed": 12,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 3:00"
+   },
+   {
+    "page": 12,
+    "round": "Round of 16",
+    "match": "222",
+    "top": {
+     "name": "Zelna",
+     "team": "DMNT",
+     "seed": 20,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Vann",
+     "team": "DEL",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:00"
+   },
+   {
+    "page": 12,
+    "round": "Quarter-Finals",
+    "match": "311",
+    "top": {
+     "name": "Douangmala",
+     "team": "MSCA",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Brown",
+     "team": "SPAR",
+     "seed": 9,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 7-0"
+   },
+   {
+    "page": 12,
+    "round": "Quarter-Finals",
+    "match": "312",
+    "top": {
+     "name": "Hernandez",
+     "team": "DPLC",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Vann",
+     "team": "DEL",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 15-13"
+   },
+   {
+    "page": 12,
+    "round": "Semi-Finals",
+    "match": "367",
+    "top": {
+     "name": "Douangmala",
+     "team": "MSCA",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Vann",
+     "team": "DEL",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "M FOR"
+   },
+   {
+    "page": 13,
+    "round": "Round of 64",
+    "match": "35",
+    "top": {
+     "name": "Jack Abramson",
+     "team": "PING",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 13,
+    "round": "Round of 64",
+    "match": "44",
+    "top": {
+     "name": "Nathan Kadar",
+     "team": "CHER",
+     "seed": 35,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Jared Puleo",
+     "team": "DBP",
+     "seed": 30,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:47"
+   },
+   {
+    "page": 13,
+    "round": "Round of 64",
+    "match": "14",
+    "top": {
+     "name": "Landon Lill",
+     "team": "PEDD",
+     "seed": 19,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 13,
+    "round": "Round of 64",
+    "match": "11",
+    "top": null,
+    "bottom": {
+     "name": "Malik Abuharthieh",
+     "team": "PSCT",
+     "seed": 14,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 13,
+    "round": "Round of 64",
+    "match": "22",
+    "top": {
+     "name": "Mason Distefano",
+     "team": "WALL",
+     "seed": 11,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 13,
+    "round": "Round of 64",
+    "match": "27",
+    "top": null,
+    "bottom": {
+     "name": "Sam Allen",
+     "team": "MOKN",
+     "seed": 22,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 13,
+    "round": "Round of 64",
+    "match": "6",
+    "top": {
+     "name": "Damian Lagrone",
+     "team": "PARA",
+     "seed": 27,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 13,
+    "round": "Round of 64",
+    "match": "7",
+    "top": null,
+    "bottom": {
+     "name": "Ryan Yang",
+     "team": "RHS",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 13,
+    "round": "Round of 64",
+    "match": "26",
+    "top": {
+     "name": "Jayce Capello",
+     "team": "TRE",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 13,
+    "round": "Round of 64",
+    "match": "23",
+    "top": null,
+    "bottom": {
+     "name": "Mark Centurione",
+     "team": "LAKE",
+     "seed": 26,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 13,
+    "round": "Round of 64",
+    "match": "10",
+    "top": {
+     "name": "Frankie Spagnola",
+     "team": "PJ23",
+     "seed": 23,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 13,
+    "round": "Round of 64",
+    "match": "15",
+    "top": null,
+    "bottom": {
+     "name": "Giovanni Giardina",
+     "team": "W/MP",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 13,
+    "round": "Round of 64",
+    "match": "18",
+    "top": {
+     "name": "Maksim Marrero",
+     "team": "SHP",
+     "seed": 15,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 13,
+    "round": "Round of 64",
+    "match": "31",
+    "top": null,
+    "bottom": {
+     "name": "Ty`Zer Burr",
+     "team": "PISC",
+     "seed": 18,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 13,
+    "round": "Round of 64",
+    "match": "55",
+    "top": {
+     "name": "Dylan Taylor",
+     "team": "CHER",
+     "seed": 31,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Ryan Kim",
+     "team": "NHGH",
+     "seed": 34,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 7-4"
+   },
+   {
+    "page": 13,
+    "round": "Round of 64",
+    "match": "3",
+    "top": null,
+    "bottom": {
+     "name": "Chase Hansen",
+     "team": "LCM",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 13,
+    "round": "Round of 32",
+    "match": "85",
+    "top": {
+     "name": "Abramson",
+     "team": "PING",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Puleo",
+     "team": "DBP",
+     "seed": 30,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:18"
+   },
+   {
+    "page": 13,
+    "round": "Round of 32",
+    "match": "86",
+    "top": {
+     "name": "Lill",
+     "team": "PEDD",
+     "seed": 19,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Abuharthieh",
+     "team": "PSCT",
+     "seed": 14,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 7-3"
+   },
+   {
+    "page": 13,
+    "round": "Round of 32",
+    "match": "87",
+    "top": {
+     "name": "Distefano",
+     "team": "WALL",
+     "seed": 11,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Allen",
+     "team": "MOKN",
+     "seed": 22,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 4-2"
+   },
+   {
+    "page": 13,
+    "round": "Round of 32",
+    "match": "88",
+    "top": {
+     "name": "Lagrone",
+     "team": "PARA",
+     "seed": 27,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Yang",
+     "team": "RHS",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:55"
+   },
+   {
+    "page": 13,
+    "round": "Round of 32",
+    "match": "89",
+    "top": {
+     "name": "Capello",
+     "team": "TRE",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Centurione",
+     "team": "LAKE",
+     "seed": 26,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:46"
+   },
+   {
+    "page": 13,
+    "round": "Round of 32",
+    "match": "90",
+    "top": {
+     "name": "Spagnola",
+     "team": "PJ23",
+     "seed": 23,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Giardina",
+     "team": "W/MP",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:02"
+   },
+   {
+    "page": 13,
+    "round": "Round of 32",
+    "match": "91",
+    "top": {
+     "name": "Marrero",
+     "team": "SHP",
+     "seed": 15,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Burr",
+     "team": "PISC",
+     "seed": 18,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 3:43"
+   },
+   {
+    "page": 13,
+    "round": "Round of 32",
+    "match": "92",
+    "top": {
+     "name": "Taylor",
+     "team": "CHER",
+     "seed": 31,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Hansen",
+     "team": "LCM",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:01"
+   },
+   {
+    "page": 13,
+    "round": "Round of 16",
+    "match": "223",
+    "top": {
+     "name": "Abramson",
+     "team": "PING",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Abuharthieh",
+     "team": "PSCT",
+     "seed": 14,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 13-3"
+   },
+   {
+    "page": 13,
+    "round": "Round of 16",
+    "match": "224",
+    "top": {
+     "name": "Allen",
+     "team": "MOKN",
+     "seed": 22,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Yang",
+     "team": "RHS",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:25"
+   },
+   {
+    "page": 13,
+    "round": "Round of 16",
+    "match": "225",
+    "top": {
+     "name": "Capello",
+     "team": "TRE",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Giardina",
+     "team": "W/MP",
+     "seed": 10,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 17-3"
+   },
+   {
+    "page": 13,
+    "round": "Round of 16",
+    "match": "226",
+    "top": {
+     "name": "Marrero",
+     "team": "SHP",
+     "seed": 15,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Hansen",
+     "team": "LCM",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:19"
+   },
+   {
+    "page": 13,
+    "round": "Quarter-Finals",
+    "match": "313",
+    "top": {
+     "name": "Abramson",
+     "team": "PING",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Yang",
+     "team": "RHS",
+     "seed": 6,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 3-0"
+   },
+   {
+    "page": 13,
+    "round": "Quarter-Finals",
+    "match": "314",
+    "top": {
+     "name": "Capello",
+     "team": "TRE",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Hansen",
+     "team": "LCM",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:20"
+   },
+   {
+    "page": 13,
+    "round": "Semi-Finals",
+    "match": "368",
+    "top": {
+     "name": "Abramson",
+     "team": "PING",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Hansen",
+     "team": "LCM",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 8-3"
+   },
+   {
+    "page": 14,
+    "round": "Finals",
+    "match": "448",
+    "top": {
+     "name": "Douangmala",
+     "team": "MSCA",
+     "seed": 1,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Hansen",
+     "team": "LCM",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 3:41"
+   },
+   {
+    "page": 15,
+    "round": "3rd Place",
+    "match": "446",
+    "top": {
+     "name": "Abramson",
+     "team": "PING",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Vann",
+     "team": "DEL",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "M FOR"
+   },
+   {
+    "page": 15,
+    "round": "5th Place",
+    "match": "447",
+    "top": {
+     "name": "Hernandez",
+     "team": "DPLC",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Yang",
+     "team": "RHS",
+     "seed": 6,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 14-2"
+   },
+   {
+    "page": 15,
+    "round": "Consi-Semis",
+    "match": "413",
+    "top": {
+     "name": "Hernandez",
+     "team": "DPLC",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Abramson",
+     "team": "PING",
+     "seed": 3,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 15,
+    "round": "Consi-Semis",
+    "match": "414",
+    "top": {
+     "name": "Yang",
+     "team": "RHS",
+     "seed": 6,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Vann",
+     "team": "DEL",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 15,
+    "round": "Consi of 4",
+    "match": "369",
+    "top": {
+     "name": "Brown",
+     "team": "SPAR",
+     "seed": 9,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Hernandez",
+     "team": "DPLC",
+     "seed": 5,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:00"
+   },
+   {
+    "page": 15,
+    "round": "Consi of 4",
+    "match": "370",
+    "top": {
+     "name": "Yang",
+     "team": "RHS",
+     "seed": 6,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Capello",
+     "team": "TRE",
+     "seed": 7,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 13-9"
+   }
+  ],
+  "pages": [
+   12,
+   13,
+   14,
+   15
+  ]
+ },
+ "144": {
+  "bouts": [
+   {
+    "page": 16,
+    "round": "Round of 64",
+    "match": "33",
+    "top": {
+     "name": "Nicholas Pallitto",
+     "team": "PRMC",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 16,
+    "round": "Round of 64",
+    "match": "66",
+    "top": {
+     "name": "Ilias Konstantinidis",
+     "team": "GFA",
+     "seed": 33,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "John Owen",
+     "team": "MSCA",
+     "seed": 32,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:34"
+   },
+   {
+    "page": 16,
+    "round": "Round of 64",
+    "match": "16",
+    "top": {
+     "name": "CJ Anzaldo",
+     "team": "RMPO",
+     "seed": 17,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 16,
+    "round": "Round of 64",
+    "match": "9",
+    "top": null,
+    "bottom": {
+     "name": "Adrian Pinto",
+     "team": "HTWN",
+     "seed": 16,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 16,
+    "round": "Round of 64",
+    "match": "24",
+    "top": {
+     "name": "Xavier Gonzalez",
+     "team": "TNCK",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 16,
+    "round": "Round of 64",
+    "match": "25",
+    "top": null,
+    "bottom": {
+     "name": "Sean Morris",
+     "team": "MOKN",
+     "seed": 24,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 16,
+    "round": "Round of 64",
+    "match": "8",
+    "top": {
+     "name": "Andrew Matter",
+     "team": "DEL",
+     "seed": 25,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 16,
+    "round": "Round of 64",
+    "match": "5",
+    "top": null,
+    "bottom": {
+     "name": "Dylan Biegel",
+     "team": "PSKV",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 16,
+    "round": "Round of 64",
+    "match": "28",
+    "top": {
+     "name": "Brighton Karvoski",
+     "team": "GFA",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 16,
+    "round": "Round of 64",
+    "match": "21",
+    "top": null,
+    "bottom": {
+     "name": "Ethan Perez",
+     "team": "LAKE",
+     "seed": 28,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 16,
+    "round": "Round of 64",
+    "match": "12",
+    "top": {
+     "name": "Bradley Ingram",
+     "team": "CHER",
+     "seed": 21,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 16,
+    "round": "Round of 64",
+    "match": "13",
+    "top": null,
+    "bottom": {
+     "name": "Dominick Marrero",
+     "team": "LCM",
+     "seed": 12,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 16,
+    "round": "Round of 64",
+    "match": "20",
+    "top": {
+     "name": "Brendon Katimbang",
+     "team": "CHAM",
+     "seed": 13,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 16,
+    "round": "Round of 64",
+    "match": "29",
+    "top": null,
+    "bottom": {
+     "name": "Anthony Dispensa",
+     "team": "CRAN",
+     "seed": 20,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 16,
+    "round": "Round of 64",
+    "match": "4",
+    "top": {
+     "name": "Darryen Rodriguez",
+     "team": "RP",
+     "seed": 29,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 16,
+    "round": "Round of 64",
+    "match": "1",
+    "top": null,
+    "bottom": {
+     "name": "Ethan Delacruz",
+     "team": "BBRK",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 16,
+    "round": "Round of 32",
+    "match": "93",
+    "top": {
+     "name": "Pallitto",
+     "team": "PRMC",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Konstantinidis",
+     "team": "GFA",
+     "seed": 33,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:08"
+   },
+   {
+    "page": 16,
+    "round": "Round of 32",
+    "match": "94",
+    "top": {
+     "name": "Anzaldo",
+     "team": "RMPO",
+     "seed": 17,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Pinto",
+     "team": "HTWN",
+     "seed": 16,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 3:47"
+   },
+   {
+    "page": 16,
+    "round": "Round of 32",
+    "match": "95",
+    "top": {
+     "name": "Gonzalez",
+     "team": "TNCK",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Morris",
+     "team": "MOKN",
+     "seed": 24,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:17"
+   },
+   {
+    "page": 16,
+    "round": "Round of 32",
+    "match": "96",
+    "top": {
+     "name": "Matter",
+     "team": "DEL",
+     "seed": 25,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Biegel",
+     "team": "PSKV",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 4:18"
+   },
+   {
+    "page": 16,
+    "round": "Round of 32",
+    "match": "97",
+    "top": {
+     "name": "Karvoski",
+     "team": "GFA",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Perez",
+     "team": "LAKE",
+     "seed": 28,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:55"
+   },
+   {
+    "page": 16,
+    "round": "Round of 32",
+    "match": "98",
+    "top": {
+     "name": "Ingram",
+     "team": "CHER",
+     "seed": 21,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Marrero",
+     "team": "LCM",
+     "seed": 12,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:31"
+   },
+   {
+    "page": 16,
+    "round": "Round of 32",
+    "match": "99",
+    "top": {
+     "name": "Katimbang",
+     "team": "CHAM",
+     "seed": 13,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Dispensa",
+     "team": "CRAN",
+     "seed": 20,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 2:50"
+   },
+   {
+    "page": 16,
+    "round": "Round of 32",
+    "match": "100",
+    "top": {
+     "name": "Rodriguez",
+     "team": "RP",
+     "seed": 29,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Delacruz",
+     "team": "BBRK",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:16"
+   },
+   {
+    "page": 16,
+    "round": "Round of 16",
+    "match": "227",
+    "top": {
+     "name": "Pallitto",
+     "team": "PRMC",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Anzaldo",
+     "team": "RMPO",
+     "seed": 17,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 5:54"
+   },
+   {
+    "page": 16,
+    "round": "Round of 16",
+    "match": "228",
+    "top": {
+     "name": "Gonzalez",
+     "team": "TNCK",
+     "seed": 9,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Biegel",
+     "team": "PSKV",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 7-4"
+   },
+   {
+    "page": 16,
+    "round": "Round of 16",
+    "match": "229",
+    "top": {
+     "name": "Karvoski",
+     "team": "GFA",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Marrero",
+     "team": "LCM",
+     "seed": 12,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:10"
+   },
+   {
+    "page": 16,
+    "round": "Round of 16",
+    "match": "230",
+    "top": {
+     "name": "Katimbang",
+     "team": "CHAM",
+     "seed": 13,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Delacruz",
+     "team": "BBRK",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 3-0"
+   },
+   {
+    "page": 16,
+    "round": "Quarter-Finals",
+    "match": "315",
+    "top": {
+     "name": "Pallitto",
+     "team": "PRMC",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Biegel",
+     "team": "PSKV",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 3:20"
+   },
+   {
+    "page": 16,
+    "round": "Quarter-Finals",
+    "match": "316",
+    "top": {
+     "name": "Karvoski",
+     "team": "GFA",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Delacruz",
+     "team": "BBRK",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 7-2"
+   },
+   {
+    "page": 16,
+    "round": "Semi-Finals",
+    "match": "371",
+    "top": {
+     "name": "Pallitto",
+     "team": "PRMC",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Delacruz",
+     "team": "BBRK",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "M FOR"
+   },
+   {
+    "page": 17,
+    "round": "Round of 64",
+    "match": "30",
+    "top": {
+     "name": "Delvan Rotte",
+     "team": "DPLC",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 17,
+    "round": "Round of 64",
+    "match": "19",
+    "top": null,
+    "bottom": {
+     "name": "Nathan Emmert",
+     "team": "NHGH",
+     "seed": 30,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 17,
+    "round": "Round of 64",
+    "match": "14",
+    "top": {
+     "name": "Luken Ramos",
+     "team": "RBC",
+     "seed": 19,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 17,
+    "round": "Round of 64",
+    "match": "11",
+    "top": null,
+    "bottom": {
+     "name": "Max Ventura",
+     "team": "PING",
+     "seed": 14,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 17,
+    "round": "Round of 64",
+    "match": "22",
+    "top": {
+     "name": "Tyler Yildiz",
+     "team": "SHP",
+     "seed": 11,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 17,
+    "round": "Round of 64",
+    "match": "27",
+    "top": null,
+    "bottom": {
+     "name": "Marcus Puorro",
+     "team": "B-R",
+     "seed": 22,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 17,
+    "round": "Round of 64",
+    "match": "6",
+    "top": {
+     "name": "Hudson Hicks",
+     "team": "DBP",
+     "seed": 27,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 17,
+    "round": "Round of 64",
+    "match": "7",
+    "top": null,
+    "bottom": {
+     "name": "Ariel Azeredo",
+     "team": "UHS",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 17,
+    "round": "Round of 64",
+    "match": "26",
+    "top": {
+     "name": "Ryan Mckenna",
+     "team": "DMNT",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 17,
+    "round": "Round of 64",
+    "match": "23",
+    "top": null,
+    "bottom": {
+     "name": "Nick Bartasi",
+     "team": "CHAM",
+     "seed": 26,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 17,
+    "round": "Round of 64",
+    "match": "10",
+    "top": {
+     "name": "Brody Walton",
+     "team": "HILL",
+     "seed": 23,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 17,
+    "round": "Round of 64",
+    "match": "15",
+    "top": null,
+    "bottom": {
+     "name": "JP Sanders",
+     "team": "MANA",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 17,
+    "round": "Round of 64",
+    "match": "18",
+    "top": {
+     "name": "Michael angelini",
+     "team": "MTWN",
+     "seed": 15,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 17,
+    "round": "Round of 64",
+    "match": "31",
+    "top": null,
+    "bottom": {
+     "name": "Jamal Kouzer",
+     "team": "WH",
+     "seed": 18,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 17,
+    "round": "Round of 64",
+    "match": "2",
+    "top": {
+     "name": "Lucas Coesfeld",
+     "team": "DEL",
+     "seed": 31,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 17,
+    "round": "Round of 64",
+    "match": "3",
+    "top": null,
+    "bottom": {
+     "name": "Ryan Hrenenko",
+     "team": "SPAR",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 17,
+    "round": "Round of 32",
+    "match": "101",
+    "top": {
+     "name": "Rotte",
+     "team": "DPLC",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Emmert",
+     "team": "NHGH",
+     "seed": 30,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 1:52"
+   },
+   {
+    "page": 17,
+    "round": "Round of 32",
+    "match": "102",
+    "top": {
+     "name": "Ramos",
+     "team": "RBC",
+     "seed": 19,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Ventura",
+     "team": "PING",
+     "seed": 14,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 7-2"
+   },
+   {
+    "page": 17,
+    "round": "Round of 32",
+    "match": "103",
+    "top": {
+     "name": "Yildiz",
+     "team": "SHP",
+     "seed": 11,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Puorro",
+     "team": "B-R",
+     "seed": 22,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:35"
+   },
+   {
+    "page": 17,
+    "round": "Round of 32",
+    "match": "104",
+    "top": {
+     "name": "Hicks",
+     "team": "DBP",
+     "seed": 27,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Azeredo",
+     "team": "UHS",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 1:03"
+   },
+   {
+    "page": 17,
+    "round": "Round of 32",
+    "match": "105",
+    "top": {
+     "name": "Mckenna",
+     "team": "DMNT",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Bartasi",
+     "team": "CHAM",
+     "seed": 26,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:35"
+   },
+   {
+    "page": 17,
+    "round": "Round of 32",
+    "match": "106",
+    "top": {
+     "name": "Walton",
+     "team": "HILL",
+     "seed": 23,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Sanders",
+     "team": "MANA",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 5:32"
+   },
+   {
+    "page": 17,
+    "round": "Round of 32",
+    "match": "107",
+    "top": {
+     "name": "angelini",
+     "team": "MTWN",
+     "seed": 15,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Kouzer",
+     "team": "WH",
+     "seed": 18,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "M FOR 2:19"
+   },
+   {
+    "page": 17,
+    "round": "Round of 32",
+    "match": "108",
+    "top": {
+     "name": "Coesfeld",
+     "team": "DEL",
+     "seed": 31,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Hrenenko",
+     "team": "SPAR",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:44"
+   },
+   {
+    "page": 17,
+    "round": "Round of 16",
+    "match": "231",
+    "top": {
+     "name": "Rotte",
+     "team": "DPLC",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Ramos",
+     "team": "RBC",
+     "seed": 19,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:24"
+   },
+   {
+    "page": 17,
+    "round": "Round of 16",
+    "match": "232",
+    "top": {
+     "name": "Yildiz",
+     "team": "SHP",
+     "seed": 11,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Azeredo",
+     "team": "UHS",
+     "seed": 6,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 12-2"
+   },
+   {
+    "page": 17,
+    "round": "Round of 16",
+    "match": "233",
+    "top": {
+     "name": "Mckenna",
+     "team": "DMNT",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Sanders",
+     "team": "MANA",
+     "seed": 10,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:37"
+   },
+   {
+    "page": 17,
+    "round": "Round of 16",
+    "match": "234",
+    "top": {
+     "name": "Kouzer",
+     "team": "WH",
+     "seed": 18,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Hrenenko",
+     "team": "SPAR",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 3-1"
+   },
+   {
+    "page": 17,
+    "round": "Quarter-Finals",
+    "match": "317",
+    "top": {
+     "name": "Rotte",
+     "team": "DPLC",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Yildiz",
+     "team": "SHP",
+     "seed": 11,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DQ 9-2"
+   },
+   {
+    "page": 17,
+    "round": "Quarter-Finals",
+    "match": "318",
+    "top": {
+     "name": "Mckenna",
+     "team": "DMNT",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Hrenenko",
+     "team": "SPAR",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 7-0"
+   },
+   {
+    "page": 17,
+    "round": "Semi-Finals",
+    "match": "372",
+    "top": {
+     "name": "Rotte",
+     "team": "DPLC",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Hrenenko",
+     "team": "SPAR",
+     "seed": 2,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 14-8"
+   },
+   {
+    "page": 18,
+    "round": "Finals",
+    "match": "451",
+    "top": {
+     "name": "Pallitto",
+     "team": "PRMC",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Rotte",
+     "team": "DPLC",
+     "seed": 3,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:30"
+   },
+   {
+    "page": 19,
+    "round": "3rd Place",
+    "match": "449",
+    "top": {
+     "name": "Hrenenko",
+     "team": "SPAR",
+     "seed": 2,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Delacruz",
+     "team": "BBRK",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "M FOR"
+   },
+   {
+    "page": 19,
+    "round": "5th Place",
+    "match": "450",
+    "top": {
+     "name": "Karvoski",
+     "team": "GFA",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Yildiz",
+     "team": "SHP",
+     "seed": 11,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 5-0"
+   },
+   {
+    "page": 19,
+    "round": "Consi-Semis",
+    "match": "415",
+    "top": {
+     "name": "Karvoski",
+     "team": "GFA",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Hrenenko",
+     "team": "SPAR",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 19,
+    "round": "Consi-Semis",
+    "match": "416",
+    "top": {
+     "name": "Yildiz",
+     "team": "SHP",
+     "seed": 11,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Delacruz",
+     "team": "BBRK",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 19,
+    "round": "Consi of 4",
+    "match": "373",
+    "top": {
+     "name": "Biegel",
+     "team": "PSKV",
+     "seed": 8,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Karvoski",
+     "team": "GFA",
+     "seed": 5,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:43"
+   },
+   {
+    "page": 19,
+    "round": "Consi of 4",
+    "match": "374",
+    "top": {
+     "name": "Yildiz",
+     "team": "SHP",
+     "seed": 11,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Mckenna",
+     "team": "DMNT",
+     "seed": 7,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:56"
+   }
+  ],
+  "pages": [
+   16,
+   17,
+   18,
+   19
+  ]
+ },
+ "150": {
+  "bouts": [
+   {
+    "page": 20,
+    "round": "Round of 32",
+    "match": "17",
+    "top": {
+     "name": "Joe Mahoney",
+     "team": "GFA",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 20,
+    "round": "Round of 32",
+    "match": "109",
+    "top": {
+     "name": "Daniel Arroyo",
+     "team": "PJ23",
+     "seed": 17,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Joey Riccio",
+     "team": "CRAN",
+     "seed": 16,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 17-4"
+   },
+   {
+    "page": 20,
+    "round": "Round of 32",
+    "match": "110",
+    "top": {
+     "name": "William Clasen",
+     "team": "NHGH",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Christian Jung",
+     "team": "LAKE",
+     "seed": 24,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:49"
+   },
+   {
+    "page": 20,
+    "round": "Round of 32",
+    "match": "111",
+    "top": {
+     "name": "Bryce Meserlian",
+     "team": "DBP",
+     "seed": 25,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Logan Zimmer",
+     "team": "MTWN",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 17-5"
+   },
+   {
+    "page": 20,
+    "round": "Round of 32",
+    "match": "112",
+    "top": {
+     "name": "Michael Boulard",
+     "team": "WALL",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Ilirian Vuka",
+     "team": "RMPO",
+     "seed": 28,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 1:37"
+   },
+   {
+    "page": 20,
+    "round": "Round of 32",
+    "match": "113",
+    "top": {
+     "name": "Kane Sheridan",
+     "team": "SPP",
+     "seed": 21,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Lukas Valentin",
+     "team": "Woodbridge",
+     "seed": 12,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 10-7"
+   },
+   {
+    "page": 20,
+    "round": "Round of 32",
+    "match": "114",
+    "top": {
+     "name": "Damian VonderLinden",
+     "team": "TRE",
+     "seed": 13,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Vin Castrofilippo",
+     "team": "CHAM",
+     "seed": 20,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 4:53"
+   },
+   {
+    "page": 20,
+    "round": "Round of 32",
+    "match": "3",
+    "top": null,
+    "bottom": {
+     "name": "Enzo Triola",
+     "team": "SPP",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 20,
+    "round": "Round of 32",
+    "match": "19",
+    "top": {
+     "name": "Alexander Liss",
+     "team": "MAT",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 20,
+    "round": "Round of 32",
+    "match": "115",
+    "top": {
+     "name": "Trevor Grageda",
+     "team": "PSKV",
+     "seed": 19,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Oskar Gluckow",
+     "team": "SBP",
+     "seed": 14,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 14-4"
+   },
+   {
+    "page": 20,
+    "round": "Round of 32",
+    "match": "116",
+    "top": {
+     "name": "Anthony Russo",
+     "team": "RBC",
+     "seed": 11,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Anthony Bray",
+     "team": "MOKN",
+     "seed": 22,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 2:13"
+   },
+   {
+    "page": 20,
+    "round": "Round of 32",
+    "match": "117",
+    "top": {
+     "name": "Luke Riker",
+     "team": "SHP",
+     "seed": 27,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Dane Raveis",
+     "team": "GFA",
+     "seed": 6,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 11-2"
+   },
+   {
+    "page": 20,
+    "round": "Round of 32",
+    "match": "118",
+    "top": {
+     "name": "Michael Pocius",
+     "team": "SHP",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Devin Grayson",
+     "team": "CHER",
+     "seed": 26,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 3:00"
+   },
+   {
+    "page": 20,
+    "round": "Round of 32",
+    "match": "119",
+    "top": {
+     "name": "Jacob Walker",
+     "team": "PRMC",
+     "seed": 23,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Tyler King",
+     "team": "MDTWP",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 2:46"
+   },
+   {
+    "page": 20,
+    "round": "Round of 32",
+    "match": "120",
+    "top": {
+     "name": "Andrew Brant",
+     "team": "LCM",
+     "seed": 15,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Brady Tiernan",
+     "team": "DPLC",
+     "seed": 18,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 17-4"
+   },
+   {
+    "page": 20,
+    "round": "Round of 32",
+    "match": "1",
+    "top": null,
+    "bottom": {
+     "name": "Nicholas Barone",
+     "team": "PRMC",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 20,
+    "round": "Round of 16",
+    "match": "235",
+    "top": {
+     "name": "Mahoney",
+     "team": "GFA",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Arroyo",
+     "team": "PJ23",
+     "seed": 17,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 4:54"
+   },
+   {
+    "page": 20,
+    "round": "Round of 16",
+    "match": "236",
+    "top": {
+     "name": "Clasen",
+     "team": "NHGH",
+     "seed": 9,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Zimmer",
+     "team": "MTWN",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 17-7"
+   },
+   {
+    "page": 20,
+    "round": "Round of 16",
+    "match": "237",
+    "top": {
+     "name": "Boulard",
+     "team": "WALL",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Valentin",
+     "team": "Woodbridge",
+     "seed": 12,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 10-2"
+   },
+   {
+    "page": 20,
+    "round": "Round of 16",
+    "match": "238",
+    "top": {
+     "name": "VonderLinden",
+     "team": "TRE",
+     "seed": 13,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Triola",
+     "team": "SPP",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 17-6"
+   },
+   {
+    "page": 20,
+    "round": "Round of 16",
+    "match": "239",
+    "top": {
+     "name": "Liss",
+     "team": "MAT",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Gluckow",
+     "team": "SBP",
+     "seed": 14,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 3-2"
+   },
+   {
+    "page": 20,
+    "round": "Round of 16",
+    "match": "240",
+    "top": {
+     "name": "Russo",
+     "team": "RBC",
+     "seed": 11,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Riker",
+     "team": "SHP",
+     "seed": 27,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:09"
+   },
+   {
+    "page": 20,
+    "round": "Round of 16",
+    "match": "241",
+    "top": {
+     "name": "Pocius",
+     "team": "SHP",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "King",
+     "team": "MDTWP",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 14-3"
+   },
+   {
+    "page": 20,
+    "round": "Round of 16",
+    "match": "242",
+    "top": {
+     "name": "Tiernan",
+     "team": "DPLC",
+     "seed": 18,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Barone",
+     "team": "PRMC",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 1:52"
+   },
+   {
+    "page": 20,
+    "round": "Quarter-Finals",
+    "match": "319",
+    "top": {
+     "name": "Mahoney",
+     "team": "GFA",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Zimmer",
+     "team": "MTWN",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:36"
+   },
+   {
+    "page": 20,
+    "round": "Quarter-Finals",
+    "match": "320",
+    "top": {
+     "name": "Boulard",
+     "team": "WALL",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Triola",
+     "team": "SPP",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 4-2"
+   },
+   {
+    "page": 20,
+    "round": "Quarter-Finals",
+    "match": "321",
+    "top": {
+     "name": "Gluckow",
+     "team": "SBP",
+     "seed": 14,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Russo",
+     "team": "RBC",
+     "seed": 11,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 4-3"
+   },
+   {
+    "page": 20,
+    "round": "Quarter-Finals",
+    "match": "322",
+    "top": {
+     "name": "King",
+     "team": "MDTWP",
+     "seed": 10,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Barone",
+     "team": "PRMC",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 1:21"
+   },
+   {
+    "page": 20,
+    "round": "Semi-Finals",
+    "match": "375",
+    "top": {
+     "name": "Mahoney",
+     "team": "GFA",
+     "seed": 1,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Boulard",
+     "team": "WALL",
+     "seed": 5,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:24"
+   },
+   {
+    "page": 20,
+    "round": "Semi-Finals",
+    "match": "376",
+    "top": {
+     "name": "Gluckow",
+     "team": "SBP",
+     "seed": 14,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Barone",
+     "team": "PRMC",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 5:33"
+   },
+   {
+    "page": 20,
+    "round": "Finals",
+    "match": "454",
+    "top": {
+     "name": "Boulard",
+     "team": "WALL",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Barone",
+     "team": "PRMC",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 5-0"
+   },
+   {
+    "page": 21,
+    "round": "3rd Place",
+    "match": "452",
+    "top": {
+     "name": "Gluckow",
+     "team": "SBP",
+     "seed": 14,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Mahoney",
+     "team": "GFA",
+     "seed": 1,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 13-0"
+   },
+   {
+    "page": 21,
+    "round": "5th Place",
+    "match": "453",
+    "top": {
+     "name": "Triola",
+     "team": "SPP",
+     "seed": 4,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Russo",
+     "team": "RBC",
+     "seed": 11,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 14-7"
+   },
+   {
+    "page": 21,
+    "round": "Consi-Semis",
+    "match": "417",
+    "top": {
+     "name": "Triola",
+     "team": "SPP",
+     "seed": 4,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Gluckow",
+     "team": "SBP",
+     "seed": 14,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 21,
+    "round": "Consi-Semis",
+    "match": "418",
+    "top": {
+     "name": "Russo",
+     "team": "RBC",
+     "seed": 11,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Mahoney",
+     "team": "GFA",
+     "seed": 1,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 21,
+    "round": "Consi of 4",
+    "match": "377",
+    "top": {
+     "name": "Zimmer",
+     "team": "MTWN",
+     "seed": 8,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Triola",
+     "team": "SPP",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 5:59"
+   },
+   {
+    "page": 21,
+    "round": "Consi of 4",
+    "match": "378",
+    "top": {
+     "name": "Russo",
+     "team": "RBC",
+     "seed": 11,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "King",
+     "team": "MDTWP",
+     "seed": 10,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 8-5"
+   }
+  ],
+  "pages": [
+   20,
+   21
+  ]
+ },
+ "157": {
+  "bouts": [
+   {
+    "page": 22,
+    "round": "Round of 32",
+    "match": "17",
+    "top": {
+     "name": "Sean Love",
+     "team": "PISC",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 22,
+    "round": "Round of 32",
+    "match": "121",
+    "top": {
+     "name": "Tyler Morodan",
+     "team": "NWTN",
+     "seed": 17,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Danny Byrne",
+     "team": "LCM",
+     "seed": 16,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 19-6"
+   },
+   {
+    "page": 22,
+    "round": "Round of 32",
+    "match": "122",
+    "top": {
+     "name": "Owen Miller",
+     "team": "HILL",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Frank Monto",
+     "team": "LAKE",
+     "seed": 24,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 9-0"
+   },
+   {
+    "page": 22,
+    "round": "Round of 32",
+    "match": "123",
+    "top": {
+     "name": "Lucas Meisenholder",
+     "team": "CHAM",
+     "seed": 25,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Jacob Jones",
+     "team": "GFA",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 3:49"
+   },
+   {
+    "page": 22,
+    "round": "Round of 32",
+    "match": "21",
+    "top": {
+     "name": "Colin Smyth",
+     "team": "MO",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 22,
+    "round": "Round of 32",
+    "match": "124",
+    "top": {
+     "name": "Cole Jasinkiewicz",
+     "team": "DEL",
+     "seed": 21,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Jeremy Marsella",
+     "team": "WALL",
+     "seed": 12,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:37"
+   },
+   {
+    "page": 22,
+    "round": "Round of 32",
+    "match": "125",
+    "top": {
+     "name": "Muhammed Tafida",
+     "team": "BRGF",
+     "seed": 13,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Eddie Hufnagel",
+     "team": "DMNT",
+     "seed": 20,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 12-2"
+   },
+   {
+    "page": 22,
+    "round": "Round of 32",
+    "match": "3",
+    "top": null,
+    "bottom": {
+     "name": "Harry Asatrian.Jr",
+     "team": "PRMC",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 22,
+    "round": "Round of 32",
+    "match": "19",
+    "top": {
+     "name": "Luke Scholz",
+     "team": "CRAN",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 22,
+    "round": "Round of 32",
+    "match": "126",
+    "top": {
+     "name": "Roman Ritacco",
+     "team": "KINN",
+     "seed": 19,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Tyler Whartnaby",
+     "team": "PSCT",
+     "seed": 14,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 8-3"
+   },
+   {
+    "page": 22,
+    "round": "Round of 32",
+    "match": "127",
+    "top": {
+     "name": "Jamison Devlin",
+     "team": "DEL",
+     "seed": 11,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Matt Summa",
+     "team": "SHP",
+     "seed": 22,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 2:54"
+   },
+   {
+    "page": 22,
+    "round": "Round of 32",
+    "match": "7",
+    "top": null,
+    "bottom": {
+     "name": "Jeremy McGrath",
+     "team": "GFA",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 22,
+    "round": "Round of 32",
+    "match": "128",
+    "top": {
+     "name": "Parker Quinn",
+     "team": "WALL",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Cael Hoffman",
+     "team": "DBP",
+     "seed": 26,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:38"
+   },
+   {
+    "page": 22,
+    "round": "Round of 32",
+    "match": "129",
+    "top": {
+     "name": "Thomas Burke",
+     "team": "RBC",
+     "seed": 23,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Luke Stempkowski",
+     "team": "PSKV",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:45"
+   },
+   {
+    "page": 22,
+    "round": "Round of 32",
+    "match": "130",
+    "top": {
+     "name": "Torrin Tracey",
+     "team": "MANA",
+     "seed": 15,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Dominic LiSanti",
+     "team": "W/MP",
+     "seed": 18,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 5:54"
+   },
+   {
+    "page": 22,
+    "round": "Round of 32",
+    "match": "1",
+    "top": null,
+    "bottom": {
+     "name": "Joseph Ruiz",
+     "team": "SPP",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 22,
+    "round": "Round of 16",
+    "match": "243",
+    "top": {
+     "name": "Love",
+     "team": "PISC",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Byrne",
+     "team": "LCM",
+     "seed": 16,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 14-0"
+   },
+   {
+    "page": 22,
+    "round": "Round of 16",
+    "match": "244",
+    "top": {
+     "name": "Miller",
+     "team": "HILL",
+     "seed": 9,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Jones",
+     "team": "GFA",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 8-7"
+   },
+   {
+    "page": 22,
+    "round": "Round of 16",
+    "match": "245",
+    "top": {
+     "name": "Smyth",
+     "team": "MO",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Marsella",
+     "team": "WALL",
+     "seed": 12,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC SV 6-3"
+   },
+   {
+    "page": 22,
+    "round": "Round of 16",
+    "match": "246",
+    "top": {
+     "name": "Tafida",
+     "team": "BRGF",
+     "seed": 13,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Asatrian.Jr",
+     "team": "PRMC",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:59"
+   },
+   {
+    "page": 22,
+    "round": "Round of 16",
+    "match": "247",
+    "top": {
+     "name": "Scholz",
+     "team": "CRAN",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Whartnaby",
+     "team": "PSCT",
+     "seed": 14,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 3:36"
+   },
+   {
+    "page": 22,
+    "round": "Round of 16",
+    "match": "248",
+    "top": {
+     "name": "Devlin",
+     "team": "DEL",
+     "seed": 11,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "McGrath",
+     "team": "GFA",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:27"
+   },
+   {
+    "page": 22,
+    "round": "Round of 16",
+    "match": "249",
+    "top": {
+     "name": "Quinn",
+     "team": "WALL",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Stempkowski",
+     "team": "PSKV",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 8-6"
+   },
+   {
+    "page": 22,
+    "round": "Round of 16",
+    "match": "250",
+    "top": {
+     "name": "Tracey",
+     "team": "MANA",
+     "seed": 15,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Ruiz",
+     "team": "SPP",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:43"
+   },
+   {
+    "page": 22,
+    "round": "Quarter-Finals",
+    "match": "323",
+    "top": {
+     "name": "Love",
+     "team": "PISC",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Jones",
+     "team": "GFA",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 4:40"
+   },
+   {
+    "page": 22,
+    "round": "Quarter-Finals",
+    "match": "324",
+    "top": {
+     "name": "Smyth",
+     "team": "MO",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Asatrian.Jr",
+     "team": "PRMC",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 13-4"
+   },
+   {
+    "page": 22,
+    "round": "Quarter-Finals",
+    "match": "325",
+    "top": {
+     "name": "Scholz",
+     "team": "CRAN",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "McGrath",
+     "team": "GFA",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "M FOR 4:58"
+   },
+   {
+    "page": 22,
+    "round": "Quarter-Finals",
+    "match": "326",
+    "top": {
+     "name": "Stempkowski",
+     "team": "PSKV",
+     "seed": 10,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Ruiz",
+     "team": "SPP",
+     "seed": 2,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC SV 10-7"
+   },
+   {
+    "page": 22,
+    "round": "Semi-Finals",
+    "match": "379",
+    "top": {
+     "name": "Love",
+     "team": "PISC",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Asatrian.Jr",
+     "team": "PRMC",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 2-1"
+   },
+   {
+    "page": 22,
+    "round": "Semi-Finals",
+    "match": "380",
+    "top": {
+     "name": "McGrath",
+     "team": "GFA",
+     "seed": 6,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Stempkowski",
+     "team": "PSKV",
+     "seed": 10,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 1-0"
+   },
+   {
+    "page": 22,
+    "round": "Finals",
+    "match": "457",
+    "top": {
+     "name": "Love",
+     "team": "PISC",
+     "seed": 1,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "McGrath",
+     "team": "GFA",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 6-1"
+   },
+   {
+    "page": 23,
+    "round": "3rd Place",
+    "match": "455",
+    "top": {
+     "name": "Stempkowski",
+     "team": "PSKV",
+     "seed": 10,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Asatrian.Jr",
+     "team": "PRMC",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 4-2"
+   },
+   {
+    "page": 23,
+    "round": "5th Place",
+    "match": "456",
+    "top": {
+     "name": "Smyth",
+     "team": "MO",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Ruiz",
+     "team": "SPP",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:55"
+   },
+   {
+    "page": 23,
+    "round": "Consi-Semis",
+    "match": "419",
+    "top": {
+     "name": "Smyth",
+     "team": "MO",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Stempkowski",
+     "team": "PSKV",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 23,
+    "round": "Consi-Semis",
+    "match": "420",
+    "top": {
+     "name": "Ruiz",
+     "team": "SPP",
+     "seed": 2,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Asatrian.Jr",
+     "team": "PRMC",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 23,
+    "round": "Consi of 4",
+    "match": "381",
+    "top": {
+     "name": "Jones",
+     "team": "GFA",
+     "seed": 8,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Smyth",
+     "team": "MO",
+     "seed": 5,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "M FOR"
+   },
+   {
+    "page": 23,
+    "round": "Consi of 4",
+    "match": "382",
+    "top": {
+     "name": "Scholz",
+     "team": "CRAN",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Ruiz",
+     "team": "SPP",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "M FOR"
+   }
+  ],
+  "pages": [
+   22,
+   23
+  ]
+ },
+ "165": {
+  "bouts": [
+   {
+    "page": 24,
+    "round": "Round of 32",
+    "match": "17",
+    "top": {
+     "name": "Ryan Willi",
+     "team": "MS",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 24,
+    "round": "Round of 32",
+    "match": "131",
+    "top": {
+     "name": "Tommy O'Connor",
+     "team": "MTWN",
+     "seed": 17,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "David Lopes",
+     "team": "SHP",
+     "seed": 16,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 16-11"
+   },
+   {
+    "page": 24,
+    "round": "Round of 32",
+    "match": "132",
+    "top": {
+     "name": "Matthew McCann",
+     "team": "B-R",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Giammaria Giordano",
+     "team": "PRMC",
+     "seed": 24,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 12-2"
+   },
+   {
+    "page": 24,
+    "round": "Round of 32",
+    "match": "133",
+    "top": {
+     "name": "Leo Dimitrakiou",
+     "team": "KINN",
+     "seed": 25,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Joe Aiello",
+     "team": "PARA",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 4:51"
+   },
+   {
+    "page": 24,
+    "round": "Round of 32",
+    "match": "134",
+    "top": {
+     "name": "Cameron Pote",
+     "team": "DEL",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Blake Watkins",
+     "team": "GFA",
+     "seed": 28,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 12-8"
+   },
+   {
+    "page": 24,
+    "round": "Round of 32",
+    "match": "135",
+    "top": {
+     "name": "Jayden Soy",
+     "team": "MSCA",
+     "seed": 21,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Robert Attenborough",
+     "team": "MDTW",
+     "seed": 12,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 3:10"
+   },
+   {
+    "page": 24,
+    "round": "Round of 32",
+    "match": "136",
+    "top": {
+     "name": "Cristian Rodriguez",
+     "team": "RBC",
+     "seed": 13,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Jared Acinapura",
+     "team": "CRAN",
+     "seed": 20,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 10-8"
+   },
+   {
+    "page": 24,
+    "round": "Round of 32",
+    "match": "137",
+    "top": {
+     "name": "Will Tarna",
+     "team": "PSKV",
+     "seed": 29,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Colby Vital",
+     "team": "PNGT",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 3:06"
+   },
+   {
+    "page": 24,
+    "round": "Round of 32",
+    "match": "138",
+    "top": {
+     "name": "Aidan Rotbaum",
+     "team": "Nut",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Nicholas Konopka",
+     "team": "PRMC",
+     "seed": 30,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:33"
+   },
+   {
+    "page": 24,
+    "round": "Round of 32",
+    "match": "139",
+    "top": {
+     "name": "Sincere Mello",
+     "team": "MSCA",
+     "seed": 19,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Branden Causillas",
+     "team": "RMPO",
+     "seed": 14,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 12-5"
+   },
+   {
+    "page": 24,
+    "round": "Round of 32",
+    "match": "140",
+    "top": {
+     "name": "Kaden Montoya",
+     "team": "MOKN",
+     "seed": 11,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Chris Ferranti",
+     "team": "CHAM",
+     "seed": 22,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 10-5"
+   },
+   {
+    "page": 24,
+    "round": "Round of 32",
+    "match": "141",
+    "top": {
+     "name": "Dan Kyzima",
+     "team": "LAKE",
+     "seed": 27,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Scott Coppolo",
+     "team": "MO",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:51"
+   },
+   {
+    "page": 24,
+    "round": "Round of 32",
+    "match": "142",
+    "top": {
+     "name": "Louis Dellavolpe",
+     "team": "DBP",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Max Tripoli",
+     "team": "DPLC",
+     "seed": 26,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:42"
+   },
+   {
+    "page": 24,
+    "round": "Round of 32",
+    "match": "143",
+    "top": {
+     "name": "Timothy McNamara",
+     "team": "NWTN",
+     "seed": 23,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Levi Schulmann",
+     "team": "NHGH",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 12-5"
+   },
+   {
+    "page": 24,
+    "round": "Round of 32",
+    "match": "144",
+    "top": {
+     "name": "Finn Mckeon",
+     "team": "SBP",
+     "seed": 15,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Anthony DeLorenzo",
+     "team": "RMPO",
+     "seed": 18,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 8-5"
+   },
+   {
+    "page": 24,
+    "round": "Round of 32",
+    "match": "145",
+    "top": {
+     "name": "Lucas Pelletier",
+     "team": "CHER",
+     "seed": 31,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Lukas Katsigiannis",
+     "team": "PJ23",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:47"
+   },
+   {
+    "page": 24,
+    "round": "Round of 16",
+    "match": "251",
+    "top": {
+     "name": "Willi",
+     "team": "MS",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Lopes",
+     "team": "SHP",
+     "seed": 16,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:18"
+   },
+   {
+    "page": 24,
+    "round": "Round of 16",
+    "match": "252",
+    "top": {
+     "name": "McCann",
+     "team": "B-R",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Aiello",
+     "team": "PARA",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 11-3"
+   },
+   {
+    "page": 24,
+    "round": "Round of 16",
+    "match": "253",
+    "top": {
+     "name": "Watkins",
+     "team": "GFA",
+     "seed": 28,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Soy",
+     "team": "MSCA",
+     "seed": 21,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 12-8"
+   },
+   {
+    "page": 24,
+    "round": "Round of 16",
+    "match": "254",
+    "top": {
+     "name": "Rodriguez",
+     "team": "RBC",
+     "seed": 13,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Vital",
+     "team": "PNGT",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 10-1"
+   },
+   {
+    "page": 24,
+    "round": "Round of 16",
+    "match": "255",
+    "top": {
+     "name": "Rotbaum",
+     "team": "Nut",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Causillas",
+     "team": "RMPO",
+     "seed": 14,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 5:17"
+   },
+   {
+    "page": 24,
+    "round": "Round of 16",
+    "match": "256",
+    "top": {
+     "name": "Montoya",
+     "team": "MOKN",
+     "seed": 11,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Coppolo",
+     "team": "MO",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 9-7"
+   },
+   {
+    "page": 24,
+    "round": "Round of 16",
+    "match": "257",
+    "top": {
+     "name": "Dellavolpe",
+     "team": "DBP",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Schulmann",
+     "team": "NHGH",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 5:20"
+   },
+   {
+    "page": 24,
+    "round": "Round of 16",
+    "match": "258",
+    "top": {
+     "name": "DeLorenzo",
+     "team": "RMPO",
+     "seed": 18,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Katsigiannis",
+     "team": "PJ23",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 2:00"
+   },
+   {
+    "page": 24,
+    "round": "Quarter-Finals",
+    "match": "327",
+    "top": {
+     "name": "Willi",
+     "team": "MS",
+     "seed": 1,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "McCann",
+     "team": "B-R",
+     "seed": 9,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 9-5"
+   },
+   {
+    "page": 24,
+    "round": "Quarter-Finals",
+    "match": "328",
+    "top": {
+     "name": "Watkins",
+     "team": "GFA",
+     "seed": 28,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Vital",
+     "team": "PNGT",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 3:28"
+   },
+   {
+    "page": 24,
+    "round": "Quarter-Finals",
+    "match": "329",
+    "top": {
+     "name": "Rotbaum",
+     "team": "Nut",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Coppolo",
+     "team": "MO",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 4-1"
+   },
+   {
+    "page": 24,
+    "round": "Quarter-Finals",
+    "match": "330",
+    "top": {
+     "name": "Schulmann",
+     "team": "NHGH",
+     "seed": 10,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Katsigiannis",
+     "team": "PJ23",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC SV 7-3"
+   },
+   {
+    "page": 24,
+    "round": "Semi-Finals",
+    "match": "383",
+    "top": {
+     "name": "McCann",
+     "team": "B-R",
+     "seed": 9,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Vital",
+     "team": "PNGT",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 5-2"
+   },
+   {
+    "page": 24,
+    "round": "Semi-Finals",
+    "match": "384",
+    "top": {
+     "name": "Coppolo",
+     "team": "MO",
+     "seed": 6,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Katsigiannis",
+     "team": "PJ23",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 3:07"
+   },
+   {
+    "page": 24,
+    "round": "Finals",
+    "match": "460",
+    "top": {
+     "name": "Vital",
+     "team": "PNGT",
+     "seed": 4,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Katsigiannis",
+     "team": "PJ23",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC SV 6-3"
+   },
+   {
+    "page": 25,
+    "round": "3rd Place",
+    "match": "458",
+    "top": {
+     "name": "Coppolo",
+     "team": "MO",
+     "seed": 6,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "McCann",
+     "team": "B-R",
+     "seed": 9,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 4-0"
+   },
+   {
+    "page": 25,
+    "round": "5th Place",
+    "match": "459",
+    "top": {
+     "name": "Willi",
+     "team": "MS",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Schulmann",
+     "team": "NHGH",
+     "seed": 10,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 2:31"
+   },
+   {
+    "page": 25,
+    "round": "Consi-Semis",
+    "match": "421",
+    "top": {
+     "name": "Willi",
+     "team": "MS",
+     "seed": 1,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Coppolo",
+     "team": "MO",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 25,
+    "round": "Consi-Semis",
+    "match": "422",
+    "top": {
+     "name": "Schulmann",
+     "team": "NHGH",
+     "seed": 10,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "McCann",
+     "team": "B-R",
+     "seed": 9,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 25,
+    "round": "Consi of 4",
+    "match": "385",
+    "top": {
+     "name": "Willi",
+     "team": "MS",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Watkins",
+     "team": "GFA",
+     "seed": 28,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:20"
+   },
+   {
+    "page": 25,
+    "round": "Consi of 4",
+    "match": "386",
+    "top": {
+     "name": "Rotbaum",
+     "team": "Nut",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Schulmann",
+     "team": "NHGH",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:19"
+   }
+  ],
+  "pages": [
+   24,
+   25
+  ]
+ },
+ "175": {
+  "bouts": [
+   {
+    "page": 26,
+    "round": "Round of 32",
+    "match": "17",
+    "top": {
+     "name": "Santino Rodriguez",
+     "team": "DBP",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 26,
+    "round": "Round of 32",
+    "match": "146",
+    "top": {
+     "name": "Zack Lombreglia",
+     "team": "PJ23",
+     "seed": 17,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Jack Leiman",
+     "team": "NHGH",
+     "seed": 16,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:47"
+   },
+   {
+    "page": 26,
+    "round": "Round of 32",
+    "match": "147",
+    "top": {
+     "name": "Luke Shivas",
+     "team": "MOKN",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Sebastian Goins",
+     "team": "CHER",
+     "seed": 24,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:08"
+   },
+   {
+    "page": 26,
+    "round": "Round of 32",
+    "match": "148",
+    "top": {
+     "name": "Ryder Bernholz",
+     "team": "DEL",
+     "seed": 25,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Brandon Papa",
+     "team": "SHP",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 3-2"
+   },
+   {
+    "page": 26,
+    "round": "Round of 32",
+    "match": "149",
+    "top": {
+     "name": "William Capizzi",
+     "team": "PCVY",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Logan Rickard",
+     "team": "PARA",
+     "seed": 22,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:51"
+   },
+   {
+    "page": 26,
+    "round": "Round of 32",
+    "match": "150",
+    "top": {
+     "name": "Alexander Helphingstine",
+     "team": "LA",
+     "seed": 21,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Joey Acinapura",
+     "team": "CRAN",
+     "seed": 12,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 2:15"
+   },
+   {
+    "page": 26,
+    "round": "Round of 32",
+    "match": "151",
+    "top": {
+     "name": "Shane Morrell",
+     "team": "LCM",
+     "seed": 13,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Matthew Cmielewski",
+     "team": "RBC",
+     "seed": 20,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 14-4"
+   },
+   {
+    "page": 26,
+    "round": "Round of 32",
+    "match": "3",
+    "top": null,
+    "bottom": {
+     "name": "Ryan Engle",
+     "team": "RHS",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 26,
+    "round": "Round of 32",
+    "match": "19",
+    "top": {
+     "name": "Cole Dunham",
+     "team": "PJ23",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 26,
+    "round": "Round of 32",
+    "match": "152",
+    "top": {
+     "name": "Prince Ezeanii",
+     "team": "DPLC",
+     "seed": 19,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Lukas Van Veen",
+     "team": "PSKV",
+     "seed": 14,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:42"
+   },
+   {
+    "page": 26,
+    "round": "Round of 32",
+    "match": "153",
+    "top": {
+     "name": "AJ Maiden",
+     "team": "Nut",
+     "seed": 11,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Landon Hackney",
+     "team": "CHER",
+     "seed": 28,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 5:09"
+   },
+   {
+    "page": 26,
+    "round": "Round of 32",
+    "match": "154",
+    "top": {
+     "name": "Isaiah Rojas",
+     "team": "PRMC",
+     "seed": 27,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Justin Bullock",
+     "team": "MO",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 2:33"
+   },
+   {
+    "page": 26,
+    "round": "Round of 32",
+    "match": "155",
+    "top": {
+     "name": "Kwabena Morgan",
+     "team": "BBRK",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Farel Cespedes",
+     "team": "B-R",
+     "seed": 26,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:58"
+   },
+   {
+    "page": 26,
+    "round": "Round of 32",
+    "match": "156",
+    "top": {
+     "name": "Xzavier Torres",
+     "team": "PEDD",
+     "seed": 23,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Finn Cavanaugh",
+     "team": "PING",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:55"
+   },
+   {
+    "page": 26,
+    "round": "Round of 32",
+    "match": "157",
+    "top": {
+     "name": "Noah Nagle",
+     "team": "MDTWP",
+     "seed": 15,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Tim Dochnal",
+     "team": "CHAM",
+     "seed": 18,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 5:00"
+   },
+   {
+    "page": 26,
+    "round": "Round of 32",
+    "match": "1",
+    "top": null,
+    "bottom": {
+     "name": "Jack Harty",
+     "team": "GFA",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 26,
+    "round": "Round of 16",
+    "match": "259",
+    "top": {
+     "name": "Rodriguez",
+     "team": "DBP",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Lombreglia",
+     "team": "PJ23",
+     "seed": 17,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:35"
+   },
+   {
+    "page": 26,
+    "round": "Round of 16",
+    "match": "260",
+    "top": {
+     "name": "Shivas",
+     "team": "MOKN",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Papa",
+     "team": "SHP",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 13-0"
+   },
+   {
+    "page": 26,
+    "round": "Round of 16",
+    "match": "261",
+    "top": {
+     "name": "Capizzi",
+     "team": "PCVY",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Acinapura",
+     "team": "CRAN",
+     "seed": 12,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:56"
+   },
+   {
+    "page": 26,
+    "round": "Round of 16",
+    "match": "262",
+    "top": {
+     "name": "Morrell",
+     "team": "LCM",
+     "seed": 13,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Engle",
+     "team": "RHS",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 4:20"
+   },
+   {
+    "page": 26,
+    "round": "Round of 16",
+    "match": "263",
+    "top": {
+     "name": "Dunham",
+     "team": "PJ23",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Van Veen",
+     "team": "PSKV",
+     "seed": 14,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 5:23"
+   },
+   {
+    "page": 26,
+    "round": "Round of 16",
+    "match": "264",
+    "top": {
+     "name": "Maiden",
+     "team": "Nut",
+     "seed": 11,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Bullock",
+     "team": "MO",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:53"
+   },
+   {
+    "page": 26,
+    "round": "Round of 16",
+    "match": "265",
+    "top": {
+     "name": "Morgan",
+     "team": "BBRK",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Cavanaugh",
+     "team": "PING",
+     "seed": 10,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 3:40"
+   },
+   {
+    "page": 26,
+    "round": "Round of 16",
+    "match": "266",
+    "top": {
+     "name": "Nagle",
+     "team": "MDTWP",
+     "seed": 15,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Harty",
+     "team": "GFA",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 3:08"
+   },
+   {
+    "page": 26,
+    "round": "Quarter-Finals",
+    "match": "331",
+    "top": {
+     "name": "Rodriguez",
+     "team": "DBP",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Shivas",
+     "team": "MOKN",
+     "seed": 9,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 2:00"
+   },
+   {
+    "page": 26,
+    "round": "Quarter-Finals",
+    "match": "332",
+    "top": {
+     "name": "Capizzi",
+     "team": "PCVY",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Engle",
+     "team": "RHS",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 3:14"
+   },
+   {
+    "page": 26,
+    "round": "Quarter-Finals",
+    "match": "333",
+    "top": {
+     "name": "Dunham",
+     "team": "PJ23",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Bullock",
+     "team": "MO",
+     "seed": 6,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 12-6"
+   },
+   {
+    "page": 26,
+    "round": "Quarter-Finals",
+    "match": "334",
+    "top": {
+     "name": "Morgan",
+     "team": "BBRK",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Harty",
+     "team": "GFA",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 4-2"
+   },
+   {
+    "page": 26,
+    "round": "Semi-Finals",
+    "match": "387",
+    "top": {
+     "name": "Rodriguez",
+     "team": "DBP",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Engle",
+     "team": "RHS",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 11-4"
+   },
+   {
+    "page": 26,
+    "round": "Semi-Finals",
+    "match": "388",
+    "top": {
+     "name": "Dunham",
+     "team": "PJ23",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Harty",
+     "team": "GFA",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 9-7"
+   },
+   {
+    "page": 26,
+    "round": "Finals",
+    "match": "463",
+    "top": {
+     "name": "Rodriguez",
+     "team": "DBP",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Harty",
+     "team": "GFA",
+     "seed": 2,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 5-4"
+   },
+   {
+    "page": 27,
+    "round": "3rd Place",
+    "match": "461",
+    "top": {
+     "name": "Dunham",
+     "team": "PJ23",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Engle",
+     "team": "RHS",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 3-2"
+   },
+   {
+    "page": 27,
+    "round": "5th Place",
+    "match": "462",
+    "top": {
+     "name": "Capizzi",
+     "team": "PCVY",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Morgan",
+     "team": "BBRK",
+     "seed": 7,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 11-8"
+   },
+   {
+    "page": 27,
+    "round": "Consi-Semis",
+    "match": "423",
+    "top": {
+     "name": "Capizzi",
+     "team": "PCVY",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Dunham",
+     "team": "PJ23",
+     "seed": 3,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 27,
+    "round": "Consi-Semis",
+    "match": "424",
+    "top": {
+     "name": "Morgan",
+     "team": "BBRK",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Engle",
+     "team": "RHS",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 27,
+    "round": "Consi of 4",
+    "match": "389",
+    "top": {
+     "name": "Shivas",
+     "team": "MOKN",
+     "seed": 9,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Capizzi",
+     "team": "PCVY",
+     "seed": 5,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 17-7"
+   },
+   {
+    "page": 27,
+    "round": "Consi of 4",
+    "match": "390",
+    "top": {
+     "name": "Bullock",
+     "team": "MO",
+     "seed": 6,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Morgan",
+     "team": "BBRK",
+     "seed": 7,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 10-5"
+   }
+  ],
+  "pages": [
+   26,
+   27
+  ]
+ },
+ "190": {
+  "bouts": [
+   {
+    "page": 28,
+    "round": "Round of 32",
+    "match": "17",
+    "top": {
+     "name": "Nevin Mattessich",
+     "team": "DBP",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 28,
+    "round": "Round of 32",
+    "match": "158",
+    "top": {
+     "name": "Joe Cutruzzula",
+     "team": "WE",
+     "seed": 17,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Michael Morelli",
+     "team": "PJ23",
+     "seed": 16,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:35"
+   },
+   {
+    "page": 28,
+    "round": "Round of 32",
+    "match": "8",
+    "top": {
+     "name": "David Douglass",
+     "team": "LCM",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 28,
+    "round": "Round of 32",
+    "match": "5",
+    "top": null,
+    "bottom": {
+     "name": "Dane Shiroff",
+     "team": "CHER",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 28,
+    "round": "Round of 32",
+    "match": "21",
+    "top": {
+     "name": "Greg Sawyer",
+     "team": "DEL",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 28,
+    "round": "Round of 32",
+    "match": "159",
+    "top": {
+     "name": "Rocky Penny",
+     "team": "GFA",
+     "seed": 21,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Landon Fitzsimmons",
+     "team": "MSCA",
+     "seed": 12,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 4:06"
+   },
+   {
+    "page": 28,
+    "round": "Round of 32",
+    "match": "160",
+    "top": {
+     "name": "Lemuel Lewis",
+     "team": "SBP",
+     "seed": 13,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "John Sammartano",
+     "team": "CHAM",
+     "seed": 20,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:40"
+   },
+   {
+    "page": 28,
+    "round": "Round of 32",
+    "match": "3",
+    "top": null,
+    "bottom": {
+     "name": "Tyler Neiva",
+     "team": "GFA",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 28,
+    "round": "Round of 32",
+    "match": "19",
+    "top": {
+     "name": "David Thomson",
+     "team": "PJ23",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 28,
+    "round": "Round of 32",
+    "match": "161",
+    "top": {
+     "name": "Buddha Washington",
+     "team": "DEMA",
+     "seed": 19,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Matthew Sutton",
+     "team": "PJ23",
+     "seed": 14,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:30"
+   },
+   {
+    "page": 28,
+    "round": "Round of 32",
+    "match": "162",
+    "top": {
+     "name": "Michael Damerjian",
+     "team": "MTWN",
+     "seed": 11,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Kevin Rafferty",
+     "team": "SHP",
+     "seed": 22,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 7-6"
+   },
+   {
+    "page": 28,
+    "round": "Round of 32",
+    "match": "7",
+    "top": null,
+    "bottom": {
+     "name": "Artun Kirgezmis",
+     "team": "WHLS",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 28,
+    "round": "Round of 32",
+    "match": "23",
+    "top": {
+     "name": "Alex Bainbridge",
+     "team": "PSKV",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 28,
+    "round": "Round of 32",
+    "match": "163",
+    "top": {
+     "name": "Marlowe Brown-Cabarris",
+     "team": "B-",
+     "seed": 23,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Anthony Cianfrocca",
+     "team": "RP",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:38"
+   },
+   {
+    "page": 28,
+    "round": "Round of 32",
+    "match": "164",
+    "top": {
+     "name": "Anthony Wagner",
+     "team": "MOKN",
+     "seed": 15,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Hector Rodriguez",
+     "team": "PSCT",
+     "seed": 18,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:52"
+   },
+   {
+    "page": 28,
+    "round": "Round of 32",
+    "match": "1",
+    "top": null,
+    "bottom": {
+     "name": "Guy Oelsner",
+     "team": "PRMC",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 28,
+    "round": "Round of 16",
+    "match": "267",
+    "top": {
+     "name": "Mattessich",
+     "team": "DBP",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Cutruzzula",
+     "team": "WE",
+     "seed": 17,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 2:21"
+   },
+   {
+    "page": 28,
+    "round": "Round of 16",
+    "match": "268",
+    "top": {
+     "name": "Douglass",
+     "team": "LCM",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Shiroff",
+     "team": "CHER",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:17"
+   },
+   {
+    "page": 28,
+    "round": "Round of 16",
+    "match": "269",
+    "top": {
+     "name": "Sawyer",
+     "team": "DEL",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Fitzsimmons",
+     "team": "MSCA",
+     "seed": 12,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 5:07"
+   },
+   {
+    "page": 28,
+    "round": "Round of 16",
+    "match": "270",
+    "top": {
+     "name": "Sammartano",
+     "team": "CHAM",
+     "seed": 20,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Neiva",
+     "team": "GFA",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 5:13"
+   },
+   {
+    "page": 28,
+    "round": "Round of 16",
+    "match": "271",
+    "top": {
+     "name": "Thomson",
+     "team": "PJ23",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Sutton",
+     "team": "PJ23",
+     "seed": 14,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 3:18"
+   },
+   {
+    "page": 28,
+    "round": "Round of 16",
+    "match": "272",
+    "top": {
+     "name": "Damerjian",
+     "team": "MTWN",
+     "seed": 11,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Kirgezmis",
+     "team": "WHLS",
+     "seed": 6,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD SV 10-2"
+   },
+   {
+    "page": 28,
+    "round": "Round of 16",
+    "match": "273",
+    "top": {
+     "name": "Bainbridge",
+     "team": "PSKV",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Cianfrocca",
+     "team": "RP",
+     "seed": 10,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 3:36"
+   },
+   {
+    "page": 28,
+    "round": "Round of 16",
+    "match": "274",
+    "top": {
+     "name": "Rodriguez",
+     "team": "PSCT",
+     "seed": 18,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Oelsner",
+     "team": "PRMC",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:09"
+   },
+   {
+    "page": 28,
+    "round": "Quarter-Finals",
+    "match": "335",
+    "top": {
+     "name": "Mattessich",
+     "team": "DBP",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Douglass",
+     "team": "LCM",
+     "seed": 9,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 1:49"
+   },
+   {
+    "page": 28,
+    "round": "Quarter-Finals",
+    "match": "336",
+    "top": {
+     "name": "Sawyer",
+     "team": "DEL",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Neiva",
+     "team": "GFA",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 13-6"
+   },
+   {
+    "page": 28,
+    "round": "Quarter-Finals",
+    "match": "337",
+    "top": {
+     "name": "Sutton",
+     "team": "PJ23",
+     "seed": 14,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Damerjian",
+     "team": "MTWN",
+     "seed": 11,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 12-6"
+   },
+   {
+    "page": 28,
+    "round": "Quarter-Finals",
+    "match": "338",
+    "top": {
+     "name": "Bainbridge",
+     "team": "PSKV",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Oelsner",
+     "team": "PRMC",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 3:21"
+   },
+   {
+    "page": 28,
+    "round": "Semi-Finals",
+    "match": "391",
+    "top": {
+     "name": "Mattessich",
+     "team": "DBP",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Neiva",
+     "team": "GFA",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:00"
+   },
+   {
+    "page": 28,
+    "round": "Semi-Finals",
+    "match": "392",
+    "top": {
+     "name": "Damerjian",
+     "team": "MTWN",
+     "seed": 11,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Oelsner",
+     "team": "PRMC",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 2-1"
+   },
+   {
+    "page": 28,
+    "round": "Finals",
+    "match": "466",
+    "top": {
+     "name": "Mattessich",
+     "team": "DBP",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Oelsner",
+     "team": "PRMC",
+     "seed": 2,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:49"
+   },
+   {
+    "page": 29,
+    "round": "3rd Place",
+    "match": "464",
+    "top": {
+     "name": "Damerjian",
+     "team": "MTWN",
+     "seed": 11,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Neiva",
+     "team": "GFA",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 5:30"
+   },
+   {
+    "page": 29,
+    "round": "5th Place",
+    "match": "465",
+    "top": {
+     "name": "Sawyer",
+     "team": "DEL",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Sutton",
+     "team": "PJ23",
+     "seed": 14,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:31"
+   },
+   {
+    "page": 29,
+    "round": "Consi-Semis",
+    "match": "425",
+    "top": {
+     "name": "Sawyer",
+     "team": "DEL",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Damerjian",
+     "team": "MTWN",
+     "seed": 11,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 29,
+    "round": "Consi-Semis",
+    "match": "426",
+    "top": {
+     "name": "Sutton",
+     "team": "PJ23",
+     "seed": 14,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Neiva",
+     "team": "GFA",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 29,
+    "round": "Consi of 4",
+    "match": "393",
+    "top": {
+     "name": "Douglass",
+     "team": "LCM",
+     "seed": 9,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Sawyer",
+     "team": "DEL",
+     "seed": 5,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 13-8"
+   },
+   {
+    "page": 29,
+    "round": "Consi of 4",
+    "match": "394",
+    "top": {
+     "name": "Sutton",
+     "team": "PJ23",
+     "seed": 14,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Bainbridge",
+     "team": "PSKV",
+     "seed": 7,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:55"
+   }
+  ],
+  "pages": [
+   28,
+   29
+  ]
+ },
+ "215": {
+  "bouts": [
+   {
+    "page": 30,
+    "round": "Round of 32",
+    "match": "17",
+    "top": {
+     "name": "Nicolas Gonzalez",
+     "team": "MO",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 30,
+    "round": "Round of 32",
+    "match": "165",
+    "top": {
+     "name": "Carlito Bonita",
+     "team": "DBP",
+     "seed": 17,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Josiah Barrera",
+     "team": "SPP",
+     "seed": 16,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 4:37"
+   },
+   {
+    "page": 30,
+    "round": "Round of 32",
+    "match": "8",
+    "top": {
+     "name": "August Cassidy",
+     "team": "PEDD",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 30,
+    "round": "Round of 32",
+    "match": "5",
+    "top": null,
+    "bottom": {
+     "name": "Delvin Oxmann",
+     "team": "PSKV",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 30,
+    "round": "Round of 32",
+    "match": "21",
+    "top": {
+     "name": "Tuguldur Bayarkhuu",
+     "team": "SBP",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 30,
+    "round": "Round of 32",
+    "match": "166",
+    "top": {
+     "name": "Hayden woolley",
+     "team": "RBC",
+     "seed": 21,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Nate Fabunan",
+     "team": "CHAM",
+     "seed": 12,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 6-4"
+   },
+   {
+    "page": 30,
+    "round": "Round of 32",
+    "match": "167",
+    "top": {
+     "name": "Atkan Cosar",
+     "team": "PRMC",
+     "seed": 13,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Theodore Skversky",
+     "team": "CHER",
+     "seed": 20,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 3:09"
+   },
+   {
+    "page": 30,
+    "round": "Round of 32",
+    "match": "3",
+    "top": null,
+    "bottom": {
+     "name": "Wyatt Sisco",
+     "team": "KINN",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 30,
+    "round": "Round of 32",
+    "match": "19",
+    "top": {
+     "name": "Matthew Morrissey",
+     "team": "OLDT",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 30,
+    "round": "Round of 32",
+    "match": "168",
+    "top": {
+     "name": "Ashton Arguello",
+     "team": "HILL",
+     "seed": 19,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Ryan Burke",
+     "team": "CHAM",
+     "seed": 14,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 3:02"
+   },
+   {
+    "page": 30,
+    "round": "Round of 32",
+    "match": "169",
+    "top": {
+     "name": "Caden Britton",
+     "team": "LCM",
+     "seed": 11,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Zach Ventola",
+     "team": "SHP",
+     "seed": 22,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 12-6"
+   },
+   {
+    "page": 30,
+    "round": "Round of 32",
+    "match": "7",
+    "top": null,
+    "bottom": {
+     "name": "Liam Hassloch",
+     "team": "SPAR",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 30,
+    "round": "Round of 32",
+    "match": "10",
+    "top": {
+     "name": "Aren Hidalgo",
+     "team": "HILL",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 30,
+    "round": "Round of 32",
+    "match": "15",
+    "top": null,
+    "bottom": {
+     "name": "Grayson Abbruzzese",
+     "team": "PRMC",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 30,
+    "round": "Round of 32",
+    "match": "170",
+    "top": {
+     "name": "Brody Ismael",
+     "team": "DEL",
+     "seed": 15,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Christopher Diaz",
+     "team": "DEL",
+     "seed": 18,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 0:58"
+   },
+   {
+    "page": 30,
+    "round": "Round of 32",
+    "match": "1",
+    "top": null,
+    "bottom": {
+     "name": "Trent Levash",
+     "team": "B-R",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 30,
+    "round": "Round of 16",
+    "match": "275",
+    "top": {
+     "name": "Gonzalez",
+     "team": "MO",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Barrera",
+     "team": "SPP",
+     "seed": 16,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:34"
+   },
+   {
+    "page": 30,
+    "round": "Round of 16",
+    "match": "276",
+    "top": {
+     "name": "Cassidy",
+     "team": "PEDD",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Oxmann",
+     "team": "PSKV",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 9-5"
+   },
+   {
+    "page": 30,
+    "round": "Round of 16",
+    "match": "277",
+    "top": {
+     "name": "Bayarkhuu",
+     "team": "SBP",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Fabunan",
+     "team": "CHAM",
+     "seed": 12,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 14-2"
+   },
+   {
+    "page": 30,
+    "round": "Round of 16",
+    "match": "278",
+    "top": {
+     "name": "Cosar",
+     "team": "PRMC",
+     "seed": 13,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Sisco",
+     "team": "KINN",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 3:00"
+   },
+   {
+    "page": 30,
+    "round": "Round of 16",
+    "match": "279",
+    "top": {
+     "name": "Morrissey",
+     "team": "OLDT",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Arguello",
+     "team": "HILL",
+     "seed": 19,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:32"
+   },
+   {
+    "page": 30,
+    "round": "Round of 16",
+    "match": "280",
+    "top": {
+     "name": "Ventola",
+     "team": "SHP",
+     "seed": 22,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Hassloch",
+     "team": "SPAR",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:48"
+   },
+   {
+    "page": 30,
+    "round": "Round of 16",
+    "match": "281",
+    "top": {
+     "name": "Hidalgo",
+     "team": "HILL",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Abbruzzese",
+     "team": "PRMC",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:31"
+   },
+   {
+    "page": 30,
+    "round": "Round of 16",
+    "match": "282",
+    "top": {
+     "name": "Ismael",
+     "team": "DEL",
+     "seed": 15,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Levash",
+     "team": "B-R",
+     "seed": 2,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 4-0"
+   },
+   {
+    "page": 30,
+    "round": "Quarter-Finals",
+    "match": "339",
+    "top": {
+     "name": "Gonzalez",
+     "team": "MO",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Cassidy",
+     "team": "PEDD",
+     "seed": 9,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 1:25"
+   },
+   {
+    "page": 30,
+    "round": "Quarter-Finals",
+    "match": "340",
+    "top": {
+     "name": "Bayarkhuu",
+     "team": "SBP",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Sisco",
+     "team": "KINN",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 4:19"
+   },
+   {
+    "page": 30,
+    "round": "Quarter-Finals",
+    "match": "341",
+    "top": {
+     "name": "Morrissey",
+     "team": "OLDT",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Hassloch",
+     "team": "SPAR",
+     "seed": 6,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:47"
+   },
+   {
+    "page": 30,
+    "round": "Quarter-Finals",
+    "match": "342",
+    "top": {
+     "name": "Abbruzzese",
+     "team": "PRMC",
+     "seed": 10,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Ismael",
+     "team": "DEL",
+     "seed": 15,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:46"
+   },
+   {
+    "page": 30,
+    "round": "Semi-Finals",
+    "match": "395",
+    "top": {
+     "name": "Gonzalez",
+     "team": "MO",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Sisco",
+     "team": "KINN",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 2:33"
+   },
+   {
+    "page": 30,
+    "round": "Semi-Finals",
+    "match": "396",
+    "top": {
+     "name": "Morrissey",
+     "team": "OLDT",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Abbruzzese",
+     "team": "PRMC",
+     "seed": 10,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 14-10"
+   },
+   {
+    "page": 30,
+    "round": "Finals",
+    "match": "469",
+    "top": {
+     "name": "Gonzalez",
+     "team": "MO",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Morrissey",
+     "team": "OLDT",
+     "seed": 3,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 1:39"
+   },
+   {
+    "page": 31,
+    "round": "3rd Place",
+    "match": "467",
+    "top": {
+     "name": "Abbruzzese",
+     "team": "PRMC",
+     "seed": 10,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Sisco",
+     "team": "KINN",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 3:38"
+   },
+   {
+    "page": 31,
+    "round": "5th Place",
+    "match": "468",
+    "top": {
+     "name": "Bayarkhuu",
+     "team": "SBP",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Ismael",
+     "team": "DEL",
+     "seed": 15,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 4-0"
+   },
+   {
+    "page": 31,
+    "round": "Consi-Semis",
+    "match": "427",
+    "top": {
+     "name": "Bayarkhuu",
+     "team": "SBP",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Abbruzzese",
+     "team": "PRMC",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 31,
+    "round": "Consi-Semis",
+    "match": "428",
+    "top": {
+     "name": "Ismael",
+     "team": "DEL",
+     "seed": 15,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Sisco",
+     "team": "KINN",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 31,
+    "round": "Consi of 4",
+    "match": "397",
+    "top": {
+     "name": "Cassidy",
+     "team": "PEDD",
+     "seed": 9,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Bayarkhuu",
+     "team": "SBP",
+     "seed": 5,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 5:01"
+   },
+   {
+    "page": 31,
+    "round": "Consi of 4",
+    "match": "398",
+    "top": {
+     "name": "Hassloch",
+     "team": "SPAR",
+     "seed": 6,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Ismael",
+     "team": "DEL",
+     "seed": 15,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 2:23"
+   }
+  ],
+  "pages": [
+   30,
+   31
+  ]
+ },
+ "285": {
+  "bouts": [
+   {
+    "page": 32,
+    "round": "Round of 32",
+    "match": "17",
+    "top": {
+     "name": "Ryan Schnieder",
+     "team": "GFA",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 32,
+    "round": "Round of 32",
+    "match": "171",
+    "top": {
+     "name": "Philip Bertole",
+     "team": "RBC",
+     "seed": 17,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Austin Hooey",
+     "team": "CRAN",
+     "seed": 16,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:53"
+   },
+   {
+    "page": 32,
+    "round": "Round of 32",
+    "match": "172",
+    "top": {
+     "name": "Samuel Jean Marie",
+     "team": "DBP",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Michael Oakes",
+     "team": "GLRK",
+     "seed": 24,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 4:00"
+   },
+   {
+    "page": 32,
+    "round": "Round of 32",
+    "match": "5",
+    "top": null,
+    "bottom": {
+     "name": "Gabe Medina",
+     "team": "B-R",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 32,
+    "round": "Round of 32",
+    "match": "21",
+    "top": {
+     "name": "Nick Duarte",
+     "team": "HILL",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 32,
+    "round": "Round of 32",
+    "match": "173",
+    "top": {
+     "name": "Donavan Black",
+     "team": "CHER",
+     "seed": 21,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Sean Brown",
+     "team": "NWTN",
+     "seed": 12,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:12"
+   },
+   {
+    "page": 32,
+    "round": "Round of 32",
+    "match": "174",
+    "top": {
+     "name": "Anthony Evaristo",
+     "team": "MOKN",
+     "seed": 13,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Max Georges",
+     "team": "DPLC",
+     "seed": 20,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:55"
+   },
+   {
+    "page": 32,
+    "round": "Round of 32",
+    "match": "3",
+    "top": null,
+    "bottom": {
+     "name": "Jared Martini",
+     "team": "MO",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 32,
+    "round": "Round of 32",
+    "match": "19",
+    "top": {
+     "name": "Mohammad Targali",
+     "team": "MAT",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 32,
+    "round": "Round of 32",
+    "match": "175",
+    "top": {
+     "name": "Anthony Alfonso",
+     "team": "DPLC",
+     "seed": 19,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Lorenzo Palescandolo",
+     "team": "SHP",
+     "seed": 14,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 9-2"
+   },
+   {
+    "page": 32,
+    "round": "Round of 32",
+    "match": "176",
+    "top": {
+     "name": "Gabriel Gomez",
+     "team": "BRGF",
+     "seed": 11,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Domenick Infantes",
+     "team": "SPP",
+     "seed": 22,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:45"
+   },
+   {
+    "page": 32,
+    "round": "Round of 32",
+    "match": "7",
+    "top": null,
+    "bottom": {
+     "name": "Eric Clauburg",
+     "team": "WALL",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 32,
+    "round": "Round of 32",
+    "match": "23",
+    "top": {
+     "name": "Vincent Williams",
+     "team": "PISC",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 32,
+    "round": "Round of 32",
+    "match": "177",
+    "top": {
+     "name": "Nathaniel McCrone",
+     "team": "MDTWP",
+     "seed": 23,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Nolan Brewer",
+     "team": "Nut",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:26"
+   },
+   {
+    "page": 32,
+    "round": "Round of 32",
+    "match": "178",
+    "top": {
+     "name": "John Hearon IV",
+     "team": "LCM",
+     "seed": 15,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Ayden Fox",
+     "team": "BLOM",
+     "seed": 18,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 5:08"
+   },
+   {
+    "page": 32,
+    "round": "Round of 32",
+    "match": "1",
+    "top": null,
+    "bottom": {
+     "name": "August Moser",
+     "team": "DEL",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 32,
+    "round": "Round of 16",
+    "match": "283",
+    "top": {
+     "name": "Schnieder",
+     "team": "GFA",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Hooey",
+     "team": "CRAN",
+     "seed": 16,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:42"
+   },
+   {
+    "page": 32,
+    "round": "Round of 16",
+    "match": "284",
+    "top": {
+     "name": "Jean Marie",
+     "team": "DBP",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Medina",
+     "team": "B-R",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:14"
+   },
+   {
+    "page": 32,
+    "round": "Round of 16",
+    "match": "285",
+    "top": {
+     "name": "Duarte",
+     "team": "HILL",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Brown",
+     "team": "NWTN",
+     "seed": 12,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:21"
+   },
+   {
+    "page": 32,
+    "round": "Round of 16",
+    "match": "286",
+    "top": {
+     "name": "Georges",
+     "team": "DPLC",
+     "seed": 20,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Martini",
+     "team": "MO",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:47"
+   },
+   {
+    "page": 32,
+    "round": "Round of 16",
+    "match": "287",
+    "top": {
+     "name": "Targali",
+     "team": "MAT",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Palescandolo",
+     "team": "SHP",
+     "seed": 14,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 2-0"
+   },
+   {
+    "page": 32,
+    "round": "Round of 16",
+    "match": "288",
+    "top": {
+     "name": "Gomez",
+     "team": "BRGF",
+     "seed": 11,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Clauburg",
+     "team": "WALL",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 4-3"
+   },
+   {
+    "page": 32,
+    "round": "Round of 16",
+    "match": "289",
+    "top": {
+     "name": "Williams",
+     "team": "PISC",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Brewer",
+     "team": "Nut",
+     "seed": 10,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 2:03"
+   },
+   {
+    "page": 32,
+    "round": "Round of 16",
+    "match": "290",
+    "top": {
+     "name": "Hearon IV",
+     "team": "LCM",
+     "seed": 15,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Moser",
+     "team": "DEL",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 2:29"
+   },
+   {
+    "page": 32,
+    "round": "Quarter-Finals",
+    "match": "343",
+    "top": {
+     "name": "Schnieder",
+     "team": "GFA",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Jean Marie",
+     "team": "DBP",
+     "seed": 9,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:17"
+   },
+   {
+    "page": 32,
+    "round": "Quarter-Finals",
+    "match": "344",
+    "top": {
+     "name": "Duarte",
+     "team": "HILL",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Martini",
+     "team": "MO",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:16"
+   },
+   {
+    "page": 32,
+    "round": "Quarter-Finals",
+    "match": "345",
+    "top": {
+     "name": "Targali",
+     "team": "MAT",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Clauburg",
+     "team": "WALL",
+     "seed": 6,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 6-0"
+   },
+   {
+    "page": 32,
+    "round": "Quarter-Finals",
+    "match": "346",
+    "top": {
+     "name": "Williams",
+     "team": "PISC",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Moser",
+     "team": "DEL",
+     "seed": 2,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:56"
+   },
+   {
+    "page": 32,
+    "round": "Semi-Finals",
+    "match": "399",
+    "top": {
+     "name": "Schnieder",
+     "team": "GFA",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Martini",
+     "team": "MO",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:58"
+   },
+   {
+    "page": 32,
+    "round": "Semi-Finals",
+    "match": "400",
+    "top": {
+     "name": "Targali",
+     "team": "MAT",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Williams",
+     "team": "PISC",
+     "seed": 7,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:21"
+   },
+   {
+    "page": 32,
+    "round": "Finals",
+    "match": "472",
+    "top": {
+     "name": "Schnieder",
+     "team": "GFA",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Targali",
+     "team": "MAT",
+     "seed": 3,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 3:35"
+   },
+   {
+    "page": 33,
+    "round": "3rd Place",
+    "match": "470",
+    "top": {
+     "name": "Williams",
+     "team": "PISC",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Martini",
+     "team": "MO",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:21"
+   },
+   {
+    "page": 33,
+    "round": "5th Place",
+    "match": "471",
+    "top": {
+     "name": "Duarte",
+     "team": "HILL",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Moser",
+     "team": "DEL",
+     "seed": 2,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:09"
+   },
+   {
+    "page": 33,
+    "round": "Consi-Semis",
+    "match": "429",
+    "top": {
+     "name": "Duarte",
+     "team": "HILL",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Williams",
+     "team": "PISC",
+     "seed": 7,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 33,
+    "round": "Consi-Semis",
+    "match": "430",
+    "top": {
+     "name": "Moser",
+     "team": "DEL",
+     "seed": 2,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Martini",
+     "team": "MO",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "NC"
+   },
+   {
+    "page": 33,
+    "round": "Consi of 4",
+    "match": "401",
+    "top": {
+     "name": "Jean Marie",
+     "team": "DBP",
+     "seed": 9,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Duarte",
+     "team": "HILL",
+     "seed": 5,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:16"
+   },
+   {
+    "page": 33,
+    "round": "Consi of 4",
+    "match": "402",
+    "top": {
+     "name": "Clauburg",
+     "team": "WALL",
+     "seed": 6,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Moser",
+     "team": "DEL",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:24"
+   }
+  ],
+  "pages": [
+   32,
+   33
+  ]
+ }
+}

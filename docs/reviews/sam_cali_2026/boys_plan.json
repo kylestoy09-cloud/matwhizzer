@@ -1,0 +1,5863 @@
+{
+ "relabel": [
+  {
+   "id": "ae9c3b6d-e484-4f21-b144-75e39d754fd4",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "fe31e01d-0c59-4f03-b681-26396cc4b25a",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "3388a138-7aed-4dd6-bd30-dd8f08e7d4f4",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "5664ab28-f1b7-45ba-a151-c09d82fb869c",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "089cf658-1230-4ae9-92d8-e3d9cfae0e89",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "510fff71-0562-48b7-a58b-84c89c89e9c4",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "1443b650-6f34-4bec-a855-661a4f649d9b",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "b72d462b-fd02-43c3-86c6-17339c8d4e76",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "c4b96114-e0f6-4aba-b77a-0f4ae3bdf764",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "6f02d099-6326-4572-a770-e8ad98883ee1",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "a5678347-eb9e-4b73-bf49-70e04282a218",
+   "from": "R1",
+   "to": "SF"
+  },
+  {
+   "id": "50470cd2-e15a-41f0-b86c-1d9b4afe4ab3",
+   "from": "R1",
+   "to": "SF"
+  },
+  {
+   "id": "8ea6cd67-5734-4858-a5d3-3469cb45aa34",
+   "from": "R1",
+   "to": "F"
+  },
+  {
+   "id": "bfe65d41-0c3e-4e67-a31f-7c8ec2d15f14",
+   "from": "R1",
+   "to": "3rd_Place"
+  },
+  {
+   "id": "911a3878-19d3-4987-ae07-437a1f33fe8e",
+   "from": "R1",
+   "to": "5th_Place"
+  },
+  {
+   "id": "c4aade0b-eadd-4f70-bd7b-6ef9383f18d8",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "395400ed-545f-4275-afcf-4db7851df404",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "8c2944a7-33de-456d-a85e-fea59da01747",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "5763dd66-7dc0-4d80-bb2b-14c7eb618cac",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "0152ac96-3ede-4cc0-8169-29f4370ea0ad",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "d56903cf-7906-4316-8347-1af08390ffa3",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "be3b2a7d-16e1-4b90-b538-40e3ce00bb22",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "4a977e56-f011-47b6-81a1-ccd697d501cc",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "22ad81d1-6704-4a0b-bf89-f2cf70e85252",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "0dc0e62f-30f3-43a3-b9e8-3d2b8dc3d3e0",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "3de77073-e301-46cb-83d4-1c40f7cb1394",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "46854491-21c2-4abe-8411-40a4bedd48dd",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "e6d4e98e-1f18-46f7-9ac7-f082e5ee5a2b",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "36e6255f-47ac-4cc5-b2af-5932b8cef245",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "7b3ed884-f7a8-45bc-a95d-eaeca44a6b95",
+   "from": "R1",
+   "to": "SF"
+  },
+  {
+   "id": "34e5f12a-2cb3-4bdf-b102-960e4feba7fc",
+   "from": "R1",
+   "to": "SF"
+  },
+  {
+   "id": "137f4fad-e966-4ac8-8b61-dc997f50d93c",
+   "from": "R1",
+   "to": "F"
+  },
+  {
+   "id": "8591cfa0-2296-4396-876d-7916939aa6bb",
+   "from": "R1",
+   "to": "5th_Place"
+  },
+  {
+   "id": "5ac0b0ab-dd55-4d2a-8a6f-99a45ed8db35",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "4884a3aa-257a-4bdf-a002-715d83d2022a",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "1eda5fed-ea4a-4aa4-a8bc-3e1ecb137873",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "bddd4f98-130c-4758-977a-6ee0eb9e9ae2",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "28b354b4-1ad4-4f44-913d-ce8c960c49bb",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "014aa655-bef0-4aa5-a650-e421853257a3",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "d2d7f4d1-9452-446a-ac26-9bfa62a93207",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "ac167e5d-c45f-494f-92ef-4763f6fb1c25",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "1613d181-7319-4dd2-90c7-a936acb73935",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "3c0ba04b-94e4-4f1e-b416-d817fb25611d",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "cdd5c096-6dd5-4344-96f6-8901d16f8852",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "4be173bc-54cf-4868-ad4b-8a116b300be6",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "3e92dead-0a71-436b-987a-957fefbba1a9",
+   "from": "R1",
+   "to": "SF"
+  },
+  {
+   "id": "bc4cc499-ef19-460a-9fc9-2f884257fb2e",
+   "from": "R1",
+   "to": "SF"
+  },
+  {
+   "id": "222be7b5-b33e-4c63-977c-7effef853c13",
+   "from": "R1",
+   "to": "F"
+  },
+  {
+   "id": "7e8fec73-e5c5-4818-822d-c50471f07c8f",
+   "from": "R1",
+   "to": "5th_Place"
+  },
+  {
+   "id": "ac4576cd-666b-4d83-8e44-95e6056fd877",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "c77e00a8-76ec-4d5e-afbf-1c60bddd7e65",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "bb062501-a34b-4260-88fc-d371587be31b",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "d630b39c-d01c-42dd-bd31-4d8eff4894a8",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "1bf07ba7-b2a4-4f5c-9439-bbcf8fa22ac6",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "c114eb6a-7703-4ed1-a117-c5b2eb73000a",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "8569f433-1700-4f70-b46c-fc04879ef9af",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "191ae19b-45b7-437f-a01f-2455c559c630",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "48bb953e-5ad4-4f31-ae49-42fc3f4d5afe",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "70c13c0f-fb3c-4c23-9b42-3fe08dcebb6d",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "5b53b9f5-462b-4d90-8b79-e2093fde51b2",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "000b9ccb-3938-4836-9802-4161d719bdd0",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "830e12c8-3846-413d-8e3a-ecb8bc793fac",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "f6c7f7c8-1cd5-45b6-87b7-9d4225121578",
+   "from": "R1",
+   "to": "SF"
+  },
+  {
+   "id": "c4e73062-91f5-4951-86bc-a8c49d9b4c2d",
+   "from": "R1",
+   "to": "SF"
+  },
+  {
+   "id": "64a5c3cb-c883-4119-9031-890bbcfcd5f2",
+   "from": "R1",
+   "to": "F"
+  },
+  {
+   "id": "add5d07e-bdc5-42dc-b953-35d1a8f35ef0",
+   "from": "R1",
+   "to": "3rd_Place"
+  },
+  {
+   "id": "ab618d21-3916-4d55-b2ee-2595cfe9c13b",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "8dd59bdf-e7d9-40e4-b427-30ec000f5eb7",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "bc29a64f-61fe-4de8-b712-19d63d87d7f3",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "5e1bf006-c371-4550-99d3-207b7849ec30",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "499b7736-5dde-4581-ac8c-ea91f93ef78c",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "e625a7b4-231c-459a-9ee5-5a219c213970",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "4f7b792c-5a6d-45f4-b253-cdd2f0b40b90",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "6b3fb4ef-0fc8-4a33-8f81-f4dd3da77a8c",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "2a2be519-e4a5-42da-8d73-49a2a3841b8e",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "94261e3c-5ff0-496e-8265-78eb86588425",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "957688e4-d570-45bb-bc47-ba547b646f4d",
+   "from": "R1",
+   "to": "R3"
+  },
+  {
+   "id": "e810d8a9-b1c8-4721-b31b-d75b63822214",
+   "from": "R1",
+   "to": "R3"
+  },
+  {
+   "id": "827130bf-5885-407a-b391-53ec966963be",
+   "from": "R1",
+   "to": "R3"
+  },
+  {
+   "id": "c7b9e428-2b83-4159-9374-81a143498f5e",
+   "from": "R1",
+   "to": "R3"
+  },
+  {
+   "id": "8500343d-6d23-4ffa-ae12-08c479dff69e",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "48484c1d-e9b6-4bea-b3a2-3cf6b3937ac6",
+   "from": "R1",
+   "to": "SF"
+  },
+  {
+   "id": "7d58b12c-b786-43c4-8818-7e11c27bc467",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "e9be4ee1-dc8b-4db3-8a11-0fb2f4386d59",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "98e45183-91c4-4d41-a704-5b59161bc04d",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "743ce450-0804-45f6-a066-1622fed14365",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "5bc76f05-c97d-4925-ac91-fddf5800ff95",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "34b882ec-271c-4314-a5e5-7dbbe1e8daa8",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "5ea3fc34-65cb-4310-a132-2a508421f136",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "cb286e3e-7c2f-423e-8035-2e7778d51f01",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "5bfadcce-846d-485b-8816-31bf183e91a1",
+   "from": "R1",
+   "to": "R3"
+  },
+  {
+   "id": "126f2ddd-2c99-441c-8920-719a2fcbe50a",
+   "from": "R1",
+   "to": "R3"
+  },
+  {
+   "id": "d12e2a34-e311-4437-9cec-3311f5df5dd0",
+   "from": "R1",
+   "to": "R3"
+  },
+  {
+   "id": "38b5b594-920a-441e-9d3a-e65adf8501dc",
+   "from": "R1",
+   "to": "R3"
+  },
+  {
+   "id": "7cfcd3b0-943f-4d61-a2c2-5e1b999a58e8",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "af7fd5e0-ce4c-4d8c-8a80-7baf1a28cbe7",
+   "from": "R1",
+   "to": "SF"
+  },
+  {
+   "id": "688acb5c-1525-44ee-94a7-1cb85ae300cb",
+   "from": "R1",
+   "to": "F"
+  },
+  {
+   "id": "12e3ef5e-d900-4fa7-8c5b-d87e697e452f",
+   "from": "R1",
+   "to": "3rd_Place"
+  },
+  {
+   "id": "7ca848ec-7169-4df7-a64c-5363a5276341",
+   "from": "R1",
+   "to": "5th_Place"
+  },
+  {
+   "id": "8d710314-b822-4018-bf0f-a0f44bb6d6ef",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "b0ca721b-9596-4cd2-9c7f-7189b9089100",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "e9a13c2b-96af-4e5d-bad7-93c9adf628df",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "abcb4975-eb30-4579-b038-fad88883f1c4",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "f7cbb095-5b7d-4db7-bbb4-a7d078023f6c",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "6bed65c7-f04d-4e57-ad73-2a79c5905c0c",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "08e704fa-2f59-413c-a10c-a587f6e9700e",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "5d3167ca-4223-4ac0-b08c-c768cc1f55e1",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "bb7803be-631a-4186-ac6c-c9bd714f88d9",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "bc14b55e-65e0-456c-89d0-17e05c9f2288",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "0b8fadcc-2faa-46f8-8fa8-e3e880e6e455",
+   "from": "R1",
+   "to": "R3"
+  },
+  {
+   "id": "7a3f2844-e1cf-40a7-be59-2580b586a9fe",
+   "from": "R1",
+   "to": "R3"
+  },
+  {
+   "id": "39b9782c-743f-4fcc-a88e-ec61c19760b8",
+   "from": "R1",
+   "to": "R3"
+  },
+  {
+   "id": "7014260b-bf83-4d2f-a8c3-5f6fdafde14d",
+   "from": "R1",
+   "to": "R3"
+  },
+  {
+   "id": "5899647a-7ac5-4c3b-acb7-f505bff98df2",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "6b89ef23-e972-4b89-a63b-91b75a39767a",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "a7e3c158-570d-4dd7-bf61-21b786564963",
+   "from": "R1",
+   "to": "SF"
+  },
+  {
+   "id": "094baa3b-5837-4779-b5f7-ac9031e47d25",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "d0cfec99-2ade-4f1b-a48c-89a12c670d19",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "c0f92423-0c98-46b6-ba0a-998835e8724b",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "c2e09633-8956-475d-845d-1fa5fff3d428",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "e58f4faf-bb86-47c6-a2f5-1f305ae677ae",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "e11d8314-9752-475a-b852-ff5b3bbad5b0",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "bb1fc2bd-b371-4eac-8c02-c6d8f53c443d",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "6ccad32e-c2a6-4a43-8f01-f4ac7fd21baf",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "2f45a749-c0f0-4b98-a30f-35f1599b5d83",
+   "from": "R1",
+   "to": "R3"
+  },
+  {
+   "id": "215a6809-1eca-4b32-80c6-aafe6436b275",
+   "from": "R1",
+   "to": "R3"
+  },
+  {
+   "id": "c7b91397-6208-4881-83c7-acfaf0c5f8b9",
+   "from": "R1",
+   "to": "R3"
+  },
+  {
+   "id": "7317dabe-0153-4869-8e05-5dc889ebf8b1",
+   "from": "R1",
+   "to": "R3"
+  },
+  {
+   "id": "e7444b69-8e7b-4613-bf33-e6e0f0708bf0",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "c31a7a7e-7c55-442e-951c-91b708dfab79",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "276aea9f-bfef-4110-86a3-8031f8f540b5",
+   "from": "R1",
+   "to": "SF"
+  },
+  {
+   "id": "8d9e44ec-5d7f-483f-8fa3-fe04f7761b8d",
+   "from": "R1",
+   "to": "F"
+  },
+  {
+   "id": "aa5f8686-437d-4a84-ac71-42241de15efa",
+   "from": "R1",
+   "to": "3rd_Place"
+  },
+  {
+   "id": "88d0f4e3-27ea-4a18-ba8a-ddd66638451c",
+   "from": "R1",
+   "to": "5th_Place"
+  },
+  {
+   "id": "4d777e73-7b29-42ad-b56f-53e53c5cd774",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "203e045d-6fff-4bab-bb60-99795af8058a",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "9beca7c8-0446-40d6-ac7f-14be2867ea36",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "8adf076f-d5a1-4a74-985f-42856f086d47",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "073ffd19-4918-4441-a401-2dbd306036dd",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "e5a29652-b69b-44f8-abb9-6de796111db7",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "9f8e7c23-cfd6-404e-892f-89d5970a442a",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "7d4a8497-102e-40a0-bfa4-df5034664340",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "078972d9-48ec-4b5f-b9a8-20036a5e0ff3",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "6a379f90-7eb2-426b-bb1d-799708e3fc01",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "649fd773-08b0-4ba2-b4a0-87dc8fa7d6f7",
+   "from": "R1",
+   "to": "R3"
+  },
+  {
+   "id": "eaae4dac-8375-4bab-b01c-5182352dd48b",
+   "from": "R1",
+   "to": "R3"
+  },
+  {
+   "id": "39c2e2b7-edce-4a50-b9f4-c7d151a409b3",
+   "from": "R1",
+   "to": "R3"
+  },
+  {
+   "id": "3ac58a7f-9cce-4145-b38a-7f1c342c9be4",
+   "from": "R2",
+   "to": "R3"
+  },
+  {
+   "id": "802f4c74-bd00-493f-b9eb-9f0515f2010b",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "0179d1df-12b5-4fb6-9291-c2fac2af33f0",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "d91c8d0f-66ca-481e-8cbe-afc057d6abeb",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "e6bf86f3-3b2c-419d-9b0d-e11f62d52008",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "15e563f4-8fc3-4472-8408-26833aa6b6b8",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "d4e0b8bd-7a2f-4902-b244-fc036925f888",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "41b5450e-3f0e-4278-b475-695b7c1ba879",
+   "from": "Round 20",
+   "to": "R2"
+  },
+  {
+   "id": "2da4647a-f3e8-4fa3-b401-51c50bbac7f9",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "7e2b5753-aa81-4578-9ce3-6b7ca1f44634",
+   "from": "R1",
+   "to": "R3"
+  },
+  {
+   "id": "3b57c856-ca68-48ec-befd-2444bb2eea72",
+   "from": "R1",
+   "to": "R3"
+  },
+  {
+   "id": "bd24d7d7-4e5a-4c11-8c4f-9474858e995d",
+   "from": "R1",
+   "to": "R3"
+  },
+  {
+   "id": "3d59fed3-d20e-47eb-8cae-c6e85461c880",
+   "from": "Round 16",
+   "to": "R3"
+  },
+  {
+   "id": "ef521a94-04a7-4c24-a5ad-a40a9094e67c",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "e1cd9a47-2f89-41fa-9772-bbb8394f28af",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "c5e31b64-71e5-4bfc-9c85-396780bca30c",
+   "from": "R1",
+   "to": "SF"
+  },
+  {
+   "id": "6badc255-cd62-46da-949b-6177b7e1969b",
+   "from": "R1",
+   "to": "F"
+  },
+  {
+   "id": "495fd4bb-cf66-4ac7-8697-786c9ecad118",
+   "from": "R1",
+   "to": "5th_Place"
+  },
+  {
+   "id": "647a3112-030b-40ac-a3cd-102d7d47214b",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "e3363cbc-c985-4b70-be9a-da83294fa747",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "a081051d-90f9-4bd0-abde-bd0b8d74e49d",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "dd1297b5-a00d-4939-a67f-68a5fb543250",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "765b12b4-d2b4-4124-968d-786839577b2e",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "c2e78fe7-a924-4918-8678-6e5e4ade9d12",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "9497ea16-e486-4f6a-b6a8-a4f07df99422",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "a6a23b0c-d6d4-4b19-8bb1-f7d1b4b643a1",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "2f202288-2c64-46c6-b4c8-490973c6aac8",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "e98d7109-c88a-44a0-803d-1de9cac4ea00",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "7b90832a-e38d-4c78-bd2e-42258b25ef0a",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "b5cbff77-f0df-417f-be64-6edf53a8ba82",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "733fe20b-4fb9-4251-b5d3-49e3aae74e6f",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "bcd42ccf-3447-459e-aa48-239ea723a857",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "3bd286e0-1281-476e-b291-180fbfe3d643",
+   "from": "R1",
+   "to": "SF"
+  },
+  {
+   "id": "96ef73d6-e94d-49ce-96d7-3acaec98a912",
+   "from": "R1",
+   "to": "SF"
+  },
+  {
+   "id": "9757ed1e-aef5-4b6e-8210-652ea577477f",
+   "from": "R1",
+   "to": "F"
+  },
+  {
+   "id": "b80aa0e7-5663-4831-88be-8541d1802a86",
+   "from": "R1",
+   "to": "3rd_Place"
+  },
+  {
+   "id": "ef8062ac-44ce-4f72-bb9f-a98afe89ec87",
+   "from": "R1",
+   "to": "5th_Place"
+  },
+  {
+   "id": "d0e6d244-e431-4b94-a82c-73b88d74279d",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "4518fbd5-6307-490a-a133-6906af796de3",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "38c5fcc6-e69e-4863-9362-ee22bb732ac4",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "438db659-84e0-42ee-ad1d-263fdaf71bbc",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "adbb6b53-584f-4a61-ba4c-ef21cf9ab3db",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "d41571a1-f456-46d3-8ecd-832606579649",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "65ec35fb-8397-4e87-a3fd-0d86d5db47e7",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "6958ac28-4197-42f9-adb6-431e020480a0",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "ea31234a-89af-4cf4-9805-ac18bbee82b9",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "b5424c6b-c2d0-4248-843f-357f3435120f",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "85c37047-008d-4a9d-94d1-ec042ff22355",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "64dd33ba-4485-4e2c-a0da-adb6166f9799",
+   "from": "R1",
+   "to": "SF"
+  },
+  {
+   "id": "890e65da-f218-4bf6-ba6d-108467ac2aa0",
+   "from": "R1",
+   "to": "SF"
+  },
+  {
+   "id": "e65c1254-4f24-4bbd-a1bd-11ec5138c36a",
+   "from": "R1",
+   "to": "F"
+  },
+  {
+   "id": "fe062973-3836-4ef3-a422-cc4203420fd6",
+   "from": "R1",
+   "to": "3rd_Place"
+  },
+  {
+   "id": "77bcba5e-97c6-4d7b-933b-98122bc57370",
+   "from": "C4",
+   "to": "C1"
+  },
+  {
+   "id": "f37654d9-fadc-45dc-b250-8d7f62c875cc",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "22380267-2170-45a2-b6be-4a4229321210",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "a16a7b4a-d0d1-4e71-b71f-e88cc8436f11",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "9e381458-7a61-4589-80a5-ce7c7015fa97",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "91019709-5192-43e3-8240-7163c1b46c97",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "cf134769-78e9-4c7c-9557-e601d1bbc721",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "ca29c91c-e948-4978-a9f8-60bf102ba4a1",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "57344014-3b5c-4414-9a3c-6ff01aab0b98",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "4979e52a-0dc3-46e4-8ab4-ddf2095ede2c",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "e4e47401-698e-423d-aebf-d4e0cca099e2",
+   "from": "R1",
+   "to": "SF"
+  },
+  {
+   "id": "3758d254-1398-4d96-bc1e-77e0f885c03b",
+   "from": "R1",
+   "to": "F"
+  },
+  {
+   "id": "9fed0845-5702-4ad0-9d2c-779b5234ca3a",
+   "from": "R1",
+   "to": "5th_Place"
+  },
+  {
+   "id": "1725e76a-d6dc-4ae5-8040-b32d90b1458b",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "15552550-9958-4b90-afe3-ffe6f2380040",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "12cbd6d2-8f2f-4937-912d-cf43a05ea64c",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "728384e8-0f73-4e9a-89e6-656b65a2fa7f",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "702ab47b-9d70-44bd-98c1-03805492e01e",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "3a3e1f28-001c-4385-a5b8-8d4fbc13cacb",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "c93c3733-f559-494d-96df-d11da714d518",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "9eec8999-3c7d-4c2d-af72-fc7bbe623f1e",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "e867e356-57cb-4bea-9cbb-717edaef875d",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "23eb4145-406c-4f79-8cbe-bdceab9639cc",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "6f958f58-2cf8-4bed-bbef-67f0e87ac0b7",
+   "from": "R1",
+   "to": "SF"
+  },
+  {
+   "id": "1a5a25b9-5640-4572-a99c-91be11ca38c1",
+   "from": "R1",
+   "to": "SF"
+  },
+  {
+   "id": "ea5e4d95-e7f5-410a-863a-d91cc264c5e4",
+   "from": "R1",
+   "to": "F"
+  },
+  {
+   "id": "93c76d66-0881-4182-bde0-3d5d524e861a",
+   "from": "R1",
+   "to": "3rd_Place"
+  },
+  {
+   "id": "51f25de6-c5af-4f24-872e-b219607b68af",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "ac38cab1-473b-4113-979a-c7a3da50e0fd",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "26aae452-fdc7-4133-952d-b36a39de67de",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "ff676407-9051-4f7c-9a72-7931a7282757",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "4219d05a-0435-461a-85d5-90f7e01db200",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "0ba8dfa9-9247-4bd1-be41-55abc195f5a5",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "bb78c82a-7285-4657-a599-8779e3b330aa",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "1df35c32-14d2-4957-8e85-e85bf8a577d6",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "68c06e73-accd-4d6c-b542-2be24e56ce95",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "94627e6f-0e77-4c3d-91cf-b88bb2500d41",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "eb63b80d-9eef-4e52-a473-f4ec076c9f7a",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "88832d74-672c-48b3-8ca5-57b5b67a5b3a",
+   "from": "R1",
+   "to": "SF"
+  },
+  {
+   "id": "d56cae31-4ec7-4abc-b96d-6c6a8dbccca4",
+   "from": "R1",
+   "to": "SF"
+  },
+  {
+   "id": "bfcfa023-47ba-4a3f-85f0-501abca85f97",
+   "from": "R1",
+   "to": "F"
+  },
+  {
+   "id": "2b19a038-a0a1-4bd6-b565-f38f5b146f03",
+   "from": "R1",
+   "to": "3rd_Place"
+  },
+  {
+   "id": "089c10f5-52a6-41d8-9af9-1c0ce2673d66",
+   "from": "R1",
+   "to": "5th_Place"
+  },
+  {
+   "id": "f9b5d382-2a3c-48c2-b4aa-7aae35471179",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "fc13a647-5e5f-4043-9736-04607d4f0834",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "7c7730c6-f7b2-4808-98c1-921053216474",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "60f953f0-a404-4da3-bf13-c8d53bf62478",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "4ce54024-6b4c-4e91-9021-2eca67a55d47",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "fc3eaf7d-74a2-4764-b103-2c35fb0615d0",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "7f765da8-ae9f-4ed8-b638-43a50f1807eb",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "c4251c14-7303-4e78-bb6a-7e91e56d1d6b",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "56c0b333-806d-4d82-bf03-3c7a67105279",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "f31823ae-3239-48b6-9c7b-c29f521e9543",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "b94d1cc9-3944-412c-8c23-45d70926074d",
+   "from": "R1",
+   "to": "SF"
+  },
+  {
+   "id": "61e699cd-9caf-4894-8e57-728f1d078a5c",
+   "from": "R1",
+   "to": "3rd_Place"
+  },
+  {
+   "id": "193d883a-a3f2-4689-9f48-122b08457255",
+   "from": "R1",
+   "to": "5th_Place"
+  },
+  {
+   "id": "8a2b8368-9072-43fa-bc6f-e982ccbe7d4e",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "fc8adb3d-b855-49a3-8ea6-87b3bcb13aaf",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "68469792-5ade-49ad-bbe0-92cd17a734f2",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "e70ab9cc-dc85-4d2c-9e8a-98933cbc90c7",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "4e7c0f10-7767-4e96-9ba7-89988352f928",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "739e9c0c-b6d4-43d1-9190-31e7c22b2a31",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "04216ca8-c36b-4a9c-8dec-0a52c98acd9b",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "dba6752b-3e53-4771-986d-8db70dc29df1",
+   "from": "R1",
+   "to": "R2"
+  },
+  {
+   "id": "2c2ac4cb-761d-4def-b049-69d160b44bcc",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "479c77c4-6fba-4cee-807b-132692ae2962",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "fc6e856a-7991-4bfe-ba79-d807e146b046",
+   "from": "R1",
+   "to": "QF"
+  },
+  {
+   "id": "1d9811cd-7e88-4a12-999a-6940386b2978",
+   "from": "R1",
+   "to": "SF"
+  },
+  {
+   "id": "a7574605-a9c8-401c-9ad6-53bbd61f4eac",
+   "from": "R1",
+   "to": "F"
+  },
+  {
+   "id": "4203a896-7b46-43d9-a5f6-d46cc329a275",
+   "from": "R1",
+   "to": "C1"
+  },
+  {
+   "id": "45944c7c-7916-4ca7-8488-c9416c4f6bf8",
+   "from": "R1",
+   "to": "C1"
+  }
+ ],
+ "moves": [],
+ "adds": [
+  {
+   "weight_class": 106,
+   "round": "QF",
+   "wrestler1_id": "7df79753-db6b-4342-a1b3-917171b5a684",
+   "wrestler1_name_raw": "Calvin Parke",
+   "wrestler1_school_id": 283,
+   "wrestler2_id": "d1fd1390-1cc6-4d2d-9d7f-98e51cefc11b",
+   "wrestler2_name_raw": "Logan Bailey",
+   "wrestler2_school_id": 600,
+   "winner": 1,
+   "result_type": "SV-1",
+   "result_detail": "12-9",
+   "fall_time_seconds": null,
+   "winner_score": 12,
+   "loser_score": 9,
+   "_label": "106 Quarter-Finals: 1 Calvin Parke (MDTWP) vs 8 Logan Bailey (GFA), DEC SV 12-9"
+  },
+  {
+   "weight_class": 120,
+   "round": "R2",
+   "wrestler1_id": "d3ddd0b3-f898-4a5b-b2c2-b39fbdb33a51",
+   "wrestler1_name_raw": "David Vazquez",
+   "wrestler1_school_id": 95,
+   "wrestler2_id": "421fad9d-c8a7-4fb5-8e4e-4e99031c0869",
+   "wrestler2_name_raw": "Jax Sgrulletta",
+   "wrestler2_school_id": 147,
+   "winner": 1,
+   "result_type": "SV-1",
+   "result_detail": "11-8",
+   "fall_time_seconds": null,
+   "winner_score": 11,
+   "loser_score": 8,
+   "_label": "120 Round of 16: 7 David Vazquez (NBGN) vs 10 Jax Sgrulletta (GFA), DEC SV 11-8"
+  },
+  {
+   "weight_class": 120,
+   "round": "3rd_Place",
+   "wrestler1_id": "eb23448f-96a2-4dca-a44e-d35fb6a20138",
+   "wrestler1_name_raw": "Chase Kastner",
+   "wrestler1_school_id": 600,
+   "wrestler2_id": "ebe5d8a2-17df-4ac3-b64b-c01551e95bba",
+   "wrestler2_name_raw": "Muhammad Abuhadba",
+   "wrestler2_school_id": 391,
+   "winner": 1,
+   "result_type": "SV-1",
+   "result_detail": "4-1",
+   "fall_time_seconds": null,
+   "winner_score": 4,
+   "loser_score": 1,
+   "_label": "120 3rd Place: 6 Chase Kastner (GFA) vs 4 Muhammad Abuhadba (PSCT), DEC SV 4-1"
+  },
+  {
+   "weight_class": 132,
+   "round": "QF",
+   "wrestler1_id": "65c8695a-4522-47ce-aa4e-7a8c009f6d8d",
+   "wrestler1_name_raw": "AJ Stover",
+   "wrestler1_school_id": 603,
+   "wrestler2_id": "549b645c-0771-48c8-b473-693736c7e8a4",
+   "wrestler2_name_raw": "Jack Francis",
+   "wrestler2_school_id": 600,
+   "winner": 1,
+   "result_type": "MD",
+   "result_detail": "10-2",
+   "fall_time_seconds": null,
+   "winner_score": 10,
+   "loser_score": 2,
+   "_label": "132 Quarter-Finals: 12 AJ Stover (PEDD) vs 13 Jack Francis (GFA), MD 10-2"
+  },
+  {
+   "weight_class": 144,
+   "round": "R1",
+   "wrestler1_id": "50c5d5fd-a4e2-4ba1-bfa1-a0c374392f17",
+   "wrestler1_name_raw": "Ilias Konstantinidis",
+   "wrestler1_school_id": 600,
+   "wrestler2_id": "1efca6d1-5db9-4083-a4ca-b100fe10fcae",
+   "wrestler2_name_raw": "John Owen",
+   "wrestler2_school_id": 602,
+   "winner": 1,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 154,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "144 Round of 64: 33 Ilias Konstantinidis (GFA) vs 32 John Owen (MSCA), F 2:34"
+  },
+  {
+   "weight_class": 157,
+   "round": "R1",
+   "wrestler1_id": "c5292330-2374-483b-87cc-7d7a3e6d27cb",
+   "wrestler1_name_raw": "Lucas Meisenholder",
+   "wrestler1_school_id": 599,
+   "wrestler2_id": "add28b3f-20b3-4f2f-b760-cea561a06ec4",
+   "wrestler2_name_raw": "Jacob Jones",
+   "wrestler2_school_id": 600,
+   "winner": 2,
+   "result_type": "TF",
+   "result_detail": null,
+   "fall_time_seconds": 229,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "157 Round of 32: 25 Lucas Meisenholder (CHAM) vs 8 Jacob Jones (GFA), TF 3:49"
+  },
+  {
+   "weight_class": 165,
+   "round": "R2",
+   "wrestler1_id": "9d521d4b-250a-4ee9-bf32-69d764378116",
+   "wrestler1_name_raw": "Blake Watkins",
+   "wrestler1_school_id": 600,
+   "wrestler2_id": "99e3e4d0-cc61-41b2-a1af-028eccc75a73",
+   "wrestler2_name_raw": "Jayden Soy",
+   "wrestler2_school_id": 602,
+   "winner": 1,
+   "result_type": "Dec",
+   "result_detail": "12-8",
+   "fall_time_seconds": null,
+   "winner_score": 12,
+   "loser_score": 8,
+   "_label": "165 Round of 16: 28 Blake Watkins (GFA) vs 21 Jayden Soy (MSCA), DEC 12-8"
+  },
+  {
+   "weight_class": 165,
+   "round": "QF",
+   "wrestler1_id": "9d521d4b-250a-4ee9-bf32-69d764378116",
+   "wrestler1_name_raw": "Blake Watkins",
+   "wrestler1_school_id": 600,
+   "wrestler2_id": "43343bf1-7a01-4d74-aa38-fdb8880c5140",
+   "wrestler2_name_raw": "Colby Vital",
+   "wrestler2_school_id": 601,
+   "winner": 2,
+   "result_type": "TF",
+   "result_detail": null,
+   "fall_time_seconds": 208,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "165 Quarter-Finals: 28 Blake Watkins (GFA) vs 4 Colby Vital (PNGT), TF 3:28"
+  },
+  {
+   "weight_class": 190,
+   "round": "R1",
+   "wrestler1_id": "7f28e0d7-8ec1-4957-be6a-eec6f38e44ad",
+   "wrestler1_name_raw": "Rocky Penny",
+   "wrestler1_school_id": 600,
+   "wrestler2_id": "58f66647-d48c-4a0e-8512-bf435dcd97f0",
+   "wrestler2_name_raw": "Landon Fitzsimmons",
+   "wrestler2_school_id": 602,
+   "winner": 2,
+   "result_type": "TF",
+   "result_detail": null,
+   "fall_time_seconds": 246,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "190 Round of 32: 21 Rocky Penny (GFA) vs 12 Landon Fitzsimmons (MSCA), TF 4:06"
+  },
+  {
+   "weight_class": 190,
+   "round": "R2",
+   "wrestler1_id": "4b667ee8-403a-493b-bc79-c874e17d7c98",
+   "wrestler1_name_raw": "John Sammartano",
+   "wrestler1_school_id": 599,
+   "wrestler2_id": "e30136ac-85b6-4cb0-9a83-eece796f3415",
+   "wrestler2_name_raw": "Tyler Neiva",
+   "wrestler2_school_id": 600,
+   "winner": 2,
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 313,
+   "winner_score": null,
+   "loser_score": null,
+   "_label": "190 Round of 16: 20 John Sammartano (CHAM) vs 4 Tyler Neiva (GFA), F 5:13"
+  }
+ ],
+ "addProblems": [],
+ "seeds": [
+  {
+   "weight_class": 106,
+   "seed": 1,
+   "wrestler_name_raw": "Calvin Parke",
+   "wrestler_id": "7df79753-db6b-4342-a1b3-917171b5a684",
+   "school_id": 283
+  },
+  {
+   "weight_class": 106,
+   "seed": 17,
+   "wrestler_name_raw": "Hunter Karp",
+   "wrestler_id": "eaf1f836-1a0a-4303-8408-4017820a96e0",
+   "school_id": 131
+  },
+  {
+   "weight_class": 106,
+   "seed": 16,
+   "wrestler_name_raw": "Niko Raggazzone",
+   "wrestler_id": "c09f358c-1565-4138-bf0a-aa299cbf9f4e",
+   "school_id": 266
+  },
+  {
+   "weight_class": 106,
+   "seed": 9,
+   "wrestler_name_raw": "Jake Appello",
+   "wrestler_id": "1b34c02e-4bfc-42a0-b02c-27fef35bc7b3",
+   "school_id": 125
+  },
+  {
+   "weight_class": 106,
+   "seed": 24,
+   "wrestler_name_raw": "Jordan Martin",
+   "wrestler_id": "33c53371-3e2b-437b-b519-3aff868bdcfb",
+   "school_id": 16
+  },
+  {
+   "weight_class": 106,
+   "seed": 25,
+   "wrestler_name_raw": "Jaxon Weber",
+   "wrestler_id": "9a84cdc0-b516-4627-84ec-31dbf39eccf3",
+   "school_id": 117
+  },
+  {
+   "weight_class": 106,
+   "seed": 8,
+   "wrestler_name_raw": "Logan Bailey",
+   "wrestler_id": "d1fd1390-1cc6-4d2d-9d7f-98e51cefc11b",
+   "school_id": 600
+  },
+  {
+   "weight_class": 106,
+   "seed": 5,
+   "wrestler_name_raw": "Dominick Malfitano",
+   "wrestler_id": "cdc5c344-430f-41d5-8493-48065e3078cb",
+   "school_id": 33
+  },
+  {
+   "weight_class": 106,
+   "seed": 28,
+   "wrestler_name_raw": "Valen Delaney",
+   "wrestler_id": "07123dee-2787-4305-96b4-43411d877396",
+   "school_id": 106
+  },
+  {
+   "weight_class": 106,
+   "seed": 21,
+   "wrestler_name_raw": "John Tarantino",
+   "wrestler_id": "ea61d943-282e-4268-be27-76d69ecafd23",
+   "school_id": 264
+  },
+  {
+   "weight_class": 106,
+   "seed": 12,
+   "wrestler_name_raw": "Anthony Lopera",
+   "wrestler_id": "1a0a2bd7-60c7-43f9-8425-6ca826904794",
+   "school_id": 82
+  },
+  {
+   "weight_class": 106,
+   "seed": 13,
+   "wrestler_name_raw": "Luke Rivara",
+   "wrestler_id": "74fffdd8-6871-4d7e-a4ae-7c43b2cc4c51",
+   "school_id": 17
+  },
+  {
+   "weight_class": 106,
+   "seed": 20,
+   "wrestler_name_raw": "Ronnie Rodriguez",
+   "wrestler_id": "524d887e-79a2-4ab6-921a-bdbcfd55e206",
+   "school_id": 167
+  },
+  {
+   "weight_class": 106,
+   "seed": 29,
+   "wrestler_name_raw": "Rafael Torres",
+   "wrestler_id": "ca34c307-ed6c-4768-b391-ce61ac74d390",
+   "school_id": 5
+  },
+  {
+   "weight_class": 106,
+   "seed": 4,
+   "wrestler_name_raw": "Maxim Gaft",
+   "wrestler_id": "7a95e8a0-cfd5-43cb-a902-8e5e8f811ccc",
+   "school_id": 15
+  },
+  {
+   "weight_class": 106,
+   "seed": 3,
+   "wrestler_name_raw": "Nicholas Nguyen",
+   "wrestler_id": "ed5cffe6-6398-4e6c-b1a3-60adc04b9f1d",
+   "school_id": 391
+  },
+  {
+   "weight_class": 106,
+   "seed": 19,
+   "wrestler_name_raw": "Mikey Olivieri",
+   "wrestler_id": "555e4007-fe3d-49ba-ab8a-98e9ac343be9",
+   "school_id": 188
+  },
+  {
+   "weight_class": 106,
+   "seed": 14,
+   "wrestler_name_raw": "Vincent Petriello",
+   "wrestler_id": "62681cfc-2365-42b5-8aec-529fc1b6ceb4",
+   "school_id": 2
+  },
+  {
+   "weight_class": 106,
+   "seed": 11,
+   "wrestler_name_raw": "Sebastian Cantarero",
+   "wrestler_id": "d8f755d6-93b7-4bbf-b203-8ac860d26284",
+   "school_id": 599
+  },
+  {
+   "weight_class": 106,
+   "seed": 22,
+   "wrestler_name_raw": "Carson Taylor",
+   "wrestler_id": "0f53309c-a657-488e-8f94-95aef2a9f4a7",
+   "school_id": 253
+  },
+  {
+   "weight_class": 106,
+   "seed": 27,
+   "wrestler_name_raw": "William Jayden Ratz",
+   "wrestler_id": "b5140db1-94b9-4257-8396-d040f8f242c7",
+   "school_id": 127
+  },
+  {
+   "weight_class": 106,
+   "seed": 6,
+   "wrestler_name_raw": "Finn Andersen",
+   "wrestler_id": "228296f5-cee0-4431-b777-d603dd3806af",
+   "school_id": 82
+  },
+  {
+   "weight_class": 106,
+   "seed": 7,
+   "wrestler_name_raw": "Eli Shea",
+   "wrestler_id": "5b567584-9969-4d81-bc4e-6a1faf44b347",
+   "school_id": 600
+  },
+  {
+   "weight_class": 106,
+   "seed": 26,
+   "wrestler_name_raw": "Seamus Hanley",
+   "wrestler_id": "269ec69f-7080-4c28-9ce2-1da9b0b7977b",
+   "school_id": 11
+  },
+  {
+   "weight_class": 106,
+   "seed": 23,
+   "wrestler_name_raw": "Nicholas Mateus",
+   "wrestler_id": "1d2eef39-df36-4a88-9a0f-556cf26ae3c8",
+   "school_id": 77
+  },
+  {
+   "weight_class": 106,
+   "seed": 10,
+   "wrestler_name_raw": "Alexander Dyki",
+   "wrestler_id": "8c4f34bb-a7a7-4022-b54c-0860d36c5416",
+   "school_id": 35
+  },
+  {
+   "weight_class": 106,
+   "seed": 15,
+   "wrestler_name_raw": "Jake Mazzurco",
+   "wrestler_id": "b3b09329-f9a8-42fb-b9cd-c72460acc90b",
+   "school_id": 147
+  },
+  {
+   "weight_class": 106,
+   "seed": 18,
+   "wrestler_name_raw": "Samuel Mazin",
+   "wrestler_id": "b51cbc2a-e6bb-4249-89e4-94750f0cf57b",
+   "school_id": 153
+  },
+  {
+   "weight_class": 106,
+   "seed": 2,
+   "wrestler_name_raw": "Steven Vidal",
+   "wrestler_id": "ccd2a21c-ac71-41bf-aaf3-db101f1a70ea",
+   "school_id": 112
+  },
+  {
+   "weight_class": 113,
+   "seed": 1,
+   "wrestler_name_raw": "Tristan Rosemeyer",
+   "wrestler_id": "9cb36b80-0b92-4842-b50b-4ab2db01cec9",
+   "school_id": 281
+  },
+  {
+   "weight_class": 113,
+   "seed": 17,
+   "wrestler_name_raw": "Alessandro Camargo",
+   "wrestler_id": "b3ec7be0-fc50-4346-8673-d45c7575cf6e",
+   "school_id": 153
+  },
+  {
+   "weight_class": 113,
+   "seed": 16,
+   "wrestler_name_raw": "DJ Torsone",
+   "wrestler_id": "7b672195-46c6-4067-b007-0151b543fd28",
+   "school_id": 93
+  },
+  {
+   "weight_class": 113,
+   "seed": 9,
+   "wrestler_name_raw": "Dominic Litterio",
+   "wrestler_id": "29628fb2-0b34-4ed0-b27f-300c87fbef65",
+   "school_id": 77
+  },
+  {
+   "weight_class": 113,
+   "seed": 24,
+   "wrestler_name_raw": "Vin Iaquinto",
+   "wrestler_id": "ad02ec55-5af4-4259-9638-13f9da9e061f",
+   "school_id": 11
+  },
+  {
+   "weight_class": 113,
+   "seed": 25,
+   "wrestler_name_raw": "Dominic Coppola",
+   "wrestler_id": "fe965cb2-ae5c-404c-8b1c-bafc774a4a0d",
+   "school_id": 22
+  },
+  {
+   "weight_class": 113,
+   "seed": 8,
+   "wrestler_name_raw": "Preston Nitche",
+   "wrestler_id": "847b86df-6829-4da8-b6de-14438b1b4508",
+   "school_id": 127
+  },
+  {
+   "weight_class": 113,
+   "seed": 5,
+   "wrestler_name_raw": "Connor DePersis",
+   "wrestler_id": "1a919ce2-8541-4a99-b707-1524f1ac9eeb",
+   "school_id": 17
+  },
+  {
+   "weight_class": 113,
+   "seed": 28,
+   "wrestler_name_raw": "Dominic Petulla",
+   "wrestler_id": "16f65a05-fc90-4a7d-a0e9-0837be0331f0",
+   "school_id": 266
+  },
+  {
+   "weight_class": 113,
+   "seed": 21,
+   "wrestler_name_raw": "Chase Berkowitz",
+   "wrestler_id": "fd522825-6a35-4d8e-9d84-29786f7fa2d7",
+   "school_id": 599
+  },
+  {
+   "weight_class": 113,
+   "seed": 12,
+   "wrestler_name_raw": "Maxwell Emmert",
+   "wrestler_id": "96907cfd-95be-4798-956e-ff571d2eff4b",
+   "school_id": 35
+  },
+  {
+   "weight_class": 113,
+   "seed": 13,
+   "wrestler_name_raw": "Marco Barra",
+   "wrestler_id": "2942f232-1386-4f6c-86ca-a8b2bc8f6700",
+   "school_id": 391
+  },
+  {
+   "weight_class": 113,
+   "seed": 20,
+   "wrestler_name_raw": "Julius Feliciano",
+   "wrestler_id": "c3bd1dd5-0616-48a5-a57e-fbac7fbaa60b",
+   "school_id": 253
+  },
+  {
+   "weight_class": 113,
+   "seed": 29,
+   "wrestler_name_raw": "Christopher Powell",
+   "wrestler_id": "1d2186b1-0822-48ba-a1ad-5900c137e62c",
+   "school_id": 290
+  },
+  {
+   "weight_class": 113,
+   "seed": 4,
+   "wrestler_name_raw": "Omar Carrillo-Solano",
+   "wrestler_id": "cd50647b-3181-4adf-ac02-798ef50c22ef",
+   "school_id": 235
+  },
+  {
+   "weight_class": 113,
+   "seed": 3,
+   "wrestler_name_raw": "Noah Perez",
+   "wrestler_id": "5d39e7db-27da-4ebf-b7e5-3493885ddac6",
+   "school_id": 187
+  },
+  {
+   "weight_class": 113,
+   "seed": 19,
+   "wrestler_name_raw": "Joseph Gallagher",
+   "wrestler_id": "f18a4346-60fd-4e1c-b402-95c9b1442d60",
+   "school_id": 264
+  },
+  {
+   "weight_class": 113,
+   "seed": 14,
+   "wrestler_name_raw": "Ben Chacko",
+   "wrestler_id": "68cdf0e5-da19-4540-9b8d-3003b158d08c",
+   "school_id": 156
+  },
+  {
+   "weight_class": 113,
+   "seed": 11,
+   "wrestler_name_raw": "Drew Adell",
+   "wrestler_id": "c542991b-b1fe-4de3-8cc3-1b7662a1e137",
+   "school_id": 131
+  },
+  {
+   "weight_class": 113,
+   "seed": 22,
+   "wrestler_name_raw": "David Bubnowski",
+   "wrestler_id": "4ad47074-a4ef-4c9d-aca1-3a43b4cfd72b",
+   "school_id": 147
+  },
+  {
+   "weight_class": 113,
+   "seed": 27,
+   "wrestler_name_raw": "Caleb Pacor",
+   "wrestler_id": "09bd44fd-65d2-4d3a-94cd-038228a808d1",
+   "school_id": 16
+  },
+  {
+   "weight_class": 113,
+   "seed": 6,
+   "wrestler_name_raw": "Shea Tracey",
+   "wrestler_id": "b833c9cc-0349-4345-bf0c-7b62647cfdbb",
+   "school_id": 220
+  },
+  {
+   "weight_class": 113,
+   "seed": 7,
+   "wrestler_name_raw": "Jacob Cambell",
+   "wrestler_id": "a23bafb5-c3eb-4de7-8506-a16cf575dbba",
+   "school_id": 167
+  },
+  {
+   "weight_class": 113,
+   "seed": 26,
+   "wrestler_name_raw": "Braedan Ruiz",
+   "wrestler_id": "a23bafb5-c3eb-4de7-8506-a16cf575dbba",
+   "school_id": 167
+  },
+  {
+   "weight_class": 113,
+   "seed": 23,
+   "wrestler_name_raw": "Aidan Meehan",
+   "wrestler_id": "7485e03e-f912-4547-8310-17022067409f",
+   "school_id": 5
+  },
+  {
+   "weight_class": 113,
+   "seed": 10,
+   "wrestler_name_raw": "Dylan Sierra",
+   "wrestler_id": "000cb860-bc6c-4596-8b28-51b2f2cc06e8",
+   "school_id": 382
+  },
+  {
+   "weight_class": 113,
+   "seed": 15,
+   "wrestler_name_raw": "Zane Shama",
+   "wrestler_id": "fba381e6-28fd-4259-b826-5eba79f40faf",
+   "school_id": 603
+  },
+  {
+   "weight_class": 113,
+   "seed": 18,
+   "wrestler_name_raw": "Danny D'Arcy",
+   "wrestler_id": "43e80366-c456-478e-83f8-9e61a9a4201b",
+   "school_id": 118
+  },
+  {
+   "weight_class": 113,
+   "seed": 2,
+   "wrestler_name_raw": "Tanner Connelly",
+   "wrestler_id": "0ce284e7-8eaa-4f92-b113-192d4dea8524",
+   "school_id": 156
+  },
+  {
+   "weight_class": 120,
+   "seed": 1,
+   "wrestler_name_raw": "Michael Daly",
+   "wrestler_id": "206015e6-9040-4fa8-b79b-d82451b808a8",
+   "school_id": 93
+  },
+  {
+   "weight_class": 120,
+   "seed": 32,
+   "wrestler_name_raw": "Joseph Ciullo",
+   "wrestler_id": "090fbefd-faab-4ca2-b71a-8892e1bd6366",
+   "school_id": 127
+  },
+  {
+   "weight_class": 120,
+   "seed": 17,
+   "wrestler_name_raw": "Benjamin Banks",
+   "wrestler_id": "91c45204-5761-49b1-9142-c7f86cbfa31e",
+   "school_id": 283
+  },
+  {
+   "weight_class": 120,
+   "seed": 16,
+   "wrestler_name_raw": "Jack Finkelstein",
+   "wrestler_id": "fa3d02c5-9d32-4c60-88b2-60d38669ab66",
+   "school_id": 22
+  },
+  {
+   "weight_class": 120,
+   "seed": 9,
+   "wrestler_name_raw": "Alec Murado",
+   "wrestler_id": "3bd4999f-fdb5-4220-9181-233269b20090",
+   "school_id": 314
+  },
+  {
+   "weight_class": 120,
+   "seed": 24,
+   "wrestler_name_raw": "Dan Montalvan",
+   "wrestler_id": "79a2c315-0fcd-4a50-a8a9-fd2bcf2675ca",
+   "school_id": 599
+  },
+  {
+   "weight_class": 120,
+   "seed": 25,
+   "wrestler_name_raw": "Gavin Stempkowski",
+   "wrestler_id": "15dcea03-69fc-4f5d-b453-ba6f37d02d72",
+   "school_id": 16
+  },
+  {
+   "weight_class": 120,
+   "seed": 8,
+   "wrestler_name_raw": "John Barron",
+   "wrestler_id": "5e96795f-6a46-453b-8f6a-f649afbed91c",
+   "school_id": 167
+  },
+  {
+   "weight_class": 120,
+   "seed": 5,
+   "wrestler_name_raw": "Joseph Rowinski",
+   "wrestler_id": "e0e9729a-6fb4-44ff-99d1-c263dba949cc",
+   "school_id": 112
+  },
+  {
+   "weight_class": 120,
+   "seed": 28,
+   "wrestler_name_raw": "Nicholas Gallo",
+   "wrestler_id": "0287a7e1-a91f-4d76-993b-d9a3031ca8b1",
+   "school_id": 35
+  },
+  {
+   "weight_class": 120,
+   "seed": 21,
+   "wrestler_name_raw": "Demitri DeLuca",
+   "wrestler_id": "fa1757a7-c9d0-4dc4-99ca-5f95ece67da9",
+   "school_id": 188
+  },
+  {
+   "weight_class": 120,
+   "seed": 12,
+   "wrestler_name_raw": "Aidan Matias",
+   "wrestler_id": "db935e8d-3bfb-4460-972d-5f1186eafffd",
+   "school_id": 81
+  },
+  {
+   "weight_class": 120,
+   "seed": 13,
+   "wrestler_name_raw": "Noah Hernandez",
+   "wrestler_id": "d1bf4b5c-15d5-4e0d-9e58-faf359f0af59",
+   "school_id": 127
+  },
+  {
+   "weight_class": 120,
+   "seed": 20,
+   "wrestler_name_raw": "Jayden Leneus",
+   "wrestler_id": "8537470d-a430-48c5-9dfc-567df2a4123e",
+   "school_id": 118
+  },
+  {
+   "weight_class": 120,
+   "seed": 29,
+   "wrestler_name_raw": "Mason Romero",
+   "wrestler_id": "22946a00-a6e9-418c-bb90-3307a97e4602",
+   "school_id": 5
+  },
+  {
+   "weight_class": 120,
+   "seed": 4,
+   "wrestler_name_raw": "Muhammad Abuhadba",
+   "wrestler_id": "ebe5d8a2-17df-4ac3-b64b-c01551e95bba",
+   "school_id": 391
+  },
+  {
+   "weight_class": 120,
+   "seed": 3,
+   "wrestler_name_raw": "Peter Trezza",
+   "wrestler_id": "b637a9b1-4e62-4802-aeba-65ae76b4e0f3",
+   "school_id": 160
+  },
+  {
+   "weight_class": 120,
+   "seed": 30,
+   "wrestler_name_raw": "Luca Perillo",
+   "wrestler_id": "27e135ef-00a7-4094-9f3a-d1c308a31a1c",
+   "school_id": 11
+  },
+  {
+   "weight_class": 120,
+   "seed": 19,
+   "wrestler_name_raw": "Bryson Jarosz",
+   "wrestler_id": "e7dd3850-e7c3-4dbc-93d3-05f876a343d9",
+   "school_id": 235
+  },
+  {
+   "weight_class": 120,
+   "seed": 14,
+   "wrestler_name_raw": "Lucas Perez",
+   "wrestler_id": "574543cd-3376-4c40-84c2-a850a7e74e94",
+   "school_id": 187
+  },
+  {
+   "weight_class": 120,
+   "seed": 11,
+   "wrestler_name_raw": "Reid Lightfoot",
+   "wrestler_id": "791b6970-a7fe-4369-b6e7-8052f7b3ab23",
+   "school_id": 290
+  },
+  {
+   "weight_class": 120,
+   "seed": 22,
+   "wrestler_name_raw": "Steven Malfitano",
+   "wrestler_id": "2cfc58eb-84d9-4f1d-81e3-8e80805670f0",
+   "school_id": 33
+  },
+  {
+   "weight_class": 120,
+   "seed": 27,
+   "wrestler_name_raw": "Julian Polanco",
+   "wrestler_id": "9a6e26af-e32a-4e89-9c97-e7639d536e21",
+   "school_id": 153
+  },
+  {
+   "weight_class": 120,
+   "seed": 6,
+   "wrestler_name_raw": "Chase Kastner",
+   "wrestler_id": "eb23448f-96a2-4dca-a44e-d35fb6a20138",
+   "school_id": 600
+  },
+  {
+   "weight_class": 120,
+   "seed": 7,
+   "wrestler_name_raw": "David Vazquez",
+   "wrestler_id": "d3ddd0b3-f898-4a5b-b2c2-b39fbdb33a51",
+   "school_id": 95
+  },
+  {
+   "weight_class": 120,
+   "seed": 26,
+   "wrestler_name_raw": "Benjamin Cole",
+   "wrestler_id": "369e0e57-6e77-4ea3-affd-3bf05782fd8a",
+   "school_id": 266
+  },
+  {
+   "weight_class": 120,
+   "seed": 23,
+   "wrestler_name_raw": "Morgan Torres",
+   "wrestler_id": "421fad9d-c8a7-4fb5-8e4e-4e99031c0869",
+   "school_id": 147
+  },
+  {
+   "weight_class": 120,
+   "seed": 10,
+   "wrestler_name_raw": "Jax Sgrulletta",
+   "wrestler_id": "421fad9d-c8a7-4fb5-8e4e-4e99031c0869",
+   "school_id": 147
+  },
+  {
+   "weight_class": 120,
+   "seed": 15,
+   "wrestler_name_raw": "Lucas Pelc",
+   "wrestler_id": "500903fa-6d7f-4ff7-b576-702f82f05d6c",
+   "school_id": 131
+  },
+  {
+   "weight_class": 120,
+   "seed": 18,
+   "wrestler_name_raw": "Camilo Sampedro",
+   "wrestler_id": "638cb4c5-2fcd-4d6a-b22d-de1e6f91fb31",
+   "school_id": 41
+  },
+  {
+   "weight_class": 120,
+   "seed": 31,
+   "wrestler_name_raw": "Evan Blanchard",
+   "wrestler_id": "40ee1a34-7fd2-4a7e-a077-92233208e17e",
+   "school_id": 106
+  },
+  {
+   "weight_class": 120,
+   "seed": 2,
+   "wrestler_name_raw": "Robby Rodriguez",
+   "wrestler_id": "0956ca62-bb4a-4208-85d9-46e0c67d8b62",
+   "school_id": 167
+  },
+  {
+   "weight_class": 126,
+   "seed": 1,
+   "wrestler_name_raw": "Cameron Sontz",
+   "wrestler_id": "11fb1877-6b12-46aa-b29f-d00438963678",
+   "school_id": 82
+  },
+  {
+   "weight_class": 126,
+   "seed": 17,
+   "wrestler_name_raw": "Vincent DeSomma",
+   "wrestler_id": "6f137234-77c0-4793-90f7-cccbd0c9795a",
+   "school_id": 77
+  },
+  {
+   "weight_class": 126,
+   "seed": 16,
+   "wrestler_name_raw": "Max Graeber",
+   "wrestler_id": "545f538d-ca77-475a-8d95-fe2cd493ff2c",
+   "school_id": 314
+  },
+  {
+   "weight_class": 126,
+   "seed": 9,
+   "wrestler_name_raw": "Giovanni Gutierrez",
+   "wrestler_id": "c66c9658-6c5a-4635-b402-a00e16f19a40",
+   "school_id": 112
+  },
+  {
+   "weight_class": 126,
+   "seed": 24,
+   "wrestler_name_raw": "Michael Kleynshvag",
+   "wrestler_id": "332a022b-7b51-474b-a534-382ceee4681a",
+   "school_id": 127
+  },
+  {
+   "weight_class": 126,
+   "seed": 25,
+   "wrestler_name_raw": "Collin O’Connor",
+   "wrestler_id": "59c1a3a2-e1a3-4c36-922a-77c52733201e",
+   "school_id": 22
+  },
+  {
+   "weight_class": 126,
+   "seed": 8,
+   "wrestler_name_raw": "Jacob Richardson",
+   "wrestler_id": "a7009719-cb4f-4798-b26c-4218695e5916",
+   "school_id": 147
+  },
+  {
+   "weight_class": 126,
+   "seed": 5,
+   "wrestler_name_raw": "Chase Severs",
+   "wrestler_id": "d8ab8127-daa4-4487-bc4b-5da3b786a6d6",
+   "school_id": 5
+  },
+  {
+   "weight_class": 126,
+   "seed": 28,
+   "wrestler_name_raw": "Jax Bucco",
+   "wrestler_id": "60158f54-b161-47a3-82dc-66971daa8cb6",
+   "school_id": 264
+  },
+  {
+   "weight_class": 126,
+   "seed": 21,
+   "wrestler_name_raw": "Braydon Housel",
+   "wrestler_id": "632b3fe0-6feb-45e2-83b6-bd13575650a5",
+   "school_id": 266
+  },
+  {
+   "weight_class": 126,
+   "seed": 12,
+   "wrestler_name_raw": "Jaydon Sulca",
+   "wrestler_id": "b845862d-161d-417d-8d44-64ec93938618",
+   "school_id": 40
+  },
+  {
+   "weight_class": 126,
+   "seed": 13,
+   "wrestler_name_raw": "Sal D'Arco",
+   "wrestler_id": "c56fb52d-9d3c-44c3-9ec9-99774050c408",
+   "school_id": 117
+  },
+  {
+   "weight_class": 126,
+   "seed": 20,
+   "wrestler_name_raw": "Jayden Cruz",
+   "wrestler_id": "df2643d7-3e3d-405b-bea2-d4bbce0ce627",
+   "school_id": 22
+  },
+  {
+   "weight_class": 126,
+   "seed": 4,
+   "wrestler_name_raw": "Joseph Viola",
+   "wrestler_id": "6323a359-1faa-47da-8794-c6cc4d46ed71",
+   "school_id": 127
+  },
+  {
+   "weight_class": 126,
+   "seed": 3,
+   "wrestler_name_raw": "Owen O'Leary",
+   "wrestler_id": "547e4a5a-abee-4b09-af46-55c2f470460c",
+   "school_id": 156
+  },
+  {
+   "weight_class": 126,
+   "seed": 19,
+   "wrestler_name_raw": "Nate O'Sullivan",
+   "wrestler_id": "e2502160-5403-4e77-bd8f-78c80038e8e7",
+   "school_id": 599
+  },
+  {
+   "weight_class": 126,
+   "seed": 14,
+   "wrestler_name_raw": "Mariano Droz",
+   "wrestler_id": "be0212e9-3da7-465e-bb00-b6826d11628a",
+   "school_id": 2
+  },
+  {
+   "weight_class": 126,
+   "seed": 11,
+   "wrestler_name_raw": "Rohi Hubert",
+   "wrestler_id": "6412d124-6115-40fb-9870-e5da61f5b34b",
+   "school_id": 12
+  },
+  {
+   "weight_class": 126,
+   "seed": 22,
+   "wrestler_name_raw": "Cassen Coreggio",
+   "wrestler_id": "6412d124-6115-40fb-9870-e5da61f5b34b",
+   "school_id": 12
+  },
+  {
+   "weight_class": 126,
+   "seed": 27,
+   "wrestler_name_raw": "Andre Martin",
+   "wrestler_id": "b9072bb4-6253-4736-81f5-e8075b8eaee4",
+   "school_id": 16
+  },
+  {
+   "weight_class": 126,
+   "seed": 6,
+   "wrestler_name_raw": "Michael Echeverri",
+   "wrestler_id": "7dae1888-8c72-4a10-b6a4-f2d7a6068dbd",
+   "school_id": 35
+  },
+  {
+   "weight_class": 126,
+   "seed": 7,
+   "wrestler_name_raw": "Ryan Horner",
+   "wrestler_id": "61285906-9de1-409a-8774-bd56c04f0a66",
+   "school_id": 603
+  },
+  {
+   "weight_class": 126,
+   "seed": 26,
+   "wrestler_name_raw": "Khuchuleg Battulga",
+   "wrestler_id": "b0fefcc1-bd31-4994-945b-e25a67be2b13",
+   "school_id": 118
+  },
+  {
+   "weight_class": 126,
+   "seed": 23,
+   "wrestler_name_raw": "Connor Klein",
+   "wrestler_id": "73eb7f9a-a14d-4726-97c7-10256ff1baf4",
+   "school_id": 57
+  },
+  {
+   "weight_class": 126,
+   "seed": 10,
+   "wrestler_name_raw": "Ryan Spinelli",
+   "wrestler_id": "21cc5990-2fcf-4845-9373-47d4a57b7da4",
+   "school_id": 188
+  },
+  {
+   "weight_class": 126,
+   "seed": 15,
+   "wrestler_name_raw": "Lucas Churpakovich",
+   "wrestler_id": "fb4686df-6c4e-48b4-a161-aa70e0dd0c87",
+   "school_id": 131
+  },
+  {
+   "weight_class": 126,
+   "seed": 18,
+   "wrestler_name_raw": "Dan Rosen",
+   "wrestler_id": "7c7a6dce-470d-4d28-835a-3d7845f3e687",
+   "school_id": 314
+  },
+  {
+   "weight_class": 126,
+   "seed": 2,
+   "wrestler_name_raw": "Joseph Pellicci",
+   "wrestler_id": "446510e1-d1de-4c62-8ea3-21e229c9d0a9",
+   "school_id": 153
+  },
+  {
+   "weight_class": 132,
+   "seed": 1,
+   "wrestler_name_raw": "Dalton Weber",
+   "wrestler_id": "a070e072-808d-4227-bc1d-169f505c0603",
+   "school_id": 117
+  },
+  {
+   "weight_class": 132,
+   "seed": 33,
+   "wrestler_name_raw": "David Butenewicz",
+   "wrestler_id": "9da7abbb-e50f-405f-802d-0f4f05bfcca7",
+   "school_id": 290
+  },
+  {
+   "weight_class": 132,
+   "seed": 32,
+   "wrestler_name_raw": "Antonio Spina",
+   "wrestler_id": "8c7f9fe4-6caa-4eea-8377-647e439a28ea",
+   "school_id": 127
+  },
+  {
+   "weight_class": 132,
+   "seed": 17,
+   "wrestler_name_raw": "Rayan Mohammed",
+   "wrestler_id": "b2a94b34-0a3c-4b8e-9994-0b221a85c645",
+   "school_id": 391
+  },
+  {
+   "weight_class": 132,
+   "seed": 16,
+   "wrestler_name_raw": "Jack Corelli",
+   "wrestler_id": "51cb44c4-4dbe-46b6-bfb2-0881ed4fdf10",
+   "school_id": 266
+  },
+  {
+   "weight_class": 132,
+   "seed": 9,
+   "wrestler_name_raw": "Adan Cedeno",
+   "wrestler_id": "1e5cf153-e7fc-4342-8bcd-6464360ec61e",
+   "school_id": 16
+  },
+  {
+   "weight_class": 132,
+   "seed": 24,
+   "wrestler_name_raw": "Cole DeAngelo",
+   "wrestler_id": "d549fff0-8ce6-43a4-a9c1-b13e3e5c67d2",
+   "school_id": 264
+  },
+  {
+   "weight_class": 132,
+   "seed": 25,
+   "wrestler_name_raw": "Rocco Fontanelli",
+   "wrestler_id": "71fe9741-2fbc-4a2f-be02-7492737be0ca",
+   "school_id": 599
+  },
+  {
+   "weight_class": 132,
+   "seed": 8,
+   "wrestler_name_raw": "Andre Morero",
+   "wrestler_id": "f79b8b48-40dd-4c57-9d4f-8e849e7a8cd0",
+   "school_id": 127
+  },
+  {
+   "weight_class": 132,
+   "seed": 5,
+   "wrestler_name_raw": "River Hibler",
+   "wrestler_id": "eb4e2fd9-dbf4-42a9-850f-ae6d93ec5d48",
+   "school_id": 153
+  },
+  {
+   "weight_class": 132,
+   "seed": 28,
+   "wrestler_name_raw": "Joe Monto",
+   "wrestler_id": "f52ee5cf-074f-49f4-9890-9dedb3939a8a",
+   "school_id": 5
+  },
+  {
+   "weight_class": 132,
+   "seed": 21,
+   "wrestler_name_raw": "Knox Landell",
+   "wrestler_id": "e342fd0f-5b06-4632-81fe-0ee23ff1706a",
+   "school_id": 266
+  },
+  {
+   "weight_class": 132,
+   "seed": 12,
+   "wrestler_name_raw": "AJ Stover",
+   "wrestler_id": "65c8695a-4522-47ce-aa4e-7a8c009f6d8d",
+   "school_id": 603
+  },
+  {
+   "weight_class": 132,
+   "seed": 13,
+   "wrestler_name_raw": "Jack Francis",
+   "wrestler_id": "549b645c-0771-48c8-b473-693736c7e8a4",
+   "school_id": 600
+  },
+  {
+   "weight_class": 132,
+   "seed": 20,
+   "wrestler_name_raw": "Ryan Dyki",
+   "wrestler_id": "98ecdee6-1040-4164-907c-fc4b217f1391",
+   "school_id": 35
+  },
+  {
+   "weight_class": 132,
+   "seed": 29,
+   "wrestler_name_raw": "Connor Glory",
+   "wrestler_id": "8403c3c8-22a1-456b-a63f-43278499e2d7",
+   "school_id": 82
+  },
+  {
+   "weight_class": 132,
+   "seed": 4,
+   "wrestler_name_raw": "Joey Rizzuto",
+   "wrestler_id": "bdfa3574-fbf1-4b06-b632-df274799a95a",
+   "school_id": 22
+  },
+  {
+   "weight_class": 132,
+   "seed": 3,
+   "wrestler_name_raw": "PJ Terranova",
+   "wrestler_id": "a7427d2e-3ea3-45fa-8be0-145db8849bb6",
+   "school_id": 82
+  },
+  {
+   "weight_class": 132,
+   "seed": 30,
+   "wrestler_name_raw": "Michael Oliveri",
+   "wrestler_id": "b9f4d82a-5b36-4eeb-b709-2e9118f072ad",
+   "school_id": 82
+  },
+  {
+   "weight_class": 132,
+   "seed": 19,
+   "wrestler_name_raw": "Matt Velez",
+   "wrestler_id": "0b43473c-c0f7-4ae8-9ac9-8f49511a6527",
+   "school_id": 15
+  },
+  {
+   "weight_class": 132,
+   "seed": 14,
+   "wrestler_name_raw": "Dontae Kelly",
+   "wrestler_id": "c6b46ea5-2b89-486b-9c05-426885a5e1c8",
+   "school_id": 283
+  },
+  {
+   "weight_class": 132,
+   "seed": 11,
+   "wrestler_name_raw": "Andrew Bonita",
+   "wrestler_id": "571003ad-4d42-483f-a71b-250fe1248b34",
+   "school_id": 11
+  },
+  {
+   "weight_class": 132,
+   "seed": 22,
+   "wrestler_name_raw": "Michael Garcia",
+   "wrestler_id": "5fc6d226-cdd2-45cc-bced-d4337a884748",
+   "school_id": 131
+  },
+  {
+   "weight_class": 132,
+   "seed": 27,
+   "wrestler_name_raw": "Mike Hamdeh",
+   "wrestler_id": "e115dd4d-c6cc-4e00-a03a-120de392dc10",
+   "school_id": 188
+  },
+  {
+   "weight_class": 132,
+   "seed": 6,
+   "wrestler_name_raw": "Eli Glover",
+   "wrestler_id": "e4d7b199-98c7-496a-8b76-bdbaa8b3a34f",
+   "school_id": 281
+  },
+  {
+   "weight_class": 132,
+   "seed": 7,
+   "wrestler_name_raw": "Greyson Pettit",
+   "wrestler_id": "4fa1f408-c019-48fa-be02-169293a32bea",
+   "school_id": 290
+  },
+  {
+   "weight_class": 132,
+   "seed": 26,
+   "wrestler_name_raw": "Cooper Gill",
+   "wrestler_id": "b09706a9-cbae-43cd-9aa5-7d9431807dc6",
+   "school_id": 12
+  },
+  {
+   "weight_class": 132,
+   "seed": 23,
+   "wrestler_name_raw": "Jake Piotrowsky",
+   "wrestler_id": "a26e53cb-ec1e-4957-9836-e75c503d96b6",
+   "school_id": 117
+  },
+  {
+   "weight_class": 132,
+   "seed": 10,
+   "wrestler_name_raw": "Gennaro Marzocca",
+   "wrestler_id": "61513255-6fc8-4510-bae0-73fe51a9bafe",
+   "school_id": 153
+  },
+  {
+   "weight_class": 132,
+   "seed": 15,
+   "wrestler_name_raw": "Nate Gomes",
+   "wrestler_id": "437f3b63-52fa-43ae-9bd9-7ebfff4f296a",
+   "school_id": 77
+  },
+  {
+   "weight_class": 132,
+   "seed": 18,
+   "wrestler_name_raw": "Dmytro Bohdan",
+   "wrestler_id": "06174253-b777-4b52-a1f9-f2c01faeeff2",
+   "school_id": 57
+  },
+  {
+   "weight_class": 132,
+   "seed": 31,
+   "wrestler_name_raw": "Conor Raveis",
+   "wrestler_id": "a51da2dd-a7a7-4bc6-9e23-1c85f00925df",
+   "school_id": 600
+  },
+  {
+   "weight_class": 132,
+   "seed": 34,
+   "wrestler_name_raw": "Paul Tsocanos",
+   "wrestler_id": "1a908aa8-5962-4e12-b431-76d8a34a7609",
+   "school_id": 17
+  },
+  {
+   "weight_class": 132,
+   "seed": 2,
+   "wrestler_name_raw": "Richard DeLorenzo II",
+   "wrestler_id": "d070c22c-faa5-4ccf-815d-38255027c2f2",
+   "school_id": 253
+  },
+  {
+   "weight_class": 138,
+   "seed": 1,
+   "wrestler_name_raw": "Robert Douangmala",
+   "wrestler_id": "08a53a03-5b7c-41fb-b0ae-8deae4bef5a2",
+   "school_id": 602
+  },
+  {
+   "weight_class": 138,
+   "seed": 33,
+   "wrestler_name_raw": "David Sawyer",
+   "wrestler_id": "6ea1d100-1e02-4a1e-ad2e-3762e0ef4773",
+   "school_id": 290
+  },
+  {
+   "weight_class": 138,
+   "seed": 32,
+   "wrestler_name_raw": "Nico Marchetti",
+   "wrestler_id": "30d89fe4-a79e-47ca-a61b-94c0a3d3e8c4",
+   "school_id": 82
+  },
+  {
+   "weight_class": 138,
+   "seed": 17,
+   "wrestler_name_raw": "Liam Williams",
+   "wrestler_id": "b6aac187-1a8a-4c17-9f8c-8f6f817b0c24",
+   "school_id": 261
+  },
+  {
+   "weight_class": 138,
+   "seed": 16,
+   "wrestler_name_raw": "Bryan Dougherty",
+   "wrestler_id": "4bf62254-c2d2-457f-9028-ab72b9c0b423",
+   "school_id": 112
+  },
+  {
+   "weight_class": 138,
+   "seed": 9,
+   "wrestler_name_raw": "Sean Brown",
+   "wrestler_id": "a18a6b18-9b72-4a8a-bbef-355ffe8cde57",
+   "school_id": 26
+  },
+  {
+   "weight_class": 138,
+   "seed": 24,
+   "wrestler_name_raw": "Nick Pugliese",
+   "wrestler_id": "75b10ec4-0109-4970-a8c8-4b0a0e26e24e",
+   "school_id": 599
+  },
+  {
+   "weight_class": 138,
+   "seed": 25,
+   "wrestler_name_raw": "Rhys KOZUBAL",
+   "wrestler_id": "b0743ade-1f63-42ff-a8c4-44093f70b707",
+   "school_id": 131
+  },
+  {
+   "weight_class": 138,
+   "seed": 8,
+   "wrestler_name_raw": "Ryder connors",
+   "wrestler_id": "199fcdbf-8a1c-49cd-8cb0-6b41e7afb69a",
+   "school_id": 93
+  },
+  {
+   "weight_class": 138,
+   "seed": 5,
+   "wrestler_name_raw": "Isaias Hernandez",
+   "wrestler_id": "309777a3-a68c-4ddd-896f-073d489f7a69",
+   "school_id": 22
+  },
+  {
+   "weight_class": 138,
+   "seed": 28,
+   "wrestler_name_raw": "Matthew Miller",
+   "wrestler_id": "c7f9ebc3-b7c6-4cda-884f-34d4411b8b3a",
+   "school_id": 81
+  },
+  {
+   "weight_class": 138,
+   "seed": 21,
+   "wrestler_name_raw": "Chris Kelesidis",
+   "wrestler_id": "681fc761-c1fd-40f8-a2b7-4b8d0394d9ce",
+   "school_id": 264
+  },
+  {
+   "weight_class": 138,
+   "seed": 12,
+   "wrestler_name_raw": "Christopher Cifelli",
+   "wrestler_id": "1019062a-e078-4a8c-914b-325950814504",
+   "school_id": 106
+  },
+  {
+   "weight_class": 138,
+   "seed": 13,
+   "wrestler_name_raw": "Dylan cerciello",
+   "wrestler_id": "d69de84e-b5a4-4e23-a590-2ac8d158cbb7",
+   "school_id": 379
+  },
+  {
+   "weight_class": 138,
+   "seed": 20,
+   "wrestler_name_raw": "Alex Zelna",
+   "wrestler_id": "25309dc7-1e6c-4418-834f-0181cbe3fdb2",
+   "school_id": 2
+  },
+  {
+   "weight_class": 138,
+   "seed": 29,
+   "wrestler_name_raw": "Lucas Rafeh",
+   "wrestler_id": "cde393db-1ac9-4b90-a9a4-8472b093c60e",
+   "school_id": 127
+  },
+  {
+   "weight_class": 138,
+   "seed": 4,
+   "wrestler_name_raw": "Amari Vann",
+   "wrestler_id": "b805371f-d21b-4849-a31c-b675151718fc",
+   "school_id": 290
+  },
+  {
+   "weight_class": 138,
+   "seed": 3,
+   "wrestler_name_raw": "Jack Abramson",
+   "wrestler_id": "e1a7b6fe-3e83-471c-a1f9-ad61497d4c88",
+   "school_id": 144
+  },
+  {
+   "weight_class": 138,
+   "seed": 35,
+   "wrestler_name_raw": "Nathan Kadar",
+   "wrestler_id": "0fda066c-bd6d-4dd3-80b9-36038344e6ae",
+   "school_id": 266
+  },
+  {
+   "weight_class": 138,
+   "seed": 30,
+   "wrestler_name_raw": "Jared Puleo",
+   "wrestler_id": "0aaac3e3-afd8-44d7-99c3-1f53a4b48cb7",
+   "school_id": 11
+  },
+  {
+   "weight_class": 138,
+   "seed": 19,
+   "wrestler_name_raw": "Landon Lill",
+   "wrestler_id": "7fec9c19-9ed4-4798-9edc-788fc2ec12a7",
+   "school_id": 603
+  },
+  {
+   "weight_class": 138,
+   "seed": 14,
+   "wrestler_name_raw": "Malik Abuharthieh",
+   "wrestler_id": "671e2ac8-59ac-4926-8b08-49a3c8a289bd",
+   "school_id": 391
+  },
+  {
+   "weight_class": 138,
+   "seed": 11,
+   "wrestler_name_raw": "Mason Distefano",
+   "wrestler_id": "adb5ed10-fc55-4b82-94f8-0121af3b458d",
+   "school_id": 235
+  },
+  {
+   "weight_class": 138,
+   "seed": 22,
+   "wrestler_name_raw": "Sam Allen",
+   "wrestler_id": "efbb8b54-7595-4d65-a857-94210a513473",
+   "school_id": 77
+  },
+  {
+   "weight_class": 138,
+   "seed": 27,
+   "wrestler_name_raw": "Damian Lagrone",
+   "wrestler_id": "4e035854-55db-418c-bb76-f7e9d04c0e3d",
+   "school_id": 57
+  },
+  {
+   "weight_class": 138,
+   "seed": 6,
+   "wrestler_name_raw": "Ryan Yang",
+   "wrestler_id": "3089e808-3380-4ff8-a166-4001067abb90",
+   "school_id": 156
+  },
+  {
+   "weight_class": 138,
+   "seed": 7,
+   "wrestler_name_raw": "Jayce Capello",
+   "wrestler_id": "0a20bbfa-a2ab-4a1b-801f-8dbe82086d38",
+   "school_id": 5
+  },
+  {
+   "weight_class": 138,
+   "seed": 26,
+   "wrestler_name_raw": "Mark Centurione",
+   "wrestler_id": "0a20bbfa-a2ab-4a1b-801f-8dbe82086d38",
+   "school_id": 5
+  },
+  {
+   "weight_class": 138,
+   "seed": 23,
+   "wrestler_name_raw": "Frankie Spagnola",
+   "wrestler_id": "2906af9b-de70-47fd-8bd4-d30f6aef4aef",
+   "school_id": 117
+  },
+  {
+   "weight_class": 138,
+   "seed": 10,
+   "wrestler_name_raw": "Giovanni Giardina",
+   "wrestler_id": "27aa7075-5569-4c61-bf7d-ba872126a9f7",
+   "school_id": 9
+  },
+  {
+   "weight_class": 138,
+   "seed": 15,
+   "wrestler_name_raw": "Maksim Marrero",
+   "wrestler_id": "982cc0b5-bf60-4831-8ab3-6ec319c1b013",
+   "school_id": 127
+  },
+  {
+   "weight_class": 138,
+   "seed": 18,
+   "wrestler_name_raw": "Ty`Zer Burr",
+   "wrestler_id": "3dbabf6c-750d-4c07-a3ca-ff9b354d2a79",
+   "school_id": 183
+  },
+  {
+   "weight_class": 138,
+   "seed": 31,
+   "wrestler_name_raw": "Dylan Taylor",
+   "wrestler_id": "269dd23e-e0bf-46d5-93c4-7a5cc95ae9e9",
+   "school_id": 266
+  },
+  {
+   "weight_class": 138,
+   "seed": 34,
+   "wrestler_name_raw": "Ryan Kim",
+   "wrestler_id": "b2731464-9d88-4ddc-a645-d67a4a26e286",
+   "school_id": 35
+  },
+  {
+   "weight_class": 138,
+   "seed": 2,
+   "wrestler_name_raw": "Chase Hansen",
+   "wrestler_id": "4b6b3760-f1c7-4303-bf08-f52763e5e134",
+   "school_id": 281
+  },
+  {
+   "weight_class": 144,
+   "seed": 1,
+   "wrestler_name_raw": "Nicholas Pallitto",
+   "wrestler_id": "dcfab1d1-a85c-4d1b-a495-bd43f754d35d",
+   "school_id": 153
+  },
+  {
+   "weight_class": 144,
+   "seed": 33,
+   "wrestler_name_raw": "Ilias Konstantinidis",
+   "wrestler_id": "50c5d5fd-a4e2-4ba1-bfa1-a0c374392f17",
+   "school_id": 600
+  },
+  {
+   "weight_class": 144,
+   "seed": 32,
+   "wrestler_name_raw": "John Owen",
+   "wrestler_id": "1efca6d1-5db9-4083-a4ca-b100fe10fcae",
+   "school_id": 602
+  },
+  {
+   "weight_class": 144,
+   "seed": 17,
+   "wrestler_name_raw": "CJ Anzaldo",
+   "wrestler_id": "864f9860-cf1f-4c32-8b91-a15b68478bd4",
+   "school_id": 17
+  },
+  {
+   "weight_class": 144,
+   "seed": 16,
+   "wrestler_name_raw": "Adrian Pinto",
+   "wrestler_id": "bc1c026c-d8c0-438d-b27d-cae5ce23e7fe",
+   "school_id": 112
+  },
+  {
+   "weight_class": 144,
+   "seed": 9,
+   "wrestler_name_raw": "Xavier Gonzalez",
+   "wrestler_id": "e5300ea4-b1a3-48ef-8f20-c8d82b774d70",
+   "school_id": 48
+  },
+  {
+   "weight_class": 144,
+   "seed": 24,
+   "wrestler_name_raw": "Sean Morris",
+   "wrestler_id": "a76998a7-0eb6-461c-a8ef-86527c60e53a",
+   "school_id": 77
+  },
+  {
+   "weight_class": 144,
+   "seed": 25,
+   "wrestler_name_raw": "Andrew Matter",
+   "wrestler_id": "abef6f90-4c37-4576-a3cd-19276cd1c640",
+   "school_id": 82
+  },
+  {
+   "weight_class": 144,
+   "seed": 8,
+   "wrestler_name_raw": "Dylan Biegel",
+   "wrestler_id": "a074ea63-36c2-4aff-ae8f-afde3feeccc8",
+   "school_id": 16
+  },
+  {
+   "weight_class": 144,
+   "seed": 5,
+   "wrestler_name_raw": "Brighton Karvoski",
+   "wrestler_id": "42ad6959-10ea-45c2-8ee1-28425552428e",
+   "school_id": 600
+  },
+  {
+   "weight_class": 144,
+   "seed": 28,
+   "wrestler_name_raw": "Ethan Perez",
+   "wrestler_id": "6f823948-389c-4051-ade6-25fdfe169852",
+   "school_id": 5
+  },
+  {
+   "weight_class": 144,
+   "seed": 21,
+   "wrestler_name_raw": "Bradley Ingram",
+   "wrestler_id": "e441efe8-b8ca-4215-ac27-f36eea5b186d",
+   "school_id": 266
+  },
+  {
+   "weight_class": 144,
+   "seed": 12,
+   "wrestler_name_raw": "Dominick Marrero",
+   "wrestler_id": "f3af1561-4350-4bf2-a2b2-37f14f0a7e69",
+   "school_id": 281
+  },
+  {
+   "weight_class": 144,
+   "seed": 13,
+   "wrestler_name_raw": "Brendon Katimbang",
+   "wrestler_id": "f1bb580a-90a8-4844-9e50-1ff965e93787",
+   "school_id": 599
+  },
+  {
+   "weight_class": 144,
+   "seed": 20,
+   "wrestler_name_raw": "Anthony Dispensa",
+   "wrestler_id": "15179488-0d14-4e85-8c45-f9458ef9e6c9",
+   "school_id": 93
+  },
+  {
+   "weight_class": 144,
+   "seed": 29,
+   "wrestler_name_raw": "Darryen Rodriguez",
+   "wrestler_id": "9ff61ae8-ffa9-46a7-a13e-d067d1196779",
+   "school_id": 125
+  },
+  {
+   "weight_class": 144,
+   "seed": 4,
+   "wrestler_name_raw": "Ethan Delacruz",
+   "wrestler_id": "6de08d79-350b-47ac-a0ea-23b93e88dc2a",
+   "school_id": 322
+  },
+  {
+   "weight_class": 144,
+   "seed": 3,
+   "wrestler_name_raw": "Delvan Rotte",
+   "wrestler_id": "d766f68d-1349-4336-b88d-fc768ed723c5",
+   "school_id": 22
+  },
+  {
+   "weight_class": 144,
+   "seed": 30,
+   "wrestler_name_raw": "Nathan Emmert",
+   "wrestler_id": "cad3fe9d-fe9b-452c-a020-36b6628079a8",
+   "school_id": 35
+  },
+  {
+   "weight_class": 144,
+   "seed": 19,
+   "wrestler_name_raw": "Luken Ramos",
+   "wrestler_id": "206659ee-b6f9-44e2-93da-135580063c6e",
+   "school_id": 264
+  },
+  {
+   "weight_class": 144,
+   "seed": 14,
+   "wrestler_name_raw": "Max Ventura",
+   "wrestler_id": "4db013f1-9401-43a9-83c2-a2e7968a8b90",
+   "school_id": 144
+  },
+  {
+   "weight_class": 144,
+   "seed": 11,
+   "wrestler_name_raw": "Tyler Yildiz",
+   "wrestler_id": "5fb9c878-43c8-41e5-acbe-4f377644f5dc",
+   "school_id": 127
+  },
+  {
+   "weight_class": 144,
+   "seed": 22,
+   "wrestler_name_raw": "Marcus Puorro",
+   "wrestler_id": "5e051d8d-8d8a-4254-a01a-f0da732132f0",
+   "school_id": 131
+  },
+  {
+   "weight_class": 144,
+   "seed": 27,
+   "wrestler_name_raw": "Hudson Hicks",
+   "wrestler_id": "3da022bd-2690-4e0c-84ca-4306b40edc6a",
+   "school_id": 11
+  },
+  {
+   "weight_class": 144,
+   "seed": 6,
+   "wrestler_name_raw": "Ariel Azeredo",
+   "wrestler_id": "cc7d4510-ba38-476f-b2ee-348c785aeb7a",
+   "school_id": 138
+  },
+  {
+   "weight_class": 144,
+   "seed": 7,
+   "wrestler_name_raw": "Ryan Mckenna",
+   "wrestler_id": "686aada4-b5ce-492b-8efb-0d6d32867f63",
+   "school_id": 2
+  },
+  {
+   "weight_class": 144,
+   "seed": 26,
+   "wrestler_name_raw": "Nick Bartasi",
+   "wrestler_id": "aa3d8ed8-36d0-436f-9a9a-1f2966517874",
+   "school_id": 599
+  },
+  {
+   "weight_class": 144,
+   "seed": 23,
+   "wrestler_name_raw": "Brody Walton",
+   "wrestler_id": "852d1366-2259-4d28-ad94-37f936c82557",
+   "school_id": 188
+  },
+  {
+   "weight_class": 144,
+   "seed": 10,
+   "wrestler_name_raw": "JP Sanders",
+   "wrestler_id": "934719ef-8d4d-46ac-8157-8d1007660346",
+   "school_id": 220
+  },
+  {
+   "weight_class": 144,
+   "seed": 15,
+   "wrestler_name_raw": "Michael angelini",
+   "wrestler_id": "e899543a-f017-4574-8ea3-6666d04cc8f4",
+   "school_id": 261
+  },
+  {
+   "weight_class": 144,
+   "seed": 18,
+   "wrestler_name_raw": "Jamal Kouzer",
+   "wrestler_id": "3a925c3c-bdf6-4e5d-ac4b-8b26205682e6",
+   "school_id": 38
+  },
+  {
+   "weight_class": 144,
+   "seed": 31,
+   "wrestler_name_raw": "Lucas Coesfeld",
+   "wrestler_id": "83025e46-b5f6-4cd3-8b3c-824ca6997baf",
+   "school_id": 290
+  },
+  {
+   "weight_class": 144,
+   "seed": 2,
+   "wrestler_name_raw": "Ryan Hrenenko",
+   "wrestler_id": "1085fda8-9e12-4e41-b256-6e8abd72e778",
+   "school_id": 26
+  },
+  {
+   "weight_class": 150,
+   "seed": 1,
+   "wrestler_name_raw": "Joe Mahoney",
+   "wrestler_id": "9fc69479-5141-4f8d-b890-58c1ee116bd8",
+   "school_id": 600
+  },
+  {
+   "weight_class": 150,
+   "seed": 17,
+   "wrestler_name_raw": "Daniel Arroyo",
+   "wrestler_id": "12794ac5-1b2d-4483-a0d0-6f4af532e16d",
+   "school_id": 117
+  },
+  {
+   "weight_class": 150,
+   "seed": 16,
+   "wrestler_name_raw": "Joey Riccio",
+   "wrestler_id": "2322c510-fc24-4f1b-8c03-486fbd93c264",
+   "school_id": 93
+  },
+  {
+   "weight_class": 150,
+   "seed": 9,
+   "wrestler_name_raw": "William Clasen",
+   "wrestler_id": "dc07df30-4bc9-4d62-9b68-2eb3ef41a211",
+   "school_id": 35
+  },
+  {
+   "weight_class": 150,
+   "seed": 24,
+   "wrestler_name_raw": "Christian Jung",
+   "wrestler_id": "9ffc4152-4c25-4c17-8e43-4360224f6362",
+   "school_id": 5
+  },
+  {
+   "weight_class": 150,
+   "seed": 25,
+   "wrestler_name_raw": "Bryce Meserlian",
+   "wrestler_id": "4ef21cef-fd30-4bd3-9c9f-5e2b6d265e06",
+   "school_id": 11
+  },
+  {
+   "weight_class": 150,
+   "seed": 8,
+   "wrestler_name_raw": "Logan Zimmer",
+   "wrestler_id": "cecc3f42-040a-4e68-993e-46b5c658a182",
+   "school_id": 261
+  },
+  {
+   "weight_class": 150,
+   "seed": 5,
+   "wrestler_name_raw": "Michael Boulard",
+   "wrestler_id": "b8e5d1df-6ea6-412c-91a0-c55e35541770",
+   "school_id": 235
+  },
+  {
+   "weight_class": 150,
+   "seed": 28,
+   "wrestler_name_raw": "Ilirian Vuka",
+   "wrestler_id": "412e8a99-bbed-451e-9fbf-cf043994d1aa",
+   "school_id": 17
+  },
+  {
+   "weight_class": 150,
+   "seed": 21,
+   "wrestler_name_raw": "Kane Sheridan",
+   "wrestler_id": "0178092a-9577-4152-a135-6ad5e35b04fe",
+   "school_id": 167
+  },
+  {
+   "weight_class": 150,
+   "seed": 12,
+   "wrestler_name_raw": "Lukas Valentin",
+   "wrestler_id": "ab8900f8-7195-47ab-8fa0-b41b519d88cd",
+   "school_id": 187
+  },
+  {
+   "weight_class": 150,
+   "seed": 13,
+   "wrestler_name_raw": "Damian VonderLinden",
+   "wrestler_id": "96b181af-b395-4935-94d4-446c4d7adc10",
+   "school_id": 253
+  },
+  {
+   "weight_class": 150,
+   "seed": 20,
+   "wrestler_name_raw": "Vin Castrofilippo",
+   "wrestler_id": "48063201-24ae-4c13-8e37-c744bbc1d021",
+   "school_id": 599
+  },
+  {
+   "weight_class": 150,
+   "seed": 4,
+   "wrestler_name_raw": "Enzo Triola",
+   "wrestler_id": "22c11752-3ff6-4330-becc-2f7474cf8a2b",
+   "school_id": 167
+  },
+  {
+   "weight_class": 150,
+   "seed": 3,
+   "wrestler_name_raw": "Alexander Liss",
+   "wrestler_id": "5902192d-fadf-410d-995b-60561234d904",
+   "school_id": 382
+  },
+  {
+   "weight_class": 150,
+   "seed": 19,
+   "wrestler_name_raw": "Trevor Grageda",
+   "wrestler_id": "1746a202-a123-4b68-a6d2-b30144523e1c",
+   "school_id": 16
+  },
+  {
+   "weight_class": 150,
+   "seed": 14,
+   "wrestler_name_raw": "Oskar Gluckow",
+   "wrestler_id": "956289d1-eefb-45eb-80ce-1335b3425fbc",
+   "school_id": 118
+  },
+  {
+   "weight_class": 150,
+   "seed": 11,
+   "wrestler_name_raw": "Anthony Russo",
+   "wrestler_id": "99e50f31-1de0-4686-9108-cac8e45a615d",
+   "school_id": 264
+  },
+  {
+   "weight_class": 150,
+   "seed": 22,
+   "wrestler_name_raw": "Anthony Bray",
+   "wrestler_id": "51e8e67f-b362-466f-8625-1148cdcedafd",
+   "school_id": 77
+  },
+  {
+   "weight_class": 150,
+   "seed": 27,
+   "wrestler_name_raw": "Luke Riker",
+   "wrestler_id": "3059ae8e-7e94-4b86-b7b6-c1710680be7d",
+   "school_id": 127
+  },
+  {
+   "weight_class": 150,
+   "seed": 6,
+   "wrestler_name_raw": "Dane Raveis",
+   "wrestler_id": "c5349cb0-9879-44a4-8c64-cdf9c7e04b75",
+   "school_id": 600
+  },
+  {
+   "weight_class": 150,
+   "seed": 7,
+   "wrestler_name_raw": "Michael Pocius",
+   "wrestler_id": "0df39eec-aaaf-4521-9767-d7f1fe4f7308",
+   "school_id": 127
+  },
+  {
+   "weight_class": 150,
+   "seed": 26,
+   "wrestler_name_raw": "Devin Grayson",
+   "wrestler_id": "cc5585b4-fcf0-4a35-8c79-add9c5c85088",
+   "school_id": 266
+  },
+  {
+   "weight_class": 150,
+   "seed": 23,
+   "wrestler_name_raw": "Jacob Walker",
+   "wrestler_id": "8a0081a0-412d-4d39-8969-dc29b8abd167",
+   "school_id": 153
+  },
+  {
+   "weight_class": 150,
+   "seed": 10,
+   "wrestler_name_raw": "Tyler King",
+   "wrestler_id": "b984e983-5803-4787-892c-4041a7f8c1c7",
+   "school_id": 283
+  },
+  {
+   "weight_class": 150,
+   "seed": 15,
+   "wrestler_name_raw": "Andrew Brant",
+   "wrestler_id": "c06534ed-cf03-4c09-bb09-2e2c25210c97",
+   "school_id": 281
+  },
+  {
+   "weight_class": 150,
+   "seed": 18,
+   "wrestler_name_raw": "Brady Tiernan",
+   "wrestler_id": "af7fbd6d-a98b-449e-ba6b-f6547a312501",
+   "school_id": 22
+  },
+  {
+   "weight_class": 150,
+   "seed": 2,
+   "wrestler_name_raw": "Nicholas Barone",
+   "wrestler_id": "00241ca4-7cd1-4504-9031-12bf8e1a18e7",
+   "school_id": 153
+  },
+  {
+   "weight_class": 157,
+   "seed": 1,
+   "wrestler_name_raw": "Sean Love",
+   "wrestler_id": "c4c8e9a2-932a-46fd-acdb-2e2d51d25756",
+   "school_id": 183
+  },
+  {
+   "weight_class": 157,
+   "seed": 17,
+   "wrestler_name_raw": "Tyler Morodan",
+   "wrestler_id": "97f8666b-52b6-4ad9-96b5-f534af9822a0",
+   "school_id": 24
+  },
+  {
+   "weight_class": 157,
+   "seed": 16,
+   "wrestler_name_raw": "Danny Byrne",
+   "wrestler_id": "a4700377-8a75-4331-bdb7-358cded37740",
+   "school_id": 281
+  },
+  {
+   "weight_class": 157,
+   "seed": 9,
+   "wrestler_name_raw": "Owen Miller",
+   "wrestler_id": "1e3268e3-ada5-4a5c-85e3-2b1cf133c036",
+   "school_id": 188
+  },
+  {
+   "weight_class": 157,
+   "seed": 24,
+   "wrestler_name_raw": "Frank Monto",
+   "wrestler_id": "211d0588-f9a9-4925-9bd8-51f19751db15",
+   "school_id": 5
+  },
+  {
+   "weight_class": 157,
+   "seed": 25,
+   "wrestler_name_raw": "Lucas Meisenholder",
+   "wrestler_id": "c5292330-2374-483b-87cc-7d7a3e6d27cb",
+   "school_id": 599
+  },
+  {
+   "weight_class": 157,
+   "seed": 8,
+   "wrestler_name_raw": "Jacob Jones",
+   "wrestler_id": "add28b3f-20b3-4f2f-b760-cea561a06ec4",
+   "school_id": 600
+  },
+  {
+   "weight_class": 157,
+   "seed": 5,
+   "wrestler_name_raw": "Colin Smyth",
+   "wrestler_id": "fc3baddd-a482-4b32-a203-3716bdf7c985",
+   "school_id": 56
+  },
+  {
+   "weight_class": 157,
+   "seed": 21,
+   "wrestler_name_raw": "Cole Jasinkiewicz",
+   "wrestler_id": "d5718bdb-2a7a-4b97-8334-03b25c5ce04e",
+   "school_id": 82
+  },
+  {
+   "weight_class": 157,
+   "seed": 12,
+   "wrestler_name_raw": "Jeremy Marsella",
+   "wrestler_id": "ca3ec3ab-7fea-4cfd-abc3-79ef912435e8",
+   "school_id": 235
+  },
+  {
+   "weight_class": 157,
+   "seed": 13,
+   "wrestler_name_raw": "Muhammed Tafida",
+   "wrestler_id": "4ab0198c-298b-4a35-8130-f8dfaf1d8058",
+   "school_id": 40
+  },
+  {
+   "weight_class": 157,
+   "seed": 20,
+   "wrestler_name_raw": "Eddie Hufnagel",
+   "wrestler_id": "31660af3-7b91-4111-9320-a8b08bb9b5fe",
+   "school_id": 2
+  },
+  {
+   "weight_class": 157,
+   "seed": 4,
+   "wrestler_name_raw": "Harry Asatrian.Jr",
+   "wrestler_id": "a67a9aed-0940-40e1-85d8-36ec697f2c8d",
+   "school_id": 153
+  },
+  {
+   "weight_class": 157,
+   "seed": 3,
+   "wrestler_name_raw": "Luke Scholz",
+   "wrestler_id": "f9d9655d-8a70-4b67-a203-4a20957a07a3",
+   "school_id": 93
+  },
+  {
+   "weight_class": 157,
+   "seed": 19,
+   "wrestler_name_raw": "Roman Ritacco",
+   "wrestler_id": "cd382f34-f28e-4c45-8343-1c40d1efb5e3",
+   "school_id": 33
+  },
+  {
+   "weight_class": 157,
+   "seed": 14,
+   "wrestler_name_raw": "Tyler Whartnaby",
+   "wrestler_id": "04011ddb-9cd2-44a1-9096-dc973d3c2a81",
+   "school_id": 391
+  },
+  {
+   "weight_class": 157,
+   "seed": 11,
+   "wrestler_name_raw": "Jamison Devlin",
+   "wrestler_id": "29da4c3b-c9a2-4f8c-b43d-8d9e9ca6d46c",
+   "school_id": 290
+  },
+  {
+   "weight_class": 157,
+   "seed": 22,
+   "wrestler_name_raw": "Matt Summa",
+   "wrestler_id": "e14fe52e-d840-42d1-875b-f086ed5f5b72",
+   "school_id": 127
+  },
+  {
+   "weight_class": 157,
+   "seed": 6,
+   "wrestler_name_raw": "Jeremy McGrath",
+   "wrestler_id": "ee286986-ef44-4d6e-a129-c4a7d4cc2eab",
+   "school_id": 600
+  },
+  {
+   "weight_class": 157,
+   "seed": 7,
+   "wrestler_name_raw": "Parker Quinn",
+   "wrestler_id": "ae54becb-f6b0-49c5-a550-2199e8b54efc",
+   "school_id": 235
+  },
+  {
+   "weight_class": 157,
+   "seed": 26,
+   "wrestler_name_raw": "Cael Hoffman",
+   "wrestler_id": "36286c14-4bf1-40ef-935d-ab75f1bdbd4b",
+   "school_id": 11
+  },
+  {
+   "weight_class": 157,
+   "seed": 23,
+   "wrestler_name_raw": "Thomas Burke",
+   "wrestler_id": "32f760a1-e4da-496c-882e-53ffb4ee777e",
+   "school_id": 264
+  },
+  {
+   "weight_class": 157,
+   "seed": 10,
+   "wrestler_name_raw": "Luke Stempkowski",
+   "wrestler_id": "2dd2f48e-e964-4470-828f-963457e86169",
+   "school_id": 16
+  },
+  {
+   "weight_class": 157,
+   "seed": 15,
+   "wrestler_name_raw": "Torrin Tracey",
+   "wrestler_id": "714b9c66-7df2-474e-8014-33e2db0a25a3",
+   "school_id": 220
+  },
+  {
+   "weight_class": 157,
+   "seed": 18,
+   "wrestler_name_raw": "Dominic LiSanti",
+   "wrestler_id": "9c2314ee-26a3-424e-9989-f66dc89dfe8d",
+   "school_id": 9
+  },
+  {
+   "weight_class": 157,
+   "seed": 2,
+   "wrestler_name_raw": "Joseph Ruiz",
+   "wrestler_id": "175ec098-8af6-4c82-bb2d-e957623a2331",
+   "school_id": 167
+  },
+  {
+   "weight_class": 165,
+   "seed": 1,
+   "wrestler_name_raw": "Ryan Willi",
+   "wrestler_id": "5a23767b-d9ea-4ccc-a739-65b1ffee1461",
+   "school_id": 160
+  },
+  {
+   "weight_class": 165,
+   "seed": 17,
+   "wrestler_name_raw": "Tommy O'Connor",
+   "wrestler_id": "3df0a967-05d7-49dc-b4a3-c2cfb7be42ed",
+   "school_id": 261
+  },
+  {
+   "weight_class": 165,
+   "seed": 16,
+   "wrestler_name_raw": "David Lopes",
+   "wrestler_id": "ae3db28a-863d-427a-98fe-20f76b19bc04",
+   "school_id": 127
+  },
+  {
+   "weight_class": 165,
+   "seed": 9,
+   "wrestler_name_raw": "Matthew McCann",
+   "wrestler_id": "b7509f42-d493-4083-9ed5-90d8d9cd019f",
+   "school_id": 131
+  },
+  {
+   "weight_class": 165,
+   "seed": 24,
+   "wrestler_name_raw": "Giammaria Giordano",
+   "wrestler_id": "8948af9f-8150-41d2-b423-7961764194f9",
+   "school_id": 153
+  },
+  {
+   "weight_class": 165,
+   "seed": 25,
+   "wrestler_name_raw": "Leo Dimitrakiou",
+   "wrestler_id": "ee15bd62-195a-41d1-b79d-0553e8a8827c",
+   "school_id": 33
+  },
+  {
+   "weight_class": 165,
+   "seed": 8,
+   "wrestler_name_raw": "Joe Aiello",
+   "wrestler_id": "18b67cc4-48fb-4ac9-94bb-2379a056392a",
+   "school_id": 57
+  },
+  {
+   "weight_class": 165,
+   "seed": 5,
+   "wrestler_name_raw": "Cameron Pote",
+   "wrestler_id": "c387b51f-7676-457c-8f95-0b83eee57916",
+   "school_id": 290
+  },
+  {
+   "weight_class": 165,
+   "seed": 28,
+   "wrestler_name_raw": "Blake Watkins",
+   "wrestler_id": "9d521d4b-250a-4ee9-bf32-69d764378116",
+   "school_id": 600
+  },
+  {
+   "weight_class": 165,
+   "seed": 21,
+   "wrestler_name_raw": "Jayden Soy",
+   "wrestler_id": "99e3e4d0-cc61-41b2-a1af-028eccc75a73",
+   "school_id": 602
+  },
+  {
+   "weight_class": 165,
+   "seed": 12,
+   "wrestler_name_raw": "Robert Attenborough",
+   "wrestler_id": "f9534ad1-5a81-4cde-8224-c85e3c56c40d",
+   "school_id": 283
+  },
+  {
+   "weight_class": 165,
+   "seed": 13,
+   "wrestler_name_raw": "Cristian Rodriguez",
+   "wrestler_id": "3c48962c-ff83-4e43-bbb4-a0213aca222b",
+   "school_id": 264
+  },
+  {
+   "weight_class": 165,
+   "seed": 20,
+   "wrestler_name_raw": "Jared Acinapura",
+   "wrestler_id": "c3aa44a1-71a6-4791-b073-e0ccdce8847a",
+   "school_id": 93
+  },
+  {
+   "weight_class": 165,
+   "seed": 29,
+   "wrestler_name_raw": "Will Tarna",
+   "wrestler_id": "9fc14fb4-6d21-49e8-8dfa-1f92fcf6aaca",
+   "school_id": 16
+  },
+  {
+   "weight_class": 165,
+   "seed": 4,
+   "wrestler_name_raw": "Colby Vital",
+   "wrestler_id": "43343bf1-7a01-4d74-aa38-fdb8880c5140",
+   "school_id": 601
+  },
+  {
+   "weight_class": 165,
+   "seed": 3,
+   "wrestler_name_raw": "Aidan Rotbaum",
+   "wrestler_id": "964c0417-0676-4f91-a012-146fdeebfae2",
+   "school_id": 106
+  },
+  {
+   "weight_class": 165,
+   "seed": 30,
+   "wrestler_name_raw": "Nicholas Konopka",
+   "wrestler_id": "cbaf07df-6446-47e9-a66a-dc565d9cb78c",
+   "school_id": 153
+  },
+  {
+   "weight_class": 165,
+   "seed": 19,
+   "wrestler_name_raw": "Sincere Mello",
+   "wrestler_id": "acc30efa-df0e-412d-8f7f-033e89a426cc",
+   "school_id": 602
+  },
+  {
+   "weight_class": 165,
+   "seed": 14,
+   "wrestler_name_raw": "Branden Causillas",
+   "wrestler_id": "d35cda72-95b8-423f-a7e3-a3be5277f514",
+   "school_id": 17
+  },
+  {
+   "weight_class": 165,
+   "seed": 11,
+   "wrestler_name_raw": "Kaden Montoya",
+   "wrestler_id": "829ba269-8b20-4ccb-8910-a7218f1890fb",
+   "school_id": 77
+  },
+  {
+   "weight_class": 165,
+   "seed": 22,
+   "wrestler_name_raw": "Chris Ferranti",
+   "wrestler_id": "6f855798-73c6-4a9f-aecb-02008c2b407b",
+   "school_id": 599
+  },
+  {
+   "weight_class": 165,
+   "seed": 27,
+   "wrestler_name_raw": "Dan Kyzima",
+   "wrestler_id": "484209cb-6558-4f63-9934-48dcce1f33ea",
+   "school_id": 5
+  },
+  {
+   "weight_class": 165,
+   "seed": 6,
+   "wrestler_name_raw": "Scott Coppolo",
+   "wrestler_id": "c1756f04-0d19-4729-88c9-a256c0bffea7",
+   "school_id": 56
+  },
+  {
+   "weight_class": 165,
+   "seed": 7,
+   "wrestler_name_raw": "Louis Dellavolpe",
+   "wrestler_id": "18e969d7-3a50-4b8a-996a-ca1badb93cb6",
+   "school_id": 11
+  },
+  {
+   "weight_class": 165,
+   "seed": 26,
+   "wrestler_name_raw": "Max Tripoli",
+   "wrestler_id": "647e7e23-fc92-4b29-b535-72626e37f07f",
+   "school_id": 22
+  },
+  {
+   "weight_class": 165,
+   "seed": 23,
+   "wrestler_name_raw": "Timothy McNamara",
+   "wrestler_id": "ce4bb55e-191e-46f9-858c-6f23f66fac4f",
+   "school_id": 24
+  },
+  {
+   "weight_class": 165,
+   "seed": 10,
+   "wrestler_name_raw": "Levi Schulmann",
+   "wrestler_id": "eb2b5800-e4c9-4f5d-acbe-0af8bf9396b4",
+   "school_id": 35
+  },
+  {
+   "weight_class": 165,
+   "seed": 15,
+   "wrestler_name_raw": "Finn Mckeon",
+   "wrestler_id": "4060d825-7965-4b7e-b20c-e8f00e91da93",
+   "school_id": 118
+  },
+  {
+   "weight_class": 165,
+   "seed": 18,
+   "wrestler_name_raw": "Anthony DeLorenzo",
+   "wrestler_id": "65f3ceab-f275-43cd-8611-a429c7190e2c",
+   "school_id": 17
+  },
+  {
+   "weight_class": 165,
+   "seed": 31,
+   "wrestler_name_raw": "Lucas Pelletier",
+   "wrestler_id": "d2e65e4f-25d3-481f-9da7-c28b6345ff5f",
+   "school_id": 266
+  },
+  {
+   "weight_class": 165,
+   "seed": 2,
+   "wrestler_name_raw": "Lukas Katsigiannis",
+   "wrestler_id": "63bf1c1e-7435-4a1c-835e-c975c3a23289",
+   "school_id": 117
+  },
+  {
+   "weight_class": 175,
+   "seed": 1,
+   "wrestler_name_raw": "Santino Rodriguez",
+   "wrestler_id": "cf3412d5-9c07-4605-acab-8ff00c22a4cf",
+   "school_id": 11
+  },
+  {
+   "weight_class": 175,
+   "seed": 17,
+   "wrestler_name_raw": "Zack Lombreglia",
+   "wrestler_id": "af791c63-400f-4d16-8470-74388c2730bd",
+   "school_id": 117
+  },
+  {
+   "weight_class": 175,
+   "seed": 16,
+   "wrestler_name_raw": "Jack Leiman",
+   "wrestler_id": "e2c72144-8fca-4e1e-b48e-1cf4f43e0ee0",
+   "school_id": 35
+  },
+  {
+   "weight_class": 175,
+   "seed": 9,
+   "wrestler_name_raw": "Luke Shivas",
+   "wrestler_id": "6d594228-f671-48e7-a226-d8a445da7c5e",
+   "school_id": 77
+  },
+  {
+   "weight_class": 175,
+   "seed": 24,
+   "wrestler_name_raw": "Sebastian Goins",
+   "wrestler_id": "2f67e7fb-2542-4758-ac6d-2f3b3cd10c76",
+   "school_id": 266
+  },
+  {
+   "weight_class": 175,
+   "seed": 25,
+   "wrestler_name_raw": "Ryder Bernholz",
+   "wrestler_id": "a67691a3-a1f7-4562-bc2d-733f62f64210",
+   "school_id": 82
+  },
+  {
+   "weight_class": 175,
+   "seed": 8,
+   "wrestler_name_raw": "Brandon Papa",
+   "wrestler_id": "e2cc8622-ec46-4f99-912c-6c3ad4b56998",
+   "school_id": 127
+  },
+  {
+   "weight_class": 175,
+   "seed": 5,
+   "wrestler_name_raw": "William Capizzi",
+   "wrestler_id": "307d9329-5857-4af4-ae98-bcd0ddf8effc",
+   "school_id": 46
+  },
+  {
+   "weight_class": 175,
+   "seed": 22,
+   "wrestler_name_raw": "Logan Rickard",
+   "wrestler_id": "5fe459a6-9706-48e8-80c6-700d8e5d2ea9",
+   "school_id": 57
+  },
+  {
+   "weight_class": 175,
+   "seed": 21,
+   "wrestler_name_raw": "Alexander Helphingstine",
+   "wrestler_id": "f78322d3-36e6-4a1c-b78f-fc418b0294f7",
+   "school_id": 5
+  },
+  {
+   "weight_class": 175,
+   "seed": 12,
+   "wrestler_name_raw": "Joey Acinapura",
+   "wrestler_id": "ea12c119-3d33-4673-8811-11889f8df956",
+   "school_id": 93
+  },
+  {
+   "weight_class": 175,
+   "seed": 13,
+   "wrestler_name_raw": "Shane Morrell",
+   "wrestler_id": "9937424c-68fe-4bd0-9d29-224c63f8d587",
+   "school_id": 281
+  },
+  {
+   "weight_class": 175,
+   "seed": 20,
+   "wrestler_name_raw": "Matthew Cmielewski",
+   "wrestler_id": "6fa9cafc-3af7-424c-8493-9a4652f8c827",
+   "school_id": 264
+  },
+  {
+   "weight_class": 175,
+   "seed": 4,
+   "wrestler_name_raw": "Ryan Engle",
+   "wrestler_id": "a5e0e3d6-0499-4b84-ac1e-29551a62be4d",
+   "school_id": 156
+  },
+  {
+   "weight_class": 175,
+   "seed": 3,
+   "wrestler_name_raw": "Cole Dunham",
+   "wrestler_id": "06a59fac-5252-4522-a686-5df7e462dcc3",
+   "school_id": 117
+  },
+  {
+   "weight_class": 175,
+   "seed": 19,
+   "wrestler_name_raw": "Prince Ezeanii",
+   "wrestler_id": "862a0f23-b93e-40dc-afac-1640925c0a5b",
+   "school_id": 22
+  },
+  {
+   "weight_class": 175,
+   "seed": 14,
+   "wrestler_name_raw": "Lukas Van Veen",
+   "wrestler_id": "ca388ad0-a81a-4292-83e0-340e84c80229",
+   "school_id": 16
+  },
+  {
+   "weight_class": 175,
+   "seed": 11,
+   "wrestler_name_raw": "AJ Maiden",
+   "wrestler_id": "0d7841bd-7fe3-46fe-89a9-a897c88feddb",
+   "school_id": 106
+  },
+  {
+   "weight_class": 175,
+   "seed": 28,
+   "wrestler_name_raw": "Landon Hackney",
+   "wrestler_id": "e59ea63a-ab5c-4464-ab6c-d023da3dff1f",
+   "school_id": 266
+  },
+  {
+   "weight_class": 175,
+   "seed": 27,
+   "wrestler_name_raw": "Isaiah Rojas",
+   "wrestler_id": "9b276d3f-b436-471e-b6e8-bfd4417387ea",
+   "school_id": 153
+  },
+  {
+   "weight_class": 175,
+   "seed": 6,
+   "wrestler_name_raw": "Justin Bullock",
+   "wrestler_id": "b3b28fb0-ace5-4061-9fab-efaa6b089734",
+   "school_id": 56
+  },
+  {
+   "weight_class": 175,
+   "seed": 7,
+   "wrestler_name_raw": "Kwabena Morgan",
+   "wrestler_id": "2ad7cb64-099d-446e-a4aa-db928f97389d",
+   "school_id": 322
+  },
+  {
+   "weight_class": 175,
+   "seed": 26,
+   "wrestler_name_raw": "Farel Cespedes",
+   "wrestler_id": "77036f5c-8bb2-4f29-ae10-e326f7c6eb8a",
+   "school_id": 131
+  },
+  {
+   "weight_class": 175,
+   "seed": 23,
+   "wrestler_name_raw": "Xzavier Torres",
+   "wrestler_id": "3655a913-d5f0-4dab-b037-81f16f4e9fb6",
+   "school_id": 603
+  },
+  {
+   "weight_class": 175,
+   "seed": 10,
+   "wrestler_name_raw": "Finn Cavanaugh",
+   "wrestler_id": "061b46d7-2de0-49ae-aff2-0b67e4071310",
+   "school_id": 144
+  },
+  {
+   "weight_class": 175,
+   "seed": 15,
+   "wrestler_name_raw": "Noah Nagle",
+   "wrestler_id": "6ecd8e87-c000-4818-9e57-b539f20e14bc",
+   "school_id": 283
+  },
+  {
+   "weight_class": 175,
+   "seed": 18,
+   "wrestler_name_raw": "Tim Dochnal",
+   "wrestler_id": "1d5f0317-161e-4b99-9188-2f4afea07301",
+   "school_id": 599
+  },
+  {
+   "weight_class": 175,
+   "seed": 2,
+   "wrestler_name_raw": "Jack Harty",
+   "wrestler_id": "8f1614ef-551f-4761-82b7-a7e910136589",
+   "school_id": 600
+  },
+  {
+   "weight_class": 190,
+   "seed": 1,
+   "wrestler_name_raw": "Nevin Mattessich",
+   "wrestler_id": "0cf85176-7ad2-442f-bbce-fa0c8aaa5fec",
+   "school_id": 11
+  },
+  {
+   "weight_class": 190,
+   "seed": 17,
+   "wrestler_name_raw": "Joe Cutruzzula",
+   "wrestler_id": "a1bbfc14-d6cc-4c04-a35d-f8c3a7ff875e",
+   "school_id": 39
+  },
+  {
+   "weight_class": 190,
+   "seed": 16,
+   "wrestler_name_raw": "Michael Morelli",
+   "wrestler_id": "2b5272d3-e99c-4399-95d6-5734c8c2b3f0",
+   "school_id": 117
+  },
+  {
+   "weight_class": 190,
+   "seed": 9,
+   "wrestler_name_raw": "David Douglass",
+   "wrestler_id": "ca7990cf-5acc-45e2-9041-13d73e2ad5de",
+   "school_id": 281
+  },
+  {
+   "weight_class": 190,
+   "seed": 8,
+   "wrestler_name_raw": "Dane Shiroff",
+   "wrestler_id": "742e6f57-ec17-420c-a55a-123a2f4364c4",
+   "school_id": 266
+  },
+  {
+   "weight_class": 190,
+   "seed": 5,
+   "wrestler_name_raw": "Greg Sawyer",
+   "wrestler_id": "a8288453-9a7a-43dc-8bdc-05c98e1d71a1",
+   "school_id": 290
+  },
+  {
+   "weight_class": 190,
+   "seed": 21,
+   "wrestler_name_raw": "Rocky Penny",
+   "wrestler_id": "7f28e0d7-8ec1-4957-be6a-eec6f38e44ad",
+   "school_id": 600
+  },
+  {
+   "weight_class": 190,
+   "seed": 12,
+   "wrestler_name_raw": "Landon Fitzsimmons",
+   "wrestler_id": "58f66647-d48c-4a0e-8512-bf435dcd97f0",
+   "school_id": 602
+  },
+  {
+   "weight_class": 190,
+   "seed": 13,
+   "wrestler_name_raw": "Lemuel Lewis",
+   "wrestler_id": "a330fbb6-a222-4bfe-abf5-a4d7e0c466f9",
+   "school_id": 118
+  },
+  {
+   "weight_class": 190,
+   "seed": 20,
+   "wrestler_name_raw": "John Sammartano",
+   "wrestler_id": "4b667ee8-403a-493b-bc79-c874e17d7c98",
+   "school_id": 599
+  },
+  {
+   "weight_class": 190,
+   "seed": 4,
+   "wrestler_name_raw": "Tyler Neiva",
+   "wrestler_id": "e30136ac-85b6-4cb0-9a83-eece796f3415",
+   "school_id": 600
+  },
+  {
+   "weight_class": 190,
+   "seed": 3,
+   "wrestler_name_raw": "David Thomson",
+   "wrestler_id": "28c1ecc4-b5fc-41dd-b87e-02967e065c77",
+   "school_id": 117
+  },
+  {
+   "weight_class": 190,
+   "seed": 19,
+   "wrestler_name_raw": "Buddha Washington",
+   "wrestler_id": "73caefb1-5475-4786-9597-f0a0a6e6edf9",
+   "school_id": 314
+  },
+  {
+   "weight_class": 190,
+   "seed": 14,
+   "wrestler_name_raw": "Matthew Sutton",
+   "wrestler_id": "45acb602-b915-441d-b4d3-b30276766254",
+   "school_id": 117
+  },
+  {
+   "weight_class": 190,
+   "seed": 11,
+   "wrestler_name_raw": "Michael Damerjian",
+   "wrestler_id": "8b4c24af-be7d-4193-ab24-a9a571ffcbb9",
+   "school_id": 261
+  },
+  {
+   "weight_class": 190,
+   "seed": 22,
+   "wrestler_name_raw": "Kevin Rafferty",
+   "wrestler_id": "2b08a1ec-8f7f-4fab-bd9b-12561acb8e84",
+   "school_id": 127
+  },
+  {
+   "weight_class": 190,
+   "seed": 6,
+   "wrestler_name_raw": "Artun Kirgezmis",
+   "wrestler_id": "74f73ee3-98e6-413b-ad5d-9cc407ff6f02",
+   "school_id": 147
+  },
+  {
+   "weight_class": 190,
+   "seed": 7,
+   "wrestler_name_raw": "Alex Bainbridge",
+   "wrestler_id": "93fc3951-cf70-4dfa-821e-ee896b60d200",
+   "school_id": 16
+  },
+  {
+   "weight_class": 190,
+   "seed": 23,
+   "wrestler_name_raw": "Marlowe Brown-Cabarris",
+   "wrestler_id": "3f17b319-bdb0-4d5b-a355-debda877513a",
+   "school_id": 131
+  },
+  {
+   "weight_class": 190,
+   "seed": 10,
+   "wrestler_name_raw": "Anthony Cianfrocca",
+   "wrestler_id": "5f6000aa-b81f-40bd-89c4-9af99d2aac5c",
+   "school_id": 125
+  },
+  {
+   "weight_class": 190,
+   "seed": 15,
+   "wrestler_name_raw": "Anthony Wagner",
+   "wrestler_id": "524bfca8-863f-4ec2-bf7c-1dfe2cc31be5",
+   "school_id": 77
+  },
+  {
+   "weight_class": 190,
+   "seed": 18,
+   "wrestler_name_raw": "Hector Rodriguez",
+   "wrestler_id": "152e6f9c-0462-4291-8c68-8852ee6526e0",
+   "school_id": 391
+  },
+  {
+   "weight_class": 190,
+   "seed": 2,
+   "wrestler_name_raw": "Guy Oelsner",
+   "wrestler_id": "d322ac8a-e14e-48d6-ad6c-7c97f43348ba",
+   "school_id": 153
+  },
+  {
+   "weight_class": 215,
+   "seed": 1,
+   "wrestler_name_raw": "Nicolas Gonzalez",
+   "wrestler_id": "bfd977a5-a02f-460f-be59-a9d00f297027",
+   "school_id": 56
+  },
+  {
+   "weight_class": 215,
+   "seed": 17,
+   "wrestler_name_raw": "Carlito Bonita",
+   "wrestler_id": "6aef5cb0-6dea-45b7-90af-1fd9ad9e425a",
+   "school_id": 11
+  },
+  {
+   "weight_class": 215,
+   "seed": 16,
+   "wrestler_name_raw": "Josiah Barrera",
+   "wrestler_id": "369f14ac-115c-4ee5-a2f6-ec2b0384b4d6",
+   "school_id": 167
+  },
+  {
+   "weight_class": 215,
+   "seed": 9,
+   "wrestler_name_raw": "August Cassidy",
+   "wrestler_id": "2e337af3-a188-485c-ba9b-20bc827b3dfa",
+   "school_id": 603
+  },
+  {
+   "weight_class": 215,
+   "seed": 8,
+   "wrestler_name_raw": "Delvin Oxmann",
+   "wrestler_id": "808b78dd-9de1-40d4-9262-af1369095f83",
+   "school_id": 16
+  },
+  {
+   "weight_class": 215,
+   "seed": 5,
+   "wrestler_name_raw": "Tuguldur Bayarkhuu",
+   "wrestler_id": "e4db8877-c148-429a-bd52-81475ea8ef87",
+   "school_id": 118
+  },
+  {
+   "weight_class": 215,
+   "seed": 21,
+   "wrestler_name_raw": "Hayden woolley",
+   "wrestler_id": "30d7f391-d525-49b3-808e-f2e4035bf6a0",
+   "school_id": 264
+  },
+  {
+   "weight_class": 215,
+   "seed": 12,
+   "wrestler_name_raw": "Nate Fabunan",
+   "wrestler_id": "ae000659-5036-4e60-921d-415a33758524",
+   "school_id": 599
+  },
+  {
+   "weight_class": 215,
+   "seed": 13,
+   "wrestler_name_raw": "Atkan Cosar",
+   "wrestler_id": "132ecbff-8964-4098-9905-7e60587a2591",
+   "school_id": 153
+  },
+  {
+   "weight_class": 215,
+   "seed": 20,
+   "wrestler_name_raw": "Theodore Skversky",
+   "wrestler_id": "3ec29362-3aa8-4fcd-81a4-d632842ecc1c",
+   "school_id": 266
+  },
+  {
+   "weight_class": 215,
+   "seed": 4,
+   "wrestler_name_raw": "Wyatt Sisco",
+   "wrestler_id": "e86cc982-b999-41d0-92d6-5583957fbbc1",
+   "school_id": 33
+  },
+  {
+   "weight_class": 215,
+   "seed": 3,
+   "wrestler_name_raw": "Matthew Morrissey",
+   "wrestler_id": "6d8e6181-6686-4f6d-81e1-8a3e42e92871",
+   "school_id": 6
+  },
+  {
+   "weight_class": 215,
+   "seed": 19,
+   "wrestler_name_raw": "Ashton Arguello",
+   "wrestler_id": "9b91aecf-60f4-4e20-bbff-677af412753c",
+   "school_id": 188
+  },
+  {
+   "weight_class": 215,
+   "seed": 14,
+   "wrestler_name_raw": "Ryan Burke",
+   "wrestler_id": "4a83d08c-7511-46fd-a128-e8a9ce391b5e",
+   "school_id": 599
+  },
+  {
+   "weight_class": 215,
+   "seed": 11,
+   "wrestler_name_raw": "Caden Britton",
+   "wrestler_id": "778d9625-7280-413b-a531-bc8ef4e3da0d",
+   "school_id": 281
+  },
+  {
+   "weight_class": 215,
+   "seed": 22,
+   "wrestler_name_raw": "Zach Ventola",
+   "wrestler_id": "3db41b21-dcc3-407d-ac85-9fd59eeea3e8",
+   "school_id": 127
+  },
+  {
+   "weight_class": 215,
+   "seed": 6,
+   "wrestler_name_raw": "Liam Hassloch",
+   "wrestler_id": "61bac66a-d5a3-4f19-b40a-0859588625e2",
+   "school_id": 26
+  },
+  {
+   "weight_class": 215,
+   "seed": 7,
+   "wrestler_name_raw": "Aren Hidalgo",
+   "wrestler_id": "34e8f24d-7ae4-457a-8fcb-7f4e26917251",
+   "school_id": 188
+  },
+  {
+   "weight_class": 215,
+   "seed": 10,
+   "wrestler_name_raw": "Grayson Abbruzzese",
+   "wrestler_id": "086cf370-0d75-4261-bc5f-212ad52e9362",
+   "school_id": 153
+  },
+  {
+   "weight_class": 215,
+   "seed": 15,
+   "wrestler_name_raw": "Brody Ismael",
+   "wrestler_id": "29c4f9bb-3171-40b9-80fc-9fc39676abb1",
+   "school_id": 82
+  },
+  {
+   "weight_class": 215,
+   "seed": 18,
+   "wrestler_name_raw": "Christopher Diaz",
+   "wrestler_id": "a6a94f84-9bac-477d-a8f7-ef4fb8dc02d1",
+   "school_id": 290
+  },
+  {
+   "weight_class": 215,
+   "seed": 2,
+   "wrestler_name_raw": "Trent Levash",
+   "wrestler_id": "f39f0627-be5d-42d5-97fc-857a4d019f42",
+   "school_id": 131
+  },
+  {
+   "weight_class": 285,
+   "seed": 1,
+   "wrestler_name_raw": "Ryan Schnieder",
+   "wrestler_id": "da85b706-885b-4387-ba38-15fb5f69b5b1",
+   "school_id": 93
+  },
+  {
+   "weight_class": 285,
+   "seed": 17,
+   "wrestler_name_raw": "Philip Bertole",
+   "wrestler_id": "88e218b0-9f4f-4200-9d4a-be15f6d0141a",
+   "school_id": 264
+  },
+  {
+   "weight_class": 285,
+   "seed": 16,
+   "wrestler_name_raw": "Austin Hooey",
+   "wrestler_id": "da85b706-885b-4387-ba38-15fb5f69b5b1",
+   "school_id": 93
+  },
+  {
+   "weight_class": 285,
+   "seed": 9,
+   "wrestler_name_raw": "Samuel Jean Marie",
+   "wrestler_id": "0b50576f-69d0-4107-a17b-20a794687df8",
+   "school_id": 11
+  },
+  {
+   "weight_class": 285,
+   "seed": 24,
+   "wrestler_name_raw": "Michael Oakes",
+   "wrestler_id": "e40919cf-6b3e-4355-9eab-89b40e168107",
+   "school_id": 12
+  },
+  {
+   "weight_class": 285,
+   "seed": 8,
+   "wrestler_name_raw": "Gabe Medina",
+   "wrestler_id": "eee3d14a-7187-4c80-8061-047a35f6c11d",
+   "school_id": 131
+  },
+  {
+   "weight_class": 285,
+   "seed": 5,
+   "wrestler_name_raw": "Nick Duarte",
+   "wrestler_id": "443abc58-4cc8-4f88-b447-35f3fd903c6e",
+   "school_id": 188
+  },
+  {
+   "weight_class": 285,
+   "seed": 21,
+   "wrestler_name_raw": "Donavan Black",
+   "wrestler_id": "0fed60e5-7757-43e7-8acd-d63cda447263",
+   "school_id": 266
+  },
+  {
+   "weight_class": 285,
+   "seed": 12,
+   "wrestler_name_raw": "Sean Brown",
+   "wrestler_id": "d79d98fa-d304-4e8e-b6d6-93158e7e4962",
+   "school_id": 24
+  },
+  {
+   "weight_class": 285,
+   "seed": 13,
+   "wrestler_name_raw": "Anthony Evaristo",
+   "wrestler_id": "b988790d-cc3a-4419-bff7-5b1f2a3b30e6",
+   "school_id": 77
+  },
+  {
+   "weight_class": 285,
+   "seed": 20,
+   "wrestler_name_raw": "Max Georges",
+   "wrestler_id": "2092097a-61be-4f6e-b62a-cb542be23151",
+   "school_id": 22
+  },
+  {
+   "weight_class": 285,
+   "seed": 4,
+   "wrestler_name_raw": "Jared Martini",
+   "wrestler_id": "26fc80e8-6f19-4795-9934-e252ef65e294",
+   "school_id": 56
+  },
+  {
+   "weight_class": 285,
+   "seed": 3,
+   "wrestler_name_raw": "Mohammad Targali",
+   "wrestler_id": "2f743383-ce92-454e-b2e9-93e9baded75f",
+   "school_id": 382
+  },
+  {
+   "weight_class": 285,
+   "seed": 19,
+   "wrestler_name_raw": "Anthony Alfonso",
+   "wrestler_id": "0a160fc2-75b9-4bce-b4d2-143f172ffcb2",
+   "school_id": 22
+  },
+  {
+   "weight_class": 285,
+   "seed": 14,
+   "wrestler_name_raw": "Lorenzo Palescandolo",
+   "wrestler_id": "e31f58dd-a999-4950-b2ba-0125b7de56c0",
+   "school_id": 127
+  },
+  {
+   "weight_class": 285,
+   "seed": 11,
+   "wrestler_name_raw": "Gabriel Gomez",
+   "wrestler_id": "40693895-847a-4a5b-92c8-380d2befebca",
+   "school_id": 40
+  },
+  {
+   "weight_class": 285,
+   "seed": 22,
+   "wrestler_name_raw": "Domenick Infantes",
+   "wrestler_id": "12e53e59-9250-4c32-a901-cd5ea6082380",
+   "school_id": 167
+  },
+  {
+   "weight_class": 285,
+   "seed": 6,
+   "wrestler_name_raw": "Eric Clauburg",
+   "wrestler_id": "147d7c14-b5ca-49a4-8b43-c6c90202ef42",
+   "school_id": 235
+  },
+  {
+   "weight_class": 285,
+   "seed": 7,
+   "wrestler_name_raw": "Vincent Williams",
+   "wrestler_id": "89ca350d-5029-4e78-a4c3-c7887527eefe",
+   "school_id": 183
+  },
+  {
+   "weight_class": 285,
+   "seed": 23,
+   "wrestler_name_raw": "Nathaniel McCrone",
+   "wrestler_id": "361665fb-25f7-409c-90d0-0867679dcba7",
+   "school_id": 283
+  },
+  {
+   "weight_class": 285,
+   "seed": 10,
+   "wrestler_name_raw": "Nolan Brewer",
+   "wrestler_id": "edcd97fd-f886-469a-8f7e-f75ca73bc634",
+   "school_id": 106
+  },
+  {
+   "weight_class": 285,
+   "seed": 15,
+   "wrestler_name_raw": "John Hearon IV",
+   "wrestler_id": "83321d7e-54ee-47b4-b79a-72ac0fa44bc9",
+   "school_id": 281
+  },
+  {
+   "weight_class": 285,
+   "seed": 18,
+   "wrestler_name_raw": "Ayden Fox",
+   "wrestler_id": "082a79d3-4e02-4bc9-a064-2bf027d423f6",
+   "school_id": 81
+  },
+  {
+   "weight_class": 285,
+   "seed": 2,
+   "wrestler_name_raw": "August Moser",
+   "wrestler_id": "fb792258-2afe-466d-9831-23cdc4d08cc9",
+   "school_id": 82
+  }
+ ],
+ "places": [
+  {
+   "weight_class": 106,
+   "place": 1,
+   "wrestler_name_raw": "Finn Andersen",
+   "wrestler_id": "228296f5-cee0-4431-b777-d603dd3806af",
+   "school_id": 82
+  },
+  {
+   "weight_class": 106,
+   "place": 2,
+   "wrestler_name_raw": "John Tarantino",
+   "wrestler_id": "ea61d943-282e-4268-be27-76d69ecafd23",
+   "school_id": 264
+  },
+  {
+   "weight_class": 106,
+   "place": 3,
+   "wrestler_name_raw": "Steven Vidal",
+   "wrestler_id": "ccd2a21c-ac71-41bf-aaf3-db101f1a70ea",
+   "school_id": 112
+  },
+  {
+   "weight_class": 106,
+   "place": 4,
+   "wrestler_name_raw": "Calvin Parke",
+   "wrestler_id": "7df79753-db6b-4342-a1b3-917171b5a684",
+   "school_id": 283
+  },
+  {
+   "weight_class": 106,
+   "place": 5,
+   "wrestler_name_raw": "Ronnie Rodriguez",
+   "wrestler_id": "524d887e-79a2-4ab6-921a-bdbcfd55e206",
+   "school_id": 167
+  },
+  {
+   "weight_class": 106,
+   "place": 6,
+   "wrestler_name_raw": "Eli Shea",
+   "wrestler_id": "5b567584-9969-4d81-bc4e-6a1faf44b347",
+   "school_id": 600
+  },
+  {
+   "weight_class": 113,
+   "place": 1,
+   "wrestler_name_raw": "Tristan Rosemeyer",
+   "wrestler_id": "9cb36b80-0b92-4842-b50b-4ab2db01cec9",
+   "school_id": 281
+  },
+  {
+   "weight_class": 113,
+   "place": 2,
+   "wrestler_name_raw": "Tanner Connelly",
+   "wrestler_id": "0ce284e7-8eaa-4f92-b113-192d4dea8524",
+   "school_id": 156
+  },
+  {
+   "weight_class": 113,
+   "place": 3,
+   "wrestler_name_raw": "Julius Feliciano",
+   "wrestler_id": "c3bd1dd5-0616-48a5-a57e-fbac7fbaa60b",
+   "school_id": 253
+  },
+  {
+   "weight_class": 113,
+   "place": 4,
+   "wrestler_name_raw": "Noah Perez",
+   "wrestler_id": "5d39e7db-27da-4ebf-b7e5-3493885ddac6",
+   "school_id": 187
+  },
+  {
+   "weight_class": 113,
+   "place": 5,
+   "wrestler_name_raw": "Dylan Sierra",
+   "wrestler_id": "000cb860-bc6c-4596-8b28-51b2f2cc06e8",
+   "school_id": 382
+  },
+  {
+   "weight_class": 113,
+   "place": 6,
+   "wrestler_name_raw": "Dominic Coppola",
+   "wrestler_id": "fe965cb2-ae5c-404c-8b1c-bafc774a4a0d",
+   "school_id": 22
+  },
+  {
+   "weight_class": 120,
+   "place": 1,
+   "wrestler_name_raw": "Robby Rodriguez",
+   "wrestler_id": "0956ca62-bb4a-4208-85d9-46e0c67d8b62",
+   "school_id": 167
+  },
+  {
+   "weight_class": 120,
+   "place": 2,
+   "wrestler_name_raw": "Michael Daly",
+   "wrestler_id": "206015e6-9040-4fa8-b79b-d82451b808a8",
+   "school_id": 93
+  },
+  {
+   "weight_class": 120,
+   "place": 3,
+   "wrestler_name_raw": "Chase Kastner",
+   "wrestler_id": "eb23448f-96a2-4dca-a44e-d35fb6a20138",
+   "school_id": 600
+  },
+  {
+   "weight_class": 120,
+   "place": 4,
+   "wrestler_name_raw": "Muhammad Abuhadba",
+   "wrestler_id": "ebe5d8a2-17df-4ac3-b64b-c01551e95bba",
+   "school_id": 391
+  },
+  {
+   "weight_class": 120,
+   "place": 5,
+   "wrestler_name_raw": "John Barron",
+   "wrestler_id": "5e96795f-6a46-453b-8f6a-f649afbed91c",
+   "school_id": 167
+  },
+  {
+   "weight_class": 120,
+   "place": 6,
+   "wrestler_name_raw": "David Vazquez",
+   "wrestler_id": "d3ddd0b3-f898-4a5b-b2c2-b39fbdb33a51",
+   "school_id": 95
+  },
+  {
+   "weight_class": 126,
+   "place": 1,
+   "wrestler_name_raw": "Cameron Sontz",
+   "wrestler_id": "11fb1877-6b12-46aa-b29f-d00438963678",
+   "school_id": 82
+  },
+  {
+   "weight_class": 126,
+   "place": 2,
+   "wrestler_name_raw": "Joseph Pellicci",
+   "wrestler_id": "446510e1-d1de-4c62-8ea3-21e229c9d0a9",
+   "school_id": 153
+  },
+  {
+   "weight_class": 126,
+   "place": 3,
+   "wrestler_name_raw": "Chase Severs",
+   "wrestler_id": "d8ab8127-daa4-4487-bc4b-5da3b786a6d6",
+   "school_id": 5
+  },
+  {
+   "weight_class": 126,
+   "place": 4,
+   "wrestler_name_raw": "Owen O'Leary",
+   "wrestler_id": "547e4a5a-abee-4b09-af46-55c2f470460c",
+   "school_id": 156
+  },
+  {
+   "weight_class": 126,
+   "place": 5,
+   "wrestler_name_raw": "Michael Echeverri",
+   "wrestler_id": "7dae1888-8c72-4a10-b6a4-f2d7a6068dbd",
+   "school_id": 35
+  },
+  {
+   "weight_class": 126,
+   "place": 6,
+   "wrestler_name_raw": "Giovanni Gutierrez",
+   "wrestler_id": "c66c9658-6c5a-4635-b402-a00e16f19a40",
+   "school_id": 112
+  },
+  {
+   "weight_class": 132,
+   "place": 1,
+   "wrestler_name_raw": "Richard DeLorenzo II",
+   "wrestler_id": "d070c22c-faa5-4ccf-815d-38255027c2f2",
+   "school_id": 253
+  },
+  {
+   "weight_class": 132,
+   "place": 2,
+   "wrestler_name_raw": "Dalton Weber",
+   "wrestler_id": "a070e072-808d-4227-bc1d-169f505c0603",
+   "school_id": 117
+  },
+  {
+   "weight_class": 132,
+   "place": 3,
+   "wrestler_name_raw": "PJ Terranova",
+   "wrestler_id": "a7427d2e-3ea3-45fa-8be0-145db8849bb6",
+   "school_id": 82
+  },
+  {
+   "weight_class": 132,
+   "place": 4,
+   "wrestler_name_raw": "AJ Stover",
+   "wrestler_id": "65c8695a-4522-47ce-aa4e-7a8c009f6d8d",
+   "school_id": 603
+  },
+  {
+   "weight_class": 132,
+   "place": 5,
+   "wrestler_name_raw": "Greyson Pettit",
+   "wrestler_id": "4fa1f408-c019-48fa-be02-169293a32bea",
+   "school_id": 290
+  },
+  {
+   "weight_class": 132,
+   "place": 6,
+   "wrestler_name_raw": "Andre Morero",
+   "wrestler_id": "f79b8b48-40dd-4c57-9d4f-8e849e7a8cd0",
+   "school_id": 127
+  },
+  {
+   "weight_class": 138,
+   "place": 1,
+   "wrestler_name_raw": "Chase Hansen",
+   "wrestler_id": "4b6b3760-f1c7-4303-bf08-f52763e5e134",
+   "school_id": 281
+  },
+  {
+   "weight_class": 138,
+   "place": 2,
+   "wrestler_name_raw": "Robert Douangmala",
+   "wrestler_id": "08a53a03-5b7c-41fb-b0ae-8deae4bef5a2",
+   "school_id": 602
+  },
+  {
+   "weight_class": 138,
+   "place": 3,
+   "wrestler_name_raw": "Jack Abramson",
+   "wrestler_id": "e1a7b6fe-3e83-471c-a1f9-ad61497d4c88",
+   "school_id": 144
+  },
+  {
+   "weight_class": 138,
+   "place": 4,
+   "wrestler_name_raw": "Amari Vann",
+   "wrestler_id": "b805371f-d21b-4849-a31c-b675151718fc",
+   "school_id": 290
+  },
+  {
+   "weight_class": 138,
+   "place": 5,
+   "wrestler_name_raw": "Isaias Hernandez",
+   "wrestler_id": "309777a3-a68c-4ddd-896f-073d489f7a69",
+   "school_id": 22
+  },
+  {
+   "weight_class": 138,
+   "place": 6,
+   "wrestler_name_raw": "Ryan Yang",
+   "wrestler_id": "3089e808-3380-4ff8-a166-4001067abb90",
+   "school_id": 156
+  },
+  {
+   "weight_class": 144,
+   "place": 1,
+   "wrestler_name_raw": "Nicholas Pallitto",
+   "wrestler_id": "dcfab1d1-a85c-4d1b-a495-bd43f754d35d",
+   "school_id": 153
+  },
+  {
+   "weight_class": 144,
+   "place": 2,
+   "wrestler_name_raw": "Delvan Rotte",
+   "wrestler_id": "d766f68d-1349-4336-b88d-fc768ed723c5",
+   "school_id": 22
+  },
+  {
+   "weight_class": 144,
+   "place": 3,
+   "wrestler_name_raw": "Ryan Hrenenko",
+   "wrestler_id": "1085fda8-9e12-4e41-b256-6e8abd72e778",
+   "school_id": 26
+  },
+  {
+   "weight_class": 144,
+   "place": 4,
+   "wrestler_name_raw": "Ethan Delacruz",
+   "wrestler_id": "6de08d79-350b-47ac-a0ea-23b93e88dc2a",
+   "school_id": 322
+  },
+  {
+   "weight_class": 144,
+   "place": 5,
+   "wrestler_name_raw": "Tyler Yildiz",
+   "wrestler_id": "5fb9c878-43c8-41e5-acbe-4f377644f5dc",
+   "school_id": 127
+  },
+  {
+   "weight_class": 144,
+   "place": 6,
+   "wrestler_name_raw": "Brighton Karvoski",
+   "wrestler_id": "42ad6959-10ea-45c2-8ee1-28425552428e",
+   "school_id": 600
+  },
+  {
+   "weight_class": 150,
+   "place": 1,
+   "wrestler_name_raw": "Nicholas Barone",
+   "wrestler_id": "00241ca4-7cd1-4504-9031-12bf8e1a18e7",
+   "school_id": 153
+  },
+  {
+   "weight_class": 150,
+   "place": 2,
+   "wrestler_name_raw": "Michael Boulard",
+   "wrestler_id": "b8e5d1df-6ea6-412c-91a0-c55e35541770",
+   "school_id": 235
+  },
+  {
+   "weight_class": 150,
+   "place": 3,
+   "wrestler_name_raw": "Joe Mahoney",
+   "wrestler_id": "9fc69479-5141-4f8d-b890-58c1ee116bd8",
+   "school_id": 600
+  },
+  {
+   "weight_class": 150,
+   "place": 4,
+   "wrestler_name_raw": "Oskar Gluckow",
+   "wrestler_id": "956289d1-eefb-45eb-80ce-1335b3425fbc",
+   "school_id": 118
+  },
+  {
+   "weight_class": 150,
+   "place": 5,
+   "wrestler_name_raw": "Enzo Triola",
+   "wrestler_id": "22c11752-3ff6-4330-becc-2f7474cf8a2b",
+   "school_id": 167
+  },
+  {
+   "weight_class": 150,
+   "place": 6,
+   "wrestler_name_raw": "Anthony Russo",
+   "wrestler_id": "99e50f31-1de0-4686-9108-cac8e45a615d",
+   "school_id": 264
+  },
+  {
+   "weight_class": 157,
+   "place": 1,
+   "wrestler_name_raw": "Jeremy McGrath",
+   "wrestler_id": "ee286986-ef44-4d6e-a129-c4a7d4cc2eab",
+   "school_id": 600
+  },
+  {
+   "weight_class": 157,
+   "place": 2,
+   "wrestler_name_raw": "Sean Love",
+   "wrestler_id": "c4c8e9a2-932a-46fd-acdb-2e2d51d25756",
+   "school_id": 183
+  },
+  {
+   "weight_class": 157,
+   "place": 3,
+   "wrestler_name_raw": "Luke Stempkowski",
+   "wrestler_id": "2dd2f48e-e964-4470-828f-963457e86169",
+   "school_id": 16
+  },
+  {
+   "weight_class": 157,
+   "place": 4,
+   "wrestler_name_raw": "Harry Asatrian.Jr",
+   "wrestler_id": "a67a9aed-0940-40e1-85d8-36ec697f2c8d",
+   "school_id": 153
+  },
+  {
+   "weight_class": 157,
+   "place": 5,
+   "wrestler_name_raw": "Joseph Ruiz",
+   "wrestler_id": "175ec098-8af6-4c82-bb2d-e957623a2331",
+   "school_id": 167
+  },
+  {
+   "weight_class": 157,
+   "place": 6,
+   "wrestler_name_raw": "Colin Smyth",
+   "wrestler_id": "fc3baddd-a482-4b32-a203-3716bdf7c985",
+   "school_id": 56
+  },
+  {
+   "weight_class": 165,
+   "place": 1,
+   "wrestler_name_raw": "Lukas Katsigiannis",
+   "wrestler_id": "63bf1c1e-7435-4a1c-835e-c975c3a23289",
+   "school_id": 117
+  },
+  {
+   "weight_class": 165,
+   "place": 2,
+   "wrestler_name_raw": "Colby Vital",
+   "wrestler_id": "43343bf1-7a01-4d74-aa38-fdb8880c5140",
+   "school_id": 601
+  },
+  {
+   "weight_class": 165,
+   "place": 3,
+   "wrestler_name_raw": "Matthew McCann",
+   "wrestler_id": "b7509f42-d493-4083-9ed5-90d8d9cd019f",
+   "school_id": 131
+  },
+  {
+   "weight_class": 165,
+   "place": 4,
+   "wrestler_name_raw": "Scott Coppolo",
+   "wrestler_id": "c1756f04-0d19-4729-88c9-a256c0bffea7",
+   "school_id": 56
+  },
+  {
+   "weight_class": 165,
+   "place": 5,
+   "wrestler_name_raw": "Ryan Willi",
+   "wrestler_id": "5a23767b-d9ea-4ccc-a739-65b1ffee1461",
+   "school_id": 160
+  },
+  {
+   "weight_class": 165,
+   "place": 6,
+   "wrestler_name_raw": "Levi Schulmann",
+   "wrestler_id": "eb2b5800-e4c9-4f5d-acbe-0af8bf9396b4",
+   "school_id": 35
+  },
+  {
+   "weight_class": 175,
+   "place": 1,
+   "wrestler_name_raw": "Santino Rodriguez",
+   "wrestler_id": "cf3412d5-9c07-4605-acab-8ff00c22a4cf",
+   "school_id": 11
+  },
+  {
+   "weight_class": 175,
+   "place": 2,
+   "wrestler_name_raw": "Jack Harty",
+   "wrestler_id": "8f1614ef-551f-4761-82b7-a7e910136589",
+   "school_id": 600
+  },
+  {
+   "weight_class": 175,
+   "place": 3,
+   "wrestler_name_raw": "Ryan Engle",
+   "wrestler_id": "a5e0e3d6-0499-4b84-ac1e-29551a62be4d",
+   "school_id": 156
+  },
+  {
+   "weight_class": 175,
+   "place": 4,
+   "wrestler_name_raw": "Cole Dunham",
+   "wrestler_id": "06a59fac-5252-4522-a686-5df7e462dcc3",
+   "school_id": 117
+  },
+  {
+   "weight_class": 175,
+   "place": 5,
+   "wrestler_name_raw": "William Capizzi",
+   "wrestler_id": "307d9329-5857-4af4-ae98-bcd0ddf8effc",
+   "school_id": 46
+  },
+  {
+   "weight_class": 175,
+   "place": 6,
+   "wrestler_name_raw": "Kwabena Morgan",
+   "wrestler_id": "2ad7cb64-099d-446e-a4aa-db928f97389d",
+   "school_id": 322
+  },
+  {
+   "weight_class": 190,
+   "place": 1,
+   "wrestler_name_raw": "Nevin Mattessich",
+   "wrestler_id": "0cf85176-7ad2-442f-bbce-fa0c8aaa5fec",
+   "school_id": 11
+  },
+  {
+   "weight_class": 190,
+   "place": 2,
+   "wrestler_name_raw": "Guy Oelsner",
+   "wrestler_id": "d322ac8a-e14e-48d6-ad6c-7c97f43348ba",
+   "school_id": 153
+  },
+  {
+   "weight_class": 190,
+   "place": 3,
+   "wrestler_name_raw": "Michael Damerjian",
+   "wrestler_id": "8b4c24af-be7d-4193-ab24-a9a571ffcbb9",
+   "school_id": 261
+  },
+  {
+   "weight_class": 190,
+   "place": 4,
+   "wrestler_name_raw": "Tyler Neiva",
+   "wrestler_id": "e30136ac-85b6-4cb0-9a83-eece796f3415",
+   "school_id": 600
+  },
+  {
+   "weight_class": 190,
+   "place": 5,
+   "wrestler_name_raw": "Greg Sawyer",
+   "wrestler_id": "a8288453-9a7a-43dc-8bdc-05c98e1d71a1",
+   "school_id": 290
+  },
+  {
+   "weight_class": 190,
+   "place": 6,
+   "wrestler_name_raw": "Matthew Sutton",
+   "wrestler_id": "45acb602-b915-441d-b4d3-b30276766254",
+   "school_id": 117
+  },
+  {
+   "weight_class": 215,
+   "place": 1,
+   "wrestler_name_raw": "Nicolas Gonzalez",
+   "wrestler_id": "bfd977a5-a02f-460f-be59-a9d00f297027",
+   "school_id": 56
+  },
+  {
+   "weight_class": 215,
+   "place": 2,
+   "wrestler_name_raw": "Matthew Morrissey",
+   "wrestler_id": "6d8e6181-6686-4f6d-81e1-8a3e42e92871",
+   "school_id": 6
+  },
+  {
+   "weight_class": 215,
+   "place": 3,
+   "wrestler_name_raw": "Wyatt Sisco",
+   "wrestler_id": "e86cc982-b999-41d0-92d6-5583957fbbc1",
+   "school_id": 33
+  },
+  {
+   "weight_class": 215,
+   "place": 4,
+   "wrestler_name_raw": "Grayson Abbruzzese",
+   "wrestler_id": "086cf370-0d75-4261-bc5f-212ad52e9362",
+   "school_id": 153
+  },
+  {
+   "weight_class": 215,
+   "place": 5,
+   "wrestler_name_raw": "Brody Ismael",
+   "wrestler_id": "29c4f9bb-3171-40b9-80fc-9fc39676abb1",
+   "school_id": 82
+  },
+  {
+   "weight_class": 215,
+   "place": 6,
+   "wrestler_name_raw": "Tuguldur Bayarkhuu",
+   "wrestler_id": "e4db8877-c148-429a-bd52-81475ea8ef87",
+   "school_id": 118
+  },
+  {
+   "weight_class": 285,
+   "place": 1,
+   "wrestler_name_raw": "Ryan Schnieder",
+   "wrestler_id": "da85b706-885b-4387-ba38-15fb5f69b5b1",
+   "school_id": 93
+  },
+  {
+   "weight_class": 285,
+   "place": 2,
+   "wrestler_name_raw": "Mohammad Targali",
+   "wrestler_id": "2f743383-ce92-454e-b2e9-93e9baded75f",
+   "school_id": 382
+  },
+  {
+   "weight_class": 285,
+   "place": 3,
+   "wrestler_name_raw": "Jared Martini",
+   "wrestler_id": "26fc80e8-6f19-4795-9934-e252ef65e294",
+   "school_id": 56
+  },
+  {
+   "weight_class": 285,
+   "place": 4,
+   "wrestler_name_raw": "Vincent Williams",
+   "wrestler_id": "89ca350d-5029-4e78-a4c3-c7887527eefe",
+   "school_id": 183
+  },
+  {
+   "weight_class": 285,
+   "place": 5,
+   "wrestler_name_raw": "Nick Duarte",
+   "wrestler_id": "443abc58-4cc8-4f88-b447-35f3fd903c6e",
+   "school_id": 188
+  },
+  {
+   "weight_class": 285,
+   "place": 6,
+   "wrestler_name_raw": "August Moser",
+   "wrestler_id": "fb792258-2afe-466d-9831-23cdc4d08cc9",
+   "school_id": 82
+  }
+ ],
+ "unresolved": [],
+ "winnerFix": [],
+ "storedOnly": [
+  {
+   "id": "ca894703-5c89-4b73-8353-64443fd40157",
+   "weight": 106,
+   "round": "R1",
+   "a": "Jake Mazzurco",
+   "as": "Watchung Hills",
+   "b": "Nicholas Mateus",
+   "bs": "Morris Knolls",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "88c4e667-c6ed-403d-bd66-79d16084d5a3",
+   "weight": 138,
+   "round": "R1",
+   "a": "Chris Kelesidis",
+   "as": "Red Bank Catholic",
+   "b": "Matthew Miller",
+   "bs": "Bloomfield",
+   "winner": 1,
+   "res": "Dec 9-2"
+  },
+  {
+   "id": "f8bef3b1-51ff-4e06-87c8-995c687653c7",
+   "weight": 285,
+   "round": "R1",
+   "a": "Ayden Fox",
+   "as": "Bloomfield",
+   "b": "Donavan Black",
+   "bs": "Cherokee",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "6c2ff367-d25f-4999-8eed-5b27be515acb",
+   "weight": 132,
+   "round": "C1",
+   "a": "Mike Hamdeh",
+   "as": "Hillsborough",
+   "b": "Michael Garcia",
+   "bs": "Bridgewater-Raritan",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "3826b5ba-27e7-4de3-b606-d6083bae852e",
+   "weight": 138,
+   "round": "R1",
+   "a": "Nicky Pugliese",
+   "as": "Chaminade",
+   "b": "Rhys Kozubal",
+   "bs": "Bridgewater-Raritan",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "e3b7d781-4130-48e8-889a-eaf770a4c08a",
+   "weight": 144,
+   "round": "R1",
+   "a": "Marcus Puorro",
+   "as": "Bridgewater-Raritan",
+   "b": "Hudson Hicks",
+   "bs": "Don Bosco Prep",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "e9b074ae-b493-42e7-8c23-b6ce499a266b",
+   "weight": 175,
+   "round": "R1",
+   "a": "Isaiah Rojas",
+   "as": "Paramus Catholic",
+   "b": "Farel Cespedes",
+   "bs": "Bridgewater-Raritan",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "ee17297c-f8df-4ff7-811f-de0ceec42538",
+   "weight": 215,
+   "round": "R1",
+   "a": "Trent Levash",
+   "as": "Bridgewater-Raritan",
+   "b": "Hayden Woolley",
+   "bs": "Red Bank Catholic",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "57bb31f8-5e8b-4ba6-bba7-898beacfea75",
+   "weight": 285,
+   "round": "R1",
+   "a": "Gabriel Medina-Coello",
+   "as": "Bridgewater-Raritan",
+   "b": "Philip Bertole",
+   "bs": "Red Bank Catholic",
+   "winner": 1,
+   "res": "Forfeit "
+  },
+  {
+   "id": "71de0187-e6cb-43fa-8530-720936acf462",
+   "weight": 106,
+   "round": "R1",
+   "a": "Sebastian Cantarero",
+   "as": "Chaminade",
+   "b": "William Jayden Ratz",
+   "bs": "Seton Hall Prep",
+   "winner": 1,
+   "res": "MD 13-1"
+  },
+  {
+   "id": "f3f6201d-3678-4848-abf4-6b3a0b6a1da0",
+   "weight": 120,
+   "round": "R1",
+   "a": "Dan Montalvan",
+   "as": "Chaminade",
+   "b": "Gavin Stempkowski",
+   "bs": "Pascack Valley",
+   "winner": 1,
+   "res": "Dec 4-1"
+  },
+  {
+   "id": "6199b675-a3b4-4577-81ad-1d240db4b60a",
+   "weight": 126,
+   "round": "R1",
+   "a": "Dan Rosen",
+   "as": "Demarest/Old Tappan",
+   "b": "Nate O`Sullivan",
+   "bs": "Chaminade",
+   "winner": 1,
+   "res": "Dec 10-7"
+  },
+  {
+   "id": "871cca4a-29ac-425d-881d-8e9daa1feec0",
+   "weight": 132,
+   "round": "R1",
+   "a": "Adan Cedeno",
+   "as": "Pascack Valley",
+   "b": "Rocco Fontanelli",
+   "bs": "Chaminade",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "41d6f6e7-dbab-4db2-a3c7-addd7300e6da",
+   "weight": 144,
+   "round": "C1",
+   "a": "Brody Walton",
+   "as": "Hillsborough",
+   "b": "Nick Bartasi",
+   "bs": "Chaminade",
+   "winner": 1,
+   "res": "Dec 12-6"
+  },
+  {
+   "id": "c14a70ce-4927-4f08-902f-6153434213b9",
+   "weight": 150,
+   "round": "R1",
+   "a": "Kane Sheridan",
+   "as": "St. Peter's Prep",
+   "b": "Vin Castrofilippo",
+   "bs": "Chaminade",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "a814c59b-f0c9-43a3-8854-a06e27f42e49",
+   "weight": 157,
+   "round": "R1",
+   "a": "Lucas Meisenholder",
+   "as": "Chaminade",
+   "b": "Cole Jasinkiewicz",
+   "bs": "Delbarton School",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "febfc0ff-1c37-4cb2-959a-935bff3542c8",
+   "weight": 215,
+   "round": "R1",
+   "a": "Theodore Skversky",
+   "as": "Cherokee",
+   "b": "Ryan Burke",
+   "bs": "Chaminade",
+   "winner": 1,
+   "res": "TF 16-1"
+  },
+  {
+   "id": "0c406e55-7ada-46d8-a8d6-727666c3b04a",
+   "weight": 106,
+   "round": "R1",
+   "a": "Niko Raggazzone",
+   "as": "Cherokee",
+   "b": "Jordan Martin",
+   "bs": "Pascack Valley",
+   "winner": 1,
+   "res": "Forfeit "
+  },
+  {
+   "id": "29a051b5-57df-4083-9bf9-faf84c42ae04",
+   "weight": 113,
+   "round": "R1",
+   "a": "Preston Nitche",
+   "as": "Seton Hall Prep",
+   "b": "Dominic Petulla",
+   "bs": "Cherokee",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "8f171147-2b83-4143-b294-fa6f5dc14fa3",
+   "weight": 126,
+   "round": "R1",
+   "a": "Jax Bucco",
+   "as": "Red Bank Catholic",
+   "b": "Braydon Housel",
+   "bs": "Cherokee",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "b1ffcdc5-347e-4bd4-9b75-82f763b368b7",
+   "weight": 132,
+   "round": "R1",
+   "a": "Trenton Landell",
+   "as": "Cherokee",
+   "b": "Joseph Monto",
+   "bs": "Lakeland",
+   "winner": 1,
+   "res": "TF 18-3"
+  },
+  {
+   "id": "21e32b6a-0724-4651-a7e5-8afa8cccad7e",
+   "weight": 144,
+   "round": "R1",
+   "a": "Bradley Ingram",
+   "as": "Cherokee",
+   "b": "Ethan Perez",
+   "bs": "Lakeland",
+   "winner": 1,
+   "res": "Forfeit "
+  },
+  {
+   "id": "2ad2aed9-2ae2-4cd8-b8a6-dc0caa70cd26",
+   "weight": 150,
+   "round": "R1",
+   "a": "Dane Raveis",
+   "as": "Green Farms Academy",
+   "b": "Devin Grayson",
+   "bs": "Cherokee",
+   "winner": 1,
+   "res": "Dec 4-0"
+  },
+  {
+   "id": "098606e9-e46a-490c-afe3-ba1ce1550606",
+   "weight": 165,
+   "round": "C1",
+   "a": "Finn Mckeon",
+   "as": "St. Benedicts Prep School",
+   "b": "Lucas Pelletier",
+   "bs": "Cherokee",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "87ac06bd-dffb-44c5-8d70-2f000d459bde",
+   "weight": 175,
+   "round": "R1",
+   "a": "Jack Leiman",
+   "as": "Northern Highlands",
+   "b": "Sebastian Goins",
+   "bs": "Cherokee",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "b39c19df-2dd2-4474-8f74-86fa42e73697",
+   "weight": 138,
+   "round": "R1",
+   "a": "Landon Lill",
+   "as": "The Peddie School",
+   "b": "Nathan Kadar",
+   "bs": "Cherokee",
+   "winner": 1,
+   "res": "TF 18-2"
+  },
+  {
+   "id": "bf48fd02-f461-4828-9352-4750445779e0",
+   "weight": 138,
+   "round": "R1",
+   "a": "Landon Lill",
+   "as": "The Peddie School",
+   "b": "Nathan Kadar",
+   "bs": "Cherokee",
+   "winner": 1,
+   "res": "TF 19-3"
+  },
+  {
+   "id": "f9e79cbe-18e7-4c5f-953e-d902e3d6040a",
+   "weight": 120,
+   "round": "R1",
+   "a": "Morgan Torres",
+   "as": "Watchung Hills",
+   "b": "Benjamin Cole",
+   "bs": "Cherokee",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "90222078-c209-4438-8cea-a73a0cf98809",
+   "weight": 175,
+   "round": "R1",
+   "a": "Prince Ezenanii",
+   "as": "Depaul Catholic",
+   "b": "Landon Hackney",
+   "bs": "Cherokee",
+   "winner": 1,
+   "res": "Dec 7-3"
+  },
+  {
+   "id": "bbcdfaad-64e7-4e30-baa5-6c3d62868611",
+   "weight": 190,
+   "round": "R1",
+   "a": "Dane Shiroff",
+   "as": "Cherokee",
+   "b": "Anthony Wagner",
+   "bs": "Morris Knolls",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "7b37a866-f7bc-45bf-92cf-b95aeb1b8df5",
+   "weight": 106,
+   "round": "R1",
+   "a": "Anthony Lopera",
+   "as": "Delbarton School",
+   "b": "Luke Rivara",
+   "bs": "Ramapo",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "e098c574-4506-40b6-9485-ad03a6742285",
+   "weight": 132,
+   "round": "R1",
+   "a": "Ryan Dyki",
+   "as": "Northern Highlands",
+   "b": "Connor Glory",
+   "bs": "Delbarton School",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "21c6865c-91fe-41da-bba5-3cc84f498694",
+   "weight": 132,
+   "round": "R1",
+   "a": "Dontae Kelly",
+   "as": "Middle Township",
+   "b": "Michael Oliveri",
+   "bs": "Delbarton School",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "5c8d2e9e-3a43-443f-9fcf-7b101b18b65f",
+   "weight": 144,
+   "round": "R1",
+   "a": "Andrew Matter",
+   "as": "Delbarton School",
+   "b": "Sean Morris",
+   "bs": "Morris Knolls",
+   "winner": 1,
+   "res": "MD 8-0"
+  },
+  {
+   "id": "ce8dd7d8-49cd-4661-9ccc-905f2e72dd62",
+   "weight": 175,
+   "round": "R1",
+   "a": "Ryder Bernholz",
+   "as": "Delbarton School",
+   "b": "Logan Rickard",
+   "bs": "Paramus",
+   "winner": 1,
+   "res": "MD 14-4"
+  },
+  {
+   "id": "031ca6d2-a782-4f0f-b900-db6ee92c92a1",
+   "weight": 113,
+   "round": "R1",
+   "a": "Joseph Gallagher",
+   "as": "Red Bank Catholic",
+   "b": "Christopher Powell",
+   "bs": "Delsea",
+   "winner": 1,
+   "res": "Dec 8-1"
+  },
+  {
+   "id": "09f3ba83-ee7a-493e-97e9-7b504dfa4449",
+   "weight": 120,
+   "round": "R1",
+   "a": "Evan Blanchard",
+   "as": "Nutley",
+   "b": "Reid Lightfoot",
+   "bs": "Delsea",
+   "winner": 1,
+   "res": "MD 12-4"
+  },
+  {
+   "id": "e2abe159-7a12-4b23-bcc2-c8f4ad0c6fa3",
+   "weight": 132,
+   "round": "R1",
+   "a": "David Butenewicz",
+   "as": "Delsea",
+   "b": "Rayan Mohammad",
+   "bs": "Passaic Tech",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "98ff5820-6cc3-4a10-a81d-7591a9a0bb51",
+   "weight": 138,
+   "round": "R1",
+   "a": "Liam Williams",
+   "as": "Moorestown",
+   "b": "David Sawyer",
+   "bs": "Delsea",
+   "winner": 1,
+   "res": "Dec 11-4"
+  },
+  {
+   "id": "09f27608-a4d5-47bd-9d99-afc2e6d973c4",
+   "weight": 144,
+   "round": "C2",
+   "a": "Lucas Coesfeld",
+   "as": "Delsea",
+   "b": "Brody Walton",
+   "bs": "Hillsborough",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "4f26742a-b766-450f-8b81-6ea569539334",
+   "weight": 165,
+   "round": "R1",
+   "a": "Cameron Pote",
+   "as": "Delsea",
+   "b": "Leo Dimitrakiou",
+   "bs": "Kinnelon",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "056666c6-ecc3-4aaf-86d3-9a55bc76fab9",
+   "weight": 215,
+   "round": "R1",
+   "a": "Christopher Diaz",
+   "as": "Delsea",
+   "b": "Caden Britton",
+   "bs": "Lower Cape May",
+   "winner": 1,
+   "res": "Forfeit "
+  },
+  {
+   "id": "811a8570-c756-4cc4-a462-3d94a0436e45",
+   "weight": 106,
+   "round": "R1",
+   "a": "Jake Mazzurco",
+   "as": "Watchung Hills",
+   "b": "Seamus Hanley",
+   "bs": "Don Bosco Prep",
+   "winner": 1,
+   "res": "Dec 8-2"
+  },
+  {
+   "id": "6dbd0574-7556-4899-b94f-7bd1cd673611",
+   "weight": 113,
+   "round": "R1",
+   "a": "Alessandro Camargo",
+   "as": "Paramus Catholic",
+   "b": "Vincent Iaquinto",
+   "bs": "Don Bosco Prep",
+   "winner": 1,
+   "res": "Dec 9-7"
+  },
+  {
+   "id": "d80ada82-cb40-4c21-89c7-ac7722810133",
+   "weight": 120,
+   "round": "R1",
+   "a": "Luca Perillo",
+   "as": "Don Bosco Prep",
+   "b": "Lucas Perez",
+   "bs": "Woodbridge",
+   "winner": 1,
+   "res": "Dec 4-3"
+  },
+  {
+   "id": "d4b4b226-c654-48ba-b0dc-6d9752fa77e4",
+   "weight": 150,
+   "round": "R1",
+   "a": "Bryce Meserlian",
+   "as": "Don Bosco Prep",
+   "b": "Ilirian Vuka",
+   "bs": "Ramapo",
+   "winner": 1,
+   "res": "MD 10-1"
+  },
+  {
+   "id": "0dc6844a-7539-43a7-b512-144d74d05ee7",
+   "weight": 157,
+   "round": "R1",
+   "a": "Matt Summa",
+   "as": "Seton Hall Prep",
+   "b": "Cael Hoffman",
+   "bs": "Don Bosco Prep",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "d0f9c535-bf5f-4478-9bb1-ada3306dafae",
+   "weight": 126,
+   "round": "R1",
+   "a": "Rohi Hubert",
+   "as": "Glen Rock",
+   "b": "Andre Martin",
+   "bs": "Pascack Valley",
+   "winner": 1,
+   "res": "Forfeit "
+  },
+  {
+   "id": "19bc64fc-bf9c-4b85-8b0a-7d6f24d889f9",
+   "weight": 132,
+   "round": "R1",
+   "a": "Cooper Gill",
+   "as": "Glen Rock",
+   "b": "Jake Piotrowsky",
+   "bs": "Pope John XXIII",
+   "winner": 1,
+   "res": "Dec 8-3"
+  },
+  {
+   "id": "4c45b161-f49f-4f65-80a9-ad7502b6c025",
+   "weight": 190,
+   "round": "R1",
+   "a": "Michael Morelli",
+   "as": "Pope John XXIII",
+   "b": "Rocky Penny",
+   "bs": "Green Farms Academy",
+   "winner": 1,
+   "res": "MD 15-7"
+  },
+  {
+   "id": "ab5e2c95-6d0f-453c-a495-34fee21cca90",
+   "weight": 144,
+   "round": "R1",
+   "a": "Adrian Pinto",
+   "as": "Hackettstown",
+   "b": "John Owen",
+   "bs": "Mt. St. Charles Academy",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "976df67e-7ac2-4122-accb-1691ec868ffd",
+   "weight": 106,
+   "round": "C1",
+   "a": "Mikey Olivieri",
+   "as": "Hillsborough",
+   "b": "Rafael Torres",
+   "bs": "Lakeland",
+   "winner": 1,
+   "res": "Dec 7-3"
+  },
+  {
+   "id": "a51fd3b5-062b-426c-878c-7e71073a289c",
+   "weight": 120,
+   "round": "C1",
+   "a": "Demitri DeLuca",
+   "as": "Hillsborough",
+   "b": "Nicholas Gallo",
+   "bs": "Northern Highlands",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "88c2ebd2-b8de-4973-9342-fad2b5d68694",
+   "weight": 215,
+   "round": "C1",
+   "a": "Aren Hidalgo",
+   "as": "Hillsborough",
+   "b": "Delvin Oxmann",
+   "bs": "Pascack Valley",
+   "winner": 1,
+   "res": "MD 19-6"
+  },
+  {
+   "id": "cdeb1ee3-e353-4d83-b529-91088029f11e",
+   "weight": 157,
+   "round": "R1",
+   "a": "Roman Ritacco",
+   "as": "Kinnelon",
+   "b": "Dominic Lisanti",
+   "bs": "Waldwick",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "361d06b2-7daa-455a-a6b6-c68f0dde81fa",
+   "weight": 113,
+   "round": "R1",
+   "a": "Braedan Ruiz",
+   "as": "St. Peter's Prep",
+   "b": "Aidan Meehan",
+   "bs": "Lakeland",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "6f2f661f-f007-404d-a89b-14e46f54fb38",
+   "weight": 120,
+   "round": "R1",
+   "a": "Jayden Leneus",
+   "as": "St. Benedicts Prep School",
+   "b": "Mason Romero",
+   "bs": "Lakeland",
+   "winner": 1,
+   "res": "Dec 10-3"
+  },
+  {
+   "id": "bfe9fd04-ffc8-4849-969d-b3bfc022a672",
+   "weight": 157,
+   "round": "C1",
+   "a": "Tyler Morodan",
+   "as": "Newton/Kittatinny",
+   "b": "Frank Monto",
+   "bs": "Lakeland",
+   "winner": 1,
+   "res": "MD 8-0"
+  },
+  {
+   "id": "223f72f3-b133-4a6e-b963-6795cf634ab4",
+   "weight": 175,
+   "round": "R1",
+   "a": "Alex Helphingstine",
+   "as": "Lakeland",
+   "b": "Matt Cmielewski",
+   "bs": "Red Bank Catholic",
+   "winner": 1,
+   "res": "Forfeit "
+  },
+  {
+   "id": "c52ab6d4-0ff5-4bf6-b4a6-bf5ba607dfb8",
+   "weight": 138,
+   "round": "R1",
+   "a": "Dylan Cerciello",
+   "as": "Lodi/Saddle Brook",
+   "b": "Lucas Rafeh",
+   "bs": "Seton Hall Prep",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "993f96b7-2e7d-42fa-9a20-ec190674e6ee",
+   "weight": 150,
+   "round": "R1",
+   "a": "Andrew Brant",
+   "as": "Lower Cape May",
+   "b": "Jacob Walker",
+   "bs": "Paramus Catholic",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "caf2efad-bea4-41a3-bd18-a24798e2f425",
+   "weight": 120,
+   "round": "R1",
+   "a": "Joseph Ciullo",
+   "as": "Seton Hall Prep",
+   "b": "Benjamin Banks",
+   "bs": "Middle Township",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "6cd28a84-3a10-4b1c-a5ec-0201147b94c6",
+   "weight": 165,
+   "round": "R1",
+   "a": "Robert Attenborough",
+   "as": "Middle Township",
+   "b": "Lucas Pelletier",
+   "bs": "Cherokee",
+   "winner": 1,
+   "res": "Forfeit "
+  },
+  {
+   "id": "1405c30f-a907-43da-b060-986435c4220b",
+   "weight": 285,
+   "round": "R1",
+   "a": "Nathaniel McCrone",
+   "as": "Middle Township",
+   "b": "Domenick Infantes",
+   "bs": "St. Peter's Prep",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "a54f5f35-59d8-4149-b9e0-65ff893c96c0",
+   "weight": 285,
+   "round": "R1",
+   "a": "Nathaniel McCrone",
+   "as": "Middle Township",
+   "b": "Anthony Alfonso",
+   "bs": "Depaul Catholic",
+   "winner": 1,
+   "res": "Forfeit "
+  },
+  {
+   "id": "0bc31924-a1d1-4b49-bbc3-c3acbca1cd8b",
+   "weight": 165,
+   "round": "R1",
+   "a": "Giammaria Giordano",
+   "as": "Paramus Catholic",
+   "b": "Tommy O`Connor",
+   "bs": "Moorestown",
+   "winner": 1,
+   "res": "TF 15-0"
+  },
+  {
+   "id": "9bdebd6e-6d9c-4484-ad0e-5d9751553936",
+   "weight": 132,
+   "round": "R1",
+   "a": "Nathan Gomes",
+   "as": "Morris Knolls",
+   "b": "Paul Tsocanos",
+   "bs": "Ramapo",
+   "winner": 1,
+   "res": "MD 10-2"
+  },
+  {
+   "id": "a700ebeb-03b9-4b26-a5b4-d7378b80006f",
+   "weight": 150,
+   "round": "R1",
+   "a": "Trevor Grageda",
+   "as": "Pascack Valley",
+   "b": "Anthony Bray",
+   "bs": "Morris Knolls",
+   "winner": 1,
+   "res": "Dec 5-4"
+  },
+  {
+   "id": "c6bb6d2a-8141-4aa8-95df-9326f8ec4853",
+   "weight": 165,
+   "round": "C1",
+   "a": "Finn Mckeon",
+   "as": "St. Benedicts Prep School",
+   "b": "Timothy McNamara",
+   "bs": "Newton/Kittatinny",
+   "winner": 1,
+   "res": "Dec 3-1"
+  },
+  {
+   "id": "e65bbe0f-f639-4833-a3fd-91a829e234a4",
+   "weight": 113,
+   "round": "R1",
+   "a": "Marco Barra",
+   "as": "Passaic Tech",
+   "b": "Maxwell Emmert",
+   "bs": "Northern Highlands",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "b9d4fdcb-91a9-45d1-85c4-d1b75abe1be4",
+   "weight": 138,
+   "round": "R1",
+   "a": "Ryan Kim",
+   "as": "Northern Highlands",
+   "b": "Ty`Zer Burr",
+   "bs": "Piscataway",
+   "winner": 1,
+   "res": "MD 17-3"
+  },
+  {
+   "id": "068881ec-3484-4d7a-aaa0-b0a4bc9dbc7c",
+   "weight": 144,
+   "round": "R1",
+   "a": "Max Ventura",
+   "as": "Pingry",
+   "b": "Nathan Emmert",
+   "bs": "Northern Highlands",
+   "winner": 1,
+   "res": "Dec 8-1"
+  },
+  {
+   "id": "e9b676db-812f-4f09-a097-d9954e7a7039",
+   "weight": 126,
+   "round": "R1",
+   "a": "Michael Kleynshvag",
+   "as": "Seton Hall Prep",
+   "b": "Max Graeber",
+   "bs": "Demarest/Old Tappan",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "6c3ee18d-b285-41be-a94f-d215a12e4cfd",
+   "weight": 190,
+   "round": "R1",
+   "a": "Navell Washington",
+   "as": "Demarest/Old Tappan",
+   "b": "Lemuel Lewis",
+   "bs": "St. Benedicts Prep School",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "9366ad3c-4539-4da4-842b-1a72cb588d28",
+   "weight": 106,
+   "round": "R1",
+   "a": "Jaxson Weber",
+   "as": "Pope John XXIII",
+   "b": "Valen Delaney",
+   "bs": "Nutley",
+   "winner": 1,
+   "res": "Dec 9-7"
+  },
+  {
+   "id": "f34d7aa6-afe2-4a2b-b828-248119f0125f",
+   "weight": 126,
+   "round": "R1",
+   "a": "Connor Klein",
+   "as": "Paramus",
+   "b": "Khuchuleg Battulga",
+   "bs": "St. Benedicts Prep School",
+   "winner": 1,
+   "res": "Fall "
+  },
+  {
+   "id": "6a08fbf0-a0b2-4c3d-acee-fbfcafe83366",
+   "weight": 138,
+   "round": "R1",
+   "a": "Damian LaGrone",
+   "as": "Paramus",
+   "b": "Mason DiStefano",
+   "bs": "Wall",
+   "winner": 1,
+   "res": "Dec 4-1"
+  },
+  {
+   "id": "f2d75174-9567-4d45-936d-d151a0f3b96f",
+   "weight": 165,
+   "round": "R1",
+   "a": "Will Tarna",
+   "as": "Pascack Valley",
+   "b": "Nicholas Konepka",
+   "bs": "Paramus Catholic",
+   "winner": 1,
+   "res": "Forfeit "
+  },
+  {
+   "id": "3434ce9a-da7e-41d0-9756-d39166c91e59",
+   "weight": 113,
+   "round": "R1",
+   "a": "David Bubnowski",
+   "as": "Watchung Hills",
+   "b": "Caleb Pacor",
+   "bs": "Pascack Valley",
+   "winner": 1,
+   "res": "Forfeit "
+  },
+  {
+   "id": "019bc8df-8db1-41e5-bda4-10c00d7e9061",
+   "weight": 190,
+   "round": "R1",
+   "a": "Artun Kirgezmis",
+   "as": "Watchung Hills",
+   "b": "David Thomson",
+   "bs": "Pope John XXIII",
+   "winner": 1,
+   "res": "Forfeit "
+  },
+  {
+   "id": "a3b318f7-f1ad-44b2-be4d-69d36af3ee32",
+   "weight": 157,
+   "round": "R1",
+   "a": "Matt Summa",
+   "as": "Seton Hall Prep",
+   "b": "Thomas Burke",
+   "bs": "Red Bank Catholic",
+   "winner": 1,
+   "res": "Forfeit "
+  },
+  {
+   "id": "42a6eb53-d10c-451b-89b7-1be39ea06a48",
+   "weight": 144,
+   "round": "C1",
+   "a": "Darryen Rodriguez",
+   "as": "Roselle Park",
+   "b": "Anthony Dispensa",
+   "bs": "Cranford",
+   "winner": 1,
+   "res": "Def. "
+  },
+  {
+   "id": "67dc5a58-08dc-4552-b99d-5b51744c26f1",
+   "weight": 190,
+   "round": "R1",
+   "a": "Nevin Mattessich",
+   "as": "Don Bosco Prep",
+   "b": "Joe Cutruzzula",
+   "bs": "West Essex",
+   "winner": 1,
+   "res": "TF 15-0"
+  },
+  {
+   "id": "97b747fa-fa74-4682-a729-59119fa0133f",
+   "weight": 113,
+   "round": "R1",
+   "a": "Braedan Ruiz",
+   "as": "St. Peter's Prep",
+   "b": "Zane Shama",
+   "bs": "The Peddie School",
+   "winner": 1,
+   "res": "SV-1 8-5"
+  }
+ ],
+ "ncMatched": []
+}

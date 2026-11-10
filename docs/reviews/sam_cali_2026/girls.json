@@ -1,0 +1,4200 @@
+{
+ "100": {
+  "bouts": [
+   {
+    "page": 0,
+    "round": "3rd Place",
+    "match": "633",
+    "top": {
+     "name": "Chac",
+     "team": "BBRK",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Bush",
+     "team": "MH",
+     "seed": 6,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 4:20"
+   },
+   {
+    "page": 0,
+    "round": "5th Place",
+    "match": "634",
+    "top": {
+     "name": "Petersen",
+     "team": "NWTN",
+     "seed": 4,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Minervini",
+     "team": "MO",
+     "seed": 5,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "M FOR"
+   },
+   {
+    "page": 0,
+    "round": "Consi-Semis",
+    "match": "612",
+    "top": {
+     "name": "Bush",
+     "team": "MH",
+     "seed": 6,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Minervini",
+     "team": "MO",
+     "seed": 5,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 4:25"
+   },
+   {
+    "page": 0,
+    "round": "Consi-Semis",
+    "match": "611",
+    "top": {
+     "name": "Petersen",
+     "team": "NWTN",
+     "seed": 4,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Chac",
+     "team": "BBRK",
+     "seed": 3,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:54"
+   },
+   {
+    "page": 0,
+    "round": "Consi of 4",
+    "match": "6",
+    "top": null,
+    "bottom": {
+     "name": "Petersen",
+     "team": "NWTN",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 0,
+    "round": "Consi of 4",
+    "match": "573",
+    "top": {
+     "name": "Bush",
+     "team": "MH",
+     "seed": 6,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Rodriguez",
+     "team": "PCT",
+     "seed": 7,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "FOR"
+   },
+   {
+    "page": 0,
+    "round": "Quarter-Finals",
+    "match": "5",
+    "top": {
+     "name": "Alysa Patel",
+     "team": "PRMC",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 0,
+    "round": "Quarter-Finals",
+    "match": "517",
+    "top": {
+     "name": "Belinda Minervini",
+     "team": "MO",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Addison Petersen",
+     "team": "NWTN",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC SV 11-8"
+   },
+   {
+    "page": 0,
+    "round": "Quarter-Finals",
+    "match": "518",
+    "top": {
+     "name": "Kiara Chac",
+     "team": "BBRK",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Mya Bush",
+     "team": "MH",
+     "seed": 6,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 4:00"
+   },
+   {
+    "page": 0,
+    "round": "Quarter-Finals",
+    "match": "519",
+    "top": {
+     "name": "Kaylee Rodriguez",
+     "team": "PCT",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Izzy Timonera",
+     "team": "Nut",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:08"
+   },
+   {
+    "page": 0,
+    "round": "Semi-Finals",
+    "match": "571",
+    "top": {
+     "name": "Patel",
+     "team": "PRMC",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Minervini",
+     "team": "MO",
+     "seed": 5,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:17"
+   },
+   {
+    "page": 0,
+    "round": "Semi-Finals",
+    "match": "572",
+    "top": {
+     "name": "Chac",
+     "team": "BBRK",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Timonera",
+     "team": "Nut",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 4:56"
+   },
+   {
+    "page": 0,
+    "round": "Finals",
+    "match": "635",
+    "top": {
+     "name": "Patel",
+     "team": "PRMC",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Timonera",
+     "team": "Nut",
+     "seed": 2,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 10-0"
+   }
+  ],
+  "pages": [
+   0
+  ]
+ },
+ "107": {
+  "bouts": [
+   {
+    "page": 1,
+    "round": "Round of 16",
+    "match": "9",
+    "top": {
+     "name": "Nathaly Diaz Santos",
+     "team": "MH",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 1,
+    "round": "Round of 16",
+    "match": "501",
+    "top": {
+     "name": "Mariella Nieves",
+     "team": "PCT",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Eva Denne",
+     "team": "NWTN",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 8-1"
+   },
+   {
+    "page": 1,
+    "round": "Round of 16",
+    "match": "4",
+    "top": {
+     "name": "Genevieve Maruhom",
+     "team": "WILL",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 1,
+    "round": "Round of 16",
+    "match": "3",
+    "top": null,
+    "bottom": {
+     "name": "Cayce Wang",
+     "team": "COLU",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 1,
+    "round": "Round of 16",
+    "match": "6",
+    "top": {
+     "name": "Kelsey Hartman",
+     "team": "DELR",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 1,
+    "round": "Round of 16",
+    "match": "501A",
+    "top": {
+     "name": "Zoe Mullane",
+     "team": "BAYO",
+     "seed": null,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Perjia Dupont",
+     "team": "PRMC",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:54"
+   },
+   {
+    "page": 1,
+    "round": "Round of 16",
+    "match": "502",
+    "top": {
+     "name": "Gabrielle Ruedy",
+     "team": "BERN",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Alexa Scholz",
+     "team": "JS",
+     "seed": 10,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:18"
+   },
+   {
+    "page": 1,
+    "round": "Round of 16",
+    "match": "1",
+    "top": null,
+    "bottom": {
+     "name": "Chastelyn Hechavarria Vasquez",
+     "team": "",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 1,
+    "round": "Quarter-Finals",
+    "match": "520",
+    "top": {
+     "name": "Diaz Santos",
+     "team": "MH",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Nieves",
+     "team": "PCT",
+     "seed": 9,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:56"
+   },
+   {
+    "page": 1,
+    "round": "Quarter-Finals",
+    "match": "521",
+    "top": {
+     "name": "Maruhom",
+     "team": "WILL",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Wang",
+     "team": "COLU",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 3:00"
+   },
+   {
+    "page": 1,
+    "round": "Quarter-Finals",
+    "match": "522",
+    "top": {
+     "name": "Hartman",
+     "team": "DELR",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Dupont",
+     "team": "PRMC",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 13-3"
+   },
+   {
+    "page": 1,
+    "round": "Quarter-Finals",
+    "match": "523",
+    "top": {
+     "name": "Ruedy",
+     "team": "BERN",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Hechavarria Vasquez",
+     "team": "B/RP",
+     "seed": 2,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:53"
+   },
+   {
+    "page": 1,
+    "round": "Semi-Finals",
+    "match": "574",
+    "top": {
+     "name": "Diaz Santos",
+     "team": "MH",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Wang",
+     "team": "COLU",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:26"
+   },
+   {
+    "page": 1,
+    "round": "Semi-Finals",
+    "match": "575",
+    "top": {
+     "name": "Dupont",
+     "team": "PRMC",
+     "seed": 6,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Ruedy",
+     "team": "BERN",
+     "seed": 7,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:33"
+   },
+   {
+    "page": 1,
+    "round": "Finals",
+    "match": "638",
+    "top": {
+     "name": "Diaz Santos",
+     "team": "MH",
+     "seed": 1,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Ruedy",
+     "team": "BERN",
+     "seed": 7,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:23"
+   },
+   {
+    "page": 2,
+    "round": "3rd Place",
+    "match": "636",
+    "top": {
+     "name": "Hechavarria Vasquez",
+     "team": "B/R",
+     "seed": 2,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Dupont",
+     "team": "PRMC",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 4-1"
+   },
+   {
+    "page": 2,
+    "round": "5th Place",
+    "match": "637",
+    "top": {
+     "name": "Wang",
+     "team": "COLU",
+     "seed": 4,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Nieves",
+     "team": "PCT",
+     "seed": 9,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 4:31"
+   },
+   {
+    "page": 2,
+    "round": "Consi-Semis",
+    "match": "613",
+    "top": {
+     "name": "Hechavarria Vasquez",
+     "team": "B/R",
+     "seed": 2,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Wang",
+     "team": "COLU",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:45"
+   },
+   {
+    "page": 2,
+    "round": "Consi-Semis",
+    "match": "614",
+    "top": {
+     "name": "Nieves",
+     "team": "PCT",
+     "seed": 9,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Dupont",
+     "team": "PRMC",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 3:54"
+   },
+   {
+    "page": 2,
+    "round": "Consi of 4",
+    "match": "576",
+    "top": {
+     "name": "Hechavarria Vasquez",
+     "team": "B/R",
+     "seed": 2,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Hartman",
+     "team": "DELR",
+     "seed": 3,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:41"
+   },
+   {
+    "page": 2,
+    "round": "Consi of 4",
+    "match": "577",
+    "top": {
+     "name": "Maruhom",
+     "team": "WILL",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Nieves",
+     "team": "PCT",
+     "seed": 9,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 4:22"
+   },
+   {
+    "page": 2,
+    "round": "Consi of 8 #2",
+    "match": "559",
+    "top": {
+     "name": "Denne",
+     "team": "NWTN",
+     "seed": 8,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Hechavarria Vasquez",
+     "team": "B/R",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:22"
+   },
+   {
+    "page": 2,
+    "round": "Consi of 8 #2",
+    "match": "5",
+    "top": null,
+    "bottom": {
+     "name": "Hartman",
+     "team": "DELR",
+     "seed": 3,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 2,
+    "round": "Consi of 8 #2",
+    "match": "559A",
+    "top": {
+     "name": "Mullane",
+     "team": "BAYO",
+     "seed": null,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Maruhom",
+     "team": "WILL",
+     "seed": 5,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:21"
+   },
+   {
+    "page": 2,
+    "round": "Consi of 8 #2",
+    "match": "560",
+    "top": {
+     "name": "Scholz",
+     "team": "JS",
+     "seed": 10,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Nieves",
+     "team": "PCT",
+     "seed": 9,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:52"
+   },
+   {
+    "page": 2,
+    "round": "Consi of 8 #1",
+    "match": null,
+    "top": null,
+    "bottom": {
+     "name": "Denne",
+     "team": "NWTN",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 2,
+    "round": "Consi of 8 #1",
+    "match": null,
+    "top": null,
+    "bottom": null,
+    "winner": null,
+    "result": "BYE"
+   },
+   {
+    "page": 2,
+    "round": "Consi of 8 #1",
+    "match": "10",
+    "top": null,
+    "bottom": {
+     "name": "Mullane",
+     "team": "BAYO",
+     "seed": null,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 2,
+    "round": "Consi of 8 #1",
+    "match": null,
+    "top": {
+     "name": "Scholz",
+     "team": "JS",
+     "seed": 10,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   }
+  ],
+  "pages": [
+   1,
+   2
+  ]
+ },
+ "114": {
+  "bouts": [
+   {
+    "page": 3,
+    "round": "Round of 16",
+    "match": "9",
+    "top": {
+     "name": "Emelly Diaz Santos",
+     "team": "MH",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 3,
+    "round": "Round of 16",
+    "match": "503",
+    "top": {
+     "name": "Camryn Pipher",
+     "team": "BAYO",
+     "seed": 9,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Nicolette Vivas",
+     "team": "BRGF",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:24"
+   },
+   {
+    "page": 3,
+    "round": "Round of 16",
+    "match": "504",
+    "top": {
+     "name": "Isabelle Yukselen",
+     "team": "PARA",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Sophia Meehan",
+     "team": "GLRK",
+     "seed": 12,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 16-8"
+   },
+   {
+    "page": 3,
+    "round": "Round of 16",
+    "match": "505",
+    "top": {
+     "name": "Sanaa Prescott",
+     "team": "BAYO",
+     "seed": 13,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Isabel Diehl",
+     "team": "DELR",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:42"
+   },
+   {
+    "page": 3,
+    "round": "Round of 16",
+    "match": "11",
+    "top": {
+     "name": "Sophia Salazar",
+     "team": "MH",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 3,
+    "round": "Round of 16",
+    "match": "506",
+    "top": {
+     "name": "Ashanty Ruiz Santana",
+     "team": "PCT",
+     "seed": 11,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Mia Capone",
+     "team": "MO",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:27"
+   },
+   {
+    "page": 3,
+    "round": "Round of 16",
+    "match": "507",
+    "top": {
+     "name": "Abigail Bloxham",
+     "team": "NWTN",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Reilly Callan",
+     "team": "JS",
+     "seed": 10,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:25"
+   },
+   {
+    "page": 3,
+    "round": "Round of 16",
+    "match": "1",
+    "top": null,
+    "bottom": {
+     "name": "Adrianna Digregorio",
+     "team": "WILL",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 3,
+    "round": "Quarter-Finals",
+    "match": "524",
+    "top": {
+     "name": "Diaz Santos",
+     "team": "MH",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Vivas",
+     "team": "BRGF",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:50"
+   },
+   {
+    "page": 3,
+    "round": "Quarter-Finals",
+    "match": "525",
+    "top": {
+     "name": "Yukselen",
+     "team": "PARA",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Diehl",
+     "team": "DELR",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 15-10"
+   },
+   {
+    "page": 3,
+    "round": "Quarter-Finals",
+    "match": "526",
+    "top": {
+     "name": "Salazar",
+     "team": "MH",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Capone",
+     "team": "MO",
+     "seed": 6,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:37"
+   },
+   {
+    "page": 3,
+    "round": "Quarter-Finals",
+    "match": "527",
+    "top": {
+     "name": "Bloxham",
+     "team": "NWTN",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Digregorio",
+     "team": "WILL",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:47"
+   },
+   {
+    "page": 3,
+    "round": "Semi-Finals",
+    "match": "578",
+    "top": {
+     "name": "Diaz Santos",
+     "team": "MH",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Yukselen",
+     "team": "PARA",
+     "seed": 5,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:42"
+   },
+   {
+    "page": 3,
+    "round": "Semi-Finals",
+    "match": "579",
+    "top": {
+     "name": "Salazar",
+     "team": "MH",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Digregorio",
+     "team": "WILL",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 3:57"
+   },
+   {
+    "page": 3,
+    "round": "Finals",
+    "match": "641",
+    "top": {
+     "name": "Diaz Santos",
+     "team": "MH",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Digregorio",
+     "team": "WILL",
+     "seed": 2,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 9-0"
+   },
+   {
+    "page": 4,
+    "round": "3rd Place",
+    "match": "639",
+    "top": {
+     "name": "Capone",
+     "team": "MO",
+     "seed": 6,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Salazar",
+     "team": "MH",
+     "seed": 3,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 3:55"
+   },
+   {
+    "page": 4,
+    "round": "5th Place",
+    "match": "640",
+    "top": {
+     "name": "Yukselen",
+     "team": "PARA",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Vivas",
+     "team": "BRGF",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:07"
+   },
+   {
+    "page": 4,
+    "round": "Consi-Semis",
+    "match": "615",
+    "top": {
+     "name": "Capone",
+     "team": "MO",
+     "seed": 6,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Yukselen",
+     "team": "PARA",
+     "seed": 5,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 4:01"
+   },
+   {
+    "page": 4,
+    "round": "Consi-Semis",
+    "match": "616",
+    "top": {
+     "name": "Vivas",
+     "team": "BRGF",
+     "seed": 8,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Salazar",
+     "team": "MH",
+     "seed": 3,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 3:56"
+   },
+   {
+    "page": 4,
+    "round": "Consi of 4",
+    "match": "580",
+    "top": {
+     "name": "Bloxham",
+     "team": "NWTN",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Capone",
+     "team": "MO",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:37"
+   },
+   {
+    "page": 4,
+    "round": "Consi of 4",
+    "match": "581",
+    "top": {
+     "name": "Diehl",
+     "team": "DELR",
+     "seed": 4,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Vivas",
+     "team": "BRGF",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:49"
+   },
+   {
+    "page": 4,
+    "round": "Consi of 8 #2",
+    "match": "561",
+    "top": {
+     "name": "Pipher",
+     "team": "BAYO",
+     "seed": 9,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Bloxham",
+     "team": "NWTN",
+     "seed": 7,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:39"
+   },
+   {
+    "page": 4,
+    "round": "Consi of 8 #2",
+    "match": "562",
+    "top": {
+     "name": "Meehan",
+     "team": "GLRK",
+     "seed": 12,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Capone",
+     "team": "MO",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:51"
+   },
+   {
+    "page": 4,
+    "round": "Consi of 8 #2",
+    "match": "563",
+    "top": {
+     "name": "Ruiz Santana",
+     "team": "PCT",
+     "seed": 11,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Diehl",
+     "team": "DELR",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:49"
+   },
+   {
+    "page": 4,
+    "round": "Consi of 8 #2",
+    "match": "564",
+    "top": {
+     "name": "Callan",
+     "team": "JS",
+     "seed": 10,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Vivas",
+     "team": "BRGF",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:51"
+   },
+   {
+    "page": 4,
+    "round": "Consi of 8 #1",
+    "match": "12",
+    "top": null,
+    "bottom": {
+     "name": "Pipher",
+     "team": "BAYO",
+     "seed": 9,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 4,
+    "round": "Consi of 8 #1",
+    "match": "528",
+    "top": {
+     "name": "Meehan",
+     "team": "GLRK",
+     "seed": 12,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Prescott",
+     "team": "BAYO",
+     "seed": 13,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "M FOR 1:32"
+   },
+   {
+    "page": 4,
+    "round": "Consi of 8 #1",
+    "match": "10",
+    "top": null,
+    "bottom": {
+     "name": "Ruiz Santana",
+     "team": "PCT",
+     "seed": 11,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 4,
+    "round": "Consi of 8 #1",
+    "match": null,
+    "top": {
+     "name": "Callan",
+     "team": "JS",
+     "seed": 10,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   }
+  ],
+  "pages": [
+   3,
+   4
+  ]
+ },
+ "120": {
+  "bouts": [
+   {
+    "page": 5,
+    "round": "3rd Place",
+    "match": "642",
+    "top": {
+     "name": "Drew",
+     "team": "MO",
+     "seed": 8,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Zwillinger",
+     "team": "WILL",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:28"
+   },
+   {
+    "page": 5,
+    "round": "5th Place",
+    "match": "643",
+    "top": {
+     "name": "Fiestas",
+     "team": "PCT",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Hayes",
+     "team": "BAYO",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 8-5"
+   },
+   {
+    "page": 5,
+    "round": "Consi-Semis",
+    "match": "617",
+    "top": {
+     "name": "Drew",
+     "team": "MO",
+     "seed": 8,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Fiestas",
+     "team": "PCT",
+     "seed": 7,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 10-1"
+   },
+   {
+    "page": 5,
+    "round": "Consi-Semis",
+    "match": "618",
+    "top": {
+     "name": "Hayes",
+     "team": "BAYO",
+     "seed": 6,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Zwillinger",
+     "team": "WILL",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 3:49"
+   },
+   {
+    "page": 5,
+    "round": "Consi of 4",
+    "match": "584A",
+    "top": {
+     "name": "Drew",
+     "team": "MO",
+     "seed": 8,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Powell",
+     "team": "DELR",
+     "seed": 5,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:55"
+   },
+   {
+    "page": 5,
+    "round": "Consi of 4",
+    "match": "584",
+    "top": {
+     "name": "Hayes",
+     "team": "BAYO",
+     "seed": 6,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Santanocito",
+     "team": "RMSY",
+     "seed": 2,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 3-0"
+   },
+   {
+    "page": 5,
+    "round": "Quarter-Finals",
+    "match": "529A",
+    "top": {
+     "name": "Abigail Naddeo",
+     "team": "PRMC",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Ava Drew",
+     "team": "MO",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:23"
+   },
+   {
+    "page": 5,
+    "round": "Quarter-Finals",
+    "match": "529",
+    "top": {
+     "name": "Gianna Powell",
+     "team": "DELR",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "LIly Zwillinger",
+     "team": "WILL",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:54"
+   },
+   {
+    "page": 5,
+    "round": "Quarter-Finals",
+    "match": "530",
+    "top": {
+     "name": "Reese Rotonde",
+     "team": "RMSY",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Charlize Hayes",
+     "team": "BAYO",
+     "seed": 6,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 3:16"
+   },
+   {
+    "page": 5,
+    "round": "Quarter-Finals",
+    "match": "531",
+    "top": {
+     "name": "Cristelle Fiestas",
+     "team": "PCT",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Isabella Santanocito",
+     "team": "RMS",
+     "seed": 2,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 4:21"
+   },
+   {
+    "page": 5,
+    "round": "Semi-Finals",
+    "match": "582",
+    "top": {
+     "name": "Naddeo",
+     "team": "PRMC",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Zwillinger",
+     "team": "WILL",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 5:16"
+   },
+   {
+    "page": 5,
+    "round": "Semi-Finals",
+    "match": "583",
+    "top": {
+     "name": "Rotonde",
+     "team": "RMSY",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Fiestas",
+     "team": "PCT",
+     "seed": 7,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:50"
+   },
+   {
+    "page": 5,
+    "round": "Finals",
+    "match": "644",
+    "top": {
+     "name": "Naddeo",
+     "team": "PRMC",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Rotonde",
+     "team": "RMSY",
+     "seed": 3,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 15-6"
+   }
+  ],
+  "pages": [
+   5
+  ]
+ },
+ "126": {
+  "bouts": [
+   {
+    "page": 6,
+    "round": "Round of 16",
+    "match": "9",
+    "top": {
+     "name": "Lucia Ranieri",
+     "team": "RP",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 6,
+    "round": "Round of 16",
+    "match": "508",
+    "top": {
+     "name": "Layla Dadzie",
+     "team": "HILL",
+     "seed": 9,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Tania Ayala Rosas",
+     "team": "PCT",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 3:59"
+   },
+   {
+    "page": 6,
+    "round": "Round of 16",
+    "match": "509",
+    "top": {
+     "name": "Sua Jeong",
+     "team": "DEMA",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Chloe Lloyd",
+     "team": "WILL",
+     "seed": 12,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 3:11"
+   },
+   {
+    "page": 6,
+    "round": "Round of 16",
+    "match": "510",
+    "top": {
+     "name": "Yulie Harada",
+     "team": "RMSY",
+     "seed": 13,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Isabella Vargas",
+     "team": "B/RP",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:54"
+   },
+   {
+    "page": 6,
+    "round": "Round of 16",
+    "match": "511",
+    "top": {
+     "name": "Elizabeth Panuccio",
+     "team": "RMSY",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Brooklyn Hocko",
+     "team": "WILL",
+     "seed": 14,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:00"
+   },
+   {
+    "page": 6,
+    "round": "Round of 16",
+    "match": "512",
+    "top": {
+     "name": "Jasmine Rodriguez",
+     "team": "PRMC",
+     "seed": 11,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Kamryn Hansen",
+     "team": "BAYO",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:25"
+   },
+   {
+    "page": 6,
+    "round": "Round of 16",
+    "match": "513",
+    "top": {
+     "name": "Rebecca Garcia",
+     "team": "DEMA",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Hannah Harrison",
+     "team": "NWTN",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:55"
+   },
+   {
+    "page": 6,
+    "round": "Round of 16",
+    "match": "514",
+    "top": {
+     "name": "Isabella Grippo",
+     "team": "MH",
+     "seed": 15,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Molly Smyth",
+     "team": "MO",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 3:08"
+   },
+   {
+    "page": 6,
+    "round": "Quarter-Finals",
+    "match": "532",
+    "top": {
+     "name": "Ranieri",
+     "team": "RP",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Ayala Rosas",
+     "team": "PCT",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:21"
+   },
+   {
+    "page": 6,
+    "round": "Quarter-Finals",
+    "match": "533",
+    "top": {
+     "name": "Jeong",
+     "team": "DEMA",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Vargas",
+     "team": "B/RP",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:57"
+   },
+   {
+    "page": 6,
+    "round": "Quarter-Finals",
+    "match": "534",
+    "top": {
+     "name": "Panuccio",
+     "team": "RMSY",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Hansen",
+     "team": "BAYO",
+     "seed": 6,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:48"
+   },
+   {
+    "page": 6,
+    "round": "Quarter-Finals",
+    "match": "535",
+    "top": {
+     "name": "Harrison",
+     "team": "NWTN",
+     "seed": 10,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Smyth",
+     "team": "MO",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 8-1"
+   },
+   {
+    "page": 6,
+    "round": "Semi-Finals",
+    "match": "585",
+    "top": {
+     "name": "Ranieri",
+     "team": "RP",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Vargas",
+     "team": "B/RP",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 1:33"
+   },
+   {
+    "page": 6,
+    "round": "Semi-Finals",
+    "match": "586",
+    "top": {
+     "name": "Panuccio",
+     "team": "RMSY",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Smyth",
+     "team": "MO",
+     "seed": 2,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 8-7"
+   },
+   {
+    "page": 6,
+    "round": "Finals",
+    "match": "647",
+    "top": {
+     "name": "Ranieri",
+     "team": "RP",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Panuccio",
+     "team": "RMSY",
+     "seed": 3,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "TF 2:17"
+   },
+   {
+    "page": 7,
+    "round": "3rd Place",
+    "match": "645",
+    "top": {
+     "name": "Hansen",
+     "team": "BAYO",
+     "seed": 6,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Smyth",
+     "team": "MO",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:51"
+   },
+   {
+    "page": 7,
+    "round": "5th Place",
+    "match": "646",
+    "top": {
+     "name": "Vargas",
+     "team": "B/RP",
+     "seed": 4,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Ayala Rosas",
+     "team": "PCT",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:26"
+   },
+   {
+    "page": 7,
+    "round": "Consi-Semis",
+    "match": "619",
+    "top": {
+     "name": "Hansen",
+     "team": "BAYO",
+     "seed": 6,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Vargas",
+     "team": "B/RP",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 10-3"
+   },
+   {
+    "page": 7,
+    "round": "Consi-Semis",
+    "match": "620",
+    "top": {
+     "name": "Ayala Rosas",
+     "team": "PCT",
+     "seed": 8,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Smyth",
+     "team": "MO",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 10-3"
+   },
+   {
+    "page": 7,
+    "round": "Consi of 4",
+    "match": "587",
+    "top": {
+     "name": "Harrison",
+     "team": "NWTN",
+     "seed": 10,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Hansen",
+     "team": "BAYO",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:48"
+   },
+   {
+    "page": 7,
+    "round": "Consi of 4",
+    "match": "588",
+    "top": {
+     "name": "Rodriguez",
+     "team": "PRMC",
+     "seed": 11,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Ayala Rosas",
+     "team": "PCT",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:25"
+   },
+   {
+    "page": 7,
+    "round": "Consi of 8 #2",
+    "match": "565",
+    "top": {
+     "name": "Dadzie",
+     "team": "HILL",
+     "seed": 9,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Harrison",
+     "team": "NWTN",
+     "seed": 10,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:33"
+   },
+   {
+    "page": 7,
+    "round": "Consi of 8 #2",
+    "match": "566",
+    "top": {
+     "name": "Harada",
+     "team": "RMSY",
+     "seed": 13,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Hansen",
+     "team": "BAYO",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:31"
+   },
+   {
+    "page": 7,
+    "round": "Consi of 8 #2",
+    "match": "567",
+    "top": {
+     "name": "Rodriguez",
+     "team": "PRMC",
+     "seed": 11,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Jeong",
+     "team": "DEMA",
+     "seed": 5,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:18"
+   },
+   {
+    "page": 7,
+    "round": "Consi of 8 #2",
+    "match": "568",
+    "top": {
+     "name": "Garcia",
+     "team": "DEMA",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Ayala Rosas",
+     "team": "PCT",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:28"
+   },
+   {
+    "page": 7,
+    "round": "Consi of 8 #1",
+    "match": "12",
+    "top": null,
+    "bottom": {
+     "name": "Dadzie",
+     "team": "HILL",
+     "seed": 9,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 7,
+    "round": "Consi of 8 #1",
+    "match": "536",
+    "top": {
+     "name": "Lloyd",
+     "team": "WILL",
+     "seed": 12,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Harada",
+     "team": "RMSY",
+     "seed": 13,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 7-3"
+   },
+   {
+    "page": 7,
+    "round": "Consi of 8 #1",
+    "match": "537",
+    "top": {
+     "name": "Hocko",
+     "team": "WILL",
+     "seed": 14,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Rodriguez",
+     "team": "PRMC",
+     "seed": 11,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:13"
+   },
+   {
+    "page": 7,
+    "round": "Consi of 8 #1",
+    "match": "538",
+    "top": {
+     "name": "Garcia",
+     "team": "DEMA",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Grippo",
+     "team": "MH",
+     "seed": 15,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 4-1"
+   }
+  ],
+  "pages": [
+   6,
+   7
+  ]
+ },
+ "132": {
+  "bouts": [
+   {
+    "page": 8,
+    "round": "Round of 16",
+    "match": "9",
+    "top": {
+     "name": "Paige Weiss",
+     "team": "JS",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 8,
+    "round": "Round of 16",
+    "match": "515",
+    "top": {
+     "name": "Bria Beshada",
+     "team": "NWTN",
+     "seed": 9,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Melanny Salas",
+     "team": "BAYO",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 5:23"
+   },
+   {
+    "page": 8,
+    "round": "Round of 16",
+    "match": "4",
+    "top": {
+     "name": "Tiana Diaz",
+     "team": "PCT",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 8,
+    "round": "Round of 16",
+    "match": "3",
+    "top": null,
+    "bottom": {
+     "name": "Daniela Fasca-Morales",
+     "team": "BAYO",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 8,
+    "round": "Round of 16",
+    "match": "6",
+    "top": {
+     "name": "Ester Teixiera",
+     "team": "MH",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 8,
+    "round": "Round of 16",
+    "match": "7",
+    "top": null,
+    "bottom": {
+     "name": "Sared Mata",
+     "team": "COLU",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 8,
+    "round": "Round of 16",
+    "match": "2",
+    "top": {
+     "name": "Erica Vasquez",
+     "team": "PRMC",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 8,
+    "round": "Round of 16",
+    "match": "1",
+    "top": null,
+    "bottom": {
+     "name": "Everleigh Whitham-Mandarakas",
+     "team": "",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 8,
+    "round": "Quarter-Finals",
+    "match": "539",
+    "top": {
+     "name": "Weiss",
+     "team": "JS",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Salas",
+     "team": "BAYO",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:26"
+   },
+   {
+    "page": 8,
+    "round": "Quarter-Finals",
+    "match": "540",
+    "top": {
+     "name": "Diaz",
+     "team": "PCT",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Fasca-Morales",
+     "team": "BAYO",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:12"
+   },
+   {
+    "page": 8,
+    "round": "Quarter-Finals",
+    "match": "541",
+    "top": {
+     "name": "Teixiera",
+     "team": "MH",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Mata",
+     "team": "COLU",
+     "seed": 6,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:31"
+   },
+   {
+    "page": 8,
+    "round": "Quarter-Finals",
+    "match": "542",
+    "top": {
+     "name": "Vasquez",
+     "team": "PRMC",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Whitham-Mandarakas",
+     "team": "DELR",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:38"
+   },
+   {
+    "page": 8,
+    "round": "Semi-Finals",
+    "match": "589",
+    "top": {
+     "name": "Weiss",
+     "team": "JS",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Fasca-Morales",
+     "team": "BAYO",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:23"
+   },
+   {
+    "page": 8,
+    "round": "Semi-Finals",
+    "match": "590",
+    "top": {
+     "name": "Teixiera",
+     "team": "MH",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Whitham-Mandarakas",
+     "team": "DELR",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:26"
+   },
+   {
+    "page": 8,
+    "round": "Finals",
+    "match": "650",
+    "top": {
+     "name": "Weiss",
+     "team": "JS",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Whitham-Mandarakas",
+     "team": "DELR",
+     "seed": 2,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:46"
+   },
+   {
+    "page": 9,
+    "round": "3rd Place",
+    "match": "648",
+    "top": {
+     "name": "Vasquez",
+     "team": "PRMC",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Teixiera",
+     "team": "MH",
+     "seed": 3,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 3:30"
+   },
+   {
+    "page": 9,
+    "round": "5th Place",
+    "match": "649",
+    "top": {
+     "name": "Fasca-Morales",
+     "team": "BAYO",
+     "seed": 4,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Salas",
+     "team": "BAYO",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:15"
+   },
+   {
+    "page": 9,
+    "round": "Consi-Semis",
+    "match": "621",
+    "top": {
+     "name": "Vasquez",
+     "team": "PRMC",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Fasca-Morales",
+     "team": "BAYO",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:59"
+   },
+   {
+    "page": 9,
+    "round": "Consi-Semis",
+    "match": "622",
+    "top": {
+     "name": "Salas",
+     "team": "BAYO",
+     "seed": 8,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Teixiera",
+     "team": "MH",
+     "seed": 3,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:28"
+   },
+   {
+    "page": 9,
+    "round": "Consi of 4",
+    "match": "591",
+    "top": {
+     "name": "Vasquez",
+     "team": "PRMC",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Mata",
+     "team": "COLU",
+     "seed": 6,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:29"
+   },
+   {
+    "page": 9,
+    "round": "Consi of 4",
+    "match": "592",
+    "top": {
+     "name": "Diaz",
+     "team": "PCT",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Salas",
+     "team": "BAYO",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 10-7"
+   },
+   {
+    "page": 9,
+    "round": "Consi of 8 #2",
+    "match": "569",
+    "top": {
+     "name": "Beshada",
+     "team": "NWTN",
+     "seed": 9,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Vasquez",
+     "team": "PRMC",
+     "seed": 7,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 3:56"
+   },
+   {
+    "page": 9,
+    "round": "Consi of 8 #2",
+    "match": "5",
+    "top": null,
+    "bottom": {
+     "name": "Mata",
+     "team": "COLU",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 9,
+    "round": "Consi of 8 #2",
+    "match": "8",
+    "top": null,
+    "bottom": {
+     "name": "Diaz",
+     "team": "PCT",
+     "seed": 5,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 9,
+    "round": "Consi of 8 #2",
+    "match": "9",
+    "top": null,
+    "bottom": {
+     "name": "Salas",
+     "team": "BAYO",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 9,
+    "round": "Consi of 8 #1",
+    "match": null,
+    "top": null,
+    "bottom": {
+     "name": "Beshada",
+     "team": "NWTN",
+     "seed": 9,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 9,
+    "round": "Consi of 8 #1",
+    "match": null,
+    "top": null,
+    "bottom": null,
+    "winner": null,
+    "result": "BYE"
+   },
+   {
+    "page": 9,
+    "round": "Consi of 8 #1",
+    "match": null,
+    "top": null,
+    "bottom": null,
+    "winner": null,
+    "result": "BYE"
+   },
+   {
+    "page": 9,
+    "round": "Consi of 8 #1",
+    "match": null,
+    "top": null,
+    "bottom": null,
+    "winner": null,
+    "result": "BYE"
+   }
+  ],
+  "pages": [
+   8,
+   9
+  ]
+ },
+ "138": {
+  "bouts": [
+   {
+    "page": 10,
+    "round": "3rd Place",
+    "match": "651",
+    "top": {
+     "name": "Aiello",
+     "team": "JS",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Haliloglu",
+     "team": "DELR",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 5-2"
+   },
+   {
+    "page": 10,
+    "round": "5th Place",
+    "match": "652",
+    "top": {
+     "name": "Perez",
+     "team": "MH",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Hidalgo",
+     "team": "HILL",
+     "seed": 6,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "M FOR"
+   },
+   {
+    "page": 10,
+    "round": "Consi-Semis",
+    "match": "623",
+    "top": {
+     "name": "Perez",
+     "team": "MH",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Aiello",
+     "team": "JS",
+     "seed": 3,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 3:05"
+   },
+   {
+    "page": 10,
+    "round": "Consi-Semis",
+    "match": "624",
+    "top": {
+     "name": "Hidalgo",
+     "team": "HILL",
+     "seed": 6,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Haliloglu",
+     "team": "DELR",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DQ 3:44"
+   },
+   {
+    "page": 10,
+    "round": "Consi of 4",
+    "match": "6",
+    "top": null,
+    "bottom": {
+     "name": "Perez",
+     "team": "MH",
+     "seed": 5,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 10,
+    "round": "Consi of 4",
+    "match": "1",
+    "top": {
+     "name": "Hidalgo",
+     "team": "HILL",
+     "seed": 6,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 10,
+    "round": "Quarter-Finals",
+    "match": "5",
+    "top": {
+     "name": "Mia Spadavecchia",
+     "team": "WW",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 10,
+    "round": "Quarter-Finals",
+    "match": "543",
+    "top": {
+     "name": "Genesis Perez",
+     "team": "MH",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Ecrin Haliloglu",
+     "team": "DELR",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:45"
+   },
+   {
+    "page": 10,
+    "round": "Quarter-Finals",
+    "match": "544",
+    "top": {
+     "name": "Alyssa Aiello",
+     "team": "JS",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Jayla Hidalgo",
+     "team": "HILL",
+     "seed": 6,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 8-4"
+   },
+   {
+    "page": 10,
+    "round": "Quarter-Finals",
+    "match": "1",
+    "top": null,
+    "bottom": {
+     "name": "Mariana Puzycki",
+     "team": "BAYO",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 10,
+    "round": "Semi-Finals",
+    "match": "593",
+    "top": {
+     "name": "Spadavecchia",
+     "team": "WW",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Haliloglu",
+     "team": "DELR",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 5:55"
+   },
+   {
+    "page": 10,
+    "round": "Semi-Finals",
+    "match": "594",
+    "top": {
+     "name": "Aiello",
+     "team": "JS",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Puzycki",
+     "team": "BAYO",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "MD 12-2"
+   },
+   {
+    "page": 10,
+    "round": "Finals",
+    "match": "653",
+    "top": {
+     "name": "Spadavecchia",
+     "team": "WW",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Puzycki",
+     "team": "BAYO",
+     "seed": 2,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC SV 9-6"
+   }
+  ],
+  "pages": [
+   10
+  ]
+ },
+ "145": {
+  "bouts": [
+   {
+    "page": 11,
+    "round": "Round of 16",
+    "match": "9",
+    "top": {
+     "name": "Taylor Thiele",
+     "team": "IHS",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 11,
+    "round": "Round of 16",
+    "match": "516",
+    "top": {
+     "name": "Mia Truncellito",
+     "team": "BAYO",
+     "seed": 9,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Karina Ortiz",
+     "team": "WILL",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:37"
+   },
+   {
+    "page": 11,
+    "round": "Round of 16",
+    "match": "4",
+    "top": {
+     "name": "Ruby Meagher",
+     "team": "COLU",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 11,
+    "round": "Round of 16",
+    "match": "3",
+    "top": null,
+    "bottom": {
+     "name": "Olyvia Bowie",
+     "team": "BRGF",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 11,
+    "round": "Round of 16",
+    "match": "6",
+    "top": {
+     "name": "Paige Berger",
+     "team": "RMSY",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 11,
+    "round": "Round of 16",
+    "match": "7",
+    "top": null,
+    "bottom": {
+     "name": "Aubree Pusey",
+     "team": "WILL",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 11,
+    "round": "Round of 16",
+    "match": "2",
+    "top": {
+     "name": "Victoria Frias",
+     "team": "PCT",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 11,
+    "round": "Round of 16",
+    "match": "1",
+    "top": null,
+    "bottom": {
+     "name": "Michelle Gavilanes",
+     "team": "Nut",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 11,
+    "round": "Quarter-Finals",
+    "match": "545",
+    "top": {
+     "name": "Thiele",
+     "team": "IHS",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Truncellito",
+     "team": "BAYO",
+     "seed": 9,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:32"
+   },
+   {
+    "page": 11,
+    "round": "Quarter-Finals",
+    "match": "546",
+    "top": {
+     "name": "Meagher",
+     "team": "COLU",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Bowie",
+     "team": "BRGF",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:01"
+   },
+   {
+    "page": 11,
+    "round": "Quarter-Finals",
+    "match": "547",
+    "top": {
+     "name": "Berger",
+     "team": "RMSY",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Pusey",
+     "team": "WILL",
+     "seed": 6,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:32"
+   },
+   {
+    "page": 11,
+    "round": "Quarter-Finals",
+    "match": "548",
+    "top": {
+     "name": "Frias",
+     "team": "PCT",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Gavilanes",
+     "team": "Nut",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "TF 2:59"
+   },
+   {
+    "page": 11,
+    "round": "Semi-Finals",
+    "match": "595",
+    "top": {
+     "name": "Thiele",
+     "team": "IHS",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Bowie",
+     "team": "BRGF",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 3:16"
+   },
+   {
+    "page": 11,
+    "round": "Semi-Finals",
+    "match": "596",
+    "top": {
+     "name": "Berger",
+     "team": "RMSY",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Gavilanes",
+     "team": "Nut",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:23"
+   },
+   {
+    "page": 11,
+    "round": "Finals",
+    "match": "656",
+    "top": {
+     "name": "Thiele",
+     "team": "IHS",
+     "seed": 1,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Gavilanes",
+     "team": "Nut",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 4:00"
+   },
+   {
+    "page": 12,
+    "round": "3rd Place",
+    "match": "654",
+    "top": {
+     "name": "Bowie",
+     "team": "BRGF",
+     "seed": 4,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Berger",
+     "team": "RMSY",
+     "seed": 3,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:52"
+   },
+   {
+    "page": 12,
+    "round": "5th Place",
+    "match": "655",
+    "top": {
+     "name": "Frias",
+     "team": "PCT",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Meagher",
+     "team": "COLU",
+     "seed": 5,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:49"
+   },
+   {
+    "page": 12,
+    "round": "Consi-Semis",
+    "match": "625",
+    "top": {
+     "name": "Frias",
+     "team": "PCT",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Bowie",
+     "team": "BRGF",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:13"
+   },
+   {
+    "page": 12,
+    "round": "Consi-Semis",
+    "match": "626",
+    "top": {
+     "name": "Meagher",
+     "team": "COLU",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Berger",
+     "team": "RMSY",
+     "seed": 3,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 3:51"
+   },
+   {
+    "page": 12,
+    "round": "Consi of 4",
+    "match": "597",
+    "top": {
+     "name": "Frias",
+     "team": "PCT",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Pusey",
+     "team": "WILL",
+     "seed": 6,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 3:28"
+   },
+   {
+    "page": 12,
+    "round": "Consi of 4",
+    "match": "598",
+    "top": {
+     "name": "Meagher",
+     "team": "COLU",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Truncellito",
+     "team": "BAYO",
+     "seed": 9,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:59"
+   },
+   {
+    "page": 12,
+    "round": "Consi of 8 #2",
+    "match": "570",
+    "top": {
+     "name": "Ortiz",
+     "team": "WILL",
+     "seed": 8,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Frias",
+     "team": "PCT",
+     "seed": 7,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:47"
+   },
+   {
+    "page": 12,
+    "round": "Consi of 8 #2",
+    "match": "5",
+    "top": null,
+    "bottom": {
+     "name": "Pusey",
+     "team": "WILL",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 12,
+    "round": "Consi of 8 #2",
+    "match": "9",
+    "top": null,
+    "bottom": {
+     "name": "Meagher",
+     "team": "COLU",
+     "seed": 5,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 12,
+    "round": "Consi of 8 #2",
+    "match": "8",
+    "top": null,
+    "bottom": {
+     "name": "Truncellito",
+     "team": "BAYO",
+     "seed": 9,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 12,
+    "round": "Consi of 8 #1",
+    "match": null,
+    "top": null,
+    "bottom": {
+     "name": "Ortiz",
+     "team": "WILL",
+     "seed": 8,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 12,
+    "round": "Consi of 8 #1",
+    "match": null,
+    "top": null,
+    "bottom": null,
+    "winner": null,
+    "result": "BYE"
+   },
+   {
+    "page": 12,
+    "round": "Consi of 8 #1",
+    "match": null,
+    "top": null,
+    "bottom": null,
+    "winner": null,
+    "result": "BYE"
+   },
+   {
+    "page": 12,
+    "round": "Consi of 8 #1",
+    "match": null,
+    "top": null,
+    "bottom": null,
+    "winner": null,
+    "result": "BYE"
+   }
+  ],
+  "pages": [
+   11,
+   12
+  ]
+ },
+ "152": {
+  "bouts": [
+   {
+    "page": 13,
+    "round": "3rd Place",
+    "match": "657",
+    "top": {
+     "name": "Silipena",
+     "team": "JS",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Correa",
+     "team": "B/RP",
+     "seed": 3,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:21"
+   },
+   {
+    "page": 13,
+    "round": "5th Place",
+    "match": "658",
+    "top": {
+     "name": "Nunez",
+     "team": "PCT",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Muia",
+     "team": "RMSY",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:37"
+   },
+   {
+    "page": 13,
+    "round": "Consi-Semis",
+    "match": "628",
+    "top": {
+     "name": "Correa",
+     "team": "B/RP",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Muia",
+     "team": "RMSY",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:18"
+   },
+   {
+    "page": 13,
+    "round": "Consi-Semis",
+    "match": "627",
+    "top": {
+     "name": "Nunez",
+     "team": "PCT",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Silipena",
+     "team": "JS",
+     "seed": 7,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:26"
+   },
+   {
+    "page": 13,
+    "round": "Consi of 4",
+    "match": "601",
+    "top": {
+     "name": "Bibi",
+     "team": "GLRK",
+     "seed": 8,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Nunez",
+     "team": "PCT",
+     "seed": 5,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:33"
+   },
+   {
+    "page": 13,
+    "round": "Consi of 4",
+    "match": "602",
+    "top": {
+     "name": "Correa",
+     "team": "B/RP",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Shemon",
+     "team": "MH",
+     "seed": 2,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "FOR"
+   },
+   {
+    "page": 13,
+    "round": "Quarter-Finals",
+    "match": "549",
+    "top": {
+     "name": "Maria Imhauser",
+     "team": "HILL",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Nadia Bibi",
+     "team": "GLRK",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:11"
+   },
+   {
+    "page": 13,
+    "round": "Quarter-Finals",
+    "match": "550",
+    "top": {
+     "name": "Alexa Nunez",
+     "team": "PCT",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Francesca Muia",
+     "team": "RMSY",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 10-3"
+   },
+   {
+    "page": 13,
+    "round": "Quarter-Finals",
+    "match": "551",
+    "top": {
+     "name": "Gabriella Correa",
+     "team": "B/RP",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Alina Williams",
+     "team": "WILL",
+     "seed": 6,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:47"
+   },
+   {
+    "page": 13,
+    "round": "Quarter-Finals",
+    "match": "552",
+    "top": {
+     "name": "Gwen Silipena",
+     "team": "JS",
+     "seed": 7,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Nora Shemon",
+     "team": "MH",
+     "seed": 2,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:52"
+   },
+   {
+    "page": 13,
+    "round": "Semi-Finals",
+    "match": "599",
+    "top": {
+     "name": "Imhauser",
+     "team": "HILL",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Muia",
+     "team": "RMSY",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:52"
+   },
+   {
+    "page": 13,
+    "round": "Semi-Finals",
+    "match": "600",
+    "top": {
+     "name": "Williams",
+     "team": "WILL",
+     "seed": 6,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Silipena",
+     "team": "JS",
+     "seed": 7,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 0:49"
+   },
+   {
+    "page": 13,
+    "round": "Finals",
+    "match": "659",
+    "top": {
+     "name": "Imhauser",
+     "team": "HILL",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Williams",
+     "team": "WILL",
+     "seed": 6,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "MD 22-10"
+   }
+  ],
+  "pages": [
+   13
+  ]
+ },
+ "165": {
+  "bouts": [
+   {
+    "page": 14,
+    "round": "3rd Place",
+    "match": "660",
+    "top": {
+     "name": "Pinto",
+     "team": "MH",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Galindo",
+     "team": "PCT",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 4:31"
+   },
+   {
+    "page": 14,
+    "round": "5th Place",
+    "match": "661",
+    "top": {
+     "name": "Melendez",
+     "team": "WILL",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 14,
+    "round": "Consi-Semis",
+    "match": "629",
+    "top": {
+     "name": "Melendez",
+     "team": "WILL",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Pinto",
+     "team": "MH",
+     "seed": 3,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:16"
+   },
+   {
+    "page": 14,
+    "round": "Consi-Semis",
+    "match": "5",
+    "top": null,
+    "bottom": {
+     "name": "Galindo",
+     "team": "PCT",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 14,
+    "round": "Consi of 4",
+    "match": null,
+    "top": null,
+    "bottom": {
+     "name": "Melendez",
+     "team": "WILL",
+     "seed": 5,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 14,
+    "round": "Consi of 4",
+    "match": "1",
+    "top": null,
+    "bottom": null,
+    "winner": null,
+    "result": "BYE"
+   },
+   {
+    "page": 14,
+    "round": "Quarter-Finals",
+    "match": "5",
+    "top": {
+     "name": "Ariana Soto",
+     "team": "PSKH",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 14,
+    "round": "Quarter-Finals",
+    "match": "553",
+    "top": {
+     "name": "Camilla Melendez",
+     "team": "WILL",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Athena Galindo",
+     "team": "PCT",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "DEC 3-0"
+   },
+   {
+    "page": 14,
+    "round": "Quarter-Finals",
+    "match": "2",
+    "top": {
+     "name": "Chelsea Pinto",
+     "team": "MH",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 14,
+    "round": "Quarter-Finals",
+    "match": "1",
+    "top": null,
+    "bottom": {
+     "name": "emma cabrera",
+     "team": "RMSY",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 14,
+    "round": "Semi-Finals",
+    "match": "603",
+    "top": {
+     "name": "Soto",
+     "team": "PSKH",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Galindo",
+     "team": "PCT",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:20"
+   },
+   {
+    "page": 14,
+    "round": "Semi-Finals",
+    "match": "604",
+    "top": {
+     "name": "Pinto",
+     "team": "MH",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "cabrera",
+     "team": "RMSY",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:53"
+   },
+   {
+    "page": 14,
+    "round": "Finals",
+    "match": "662",
+    "top": {
+     "name": "Soto",
+     "team": "PSKH",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "cabrera",
+     "team": "RMSY",
+     "seed": 2,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:57"
+   }
+  ],
+  "pages": [
+   14
+  ]
+ },
+ "185": {
+  "bouts": [
+   {
+    "page": 15,
+    "round": "3rd Place",
+    "match": "663",
+    "top": {
+     "name": "Battaglia",
+     "team": "NWTN",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Murray",
+     "team": "NWTN",
+     "seed": 1,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:25"
+   },
+   {
+    "page": 15,
+    "round": "5th Place",
+    "match": "664",
+    "top": {
+     "name": "Vilela Armijos",
+     "team": "B/RP",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Bottino",
+     "team": "BAYO",
+     "seed": 7,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 2:15"
+   },
+   {
+    "page": 15,
+    "round": "Consi-Semis",
+    "match": "630",
+    "top": {
+     "name": "Battaglia",
+     "team": "NWTN",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Vilela Armijos",
+     "team": "B/RP",
+     "seed": 3,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:00"
+   },
+   {
+    "page": 15,
+    "round": "Consi-Semis",
+    "match": "631",
+    "top": {
+     "name": "Bottino",
+     "team": "BAYO",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Murray",
+     "team": "NWTN",
+     "seed": 1,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 2:04"
+   },
+   {
+    "page": 15,
+    "round": "Consi of 4",
+    "match": "607",
+    "top": {
+     "name": "Corum",
+     "team": "JS",
+     "seed": 8,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Battaglia",
+     "team": "NWTN",
+     "seed": 5,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:17"
+   },
+   {
+    "page": 15,
+    "round": "Consi of 4",
+    "match": "608",
+    "top": {
+     "name": "Hassan",
+     "team": "BAYO",
+     "seed": 6,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Bottino",
+     "team": "BAYO",
+     "seed": 7,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 4:22"
+   },
+   {
+    "page": 15,
+    "round": "Quarter-Finals",
+    "match": "554",
+    "top": {
+     "name": "Brianna Murray",
+     "team": "NWTN",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Janayla Corum",
+     "team": "JS",
+     "seed": 8,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:30"
+   },
+   {
+    "page": 15,
+    "round": "Quarter-Finals",
+    "match": "555",
+    "top": {
+     "name": "Kalli Battaglia",
+     "team": "NWTN",
+     "seed": 5,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Maggie Armstrong",
+     "team": "WILL",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:31"
+   },
+   {
+    "page": 15,
+    "round": "Quarter-Finals",
+    "match": "556",
+    "top": {
+     "name": "Ashley Vilela Armijos",
+     "team": "B/",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Aya Hassan",
+     "team": "BAYO",
+     "seed": 6,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:19"
+   },
+   {
+    "page": 15,
+    "round": "Quarter-Finals",
+    "match": "557",
+    "top": {
+     "name": "Savannah Bottino",
+     "team": "BAYO",
+     "seed": 7,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Brianna Sandoval",
+     "team": "BBRK",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:55"
+   },
+   {
+    "page": 15,
+    "round": "Semi-Finals",
+    "match": "605",
+    "top": {
+     "name": "Murray",
+     "team": "NWTN",
+     "seed": 1,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Armstrong",
+     "team": "WILL",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:22"
+   },
+   {
+    "page": 15,
+    "round": "Semi-Finals",
+    "match": "606",
+    "top": {
+     "name": "Vilela Armijos",
+     "team": "B/RP",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Sandoval",
+     "team": "BBRK",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 0:19"
+   },
+   {
+    "page": 15,
+    "round": "Finals",
+    "match": "665",
+    "top": {
+     "name": "Armstrong",
+     "team": "WILL",
+     "seed": 4,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Sandoval",
+     "team": "BBRK",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 1:04"
+   }
+  ],
+  "pages": [
+   15
+  ]
+ },
+ "235": {
+  "bouts": [
+   {
+    "page": 16,
+    "round": "3rd Place",
+    "match": "666",
+    "top": {
+     "name": "Jimenez",
+     "team": "BAYO",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Campbell",
+     "team": "MO",
+     "seed": 5,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 3:41"
+   },
+   {
+    "page": 16,
+    "round": "5th Place",
+    "match": "667",
+    "top": {
+     "name": "Grande",
+     "team": "MH",
+     "seed": 4,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 16,
+    "round": "Consi-Semis",
+    "match": "632",
+    "top": {
+     "name": "Grande",
+     "team": "MH",
+     "seed": 4,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Jimenez",
+     "team": "BAYO",
+     "seed": 3,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 4:13"
+   },
+   {
+    "page": 16,
+    "round": "Consi-Semis",
+    "match": "4",
+    "top": null,
+    "bottom": {
+     "name": "Campbell",
+     "team": "MO",
+     "seed": 5,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 16,
+    "round": "Consi of 4",
+    "match": null,
+    "top": null,
+    "bottom": {
+     "name": "Grande",
+     "team": "MH",
+     "seed": 4,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 16,
+    "round": "Consi of 4",
+    "match": "1",
+    "top": null,
+    "bottom": null,
+    "winner": null,
+    "result": "BYE"
+   },
+   {
+    "page": 16,
+    "round": "Quarter-Finals",
+    "match": "5",
+    "top": {
+     "name": "Abigail Paglia",
+     "team": "NWTN",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 16,
+    "round": "Quarter-Finals",
+    "match": "558",
+    "top": {
+     "name": "Ayonna Campbell",
+     "team": "MO",
+     "seed": 5,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Jasmine Grande",
+     "team": "MH",
+     "seed": 4,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:31"
+   },
+   {
+    "page": 16,
+    "round": "Quarter-Finals",
+    "match": "2",
+    "top": {
+     "name": "Mia Jimenez",
+     "team": "BAYO",
+     "seed": 3,
+     "heavy": true
+    },
+    "bottom": null,
+    "winner": 1,
+    "result": "BYE"
+   },
+   {
+    "page": 16,
+    "round": "Quarter-Finals",
+    "match": "1",
+    "top": null,
+    "bottom": {
+     "name": "Jana Abdalate",
+     "team": "HILL",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "BYE"
+   },
+   {
+    "page": 16,
+    "round": "Semi-Finals",
+    "match": "609",
+    "top": {
+     "name": "Paglia",
+     "team": "NWTN",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Campbell",
+     "team": "MO",
+     "seed": 5,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "F 1:29"
+   },
+   {
+    "page": 16,
+    "round": "Semi-Finals",
+    "match": "610",
+    "top": {
+     "name": "Jimenez",
+     "team": "BAYO",
+     "seed": 3,
+     "heavy": false
+    },
+    "bottom": {
+     "name": "Abdalate",
+     "team": "HILL",
+     "seed": 2,
+     "heavy": true
+    },
+    "winner": 2,
+    "result": "F 5:25"
+   },
+   {
+    "page": 16,
+    "round": "Finals",
+    "match": "668",
+    "top": {
+     "name": "Paglia",
+     "team": "NWTN",
+     "seed": 1,
+     "heavy": true
+    },
+    "bottom": {
+     "name": "Abdalate",
+     "team": "HILL",
+     "seed": 2,
+     "heavy": false
+    },
+    "winner": 1,
+    "result": "DEC 4-1"
+   }
+  ],
+  "pages": [
+   16
+  ]
+ }
+}
