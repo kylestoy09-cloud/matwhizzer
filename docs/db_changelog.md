@@ -15,7 +15,14 @@
 
 **Next:** `scripts/build_girls_tournament_team_scores.mts --apply` adds 743 girls team score rows across 20 tournaments, read from the TrackWrestling result files. One row is held: Canyon View, Beast of the East, with two possible records (AZ, UT).
 
-**Status:** waiting for Kyle to run it. **Reversible?** Yes (rollback note in the file).
+**APPLIED** — 2026-11-09, Supabase SQL editor (fkey 0; the three triggers). **Reversible?** Yes (rollback note in the file).
+
+**Loaded afterwards (service role, `scripts/build_tournament_team_scores.mts`, add-only, only tournaments with no rows):**
+- **Girls:** 744 rows, 20 tournaments. Canyon View = Arizona (920, Kyle).
+- **Boys:** 204 rows, 11 tournaments. File misspellings mapped: Sommerville, St. Mary`s Rutherford, College Achieve- Patterson.
+- **How teams were matched:** first the school the team's own wrestlers were stored under at that tournament; else the school matcher; else a listed override (out-of-state schools by the record the boys version of the same event used).
+- **Backups (new ids):** `backups/20261109_girls_tournament_team_scores_added.json`, `..._boys_...`.
+- **Still without standings** (none in the files): boys 22 of 74, girls 21 of 41, listed in `docs/reviews/tournaments_without_team_standings.md` for Kyle to compile.
 
 ---
 
