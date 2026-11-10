@@ -5,7 +5,7 @@ import { fetchAllRows } from '@/lib/fetchAllRows'
 import { boysRosterGradeCounts, girlsRosterGradeCounts } from '@/lib/rosterGrades'
 import { boysProgramSchoolIds, girlsProgramSchoolIds } from '@/lib/genderPrograms'
 import { PreseasonDashboard } from './PreseasonDashboard'
-import { getRosterImportSeason, getWorkingSeason } from '@/lib/season-context'
+import { getNewestSeason, getRosterImportSeason, getWorkingSeason } from '@/lib/season-context'
 import type { GenderPreseasonStats } from './PreseasonHeader'
 
 export const dynamic = 'force-dynamic'
@@ -154,6 +154,7 @@ export default async function PreseasonPage() {
       statsF={buildStats(girlsIds, ids(girlsCoachRows), ids(girlsEmailRows), scheduleIds(girlsScheduleRows), ids(girlsRosterRows), ids([...(girlsGradeReviewRows ?? []), ...(girlsCompleteRows ?? [])]), girlsGrades)}
       directorySeasonM={rosterSeasonM}
       directorySeasonF={rosterSeasonF}
+      coachSeasonId={(await getNewestSeason()).id}
     />
   )
 }

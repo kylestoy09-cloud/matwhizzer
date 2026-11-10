@@ -956,8 +956,11 @@ export async function POST(req: NextRequest) {
   const BATCH = 500
   const newLogIds: string[] = []
   for (let i = 0; i < logEntries.length; i += BATCH) {
+    const batchStart = Date.now()
     const { data, error } = await db.from('wrestler_match_score_log').insert(logEntries.slice(i, i + BATCH)).select('id')
     if (error) {
+      // a network failure only says "fetch failed": keep the cause and how long the batch ran
+      const why = `${error.message}${error.details ? ` — ${String(error.details).split('\n').slice(0, 3).join(' | ')}` : ''} (batch ran ${Math.round((Date.now() - batchStart) / 1000)}s, ${JSON.stringify(logEntries.slice(i, i + BATCH)).length} bytes)`
       // A batch can be written even though its reply failed (a timeout), so its ids
       // never reached newLogIds: re-read the season's ids and remove all that are new
       const old = new Set(oldLogIds)
@@ -974,7 +977,7 @@ export async function POST(req: NextRequest) {
         last = String(page[page.length - 1].id)
       }
       undoErr = undoErr ?? await deleteLogIds([...new Set([...newLogIds, ...current.filter(id => !old.has(id))])])
-      throw new Error(`INSERT wrestler_match_score_log failed at row ${i}: ${error.message}` +
+      throw new Error(`INSERT wrestler_match_score_log failed at row ${i}: ${why}` +
         (undoErr ? ` (removing this run's partial rows also failed: ${undoErr})` : '; previous log kept'))
     }
     for (const r of data ?? []) newLogIds.push(String(r.id))

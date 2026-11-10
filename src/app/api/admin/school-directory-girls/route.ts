@@ -26,6 +26,10 @@ export async function GET(req: NextRequest) {
 
   const seasonParam = req.nextUrl.searchParams.get('season_id')
   const seasonId = seasonParam ? Number(seasonParam) : (await getWorkingSeason('F')).id
+  // coaches are entered for the upcoming season (microcheck saves them to the newest season), which can
+  // differ from the season the directory shows; the preseason dashboard sends it as coach_season_id
+  const coachSeasonParam = req.nextUrl.searchParams.get('coach_season_id')
+  const coachSeasonId = coachSeasonParam ? Number(coachSeasonParam) : seasonId
   const db = createSupabaseAdmin()
 
   const [
@@ -47,7 +51,7 @@ export async function GET(req: NextRequest) {
       .eq('is_nj', true),
     db.from('girls_coaches')
       .select('school_id, name, email')
-      .eq('season_id', seasonId)
+      .eq('season_id', coachSeasonId)
       .eq('is_active', true),
     db.from('girls_school_conferences')
       .select('school_id, conference')
@@ -151,12 +155,14 @@ export async function PATCH(req: NextRequest) {
   const user = await requireAdmin()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const { school_id, field, value, season_id } = await req.json() as {
+  const { school_id, field, value, season_id, coach_season_id } = await req.json() as {
     school_id: number
     field:     string
     value:     string | null
     season_id: number
+    coach_season_id?: number
   }
+  const coachSeason = coach_season_id ?? season_id
   if (!school_id || !field) return NextResponse.json({ error: 'Missing params' }, { status: 400 })
 
   const db  = createSupabaseAdmin()
@@ -179,19 +185,19 @@ export async function PATCH(req: NextRequest) {
 
   } else if (field === 'coach_name') {
     const { data: existing } = await db.from('girls_coaches')
-      .select('id').eq('school_id', school_id).eq('season_id', season_id).eq('is_active', true).maybeSingle()
+      .select('id').eq('school_id', school_id).eq('season_id', coachSeason).eq('is_active', true).maybeSingle()
     if (existing) {
       const { error } = await db.from('girls_coaches').update({ name: val }).eq('id', existing.id)
       if (error) return NextResponse.json({ error: error.message }, { status: 500 })
     } else if (val) {
-      const { error } = await db.from('girls_coaches').insert({ school_id, season_id, name: val, is_active: true })
+      const { error } = await db.from('girls_coaches').insert({ school_id, season_id: coachSeason, name: val, is_active: true })
       if (error) return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
   } else if (field === 'coach_email') {
     const { error } = await db.from('girls_coaches')
       .update({ email: val })
-      .eq('school_id', school_id).eq('season_id', season_id).eq('is_active', true)
+      .eq('school_id', school_id).eq('season_id', coachSeason).eq('is_active', true)
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
 
   } else if (field === 'conference') {
@@ -252,6 +258,7 @@ export async function POST(req: NextRequest) {
     section?:       string | null
     classification?: string | null
     season_id:      number
+    coach_season_id?: number
   }
 
   if (!body.display_name?.trim()) return NextResponse.json({ error: 'Name required' }, { status: 400 })
@@ -285,7 +292,7 @@ export async function POST(req: NextRequest) {
 
   if (body.coach_name?.trim()) {
     inserts.push(db.from('girls_coaches').insert({
-      school_id, season_id, name: body.coach_name.trim(),
+      school_id, season_id: body.coach_season_id ?? season_id, name: body.coach_name.trim(),
       email: body.coach_email?.trim() || null, is_active: true,
     }))
   }

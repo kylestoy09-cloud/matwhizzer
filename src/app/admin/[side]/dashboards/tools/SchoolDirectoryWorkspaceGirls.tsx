@@ -61,9 +61,9 @@ const COLUMNS: ColDef[] = [
 
 const DROPDOWN_TYPES = new Set(['conference', 'district', 'region', 'group', 'section', 'active'])
 
-type Props = { seasonId: number }
+type Props = { seasonId: number; coachSeasonId: number }
 
-export function SchoolDirectoryWorkspaceGirls({ seasonId }: Props) {
+export function SchoolDirectoryWorkspaceGirls({ seasonId, coachSeasonId }: Props) {
   const [rows,     setRows]     = useState<SchoolRow[]>([])
   const [options,  setOptions]  = useState<Options>({ districts: [], regions: [], conferences: [], sections: [], groups: [] })
   const [cantFind, setCantFind] = useState<Set<string>>(new Set())
@@ -87,7 +87,7 @@ export function SchoolDirectoryWorkspaceGirls({ seasonId }: Props) {
   const load = useCallback(async () => {
     setLoading(true)
     try {
-      const res  = await fetch(`/api/admin/school-directory-girls?season_id=${seasonId}`)
+      const res  = await fetch(`/api/admin/school-directory-girls?season_id=${seasonId}&coach_season_id=${coachSeasonId}`)
       const data = await res.json()
       if (!data.error) {
         setRows(data.schools ?? [])
@@ -97,7 +97,7 @@ export function SchoolDirectoryWorkspaceGirls({ seasonId }: Props) {
     } finally {
       setLoading(false)
     }
-  }, [seasonId])
+  }, [seasonId, coachSeasonId])
 
   useEffect(() => { load() }, [load])
 
@@ -147,7 +147,7 @@ export function SchoolDirectoryWorkspaceGirls({ seasonId }: Props) {
       const res = await fetch('/api/admin/school-directory-girls', {
         method:  'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ school_id: row.id, field: col.key, value: value.trim() || null, season_id: seasonId }),
+        body:    JSON.stringify({ school_id: row.id, field: col.key, value: value.trim() || null, season_id: seasonId, coach_season_id: coachSeasonId }),
       })
       const data = await res.json()
       if (data.error) throw new Error(data.error)
@@ -183,6 +183,7 @@ export function SchoolDirectoryWorkspaceGirls({ seasonId }: Props) {
           district_id: addForm.district_id ? Number(addForm.district_id) : null,
           region_id:   addForm.region_id   ? Number(addForm.region_id)   : null,
           season_id:   seasonId,
+          coach_season_id: coachSeasonId,
         }),
       })
       const data = await res.json()
