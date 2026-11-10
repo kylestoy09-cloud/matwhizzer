@@ -1,0 +1,596 @@
+630 PA H
+747 NJ H Frisch School, Paramus (not NJSIAA)
+969 CA H
+976 CA M Frontier HS, Bakersfield fits Doc Buchanan
+978 CA H
+985 CA H
+994 CA H
+1005 CA H
+1203 VA H "VA" in the name
+1036 PA H Simon Gratz, Philadelphia
+1056 WV H
+1079 PA M Sun Valley, Aston PA; also Sun Valley NC
+1084 VA H
+1090 VA H Orange County HS, Orange VA
+1110 VA H
+1113 VA L Hickory, Chesapeake VA; also Hickory PA and Hickory NC
+1145 OH H
+1151 FL M Hernando HS, Brooksville FL (girls); also Hernando MS
+1164 OH M Tri-Valley, Dresden OH
+1187 OH H
+580 PA H
+590 PA H
+1050 WV H
+1121 PA H
+1135 IL M Marist, Chicago (girls); also Marist GA
+1148 OH H
+1177 OH H
+1190 OH H
+631 IL H
+636 DC H
+641 VA H
+646 VA H
+656 DE H St. Georges Tech, Middletown DE
+661 VA H St. Christopher's, Richmond
+666 MD H
+676 VA H
+681 VA H
+686 PA H
+691 VA H Robinson Secondary, Fairfax
+701 NY H
+706 VA H "VA" in the name
+710 VA H Cape Henry Collegiate
+725 MD H
+730 VA H
+581 PA H
+748 NJ H Kushner Hebrew Academy, Livingston (not NJSIAA)
+771 VA H "VA" in the name
+980 CA M Anderson HS, Anderson CA
+987 CA H
+996 CA H
+1051 WV H
+591 PA H
+1080 VA H Woodbridge Senior HS, Woodbridge VA
+1098 DE M Concord HS, Wilmington DE
+1103 PA H Philadelphia
+1122 PA M one of the West Chester schools
+1197 OH H
+1037 PA H
+1142 OH M Urbana OH; also Urbana MD and IL
+1161 IL H
+1174 WV M Preston HS, Kingwood WV
+1184 UT L Ridgeline, Millville UT; other Ridgelines exist
+582 PA H
+632 VA H
+637 VA H
+642 PA H
+647 VA H
+652 DE H
+657 OH H
+662 DE H
+667 VA H
+672 PA H
+677 VA H
+682 MA H
+687 MA H
+692 VA H
+697 KS M The St. James Academy, Lenexa KS (girls at Ironman); also St. James School MD
+702 PA H
+712 LA H
+715 VA H
+718 VA H Loudoun County
+722 VA H
+727 VA H
+732 VA H
+973 CA H
+982 CA H
+989 CA H
+1038 PA H
+1057 WV H
+1081 PA H
+1087 WV H
+1093 DE H
+1107 MD H
+592 PA H
+1123 PA H
+1198 PA H Abington Friends School
+633 MD H
+643 PA M Oxford Area PA; may duplicate #1032
+648 NH H
+653 MA H
+658 DE H
+663 VA M Thomas Edison, Alexandria VA
+668 DE H
+673 VA H
+678 PA H
+683 VA H
+688 PA M La Salle College HS, Philadelphia
+693 VA M Patrick Henry, Ashland VA; several exist
+698 VA H
+703 NY H
+583 PA H
+593 PA H
+1124 PA H Philadelphia
+708 VA H
+983 CA H
+990 CA H
+992 CA H
+1003 CA M James Monroe, North Hills CA
+1039 PA H
+1058 WV H
+1082 PA H
+1088 PA H Seneca Valley
+1094 NC M Rosewood, Goldsboro NC
+1105 DE H
+1199 PA H "PA" in the name
+634 TN H
+639 MD H
+644 DE H
+654 NY H
+659 PA H
+664 VA H
+669 DC H
+674 PA H
+684 NY H
+689 DE H
+694 PA H
+699 VA H
+704 VA H
+709 VA H
+714 VA H
+717 VA H
+720 VA H
+750 NY H
+584 PA H
+594 PA H Freedom HS, Bethlehem
+1013 PA H
+1040 PA H
+1125 PA H
+1008 CA H Pitman HS, Turlock
+1024 TN H "TN" in the name
+1025 PA H may duplicate #1017 Belle Vernon Area
+1059 WV H
+1085 VA M
+1091 MD H
+1111 VA M
+1114 VA H
+1200 PA H "PA" in the name
+795 PA M no bouts on file
+797 GA M no bouts on file
+798 OH L no bouts on file; Avon OH, IN and CT all wrestle
+524 IL H
+800 OH H
+534 PA H
+595 PA H
+726 NC M
+484 IN H
+494 PA H Faith Christian Academy, Barto PA
+504 IN H
+514 IL H
+585 PA H
+640 PA H
+645 CT H
+650 DE H
+655 VA H
+660 DE H
+665 IL M Morris Community HS, Morris IL
+670 VA H
+675 VA M Mountain View, Stafford VA
+680 MD H
+685 VA H
+690 VA H
+700 VA H
+705 VA H
+721 VA H
+731 VA H
+801 OH H
+802 OH H
+806 IN H
+807 TX M Canyon Randall, Canyon TX
+808 OH L no bouts on file; Clay OH, IN, FL
+810 NE H
+811 OH H
+812 UT M Davis HS, Kaysville UT
+815 UT L no bouts on file; Delta UT, OH, IN
+818 OH H
+820 IL M Grant Community (Fox Lake) IL
+821 MO H
+822 MO H
+823 PA H
+824 PA H
+827 VA H
+828 IL H
+830 IL H may duplicate #765
+831 IL H may duplicate #511
+834 MO L no bouts on file; may duplicate #513 Lafayette (Wildwood)
+835 IL M Lake Forest IL; also Lake Forest DE
+836 FL H
+837 UT H
+840 OH H
+841 IL M Lockport IL; also Lockport NY
+842 MI L no bouts on file; Lowell MI or Lowell IN
+843 IL H may duplicate #488
+845 ID H
+846 IL H
+848 OH H
+849 FL H
+850 IL H
+851 PA H
+853 OH M Mount Vernon OH; several exist
+854 PA H
+857 OH L no bouts on file; Ontario OH, OR, CA
+859 WV H
+1201 WV H "WV" in the name
+485 CO H
+495 FL H
+505 MO H
+515 OH H
+586 PA H
+711 VA H
+525 NY H
+535 PA H
+863 PA H
+864 IL H may duplicate #530
+865 PA H
+866 NV M SLAM Academy, Las Vegas
+867 PA H
+596 PA H
+869 PA H
+870 OH L no bouts on file; Sheridan OH or WY
+871 NY H
+872 NC H
+873 UT H
+1062 PA H
+1071 PA H
+874 PA H
+875 OH M St. Francis DeSales, Columbus OH
+876 MO L no bouts on file; several St. Pius X schools
+877 IL H
+878 PA L no bouts on file; St. John Neumann PA or FL
+879 MD L no bouts on file; St. Paul's MD or NH
+880 OH H
+881 NC H
+1115 VA H Potomac Senior HS, Dumfries VA
+883 DE H
+884 UT M Syracuse UT (girls)
+1146 OH M Lebanon OH (girls at Ironman)
+886 KY L Trinity, Louisville KY; several Trinitys at Catholic events
+887 OH H
+888 WV H University HS, Morgantown
+889 OH H
+1165 OH H
+1178 OH M Keystone, LaGrange OH
+892 PA M Warwick, Lititz PA
+893 IL H
+894 PA H
+897 PA H
+898 UT M Westlake, Saratoga Springs UT; also Westlake CA
+899 PA H
+900 PA H
+901 PA H
+902 PA H
+1014 TN H
+1033 FL H
+1041 PA H
+1086 PA L Washington PA; many Washingtons
+1092 VA H
+1106 VA H
+1112 WV H
+1126 OH H
+1136 OH H
+1152 OH H
+1188 OH H
+1191 OH H
+587 PA H
+486 OH H
+496 VA H
+506 MO H
+516 IL H
+526 PA H
+536 KY L Union County KY or IN
+597 PA H
+713 TN H "TN" in the name
+716 CT H
+903 MD H
+1010 NJ H Lawrenceville School (not NJSIAA)
+1021 VA H
+1063 PA H
+1089 VA H
+1104 PA H
+1109 NC H
+1137 OH H
+1153 OH H
+1166 KY H
+1179 OH H
+1189 OH H
+905 LA L "Catholic" at the East Coast Catholic Classic; Catholic HS Baton Rouge or Virginia Beach
+1015 TN H
+1042 PA H Philadelphia
+1072 PA H
+1127 WV L Taylor County WV or KY
+1147 IL H
+1156 OH H
+1192 KY H
+487 WA M Sunnyside WA; also Sunnyside AZ
+1011 PA H
+1016 PA H
+1022 PA H
+1064 PA H
+497 ND H
+507 OK H
+517 MO H
+527 OH M St. Xavier, Cincinnati; also St. Xavier KY
+537 IN H
+599 NY H
+719 VA H
+723 NY L Norwich NY or CT
+728 NC H
+733 NH H
+904 CT H "CT" in the name
+1073 PA H
+1043 PA H
+1128 OK H
+1138 WV H
+1157 OK H
+1167 KY M Ohio County KY
+1096 IL H
+1099 DE M Middletown DE
+1101 NC H
+1154 OH H
+1180 IL H
+1193 L L "King"; too common to place
+508 PA H
+528 WV H
+488 IL H may duplicate #843
+498 OK H
+518 PA H
+538 NY H
+600 CT H
+724 VA H
+729 VA H
+734 PA H
+906 NC M Cardinal Gibbons, Raleigh NC; also FL
+909 CA H
+1044 PA H
+1097 MD H
+1102 FL H
+1129 KY H
+1139 OH H
+1181 L L West Field; not placed
+1012 PA H
+1017 PA H
+1065 PA H
+1067 PA H
+1074 PA H
+1155 OH H
+1158 OH H
+1168 OH M Lexington OH; several exist
+1171 OH M Brunswick OH; several exist
+1194 OH M Norwood OH
+539 OH H
+489 OK H
+499 OH H
+509 OH H
+519 OH H
+529 MO H
+758 PA H
+907 VA H
+1029 VA H may duplicate #661
+1045 PA H
+1116 PA H
+1169 OH H
+1182 OH H
+1195 OH M Northwest OH; several exist
+601 RI H
+736 PA H
+1018 TN H
+1066 PA H
+1068 PA H
+1075 PA H
+1130 OH M Aurora OH; also Aurora IL
+1140 L L Hillcrest; too common to place
+1159 OH H
+1172 OH M London OH
+464 NY M Xavier HS, New York City
+490 OH H
+500 PA H
+510 OK H
+530 IL H
+602 RI H
+737 CT H "CT" in the name
+520 FL H
+540 OH H
+908 NC H
+739 NY H
+759 PA H
+1019 PA H
+1046 WV H
+1069 PA H
+1076 PA H
+1052 WV H
+1117 DE H
+1131 OH H
+1160 OH M Chippewa OH
+1173 OH H
+1141 MO L Kearney MO or NE
+1170 OH M Chesapeake OH
+1183 OH M Crestview OH; several exist
+1196 OH H
+491 OH H
+531 OH H
+760 PA H
+501 IL M Pontiac IL
+511 IL H
+521 LA H
+738 PA H
+910 CA H
+926 CA H
+933 CA H
+935 CA M
+937 CA H
+951 CA H
+957 CA M Bellarmine Prep, San Jose; also Tacoma WA
+603 NJ H The Peddie School (not NJSIAA)
+502 CO M
+492 OH H
+512 TX H
+522 NJ H Blair Academy (not NJSIAA)
+532 AR H
+609 DE H
+614 DE H
+624 DE H
+740 NY H
+604 DE H
+761 PA H
+1020 PA H
+1023 PA H
+1047 WV H
+1070 PA H
+1077 PA H
+619 DE H
+911 CA H
+912 CA H
+934 CA H
+958 CA H
+965 CA H Birmingham HS, Van Nuys
+972 CA H
+981 CA H
+988 CA H
+997 CA H
+999 CA H
+1053 WV H
+1118 DE H
+1132 OH H
+493 IN M Cathedral, Indianapolis
+503 IL H Mount Carmel, Chicago
+610 PA H
+620 DE H
+625 DE H
+762 PA H
+513 MO H
+523 OK H
+533 NE H
+605 DE H
+615 PA H
+741 MD H
+913 CA H
+921 CA H
+928 CA H
+939 CA H
+946 CA H
+959 CA H
+966 CA H
+541 TN H
+546 PA H
+551 PA H
+556 PA H
+561 PA H
+566 L L Cleveland (girls at Ironman); not placed
+571 PA H
+576 PA H
+606 DE H
+611 DE H
+626 DE H
+742 NY H
+763 PA H
+914 CA H
+940 CA H
+953 CA H
+960 CA H
+967 CA H
+616 DE H
+621 DE H
+542 PA H
+562 OH H
+547 PA H
+557 WV H
+567 FL H
+543 PA H
+548 PA H
+553 PA H
+573 VA H
+617 DE H
+558 PA H
+568 PA H
+607 PA H
+612 DE H
+622 DE H
+544 WV H
+554 PA H
+559 PA H
+574 PA H
+618 PA H
+549 PA H
+564 TN H
+569 L L St. Francis; too common to place
+608 DE H "DE" in the name
+613 DE H
+1048 OH H
+1143 OH M River Valley OH
+1162 OH L Warren OH; several exist
+1175 MO H
+577 NV H
+623 MD H
+915 CA H
+545 PA H
+550 PA H
+555 PA H
+560 PA H
+941 CA H
+961 CA H
+968 CA H
+975 CA H
+1004 CA H
+565 PA H
+570 PA H
+575 PA H
+743 NY H
+1054 WV H
+1060 WV H
+1119 PA H
+764 PA H
+1133 OH M Marysville OH; also WA and MI
+1149 OH M Maysville OH
+1185 IL H
+572 PA H
+627 NY H
+765 IL H may duplicate #830
+916 CA H
+744 RI H
+578 PA H
+588 PA H
+598 PA H
+628 MD H
+745 NJ H Torah Academy of Bergen County, Teaneck (not NJSIAA)
+766 VA H "VA" in the name
+770 VA H
+924 CA H
+931 CA H
+949 CA H
+629 MD H
+746 NY H
+925 CA H
+932 CA H
+950 CA H Central Catholic, Modesto
+963 CA H
+977 CA H
+979 CA M
+1006 CA H
+1032 PA H may duplicate #643
+1061 WV H
+1078 CT H
+1083 MD H
+1095 RI M Pilgrim, Warwick RI
+1100 L L Calhoun; not placed
+1120 PA H
+1150 L L Harrison (girls at Ironman); not placed
+579 PA H
+589 PA H
+767 RI H
+1049 WV H
+1055 PA H
+1134 IL H
+1144 OH H
+1163 OH H
+1176 OH H
+1186 ND M Bismarck HS, ND

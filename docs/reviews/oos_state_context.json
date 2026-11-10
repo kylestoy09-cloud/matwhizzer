@@ -1,0 +1,6014 @@
+[
+ {
+  "id": 630,
+  "name": "Downingtown West",
+  "known": [],
+  "bouts": 52,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×40",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×12"
+  ]
+ },
+ {
+  "id": 747,
+  "name": "Frisch",
+  "known": [],
+  "bouts": 14,
+  "events": [
+   "dual vs Cresskill ×14"
+  ]
+ },
+ {
+  "id": 768,
+  "name": "Corner Canyon",
+  "known": [
+   "UT"
+  ],
+  "bouts": 24,
+  "events": [
+   "dual vs St. Augustine ×14",
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×10"
+  ]
+ },
+ {
+  "id": 769,
+  "name": "Smithfield, VA",
+  "known": [
+   "VA"
+  ],
+  "bouts": 14,
+  "events": [
+   "dual vs Ridge ×14"
+  ]
+ },
+ {
+  "id": 955,
+  "name": "Cherokee Trail (CO)",
+  "known": [
+   "CO"
+  ],
+  "bouts": 2,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×2"
+  ]
+ },
+ {
+  "id": 962,
+  "name": "Wasatch (UT)",
+  "known": [
+   "UT"
+  ],
+  "bouts": 7,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×7"
+  ]
+ },
+ {
+  "id": 969,
+  "name": "Redlands East Valley",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×2"
+  ]
+ },
+ {
+  "id": 976,
+  "name": "Frontier",
+  "known": [],
+  "bouts": 7,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×7"
+  ]
+ },
+ {
+  "id": 978,
+  "name": "Centennial Corona",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×4"
+  ]
+ },
+ {
+  "id": 985,
+  "name": "Temecula Valley",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×4"
+  ]
+ },
+ {
+  "id": 994,
+  "name": "Bakersfield Christian",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×1"
+  ]
+ },
+ {
+  "id": 1005,
+  "name": "Novato",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×1"
+  ]
+ },
+ {
+  "id": 1203,
+  "name": "Riverside, VA",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×4"
+  ]
+ },
+ {
+  "id": 1036,
+  "name": "Simon Gratz",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Penn Charter Invitational (2026-01-17; ) ×2"
+  ]
+ },
+ {
+  "id": 1056,
+  "name": "Oak Hill",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "WSAZ Invitational (2026-01-23; ) ×2"
+  ]
+ },
+ {
+  "id": 1079,
+  "name": "Sun Valley",
+  "known": [],
+  "bouts": 7,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×7"
+  ]
+ },
+ {
+  "id": 1084,
+  "name": "Tabb",
+  "known": [],
+  "bouts": 17,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×17"
+  ]
+ },
+ {
+  "id": 1090,
+  "name": "Orange County",
+  "known": [],
+  "bouts": 44,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×25",
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×19"
+  ]
+ },
+ {
+  "id": 1110,
+  "name": "Kings Fork",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×5"
+  ]
+ },
+ {
+  "id": 1113,
+  "name": "Hickory",
+  "known": [],
+  "bouts": 9,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×5",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×4"
+  ]
+ },
+ {
+  "id": 1145,
+  "name": "Big Walnut",
+  "known": [],
+  "bouts": 14,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×14"
+  ]
+ },
+ {
+  "id": 1151,
+  "name": "Hernando",
+  "known": [],
+  "bouts": 10,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×10"
+  ]
+ },
+ {
+  "id": 1164,
+  "name": "Tri-Valley",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×5"
+  ]
+ },
+ {
+  "id": 1187,
+  "name": "Gahanna Lincoln",
+  "known": [],
+  "bouts": 12,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×12"
+  ]
+ },
+ {
+  "id": 580,
+  "name": "Saucon Valley",
+  "known": [],
+  "bouts": 45,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×44",
+   "Bethlehem Holiday Wrestling Classic (2025-12-28; ) ×1"
+  ]
+ },
+ {
+  "id": 590,
+  "name": "Nazareth Area",
+  "known": [],
+  "bouts": 68,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×58",
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×6",
+   "Bethlehem Holiday Wrestling Classic (2025-12-28; ) ×4"
+  ]
+ },
+ {
+  "id": 1050,
+  "name": "Bridgeport",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "WSAZ Invitational (2026-01-23; ) ×1"
+  ]
+ },
+ {
+  "id": 1121,
+  "name": "Wyoming Area",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Ralph Wetzel Girls Classic (2025-12-27; Hatboro-Horsham Senior High School, 899 Horsham Road, Horsham, PA 19044, 2025 We) ×2"
+  ]
+ },
+ {
+  "id": 1135,
+  "name": "Marist",
+  "known": [],
+  "bouts": 38,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×38"
+  ]
+ },
+ {
+  "id": 1148,
+  "name": "Madison Plains",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×5"
+  ]
+ },
+ {
+  "id": 1177,
+  "name": "United Local",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×6"
+  ]
+ },
+ {
+  "id": 1190,
+  "name": "Archbold",
+  "known": [],
+  "bouts": 8,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×8"
+  ]
+ },
+ {
+  "id": 631,
+  "name": "Bethalto (Civic Memorial)",
+  "known": [],
+  "bouts": 30,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×30"
+  ]
+ },
+ {
+  "id": 636,
+  "name": "St John`s College",
+  "known": [],
+  "bouts": 49,
+  "events": [
+   "2026 East Coast Catholic Classic (2026-01-09; ) ×42",
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×7"
+  ]
+ },
+ {
+  "id": 641,
+  "name": "St Paul VI Catholic",
+  "known": [],
+  "bouts": 28,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×26",
+   "Escape the Rock (2026-01-17; ) ×2"
+  ]
+ },
+ {
+  "id": 646,
+  "name": "New Kent",
+  "known": [],
+  "bouts": 22,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×22"
+  ]
+ },
+ {
+  "id": 656,
+  "name": "St Georges",
+  "known": [],
+  "bouts": 84,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×36",
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×33",
+   "dual vs Gloucester ×12",
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×3"
+  ]
+ },
+ {
+  "id": 661,
+  "name": "St Christopher",
+  "known": [],
+  "bouts": 45,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×43",
+   "Escape the Rock (2026-01-17; ) ×2"
+  ]
+ },
+ {
+  "id": 666,
+  "name": "Gilman School",
+  "known": [],
+  "bouts": 37,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×37"
+  ]
+ },
+ {
+  "id": 676,
+  "name": "Riverheads",
+  "known": [],
+  "bouts": 11,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×11"
+  ]
+ },
+ {
+  "id": 681,
+  "name": "Chantilly",
+  "known": [],
+  "bouts": 8,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×8"
+  ]
+ },
+ {
+  "id": 686,
+  "name": "Mercersburg Academy",
+  "known": [],
+  "bouts": 15,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×11",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×4"
+  ]
+ },
+ {
+  "id": 691,
+  "name": "JW Robinson",
+  "known": [],
+  "bouts": 23,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×13",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×10"
+  ]
+ },
+ {
+  "id": 696,
+  "name": "Frank W Cox",
+  "known": [
+   "VA"
+  ],
+  "bouts": 48,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×34",
+   "dual vs West Deptford ×14"
+  ]
+ },
+ {
+  "id": 701,
+  "name": "Valley Central",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×6"
+  ]
+ },
+ {
+  "id": 706,
+  "name": "Independence VA",
+  "known": [],
+  "bouts": 12,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×12"
+  ]
+ },
+ {
+  "id": 710,
+  "name": "Cape Henry",
+  "known": [],
+  "bouts": 8,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×8"
+  ]
+ },
+ {
+  "id": 725,
+  "name": "The Heights School",
+  "known": [],
+  "bouts": 38,
+  "events": [
+   "2026 East Coast Catholic Classic (2026-01-09; ) ×33",
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×5"
+  ]
+ },
+ {
+  "id": 730,
+  "name": "King George",
+  "known": [],
+  "bouts": 8,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×5",
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×3"
+  ]
+ },
+ {
+  "id": 581,
+  "name": "Boyertown Area",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "Bethlehem Holiday Wrestling Classic (2025-12-28; ) ×3",
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×2"
+  ]
+ },
+ {
+  "id": 748,
+  "name": "Kushner Academy",
+  "known": [],
+  "bouts": 28,
+  "events": [
+   "dual vs Scotch Plains-Fanwood ×14",
+   "dual vs Rutgers Prep ×14"
+  ]
+ },
+ {
+  "id": 771,
+  "name": "Gloucester, VA",
+  "known": [],
+  "bouts": 14,
+  "events": [
+   "dual vs West Deptford ×14"
+  ]
+ },
+ {
+  "id": 971,
+  "name": "Meridian (ID)",
+  "known": [
+   "ID"
+  ],
+  "bouts": 6,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×6"
+  ]
+ },
+ {
+  "id": 980,
+  "name": "Anderson",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×4"
+  ]
+ },
+ {
+  "id": 987,
+  "name": "El Diamante",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×5"
+  ]
+ },
+ {
+  "id": 996,
+  "name": "San Clemente",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×1"
+  ]
+ },
+ {
+  "id": 1007,
+  "name": "Legend (CO)",
+  "known": [
+   "CO"
+  ],
+  "bouts": 1,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×1"
+  ]
+ },
+ {
+  "id": 1051,
+  "name": "Lewis County",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "WSAZ Invitational (2026-01-23; ) ×1"
+  ]
+ },
+ {
+  "id": 591,
+  "name": "Southern Lehigh",
+  "known": [],
+  "bouts": 53,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×29",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×18",
+   "Bethlehem Holiday Wrestling Classic (2025-12-28; ) ×4",
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×2"
+  ]
+ },
+ {
+  "id": 1080,
+  "name": "Woodbridge Senior",
+  "known": [],
+  "bouts": 29,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×29"
+  ]
+ },
+ {
+  "id": 1098,
+  "name": "Concord",
+  "known": [],
+  "bouts": 8,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×8"
+  ]
+ },
+ {
+  "id": 1103,
+  "name": "Mariana Bracetti Charter Academy",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×6"
+  ]
+ },
+ {
+  "id": 1122,
+  "name": "West Chester",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Ralph Wetzel Girls Classic (2025-12-27; Hatboro-Horsham Senior High School, 899 Horsham Road, Horsham, PA 19044, 2025 We) ×3"
+  ]
+ },
+ {
+  "id": 1197,
+  "name": "Shaker Heights",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×6"
+  ]
+ },
+ {
+  "id": 1037,
+  "name": "Academy Park",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Penn Charter Invitational (2026-01-17; ) ×2"
+  ]
+ },
+ {
+  "id": 1142,
+  "name": "Urbana",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×5"
+  ]
+ },
+ {
+  "id": 1161,
+  "name": "Kaneland",
+  "known": [],
+  "bouts": 10,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×10"
+  ]
+ },
+ {
+  "id": 1174,
+  "name": "Preston",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×5"
+  ]
+ },
+ {
+  "id": 1184,
+  "name": "Ridgeline",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×6"
+  ]
+ },
+ {
+  "id": 582,
+  "name": "Stroudsburg",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Bethlehem Holiday Wrestling Classic (2025-12-28; ) ×4"
+  ]
+ },
+ {
+  "id": 632,
+  "name": "Great Bridge",
+  "known": [],
+  "bouts": 31,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×30",
+   "Escape the Rock (2026-01-17; ) ×1"
+  ]
+ },
+ {
+  "id": 637,
+  "name": "Chancellor",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×4"
+  ]
+ },
+ {
+  "id": 642,
+  "name": "The Hill School",
+  "known": [],
+  "bouts": 33,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×27",
+   "Escape the Rock (2026-01-17; ) ×3",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×3"
+  ]
+ },
+ {
+  "id": 647,
+  "name": "Glenvar",
+  "known": [],
+  "bouts": 18,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×18"
+  ]
+ },
+ {
+  "id": 652,
+  "name": "Sussex Central",
+  "known": [],
+  "bouts": 34,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×28",
+   "King of The Castle (2025-12-29; ) ×6"
+  ]
+ },
+ {
+  "id": 657,
+  "name": "Brecksville",
+  "known": [],
+  "bouts": 60,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×60"
+  ]
+ },
+ {
+  "id": 662,
+  "name": "Caesar Rodney",
+  "known": [],
+  "bouts": 46,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×31",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×15"
+  ]
+ },
+ {
+  "id": 667,
+  "name": "Virginia Episcopal",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×4"
+  ]
+ },
+ {
+  "id": 672,
+  "name": "Gettysburg",
+  "known": [],
+  "bouts": 31,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×31"
+  ]
+ },
+ {
+  "id": 677,
+  "name": "Eastern View",
+  "known": [],
+  "bouts": 19,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×19"
+  ]
+ },
+ {
+  "id": 682,
+  "name": "Belmont Hill",
+  "known": [],
+  "bouts": 32,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×18",
+   "dual vs St. Peter's Prep ×14"
+  ]
+ },
+ {
+  "id": 687,
+  "name": "Northfield Mt Hermon",
+  "known": [],
+  "bouts": 65,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×37",
+   "dual vs St. Peter's Prep ×14",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×11",
+   "Escape the Rock (2026-01-17; ) ×3"
+  ]
+ },
+ {
+  "id": 692,
+  "name": "Stafford",
+  "known": [],
+  "bouts": 34,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×22",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×12"
+  ]
+ },
+ {
+  "id": 697,
+  "name": "St James Academy",
+  "known": [],
+  "bouts": 41,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×17",
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×13",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×11"
+  ]
+ },
+ {
+  "id": 702,
+  "name": "Manheim Township",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×5"
+  ]
+ },
+ {
+  "id": 712,
+  "name": "Acadiana",
+  "known": [],
+  "bouts": 8,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×8"
+  ]
+ },
+ {
+  "id": 715,
+  "name": "James Wood",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×5"
+  ]
+ },
+ {
+  "id": 718,
+  "name": "Loudon County",
+  "known": [],
+  "bouts": 23,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×22",
+   "Escape the Rock (2026-01-17; ) ×1"
+  ]
+ },
+ {
+  "id": 722,
+  "name": "Sherando",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×6"
+  ]
+ },
+ {
+  "id": 727,
+  "name": "Goochland",
+  "known": [],
+  "bouts": 9,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×9"
+  ]
+ },
+ {
+  "id": 732,
+  "name": "Kempsville",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×4"
+  ]
+ },
+ {
+  "id": 973,
+  "name": "Bella Vista",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×1"
+  ]
+ },
+ {
+  "id": 982,
+  "name": "Sanger",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×1"
+  ]
+ },
+ {
+  "id": 989,
+  "name": "Millikan",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×3"
+  ]
+ },
+ {
+  "id": 998,
+  "name": "Juab (UT)",
+  "known": [
+   "UT"
+  ],
+  "bouts": 5,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×5"
+  ]
+ },
+ {
+  "id": 1000,
+  "name": "Green Valley (NV)",
+  "known": [
+   "NV"
+  ],
+  "bouts": 4,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×4"
+  ]
+ },
+ {
+  "id": 1038,
+  "name": "Westtown School",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Penn Charter Invitational (2026-01-17; ) ×1"
+  ]
+ },
+ {
+  "id": 1057,
+  "name": "Spring Valley",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "WSAZ Invitational (2026-01-23; ) ×1"
+  ]
+ },
+ {
+  "id": 1081,
+  "name": "Boiling Springs",
+  "known": [],
+  "bouts": 29,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×29"
+  ]
+ },
+ {
+  "id": 1087,
+  "name": "Spring Mills",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×4"
+  ]
+ },
+ {
+  "id": 1093,
+  "name": "Red Lion Christian Academy",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "2025 Howdy Duncan Ladies Classic (2025-12-21; William Penn High School, 713 East Basin Road, New Castle, DE 19720) ×3",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×2"
+  ]
+ },
+ {
+  "id": 1107,
+  "name": "Rising Sun",
+  "known": [],
+  "bouts": 7,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×7"
+  ]
+ },
+ {
+  "id": 592,
+  "name": "Quakertown",
+  "known": [],
+  "bouts": 26,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×24",
+   "Bethlehem Holiday Wrestling Classic (2025-12-28; ) ×1",
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×1"
+  ]
+ },
+ {
+  "id": 1123,
+  "name": "Bensalem",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Ralph Wetzel Girls Classic (2025-12-27; Hatboro-Horsham Senior High School, 899 Horsham Road, Horsham, PA 19044, 2025 We) ×2"
+  ]
+ },
+ {
+  "id": 1198,
+  "name": "Abington School of Friends",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Golden Eagle Grapple (2026-02-15; Central Regional High School , 09 Forest Hills Parkway Berkeley Township, NJ 087) ×3"
+  ]
+ },
+ {
+  "id": 633,
+  "name": "McDonogh",
+  "known": [],
+  "bouts": 32,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×32"
+  ]
+ },
+ {
+  "id": 638,
+  "name": "Grassfield",
+  "known": [
+   "VA"
+  ],
+  "bouts": 83,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×62",
+   "dual vs West Deptford ×14",
+   "Escape the Rock (2026-01-17; ) ×7"
+  ]
+ },
+ {
+  "id": 643,
+  "name": "Oxford",
+  "known": [],
+  "bouts": 29,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×25",
+   "Escape the Rock (2026-01-17; ) ×4"
+  ]
+ },
+ {
+  "id": 648,
+  "name": "Timberlane",
+  "known": [],
+  "bouts": 39,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×39"
+  ]
+ },
+ {
+  "id": 653,
+  "name": "Phillips Academy",
+  "known": [],
+  "bouts": 37,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×25",
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×12"
+  ]
+ },
+ {
+  "id": 658,
+  "name": "Newark Charter",
+  "known": [],
+  "bouts": 39,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×24",
+   "2025 Howdy Duncan Ladies Classic (2025-12-21; William Penn High School, 713 East Basin Road, New Castle, DE 19720) ×15"
+  ]
+ },
+ {
+  "id": 663,
+  "name": "Thomas Edison",
+  "known": [],
+  "bouts": 13,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×13"
+  ]
+ },
+ {
+  "id": 668,
+  "name": "Smyrna",
+  "known": [],
+  "bouts": 49,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×34",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×15"
+  ]
+ },
+ {
+  "id": 673,
+  "name": "Ocean Lakes",
+  "known": [],
+  "bouts": 13,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×9",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×4"
+  ]
+ },
+ {
+  "id": 678,
+  "name": "Cedar Cliff",
+  "known": [],
+  "bouts": 41,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×41"
+  ]
+ },
+ {
+  "id": 683,
+  "name": "St John Paul the Great",
+  "known": [],
+  "bouts": 111,
+  "events": [
+   "2026 East Coast Catholic Classic (2026-01-09; ) ×104",
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×7"
+  ]
+ },
+ {
+  "id": 688,
+  "name": "LaSalle",
+  "known": [],
+  "bouts": 17,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×17"
+  ]
+ },
+ {
+  "id": 693,
+  "name": "Patrick Henry",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×6"
+  ]
+ },
+ {
+  "id": 698,
+  "name": "Benedictine College Prep",
+  "known": [],
+  "bouts": 157,
+  "events": [
+   "2026 East Coast Catholic Classic (2026-01-09; ) ×129",
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×26",
+   "Escape the Rock (2026-01-17; ) ×2"
+  ]
+ },
+ {
+  "id": 703,
+  "name": "Hewlett",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×5"
+  ]
+ },
+ {
+  "id": 583,
+  "name": "Kennett",
+  "known": [],
+  "bouts": 29,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×27",
+   "Bethlehem Holiday Wrestling Classic (2025-12-28; ) ×2"
+  ]
+ },
+ {
+  "id": 593,
+  "name": "Hazleton Area",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Bethlehem Holiday Wrestling Classic (2025-12-28; ) ×1"
+  ]
+ },
+ {
+  "id": 1124,
+  "name": "Abraham Lincoln",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Ralph Wetzel Girls Classic (2025-12-27; Hatboro-Horsham Senior High School, 899 Horsham Road, Horsham, PA 19044, 2025 We) ×2"
+  ]
+ },
+ {
+  "id": 708,
+  "name": "Brooke Point",
+  "known": [],
+  "bouts": 9,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×9"
+  ]
+ },
+ {
+  "id": 974,
+  "name": "Lyons Township (IL)",
+  "known": [
+   "IL"
+  ],
+  "bouts": 2,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×2"
+  ]
+ },
+ {
+  "id": 983,
+  "name": "Liberty-Brentwood",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×6"
+  ]
+ },
+ {
+  "id": 990,
+  "name": "Del Norte",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×3"
+  ]
+ },
+ {
+  "id": 992,
+  "name": "Calvary Chapel",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×2"
+  ]
+ },
+ {
+  "id": 1001,
+  "name": "Brush (CO)",
+  "known": [
+   "CO"
+  ],
+  "bouts": 1,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×1"
+  ]
+ },
+ {
+  "id": 1003,
+  "name": "James Monroe",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×2"
+  ]
+ },
+ {
+  "id": 1039,
+  "name": "Father Judge",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Penn Charter Invitational (2026-01-17; ) ×3"
+  ]
+ },
+ {
+  "id": 1058,
+  "name": "Point Pleasant",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "WSAZ Invitational (2026-01-23; ) ×1"
+  ]
+ },
+ {
+  "id": 1082,
+  "name": "Lehighton Area",
+  "known": [],
+  "bouts": 36,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×36"
+  ]
+ },
+ {
+  "id": 1088,
+  "name": "Senaca Valley",
+  "known": [],
+  "bouts": 25,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×25"
+  ]
+ },
+ {
+  "id": 1094,
+  "name": "Rosewood",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×6"
+  ]
+ },
+ {
+  "id": 1105,
+  "name": "Odessa",
+  "known": [],
+  "bouts": 8,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×8"
+  ]
+ },
+ {
+  "id": 1199,
+  "name": "Franklin, PA",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Powerade (2025-12-29; ) ×3"
+  ]
+ },
+ {
+  "id": 634,
+  "name": "Dobyns Bennett",
+  "known": [],
+  "bouts": 42,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×32",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×10"
+  ]
+ },
+ {
+  "id": 639,
+  "name": "Archbishop Spalding",
+  "known": [],
+  "bouts": 64,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×45",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×10",
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×9"
+  ]
+ },
+ {
+  "id": 644,
+  "name": "Salesianum",
+  "known": [],
+  "bouts": 54,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×40",
+   "dual vs Clearview ×14"
+  ]
+ },
+ {
+  "id": 649,
+  "name": "Skyline",
+  "known": [
+   "VA"
+  ],
+  "bouts": 66,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×36",
+   "dual vs Ridge ×14",
+   "dual vs St. Augustine ×14",
+   "WSAZ Invitational (2026-01-23; ) ×2"
+  ]
+ },
+ {
+  "id": 654,
+  "name": "Long Beach",
+  "known": [],
+  "bouts": 10,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×10"
+  ]
+ },
+ {
+  "id": 659,
+  "name": "Haverford School",
+  "known": [],
+  "bouts": 10,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×10"
+  ]
+ },
+ {
+  "id": 664,
+  "name": "West Springfield",
+  "known": [],
+  "bouts": 41,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×26",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×15"
+  ]
+ },
+ {
+  "id": 669,
+  "name": "Gonzaga",
+  "known": [],
+  "bouts": 74,
+  "events": [
+   "2026 East Coast Catholic Classic (2026-01-09; ) ×64",
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×10"
+  ]
+ },
+ {
+  "id": 674,
+  "name": "Hatboro Horsham",
+  "known": [],
+  "bouts": 21,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×20",
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×1"
+  ]
+ },
+ {
+  "id": 684,
+  "name": "NY Military Academy",
+  "known": [],
+  "bouts": 47,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×31",
+   "dual vs St. Peter's Prep ×14",
+   "Escape the Rock (2026-01-17; ) ×2"
+  ]
+ },
+ {
+  "id": 689,
+  "name": "Delmar",
+  "known": [],
+  "bouts": 10,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×7",
+   "King of The Castle (2025-12-29; ) ×3"
+  ]
+ },
+ {
+  "id": 694,
+  "name": "Conwell Egan",
+  "known": [],
+  "bouts": 24,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×13",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×8",
+   "Escape the Rock (2026-01-17; ) ×3"
+  ]
+ },
+ {
+  "id": 699,
+  "name": "Brentsville",
+  "known": [],
+  "bouts": 24,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×19",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×5"
+  ]
+ },
+ {
+  "id": 704,
+  "name": "Glen Allen",
+  "known": [],
+  "bouts": 10,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×10"
+  ]
+ },
+ {
+  "id": 709,
+  "name": "Peninsula Catholic",
+  "known": [],
+  "bouts": 45,
+  "events": [
+   "2026 East Coast Catholic Classic (2026-01-09; ) ×35",
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×10"
+  ]
+ },
+ {
+  "id": 714,
+  "name": "Woodgrove",
+  "known": [],
+  "bouts": 26,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×24",
+   "Escape the Rock (2026-01-17; ) ×2"
+  ]
+ },
+ {
+  "id": 717,
+  "name": "Norfolk Academy",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×5"
+  ]
+ },
+ {
+  "id": 720,
+  "name": "Spotsylvania",
+  "known": [],
+  "bouts": 13,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×9",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×4"
+  ]
+ },
+ {
+  "id": 750,
+  "name": "St. Anthony's",
+  "known": [],
+  "bouts": 14,
+  "events": [
+   "dual vs Don Bosco Prep ×14"
+  ]
+ },
+ {
+  "id": 584,
+  "name": "North Allegheny",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Bethlehem Holiday Wrestling Classic (2025-12-28; ) ×4"
+  ]
+ },
+ {
+  "id": 594,
+  "name": "Freedom",
+  "known": [],
+  "bouts": 12,
+  "events": [
+   "dual vs Phillipsburg ×9",
+   "Bethlehem Holiday Wrestling Classic (2025-12-28; ) ×2",
+   "dual vs ? ×1"
+  ]
+ },
+ {
+  "id": 1013,
+  "name": "St Josephs Preparatory",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Escape the Rock (2026-01-17; ) ×4"
+  ]
+ },
+ {
+  "id": 1040,
+  "name": "William Allen",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Penn Charter Invitational (2026-01-17; ) ×1"
+  ]
+ },
+ {
+  "id": 1125,
+  "name": "Jim Thorpe Area",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Ralph Wetzel Girls Classic (2025-12-27; Hatboro-Horsham Senior High School, 899 Horsham Road, Horsham, PA 19044, 2025 We) ×1"
+  ]
+ },
+ {
+  "id": 1008,
+  "name": "Pitman",
+  "known": [],
+  "bouts": 16,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×16"
+  ]
+ },
+ {
+  "id": 1024,
+  "name": "Cleveland, TN",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Escape the Rock (2026-01-17; ) ×1"
+  ]
+ },
+ {
+  "id": 1025,
+  "name": "Belle Vernon",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 1059,
+  "name": "Nitro",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "WSAZ Invitational (2026-01-23; ) ×1"
+  ]
+ },
+ {
+  "id": 1085,
+  "name": "Madison County",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×5"
+  ]
+ },
+ {
+  "id": 1091,
+  "name": "Gwynn Park",
+  "known": [],
+  "bouts": 7,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×7"
+  ]
+ },
+ {
+  "id": 1111,
+  "name": "James River",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×3",
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×2"
+  ]
+ },
+ {
+  "id": 1114,
+  "name": "Herndon",
+  "known": [],
+  "bouts": 7,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×7"
+  ]
+ },
+ {
+  "id": 1200,
+  "name": "Delaware Valley, PA",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Bethlehem Holiday Wrestling Classic (2025-12-28; ) ×1"
+  ]
+ },
+ {
+  "id": 795,
+  "name": "Altoona",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 797,
+  "name": "Athens Christian School",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 798,
+  "name": "Avon",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 524,
+  "name": "Herrin",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 800,
+  "name": "Barberton",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 534,
+  "name": "Bishop Mccort",
+  "known": [],
+  "bouts": 68,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×65",
+   "Iron Man Tournament (2025-12-12; ) ×2",
+   "Powerade (2025-12-29; ) ×1"
+  ]
+ },
+ {
+  "id": 595,
+  "name": "Blue Mountain",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Bethlehem Holiday Wrestling Classic (2025-12-28; ) ×1"
+  ]
+ },
+ {
+  "id": 726,
+  "name": "Mount Airy",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×6"
+  ]
+ },
+ {
+  "id": 484,
+  "name": "Crown Point",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×4"
+  ]
+ },
+ {
+  "id": 494,
+  "name": "Faith Christian Academy",
+  "known": [],
+  "bouts": 61,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×43",
+   "dual vs Delbarton School ×14",
+   "Iron Man Tournament (2025-12-12; ) ×4"
+  ]
+ },
+ {
+  "id": 504,
+  "name": "Center Grove",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 514,
+  "name": "St. Charles (East)",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 585,
+  "name": "Liberty High School - Bethlehem",
+  "known": [],
+  "bouts": 23,
+  "events": [
+   "dual vs Warren Hills ×13",
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×8",
+   "Bethlehem Holiday Wrestling Classic (2025-12-28; ) ×2"
+  ]
+ },
+ {
+  "id": 635,
+  "name": "Delaware Military Academy",
+  "known": [
+   "DE"
+  ],
+  "bouts": 73,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×45",
+   "dual vs Ridge ×14",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×7",
+   "2025 Howdy Duncan Ladies Classic (2025-12-21; William Penn High School, 713 East Basin Road, New Castle, DE 19720) ×7"
+  ]
+ },
+ {
+  "id": 640,
+  "name": "Northern Lebanon",
+  "known": [],
+  "bouts": 36,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×36"
+  ]
+ },
+ {
+  "id": 645,
+  "name": "Notre Dame West Haven",
+  "known": [],
+  "bouts": 8,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×8"
+  ]
+ },
+ {
+  "id": 650,
+  "name": "Sussex Tech",
+  "known": [],
+  "bouts": 40,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×26",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×10",
+   "King of The Castle (2025-12-29; ) ×4"
+  ]
+ },
+ {
+  "id": 655,
+  "name": "Fairfax",
+  "known": [],
+  "bouts": 8,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×8"
+  ]
+ },
+ {
+  "id": 660,
+  "name": "Cape Henlopen",
+  "known": [],
+  "bouts": 44,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×44"
+  ]
+ },
+ {
+  "id": 665,
+  "name": "Morris Community",
+  "known": [],
+  "bouts": 19,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×19"
+  ]
+ },
+ {
+  "id": 670,
+  "name": "Fauquier",
+  "known": [],
+  "bouts": 30,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×16",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×7",
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×7"
+  ]
+ },
+ {
+  "id": 675,
+  "name": "Mountain View",
+  "known": [],
+  "bouts": 92,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×43",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×29",
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×18",
+   "Doc Buchanan (2026-01-09; ) ×1",
+   "Escape the Rock (2026-01-17; ) ×1"
+  ]
+ },
+ {
+  "id": 680,
+  "name": "Mount St Joes",
+  "known": [],
+  "bouts": 37,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×37"
+  ]
+ },
+ {
+  "id": 685,
+  "name": "Cosby",
+  "known": [],
+  "bouts": 7,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×7"
+  ]
+ },
+ {
+  "id": 690,
+  "name": "Western Branch",
+  "known": [],
+  "bouts": 7,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×7"
+  ]
+ },
+ {
+  "id": 700,
+  "name": "First Colonial",
+  "known": [],
+  "bouts": 10,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×10"
+  ]
+ },
+ {
+  "id": 705,
+  "name": "Kellam",
+  "known": [],
+  "bouts": 30,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×22",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×8"
+  ]
+ },
+ {
+  "id": 721,
+  "name": "Fishburne Military School",
+  "known": [],
+  "bouts": 8,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×8"
+  ]
+ },
+ {
+  "id": 731,
+  "name": "Broad Run",
+  "known": [],
+  "bouts": 17,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×14",
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×3"
+  ]
+ },
+ {
+  "id": 801,
+  "name": "Beachwood",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 802,
+  "name": "Beaver Local",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 806,
+  "name": "Brownsburg",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 807,
+  "name": "Canyon Randall",
+  "known": [],
+  "bouts": 8,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×8"
+  ]
+ },
+ {
+  "id": 808,
+  "name": "Clay",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 810,
+  "name": "Creighton Prep",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 811,
+  "name": "Cuyahoga Valley Christian Academy",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 812,
+  "name": "Davis",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×2"
+  ]
+ },
+ {
+  "id": 815,
+  "name": "Delta",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 818,
+  "name": "Elder",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 820,
+  "name": "Fox Lake",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 821,
+  "name": "Francis Howell",
+  "known": [],
+  "bouts": 14,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×14"
+  ]
+ },
+ {
+  "id": 822,
+  "name": "Francis Howell North",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 823,
+  "name": "Garnet Valley",
+  "known": [],
+  "bouts": 12,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×11",
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×1"
+  ]
+ },
+ {
+  "id": 824,
+  "name": "Great Valley",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "King of The Castle (2025-12-29; ) ×5"
+  ]
+ },
+ {
+  "id": 827,
+  "name": "Heritage (Leesburg)",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×6"
+  ]
+ },
+ {
+  "id": 828,
+  "name": "Hersey",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 830,
+  "name": "Homewood-Flossmoor",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 831,
+  "name": "Hononegah",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 834,
+  "name": "Lafayette",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 835,
+  "name": "Lake Forest",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 836,
+  "name": "Lake Gibson",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 837,
+  "name": "Layton",
+  "known": [],
+  "bouts": 21,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×17",
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×4"
+  ]
+ },
+ {
+  "id": 840,
+  "name": "Lima Central Catholic",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 841,
+  "name": "Lockport",
+  "known": [],
+  "bouts": 16,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×16"
+  ]
+ },
+ {
+  "id": 842,
+  "name": "Lowell",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 843,
+  "name": "Loyola Academy (Wilmette)",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 845,
+  "name": "Malad",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×1"
+  ]
+ },
+ {
+  "id": 846,
+  "name": "Marian Central Catholic",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 848,
+  "name": "Medina Buckeye",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 849,
+  "name": "Merritt Island",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 850,
+  "name": "Montini Catholic",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 851,
+  "name": "Mount Lebanon",
+  "known": [],
+  "bouts": 60,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×33",
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×27"
+  ]
+ },
+ {
+  "id": 853,
+  "name": "Mount Vernon",
+  "known": [],
+  "bouts": 7,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×7"
+  ]
+ },
+ {
+  "id": 854,
+  "name": "North Penn",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×2",
+   "Bethlehem Holiday Wrestling Classic (2025-12-28; ) ×1"
+  ]
+ },
+ {
+  "id": 857,
+  "name": "Ontario",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 859,
+  "name": "Parkersburg",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "WSAZ Invitational (2026-01-23; ) ×1"
+  ]
+ },
+ {
+  "id": 1201,
+  "name": "Williamstown, WV",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "WSAZ Invitational (2026-01-23; ) ×1"
+  ]
+ },
+ {
+  "id": 485,
+  "name": "Pomona",
+  "known": [],
+  "bouts": 14,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×13",
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 495,
+  "name": "Lake Highland Preparatory School",
+  "known": [],
+  "bouts": 92,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×75",
+   "Escape the Rock (2026-01-17; ) ×12",
+   "Iron Man Tournament (2025-12-12; ) ×3",
+   "Powerade (2025-12-29; ) ×2"
+  ]
+ },
+ {
+  "id": 505,
+  "name": "Staley",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 515,
+  "name": "Perry (Massillon)",
+  "known": [],
+  "bouts": 86,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×42",
+   "dual vs St Joseph (Montvale) HS ×14",
+   "dual vs Delbarton School ×14",
+   "dual vs North Hunterdon ×14",
+   "Iron Man Tournament (2025-12-12; ) ×2"
+  ]
+ },
+ {
+  "id": 586,
+  "name": "Wilkes-Barre Area",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Bethlehem Holiday Wrestling Classic (2025-12-28; ) ×1"
+  ]
+ },
+ {
+  "id": 711,
+  "name": "Oakton",
+  "known": [],
+  "bouts": 57,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×27",
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×16",
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×14"
+  ]
+ },
+ {
+  "id": 525,
+  "name": "Honeoye Falls-Lima Sr",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×2"
+  ]
+ },
+ {
+  "id": 535,
+  "name": "Bethlehem Catholic",
+  "known": [],
+  "bouts": 65,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×58",
+   "Escape the Rock (2026-01-17; ) ×6",
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 863,
+  "name": "Pittsburgh Central Catholic",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 864,
+  "name": "Providence Catholic",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 865,
+  "name": "Red Lion Area",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "King of The Castle (2025-12-29; ) ×4"
+  ]
+ },
+ {
+  "id": 866,
+  "name": "SLAM Academy",
+  "known": [],
+  "bouts": 12,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×12"
+  ]
+ },
+ {
+  "id": 867,
+  "name": "Saegertown",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 596,
+  "name": "Northwestern Lehigh",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Bethlehem Holiday Wrestling Classic (2025-12-28; ) ×1"
+  ]
+ },
+ {
+  "id": 869,
+  "name": "Shaler",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 870,
+  "name": "Sheridan",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 871,
+  "name": "Shoreham-Wading River",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 872,
+  "name": "South Rowan",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 873,
+  "name": "South Summit",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×3"
+  ]
+ },
+ {
+  "id": 1062,
+  "name": "Panther Valley",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×4"
+  ]
+ },
+ {
+  "id": 1071,
+  "name": "Eastern Lebanon Co",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×1"
+  ]
+ },
+ {
+  "id": 874,
+  "name": "Spring Grove Area",
+  "known": [],
+  "bouts": 8,
+  "events": [
+   "King of The Castle (2025-12-29; ) ×8"
+  ]
+ },
+ {
+  "id": 875,
+  "name": "St. Francis DeSales",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 876,
+  "name": "St. Pius X",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 877,
+  "name": "St. Viator",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×4"
+  ]
+ },
+ {
+  "id": 878,
+  "name": "St. John Neumann Catholic",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 879,
+  "name": "St. Paul's School",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 880,
+  "name": "Streetsboro",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 881,
+  "name": "Stuart W. Cramer",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 1115,
+  "name": "Potomac",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×2"
+  ]
+ },
+ {
+  "id": 883,
+  "name": "Sussex Academy",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 884,
+  "name": "Syracuse",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×4"
+  ]
+ },
+ {
+  "id": 1146,
+  "name": "Lebanon",
+  "known": [],
+  "bouts": 29,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×29"
+  ]
+ },
+ {
+  "id": 886,
+  "name": "Trinity",
+  "known": [],
+  "bouts": 30,
+  "events": [
+   "2026 East Coast Catholic Classic (2026-01-09; ) ×30"
+  ]
+ },
+ {
+  "id": 887,
+  "name": "Trotwood-Madison",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 888,
+  "name": "University",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "WSAZ Invitational (2026-01-23; ) ×1"
+  ]
+ },
+ {
+  "id": 889,
+  "name": "Wadsworth",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 1165,
+  "name": "Clermont Northeastern",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×6"
+  ]
+ },
+ {
+  "id": 1178,
+  "name": "Keystone",
+  "known": [],
+  "bouts": 8,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×8"
+  ]
+ },
+ {
+  "id": 892,
+  "name": "Warwick",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 893,
+  "name": "Washington Community",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 894,
+  "name": "West Chester Henderson",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "King of The Castle (2025-12-29; ) ×3"
+  ]
+ },
+ {
+  "id": 897,
+  "name": "West Scranton",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 898,
+  "name": "Westlake",
+  "known": [],
+  "bouts": 9,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×9"
+  ]
+ },
+ {
+  "id": 899,
+  "name": "William Penn Charter",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×3",
+   "dual vs Washington Township ×1"
+  ]
+ },
+ {
+  "id": 900,
+  "name": "Williamsport Area",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 901,
+  "name": "Wilson Area",
+  "known": [],
+  "bouts": 20,
+  "events": [
+   "dual vs Phillipsburg ×12",
+   "dual vs Belvidere ×8"
+  ]
+ },
+ {
+  "id": 902,
+  "name": "Wyoming Valley West",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 1014,
+  "name": "McCallie School",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Escape the Rock (2026-01-17; ) ×2"
+  ]
+ },
+ {
+  "id": 1033,
+  "name": "Bishop Verot",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 1041,
+  "name": "Academy - Palumbo",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Penn Charter Invitational (2026-01-17; ) ×3"
+  ]
+ },
+ {
+  "id": 1086,
+  "name": "Washington",
+  "known": [],
+  "bouts": 31,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×31"
+  ]
+ },
+ {
+  "id": 1092,
+  "name": "George C. Marshall",
+  "known": [],
+  "bouts": 7,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×7"
+  ]
+ },
+ {
+  "id": 1106,
+  "name": "Courtland",
+  "known": [],
+  "bouts": 16,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×16"
+  ]
+ },
+ {
+  "id": 1112,
+  "name": "Buckhannon Upshur",
+  "known": [],
+  "bouts": 36,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×20",
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×16"
+  ]
+ },
+ {
+  "id": 1126,
+  "name": "Poland Seminary",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×4"
+  ]
+ },
+ {
+  "id": 1136,
+  "name": "Avon Lake",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×2"
+  ]
+ },
+ {
+  "id": 1152,
+  "name": "North Royalton",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×4"
+  ]
+ },
+ {
+  "id": 1188,
+  "name": "Greeneview",
+  "known": [],
+  "bouts": 8,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×8"
+  ]
+ },
+ {
+  "id": 1191,
+  "name": "Black River",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×4"
+  ]
+ },
+ {
+  "id": 587,
+  "name": "Council Rock South",
+  "known": [],
+  "bouts": 44,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×18",
+   "dual vs Northern Burlington ×14",
+   "Escape the Rock (2026-01-17; ) ×6",
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×5",
+   "Bethlehem Holiday Wrestling Classic (2025-12-28; ) ×1"
+  ]
+ },
+ {
+  "id": 486,
+  "name": "Spire Academy",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 496,
+  "name": "Staunton River",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×1",
+   "Escape the Rock (2026-01-17; ) ×1"
+  ]
+ },
+ {
+  "id": 506,
+  "name": "Christian Brothers College",
+  "known": [],
+  "bouts": 93,
+  "events": [
+   "2026 East Coast Catholic Classic (2026-01-09; ) ×92",
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 516,
+  "name": "Aurora (Marmion Academy)",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 526,
+  "name": "Wyoming Seminary",
+  "known": [],
+  "bouts": 111,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×27",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×26",
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×20",
+   "dual vs St Joseph (Montvale) HS ×14",
+   "dual vs Delbarton School ×14",
+   "Escape the Rock (2026-01-17; ) ×6",
+   "Iron Man Tournament (2025-12-12; ) ×2",
+   "Powerade (2025-12-29; ) ×2"
+  ]
+ },
+ {
+  "id": 536,
+  "name": "Union County",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 597,
+  "name": "Wilson West Lawn",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "Escape the Rock (2026-01-17; ) ×3",
+   "Bethlehem Holiday Wrestling Classic (2025-12-28; ) ×2"
+  ]
+ },
+ {
+  "id": 713,
+  "name": "Independence TN",
+  "known": [],
+  "bouts": 12,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×12"
+  ]
+ },
+ {
+  "id": 716,
+  "name": "Danbury",
+  "known": [],
+  "bouts": 11,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×11"
+  ]
+ },
+ {
+  "id": 903,
+  "name": "Dematha",
+  "known": [],
+  "bouts": 51,
+  "events": [
+   "2026 East Coast Catholic Classic (2026-01-09; ) ×51"
+  ]
+ },
+ {
+  "id": 1010,
+  "name": "Lawrenceville School",
+  "known": [],
+  "bouts": 42,
+  "events": [
+   "dual vs Princeton ×14",
+   "dual vs Middle Township ×14",
+   "dual vs Pingry ×14"
+  ]
+ },
+ {
+  "id": 1021,
+  "name": "William Byrd",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Escape the Rock (2026-01-17; ) ×2"
+  ]
+ },
+ {
+  "id": 1063,
+  "name": "Archbishop Ryan",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×1"
+  ]
+ },
+ {
+  "id": 1089,
+  "name": "Riverbend",
+  "known": [],
+  "bouts": 20,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×14",
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×6"
+  ]
+ },
+ {
+  "id": 1104,
+  "name": "Bishop Shanahan",
+  "known": [],
+  "bouts": 14,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×7",
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×7"
+  ]
+ },
+ {
+  "id": 1109,
+  "name": "New Bern",
+  "known": [],
+  "bouts": 7,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×7"
+  ]
+ },
+ {
+  "id": 1137,
+  "name": "Lorain high school",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×3"
+  ]
+ },
+ {
+  "id": 1153,
+  "name": "Washington Court House",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×3"
+  ]
+ },
+ {
+  "id": 1166,
+  "name": "Boyle County",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×5"
+  ]
+ },
+ {
+  "id": 1179,
+  "name": "Berea Midpark",
+  "known": [],
+  "bouts": 7,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×7"
+  ]
+ },
+ {
+  "id": 1189,
+  "name": "Springfield Local",
+  "known": [],
+  "bouts": 7,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×7"
+  ]
+ },
+ {
+  "id": 905,
+  "name": "Catholic",
+  "known": [],
+  "bouts": 66,
+  "events": [
+   "2026 East Coast Catholic Classic (2026-01-09; ) ×66"
+  ]
+ },
+ {
+  "id": 1015,
+  "name": "Father Ryan",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "Escape the Rock (2026-01-17; ) ×5"
+  ]
+ },
+ {
+  "id": 1042,
+  "name": "George Washington",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Penn Charter Invitational (2026-01-17; ) ×3"
+  ]
+ },
+ {
+  "id": 1072,
+  "name": "Octorara Area",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×1"
+  ]
+ },
+ {
+  "id": 1127,
+  "name": "Taylor County",
+  "known": [],
+  "bouts": 9,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×9"
+  ]
+ },
+ {
+  "id": 1147,
+  "name": "Roxana",
+  "known": [],
+  "bouts": 7,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×7"
+  ]
+ },
+ {
+  "id": 1156,
+  "name": "Barnesville",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×6"
+  ]
+ },
+ {
+  "id": 1192,
+  "name": "Atherton",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×2"
+  ]
+ },
+ {
+  "id": 487,
+  "name": "Sunnyside",
+  "known": [],
+  "bouts": 21,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×18",
+   "Iron Man Tournament (2025-12-12; ) ×3"
+  ]
+ },
+ {
+  "id": 1011,
+  "name": "New Hope-Solebury",
+  "known": [],
+  "bouts": 14,
+  "events": [
+   "dual vs South Hunterdon ×14"
+  ]
+ },
+ {
+  "id": 1016,
+  "name": "Upper Dublin",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Ralph Wetzel Girls Classic (2025-12-27; Hatboro-Horsham Senior High School, 899 Horsham Road, Horsham, PA 19044, 2025 We) ×4",
+   "Escape the Rock (2026-01-17; ) ×1",
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×1"
+  ]
+ },
+ {
+  "id": 1022,
+  "name": "Central Bucks West",
+  "known": [],
+  "bouts": 13,
+  "events": [
+   "Ralph Wetzel Girls Classic (2025-12-27; Hatboro-Horsham Senior High School, 899 Horsham Road, Horsham, PA 19044, 2025 We) ×5",
+   "Escape the Rock (2026-01-17; ) ×4",
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×4"
+  ]
+ },
+ {
+  "id": 1064,
+  "name": "Upper Perkiomen",
+  "known": [],
+  "bouts": 42,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×40",
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×2"
+  ]
+ },
+ {
+  "id": 497,
+  "name": "Bismarck Legacy",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×2"
+  ]
+ },
+ {
+  "id": 507,
+  "name": "Broken Arrow",
+  "known": [],
+  "bouts": 55,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×54",
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 517,
+  "name": "St. Pius X (Kansas City)",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×2"
+  ]
+ },
+ {
+  "id": 527,
+  "name": "St Xavier",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 537,
+  "name": "Lawrence North",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 599,
+  "name": "Chaminade",
+  "known": [],
+  "bouts": 30,
+  "events": [
+   "Sam Cali Battle for The Belt (2025-12-27; Morristown National Guard Armory, 430 Western Avenue, Morristown, NJ 07960) ×30"
+  ]
+ },
+ {
+  "id": 719,
+  "name": "Christiansburg",
+  "known": [],
+  "bouts": 22,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×22"
+  ]
+ },
+ {
+  "id": 723,
+  "name": "Norwich",
+  "known": [],
+  "bouts": 7,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×7"
+  ]
+ },
+ {
+  "id": 728,
+  "name": "Cannon",
+  "known": [],
+  "bouts": 7,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×4",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×3"
+  ]
+ },
+ {
+  "id": 733,
+  "name": "Phillips Exeter Academy",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×6"
+  ]
+ },
+ {
+  "id": 904,
+  "name": "Notre Dame, CT",
+  "known": [],
+  "bouts": 41,
+  "events": [
+   "2026 East Coast Catholic Classic (2026-01-09; ) ×41"
+  ]
+ },
+ {
+  "id": 1073,
+  "name": "Harry S Truman",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×1"
+  ]
+ },
+ {
+  "id": 1043,
+  "name": "Pope John Paul II",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Penn Charter Invitational (2026-01-17; ) ×2"
+  ]
+ },
+ {
+  "id": 1128,
+  "name": "Tulsa Union",
+  "known": [],
+  "bouts": 28,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×28"
+  ]
+ },
+ {
+  "id": 1138,
+  "name": "Cabell Midland",
+  "known": [],
+  "bouts": 8,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×8"
+  ]
+ },
+ {
+  "id": 1157,
+  "name": "Pryor",
+  "known": [],
+  "bouts": 7,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×7"
+  ]
+ },
+ {
+  "id": 1167,
+  "name": "Ohio County",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×5"
+  ]
+ },
+ {
+  "id": 1096,
+  "name": "Bolingbrook",
+  "known": [],
+  "bouts": 15,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×10",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×5"
+  ]
+ },
+ {
+  "id": 1099,
+  "name": "Middletown",
+  "known": [],
+  "bouts": 12,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×12"
+  ]
+ },
+ {
+  "id": 1101,
+  "name": "Union Pines",
+  "known": [],
+  "bouts": 23,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×23"
+  ]
+ },
+ {
+  "id": 1154,
+  "name": "Hilliard Bradley",
+  "known": [],
+  "bouts": 19,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×19"
+  ]
+ },
+ {
+  "id": 1180,
+  "name": "St. Ignatius College Prep",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×4"
+  ]
+ },
+ {
+  "id": 1193,
+  "name": "King",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×4"
+  ]
+ },
+ {
+  "id": 508,
+  "name": "Northampton Area",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×4"
+  ]
+ },
+ {
+  "id": 528,
+  "name": "Parkersburg Catholic",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 488,
+  "name": "Wilmette (Loyola Academy)",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Powerade (2025-12-29; ) ×1",
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 498,
+  "name": "Stillwater",
+  "known": [],
+  "bouts": 16,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×14",
+   "Iron Man Tournament (2025-12-12; ) ×2"
+  ]
+ },
+ {
+  "id": 518,
+  "name": "Notre Dame - Green Pond",
+  "known": [],
+  "bouts": 81,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×66",
+   "Escape the Rock (2026-01-17; ) ×11",
+   "Powerade (2025-12-29; ) ×2",
+   "Iron Man Tournament (2025-12-12; ) ×2"
+  ]
+ },
+ {
+  "id": 538,
+  "name": "Plainedge Sr High",
+  "known": [],
+  "bouts": 11,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×10",
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 600,
+  "name": "Green Farms Academy",
+  "known": [],
+  "bouts": 121,
+  "events": [
+   "Sam Cali Battle for The Belt (2025-12-27; Morristown National Guard Armory, 430 Western Avenue, Morristown, NJ 07960) ×60",
+   "dual vs St Joseph (Montvale) HS ×14",
+   "dual vs North Hunterdon ×14",
+   "dual vs Delbarton School ×14",
+   "dual vs Christian Brothers ×14",
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×5"
+  ]
+ },
+ {
+  "id": 724,
+  "name": "Patriot",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×2"
+  ]
+ },
+ {
+  "id": 729,
+  "name": "Amherst County",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×6"
+  ]
+ },
+ {
+  "id": 734,
+  "name": "AIM Academy",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×6"
+  ]
+ },
+ {
+  "id": 906,
+  "name": "Cardinal Gibbons",
+  "known": [],
+  "bouts": 62,
+  "events": [
+   "2026 East Coast Catholic Classic (2026-01-09; ) ×62"
+  ]
+ },
+ {
+  "id": 909,
+  "name": "St. John Bosco Academy",
+  "known": [],
+  "bouts": 47,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×40",
+   "2026 East Coast Catholic Classic (2026-01-09; ) ×7"
+  ]
+ },
+ {
+  "id": 1044,
+  "name": "Martin Luther King",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Penn Charter Invitational (2026-01-17; ) ×1"
+  ]
+ },
+ {
+  "id": 1097,
+  "name": "Perryville",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×5"
+  ]
+ },
+ {
+  "id": 1102,
+  "name": "South Dade",
+  "known": [],
+  "bouts": 19,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×11",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×8"
+  ]
+ },
+ {
+  "id": 1129,
+  "name": "Walton-Verona",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×5"
+  ]
+ },
+ {
+  "id": 1139,
+  "name": "Alliance",
+  "known": [],
+  "bouts": 10,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×10"
+  ]
+ },
+ {
+  "id": 1181,
+  "name": "West Field High School",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×5"
+  ]
+ },
+ {
+  "id": 1012,
+  "name": "Pen Argyl Area",
+  "known": [],
+  "bouts": 13,
+  "events": [
+   "dual vs Belvidere ×9",
+   "dual vs ? ×4"
+  ]
+ },
+ {
+  "id": 1017,
+  "name": "Belle Vernon Area",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Escape the Rock (2026-01-17; ) ×6"
+  ]
+ },
+ {
+  "id": 1065,
+  "name": "Souderton",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×6"
+  ]
+ },
+ {
+  "id": 1067,
+  "name": "William Tennent",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×2",
+   "Ralph Wetzel Girls Classic (2025-12-27; Hatboro-Horsham Senior High School, 899 Horsham Road, Horsham, PA 19044, 2025 We) ×2"
+  ]
+ },
+ {
+  "id": 1074,
+  "name": "Pennsbury",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Ralph Wetzel Girls Classic (2025-12-27; Hatboro-Horsham Senior High School, 899 Horsham Road, Horsham, PA 19044, 2025 We) ×5",
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×1"
+  ]
+ },
+ {
+  "id": 1155,
+  "name": "Little Miami",
+  "known": [],
+  "bouts": 11,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×11"
+  ]
+ },
+ {
+  "id": 1158,
+  "name": "East Liverpool",
+  "known": [],
+  "bouts": 17,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×17"
+  ]
+ },
+ {
+  "id": 1168,
+  "name": "Lexington",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×4"
+  ]
+ },
+ {
+  "id": 1171,
+  "name": "Brunswick",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×6"
+  ]
+ },
+ {
+  "id": 1194,
+  "name": "Norwood",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×3"
+  ]
+ },
+ {
+  "id": 539,
+  "name": "Dublin Coffman",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 489,
+  "name": "Coweta",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×2"
+  ]
+ },
+ {
+  "id": 499,
+  "name": "Perrysburg",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 509,
+  "name": "Walsh Jesuit",
+  "known": [],
+  "bouts": 19,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×13",
+   "Escape the Rock (2026-01-17; ) ×5",
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 519,
+  "name": "St Edward",
+  "known": [],
+  "bouts": 8,
+  "events": [
+   "Powerade (2025-12-29; ) ×5",
+   "Iron Man Tournament (2025-12-12; ) ×3"
+  ]
+ },
+ {
+  "id": 529,
+  "name": "Seckman",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 758,
+  "name": "Trinity High School (Camp Hill)",
+  "known": [],
+  "bouts": 14,
+  "events": [
+   "Powerade (2025-12-29; ) ×6",
+   "Escape the Rock (2026-01-17; ) ×4",
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×4"
+  ]
+ },
+ {
+  "id": 907,
+  "name": "Bishop O`Connell",
+  "known": [],
+  "bouts": 18,
+  "events": [
+   "2026 East Coast Catholic Classic (2026-01-09; ) ×18"
+  ]
+ },
+ {
+  "id": 1029,
+  "name": "St. Christopher's School",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 1045,
+  "name": "Friends` Central School",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Penn Charter Invitational (2026-01-17; ) ×2"
+  ]
+ },
+ {
+  "id": 1116,
+  "name": "Cumberland Valley",
+  "known": [],
+  "bouts": 40,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×40"
+  ]
+ },
+ {
+  "id": 1169,
+  "name": "Tuslaw",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×3"
+  ]
+ },
+ {
+  "id": 1182,
+  "name": "Bishop Hartley",
+  "known": [],
+  "bouts": 9,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×9"
+  ]
+ },
+ {
+  "id": 1195,
+  "name": "Northwest",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×4"
+  ]
+ },
+ {
+  "id": 601,
+  "name": "Ponaganset",
+  "known": [],
+  "bouts": 47,
+  "events": [
+   "dual vs North Hunterdon ×14",
+   "dual vs St Joseph (Montvale) HS ×14",
+   "dual vs Delbarton School ×14",
+   "Sam Cali Battle for The Belt (2025-12-27; Morristown National Guard Armory, 430 Western Avenue, Morristown, NJ 07960) ×5"
+  ]
+ },
+ {
+  "id": 736,
+  "name": "Easton Area",
+  "known": [],
+  "bouts": 113,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×51",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×30",
+   "dual vs Phillipsburg ×26",
+   "Escape the Rock (2026-01-17; ) ×6"
+  ]
+ },
+ {
+  "id": 1018,
+  "name": "Nolensville",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Escape the Rock (2026-01-17; ) ×1"
+  ]
+ },
+ {
+  "id": 1066,
+  "name": "Dallastown Area",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×6"
+  ]
+ },
+ {
+  "id": 1068,
+  "name": "Abington",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Ralph Wetzel Girls Classic (2025-12-27; Hatboro-Horsham Senior High School, 899 Horsham Road, Horsham, PA 19044, 2025 We) ×2",
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×1"
+  ]
+ },
+ {
+  "id": 1075,
+  "name": "Neshaminy",
+  "known": [],
+  "bouts": 34,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×31",
+   "Ralph Wetzel Girls Classic (2025-12-27; Hatboro-Horsham Senior High School, 899 Horsham Road, Horsham, PA 19044, 2025 We) ×2",
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×1"
+  ]
+ },
+ {
+  "id": 1130,
+  "name": "Aurora",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×4"
+  ]
+ },
+ {
+  "id": 1140,
+  "name": "Hillcrest",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×5"
+  ]
+ },
+ {
+  "id": 1159,
+  "name": "Lakota East",
+  "known": [],
+  "bouts": 14,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×14"
+  ]
+ },
+ {
+  "id": 1172,
+  "name": "London",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×3"
+  ]
+ },
+ {
+  "id": 464,
+  "name": "Xavier",
+  "known": [],
+  "bouts": 51,
+  "events": [
+   "Rahway Holiday Tournament (2025-12-29; ) ×29",
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×22"
+  ]
+ },
+ {
+  "id": 490,
+  "name": "St Vincent-St Mary",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 500,
+  "name": "Malvern Prep",
+  "known": [],
+  "bouts": 191,
+  "events": [
+   "2026 East Coast Catholic Classic (2026-01-09; ) ×98",
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×75",
+   "Escape the Rock (2026-01-17; ) ×7",
+   "Powerade (2025-12-29; ) ×6",
+   "Iron Man Tournament (2025-12-12; ) ×5"
+  ]
+ },
+ {
+  "id": 510,
+  "name": "Edmond North",
+  "known": [],
+  "bouts": 44,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×29",
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×13",
+   "Iron Man Tournament (2025-12-12; ) ×2"
+  ]
+ },
+ {
+  "id": 530,
+  "name": "New Lenox (Providence Catholic)",
+  "known": [],
+  "bouts": 10,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×9",
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 602,
+  "name": "Mt. St. Charles Academy",
+  "known": [],
+  "bouts": 52,
+  "events": [
+   "2026 East Coast Catholic Classic (2026-01-09; ) ×33",
+   "Sam Cali Battle for The Belt (2025-12-27; Morristown National Guard Armory, 430 Western Avenue, Morristown, NJ 07960) ×12",
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×7"
+  ]
+ },
+ {
+  "id": 737,
+  "name": "Ridgefield, CT",
+  "known": [],
+  "bouts": 17,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×17"
+  ]
+ },
+ {
+  "id": 520,
+  "name": "Miami Southridge",
+  "known": [],
+  "bouts": 9,
+  "events": [
+   "Escape the Rock (2026-01-17; ) ×4",
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×4",
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 540,
+  "name": "Graham",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 908,
+  "name": "Charlotte Christian",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "2026 East Coast Catholic Classic (2026-01-09; ) ×5"
+  ]
+ },
+ {
+  "id": 739,
+  "name": "Manhasset Sr",
+  "known": [],
+  "bouts": 7,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×7"
+  ]
+ },
+ {
+  "id": 759,
+  "name": "State College Area",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "Powerade (2025-12-29; ) ×5"
+  ]
+ },
+ {
+  "id": 1019,
+  "name": "Central Bucks East",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Escape the Rock (2026-01-17; ) ×2"
+  ]
+ },
+ {
+  "id": 1046,
+  "name": "Greenbrier West",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "WSAZ Invitational (2026-01-23; ) ×2"
+  ]
+ },
+ {
+  "id": 1069,
+  "name": "Strath Haven",
+  "known": [],
+  "bouts": 21,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×14",
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×5",
+   "Ralph Wetzel Girls Classic (2025-12-27; Hatboro-Horsham Senior High School, 899 Horsham Road, Horsham, PA 19044, 2025 We) ×2"
+  ]
+ },
+ {
+  "id": 1076,
+  "name": "Coatesville Area",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×1"
+  ]
+ },
+ {
+  "id": 1052,
+  "name": "Herbert Hoover",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "WSAZ Invitational (2026-01-23; ) ×1"
+  ]
+ },
+ {
+  "id": 1117,
+  "name": "Indian River",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "2025 Howdy Duncan Ladies Classic (2025-12-21; William Penn High School, 713 East Basin Road, New Castle, DE 19720) ×3"
+  ]
+ },
+ {
+  "id": 1131,
+  "name": "Tuscarawas Valley",
+  "known": [],
+  "bouts": 12,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×12"
+  ]
+ },
+ {
+  "id": 1160,
+  "name": "Chippewa",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×6"
+  ]
+ },
+ {
+  "id": 1173,
+  "name": "Benjamin Logan",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×4"
+  ]
+ },
+ {
+  "id": 1141,
+  "name": "Kearney",
+  "known": [],
+  "bouts": 31,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×31"
+  ]
+ },
+ {
+  "id": 1170,
+  "name": "Chesapeake",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×2"
+  ]
+ },
+ {
+  "id": 1183,
+  "name": "Crestview",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×6"
+  ]
+ },
+ {
+  "id": 1196,
+  "name": "Carrollton Exempted Village",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×5"
+  ]
+ },
+ {
+  "id": 491,
+  "name": "Lake Catholic",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 531,
+  "name": "West Holmes",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 760,
+  "name": "Connellsville Area",
+  "known": [],
+  "bouts": 13,
+  "events": [
+   "Escape the Rock (2026-01-17; ) ×8",
+   "Powerade (2025-12-29; ) ×5"
+  ]
+ },
+ {
+  "id": 501,
+  "name": "Pontiac",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 511,
+  "name": "Rockton (Hononegah)",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×2"
+  ]
+ },
+ {
+  "id": 521,
+  "name": "Teurlings Catholic",
+  "known": [],
+  "bouts": 8,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×7",
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 738,
+  "name": "Delone Catholic",
+  "known": [],
+  "bouts": 25,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×16",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×6",
+   "Escape the Rock (2026-01-17; ) ×3"
+  ]
+ },
+ {
+  "id": 910,
+  "name": "Clovis",
+  "known": [],
+  "bouts": 29,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×29"
+  ]
+ },
+ {
+  "id": 919,
+  "name": "Carbon (UT)",
+  "known": [
+   "UT"
+  ],
+  "bouts": 3,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×3"
+  ]
+ },
+ {
+  "id": 926,
+  "name": "Brawley",
+  "known": [],
+  "bouts": 7,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×7"
+  ]
+ },
+ {
+  "id": 933,
+  "name": "Granite Hills-El Cajon",
+  "known": [],
+  "bouts": 10,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×10"
+  ]
+ },
+ {
+  "id": 935,
+  "name": "Bonita",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×1"
+  ]
+ },
+ {
+  "id": 937,
+  "name": "Bakersfield",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×3"
+  ]
+ },
+ {
+  "id": 944,
+  "name": "Eaton (CO)",
+  "known": [
+   "CO"
+  ],
+  "bouts": 4,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×4"
+  ]
+ },
+ {
+  "id": 951,
+  "name": "Highland-Bakersfield",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×1"
+  ]
+ },
+ {
+  "id": 957,
+  "name": "Bellarmine Prep",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×5"
+  ]
+ },
+ {
+  "id": 964,
+  "name": "Roosevelt (CO)",
+  "known": [
+   "CO"
+  ],
+  "bouts": 10,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×10"
+  ]
+ },
+ {
+  "id": 603,
+  "name": "The Peddie School",
+  "known": [],
+  "bouts": 221,
+  "events": [
+   "Sam Cali Battle for The Belt (2025-12-27; Morristown National Guard Armory, 430 Western Avenue, Morristown, NJ 07960) ×18",
+   "dual vs Hightstown ×18",
+   "dual vs Middle Township ×16",
+   "dual vs Steinert ×14",
+   "dual vs Holy Cross ×14",
+   "dual vs Washington Township ×14",
+   "dual vs Allentown ×14",
+   "dual vs Matawan ×14",
+   "dual vs Middletown North ×14",
+   "dual vs Shawnee ×14",
+   "dual vs Delsea ×14",
+   "dual vs Rumson-Fair Haven ×14",
+   "dual vs Old Bridge ×14",
+   "dual vs Princeton ×14",
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×13",
+   "Golden Eagle Grapple (2026-02-15; Central Regional High School , 09 Forest Hills Parkway Berkeley Township, NJ 087) ×2"
+  ]
+ },
+ {
+  "id": 502,
+  "name": "Ponderosa",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 492,
+  "name": "Genoa Area",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 512,
+  "name": "Allen",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×2"
+  ]
+ },
+ {
+  "id": 522,
+  "name": "Blair Academy",
+  "known": [],
+  "bouts": 195,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×82",
+   "Robin Leff Tournament (2025-12-13; ) ×42",
+   "dual vs North Hunterdon ×14",
+   "dual vs St. Peter's Prep ×14",
+   "dual vs Delbarton School ×14",
+   "dual vs St Joseph (Montvale) HS ×14",
+   "Escape the Rock (2026-01-17; ) ×7",
+   "Powerade (2025-12-29; ) ×4",
+   "Iron Man Tournament (2025-12-12; ) ×4"
+  ]
+ },
+ {
+  "id": 532,
+  "name": "Central Arkansas Christian School",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 609,
+  "name": "McKean",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Howdy Duncan (2025-12-19; ) ×2"
+  ]
+ },
+ {
+  "id": 614,
+  "name": "Delcastle",
+  "known": [],
+  "bouts": 14,
+  "events": [
+   "2025 Howdy Duncan Ladies Classic (2025-12-21; William Penn High School, 713 East Basin Road, New Castle, DE 19720) ×10",
+   "King of The Castle (2025-12-29; ) ×3",
+   "Howdy Duncan (2025-12-19; ) ×1"
+  ]
+ },
+ {
+  "id": 624,
+  "name": "Tatnall",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "2025 Howdy Duncan Ladies Classic (2025-12-21; William Penn High School, 713 East Basin Road, New Castle, DE 19720) ×2",
+   "Howdy Duncan (2025-12-19; ) ×1"
+  ]
+ },
+ {
+  "id": 740,
+  "name": "John Jay Sr -East Fishkill",
+  "known": [],
+  "bouts": 7,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×7"
+  ]
+ },
+ {
+  "id": 604,
+  "name": "Conrad School of Science",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "Howdy Duncan (2025-12-19; ) ×3",
+   "2025 Howdy Duncan Ladies Classic (2025-12-21; William Penn High School, 713 East Basin Road, New Castle, DE 19720) ×2"
+  ]
+ },
+ {
+  "id": 761,
+  "name": "Muncy",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Powerade (2025-12-29; ) ×1"
+  ]
+ },
+ {
+  "id": 1020,
+  "name": "Owen J Roberts",
+  "known": [],
+  "bouts": 42,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×35",
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×4",
+   "Escape the Rock (2026-01-17; ) ×3"
+  ]
+ },
+ {
+  "id": 1023,
+  "name": "Perkiomen Valley",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Escape the Rock (2026-01-17; ) ×1"
+  ]
+ },
+ {
+  "id": 1047,
+  "name": "Fairmont",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "WSAZ Invitational (2026-01-23; ) ×1"
+  ]
+ },
+ {
+  "id": 1070,
+  "name": "Bermudian Springs",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×3"
+  ]
+ },
+ {
+  "id": 1077,
+  "name": "Cheltenham",
+  "known": [],
+  "bouts": 10,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×6",
+   "Ralph Wetzel Girls Classic (2025-12-27; Hatboro-Horsham Senior High School, 899 Horsham Road, Horsham, PA 19044, 2025 We) ×3",
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×1"
+  ]
+ },
+ {
+  "id": 619,
+  "name": "Saint Mark`s",
+  "known": [],
+  "bouts": 62,
+  "events": [
+   "2026 East Coast Catholic Classic (2026-01-09; ) ×43",
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×8",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×8",
+   "Howdy Duncan (2025-12-19; ) ×2",
+   "Ralph Wetzel Girls Classic (2025-12-27; Hatboro-Horsham Senior High School, 899 Horsham Road, Horsham, PA 19044, 2025 We) ×1"
+  ]
+ },
+ {
+  "id": 911,
+  "name": "Buchanan",
+  "known": [],
+  "bouts": 51,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×51"
+  ]
+ },
+ {
+  "id": 912,
+  "name": "Folsom",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×6"
+  ]
+ },
+ {
+  "id": 920,
+  "name": "Canyon View (AZ)",
+  "known": [
+   "AZ"
+  ],
+  "bouts": 32,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×26",
+   "Doc Buchanan (2026-01-09; ) ×6"
+  ]
+ },
+ {
+  "id": 927,
+  "name": "South Anchorage (AK)",
+  "known": [
+   "AK"
+  ],
+  "bouts": 11,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×11"
+  ]
+ },
+ {
+  "id": 934,
+  "name": "La Costa Canyon",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×4"
+  ]
+ },
+ {
+  "id": 936,
+  "name": "West Linn (OR)",
+  "known": [
+   "OR"
+  ],
+  "bouts": 10,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×10"
+  ]
+ },
+ {
+  "id": 938,
+  "name": "Canyon View (UT)",
+  "known": [
+   "UT"
+  ],
+  "bouts": 1,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×1"
+  ]
+ },
+ {
+  "id": 945,
+  "name": "Addison Trail (IL)",
+  "known": [
+   "IL"
+  ],
+  "bouts": 2,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×2"
+  ]
+ },
+ {
+  "id": 952,
+  "name": "Roseburg (OR)",
+  "known": [
+   "OR"
+  ],
+  "bouts": 4,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×4"
+  ]
+ },
+ {
+  "id": 958,
+  "name": "Camarillo",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×2"
+  ]
+ },
+ {
+  "id": 965,
+  "name": "Birmingham",
+  "known": [],
+  "bouts": 12,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×12"
+  ]
+ },
+ {
+  "id": 972,
+  "name": "Central Union",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×1"
+  ]
+ },
+ {
+  "id": 981,
+  "name": "Burbank",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×2"
+  ]
+ },
+ {
+  "id": 988,
+  "name": "Everett Alverez",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×4"
+  ]
+ },
+ {
+  "id": 997,
+  "name": "Garces",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×1"
+  ]
+ },
+ {
+  "id": 999,
+  "name": "Sheldon",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×2"
+  ]
+ },
+ {
+  "id": 1053,
+  "name": "Huntington",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "WSAZ Invitational (2026-01-23; ) ×1"
+  ]
+ },
+ {
+  "id": 1118,
+  "name": "Hodgson Vo Tech School",
+  "known": [],
+  "bouts": 27,
+  "events": [
+   "2025 Howdy Duncan Ladies Classic (2025-12-21; William Penn High School, 713 East Basin Road, New Castle, DE 19720) ×21",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×6"
+  ]
+ },
+ {
+  "id": 1132,
+  "name": "Olentangy Orange",
+  "known": [],
+  "bouts": 47,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×47"
+  ]
+ },
+ {
+  "id": 493,
+  "name": "Cathedral",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 503,
+  "name": "Mt. Carmel",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×3"
+  ]
+ },
+ {
+  "id": 610,
+  "name": "Palisades",
+  "known": [],
+  "bouts": 22,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×18",
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×2",
+   "King of The Castle (2025-12-29; ) ×1",
+   "Howdy Duncan (2025-12-19; ) ×1"
+  ]
+ },
+ {
+  "id": 620,
+  "name": "Milford",
+  "known": [],
+  "bouts": 36,
+  "events": [
+   "2025 Howdy Duncan Ladies Classic (2025-12-21; William Penn High School, 713 East Basin Road, New Castle, DE 19720) ×23",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×8",
+   "King of The Castle (2025-12-29; ) ×4",
+   "Howdy Duncan (2025-12-19; ) ×1"
+  ]
+ },
+ {
+  "id": 625,
+  "name": "Glasgow",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×2",
+   "Howdy Duncan (2025-12-19; ) ×1"
+  ]
+ },
+ {
+  "id": 762,
+  "name": "Bentworth",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Powerade (2025-12-29; ) ×2"
+  ]
+ },
+ {
+  "id": 513,
+  "name": "Lafayette (Wildwood)",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×2"
+  ]
+ },
+ {
+  "id": 523,
+  "name": "Bixby",
+  "known": [],
+  "bouts": 57,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×41",
+   "Doc Buchanan (2026-01-09; ) ×15",
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 533,
+  "name": "Omaha Skutt Catholic",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 605,
+  "name": "William Penn H.S.",
+  "known": [],
+  "bouts": 44,
+  "events": [
+   "2025 Howdy Duncan Ladies Classic (2025-12-21; William Penn High School, 713 East Basin Road, New Castle, DE 19720) ×32",
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×7",
+   "Howdy Duncan (2025-12-19; ) ×4",
+   "Penn Charter Invitational (2026-01-17; ) ×1"
+  ]
+ },
+ {
+  "id": 615,
+  "name": "Episcopal Academy",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Howdy Duncan (2025-12-19; ) ×3"
+  ]
+ },
+ {
+  "id": 741,
+  "name": "Bullis Prep",
+  "known": [],
+  "bouts": 26,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×20",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×6"
+  ]
+ },
+ {
+  "id": 913,
+  "name": "Clovis North",
+  "known": [],
+  "bouts": 31,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×31"
+  ]
+ },
+ {
+  "id": 921,
+  "name": "Gilroy",
+  "known": [],
+  "bouts": 22,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×22"
+  ]
+ },
+ {
+  "id": 928,
+  "name": "Oakdale",
+  "known": [],
+  "bouts": 9,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×9"
+  ]
+ },
+ {
+  "id": 939,
+  "name": "Chino",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×6"
+  ]
+ },
+ {
+  "id": 946,
+  "name": "La Mirada",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×2"
+  ]
+ },
+ {
+  "id": 959,
+  "name": "South Torrance",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×2"
+  ]
+ },
+ {
+  "id": 966,
+  "name": "Valencia",
+  "known": [],
+  "bouts": 10,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×10"
+  ]
+ },
+ {
+  "id": 541,
+  "name": "Science Hill",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Powerade (2025-12-29; ) ×2"
+  ]
+ },
+ {
+  "id": 546,
+  "name": "Penn Trafford",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Powerade (2025-12-29; ) ×2"
+  ]
+ },
+ {
+  "id": 551,
+  "name": "Bishop Mcdevitt",
+  "known": [],
+  "bouts": 14,
+  "events": [
+   "Escape the Rock (2026-01-17; ) ×8",
+   "Powerade (2025-12-29; ) ×6"
+  ]
+ },
+ {
+  "id": 556,
+  "name": "Norwin",
+  "known": [],
+  "bouts": 79,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×43",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×34",
+   "Powerade (2025-12-29; ) ×2"
+  ]
+ },
+ {
+  "id": 561,
+  "name": "Montoursville Area",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Powerade (2025-12-29; ) ×1"
+  ]
+ },
+ {
+  "id": 566,
+  "name": "Cleveland",
+  "known": [],
+  "bouts": 35,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×33",
+   "Powerade (2025-12-29; ) ×2"
+  ]
+ },
+ {
+  "id": 571,
+  "name": "Thomas Jefferson",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Powerade (2025-12-29; ) ×1"
+  ]
+ },
+ {
+  "id": 576,
+  "name": "West Greene",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Powerade (2025-12-29; ) ×1"
+  ]
+ },
+ {
+  "id": 606,
+  "name": "Laurel",
+  "known": [],
+  "bouts": 16,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×10",
+   "King of The Castle (2025-12-29; ) ×3",
+   "Howdy Duncan (2025-12-19; ) ×3"
+  ]
+ },
+ {
+  "id": 611,
+  "name": "Charter School of Wilmington",
+  "known": [],
+  "bouts": 46,
+  "events": [
+   "2025 Howdy Duncan Ladies Classic (2025-12-21; William Penn High School, 713 East Basin Road, New Castle, DE 19720) ×30",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×10",
+   "King of The Castle (2025-12-29; ) ×4",
+   "Howdy Duncan (2025-12-19; ) ×2"
+  ]
+ },
+ {
+  "id": 626,
+  "name": "Caravel Academy",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Howdy Duncan (2025-12-19; ) ×1"
+  ]
+ },
+ {
+  "id": 742,
+  "name": "Monsignor Farrell",
+  "known": [],
+  "bouts": 42,
+  "events": [
+   "dual vs St. Joseph Metuchen ×14",
+   "dual vs St. Benedicts Prep School ×14",
+   "dual vs Don Bosco Prep ×14"
+  ]
+ },
+ {
+  "id": 763,
+  "name": "Trinity High School (Washington)",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Powerade (2025-12-29; ) ×3"
+  ]
+ },
+ {
+  "id": 914,
+  "name": "Clovis West",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×6"
+  ]
+ },
+ {
+  "id": 922,
+  "name": "Severance (CO)",
+  "known": [
+   "CO"
+  ],
+  "bouts": 5,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×5"
+  ]
+ },
+ {
+  "id": 929,
+  "name": "Fort Lupton (CO)",
+  "known": [
+   "CO"
+  ],
+  "bouts": 5,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×5"
+  ]
+ },
+ {
+  "id": 940,
+  "name": "Fountain Valley",
+  "known": [],
+  "bouts": 14,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×14"
+  ]
+ },
+ {
+  "id": 947,
+  "name": "Tahoma (WA)",
+  "known": [
+   "WA"
+  ],
+  "bouts": 12,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×12"
+  ]
+ },
+ {
+  "id": 953,
+  "name": "Los Gatos",
+  "known": [],
+  "bouts": 11,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×11"
+  ]
+ },
+ {
+  "id": 960,
+  "name": "Sultana",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×4"
+  ]
+ },
+ {
+  "id": 967,
+  "name": "Etiwanda",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×6"
+  ]
+ },
+ {
+  "id": 616,
+  "name": "Mt Pleasant",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Howdy Duncan (2025-12-19; ) ×1"
+  ]
+ },
+ {
+  "id": 621,
+  "name": "Christiana",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Howdy Duncan (2025-12-19; ) ×2"
+  ]
+ },
+ {
+  "id": 542,
+  "name": "Moon Area",
+  "known": [],
+  "bouts": 16,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×7",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×5",
+   "Powerade (2025-12-29; ) ×4"
+  ]
+ },
+ {
+  "id": 562,
+  "name": "Arch Bishop Moeller",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Powerade (2025-12-29; ) ×1"
+  ]
+ },
+ {
+  "id": 547,
+  "name": "Germantown Academy",
+  "known": [],
+  "bouts": 36,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×29",
+   "Escape the Rock (2026-01-17; ) ×5",
+   "Powerade (2025-12-29; ) ×2"
+  ]
+ },
+ {
+  "id": 557,
+  "name": "Parkersburg South",
+  "known": [],
+  "bouts": 18,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×9",
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×8",
+   "Powerade (2025-12-29; ) ×1"
+  ]
+ },
+ {
+  "id": 567,
+  "name": "Jensen Beach",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Powerade (2025-12-29; ) ×1"
+  ]
+ },
+ {
+  "id": 543,
+  "name": "Canon-McMillan",
+  "known": [],
+  "bouts": 101,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×49",
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×49",
+   "Powerade (2025-12-29; ) ×3"
+  ]
+ },
+ {
+  "id": 548,
+  "name": "Penns Valley Area",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Powerade (2025-12-29; ) ×2"
+  ]
+ },
+ {
+  "id": 553,
+  "name": "Abington Heights",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Powerade (2025-12-29; ) ×1"
+  ]
+ },
+ {
+  "id": 563,
+  "name": "Battlefield",
+  "known": [
+   "VA"
+  ],
+  "bouts": 29,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×14",
+   "dual vs West Deptford ×14",
+   "Powerade (2025-12-29; ) ×1"
+  ]
+ },
+ {
+  "id": 573,
+  "name": "Blacksburg",
+  "known": [],
+  "bouts": 9,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×8",
+   "Powerade (2025-12-29; ) ×1"
+  ]
+ },
+ {
+  "id": 617,
+  "name": "First State Military Academy",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×2",
+   "Howdy Duncan (2025-12-19; ) ×2"
+  ]
+ },
+ {
+  "id": 558,
+  "name": "Council Rock North",
+  "known": [],
+  "bouts": 40,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×31",
+   "Escape the Rock (2026-01-17; ) ×6",
+   "dual vs Delsea ×2",
+   "Powerade (2025-12-29; ) ×1"
+  ]
+ },
+ {
+  "id": 568,
+  "name": "Dubois Area",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Powerade (2025-12-29; ) ×2"
+  ]
+ },
+ {
+  "id": 607,
+  "name": "Unionville",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Howdy Duncan (2025-12-19; ) ×1"
+  ]
+ },
+ {
+  "id": 612,
+  "name": "Newark",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "2025 Howdy Duncan Ladies Classic (2025-12-21; William Penn High School, 713 East Basin Road, New Castle, DE 19720) ×4",
+   "Howdy Duncan (2025-12-19; ) ×1"
+  ]
+ },
+ {
+  "id": 622,
+  "name": "Tower Hill",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Howdy Duncan (2025-12-19; ) ×2",
+   "2025 Howdy Duncan Ladies Classic (2025-12-21; William Penn High School, 713 East Basin Road, New Castle, DE 19720) ×2"
+  ]
+ },
+ {
+  "id": 544,
+  "name": "Linsly School",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Powerade (2025-12-29; ) ×1"
+  ]
+ },
+ {
+  "id": 554,
+  "name": "Bellefonte Area",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Powerade (2025-12-29; ) ×2"
+  ]
+ },
+ {
+  "id": 559,
+  "name": "Kiski Area",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Powerade (2025-12-29; ) ×2"
+  ]
+ },
+ {
+  "id": 574,
+  "name": "Armstrong",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Powerade (2025-12-29; ) ×1"
+  ]
+ },
+ {
+  "id": 618,
+  "name": "Plymouth Whitemarsh",
+  "known": [],
+  "bouts": 7,
+  "events": [
+   "2025 Howdy Duncan Ladies Classic (2025-12-21; William Penn High School, 713 East Basin Road, New Castle, DE 19720) ×4",
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×2",
+   "Howdy Duncan (2025-12-19; ) ×1"
+  ]
+ },
+ {
+  "id": 549,
+  "name": "Berks Catholic",
+  "known": [],
+  "bouts": 10,
+  "events": [
+   "Escape the Rock (2026-01-17; ) ×7",
+   "Powerade (2025-12-29; ) ×3"
+  ]
+ },
+ {
+  "id": 564,
+  "name": "Baylor School",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Powerade (2025-12-29; ) ×2"
+  ]
+ },
+ {
+  "id": 569,
+  "name": "St. Francis",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×2",
+   "Powerade (2025-12-29; ) ×1"
+  ]
+ },
+ {
+  "id": 608,
+  "name": "Dover, DE",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Howdy Duncan (2025-12-19; ) ×3"
+  ]
+ },
+ {
+  "id": 613,
+  "name": "Odyssey Charter School",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Howdy Duncan (2025-12-19; ) ×1"
+  ]
+ },
+ {
+  "id": 1048,
+  "name": "Ironton",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "WSAZ Invitational (2026-01-23; ) ×1"
+  ]
+ },
+ {
+  "id": 1143,
+  "name": "River Valley",
+  "known": [],
+  "bouts": 11,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×11"
+  ]
+ },
+ {
+  "id": 1162,
+  "name": "Warren",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×4"
+  ]
+ },
+ {
+  "id": 1175,
+  "name": "Parkway Central",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×4"
+  ]
+ },
+ {
+  "id": 577,
+  "name": "Slam! Nevada",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Powerade (2025-12-29; ) ×2"
+  ]
+ },
+ {
+  "id": 623,
+  "name": "Calvert Hall College",
+  "known": [],
+  "bouts": 18,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×17",
+   "Howdy Duncan (2025-12-19; ) ×1"
+  ]
+ },
+ {
+  "id": 915,
+  "name": "Esperanza",
+  "known": [],
+  "bouts": 18,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×18"
+  ]
+ },
+ {
+  "id": 545,
+  "name": "Derry Area",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Powerade (2025-12-29; ) ×2"
+  ]
+ },
+ {
+  "id": 550,
+  "name": "Reynolds",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Powerade (2025-12-29; ) ×3"
+  ]
+ },
+ {
+  "id": 555,
+  "name": "Quaker Valley",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Powerade (2025-12-29; ) ×1"
+  ]
+ },
+ {
+  "id": 560,
+  "name": "Cranberry Area",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Powerade (2025-12-29; ) ×1"
+  ]
+ },
+ {
+  "id": 923,
+  "name": "Immaculate Conception (IL)",
+  "known": [
+   "IL"
+  ],
+  "bouts": 24,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×23",
+   "Iron Man Tournament (2025-12-12; ) ×1"
+  ]
+ },
+ {
+  "id": 930,
+  "name": "Oak Park River Forest (IL)",
+  "known": [
+   "IL"
+  ],
+  "bouts": 8,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×8"
+  ]
+ },
+ {
+  "id": 941,
+  "name": "Kingsburg",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×4"
+  ]
+ },
+ {
+  "id": 948,
+  "name": "Fruita Monument (CO)",
+  "known": [
+   "CO"
+  ],
+  "bouts": 3,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×3"
+  ]
+ },
+ {
+  "id": 954,
+  "name": "Riverton (UT)",
+  "known": [
+   "UT"
+  ],
+  "bouts": 2,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×2"
+  ]
+ },
+ {
+  "id": 961,
+  "name": "Cerritos",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×3"
+  ]
+ },
+ {
+  "id": 968,
+  "name": "Corona Del Mar",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×2"
+  ]
+ },
+ {
+  "id": 975,
+  "name": "Liberty-Bakersfield",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×2"
+  ]
+ },
+ {
+  "id": 984,
+  "name": "West Aurora (IL)",
+  "known": [
+   "IL"
+  ],
+  "bouts": 6,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×6"
+  ]
+ },
+ {
+  "id": 991,
+  "name": "Pueblo East (CO)",
+  "known": [
+   "CO"
+  ],
+  "bouts": 2,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×2"
+  ]
+ },
+ {
+  "id": 993,
+  "name": "Windsor (CO)",
+  "known": [
+   "CO"
+  ],
+  "bouts": 3,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×3"
+  ]
+ },
+ {
+  "id": 1002,
+  "name": "Harrisburg (OR)",
+  "known": [
+   "OR"
+  ],
+  "bouts": 3,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×3"
+  ]
+ },
+ {
+  "id": 1004,
+  "name": "Imperial",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×2"
+  ]
+ },
+ {
+  "id": 565,
+  "name": "Greater Latrobe",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Powerade (2025-12-29; ) ×1"
+  ]
+ },
+ {
+  "id": 570,
+  "name": "Grove City Area",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Powerade (2025-12-29; ) ×1"
+  ]
+ },
+ {
+  "id": 575,
+  "name": "Waynesburg Central",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Powerade (2025-12-29; ) ×1"
+  ]
+ },
+ {
+  "id": 743,
+  "name": "Kellenberg Memorial",
+  "known": [],
+  "bouts": 28,
+  "events": [
+   "dual vs Immaculata ×14",
+   "dual vs Pope John XXIII ×14"
+  ]
+ },
+ {
+  "id": 1054,
+  "name": "Ripley",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "WSAZ Invitational (2026-01-23; ) ×1"
+  ]
+ },
+ {
+  "id": 1060,
+  "name": "Nicholas County",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "WSAZ Invitational (2026-01-23; ) ×1"
+  ]
+ },
+ {
+  "id": 1119,
+  "name": "Scranton Prep",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Bloomfield Holiday Girls Tournament (2025-12-21; Bloomfield High School, 160 Broad Street, Bloomfield, NJ 07003) ×4"
+  ]
+ },
+ {
+  "id": 764,
+  "name": "Chestnut Ridge",
+  "known": [],
+  "bouts": 31,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×14",
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×13",
+   "Powerade (2025-12-29; ) ×4"
+  ]
+ },
+ {
+  "id": 1133,
+  "name": "Marysville",
+  "known": [],
+  "bouts": 40,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×40"
+  ]
+ },
+ {
+  "id": 1149,
+  "name": "Maysville",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×5"
+  ]
+ },
+ {
+  "id": 1185,
+  "name": "Chicago (Lane)",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×2"
+  ]
+ },
+ {
+  "id": 572,
+  "name": "Line Mountain",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Powerade (2025-12-29; ) ×1"
+  ]
+ },
+ {
+  "id": 627,
+  "name": "Suffern Sr",
+  "known": [],
+  "bouts": 29,
+  "events": [
+   "Harry McLaughlin Invitational (2025-12-13; ) ×29"
+  ]
+ },
+ {
+  "id": 765,
+  "name": "Flossmoor (Homewood-F.)",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Powerade (2025-12-29; ) ×2"
+  ]
+ },
+ {
+  "id": 916,
+  "name": "Poway",
+  "known": [],
+  "bouts": 37,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×37"
+  ]
+ },
+ {
+  "id": 744,
+  "name": "Bishop Hendricken",
+  "known": [],
+  "bouts": 12,
+  "events": [
+   "dual vs Don Bosco Prep ×12"
+  ]
+ },
+ {
+  "id": 578,
+  "name": "Whitehall",
+  "known": [],
+  "bouts": 52,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×48",
+   "Bethlehem Holiday Wrestling Classic (2025-12-28; ) ×4"
+  ]
+ },
+ {
+  "id": 588,
+  "name": "Parkland",
+  "known": [],
+  "bouts": 62,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×53",
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×7",
+   "Bethlehem Holiday Wrestling Classic (2025-12-28; ) ×2"
+  ]
+ },
+ {
+  "id": 598,
+  "name": "Honesdale",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Bethlehem Holiday Wrestling Classic (2025-12-28; ) ×1"
+  ]
+ },
+ {
+  "id": 628,
+  "name": "Saint Mary`s Ryken",
+  "known": [],
+  "bouts": 67,
+  "events": [
+   "Ricky I Memorial Tournament (2025-12-13; ) ×30",
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×23",
+   "dual vs Ridge ×14"
+  ]
+ },
+ {
+  "id": 745,
+  "name": "Torah Academy",
+  "known": [],
+  "bouts": 14,
+  "events": [
+   "dual vs Cresskill ×14"
+  ]
+ },
+ {
+  "id": 766,
+  "name": "Westfield, VA",
+  "known": [],
+  "bouts": 28,
+  "events": [
+   "dual vs Ridge ×14",
+   "dual vs St. Augustine ×14"
+  ]
+ },
+ {
+  "id": 770,
+  "name": "Green Run",
+  "known": [],
+  "bouts": 14,
+  "events": [
+   "dual vs St. Augustine ×14"
+  ]
+ },
+ {
+  "id": 917,
+  "name": "Greeley Central (CO)",
+  "known": [
+   "CO"
+  ],
+  "bouts": 2,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×2"
+  ]
+ },
+ {
+  "id": 924,
+  "name": "Reedley",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×1"
+  ]
+ },
+ {
+  "id": 931,
+  "name": "J Serra",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×3"
+  ]
+ },
+ {
+  "id": 942,
+  "name": "Grandview (CO)",
+  "known": [
+   "CO"
+  ],
+  "bouts": 12,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×12"
+  ]
+ },
+ {
+  "id": 949,
+  "name": "Selma",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×2"
+  ]
+ },
+ {
+  "id": 629,
+  "name": "Loyola Blakefield",
+  "known": [],
+  "bouts": 39,
+  "events": [
+   "Beast of the East (2025-12-19; Bob Carpenter Center, 631 S College Ave, Newark, DE 19716) ×39"
+  ]
+ },
+ {
+  "id": 746,
+  "name": "Iona Prep",
+  "known": [],
+  "bouts": 14,
+  "events": [
+   "dual vs Don Bosco Prep ×14"
+  ]
+ },
+ {
+  "id": 918,
+  "name": "Mullen (CO)",
+  "known": [
+   "CO"
+  ],
+  "bouts": 6,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×6"
+  ]
+ },
+ {
+  "id": 925,
+  "name": "Del Oro",
+  "known": [],
+  "bouts": 7,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×7"
+  ]
+ },
+ {
+  "id": 932,
+  "name": "Victor Valley",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×4"
+  ]
+ },
+ {
+  "id": 943,
+  "name": "Toppenish (WA)",
+  "known": [
+   "WA"
+  ],
+  "bouts": 3,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×3"
+  ]
+ },
+ {
+  "id": 950,
+  "name": "Central Catholic",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×6"
+  ]
+ },
+ {
+  "id": 956,
+  "name": "Orting (WA)",
+  "known": [
+   "WA"
+  ],
+  "bouts": 6,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×6"
+  ]
+ },
+ {
+  "id": 963,
+  "name": "Roosevelt-Eastvale",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×2"
+  ]
+ },
+ {
+  "id": 970,
+  "name": "La Grande (OR)",
+  "known": [
+   "OR"
+  ],
+  "bouts": 5,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×5"
+  ]
+ },
+ {
+  "id": 977,
+  "name": "Granada",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×2"
+  ]
+ },
+ {
+  "id": 979,
+  "name": "Fremont",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×1"
+  ]
+ },
+ {
+  "id": 986,
+  "name": "Bishop Gorman (NV)",
+  "known": [
+   "NV"
+  ],
+  "bouts": 2,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×2"
+  ]
+ },
+ {
+  "id": 995,
+  "name": "Punahou(HI)",
+  "known": [
+   "HI"
+  ],
+  "bouts": 1,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×1"
+  ]
+ },
+ {
+  "id": 1006,
+  "name": "Moorpark",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "Doc Buchanan (2026-01-09; ) ×1"
+  ]
+ },
+ {
+  "id": 1032,
+  "name": "Oxford Area",
+  "known": [],
+  "bouts": 0,
+  "events": []
+ },
+ {
+  "id": 1061,
+  "name": "Chapmanville Regional",
+  "known": [],
+  "bouts": 1,
+  "events": [
+   "WSAZ Invitational (2026-01-23; ) ×1"
+  ]
+ },
+ {
+  "id": 1078,
+  "name": "Choate Rosemary Hall",
+  "known": [],
+  "bouts": 38,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×38"
+  ]
+ },
+ {
+  "id": 1083,
+  "name": "Mount de Sales Academy",
+  "known": [],
+  "bouts": 11,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×11"
+  ]
+ },
+ {
+  "id": 1095,
+  "name": "Pilgrim",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×6"
+  ]
+ },
+ {
+  "id": 1100,
+  "name": "Calhoun",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "4th Annual Girls Beast of the East (2025-12-18; Bob Carpenter Center, 631 South College Avenue, Newark, DE 19716) ×3"
+  ]
+ },
+ {
+  "id": 1120,
+  "name": "CENTRAL High School (Philadelphia)",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "Ralph Wetzel Girls Classic (2025-12-27; Hatboro-Horsham Senior High School, 899 Horsham Road, Horsham, PA 19044, 2025 We) ×2"
+  ]
+ },
+ {
+  "id": 1150,
+  "name": "Harrison",
+  "known": [],
+  "bouts": 27,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×27"
+  ]
+ },
+ {
+  "id": 579,
+  "name": "Hempfield",
+  "known": [],
+  "bouts": 5,
+  "events": [
+   "Escape the Rock Girls at North Penn HS (2025-12-13; North Penn HS, 1340 S Valley Forge Rd, Lansdale, PA 19446) ×3",
+   "Bethlehem Holiday Wrestling Classic (2025-12-28; ) ×2"
+  ]
+ },
+ {
+  "id": 589,
+  "name": "Emmaus",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Bethlehem Holiday Wrestling Classic (2025-12-28; ) ×3"
+  ]
+ },
+ {
+  "id": 767,
+  "name": "Mt. Hope",
+  "known": [],
+  "bouts": 42,
+  "events": [
+   "dual vs Montville ×14",
+   "dual vs Kinnelon ×14",
+   "dual vs Ramapo ×14"
+  ]
+ },
+ {
+  "id": 1049,
+  "name": "Hurricane",
+  "known": [],
+  "bouts": 2,
+  "events": [
+   "WSAZ Invitational (2026-01-23; ) ×2"
+  ]
+ },
+ {
+  "id": 1055,
+  "name": "Northern York",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "WSAZ Invitational (2026-01-23; ) ×3"
+  ]
+ },
+ {
+  "id": 1134,
+  "name": "Andrew",
+  "known": [],
+  "bouts": 34,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×34"
+  ]
+ },
+ {
+  "id": 1144,
+  "name": "Westfall",
+  "known": [],
+  "bouts": 3,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×3"
+  ]
+ },
+ {
+  "id": 1163,
+  "name": "Mogadore",
+  "known": [],
+  "bouts": 10,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×10"
+  ]
+ },
+ {
+  "id": 1176,
+  "name": "Alter",
+  "known": [],
+  "bouts": 6,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×6"
+  ]
+ },
+ {
+  "id": 1186,
+  "name": "Bismarck",
+  "known": [],
+  "bouts": 4,
+  "events": [
+   "Women of Ironman (2025-12-13; Walsh Jesuit High School, 4550 Wyoga Lake Road, Cuyahoga Falls, OH 44224) ×4"
+  ]
+ }
+]
