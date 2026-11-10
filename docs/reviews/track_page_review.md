@@ -64,7 +64,7 @@ the row backed up), or leave it.
 
 - ~~Falls under 10 seconds~~ — Kyle 2026-11-10: under 10 s can happen; only 0:00–0:02 falls are wrong; tech falls under 0:13 and tech falls / injury defaults with no time likewise → 6:00 (`20261110_bout_times_to_6_00.sql`, 432 bouts).
 - 229 boys / 42 girls duals where the final score differs from the bout points, mostly by 1 point (likely team deductions; not verified).
-- Duplicate school records for one school: "Blair Academy" / "Blair Academy (B Team)", "Hodgson" / "Hodgson Vo Tech School".
+- Duplicate school records: ~~"Blair Academy (B Team)"~~ gone (one Blair record left); "Hodgson" (1108) / "Hodgson Vo Tech School" (1118), both girls only, open.
 
 ## 5. Before the 2026-27 season (pinned 2026-11-02)
 
@@ -75,7 +75,7 @@ the row backed up), or leave it.
 
 - **Shared "Unknown" profile:** bout sides the source didn't name are linked to one boys profile named "Unknown", aliased at 30+ schools, so it collects bouts from many different people. Better: those sides get no profile (pages already show "Unknown").
 - **Out-of-state school names** read like bracket text: "Delcastle H S", "Laurel H S", "Palisades Hs", and others. Tidy schools.display_name for is_nj = false schools.
-- **`lb_gp_team_points`** exists twice (p_season smallint and integer), so every call fails ("could not choose the best candidate"). The girls state page no longer uses it; drop one copy.
+- ~~**`lb_gp_team_points`**~~ — resolved: the 2026-11-03 migration dropped the extra copy; the call works (checked 2026-11-10).
 - ~~**Girls District 9 2025-26, Jackson Township**~~ — already 223 in the database (checked 2026-11-10; Kyle confirmed 223). Was: stored official total 257.5; source_of_truth_team_scores.csv has "Jackson Township H.S." 223. Check the official sheet.
 - ~~**Girls tournaments have no team results**~~ — resolved 2026-11-09: the tables' boys-only foreign key had refused every girls row (`20261109_tournament_team_scores_both_genders.sql`); standings loaded for 21 of 41. The rest have no standings in the files: `docs/reviews/tournaments_without_team_standings.md`.
-- **Profile name split:** William "Jayden Ratz" (first name William, last name "Jayden Ratz"), probably first "William Jayden" or last "Ratz".
+- ~~**Profile name split:**~~ — resolved: the profile reads William Jayden / Ratz (checked 2026-11-10).

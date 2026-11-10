@@ -26,9 +26,11 @@
 
 **Backup:** `backups/20261110_bout_times_before.json`
 
-**Afterwards:** refresh the leaderboards (Quickest Deck).
+**APPLIED:** 2026-11-10. The check read 0 on all 15 lines.
 
-**Status:** waiting for Kyle to run it.
+**Afterwards:**
+- Leaderboards refreshed (rs/ps, M and F, 2025 and 2026).
+- Fall and tech-fall times set the outcome tier in the ratings (`classifyOutcome`), so ratings are being rebuilt: F 2025-26, M 2025-26 (archive), F and M 2024-25 (archive).
 
 ---
 
