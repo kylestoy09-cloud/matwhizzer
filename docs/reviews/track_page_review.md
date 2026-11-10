@@ -64,7 +64,7 @@ the row backed up), or leave it.
 
 - ~~Falls under 10 seconds~~ — Kyle 2026-11-10: under 10 s can happen; only 0:00–0:02 falls are wrong; tech falls under 0:13 and tech falls / injury defaults with no time likewise → 6:00 (`20261110_bout_times_to_6_00.sql`, 432 bouts).
 - 229 boys / 42 girls duals where the final score differs from the bout points, mostly by 1 point (likely team deductions; not verified).
-- Duplicate school records: ~~"Blair Academy (B Team)"~~ gone (one Blair record left); "Hodgson" (1108) / "Hodgson Vo Tech School" (1118), both girls only, open.
+- Duplicate school records: ~~"Blair Academy (B Team)"~~ gone (one Blair record left); "Hodgson" (1108) → "Hodgson Vo Tech School" (1118), merge approved 2026-11-10 (`20261110_merge_hodgson.sql`).
 
 ## 5. Before the 2026-27 season (pinned 2026-11-02)
 
@@ -73,7 +73,7 @@ the row backed up), or leave it.
 
 ## 6. Follow-ups from the 2026-11-02 logo / no-raw-text work
 
-- **Shared "Unknown" profile:** bout sides the source didn't name are linked to one boys profile named "Unknown", aliased at 30+ schools, so it collects bouts from many different people. Better: those sides get no profile (pages already show "Unknown").
+- ~~**Shared "Unknown" profile**~~ — done 2026-11-10 (Kyle): 4 "Unknown" profiles removed, their 104 dual bouts kept with no profile on that side.
 - **Out-of-state school names** read like bracket text: "Delcastle H S", "Laurel H S", "Palisades Hs", and others. Tidy schools.display_name for is_nj = false schools.
 - ~~**`lb_gp_team_points`**~~ — resolved: the 2026-11-03 migration dropped the extra copy; the call works (checked 2026-11-10).
 - ~~**Girls District 9 2025-26, Jackson Township**~~ — already 223 in the database (checked 2026-11-10; Kyle confirmed 223). Was: stored official total 257.5; source_of_truth_team_scores.csv has "Jackson Township H.S." 223. Check the official sheet.
