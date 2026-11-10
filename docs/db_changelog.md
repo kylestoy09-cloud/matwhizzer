@@ -10,9 +10,9 @@
 - A fall at 0:00-0:02 becomes 6:00.
 - A tech fall under 0:13 or with no time becomes 6:00.
 - An injury default at 0:00-0:02 or with no time becomes 6:00.
-- **Status:** waiting for Kyle to run it.
+- **APPLIED:** 2026-11-10. 5 triggers listed.
 
-**Hodgson (Delaware, girls only):** #1108 "Hodgson" is merged into #1118 "Hodgson Vo Tech School", using the catalog-driven pattern of 20261106. The name waits on the out-of-state naming decision. Backup: `backups/20261110_merge_hodgson_before.json`. **Status:** waiting for Kyle to run it.
+**Hodgson (Delaware, girls only):** #1108 "Hodgson" is merged into #1118 "Hodgson Vo Tech School", using the catalog-driven pattern of 20261106. The name waits on the out-of-state naming decision. Backup: `backups/20261110_merge_hodgson_before.json`. **APPLIED:** 2026-11-10. One row left, #1118.
 
 **"Unknown" profiles (no migration; service role, `scripts/remove_unknown_profiles_20261110.mts --apply`).**
 - **Why:** 4 profiles named "Unknown" (3 boys, 1 girls) stood in for bout sides the source didn't name. Each was rated as one person.
@@ -25,9 +25,15 @@
 - **Backup:** `backups/20261110_unknown_profiles_before.json`.
 - **Afterwards:** 2025-26 ratings rebuilt (F; M archive).
 
-**Out-of-state names (decision pending):**
-- Of 640: 348 bare names, 125 end "High School", 72 Academy/Prep/School/Catholic, 36 state tag "(XX)", 25 end "Hs", 16 other "(…)", 9 end "H S", 5 end "HS", 4 end Senior/Sr.
-- No "HS" names are in any other name field.
+**Out-of-state names (Kyle: plain names; no migration; service role, `scripts/rename_oos_schools_20261110.mts`).**
+- **Renamed:** 165 schools drop the ending "High School", "Hs", "H S", "HS" or "Senior". "Madison plains" is now "Madison Plains".
+- **Unchanged:** state tags, bracket notes in "(…)", and Academy / Prep / School / Catholic names.
+- **Held (2):** Woodbridge Senior and West Field High School. Their short names would equal NJ Woodbridge / Westfield.
+- **Old names kept as aliases** (`alias_type 'oos'`), so imports printing the long name still match exactly. Checked with 5 names.
+- **First alias insert failed:** `school_id` is NOT NULL, while the matcher's comment said null. The renames had already been applied; the aliases were then added with `school_id`, as the existing ones have it.
+- **Files:**
+  - list: `docs/reviews/oos_school_renames_20261110.md`;
+  - backups: `backups/20261110_oos_school_renames_before.json`, `backups/20261110_oos_school_aliases_added.json`.
 
 ---
 

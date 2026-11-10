@@ -10,9 +10,8 @@
 //   5. Suffix-stripped OOS display_name → 'oos'
 //   6. JS trigram fuzzy over NJ + OOS schools (pg_trgm not available)
 //
-// OOS alias rows use school_aliases.notes to store the OOS school_id as a
-// string (avoids conflict with the nj_alias_unique partial index which fires
-// on all rows where school_id IS NOT NULL).
+// OOS alias rows (alias_type 'oos') carry the OOS school_id in school_id (now NOT NULL) and, as a string,
+// in notes, which this file reads; older rows may have only notes.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { createClient } from '@supabase/supabase-js'

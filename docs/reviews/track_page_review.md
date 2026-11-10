@@ -74,7 +74,7 @@ the row backed up), or leave it.
 ## 6. Follow-ups from the 2026-11-02 logo / no-raw-text work
 
 - ~~**Shared "Unknown" profile**~~ — done 2026-11-10 (Kyle): 4 "Unknown" profiles removed, their 104 dual bouts kept with no profile on that side.
-- **Out-of-state school names** read like bracket text: "Delcastle H S", "Laurel H S", "Palisades Hs", and others. Tidy schools.display_name for is_nj = false schools.
+- ~~**Out-of-state school names**~~ — done 2026-11-10: 165 renamed to plain names (`docs/reviews/oos_school_renames_20261110.md`); Woodbridge Senior and West Field High School held (would equal NJ Woodbridge / Westfield).
 - ~~**`lb_gp_team_points`**~~ — resolved: the 2026-11-03 migration dropped the extra copy; the call works (checked 2026-11-10).
 - ~~**Girls District 9 2025-26, Jackson Township**~~ — already 223 in the database (checked 2026-11-10; Kyle confirmed 223). Was: stored official total 257.5; source_of_truth_team_scores.csv has "Jackson Township H.S." 223. Check the official sheet.
 - ~~**Girls tournaments have no team results**~~ — resolved 2026-11-09: the tables' boys-only foreign key had refused every girls row (`20261109_tournament_team_scores_both_genders.sql`); standings loaded for 21 of 41. The rest have no standings in the files: `docs/reviews/tournaments_without_team_standings.md`.
