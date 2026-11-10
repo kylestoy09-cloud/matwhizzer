@@ -2,6 +2,18 @@
 
 ---
 
+## 2026-11-10 — Ella Magee self-bout deleted
+
+**Migration file:** `docs/migrations/20261110_delete_magee_self_bout.sql`
+
+**Purpose:** pinned-list item 2. At the 2026 SJWHOF Girls Varsity, 107, the source listed Ella Magee (Schalick) on both sides of a placement-round no contest. Kyle: delete it.
+
+**Counts and backup:** 1 row. No score-log row, because NC bouts aren't rated. Backup: `backups/20261110_magee_self_bout.json`.
+
+**Status:** waiting for Kyle to run it.
+
+---
+
 ## 2026-11-09 — In-season tournament placements rebuilt; three boys duplicate profiles merged
 
 **No migration file** (data only, service role; add-only and merge).

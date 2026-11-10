@@ -1,0 +1,25 @@
+[
+ {
+  "id": "9d96ee7a-7da6-468b-851a-6d0742e29daf",
+  "in_season_tournament_id": "8691e0fc-01e3-4d57-8c04-59b82067aee6",
+  "weight_class": 107,
+  "round": "PL",
+  "wrestler1_id": "544400d7-31f9-4d68-950e-2f10d4f03324",
+  "wrestler1_name_raw": "Ella Magee",
+  "wrestler1_school_id": 286,
+  "wrestler1_school_raw": "Schalick",
+  "wrestler2_id": "544400d7-31f9-4d68-950e-2f10d4f03324",
+  "wrestler2_name_raw": "Ella Magee",
+  "wrestler2_school_id": 286,
+  "wrestler2_school_raw": "Schalick",
+  "winner": 1,
+  "result_type": "NC",
+  "result_detail": null,
+  "fall_time_seconds": null,
+  "winner_score": null,
+  "loser_score": null,
+  "result_time_estimated": false,
+  "source_format": "rtf",
+  "created_at": "2026-09-09T23:26:09.999212+00:00"
+ }
+]
