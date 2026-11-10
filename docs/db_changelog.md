@@ -21,7 +21,7 @@
 **Duplicates:** `scripts/merge_duplicates_20261109_sam_cali.mts`. Backup in `backups/20261109_sam_cali_duplicates_before.json`.
 - **Merged:** Nick Konopka → Nicholas Konepka; Isiah → Isaiah Rojas (both Paramus Catholic); Gabe → Gabriel Gomez (Bergenfield).
 - **Checks:** same school; no event in common; same weights.
-- **Status:** records moved. The emptied profiles are deleted after the ratings rebuild clears the score-log references (`--delete` recounts first).
+- **Status:** done. Records moved. After the ratings rebuild, `--delete` recounted 0 references and deleted the three emptied profiles.
 
 ---
 
@@ -56,7 +56,13 @@
 
 **Backup:** `docs/migrations/backups/20261109_sam_cali_brackets_before.json` holds every bout, seed and placement row of both tournaments, plus the 7 tournament rows, before the change.
 
-**Status:** waiting for Kyle to run it. **Reversible?** Yes, from the backup.
+**APPLIED:** 2026-11-09 (third run; the first two failed whole and applied nothing). The check matched every expected count: boys 528 bouts, girls 170; seeds 402 / 103; placements 84 / 68. **Reversible?** Yes, from the backup.
+
+**Afterwards:**
+- **Ratings rebuilt:** girls `{"gender":"F"}`; boys `{"gender":"M","season":"2025-26","archive":true}`, 7,427 rows.
+  - Boys 2025-26 is archived, so a plain `{"gender":"M"}` run rebuilds 2026-27 instead. Two such runs were made by mistake first: one failed with "fetch failed" and kept the previous log; the other rebuilt boys 2026-27 as the daily job would.
+- **Leaderboards:** `lb_rs_refresh` and `lb_ps_refresh` for M and F, 2026.
+- **Integrity check:** unchanged (3 known).
 
 ---
 
