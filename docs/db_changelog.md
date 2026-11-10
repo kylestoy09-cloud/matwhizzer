@@ -2,6 +2,19 @@
 
 ---
 
+## 2026-11-09 — Girls 2024-25 regions numbered; Valliere merged; Keyra's duplicate removed
+
+**Migration file:** `docs/migrations/20261109_girls_2025_regions_numbered_and_merges.sql`. **Backup:** `docs/migrations/backups/20261109_girls_2025_regions_rename_merges_before.json`
+
+**Changes (Kyle):**
+1. **Regions numbered:** the 2024-25 girls regions are now Region 1 (North 1, id 135), 2 (North 2, 136), 3 (Central, 134) and 4 (South, 137). The region pages and functions find a region by "Girl_s Regions r" + number, so 2024-25 girls region pages were empty. Only the names change.
+2. **Savanah Valliere** is one girl (Lindenwold 2024-25, Paulsboro 2025-26). Today's 2024-25 profile (b6292eb7) merges into ee6626b7: 1 entry and 1 name link move; the emptied profile is deleted.
+3. **Keyra Huastitlan Reyes's duplicate** (4b9a9152, made by mistake today, no references) is deleted.
+
+**Status:** waiting for Kyle to run it (deletes approved). **Reversible?** Yes (backup).
+
+---
+
 ## 2026-11-09 — Girls 2024-25 postseason: standings rows, 3rd / 4th placements, leaderboards
 
 **Scripts (service role):** `scripts/build_girls_2025_official_team_scores.mts --apply` (adapted from the 2025-26 builder; add-only) and `scripts/add_girls_2025_region_thirds_placements.mts --apply`. **Backups:** `docs/migrations/backups/20261109_girls_2025_team_scores_before.json` (the 242 stored rows, unchanged) and `..._girls_2025_region_placements_added.json` (the new ids).
