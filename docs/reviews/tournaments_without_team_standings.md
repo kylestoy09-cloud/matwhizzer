@@ -29,7 +29,7 @@ Built 2026-11-09 from the database (`in_season_tournament_team_scores` has no ro
 | 2026-01-23 – 2026-01-24 | WSAZ Invitational | yes |
 | 2026-02-14 | Escape Gloucester County Cell Block 6 |  |
 
-## Girls: 21 of 41 without standings
+## Girls: 20 of 41 without standings
 
 | Date | Tournament | Out of state |
 |---|---|---|
@@ -39,7 +39,6 @@ Built 2026-11-09 from the database (`in_season_tournament_team_scores` has no ro
 | 2025-12-21 | Bloomfield Holiday Girls Tournament |  |
 | 2025-12-26 | Lady Viking Jamboree |  |
 | 2025-12-27 – 2025-12-28 | Ralph Wetzel Girls Classic | yes |
-| 2025-12-27 – 2025-12-28 | Sam Cali Invitational Girls Wrestling Tournament |  |
 | 2025-12-28 | Hillsborough Holiday Brawl |  |
 | 2025-12-29 | 2025 EB Lady Bear Invitational |  |
 | 2025-12-29 | 2025 Lady Cutter Classic |  |
