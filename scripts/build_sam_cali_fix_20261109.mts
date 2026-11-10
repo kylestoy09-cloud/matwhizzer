@@ -12,6 +12,8 @@ const BT = { boys: 'tournament_bouts', girls: 'tournament_bouts_girls' }
 const ST = { boys: 'in_season_tournament_seeds', girls: 'in_season_tournament_seeds_girls' }
 const q = (v: any) => v == null ? 'NULL' : typeof v === 'number' ? String(v) : `'${String(v).replace(/'/g, "''")}'`
 const sql: string[] = []
+// the bouts' school text (NOT NULL): the school's name, as imports store it
+const SN = new Map(((await db.from('schools').select('id, display_name')).data ?? []).map(x => [x.id, x.display_name]))
 const backup: any = {}
 const counts: Record<string, number> = {}
 for (const g of ['boys', 'girls'] as const) {
@@ -44,8 +46,8 @@ for (const g of ['boys', 'girls'] as const) {
   }
   // 4. bracket bouts never stored
   if (p.adds.length) {
-    sql.push(`  INSERT INTO ${B} (in_season_tournament_id, weight_class, round, wrestler1_id, wrestler1_name_raw, wrestler1_school_id, wrestler2_id, wrestler2_name_raw, wrestler2_school_id, winner, result_type, result_detail, fall_time_seconds, winner_score, loser_score, source_format) VALUES`)
-    sql.push(p.adds.map((a: any, i: number) => `    (${tid}, ${a.weight_class}, ${q(a.round)}, ${q(a.wrestler1_id)}, ${q(a.wrestler1_name_raw)}, ${q(a.wrestler1_school_id)}, ${q(a.wrestler2_id)}, ${q(a.wrestler2_name_raw)}, ${q(a.wrestler2_school_id)}, ${a.winner}, ${q(a.result_type)}, ${q(a.result_detail)}, ${q(a.fall_time_seconds)}, ${q(a.winner_score)}, ${q(a.loser_score)}, 'pdf')${i === p.adds.length - 1 ? ';' : ','}  -- ${a._label.replace(/\n/g, ' ')}`).join('\n'))
+    sql.push(`  INSERT INTO ${B} (in_season_tournament_id, weight_class, round, wrestler1_id, wrestler1_name_raw, wrestler1_school_id, wrestler1_school_raw, wrestler2_id, wrestler2_name_raw, wrestler2_school_id, wrestler2_school_raw, winner, result_type, result_detail, fall_time_seconds, winner_score, loser_score, source_format) VALUES`)
+    sql.push(p.adds.map((a: any, i: number) => `    (${tid}, ${a.weight_class}, ${q(a.round)}, ${q(a.wrestler1_id)}, ${q(a.wrestler1_name_raw)}, ${q(a.wrestler1_school_id)}, ${q(SN.get(a.wrestler1_school_id) ?? '')}, ${q(a.wrestler2_id)}, ${q(a.wrestler2_name_raw)}, ${q(a.wrestler2_school_id)}, ${q(SN.get(a.wrestler2_school_id) ?? '')}, ${a.winner}, ${q(a.result_type)}, ${q(a.result_detail)}, ${q(a.fall_time_seconds)}, ${q(a.winner_score)}, ${q(a.loser_score)}, 'pdf')${i === p.adds.length - 1 ? ';' : ','}  -- ${a._label.replace(/\n/g, ' ')}`).join('\n'))
     sql.push(`  GET DIAGNOSTICS n = ROW_COUNT; IF n <> ${p.adds.length} THEN RAISE EXCEPTION '${g} bouts added: %', n; END IF;`)
   }
   // 4b. extra matches wrestled outside the bracket: consolation (Kyle 2026-11-09), "C1" (Cons. R1)

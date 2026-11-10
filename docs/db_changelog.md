@@ -52,7 +52,7 @@
 
 **Extra matches (Kyle: count them as consolation):** the boys' 84 bouts outside the bracket become "C1" (75 relabelled; 9 already were). They still count in records.
 
-**First run failed:** syntax error. A comment after each added bout swallowed the comma between rows. Nothing was applied. Regenerated.
+**First run failed:** syntax error. A comment after each added bout swallowed the comma between rows. Nothing was applied. Regenerated. A second run failed on a NOT NULL constraint: added bouts need `wrestler1/2_school_raw`, now filled with the school's name. Again nothing was applied.
 
 **Backup:** `docs/migrations/backups/20261109_sam_cali_brackets_before.json` holds every bout, seed and placement row of both tournaments, plus the 7 tournament rows, before the change.
 
