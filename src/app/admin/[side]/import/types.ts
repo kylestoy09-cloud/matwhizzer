@@ -13,6 +13,7 @@ export type SchoolOverride = {
   schoolId:     number | null
   displayName:  string
   isOutOfState?: boolean
+  state?:       string   // out-of-state school created at import (schoolId null): its state, required
 }
 
 export type WrestlerOverride = {

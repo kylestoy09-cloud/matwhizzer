@@ -113,7 +113,7 @@ export type ReviewedTournament = TournamentSummary & {
 
 export type SchoolOverride =
   | { type: 'nj'; school_id: number; display_name: string }
-  | { type: 'oos'; school_id?: number; display_name?: string }  // school_id present = link to existing OOS school
+  | { type: 'oos'; school_id?: number; display_name?: string; state?: string }  // school_id present = link to existing OOS school; a new one needs state
   | { type: 'skip' }
 
 export type ImportResult = {

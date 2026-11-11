@@ -14,6 +14,7 @@ import { seasonIdForDate } from '@/lib/seasons'
 import type { SchoolFlag, ImportResult, SchoolOverride, WrestlerOverride, TournamentOverride, MsProfileLink } from '@/app/admin/[side]/import-rtf/types'
 import { nonNjSchools } from '@/lib/schoolIsOos'
 import { isAdminUser } from '@/lib/auth/isAdminUser'
+import { createOosSchool, needsStateMessage, overridesMissingState } from '@/lib/oosSchool'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 300
@@ -34,26 +35,6 @@ type ResolvedSchool = {
   alternates: SchoolFlag['alternates']
 }
 
-function normalizeOosSchoolName(raw: string): string {
-  // TW sometimes exports school names in ALL CAPS (e.g. "COWETA", "EDMOND NORTH").
-  // If the entire string is uppercase, convert to title case.
-  if (raw === raw.toUpperCase() && /[A-Z]{2}/.test(raw)) {
-    return raw.toLowerCase().replace(/\b\w/g, c => c.toUpperCase())
-  }
-  return raw
-}
-
-async function findOrCreateOosSchool(client: ReturnType<typeof createClient>, raw: string): Promise<number> {
-  const name = normalizeOosSchoolName(raw)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const c = client as any
-  const existing = await c.from('schools').select('id').eq('display_name', name).eq('is_nj', false).maybeSingle()
-  if (existing.data?.id) return existing.data.id
-  const ins = await c.from('schools').insert({ display_name: name, is_nj: false }).select('id').single()
-  if (ins.error) throw new Error(`OOS school insert failed for "${name}": ${ins.error.message}`)
-  return ins.data.id
-}
-
 async function buildSchoolCache(
   rawNames: string[],
   overrides: Record<string, SchoolOverride>,
@@ -69,7 +50,7 @@ async function buildSchoolCache(
     } else if (override?.type === 'oos') {
       const school_id = override.school_id != null
         ? override.school_id
-        : await findOrCreateOosSchool(client, override.display_name ?? raw)
+        : (await createOosSchool(client, override.display_name ?? raw, override.state!)).id
       const display_name = override.display_name ?? raw
       cache.set(raw, { school_id, display_name, confidence: 'oos', alternates: [] })
       // Remember the decision so this raw name resolves to the OOS school next time —
@@ -135,6 +116,8 @@ export async function POST(req: NextRequest) {
     year = body.year ?? new Date().getFullYear()
     selected = body.selected ?? []
     schoolOverrides = body.schoolOverrides ?? {}
+    const noState = overridesMissingState(schoolOverrides)
+    if (noState.length) return NextResponse.json({ error: needsStateMessage(noState) }, { status: 400 })
     wrestlerOverrides = body.wrestlerOverrides ?? {}
     tournamentDates = body.tournamentDates ?? {}
     tournamentTypes = body.tournamentTypes ?? {}

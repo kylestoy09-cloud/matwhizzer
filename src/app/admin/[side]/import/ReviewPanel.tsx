@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
+import { StateSelect } from '@/components/admin/StateSelect'
 import type { ParsedMeet } from '@/lib/parseDualMeet'
 import type { SchoolMatch } from '@/lib/matchSchools'
 import type { WrestlerMatch } from '@/lib/matchWrestlers'
@@ -61,6 +62,7 @@ function SchoolFlagCard({
   const [oosSearching, setOosSearching] = useState(false)
   const [editingNewOos, setEditingNewOos] = useState(false)
   const [newOosName,   setNewOosName]   = useState('')
+  const [newOosState,  setNewOosState]  = useState('')
   const [creating,     setCreating]     = useState(false)
   const [createError,  setCreateError]  = useState(false)
 
@@ -110,14 +112,14 @@ function SchoolFlagCard({
 
   const createNewOos = useCallback(async () => {
     const name = newOosName.trim()
-    if (!name) return
+    if (!name || !newOosState) return
     setCreating(true)
     setCreateError(false)
     try {
       const res = await fetch('/api/admin/create-oos-school', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ display_name: name }),
+        body:    JSON.stringify({ display_name: name, alias: rawName, state: newOosState }),
       })
       if (!res.ok) throw new Error()
       const { school } = await res.json()
@@ -125,7 +127,7 @@ function SchoolFlagCard({
       setEditingNewOos(false)
     } catch { setCreateError(true) }
     finally { setCreating(false) }
-  }, [rawName, newOosName, onOverride])
+  }, [rawName, newOosName, newOosState, onOverride])
 
   const markNotNJ = useCallback(() => {
     onOverride(rawName, { schoolId: null, displayName: rawName, isOutOfState: true })
@@ -344,9 +346,11 @@ function SchoolFlagCard({
               placeholder="Display name…"
               className="flex-1 text-xs border border-amber-400 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-amber-500"
             />
+            <StateSelect value={newOosState} onChange={setNewOosState} />
             <button
               onClick={createNewOos}
-              disabled={!newOosName.trim() || creating}
+              disabled={!newOosName.trim() || !newOosState || creating}
+              title={newOosState ? undefined : 'Choose the state'}
               className="text-xs px-2 py-1 bg-amber-600 text-white hover:bg-amber-700 disabled:opacity-40 transition-colors whitespace-nowrap"
             >
               {creating ? 'Creating…' : 'Create'}

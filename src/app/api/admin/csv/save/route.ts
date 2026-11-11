@@ -17,6 +17,7 @@ import { seasonIdForDate } from '@/lib/seasons'
 import type { SchoolOverride, WrestlerOverride } from '@/app/admin/[side]/import-rtf/types'
 import { nonNjSchools } from '@/lib/schoolIsOos'
 import { isAdminUser } from '@/lib/auth/isAdminUser'
+import { addOosAlias, createOosSchool, needsStateMessage, overridesMissingState } from '@/lib/oosSchool'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 300
@@ -57,6 +58,8 @@ export async function POST(req: NextRequest) {
     gender          = body.gender ?? 'M'
     force           = body.force ?? false
     schoolOverrides = body.schoolOverrides ?? {}
+    const noState = overridesMissingState(schoolOverrides)
+    if (noState.length) return NextResponse.json({ error: needsStateMessage(noState) }, { status: 400 })
     wrestlerOverrides = body.wrestlerOverrides ?? {}
     existingId      = body.existingId ?? null
   } catch {
@@ -92,13 +95,6 @@ export async function POST(req: NextRequest) {
 
   const schoolCache = new Map<string, ResolvedSchool>()
 
-  async function findOrCreateOosSchool(raw: string): Promise<number> {
-    const existing = await client.from('schools').select('id').eq('display_name', raw).eq('is_nj', false).maybeSingle()
-    if (existing.data?.id) return existing.data.id
-    const ins = await client.from('schools').insert({ display_name: raw, is_nj: false }).select('id').single()
-    if (ins.error) throw new Error(`OOS school insert failed for "${raw}": ${ins.error.message}`)
-    return ins.data.id
-  }
 
   for (const raw of allSchoolRaws) {
     const override = schoolOverrides[raw]
@@ -107,12 +103,11 @@ export async function POST(req: NextRequest) {
     } else if (override?.type === 'oos') {
       const school_id = override.school_id != null
         ? override.school_id
-        : await findOrCreateOosSchool(override.display_name ?? raw)
+        : (await createOosSchool(client, override.display_name ?? raw, override.state!)).id
       const display_name = override.display_name ?? raw
       schoolCache.set(raw, { school_id, display_name, confidence: 'oos' })
-      await client.from('school_aliases')
-        .insert({ school_id: null, alias: raw, alias_type: 'oos', notes: String(school_id) })
-        .then(() => {}).catch((e: { code?: string }) => { if (e?.code !== '23505') throw e })
+      // so this raw name resolves to the school next import (school_id is NOT NULL; the old null insert never saved)
+      await addOosAlias(client, raw, school_id)
     } else if (override?.type === 'nj') {
       schoolCache.set(raw, { school_id: override.school_id, display_name: override.display_name, confidence: 'exact' })
       await client.from('school_aliases')

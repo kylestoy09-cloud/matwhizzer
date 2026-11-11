@@ -10,6 +10,7 @@ import { matchTournament } from '@/lib/matchTournaments'
 import { findMsProfileCandidates, msSeasonsForHsSeason, type MsWrestlerRow } from '@/lib/matchMsWrestler'
 import type { SchoolFlag, WrestlerFlag, ReviewedTournament, SchoolOverride, TournamentType } from '@/app/admin/[side]/import-rtf/types'
 import { isAdminUser } from '@/lib/auth/isAdminUser'
+import { createOosSchool, needsStateMessage, overridesMissingState } from '@/lib/oosSchool'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
@@ -29,20 +30,6 @@ type ResolvedSchool = {
   alternates: SchoolFlag['alternates']
 }
 
-async function findOrCreateOosSchool(client: ReturnType<typeof createClient>, raw: string): Promise<number> {
-  // Normalize ALL CAPS names (e.g. "COWETA" → "Coweta") to match what import/route.ts stores.
-  // Without this, match phase creates "COWETA" while import phase creates "Coweta" — duplicate rows.
-  const name = raw === raw.toUpperCase() && /[A-Z]{2}/.test(raw)
-    ? raw.toLowerCase().replace(/\b\w/g, c => c.toUpperCase())
-    : raw
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const c = client as any
-  const existing = await c.from('schools').select('id').eq('display_name', name).eq('is_nj', false).maybeSingle()
-  if (existing.data?.id) return existing.data.id
-  const ins = await c.from('schools').insert({ display_name: name, is_nj: false }).select('id').single()
-  if (ins.error) throw new Error(`OOS school insert failed for "${name}": ${ins.error.message}`)
-  return ins.data.id
-}
 
 async function buildSchoolCache(
   rawNames: string[],
@@ -60,7 +47,7 @@ async function buildSchoolCache(
     } else if (override?.type === 'oos') {
       const school_id = override.school_id != null
         ? override.school_id
-        : await findOrCreateOosSchool(client, raw)
+        : (await createOosSchool(client, override.display_name ?? raw, override.state!)).id
       const display_name = override.display_name ?? raw
       cache.set(raw, { school_id, display_name, confidence: 'oos', alternates: [] })
     } else if (override?.type === 'nj') {
@@ -92,6 +79,8 @@ export async function POST(req: NextRequest) {
     year = body.year ?? new Date().getFullYear()
     selected = body.selected ?? []
     schoolOverrides = body.schoolOverrides ?? {}
+    const noState = overridesMissingState(schoolOverrides)
+    if (noState.length) return NextResponse.json({ error: needsStateMessage(noState) }, { status: 400 })
     gender = body.gender ?? 'M'
     tournamentTypes = body.tournamentTypes ?? {}
   } catch {

@@ -13,6 +13,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server'
+import { createOosSchool, isState, needsStateMessage } from '@/lib/oosSchool'
 import { applyImportGrades } from '@/lib/applyImportGrades'
 import { findSameSchoolWrestlers, personKey } from '@/lib/sameSchoolWrestler'
 import { nonNjSchools } from '@/lib/schoolIsOos'
@@ -278,21 +279,26 @@ export async function POST(req: NextRequest) {
         oosSchoolMap.set(s.display_name, s.id as number)
       }
 
-      const toCreate = [...unresolvedNames].filter(n => !oosSchoolMap.has(n))
-      if (toCreate.length > 0) {
-        const { data: created, error: oosErr } = await supabase
-          .from('schools')
-          .insert(toCreate.map(name => ({ display_name: name, is_nj: false })))
-          .select('id, display_name')
-
-        if (oosErr) {
-          return NextResponse.json(
-            { error: `Failed to create OOS school stubs: ${oosErr.message}` },
-            { status: 500 },
-          )
-        }
-        for (const s of created ?? []) {
-          oosSchoolMap.set(s.display_name, s.id as number)
+      // Create any that don't exist yet: each needs the state chosen in review ("Not NJ" + state).
+      // Nothing has been written yet, so a missing state stops the import cleanly.
+      // "Not a school" in review (no school, no state) creates nothing: those bouts get no school.
+      // A meet's own team must be a school.
+      const notASchool = (n: string) => { const o = schoolOverrides[n]; return !!o && o.schoolId == null && !o.state }
+      const teamNotSchool = meets.flatMap((m, i) => skippedSet.has(i) ? [] : [m.team1Name, m.team2Name]).filter(n => n && notASchool(n))
+      if (teamNotSchool.length > 0) {
+        return NextResponse.json({ error: `A meet's team can't be "Not a school": ${[...new Set(teamNotSchool)].join(', ')}` }, { status: 400 })
+      }
+      const toCreate = [...unresolvedNames].filter(n => !oosSchoolMap.has(n) && !notASchool(n))
+      const noState = toCreate.filter(n => !isState(schoolOverrides[n]?.state))
+      if (noState.length > 0) {
+        return NextResponse.json({ error: needsStateMessage(noState) }, { status: 400 })
+      }
+      for (const name of toCreate) {
+        try {
+          const school = await createOosSchool(supabase, name, schoolOverrides[name]!.state!)
+          oosSchoolMap.set(name, school.id)
+        } catch (e) {
+          return NextResponse.json({ error: `Failed to create out-of-state school: ${(e as Error).message}` }, { status: 500 })
         }
       }
     }

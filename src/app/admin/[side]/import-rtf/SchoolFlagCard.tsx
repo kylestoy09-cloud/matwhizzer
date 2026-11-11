@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback, useRef } from 'react'
+import { StateSelect } from '@/components/admin/StateSelect'
 import type { SchoolFlag, SchoolOverride } from './types'
 
 function normalizeForDisplay(raw: string): string {
@@ -51,6 +52,7 @@ export function SchoolFlagCard({
 
   const [editingNewOos, setEditingNewOos] = useState(false)
   const [newOosName, setNewOosName] = useState('')
+  const [newOosState, setNewOosState] = useState('')
 
   const searchTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const oosSearchTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -92,7 +94,7 @@ export function SchoolFlagCard({
 
   const resolved =
     override?.type === 'nj'  ? `→ ${override.display_name}` :
-    override?.type === 'oos' ? (override.display_name ? `→ OOS: ${override.display_name}` : '→ New OOS school') :
+    override?.type === 'oos' ? (override.display_name ? `→ OOS: ${override.display_name}${override.school_id == null && override.state ? ` (${override.state}), new` : ''}` : '→ New OOS school') :
     override?.type === 'skip' ? '→ Not a school (skipped)' :
     null
 
@@ -253,14 +255,16 @@ export function SchoolFlagCard({
                 placeholder="Display name…"
                 className="flex-1 text-xs border border-amber-400 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-amber-500"
               />
+              <StateSelect value={newOosState} onChange={setNewOosState} />
               <button
                 onClick={() => {
                   const name = newOosName.trim()
-                  if (!name) return
-                  onOverride(flag.raw, { type: 'oos', display_name: name })
+                  if (!name || !newOosState) return
+                  onOverride(flag.raw, { type: 'oos', display_name: name, state: newOosState })
                   setEditingNewOos(false)
                 }}
-                disabled={!newOosName.trim()}
+                disabled={!newOosName.trim() || !newOosState}
+                title={newOosState ? undefined : 'Choose the state'}
                 className="text-xs px-2 py-1 bg-amber-600 text-white hover:bg-amber-700 disabled:opacity-40 transition-colors whitespace-nowrap"
               >
                 Create
