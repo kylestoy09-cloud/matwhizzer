@@ -2,6 +2,23 @@
 
 ---
 
+## 2026-11-11 — Nine out-of-state duplicate schools merged
+
+**Migration file:** `docs/migrations/20261111_merge_oos_duplicate_schools.sql`
+
+**Purpose:** Kyle: merge. Eight pairs from the state review, plus Cleveland: Kyle's lists give Cleveland High School TN, and #1024 "Cleveland, TN" is the same school. In each pair the empty record held only team-standings rows and a name link. It still caught imports, e.g. "Oxford Area Hs" matched the empty "Oxford Area (PA)".
+
+**Changes:**
+- Kept ← merged: 488 ← 843, 765 ← 830, 511 ← 831, 530 ← 864, 1017 ← 1025, 643 ← 1032, 661 ← 1029, 513 ← 834, 566 ← 1024.
+- No tournament has a team row for both records of a pair.
+- Each kept school takes the cleaner name (e.g. "Loyola Academy (Wilmette, IL)", "Oxford Area (PA)", "Cleveland (TN)"). Its previous name is saved as an out-of-state alias.
+
+**Backup:** `backups/20261111_merge_oos_duplicates_before.json`.
+
+**Status:** waiting for Kyle to run it.
+
+---
+
 ## 2026-11-11 — Out-of-state states from Kyle's TrackWrestling team lists; 3 mixed records split
 
 **No migration** (data; service role). Scripts: `scripts/oos_states_from_lists_20261111.mts` (compare, read-only) and `scripts/apply_oos_states_from_lists_20261111.mts --apply`.
