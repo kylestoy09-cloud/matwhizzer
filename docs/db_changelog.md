@@ -2,6 +2,26 @@
 
 ---
 
+## 2026-11-11 — Tournament standings from Kyle's TrackWrestling copy; 4 out-of-state schools created
+
+**No migration** (data; service role, `scripts/load_tournament_standings_20261111.mts --apply`, add-only).
+
+**Source:** `Whizzer Upload/2026-27 Girls Data/Tournament Standings.rtf`, every 2025-26 in-season tournament that has standings, parsed to `docs/reviews/tournament_standings_20261111.json`. Kyle: if a tournament isn't in it, it has no standings.
+
+**Loaded:** 514 rows for 19 tournaments, 12 boys and 7 girls.
+- **Team matching:** first by the school text on that team's own bouts at the tournament, then the matcher, then 37 settled by hand (short names such as "Rv" = Rancocas Valley, "Elco" = Eastern Lebanon Co).
+- **Same school twice:** Summit/Chatham (Pioneer Classic) and Wyoming Area (Ralph Wetzel) each appear twice in TrackWrestling's standings, the second entry with 0 points. Both rows are kept, as copied.
+- **New out-of-state schools** (via `createOosSchool`, with state): 1207 Archmere Academy (DE), 1208 Germantown Friends (PA), 1209 Executive Education Academy (PA), 1210 Pottstown (PA).
+- **Backup (ids):** `backups/20261111_tournament_standings_added.json`.
+
+**Still without standings (none exist):** 10 boys and 13 girls, listed in `docs/reviews/tournaments_without_team_standings.csv` (a copy is in Whizzer Upload).
+
+**Scoring test** (`scripts/check_inseason_team_scoring.mts`, read-only): can the proven TrackWrestling rules score in-season events from stored data?
+- **Exact totals:** rarely. Byes aren't stored for in-season events (2 each), out-of-state and national events store only NJ teams' bouts, and placement tables vary.
+- **Winner and podium:** with one fixed table (16/12/9/7/5/3/2/1), our winner matches the official at 61 of 72 NJ events, and 192 of 216 top-3 spots match.
+
+---
+
 ## 2026-11-11 — Nine out-of-state duplicate schools merged
 
 **Migration file:** `docs/migrations/20261111_merge_oos_duplicate_schools.sql`

@@ -1,0 +1,10615 @@
+[
+ {
+  "name": "Howdy Duncan",
+  "rows": [
+   {
+    "place": 1,
+    "team": "William Penn H.S.",
+    "score": 240.5,
+    "counts": [
+     2,
+     3,
+     1,
+     0,
+     2,
+     2
+    ]
+   },
+   {
+    "place": 2,
+    "team": "Plymouth Whitemarsh",
+    "score": 209.5,
+    "counts": [
+     2,
+     1,
+     2,
+     1,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 3,
+    "team": "Milford Senior",
+    "score": 204.0,
+    "counts": [
+     3,
+     2,
+     0,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "place": 4,
+    "team": "Laurel H S",
+    "score": 173.5,
+    "counts": [
+     0,
+     1,
+     2,
+     0,
+     2,
+     1
+    ]
+   },
+   {
+    "place": 5,
+    "team": "Mt St Joseph",
+    "score": 165.0,
+    "counts": [
+     0,
+     3,
+     0,
+     3,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 6,
+    "team": "Charter School of Wilmington",
+    "score": 130.0,
+    "counts": [
+     1,
+     1,
+     0,
+     1,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 7,
+    "team": "Conrad School of Science",
+    "score": 124.0,
+    "counts": [
+     1,
+     0,
+     1,
+     2,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 8,
+    "team": "Pennsville",
+    "score": 122.5,
+    "counts": [
+     0,
+     1,
+     1,
+     1,
+     2,
+     0
+    ]
+   },
+   {
+    "place": 9,
+    "team": "Episcopal Academy",
+    "score": 118.5,
+    "counts": [
+     2,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 10,
+    "team": "Palisades",
+    "score": 117.0,
+    "counts": [
+     2,
+     0,
+     0,
+     1,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 11,
+    "team": "McKean H S",
+    "score": 109.0,
+    "counts": [
+     0,
+     1,
+     2,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 12,
+    "team": "First State Military Academy",
+    "score": 99.5,
+    "counts": [
+     1,
+     0,
+     0,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "place": 13,
+    "team": "Unionville",
+    "score": 94.0,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     1,
+     1
+    ]
+   },
+   {
+    "place": 14,
+    "team": "Dover",
+    "score": 87.5,
+    "counts": [
+     0,
+     0,
+     1,
+     1,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 15,
+    "team": "Caravel Academy",
+    "score": 82.0,
+    "counts": [
+     0,
+     1,
+     1,
+     1,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 16,
+    "team": "Delcastle H S",
+    "score": 81.5,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 17,
+    "team": "Odessa H S",
+    "score": 65.0,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 18,
+    "team": "Calvert Hall College",
+    "score": 61.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 19,
+    "team": "Newark H S",
+    "score": 52.0,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 20,
+    "team": "Saint Mark`s",
+    "score": 50.0,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 21,
+    "team": "Tower Hill HS",
+    "score": 49.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     2
+    ]
+   },
+   {
+    "place": 22,
+    "team": "Tatnall H S",
+    "score": 49.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 23,
+    "team": "Christiana H S",
+    "score": 46.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 24,
+    "team": "Mt Pleasant H S",
+    "score": 41.5,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 25,
+    "team": "Glasgow H S",
+    "score": 35.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 25,
+    "team": "Sussex Academy",
+    "score": 35.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 27,
+    "team": "Red Lion Christian Academy",
+    "score": 28.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 28,
+    "team": "Delmar Junior-Senior H S",
+    "score": 24.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 29,
+    "team": "Archmere Academy",
+    "score": 21.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 30,
+    "team": "Odyssey Charter School",
+    "score": 15.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Morris Knolls Holiday Tournament",
+  "rows": [
+   {
+    "place": 1,
+    "team": "South Plainfield",
+    "score": 218.0,
+    "counts": [
+     0,
+     0,
+     5,
+     4,
+     1,
+     4,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 2,
+    "team": "Morris Knolls",
+    "score": 210.0,
+    "counts": [
+     0,
+     0,
+     5,
+     2,
+     3,
+     4,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 3,
+    "team": "Montville",
+    "score": 199.5,
+    "counts": [
+     0,
+     0,
+     5,
+     5,
+     2,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 4,
+    "team": "Sayreville",
+    "score": 184.0,
+    "counts": [
+     0,
+     0,
+     5,
+     9,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 5,
+    "team": "Roxbury",
+    "score": 158.0,
+    "counts": [
+     0,
+     0,
+     4,
+     3,
+     2,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 6,
+    "team": "Sparta",
+    "score": 156.5,
+    "counts": [
+     0,
+     0,
+     3,
+     6,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 7,
+    "team": "West Morris",
+    "score": 152.5,
+    "counts": [
+     0,
+     0,
+     5,
+     5,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 8,
+    "team": "Hackettstown",
+    "score": 126.5,
+    "counts": [
+     0,
+     0,
+     4,
+     3,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 9,
+    "team": "Watchung Hills",
+    "score": 103.5,
+    "counts": [
+     0,
+     0,
+     3,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 10,
+    "team": "Seton Hall Prep",
+    "score": 88.5,
+    "counts": [
+     0,
+     0,
+     1,
+     3,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 11,
+    "team": "Warren Hills",
+    "score": 42.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ]
+ },
+ {
+  "name": "40th Marinelli - EHT Varsity Tournament",
+  "rows": [
+   {
+    "place": 1,
+    "team": "Seneca",
+    "score": 227.5,
+    "counts": [
+     1,
+     4,
+     4,
+     2,
+     2,
+     2,
+     0
+    ]
+   },
+   {
+    "place": 2,
+    "team": "Clearview Regional",
+    "score": 121.0,
+    "counts": [
+     0,
+     3,
+     1,
+     2,
+     0,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 3,
+    "team": "Cumberland Regional",
+    "score": 109.5,
+    "counts": [
+     1,
+     1,
+     2,
+     0,
+     2,
+     2,
+     3
+    ]
+   },
+   {
+    "place": 4,
+    "team": "Haddonfield High Schol",
+    "score": 96.5,
+    "counts": [
+     1,
+     1,
+     2,
+     1,
+     1,
+     2,
+     1
+    ]
+   },
+   {
+    "place": 5,
+    "team": "Ocean City",
+    "score": 89.0,
+    "counts": [
+     0,
+     1,
+     2,
+     2,
+     0,
+     2,
+     2
+    ]
+   },
+   {
+    "place": 6,
+    "team": "Bordentown Regional/Florence Township",
+    "score": 84.0,
+    "counts": [
+     0,
+     3,
+     0,
+     0,
+     1,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 7,
+    "team": "Absegami",
+    "score": 79.5,
+    "counts": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     0,
+     2
+    ]
+   },
+   {
+    "place": 8,
+    "team": "Egg Harbor",
+    "score": 72.0,
+    "counts": [
+     0,
+     0,
+     1,
+     1,
+     2,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 9,
+    "team": "Williamstown",
+    "score": 63.0,
+    "counts": [
+     2,
+     0,
+     1,
+     3,
+     0,
+     3,
+     1
+    ]
+   },
+   {
+    "place": 10,
+    "team": "Vineland",
+    "score": 43.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     3,
+     1,
+     2
+    ]
+   },
+   {
+    "place": 11,
+    "team": "Holy Spirit",
+    "score": 28.5,
+    "counts": [
+     1,
+     0,
+     0,
+     2,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 12,
+    "team": "Holy Cross",
+    "score": 24.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     2,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 13,
+    "team": "Atlantic City",
+    "score": 1.5,
+    "counts": [
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 14,
+    "team": "Audubon",
+    "score": 0.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 14,
+    "team": "Lower Cape May Reg",
+    "score": 0.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Sam Cali Battle for the Belt",
+  "rows": [
+   {
+    "place": 1,
+    "team": "Greens Farms Academy",
+    "score": 198.0,
+    "counts": [
+     0,
+     0,
+     3,
+     2,
+     2,
+     1,
+     0,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 2,
+    "team": "Paramus Catholic",
+    "score": 161.0,
+    "counts": [
+     0,
+     0,
+     4,
+     5,
+     0,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 3,
+    "team": "Delbarton",
+    "score": 109.5,
+    "counts": [
+     0,
+     0,
+     5,
+     3,
+     1,
+     0,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 4,
+    "team": "Pope John XXIII",
+    "score": 99.0,
+    "counts": [
+     0,
+     0,
+     4,
+     3,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 5,
+    "team": "Lower Cape May",
+    "score": 92.5,
+    "counts": [
+     0,
+     0,
+     3,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 6,
+    "team": "St. Peter's Prep",
+    "score": 87.0,
+    "counts": [
+     0,
+     0,
+     3,
+     2,
+     0,
+     0,
+     4,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 7,
+    "team": "Mt. Olive",
+    "score": 84.0,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     1,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 8,
+    "team": "Don Bosco Prep",
+    "score": 82.5,
+    "counts": [
+     0,
+     0,
+     4,
+     4,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 9,
+    "team": "Depaul Catholic",
+    "score": 75.5,
+    "counts": [
+     0,
+     0,
+     2,
+     1,
+     1,
+     0,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 10,
+    "team": "Ridge High School",
+    "score": 72.5,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 11,
+    "team": "Toms River East",
+    "score": 65.5,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 12,
+    "team": "Seton Hall Prep",
+    "score": 63.5,
+    "counts": [
+     0,
+     0,
+     5,
+     2,
+     0,
+     0,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 13,
+    "team": "Delsea",
+    "score": 53.0,
+    "counts": [
+     0,
+     0,
+     4,
+     3,
+     0,
+     1,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 14,
+    "team": "Cranford",
+    "score": 47.5,
+    "counts": [
+     0,
+     0,
+     1,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 15,
+    "team": "Red Bank Catholic",
+    "score": 46.5,
+    "counts": [
+     0,
+     0,
+     3,
+     3,
+     2,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 16,
+    "team": "Hackettstown",
+    "score": 42.5,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 17,
+    "team": "Wall",
+    "score": 42.0,
+    "counts": [
+     0,
+     0,
+     0,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 18,
+    "team": "Piscataway",
+    "score": 39.0,
+    "counts": [
+     0,
+     0,
+     0,
+     2,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 19,
+    "team": "Matawan",
+    "score": 35.5,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 20,
+    "team": "Pascack Valley",
+    "score": 35.0,
+    "counts": [
+     0,
+     0,
+     3,
+     5,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 20,
+    "team": "Sparta",
+    "score": 35.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 22,
+    "team": "Northern Highlands",
+    "score": 34.5,
+    "counts": [
+     0,
+     0,
+     3,
+     3,
+     0,
+     0,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 23,
+    "team": "Mt. St. Charles",
+    "score": 31.5,
+    "counts": [
+     0,
+     0,
+     0,
+     3,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 24,
+    "team": "Passaic Tech",
+    "score": 30.5,
+    "counts": [
+     0,
+     0,
+     1,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 25,
+    "team": "Bridgewater-Raritan",
+    "score": 29.0,
+    "counts": [
+     0,
+     0,
+     3,
+     4,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 26,
+    "team": "Bound Brook",
+    "score": 28.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 27,
+    "team": "Kinnelon",
+    "score": 27.5,
+    "counts": [
+     0,
+     0,
+     1,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 27,
+    "team": "St. Benedict's Prep",
+    "score": 27.5,
+    "counts": [
+     0,
+     0,
+     2,
+     2,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 29,
+    "team": "Hillsborough",
+    "score": 26.5,
+    "counts": [
+     0,
+     0,
+     4,
+     1,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 30,
+    "team": "Peddie School",
+    "score": 26.0,
+    "counts": [
+     0,
+     0,
+     1,
+     1,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 30,
+    "team": "The Pingry School",
+    "score": 26.0,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 32,
+    "team": "Middle Township",
+    "score": 25.5,
+    "counts": [
+     0,
+     0,
+     3,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 33,
+    "team": "Moorestown",
+    "score": 24.0,
+    "counts": [
+     0,
+     0,
+     1,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 33,
+    "team": "Old Tappan",
+    "score": 24.0,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 33,
+    "team": "Ponaganset",
+    "score": 24.0,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 36,
+    "team": "Middletown South",
+    "score": 23.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 37,
+    "team": "Dumont",
+    "score": 22.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 38,
+    "team": "Lakeland",
+    "score": 21.0,
+    "counts": [
+     0,
+     0,
+     1,
+     9,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 38,
+    "team": "Nutley",
+    "score": 21.0,
+    "counts": [
+     0,
+     0,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 40,
+    "team": "Morris Knolls",
+    "score": 19.0,
+    "counts": [
+     0,
+     0,
+     1,
+     4,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 41,
+    "team": "Woodbridge high school",
+    "score": 18.5,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 42,
+    "team": "Chaminade",
+    "score": 17.5,
+    "counts": [
+     0,
+     0,
+     6,
+     4,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 43,
+    "team": "Manasquan",
+    "score": 16.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 44,
+    "team": "Passaic Valley",
+    "score": 15.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 45,
+    "team": "Ramapo",
+    "score": 14.0,
+    "counts": [
+     0,
+     0,
+     0,
+     3,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 46,
+    "team": "Bergenfield",
+    "score": 10.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 47,
+    "team": "North Bergen",
+    "score": 10.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 48,
+    "team": "Paramus",
+    "score": 9.0,
+    "counts": [
+     0,
+     0,
+     2,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 49,
+    "team": "Pascack Hills",
+    "score": 8.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 49,
+    "team": "Roselle park",
+    "score": 8.0,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 51,
+    "team": "Cherokee",
+    "score": 7.0,
+    "counts": [
+     0,
+     0,
+     5,
+     8,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 52,
+    "team": "Teaneck",
+    "score": 6.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 52,
+    "team": "Waldwick/Midland Park",
+    "score": 6.0,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 52,
+    "team": "Wayne Hills",
+    "score": 6.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 55,
+    "team": "Union High School",
+    "score": 5.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 56,
+    "team": "Bloomfield",
+    "score": 4.0,
+    "counts": [
+     0,
+     0,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 56,
+    "team": "Dwight Morrow",
+    "score": 4.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 56,
+    "team": "Newton",
+    "score": 4.0,
+    "counts": [
+     0,
+     0,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 56,
+    "team": "Watchung Hills",
+    "score": 4.0,
+    "counts": [
+     0,
+     0,
+     4,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 56,
+    "team": "West Essex",
+    "score": 4.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 61,
+    "team": "Demarest",
+    "score": 3.0,
+    "counts": [
+     0,
+     0,
+     2,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 62,
+    "team": "Glen Rock",
+    "score": 0.0,
+    "counts": [
+     0,
+     0,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 62,
+    "team": "Saddle Brook",
+    "score": 0.0,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ]
+ },
+ {
+  "name": "67th Annual John Goles Tournament",
+  "rows": [
+   {
+    "place": 1,
+    "team": "St. Joseph Metuchen",
+    "score": 233.5,
+    "counts": [
+     0,
+     3,
+     4,
+     3,
+     0,
+     0,
+     2
+    ]
+   },
+   {
+    "place": 2,
+    "team": "Delaware Valley Regional",
+    "score": 231.0,
+    "counts": [
+     0,
+     3,
+     5,
+     2,
+     0,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 3,
+    "team": "West Morris Central",
+    "score": 177.0,
+    "counts": [
+     0,
+     3,
+     1,
+     2,
+     1,
+     0,
+     4
+    ]
+   },
+   {
+    "place": 4,
+    "team": "Warren Hills",
+    "score": 161.0,
+    "counts": [
+     0,
+     1,
+     2,
+     2,
+     1,
+     3,
+     0
+    ]
+   },
+   {
+    "place": 5,
+    "team": "Butler",
+    "score": 104.5,
+    "counts": [
+     0,
+     0,
+     2,
+     2,
+     1,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 6,
+    "team": "Kearny",
+    "score": 87.0,
+    "counts": [
+     0,
+     1,
+     0,
+     1,
+     0,
+     3,
+     2
+    ]
+   },
+   {
+    "place": 7,
+    "team": "Westfield",
+    "score": 77.5,
+    "counts": [
+     0,
+     2,
+     0,
+     0,
+     0,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 8,
+    "team": "Columbia",
+    "score": 62.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     2,
+     2,
+     1
+    ]
+   },
+   {
+    "place": 9,
+    "team": "Lyndhurst/North Arlington",
+    "score": 61.0,
+    "counts": [
+     0,
+     1,
+     0,
+     0,
+     2,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 10,
+    "team": "Montclair",
+    "score": 58.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     3,
+     1,
+     1
+    ]
+   },
+   {
+    "place": 11,
+    "team": "Princeton",
+    "score": 56.5,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     2,
+     1,
+     1
+    ]
+   },
+   {
+    "place": 12,
+    "team": "Verona",
+    "score": 46.0,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     2,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 13,
+    "team": "Hoboken High School",
+    "score": 19.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "place": 14,
+    "team": "Newton",
+    "score": 0.0,
+    "counts": [
+     10,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ]
+ },
+ {
+  "name": "2026 Pioneer Classic",
+  "rows": [
+   {
+    "place": 1,
+    "team": "Millburn",
+    "score": 139.5,
+    "counts": [
+     0,
+     0,
+     3,
+     2,
+     1,
+     3
+    ]
+   },
+   {
+    "place": 2,
+    "team": "Middlesex",
+    "score": 126.0,
+    "counts": [
+     0,
+     1,
+     1,
+     3,
+     2,
+     1
+    ]
+   },
+   {
+    "place": 3,
+    "team": "Madison",
+    "score": 117.5,
+    "counts": [
+     0,
+     0,
+     1,
+     3,
+     3,
+     0
+    ]
+   },
+   {
+    "place": 4,
+    "team": "Whippany Park",
+    "score": 114.0,
+    "counts": [
+     0,
+     0,
+     2,
+     2,
+     2,
+     0
+    ]
+   },
+   {
+    "place": 5,
+    "team": "Boonton",
+    "score": 108.0,
+    "counts": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     2
+    ]
+   },
+   {
+    "place": 6,
+    "team": "Metuchen",
+    "score": 107.0,
+    "counts": [
+     0,
+     0,
+     3,
+     1,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 7,
+    "team": "Summit/Chatham",
+    "score": 74.0,
+    "counts": [
+     1,
+     0,
+     1,
+     0,
+     1,
+     2
+    ]
+   },
+   {
+    "place": 8,
+    "team": "Highland Park",
+    "score": 69.5,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     2,
+     1
+    ]
+   },
+   {
+    "place": 9,
+    "team": "New Providence",
+    "score": 65.0,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     3
+    ]
+   },
+   {
+    "place": 10,
+    "team": "Newark Academy",
+    "score": 20.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 11,
+    "team": "Summit/Chatham",
+    "score": 0.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ]
+ },
+ {
+  "name": "2026 East Coast Catholic Classic",
+  "rows": [
+   {
+    "place": 1,
+    "team": "Malvern Prep",
+    "score": 405.5,
+    "counts": [
+     0,
+     0,
+     10,
+     3,
+     2,
+     0,
+     0,
+     2
+    ]
+   },
+   {
+    "place": 2,
+    "team": "Christian Brothers Academy",
+    "score": 241.0,
+    "counts": [
+     0,
+     0,
+     2,
+     4,
+     2,
+     1,
+     3,
+     1
+    ]
+   },
+   {
+    "place": 3,
+    "team": "Don Bosco Prep",
+    "score": 202.5,
+    "counts": [
+     0,
+     0,
+     2,
+     1,
+     0,
+     2,
+     2,
+     0
+    ]
+   },
+   {
+    "place": 4,
+    "team": "Benedictine College Prep",
+    "score": 200.0,
+    "counts": [
+     0,
+     0,
+     0,
+     4,
+     1,
+     2,
+     0,
+     3
+    ]
+   },
+   {
+    "place": 5,
+    "team": "Christian Brothers High",
+    "score": 190.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     5,
+     2,
+     3
+    ]
+   },
+   {
+    "place": 6,
+    "team": "Cardinal Gibbons",
+    "score": 128.5,
+    "counts": [
+     3,
+     0,
+     0,
+     0,
+     2,
+     0,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 7,
+    "team": "Gonzaga",
+    "score": 105.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 8,
+    "team": "Dematha",
+    "score": 95.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     2,
+     0,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 9,
+    "team": "St. John Paul The Great",
+    "score": 83.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 10,
+    "team": "St. Mark`s",
+    "score": 75.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     2,
+     0,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 11,
+    "team": "St. Benedict`s Prep",
+    "score": 75.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 12,
+    "team": "Notre Dame",
+    "score": 73.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "place": 13,
+    "team": "Peninsula Catholic",
+    "score": 58.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 14,
+    "team": "St. John`s College",
+    "score": 54.0,
+    "counts": [
+     3,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 15,
+    "team": "Holy Cross Prep",
+    "score": 46.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 16,
+    "team": "Mount Saint Charles Academy",
+    "score": 43.5,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 17,
+    "team": "Trinity",
+    "score": 43.0,
+    "counts": [
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 18,
+    "team": "The Heights",
+    "score": 37.5,
+    "counts": [
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 19,
+    "team": "Catholic High School",
+    "score": 36.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 20,
+    "team": "Bishop O`Connell",
+    "score": 18.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 21,
+    "team": "Charlotte Christian",
+    "score": 17.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 22,
+    "team": "St. John Bosco Academy",
+    "score": 14.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Doc Buchanan",
+  "rows": [
+   {
+    "place": 1,
+    "team": "Buchanan",
+    "score": 238.5,
+    "counts": [
+     0,
+     0,
+     2,
+     1,
+     2,
+     2,
+     0,
+     1,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 2,
+    "team": "Faith Christian (PA)",
+    "score": 189.5,
+    "counts": [
+     0,
+     0,
+     2,
+     2,
+     0,
+     3,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 3,
+    "team": "St. John Bosco",
+    "score": 161.0,
+    "counts": [
+     0,
+     0,
+     3,
+     0,
+     0,
+     0,
+     2,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 4,
+    "team": "Delbarton (NJ)",
+    "score": 141.5,
+    "counts": [
+     0,
+     0,
+     1,
+     1,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 4,
+    "team": "Poway",
+    "score": 141.5,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     1,
+     0,
+     1,
+     0,
+     2,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 6,
+    "team": "Clovis",
+    "score": 125.5,
+    "counts": [
+     0,
+     0,
+     1,
+     1,
+     1,
+     0,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 7,
+    "team": "Edmond North (OK)",
+    "score": 115.5,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     2,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 8,
+    "team": "St. Peter`s Prep (NJ)",
+    "score": 106.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     2,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 9,
+    "team": "Clovis North",
+    "score": 101.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 10,
+    "team": "Gilroy",
+    "score": 81.5,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     1,
+     0,
+     0,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 11,
+    "team": "Stillwater (OK)",
+    "score": 67.5,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 12,
+    "team": "Bergen Catholic (NJ)",
+    "score": 63.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 13,
+    "team": "Immaculate Conception (IL)",
+    "score": 62.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 14,
+    "team": "Layton (UT)",
+    "score": 59.5,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 15,
+    "team": "Esperanza",
+    "score": 54.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 16,
+    "team": "Bixby (OK)",
+    "score": 51.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 17,
+    "team": "Fountain Valley",
+    "score": 50.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 17,
+    "team": "Sunnyside (AZ)",
+    "score": 50.0,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 19,
+    "team": "South Anchorage (AK)",
+    "score": 44.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 20,
+    "team": "Pitman",
+    "score": 43.0,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 21,
+    "team": "Birmingham",
+    "score": 40.0,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 22,
+    "team": "Randall (TX)",
+    "score": 38.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 23,
+    "team": "Pomona (CO)",
+    "score": 38.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 23,
+    "team": "SLAM Academy (NV)",
+    "score": 38.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 25,
+    "team": "Oakdale",
+    "score": 37.0,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 26,
+    "team": "Roosevelt (CO)",
+    "score": 36.0,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 27,
+    "team": "Grandview (CO)",
+    "score": 34.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 27,
+    "team": "Valencia",
+    "score": 34.5,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 29,
+    "team": "El Diamante",
+    "score": 31.5,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 30,
+    "team": "Wasatch (UT)",
+    "score": 30.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 31,
+    "team": "Liberty-Brentwood",
+    "score": 27.5,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 32,
+    "team": "Juab (UT)",
+    "score": 27.0,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 33,
+    "team": "Los Gatos",
+    "score": 24.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 34,
+    "team": "Etiwanda",
+    "score": 23.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 34,
+    "team": "Folsom",
+    "score": 23.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 36,
+    "team": "Everett Alverez",
+    "score": 22.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 36,
+    "team": "St. Viator (IL)",
+    "score": 22.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 38,
+    "team": "Bellarmine Prep",
+    "score": 22.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 38,
+    "team": "Frontier",
+    "score": 22.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 38,
+    "team": "West Linn (OR)",
+    "score": 22.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 41,
+    "team": "Oak Park River Forest (IL)",
+    "score": 21.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 41,
+    "team": "West Aurora (IL)",
+    "score": 21.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 43,
+    "team": "Tahoma (WA)",
+    "score": 20.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 44,
+    "team": "Del Norte",
+    "score": 20.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 44,
+    "team": "Granite Hills-El Cajon",
+    "score": 20.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 44,
+    "team": "Westlake (UT)",
+    "score": 20.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 47,
+    "team": "Orting (WA)",
+    "score": 19.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 48,
+    "team": "Del Oro",
+    "score": 16.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 48,
+    "team": "Sultana",
+    "score": 16.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 50,
+    "team": "Anderson",
+    "score": 14.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 50,
+    "team": "Mullen (CO)",
+    "score": 14.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 50,
+    "team": "Temecula Valley",
+    "score": 14.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 53,
+    "team": "Reedley",
+    "score": 13.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 53,
+    "team": "South Summit (UT)",
+    "score": 13.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 55,
+    "team": "Cherokee Trail (CO)",
+    "score": 12.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 56,
+    "team": "Windsor (CO)",
+    "score": 11.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 57,
+    "team": "Chino",
+    "score": 11.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 57,
+    "team": "Greeley Central (CO)",
+    "score": 11.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 59,
+    "team": "Severance (CO)",
+    "score": 10.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 60,
+    "team": "Eaton (CO)",
+    "score": 10.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 60,
+    "team": "Imperial",
+    "score": 10.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 60,
+    "team": "Toppenish (WA)",
+    "score": 10.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 63,
+    "team": "Malad (ID)",
+    "score": 9.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 64,
+    "team": "Central Catholic",
+    "score": 9.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 64,
+    "team": "Kingsburg",
+    "score": 9.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 64,
+    "team": "La Grande (OR)",
+    "score": 9.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 64,
+    "team": "Meridian (ID)",
+    "score": 9.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 68,
+    "team": "Sheldon",
+    "score": 8.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 69,
+    "team": "Brawley",
+    "score": 8.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 69,
+    "team": "Carbon (UT)",
+    "score": 8.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 69,
+    "team": "Granada",
+    "score": 8.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 69,
+    "team": "Lyons Township (IL)",
+    "score": 8.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 69,
+    "team": "Victor Valley",
+    "score": 8.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 74,
+    "team": "Millikan",
+    "score": 7.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 75,
+    "team": "Addison Trail (IL)",
+    "score": 7.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 75,
+    "team": "Canyon View (UT)",
+    "score": 7.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 75,
+    "team": "Centennial Corona",
+    "score": 7.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 75,
+    "team": "Central Union",
+    "score": 7.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 75,
+    "team": "Green Valley (NV)",
+    "score": 7.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 75,
+    "team": "Redlands East Valley",
+    "score": 7.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 81,
+    "team": "Bella Vista",
+    "score": 6.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 81,
+    "team": "Davis (UT)",
+    "score": 6.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 81,
+    "team": "Harrisburg (OR)",
+    "score": 6.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 81,
+    "team": "La Mirada",
+    "score": 6.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 81,
+    "team": "Pueblo East (CO)",
+    "score": 6.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 81,
+    "team": "Roosevelt-Eastvale",
+    "score": 6.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 81,
+    "team": "St. Francis",
+    "score": 6.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 88,
+    "team": "Clovis West",
+    "score": 5.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 88,
+    "team": "Corona Del Mar",
+    "score": 5.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 90,
+    "team": "Burbank",
+    "score": 5.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 90,
+    "team": "Fort Lupton (CO)",
+    "score": 5.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 90,
+    "team": "J Serra",
+    "score": 5.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 90,
+    "team": "La Costa Canyon",
+    "score": 5.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 94,
+    "team": "Calvary Chapel",
+    "score": 4.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 95,
+    "team": "Fruita Monument (CO)",
+    "score": 4.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 95,
+    "team": "James Monroe",
+    "score": 4.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 95,
+    "team": "Riverton (UT)",
+    "score": 4.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 98,
+    "team": "Camarillo",
+    "score": 3.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 98,
+    "team": "Moorpark",
+    "score": 3.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 98,
+    "team": "Roseburg (OR)",
+    "score": 3.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 98,
+    "team": "South Torrance",
+    "score": 3.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 102,
+    "team": "Bishop Gorman (NV)",
+    "score": 2.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 102,
+    "team": "Brush (CO)",
+    "score": 2.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 102,
+    "team": "Canyon View (AZ)",
+    "score": 2.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 102,
+    "team": "Cerritos",
+    "score": 2.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 102,
+    "team": "Highland-Bakersfield",
+    "score": 2.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 102,
+    "team": "Legend (CO)",
+    "score": 2.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 102,
+    "team": "Liberty-Bakersfield",
+    "score": 2.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 102,
+    "team": "Punahou(HI)",
+    "score": 2.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 110,
+    "team": "San Clemente",
+    "score": 1.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 111,
+    "team": "Bakersfield",
+    "score": 0.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 111,
+    "team": "Bakersfield Christian",
+    "score": 0.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 111,
+    "team": "Bonita",
+    "score": 0.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 111,
+    "team": "Fremont",
+    "score": 0.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 111,
+    "team": "Garces",
+    "score": 0.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 111,
+    "team": "Mountain View",
+    "score": 0.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 111,
+    "team": "Novato",
+    "score": 0.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 111,
+    "team": "Sanger",
+    "score": 0.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 111,
+    "team": "Selma",
+    "score": 0.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Buc Classic",
+  "rows": [
+   {
+    "place": 1,
+    "team": "Middle Township",
+    "score": 269.0,
+    "counts": [
+     0,
+     0,
+     6,
+     1,
+     2,
+     3,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 2,
+    "team": "Manasquan",
+    "score": 197.5,
+    "counts": [
+     0,
+     0,
+     4,
+     1,
+     1,
+     0,
+     2,
+     0
+    ]
+   },
+   {
+    "place": 3,
+    "team": "Pinelands",
+    "score": 151.0,
+    "counts": [
+     0,
+     0,
+     1,
+     2,
+     0,
+     1,
+     3,
+     1
+    ]
+   },
+   {
+    "place": 4,
+    "team": "Asbury Park",
+    "score": 141.0,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     1,
+     3,
+     2,
+     2
+    ]
+   },
+   {
+    "place": 5,
+    "team": "Keansburg",
+    "score": 136.0,
+    "counts": [
+     0,
+     0,
+     1,
+     1,
+     2,
+     2,
+     2,
+     0
+    ]
+   },
+   {
+    "place": 6,
+    "team": "Rumson Fair Haven",
+    "score": 121.5,
+    "counts": [
+     2,
+     0,
+     0,
+     1,
+     1,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "place": 7,
+    "team": "South Brunswick",
+    "score": 88.0,
+    "counts": [
+     1,
+     1,
+     0,
+     0,
+     1,
+     0,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 8,
+    "team": "Red Bank Regional",
+    "score": 86.5,
+    "counts": [
+     0,
+     0,
+     1,
+     1,
+     0,
+     0,
+     2,
+     0
+    ]
+   },
+   {
+    "place": 9,
+    "team": "Marlboro",
+    "score": 83.5,
+    "counts": [
+     1,
+     0,
+     0,
+     0,
+     1,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "place": 10,
+    "team": "Neptune",
+    "score": 79.0,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     2,
+     0,
+     2
+    ]
+   },
+   {
+    "place": 11,
+    "team": "Brick Township",
+    "score": 66.0,
+    "counts": [
+     1,
+     3,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 12,
+    "team": "Shore Regional",
+    "score": 59.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     3,
+     0,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 13,
+    "team": "Freehold Boro",
+    "score": 36.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 14,
+    "team": "Keyport",
+    "score": 36.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     2,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 15,
+    "team": "Monmouth",
+    "score": 34.5,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 16,
+    "team": "New Brunswick",
+    "score": 23.5,
+    "counts": [
+     1,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 17,
+    "team": "Willingboro",
+    "score": 9.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 18,
+    "team": "Rutgers Prep",
+    "score": 6.0,
+    "counts": [
+     3,
+     4,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Battle at the Brook",
+  "rows": [
+   {
+    "place": 1,
+    "team": "Indian Hills",
+    "score": 223.5,
+    "counts": [
+     0,
+     0,
+     4,
+     1,
+     3,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 2,
+    "team": "Bernards",
+    "score": 206.5,
+    "counts": [
+     0,
+     0,
+     7,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 3,
+    "team": "Passaic",
+    "score": 197.0,
+    "counts": [
+     0,
+     0,
+     4,
+     2,
+     0,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 4,
+    "team": "Union City",
+    "score": 195.5,
+    "counts": [
+     0,
+     0,
+     3,
+     3,
+     1,
+     0,
+     2,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 5,
+    "team": "Manchester Regional",
+    "score": 192.5,
+    "counts": [
+     0,
+     0,
+     5,
+     2,
+     2,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 6,
+    "team": "Bergenfield",
+    "score": 189.5,
+    "counts": [
+     0,
+     0,
+     5,
+     1,
+     0,
+     1,
+     2,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 6,
+    "team": "Hawthorne",
+    "score": 189.5,
+    "counts": [
+     0,
+     0,
+     5,
+     4,
+     0,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 8,
+    "team": "Garfield",
+    "score": 187.5,
+    "counts": [
+     0,
+     0,
+     1,
+     1,
+     2,
+     4,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 9,
+    "team": "Dwight Morrow",
+    "score": 180.0,
+    "counts": [
+     0,
+     0,
+     5,
+     4,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 10,
+    "team": "Saddle Brook/Lodi",
+    "score": 174.0,
+    "counts": [
+     0,
+     0,
+     3,
+     2,
+     1,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 11,
+    "team": "Rutherford",
+    "score": 159.5,
+    "counts": [
+     0,
+     0,
+     2,
+     5,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 12,
+    "team": "Tenafly",
+    "score": 151.5,
+    "counts": [
+     0,
+     0,
+     3,
+     1,
+     2,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 13,
+    "team": "Fort Lee",
+    "score": 129.5,
+    "counts": [
+     0,
+     0,
+     2,
+     1,
+     0,
+     1,
+     1,
+     4,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 14,
+    "team": "Verona",
+    "score": 123.0,
+    "counts": [
+     0,
+     0,
+     2,
+     1,
+     1,
+     0,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 15,
+    "team": "Secaucus",
+    "score": 109.0,
+    "counts": [
+     0,
+     0,
+     2,
+     0,
+     1,
+     0,
+     2,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 16,
+    "team": "College Achieve Patterson",
+    "score": 108.0,
+    "counts": [
+     0,
+     0,
+     2,
+     5,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 17,
+    "team": "Summit/Chatham",
+    "score": 106.5,
+    "counts": [
+     0,
+     0,
+     3,
+     3,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 18,
+    "team": "Newark Academy",
+    "score": 98.0,
+    "counts": [
+     0,
+     0,
+     1,
+     6,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 19,
+    "team": "JFK",
+    "score": 97.5,
+    "counts": [
+     0,
+     0,
+     3,
+     3,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 20,
+    "team": "Eastside",
+    "score": 96.0,
+    "counts": [
+     0,
+     0,
+     1,
+     4,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 21,
+    "team": "Hackensack",
+    "score": 77.5,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     1,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 22,
+    "team": "Pioneer Academy",
+    "score": 75.0,
+    "counts": [
+     0,
+     0,
+     1,
+     2,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 23,
+    "team": "Hillside",
+    "score": 74.0,
+    "counts": [
+     0,
+     0,
+     0,
+     5,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 24,
+    "team": "Saddle River Day School",
+    "score": 72.5,
+    "counts": [
+     0,
+     0,
+     1,
+     4,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 25,
+    "team": "Newark Collegiate",
+    "score": 54.5,
+    "counts": [
+     0,
+     0,
+     1,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 26,
+    "team": "Hoboken",
+    "score": 15.5,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Penn Charter Invitational",
+  "rows": [
+   {
+    "place": 1,
+    "team": "William Penn Charter",
+    "score": 187.0,
+    "counts": [
+     0,
+     0,
+     6,
+     2,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 2,
+    "team": "Father Judge",
+    "score": 165.0,
+    "counts": [
+     0,
+     0,
+     3,
+     1,
+     3,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 3,
+    "team": "Central High",
+    "score": 106.5,
+    "counts": [
+     0,
+     0,
+     0,
+     4,
+     0,
+     3,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 4,
+    "team": "Academy at Palumbo",
+    "score": 106.0,
+    "counts": [
+     0,
+     0,
+     0,
+     2,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 5,
+    "team": "Academy Park",
+    "score": 102.0,
+    "counts": [
+     0,
+     0,
+     3,
+     0,
+     0,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 6,
+    "team": "Holy Cross",
+    "score": 73.5,
+    "counts": [
+     0,
+     0,
+     1,
+     1,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 7,
+    "team": "George Washington",
+    "score": 68.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     2,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 8,
+    "team": "William Allen HS",
+    "score": 55.0,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 9,
+    "team": "Westtown School",
+    "score": 40.5,
+    "counts": [
+     0,
+     0,
+     0,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 10,
+    "team": "Pope John Paul II",
+    "score": 33.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 11,
+    "team": "Simon Gratz",
+    "score": 29.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 12,
+    "team": "Friends Central",
+    "score": 27.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 13,
+    "team": "Germantown Friends",
+    "score": 10.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 13,
+    "team": "MLK High School",
+    "score": 10.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Burlington County Tournament",
+  "rows": [
+   {
+    "place": 1,
+    "team": "Lenape",
+    "score": 202.5,
+    "counts": [
+     0,
+     0,
+     3,
+     3,
+     1,
+     2,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 2,
+    "team": "Seneca",
+    "score": 195.0,
+    "counts": [
+     0,
+     0,
+     3,
+     4,
+     2,
+     2,
+     0,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 3,
+    "team": "Delran",
+    "score": 183.5,
+    "counts": [
+     0,
+     0,
+     3,
+     3,
+     0,
+     1,
+     2,
+     4,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 4,
+    "team": "Rv",
+    "score": 170.0,
+    "counts": [
+     0,
+     0,
+     3,
+     3,
+     2,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 5,
+    "team": "Northern Burlington",
+    "score": 163.0,
+    "counts": [
+     0,
+     0,
+     5,
+     2,
+     2,
+     3,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 6,
+    "team": "Moorestown",
+    "score": 139.5,
+    "counts": [
+     0,
+     0,
+     3,
+     3,
+     3,
+     0,
+     2,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 7,
+    "team": "Cinnaminson",
+    "score": 128.5,
+    "counts": [
+     0,
+     0,
+     3,
+     4,
+     1,
+     0,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 8,
+    "team": "Cherokee",
+    "score": 107.0,
+    "counts": [
+     0,
+     0,
+     4,
+     2,
+     2,
+     3,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 9,
+    "team": "Bordentown",
+    "score": 79.5,
+    "counts": [
+     0,
+     0,
+     5,
+     4,
+     1,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 10,
+    "team": "Pemberton",
+    "score": 65.5,
+    "counts": [
+     0,
+     0,
+     4,
+     3,
+     1,
+     1,
+     2,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 11,
+    "team": "Burlington Twp",
+    "score": 52.5,
+    "counts": [
+     0,
+     0,
+     2,
+     6,
+     1,
+     0,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 12,
+    "team": "Maple Shade",
+    "score": 36.0,
+    "counts": [
+     0,
+     0,
+     4,
+     0,
+     0,
+     0,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 13,
+    "team": "Riverside",
+    "score": 28.5,
+    "counts": [
+     0,
+     0,
+     1,
+     4,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 14,
+    "team": "Holy Cross",
+    "score": 26.0,
+    "counts": [
+     0,
+     0,
+     4,
+     3,
+     1,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 15,
+    "team": "Palmyra",
+    "score": 20.5,
+    "counts": [
+     0,
+     0,
+     2,
+     2,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 16,
+    "team": "Bcit",
+    "score": 18.0,
+    "counts": [
+     0,
+     0,
+     1,
+     5,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 17,
+    "team": "Willingboro",
+    "score": 0.0,
+    "counts": [
+     0,
+     0,
+     4,
+     4,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Escape the Rock Girls at North Penn HS",
+  "rows": [
+   {
+    "place": 1,
+    "team": "Parkland",
+    "score": 213.0,
+    "counts": [
+     0,
+     0,
+     1,
+     1,
+     0,
+     3,
+     2,
+     0,
+     3,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 2,
+    "team": "Neshaminy",
+    "score": 130.5,
+    "counts": [
+     0,
+     0,
+     2,
+     0,
+     1,
+     1,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 3,
+    "team": "Dallastown",
+    "score": 120.0,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     0,
+     1,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 4,
+    "team": "Souderton",
+    "score": 115.5,
+    "counts": [
+     0,
+     0,
+     0,
+     2,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 5,
+    "team": "Owen J Roberts",
+    "score": 113.0,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 6,
+    "team": "Nazareth",
+    "score": 111.5,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 7,
+    "team": "Quakertown",
+    "score": 103.0,
+    "counts": [
+     0,
+     0,
+     2,
+     0,
+     0,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 8,
+    "team": "Hillsborough",
+    "score": 98.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     0,
+     1,
+     0,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 9,
+    "team": "Southern Lehigh",
+    "score": 85.5,
+    "counts": [
+     0,
+     0,
+     1,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 10,
+    "team": "Gloucester City",
+    "score": 79.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 11,
+    "team": "Upper Perkiomen",
+    "score": 77.0,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 12,
+    "team": "Hempfield",
+    "score": 72.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     2,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 12,
+    "team": "Panther Valley",
+    "score": 72.0,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 14,
+    "team": "North Penn",
+    "score": 70.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 14,
+    "team": "St. Georges Tech",
+    "score": 70.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 16,
+    "team": "Pennsbury",
+    "score": 67.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 17,
+    "team": "Council Rock",
+    "score": 66.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     2,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 18,
+    "team": "Bethlehem Liberty",
+    "score": 65.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 19,
+    "team": "Elco",
+    "score": 59.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 20,
+    "team": "Upper Dublin",
+    "score": 56.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 21,
+    "team": "Howell",
+    "score": 51.5,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 22,
+    "team": "Downingtown West",
+    "score": 51.0,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 23,
+    "team": "Octorara",
+    "score": 49.0,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 24,
+    "team": "Bermudian Springs",
+    "score": 45.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 25,
+    "team": "Abington",
+    "score": 44.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 26,
+    "team": "Central Bucks",
+    "score": 42.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 27,
+    "team": "Garnet Valley",
+    "score": 41.5,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 28,
+    "team": "Strath Haven",
+    "score": 41.0,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 29,
+    "team": "Conwell Egan Catholic",
+    "score": 40.5,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 30,
+    "team": "Palisades",
+    "score": 40.0,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 31,
+    "team": "Clayton/Glassboro",
+    "score": 39.0,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 32,
+    "team": "William Tennent",
+    "score": 37.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 33,
+    "team": "Trinity",
+    "score": 36.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 34,
+    "team": "Boyertown",
+    "score": 36.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 35,
+    "team": "Coatesville",
+    "score": 35.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 35,
+    "team": "Sun Valley",
+    "score": 35.0,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 37,
+    "team": "Harry S Truman",
+    "score": 32.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 38,
+    "team": "Hanover Park",
+    "score": 31.5,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 38,
+    "team": "Mariana Bracetti Academy",
+    "score": 31.5,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 40,
+    "team": "Cheltenham",
+    "score": 27.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 41,
+    "team": "Immaculata",
+    "score": 24.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 42,
+    "team": "Archbishop Ryan",
+    "score": 22.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 42,
+    "team": "Parsippany Hills",
+    "score": 22.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 44,
+    "team": "Hatboro-Horsham",
+    "score": 21.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 45,
+    "team": "Executive Education Academy",
+    "score": 20.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 46,
+    "team": "Plymouth Whitemarsh",
+    "score": 13.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 47,
+    "team": "Hill School",
+    "score": 7.5,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 48,
+    "team": "Pottstown",
+    "score": 1.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Ralph Wetzel Girls Classic",
+  "rows": [
+   {
+    "place": 1,
+    "team": "Neshaminy HS",
+    "score": 158.5,
+    "counts": [
+     5,
+     0,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 2,
+    "team": "Pennsbury HS",
+    "score": 146.0,
+    "counts": [
+     0,
+     3,
+     1,
+     3
+    ]
+   },
+   {
+    "place": 3,
+    "team": "Upper Dublin HS",
+    "score": 116.0,
+    "counts": [
+     1,
+     2,
+     1,
+     2
+    ]
+   },
+   {
+    "place": 4,
+    "team": "Central Bucks West HS",
+    "score": 101.5,
+    "counts": [
+     0,
+     2,
+     2,
+     0
+    ]
+   },
+   {
+    "place": 5,
+    "team": "Bensalem HS",
+    "score": 101.0,
+    "counts": [
+     1,
+     0,
+     3,
+     2
+    ]
+   },
+   {
+    "place": 6,
+    "team": "Lenape HS",
+    "score": 69.0,
+    "counts": [
+     1,
+     1,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 7,
+    "team": "Strath Haven HS",
+    "score": 67.0,
+    "counts": [
+     1,
+     1,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 8,
+    "team": "Cheltenham HS",
+    "score": 51.5,
+    "counts": [
+     1,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "place": 9,
+    "team": "Wyoming Area HS",
+    "score": 50.0,
+    "counts": [
+     1,
+     1,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 10,
+    "team": "Central HS Philadelphia",
+    "score": 43.5,
+    "counts": [
+     0,
+     0,
+     2,
+     0
+    ]
+   },
+   {
+    "place": 11,
+    "team": "William Tennent HS",
+    "score": 39.0,
+    "counts": [
+     0,
+     1,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 12,
+    "team": "Abington HS",
+    "score": 36.5,
+    "counts": [
+     0,
+     1,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 13,
+    "team": "West Chester",
+    "score": 34.0,
+    "counts": [
+     0,
+     0,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 14,
+    "team": "Abraham Lincoln HS",
+    "score": 30.5,
+    "counts": [
+     1,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 15,
+    "team": "Jim Thrope HS",
+    "score": 15.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 16,
+    "team": "Hatboro Horsham HS",
+    "score": 14.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 17,
+    "team": "William Penn Charter School",
+    "score": 8.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 18,
+    "team": "Overbrook HS",
+    "score": 7.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 19,
+    "team": "Saint Mark`s",
+    "score": 6.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 20,
+    "team": "Scranton Prep HS",
+    "score": 2.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 21,
+    "team": "Marianna Bracetti Academy",
+    "score": 1.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 22,
+    "team": "Wyoming Area",
+    "score": 0.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ]
+ },
+ {
+  "name": "2025 EB Lady Bear Invitational",
+  "rows": [
+   {
+    "place": 1,
+    "team": "Jackson Twp",
+    "score": 136.0,
+    "counts": [
+     5,
+     2,
+     1,
+     1,
+     2,
+     3,
+     1,
+     2,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 2,
+    "team": "Scotch Plains - Fanwood",
+    "score": 103.0,
+    "counts": [
+     2,
+     1,
+     2,
+     1,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 3,
+    "team": "Kingsway",
+    "score": 94.0,
+    "counts": [
+     0,
+     3,
+     2,
+     5,
+     0,
+     4,
+     1,
+     0,
+     2,
+     0
+    ]
+   },
+   {
+    "place": 4,
+    "team": "Bloomfield",
+    "score": 80.0,
+    "counts": [
+     2,
+     0,
+     1,
+     0,
+     2,
+     0,
+     0,
+     1,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 5,
+    "team": "East Brunswick",
+    "score": 78.0,
+    "counts": [
+     1,
+     6,
+     2,
+     3,
+     1,
+     1,
+     0,
+     1,
+     1,
+     1
+    ]
+   },
+   {
+    "place": 6,
+    "team": "High Point Regional",
+    "score": 73.0,
+    "counts": [
+     1,
+     0,
+     2,
+     1,
+     2,
+     2,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 6,
+    "team": "Point Pleasant Boro",
+    "score": 73.0,
+    "counts": [
+     3,
+     1,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 8,
+    "team": "Franklin",
+    "score": 67.0,
+    "counts": [
+     1,
+     0,
+     3,
+     0,
+     0,
+     1,
+     2,
+     1,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 9,
+    "team": "Delsea",
+    "score": 56.0,
+    "counts": [
+     0,
+     1,
+     2,
+     2,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 10,
+    "team": "South Brunswick",
+    "score": 43.0,
+    "counts": [
+     0,
+     1,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 11,
+    "team": "Spotswood",
+    "score": 35.0,
+    "counts": [
+     1,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 12,
+    "team": "Southern Regional",
+    "score": 34.0,
+    "counts": [
+     0,
+     1,
+     1,
+     1,
+     1,
+     2,
+     0,
+     1,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 13,
+    "team": "North Plainfield",
+    "score": 31.0,
+    "counts": [
+     1,
+     2,
+     0,
+     1,
+     2,
+     2,
+     0,
+     2,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 14,
+    "team": "Somerville",
+    "score": 29.0,
+    "counts": [
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 15,
+    "team": "Point Pleasant Beach",
+    "score": 24.0,
+    "counts": [
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 16,
+    "team": "Middlesex",
+    "score": 21.0,
+    "counts": [
+     2,
+     1,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 17,
+    "team": "Roselle Park",
+    "score": 19.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     2,
+     2,
+     1,
+     1,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 18,
+    "team": "JFK iselin/Woodbridge/colonia",
+    "score": 13.0,
+    "counts": [
+     0,
+     0,
+     1,
+     2,
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 18,
+    "team": "Saint John Vianney",
+    "score": 13.0,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 20,
+    "team": "Rahway",
+    "score": 12.0,
+    "counts": [
+     2,
+     1,
+     1,
+     1,
+     0,
+     2,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 20,
+    "team": "Warren Hills",
+    "score": 12.0,
+    "counts": [
+     1,
+     0,
+     2,
+     1,
+     0,
+     2,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 22,
+    "team": "Colonia",
+    "score": 11.0,
+    "counts": [
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 22,
+    "team": "Columbia",
+    "score": 11.0,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 24,
+    "team": "Gloucester City",
+    "score": 10.0,
+    "counts": [
+     1,
+     1,
+     1,
+     3,
+     0,
+     0,
+     1,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "place": 25,
+    "team": "Woodbridge",
+    "score": 7.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 26,
+    "team": "Piscataway",
+    "score": 6.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     1,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 27,
+    "team": "West Windsor Plainsboro South",
+    "score": 0.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Essex County Tournament 2026 Girls",
+  "rows": [
+   {
+    "place": 1,
+    "team": "Bloomfield",
+    "score": 177.0,
+    "counts": [
+     3,
+     2,
+     4,
+     1,
+     2,
+     1,
+     1,
+     2,
+     0
+    ]
+   },
+   {
+    "place": 2,
+    "team": "Newark Collegiate Charter",
+    "score": 136.5,
+    "counts": [
+     3,
+     1,
+     1,
+     0,
+     1,
+     1,
+     1,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 3,
+    "team": "West Orange",
+    "score": 134.0,
+    "counts": [
+     0,
+     3,
+     1,
+     1,
+     2,
+     1,
+     4,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 4,
+    "team": "Irvington",
+    "score": 131.0,
+    "counts": [
+     1,
+     1,
+     2,
+     1,
+     1,
+     1,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 5,
+    "team": "Columbia",
+    "score": 121.0,
+    "counts": [
+     0,
+     1,
+     1,
+     2,
+     1,
+     0,
+     1,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 6,
+    "team": "Nutley",
+    "score": 95.0,
+    "counts": [
+     1,
+     0,
+     2,
+     1,
+     0,
+     1,
+     1,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 7,
+    "team": "North Star Academy",
+    "score": 65.0,
+    "counts": [
+     3,
+     3,
+     0,
+     0,
+     1,
+     1,
+     1,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 8,
+    "team": "Montclair",
+    "score": 62.0,
+    "counts": [
+     2,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 9,
+    "team": "Belleville",
+    "score": 47.0,
+    "counts": [
+     6,
+     0,
+     0,
+     0,
+     0,
+     2,
+     1,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 10,
+    "team": "Orange",
+    "score": 43.0,
+    "counts": [
+     3,
+     2,
+     0,
+     0,
+     2,
+     0,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "place": 11,
+    "team": "Newark Academy",
+    "score": 41.0,
+    "counts": [
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 11,
+    "team": "St. Benedict`s Prep",
+    "score": 41.0,
+    "counts": [
+     0,
+     1,
+     1,
+     0,
+     0,
+     0,
+     2,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 13,
+    "team": "Millburn",
+    "score": 35.0,
+    "counts": [
+     1,
+     2,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 14,
+    "team": "Glen Ridge",
+    "score": 26.0,
+    "counts": [
+     0,
+     1,
+     0,
+     0,
+     1,
+     1,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 15,
+    "team": "East Side",
+    "score": 12.0,
+    "counts": [
+     3,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 16,
+    "team": "Verona",
+    "score": 10.0,
+    "counts": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 17,
+    "team": "Barringer Hs",
+    "score": 1.0,
+    "counts": [
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 18,
+    "team": "East Orange Campus",
+    "score": 0.0,
+    "counts": [
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ]
+ },
+ {
+  "name": "2026 Union County Girls Tournament",
+  "rows": [
+   {
+    "place": 1,
+    "team": "Cranford",
+    "score": 215.5,
+    "counts": [
+     0,
+     0,
+     2,
+     3,
+     3,
+     1,
+     2,
+     1
+    ]
+   },
+   {
+    "place": 2,
+    "team": "Rahway",
+    "score": 206.0,
+    "counts": [
+     1,
+     1,
+     3,
+     2,
+     0,
+     1,
+     2,
+     2
+    ]
+   },
+   {
+    "place": 3,
+    "team": "Union",
+    "score": 202.0,
+    "counts": [
+     0,
+     0,
+     2,
+     2,
+     2,
+     3,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 4,
+    "team": "AL Johnson",
+    "score": 107.5,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     2,
+     2,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 5,
+    "team": "Elizabeth",
+    "score": 98.0,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     3,
+     0,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 6,
+    "team": "Brearley",
+    "score": 88.0,
+    "counts": [
+     0,
+     0,
+     1,
+     1,
+     0,
+     2,
+     1,
+     2
+    ]
+   },
+   {
+    "place": 7,
+    "team": "Governor Livingston",
+    "score": 77.0,
+    "counts": [
+     0,
+     0,
+     0,
+     2,
+     0,
+     0,
+     3,
+     2
+    ]
+   },
+   {
+    "place": 8,
+    "team": "Linden",
+    "score": 74.5,
+    "counts": [
+     1,
+     0,
+     1,
+     0,
+     1,
+     1,
+     1,
+     2
+    ]
+   },
+   {
+    "place": 9,
+    "team": "Roselle Park",
+    "score": 72.5,
+    "counts": [
+     0,
+     0,
+     2,
+     0,
+     0,
+     1,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 10,
+    "team": "Scotch Plains fanwood",
+    "score": 56.0,
+    "counts": [
+     1,
+     0,
+     1,
+     0,
+     1,
+     0,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 11,
+    "team": "Westfield",
+    "score": 52.5,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     1,
+     0,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 12,
+    "team": "Plainfield",
+    "score": 43.0,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "place": 13,
+    "team": "New Providence",
+    "score": 33.0,
+    "counts": [
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 14,
+    "team": "Summit",
+    "score": 30.0,
+    "counts": [
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 15,
+    "team": "Hillside",
+    "score": 22.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 16,
+    "team": "Abraham Clark",
+    "score": 0.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ]
+ },
+ {
+  "name": "CVC Girls Championships",
+  "rows": [
+   {
+    "place": 1,
+    "team": "Trenton Central",
+    "score": 200.5,
+    "counts": [
+     2,
+     0,
+     3,
+     0,
+     1,
+     1,
+     3,
+     2
+    ]
+   },
+   {
+    "place": 2,
+    "team": "Hamilton West",
+    "score": 163.0,
+    "counts": [
+     0,
+     0,
+     0,
+     3,
+     3,
+     2,
+     2,
+     1
+    ]
+   },
+   {
+    "place": 3,
+    "team": "Hamilton East-Steinert",
+    "score": 135.5,
+    "counts": [
+     0,
+     0,
+     2,
+     1,
+     2,
+     1,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 4,
+    "team": "Lawrence Senior",
+    "score": 116.0,
+    "counts": [
+     0,
+     0,
+     3,
+     0,
+     0,
+     1,
+     1,
+     1
+    ]
+   },
+   {
+    "place": 5,
+    "team": "Princeton",
+    "score": 91.0,
+    "counts": [
+     1,
+     0,
+     1,
+     1,
+     0,
+     0,
+     0,
+     2
+    ]
+   },
+   {
+    "place": 6,
+    "team": "Robbinsville",
+    "score": 88.0,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     1,
+     3,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 7,
+    "team": "Hightstown",
+    "score": 83.0,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     1,
+     2,
+     1,
+     1
+    ]
+   },
+   {
+    "place": 8,
+    "team": "Ewing",
+    "score": 78.0,
+    "counts": [
+     0,
+     0,
+     1,
+     1,
+     2,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 9,
+    "team": "Hopewell Valley Hs",
+    "score": 69.0,
+    "counts": [
+     1,
+     0,
+     0,
+     0,
+     2,
+     0,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 10,
+    "team": "Hamilton North- Nottingham",
+    "score": 46.0,
+    "counts": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     3,
+     0
+    ]
+   },
+   {
+    "place": 11,
+    "team": "Notre Dame",
+    "score": 44.5,
+    "counts": [
+     0,
+     0,
+     1,
+     0,
+     0,
+     1,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 12,
+    "team": "West Windsor-Plainsboro South",
+    "score": 43.0,
+    "counts": [
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "place": 13,
+    "team": "West Windsor-Plainsboro North",
+    "score": 0.0,
+    "counts": [
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ]
+ },
+ {
+  "name": "2026 Colonial Con. Girls Tournament",
+  "rows": [
+   {
+    "place": 1,
+    "team": "Gloucester City JR/SR",
+    "score": 271.0,
+    "counts": [
+     0,
+     5,
+     4,
+     3,
+     3,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 2,
+    "team": "Collingswood",
+    "score": 175.0,
+    "counts": [
+     2,
+     1,
+     4,
+     2,
+     4,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 3,
+    "team": "Paulsboro H.S.",
+    "score": 116.0,
+    "counts": [
+     0,
+     1,
+     4,
+     0,
+     0,
+     1,
+     1
+    ]
+   },
+   {
+    "place": 4,
+    "team": "Gateway Reg/ Woodbury",
+    "score": 97.0,
+    "counts": [
+     0,
+     1,
+     0,
+     4,
+     1,
+     1,
+     0
+    ]
+   },
+   {
+    "place": 5,
+    "team": "Lindenwold",
+    "score": 88.5,
+    "counts": [
+     0,
+     2,
+     0,
+     1,
+     1,
+     0,
+     1
+    ]
+   },
+   {
+    "place": 6,
+    "team": "West Deptford",
+    "score": 82.0,
+    "counts": [
+     0,
+     1,
+     0,
+     1,
+     2,
+     3,
+     1
+    ]
+   },
+   {
+    "place": 7,
+    "team": "Haddon Heights",
+    "score": 28.0,
+    "counts": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 8,
+    "team": "Sterling",
+    "score": 25.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     3
+    ]
+   },
+   {
+    "place": 9,
+    "team": "Haddon Twp Hgh School",
+    "score": 9.0,
+    "counts": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "place": 10,
+    "team": "Audubon",
+    "score": 0.0,
+    "counts": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ]
+ }
+]

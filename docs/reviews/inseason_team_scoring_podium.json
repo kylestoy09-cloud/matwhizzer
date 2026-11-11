@@ -1,0 +1,738 @@
+[
+ {
+  "side": "Boys",
+  "t": "Buc Classic",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "SCIAA Somerset County Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Mustang Classic",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Passaic County Coaches Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "CVC Wrestling Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Frank M. Dawson Jr. Holiday Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "12th Annual Laker Holiday Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "67th Annual John Goles Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "2026 East Coast Catholic Classic",
+  "inside": false,
+  "winner": true,
+  "top3": 2,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Union County Conference Tournament",
+  "inside": true,
+  "winner": false,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Belleville Buccaneer Classic",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Burlington County Tournament",
+  "inside": true,
+  "winner": false,
+  "top3": 2,
+  "complete": false
+ },
+ {
+  "side": "Boys",
+  "t": "Rahway Holiday Tournament",
+  "inside": true,
+  "winner": false,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Howdy Duncan",
+  "inside": false,
+  "winner": false,
+  "top3": 1,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Wendy Pandy-Leh Wrestling Invitational",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Doc Buchanan",
+  "inside": false,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Hunterdon Central Invitational",
+  "inside": true,
+  "winner": true,
+  "top3": 2,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Dover Holiday Tournament",
+  "inside": false,
+  "winner": true,
+  "top3": 2,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Minuteman Classic",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Hammonton Kick-Off Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Overbrook Holiday Wrestling Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 2,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Pete Adams Memorial",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "A-Nice Invitational",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Holmdel Holiday Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 2,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "NJSIAA Shore Conference Individual Championship",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Tim Groves Holiday Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Essex County Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "King of The Castle",
+  "inside": false,
+  "winner": false,
+  "top3": 1,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Blue Devil Classic",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Ramsey Invitational",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Linn Crawn Memorial Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Lenape Valley Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Caldwell Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "2nd Annual Schulman Scuffle Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 1,
+  "complete": false
+ },
+ {
+  "side": "Boys",
+  "t": "Ronald Bond Wrestling Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 2,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Powerade",
+  "inside": false,
+  "winner": false,
+  "top3": 0,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Parsippany Hills Holiday Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Kearny Holiday Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Bethlehem Holiday Wrestling Classic",
+  "inside": false,
+  "winner": false,
+  "top3": 0,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Central Regional Golden Eagle Classic",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Mike Dessino Invitational",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "2026 Morris County Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "East Brunswick Bear Invitational",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Harry McLaughlin Invitational",
+  "inside": false,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Palmyra Panther High School Wrestling Tournament",
+  "inside": true,
+  "winner": false,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Greater Middlesex Conference Tournament- 01/23",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Mustang Invitational Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Ricky I Memorial Tournament",
+  "inside": false,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Battle at the Brook",
+  "inside": true,
+  "winner": false,
+  "top3": 1,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Iron Man Tournament",
+  "inside": false,
+  "winner": false,
+  "top3": 1,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Bart Payne HT Holiday Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 2,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Cutter Classic",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Sam Cali Battle for The Belt",
+  "inside": false,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "TCNJ Pride",
+  "inside": true,
+  "winner": true,
+  "top3": 2,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Walter Woods Holiday Tournament",
+  "inside": true,
+  "winner": false,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Penn Charter Invitational",
+  "inside": false,
+  "winner": false,
+  "top3": 0,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Morris Knolls Tournament",
+  "inside": true,
+  "winner": false,
+  "top3": 1,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "2026 Pioneer Classic",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Garden State Classic",
+  "inside": true,
+  "winner": false,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Beast of the East",
+  "inside": false,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Ron Mazzola Memorial Wrestling Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 1,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Gator Beast Wrestling Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "Schalick Classic",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Boys",
+  "t": "40th Marinelli - EHT Varsity Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 2,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "2026 NJAC Girls' Wrestling Championships",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "Escape the Rock Girls at North Penn HS",
+  "inside": true,
+  "winner": false,
+  "top3": 0,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "Ralph Wetzel Girls Classic",
+  "inside": false,
+  "winner": false,
+  "top3": 2,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "Garfield Girls Holiday Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "2025 Howdy Duncan Ladies Classic",
+  "inside": false,
+  "winner": true,
+  "top3": 2,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "H/W/S Girls Wrestling 2026",
+  "inside": true,
+  "winner": true,
+  "top3": 2,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "2026 Lady Patriots Tournament",
+  "inside": true,
+  "winner": false,
+  "top3": 2,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "2026 Colonial Con. Girls Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "Queen of the East",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "NH Lady Lions Classic Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "Women of Ironman",
+  "inside": false,
+  "winner": true,
+  "top3": 2,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "Girls Skyland Conference Wrestling Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "Essex County Tournament 2026 Girls",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "Girls Shore Conference",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "2026 Greater Middlesex Conference Girls",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "Lady Panther Invitational",
+  "inside": true,
+  "winner": true,
+  "top3": 2,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "2026 Union County Girls Tournament",
+  "inside": true,
+  "winner": false,
+  "top3": 1,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "2nd Annual Lady Kards Invitational",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "CVC Girls Championships",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "Overbrook Girls Winter Open 2025",
+  "inside": true,
+  "winner": false,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "Girls Creek Classic",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "2025 EB Lady Bear Invitational",
+  "inside": true,
+  "winner": true,
+  "top3": 2,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "Sam Cali Invitational Girls Wrestling Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 2,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "BCWCA Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "Lady Minutemen Tournament",
+  "inside": true,
+  "winner": true,
+  "top3": 2,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "Golden Eagle Grapple",
+  "inside": false,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "4th Annual Girls Beast of the East",
+  "inside": false,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ },
+ {
+  "side": "Girls",
+  "t": "Rebel Rumble",
+  "inside": true,
+  "winner": true,
+  "top3": 3,
+  "complete": true
+ }
+]
