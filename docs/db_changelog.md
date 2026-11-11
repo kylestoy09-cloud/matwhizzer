@@ -2,6 +2,30 @@
 
 ---
 
+## 2026-11-11 — Out-of-state states from Kyle's TrackWrestling team lists; 3 mixed records split
+
+**No migration** (data; service role). Scripts: `scripts/oos_states_from_lists_20261111.mts` (compare, read-only) and `scripts/apply_oos_states_from_lists_20261111.mts --apply`.
+
+**Source:** `Whizzer Upload/2025-26 Girls Data/OOS - school lists.rtf`. It holds the TrackWrestling team lists ("School, ST") of 8 tournaments: girls/boys Beast of the East, Women of Ironman / Ironman, Ralph Wetzel, Rahway, Doc Buchanan, East Coast Catholic. Each school was matched by the name its own bouts print at that tournament.
+
+**Result:**
+- **Agreed:** 310 of the states already on file.
+- **Added:** 69 tagged (58 straight from the lists, 8 found by hand under another printed name, plus Mountain View as VA). Corrected: Boiling Springs SC (was PA), Mount de Sales Academy GA (was MD).
+- **Splits** (one record held two schools; the bouts move, with the name links of wrestlers who only wrestled there):
+  - Christian Brothers College (MO): its 92 East Coast Catholic bouts → new #1204 Christian Brothers (TN), with 18 links. The alias "Christian Brothers High School" was re-pointed.
+  - St. John Bosco Academy (CA): its 7 East Coast Catholic bouts → new #1205 St. John Bosco Academy (GA).
+  - Mountain View (VA): its 1 Doc Buchanan bout → new #1206 Mountain View (CA). An alias "Mountain View" briefly pointed to #1206 and was removed.
+- **Kept against the list:**
+  - Pitman CA: the Doc Buchanan list has both "Pitman, NJ" and "John H Pitman, CA".
+  - Roosevelt CO and Canyon View AZ: the list match had taken a same-named school.
+- **Still untagged:**
+  - Not in the lists: Ridgeline, Washington, West Field, Norwood, River Valley, Calhoun.
+  - Held: Cleveland (girls Ironman, TN), which would equal the existing "Cleveland (TN)" (#1024, 1 bout), probably the same school.
+
+**Backup:** `backups/20261111_oos_states_from_lists_before.json`. **Afterwards:** leaderboards refreshed for 2026.
+
+---
+
 ## 2026-11-10 — Out-of-state schools carry a state tag
 
 **No migration** (data; service role, `scripts/oos_state_tags_20261110.mts --apply`).

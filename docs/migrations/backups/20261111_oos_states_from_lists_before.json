@@ -1,0 +1,857 @@
+{
+ "renames": [
+  {
+   "id": 976,
+   "from": "Frontier",
+   "to": "Frontier (CA)"
+  },
+  {
+   "id": 1079,
+   "from": "Sun Valley",
+   "to": "Sun Valley (PA)"
+  },
+  {
+   "id": 1113,
+   "from": "Hickory",
+   "to": "Hickory (VA)"
+  },
+  {
+   "id": 1151,
+   "from": "Hernando",
+   "to": "Hernando (FL)"
+  },
+  {
+   "id": 1164,
+   "from": "Tri-Valley",
+   "to": "Tri-Valley (OH)"
+  },
+  {
+   "id": 1135,
+   "from": "Marist",
+   "to": "Marist (IL)"
+  },
+  {
+   "id": 1098,
+   "from": "Concord",
+   "to": "Concord (DE)"
+  },
+  {
+   "id": 1122,
+   "from": "West Chester",
+   "to": "West Chester (PA)"
+  },
+  {
+   "id": 1142,
+   "from": "Urbana",
+   "to": "Urbana (OH)"
+  },
+  {
+   "id": 663,
+   "from": "Thomas Edison",
+   "to": "Thomas Edison (VA)"
+  },
+  {
+   "id": 693,
+   "from": "Patrick Henry",
+   "to": "Patrick Henry (VA)"
+  },
+  {
+   "id": 1003,
+   "from": "James Monroe",
+   "to": "James Monroe (CA)"
+  },
+  {
+   "id": 1094,
+   "from": "Rosewood",
+   "to": "Rosewood (NC)"
+  },
+  {
+   "id": 1085,
+   "from": "Madison County",
+   "to": "Madison County (VA)"
+  },
+  {
+   "id": 1111,
+   "from": "James River",
+   "to": "James River (VA)"
+  },
+  {
+   "id": 726,
+   "from": "Mount Airy",
+   "to": "Mount Airy (NC)"
+  },
+  {
+   "id": 807,
+   "from": "Canyon Randall",
+   "to": "Canyon Randall (TX)"
+  },
+  {
+   "id": 812,
+   "from": "Davis",
+   "to": "Davis (UT)"
+  },
+  {
+   "id": 841,
+   "from": "Lockport",
+   "to": "Lockport (IL)"
+  },
+  {
+   "id": 853,
+   "from": "Mount Vernon",
+   "to": "Mount Vernon (OH)"
+  },
+  {
+   "id": 884,
+   "from": "Syracuse",
+   "to": "Syracuse (UT)"
+  },
+  {
+   "id": 1146,
+   "from": "Lebanon",
+   "to": "Lebanon (OH)"
+  },
+  {
+   "id": 886,
+   "from": "Trinity",
+   "to": "Trinity (KY)"
+  },
+  {
+   "id": 1178,
+   "from": "Keystone",
+   "to": "Keystone (OH)"
+  },
+  {
+   "id": 898,
+   "from": "Westlake",
+   "to": "Westlake (UT)"
+  },
+  {
+   "id": 536,
+   "from": "Union County",
+   "to": "Union County (KY)"
+  },
+  {
+   "id": 905,
+   "from": "Catholic",
+   "to": "Catholic (VA)"
+  },
+  {
+   "id": 1127,
+   "from": "Taylor County",
+   "to": "Taylor County (KY)"
+  },
+  {
+   "id": 487,
+   "from": "Sunnyside",
+   "to": "Sunnyside (AZ)"
+  },
+  {
+   "id": 527,
+   "from": "St Xavier",
+   "to": "St Xavier (OH)"
+  },
+  {
+   "id": 1167,
+   "from": "Ohio County",
+   "to": "Ohio County (KY)"
+  },
+  {
+   "id": 1099,
+   "from": "Middletown",
+   "to": "Middletown (DE)"
+  },
+  {
+   "id": 1193,
+   "from": "King",
+   "to": "King (FL)"
+  },
+  {
+   "id": 906,
+   "from": "Cardinal Gibbons",
+   "to": "Cardinal Gibbons (NC)"
+  },
+  {
+   "id": 1168,
+   "from": "Lexington",
+   "to": "Lexington (OH)"
+  },
+  {
+   "id": 1171,
+   "from": "Brunswick",
+   "to": "Brunswick (OH)"
+  },
+  {
+   "id": 1195,
+   "from": "Northwest",
+   "to": "Northwest (OH)"
+  },
+  {
+   "id": 1130,
+   "from": "Aurora",
+   "to": "Aurora (OH)"
+  },
+  {
+   "id": 1140,
+   "from": "Hillcrest",
+   "to": "Hillcrest (UT)"
+  },
+  {
+   "id": 1172,
+   "from": "London",
+   "to": "London (OH)"
+  },
+  {
+   "id": 464,
+   "from": "Xavier",
+   "to": "Xavier (NY)"
+  },
+  {
+   "id": 1160,
+   "from": "Chippewa",
+   "to": "Chippewa (OH)"
+  },
+  {
+   "id": 1141,
+   "from": "Kearney",
+   "to": "Kearney (MO)"
+  },
+  {
+   "id": 1170,
+   "from": "Chesapeake",
+   "to": "Chesapeake (OH)"
+  },
+  {
+   "id": 1183,
+   "from": "Crestview",
+   "to": "Crestview (OH)"
+  },
+  {
+   "id": 501,
+   "from": "Pontiac",
+   "to": "Pontiac (IL)"
+  },
+  {
+   "id": 935,
+   "from": "Bonita",
+   "to": "Bonita (CA)"
+  },
+  {
+   "id": 957,
+   "from": "Bellarmine Prep",
+   "to": "Bellarmine Prep (CA)"
+  },
+  {
+   "id": 502,
+   "from": "Ponderosa",
+   "to": "Ponderosa (CO)"
+  },
+  {
+   "id": 493,
+   "from": "Cathedral",
+   "to": "Cathedral (IN)"
+  },
+  {
+   "id": 566,
+   "from": "Cleveland",
+   "to": "Cleveland (TN)"
+  },
+  {
+   "id": 569,
+   "from": "St. Francis",
+   "to": "St. Francis (CA)"
+  },
+  {
+   "id": 1162,
+   "from": "Warren",
+   "to": "Warren (OH)"
+  },
+  {
+   "id": 1133,
+   "from": "Marysville",
+   "to": "Marysville (OH)"
+  },
+  {
+   "id": 1149,
+   "from": "Maysville",
+   "to": "Maysville (OH)"
+  },
+  {
+   "id": 979,
+   "from": "Fremont",
+   "to": "Fremont (CA)"
+  },
+  {
+   "id": 1095,
+   "from": "Pilgrim",
+   "to": "Pilgrim (RI)"
+  },
+  {
+   "id": 1150,
+   "from": "Harrison",
+   "to": "Harrison (OH)"
+  },
+  {
+   "id": 1186,
+   "from": "Bismarck",
+   "to": "Bismarck (ND)"
+  },
+  {
+   "id": 980,
+   "from": "Anderson",
+   "to": "Anderson (CA)"
+  },
+  {
+   "id": 1174,
+   "from": "Preston",
+   "to": "Preston (WV)"
+  },
+  {
+   "id": 697,
+   "from": "St James Academy",
+   "to": "St James Academy (VA)"
+  },
+  {
+   "id": 643,
+   "from": "Oxford",
+   "to": "Oxford (PA)"
+  },
+  {
+   "id": 688,
+   "from": "LaSalle",
+   "to": "LaSalle (PA)"
+  },
+  {
+   "id": 665,
+   "from": "Morris Community",
+   "to": "Morris Community (IL)"
+  },
+  {
+   "id": 866,
+   "from": "SLAM Academy",
+   "to": "SLAM Academy (NV)"
+  },
+  {
+   "id": 723,
+   "from": "Norwich",
+   "to": "Norwich (NY)"
+  },
+  {
+   "id": 675,
+   "from": "Mountain View",
+   "to": "Mountain View (VA)"
+  },
+  {
+   "id": 1081,
+   "from": "Boiling Springs (PA)",
+   "to": "Boiling Springs (SC)"
+  },
+  {
+   "id": 1083,
+   "from": "Mount de Sales Academy (MD)",
+   "to": "Mount de Sales Academy (GA)"
+  }
+ ],
+ "splits": {
+  "506": {
+   "school": 1204,
+   "bouts": [
+    {
+     "id": "a6f6836f-c2fd-4716-a9be-84a2f23b3651",
+     "side": 1
+    },
+    {
+     "id": "e0bf2fdc-b146-408f-99a4-8c9d1a02a685",
+     "side": 1
+    },
+    {
+     "id": "7b13f6ac-2b66-4869-89c8-325877504cb7",
+     "side": 1
+    },
+    {
+     "id": "a38e48a4-77a9-4662-b2dd-0f3a2dbd1a99",
+     "side": 1
+    },
+    {
+     "id": "75dfdd72-d398-4089-bf4c-9acbce3a2316",
+     "side": 1
+    },
+    {
+     "id": "7e2bf1d0-6084-4ef5-a6c6-2cf9ae89d028",
+     "side": 1
+    },
+    {
+     "id": "9f2c9b84-ddde-4f7a-b528-5f6ef42f5134",
+     "side": 1
+    },
+    {
+     "id": "287c119f-9fc0-4b6e-af6c-91a8276ad6cd",
+     "side": 1
+    },
+    {
+     "id": "d6e1048a-378a-410c-bc89-b8aaff21bdb4",
+     "side": 1
+    },
+    {
+     "id": "4eb4cb48-e8d2-4c63-bbd4-cadb338e86fe",
+     "side": 1
+    },
+    {
+     "id": "7d86addd-6f2f-4feb-97d0-7958f76f2303",
+     "side": 1
+    },
+    {
+     "id": "1e870742-f737-41cb-b983-34b68b27c05c",
+     "side": 1
+    },
+    {
+     "id": "7a44c3bb-bffa-4f94-b294-f9fee011cb7c",
+     "side": 1
+    },
+    {
+     "id": "26f2717d-4ff5-4e3f-a1df-dc06d67a5c4a",
+     "side": 1
+    },
+    {
+     "id": "bf2583ca-b905-4e6e-afd5-6ca5c2995a2f",
+     "side": 1
+    },
+    {
+     "id": "7ed7aa8b-51f2-493c-b476-4313ff408b84",
+     "side": 1
+    },
+    {
+     "id": "12b10df2-bf81-40ce-a966-92f7e730c8de",
+     "side": 1
+    },
+    {
+     "id": "7fc06249-9a59-413a-9cd2-2943d92d44c0",
+     "side": 1
+    },
+    {
+     "id": "4f24e00e-25f5-416a-8c8f-66f3e0db0109",
+     "side": 1
+    },
+    {
+     "id": "da4cde6a-6d11-4a48-a06c-8a7140ad9db6",
+     "side": 1
+    },
+    {
+     "id": "f83d8353-8dc2-4d2c-9a97-d88c0d0797b1",
+     "side": 1
+    },
+    {
+     "id": "90a41b28-153f-4629-876a-fced5a8e64f1",
+     "side": 1
+    },
+    {
+     "id": "424e1164-b732-4d15-8108-984ba26a2484",
+     "side": 1
+    },
+    {
+     "id": "1474c761-a38a-4c99-b0a5-36f82b9ee795",
+     "side": 1
+    },
+    {
+     "id": "bd819b27-89d2-4568-87ea-4534945e7dc0",
+     "side": 1
+    },
+    {
+     "id": "8ec63ba1-f8ae-404a-a775-dc73b7034fda",
+     "side": 1
+    },
+    {
+     "id": "bc3c73b5-16ed-40ae-9371-6692b39a9da4",
+     "side": 1
+    },
+    {
+     "id": "3b46f098-4630-473c-aa7c-de800004259e",
+     "side": 1
+    },
+    {
+     "id": "285e60b0-521c-4317-869a-fc0c60382c60",
+     "side": 1
+    },
+    {
+     "id": "80fae34c-b2e0-415b-a785-c2b49e577da6",
+     "side": 1
+    },
+    {
+     "id": "9f826667-b389-4b9c-9391-b9e76360f9c2",
+     "side": 1
+    },
+    {
+     "id": "1f3c1356-baec-413c-b182-50607325b2b4",
+     "side": 1
+    },
+    {
+     "id": "3076fe01-176d-4091-bb68-fea8c1559b83",
+     "side": 1
+    },
+    {
+     "id": "06628932-ce10-470b-81a4-ceed1b4ddcd4",
+     "side": 1
+    },
+    {
+     "id": "ba540bc9-29ec-40cd-b4e1-6e4d41e3d317",
+     "side": 1
+    },
+    {
+     "id": "37f2766e-6321-4e6b-a000-4d7824658925",
+     "side": 1
+    },
+    {
+     "id": "2c33878e-9f05-4b16-829c-d01bb2ff7d90",
+     "side": 1
+    },
+    {
+     "id": "a7ec8f5d-d744-45c7-ab49-441c8070a02b",
+     "side": 1
+    },
+    {
+     "id": "05958730-2c1a-4502-933d-effba95ebfbf",
+     "side": 1
+    },
+    {
+     "id": "a2aa462d-326a-4715-9fbe-74c05a277825",
+     "side": 1
+    },
+    {
+     "id": "614b46da-1b3a-4ae9-86db-5e3125835f2e",
+     "side": 1
+    },
+    {
+     "id": "39fb237e-11a9-4750-a78f-0091f8422118",
+     "side": 1
+    },
+    {
+     "id": "a18f72ae-4d41-45c7-9983-b39f934a1492",
+     "side": 1
+    },
+    {
+     "id": "d9205a19-1b5f-4962-b495-c87a80e279a8",
+     "side": 1
+    },
+    {
+     "id": "09584df3-be02-4eb6-b497-a9dbbefea015",
+     "side": 1
+    },
+    {
+     "id": "c291875e-a51e-4012-ba5a-166d5ac2c5a1",
+     "side": 1
+    },
+    {
+     "id": "ded62f49-f888-4a43-a957-8666d411867d",
+     "side": 1
+    },
+    {
+     "id": "4f3bb603-2e33-4052-8583-365d87230121",
+     "side": 1
+    },
+    {
+     "id": "c83b5503-005f-4893-8c3c-7918da15bd73",
+     "side": 1
+    },
+    {
+     "id": "bfbc75fc-4502-4c2c-87f7-8c35fc902b43",
+     "side": 1
+    },
+    {
+     "id": "c84dbcd1-86b9-4cb5-b8c3-200b53a3218e",
+     "side": 1
+    },
+    {
+     "id": "1cc635ff-ae8c-4772-9c59-9bbec3a50747",
+     "side": 1
+    },
+    {
+     "id": "99cfd928-8a6b-43d9-b05c-dd620481d466",
+     "side": 1
+    },
+    {
+     "id": "d5db4b64-9737-40b8-9a37-d3848d1e0df4",
+     "side": 1
+    },
+    {
+     "id": "a0497cc9-b010-4452-a8bf-a7bfc78f4a0b",
+     "side": 1
+    },
+    {
+     "id": "842e42c5-31b0-4d99-b022-4c624ca62b6b",
+     "side": 1
+    },
+    {
+     "id": "a9b59773-95f1-4f9f-812f-5113f2734b0e",
+     "side": 1
+    },
+    {
+     "id": "9a3327af-f9fd-439e-972d-556a737394ba",
+     "side": 2
+    },
+    {
+     "id": "ec57ef3c-6607-4c88-a769-75b0defa2907",
+     "side": 2
+    },
+    {
+     "id": "721b39d4-7533-4160-9692-40cf8fa71ac5",
+     "side": 2
+    },
+    {
+     "id": "32b77e72-086f-49d1-ad19-33ce2e5f3212",
+     "side": 2
+    },
+    {
+     "id": "1ff1f7c3-291e-46b9-afa4-bf7bd9d62b8d",
+     "side": 2
+    },
+    {
+     "id": "3ebc848c-06ed-411c-a0af-5bd1367e3eee",
+     "side": 2
+    },
+    {
+     "id": "675c7e0e-e938-4aa6-89a6-1a0b4f0ca112",
+     "side": 2
+    },
+    {
+     "id": "399b1964-a4e6-4346-ac89-14b3336472dc",
+     "side": 2
+    },
+    {
+     "id": "087d5eee-28aa-4dd7-9f47-f07e0f7d9dc9",
+     "side": 2
+    },
+    {
+     "id": "7144dcd1-cbcc-4893-a987-5ef6a139759a",
+     "side": 2
+    },
+    {
+     "id": "611e8d7b-37d7-44e8-89b0-64c183d49042",
+     "side": 2
+    },
+    {
+     "id": "65938c10-994a-4807-8f2b-592a996c15fe",
+     "side": 2
+    },
+    {
+     "id": "bf9af983-2684-4a86-9409-e701834d2f87",
+     "side": 2
+    },
+    {
+     "id": "4f71dcaf-3c74-4944-b543-33768a9fea77",
+     "side": 2
+    },
+    {
+     "id": "942860e2-cf5a-4105-a1d2-497d0314c9fe",
+     "side": 2
+    },
+    {
+     "id": "7e014abf-4563-45b8-8cdf-ac5f8f8a964a",
+     "side": 2
+    },
+    {
+     "id": "da24ebdc-e492-456f-8f89-61b7f6a9961f",
+     "side": 2
+    },
+    {
+     "id": "acc57301-c0e6-4f35-9300-554e854b88b3",
+     "side": 2
+    },
+    {
+     "id": "182ba6df-3cf4-44e0-8297-8767179d678a",
+     "side": 2
+    },
+    {
+     "id": "7a4a94e1-fc69-4e4e-8545-abc370cd931a",
+     "side": 2
+    },
+    {
+     "id": "83e6c24f-7473-48f8-ac76-5a71567038a5",
+     "side": 2
+    },
+    {
+     "id": "7b1fe264-f33b-4485-b0e8-767f30b9380e",
+     "side": 2
+    },
+    {
+     "id": "88cd9fda-41d8-4ca7-976e-2af82e3df36b",
+     "side": 2
+    },
+    {
+     "id": "ccc1bc1c-69f6-4b17-ba4d-393d9f86efe2",
+     "side": 2
+    },
+    {
+     "id": "96f0a55c-16e5-47c2-8dd4-8b80a8e5c60c",
+     "side": 2
+    },
+    {
+     "id": "c84dbcd1-86b9-4cb5-b8c3-200b53a3218e",
+     "side": 2
+    },
+    {
+     "id": "17d5399c-3c1e-4ad8-970e-574d33a4bf6d",
+     "side": 2
+    },
+    {
+     "id": "10da41ca-c0c3-4f92-ac4d-ffddee23a56a",
+     "side": 2
+    },
+    {
+     "id": "af8333fa-7e69-437e-91ed-040231c1ec7b",
+     "side": 2
+    },
+    {
+     "id": "4218fa40-6263-4cea-a60d-67aed346b25d",
+     "side": 2
+    },
+    {
+     "id": "f790e958-93f6-495c-9bc8-cebdfda22f27",
+     "side": 2
+    },
+    {
+     "id": "5fb12cb0-d436-449a-9d02-ab12b23e2fd6",
+     "side": 2
+    },
+    {
+     "id": "b3a90374-e905-4d08-888e-b38708e67ca5",
+     "side": 2
+    },
+    {
+     "id": "7925d0db-92c1-4e5e-b020-05adbedaf025",
+     "side": 2
+    },
+    {
+     "id": "fd042f15-61ca-4a9f-8b09-059346785fd9",
+     "side": 2
+    }
+   ],
+   "aliases": [
+    {
+     "id": 15170,
+     "wrestler": "0a4e3499-c428-483e-b341-112bd0314338"
+    },
+    {
+     "id": 15187,
+     "wrestler": "363f2311-9d12-4085-b318-10f0fc99a4a5"
+    },
+    {
+     "id": 15189,
+     "wrestler": "42d8838d-40cc-486c-8a40-1c5e71ac2d95"
+    },
+    {
+     "id": 15207,
+     "wrestler": "f65ea887-5bdc-4d43-9abf-dc229f18ac07"
+    },
+    {
+     "id": 15239,
+     "wrestler": "aa290ffe-7982-40f3-991b-31d25cb61d4f"
+    },
+    {
+     "id": 15064,
+     "wrestler": "c43d87ec-9223-4dab-9225-eca8e008234f"
+    },
+    {
+     "id": 15074,
+     "wrestler": "83bc2d71-7bfe-406d-b8fc-297008a44688"
+    },
+    {
+     "id": 15073,
+     "wrestler": "87199084-3f94-41cd-b6a8-a111bc6d8a56"
+    },
+    {
+     "id": 15084,
+     "wrestler": "972089f9-5a2b-4e99-9dc2-1bf015722a5a"
+    },
+    {
+     "id": 15100,
+     "wrestler": "fc6bae1e-3523-4cc5-a6ab-48e2085fdb31"
+    },
+    {
+     "id": 15111,
+     "wrestler": "e597e8e2-71af-41d2-82e0-7d5a9e96bf4c"
+    },
+    {
+     "id": 15131,
+     "wrestler": "e80f253d-1615-4aa5-b61f-c4955901507a"
+    },
+    {
+     "id": 15159,
+     "wrestler": "cecbf95f-08c0-466e-b94f-6adb3b1b7332"
+    },
+    {
+     "id": 15152,
+     "wrestler": "11a0220b-ef09-45a2-af45-b1e0b772a107"
+    },
+    {
+     "id": 15266,
+     "wrestler": "668b827a-9ba0-491f-abc4-668bd3f4132b"
+    },
+    {
+     "id": 15275,
+     "wrestler": "405672d1-9ae9-47f8-b093-5e3dbf94d1a0"
+    },
+    {
+     "id": 15117,
+     "wrestler": "597a0497-0c4b-4643-be42-8c9298bf7425"
+    },
+    {
+     "id": 15096,
+     "wrestler": "87d792c5-7831-4b64-a974-06ff10987c01"
+    }
+   ]
+  },
+  "675": {
+   "school": 1206,
+   "bouts": [
+    {
+     "id": "2f7d143d-d9df-46a2-8591-32322aa9d0c3",
+     "side": 2
+    }
+   ],
+   "aliases": [
+    {
+     "id": 15518,
+     "wrestler": "eb2fa6f7-454b-468c-abfd-fcab90c2af9a"
+    }
+   ]
+  },
+  "909": {
+   "school": 1205,
+   "bouts": [
+    {
+     "id": "f797011e-b2d8-4e2d-9f59-3c6b0c7320c8",
+     "side": 1
+    },
+    {
+     "id": "2729f090-4241-4fd8-bc29-c48144937964",
+     "side": 1
+    },
+    {
+     "id": "ebbec549-f771-489a-bde4-639f7425aef1",
+     "side": 1
+    },
+    {
+     "id": "7e014abf-4563-45b8-8cdf-ac5f8f8a964a",
+     "side": 1
+    },
+    {
+     "id": "941162f3-ee5d-4aec-96ce-c4c659073311",
+     "side": 1
+    },
+    {
+     "id": "354f78e7-cf49-4c12-b321-f55d0d56b99d",
+     "side": 2
+    },
+    {
+     "id": "70de064f-e328-4c9e-a43d-a4b70c77ec71",
+     "side": 2
+    }
+   ],
+   "aliases": [
+    {
+     "id": 15112,
+     "wrestler": "95853a07-9224-413b-b4cd-6d5a3455d457"
+    }
+   ]
+  }
+ }
+}
