@@ -24,6 +24,8 @@
 
 **Backup:** `backups/20261111_oos_states_from_lists_before.json`. **Afterwards:** leaderboards refreshed for 2026.
 
+**Follow-up, the same day:** Kyle gave the six missing from his lists: Ridgeline UT, West Field UT, Norwood OH, River Valley OH, Calhoun NY, Washington WV. All six are tagged (`scripts/oos_states_kyle_20261111.mts`; backup `backups/20261111_oos_states_kyle_before.json`). West Field drops "High School", since the tag keeps it apart from NJ Westfield. Every out-of-state school with bouts now has a state, except Cleveland, which waits on a merge with #1024 Cleveland (TN).
+
 ---
 
 ## 2026-11-10 — Out-of-state schools carry a state tag
