@@ -15,7 +15,12 @@
 
 **Backup:** `backups/20261111_merge_oos_duplicates_before.json`.
 
-**Status:** waiting for Kyle to run it.
+**APPLIED:** 2026-11-11. The check listed the 9 kept schools with their new names.
+
+**Afterwards:**
+- Aliases added for the merged records' short names: "Loyola Academy", "St Christopher's School", "Lafayette", "Homewood-Flossmoor", "Oxford Area". A name inside "(note, ST)" isn't reached by removing the tag.
+- Matching checked: "Oxford Area Hs" now goes to #643.
+- Leaderboards refreshed. Integrity check: the same 3 known failures; the no-alias list went from 79 to 77.
 
 ---
 
