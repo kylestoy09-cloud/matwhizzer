@@ -4,43 +4,14 @@ Items that need the Track results page (or a decision) before they can be fixed.
 `scripts/integrity_check.mts`; work them the way Bloomfield vs Delaware Valley was (2026-11-01):
 compare each meet's bouts to Track, then split, move or add bouts.
 
-## 1. Girls duals with one wrestler facing several opponents at one weight (31 meets)
+## 1. ~~Girls duals with one wrestler facing several opponents at one weight~~ — resolved 2026-11-11
 
-Likely several meets from the same day combined into one record. Need each meet's Track page.
-
-| Date | Meet | Weights affected |
-|---|---|---|
-| 2025-12-10 | Holmdel vs Colts Neck | 2 |
-| 2025-12-13 | Colts Neck vs Freehold Township | 2 |
-| 2025-12-16 | Nottingham vs Hamilton West | 1 |
-| 2025-12-19 | Sterling vs Lindenwold | 2 |
-| 2025-12-19 | Voorhees vs Bridgewater-Raritan | 1 |
-| 2025-12-20 | Toms River North vs Toms River South | 1 |
-| 2025-12-30 | Middlesex-Dunellen vs Carteret | 2 |
-| 2026-01-03 | Lakeland vs Wallkill Valley | 3 |
-| 2026-01-06 | Manchester Regional vs Elmwood Park | 1 |
-| 2026-01-09 | Manville vs Morristown | 1 |
-| 2026-01-10 | Lindenwold vs Sterling | 2 |
-| 2026-01-14 | Barnegat vs Toms River North | 1 |
-| 2026-01-14 | Gateway Reg/Woodbury vs Lindenwold | 2 |
-| 2026-01-14 | Manville vs Rutgers Prep | 1 |
-| 2026-01-14 | Old Tappan vs Pascack Valley | 2 |
-| 2026-01-15 | Elmwood Park vs Leonia-Palisades | 1 |
-| 2026-01-16 | Matawan vs Toms River North | 2 |
-| 2026-01-16 | Sterling vs Collingswood | 2 |
-| 2026-01-16 | Verona vs Orange | 1 |
-| 2026-01-21 | John P. Stevens vs Middlesex-Dunellen | 1 |
-| 2026-01-21 | South River vs Middlesex-Dunellen | 2 |
-| 2026-02-04 | Washington Township vs Cumberland | 1 |
-| 2026-02-11 | Cherokee vs Collingswood | 1 |
-| 2026-02-11 | Delran vs Gloucester | 1 |
-| 2026-02-11 | Orange vs Bergenfield | 1 |
-| 2026-02-11 | West Orange vs West Milford | 1 |
-| 2026-02-12 | Middle Township vs Ocean City | 1 |
-| 2026-02-20 | Overbrook vs Clayton/Glassboro | 1 |
-| 2026-02-21 | Bergenfield vs Red Bank Regional | 1 |
-| 2026-02-21 | Bergenfield vs West Windsor-Plainsboro South | 1 |
-| 2026-02-21 | Hightstown vs Bordentown Regional/Florence | 2 |
+Not combined meets. Checked against Kyle's TrackWrestling dual files in Whizzer Upload/2025-26 Girls Data
+(`scripts/check_girls_multi_opponent_duals.mts`). Today 22 plain duals have a girl facing two opponents at one
+weight; the others on the old list of 31 had since been marked jamboree or partial. All 22 match their TrackWrestling
+entry bout for bout, double forfeits included, and score for score. Small girls teams wrestle extra bouts, and the
+team score counts them. That's why the integrity check flags "a weight wrestled twice" for boys only.
+(`scripts/girls_duals_multi_opponent.mts` lists the wider set, jamborees included: 188 meets.)
 
 ## 2. ~~Ella Magee vs Ella Magee~~ — deleted 2026-11-10 (Kyle; `20261110_delete_magee_self_bout.sql`)
 
