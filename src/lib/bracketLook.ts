@@ -6,6 +6,8 @@ export type BracketLook = {
   rowH: number            // one wrestler's line, px
   firstRowH: number       // a first-round wrestler's line (the round with the most bouts), px
   pigtailRowH: number     // a pigtail's line (a bout whose winner meets a wrestler who had a bye), px
+  podiumRowH: number      // a podium bout's line (final, 3rd, 5th, 7th), px
+  podiumFont: number      // a podium bout's name size, px
   gap: number             // space between first-round cards, px
   font: number            // name size, px
   lastNameOnly: boolean
@@ -14,4 +16,4 @@ export type BracketLook = {
   fit: boolean            // card width sized so the whole tree fits the page width (cardW is then the most a card gets)
   live: boolean           // the live bracket page uses this format (Kyle saves it on in the Aesthetic tool = approved)
 }
-export const BRACKET_LOOK_DEFAULT: BracketLook = { split: true, cardW: 120, rowH: 16, firstRowH: 13, pigtailRowH: 11, gap: 3, font: 10, lastNameOnly: true, showSchool: false, hover: true, fit: true, live: false }
+export const BRACKET_LOOK_DEFAULT: BracketLook = { split: true, cardW: 120, rowH: 16, firstRowH: 13, pigtailRowH: 11, podiumRowH: 22, podiumFont: 12, gap: 3, font: 10, lastNameOnly: true, showSchool: false, hover: true, fit: true, live: false }

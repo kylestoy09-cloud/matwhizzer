@@ -50,12 +50,12 @@ function Full({ p, won, mark }: { p: BracketPerson | null; won: boolean; mark: b
 }
 
 /** One bout: compact; on hover the full bout opens over it (toward the middle of the sheet) */
-function Card({ b, look, mark, toLeft, label, tagOf }: { b: BracketBout | null; look: BracketLook & { seedSpace?: boolean }; mark: boolean; toLeft?: boolean; label?: string; tagOf?: (p: BracketPerson | null) => string | undefined }) {
+function Card({ b, look, mark, toLeft, label, tagOf, podium }: { b: BracketBout | null; look: BracketLook & { seedSpace?: boolean }; mark: boolean; toLeft?: boolean; label?: string; tagOf?: (p: BracketPerson | null) => string | undefined; podium?: boolean }) {
   const h = cardH(look)
   if (!b) return <div style={{ width: look.cardW, height: h }} />
   return (
     <div className="group relative" style={{ width: look.cardW, height: h }}>
-      <div className="h-full border border-slate-300 bg-white overflow-hidden flex flex-col">
+      <div className={`h-full border bg-white overflow-hidden flex flex-col ${podium ? 'border-slate-900 ring-1 ring-slate-900' : 'border-slate-300'}`}>
         <Line p={b.top} won={b.winner === 'top'} look={look} mark={mark} tag={tagOf?.(b.top)} />
         <div className="border-t border-slate-200" />
         <Line p={b.bottom} won={b.winner === 'bottom'} look={look} mark={mark} tag={tagOf?.(b.bottom)} />
@@ -74,6 +74,9 @@ function Card({ b, look, mark, toLeft, label, tagOf }: { b: BracketBout | null; 
 }
 
 const cardH = (look: BracketLook) => (look.showSchool ? look.rowH * 1.6 : look.rowH) * 2 + 3
+// podium bouts (final, 3rd, 5th, 7th) stand out (Kyle 2026-11-25: "make the podium matches larger so they stand out"):
+// taller lines, bigger names, a dark outline; same card width, so the columns don't move
+const podiumLook = <L extends BracketLook>(look: L): L => ({ ...look, rowH: Math.max(look.podiumRowH, look.rowH), font: Math.max(look.podiumFont, look.font) })
 
 export function SplitBracket({ bracket, look: given, mixed }: { bracket: WeightBracket; look: BracketLook; mixed: boolean }) {
   const { champ, cons } = bracket
@@ -104,7 +107,8 @@ export function SplitBracket({ bracket, look: given, mixed }: { bracket: WeightB
   // bouts up — a bout sits centered on the bouts that fed it, a bout with no feeders (its wrestlers had byes) takes only
   // its own card's height, so byes leave no empty slots; the first round can use a shorter line (firstRowH)
   const firstLook = { ...look, rowH: Math.min(look.firstRowH, look.rowH) }
-  const lookAt = (c: number) => (c === 0 ? firstLook : look)
+  const finalLook = podiumLook(look)
+  const lookAt = (c: number) => (c === D - 1 ? finalLook : c === 0 ? firstLook : look)
   const hOf = (c: number) => cardH(lookAt(c))
   const cell = (c: number, i: number) => champ[c]?.cells[i] ?? null
   const center = new Map<string, number>()   // "c|i" → center y within its half
@@ -155,11 +159,14 @@ export function SplitBracket({ bracket, look: given, mixed }: { bracket: WeightB
     H = T.h; finalMid = T.mid
     offset.set('L', 0); offset.set('R', 0)
   }
+  // a small bracket's (taller) final can reach above the halves: move everything down so it fits
+  const lift = Math.max(0, hOf(D - 1) / 2 - finalMid)
+  if (lift) { offset.set('L', offset.get('L')! + lift); offset.set('R', offset.get('R')! + lift); finalMid += lift; H += lift }
   const sideOf = (c: number, i: number) => (look.split && c < D - 1 && i >= champ[c].cells.length / 2 ? 'R' : 'L')
   const yOf = (c: number, i: number) => (c === D - 1 ? finalMid : center.get(`${c}|${i}`)! + offset.get(sideOf(c, i))!)
   const xOf = (c: number, i: number) => (c === D - 1 ? finalX : sideOf(c, i) === 'R' ? W - CW - c * STEP : c * STEP)
 
-  type Pos = { b: BracketBout | null; x: number; y: number; toLeft: boolean; label: string; lk: BracketLook & { seedSpace?: boolean } }
+  type Pos = { b: BracketBout | null; x: number; y: number; toLeft: boolean; label: string; lk: BracketLook & { seedSpace?: boolean }; podium?: boolean }
   const cards: Pos[] = []
   const lines: { x: number; y: number; w: number; h: number }[] = []
   for (let c = 0; c < D; c++) {
@@ -167,7 +174,7 @@ export function SplitBracket({ bracket, look: given, mixed }: { bracket: WeightB
       if (!b || (c < D - 1 && !center.has(`${c}|${i}`))) return   // a bye: no bout, no card, no line
       const right = sideOf(c, i) === 'R', x = xOf(c, i), my = yOf(c, i)
       const lk = lookOf(c, i)
-      cards.push({ b, x, y: my - cardH(lk) / 2, toLeft: right, label: champ[c].label, lk })
+      cards.push({ b, x, y: my - cardH(lk) / 2, toLeft: right, label: champ[c].label, lk, podium: c === D - 1 })
       if (c === D - 1) return
       // a pigtail: straight across to its winner's line
       if (pig.has(`${c}|${i}`)) { lines.push({ x: right ? x - KW : x + CW, y: my, w: KW, h: 1 }); return }
@@ -194,7 +201,7 @@ export function SplitBracket({ bracket, look: given, mixed }: { bracket: WeightB
         </div>
         <div className="relative" style={{ width: W, height: Math.max(H, finalMid + CHf / 2 + 10) }}>
           {lines.map((l, i) => <div key={i} className="absolute bg-slate-300" style={{ left: l.x, top: l.y, width: l.w, height: l.h }} />)}
-          {cards.map((p, i) => <div key={i} className="absolute" style={{ left: p.x, top: p.y }}><Card b={p.b} look={p.lk} mark={mixed} toLeft={p.toLeft} label={p.label} /></div>)}
+          {cards.map((p, i) => <div key={i} className="absolute" style={{ left: p.x, top: p.y }}><Card b={p.b} look={p.lk} mark={mixed} toLeft={p.toLeft} label={p.label} podium={p.podium} /></div>)}
         </div>
       </div>
       {(wrestlebacks.length > 0 || places.length > 0) && (
@@ -261,7 +268,7 @@ export function ConsTree({ bracket, look: given, mixed, avail = 0, maxW }: { bra
   const nCols = steps[0].length + steps[1].length + 1
   // fit: the page width shared out over this tree's own columns (never wider than the set card width, nor under 56px)
   if (given.fit && avail) look = { ...given, cardW: Math.max(56, Math.min(maxW ?? given.cardW, Math.floor((avail - (nCols - 1) * KW) / nCols))) }
-  const CW = look.cardW, STEP = CW + KW, CH = cardH(look)
+  const CW = look.cardW, STEP = CW + KW, CH = cardH(look), pLook = podiumLook(look), CHp = cardH(pLook)
   const W = nCols * CW + (nCols - 1) * KW, centerX = steps[0].length * STEP
   const colX = (side: number, step: number) => { const c = steps[side].indexOf(step); return side === 0 ? c * STEP : W - CW - c * STEP }
   type Pos = { b: BracketBout; label: string; x: number; mid: number; side: number }
@@ -279,10 +286,13 @@ export function ConsTree({ bracket, look: given, mixed, avail = 0, maxW }: { bra
     return { h, mid }
   }
   const halves = sides.map((sd, i) => (sd ? lay(sd, 0, i) : { h: 0, mid: 0 }))
-  const H = Math.max(halves[0].h, halves[1].h, CH + look.gap)
+  const H = Math.max(halves[0].h, halves[1].h, CHp + look.gap)
   const off = halves.map(hv => (H - hv.h) / 2)
   for (const p of placed) p.mid += off[p.side]
-  const rootMid = halves[0].h && halves[1].h ? (halves[0].mid + off[0] + halves[1].mid + off[1]) / 2 : H / 2
+  let rootMid = halves[0].h && halves[1].h ? (halves[0].mid + off[0] + halves[1].mid + off[1]) / 2 : H / 2
+  // the (taller) 3rd place card can reach above the halves: move everything down so it fits
+  const lift = Math.max(0, CHp / 2 - rootMid)
+  if (lift) { for (const p of placed) p.mid += lift; rootMid += lift }
   // lines: each bout to the one its winner went on to (the 3rd place bout for the two sides' last ones)
   const posOf = new Map(placed.map(p => [p.b.id, p]))
   const link = (child: Pos, px: number, py: number) => {
@@ -301,7 +311,7 @@ export function ConsTree({ bracket, look: given, mixed, avail = 0, maxW }: { bra
   }
   sides.forEach(sd => linkAll(sd, { x: centerX, mid: rootMid }))
   const under = [fifth && { b: fifth, label: '5th Place' }, seventh && { b: seventh, label: '7th Place' }].filter(Boolean) as { b: BracketBout; label: string }[]
-  const tall = Math.max(H, rootMid + CH / 2 + 8 + under.length * (CH + 18) + 10)
+  const tall = Math.max(H + lift, rootMid + CHp / 2 + 8 + under.length * (CHp + 18) + 10)
   return (
     <div className="overflow-x-auto pb-2">
       <div className="relative" style={{ width: W, height: 14 }}>
@@ -311,11 +321,11 @@ export function ConsTree({ bracket, look: given, mixed, avail = 0, maxW }: { bra
       <div className="relative" style={{ width: W, height: tall }}>
         {lines.map((l, i) => <div key={i} className="absolute bg-slate-300" style={{ left: l.x, top: l.y, width: l.w, height: l.h }} />)}
         {placed.map(p => <div key={p.b.id} className="absolute" style={{ left: p.x, top: p.mid - CH / 2 }}><Card b={p.b} look={look} mark={mixed} toLeft={p.side === 1} label={p.label} tagOf={tagFor(p.b)} /></div>)}
-        <div className="absolute" style={{ left: centerX, top: rootMid - CH / 2 }}><Card b={third} look={look} mark={mixed} label="3rd Place" tagOf={tagFor(third)} /></div>
+        <div className="absolute" style={{ left: centerX, top: rootMid - CHp / 2 }}><Card b={third} look={pLook} mark={mixed} label="3rd Place" tagOf={tagFor(third)} podium /></div>
         {under.map((u, i) => (
-          <div key={u.label} className="absolute" style={{ left: centerX, top: rootMid + CH / 2 + 8 + i * (CH + 18) }}>
+          <div key={u.label} className="absolute" style={{ left: centerX, top: rootMid + CHp / 2 + 8 + i * (CHp + 18) }}>
             <div className="text-[9px] font-bold uppercase tracking-wide text-slate-400">{u.label}</div>
-            <Card b={u.b} look={look} mark={mixed} label={u.label} />
+            <Card b={u.b} look={pLook} mark={mixed} label={u.label} podium />
           </div>
         ))}
       </div>
