@@ -108,11 +108,30 @@ export function SplitBracket({ bracket, look: given, mixed }: { bracket: WeightB
   const hOf = (c: number) => cardH(lookAt(c))
   const cell = (c: number, i: number) => champ[c]?.cells[i] ?? null
   const center = new Map<string, number>()   // "c|i" → center y within its half
+  // pigtails (Kyle 2026-11-21: "make those match boxes a little smaller and have the middle of those matches be the
+  // middle of the spot the winner will occupy"): a bout with no feeders whose next bout has no other feeder (the other
+  // wrestler had a bye). It gets a smaller card (pigtailRowH), centered on the line its winner takes in the next bout,
+  // and a straight connector; the next bout keeps its own place instead of centering on the pigtail.
+  const pigLook = { ...look, rowH: Math.min(look.pigtailRowH, look.rowH) }
+  const pig = new Set<string>()
+  const lookOf = (c: number, i: number) => (pig.has(`${c}|${i}`) ? pigLook : lookAt(c))
+  const lineH = (lk: BracketLook) => (lk.showSchool ? lk.rowH * 1.6 : lk.rowH)
+  const hasFeeders = (c: number, i: number) => c > 0 && !!(cell(c - 1, 2 * i) || cell(c - 1, 2 * i + 1))
   const lay = (c: number, i: number, top: number): { h: number; mid: number } => {
     const kids = c > 0 ? [[c - 1, 2 * i], [c - 1, 2 * i + 1]].filter(([cc, ii]) => cell(cc, ii)) : []
     let h: number, mid: number
     if (!kids.length) { h = hOf(c) + look.gap; mid = top + hOf(c) / 2 }
-    else {
+    else if (kids.length === 1 && !hasFeeders(kids[0][0], kids[0][1])) {
+      const [kc, ki] = kids[0], k = cell(kc, ki)!, me = cell(c, i)!
+      // the line its winner takes: by who it is when we know, else by bracket position (even = top)
+      const w = k.winner === 'top' ? k.top : k.winner === 'bottom' ? k.bottom : null
+      const bottom = w && pkey(w) === pkey(me.bottom) ? true : w && pkey(w) === pkey(me.top) ? false : ki % 2 === 1
+      const hp = hOf(c), ln = lineH(lookAt(c)), lineY = 1 + ln / 2 + (bottom ? ln + 1 : 0), hk = cardH(pigLook)
+      const pTop = top + Math.max(0, hk / 2 - lineY), kMid = pTop + lineY
+      pig.add(`${kc}|${ki}`); center.set(`${kc}|${ki}`, kMid)
+      mid = pTop + hp / 2
+      h = Math.max(kMid + hk / 2, pTop + hp) - top + look.gap
+    } else {
       let t = top; const mids: number[] = []
       for (const [cc, ii] of kids) { const r = lay(cc, ii, t); t += r.h; mids.push(r.mid) }
       mid = (mids[0] + mids[mids.length - 1]) / 2
@@ -140,15 +159,18 @@ export function SplitBracket({ bracket, look: given, mixed }: { bracket: WeightB
   const yOf = (c: number, i: number) => (c === D - 1 ? finalMid : center.get(`${c}|${i}`)! + offset.get(sideOf(c, i))!)
   const xOf = (c: number, i: number) => (c === D - 1 ? finalX : sideOf(c, i) === 'R' ? W - CW - c * STEP : c * STEP)
 
-  type Pos = { b: BracketBout | null; x: number; y: number; toLeft: boolean; label: string; c: number }
+  type Pos = { b: BracketBout | null; x: number; y: number; toLeft: boolean; label: string; lk: BracketLook & { seedSpace?: boolean } }
   const cards: Pos[] = []
   const lines: { x: number; y: number; w: number; h: number }[] = []
   for (let c = 0; c < D; c++) {
     champ[c].cells.forEach((b, i) => {
       if (!b || (c < D - 1 && !center.has(`${c}|${i}`))) return   // a bye: no bout, no card, no line
       const right = sideOf(c, i) === 'R', x = xOf(c, i), my = yOf(c, i)
-      cards.push({ b, x, y: my - hOf(c) / 2, toLeft: right, label: champ[c].label, c })
+      const lk = lookOf(c, i)
+      cards.push({ b, x, y: my - cardH(lk) / 2, toLeft: right, label: champ[c].label, lk })
       if (c === D - 1) return
+      // a pigtail: straight across to its winner's line
+      if (pig.has(`${c}|${i}`)) { lines.push({ x: right ? x - KW : x + CW, y: my, w: KW, h: 1 }); return }
       // the line to the bout it fed
       const pc = c + 1, pi = Math.floor(i / 2), py = yOf(pc, pi)
       const midX = right ? x - KW / 2 : x + CW + KW / 2
@@ -172,7 +194,7 @@ export function SplitBracket({ bracket, look: given, mixed }: { bracket: WeightB
         </div>
         <div className="relative" style={{ width: W, height: Math.max(H, finalMid + CHf / 2 + 10) }}>
           {lines.map((l, i) => <div key={i} className="absolute bg-slate-300" style={{ left: l.x, top: l.y, width: l.w, height: l.h }} />)}
-          {cards.map((p, i) => <div key={i} className="absolute" style={{ left: p.x, top: p.y }}><Card b={p.b} look={lookAt(p.c)} mark={mixed} toLeft={p.toLeft} label={p.label} /></div>)}
+          {cards.map((p, i) => <div key={i} className="absolute" style={{ left: p.x, top: p.y }}><Card b={p.b} look={p.lk} mark={mixed} toLeft={p.toLeft} label={p.label} /></div>)}
         </div>
       </div>
       {(wrestlebacks.length > 0 || places.length > 0) && (

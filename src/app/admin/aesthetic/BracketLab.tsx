@@ -15,7 +15,7 @@ export function BracketLab({ data, look, setLook }: { data: TournamentBrackets |
   const set = <K extends keyof BracketLook>(k: K, v: BracketLook[K]) => setLook(p => ({ ...p, [k]: v }))
   if (!data) return <p className="text-sm text-slate-500">No tournament with that id.</p>
   const b = data.brackets[weight]
-  const range = (k: 'cardW' | 'rowH' | 'firstRowH' | 'gap' | 'font', label: string, min: number, max: number) => (
+  const range = (k: 'cardW' | 'rowH' | 'firstRowH' | 'pigtailRowH' | 'gap' | 'font', label: string, min: number, max: number) => (
     <label className="block">{label}: {look[k]}px<input type="range" min={min} max={max} value={look[k]} onChange={e => set(k, Number(e.target.value))} className="block w-full" /></label>
   )
   const check = (k: 'split' | 'lastNameOnly' | 'showSchool' | 'hover' | 'fit' | 'live', label: string) => (
@@ -30,6 +30,7 @@ export function BracketLab({ data, look, setLook }: { data: TournamentBrackets |
         {range('cardW', 'Card width', 60, 200)}
         {range('rowH', 'Line height', 10, 26)}
         {range('firstRowH', 'First-round line height', 8, 26)}
+        {range('pigtailRowH', 'Pigtail line height', 8, 26)}
         {range('font', 'Name size', 8, 14)}
         {range('gap', 'Space between bouts', 0, 20)}
         {check('lastNameOnly', 'Last names only')}
