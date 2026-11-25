@@ -11,6 +11,7 @@ import { useAdminGender } from '@/components/admin/AdminGenderContext'
 
 export type HubRow = {
   registry_id:             string
+  slate:                   'active' | 'new' | null   // back from last season / first season (src/lib/tournamentSlate.ts)
   name:                    string
   date_start:              string | null
   date_end:                string | null
@@ -35,10 +36,57 @@ export type HubRow = {
 
 type FilterType   = 'all' | 'tournament' | 'jamboree'
 type FilterStatus = 'all' | 'imported' | 'pending'
+type FilterSlate  = 'all' | 'active' | 'new' | 'not_set_up'
+type NotSetUp     = { id: string; name: string; start_date: string | null; end_date: string | null; is_oos: boolean }
+
+function SlateBadge({ slate, onNew }: { slate: 'active' | 'new' | null; onNew?: () => void }) {
+  if (!slate) return null
+  if (slate === 'new' && onNew) return (
+    <button onClick={onNew} title="Same tournament as one of last season's? Click to merge"
+      className="inline-block text-xs font-medium px-1.5 py-0.5 bg-sky-100 text-sky-700 hover:bg-sky-200 underline decoration-dotted">New</button>
+  )
+  return (
+    <span className={`inline-block text-xs font-medium px-1.5 py-0.5 ${slate === 'active' ? 'bg-emerald-100 text-emerald-700' : 'bg-sky-100 text-sky-700'}`}>
+      {slate === 'active' ? 'Active' : 'New'}
+    </span>
+  )
+}
+
+/** Merge a New tournament into one of last season's that has no edition this season yet (Kyle 2026-11-16) */
+function MergePopup({ row, options, priorSeason, onClose, onMerge }: { row: HubRow; options: NotSetUp[]; priorSeason: string; onClose: () => void; onMerge: (prior: NotSetUp) => Promise<void> }) {
+  const [q, setQ] = useState('')
+  const [busy, setBusy] = useState<string | null>(null)
+  const list = options.filter(o => o.name.toLowerCase().includes(q.trim().toLowerCase()))
+  return (
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/30 pt-24" onClick={onClose}>
+      <div className="w-full max-w-lg border border-black bg-white p-4 shadow-lg" onClick={e => e.stopPropagation()}>
+        <div className="mb-1 flex items-start justify-between gap-3">
+          <h3 className="text-sm font-semibold text-slate-900">Merge “{row.name}”</h3>
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-800">✕</button>
+        </div>
+        <p className="mb-3 text-xs text-slate-500">Pick the {priorSeason} tournament it is. It becomes this season&apos;s edition of that tournament (Active), takes its settings, and keeps this season&apos;s name and dates.</p>
+        <input autoFocus value={q} onChange={e => setQ(e.target.value)} placeholder={`Search ${priorSeason} tournaments not set up yet…`}
+          className="mb-2 w-full border border-slate-300 px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-black" />
+        <ul className="max-h-80 overflow-y-auto border border-slate-200">
+          {list.map(o => (
+            <li key={o.id}>
+              <button disabled={!!busy} onClick={async () => { setBusy(o.id); try { await onMerge(o) } finally { setBusy(null) } }}
+                className="flex w-full justify-between gap-3 px-3 py-1 text-left text-sm hover:bg-slate-50 disabled:opacity-40">
+                <span className="text-slate-800">{o.name}</span>
+                <span className="whitespace-nowrap text-xs text-slate-400">{busy === o.id ? 'Merging…' : fmtDate(o.start_date)}</span>
+              </button>
+            </li>
+          ))}
+          {list.length === 0 && <li className="px-3 py-2 text-xs text-slate-400">{options.length ? 'No match.' : `Every ${priorSeason} tournament is already set up.`}</li>}
+        </ul>
+      </div>
+    </div>
+  )
+}
 type SortCol      = 'date_start' | 'name' | 'point_value' | 'region_top4' | 'state_qualifiers' | 'total_nj_wrestlers'
 
 const POINT_OPTIONS = [20, 15, 10, 5, 1] as const
-const COL_COUNT = 11
+const COL_COUNT = 12
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -742,6 +790,14 @@ export function TournamentHubClient({ seasonM, seasonF }: { seasonM: string; sea
   const [filterType, setFilterType]   = useState<FilterType>('all')
   const [filterStatus, setFilterStatus] = useState<FilterStatus>('all')
   const [filterMonth, setFilterMonth] = useState('all')
+  const [filterSlate, setFilterSlate] = useState<FilterSlate>('all')
+  const [notSetUp, setNotSetUp]       = useState<NotSetUp[]>([])
+  const [notReturning, setNotReturning] = useState<NotSetUp[]>([])
+  const [rollover, setRollover]       = useState<{ pct: number; rolled: number; notReturning: number; total: number } | null>(null)
+  const [showNotReturning, setShowNotReturning] = useState(false)
+  const [priorSeason, setPriorSeason] = useState('')
+  const [settingUp, setSettingUp]     = useState<string | null>(null)
+  const [merging, setMerging]         = useState<HubRow | null>(null)
   const [sort, setSort]               = useState<SortCol>('date_start')
   const [dir, setDir]                 = useState<'asc' | 'desc'>('asc')
   const [expandedId, setExpandedId]   = useState<string | null>(null)
@@ -763,6 +819,10 @@ export function TournamentHubClient({ seasonM, seasonF }: { seasonM: string; sea
           setRows([])
         } else {
           setRows(data.rows ?? [])
+          setNotSetUp(data.notSetUp ?? [])
+          setNotReturning(data.notReturning ?? [])
+          setRollover(data.rollover ?? null)
+          setPriorSeason(data.priorSeason ?? '')
         }
         setLoading(false)
       }
@@ -786,6 +846,45 @@ export function TournamentHubClient({ seasonM, seasonF }: { seasonM: string; sea
     setRows(prev => prev.filter(r => r.registry_id !== registryId))
   }
 
+  // last season's tournament → this season's edition (same settings, dates a year on)
+  async function setUpPrior(t: NotSetUp) {
+    setSettingUp(t.id)
+    try {
+      const res = await fetch('/api/admin/tournament-hub', {
+        method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'set_up_prior', prior_id: t.id, gender, season }),
+      })
+      const d = await res.json()
+      if (d.error) { alert(d.error); return }
+      await loadRows()
+    } finally { setSettingUp(null) }
+  }
+
+  // last season's tournament isn't coming back (on) — or is after all (off)
+  async function markNotReturning(t: NotSetUp, on: boolean) {
+    setSettingUp(t.id)
+    try {
+      const res = await fetch('/api/admin/tournament-hub', {
+        method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'not_returning', prior_id: t.id, gender, on }),
+      })
+      const d = await res.json()
+      if (d.error) { alert(d.error); return }
+      await loadRows()
+    } finally { setSettingUp(null) }
+  }
+
+  async function mergeInto(row: HubRow, prior: NotSetUp) {
+    const res = await fetch('/api/admin/tournament-hub', {
+      method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'merge_prior', tournament_id: row.in_season_tournament_id, prior_id: prior.id, gender }),
+    })
+    const d = await res.json()
+    if (d.error) { alert(d.error); return }
+    setMerging(null)
+    await loadRows()
+  }
+
   function toggleSort(col: SortCol) {
     if (sort === col) setDir(d => d === 'asc' ? 'desc' : 'asc')
     else { setSort(col); setDir('asc') }
@@ -796,10 +895,11 @@ export function TournamentHubClient({ seasonM, seasonF }: { seasonM: string; sea
   )].sort()
 
   const filtered = rows.filter(r => {
-    if (filterType !== 'all' && r.event_type !== filterType) return false
+    if (gender === 'F' && filterType !== 'all' && r.event_type !== filterType) return false   // boys have no jamborees
     if (filterStatus === 'imported' && !r.imported && !r.in_season_tournament_id) return false
     if (filterStatus === 'pending'  && (r.imported || r.in_season_tournament_id)) return false
     if (filterMonth !== 'all' && (!r.date_start || !r.date_start.startsWith(filterMonth))) return false
+    if (filterSlate === 'not_set_up' || (filterSlate !== 'all' && r.slate !== filterSlate)) return false
     return true
   })
 
@@ -893,19 +993,27 @@ export function TournamentHubClient({ seasonM, seasonF }: { seasonM: string; sea
 
       {/* Filter bar */}
       <div className="flex flex-wrap items-center gap-2">
-        <div className="flex border border-slate-300 overflow-hidden text-xs">
+        {gender === 'F' && <div className="flex border border-slate-300 overflow-hidden text-xs">
           {(['all', 'tournament', 'jamboree'] as FilterType[]).map((t, i) => (
             <button key={t} onClick={() => setFilterType(t)}
               className={`px-3 py-1.5 font-medium transition-colors ${filterType === t ? 'bg-black text-white' : 'bg-white text-slate-600 hover:bg-slate-50'} ${i > 0 ? 'border-l border-slate-300' : ''}`}>
               {t === 'all' ? 'All types' : t === 'tournament' ? 'Tournaments' : 'Jamborees'}
             </button>
           ))}
-        </div>
+        </div>}
         <div className="flex border border-slate-300 overflow-hidden text-xs">
           {(['all', 'pending', 'imported'] as FilterStatus[]).map((t, i) => (
             <button key={t} onClick={() => setFilterStatus(t)}
               className={`px-3 py-1.5 font-medium transition-colors ${filterStatus === t ? 'bg-black text-white' : 'bg-white text-slate-600 hover:bg-slate-50'} ${i > 0 ? 'border-l border-slate-300' : ''}`}>
               {t === 'all' ? 'All' : t === 'pending' ? 'Pending' : 'Imported'}
+            </button>
+          ))}
+        </div>
+        <div className="flex border border-slate-300 overflow-hidden text-xs">
+          {(['all', 'active', 'new', 'not_set_up'] as FilterSlate[]).map((t, i) => (
+            <button key={t} onClick={() => setFilterSlate(t)}
+              className={`px-3 py-1.5 font-medium transition-colors ${filterSlate === t ? 'bg-black text-white' : 'bg-white text-slate-600 hover:bg-slate-50'} ${i > 0 ? 'border-l border-slate-300' : ''}`}>
+              {t === 'all' ? 'This season' : t === 'active' ? `Active (${rows.filter(r => r.slate === 'active').length})` : t === 'new' ? `New (${rows.filter(r => r.slate === 'new').length})` : `Not set up (${notSetUp.length})`}
             </button>
           ))}
         </div>
@@ -942,7 +1050,8 @@ export function TournamentHubClient({ seasonM, seasonF }: { seasonM: string; sea
               <tr>
                 <ColHd col="date_start"         label="Date" />
                 <ColHd col="name"               label="Name" />
-                <th className="px-3 py-2 text-left text-xs font-semibold text-slate-500 uppercase whitespace-nowrap">Type</th>
+                <th className="px-3 py-2 text-left text-xs font-semibold text-slate-500 uppercase whitespace-nowrap">{season}</th>
+                {gender === 'F' && <th className="px-3 py-2 text-left text-xs font-semibold text-slate-500 uppercase whitespace-nowrap">Type</th>}
                 <th className="px-3 py-2 text-left text-xs font-semibold text-slate-500 uppercase whitespace-nowrap">Points</th>
                 <th className="px-3 py-2 text-left text-xs font-semibold text-slate-500 uppercase whitespace-nowrap">Status</th>
                 <th className="px-3 py-2 text-left text-xs font-semibold text-slate-500 uppercase whitespace-nowrap">Bracket</th>
@@ -973,7 +1082,8 @@ export function TournamentHubClient({ seasonM, seasonF }: { seasonM: string; sea
                           {r.name}
                         </Link>
                       </td>
-                      <td className="px-3 py-2"><TypeBadge type={r.event_type} /></td>
+                      <td className="px-3 py-2"><SlateBadge slate={r.slate} onNew={r.in_season_tournament_id ? () => setMerging(r) : undefined} /></td>
+                      {gender === 'F' && <td className="px-3 py-2"><TypeBadge type={r.event_type} /></td>}
                       <td className="px-3 py-2"><PointDropdown row={r} onSaved={handleSaved} /></td>
                       <td className="px-3 py-2">
                         <StatusBadge imported={r.imported} linked={!!r.in_season_tournament_id} />
@@ -1046,11 +1156,68 @@ export function TournamentHubClient({ seasonM, seasonF }: { seasonM: string; sea
         </div>
       )}
 
+      {/* Last season's tournaments not set up for this season yet */}
+      {(filterSlate === 'all' || filterSlate === 'not_set_up') && notSetUp.length > 0 && (
+        <section className="pt-4">
+          <h3 className="text-sm font-semibold text-slate-800">Not set up for {season} · {notSetUp.length}</h3>
+          <p className="mb-2 text-xs text-slate-500">On last season&apos;s ({priorSeason}) schedule but not this season&apos;s yet. Set up copies its settings with the dates a year on (same weekday); edit the dates after if they changed. Not returning takes it off this list. Both count toward the preseason Tournament Rollover %.</p>
+          <div className="overflow-x-auto border border-slate-200">
+            <table className="min-w-full text-sm">
+              <thead className="bg-slate-50 border-b border-slate-200"><tr>
+                <th className="px-3 py-1 text-left text-xs font-semibold text-slate-500 uppercase whitespace-nowrap">{priorSeason} Date</th>
+                <th className="px-3 py-1 text-left text-xs font-semibold text-slate-500 uppercase">Name</th>
+                <th className="px-3 py-1 w-32"></th>
+              </tr></thead>
+              <tbody className="divide-y divide-slate-100">
+                {notSetUp.map(t => (
+                  <tr key={t.id}>
+                    <td className="px-3 py-1 tabular-nums text-slate-500 whitespace-nowrap">{fmtDate(t.start_date)}{t.end_date && t.end_date !== t.start_date ? `–${fmtDate(t.end_date)}` : ''}</td>
+                    <td className="px-3 py-1 text-slate-800">{t.name}{t.is_oos && <span className="ml-1.5 text-xs text-slate-400">out of state</span>}</td>
+                    <td className="px-3 py-1 text-right whitespace-nowrap">
+                      <button onClick={() => setUpPrior(t)} disabled={settingUp === t.id}
+                        className="px-2 py-0.5 text-xs font-medium border border-black hover:bg-slate-100 disabled:opacity-40">
+                        {settingUp === t.id ? 'Saving…' : `Set up for ${season}`}
+                      </button>
+                      <button onClick={() => markNotReturning(t, true)} disabled={settingUp === t.id}
+                        className="ml-1.5 px-2 py-0.5 text-xs font-medium border border-slate-300 text-slate-600 hover:bg-slate-100 disabled:opacity-40">
+                        Not returning
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+
+      {/* Rollover progress, and last season's tournaments marked not returning (undo here) */}
+      {rollover && rollover.total > 0 && (filterSlate === 'all' || filterSlate === 'not_set_up') && (
+        <div className="pt-2 text-xs text-slate-500">
+          Rollover: {rollover.rolled} of {priorSeason}&apos;s {rollover.total} tournaments rolled over, {rollover.notReturning} not returning — <strong className="text-slate-800">{rollover.pct}%</strong>
+          {notReturning.length > 0 && (
+            <button onClick={() => setShowNotReturning(v => !v)} className="ml-2 underline">{showNotReturning ? 'hide' : 'show'} not returning</button>
+          )}
+          {showNotReturning && notReturning.length > 0 && (
+            <ul className="mt-1 border border-slate-200">
+              {notReturning.map(t => (
+                <li key={t.id} className="flex justify-between gap-3 px-3 py-1 text-sm">
+                  <span className="text-slate-600">{t.name} <span className="text-xs text-slate-400">{fmtDate(t.start_date)}</span></span>
+                  <button onClick={() => markNotReturning(t, false)} disabled={settingUp === t.id} className="text-xs text-slate-500 underline disabled:opacity-40">Undo</button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+
+      {merging && <MergePopup row={merging} options={notSetUp} priorSeason={priorSeason} onClose={() => setMerging(null)} onMerge={p => mergeInto(merging, p)} />}
+
       {/* Footer counts */}
       {rows.length > 0 && (
         <div className="flex gap-6 text-xs text-slate-400 pt-1">
           <span>{rows.filter(r => r.event_type === 'tournament').length} tournaments</span>
-          <span>{rows.filter(r => r.event_type === 'jamboree').length} jamborees</span>
+          {gender === 'F' && <span>{rows.filter(r => r.event_type === 'jamboree').length} jamborees</span>}
           <span>{imported} imported</span>
           <span>{pending} pending</span>
         </div>

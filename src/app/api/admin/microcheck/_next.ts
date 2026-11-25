@@ -9,13 +9,17 @@
 import type { createSupabaseAdmin } from '@/lib/supabase/service'
 import { FIELD_DEFS, type TaskInfo } from './_engine'
 import { loadWorkload, typeGenderLabel, type QueueItem, type TaskType, type Workload } from './_workload'
+import { enrichSpot } from '@/lib/ncaa/spotCheck'
 
 type Db = ReturnType<typeof createSupabaseAdmin>
 
 const HOLD_MINUTES = 10
 
 export const claimKeyFor = (task: TaskInfo) =>
-  task.task_type === 'tie_resolution' ? `queue:${task.task_id}` : `${task.task_key}:${task.school_id}`
+  task.task_type === 'tie_resolution' ? `queue:${task.task_id}`
+  : task.task_type === 'college_review' ? `college:${task.gender}:${task.row.id}`
+  : task.task_type === 'college_spot' ? `spot:${task.gender}:${task.career.key}`
+  : `${task.task_key}:${task.school_id}`
 
 function schoolTask(w: Workload, t: TaskType, schoolId: number): TaskInfo {
   const def = FIELD_DEFS[t.field!]
@@ -32,10 +36,14 @@ function schoolTask(w: Workload, t: TaskType, schoolId: number): TaskInfo {
     label:       def.label,
     input_type:  def.input_type,
     placeholder: def.placeholder,
+    current:     w.current(t, schoolId),
+    ...(t.field === 'stream_choice' ? { links: (({ hudl, nfhs }) => ({ hudl, nfhs }))(w.streams(t.gender ?? 'M', schoolId) ?? { hudl: null, nfhs: null, choice: null, choice_at: null }) } : {}),
   }
 }
 
 function queueTask(t: TaskType, q: QueueItem): TaskInfo {
+  if (q.college) return { task_type: 'college_review', task_key: t.key, group_label: typeGenderLabel(t.gender), gender: t.gender ?? 'M', row: q.college }
+  if (q.spot) return { task_type: 'college_spot', task_key: t.key, group_label: typeGenderLabel(t.gender), gender: t.gender ?? 'M', career: q.spot }
   const m = q.metadata
   return {
     task_type:       'tie_resolution',
@@ -107,6 +115,7 @@ export async function nextMicrocheckTask(db: Db, userId: string, skip: Set<strin
     } else {
       await db.from('microcheck_claims').update({ claimed_at: new Date().toISOString() }).eq('claim_key', key)
     }
+    if (task.task_type === 'college_spot') return { ...task, career: await enrichSpot(db as never, task.career) }
     return task
   }
   return null

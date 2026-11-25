@@ -1,0 +1,182 @@
+# NCAA Division II Championships 2000 — source: NCAA II 2000.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 125
+- Mark Dodgen | Central Oklahoma
+- Chris Peretti | Ashland
+- Brandon Newill | Pittsburgh-Johnstown
+- Jeff Putt | Shippensburg
+- Jared Haberman | Western State
+- Drew Passley | Central Missouri
+- Zach Gressett | Nebraska-Kearney
+- Mack LaRock | Nebraska-Omaha
+place 1 Mark Dodgen
+place 2 Chris Peretti
+place 3 Brandon Newill
+place 4 Jeff Putt
+place 5 Jared Haberman
+place 6 Drew Passley
+place 7 Zach Gressett
+place 8 Mack LaRock
+
+@ 133
+- Kris Nelson | North Dakota State
+- Scott Braun | South Dakota State
+- Rob English | Pittsburgh-Johnstown
+- Luke Shaw | Central Missouri
+- Chris Shears | Ashland
+- Chad Flores | Nebraska-Kearney
+- Aaron Sanders | St. Cloud State
+- Wesley Watson | West Liberty State
+place 1 Kris Nelson
+place 2 Scott Braun
+place 3 Rob English
+place 4 Luke Shaw
+place 5 Chris Shears
+place 6 Chad Flores
+place 7 Aaron Sanders
+place 8 Wesley Watson
+
+@ 141
+- Paul Konechne | South Dakota State
+- Kurt Karjalainen | Nebraska-Kearney
+- Shaine Jaime | Central Washington
+- Jake Thielbar | North Dakota State
+- Brad Kieffer | Truman State
+- Roderick Ratcliff | Nebraska-Omaha
+- Joe Schneider | Central Oklahoma
+- Dan Tashner | Kutztown State
+place 1 Paul Konechne
+place 2 Kurt Karjalainen
+place 3 Shaine Jaime
+place 4 Jake Thielbar
+place 5 Brad Kieffer
+place 6 Roderick Ratcliff
+place 7 Joe Schneider
+place 8 Dan Tashner
+
+@ 149
+- Lazaro Reinoso | Carson-Newman
+- Gable Sullivan | Central Oklahoma
+- Corey Kline | Ashland
+- Boyce Voorhees | Nebraska-Omaha
+- Brandon Pfizenmaier | Nebraska-Kearney
+- Nick Spencer | West Liberty State
+- Aaron Veskrna | South Dakota State
+- Pete Dickinson | Minnesota State-Moorhead
+place 1 Lazaro Reinoso
+place 2 Gable Sullivan
+place 3 Corey Kline
+place 4 Boyce Voorhees
+place 5 Brandon Pfizenmaier
+place 6 Nick Spencer
+place 7 Aaron Veskrna
+place 8 Pete Dickinson
+
+@ 157
+- Wayne Mooney | North Dakota State
+- Royce Johnson | Western State
+- Matt Petsinger | Minnesota State-Mankato
+- Tony Morgan | Carson-Newman
+- Josh Schommer | Chadron State
+- Alan Cartwright | Nebraska-Omaha
+- Shad Benton | Pittsburgh-Johnstown
+- Joe Veras | Ashland
+place 1 Wayne Mooney
+place 2 Royce Johnson
+place 3 Matt Petsinger
+place 4 Tony Morgan
+place 5 Josh Schommer
+place 6 Alan Cartwright
+place 7 Shad Benton
+place 8 Joe Veras
+
+@ 165
+- Titus Taylor | SIU-Edwardsville
+- Chris Blair | Nebraska-Omaha
+- Jody Marple | Central Oklahoma
+- Scott Goldstein | Anderson College
+- Matt Gadient | Minnesota State-Mankato
+- Ryan Buterbaugh | Pittsburgh-Johnstown
+- Jason Warthan | Indianapolis
+- Tyler Bryant | South Dakota State
+place 1 Titus Taylor
+place 2 Chris Blair
+place 3 Jody Marple
+place 4 Scott Goldstein
+place 5 Matt Gadient
+place 6 Ryan Buterbaugh
+place 7 Jason Warthan
+place 8 Tyler Bryant
+
+@ 174
+- Todd Fuller | North Dakota State
+- Mike Mitchell | American International
+- Jason Tapia | Southern Colorado
+- Matt Johnson | Central Missouri
+- Travis Nagel | Minnesota State-Moorhead
+- Tyler Jones | South Dakota State
+- Mauricio Wright | San Francisco State
+- Tony Realmuto | Central Oklahoma
+place 1 Todd Fuller
+place 2 Mike Mitchell
+place 3 Jason Tapia
+place 4 Matt Johnson
+place 5 Travis Nagel
+place 6 Tyler Jones
+place 7 Mauricio Wright
+place 8 Tony Realmuto
+
+@ 184
+- Steve Saxlund | North Dakota State
+- Kevin Boccella | Shippensburg
+- Scott Antoniak | Nebraska-Omaha
+- Ethan Brownback | Pittsburgh-Johnstown
+- Cory Hintz | Southern Colorado
+- Ty Swarm | Nebraska-Kearney
+- Brady Wegesin | Ashland
+- Sam Kenton | Augustana SD
+place 1 Steve Saxlund
+place 2 Kevin Boccella
+place 3 Scott Antoniak
+place 4 Ethan Brownback
+place 5 Cory Hintz
+place 6 Ty Swarm
+place 7 Brady Wegesin
+place 8 Sam Kenton
+
+@ 197
+- Terry Tuzzolino | San Francisco State
+- Trevell Smittick | Fort Hays State
+- Ryan Rettke | Minnesota State-Mankato
+- Chad Wallace | Nebraska-Omaha
+- Luke Goral | Wisconsin-Parkside
+- Josh Waugh | West Liberty State
+- Clell Cox | Ashland
+- Tom Clemen | Northern Colorado
+place 1 Terry Tuzzolino
+place 2 Trevell Smittick
+place 3 Ryan Rettke
+place 4 Chad Wallace
+place 5 Luke Goral
+place 6 Josh Waugh
+place 7 Clell Cox
+place 8 Tom Clemen
+
+@ 285
+- Jon Madsen | South Dakota State
+- Keith Blaske | Fort Hays State
+- Jermiah Constant | Central Oklahoma
+- Tyrice Ellebb | Nebraska-Omaha
+- Todd Proper | Wisconsin-Parkside
+- Brad Hughes | Pittsburgh-Johnstown
+- James Garvey | Augustana SD
+- Willie McCowan | Central Missouri
+place 1 Jon Madsen
+place 2 Keith Blaske
+place 3 Jermiah Constant
+place 4 Tyrice Ellebb
+place 5 Todd Proper
+place 6 Brad Hughes
+place 7 James Garvey
+place 8 Willie McCowan
+

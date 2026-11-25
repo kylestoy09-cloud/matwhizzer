@@ -1,0 +1,182 @@
+# NCAA Division III Championships 2005 — source: NCAA III 2005.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 125
+- Matt Shankey | Augsburg
+- Tom Prairie | Williams
+- Terry Morgan | Loras College
+- Justin McClintock | Wartburg
+- Brian Dempsey | College of New Jersey
+- Derrick Goduto | Montclair State
+- Jordan Kolinski | Wisconsin-La Crosse
+- Ty Klofta | Ohio Northern
+place 1 Matt Shankey
+place 2 Tom Prairie
+place 3 Terry Morgan
+place 4 Justin McClintock
+place 5 Brian Dempsey
+place 6 Derrick Goduto
+place 7 Jordan Kolinski
+place 8 Ty Klofta
+
+@ 133
+- Mark Matzek | Augsburg
+- Tony D'Ambra | SUNY-Brockport
+- Tyler Hubbard | Wartburg
+- Mike Lopez | Luther
+- Jestin Hulegaard | Buena Vista
+- Sean Cullen | Lycoming
+- Matt Sganga | SUNY-Cortland
+- Mike Rohowetz | Wisconsin-La Crosse
+place 1 Mark Matzek
+place 2 Tony D'Ambra
+place 3 Tyler Hubbard
+place 4 Mike Lopez
+place 5 Jestin Hulegaard
+place 6 Sean Cullen
+place 7 Matt Sganga
+place 8 Mike Rohowetz
+
+@ 141
+- Dustin Hinschberger | Wartburg
+- Jamell Tidwell | Augsburg
+- Jeff Patzke | Luther
+- Dustin Brewer | Simpson
+- Nick Karls | Wisconsin-Whitewater
+- Tenkoran Agyeman | SUNY-Oswego
+- Mike Gaeta | Springfield
+- David Silva | Elmhurst
+place 1 Dustin Hinschberger
+place 2 Jamell Tidwell
+place 3 Jeff Patzke
+place 4 Dustin Brewer
+place 5 Nick Karls
+place 6 Tenkoran Agyeman
+place 7 Mike Gaeta
+place 8 David Silva
+
+@ 149
+- Matt Pyle | Luther
+- Clint Manny | Simpson
+- Jason Roush | Mount St. Josephs
+- Jake Larsen | Wisconsin-La Crosse
+- Rick Frondorf | Delaware Valley
+- Jacob Naig | Wartburg
+- Jared Evans | Augsburg
+- Mike Kemble | Thiel
+place 1 Matt Pyle
+place 2 Clint Manny
+place 3 Jason Roush
+place 4 Jake Larsen
+place 5 Rick Frondorf
+place 6 Jacob Naig
+place 7 Jared Evans
+place 8 Mike Kemble
+
+@ 157
+- Marcus LeVesseur | Augsburg
+- Ryan LeBeau | Luther
+- Dustin Winn | SUNY-Oneonta
+- Joe Galante | College of New Jersey
+- Shaheim Bradshaw | SUNY-Brockport
+- Rick Lamas | Elmhurst
+- KC Beach | Ithaca
+- Carl Amerine | Wilmington
+place 1 Marcus LeVesseur
+place 2 Ryan LeBeau
+place 3 Dustin Winn
+place 4 Joe Galante
+place 5 Shaheim Bradshaw
+place 6 Rick Lamas
+place 7 KC Beach
+place 8 Carl Amerine
+
+@ 165
+- Garrett South | Luther
+- Ryan Valek | Augsburg
+- Marc Isreal | Ithaca
+- Scott Roesch | Ursinus
+- Derek Sikora | Wisconsin-Eau Clair
+- Nick Ammerman | Wisconsin-La Crosse
+- John Dolan | Williams
+- Corey Murphy | Thiel
+place 1 Garrett South
+place 2 Ryan Valek
+place 3 Marc Isreal
+place 4 Scott Roesch
+place 5 Derek Sikora
+place 6 Nick Ammerman
+place 7 John Dolan
+place 8 Corey Murphy
+
+@ 174
+- Joe Moon | Augsburg
+- Chris Healy | Wabash
+- Tim Ruberg | Johnson & Wales
+- Stef Sair | SUNY-Cortland
+- Tony Howard | McDaniel
+- Josh Chelf | Wisconsin-La Crosse
+- Cody Koenig | Wisconsin-Stevens Point
+- Jason Shivak | Delaware Valley
+place 1 Joe Moon
+place 2 Chris Healy
+place 3 Tim Ruberg
+place 4 Stef Sair
+place 5 Tony Howard
+place 6 Josh Chelf
+place 7 Cody Koenig
+place 8 Jason Shivak
+
+@ 184
+- Duane Bastress | York
+- Ryan Summers | John Carroll
+- Matt Sassolino | Elmhurst
+- Brad Tupa | Augsburg
+- Scott Kauffman | Wartburg
+- Danny Adams | Luther
+- Al Stacilauskas | Wisconsin-Stevens Point
+- Mike Troutman | Ursinus
+place 1 Duane Bastress
+place 2 Ryan Summers
+place 3 Matt Sassolino
+place 4 Brad Tupa
+place 5 Scott Kauffman
+place 6 Danny Adams
+place 7 Al Stacilauskas
+place 8 Mike Troutman
+
+@ 197
+- Akeem Carter | Wartburg
+- Jamall Johnson | Delaware Valley
+- Willie Weiss | SUNY-Brockport
+- Matt Loesch | Muhlenberg
+- Jim Swanson | Wisconsin-La Crosse
+- Justin Sorensen | Augsburg
+- Mike McCabe | Coe College
+- Devin Carman | Baldwin Wallace
+place 1 Akeem Carter
+place 2 Jamall Johnson
+place 3 Willie Weiss
+place 4 Matt Loesch
+place 5 Jim Swanson
+place 6 Justin Sorensen
+place 7 Mike McCabe
+place 8 Devin Carman
+
+@ 285
+- Ryan Allen | Wisconsin-La Crosse
+- Blake Gillis | Wartburg
+- Mike Blair | Trinity
+- Mark Simmonds | Augsburg
+- Mike Hayes | Wisconsin-Stevens Point
+- Brett Christensen | Simpson
+- Tommy Snyder | Lycoming
+- Pat Bennett | SUNY-Brockport
+place 1 Ryan Allen
+place 2 Blake Gillis
+place 3 Mike Blair
+place 4 Mark Simmonds
+place 5 Mike Hayes
+place 6 Brett Christensen
+place 7 Tommy Snyder
+place 8 Pat Bennett
+

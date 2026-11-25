@@ -1,0 +1,182 @@
+# NCAA Division III Championships 2002 — source: NCAA III 2002.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 125
+- Jamie Taxted | Buena Vista
+- Carlos Restrepo | Ithaca
+- Matt Vos | St. John's
+- Calvin Johnson | Springfield
+- Heath Ropp | Wartburg
+- Jeremy Hendricks | Central College IA
+- Davey Starks | Wisconsin-Eau Clair
+- Mitchell Marcks | King's College
+place 1 Jamie Taxted
+place 2 Carlos Restrepo
+place 3 Matt Vos
+place 4 Calvin Johnson
+place 5 Heath Ropp
+place 6 Jeremy Hendricks
+place 7 Davey Starks
+place 8 Mitchell Marcks
+
+@ 133
+- Tom Hall | Ithaca
+- Steve Martin | Loras College
+- Josh Habek | Wisconsin-La Crosse
+- Mike Waldron | Lycoming
+- Ralph Acosta | Upper Iowa
+- Dan Flounders | College of New Jersey
+- Kevin DeJulius | Washington & Jefferson
+- Mario Villa | Hunter College
+place 1 Tom Hall
+place 2 Steve Martin
+place 3 Josh Habek
+place 4 Mike Waldron
+place 5 Ralph Acosta
+place 6 Dan Flounders
+place 7 Kevin DeJulius
+place 8 Mario Villa
+
+@ 141
+- Jesus Wilson | Upper Iowa
+- Brady Cudd | Wisconsin-La Crosse
+- Will Kelly | Wartburg
+- Brad Fisher | Augsburg
+- Keith Poloskey | Springfield
+- Taylor Wood | Buena Vista
+- Jeff Linn | Thiel
+- Marc Isreal | Ithaca
+place 1 Jesus Wilson
+place 2 Brady Cudd
+place 3 Will Kelly
+place 4 Brad Fisher
+place 5 Keith Poloskey
+place 6 Taylor Wood
+place 7 Jeff Linn
+place 8 Marc Isreal
+
+@ 149
+- Darrell Carr | Manchester
+- Garrett Kurth | Luther
+- Kristopher Harrington | SUNY-Brockport
+- Jim Morgan | King's College
+- Zak Kallai | Case-Western Reserve
+- Frank Petrucci | SUNY-Oswego
+- Andrew Vogel | Messiah
+- Tony Gaines | Wartburg
+place 1 Darrell Carr
+place 2 Garrett Kurth
+place 3 Kristopher Harrington
+place 4 Jim Morgan
+place 5 Zak Kallai
+place 6 Frank Petrucci
+place 7 Andrew Vogel
+place 8 Tony Gaines
+
+@ 157
+- Jimmy Wallace | Wilmington
+- Matt Moscatello | College of New Jersey
+- Kevin Bratland | Wartburg
+- Aaron Loewens | Buena Vista
+- Brent Rider | SUNY-Cortland
+- Ryan Ciotoli | Ithaca
+- Dustin Roland | Central College IA
+- Troy Hall | Pacific Oregon
+place 1 Jimmy Wallace
+place 2 Matt Moscatello
+place 3 Kevin Bratland
+place 4 Aaron Loewens
+place 5 Brent Rider
+place 6 Ryan Ciotoli
+place 7 Dustin Roland
+place 8 Troy Hall
+
+@ 165
+- Tony Abbott | Augsburg
+- Jorge Borgen | Upper Iowa
+- Noah Seitel | SUNY-Oswego
+- Pat North | RIT
+- Pat Wilsbacher | Buena Vista
+- Lee Kadinger | Lakeland
+- James Gilbert | Johnson & Wales
+- Chris Nader | Case-Western Reserve
+place 1 Tony Abbott
+place 2 Jorge Borgen
+place 3 Noah Seitel
+place 4 Pat North
+place 5 Pat Wilsbacher
+place 6 Lee Kadinger
+place 7 James Gilbert
+place 8 Chris Nader
+
+@ 174
+- Eduard Aliakseynka | Montclair State
+- Nick Slack | Augsburg
+- Anthony Stewart | SUNY-Cortland
+- Jason Snow | New York University
+- Ben Bly | Wisconsin-La Crosse
+- Josh Housekeeper | Delaware Valley
+- Don Favro | SUNY-Brockport
+- Jason Carr | Manchester
+place 1 Eduard Aliakseynka
+place 2 Nick Slack
+place 3 Anthony Stewart
+place 4 Jason Snow
+place 5 Ben Bly
+place 6 Josh Housekeeper
+place 7 Don Favro
+place 8 Jason Carr
+
+@ 184
+- Andy Kazik | Lawrence
+- Ricky Crone | Augsburg
+- Paul Cleary | Loras College
+- Sonny Alvarez | Wartburg
+- Jared Combs | Mount St. Josephs
+- Brent Meyers | Upper Iowa
+- Ryan Jones | Pacific Oregon
+- Tony Wallace | RIT
+place 1 Andy Kazik
+place 2 Ricky Crone
+place 3 Paul Cleary
+place 4 Sonny Alvarez
+place 5 Jared Combs
+place 6 Brent Meyers
+place 7 Ryan Jones
+place 8 Tony Wallace
+
+@ 197
+- Yan White | Wisconsin-Stevens Point
+- Cliff Thompson | Upper Iowa
+- Alain Djoumessi | Wartburg
+- Chris McNally | Wilmington
+- Kevin Rasmussen | Augsburg
+- Tom Mulchy | SUNY-Oswego
+- Craig Buckley | Bridgewater State
+- John Shipley | Montclair State
+place 1 Yan White
+place 2 Cliff Thompson
+place 3 Alain Djoumessi
+place 4 Chris McNally
+place 5 Kevin Rasmussen
+place 6 Tom Mulchy
+place 7 Craig Buckley
+place 8 John Shipley
+
+@ 285
+- Jason Ott | Wisconsin-La Crosse
+- Eric Urdzik | John Carroll
+- Leroy Gardner | Wartburg
+- Dax Doran | Buena Vista
+- Pat Thomas | Loras College
+- Jamie Salazar | Manchester
+- Brian Black | Upper Iowa
+- Mike Flanagan | Wilkes
+place 1 Jason Ott
+place 2 Eric Urdzik
+place 3 Leroy Gardner
+place 4 Dax Doran
+place 5 Pat Thomas
+place 6 Jamie Salazar
+place 7 Brian Black
+place 8 Mike Flanagan
+

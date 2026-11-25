@@ -1,0 +1,30 @@
+import { NextRequest } from 'next/server'
+const time = async (label: string, f: () => Promise<Response>) => { const t0 = Date.now(); const r = await f(); const d = await r.json(); console.log(`${label.padEnd(44)} ${r.status} ${String(Date.now() - t0).padStart(6)} ms ${d.error ? 'ERROR ' + d.error : ''}`); return d }
+const T = await import('../../src/app/api/admin/hub/tournaments/route')
+const L = await import('../../src/app/api/admin/hub/leaderboard/route')
+const P = await import('../../src/app/api/admin/hub/prospects/route')
+const C = await import('../../src/app/api/admin/hub/clubs/route')
+const F = await import('../../src/app/api/admin/hub/freshman/route')
+const Ev = await import('../../src/app/api/admin/hub/event/route')
+const Hi = await import('../../src/app/api/admin/history/route')
+const r = (u: string) => new NextRequest(`http://x${u}`)
+const tb = await time('tournaments boys', () => T.GET(r('/api?gender=M&hub=offseason')))
+await time('tournaments girls', () => T.GET(r('/api?gender=F&hub=offseason')))
+const tm = await time('tournaments middle school', () => T.GET(r('/api?gender=X&hub=ms')))
+await time('leaderboard boys 2026', () => L.GET(r('/api?gender=M&hub=offseason&season=2026')))
+await time('leaderboard boys all seasons + all states', () => L.GET(r('/api?gender=M&hub=offseason&state=all')))
+await time('leaderboard girls 2026', () => L.GET(r('/api?gender=F&hub=offseason&season=2026')))
+await time('leaderboard MS boys', () => L.GET(r('/api?gender=X&hub=ms&sex=M')))
+await time('prospects boys', () => P.GET(r('/api?gender=M')))
+await time('prospects boys search', () => P.GET(r('/api?gender=M&q=Sontz')))
+const cl = await time('clubs boys', () => C.GET(r('/api?gender=M')))
+console.log('   unlisted club names', cl.unlisted?.length)
+await time('freshman boys', () => F.GET(r('/api?gender=M')))
+const nhscaB = tb.tournaments.find((t: any) => t.name === 'NHSCA High School Nationals').events[0].id
+const dualB = tb.tournaments.find((t: any) => t.name === 'NHSCA National Duals')?.events[0]?.id
+await time('event page NHSCA boys (4,185 places)', () => Ev.GET(r(`/api?gender=M&id=${nhscaB}`)))
+if (dualB) { const d = await time('event page National Duals boys (8,339 bouts)', () => Ev.GET(r(`/api?gender=M&id=${dualB}`))); console.log('   bouts returned', d.bouts?.length) }
+await time('history boys', () => Hi.GET(r('/api?gender=M')))
+await time('history girls', () => Hi.GET(r('/api?gender=F')))
+console.log('boys tournaments: shown', tb.tournaments.filter((t: any) => t.is_active).length, 'hidden', tb.tournaments.filter((t: any) => !t.is_active).map((t: any) => `${t.name} (${t.events.map((e: any) => e.bouts + ' bouts').join(',')})`).join('; '))
+console.log('levels missing:', [...tb.tournaments, ...tm.tournaments].filter((t: any) => t.is_active && !t.level).map((t: any) => t.name))

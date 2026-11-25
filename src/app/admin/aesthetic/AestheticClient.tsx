@@ -6,7 +6,11 @@
 
 import { useEffect, useState } from 'react'
 import { SitePageHeader } from '@/components/site/SitePageHeader'
-import { MockSite } from './MockSite'
+import { MockSite, type MockPreviews } from './MockSite'
+import { BracketLab } from './BracketLab'
+import type { TournamentBrackets } from '@/lib/tournamentBrackets'
+import type { ReactNode } from 'react'
+import type { CalendarRow } from '@/app/(site)/about/AboutClient'
 import { DEFAULT_LOOK, LOOK_FONTS, SUMMARY_DEFAULTS, TITLE_FONT_NAMES, fontStack, fontsCss, mergeLook, type SiteLook, type SummaryKey } from '@/lib/siteLook'
 import { SiteTabs } from '@/components/site/SiteTabs'
 import { NumberTileGrid, type NumberTile } from '@/components/site/NumberTileGrid'
@@ -31,10 +35,10 @@ function Swatch({ label, value, onChange }: { label: string; value: string; onCh
   )
 }
 
-export function AestheticClient() {
+export function AestheticClient({ aboutRows, previews, previewPicker, brackets, bracketPicker }: { aboutRows: CalendarRow[]; previews?: MockPreviews; previewPicker?: ReactNode; brackets?: TournamentBrackets | null; bracketPicker?: ReactNode }) {
   const [s, setS] = useState<Settings>(DEFAULTS)
   const [copied, setCopied] = useState(false)
-  const [view, setView] = useState<'site' | 'components'>('site')
+  const [view, setView] = useState<'site' | 'components' | 'brackets'>('site')
   const set = <K extends keyof Settings>(k: K, v: Settings[K]) => setS(p => ({ ...p, [k]: v }))
 
   // saved looks: the newest is in effect; a saved look is merged over the defaults, so settings added
@@ -183,12 +187,14 @@ export function AestheticClient() {
       {/* ── Preview: the mock site (default) or the component sheet ── */}
       <div>
       <div className="mb-3 inline-flex border border-slate-300">
-        {([['site', 'Mock site'], ['components', 'Components']] as const).map(([k, l]) => (
+        {([['site', 'Mock site'], ['components', 'Components'], ['brackets', 'Brackets']] as const).map(([k, l]) => (
           <button key={k} onClick={() => setView(k)} className={`px-3 py-1 text-xs font-semibold ${view === k ? 'bg-slate-900 text-white' : 'text-slate-700 hover:bg-slate-50'}`}>{l}</button>
         ))}
       </div>
-      {view === 'site' ? (
-        <MockSite look={{ fontFamily, titleFontFamily: TITLE_FONTS[s.titleFont], titleSize: s.titleSize, summaries: s.summaries, size: s.size, radius: s.radius, border, showLogo: s.showLogo, headerLayout: s.headerLayout, boysTile, girlsTile }} />
+      {view === 'site' && previewPicker}
+      {view === 'brackets' && bracketPicker}
+      {view === 'brackets' ? <BracketLab data={brackets ?? null} look={s.bracket} setLook={f => setS(p => ({ ...p, bracket: f(p.bracket) }))} /> : view === 'site' ? (
+        <MockSite look={{ fontFamily, titleFontFamily: TITLE_FONTS[s.titleFont], titleSize: s.titleSize, summaries: s.summaries, size: s.size, radius: s.radius, border, showLogo: s.showLogo, headerLayout: s.headerLayout, boysTile, girlsTile }} aboutRows={aboutRows} previews={previews} />
       ) : (
       <div className="space-y-10 border border-slate-200 bg-white p-6">
         <section>

@@ -5,5 +5,5 @@ import { loadAbout } from './loadAbout'
 export const revalidate = 86400
 
 export default async function AboutPage() {
-  return <AboutClient {...await loadAbout()} />
+  return <AboutClient {...await loadAbout('M')} />
 }

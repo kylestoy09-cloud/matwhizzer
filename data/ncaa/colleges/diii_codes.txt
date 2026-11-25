@@ -1,0 +1,63 @@
+# DIII school codes printed in the 2013 bracket (and the short names of other years) — aliases of the colleges
+Ithaca | | | | ITHA
+Augsburg | | | | AUGS
+Springfield | | | | SPRI
+SUNY Brockport | | | | BRST
+Concordia (WI) | | | | COWI
+Central (IA) | | | | CEIA
+Elmhurst | | | | ELMH
+Wartburg | | | | WART
+Johns Hopkins | | | | JOHO
+Heidelberg | | | | HEID
+Delaware Valley | | | | DEVA
+Trine | | | | TRUN
+Concordia-Moorhead | | | | COMO
+Washington & Jefferson | | | | WAJ
+Ursinus | | | | URSI
+Coast Guard | | | | COGU
+Wisconsin-La Crosse | | | | WLC
+McDaniel | | | | MCDA
+Elizabethtown | | | | ELIZ
+Centenary (NJ) | | | | CENJ
+SUNY Cortland | | | | SUCO
+Luther | | | | LUTH
+UW-Whitewater | | | | WIWH
+MSOE | | | | MSOE
+Ohio Northern | | | | OHNO
+North Central (IL) | | | | NCI
+Dubuque | | | | DUBU
+York (PA) | | | | YOPA
+Wisconsin-Platteville | | | | WIPL
+Williams | | | | WICO
+Wisconsin-Eau Claire | | | | WEC
+Wabash | | | | WABA
+Waynesburg | | | | WAYN
+Wesleyan | | | | WECT
+Wilkes | | | | WILK
+John Carroll | | | | JOCA
+St. John's (MN) | | | | SJM
+Stevens | | | | SIOT
+UW-Stevens Point | | | | WSP
+Cornell College | | | | COCO
+Mount Union | | | | MOUN
+SUNY Oswego | | | | SUOS
+Merchant Marine | | | | MEMA
+SUNY Oneonta | | | | ONST
+Messiah | | | | MESS
+Thiel | | | | THIE
+TCNJ | | | | TCON
+Olivet | | | | OLIV
+Roger Williams | | | | ROWI
+Wisconsin-Oshkosh | | | | WIOS
+St. Olaf | | | | STOL
+Gettysburg | | | | GETT
+WPI | | | | WOPO
+Augustana (IL) | | | | AUIL
+King's (PA) | | | | KIPA
+Johnson & Wales | | | | J&WR
+Pacific (OR) | | | | PAOR
+Buena Vista | | | | BUVI
+Wheaton (IL) | | | | WHIL
+Hunter | | | | HUNT
+Loras | | | | LORA
+Western New England | | | | WNE

@@ -1,0 +1,422 @@
+# NAIA Championships 2026 — source: 2026.pdf (entrants from the PDF text; places read off the bracket pages, 2026-11-18)
+# qualifiers and places only (no bouts)
+
+@ 125
+1 Ray Ray Harris | Doane
+- Kyle Sieminski | Southern Oregon
+- Chase Walker | Cumberland
+16 Boden Banta | Providence
+9 Kobi Johnson | Providence
+- Wyatt Engwicht | Dickinson State
+- Braden Ledford | Friends
+8 Matteo Vargo | Cumberlands
+5 Anthony Hughes | Marian
+- Jaren Kimura | Embry-Riddle
+- Saoul Prado | Baker
+12 Jesse Lewis | Wayland Baptist
+13 Tyler Hisey | Indiana Tech
+- Malachi Aispuro | Waldorf
+- Julio Gonzales | Arizona Christian
+4 Elijah Cater | Grand View
+3 Haden Hernandez | Missouri Valley
+- Christopher Calderon | Westcliff
+- Jordan Rodriguez | Cleary
+14 Robert Albert | Missouri Valley
+11 Cash Donnell | Oklahoma City
+- Kane Bryson | Montreat
+- Isaac Gibbs | Doane
+6 Isaac Hampton | Southern Oregon
+7 Landon Smith | Embry-Riddle
+- Aiden Woods | Marian
+- Tyler Ramos | Truett McConnell
+10 Braydon Pacheco | Friends
+15 Patrick Jones | Keiser
+- Trevor Hisey | Indiana Tech
+- Owen Lindstrom | Bismarck State
+2 Brody Gee | Saint Mary
+place 1 Harris
+place 2 Hampton
+place 3 Cater
+place 4 Pacheco
+place 5 Lewis
+place 6 Hughes
+place 7 Hernandez
+place 8 Ledford
+
+@ 133
+1 Aaron Lucio | Southeastern
+- Josiah Fernandez | Keiser
+- Blake Woolsey | Providence
+16 Tuvshinjarg Zuunbayan | Missouri Valley
+9 Riley Bettich | Cumberlands
+- Justin Rodriguez | Hastings
+- John Davis | Missouri Baptist
+8 Paul Ruff | Concordia
+5 Nick Alayan | Rochester Christian
+- Leland Camp | Reinhardt
+- Jarrod Gilliam | Briar Cliff
+12 Braden Werdehausen | William Woods
+13 Alex Tabor | Lindsey Wilson
+- Kipp Cordes | Dakota Wesleyan
+- Kai Carson | Eastern Oregon
+4 Vincent Citrano | Oklahoma City
+3 Matthew Terrence | Doane
+- Dante Rigal | Briar Cliff
+- Leland Reeves | Georgetown
+14 Roman De La Cruz | Saint Mary
+11 Braden Carson | Eastern Oregon
+- Aurelio Mendez | Cornerstone
+- Kolten Powers | Montana State-Northern
+6 Luke Rioux | Indiana Tech
+7 Jason Ramirez | Arizona Christian
+- Landon Bertsch | Marian
+- Randy Frailey | Sienna Heights
+10 Izaeah Beavers | Campbellsville
+15 Lane Scorpil | William Penn
+- Zac Bosken | Reinhardt
+- Davion Wilson | Graceland
+2 Gabe Gonzales | Grand View
+place 1 Gonzales
+place 2 Lucio
+place 3 Rioux
+place 4 Alayan
+place 5 Citrano
+place 6 Beavers
+place 7 Terrence
+place 8 Zuunbayan
+
+@ 141
+1 Adrian Ayala | Lindsey Wilson
+- Anthony Santos | Keiser
+- Adam Stanley | Embry-Riddle
+16 Drew Jones | Southeastern
+9 Noah Parmelee | Northwestern (Iowa)
+- Eli Peyton | Cumberlands
+- Lucas Hall | Midway
+8 Logan Wagner | Marian
+5 Marckis Branford | Grand View
+- Channing Porter | Arizona Christian
+- Daryl Mills | Missouri Baptist
+12 Arojae Hart | Central Methodist
+13 Tyler Rhue | Southern Oregon
+- Guiseppe Guerra | St. Ambrose
+- Conner Kimbrough | Indiana Tech
+4 Andrew Voiles | Southeastern
+3 Sammy Shires | Cumberland
+- Jace Province | Oklahoma City
+- Dylan Clark | Southern Oregon
+14 Horacio Godinez | Evergreen
+11 Yoshiya Funakoshi | Embry-Riddle
+- Kameron Stiffler | Bismarck State
+- Cole McKinley | Lourdes
+6 Jared Dinh | Cumberland
+7 Reese Courtney | Grand View
+- Tyler Johnson | Avila
+- Steven Barnes | Concordia
+10 Mauro Michel | Life
+15 Michael Trujillo | Arizona Christian
+- Wyatt Gardner | Friends
+- Blake Runion | Corban
+2 Caden McCrary | Reinhardt
+place 1 Funakoshi
+place 2 Wagner
+place 3 Michel
+place 4 McCrary
+place 5 Rhue
+place 6 Hart
+place 7 Shires
+place 8 Godinez
+
+@ 149
+1 Kaden Fetterolf | Oklahoma City
+- Brayden Eikermann | Missouri Baptist
+- Joshua Zeman | St. Ambrose
+16 Jr Downing | Corban
+9 Jaden Two Lance | Wayland Baptist
+- Kolton Malone | Southern Oregon
+- Tiernan Boots | Marian
+8 Carlos Stanton | Arizona Christian
+5 Victor Guzman | Cumberland
+- Cal Price | Concordia
+- Boedi Kirkland | Montreat
+12 Caden Eggleston | Morningside
+13 Ty Lehman | Cumberlands
+- Arthur Reed | Brewton-Parker
+- Marlone Kirksy | Indiana Tech
+4 Elvis Solis | Life
+3 Nik Yancey | Campbellsville
+- Brody Brisker | William Penn
+- Cade White | Providence
+14 Kris Arrey | Missouri Valley
+11 Cole Karasinski | Cornerstone
+- Rico Robles | Arizona Christian
+- Christian Lopez | Embry-Riddle
+6 Mario De La Torre | Southeastern
+7 Nikolas Slatoff | Baker
+- Garrett Pace | Reinhardt
+- Brady Duling | Friends
+10 Grayson Sonntag | Cleary
+15 Cole Cross | Eastern Oregon
+- Georgino Moraga | St. Ambrose
+- Mike Loney | Indiana Tech
+2 Elijah Larsen | Grand View
+place 1 Larsen
+place 2 Guzman
+place 3 Fetterolf
+place 4 De La Torre
+place 5 Yancey
+place 6 Stanton
+place 7 Solis
+place 8 Karasinski
+
+@ 157
+1 John Wiley | Oklahoma City
+- Willard Sprenger | Bismarck State
+- Elijah Griffin | Cumberland
+16 Vinnie Abbey | Indiana Tech
+9 Jake Moon | Oklahoma City
+- Cole Zoller | Southern Oregon
+- Jordan Tobias | Hastings
+8 Hunter Hobbs | Providence
+5 Bryce Boumans | Grand View
+- Marc Le Gaspe | Cumberlands
+- Bode Wilson | Cornerstone
+12 Cayleb Atkins | Friends
+13 Antwaun Burns | Campbellsville
+- Drake Jenkins | Central Methodist
+- Emmanuel Celestine | Lindsey Wilson
+4 Hagen Heistand | Concordia
+3 Douglas Terry | Life
+- Irish Furthmyre | Providence
+- Ryan Graves | Montana State-Northern
+14 Brice Coleman | Cumberlands
+11 Easton Larson | Grand View
+- Brandon Bollinger | Missouri Baptist
+- Antonio Parker | Cumberland
+6 Ben Miller | Doane
+7 Avant Stepherson | Southern Oregon
+- Carlos Valdez | Eastern Oregon
+- Mackandle Freeman | Rio Grande
+10 Josey Jernegan | Saint Mary
+15 Christian Arberry | Marian
+- Francis Morrissey | Missouri Valley
+- Joabe Araujo | Reinhardt
+2 Fabian Padilla | Life
+place 1 Terry
+place 2 Wiley
+place 3 Padilla
+place 4 Larson
+place 5 Hobbs
+place 6 Boumans
+place 7 Atkins
+place 8 Stepherson
+
+@ 165
+1 Cam Robinson | Grand View
+- Dayton Hill | Missouri Valley
+- Nathan Napolitano | Truett McConnell
+16 Kevin Olavarria | Central Methodist
+9 Malachia Harris | Cumberlands
+- Joel Campbell | Missouri Baptist
+- Blaze Sumiye | Providence
+8 Jovon Mitchell | Southeastern
+5 Alexander Couto | Life
+- Jeff Dunasky | Marian
+- Carson Turnis | Morningside
+12 Dylan Whitt | Grand View
+13 Jordan Lomeli | Oklahoma City
+- Graham Kilpper | Saint Mary
+- Cole Price | Concordia
+4 Jasitin Kubwimana | Campbellsville
+3 Zander Ernst | Morningside
+- Hayden Brown | Oklahoma City
+- Hayden Santora | Reinhardt
+14 Jalen Vladic | Providence
+11 Justin Windauer | Montana State-Northern
+- Benjamen Mitchell | Simpson (Calif.)
+- Eric Hodge | Central Methodist
+6 Anthony Federico | Southeastern
+7 Rocky Raby | Life
+- Alexander Sederburg | William Woods
+- Derrick Bannister | Cumberlands
+10 Jayden Luttrell | Embry-Riddle
+15 Brayden Shelton | Missouri Valley
+- Ethan Gomez | Cumberland
+- Braden Getz | Marian
+2 Jonathan Kervin | Indiana Tech
+place 1 Kervin
+place 2 Robinson
+place 3 Federico
+place 4 Couto
+place 5 Raby
+place 6 Jovon Mitchell
+place 7 Kubwimana
+place 8 Ernst
+
+@ 174
+1 Tate Picklo | Oklahoma City
+- Jackson Potts | Southern Oregon
+- Michael Durham | Indiana Tech
+16 Konlin Weaver | Life
+9 Leonardo Galasso | Arizona Christian
+- Brady Ellison | Providence
+- Ronald Butler | Keiser
+8 Shadrick Slone | Campbellsville
+5 Reese Jones | Life
+- Michael Ager | Saint Mary
+- Jeivan Ross | Marian
+12 Jagger Tyler | Dakota Wesleyan
+13 Husam Mustafa | Southeastern
+- Benedict Holthaus | Friends
+- Jeraimiah Nyberg | Graceland
+4 Daniil Gorshkov | Embry-Riddle
+3 Kris Ketchum | Grand View
+- Jacob Gonzales | Rochester Christian
+- Orion Thivierge | Montana State-Northern
+14 Sean Houston | Brewton-Parker
+11 Anthony Rinehart | Marian
+- Hunter Weimer | Concordia
+- Jake Prudek | Doane
+6 Ty Rodriguez | Southeastern
+7 Weston Melvin | Cumberlands
+- Teagan Foreman | Dakota Wesleyan
+- Joseph Lashuay | Cornerstone
+10 Braylin Ruchti | Southern Oregon
+15 Nate Bukovich | Reinhardt
+- Anthony Pyron | Cumberland
+- Landon Buchanan | Indiana Tech
+2 Roman Garcia | Central Methodist
+place 1 Ketchum
+place 2 Picklo
+place 3 Gorshkov
+place 4 Garcia
+place 5 Jones
+place 6 Weaver
+place 7 Slone
+place 8 Tyler
+
+@ 184
+1 Tyson Beauperthuy | Doane
+- Lane Kiser | Cumberlands
+- Justin Bartee | Rio Grande
+16 Brice Parks | Campbellsville
+9 Ashton Habeil | Lindsey Wilson
+- Dayne Stormer | Wayland Baptist
+- Cade Gubler | Montana State-Northern
+8 Cory Cannan | Lindsey Wilson
+5 Isaiah Twait | Corban
+- Noah Hollendonner | Marian
+- Doug Dittmer | Georgetown
+12 Rocco Horvath | Cumberland
+13 Barret Brandt | Concordia
+- Matthew Russell | Williams Baptist
+- Chris Wohrley | Graceland
+4 Adrian Chavez-Morales | Southern Oregon
+3 Tre Morrisette | Life
+- Cole Olguin | Oklahoma City
+- Kolton Kammeyer | Doane
+14 Jason Bowers | Friends
+11 Austen Wetzel | William Woods
+- Jeremiah Voliva | Avila
+- Griffin Ray | Central Methodist
+6 Sam Libby | Keiser
+7 Navarro Nanpuya | Georgetown
+- Zahquel Davis | Brewton-Parker
+- Jackson King | Dickinson State
+10 August Batson | Southeastern
+15 Nate McDonald | Midland
+- Logan Heckert | Cumberland
+- Noah Poe-Hatten | Providence
+2 Kendall Norfleet | Life
+place 1 Nanpuya
+place 2 Beauperthuy
+place 3 Norfleet
+place 4 Morrisette
+place 5 Habeil
+place 6 Twait
+place 7 Wetzel
+place 8 Chavez-Morales
+
+@ 197
+1 Garavous Kouekabakilaho | Grand View
+- Kevin Lund | Baker
+- Aaron Riner | Reinhardt
+16 Gabe Chesbro | Saint Mary
+9 Kasten Grape | Southeastern
+- Cameron Cornman | Central Methodist
+- Chase Stieb | Doane
+8 Ghee Rachal | St. Thomas
+5 Gentry Smith | Southeastern
+- Ty Cobb | Lourdes
+- Jett MCcauley | Keiser
+12 Marcus James | Georgetown
+13 Tyler Rowland | Cumberland
+- Omari Smith | Oklahoma City
+- Donivan Giangregorio | Dickinson State
+4 Elijah Hynes | Missouri Valley
+3 Asher Ruchti | Southern Oregon
+- Kj Fry | Graceland
+- Hunter Hall | Baker
+14 Elias Corona | Southern Oregon
+11 Efren Arizmendez | Life
+- Torrance Keehn | Concordia
+- Mekhi Bovee | Morningside
+6 Nathan Critchfield | Indiana Tech
+7 Trenton Blomquist | Embry-Riddle
+- Rodney Trotter | Avila
+- David Rapp | Simpson (Calif.)
+10 Jaren Jackson | Doane
+15 Ashton Boswell | Campbellsville
+- Asaiah Kamplain | Corban
+- Logan Davidson | Friends
+2 Gio Jackson | Life
+place 1 Kouekabakilaho
+place 2 Ruchti
+place 3 Omari Smith
+place 4 Gio Jackson
+place 5 Blomquist
+place 6 Jaren Jackson
+place 7 Critchfield
+place 8 Rachal
+
+@ 285
+1 Zeph Sivels | Midland
+- Kazz Hyson | Graceland
+- Treyshawn White | Cumberlands
+16 Randy Gonzalez | Missouri Valley
+9 Luke Cox | Georgetown
+- Bruce Wagers | Rio Grande
+- Miguel Perez | Lindsey Wilson
+8 Shane Mattson | Montana State-Northern
+5 Nico Rodriguez | Eastern Oregon
+- Bryce Wheatley | Southeastern
+- Kaiden Cisneros | Arizona Christian
+12 Jordan Sommers | Keiser
+13 Koen Mattern | Hastings
+- Amad Soufi | Missouri Baptist
+- Steven Elwell | Ottawa
+4 Shane Cook | Grand View
+3 Austin Foye | Central Methodist
+- Phillip Terrell | Truett McConnell
+- Caleb Pruitt | Reinhardt
+14 Ethan DeRoche | Providence
+11 Gage Cook | St. Thomas
+- Daguy Massillon | Keiser
+- Ian Clifford | Indiana Tech
+6 Antonio Garcia | Corban
+7 Garine Gibson | Central Methodist
+- Collin Sullivan | Lourdes
+- Wilbert Martin | Texas Wesleyan
+10 Austin Silva | Cumberlands
+15 Emmett Bivens | Wayland Baptist
+- Seth Suvak | Dickinson State
+- Gabe Kant | Concordia
+2 Kenneth Copley | Embry-Riddle
+place 1 Copley
+place 2 Mattern
+place 3 Garcia
+place 4 Sivels
+place 5 Shane Cook
+place 6 Sommers
+place 7 Rodriguez
+place 8 DeRoche

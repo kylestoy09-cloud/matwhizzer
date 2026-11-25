@@ -38,12 +38,13 @@ type Props = {
   schoolHistory:  HistoryRow[]
   enrollmentReady: boolean
   allSchools:     School[]
+  status?:        { status: string | null; note: string | null }   // undefined before the status migration
 }
 
 const GRADE_OPTIONS = ['Fr', 'So', 'Jr', 'Sr']
 const WEIGHT_OPTIONS = [100, 106, 107, 113, 114, 120, 126, 132, 138, 144, 150, 152, 157, 165, 175, 185, 190, 215, 235, 285]
 
-export function WrestlerProfileClient({ wrestler, currentSchool, schoolHistory, enrollmentReady, allSchools }: Props) {
+export function WrestlerProfileClient({ wrestler, currentSchool, schoolHistory, enrollmentReady, status }: Props) {
   const [firstName,    setFirstName]    = useState(wrestler.first_name)
   const [lastName,     setLastName]     = useState(wrestler.last_name)
   const [mainWeight,   setMainWeight]   = useState(wrestler.main_weight ?? '')
@@ -51,7 +52,6 @@ export function WrestlerProfileClient({ wrestler, currentSchool, schoolHistory, 
   const [projWeight,   setProjWeight]   = useState(wrestler.projected_weight_class?.toString() ?? '')
   const [confWeight,   setConfWeight]   = useState(wrestler.confirmed_weight_class?.toString() ?? '')
   const [isActive,     setIsActive]     = useState(wrestler.is_active ?? true)
-  const [schoolId,     setSchoolId]     = useState(currentSchool?.id?.toString() ?? '')
   const [saving,       setSaving]       = useState(false)
   const [flash,        setFlash]        = useState<string | null>(null)
   const [flashType,    setFlashType]    = useState<'ok' | 'err'>('ok')
@@ -60,8 +60,6 @@ export function WrestlerProfileClient({ wrestler, currentSchool, schoolHistory, 
     setFlash(msg); setFlashType(type)
     setTimeout(() => setFlash(null), 3500)
   }
-
-  const originalSchoolId = currentSchool?.id?.toString() ?? ''
 
   async function save() {
     setSaving(true)
@@ -77,9 +75,6 @@ export function WrestlerProfileClient({ wrestler, currentSchool, schoolHistory, 
         body.projected_weight_class  = projWeight  ? parseInt(projWeight)  : null
         body.confirmed_weight_class  = confWeight  ? parseInt(confWeight)  : null
         body.is_active               = isActive
-        if (schoolId && schoolId !== originalSchoolId) {
-          body.school_id = parseInt(schoolId)
-        }
       }
 
       const res = await fetch('/api/admin/wrestler-profile', {
@@ -96,8 +91,6 @@ export function WrestlerProfileClient({ wrestler, currentSchool, schoolHistory, 
       setSaving(false)
     }
   }
-
-  const schoolChanged = enrollmentReady && schoolId && schoolId !== originalSchoolId
 
   return (
     <div className="space-y-6">
@@ -217,31 +210,11 @@ export function WrestlerProfileClient({ wrestler, currentSchool, schoolHistory, 
           <h2 className="text-sm font-semibold text-slate-700">School</h2>
         </div>
         <div className="px-5 py-4">
-          {enrollmentReady ? (
-            <>
-              <label className="block mb-3">
-                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide block mb-1">Current School</span>
-                <select
-                  value={schoolId}
-                  onChange={e => setSchoolId(e.target.value)}
-                  className="w-full max-w-md border border-slate-300 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-slate-400"
-                >
-                  <option value="">— Unknown —</option>
-                  {allSchools.map(s => <option key={s.id} value={s.id}>{s.display_name}</option>)}
-                </select>
-              </label>
-              {schoolChanged && (
-                <div className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded px-3 py-2 mb-3 max-w-md">
-                  Changing the school will close the current school history record and create a new one (confirmed transfer).
-                </div>
-              )}
-            </>
-          ) : (
-            <p className="text-sm text-slate-500 mb-3">
-              Current school: <strong>{currentSchool?.display_name ?? 'Unknown'}</strong>
-              <span className="text-slate-400 ml-2 text-xs">(school editing requires roster_enrollment migration)</span>
-            </p>
-          )}
+          {/* a team change is logged in the Transfers tool (Kyle 2026-11-16), not here */}
+          <p className="text-sm text-slate-600 mb-3">
+            Current team: <strong>{currentSchool?.display_name ?? 'Unknown'}</strong>
+            <Link href={`/admin/${wrestler.gender === 'F' ? 'girls' : 'boys'}/wrestlers/transfers`} className="ml-3 text-xs text-slate-500 underline hover:text-slate-800">Change team (Transfers)</Link>
+          </p>
 
           {/* History */}
           {schoolHistory.length > 0 && (
@@ -296,6 +269,7 @@ export function WrestlerProfileClient({ wrestler, currentSchool, schoolHistory, 
         </Link>
       </div>
 
+      {status && <StatusSection wrestlerId={wrestler.id} initial={status} />}
       <DeleteProfile wrestler={wrestler} />
     </div>
   )
@@ -399,6 +373,44 @@ function DeleteProfile({ wrestler }: { wrestler: Wrestler }) {
         </div>
       )}
       {error && <p className="mt-3 text-sm text-red-700">{error}</p>}
+    </section>
+  )
+}
+
+// Out for the season (this season only) or deceased (Kyle 2026-11-17): either takes him off the Whiz Rank boards;
+// deceased also makes him inactive. The note shows in italics on his public profile.
+function StatusSection({ wrestlerId, initial }: { wrestlerId: string; initial: { status: string | null; note: string | null } }) {
+  const [status, setStatus] = useState(initial.status ?? '')
+  const [note, setNote] = useState(initial.note ?? '')
+  const [saving, setSaving] = useState(false)
+  const [msg, setMsg] = useState<string | null>(null)
+  async function save() {
+    if (status === 'deceased' && initial.status !== 'deceased' && !confirm('Mark as deceased? He comes off every current list and goes inactive.')) return
+    setSaving(true); setMsg(null)
+    try {
+      const res = await fetch('/api/admin/wrestler-profile', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: wrestlerId, status: status || null, status_note: note }) })
+      const d = await res.json()
+      setMsg(d.error ? d.error : 'Saved')
+    } finally { setSaving(false) }
+  }
+  return (
+    <section className="mt-8 border border-slate-200 rounded overflow-hidden max-w-xl">
+      <div className="bg-slate-50 px-5 py-3 border-b border-slate-200"><h2 className="text-sm font-semibold text-slate-700">Status</h2></div>
+      <div className="px-5 py-4 space-y-3">
+        <select value={status} onChange={e => setStatus(e.target.value)} className="border border-slate-300 rounded px-3 py-1.5 text-sm">
+          <option value="">Normal</option>
+          <option value="out_for_season">Out for the season (injury) — off the rankings this season</option>
+          <option value="deceased">Deceased — off every current list</option>
+        </select>
+        <label className="block">
+          <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide block mb-1">Note on the public profile (italic, optional)</span>
+          <input value={note} onChange={e => setNote(e.target.value)} className="w-full border border-slate-300 rounded px-3 py-1.5 text-sm" />
+        </label>
+        <div className="flex items-center gap-3">
+          <button onClick={save} disabled={saving} className="px-4 py-1.5 bg-slate-900 text-white text-sm rounded font-medium disabled:opacity-50">{saving ? 'Saving…' : 'Save status'}</button>
+          {msg && <span className="text-sm text-slate-600">{msg}</span>}
+        </div>
+      </div>
     </section>
   )
 }

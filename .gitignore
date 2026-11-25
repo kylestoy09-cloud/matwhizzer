@@ -50,4 +50,5 @@ __pycache__/
 *.pyc
 *.pyo
 scripts/.snapshot_tmp/
+scripts/.snapshot_cache/
 docs/migrations/backups/20261102_boys_2025-26_wrr_log_before.json.gz

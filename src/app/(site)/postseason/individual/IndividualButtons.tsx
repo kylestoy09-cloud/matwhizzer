@@ -9,16 +9,18 @@ import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 
 const ordinal = (n: number) => `${n}${n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th'}`
 
-export function TournamentButtons({ side, state, regions, districts }: { side: 'boys' | 'girls'; state: boolean; regions: number[]; districts: number[] }) {
+// regionNames: each button's label from regionLabels — the number, or a named region's name (North I …).
+// Plain data: this is a client component, so it can't take a function.
+export function TournamentButtons({ side, state, regions, districts, regionNames }: { side: 'boys' | 'girls'; state: boolean; regions: number[]; districts: number[]; regionNames?: Record<number, string> }) {
   const c = useSideColors(side)
-  const P = side === 'girls' ? 'Girls' : 'Boys'
+  const named = regions.some(r => (regionNames?.[r] ?? '').length > 3)   // girls' named regions: wider tiles, bigger words
   return (
     <div className="space-y-8">
-      {state && <StdTiles tiles={[{ key: 'state', label: `${P} State Tournament →`, href: `/${side}/state`, ...c.accent }]} scale={0.8} minWidth={280} center />}
+      {state && <StdTiles tiles={[{ key: 'state', label: 'State Tournament', href: `/${side}/state`, ...c.accent }]} scale={0.8} minWidth={280} center />}
       {regions.length > 0 && (
         <section>
           <h2 className="mb-3 text-center text-lg font-bold text-slate-900">Regions</h2>
-          <StdTiles tiles={regions.map(r => ({ key: r, label: String(r), href: `/${side}/regions/${r}`, ...c.region(r) }))} groupSize={4} center />
+          <StdTiles tiles={regions.map(r => ({ key: r, label: regionNames?.[r] ?? String(r), href: `/${side}/regions/${r}`, ...c.region(Math.min(r, side === 'girls' ? 4 : 8)) }))} groupSize={4} center widthScale={named ? 2.2 : undefined} />
         </section>
       )}
       {districts.length > 0 && (

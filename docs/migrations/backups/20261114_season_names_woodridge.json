@@ -1,0 +1,666 @@
+{
+ "woodridge_entries": [
+  {
+   "id": "8218fff7-5666-4a9f-83ee-e6a1e74cdf51",
+   "school_id": 321,
+   "school_context_raw": "Wood Ridge",
+   "tournament_id": 357
+  },
+  {
+   "id": "9a770b66-f3b8-412c-b482-fb3d3dda2400",
+   "school_id": 321,
+   "school_context_raw": "Wood Ridge",
+   "tournament_id": 357
+  },
+  {
+   "id": "bffdb44d-b2e1-49e1-8950-3493e0a3a12d",
+   "school_id": 321,
+   "school_context_raw": "Wood Ridge",
+   "tournament_id": 357
+  },
+  {
+   "id": "058954d9-00f4-4e5a-9992-ffef4ea346ff",
+   "school_id": 321,
+   "school_context_raw": "Wood Ridge",
+   "tournament_id": 357
+  },
+  {
+   "id": "ad011a43-a63f-4f38-8268-089f421ac41c",
+   "school_id": 321,
+   "school_context_raw": "Wood Ridge",
+   "tournament_id": 357
+  },
+  {
+   "id": "5fa27404-db7c-4fa4-bdcf-ea4e4cbaacde",
+   "school_id": 321,
+   "school_context_raw": "Wood Ridge",
+   "tournament_id": 357
+  },
+  {
+   "id": "1a6f99b3-8e42-4508-b0ad-d3dbbac8c33a",
+   "school_id": 321,
+   "school_context_raw": "Wood Ridge",
+   "tournament_id": 357
+  },
+  {
+   "id": "c93fb863-f90e-4140-bd99-a1a80f84fac1",
+   "school_id": 321,
+   "school_context_raw": "Wood Ridge",
+   "tournament_id": 357
+  },
+  {
+   "id": "6441c757-710c-4270-b5fb-3bc2ed4bc76c",
+   "school_id": 321,
+   "school_context_raw": "Wood Ridge",
+   "tournament_id": 357
+  },
+  {
+   "id": "1957d7c6-34e3-4d56-8616-24a8519e3065",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 393
+  },
+  {
+   "id": "7c867715-0042-4ad2-9d88-633c2f57eba7",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 393
+  },
+  {
+   "id": "39796b1d-4448-4253-bade-2c398aef1473",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 393
+  },
+  {
+   "id": "21d061a4-a5ca-42d5-8af4-cbb4d8ba32d7",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 393
+  },
+  {
+   "id": "7ad39617-d61a-402a-9538-ac03c5c48f45",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 393
+  },
+  {
+   "id": "24459f2c-8534-4db3-a85c-8f31de39af6b",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 393
+  },
+  {
+   "id": "cd511b40-96c3-437d-9197-8e5b9c012f55",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 393
+  },
+  {
+   "id": "5739075b-7433-4042-bff5-fc79ae7d452d",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 393
+  },
+  {
+   "id": "06a240dd-71bb-448f-9b88-d7c3eab1a394",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 434
+  },
+  {
+   "id": "546b553b-fd93-41d4-87a2-d25d66eb88d5",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 434
+  },
+  {
+   "id": "6aa83342-d4ac-416b-921d-5278b1fd89d7",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 434
+  },
+  {
+   "id": "7bd3fd19-cdbb-4f40-ba2d-b6195b772de9",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 434
+  },
+  {
+   "id": "381fcf09-87c4-4ace-8f2c-a74f9edce277",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 434
+  },
+  {
+   "id": "9fbfc95a-65c2-4806-b287-eb18d91e2f70",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 434
+  },
+  {
+   "id": "4b37e383-1e3b-4a67-8702-1ad990f283c8",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 434
+  },
+  {
+   "id": "04af9442-bc07-4a18-9d51-0478c0321495",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 434
+  },
+  {
+   "id": "02655ee8-b377-4b36-8313-61cf1206c996",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 434
+  },
+  {
+   "id": "e6708352-efdf-4424-b7ce-753ec359d142",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 459
+  },
+  {
+   "id": "882c252c-0517-4727-880c-e5d2c36713c4",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 476
+  },
+  {
+   "id": "e987cdcf-6e28-49c2-b0cc-759aec34fbc8",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 476
+  },
+  {
+   "id": "28ad28b0-418d-432c-a73b-1bc71c7d53ae",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 476
+  },
+  {
+   "id": "35bfa6cf-03f1-4c97-bc1d-577e92c40efe",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 476
+  },
+  {
+   "id": "fe10757b-691c-43ae-8644-a878d315a830",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 476
+  },
+  {
+   "id": "8e339d92-c278-4c97-aa05-cc5ce4f4eea9",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 476
+  },
+  {
+   "id": "47634bfc-81b7-4094-8e7f-38d4d3d8c8a5",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 476
+  },
+  {
+   "id": "50f4ceda-bf2c-431f-bf2d-284b601eedd6",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 476
+  },
+  {
+   "id": "e262b4db-4dd2-4bf0-b6a2-9f3b402ec889",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 476
+  },
+  {
+   "id": "b5d433e2-f171-4d9b-9cf4-5ed607126734",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 476
+  },
+  {
+   "id": "b5a997a3-8204-4b56-aa90-4920c8f93445",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 500
+  },
+  {
+   "id": "ceef10a1-e4f9-4654-b04d-b3a692e9b3e2",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 541
+  },
+  {
+   "id": "8b6a71cc-cac2-4614-8707-49a4e259bc39",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 506
+  },
+  {
+   "id": "d993e88d-16b4-4559-9b02-6ae256b3eab6",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 517
+  },
+  {
+   "id": "3e6b84a8-49b5-4a19-a62d-161cd4e97978",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 517
+  },
+  {
+   "id": "14727e2c-0d32-42dc-96c1-213abcb0885a",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 517
+  },
+  {
+   "id": "063d3223-ed7c-4ee5-a8a7-bb69b3f0c193",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 517
+  },
+  {
+   "id": "e891c4e5-1493-4e3d-8962-0585dc5bf355",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 517
+  },
+  {
+   "id": "cd33d7ba-ed52-4e8f-a24b-1d7cde938d88",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 517
+  },
+  {
+   "id": "61740d3d-d168-4378-927b-e6ebe9fbcc2f",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 517
+  },
+  {
+   "id": "4474083c-0428-42f9-8fcf-ff5833524fed",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 517
+  },
+  {
+   "id": "22a50d83-757f-44a8-aaf8-3c33fc97f60c",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 517
+  },
+  {
+   "id": "b8aa7c08-51b1-4380-9faf-bd6565ba7d08",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 517
+  },
+  {
+   "id": "cd150701-7916-41d4-9acd-ebde3d336ac1",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 517
+  },
+  {
+   "id": "0cbaedc5-02f8-46b8-a85d-fdaee4686c75",
+   "school_id": 321,
+   "school_context_raw": "Wood-Ridge",
+   "tournament_id": 541
+  }
+ ],
+ "season_names_added": [
+  {
+   "school_id": 62,
+   "season_id": 2013,
+   "gender": "M",
+   "display_name": "Lenape Valley"
+  },
+  {
+   "school_id": 379,
+   "season_id": 2013,
+   "gender": "M",
+   "display_name": "Lodi"
+  },
+  {
+   "school_id": 383,
+   "season_id": 2013,
+   "gender": "M",
+   "display_name": "Middlesex"
+  },
+  {
+   "school_id": 227,
+   "season_id": 2013,
+   "gender": "M",
+   "display_name": "Bordentown Regional"
+  },
+  {
+   "school_id": 62,
+   "season_id": 2014,
+   "gender": "M",
+   "display_name": "Lenape Valley"
+  },
+  {
+   "school_id": 379,
+   "season_id": 2014,
+   "gender": "M",
+   "display_name": "Lodi"
+  },
+  {
+   "school_id": 321,
+   "season_id": 2014,
+   "gender": "M",
+   "display_name": "Becton/Wallington"
+  },
+  {
+   "school_id": 227,
+   "season_id": 2014,
+   "gender": "M",
+   "display_name": "Bordentown Regional"
+  },
+  {
+   "school_id": 62,
+   "season_id": 2015,
+   "gender": "M",
+   "display_name": "Lenape Valley"
+  },
+  {
+   "school_id": 379,
+   "season_id": 2015,
+   "gender": "M",
+   "display_name": "Lodi"
+  },
+  {
+   "school_id": 321,
+   "season_id": 2015,
+   "gender": "M",
+   "display_name": "Becton"
+  },
+  {
+   "school_id": 227,
+   "season_id": 2015,
+   "gender": "M",
+   "display_name": "Bordentown Regional"
+  },
+  {
+   "school_id": 62,
+   "season_id": 2016,
+   "gender": "M",
+   "display_name": "Lenape Valley"
+  },
+  {
+   "school_id": 379,
+   "season_id": 2016,
+   "gender": "M",
+   "display_name": "Lodi"
+  },
+  {
+   "school_id": 44,
+   "season_id": 2016,
+   "gender": "M",
+   "display_name": "Leonia"
+  },
+  {
+   "school_id": 227,
+   "season_id": 2016,
+   "gender": "M",
+   "display_name": "Bordentown Regional"
+  },
+  {
+   "school_id": 62,
+   "season_id": 2017,
+   "gender": "M",
+   "display_name": "Lenape Valley"
+  },
+  {
+   "school_id": 44,
+   "season_id": 2017,
+   "gender": "M",
+   "display_name": "Leonia"
+  },
+  {
+   "school_id": 379,
+   "season_id": 2017,
+   "gender": "M",
+   "display_name": "Lodi"
+  },
+  {
+   "school_id": 321,
+   "season_id": 2017,
+   "gender": "M",
+   "display_name": "Becton"
+  },
+  {
+   "school_id": 62,
+   "season_id": 2018,
+   "gender": "M",
+   "display_name": "Lenape Valley"
+  },
+  {
+   "school_id": 44,
+   "season_id": 2018,
+   "gender": "M",
+   "display_name": "Leonia"
+  },
+  {
+   "school_id": 379,
+   "season_id": 2018,
+   "gender": "M",
+   "display_name": "Lodi"
+  },
+  {
+   "school_id": 321,
+   "season_id": 2018,
+   "gender": "M",
+   "display_name": "Becton"
+  },
+  {
+   "school_id": 379,
+   "season_id": 2019,
+   "gender": "M",
+   "display_name": "Lodi"
+  },
+  {
+   "school_id": 62,
+   "season_id": 2019,
+   "gender": "M",
+   "display_name": "Lenape Valley"
+  },
+  {
+   "school_id": 321,
+   "season_id": 2019,
+   "gender": "M",
+   "display_name": "Becton"
+  },
+  {
+   "school_id": 379,
+   "season_id": 2020,
+   "gender": "M",
+   "display_name": "Lodi"
+  },
+  {
+   "school_id": 62,
+   "season_id": 2020,
+   "gender": "M",
+   "display_name": "Lenape Valley"
+  },
+  {
+   "school_id": 321,
+   "season_id": 2020,
+   "gender": "M",
+   "display_name": "Becton"
+  },
+  {
+   "school_id": 383,
+   "season_id": 2020,
+   "gender": "M",
+   "display_name": "Middlesex"
+  },
+  {
+   "school_id": 227,
+   "season_id": 2020,
+   "gender": "M",
+   "display_name": "Bordentown Regional"
+  },
+  {
+   "school_id": 62,
+   "season_id": 2021,
+   "gender": "M",
+   "display_name": "Lenape Valley"
+  },
+  {
+   "school_id": 83,
+   "season_id": 2021,
+   "gender": "M",
+   "display_name": "Lyndhurst"
+  },
+  {
+   "school_id": 321,
+   "season_id": 2021,
+   "gender": "M",
+   "display_name": "Becton"
+  },
+  {
+   "school_id": 383,
+   "season_id": 2021,
+   "gender": "M",
+   "display_name": "Middlesex"
+  },
+  {
+   "school_id": 305,
+   "season_id": 2021,
+   "gender": "M",
+   "display_name": "Clayton"
+  },
+  {
+   "school_id": 62,
+   "season_id": 2022,
+   "gender": "M",
+   "display_name": "Lenape Valley"
+  },
+  {
+   "school_id": 379,
+   "season_id": 2022,
+   "gender": "M",
+   "display_name": "Lodi"
+  },
+  {
+   "school_id": 379,
+   "season_id": 2023,
+   "gender": "M",
+   "display_name": "Lodi"
+  },
+  {
+   "school_id": 62,
+   "season_id": 2023,
+   "gender": "M",
+   "display_name": "Lenape Valley"
+  },
+  {
+   "school_id": 379,
+   "season_id": 2024,
+   "gender": "M",
+   "display_name": "Lodi"
+  },
+  {
+   "school_id": 62,
+   "season_id": 2024,
+   "gender": "M",
+   "display_name": "Lenape Valley"
+  },
+  {
+   "school_id": 227,
+   "season_id": 2019,
+   "gender": "F",
+   "display_name": "Bordentown Regional"
+  },
+  {
+   "school_id": 305,
+   "season_id": 2019,
+   "gender": "F",
+   "display_name": "Clayton"
+  },
+  {
+   "school_id": 379,
+   "season_id": 2019,
+   "gender": "F",
+   "display_name": "Lodi"
+  },
+  {
+   "school_id": 305,
+   "season_id": 2020,
+   "gender": "F",
+   "display_name": "Clayton"
+  },
+  {
+   "school_id": 227,
+   "season_id": 2020,
+   "gender": "F",
+   "display_name": "Bordentown Regional"
+  },
+  {
+   "school_id": 321,
+   "season_id": 2020,
+   "gender": "F",
+   "display_name": "Becton"
+  },
+  {
+   "school_id": 379,
+   "season_id": 2020,
+   "gender": "F",
+   "display_name": "Lodi"
+  },
+  {
+   "school_id": 393,
+   "season_id": 2020,
+   "gender": "F",
+   "display_name": "Bogota"
+  },
+  {
+   "school_id": 227,
+   "season_id": 2021,
+   "gender": "F",
+   "display_name": "Bordentown Regional"
+  },
+  {
+   "school_id": 321,
+   "season_id": 2021,
+   "gender": "F",
+   "display_name": "Becton"
+  },
+  {
+   "school_id": 393,
+   "season_id": 2021,
+   "gender": "F",
+   "display_name": "Ridgefield Park"
+  },
+  {
+   "school_id": 379,
+   "season_id": 2022,
+   "gender": "F",
+   "display_name": "Lodi"
+  },
+  {
+   "school_id": 379,
+   "season_id": 2023,
+   "gender": "F",
+   "display_name": "Lodi"
+  },
+  {
+   "school_id": 62,
+   "season_id": 2024,
+   "gender": "F",
+   "display_name": "Lenape Valley"
+  },
+  {
+   "school_id": 379,
+   "season_id": 2024,
+   "gender": "F",
+   "display_name": "Lodi"
+  }
+ ]
+}

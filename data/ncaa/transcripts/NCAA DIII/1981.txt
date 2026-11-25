@@ -1,0 +1,182 @@
+# NCAA Division III Championships 1981 — source: NCAA III 1981.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Dan Stefancin | John Carroll
+- David Parisi | SUNY-Oswego
+- Craig Gifford | Ursinus
+- Dick Gruber | Wisconsin-Oshkosh
+- Curt Cawley | Buena Vista
+- Tom Shiels | Minnesota-Morris
+- Ronald Jones | Rutgers-Newark
+- Paul Cotton | Mount Union
+place 1 Dan Stefancin
+place 2 David Parisi
+place 3 Craig Gifford
+place 4 Dick Gruber
+place 5 Curt Cawley
+place 6 Tom Shiels
+place 7 Ronald Jones
+place 8 Paul Cotton
+
+@ 126
+- Mike Jacoutot | College of New Jersey
+- Jerry McGinty | Salisbury
+- Jeff Merritt | Minnesota-Morris
+- Frank Famiano | SUNY-Brockport
+- Joe Benenati | SUNY-Binghampton
+- Bob Eddy | SUNY-Cortland
+- Rodney Smith | Montclair State
+- Jim Cornick | Buena Vista
+place 1 Mike Jacoutot
+place 2 Jerry McGinty
+place 3 Jeff Merritt
+place 4 Frank Famiano
+place 5 Joe Benenati
+place 6 Bob Eddy
+place 7 Rodney Smith
+place 8 Jim Cornick
+
+@ 134
+- Chad Gross | John Carroll
+- Andy Seras | SUNY-Albany
+- Ron Bussey | College of New Jersey
+- Pat Holmes | Swarthmore
+- Kai Togami | Wheaton
+- Kevin Brockway | Glassboro
+- John Lundgren | Washington & Jefferson
+- Mark Nourse | SUNY-Potsdam
+place 1 Chad Gross
+place 2 Andy Seras
+place 3 Ron Bussey
+place 4 Pat Holmes
+place 5 Kai Togami
+place 6 Kevin Brockway
+place 7 John Lundgren
+place 8 Mark Nourse
+
+@ 142
+- John Dolch | Salisbury
+- Dave Krivus | Washington & Jefferson
+- Brett Wyss | Hiram
+- Mike Morone | SUNY-Binghampton
+- Darryl Leslie | RIT
+- Shawn Hall | Coe College
+- Randy Viviani | John Carroll
+- Kregg Bruno | SUNY-Potsdam
+place 1 John Dolch
+place 2 Dave Krivus
+place 3 Brett Wyss
+place 4 Mike Morone
+place 5 Darryl Leslie
+place 6 Shawn Hall
+place 7 Randy Viviani
+place 8 Kregg Bruno
+
+@ 150
+- Joe Giani | SUNY-Brockport
+- Tom Elcott | Allegheny
+- Mike Keogh | Minnesota-Morris
+- Dale Schmacht | Augustana Illinois
+- Tom Gallagher | John Carroll
+- Martin Butler | Amherst
+- Kirk Benson | Muskigum
+- Ronald Peterson | Buena Vista
+place 1 Joe Giani
+place 2 Tom Elcott
+place 3 Mike Keogh
+place 4 Dale Schmacht
+place 5 Tom Gallagher
+place 6 Martin Butler
+place 7 Kirk Benson
+place 8 Ronald Peterson
+
+@ 158
+- Jeff Bouslog | Luther
+- Vertus Elmore | Cal State-Stanislaus
+- Mike McInerney | Salisbury
+- Derek Bigford | SUNY-Brockport
+- Eric Vance | Amherst
+- Doug Jewett | Muskigum
+- Michael Quast | St. Olaf
+- Martin Connor | SUNY-Cortland
+place 1 Jeff Bouslog
+place 2 Vertus Elmore
+place 3 Mike McInerney
+place 4 Derek Bigford
+place 5 Eric Vance
+place 6 Doug Jewett
+place 7 Michael Quast
+place 8 Martin Connor
+
+@ 167
+- Woody Vandenburg | SUNY-Brockport
+- Scott Slade | SUNY-Buffalo
+- Britt Mock | College of New Jersey
+- Lowell Davis | Wisconsin-Platteville
+- Dennis Hareza | John Carroll
+- John Antosiewicz | Montclair State
+- Peter Ott | Salisbury
+- Michael Houska | Hiram
+place 1 Woody Vandenburg
+place 2 Scott Slade
+place 3 Britt Mock
+place 4 Lowell Davis
+place 5 Dennis Hareza
+place 6 John Antosiewicz
+place 7 Peter Ott
+place 8 Michael Houska
+
+@ 177
+- Kevin Walzak | College of New Jersey
+- Tom Beyer | Minnesota-Morris
+- Phil Lanzatella | St. Lawrence
+- Brett Stamm | Wheaton
+- Tony Conetta | SUNY-Brockport
+- Warren Robertson | Delaware Valley
+- Jody Vanlaanen | Wisconsin-Whitewater
+- Michael Hunter | Wisconsin-Stout
+place 1 Kevin Walzak
+place 2 Tom Beyer
+place 3 Phil Lanzatella
+place 4 Brett Stamm
+place 5 Tony Conetta
+place 6 Warren Robertson
+place 7 Jody Vanlaanen
+place 8 Michael Hunter
+
+@ 190
+- Tom Martucci | College of New Jersey
+- Tony Smith | SUNY-Brockport
+- Jeff Eastlick | Wisconsin-Platteville
+- Stacy Bandy | Central College IA
+- Bill Francke | SUNY-Binghampton
+- Paul Lancaster | Wheaton
+- Michael Burke | Salisbury
+- Alan Logan | Muskigum
+place 1 Tom Martucci
+place 2 Tony Smith
+place 3 Jeff Eastlick
+place 4 Stacy Bandy
+place 5 Bill Francke
+place 6 Paul Lancaster
+place 7 Michael Burke
+place 8 Alan Logan
+
+@ 285
+- Duane Koslowski | Minnesota-Morris
+- Mike Jorgenson | Elmhurst
+- Tim Carmin | Wisconsin-Whitewater
+- Mickey Aikens | College of New Jersey
+- Lester Ware | SUNY-Binghampton
+- Greg Sattergen | Coast Guard
+- Malcom McLeod | Concordia MN
+- David Chandler | Glassboro
+place 1 Duane Koslowski
+place 2 Mike Jorgenson
+place 3 Tim Carmin
+place 4 Mickey Aikens
+place 5 Lester Ware
+place 6 Greg Sattergen
+place 7 Malcom McLeod
+place 8 David Chandler
+

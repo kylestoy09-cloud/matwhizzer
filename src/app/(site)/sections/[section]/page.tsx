@@ -54,7 +54,7 @@ export default async function SectionPage({
           <p className="text-sm text-slate-500 mt-1">{standings.length} schools</p>
         </div>
         <div className="shrink-0">
-          <div className="text-xs text-slate-400"><InlineSeasonPicker gender={gender === 'girls' ? 'F' : 'M'} activeSeason={season} /></div>
+          <div className="text-xs text-slate-400"><InlineSeasonPicker arrows gender={gender === 'girls' ? 'F' : 'M'} activeSeason={season} /></div>
         </div>
       </div>
 

@@ -1,0 +1,182 @@
+# NCAA Division III Championships 1989 — source: NCAA III 1989.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Dave Jordan | Buena Vista
+- Joe Dasti | Kean
+- Scott Martin | Rhode Island College
+- Troy Monks | SUNY-Cortland
+- Chris Hoffman | Central College IA
+- Mitch Hegland | Augsburg
+- Eric Ciha | Wisconsin-Platteville
+- Steve Rivera | College of New Jersey
+place 1 Dave Jordan
+place 2 Joe Dasti
+place 3 Scott Martin
+place 4 Troy Monks
+place 5 Chris Hoffman
+place 6 Mitch Hegland
+place 7 Eric Ciha
+place 8 Steve Rivera
+
+@ 126
+- Peter Gonzalez | Montclair State
+- Pete Hayek | John Carroll
+- Fritz Zagorski | SUNY-Brockport
+- Chad Beck | Central College IA
+- Joel Lamson | Ithaca
+- David Regina | SUNY-Oneonta
+- Brian Allen | Rhode Island College
+- Tim Gerber | Elizabethtown
+place 1 Peter Gonzalez
+place 2 Pete Hayek
+place 3 Fritz Zagorski
+place 4 Chad Beck
+place 5 Joel Lamson
+place 6 David Regina
+place 7 Brian Allen
+place 8 Tim Gerber
+
+@ 134
+- Bob Berceau | Wisconsin-Stevens Point
+- Chris Cuffari | College of New Jersey
+- Wendel Donathan | Wittenberg
+- John Beatty | Augsburg
+- Bob Carrigan | Chicago University
+- Frank Genova | Kean
+- Adam Schaaf | Wisconsin-Whitewater
+- Jeff Bakken | Buena Vista
+place 1 Bob Berceau
+place 2 Chris Cuffari
+place 3 Wendel Donathan
+place 4 John Beatty
+place 5 Bob Carrigan
+place 6 Frank Genova
+place 7 Adam Schaaf
+place 8 Jeff Bakken
+
+@ 142
+- Shawn Smith | Delaware Valley
+- Ron Gross | Ithaca
+- Mike Collica | John Carroll
+- Brian Reed | St. Lawrence
+- Jim Bogash | Upper Iowa
+- Todd Hibbs | Mount Union
+- Rich Venuto | College of New Jersey
+- Todd Enger | St. Thomas
+place 1 Shawn Smith
+place 2 Ron Gross
+place 3 Mike Collica
+place 4 Brian Reed
+place 5 Jim Bogash
+place 6 Todd Hibbs
+place 7 Rich Venuto
+place 8 Todd Enger
+
+@ 150
+- Karl Monaco | Montclair State
+- Dave Zariczny | SUNY-Cortland
+- Shawn Voight | Cornell Iowa
+- Donny Wichmann | Augsburg
+- Marty Nichols | Ithaca
+- Travis Young | Simpson
+- Nick Zupan | St. Lawrence
+- Chris Zogby | SUNY-Albany
+place 1 Karl Monaco
+place 2 Dave Zariczny
+place 3 Shawn Voight
+place 4 Donny Wichmann
+place 5 Marty Nichols
+place 6 Travis Young
+place 7 Nick Zupan
+place 8 Chris Zogby
+
+@ 158
+- Mark Ambrose | Delaware Valley
+- Eric Stewart | Central College IA
+- Bob Llorca | Wisconsin-Whitewater
+- Matt Kretlow | Augsburg
+- Scott Miller | Case-Western Reserve
+- Mike Picozzi | Montclair State
+- Sean Yengo | SUNY-Cortland
+- Toselli Silvestri | Gallaudet
+place 1 Mark Ambrose
+place 2 Eric Stewart
+place 3 Bob Llorca
+place 4 Matt Kretlow
+place 5 Scott Miller
+place 6 Mike Picozzi
+place 7 Sean Yengo
+place 8 Toselli Silvestri
+
+@ 167
+- Randy Worrell | Delaware Valley
+- Joe Schmidt | John Carroll
+- Joe Whitters | Coe College
+- Mike Yanosik | SUNY-Cortland
+- Tom Rainville | Norwich
+- Jeff Voss | Wartburg
+- Greg Jones | SUNY-Albany
+- Scott Brown | Mount Union
+place 1 Randy Worrell
+place 2 Joe Schmidt
+place 3 Joe Whitters
+place 4 Mike Yanosik
+place 5 Tom Rainville
+place 6 Jeff Voss
+place 7 Greg Jones
+place 8 Scott Brown
+
+@ 177
+- Kevin Higgins | Baldwin Wallace
+- Dan Beiller | Ithaca
+- Peter Wang | Chicago University
+- Jack Denholm | Wartburg
+- Carl DeBernardo | John Carroll
+- Greg Hanchin | Case-Western Reserve
+- Mike Nuzum | Coast Guard
+- Todd Silvestri | Gallaudet
+place 1 Kevin Higgins
+place 2 Dan Beiller
+place 3 Peter Wang
+place 4 Jack Denholm
+place 5 Carl DeBernardo
+place 6 Greg Hanchin
+place 7 Mike Nuzum
+place 8 Todd Silvestri
+
+@ 190
+- Dean Gavin | Wartburg
+- Mike Fusilli | Ithaca
+- Kevin Schiltz | Augsburg
+- Larry Danko | Kings
+- Rich Redfoot | Washington & Lee
+- Rich Caldwell | Buena Vista
+- Tom Mahoney | Millikin
+- Ben Weinthal | New York University
+place 1 Dean Gavin
+place 2 Mike Fusilli
+place 3 Kevin Schiltz
+place 4 Larry Danko
+place 5 Rich Redfoot
+place 6 Rich Caldwell
+place 7 Tom Mahoney
+place 8 Ben Weinthal
+
+@ 275
+- Vince Cameron | Ohio Northern
+- Scott Dierks | Central College IA
+- Jon Buhner | SUNY-Oswego
+- Tom Fye | Luther
+- Chester Grauberger | Augsburg
+- Tim Macal | Upper Iowa
+- Ed Dupuy | Kean
+- Randy Meyer | Wisconsin-Whitewater
+place 1 Vince Cameron
+place 2 Scott Dierks
+place 3 Jon Buhner
+place 4 Tom Fye
+place 5 Chester Grauberger
+place 6 Tim Macal
+place 7 Ed Dupuy
+place 8 Randy Meyer
+

@@ -1,0 +1,27 @@
+[
+ {
+  "id": "069b06af-114f-47ac-ba93-819eb61f4971",
+  "dual_meet_id": "f361c3bf-37a6-4fd7-a127-3c3ccda4a0c9",
+  "weight_class": 120,
+  "order_index": 1,
+  "wrestler_a_id": "f5513b35-1221-47c8-9783-458b06efd7d8",
+  "wrestler_b_id": "6d352379-7b94-4102-8ff7-e3f83738f010",
+  "wrestler_a_name_raw": "Gabby Lorenzo",
+  "wrestler_b_name_raw": "Ashley Ruiz",
+  "school_a_id": 273,
+  "school_b_id": 203,
+  "winner_id": "6d352379-7b94-4102-8ff7-e3f83738f010",
+  "result_type": "TF",
+  "result_detail": "15-0",
+  "fall_time_seconds": 360,
+  "result_time_estimated": false,
+  "winner_score": 15,
+  "loser_score": 0,
+  "team1_points": 0,
+  "team2_points": 11,
+  "is_double_forfeit": false,
+  "is_forfeit_win": false,
+  "validated": false,
+  "created_at": "2026-09-09T14:58:16.325806+00:00"
+ }
+]

@@ -21,7 +21,7 @@ function Tile({ t, fontFamily, size, radius, border, width }: { t: NumberTile; f
   const inner = (
     <div className="flex flex-col items-center justify-center transition-[filter] hover:brightness-110"
       style={{ height: size, width, background: t.bg, color: t.fg, borderRadius: radius, border }}>
-      <span className="leading-none" style={{ fontFamily, fontSize: t.label.length > 3 ? size * 0.28 : size * 0.5 }}>{t.label}</span>
+      <span className="px-1 text-center leading-tight" style={{ fontFamily, fontSize: t.label.length > 3 ? size * (width && width >= size * 2 ? 0.36 : 0.28) : size * 0.5 }}>{t.label}</span>
       {t.caption && <span className="mt-1 text-[10px] uppercase tracking-wide opacity-80">{t.caption}</span>}
     </div>
   )

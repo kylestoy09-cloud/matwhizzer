@@ -15,6 +15,9 @@ import { createClient } from '@supabase/supabase-js'
 
 export const PUBLIC_DATA_REVALIDATE = 300
 export const PUBLIC_DATA_TAG = 'public-data'
+// Public API responses (rankings, head-to-head) are kept by Vercel's CDN for the same 5 minutes,
+// so repeat requests never reach the function or the database.
+export const PUBLIC_CDN_HEADERS = { 'Cache-Control': `public, s-maxage=${PUBLIC_DATA_REVALIDATE}, stale-while-revalidate=60` }
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? ''
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''

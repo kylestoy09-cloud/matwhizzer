@@ -1,0 +1,341 @@
+# NAIA Championships 2016 — source: NAIA_M_2016.pdf (qualifiers from the PDF text; places read off the bracket pages, 2026-11-18)
+# qualifiers and places only (no bouts)
+# NAIA Championships 2016 — source: NAIA_M_2016.pdf (qualifiers from the PDF text, 2026-11-18)
+
+@ 125
+- Adrian Gaines | Oklahoma City | 21-2
+- Demarcus Gurrly | Missouri Baptist | 14-14
+- Jesse Barajas | Jamestown | 21-12
+- Casey Coulter | Southern Oregon | 23-11
+- Christia Clary | Campbellsville | 18-10
+- Josh Johnson | Warner Pacific | 16-15
+- Hugo Perez | Midland | 31-14
+- Tristan Bundy | Grand View | 36-13
+- Austin Boles | Northwestern (Iowa) | 21-12
+- Jake Sinkovics | Cumberlands | 29-11
+- Olson Delisca | Southeastern | 30-14
+- Dustin Miller | Lyon | 23-5
+- Kaleb Furr | Ottawa | 21-13
+- Luke Schlosser | Great Falls | 27-7
+- Troy Lakin | Menlo | 28-7
+- John Altieri | William Penn | 22-15
+- Keegan Hessler | Morningside | 19-8
+- Sean Nguyen | Cumberland | 23-18
+- Ryan Stearns | Missouri Valley | 13-8
+- Adelfo Valdez | Wayland Baptist | 13-12
+- James Flint | Lindsey Wilson | 22-8
+- Quintel Fuchs | Montana State-Northern | 32-14
+- Deshaun Haynes | Dickinson State | 15-11
+- Dmitri Smith | Concordia | 21-19
+- Devane Dodgens | Life | 31-8
+- Isaac Wilson | Great Falls | 11-11
+- Robert Ozuna | York (Neb.) | 21-7
+- Mitch Pawlak | Indiana Tech | 30-5
+place 1 Pawlak
+place 2 Perez
+place 3 Lakin
+place 4 Flint
+place 5 Schlosser
+place 6 Fuchs
+place 7 Sinkovics
+place 8 Coulter
+
+@ 133
+- Jacob Colon | Grand View | 31-6
+- Torrey Casper | York (Neb.) | 3-4
+- Trey Trujillo | Hastings | 12-9
+- Ethan Owen | Southeastern | 39-6
+- Jesse Martinelli | Lindenwood-Belleville | 21-11
+- Vincente Hernandez | Simpson (Calif.) | 27-15
+- Andrew Porras | Wayland Baptist | 24-7
+- Kodie Cole | Concordia | 17-12
+- Brady Moser | Lindsey Wilson | 29-16
+- Jordan Olfus | Graceland | 13-10
+- Travis Barroquillo | Indiana Tech | 36-7
+- Davion Caston | Campbellsville | 9-1
+- Blake Ivie | Montana State-Northern | 30-17
+- Collin Crume | Indiana Tech | 21-16
+- Demarco Speller | Wayland Baptist | 10-10
+- David Berg | Midland | 27-10
+- Sage Ornelas | Embry-Riddle | 13-6
+- Sammy Rosario | Cumberland | 20-10
+- Michael Andreano | Briar Cliff | 16-5
+- Peter Acuna | Central Baptist | 28-15
+- Godwin Cutler | Grand View | 26-6
+place 1 Colon
+place 2 Caston
+place 3 Cutler
+place 4 Barroquillo
+place 5 Cole
+place 6 Hernandez
+place 7 Crume
+place 8 Porras
+
+@ 141
+- Jake Ekster | Missouri Valley | 10-4
+- Christia Mesa | Hastings | 9-7
+- David Sparks | Campbellsville | 21-14
+- Matt Weber | Montana State-Northern | 26-14
+- Dante Padilla | Williams Baptist | 21-14
+- Tyler Dickman | Baker | 23-12
+- Anthony Ashford | St. Catharine | 29-15
+- Tyler Hinton | Ottawa | 30-7
+- Sonny Gulesian | Briar Cliff | 15-7
+- Wardell Morgan | Lindenwood-Belleville | 13-14
+- Steele Escobedo | Menlo | 22-12
+- Tyler Fraley | Williams Baptist | 19-2
+- Marcello Sierra | Graceland | 28-12
+- Garrett Webb | Life | 26-12
+- Andrew Burr | Embry-Riddle | 21-11
+- James Landoll | Oklahoma City | 28-19
+- Matt Miller | Indiana Tech | 25-10
+- Daniel Leonard | Lindsey Wilson | 17-8
+- Joshua Lopez | York (Neb.) | 17-8
+- Justin Whitman | Great Falls | 18-21
+- Hunter Bell | Cumberlands | 29-11
+- Walker Marshall | Grand View | 26-9
+- Andrew Schulte | Concordia | 40-6
+place 1 Schulte
+place 2 Hinton
+place 3 Weber
+place 4 Fraley
+place 5 Ekster
+place 6 Marshall
+place 7 Escobedo
+place 8 Gulesian
+
+@ 149
+- Willie Fox | York (Neb.) | 23-5
+- Foster Bunce | Concordia | 14-11
+- Dallas Brown | Life | 30-10
+- Chandler Michael | Southern Oregon | 16-12
+- Jacob Gross | Indiana Tech | 14-14
+- Victor Hughes | Baker | 33-6
+- Kenny Boyd | Missouri Valley | 21-9
+- Kane Lovvorn | Wayland Baptist | 23-14
+- Garrett Carter | St. Catharine | 24-19
+- Kyle Leir | Great Falls | 21-15
+- Patrick Grigsby | Williams Baptist | 24-11
+- Steven Garcia | Morningside | 27-7
+- William Upson | Missouri Baptist | 14-2
+- Kyle Fowler | Morningside | 11-8
+- Drake Randall | Montana State-Northern | 29-15
+- Seth Ehlang | Dickinson State | 26-7
+- Brandon Archuletta | Bethany | 9-19
+- Jaedin Sklapsky | Campbellsville | 13-4
+- Andrew Hoskins | Campbellsville | 19-14
+- Anton King | Embry-Riddle | 12-14
+- Adrain Gomez | Brewton-Parker | 14-8
+- Justin Atkinson | Indiana Tech | 15-10
+- Tyler Cowger | Southern Oregon | 28-6
+place 1 Hughes
+place 2 Cowger
+place 3 Fox
+place 4 Garcia
+place 5 Brown
+place 6 Sklapsky
+place 7 King
+place 8 Lovvorn
+
+@ 157
+- Tanner Werner | Grand View | 27-5
+- Hunter Hodges | Southern Oregon | 25-13
+- Chase Hack | Indiana Tech | 29-16
+- Shay Lauderdale | Missouri Baptist | 6-5
+- Austin Coy | York (Neb.) | 18-15
+- Kyle Terry | Campbellsville | 32-9
+- Andrew Simmons | Missouri Valley | 14-9
+- Jr Lule | Concordia | 35-9
+- Andy Dobben | St. Catharine | 34-18
+- Matt Mattingley | Hannibal-LaGrange | 16-9
+- Brenn Schiess | Embry-Riddle | 23-13
+- Colby Crank | Baker | 23-2
+- Zach Skates | Oklahoma City | 34-5
+- Martin Phillips | Doane | 18-7
+- Aaron Demay | Southern Oregon | 12-6
+- Thomas Garty | Indiana Tech | 16-16
+- Rchard Ortiz | Simpson (Calif.) | 30-11
+- Nathen Pristavec | Brewton-Parker | 39-8
+- Victor Thomas | Wayland Baptist | 24-8
+- Dakota Drenth | Morningside | 19-14
+- Brandon Weber | Montana State-Northern | 32-14
+- Rowdy Miller | Hannibal-LaGrange | 11-11
+- Nate Croley | Cumberland | 29-9
+- Grant Henderson | Grand View | 22-6
+place 1 Crank
+place 2 Henderson
+place 3 Werner
+place 4 Terry
+place 5 Pristavec
+place 6 Thomas
+place 7 Croley
+place 8 Hodges
+
+@ 165
+- Blake Cooper | Warner Pacific | 22-2
+- Orlando Nawade | Cumberland | 23-11
+- John Hedge | Doane | 10-7
+- Dalton Tipton | Missouri Valley | 25-12
+- Romen Correa | Wayland Baptist | 9-10
+- John Weldon | Indiana Tech | 32-9
+- Trever Devestern | Dakota Wesleyan | 21-4
+- Preston Steen | Bacone | 16-13
+- Joseph Jauregui | Menlo | 29-13
+- Brandon Schuler | Northwestern (Iowa) | 17-14
+- Daniel Rittell | Williams Baptist | 27-13
+- Taylor Hodel | Dickinson State | 32-2
+- Dallas Houchins | Grand View | 30-4
+- Joseph McAleavey | Bacone | 17-11
+- Tommy Bailey | Concordia | 30-22
+- Kaldoon Rashid | Great Falls | 31-15
+- Ryan Whittle | Williams Baptist | 17-12
+- Sean Black | Campbellsville | 27-13
+- Mike Nord | Jamestown | 25-8
+- Connor Webber | Lyon | 23-11
+- Peter Donchev | Cumberland | 13-16
+- Aaron Lopez | Midland | 15-9
+- Connor Middleton | Baker | 29-15
+- Andrew Bartel | Montana State-Northern | 17-15
+- Ricky McCarty | Oklahoma City | 40-4
+place 1 Cooper
+place 2 Houchins
+place 3 Hodel
+place 4 McCarty
+place 5 Middleton
+place 6 Black
+place 7 Devestern
+place 8 Nord
+
+@ 174
+- Riley Boomer | Missouri Valley | 31-2
+- Justin Brown | Campbellsville | 18-10
+- Conner Linehan | Williams Baptist | 15-17
+- Joseph Robinson | Lindenwood-Belleville | 23-14
+- Zach Fishman | Northwestern (Iowa) | 29-8
+- Michael Ayala | Great Falls | 17-15
+- Derek Sivertsen | Oklahoma City | 36-12
+- Matt Walker | Lindsey Wilson | 24-4
+- Reed Tennyson | Southern Oregon | 23-13
+- Gabe Suthoff | Benedictine | 23-15
+- Jeremiah Reed | Hannibal-LaGrange | 16-16
+- Kyle Delaune | Cumberland | 25-10
+- Travian Cooke | Concordia | 20-16
+- Nicholas Meck | York (Neb.) | 24-7
+- Lawton Benna | Grand View | 24-10
+- Adrian Virgen | Bacone | 14-12
+- Andrew Carter-Johnso | Missouri Baptist | 10-4
+- Rhodes Bell | Lindsey Wilson | 24-10
+- Tyler McMichael | Midland | 31-9
+- Justin Lozano | Menlo | 23-6
+- Kevin Corbett | Doane | 30-7
+- Cody Johnson | Dickinson State | 15-9
+- Jamie Shawver | Oklahoma City | 25-19
+- Jacob Johnson | Indiana Tech | 27-14
+- Chuck Sharon | Campbellsville | 21-4
+- Andras Lukacs-Farkas | Northwestern (Iowa) | 15-7
+- Willie Miller | Montana State-Northern | 40-11
+place 1 Boomer
+place 2 Benna
+place 3 Walker
+place 4 Miller
+place 5 Fishman
+place 6 Corbett
+place 7 Sivertsen
+place 8 Sharon
+
+@ 184
+- Michael Pixley | Grand View | 28-0
+- Dillion Fransisco | Davenport | 23-16
+- Matt Carroll | Cumberland | 14-14
+- Evan Hudson | Oklahoma City | 15-14
+- Tyree Cox | Northwestern (Iowa) | 28-9
+- Taylor Vaughn | Great Falls | 24-12
+- Jeffrey Haley | Williams Baptist | 29-13
+- Lane Oversen | Dickinson State | 16-8
+- Trevor Whittaker | Bethany | 26-15
+- Jacob Dempsey | Life | 33-15
+- Ryan McWatters | Southern Oregon | 29-6
+- Michael Napier | Wayland Baptist | 30-8
+- Curtis Bright | Briar Cliff | 14-15
+- Tyler Dilbert | Williams Baptist | 25-11
+- John Solano | Dickinson State | 23-4
+- Matthew Atwood | Concordia | 25-7
+- Brett Bader | Missouri Valley | 10-7
+- Dustin Harris | Cumberland | 16-15
+- Sam Voitlaender | Great Falls | 23-17
+- LJ Grayson | Indiana Tech | 37-5
+place 1 Pixley
+place 2 McWatters
+place 3 Grayson
+place 4 Solano
+place 5 Napier
+place 6 Oversen
+place 7 Haley
+place 8 Dempsey
+
+@ 197
+- Garrett DeMers | Montana State-Northern | 37-6
+- Nate Knauf | Campbellsville | 12-7
+- Felipe Nava | Bacone | 17-13
+- Jordan Watkins | Briar Cliff | 20-17
+- Donovan Fouchey | Missouri Valley | 25-12
+- Josh Chiles | Williams Baptist | 27-10
+- Stephen Loosbrock | Benedictine | 32-11
+- Kasey Crump | Ottawa | 27-10
+- Jared McCoy | Morningside | 15-9
+- Cody Sivertsen | Oklahoma City | 34-15
+- Jake Maupin | Lindsey Wilson | 17-7
+- Justin Harbison | Great Falls | 17-17
+- Cody Linton | Doane | 21-1
+- Grant Harrill | Grand View | 25-1
+- Ramsey Bloy | Cumberlands | 31-15
+- Nick Null | Northwestern (Iowa) | 24-12
+- Chandler Knight | Doane | 18-11
+- Tyler McCoy | Calumet | 7-7
+- Kyler Atwood | Baker | 23-15
+- Jack Murphy | York (Neb.) | 12-3
+- Hudson Buck | Dickinson State | 16-5
+- Tanner Fischer | Southern Oregon | 13-6
+- David Willoughby | Wayland Baptist | 19-13
+- Ken Burkhardt Jr | Concordia | 32-13
+- Miguel Tovar | Oklahoma City | 24-16
+- Andrew Mahone | Missouri Baptist | 29-11
+- Dalton Bailey | Life | 40-4
+place 1 Linton
+place 2 Harrill
+place 3 DeMers
+place 4 Bailey
+place 5 Buck
+place 6 Fouchey
+place 7 Burkhardt
+place 8 Knight
+
+@ 285
+- Gabi Musallam | Missouri Valley | 20-3
+- Jade Hoisington | Dakota Wesleyan | 7-12
+- Tracy Jewett | Life | 22-12
+- Bryce McGowen | Oklahoma City | 26-19
+- Chico Adams | Lindsey Wilson | 24-3
+- Ceron Francisco | Concordia | 30-15
+- Kurland Parks | Central Baptist | 23-18
+- Tyler Smith | Bethany | 17-21
+- Stephen Wilbert | Warner Pacific | 22-9
+- Dean Broghammer | Grand View | 36-5
+- Taylor Kornoely | Montana State-Northern | 29-4
+- Conor Karwath | Williams Baptist | 7-6
+- Mario Bell | St. Catharine | 17-14
+- Dalton Presley | Briar Cliff | 20-11
+- Markese Christian | Wayland Baptist | 30-4
+- Bucky Dennis | Brewton-Parker | 29-12
+- Justin Smith | Missouri Valley | 18-10
+- Korey Walker | Oklahoma City | 30-13
+- Scott Pitrowski | Calumet | 4-9
+- Toby Cheff | Montana State-Northern | 17-5
+place 1 Broghammer
+place 2 Kornoely
+place 3 Musallam
+place 4 Walker
+place 5 Adams
+place 6 Christian
+place 7 Cheff
+place 8 Wilbert

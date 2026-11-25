@@ -1,4 +1,5 @@
 'use client'
+import Link from 'next/link'
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
@@ -54,6 +55,7 @@ function MatchCard({ slot }: { slot: PublicBracketSlot | null }) {
   function Row({ pos }: { pos: 'top' | 'bottom' }) {
     const name = pos === 'top' ? s.top_name : s.bottom_name
     const seed = pos === 'top' ? s.top_seed     : s.bottom_seed
+    const wid  = pos === 'top' ? s.top_wrestler_id : s.bottom_wrestler_id   // every name opens his profile (Kyle 2026-11-19)
     const isWinner = hasResult && s.winner_position === pos
     const isLoser  = hasResult && s.winner_position !== pos
 
@@ -70,7 +72,7 @@ function MatchCard({ slot }: { slot: PublicBracketSlot | null }) {
           : !name    ? 'text-slate-300 italic'
           : 'text-slate-700'
         }`}>
-          {name ?? 'TBD'}
+          {name && wid ? <Link href={`/wrestler/${wid}`} className="hover:underline">{name}</Link> : name ?? 'TBD'}
         </span>
         {isWinner && <span className="text-[8px] font-bold text-emerald-600 shrink-0 ml-auto">W</span>}
       </div>

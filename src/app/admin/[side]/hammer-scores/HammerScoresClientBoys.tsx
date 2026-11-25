@@ -25,7 +25,11 @@ export type HammerRow = {
   last_calculated_at: string
 }
 
-type SortKey = 'hammer_score' | 'postseason_adjusted' | 'tournament_score' | 'match_score' | 'match_count' | 'weight_class'
+type SortKey = 'hammer_score' | 'postseason_adjusted' | 'tournament_score' | 'match_score' | 'match_count' | 'weight_class' | 'section'
+
+// Section order for sorting (Kyle 2026-11-12: state rankings, then sectional rankings); no section last
+const SECTION_ORDER = ['North I', 'North II', 'Central', 'South', 'Non-Public']
+const sectionRank = (s: string | null) => { const i = s ? SECTION_ORDER.indexOf(s) : -1; return i === -1 ? 99 : i }
 type SortDir = 'asc' | 'desc'
 
 function fmt(n: number) { return n.toFixed(2) }
@@ -152,7 +156,7 @@ export function HammerScoresClientBoys({ rows, calculatedAt}: { rows: HammerRow[
 
   function handleSort(k: SortKey) {
     if (sortKey === k) setSortDir(d => d === 'desc' ? 'asc' : 'desc')
-    else { setSortKey(k); setSortDir(k === 'weight_class' ? 'asc' : 'desc') }
+    else { setSortKey(k); setSortDir(k === 'weight_class' || k === 'section' ? 'asc' : 'desc') }
   }
 
   // Derive sorted unique option lists from all rows (not filtered, so options never disappear)
@@ -219,10 +223,23 @@ export function HammerScoresClientBoys({ rows, calculatedAt}: { rows: HammerRow[
         const diff = Number(a.weight_class ?? 9999) - Number(b.weight_class ?? 9999)
         return sortDir === 'desc' ? -diff : diff
       }
+      if (sortKey === 'section') {
+        // By section, then by rating within it: each section's list reads as its own ranking
+        const diff = sectionRank(a.section) - sectionRank(b.section)
+        return (sortDir === 'desc' ? -diff : diff) || b.hammer_score - a.hammer_score
+      }
       const diff = (a[sortKey] as number) - (b[sortKey] as number)
       return sortDir === 'desc' ? -diff : diff
     })
   }, [filtered, sortKey, sortDir])
+
+  // # restarts in each section when sorted by section (a sectional ranking); otherwise it's the place in the list
+  const rankOf = useMemo(() => {
+    const out: number[] = []
+    let n = 0
+    sorted.forEach((r, i) => { n = sortKey === 'section' && i > 0 && sorted[i - 1].section !== r.section ? 1 : n + 1; out.push(n) })
+    return out
+  }, [sorted, sortKey])
 
   const activeFilterCount = [weightFilter, sectionFilter, classFilter, regionFilter, districtFilter, conferenceFilter].filter(Boolean).length
 
@@ -311,6 +328,7 @@ export function HammerScoresClientBoys({ rows, calculatedAt}: { rows: HammerRow[
             <tr>
               <th className="px-3 py-2 text-left text-slate-500 font-medium">#</th>
               <th className="px-3 py-2 text-left text-slate-500 font-medium">Wrestler</th>
+              <SortHeader label="Section" sortKey="section"           current={sortKey} dir={sortDir} onSort={handleSort} />
               <SortHeader label="Wt"     sortKey="weight_class"       current={sortKey} dir={sortDir} onSort={handleSort} />
               <SortHeader label={RATING_SHORT} sortKey="hammer_score"       current={sortKey} dir={sortDir} onSort={handleSort} />
               <SortHeader label="PS"     sortKey="postseason_adjusted" current={sortKey} dir={sortDir} onSort={handleSort} />
@@ -323,12 +341,13 @@ export function HammerScoresClientBoys({ rows, calculatedAt}: { rows: HammerRow[
           <tbody>
             {sorted.map((r, i) => (
               <tr key={r.wrestler_id} className="border-b border-slate-100 hover:bg-slate-50">
-                <td className="px-3 py-1.5 text-slate-400">{i + 1}</td>
+                <td className="px-3 py-1.5 text-slate-400">{rankOf[i]}</td>
                 <td className="px-3 py-1.5">
                   <Link href={`/wrestler/${r.wrestler_id}`} className="font-medium text-slate-900 hover:underline">
                     {r.last_name}, {r.first_name}
                   </Link>
                 </td>
+                <td className="px-3 py-1.5 text-right text-slate-500 whitespace-nowrap">{r.section ?? '—'}</td>
                 <td className="px-3 py-1.5 text-right text-slate-500">{r.weight_class ?? '—'}</td>
                 <td className="px-3 py-1.5 text-right font-semibold text-slate-900">{fmt(r.hammer_score)}</td>
                 <td className="px-3 py-1.5 text-right text-slate-600">{fmt(r.postseason_adjusted)}</td>

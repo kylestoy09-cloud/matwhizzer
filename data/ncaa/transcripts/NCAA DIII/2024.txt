@@ -1,0 +1,262 @@
+# NCAA Division III Championships 2024 — source: 2024.pdf (entrants from the PDF text; places read off the bracket pages, 2026-11-18). The pigtail-round wrestlers are printed by last name only: only the two who placed (Frost 149, Massie 165) are listed, by last name
+# qualifiers and places only (no bouts)
+
+@ 125
+1 Joziah Fry | Johnson and Wales
+- Cade Hornback | Coe
+- Mac Cafurello | Roanoke College
+8 Izzy Balsiger | Wisconsin-Eau Claire
+5 Jalen Dunson | Wisconsin-Whitewater
+- James Day | Wabash
+- Akhil Vega | Stevens
+4 Jacob Decatur | Baldwin Wallace
+3 Zac Blasioli | Millikin
+- Jayden Cardenas | Cortland State
+- Jack Stanley | Mount Union
+6 Mason Barrett | Averett
+7 Gavin Bradley | Castleton
+- Ethan Liptzin | Elizabethtown
+- Jake Craig | Southern Maine
+2 Christian Guzman | North Central
+place 1 Fry
+place 2 Guzman
+place 3 Day
+place 4 Decatur
+place 5 Barrett
+place 6 Blasioli
+place 7 Bradley
+place 8 Cafurello
+
+@ 133
+1 Robbie Precin | North Central
+- Joey Langeman | Trine
+- Zach Beckner | Ferrum
+8 Isaias Torres | Ithaca
+5 Chase Randall | Coast Guard
+- Jacob Blair | Delaware Valley
+- Danny Haws | Centenary (NJ)
+4 Dominik Mallinder | Wisconsin-Whitewater
+3 Jaden Hinton | Baldwin Wallace
+- Gianni Manginelli | Springfield
+- Gabriel Leo-Esparolini | Johnson and Wales
+6 Tyler Fleetwood | Wisconsin-Eau Claire
+7 Luke Hoerle | Stevens
+- Bryce Parke | Coe
+- Desmond Diggs | Mount St. Joseph
+2 Joe Pins | Wartburg
+place 1 Randall
+place 2 Hinton
+place 3 Pins
+place 4 Precin
+place 5 Blair
+place 6 Mallinder
+place 7 Torres
+place 8 Diggs
+
+@ 141
+1 Jacob Reed | Ohio Northern
+- Jacob Dado | University of the Ozarks
+8 Evan Burge | Wabash
+5 Josiah Gehr | Messiah
+- Xavier Pena | Centenary (NJ)
+- James Rodriguez | Castleton
+4 Pierre Baldwin | Central
+3 Kyler Romero | Wartburg
+- Gabe Goss | Oswego State
+- Victor Perlleshi | Johnson and Wales
+- Mark Samuel | Roanoke College
+7 Alex Samson | St. John Fisher
+- Dylan Phelps | Olivet
+- Ethan Pogorzelski | Wisconsin-Whitewater
+2 Josh Wilson | Greensboro
+place 1 Wilson
+place 2 Reed
+place 3 Samuel
+place 4 Gehr
+place 5 Romero
+place 6 Perlleshi
+place 7 Samson
+place 8 Pogorzelski
+
+@ 149
+- Frost | Southern Maine
+1 Michael Petrella | Baldwin Wallace
+- Michael Conklin | TCNJ
+- Evan Lindner | Washington & Lee
+8 Mike Glynn | RIT
+5 Zach Sato | Wisconsin-Eau Claire
+- Matthew Beyer | Ithaca
+- Eric Kinkaid | Loras
+4 Charlie Stuhl | Augsburg
+3 Nate Fitt | Coast Guard
+- Daniel Uribe | Wabash
+- Max Honiss | Albion
+6 Charlie Dojan | Wartburg
+7 Taylor Smith | Washington & Jefferson
+- Ty Koedam | Coe
+- Jesse Alvarado | Averett
+2 Tyler Goebel | Wisconsin-La Crosse
+place 1 Petrella
+place 2 Goebel
+place 3 Dojan
+place 4 Kinkaid
+place 5 Sato
+place 6 Frost
+place 7 Conklin
+place 8 Glynn
+
+@ 157
+1 Nolan Hertel | Wisconsin-La Crosse
+- Nate Camiscioli | Castleton
+- Tim Smith | Wabash
+8 Xavier Howard | McDaniel
+5 Blake Jagodzinske | Augsburg
+- Jason Rezac | Alvernia University
+- Gabriel Smith | Cornell College
+4 Ryan Smith | Stevens
+3 Peter Kane | Williams College
+- Jaryn Hartranft | Wilkes
+- Patrick McGraw | John Carroll
+6 Nathan Callaway | Millikin
+7 Clayton McDonough | Luther
+- Jermaine Butler | Wisconsin-Whitewater
+- Thomas West | Baldwin Wallace
+2 Cooper Pontelandolfo | NYU
+place 1 Hertel
+place 2 Kane
+place 3 Pontelandolfo
+place 4 McDonough
+place 5 Jagodzinske
+place 6 Ryan Smith
+place 7 Gabriel Smith
+place 8 Howard
+
+@ 165
+- Massie | Wisconsin-Eau Claire
+1 Matt Lackman | Alvernia University
+- Steven Rochard | Coast Guard
+- Dustin Bohren | Loras
+8 Patrick Wisniewski | Johnson and Wales
+5 Brian Schneider | Elizabethtown
+- Nicholas Roeger | Castleton
+- Jesse Herrera | Wabash
+4 Noah Leisgang | Wisconsin-La Crosse
+3 Cooper Willis | Augsburg
+- Andrew Supers | Baldwin Wallace
+- David Reid | Roanoke College
+6 Will Esmoil | Coe
+7 Alex Villar | North Central
+- Shawn Marchesano | Ursinus
+- Teagan Hendricks | Ohio Northern
+2 Nicholas Sacco | TCNJ
+place 1 Sacco
+place 2 Leisgang
+place 3 Lackman
+place 4 Massie
+place 5 Willis
+place 6 Esmoil
+place 7 Bohren
+place 8 Wisniewski
+
+@ 174
+1 Jared Stricker | Wisconsin-Eau Claire
+- Jackson Gray | Ithaca
+- Ganon Smith | Elizabethtown
+8 Dejon Glaster | Millikin
+5 Jason Geyer | NYU
+- Blake Williams | Adrian
+- Christian Komitas | Aurora Universtiy
+4 Stefan Major | Stevens
+3 Seth Goetzinger | Augsburg
+- Aiden Ashburn | John Carroll
+- Carter Lloyd | Baldwin Wallace
+6 Zeb Gnida | Loras
+7 Charlie Grygas | Oswego State
+- Khalil Mitchell | Averett
+- Jayden Curley | Roger Williams
+2 Zane Mulder | Wartburg
+place 1 Stricker
+place 2 Mulder
+place 3 Gnida
+place 4 Geyer
+place 5 Grygas
+place 6 Glaster
+place 7 Goetzinger
+place 8 Major
+
+@ 184
+1 Bentley Schwanebeck-Ost | Augsburg
+- Dylan Wellbaum | Adrian
+- Ryder Slayton | Messiah
+8 Jack Ryan | Oneonta State
+5 Sean Malenfant | Alfred State
+- Gavin Layman | Ohio Northern
+- Joel Martsinovsky | Stevens
+4 Sampson Wilkins | Castleton
+- NIall Schoenfelder | Wisconsin-Eau Claire
+- Trent Furman | NYU
+- Max Borton | Ursinus
+6 George Moseley | Averett
+7 Marcus Orlandoni | Wisconsin-La Crosse
+- Cole Cervantes | North Central
+- Ryan DeVivo | Johnson and Wales
+2 Charles Baczek | Wabash
+place 1 Schwanebeck-Ost
+place 2 DeVivo
+place 3 Schoenfelder
+place 4 Wilkins
+place 5 Malenfant
+place 6 Wellbaum
+place 7 Ryan
+place 8 Borton
+
+@ 197
+1 Massoma Endene | Wartburg
+- Luke Hopkins | Baldwin Wallace
+- Lorenzo Pellot | Roanoke College
+8 Jaedyn Harris | McDaniel
+5 Parker Venz | Augsburg
+- Montgomery Mills | Westminster
+- Gable Crebs | Lycoming
+4 Ben Kawczynski | Wisconsin-La Crosse
+3 Gabriel Zierden | Concordia-Moorhead
+- Demond Harrison | Albion
+- Darby McLaughlin | Castleton
+6 Gage Linahon | Central
+7 Cameron Butka | Wilkes
+- Dylan Harr | Johnson and Wales
+- Bryce McCloskey | Mount Union
+2 Coy Spooner | Coast Guard
+place 1 Endene
+place 2 Zierden
+place 3 Mills
+place 4 Butka
+place 5 Harr
+place 6 Spooner
+place 7 Venz
+place 8 Kawczynski
+
+@ 285
+1 Carl DiGiorgio | Coast Guard
+- Mitch Williamson | Wartburg
+8 Dylan Waller | Elizabethtown
+5 Doug Byrne | Baldwin Wallace
+- Walter West | Luther
+- Caleb Burkhart | Wilkes
+4 Michael Douglas | Wisconsin-La Crosse
+3 Tyler Kim | Augsburg
+- Nick Franco | Brockport
+- Peter Wersinger | TCNJ
+6 Donovan King | Olivet
+7 Robby Bates | North Central
+- Reid Garrison | Merchant Marine
+- Adolfo Betancur | Johnson and Wales
+2 Rayshawn Dixon | Ferrum
+place 1 Kim
+place 2 Douglas
+place 3 DiGiorgio
+place 4 Bates
+place 5 Dixon
+place 6 Waller
+place 7 West
+place 8 Wersinger

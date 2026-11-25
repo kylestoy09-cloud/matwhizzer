@@ -13,6 +13,7 @@ import { matchSchoolNames, clearSchoolCache } from '@/lib/matchSchools'
 import { matchWrestler, clearWrestlerCache } from '@/lib/matchWrestlers'
 import { saveNameLinks } from '@/lib/nameLinks'
 import { boutResultToDb } from '@/lib/parseRtf'
+import { cleanEventName } from '@/lib/eventName'
 import { seasonIdForDate } from '@/lib/seasons'
 import type { SchoolOverride, WrestlerOverride } from '@/app/admin/[side]/import-rtf/types'
 import { nonNjSchools } from '@/lib/schoolIsOos'
@@ -132,15 +133,15 @@ export async function POST(req: NextRequest) {
     const exactRow = await client
       .from(istTable)
       .select('id')
-      .eq('name', tournamentName)
+      .in('name', [...new Set([tournamentName, cleanEventName(tournamentName)])])   // stored names are cleaned
       .eq('season', SEASON)
-      .maybeSingle()
+      .limit(1)
 
-    if (exactRow.data?.id) {
-      tid = exactRow.data.id
+    if (exactRow.data?.[0]?.id) {
+      tid = exactRow.data[0].id
     } else {
       const ins = await client.from(istTable).insert({
-        name: tournamentName,
+        name: cleanEventName(tournamentName),
         season: SEASON,
         start_date: startDate,
         end_date: endDate ?? undefined,

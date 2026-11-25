@@ -1,0 +1,182 @@
+# NCAA Division III Championships 1996 — source: NCAA III 1996.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Jeff O'Gara | Wisconsin-La Crosse
+- John Gemmell | Ithaca
+- Jason Goldman | SUNY-Binghampton
+- Henry Gerten | Augsburg
+- Mike DeLuca | Montclair State
+- Kyle DeForest | Plymouth State
+- Eric Gould | Springfield
+- Neil Rodak | Chicago University
+place 1 Jeff O'Gara
+place 2 John Gemmell
+place 3 Jason Goldman
+place 4 Henry Gerten
+place 5 Mike DeLuca
+place 6 Kyle DeForest
+place 7 Eric Gould
+place 8 Neil Rodak
+
+@ 126
+- Tom Smith | Wartburg
+- Joel O'Brien | St. Thomas
+- Bryan Roggie | SUNY-Cortland
+- Mike Kohl | SUNY-Oswego
+- Jesse Morrison | Western New England
+- Keith Johnson | Wisconsin-River Falls
+- Jim Hague | College of New Jersey
+- Tim Tyler | RIT
+place 1 Tom Smith
+place 2 Joel O'Brien
+place 3 Bryan Roggie
+place 4 Mike Kohl
+place 5 Jesse Morrison
+place 6 Keith Johnson
+place 7 Jim Hague
+place 8 Tim Tyler
+
+@ 134
+- Ron Vosburg | SUNY-Brockport
+- Jesse Armbruster | Augsburg
+- Pat Kelley | Springfield
+- Justin Barbush | Elizabethtown
+- Jere Hamel | Wisconsin-Stevens Point
+- Dusty Rhodes | Wartburg
+- Scott Stefl | Loras College
+- Scott Lund | Wisconsin-La Crosse
+place 1 Ron Vosburg
+place 2 Jesse Armbruster
+place 3 Pat Kelley
+place 4 Justin Barbush
+place 5 Jere Hamel
+place 6 Dusty Rhodes
+place 7 Scott Stefl
+place 8 Scott Lund
+
+@ 142
+- Jamal Fox | Wartburg
+- Josh Roe | SUNY-Cortland
+- Andy Goodwin | Springfield
+- Matt Morel | Wisconsin-La Crosse
+- Jeremy Krings | Wisconsin-Stout
+- Aaron Fitt | Lycoming
+- Nick Salandra | Augsburg
+- Joe Maiani | Ohio Northern
+place 1 Jamal Fox
+place 2 Josh Roe
+place 3 Andy Goodwin
+place 4 Matt Morel
+place 5 Jeremy Krings
+place 6 Aaron Fitt
+place 7 Nick Salandra
+place 8 Joe Maiani
+
+@ 150
+- Chris Potter | College of New Jersey
+- Kevin Fiedler | St. Thomas
+- Brett Stamper | Wisconsin-Stevens Point
+- Darin Keim | Lycoming
+- Brian Malloy | Mount Union
+- Rod Myers | York
+- Ricky Casarez | Loras College
+- Chris Raiber | Upper Iowa
+place 1 Chris Potter
+place 2 Kevin Fiedler
+place 3 Brett Stamper
+place 4 Darin Keim
+place 5 Brian Malloy
+place 6 Rod Myers
+place 7 Ricky Casarez
+place 8 Chris Raiber
+
+@ 158
+- Brandon Totten | Delaware Valley
+- Dan O'Cone | College of New Jersey
+- Bill Simpson | Western New England
+- Wade Pehrson | Augsburg
+- Matt Ryan | St. John's
+- Jason Miller | Heidelberg
+- Mike Kinsey | Lycoming
+- Brent Lawreson | Central College IA
+place 1 Brandon Totten
+place 2 Dan O'Cone
+place 3 Bill Simpson
+place 4 Wade Pehrson
+place 5 Matt Ryan
+place 6 Jason Miller
+place 7 Mike Kinsey
+place 8 Brent Lawreson
+
+@ 167
+- Brandon Penzkover | Wisconsin-La Crosse
+- Mike Alesch | Wartburg
+- Cliff Casteel | Augsburg
+- Bill Kahle | Wisconsin-Oshkosh
+- Jamell Pollack | Williams
+- Jason Dell | Gettysburg
+- Ray Jones | Trinity
+- Keith Smith | SUNY-Oswego
+place 1 Brandon Penzkover
+place 2 Mike Alesch
+place 3 Cliff Casteel
+place 4 Bill Kahle
+place 5 Jamell Pollack
+place 6 Jason Dell
+place 7 Ray Jones
+place 8 Keith Smith
+
+@ 177
+- Paul Elsen | Wheaton
+- Mike Cruikshank | College of New Jersey
+- James Brophy | Loras College
+- Chad Gerbracht | Wartburg
+- Andy Lein | St. John's
+- Clint Dunlop | Buena Vista
+- Joe Rens | Wisconsin-Stevens Point
+- Hugh Smith | Wesleyan
+place 1 Paul Elsen
+place 2 Mike Cruikshank
+place 3 James Brophy
+place 4 Chad Gerbracht
+place 5 Andy Lein
+place 6 Clint Dunlop
+place 7 Joe Rens
+place 8 Hugh Smith
+
+@ 190
+- Dan Lewandowski | Augsburg
+- Ryan Reasland | Cornell Iowa
+- John Aebly | SUNY-Brockport
+- Charlie Clarke | RIT
+- Blake Williams | Wartburg
+- Jeff Santos | Plymouth State
+- Chris Rea | Montclair State
+- Jared Goodman | York
+place 1 Dan Lewandowski
+place 2 Ryan Reasland
+place 3 John Aebly
+place 4 Charlie Clarke
+place 5 Blake Williams
+place 6 Jeff Santos
+place 7 Chris Rea
+place 8 Jared Goodman
+
+@ 275
+- Derek Messmer | Case-Western Reserve
+- Perry Miller | Wisconsin-Stevens Point
+- Nick Primozic | Manchester
+- Mike Bucci | SUNY-Cortland
+- Jay Huff | Buena Vista
+- John Pena | Augsburg
+- Derrick Levake | Wisconsin-Whitewater
+- Jason Weigand | Mount Union
+place 1 Derek Messmer
+place 2 Perry Miller
+place 3 Nick Primozic
+place 4 Mike Bucci
+place 5 Jay Huff
+place 6 John Pena
+place 7 Derrick Levake
+place 8 Jason Weigand
+

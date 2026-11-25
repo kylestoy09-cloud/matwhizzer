@@ -20,11 +20,11 @@ export type CalendarRow = {
 type QA      = { q: string; a: string }
 type Bullet  = string
 
-type DocTab = {
+export type DocTab = {
   kind: 'doc'
   tabLabel: string
   title: string
-  url: string
+  url?: string
   summary: Bullet[]
   qa: QA[]
 }
@@ -257,7 +257,11 @@ function Collapsible({
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 // embedded: inside Insight, which supplies the page frame and title
-export function AboutClient({ calendarRows, dbError, rowCount, embedded = false }: { calendarRows: CalendarRow[]; dbError?: string | null; rowCount?: number; embedded?: boolean }) {
+// side + docs (2026-11-11, mock first): each side sees its own NJSIAA calendar rows (its own plus the shared ones)
+// and its own rule documents. Without them the page is as before: every row, the boys documents.
+export function AboutClient({ calendarRows: allRows, dbError, rowCount, embedded = false, side, docs }: { calendarRows: CalendarRow[]; dbError?: string | null; rowCount?: number; embedded?: boolean; side?: 'boys' | 'girls'; docs?: DocTab[] }) {
+  const calendarRows = side ? allRows.filter(r => r.gender == null || r.gender === (side === 'girls' ? 'F' : 'M')) : allRows
+  const docTabs = docs ?? DOC_TABS
   const [activeTopTab, setActiveTopTab] = useState<'matwhizzer' | 'njsiaa'>('njsiaa')
   const [activeDoc, setActiveDoc]       = useState(0)  // 0 = dates, 1-3 = doc tabs
   const [summaryOpen, setSummaryOpen]   = useState([false, false, false])
@@ -277,7 +281,7 @@ export function AboutClient({ calendarRows, dbError, rowCount, embedded = false 
     byCategory.get(row.event_category)!.push(row)
   }
   const seasonLabel = calendarRows[0]?.season_label ?? ''
-  const docTab = activeDoc > 0 ? DOC_TABS[activeDoc - 1] : null
+  const docTab = activeDoc > 0 ? docTabs[activeDoc - 1] : null
 
   return (
     <div className={embedded ? 'max-w-3xl' : 'max-w-3xl mx-auto px-4 py-10'}>
@@ -333,7 +337,7 @@ export function AboutClient({ calendarRows, dbError, rowCount, embedded = false 
               )}
               {seasonLabel && (
                 <p className="text-xs text-slate-400 mb-3">
-                  NJSIAA Boys Wrestling {seasonLabel} season
+                  NJSIAA {side === 'girls' ? 'Girls' : 'Boys'} Wrestling {seasonLabel} season
                 </p>
               )}
               <div className="border border-slate-200 rounded-none overflow-hidden divide-y divide-slate-200">
@@ -354,17 +358,19 @@ export function AboutClient({ calendarRows, dbError, rowCount, embedded = false 
             <div>
               <div className="mb-5">
                 <h2 className="text-lg font-bold text-slate-900 mb-1">{docTab.title}</h2>
-                <a
-                  href={docTab.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-sm text-blue-600 hover:text-blue-800 hover:underline transition-colors"
-                >
-                  <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-                  </svg>
-                  View NJSIAA PDF
-                </a>
+                {docTab.url && (
+                  <a
+                    href={docTab.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-sm text-blue-600 hover:text-blue-800 hover:underline transition-colors"
+                  >
+                    <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                    </svg>
+                    View NJSIAA PDF
+                  </a>
+                )}
               </div>
 
               <div className="space-y-3">

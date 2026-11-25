@@ -1,0 +1,29 @@
+{
+ "moved": [
+  {
+   "id": "23fcf762-bdf6-4ffa-a1e2-fe4cc32d5952",
+   "dual_meet_id": "5549a266-f6af-4f7c-a73b-94d4998ef1ea",
+   "weight_class": 150,
+   "wrestler_a_id": "cb671b68-3134-4885-9863-949fc40a3b6a",
+   "wrestler_b_id": "206659ee-b6f9-44e2-93da-135580063c6e",
+   "school_a_id": 268,
+   "school_b_id": 264,
+   "winner_id": "206659ee-b6f9-44e2-93da-135580063c6e",
+   "result_type": "TF",
+   "result_detail": "26-9",
+   "fall_time_seconds": 360,
+   "team1_points": 0,
+   "team2_points": 5,
+   "is_double_forfeit": false,
+   "is_forfeit_win": false,
+   "validated": false,
+   "created_at": "2026-08-06T03:26:16.543616+00:00",
+   "wrestler_a_name_raw": "Jakob Ubarry",
+   "wrestler_b_name_raw": "Luken Ramos",
+   "result_time_estimated": true,
+   "winner_score": 26,
+   "loser_score": 9,
+   "order_index": 5
+  }
+ ]
+}

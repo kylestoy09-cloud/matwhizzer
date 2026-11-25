@@ -1,0 +1,142 @@
+# NCAA Division III Championships 1975 — source: NCAA III 1975.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Nabil Guketlov | Montclair State
+- Jack Mulhall | John Carroll
+- Roy Preefer | Wilkes
+- Dwight Miller | Humboldt State
+- Bob Daschbach | Washington & Jefferson
+- James Aquilo | Mount Union
+place 1 Nabil Guketlov
+place 2 Jack Mulhall
+place 3 Roy Preefer
+place 4 Dwight Miller
+place 5 Bob Daschbach
+place 6 James Aquilo
+
+@ 126
+- Craig Helmuth | Gettysburg
+- Tim Borshoff | SUNY-Binghampton
+- Andy Zook | Millersville
+- Rich Numa | Montclair State
+- Mike Rossetti | College of New Jersey
+- Greg Rotell | Thiel
+place 1 Craig Helmuth
+place 2 Tim Borshoff
+place 3 Andy Zook
+place 4 Rich Numa
+place 5 Mike Rossetti
+place 6 Greg Rotell
+
+@ 134
+- Mark Hawald | John Carroll
+- Vince Tundo | Montclair State
+- Abe Lang | SUNY-Brockport
+- John Chakmakas | Wilkes
+- Brian Smith | Gettysburg
+- Rae McDonald | Mount Union
+place 1 Mark Hawald
+place 2 Vince Tundo
+place 3 Abe Lang
+place 4 John Chakmakas
+place 5 Brian Smith
+place 6 Rae McDonald
+
+@ 142
+- John Martellucci | SUNY-Brockport
+- Nick Hobbs | Coe College
+- Larry Mims | SUNY-Albany
+- Mike Flamingo | Mansfield State
+- Kevin Welter | Montclair State
+- Richard Zinck | Millersville
+place 1 John Martellucci
+place 2 Nick Hobbs
+place 3 Larry Mims
+place 4 Mike Flamingo
+place 5 Kevin Welter
+place 6 Richard Zinck
+
+@ 150
+- Charles Becks | John Carroll
+- Tony Peraza | SUNY-Potsdam
+- Greg DiGioacchino | Montclair State
+- Walt Weller | SUNY-Binghampton
+- Jim Friedrich | Oberlin
+- Dave Gardner | Mansfield State
+place 1 Charles Becks
+place 2 Tony Peraza
+place 3 Greg DiGioacchino
+place 4 Walt Weller
+place 5 Jim Friedrich
+place 6 Dave Gardner
+
+@ 158
+- Gene Ashley | Wilkes
+- Ed Pucci | SUNY-Oswego
+- Mitch Brown | St. Lawrence
+- Raleigh Clemons | Ashland
+- Greg Reilly | SUNY-Binghampton
+- Al Garber | Mansfield State
+place 1 Gene Ashley
+place 2 Ed Pucci
+place 3 Mitch Brown
+place 4 Raleigh Clemons
+place 5 Greg Reilly
+place 6 Al Garber
+
+@ 167
+- Jim Weisenfluh | Wilkes
+- Joe Galea | SUNY-Potsdam
+- Clayton Barnard | Ashland
+- Ricardo Bailey | Elizabethtown
+- Mike Van Boxel | Ripon
+- Tim True | RPI
+place 1 Jim Weisenfluh
+place 2 Joe Galea
+place 3 Clayton Barnard
+place 4 Ricardo Bailey
+place 5 Mike Van Boxel
+place 6 Tim True
+
+@ 177
+- Brad Bowman | John Carroll
+- Tom McCue | SUNY-Potsdam
+- Joe Borsa | York
+- Mike Polakoff | SUNY-Binghampton
+- Allen Grinde | Luther
+- Ron King | Ithaca
+place 1 Brad Bowman
+place 2 Tom McCue
+place 3 Joe Borsa
+place 4 Mike Polakoff
+place 5 Allen Grinde
+place 6 Ron King
+
+@ 190
+- Brent Wissenback | Humboldt State
+- Skip Fair | Ashland
+- Leon Dunnam | Massachusetts Maritime
+- Fred Penrod | Augustana Illinois
+- Steve Sanko | Lebanon Valley
+- Eric Guyll | Millersville
+place 1 Brent Wissenback
+place 2 Skip Fair
+place 3 Leon Dunnam
+place 4 Fred Penrod
+place 5 Steve Sanko
+place 6 Eric Guyll
+
+@ 285
+- Joe Bertolone | John Carroll
+- Steve Caldwell | Montclair State
+- Jim Murray | Coast Guard
+- Al Scharer | Wilkes
+- Al Bartlebaugh | Delaware Valley
+- Erland Van Lidth de Jeude | MIT
+place 1 Joe Bertolone
+place 2 Steve Caldwell
+place 3 Jim Murray
+place 4 Al Scharer
+place 5 Al Bartlebaugh
+place 6 Erland Van Lidth de Jeude
+

@@ -135,25 +135,22 @@ function buildGender(side: AdminSide): RailEntry[] {
   {
     id: 'blog', label: 'Articles', icon: icons.blog,
     groups: [{ items: [
+      { label: 'Article Hub',  href: a('/content/article-hub') },
       { label: 'All Articles', href: a('/content/articles') },
       { label: 'New Article',  href: a('/content/articles/new') },
+      { label: 'Daily Challenge', href: a('/content/daily-challenge') },
+      { label: 'Polls',        href: a('/content/polls') },
+      { label: 'Challenge Sandbox', href: a('/content/challenge-sandbox') },
+      { label: 'Home Video',   href: a('/content/home-video') },
     ]}],
   },
   {
     id: 'nonnjsiaa', label: 'Non-NJSIAA', icon: icons.nonnjsiaa,
     groups: [
-      { heading: 'MS Tournaments', items: [
-        { label: 'Tournament Tiers',  href: a('/ms/tiers') },
-        { label: 'Tournaments',       href: a('/ms/tournaments') },
-        { label: 'Import Results',    href: a('/ms/import') },
-        { label: 'Wrestler Profiles', href: a('/ms/wrestlers') },
-      ]},
-      { heading: 'HS Off-Season', items: [
-        { label: 'Tournaments',    href: a('/nonnjsiaa/offseason') },
-        { label: 'Import Results', href: a('/nonnjsiaa/offseason/import') },
-      ]},
-      { heading: 'Clubs', items: [
-        { label: 'Club Profiles', href: a('/nonnjsiaa/clubs') },
+      { items: [
+        { label: 'Middle School Hub', href: a('/ms-hub') },
+        { label: 'Offseason Hub',     href: a('/offseason-hub') },
+        { label: 'College',           href: a('/college') },
       ]},
     ],
   },
@@ -176,6 +173,8 @@ function buildGender(side: AdminSide): RailEntry[] {
       { heading: 'Admin Tools', items: [
         { label: 'Tie Resolution',          href: a('/tie-resolution') },
         { label: 'Resolve Unknowns',        href: a('/resolve-unknowns') },
+        // past postseasons rebuilt from TrackWrestling exports (Kyle 2026-11-13): boys 2013 on, girls 2019 on
+        { label: 'Playoff History Review',  href: a('/playoff-history') },
       ]},
       { heading: 'Coming Soon', items: [
         { label: 'Settings',    href: '#', future: true },

@@ -1,0 +1,40 @@
+{
+ "tournament": {
+  "id": "3d365cf7-3dd5-4834-9952-8e7b9b62c2c3",
+  "name": "Gary Vittorio Holiday Classic",
+  "start_date": "2026-12-29",
+  "end_date": null,
+  "location": null,
+  "season": "2026-27",
+  "created_at": "2026-11-17T02:30:59.881249+00:00",
+  "source_format": null,
+  "tournament_type": "inside",
+  "venue_name": null,
+  "venue_address": null,
+  "location_school_id": null,
+  "banner_bg": null,
+  "banner_fg": null,
+  "is_oos": false,
+  "podium_depth": 3,
+  "point_value": null,
+  "prior_id": null
+ },
+ "registry": [
+  {
+   "id": "0b7bc6ba-cb6b-4d8d-a5b8-0455fc846e0a",
+   "season": "2026-27",
+   "name": "Gary Vittorio Holiday Classic",
+   "date_start": "2026-12-29",
+   "date_end": null,
+   "state": "NJ",
+   "event_type": "tournament",
+   "gender": "M",
+   "point_value": null,
+   "imported": false,
+   "in_season_tournament_id": "3d365cf7-3dd5-4834-9952-8e7b9b62c2c3",
+   "notes": null,
+   "created_at": "2026-11-17T02:30:59.915861+00:00",
+   "jamboree_id": null
+  }
+ ]
+}

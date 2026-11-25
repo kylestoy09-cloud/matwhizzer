@@ -37,9 +37,9 @@ export default function WrestlersDirectoryPage() {
       <h1 className="text-xl font-bold text-slate-900 mt-4 mb-2">Wrestlers</h1>
       <p className="text-sm text-slate-500 mb-6">
         Search for a wrestler to view or edit their profile. For bulk changes use the
-        season rollover tool. For transfer review see{' '}
-        <Link href={`/admin/${side}/wrestlers/pending-transfers`} className="underline text-slate-700">
-          Pending Transfers
+        season rollover tool. To move a wrestler to a new team, use{' '}
+        <Link href={`/admin/${side}/wrestlers/transfers`} className="underline text-slate-700">
+          Transfers
         </Link>.
       </p>
 

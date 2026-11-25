@@ -13,12 +13,6 @@ const MONTH_MAP: Record<string, number> = {
   july: 7, august: 8, september: 9, october: 10, november: 11, december: 12,
 }
 
-// "12/12" + year → "2025-12-12"
-function toIso(mmdd: string, year: number): string {
-  const [m, d] = mmdd.split('/').map(Number)
-  return `${year}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`
-}
-
 // season from a date: Dec 2025 → '2025-26', Jan 2026 → '2025-26'
 function seasonFromDate(month: number, year: number): string {
   if (month >= 9) return `${year}-${String(year + 1).slice(2)}`
@@ -31,10 +25,12 @@ export function parseEventList(
 ): ParsedEvent[] {
   const lines = text.split('\n').map(l => l.trim())
   const events: ParsedEvent[] = []
+  // Boys have no jamborees (Kyle 2026-11-16): every boys event is a tournament
+  const jamborees = defaultGender !== 'M'
 
   let currentType: 'tournament' | 'jamboree' = 'tournament'
   let currentYear = new Date().getFullYear()
-  let currentMonth = 1
+  let seasonStart: number | null = null   // the season's first year, from the dated lines so far
 
   for (const raw of lines) {
     // Strip leading bullet chars
@@ -49,8 +45,8 @@ export function parseEventList(
     // Month/year header: "December 2025"
     const monthMatch = lower.match(/^(january|february|march|april|may|june|july|august|september|october|november|december)\s+(\d{4})$/)
     if (monthMatch) {
-      currentMonth = MONTH_MAP[monthMatch[1]]
       currentYear = parseInt(monthMatch[2], 10)
+      seasonStart = MONTH_MAP[monthMatch[1]] >= 8 ? currentYear : currentYear - 1
       continue
     }
 
@@ -68,32 +64,38 @@ export function parseEventList(
         const date_start = `${eventYear}-${String(mm).padStart(2, '0')}-${String(dd).padStart(2, '0')}`
         const season = seasonFromDate(mm, eventYear)
         const nameIsJamboree = /jamb|jam\b/i.test(name)
-        const event_type = currentType === 'jamboree' || nameIsJamboree ? 'jamboree' : 'tournament'
+        const event_type = jamborees && (currentType === 'jamboree' || nameIsJamboree) ? 'jamboree' : 'tournament'
         events.push({ name, date_start, date_end: null, state: 'NJ', event_type, gender: defaultGender, season })
         continue
       }
     }
 
-    // Event line: "12/12 — Name, State" or "12/12–12/13 — Name, State"
-    const eventMatch = line.match(/^(\d{1,2}\/\d{1,2})(?:[–\-](\d{1,2}\/\d{1,2}))?\s*[—\-]+\s*(.+),\s*([A-Z]{2})\s*$/)
+    // Event line, with or without years on either date (Kyle 2026-11-16: "12/11 - 12/12/2026 - Ironman 2026, OH"):
+    //   "12/12 — Name, ST"  "12/12/2026 - Name, ST"  "12/11-12/13 — Name, ST"  "12/11 - 12/12/2026 - Name, ST"
+    const eventMatch = line.match(/^(\d{1,2})\/(\d{1,2})(?:\/(\d+))?(?:\s*[–—-]\s*(\d{1,2})\/(\d{1,2})(?:\/(\d+))?)?\s*[–—-]+\s*(.+?),\s*([A-Za-z]{2})\s*$/)
     if (!eventMatch) continue
 
-    const [, startMD, endMD, name, state] = eventMatch
-    const date_start = toIso(startMD, currentYear)
-    // For multi-day events spanning year boundary (e.g. Dec→Jan), treat end as next year if month rolls back
-    let endYear = currentYear
-    if (endMD) {
-      const [endM] = endMD.split('/').map(Number)
-      if (endM < currentMonth) endYear = currentYear + 1
-    }
-    const date_end = endMD ? toIso(endMD, endYear) : null
-    const season = seasonFromDate(currentMonth, currentYear)
+    const [, sM, sD, sY, eM, eD, eY, name, state] = eventMatch
+    const year = (y: string | undefined) => (y?.length === 4 ? parseInt(y, 10) : y?.length === 2 ? 2000 + parseInt(y, 10) : null)   // a typo like "202" counts as no year
+    const startM = parseInt(sM, 10)
+    const endM = eM ? parseInt(eM, 10) : null
+    let endYear = year(eY)
+    let startYear = year(sY)
+    if (startYear == null && endYear != null && endM != null) startYear = startM > endM ? endYear - 1 : endYear   // Dec 30 – Jan 2
+    // no year on the line: the season of the lines before it (Aug–Dec = its first year, Jan–Jul = its second)
+    if (startYear == null) startYear = seasonStart != null ? (startM >= 8 ? seasonStart : seasonStart + 1) : currentYear
+    if (endM != null && endYear == null) endYear = endM < startM ? startYear + 1 : startYear
+    if (seasonStart == null || year(sY) != null || year(eY) != null) seasonStart = startM >= 8 ? startYear : startYear - 1
+
+    const date_start = `${startYear}-${String(startM).padStart(2, '0')}-${sD.padStart(2, '0')}`
+    const date_end = endM != null ? `${endYear}-${String(endM).padStart(2, '0')}-${eD.padStart(2, '0')}` : null
+    const season = seasonFromDate(startM, startYear)
 
     // Auto-detect jamborees from name if section label is ambiguous
     const nameIsJamboree = /jamb|jam\b/i.test(name)
-    const event_type = currentType === 'jamboree' || nameIsJamboree ? 'jamboree' : 'tournament'
+    const event_type = jamborees && (currentType === 'jamboree' || nameIsJamboree) ? 'jamboree' : 'tournament'
 
-    events.push({ name: name.trim(), date_start, date_end, state, event_type, gender: defaultGender, season })
+    events.push({ name: name.trim(), date_start, date_end, state: state.toUpperCase(), event_type, gender: defaultGender, season })
   }
 
   return events

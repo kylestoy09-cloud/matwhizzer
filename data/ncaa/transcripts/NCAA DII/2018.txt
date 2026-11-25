@@ -1,0 +1,482 @@
+# NCAA Division II Championships 2018 — source: 2018.pdf (entrants from the PDF text; bouts typed from the bracket pages, 2026-11-17)
+# 16-man brackets, no pigtails, no seeds printed
+
+@ 125
+- Ivan McClay | Notre Dame (OH) | 32-7
+- Brandon Vu | San Francisco | 22-12
+- Austin Neal | Newberry | 13-13
+- Carlos Jacquez | Lindenwood (MO) | 29-5
+- Elijah Hale | Central Okla. | 24-0
+- Austin Petril | Kutztown | 14-9
+- Marcus Povlick | McKendree | 28-17
+- Nick Daggett | UNC Pembroke | 33-15
+- Blake Glogouski | Lake Erie | 18-8
+- Maleek Williams | Upper Iowa | 30-10
+- Vincent Distefanis | Seton Hill | 21-10
+- Darek Huff | Adams St. | 12-9
+- Brett Velasquez | St. Cloud St. | 30-4
+- Majid Corbit | Limestone | 13-10
+- Josh Portillo | Neb.-Kearney | 13-7
+- Eric Bartos | Mercyhurst | 25-10
+r1 McClay > Vu | Dec 12-8
+r1 Jacquez > Neal | MD 15-6
+r1 Hale > Petril | TF-1.5 4:19 (17-0)
+r1 Povlick > Daggett | Dec 11-4
+r1 Williams > Glogouski | MD 20-8
+r1 Distefanis > Huff | SV-1 7-5
+r1 Velasquez > Corbit | TF-1.5 6:25 (17-0)
+r1 Portillo > Bartos | Fall 2:54
+qf Jacquez > McClay | Dec 4-3
+qf Hale > Povlick | MD 11-1
+qf Williams > Distefanis | MD 13-4
+qf Portillo > Velasquez | Dec 9-5
+sf Hale > Jacquez | Dec 4-3
+sf Williams > Portillo | Dec 8-3
+f Hale > Williams | TF-1.5 3:49 (17-2)
+c1 Vu > Neal | Dec 9-2
+c1 Daggett > Petril | Dec 7-1
+c1 Glogouski > Huff | SV-1 10-8
+c1 Bartos > Corbit | Fall 2:58
+c2 Velasquez > Vu | Dec 5-2
+c2 Daggett > Distefanis | Dec 10-6
+c2 Povlick > Glogouski | Dec 6-1
+c2 McClay > Bartos | Dec 6-4
+cqf Velasquez > Daggett | Dec 4-0
+cqf McClay > Povlick | Dec 5-3
+csf Velasquez > Jacquez | MD 12-2
+csf McClay > Portillo | Dec 5-3
+3rd McClay > Velasquez | Dec 3-2
+5th Portillo > Jacquez | Dec 9-5
+7th Povlick > Daggett | MD 8-0
+
+@ 133
+- Dustin Warner | Wheeling Jesuit | 19-6
+- Lawrance Dudgeon | Ashland | 25-15
+- George Farmah | Minnesota St. | 13-7
+- Paul Garcia | Colorado St.-Pueblo | 15-7
+- Airk Furseth | Wis.-Parkside | 31-8
+- Anthony Sparacio | LIU Post | 14-4
+- Nathan Cervantez | San Francisco | 25-7
+- Adam Hedin | St. Cloud St. | 19-9
+- Josh Walker | Upper Iowa | 36-6
+- Noah Au-Yeung | Colo. Sch. of Mines | 14-10
+- Kelan McKenna | Notre Dame (OH) | 22-8
+- Dustin Kirk | King (TN) | 18-8
+- Bryce Shoemaker | Neb.-Kearney | 21-5
+- Naquan Hardy | McKendree | 27-15
+- Nolan Whitely | Newberry | 31-9
+- Darius Bunch | West Liberty | 29-6
+r1 Warner > Dudgeon | Dec 6-0
+r1 Farmah > Garcia | Fall 2:02
+r1 Furseth > Sparacio | Dec 3-2
+r1 Cervantez > Hedin | Dec 9-7
+r1 Walker > Au-Yeung | Fall 1:20
+r1 McKenna > Kirk | Dec 2-0
+r1 Shoemaker > Hardy | Fall 3:00
+r1 Whitely > Bunch | Dec 3-2
+qf Farmah > Warner | Dec 4-1
+qf Furseth > Cervantez | MD 9-0
+qf Walker > McKenna | Dec 2-0
+qf Shoemaker > Whitely | Dec 3-0
+sf Farmah > Furseth | Dec 9-7
+sf Walker > Shoemaker | Fall 4:37
+f Walker > Farmah | Dec 1-0
+c1 Garcia > Dudgeon | Fall 1:06
+c1 Sparacio > Hedin | MD 10-2
+c1 Kirk > Au-Yeung | Dec 10-4
+c1 Bunch > Hardy | Dec 2-1
+c2 Whitely > Garcia | Dec 2-1
+c2 McKenna > Sparacio | Dec 2-1
+c2 Kirk > Cervantez | Dec 5-0
+c2 Bunch > Warner | SV-1 5-1
+cqf McKenna > Whitely | Dec 2-1
+cqf Bunch > Kirk | Dec 3-2
+csf McKenna > Furseth | Dec 4-0
+csf Bunch > Shoemaker | Dec 3-2
+3rd McKenna > Bunch | Dec 4-0
+5th Shoemaker > Furseth | Dec 3-2
+7th Whitely > Kirk | Dec 14-9
+
+@ 141
+- Drew Walker | Notre Dame (OH) | 26-8
+- Zach Scott | MSU Moorhead | 17-17
+- Brock Thumm | Chadron St. | 21-10
+- Isaiah Royal | Newberry | 23-15
+- Darren Wynn | McKendree | 29-1
+- Joseph Calderone | LIU Post | 32-9
+- Bryce Killian | King (TN) | 14-6
+- Dylan Udero | Adams St. | 16-11
+- Andrew Schulte | California Baptist | 20-5
+- Bryan LaVearn | Tiffin | 15-13
+- Chris Eddins | Pitt.-Johnstown | 24-2
+- Will Roark | Maryville (MO) | 24-8
+- Nick Crume | UIndy | 22-6
+- Brandon Ball | Fort Hays St. | 34-7
+- Jarred Oftedahl | St. Cloud St. | 30-5
+- Tyler Warner | Wheeling Jesuit | 29-9
+r1 Walker > Scott | Fall 6:34
+r1 Royal > Thumm | Dec 5-3
+r1 Wynn > Calderone | Dec 9-7
+r1 Killian > Udero | Dec 6-2
+r1 Schulte > LaVearn | Dec 12-7
+r1 Eddins > Roark | Dec 6-0
+r1 Crume > Ball | Dec 10-3
+r1 Oftedahl > Warner | Dec 3-1
+qf Walker > Royal | Dec 3-2
+qf Wynn > Killian | Dec 3-2
+qf Eddins > Schulte | Dec 3-2
+qf Oftedahl > Crume | Dec 8-6
+sf Wynn > Walker | Fall 5:38
+sf Eddins > Oftedahl | Dec 7-0
+f Eddins > Wynn | Dec 4-2
+c1 Thumm > Scott | Fall 3:00
+c1 Calderone > Udero | MD 12-2
+c1 Roark > LaVearn | Dec 16-12
+c1 Warner > Ball | Dec 6-3
+c2 Crume > Thumm | Dec 4-3
+c2 Calderone > Schulte | Dec 9-8
+c2 Killian > Roark | Dec 5-4
+c2 Warner > Royal | Dec 4-1
+cqf Calderone > Crume | Dec 3-2
+cqf Killian > Warner | Dec 8-6
+csf Walker > Calderone | Dec 13-11
+csf Oftedahl > Killian | Fall 3:44
+3rd Walker > Oftedahl | Dec 10-3
+5th Calderone > Killian | Dec 5-0
+7th Warner > Crume | Dec 7-5
+
+@ 149
+- Taylor Misuna | Notre Dame (OH) | 27-4
+- Reis Humphrey | N.M. Highlands | 21-9
+- Josh Wimer | Findlay | 19-15
+- Damian Penichet | Upper Iowa | 29-12
+- Daxton Gordon | California Baptist | 25-2
+- Corey Falleroni | Pitt.-Johnstown | 14-11
+- Isaiah Kemper | McKendree | 30-16
+- Trey Grine | Tiffin | 27-8
+- Frank Yattoni | Wis.-Parkside | 28-8
+- Nate Trepanier | Lindenwood (MO) | 22-17
+- George McGuire | Gannon | 23-7
+- Natrelle Demison | Adams St. | 27-11
+- James Pleski | St. Cloud St. | 29-2
+- Tyler Makosy | UNC Pembroke | 31-16
+- Efe Osaghae | Fort Hays St. | 31-14
+- Logan Grass | Mercyhurst | 26-9
+r1 Misuna > Humphrey | Fall 7:36
+r1 Penichet > Wimer | MD 12-2
+r1 Gordon > Falleroni | MD 9-1
+r1 Grine > Kemper | Dec 9-5
+r1 Yattoni > Trepanier | MD 19-7
+r1 McGuire > Demison | Fall 1:42
+r1 Pleski > Makosy | Dec 10-4
+r1 Osaghae > Grass | Dec 9-4
+qf Penichet > Misuna | Dec 5-3
+qf Gordon > Grine | Fall 4:20
+qf Yattoni > McGuire | Dec 9-5
+qf Pleski > Osaghae | Dec 3-1
+sf Gordon > Penichet | SV-1 9-7
+sf Pleski > Yattoni | Fall 4:19
+f Gordon > Pleski | SV-1 5-1
+c1 Humphrey > Wimer | Fall 1:57
+c1 Kemper > Falleroni | Dec 7-3
+c1 Demison > Trepanier | Dec 5-2
+c1 Grass > Makosy | Dec 4-0
+c2 Osaghae > Humphrey | Dec 2-1
+c2 Kemper > McGuire | Dec 10-8
+c2 Demison > Grine | Fall 4:28
+c2 Misuna > Grass | Dec 7-2
+cqf Kemper > Osaghae | SV-1 6-4
+cqf Misuna > Demison | Dec 6-4
+csf Penichet > Kemper | Dec 6-1
+csf Yattoni > Misuna | TF-1.5 6:10 (25-7)
+3rd Yattoni > Penichet | MD 12-2
+5th Kemper > Misuna | SV-1 3-1
+7th Demison > Osaghae | Dec 3-2
+
+@ 157
+- Cody Law | Pitt.-Johnstown | 25-1
+- Heath Lange | UIndy | 17-10
+- Cortez Arredondo | Southwest Minn. St. | 20-12
+- Matt Malcom | Neb.-Kearney | 21-7
+- Austin Palmer | Newberry | 21-7
+- Zach Voytek | Seton Hill | 20-13
+- Shawn Beiriger | Western St. | 13-12
+- Jared Reis | Mary | 11-5
+- Ryan Strope | McKendree | 41-13
+- Ryne Cokeley | Fort Hays St. | 12-12
+- Fernie Silva | Notre Dame (OH) | 22-4
+- Eric Milks | UNC Pembroke | 28-17
+- Tyler Mies | Newman | 22-6
+- Larry Bomstad | St. Cloud St. | 29-5
+- Pernevlon Shepperd | Wis.-Parkside | 23-8
+- Eric Lewandowski | Gannon | 9-4
+r1 Law > Lange | TF-1.5 4:38 (18-1)
+r1 Arredondo > Malcom | Dec 8-3
+r1 Voytek > Palmer | Dec 5-4
+r1 Reis > Beiriger | MD 10-1
+r1 Strope > Cokeley | Dec 7-5
+r1 Silva > Milks | Fall 1:55
+r1 Bomstad > Mies | Dec 7-6
+r1 Shepperd > Lewandowski | Dec 5-3
+qf Law > Arredondo | Dec 7-1
+qf Reis > Voytek | Dec 7-5
+qf Silva > Strope | Dec 7-5
+qf Bomstad > Shepperd | Dec 9-5
+sf Law > Reis | Dec 7-4
+sf Bomstad > Silva | Fall 5:42
+f Law > Bomstad | Dec 6-3
+c1 Malcom > Lange | MD 12-3
+c1 Palmer > Beiriger | Fall 2:23
+c1 Milks > Cokeley | Dec 7-2
+c1 Mies > Lewandowski | MD 12-3
+c2 Malcom > Shepperd | Dec 4-0
+c2 Strope > Palmer | Dec 12-9
+c2 Milks > Voytek | Dec 5-4
+c2 Mies > Arredondo | Dec 4-2
+cqf Malcom > Strope | Dec 4-3
+cqf Mies > Milks | Dec 6-3
+csf Malcom > Reis | Fall 0:43
+csf Silva > Mies | Dec 6-0
+3rd Silva > Malcom | Dec 12-7
+5th Reis > Mies | Dec 5-3
+7th Strope > Milks | Dec 2-1
+
+@ 165
+- Nate Ross | Gannon | 18-10
+- Qiante Wagner | McKendree | 28-17
+- Koery Windham | Adams St. | 14-17
+- Rodney Shephard | UNC Pembroke | 15-4
+- Seth Elwood | Minnesota St. | 16-11
+- Keegan Driscoll | Wheeling Jesuit | 23-15
+- Nick Vandermeer | Lake Erie | 25-12
+- Christian Smith | California Baptist | 21-7
+- Tyler Mann | Ouachita Baptist | 26-9
+- Greg Hilliard | Belmont Abbey | 21-12
+- Devin Austin | Pitt.-Johnstown | 19-8
+- Devin FitzPatrick | St. Cloud St. | 23-6
+- Bret Romanzak | Ashland | 40-4
+- Jason Buhr | Colorado Mesa | 13-6
+- Blake Perryman | Northern St. | 25-4
+- Shane Ruhnke | Millersville | 27-9
+r1 Wagner > Ross | Dec 5-4
+r1 Shephard > Windham | Dec 7-2
+r1 Elwood > Driscoll | Dec 7-4
+r1 Smith > Vandermeer | Dec 9-6
+r1 Mann > Hilliard | Dec 6-0
+r1 Austin > FitzPatrick | Dec 5-3
+r1 Romanzak > Buhr | Dec 5-1
+r1 Perryman > Ruhnke | Dec 12-8
+qf Shephard > Wagner | Dec 9-7
+qf Smith > Elwood | MD 13-3
+qf Mann > Austin | SV-1 3-1
+qf Romanzak > Perryman | Dec 6-1
+sf Smith > Shephard | Dec 8-5
+sf Romanzak > Mann | Dec 7-3
+f Romanzak > Smith | Dec 3-2
+c1 Ross > Windham | SV-1 3-1
+c1 Driscoll > Vandermeer | Dec 4-3
+c1 Hilliard > FitzPatrick | Fall 1:28
+c1 Ruhnke > Buhr | Dec 18-13
+c2 Perryman > Ross | Dec 6-3
+c2 Austin > Driscoll | SV-1 4-2
+c2 Elwood > Hilliard | Dec 11-6
+c2 Ruhnke > Wagner | TF-1.5 7:00 (16-1)
+cqf Perryman > Austin | Dec 11-5
+cqf Ruhnke > Elwood | MD 14-6
+csf Perryman > Shephard | Dec 4-2
+csf Mann > Ruhnke | Dec 8-6
+3rd Perryman > Mann | Dec 3-1
+5th Shephard > Ruhnke | Fall 3:47
+7th Austin > Elwood | Dec 3-2
+
+@ 174
+- Damon Greenwald | Seton Hill | 26-11
+- Bruno Nicoletti | Colorado Mesa | 26-11
+- Christian Price | Ashland | 27-11
+- Kolton Eischens | St. Cloud St. | 32-7
+- Nolan Kistler | California Baptist | 26-4
+- Gino Sita | Alderson Broaddus | 35-7
+- Zach Johnston | Minnesota St. | 24-8
+- Nathan Vandermeer | Findlay | 25-18
+- Nick Becker | Wis.-Parkside | 24-0
+- Lukas Poloncic | Augustana | 19-17
+- Steven Edwards | Pitt.-Johnstown | 14-8
+- Zach Stodden | Neb.-Kearney | 32-15
+- Nick Foster | McKendree | 30-6
+- Chase Boyd | Tiffin | 16-15
+- Brandon Supernaw | Western St. | 33-5
+- Dalton George | Ohio Valley | 14-5
+r1 Nicoletti > Greenwald | TF-1.5 5:21 (15-0)
+r1 Eischens > Price | Dec 5-1
+r1 Kistler > Sita | TF-1.5 1:31 (18-0)
+r1 Johnston > Vandermeer | Dec 9-3
+r1 Becker > Poloncic | Fall 0:39
+r1 Stodden > Edwards | Dec 7-3
+r1 Foster > Boyd | Fall 2:45
+r1 Supernaw > George | Dec 10-3
+qf Nicoletti > Eischens | Dec 10-4
+qf Kistler > Johnston | Fall 1:30
+qf Becker > Stodden | MD 16-5
+qf Supernaw > Foster | Dec 5-3
+sf Kistler > Nicoletti | MD 10-1
+sf Becker > Supernaw | TF-1.5 4:22 (18-0)
+f Becker > Kistler | Dec 8-4
+c1 Greenwald > Price | Dec 10-7
+c1 Sita > Vandermeer | Dec 8-6
+c1 Edwards > Poloncic | SV-1 15-13
+c1 George > Boyd | Fall 1:47
+c2 Foster > Greenwald | Dec 3-0
+c2 Stodden > Sita | Dec 3-2
+c2 Johnston > Edwards | Fall 2:08
+c2 Eischens > George | Dec 9-7
+cqf Foster > Stodden | Dec 3-2
+cqf Eischens > Johnston | Fall 2:39
+csf Foster > Nicoletti | TB-1 4-2
+csf Supernaw > Eischens | SV-1 8-6
+3rd Supernaw > Foster | Dec 5-3
+5th Nicoletti > Eischens | MD 10-1
+7th Johnston > Stodden | Dec 12-5
+
+@ 184
+- Dakota DesLauriers | Mercyhurst | 11-2
+- Brody Conner | UIndy | 27-14
+- Tyree Overton | St. Cloud St. | 14-9
+- Noel Torres | Newman | 40-4
+- Jordan Murphy | Ashland | 27-1
+- Aidan Pasiuk | Wheeling Jesuit | 23-9
+- Nicholas Fiegener | California Baptist | 20-7
+- Corey Abernathy | Minnesota St. | 20-7
+- Aero Amo | Augustana | 17-4
+- Richard Bencomo | Adams St. | 15-8
+- Jeff Reimel | Kutztown | 17-10
+- Tyler Hughes | Lake Erie | 30-10
+- JaVaughn Perkins | Colorado St.-Pueblo | 16-3
+- Dalton Hahn | Upper Iowa | 25-17
+- Bradley Metz | Findlay | 33-8
+- Tony Vezzetti | Notre Dame (OH) | 17-8
+r1 DesLauriers > Conner | Dec 12-6
+r1 Torres > Overton | Dec 3-1
+r1 Murphy > Pasiuk | TF-1.5 6:59 (20-3)
+r1 Fiegener > Abernathy | Dec 8-5
+r1 Amo > Bencomo | Dec 7-0
+r1 Reimel > Hughes | TF-1.5 3:54 (15-0)
+r1 Perkins > Hahn | MD 9-1
+r1 Metz > Vezzetti | MD 10-0
+qf Torres > DesLauriers | TB-1 2-1
+qf Fiegener > Murphy | Dec 7-5
+qf Reimel > Amo | MD 14-4
+qf Perkins > Metz | Dec 5-2
+sf Torres > Fiegener | Dec 5-1
+sf Perkins > Reimel | MD 12-1
+f Torres > Perkins | Dec 3-1
+c1 Overton > Conner | Fall 3:00
+c1 Abernathy > Pasiuk | Dec 7-4
+c1 Hughes > Bencomo | Fall 3:46
+c1 Vezzetti > Hahn | Dec 7-2
+c2 Metz > Overton | Dec 1-0
+c2 Amo > Abernathy | Dec 5-2
+c2 Murphy > Hughes | Fall 2:48
+c2 Vezzetti > DesLauriers | Dec 5-2
+cqf Metz > Amo | Dec 4-2
+cqf Murphy > Vezzetti | MD 9-1
+csf Fiegener > Metz | Dec 6-4
+csf Murphy > Reimel | Dec 10-6
+3rd Murphy > Fiegener | Dec 6-4
+5th Reimel > Metz | MD 11-3
+7th Amo > Vezzetti | Dec 7-0
+
+@ 197
+- Evan Ramos | Shippensburg | 29-4
+- Samuel Reeves | Truman | 17-10
+- Morgan Smith | Simon Fraser | 41-4
+- Jesse Palser | Lake Erie | 27-16
+- Vince Dietz | St. Cloud St. | 34-3
+- Logan Kemp | West Liberty | 19-13
+- Matthew Rudy | Limestone | 24-6
+- Rakim Dean | Fort Hays St. | 33-12
+- Konnor Schmidt | Western St. | 22-6
+- James Lehman | Wis.-Parkside | 30-12
+- Levi Niebauer | Pitt.-Johnstown | 17-5
+- Matt Blome | Minnesota St. | 18-8
+- Luke Cramer | Ashland | 25-1
+- Garrett Strang | California Baptist | 16-13
+- Nick Baumler | Upper Iowa | 33-11
+- Jake Temple | Seton Hill | 20-10
+r1 Ramos > Reeves | Dec 3-1
+r1 Smith > Palser | Dec 8-1
+r1 Dietz > Kemp | Dec 8-3
+r1 Dean > Rudy | Dec 14-8
+r1 Schmidt > Lehman | MD 17-4
+r1 Blome > Niebauer | Dec 9-5
+r1 Cramer > Strang | Dec 3-1
+r1 Baumler > Temple | Dec 3-1
+qf Ramos > Smith | Dec 6-5
+qf Dietz > Dean | MD 13-1
+qf Schmidt > Blome | Dec 10-6
+qf Cramer > Baumler | Dec 5-0
+sf Dietz > Ramos | Fall 2:38
+sf Cramer > Schmidt | Dec 5-3
+f Cramer > Dietz | Dec 5-1
+c1 Reeves > Palser | Dec 3-2
+c1 Rudy > Kemp | Dec 12-7
+c1 Lehman > Niebauer | Fall 2:25
+c1 Strang > Temple | Dec 3-1
+c2 Baumler > Reeves | Dec 5-3
+c2 Rudy > Blome | Dec 8-2
+c2 Lehman > Dean | MD 18-4
+c2 Smith > Strang | MD 10-0
+cqf Rudy > Baumler | SV-1 5-1
+cqf Smith > Lehman | Dec 9-4
+csf Ramos > Rudy | Dec 12-5
+csf Smith > Schmidt | Fall 1:03
+3rd Smith > Ramos | Dec 4-2
+5th Rudy > Schmidt | M. For.
+7th Baumler > Lehman | Dec 8-4
+
+@ 285
+- Kameron Teacher | Notre Dame (OH) | 28-3
+- Ciaran Ball | Simon Fraser | 35-11
+- Mimmo Lytle | Findlay | 28-11
+- Lawrence Phillips | St. Cloud St. | 30-7
+- Jarrod Hinrichs | Neb.-Kearney | 40-10
+- Ryan Appleby | Kutztown | 20-8
+- Jacob Borgmeyer | Lindenwood (MO) | 23-15
+- Matt Halverson | Wis.-Parkside | 19-3
+- Dylan Faulkenberg | UIndy | 29-4
+- Logan Hopp | Upper Iowa | 11-5
+- Damon Sims Jr. | Pitt.-Johnstown | 18-9
+- Cody Johnson | Colorado St.-Pueblo | 24-11
+- Mitchell Eull | Minot St. | 32-7
+- Daniel Bland | Limestone | 20-16
+- Caleb Cotter | Central Okla. | 34-5
+- Terrance Fanning | Wheeling Jesuit | 31-6
+r1 Teacher > Ball | MD 10-1
+r1 Lytle > Phillips | Dec 5-0
+r1 Appleby > Hinrichs | Dec 5-4
+r1 Halverson > Borgmeyer | Dec 2-0
+r1 Faulkenberg > Hopp | Dec 8-4
+r1 Johnson > Sims Jr. | SV-1 6-4
+r1 Eull > Bland | Fall 4:51
+r1 Fanning > Cotter | Dec 10-7
+qf Teacher > Lytle | Dec 6-0
+qf Halverson > Appleby | Fall 5:53
+qf Johnson > Faulkenberg | SV-1 6-4
+qf Fanning > Eull | Dec 6-3
+sf Teacher > Halverson | Dec 3-1
+sf Fanning > Johnson | Dec 5-3
+f Fanning > Teacher | Dec 8-2
+c1 Phillips > Ball | Dec 4-3
+c1 Hinrichs > Borgmeyer | Dec 2-1
+c1 Sims Jr. > Hopp | Fall 6:29
+c1 Cotter > Bland | Fall 2:06
+c2 Eull > Phillips | Dec 2-0
+c2 Hinrichs > Faulkenberg | Dec 9-5
+c2 Sims Jr. > Appleby | Dec 6-2
+c2 Cotter > Lytle | MD 16-7
+cqf Eull > Hinrichs | Dec 3-0
+cqf Cotter > Sims Jr. | MD 14-2
+csf Halverson > Eull | Fall 1:33
+csf Johnson > Cotter | Dec 4-3
+3rd Halverson > Johnson | Fall 2:23
+5th Cotter > Eull | MD 12-2
+7th Sims Jr. > Hinrichs | Fall 7:00

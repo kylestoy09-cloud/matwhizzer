@@ -1,3 +1,5 @@
+import { getSeasons } from '@/lib/seasons-server'
+import { WEIGHT_ORDER_BOYS, WEIGHT_ORDER_GIRLS } from '@/lib/hammerScore'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { BracketEditor } from './BracketEditor'
 import { AdminBackButton } from '@/app/admin/AdminBackButton'
@@ -21,12 +23,14 @@ export default async function BracketPage({
       .from('tournaments')
       .select('id, name, tournament_type, gender, season_id')
       .eq('tournament_type', gender === 'F' ? 'girls_state' : 'boys_state')
+      .in('season_id', (await getSeasons()).map(x => x.id))   // not Playoff History seasons
       .order('season_id', { ascending: false })
       .order('name'),
     supabase
       .from('weight_classes')
       .select('id, weight, gender')
       .eq('gender', gender)
+      .in('weight', gender === 'F' ? WEIGHT_ORDER_GIRLS : WEIGHT_ORDER_BOYS)   // today's classes (history seasons add old ones)
       .order('weight'),
     supabase
       .from(gender === 'F' ? 'in_season_tournaments_girls' : 'in_season_tournaments')

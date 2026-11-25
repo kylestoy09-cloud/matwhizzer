@@ -1,0 +1,820 @@
+# source: 2025 NAIA women (TrackWrestling export)
+
+@ 103
+- Karina Vang | Doane
+- Eyvori Jacquez | Saint Mary
+- Katherine Hernandez | Life
+- Morgan Repasky | Montreat
+- Alexis Hatfield | Avila
+- Nayeli Flores Roque | Eastern Oregon
+- Dutchess King | Cumberlands
+- Alanis Serrano-Rios | Waldorf
+- Angelina Casteneda | Cumberlands
+- Devyn Moore | Grand View
+- Makayla Young | Indiana Tech
+- Isabella Bocanegra | Providence
+- Judy Sandoval | Grand View
+- Sofia Abramson | Oklahoma City
+- Malarie Dominguez | Wayland Baptist
+- Alexis Miller | Oklahoma City
+- Lillian Zapata | William Penn
+- Olivia Atkins | William Penn
+- Erin Hikiji | Providence
+r1 Karina Vang > Eyvori Jacquez | TF 12-2 6:00
+r1 Katherine Hernandez > Morgan Repasky | Fall 8-0 3:18
+r1 Alexis Hatfield > Nayeli Flores Roque | Dec 7-0
+r1 Dutchess King > bye
+r1 Alanis Serrano-Rios > bye
+r2 Dutchess King > Alanis Serrano-Rios | TF 10-0 2:27
+r1 Angelina Casteneda > bye
+r1 Devyn Moore > bye
+r2 Angelina Casteneda > Devyn Moore | Fall 2-0 1:47
+r1 Makayla Young > bye
+r1 Isabella Bocanegra > bye
+r2 Makayla Young > Isabella Bocanegra | Dec 3-1
+r1 Judy Sandoval > bye
+r1 Sofia Abramson > bye
+r2 Judy Sandoval > Sofia Abramson | Fall 8-4 2:35
+r1 Malarie Dominguez > bye
+r2 Katherine Hernandez > Malarie Dominguez | Dec 4-4
+r1 Alexis Miller > bye
+r1 Lillian Zapata > bye
+r2 Alexis Miller > Lillian Zapata | Fall 2-2 1:37
+r1 Olivia Atkins > bye
+r2 Karina Vang > Olivia Atkins | Fall 4-0 3:35
+r1 Erin Hikiji > bye
+r2 Erin Hikiji > Alexis Hatfield | Fall 6-0 0:53
+qf Erin Hikiji > Angelina Casteneda | TF 11-0 2:00
+qf Judy Sandoval > Karina Vang | Fall 8-8 5:41
+qf Alexis Miller > Dutchess King | Fall 4-0 1:13
+qf Makayla Young > Katherine Hernandez | Fall 6-2 1:53
+c1 Morgan Repasky > bye
+c2 Alexis Hatfield > Morgan Repasky | Fall 8-0 2:24
+c1 Eyvori Jacquez > bye
+c2 Eyvori Jacquez > Lillian Zapata | TF 10-0 2:30
+c1 Nayeli Flores Roque > bye
+c2 Malarie Dominguez > Nayeli Flores Roque | Dec 5-1
+c2 Devyn Moore > bye
+c3 Alexis Hatfield > Devyn Moore | Dec 5-0
+c2 Sofia Abramson > bye
+c2 Olivia Atkins > bye
+c3 Sofia Abramson > Olivia Atkins | Dec 10-8
+c2 Alanis Serrano-Rios > bye
+c3 Eyvori Jacquez > Alanis Serrano-Rios | Dec 7-0
+c2 Isabella Bocanegra > bye
+c3 Malarie Dominguez > Isabella Bocanegra | Dec 6-0
+sf Alexis Miller > Makayla Young | Fall 5-0 2:27
+sf Erin Hikiji > Judy Sandoval | TF 10-0 2:37
+c4 Alexis Hatfield > Dutchess King | Dec 8-5
+c4 Sofia Abramson > Katherine Hernandez | Fall 6-4 2:15
+c4 Angelina Casteneda > Eyvori Jacquez | TF 10-0 6:00
+c4 Karina Vang > Malarie Dominguez | Dec 3-3
+cqf Angelina Casteneda > Karina Vang | TF 10-0 2:19
+cqf Alexis Hatfield > Sofia Abramson | Fall 4-1 1:59
+csf Makayla Young > Angelina Casteneda | FOR 0-0
+csf Judy Sandoval > Alexis Hatfield | TF 12-0 4:26
+7th Karina Vang > Sofia Abramson | DEF 0-0 0:17
+5th Alexis Hatfield > Angelina Casteneda | FOR 0-0
+3rd Judy Sandoval > Makayla Young | Fall 4-0 0:39
+f Erin Hikiji > Alexis Miller | Dec 8-2
+
+@ 110
+- Anaya Falcon | Life
+- Rodiat Adeduntan | Lindsey Wilson
+- Tristan Nitta | Grand View
+- Sarah Pineda | Missouri Valley
+- Hailey Holland | Missouri Valley
+- Allison Hancher | Indiana Tech
+- Reagan Thomas | Lindsey Wilson
+- Jenna Gerhardt | Dickinson State
+- Lita Cruz | Grand View
+- Iby Garcia | Oklahoma City
+- Nizhoni Tallman | Evergreen State
+- Telsarina Walter | Eastern Oregon
+- Paige Morales | Providence
+- Stefana Jelacic | Lourdes
+- Aynsley Fink | Ottawa
+- Alexsys Jacquez | Saint Mary
+- Tehani Soares | Indiana Tech
+- Nia Avelino | Eastern Oregon
+- Kayla Shota | Providence
+- Emma Baertlein | Southern Oregon
+- Jaden Breeden | Doane
+r1 Anaya Falcon > Rodiat Adeduntan | Dec 9-2
+r1 Tristan Nitta > Sarah Pineda | Fall 6-0 2:00
+r1 Hailey Holland > Allison Hancher | TF 10-0 1:58
+r1 Reagan Thomas > Jenna Gerhardt | Dec 4-4
+r1 Lita Cruz > Iby Garcia | Fall 6-0 0:59
+r1 Nizhoni Tallman > bye
+r2 Tristan Nitta > Nizhoni Tallman | Fall 6-0 2:40
+r1 Telsarina Walter > bye
+r2 Lita Cruz > Telsarina Walter | Fall 4-2 1:39
+r1 Paige Morales > bye
+r2 Paige Morales > Reagan Thomas | Fall 6-0 1:29
+r1 Stefana Jelacic > bye
+r1 Aynsley Fink > bye
+r2 Stefana Jelacic > Aynsley Fink | TF 14-2 4:57
+r1 Alexsys Jacquez > bye
+r2 Alexsys Jacquez > Hailey Holland | TF 13-2 3:40
+r1 Tehani Soares > bye
+r1 Nia Avelino > bye
+r2 Tehani Soares > Nia Avelino | Dec 6-0
+r1 Kayla Shota > bye
+r2 Anaya Falcon > Kayla Shota | Fall 7-2 2:23
+r1 Emma Baertlein > bye
+r1 Jaden Breeden > bye
+r2 Emma Baertlein > Jaden Breeden | TF 10-0 2:44
+qf Anaya Falcon > Alexsys Jacquez | Dec 10-2
+qf Stefana Jelacic > Tristan Nitta | Dec 7-0
+qf Emma Baertlein > Lita Cruz | Dec 5-2
+qf Paige Morales > Tehani Soares | Dec 6-4
+c1 Jenna Gerhardt > bye
+c2 Jenna Gerhardt > Jaden Breeden | TF 10-0 5:25
+c1 Iby Garcia > bye
+c2 Nia Avelino > Iby Garcia | Dec 8-4
+c1 Rodiat Adeduntan > bye
+c2 Aynsley Fink > Rodiat Adeduntan | Fall 12-2 3:52
+c1 Allison Hancher > bye
+c2 Nizhoni Tallman > Allison Hancher | Fall 7-0 2:56
+c1 Sarah Pineda > bye
+c2 Hailey Holland > Sarah Pineda | Fall 4-2 2:50
+c3 Nizhoni Tallman > Aynsley Fink | Dec 8-4
+c2 Reagan Thomas > bye
+c3 Reagan Thomas > Nia Avelino | Dec 12-3
+c2 Telsarina Walter > bye
+c3 Jenna Gerhardt > Telsarina Walter | Dec 4-3
+c2 Kayla Shota > bye
+c3 Kayla Shota > Hailey Holland | TF 10-0 1:32
+sf Stefana Jelacic > Paige Morales | TF 11-1 2:59
+sf Anaya Falcon > Emma Baertlein | Dec 3-1
+c4 Tristan Nitta > Jenna Gerhardt | Fall 5-0 2:55
+c4 Tehani Soares > Kayla Shota | Fall 4-0 2:07
+c4 Nizhoni Tallman > Lita Cruz | Dec 6-5
+c4 Alexsys Jacquez > Reagan Thomas | TF 15-4 3:55
+cqf Tehani Soares > Tristan Nitta | Dec 3-3
+cqf Alexsys Jacquez > Nizhoni Tallman | TF 11-0 2:43
+csf Paige Morales > Alexsys Jacquez | TF 10-0 1:17
+csf Tehani Soares > Emma Baertlein | Dec 4-2
+7th Tristan Nitta > Nizhoni Tallman | DEF 4-0 6:00
+5th Emma Baertlein > Alexsys Jacquez | Dec 3-0
+3rd Paige Morales > Tehani Soares | TF 10-0 2:33
+f Stefana Jelacic > Anaya Falcon | Dec 7-2
+
+@ 117
+- Katherine Heath | Baker
+- Kendall Martin | Ottawa
+- Shammilka Miranda | Cumberlands
+- Marissa Kurtz | Southern Oregon
+- Jasmine Howard | Southern Oregon
+- Larhae Whaley | Dickinson State
+- Icart Galumette | Campbellsville
+- Christianah Ogunsanya | William Penn
+- Callie Payton | Lindsey Wilson
+- Camille Fournier | Texas Wesleyan
+- Alicia Frank | Providence
+- Salyna Shotwell | Life
+- Irma Retano | Eastern Oregon
+- Cailin Campbell | Grand View
+- Jamesa Robinson | Brewton-Parker
+- Mayangelie Colon | Grand View
+- Mora Peterson | Doane
+- Julia Breeden | Doane
+- Victoria Nunez | Central Methodist
+r1 Katherine Heath > Kendall Martin | TF 15-2 3:38
+r1 Shammilka Miranda > Marissa Kurtz | Dec 6-0
+r1 Jasmine Howard > Larhae Whaley | TF 10-0 3:00
+r1 Icart Galumette > bye
+r2 Katherine Heath > Icart Galumette | TF 12-1 2:33
+r1 Christianah Ogunsanya > bye
+r1 Callie Payton > bye
+r2 Christianah Ogunsanya > Callie Payton | TF 12-2 1:31
+r1 Camille Fournier > bye
+r1 Alicia Frank > bye
+r2 Camille Fournier > Alicia Frank | Fall 4-0 2:25
+r1 Salyna Shotwell > bye
+r1 Irma Retano > bye
+r2 Salyna Shotwell > Irma Retano | Fall 5-0 4:08
+r1 Cailin Campbell > bye
+r1 Jamesa Robinson > bye
+r2 Cailin Campbell > Jamesa Robinson | TF 12-0 2:54
+r1 Mayangelie Colon > bye
+r1 Mora Peterson > bye
+r2 Mayangelie Colon > Mora Peterson | TF 10-0 0:38
+r1 Julia Breeden > bye
+r2 Jasmine Howard > Julia Breeden | Fall 4-0 0:58
+r1 Victoria Nunez > bye
+r2 Shammilka Miranda > Victoria Nunez | Fall 6-0 2:13
+qf Camille Fournier > Katherine Heath | Dec 9-4
+qf Jasmine Howard > Cailin Campbell | Dec 7-0
+qf Salyna Shotwell > Mayangelie Colon | Fall 4-0 1:25
+qf Christianah Ogunsanya > Shammilka Miranda | TF 10-0 2:04
+c1 Kendall Martin > bye
+c2 Victoria Nunez > Kendall Martin | Fall 16-9 4:31
+c1 Larhae Whaley > bye
+c2 Larhae Whaley > Mora Peterson | TF 10-0 1:19
+c1 Marissa Kurtz > bye
+c2 Icart Galumette > Marissa Kurtz | Dec 16-8
+c2 Irma Retano > bye
+c3 Irma Retano > Larhae Whaley | TF 13-2 3:37
+c2 Alicia Frank > bye
+c3 Icart Galumette > Alicia Frank | Fall 8-0 2:02
+c2 Jamesa Robinson > bye
+c2 Julia Breeden > bye
+c3 Jamesa Robinson > Julia Breeden | Fall 14-2 4:31
+c2 Callie Payton > bye
+c3 Callie Payton > Victoria Nunez | TF 10-0 2:01
+sf Salyna Shotwell > Camille Fournier | Fall 10-0 5:07
+sf Christianah Ogunsanya > Jasmine Howard | Dec 11-2
+c4 Shammilka Miranda > Irma Retano | Fall 4-0 0:58
+c4 Mayangelie Colon > Callie Payton | Fall 9-0 3:45
+c4 Icart Galumette > Cailin Campbell | TF 12-2 3:23
+c4 Katherine Heath > Jamesa Robinson | TF 12-2 5:53
+cqf Shammilka Miranda > Icart Galumette | Fall 6-3 2:32
+cqf Mayangelie Colon > Katherine Heath | TF 11-0 2:40
+csf Mayangelie Colon > Jasmine Howard | Fall 8-2 2:44
+csf Shammilka Miranda > Camille Fournier | Fall 6-4 2:42
+7th Katherine Heath > Icart Galumette | Dec 10-6
+5th Jasmine Howard > Camille Fournier | Dec 7-4
+3rd Shammilka Miranda > Mayangelie Colon | TF 11-0 2:07
+f Christianah Ogunsanya > Salyna Shotwell | Dec 8-0
+
+@ 124
+- Ellabelle Taylor | Evergreen State
+- Emily Paulino | Midland
+- Kamilah Brooks | Lindsey Wilson
+- Kaylee Annis | Southern Oregon
+- Anna Krejsa | Life
+- Sydney Bridenstine | Lindsey Wilson
+- Cristelle Rodriguez | Doane
+- Presley Anderson | Cumberlands
+- Joanna Vanderwood | William Penn
+- Kadence Beck | Eastern Oregon
+- Jasmina Immaeva | Missouri Valley
+- Jill High | York
+- Alyssa Randles | Providence
+- Malia Welch | Southern Oregon
+- Rose Kaplan | Indiana Tech
+- Ariana Martinez | Life
+- Katie Gomez | Cumberlands
+- Chloe Herrick | Missouri Baptist
+- Catherine Steinkamp | William Penn
+- Kylie Robledo | Baker
+- Catharine Campbell | Grand View
+- Peyton Hand | Ottawa
+- Tess Barnett | Wayland Baptist
+- Isla Baeza | Missouri Valley
+- Maya Davis | Grand View
+r1 Ellabelle Taylor > Emily Paulino | Dec 6-2
+r1 Kamilah Brooks > Kaylee Annis | TF 10-0 1:52
+r1 Anna Krejsa > Sydney Bridenstine | Fall 6-0 2:18
+r1 Cristelle Rodriguez > Presley Anderson | Fall 10-0 1:12
+r1 Joanna Vanderwood > Kadence Beck | TF 10-0 3:46
+r1 Jasmina Immaeva > Jill High | TF 15-4 3:25
+r1 Alyssa Randles > Malia Welch | Dec 8-1
+r1 Rose Kaplan > Ariana Martinez | TF 12-1 5:08
+r1 Katie Gomez > Chloe Herrick | TF 10-0 3:25
+r1 Catherine Steinkamp > bye
+r2 Rose Kaplan > Catherine Steinkamp | Dec 8-3
+r1 Kylie Robledo > bye
+r2 Kamilah Brooks > Kylie Robledo | Dec 9-6
+r1 Catharine Campbell > bye
+r2 Jasmina Immaeva > Catharine Campbell | Dec 9-2
+r1 Peyton Hand > bye
+r2 Joanna Vanderwood > Peyton Hand | TF 10-0 2:25
+r1 Tess Barnett > bye
+r2 Cristelle Rodriguez > Tess Barnett | Fall 6-0 0:48
+r2 Ellabelle Taylor > Alyssa Randles | Dec 10-7
+r1 Isla Baeza > bye
+r2 Katie Gomez > Isla Baeza | TF 10-0 1:07
+r1 Maya Davis > bye
+r2 Maya Davis > Anna Krejsa | TF 15-4 3:09
+c1 Malia Welch > Emily Paulino | TF 11-0 4:17
+qf Cristelle Rodriguez > Kamilah Brooks | TF 10-0 0:57
+qf Joanna Vanderwood > Maya Davis | TF 11-1 5:46
+qf Katie Gomez > Ellabelle Taylor | TF 10-0 2:56
+qf Jasmina Immaeva > Rose Kaplan | Dec 5-3
+c1 Presley Anderson > bye
+c2 Presley Anderson > Isla Baeza | Dec 12-10
+c1 Jill High > bye
+c2 Peyton Hand > Jill High | Fall 8-0 1:38
+c1 Ariana Martinez > bye
+c2 Ariana Martinez > Anna Krejsa | TF 10-0 3:34
+c2 Malia Welch > Kylie Robledo | TF 10-0 4:19
+c1 Chloe Herrick > bye
+c2 Tess Barnett > Chloe Herrick | Dec 9-0
+c1 Kaylee Annis > bye
+c2 Alyssa Randles > Kaylee Annis | Dec 10-9
+c1 Sydney Bridenstine > bye
+c2 Catherine Steinkamp > Sydney Bridenstine | TF 10-0 5:39
+c1 Kadence Beck > bye
+c2 Catharine Campbell > Kadence Beck | Fall 9-2 1:38
+c3 Malia Welch > Tess Barnett | TF 13-2 6:00
+c3 Catharine Campbell > Catherine Steinkamp | Fall 4-0 1:02
+c3 Alyssa Randles > Presley Anderson | TF 14-4 6:00
+c3 Ariana Martinez > Peyton Hand | TF 12-0 3:00
+sf Katie Gomez > Joanna Vanderwood | Dec 8-2
+sf Cristelle Rodriguez > Jasmina Immaeva | TF 11-0 5:19
+c4 Ariana Martinez > Kamilah Brooks | DQ 2-9
+c4 Maya Davis > Malia Welch | Fall 5-0 2:06
+c4 Catharine Campbell > Ellabelle Taylor | TF 11-0 5:46
+c4 Rose Kaplan > Alyssa Randles | Dec 6-5
+cqf Catharine Campbell > Maya Davis | Fall 3-0 2:59
+cqf Rose Kaplan > Ariana Martinez | TF 12-0 3:46
+csf Joanna Vanderwood > Rose Kaplan | Fall 3-0 2:19
+csf Catharine Campbell > Jasmina Immaeva | Dec 8-6
+7th Maya Davis > Ariana Martinez | TF 13-2 4:06
+5th Jasmina Immaeva > Rose Kaplan | TF 10-0 2:06
+3rd Joanna Vanderwood > Catharine Campbell | Dec 5-1
+f Cristelle Rodriguez > Katie Gomez | Dec 5-5
+
+@ 131
+- Ashlee Palimo | Doane
+- Annabelle Suto | Cumberlands
+- Xochitl Mota-pettis | Missouri Valley
+- Keira Nartatez | Midland
+- Sarah Savidge | Life
+- Keera Lacock | Dakota Wesleyan
+- Olivia Mottley | Life
+- Destiny Campbell | Oklahoma City
+- Larissa Kaz | Hastings
+- Andrea Hernandez | Indiana Tech
+- Mary Jane Porter | Cumberlands
+- Emma Truex | Ottawa
+- Jumoke Adekoye | Dickinson State
+- Nicole Redmond | Avila
+- Carolina Moreno | Southern Oregon
+- Cameron Ortiz | Campbellsville
+- Ashley Whetzal | Missouri Valley
+- Olivia Messerly | Campbellsville
+- Mercy Adekuoroye | Wayland Baptist
+- Hannah Seitzinger | Indiana Tech
+- Paige Respicio | Providence
+- Bryce White | Oklahoma City
+- Devin Patton | William Penn
+r1 Ashlee Palimo > Annabelle Suto | Dec 4-2
+r1 Xochitl Mota-pettis > Keira Nartatez | TF 10-0 0:40
+r1 Sarah Savidge > Keera Lacock | TF 10-0 0:38
+r1 Olivia Mottley > Destiny Campbell | TF 11-0 1:57
+r1 Larissa Kaz > Andrea Hernandez | TF 10-0 2:13
+r1 Mary Jane Porter > Emma Truex | Fall 9-2 4:01
+r1 Jumoke Adekoye > Nicole Redmond | TF 11-0 2:29
+r1 Carolina Moreno > bye
+r1 Cameron Ortiz > bye
+r2 Carolina Moreno > Cameron Ortiz | TF 10-0 1:32
+r1 Ashley Whetzal > bye
+r1 Olivia Messerly > bye
+r2 Ashley Whetzal > Olivia Messerly | Fall 7-10 4:36
+r1 Mercy Adekuoroye > bye
+r2 Mercy Adekuoroye > Mary Jane Porter | TF 10-0 1:21
+r1 Hannah Seitzinger > bye
+r2 Xochitl Mota-pettis > Hannah Seitzinger | TF 10-0 1:23
+r1 Paige Respicio > bye
+r2 Olivia Mottley > Paige Respicio | Dec 7-1
+r2 Sarah Savidge > Larissa Kaz | TF 11-0 1:47
+r1 Bryce White > bye
+r2 Jumoke Adekoye > Bryce White | TF 10-0 1:22
+r1 Devin Patton > bye
+r2 Devin Patton > Ashlee Palimo | TF 10-0 1:16
+c1 Andrea Hernandez > Keera Lacock | Fall 12-0 1:37
+qf Jumoke Adekoye > Sarah Savidge | Fall 6-2 3:55
+qf Carolina Moreno > Devin Patton | TF 10-0 3:47
+qf Mercy Adekuoroye > Ashley Whetzal | TF 10-0 1:55
+qf Xochitl Mota-pettis > Olivia Mottley | TF 12-1 4:52
+c2 Andrea Hernandez > Hannah Seitzinger | Fall 4-2 1:10
+c1 Destiny Campbell > bye
+c2 Destiny Campbell > Bryce White | Fall 9-0 2:49
+c1 Annabelle Suto > bye
+c2 Olivia Messerly > Annabelle Suto | Dec 11-2
+c1 Keira Nartatez > bye
+c2 Larissa Kaz > Keira Nartatez | Fall 9-0 3:38
+c1 Nicole Redmond > bye
+c2 Paige Respicio > Nicole Redmond | TF 11-0 4:56
+c1 Emma Truex > bye
+c2 Cameron Ortiz > Emma Truex | Fall 4-8 3:53
+c2 Ashlee Palimo > bye
+c3 Ashlee Palimo > Cameron Ortiz | Dec 4-3
+c2 Mary Jane Porter > bye
+c3 Olivia Messerly > Mary Jane Porter | TF 13-2 3:47
+c3 Andrea Hernandez > Paige Respicio | Fall 8-4 2:28
+c3 Larissa Kaz > Destiny Campbell | Fall 9-2 3:49
+sf Jumoke Adekoye > Carolina Moreno | Dec 3-1
+sf Xochitl Mota-pettis > Mercy Adekuoroye | Fall 7-6 4:42
+c4 Olivia Mottley > Ashlee Palimo | TF 11-0 3:39
+c4 Sarah Savidge > Olivia Messerly | Fall 12-2 3:52
+c4 Larissa Kaz > Ashley Whetzal | TF 13-2 2:56
+c4 Devin Patton > Andrea Hernandez | TF 11-0 2:09
+cqf Sarah Savidge > Devin Patton | Dec 10-6
+cqf Olivia Mottley > Larissa Kaz | Dec 5-1
+csf Mercy Adekuoroye > Sarah Savidge | Dec 11-5
+csf Carolina Moreno > Olivia Mottley | TF 12-2 2:19
+7th Devin Patton > Larissa Kaz | Dec 14-12
+5th Olivia Mottley > Sarah Savidge | DEF 0-0
+3rd Mercy Adekuoroye > Carolina Moreno | Dec 15-6
+f Jumoke Adekoye > Xochitl Mota-pettis | Dec 5-3
+
+@ 138
+- Kendall Bostelman | William Penn
+- Tabitha Wood | Hastings
+- Serenity De La Garza | Missouri Valley
+- Livia Swift | Ottawa
+- Gabriella Perez | Campbellsville
+- Lilly Gough | Central Methodist
+- Isabelle Hawley | William Penn
+- Jaclyn Riedinger | Avila
+- Waipuilani Estrella-Beauchamp | Providence
+- Reagen Gallaway | Hastings
+- Zaynah Mcbryde | Life
+- Jade Martin | Baker
+- Samantha Barragan | Texas Wesleyan
+- Kailey Rees | Providence
+- Natalia Posada | Oklahoma City
+- Araya Boday | Saint Mary
+- Jordan Suarez | Wayland Baptist
+- Addison Messerly | Campbellsville
+- Kori Campbell | Lindsey Wilson
+- Gianna Moreno | Friends
+r1 Kendall Bostelman > Tabitha Wood | Fall 3-0 0:30
+r1 Serenity De La Garza > Livia Swift | TF 10-0 2:09
+r1 Gabriella Perez > Lilly Gough | Dec 9-1
+r1 Isabelle Hawley > Jaclyn Riedinger | Fall 4-0 0:29
+r1 Waipuilani Estrella-Beauchamp > bye
+r2 Waipuilani Estrella-Beauchamp > Serenity De La Garza | Fall 10-0 1:56
+r1 Reagen Gallaway > bye
+r2 Reagen Gallaway > Isabelle Hawley | TF 12-1 5:22
+r1 Zaynah Mcbryde > bye
+r1 Jade Martin > bye
+r2 Zaynah Mcbryde > Jade Martin | TF 10-0 2:03
+r1 Samantha Barragan > bye
+r1 Kailey Rees > bye
+r2 Samantha Barragan > Kailey Rees | Fall 10-7 2:19
+r1 Natalia Posada > bye
+r2 Kendall Bostelman > Natalia Posada | TF 10-0 0:32
+r1 Araya Boday > bye
+r2 Gabriella Perez > Araya Boday | Fall 11-5 5:16
+r1 Jordan Suarez > bye
+r1 Addison Messerly > bye
+r2 Jordan Suarez > Addison Messerly | Fall 10-3 5:04
+r1 Kori Campbell > bye
+r1 Gianna Moreno > bye
+r2 Kori Campbell > Gianna Moreno | Fall 4-5 3:31
+qf Zaynah Mcbryde > Gabriella Perez | TF 10-0 2:29
+qf Samantha Barragan > Kendall Bostelman | TF 13-2 5:13
+qf Waipuilani Estrella-Beauchamp > Kori Campbell | Dec 10-4
+qf Reagen Gallaway > Jordan Suarez | Dec 4-3
+c1 Lilly Gough > bye
+c2 Lilly Gough > Gianna Moreno | Dec 6-6
+c1 Livia Swift > bye
+c2 Livia Swift > Jade Martin | Fall 12-3 2:26
+c1 Tabitha Wood > bye
+c2 Addison Messerly > Tabitha Wood | Fall 8-2 4:56
+c1 Jaclyn Riedinger > bye
+c2 Kailey Rees > Jaclyn Riedinger | TF 12-0 1:12
+c2 Isabelle Hawley > bye
+c3 Isabelle Hawley > Addison Messerly | Fall 4-0 2:13
+c2 Natalia Posada > bye
+c3 Natalia Posada > Kailey Rees | Dec 12-10
+c2 Araya Boday > bye
+c3 Livia Swift > Araya Boday | Fall 6-6 1:51
+c2 Serenity De La Garza > bye
+c3 Serenity De La Garza > Lilly Gough | Fall 9-5 3:37
+sf Zaynah Mcbryde > Samantha Barragan | Dec 8-0
+sf Waipuilani Estrella-Beauchamp > Reagen Gallaway | TF 12-2 1:17
+c4 Isabelle Hawley > Gabriella Perez | Dec 2-1
+c4 Jordan Suarez > Livia Swift | Dec 8-4
+c4 Natalia Posada > Kori Campbell | Dec 6-4
+c4 Serenity De La Garza > Kendall Bostelman | Fall 6-0 2:08
+cqf Serenity De La Garza > Isabelle Hawley | Fall 4-0 0:33
+cqf Jordan Suarez > Natalia Posada | Fall 10-0 1:47
+csf Samantha Barragan > Jordan Suarez | Dec 9-9
+csf Reagen Gallaway > Serenity De La Garza | Fall 7-4 4:51
+7th Isabelle Hawley > Natalia Posada | Fall 8-0 1:21
+5th Jordan Suarez > Serenity De La Garza | Fall 11-2 3:33
+3rd Samantha Barragan > Reagen Gallaway | Fall 5-9 2:27
+f Zaynah Mcbryde > Waipuilani Estrella-Beauchamp | TF 10-0 5:52
+
+@ 145
+- Esther Kolawole | William Penn
+- Alivia Ming | Cumberlands
+- Jamilah Mcbryde | Life
+- Holland Wieber | Southern Oregon
+- Lisa Hoeflich | Hastings
+- Makena Schramm | Midland
+- Sevreign Aumua | Missouri Valley
+- Aevri Ciha | Doane
+- Anastasia Hardin | Missouri Baptist
+- Aniseta Acosta | Missouri Valley
+- Liv Wieber | Eastern Oregon
+- Makayla Munoz | Oklahoma City
+- Josselinne Campos | Lindsey Wilson
+- Esther Han | Providence
+- Aspen Dodge | Providence
+- Lexi Ritchie | Lindsey Wilson
+- Berlyn Davis | Westcliff
+- Emma Stice | Hastings
+- Aubrey Yauger | Texas Wesleyan
+- Naida Abdijanovic | William Penn
+- Krista Warren | Grand View
+- Bridgette Sotomayor | Doane
+- Ann Meiman | Jamestown
+r1 Esther Kolawole > Alivia Ming | TF 10-0 0:50
+r1 Jamilah Mcbryde > Holland Wieber | Fall 7-0 1:05
+r1 Lisa Hoeflich > Makena Schramm | Dec 7-2
+r1 Sevreign Aumua > Aevri Ciha | TF 12-0 2:23
+r1 Anastasia Hardin > Aniseta Acosta | Fall 10-8 3:46
+r1 Liv Wieber > Makayla Munoz | Fall 6-0 2:35
+r1 Josselinne Campos > Esther Han | Dec 5-4
+r1 Aspen Dodge > bye
+r1 Lexi Ritchie > bye
+r2 Aspen Dodge > Lexi Ritchie | Fall 10-2 5:15
+r1 Berlyn Davis > bye
+r2 Esther Kolawole > Berlyn Davis | TF 10-0 0:49
+r1 Emma Stice > bye
+r2 Josselinne Campos > Emma Stice | Dec 9-9
+r1 Aubrey Yauger > bye
+r2 Aubrey Yauger > Anastasia Hardin | Fall 8-8 5:26
+r1 Naida Abdijanovic > bye
+r2 Sevreign Aumua > Naida Abdijanovic | TF 10-0 3:00
+r1 Krista Warren > bye
+r2 Krista Warren > Lisa Hoeflich | Fall 12-0 2:26
+r1 Bridgette Sotomayor > bye
+r2 Liv Wieber > Bridgette Sotomayor | Fall 6-0 1:50
+r1 Ann Meiman > bye
+r2 Jamilah Mcbryde > Ann Meiman | TF 10-0 1:57
+qf Sevreign Aumua > Krista Warren | TF 11-0 3:44
+qf Esther Kolawole > Aubrey Yauger | TF 10-0 1:02
+qf Jamilah Mcbryde > Aspen Dodge | TF 12-0 1:56
+qf Liv Wieber > Josselinne Campos | Dec 5-0
+c1 Aevri Ciha > bye
+c2 Berlyn Davis > Aevri Ciha | Fall 5-0 1:38
+c1 Aniseta Acosta > bye
+c2 Aniseta Acosta > Lisa Hoeflich | TF 11-0 3:57
+c1 Holland Wieber > bye
+c2 Bridgette Sotomayor > Holland Wieber | Dec 11-5
+c1 Makayla Munoz > bye
+c2 Ann Meiman > Makayla Munoz | Fall 4-0 0:53
+c1 Esther Han > bye
+c2 Esther Han > Lexi Ritchie | Fall 10-2 4:30
+c1 Alivia Ming > bye
+c2 Alivia Ming > Naida Abdijanovic | Fall 8-2 4:03
+c1 Makena Schramm > bye
+c2 Anastasia Hardin > Makena Schramm | Fall 8-0 4:38
+c3 Alivia Ming > Aniseta Acosta | Fall 5-4 2:16
+c3 Anastasia Hardin > Berlyn Davis | Fall 4-0 1:53
+c3 Esther Han > Ann Meiman | Fall 11-1 5:53
+c2 Emma Stice > bye
+c3 Bridgette Sotomayor > Emma Stice | Dec 9-4
+sf Esther Kolawole > Liv Wieber | TF 11-0 1:10
+sf Jamilah Mcbryde > Sevreign Aumua | TF 14-4 1:27
+c4 Bridgette Sotomayor > Krista Warren | Fall 13-2 4:41
+c4 Aubrey Yauger > Esther Han | Dec 5-2
+c4 Alivia Ming > Josselinne Campos | Dec 4-2
+c4 Anastasia Hardin > Aspen Dodge | Fall 12-9 5:16
+cqf Bridgette Sotomayor > Anastasia Hardin | DQ 0-0
+cqf Aubrey Yauger > Alivia Ming | Fall 12-2 3:45
+csf Sevreign Aumua > Aubrey Yauger | Fall 12-8 2:51
+csf Liv Wieber > Bridgette Sotomayor | Fall 10-6 5:21
+7th Alivia Ming > Anastasia Hardin | DQ 0-0
+5th Bridgette Sotomayor > Aubrey Yauger | Fall 12-6 4:33
+3rd Liv Wieber > Sevreign Aumua | Fall 3-4 2:54
+f Esther Kolawole > Jamilah Mcbryde | Dec 12-5
+
+@ 160
+- Quilaztli Miguel-Lapham | Southern Oregon
+- Amelia Frounfelter | Saint Mary
+- Darby Weidl | Ottawa
+- Lamia Benn | Doane
+- Abigail Sebesta | Ottawa
+- Isabella Deeds | Hastings
+- Josette Partney | Missouri Baptist
+- Mohagany Casel | Wayland Baptist
+- Emmalee Spurgeon | Grand View
+- Aspen Barber | Doane
+- Hailey Sutton | Providence
+- Latifah Mcbryde | Life
+- Flor Parker Borrero | Evergreen State
+- Kiley Hubby | Dickinson State
+- Corin Lowe | Oklahoma City
+- Micah Fisher | Cumberlands
+- Taydem Khamjoi | Texas Wesleyan
+- Allyssa Johnson | Jamestown
+- Alexa Wolf | William Penn
+- Kylee Tait | Campbellsville
+r1 Quilaztli Miguel-Lapham > Amelia Frounfelter | Fall 6-0 2:24
+r1 Darby Weidl > Lamia Benn | TF 10-0 1:06
+r1 Abigail Sebesta > Isabella Deeds | Fall 5-0 1:04
+r1 Josette Partney > Mohagany Casel | TF 10-0 2:30
+r1 Emmalee Spurgeon > bye
+r2 Josette Partney > Emmalee Spurgeon | Dec 5-1
+r1 Aspen Barber > bye
+r1 Hailey Sutton > bye
+r2 Aspen Barber > Hailey Sutton | Dec 4-1
+r1 Latifah Mcbryde > bye
+r2 Latifah Mcbryde > Abigail Sebesta | TF 10-0 2:01
+r1 Flor Parker Borrero > bye
+r1 Kiley Hubby > bye
+r2 Flor Parker Borrero > Kiley Hubby | Fall 4-0 0:34
+r1 Corin Lowe > bye
+r2 Quilaztli Miguel-Lapham > Corin Lowe | TF 11-1 5:06
+r1 Micah Fisher > bye
+r1 Taydem Khamjoi > bye
+r2 Micah Fisher > Taydem Khamjoi | Fall 7-2 4:35
+r1 Allyssa Johnson > bye
+r1 Alexa Wolf > bye
+r2 Allyssa Johnson > Alexa Wolf | TF 10-0 1:38
+r1 Kylee Tait > bye
+r2 Darby Weidl > Kylee Tait | TF 10-0 0:56
+qf Allyssa Johnson > Quilaztli Miguel-Lapham | DEF 12-6 4:56
+qf Darby Weidl > Flor Parker Borrero | Dec 13-8
+qf Josette Partney > Micah Fisher | Dec 5-1
+qf Latifah Mcbryde > Aspen Barber | TF 10-0 4:59
+c1 Isabella Deeds > bye
+c2 Kiley Hubby > Isabella Deeds | Dec 9-0
+c1 Amelia Frounfelter > bye
+c2 Taydem Khamjoi > Amelia Frounfelter | Fall 5-2 1:31
+c1 Mohagany Casel > bye
+c2 Alexa Wolf > Mohagany Casel | Dec 6-5
+c1 Lamia Benn > bye
+c2 Hailey Sutton > Lamia Benn | Fall 12-1 4:33
+c2 Corin Lowe > bye
+c3 Alexa Wolf > Corin Lowe | Fall 14-10 5:48
+c2 Emmalee Spurgeon > bye
+c3 Taydem Khamjoi > Emmalee Spurgeon | TF 12-0 2:02
+c2 Abigail Sebesta > bye
+c3 Abigail Sebesta > Hailey Sutton | Fall 4-4 1:10
+c2 Kylee Tait > bye
+c3 Kylee Tait > Kiley Hubby | Fall 8-1 5:36
+sf Latifah Mcbryde > Josette Partney | Dec 7-2
+sf Darby Weidl > Allyssa Johnson | Fall 5-5 5:27
+c4 Flor Parker Borrero > Taydem Khamjoi | Fall 3-1 1:28
+c4 Abigail Sebesta > Quilaztli Miguel-Lapham | DEF 0-0
+c4 Micah Fisher > Kylee Tait | TF 11-0 5:41
+c4 Aspen Barber > Alexa Wolf | Dec 8-1
+cqf Flor Parker Borrero > Abigail Sebesta | Fall 8-0 1:31
+cqf Micah Fisher > Aspen Barber | Fall 4-0 2:34
+csf Flor Parker Borrero > Josette Partney | Fall 2-0 1:36
+csf Micah Fisher > Allyssa Johnson | DEF 9-2 4:07
+7th Aspen Barber > Abigail Sebesta | Fall 6-4 2:08
+5th Josette Partney > Allyssa Johnson | DEF 0-0
+3rd Flor Parker Borrero > Micah Fisher | Fall 4-0 1:28
+f Latifah Mcbryde > Darby Weidl | Dec 7-2
+
+@ 180
+- America Lopez | William Penn
+- Catherine Mcnulty | Indiana Tech
+- Yazmin Belk | Doane
+- Kaylee Davis | Ottawa
+- Saiheron Preciado-Meza | Cumberlands
+- Emma Schreiber | Missouri Baptist
+- Bailey Dennis | Southern Oregon
+- Ella Murphey | Oklahoma City
+- India Page | Lindsey Wilson
+- Kyree Rubio | Westcliff
+- Liliana Vergara | Campbellsville
+- Nevaeh Wardlow | Baker
+- (Forfeit) Bailee Nelson | Friends
+- Jannell Avila | Baker
+- Marissa Patterson | Hastings
+- Siara Arrington | Ottawa
+- Kelani Corbett | Missouri Valley
+- Lillian Gradillas-Flores | Southern Oregon
+- Ashley Lekas | Texas Wesleyan
+- Grace Doering | Indiana Tech
+- Reka Busa | Life
+r1 America Lopez > Catherine Mcnulty | Fall 7-0 3:00
+r1 Yazmin Belk > Kaylee Davis | Fall 6-8 2:59
+r1 Saiheron Preciado-Meza > Emma Schreiber | Fall 8-0 2:42
+r1 Bailey Dennis > Ella Murphey | Dec 10-3
+r1 India Page > Kyree Rubio | Dec 7-3
+r1 Liliana Vergara > bye
+r1 Nevaeh Wardlow > bye
+r2 Liliana Vergara > Nevaeh Wardlow | Fall 6-0 1:04
+r1 (Forfeit) Bailee Nelson > bye
+r2 Saiheron Preciado-Meza > (Forfeit) Bailee Nelson | FOR 0-0
+r1 Jannell Avila > bye
+r2 Jannell Avila > America Lopez | Dec 4-0
+r1 Marissa Patterson > bye
+r2 India Page > Marissa Patterson | Fall 5-0 1:03
+r1 Siara Arrington > bye
+r2 Bailey Dennis > Siara Arrington | Dec 8-1
+r1 Kelani Corbett > bye
+r1 Lillian Gradillas-Flores > bye
+r2 Kelani Corbett > Lillian Gradillas-Flores | TF 11-0 4:52
+r1 Ashley Lekas > bye
+r1 Grace Doering > bye
+r2 Ashley Lekas > Grace Doering | TF 10-0 1:48
+r1 Reka Busa > bye
+r2 Reka Busa > Yazmin Belk | TF 11-0 1:37
+qf Kelani Corbett > Reka Busa | TF 11-0 6:00
+qf Jannell Avila > India Page | Fall 9-1 5:48
+qf Ashley Lekas > Saiheron Preciado-Meza | TF 11-0 1:33
+qf Liliana Vergara > Bailey Dennis | Dec 5-0
+c1 Kyree Rubio > bye
+c2 Grace Doering > Kyree Rubio | Fall 2-8 3:21
+c1 Emma Schreiber > bye
+c2 America Lopez > Emma Schreiber | Fall 10-1 2:16
+c1 Kaylee Davis > bye
+c2 Kaylee Davis > Nevaeh Wardlow | Fall 2-2 1:55
+c1 Ella Murphey > bye
+c2 Lillian Gradillas-Flores > Ella Murphey | TF 13-2 3:35
+c1 Catherine Mcnulty > bye
+c2 Catherine Mcnulty > (Forfeit) Bailee Nelson | FOR 0-0
+c2 Marissa Patterson > bye
+c3 America Lopez > Marissa Patterson | TF 11-0 3:33
+c3 Catherine Mcnulty > Grace Doering | Dec 2-2
+c2 Siara Arrington > bye
+c3 Siara Arrington > Kaylee Davis | Fall 4-0 1:03
+c2 Yazmin Belk > bye
+c3 Lillian Gradillas-Flores > Yazmin Belk | Fall 5-0 0:48
+sf Kelani Corbett > Jannell Avila | Fall 6-0 3:39
+sf Ashley Lekas > Liliana Vergara | TF 10-0 1:07
+c4 America Lopez > Bailey Dennis | TF 10-0 5:17
+c4 Lillian Gradillas-Flores > Saiheron Preciado-Meza | Dec 7-0
+c4 India Page > Siara Arrington | Fall 2-0 1:01
+c4 Reka Busa > Catherine Mcnulty | Fall 3-0 0:26
+cqf Lillian Gradillas-Flores > America Lopez | Dec 6-0
+cqf India Page > Reka Busa | Fall 3-0 2:53
+csf India Page > Liliana Vergara | Dec 7-0
+csf Jannell Avila > Lillian Gradillas-Flores | Dec 5-1
+7th Reka Busa > America Lopez | Fall 2-0 0:43
+5th Liliana Vergara > Lillian Gradillas-Flores | Fall 4-0 0:27
+3rd Jannell Avila > India Page | Fall 5-2 5:23
+f Ashley Lekas > Kelani Corbett | TF 12-2 2:19
+
+@ 207
+- Olivia Brown | Grand View
+- Brianna Staebler | Campbellsville
+- Bella Porcelli | Grand View
+- Naomi Duenas | Cumberlands
+- Hailey Romero | Doane
+- Kena Leonard | Ottawa
+- Savannah Isaac | Life
+- Mariyah Brumley | William Woods
+- Grace Todhunter | Jamestown
+- Riley Dempewolf | Indiana Tech
+- Maquoia Bernabe | Cumberlands
+- Hayeni Costa | Lindsey Wilson
+- Skyler Bruno | Waldorf
+- Kathryn Hingano | Southern Oregon
+- Abigail Fonseca | Texas Wesleyan
+- Alysse Phillips | Lourdes
+- Leilani Sanchez | Wayland Baptist
+- Hannah Jackson | Ottawa
+- Taylor Rickley | Hastings
+r1 Olivia Brown > Brianna Staebler | Dec 3-0
+r1 Bella Porcelli > Naomi Duenas | Fall 7-2 1:47
+r1 Hailey Romero > Kena Leonard | Fall 4-4 1:50
+r1 Savannah Isaac > bye
+r1 Mariyah Brumley > bye
+r2 Savannah Isaac > Mariyah Brumley | Fall 4-0 0:52
+r1 Grace Todhunter > bye
+r2 Bella Porcelli > Grace Todhunter | Fall 8-2 1:47
+r1 Riley Dempewolf > bye
+r1 Maquoia Bernabe > bye
+r2 Riley Dempewolf > Maquoia Bernabe | Dec 2-1
+r1 Hayeni Costa > bye
+r1 Skyler Bruno > bye
+r2 Hayeni Costa > Skyler Bruno | Dec 8-0
+r1 Kathryn Hingano > bye
+r1 Abigail Fonseca > bye
+r2 Kathryn Hingano > Abigail Fonseca | TF 10-0 3:30
+r1 Alysse Phillips > bye
+r2 Alysse Phillips > Hailey Romero | Fall 4-4 0:52
+r1 Leilani Sanchez > bye
+r2 Olivia Brown > Leilani Sanchez | Fall 4-0 1:46
+r1 Hannah Jackson > bye
+r1 Taylor Rickley > bye
+r2 Hannah Jackson > Taylor Rickley | TF 10-0 6:00
+qf Kathryn Hingano > Bella Porcelli | Fall 7-6 4:11
+qf Olivia Brown > Hayeni Costa | Fall 2-0 1:24
+qf Savannah Isaac > Alysse Phillips | Fall 7-0 3:55
+qf Riley Dempewolf > Hannah Jackson | Dec 2-1
+c1 Naomi Duenas > bye
+c2 Naomi Duenas > Skyler Bruno | TF 14-2 2:46
+c1 Kena Leonard > bye
+c2 Kena Leonard > Taylor Rickley | Dec 4-2
+c1 Brianna Staebler > bye
+c2 Brianna Staebler > Abigail Fonseca | Fall 9-0 1:49
+c2 Mariyah Brumley > bye
+c2 Hailey Romero > bye
+c3 Mariyah Brumley > Hailey Romero | Fall 4-2 0:55
+c2 Leilani Sanchez > bye
+c3 Leilani Sanchez > Naomi Duenas | Fall 4-3 4:39
+c2 Grace Todhunter > bye
+c3 Brianna Staebler > Grace Todhunter | Fall 4-0 0:35
+c2 Maquoia Bernabe > bye
+c3 Maquoia Bernabe > Kena Leonard | Dec 2-1
+sf Savannah Isaac > Kathryn Hingano | Dec 7-0
+sf Riley Dempewolf > Olivia Brown | Dec 2-1
+c4 Alysse Phillips > Leilani Sanchez | Fall 8-2 5:44
+c4 Mariyah Brumley > Hayeni Costa | Fall 10-2 2:13
+c4 Maquoia Bernabe > Bella Porcelli | Fall 11-1 3:00
+c4 Hannah Jackson > Brianna Staebler | Fall 4-0 1:05
+cqf Hannah Jackson > Mariyah Brumley | Dec 8-0
+cqf Maquoia Bernabe > Alysse Phillips | Dec 3-0
+csf Olivia Brown > Maquoia Bernabe | Dec 7-0
+csf Hannah Jackson > Kathryn Hingano | Fall 8-0 3:51
+7th Mariyah Brumley > Alysse Phillips | Fall 4-0 0:47
+5th Maquoia Bernabe > Kathryn Hingano | Dec 3-1
+3rd Olivia Brown > Hannah Jackson | Dec 6-0
+f Savannah Isaac > Riley Dempewolf | Dec 4-1
+

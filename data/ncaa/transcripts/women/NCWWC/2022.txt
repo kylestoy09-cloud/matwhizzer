@@ -1,0 +1,768 @@
+# source: 2022 NCWWC (TrackWrestling export)
+
+@ 101
+- Maddie Mackenzie | Simon Fraser University
+- Kaylie Catalano | Colorado Mesa University
+- Brooke Thurber | University Of Wisconsin At Stevens Point
+- Ekta Arora | Gannon University
+- Katerina Pendergrass | Gannon University
+- Kelly Enriquez | University Of Wisconsin At Stevens Point
+- Olivia Shore | Tiffin University
+- Taylor Lindstrom | Chadron State College
+- Lizette Rodriguez | McKendree University
+- Shanna Morris | Tiffin University
+- Angelina Gomez | Emmanuel College
+- Kinsey Smith | Chadron State College
+- Jaclyn McNichols | King University
+- Samantha Miller | Presbyterian College
+r1 Maddie Mackenzie > bye
+r1 Kaylie Catalano > bye
+r2 Maddie Mackenzie > Kaylie Catalano | TF 10-0 3:00
+r1 Brooke Thurber > bye
+r1 Ekta Arora > bye
+r2 Brooke Thurber > Ekta Arora | Fall 6-0 0:48
+r1 Katerina Pendergrass > bye
+r1 Kelly Enriquez > bye
+r2 Katerina Pendergrass > Kelly Enriquez | TF 10-0 0:15
+r1 Olivia Shore > bye
+r1 Taylor Lindstrom > bye
+r2 Olivia Shore > Taylor Lindstrom | Fall 4-0 0:12
+r1 Lizette Rodriguez > bye
+r1 Shanna Morris > bye
+r2 Lizette Rodriguez > Shanna Morris | TF 10-0 3:14
+r1 Angelina Gomez > bye
+r1 Kinsey Smith > bye
+r2 Angelina Gomez > Kinsey Smith | Fall 4-0 0:25
+qf Angelina Gomez > Lizette Rodriguez | Dec 3-3
+r1 Jaclyn McNichols > bye
+qf Jaclyn McNichols > Brooke Thurber | Dec 3-0
+r1 Samantha Miller > bye
+qf Maddie Mackenzie > Samantha Miller | Dec 6-4
+qf Olivia Shore > Katerina Pendergrass | TF 13-1 3:53
+c2 Taylor Lindstrom > bye
+c2 Kelly Enriquez > bye
+c3 Taylor Lindstrom > Kelly Enriquez | Dec 4-3
+c2 Shanna Morris > bye
+c2 Kinsey Smith > bye
+c3 Shanna Morris > Kinsey Smith | TF 10-0 2:14
+sf Angelina Gomez > Jaclyn McNichols | Dec 3-1
+sf Olivia Shore > Maddie Mackenzie | Fall 6-4 5:23
+c4 Lizette Rodriguez > Taylor Lindstrom | TF 10-0 2:05
+c2 Kaylie Catalano > bye
+c3 Kaylie Catalano > bye
+c4 Brooke Thurber > Kaylie Catalano | Fall 8-0 1:12
+c2 Ekta Arora > bye
+c3 Ekta Arora > bye
+c4 Samantha Miller > Ekta Arora | Fall 2-0 0:32
+c4 Katerina Pendergrass > Shanna Morris | TF 10-0 3:00
+cqf Lizette Rodriguez > Brooke Thurber | TF 10-0 5:59
+cqf Samantha Miller > Katerina Pendergrass | Dec 16-11
+csf Jaclyn McNichols > Samantha Miller | Dec 5-0
+csf Lizette Rodriguez > Maddie Mackenzie | Fall 6-0 4:14
+7th Brooke Thurber > Katerina Pendergrass | Dec 8-7
+5th Samantha Miller > Maddie Mackenzie | Fall 6-5 6:00
+3rd Lizette Rodriguez > Jaclyn McNichols | Dec 4-1
+f Olivia Shore > Angelina Gomez | TF 11-0 4:40
+
+@ 109
+- Danielle Garcia | King University
+- Izabella Frezzo | New Jersey City University
+- Valeriia Mamleeva | Lindenwood University
+- Riley Morrison | Trine University
+- Sydney Petzinger | North Central College
+- Alina Kinsey | Schreiner University
+- Alejandra Perez | Emmanuel College
+- Alexia Seal | Simon Fraser University
+- Madison Packer | Lock Haven University
+- Emily Shilson | Augsburg University
+- Trinity Oredina | Tiffin University
+- Allicia Mahoe | Schreiner University
+- Natalie Reyna | McKendree University
+- Samara Chavez | King University
+- Kylee Bentley | Hiram College
+- Angelina Graff | North Central College
+- Pauline Granados | McKendree University
+- Julianne Moccia | Gannon University
+- Cassy Lopez | Presbyterian College
+r1 Danielle Garcia > Izabella Frezzo | Fall 9-1 0:34
+r1 Valeriia Mamleeva > Riley Morrison | Fall 7-1 1:08
+r1 Sydney Petzinger > Alina Kinsey | TF 12-2 2:13
+r1 Alejandra Perez > bye
+r2 Sydney Petzinger > Alejandra Perez | TF 10-0 1:10
+r1 Alexia Seal > bye
+r1 Madison Packer > bye
+r2 Alexia Seal > Madison Packer | TF 10-0 2:32
+r1 Emily Shilson > bye
+r1 Trinity Oredina > bye
+r2 Emily Shilson > Trinity Oredina | Fall 4-0 0:28
+r1 Allicia Mahoe > bye
+r2 Danielle Garcia > Allicia Mahoe | Fall 2-0 0:29
+r1 Natalie Reyna > bye
+r2 Natalie Reyna > Valeriia Mamleeva | Dec 6-2
+r1 Samara Chavez > bye
+r1 Kylee Bentley > bye
+r2 Samara Chavez > Kylee Bentley | Fall 13-4 2:35
+r1 Angelina Graff > bye
+r1 Pauline Granados > bye
+r2 Angelina Graff > Pauline Granados | Dec 11-6
+r1 Julianne Moccia > bye
+r1 Cassy Lopez > bye
+r2 Julianne Moccia > Cassy Lopez | Fall 10-3 3:43
+qf Samara Chavez > Julianne Moccia | TF 12-2 3:17
+qf Emily Shilson > Danielle Garcia | TF 14-4 2:30
+qf Sydney Petzinger > Alexia Seal | TF 12-1 5:50
+qf Natalie Reyna > Angelina Graff | Dec 6-0
+c1 Alina Kinsey > bye
+c2 Pauline Granados > Alina Kinsey | TF 13-2 5:23
+c1 Izabella Frezzo > bye
+c2 Izabella Frezzo > Cassy Lopez | TF 12-0 5:53
+c1 Riley Morrison > bye
+c2 Riley Morrison > Madison Packer | Fall 2-4 2:40
+c2 Valeriia Mamleeva > bye
+c3 Pauline Granados > Valeriia Mamleeva | TF 12-1 2:03
+c2 Kylee Bentley > bye
+c3 Izabella Frezzo > Kylee Bentley | TF 10-0 3:56
+c2 Trinity Oredina > bye
+c2 Allicia Mahoe > bye
+c3 Trinity Oredina > Allicia Mahoe | Fall 2-2 1:32
+c2 Alejandra Perez > bye
+c3 Riley Morrison > Alejandra Perez | Fall 2-0 0:32
+sf Sydney Petzinger > Samara Chavez | Dec 12-7
+sf Emily Shilson > Natalie Reyna | TF 10-0 1:31
+c4 Angelina Graff > Izabella Frezzo | Fall 3-2 4:31
+c4 Julianne Moccia > Pauline Granados | Fall 6-0 1:38
+c4 Alexia Seal > Trinity Oredina | TF 10-0 1:51
+c4 Danielle Garcia > Riley Morrison | Fall 7-2 2:15
+cqf Danielle Garcia > Angelina Graff | Fall 8-0 2:23
+cqf Alexia Seal > Julianne Moccia | Fall 13-10 4:56
+csf Natalie Reyna > Alexia Seal | Dec 8-3
+csf Samara Chavez > Danielle Garcia | TF 10-0 3:34
+7th Julianne Moccia > Angelina Graff | Fall 8-3 3:49
+5th Danielle Garcia > Alexia Seal | Fall 7-4 5:26
+3rd Samara Chavez > Natalie Reyna | Dec 11-6
+f Emily Shilson > Sydney Petzinger | TF 11-0 2:42
+
+@ 116
+- Kasey Baynon | Emmanuel College
+- Abby Nelson | University Of Wisconsin At Stevens Point
+- Kendra Ryan | North Central College
+- Natalie Dunn | East Stroudsburg University
+- Gabriela Ramos Diaz | Limestone College
+- Jayla Oberst | Albion College
+- Ainslie Lane | Presbyterian College
+- Angela LoRusso | Adrian College
+- Anja Tschohl | Colorado Mesa University
+- Sage Mortimer | King University
+- Carly Gross | Lock Haven University
+- Felicity Taylor | McKendree University
+- Nikoly Dos Santos | Gannon University
+- Jaslynn Gallegos | Presbyterian College
+- Natalie Majer | Carthage College
+- Amanda McAleavey | Lindenwood University
+- Karla Godinez-Gonzalez | Simon Fraser University
+- Emalie Olson | William Jewell College
+- Mateah Roehl | North Central College
+- Aliyah Rollins | McKendree University
+r1 Kasey Baynon > Abby Nelson | Dec 6-3
+r1 Kendra Ryan > Natalie Dunn | Fall 9-4 1:09
+r1 Gabriela Ramos Diaz > Jayla Oberst | TF 10-0 0:43
+r1 Ainslie Lane > Angela LoRusso | TF 16-6 3:00
+r1 Anja Tschohl > bye
+r2 Ainslie Lane > Anja Tschohl | TF 21-11 4:42
+r1 Sage Mortimer > bye
+r1 Carly Gross > bye
+r2 Sage Mortimer > Carly Gross | TF 13-2 2:04
+r1 Felicity Taylor > bye
+r1 Nikoly Dos Santos > bye
+r2 Felicity Taylor > Nikoly Dos Santos | TF 10-0 1:21
+r1 Jaslynn Gallegos > bye
+r1 Natalie Majer > bye
+r2 Jaslynn Gallegos > Natalie Majer | TF 10-0 0:33
+r1 Amanda McAleavey > bye
+r2 Kendra Ryan > Amanda McAleavey | TF 14-3 2:36
+r1 Karla Godinez-Gonzalez > bye
+r1 Emalie Olson > bye
+r2 Karla Godinez-Gonzalez > Emalie Olson | TF 10-0 2:15
+r1 Mateah Roehl > bye
+r2 Gabriela Ramos Diaz > Mateah Roehl | TF 12-2 4:45
+r1 Aliyah Rollins > bye
+r2 Kasey Baynon > Aliyah Rollins | Dec 15-10
+qf Karla Godinez-Gonzalez > Ainslie Lane | TF 10-0 2:16
+qf Felicity Taylor > Kasey Baynon | TF 10-0 1:42
+qf Jaslynn Gallegos > Kendra Ryan | TF 10-0 1:36
+qf Sage Mortimer > Gabriela Ramos Diaz | Fall 6-6 4:18
+c1 Jayla Oberst > bye
+c2 Amanda McAleavey > Jayla Oberst | Dec 8-2
+c1 Natalie Dunn > bye
+c2 Mateah Roehl > Natalie Dunn | Fall 14-5 3:54
+c1 Abby Nelson > bye
+c2 Anja Tschohl > Abby Nelson | TF 10-0 0:43
+c1 Angela LoRusso > bye
+c2 Aliyah Rollins > Angela LoRusso | TF 10-0 2:48
+c2 Emalie Olson > bye
+c3 Anja Tschohl > Emalie Olson | Fall 2-0 0:41
+c2 Nikoly Dos Santos > bye
+c3 Aliyah Rollins > Nikoly Dos Santos | TF 10-0 4:32
+c2 Natalie Majer > bye
+c3 Amanda McAleavey > Natalie Majer | Dec 6-4
+c2 Carly Gross > bye
+c3 Mateah Roehl > Carly Gross | Dec 18-9
+sf Felicity Taylor > Jaslynn Gallegos | TF 10-0 3:15
+sf Karla Godinez-Gonzalez > Sage Mortimer | Dec 6-2
+c4 Gabriela Ramos Diaz > Aliyah Rollins | Dec 6-2
+c4 Ainslie Lane > Amanda McAleavey | Dec 7-5
+c4 Mateah Roehl > Kasey Baynon | Dec 10-6
+c4 Kendra Ryan > Anja Tschohl | TF 10-0 2:22
+cqf Kendra Ryan > Mateah Roehl | Dec 10-2
+cqf Gabriela Ramos Diaz > Ainslie Lane | Dec 5-4
+csf Sage Mortimer > Kendra Ryan | TF 11-0 1:10
+csf Jaslynn Gallegos > Gabriela Ramos Diaz | Dec 9-4
+7th Mateah Roehl > Ainslie Lane | TF 11-1 2:20
+5th Gabriela Ramos Diaz > Kendra Ryan | TF 12-2 5:53
+3rd Sage Mortimer > Jaslynn Gallegos | Fall 10-4 2:41
+f Karla Godinez-Gonzalez > Felicity Taylor | Dec 3-1
+
+@ 123
+- Bridgette Schoutlz | Delaware Valley University
+- Merci Jessop | Elmira College
+- Cayden Condit | Lindenwood University
+- Caroline Schmitt | Limestone College
+- Asia Nguyen-Smith | North Central College
+- Ariana Wolkerstorfer | Greensboro College
+- Catherine Bertrand | Presbyterian College
+- Caitlyn Thorne | McKendree University
+- Cheyenne Sisenstein | King University
+- Charlotte Kouyoumtjian | Augsburg University
+- Gabby Skidmore | Augsburg University
+- Marissa Gallegos | Colorado Mesa University
+- Alexandra Hedrick | Simon Fraser University
+- Grace Jones | Tiffin University
+- Emily Klein | East Stroudsburg University
+- Melanie Mendoza | King University
+- Allison Meyer | William Jewell College
+- Amani Jones | North Central College
+- Elizabeth Miller | Colorado Mesa University
+- Samantha Parcell | Albion College
+r1 Bridgette Schoutlz > Merci Jessop | Fall 6-0 0:51
+r1 Cayden Condit > Caroline Schmitt | TF 10-0 0:58
+r1 Asia Nguyen-Smith > Ariana Wolkerstorfer | Dec 8-7
+r1 Catherine Bertrand > Caitlyn Thorne | Dec 6-2
+r1 Cheyenne Sisenstein > bye
+r1 Charlotte Kouyoumtjian > bye
+r2 Cheyenne Sisenstein > Charlotte Kouyoumtjian | Fall 11-3 4:20
+r1 Gabby Skidmore > bye
+r2 Gabby Skidmore > Catherine Bertrand | Dec 7-0
+r1 Marissa Gallegos > bye
+r2 Marissa Gallegos > Bridgette Schoutlz | TF 10-0 1:20
+r1 Alexandra Hedrick > bye
+r1 Grace Jones > bye
+r2 Alexandra Hedrick > Grace Jones | TF 11-0 2:06
+r1 Emily Klein > bye
+r2 Cayden Condit > Emily Klein | TF 10-0 3:13
+r1 Melanie Mendoza > bye
+r1 Allison Meyer > bye
+r2 Melanie Mendoza > Allison Meyer | Fall 4-0 0:46
+r1 Amani Jones > bye
+r1 Elizabeth Miller > bye
+r2 Amani Jones > Elizabeth Miller | TF 10-0 1:46
+r1 Samantha Parcell > bye
+r2 Asia Nguyen-Smith > Samantha Parcell | TF 16-5 3:36
+qf Alexandra Hedrick > Gabby Skidmore | TF 13-3 5:34
+qf Cheyenne Sisenstein > Asia Nguyen-Smith | Dec 7-6
+qf Melanie Mendoza > Marissa Gallegos | Dec 3-1
+qf Amani Jones > Cayden Condit | Fall 15-4 5:10
+c1 Caitlyn Thorne > bye
+c2 Caitlyn Thorne > Allison Meyer | TF 10-0 1:56
+c1 Merci Jessop > bye
+c2 Grace Jones > Merci Jessop | Fall 8-0 0:27
+c1 Ariana Wolkerstorfer > bye
+c2 Emily Klein > Ariana Wolkerstorfer | Dec 4-4
+c1 Caroline Schmitt > bye
+c2 Samantha Parcell > Caroline Schmitt | Fall 10-0 2:58
+c2 Catherine Bertrand > bye
+c3 Catherine Bertrand > Grace Jones | Dec 5-4
+c2 Bridgette Schoutlz > bye
+c3 Caitlyn Thorne > Bridgette Schoutlz | Fall 2-0 0:51
+c2 Charlotte Kouyoumtjian > bye
+c3 Samantha Parcell > Charlotte Kouyoumtjian | DEF 4-5 2:48
+c2 Elizabeth Miller > bye
+c3 Emily Klein > Elizabeth Miller | Dec 6-2
+sf Cheyenne Sisenstein > Melanie Mendoza | TF 10-0 4:04
+sf Alexandra Hedrick > Amani Jones | Dec 9-2
+c4 Marissa Gallegos > Emily Klein | Fall 13-0 2:34
+c4 Asia Nguyen-Smith > Catherine Bertrand | TF 11-1 5:49
+c4 Cayden Condit > Caitlyn Thorne | TF 10-0 2:14
+c4 Gabby Skidmore > Samantha Parcell | TF 12-2 2:25
+cqf Cayden Condit > Gabby Skidmore | Fall 7-10 5:18
+cqf Marissa Gallegos > Asia Nguyen-Smith | TF 12-0 2:45
+csf Cayden Condit > Melanie Mendoza | Fall 7-3
+csf Marissa Gallegos > Amani Jones | TF 12-1 4:19
+7th Asia Nguyen-Smith > Gabby Skidmore | Dec 10-6
+5th Amani Jones > Melanie Mendoza | Dec 7-6
+3rd Marissa Gallegos > Cayden Condit | Fall 5-0 1:25
+f Alexandra Hedrick > Cheyenne Sisenstein | Fall 11-1 5:49
+
+@ 130
+- Marquesis Haintz | Simon Fraser University
+- Lillian Sherer | Lock Haven University
+- Montana Delawder | King University
+- Autumn Flanigan | Augsburg University
+- Athena Willden | Lindenwood University
+- Yele Aycock | North Central College
+- Cameron Guerin | McKendree University
+- Isabela Ruiz | Greensboro College
+- Naomi Henry | New Jersey City University
+- Claire DiCugno | Colorado Mesa University
+- Anya Knappenberger | Gannon University
+- Sierra Marie Miller | Presbyterian College
+- Lauren Mason | Simon Fraser University
+- Lillian Broadrick | Colorado Mesa University
+- Mia Macaluso | East Stroudsburg University
+- Phoenix Dubose | King University
+- Solana Mottola | Tiffin University
+- Niya Teresita Gaines | North Central College
+- Katrina Anderson | Ferrum College
+r1 Marquesis Haintz > Lillian Sherer | TF 10-0 2:39
+r1 Montana Delawder > Autumn Flanigan | Fall 4-0 1:10
+r1 Athena Willden > Yele Aycock | Dec 12-8
+r1 Cameron Guerin > bye
+r1 Isabela Ruiz > bye
+r2 Cameron Guerin > Isabela Ruiz | Fall 10-0 2:47
+r1 Naomi Henry > bye
+r2 Montana Delawder > Naomi Henry | Fall 10-0 4:00
+r1 Claire DiCugno > bye
+r2 Claire DiCugno > Marquesis Haintz | Dec 6-4
+r1 Anya Knappenberger > bye
+r1 Sierra Marie Miller > bye
+r2 Anya Knappenberger > Sierra Marie Miller | TF 10-0 1:27
+r1 Lauren Mason > bye
+r1 Lillian Broadrick > bye
+r2 Lauren Mason > Lillian Broadrick | TF 10-0 1:37
+r1 Mia Macaluso > bye
+r1 Phoenix Dubose > bye
+r2 Mia Macaluso > Phoenix Dubose | Dec 5-2
+r1 Solana Mottola > bye
+r2 Solana Mottola > Athena Willden | Fall 6-2 3:00
+r1 Niya Teresita Gaines > bye
+r1 Katrina Anderson > bye
+r2 Niya Teresita Gaines > Katrina Anderson | Fall 6-0 0:57
+qf Claire DiCugno > Mia Macaluso | TF 13-2 4:27
+qf Niya Teresita Gaines > Montana Delawder | Dec 9-4
+qf Solana Mottola > Lauren Mason | Fall 4-4 2:26
+qf Cameron Guerin > Anya Knappenberger | TF 10-0 2:22
+c1 Lillian Sherer > bye
+c2 Lillian Sherer > Lillian Broadrick | TF 10-0 2:07
+c1 Yele Aycock > bye
+c2 Phoenix Dubose > Yele Aycock | Dec 5-2
+c1 Autumn Flanigan > bye
+c2 Autumn Flanigan > Isabela Ruiz | TF 10-0 2:09
+c2 Naomi Henry > bye
+c2 Katrina Anderson > bye
+c3 Naomi Henry > Katrina Anderson | Fall 6-5 1:24
+c2 Marquesis Haintz > bye
+c3 Marquesis Haintz > Phoenix Dubose | Dec 9-4
+c2 Athena Willden > bye
+c3 Athena Willden > Lillian Sherer | Fall 6-0 1:20
+c2 Sierra Marie Miller > bye
+c3 Autumn Flanigan > Sierra Marie Miller | Fall 4-0 1:28
+sf Cameron Guerin > Solana Mottola | TF 10-0 1:44
+sf Niya Teresita Gaines > Claire DiCugno | Dec 8-4
+c4 Mia Macaluso > Autumn Flanigan | Dec 6-6
+c4 Montana Delawder > Athena Willden | Dec 12-3
+c4 Anya Knappenberger > Marquesis Haintz | Dec 6-5
+c4 Lauren Mason > Naomi Henry | Dec 8-2
+cqf Lauren Mason > Anya Knappenberger | TF 10-0 3:23
+cqf Mia Macaluso > Montana Delawder | Dec 12-11
+csf Lauren Mason > Claire DiCugno | Dec 8-6
+csf Mia Macaluso > Solana Mottola | Fall 2-2 1:10
+7th Montana Delawder > Anya Knappenberger | Dec 13-4
+5th Solana Mottola > Claire DiCugno | Dec 4-2
+3rd Lauren Mason > Mia Macaluso | TF 10-0 3:17
+f Cameron Guerin > Niya Teresita Gaines | TF 10-0 1:49
+
+@ 136
+- Hannah Mains | Limestone College
+- Hannah McElroy | Presbyterian College
+- Sierra Brown Ton | Augsburg University
+- Ryleigh Dye | Chadron State College
+- Jolynn Harris | Colorado Mesa University
+- Flora Vizi | North Central College
+- Emmily Patneaud | McKendree University
+- Lana Perez | Gannon University
+- Sara Sulejmani | North Central College
+- Zoe Nowicki | Adrian College
+- Blanche `Nina` Kemu Makem | Augsburg University
+- Samantha Larios | Emmanuel College
+- Skye Realin | McKendree University
+- Mikayla Dockweiler | Gannon University
+- Ana Luciano | King University
+- Ariana Carrasquillo | Tiffin University
+- Megan Struble | University Of Wisconsin At Stevens Point
+- Holly Beaudoin | Colorado Mesa University
+- Madison Matta | Lock Haven University
+r1 Hannah Mains > Hannah McElroy | Fall 12-0 1:07
+r1 Sierra Brown Ton > Ryleigh Dye | Dec 13-4
+r1 Jolynn Harris > Flora Vizi | Dec 8-7
+r1 Emmily Patneaud > bye
+r1 Lana Perez > bye
+r2 Emmily Patneaud > Lana Perez | Dec 8-5
+r1 Sara Sulejmani > bye
+r2 Sara Sulejmani > Hannah Mains | TF 10-0 1:41
+r1 Zoe Nowicki > bye
+r2 Zoe Nowicki > Sierra Brown Ton | Fall 7-0 1:49
+r1 Blanche `Nina` Kemu Makem > bye
+r1 Samantha Larios > bye
+r2 Blanche `Nina` Kemu Makem > Samantha Larios | Fall 8-0 0:47
+r1 Skye Realin > bye
+r1 Mikayla Dockweiler > bye
+r2 Skye Realin > Mikayla Dockweiler | TF 10-0 4:06
+r1 Ana Luciano > bye
+r1 Ariana Carrasquillo > bye
+r2 Ana Luciano > Ariana Carrasquillo | TF 10-0 1:38
+r1 Megan Struble > bye
+r2 Megan Struble > Jolynn Harris | Dec 16-8
+r1 Holly Beaudoin > bye
+r1 Madison Matta > bye
+r2 Holly Beaudoin > Madison Matta | TF 10-0 1:30
+qf Zoe Nowicki > Holly Beaudoin | TF 10-0 2:17
+qf Emmily Patneaud > Sara Sulejmani | Dec 5-5
+qf Ana Luciano > Megan Struble | Fall 10-0 0:58
+qf Blanche `Nina` Kemu Makem > Skye Realin | Dec 12-6
+c1 Flora Vizi > bye
+c2 Flora Vizi > Madison Matta | Dec 2-2
+c1 Ryleigh Dye > bye
+c2 Ariana Carrasquillo > Ryleigh Dye | Fall 6-2 1:55
+c1 Hannah McElroy > bye
+c2 Samantha Larios > Hannah McElroy | Fall 14-10 4:31
+c2 Lana Perez > bye
+c2 Hannah Mains > bye
+c3 Lana Perez > Hannah Mains | Fall 8-0 0:36
+c2 Sierra Brown Ton > bye
+c3 Sierra Brown Ton > Flora Vizi | Fall 8-0 1:34
+c2 Mikayla Dockweiler > bye
+c3 Mikayla Dockweiler > Samantha Larios | Dec 10-1
+c2 Jolynn Harris > bye
+c3 Ariana Carrasquillo > Jolynn Harris | TF 13-3 4:05
+sf Zoe Nowicki > Emmily Patneaud | Dec 8-4
+sf Blanche `Nina` Kemu Makem > Ana Luciano | Dec 8-7
+c4 Skye Realin > Sierra Brown Ton | Fall 5-0 3:00
+c4 Holly Beaudoin > Mikayla Dockweiler | TF 10-0 1:40
+c4 Sara Sulejmani > Ariana Carrasquillo | Fall 7-2 2:45
+c4 Lana Perez > Megan Struble | TF 10-0 2:11
+cqf Holly Beaudoin > Sara Sulejmani | Dec 8-2
+cqf Skye Realin > Lana Perez | Fall 4-0 0:58
+csf Ana Luciano > Holly Beaudoin | Fall 8-0 1:44
+csf Skye Realin > Emmily Patneaud | Dec 6-0
+7th Sara Sulejmani > Lana Perez | Fall 8-8 4:26
+5th Emmily Patneaud > Holly Beaudoin | Dec 8-4
+3rd Ana Luciano > Skye Realin | Dec 9-4
+f Zoe Nowicki > Blanche `Nina` Kemu Makem | Dec 4-0
+
+@ 143
+- Kya Rybachek | Augsburg University
+- Tristan Folkner | Westminster College
+- Madison Sandquist | Sacred Heart University
+- Gianna Anaya | Emmanuel College
+- Julianna Moreno | Lindenwood University
+- Nia Miranda | Tiffin University
+- Stephanie Floor | Gannon University
+- Sagel Bush | Pacific University
+- Ashlynn Ortega | King University
+- Kim Nunez | North Central College
+- Alara Boyd | McKendree University
+- Mika Walters | Limestone College
+- Clara Scaglioni | Simon Fraser University
+- Avia bibeau | East Stroudsburg University
+- Kaylee Lacy | Colorado Mesa University
+- Clara Padua-Cruz | Limestone College
+- Riley Aamold | North Central College
+- Erica Schroeder | Colorado Mesa University
+- Khadijah Sanusi | Sacred Heart University
+r1 Kya Rybachek > Tristan Folkner | Fall 8-4 1:37
+r1 Madison Sandquist > Gianna Anaya | Dec 7-0
+r1 Julianna Moreno > Nia Miranda | Fall 2-2 3:41
+r1 Stephanie Floor > Sagel Bush | TF 10-0 1:27
+r1 Ashlynn Ortega > bye
+r1 Kim Nunez > bye
+r2 Ashlynn Ortega > Kim Nunez | TF 10-0 3:18
+r1 Alara Boyd > bye
+r1 Mika Walters > bye
+r2 Alara Boyd > Mika Walters | TF 10-0 1:46
+r1 Clara Scaglioni > bye
+r2 Madison Sandquist > Clara Scaglioni | Fall 4-0 0:28
+r1 Avia bibeau > bye
+r2 Avia bibeau > Kya Rybachek | Fall 4-2 1:42
+r1 Kaylee Lacy > bye
+r1 Clara Padua-Cruz > bye
+r2 Kaylee Lacy > Clara Padua-Cruz | Fall 13-5 5:33
+r1 Riley Aamold > bye
+r1 Erica Schroeder > bye
+r2 Riley Aamold > Erica Schroeder | TF 10-0 2:50
+r1 Khadijah Sanusi > bye
+r2 Khadijah Sanusi > Julianna Moreno | Dec 9-2
+qf Ashlynn Ortega > Khadijah Sanusi | TF 10-0 0:52
+qf Alara Boyd > Madison Sandquist | TF 10-0 2:13
+qf Avia bibeau > Kaylee Lacy | Fall 6-2 1:13
+qf Riley Aamold > Stephanie Floor | Fall 4-4 1:50
+c1 Nia Miranda > bye
+c2 Nia Miranda > Clara Scaglioni | TF 10-0 4:30
+c1 Gianna Anaya > bye
+c2 Julianna Moreno > Gianna Anaya | Dec 8-2
+c1 Tristan Folkner > bye
+c2 Erica Schroeder > Tristan Folkner | Fall 2-0 0:48
+c1 Sagel Bush > bye
+c2 Clara Padua-Cruz > Sagel Bush | Fall 12-2 2:28
+c2 Kya Rybachek > bye
+c3 Kya Rybachek > Clara Padua-Cruz | TF 10-0 2:41
+c2 Mika Walters > bye
+c3 Nia Miranda > Mika Walters | Dec 6-0
+c2 Kim Nunez > bye
+c3 Kim Nunez > Julianna Moreno | Fall 10-0 2:12
+sf Alara Boyd > Riley Aamold | TF 10-0 3:21
+sf Ashlynn Ortega > Avia bibeau | TF 10-0 0:46
+c3 Erica Schroeder > bye
+c4 Khadijah Sanusi > Erica Schroeder | Dec 8-4
+c4 Kaylee Lacy > Nia Miranda | Fall 3-0 1:24
+c4 Kim Nunez > Stephanie Floor | TF 10-0 4:10
+c4 Madison Sandquist > Kya Rybachek | Fall 8-0 4:48
+cqf Madison Sandquist > Kim Nunez | Dec 11-7
+cqf Kaylee Lacy > Khadijah Sanusi | TF 10-0 1:19
+csf Madison Sandquist > Avia bibeau | TF 10-0 4:34
+csf Kaylee Lacy > Riley Aamold | Fall 8-4 1:41
+7th Kim Nunez > Khadijah Sanusi | Dec 3-1
+5th Avia bibeau > Riley Aamold | Fall 4-0 0:23
+3rd Madison Sandquist > Kaylee Lacy | Fall 6-1 5:19
+f Ashlynn Ortega > Alara Boyd | Dec 3-0
+
+@ 155
+- Shelsy Renous | Limestone College
+- Kahlea Jolly | Augsburg University
+- Skylah Chakouian | Elmira College
+- Skyla Armstrong | Emmanuel College
+- Sarina Bertram | William Jewell College
+- Viktorya Torres | King University
+- Tiera Jimerson | North Central College
+- Caylee Collins | Colorado Mesa University
+- Taylor Hites | Tiffin University
+- Sara Lake | Lindenwood University
+- Jordan Johnston | Schreiner University
+- Tiffani Baublitz | King University
+- Taylor Cutler | Adrian College
+- Nyla Burgess | Adrian College
+- Marlynne Deede | Augsburg University
+- Caitlyn Gilmore | Limestone College
+- Kayla Marano | McKendree University
+- Alyvia Fiske | Simon Fraser University
+- Jessica Johnson | Lock Haven University
+r1 Shelsy Renous > Kahlea Jolly | Dec 13-4
+r1 Skylah Chakouian > Skyla Armstrong | Fall 4-0 0:31
+r1 Sarina Bertram > Viktorya Torres | Dec 2-2
+r1 Tiera Jimerson > bye
+r1 Caylee Collins > bye
+r2 Tiera Jimerson > Caylee Collins | Dec 5-3
+r1 Taylor Hites > bye
+r1 Sara Lake > bye
+r2 Taylor Hites > Sara Lake | TF 10-0 4:17
+r1 Jordan Johnston > bye
+r2 Skylah Chakouian > Jordan Johnston | Fall 8-6 2:38
+r1 Tiffani Baublitz > bye
+r1 Taylor Cutler > bye
+r2 Tiffani Baublitz > Taylor Cutler | Dec 10-4
+r1 Nyla Burgess > bye
+r2 Nyla Burgess > Sarina Bertram | TF 11-0 5:30
+r1 Marlynne Deede > bye
+r1 Caitlyn Gilmore > bye
+r2 Marlynne Deede > Caitlyn Gilmore | TF 12-0 3:00
+r1 Kayla Marano > bye
+r2 Kayla Marano > Shelsy Renous | Fall 12-0 1:45
+r1 Alyvia Fiske > bye
+r1 Jessica Johnson > bye
+r2 Alyvia Fiske > Jessica Johnson | TF 13-2 5:22
+qf Marlynne Deede > Skylah Chakouian | Fall 10-0 4:53
+qf Kayla Marano > Taylor Hites | TF 10-0 4:42
+qf Tiera Jimerson > Tiffani Baublitz | Dec 9-2
+qf Alyvia Fiske > Nyla Burgess | TF 10-0 2:25
+c1 Skyla Armstrong > bye
+c2 Taylor Cutler > Skyla Armstrong | Fall 4-0 0:11
+c1 Viktorya Torres > bye
+c2 Sara Lake > Viktorya Torres | Fall 8-7 5:58
+c1 Kahlea Jolly > bye
+c2 Jessica Johnson > Kahlea Jolly | TF 11-0 3:23
+c2 Caylee Collins > bye
+c3 Taylor Cutler > Caylee Collins | Dec 9-1
+c2 Jordan Johnston > bye
+c2 Caitlyn Gilmore > bye
+c3 Jordan Johnston > Caitlyn Gilmore | TF 10-0 3:00
+c2 Shelsy Renous > bye
+c3 Shelsy Renous > Sara Lake | TF 12-1 4:07
+c2 Sarina Bertram > bye
+c3 Sarina Bertram > Jessica Johnson | Dec 8-3
+sf Kayla Marano > Tiera Jimerson | Dec 4-1
+sf Alyvia Fiske > Marlynne Deede | Dec 3-0
+c4 Nyla Burgess > Taylor Cutler | Fall 2-0 1:11
+c4 Skylah Chakouian > Shelsy Renous | TF 10-0 1:44
+c4 Tiffani Baublitz > Sarina Bertram | Dec 3-2
+c4 Taylor Hites > Jordan Johnston | Fall 4-0 1:30
+cqf Nyla Burgess > Skylah Chakouian | Dec 9-8
+cqf Taylor Hites > Tiffani Baublitz | Dec 11-2
+csf Marlynne Deede > Taylor Hites | TF 12-2 2:41
+csf Nyla Burgess > Tiera Jimerson | Dec 5-2
+7th Tiffani Baublitz > Skylah Chakouian | Fall 4-0 1:06
+5th Tiera Jimerson > Taylor Hites | Dec 8-0
+3rd Marlynne Deede > Nyla Burgess | TF 10-0 2:15
+f Alyvia Fiske > Kayla Marano | Dec 3-2
+
+@ 170
+- Tabitha Breitrick | University Of Wisconsin At Stevens Point
+- Aspen Dodge | Adrian College
+- Cheyenne Bowman | King University
+- Emma Carter | William Jewell College
+- Grace Kristoff | McKendree University
+- Taryn Martin | Tiffin University
+- Yelena Makoyed | North Central College
+- Kamila Montenegro | Chadron State College
+- Emily Cue | Simon Fraser University
+- Kalani Rivas | Limestone College
+- Gabrielle Mendoza | Ferrum College
+- Joye Levendusky | McKendree University
+- Jacklyn Smith | Sacred Heart University
+- Kayley Rada | Adrian College
+- Jade Herzer | University Of Wisconsin At Stevens Point
+- brianna simsic | East Stroudsburg University
+- Tatum Heikkila | Colorado Mesa University
+- Madison Horn | Augsburg University
+r1 Tabitha Breitrick > Aspen Dodge | Dec 10-7
+r1 Cheyenne Bowman > Emma Carter | Fall 10-0 1:08
+r1 Grace Kristoff > bye
+r1 Taryn Martin > bye
+r2 Grace Kristoff > Taryn Martin | Fall 6-0 2:37
+r1 Yelena Makoyed > bye
+r1 Kamila Montenegro > bye
+r2 Yelena Makoyed > Kamila Montenegro | TF 10-0 1:46
+r1 Emily Cue > bye
+r1 Kalani Rivas > bye
+r2 Emily Cue > Kalani Rivas | TF 10-0 1:43
+r1 Gabrielle Mendoza > bye
+r2 Tabitha Breitrick > Gabrielle Mendoza | Fall 8-0 2:04
+r1 Joye Levendusky > bye
+r1 Jacklyn Smith > bye
+r2 Joye Levendusky > Jacklyn Smith | TF 10-0 2:08
+r1 Kayley Rada > bye
+r2 Cheyenne Bowman > Kayley Rada | TF 14-4 4:01
+r1 Jade Herzer > bye
+r1 brianna simsic > bye
+r2 Jade Herzer > brianna simsic | TF 13-0 3:22
+r1 Tatum Heikkila > bye
+r1 Madison Horn > bye
+r2 Tatum Heikkila > Madison Horn | Dec 7-0
+qf Emily Cue > Grace Kristoff | Dec 7-2
+qf Joye Levendusky > Jade Herzer | Dec 3-2
+qf Yelena Makoyed > Tabitha Breitrick | Fall 4-0 1:15
+qf Cheyenne Bowman > Tatum Heikkila | Fall 9-0 4:43
+c1 Aspen Dodge > bye
+c2 Aspen Dodge > Madison Horn | Fall 4-0 1:20
+c1 Emma Carter > bye
+c2 Emma Carter > Kamila Montenegro | Fall 6-0 0:25
+c2 Taryn Martin > bye
+c2 Kalani Rivas > bye
+c3 Taryn Martin > Kalani Rivas | Dec 5-1
+c2 Gabrielle Mendoza > bye
+c3 Emma Carter > Gabrielle Mendoza | Fall 2-4 0:11
+c2 Kayley Rada > bye
+c3 Kayley Rada > Aspen Dodge | TF 10-0 2:55
+c2 Jacklyn Smith > bye
+c2 brianna simsic > bye
+c3 Jacklyn Smith > brianna simsic | Fall 4-0 0:21
+sf Joye Levendusky > Cheyenne Bowman | Dec 6-4
+sf Yelena Makoyed > Emily Cue | TF 10-0 1:29
+c4 Jacklyn Smith > Tabitha Breitrick | Dec 6-2
+c4 Jade Herzer > Emma Carter | Fall 4-0 0:52
+c4 Tatum Heikkila > Taryn Martin | Dec 10-3
+c4 Grace Kristoff > Kayley Rada | Fall 2-0 0:32
+cqf Jade Herzer > Tatum Heikkila | Fall 8-0 5:17
+cqf Grace Kristoff > Jacklyn Smith | Fall 8-0 2:31
+csf Emily Cue > Jade Herzer | Fall 8-0 5:19
+csf Grace Kristoff > Cheyenne Bowman | Dec 4-4
+7th Tatum Heikkila > Jacklyn Smith | Dec 9-3
+5th Cheyenne Bowman > Jade Herzer | Dec 3-0
+3rd Emily Cue > Grace Kristoff | Dec 4-1
+f Yelena Makoyed > Joye Levendusky | TF 11-0 3:34
+
+@ 191
+- Ashley Reed | Sacred Heart University
+- Tayana Labady | Elmira College
+- Hollie Espinoza | Tiffin University
+- Sydni Scott | William Jewell College
+- Sandra Guerrero | New Jersey City University
+- Amber Latta | North Central College
+- Sydnee Kimber | McKendree University
+- shola cascen | East Stroudsburg University
+- Nia Crosdale | King University
+- Faith Tuttle | Augsburg University
+- Cristina Santoyo | Emmanuel College
+- Alayzah Reid | Augsburg University
+- Jayleen Sekona | Colorado Mesa University
+- Kaycee Fitero | Lindenwood University
+- Jaycee Foeller | McKendree University
+- Andreia Langley | Emory and Henry College
+- Katja Osteen | Simon Fraser University
+- Journey Land | Limestone College
+- Julia Richey | Simon Fraser University
+r1 Ashley Reed > Tayana Labady | Fall 5-2 5:00
+r1 Hollie Espinoza > Sydni Scott | Fall 6-3 2:17
+r1 Sandra Guerrero > Amber Latta | Fall 2-0 0:51
+r1 Sydnee Kimber > bye
+r1 shola cascen > bye
+r2 Sydnee Kimber > shola cascen | Fall 8-0 0:43
+r1 Nia Crosdale > bye
+r1 Faith Tuttle > bye
+r2 Nia Crosdale > Faith Tuttle | Dec 5-0
+r1 Cristina Santoyo > bye
+r1 Alayzah Reid > bye
+r2 Cristina Santoyo > Alayzah Reid | Fall 6-0 1:44
+r1 Jayleen Sekona > bye
+r2 Jayleen Sekona > Ashley Reed | Dec 6-0
+r1 Kaycee Fitero > bye
+r2 Sandra Guerrero > Kaycee Fitero | Fall 7-0 2:02
+r1 Jaycee Foeller > bye
+r1 Andreia Langley > bye
+r2 Jaycee Foeller > Andreia Langley | Fall 2-1 0:52
+r1 Katja Osteen > bye
+r2 Katja Osteen > Hollie Espinoza | Fall 4-0 0:42
+r1 Journey Land > bye
+r1 Julia Richey > bye
+r2 Journey Land > Julia Richey | Fall 14-6 3:32
+qf Jaycee Foeller > Journey Land | TF 12-1 2:24
+qf Jayleen Sekona > Nia Crosdale | Dec 3-1
+qf Cristina Santoyo > Katja Osteen | Fall 4-1 2:01
+qf Sydnee Kimber > Sandra Guerrero | TF 10-0 2:29
+c1 Amber Latta > bye
+c2 Amber Latta > Julia Richey | Dec 2-2
+c1 Sydni Scott > bye
+c2 Sydni Scott > Ashley Reed | Dec 8-4
+c1 Tayana Labady > bye
+c2 Hollie Espinoza > Tayana Labady | Fall 4-0 0:51
+c2 Alayzah Reid > bye
+c3 Hollie Espinoza > Alayzah Reid | DEF 6-0 1:41
+c2 Faith Tuttle > bye
+c3 Sydni Scott > Faith Tuttle | Dec 6-1
+c2 Andreia Langley > bye
+c3 Andreia Langley > Amber Latta | Fall 5-1 3:25
+c2 Kaycee Fitero > bye
+c2 shola cascen > bye
+c3 Kaycee Fitero > shola cascen | Fall 6-0 1:34
+sf Sydnee Kimber > Cristina Santoyo | TF 11-0 4:28
+sf Jaycee Foeller > Jayleen Sekona | Dec 5-2
+c4 Nia Crosdale > Kaycee Fitero | TF 12-0 4:12
+c4 Journey Land > Hollie Espinoza | TF 10-0 0:35
+c4 Katja Osteen > Andreia Langley | Fall 4-0 0:13
+c4 Sandra Guerrero > Sydni Scott | Fall 16-3 5:25
+cqf Nia Crosdale > Journey Land | TF 10-0 5:38
+cqf Katja Osteen > Sandra Guerrero | Fall 4-0 0:39
+csf Jayleen Sekona > Katja Osteen | Dec 9-6
+csf Nia Crosdale > Cristina Santoyo | Dec 4-3
+7th Sandra Guerrero > Journey Land | Fall 4-0 1:07
+5th Cristina Santoyo > Katja Osteen | Fall 3-5 3:59
+3rd Jayleen Sekona > Nia Crosdale | Dec 4-1
+f Sydnee Kimber > Jaycee Foeller | Fall 6-0 1:18
+

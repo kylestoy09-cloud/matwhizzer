@@ -23,10 +23,10 @@ function fmtTime(secs: number): string {
 // ── Sub-components ────────────────────────────────────────────────────────────
 
 function StatCard<T extends { wrestler_id: string; wrestler_name: string; school: string | null; school_name: string | null; school_id?: number | null; logo_url?: string | null; bg_color?: string | null }>({
-  title, rows, subtitle, value, note,
+  title, rows, subtitle, value, note, empty = 'No data',
 }: {
   title: string; rows: T[]
-  subtitle: (r: T) => string; value: (r: T) => string; note?: string
+  subtitle: (r: T) => string; value: (r: T) => string; note?: string; empty?: string
 }) {
   return (
     <div className="bg-white rounded-none border border-black shadow-none overflow-hidden">
@@ -35,7 +35,7 @@ function StatCard<T extends { wrestler_id: string; wrestler_name: string; school
         {note && <p className="text-[10px] text-slate-400 mt-0.5">{note}</p>}
       </div>
       <div className="divide-y divide-slate-100">
-        {rows.length === 0 && <p className="px-4 py-3 text-sm text-slate-400">No data</p>}
+        {rows.length === 0 && <p className="px-4 py-3 text-sm text-slate-400">{empty}</p>}
         {rows.map((r, i) => (
           <div key={`${r.wrestler_id}-${i}`} className="flex items-center gap-2 px-4 py-2.5">
             <span className="text-xs text-slate-400 w-4 shrink-0 text-right">{i + 1}</span>
@@ -146,22 +146,24 @@ export function StateContent({ gender, season, data }: { gender: 'M' | 'F', seas
       {/* ── State Leaders ── */}
       <section className="mb-10">
         <h2 className="text-base font-semibold text-slate-800 mb-3">State Leaders</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <StatCard<MatTimeRow>
             title="The Terminators"
-            note="Total Tourney Mat Time"
+            note="Total Postseason Mat Time (districts, regions and State)"
             rows={matTime}
             subtitle={r => `${r.school_id != null ? r.school_name : 'TBD'} · ${r.match_count} wins`}
             value={r => fmtTime(r.total_seconds)}
           />
           <StatCard<FastestPinRow>
             title="Quickest Deck"
+            empty="No Pins"
             rows={fastPin}
             subtitle={r => `${r.school_id != null ? r.school_name : 'TBD'} · ${r.weight} lb`}
             value={r => fmtTime(r.fall_time_seconds)}
           />
           <StatCard<FastestTfRow>
             title="Quickest Tech"
+            empty="No Techs"
             rows={fastTf}
             subtitle={r => `${r.school_id != null ? r.school_name : 'TBD'} · ${r.weight} lb`}
             value={r => fmtTime(r.fall_time_seconds)}

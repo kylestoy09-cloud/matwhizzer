@@ -11,7 +11,7 @@ import type {
   SchoolOverride,
   WrestlerOverride,
   TournamentOverride,
-  MsProfileLink,
+  ProspectLink,
   ImportResult,
 } from './types'
 import { SchoolFlagCard } from './SchoolFlagCard'
@@ -259,7 +259,7 @@ export function RtfImportClient() {
   const [venues, setVenues] = useState<Record<string, { venue_name: string; venue_address: string }>>({})
   const [tournamentOverrides, setTournamentOverrides] = useState<Record<string, TournamentOverride>>({})
   const [hubPinnedTkey, setHubPinnedTkey] = useState<string | null>(null)
-  const [msProfileLinks, setMsProfileLinks] = useState<Record<string, MsProfileLink>>({})
+  const [prospectLinks, setProspectLinks] = useState<Record<string, ProspectLink>>({})
 
   // Bout review state: tkey → boutKey → confirmed round
   const [boutRounds, setBoutRounds] = useState<Record<string, Record<string, string>>>({})
@@ -529,7 +529,7 @@ export function RtfImportClient() {
           boutReview[tkey] = { ...(boutRounds[tkey] ?? {}) }
         }
         const data = await apiPost<{ results: ImportResult[] }>(
-          '/api/admin/rtf/import', { text, year, selected: toImport, schoolOverrides, wrestlerOverrides, tournamentDates: dates, tournamentTypes, tournamentVenues: venues, tournamentOverrides, msProfileLinks, boutReview, force, gender, registry_id: sessionData.registry_id },
+          '/api/admin/rtf/import', { text, year, selected: toImport, schoolOverrides, wrestlerOverrides, tournamentDates: dates, tournamentTypes, tournamentVenues: venues, tournamentOverrides, prospectLinks, boutReview, force, gender, registry_id: sessionData.registry_id },
         )
         if (data.error) { setMatchError(data.error); return }
         if (draftId && deferredTournaments.size === 0) {
@@ -566,8 +566,8 @@ export function RtfImportClient() {
     })
   }
 
-  function handleMsLink(key: string, link: MsProfileLink | undefined) {
-    setMsProfileLinks(prev => {
+  function handleProspectLink(key: string, link: ProspectLink | undefined) {
+    setProspectLinks(prev => {
       const next = { ...prev }
       if (link === undefined) delete next[key]
       else next[key] = link
@@ -578,7 +578,7 @@ export function RtfImportClient() {
   function resetAll() {
     setText(''); setSummaries([]); setSelected(new Set())
     setReviewed([]); setSchoolOverrides({}); setWrestlersStale(false); setWrestlerOverrides({}); setDates({}); setTournamentTypes({})
-    setTournamentOverrides({}); setHubPinnedTkey(null); setMsProfileLinks({})
+    setTournamentOverrides({}); setHubPinnedTkey(null); setProspectLinks({})
     setBoutRounds({}); setBoutDuplicates({}); setBoutSeeds({})
     setImportResults([]); setDraftId(null); setDraftLabel('')
     setSaveState('idle'); setStep('input')
@@ -987,8 +987,8 @@ export function RtfImportClient() {
                                   override={wrestlerOverrides[f.key]}
                                   onOverride={handleWrestlerOverride}
                                   gender={gender}
-                                  msProfileLink={msProfileLinks[f.key]}
-                                  onMsLink={handleMsLink}
+                                  prospectLink={prospectLinks[f.key]}
+                                  onProspectLink={handleProspectLink}
                                   gradeSuggestion={gradeSuggestions[suggestionKey(f.raw_name, f.school_id)]}
                                 />
                               ))}

@@ -48,6 +48,9 @@ function play(meets: Meet[], a: number | null, b: number | null): { match: Brack
   }
 }
 
+/** The seasons with a girls team bracket on file, newest first */
+export const GIRLS_TEAM_SEASONS = Object.keys(LAYOUTS).map(Number).sort((a, b) => b - a)
+
 export async function getGirlsTeamBracket(season: number): Promise<GirlsTeamBracket | null> {
   const layout = LAYOUTS[season]
   if (!layout) return null

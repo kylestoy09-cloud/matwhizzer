@@ -1,6 +1,8 @@
 import { supabase } from '@/lib/supabase/public-cached'
 import { getSeasonLabel } from '@/lib/seasons-server'
 import Link from 'next/link'
+import { loadTrophyCase } from '@/lib/trophyCase'
+import { powerRankBox, conferenceRankBox } from '@/lib/schoolRankBoxes'
 import { notFound } from 'next/navigation'
 import { getActiveSeason } from '@/lib/get-season'
 import { getSchoolSeasonName } from '@/lib/schoolSeasonNames'
@@ -9,6 +11,8 @@ import { conferenceToSlug } from '@/lib/conferences'
 import { sectionToSlug, groupToSlug } from '@/lib/sections'
 import { SchoolTabs } from '../[school]/SchoolTabs'
 import { SchoolHeader } from '@/components/SchoolHeader'
+import { createSupabaseAdmin } from '@/lib/supabase/service'
+import { streamingLinkFor, shownStreams } from '@/lib/streamingLinks'
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
@@ -95,10 +99,13 @@ export async function SchoolProfileCore({
   schoolParam,
   gender,
   activeTab,
+  preview,
 }: {
   schoolParam: string
   gender: 'boys' | 'girls'
   activeTab: string
+  // the Trophy Case tab (Kyle 2026-11-13; live 2026-11-14: the site routes pass it); tabs that switch in place (the Aesthetic Tool)
+  preview?: { trophyCase?: boolean; localTabs?: boolean }
 }) {
   const schoolId = parseInt(schoolParam, 10)
   if (!schoolId) notFound()
@@ -283,6 +290,12 @@ export async function SchoolProfileCore({
     ? (profile.section === 'Non-Public' ? `Non-Public ${profile.classification}` : `${profile.section} Group ${profile.classification}`)
     : null
 
+  // the Power Rankings and Conference Rankings boxes (Kyle 2026-11-16)
+  const [powerBox, confBox] = await Promise.all([
+    powerRankBox(genderCode, season, dataSchoolId, profile.section, profile.classification, secSlug && grpSlug ? `/sections/${secSlug}/${grpSlug}?gender=${gender}` : null),
+    conferenceRankBox(genderCode, season, dataSchoolId),
+  ])
+
   rows.sort((a, b) => a.primary_weight - b.primary_weight)
 
   // The season roster: the postseason list (school_wrestlers) plus everyone who wrestled for the
@@ -294,6 +307,11 @@ export async function SchoolProfileCore({
   const stateMedalists = rows.filter(w => w.state_placement && medalPlaces.has(w.state_placement)).length
 
   const basePath = `${genderBase}/schools/${schoolParam}`
+
+  // the program's streaming page (Kyle 2026-11-18): admin-only table, read on the server; carried forward from the newest
+  // season on file
+  // Hudl and / or NFHS Network (Kyle 2026-11-19): both until the microcheck picks the home account
+  const streams = shownStreams(await streamingLinkFor(createSupabaseAdmin(), genderCode, dataSchoolId, season)).map(s => ({ label: s.label, url: s.url }))
 
   return (
     <>
@@ -323,6 +341,7 @@ export async function SchoolProfileCore({
         athleticConference={profile.athletic_conference}
         websiteUrl={profile.website_url}
         twitterHandle={profile.twitter_handle}
+        streams={streams}
         headCoach={headCoachName}
         address={profile.address}
       />
@@ -409,6 +428,9 @@ export async function SchoolProfileCore({
           stateMedalists={stateMedalists}
           tourneyLabel={TOURNEY_LABEL}
           activeSeason={season}
+          trophy={preview?.trophyCase ? await loadTrophyCase(schoolId, genderCode) : null}
+          rankBoxes={{ power: powerBox, conference: confBox }}
+          localTabs={preview?.localTabs}
         />
       </div>
     </>

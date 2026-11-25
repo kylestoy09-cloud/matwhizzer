@@ -256,6 +256,27 @@ export function computeTournamentComponent(
   return Math.round((included.reduce((a, b) => a + b, 0) / included.length) * 100) / 100
 }
 
+// ─── Tournament part, 12-month rolling (Kyle 2026-11-12) ─────────────────────
+// One result per tournament (its latest edition within the last 12 months; a new edition replaces the
+// old one, and an injury default at the new one averages the two, 0 if no place). The part is the
+// average of those results with any WIN worth less than the average taken out — a win is the most a
+// wrestler can score at that level, so it can't pull a step up down. Wins are removed and the rest
+// re-averaged until nothing changes, so the order the results came in doesn't matter.
+// Results worth 0 (wrestled, no points) count as no result.
+
+export type TournamentResult = { points: number; won: boolean }
+
+export function tournamentAverage(results: TournamentResult[]): number {
+  let kept = results.filter(r => r.points > 0)
+  for (;;) {
+    if (!kept.length) return 0
+    const avg = kept.reduce((a, r) => a + r.points, 0) / kept.length
+    const next = kept.filter(r => !(r.won && r.points < avg))
+    if (next.length === kept.length) return Math.round(avg * 100) / 100
+    kept = next
+  }
+}
+
 // ─── Tournament point award lookup ────────────────────────────────────────────
 // Returns the points earned for a given placement and tournament point tier.
 // Returns 0 if the placement is outside the awarding range for that tier.

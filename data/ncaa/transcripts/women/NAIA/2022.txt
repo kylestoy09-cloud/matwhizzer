@@ -1,0 +1,409 @@
+# source: 2022 NAIA women (TrackWrestling export; 64-man brackets at four weights — places only, no bouts)
+
+@ 101
+- Ana Bradshaw | Missouri Baptist (W)
+- Maddison Soman | Ottawa (W)
+- Brooke Burrows | Corban (W)
+- Kylie Hernandez | Baker (W)
+- Emma Baertlein | Southern Oregon (W)
+- Bemnet Tesfa | Hastings (W)
+- Gabriela Galvez Garcia | Brewton Parker (W)
+- Alyssa Cordova | University of St. Mary's (W)
+- Kylie Marlin | York (W)
+- Mia Diaz | Campbellsville (W)
+- Abby Jastal | Central Methodist (W)
+- Angelique Cervantes | Life Pacific (W)
+- Ella Whitaker | York (W)
+- Tianna Fernandez | Menlo
+- Kassidy Ramirez | Lyon
+- Nayeli Flores Roque | Eastern Oregon (W)
+- Sydney Kutzke | Indiana Tech (W)
+- Ira Navarro | Providence (W)
+- Malarie Dominguez | Wayland Baptist (W)
+- Hannah Michael | Grand View (W)
+- Madison Brown | Texas Wesleyan (W)
+- Alaina Sunlin | Iowa Wesleyan University (W)
+- Emma Cochran | Grand View (W)
+- Elizabeth Dosado | Cumberlands (W)
+- Esther Walker | Midland (W)
+- Katalina Bartelt | Life (W)
+- Nina Pham | Wayland Baptist (W)
+- Ivy Navarro | Providence (W)
+place 1 Nina Pham
+place 2 Ivy Navarro
+place 3 Esther Walker
+place 4 Katalina Bartelt
+place 5 Madison Brown
+place 6 Ira Navarro
+place 7 Emma Baertlein
+place 8 Tianna Fernandez
+
+@ 109
+- Jaine Stephens | Cumberlands (W)
+- Riley Horvath | Indiana Tech (W)
+- Mia Arceneaux | Wayland Baptist (W)
+- Nadia Alejandres | Oklahoma City (W)
+- Lillianna Campbell | Missouri Valley (W)
+- Jaselynn Dunn | Friends University (W)
+- Claire Payne | York (W)
+- Zoey Mzeru | Avila University (W)
+- Jessica Correrdor | Missouri Baptist (W)
+- Jessienna Burkett-Erice | Lyon
+- Lana Hunt | Providence (W)
+- Angelique Martinez | Ottawa (W)
+- Tehani Soares | Indiana Tech (W)
+- Chloe Krebsbach | Grand View (W)
+- Melanie Salazar | Simpson University
+- Tiana Savino | Hastings (W)
+- Stephanie Blankenship | Eastern Oregon (W)
+- Kelsey Bilz | Campbellsville (W)
+- Macie Stewart | Southern Oregon (W)
+- Samantha Weeks | Jamestown (W)
+- Laura Lincoln | Lyon
+- Alyssa Valdivia | Brewton Parker (W)
+- Kory Phillips | Life (W)
+- Alexis Medina | Cumberlands (W)
+- Barbara Greenberg | Menlo
+- Asia (Oviance) Ray | Wayland Baptist (W)
+- Jasmine Godinez | Texas Wesleyan (W)
+- Peyton Prussin | Life (W)
+- Mia Palumbo | Iowa Wesleyan University (W)
+place 1 Peyton Prussin
+place 2 Mia Palumbo
+place 3 Alexis Medina
+place 4 Tehani Soares
+place 5 Jasmine Godinez
+place 6 Asia (Oviance) Ray
+place 7 Kory Phillips
+place 8 Jessica Correrdor
+
+@ 116
+- Irma Retano | Eastern Oregon (W)
+- Alyssa Sanchez | Central Christian (W)
+- Prethy Enriquez | Midland (W)
+- Carly Courcier | Oklahoma City (W)
+- Gigi Loza | Central Methodist (W)
+- Kali Christie | University of St. Mary's (W)
+- Jonesha Kennedy | Wayland Baptist (W)
+- Andrea Contreras | Central Christian (W)
+- Kendall Martin | Corban (W)
+- Emma De Brum | Lyon
+- Emily Ferguson | York (W)
+- Korigan Wilkey | Indiana Tech (W)
+- Aphrodite Ayala | Simpson University
+- Anjelynn Baron | Eastern Oregon (W)
+- Destiny Dominguez | Waldorf (W)
+- Ashley Tobe | Grand View (W)
+- Markayla Lottie | Avila University (W)
+- Briana Funakoshi | Life (W)
+- Aaliyah Bueno | Baker (W)
+- Catherine Steinkamp | William Penn (W)
+- Tess Barnett | Corban (W)
+- Katherine Heath | Baker (W)
+- Hailey Holland | Lyon
+- McKayla Campbell | Campbellsville (W)
+- Carol Johnson | Southern Oregon (W)
+- Arianna Marrufo | Jamestown (W)
+- Camille Fournier | Texas Wesleyan (W)
+- Ashley Gooman | Providence (W)
+- Tara Othman | Southern Oregon (W)
+- Allieda Martinez | Menlo
+- Salyna Shotwell | Life (W)
+place 1 Allieda Martinez
+place 2 Salyna Shotwell
+place 3 Tara Othman
+place 4 Ashley Gooman
+place 5 Camille Fournier
+place 6 McKayla Campbell
+place 7 Carol Johnson
+place 8 Kendall Martin
+
+@ 123
+- Alesandra Burgos | Brewton Parker (W)
+- Alisha Van Scoy | University of St. Mary's (W)
+- Geneva Winston | Brewton Parker (W)
+- Sasha Bel | Simpson University
+- Josie Bartishofski | Jamestown (W)
+- Mckenna Deckelman | Central Methodist (W)
+- Allison Doppenberg | York (W)
+- Dakota Darby | Ottawa (W)
+- Zoi Smith | Iowa Wesleyan University (W)
+- Zoey Smith | Cumberlands (W)
+- Marissa Burt | Jamestown (W)
+- Michaela Childs | Oklahoma City (W)
+- Allison Hynes | Central Methodist (W)
+- Kimberly Evangelista | Central Christian (W)
+- Abbi Link | Hastings (W)
+- Katy Figueroa | York (W)
+- Tonya Flournory | St. Andrews (W)
+- Lauren LopezÂ | University of St. Mary's (W)
+- Dylan Hernandez | Cumberlands (W)
+- Sophia Smith | Oklahoma City (W)
+- Mami Selemani | William Penn (W)
+- Yalita Arroyo | Friends University (W)
+- Rebekah Cordovas | Wayland Baptist (W)
+- Lizzete Young | Menlo
+- Emma Jones | Indiana Tech (W)
+- Jackie Ghent | Campbellsville (W)
+- Ashley Whetzal | Lyon
+- Brianna Munoz | Midland (W)
+- Laila Sa | Life (W)
+- Jasmine Hernandez | Lyon
+- Devin Patton | Texas Wesleyan (W)
+- Alana Vivas | Menlo
+- Karoline Ortiz | Missouri Baptist (W)
+- Adrienna Turner | Grand View (W)
+- Nichole Moore | Baker (W)
+- Macy Higa | Eastern Oregon (W)
+- Caro Moreno | Southern Oregon (W)
+- Leilah Castro | Campbellsville (W)
+place 1 Caro Moreno
+place 2 Leilah Castro
+place 3 Alana Vivas
+place 4 Macy Higa
+place 5 Nichole Moore
+place 6 Adrienna Turner
+place 7 Devin Patton
+place 8 Karoline Ortiz
+
+@ 130
+- Araya Boday | University of St. Mary's (W)
+- Bailey Hoyt | Friends University (W)
+- Jori Richardson | Brewton Parker (W)
+- Hayden Oaks | Ottawa (W)
+- Joanna Vanderwood | Iowa Wesleyan University (W)
+- Corrine McClure | Central Methodist (W)
+- Olivia Mottley | Life (W)
+- Tabitha Wood | Hastings (W)
+- Gabbie Parini | Providence (W)
+- Gwendolyn Grimes | William Penn (W)
+- Jaden South | Corban (W)
+- Desinee Lopez | Southern Oregon (W)
+- Cassidy Anderson | Central Christian (W)
+- Lydia Nelson | William Penn (W)
+- Olivia Branson | Baker (W)
+- Rebekah Garcia | Lyon
+- Cindy Zepeda | Menlo
+- Willow Barnes | Missouri Valley (W)
+- Avery Thomason | Midland (W)
+- Jo-ellen Hutto | St. Andrews (W)
+- Kaelyn Siason | Providence (W)
+- Corinne Robertson | Ottawa (W)
+- Julissa Taitano | Southern Oregon (W)
+- Jocelyn Murphy | Missouri Valley (W)
+- Emily Paulino | Midland (W)
+- Jennifer Castaneda | Waldorf (W)
+- Katlyn Pizzo | Campbellsville (W)
+- Allie Baudhuin | Jamestown (W)
+- Leidaly Rivera | Brewton Parker (W)
+- Kaylee Moore | Eastern Oregon (W)
+- De'anna Prince | Wayland Baptist (W)
+- Julia Vidallon | Life (W)
+- Andrea Schlabach | Grand View (W)
+- Nanea Estrella | Menlo
+- Lexie Basham | Texas Wesleyan (W)
+place 1 Lexie Basham
+place 2 Nanea Estrella
+place 3 Andrea Schlabach
+place 4 Allie Baudhuin
+place 5 Katlyn Pizzo
+place 6 Julia Vidallon
+place 7 Desinee Lopez
+place 8 Kaylee Moore
+
+@ 136
+- Krystal Fabricante | Eastern Oregon (W)
+- Rebekah Koolstra | University of St. Mary's (W)
+- Lindsay Mills | Missouri Baptist (W)
+- Jessica Miller | Avila University (W)
+- Alex Banag | Lyon
+- Julia Mata | Missouri Valley (W)
+- Autumn Barela | Central Methodist (W)
+- Samantha Kuillan | Ottawa (W)
+- Allyson Arrington | Cumberlands (W)
+- Alondra Becerra | Hastings (W)
+- Mikinlee Smith | Ottawa (W)
+- Cameryn Hulbert | York (W)
+- Adriana Orozco | Oklahoma City (W)
+- Alexis Lopez | Grand View (W)
+- Samanatha Barragan | Life Pacific (W)
+- Nahdia Barrientos | Waldorf (W)
+- Abbie Jones | Baker (W)
+- Destiny Campbell | Iowa Wesleyan University (W)
+- Gianna Moreno | Missouri Valley (W)
+- Allyssa Pirro | Indiana Tech (W)
+- Kamryn Ellis | Brewton Parker (W)
+- Emily Se | Southern Oregon (W)
+- Ashlee Palimoo | Midland (W)
+- Savannah Turner | Hastings (W)
+- Paige Respicio | Providence (W)
+- Ellyana Kuzma | Indiana Tech (W)
+- Louisa Schwab | Menlo
+- Jordan Suarez | Wayland Baptist (W)
+- Randi Robison | Campbellsville (W)
+- Diana Dzasezeva | Waldorf (W)
+- Adaugo Nwachukwu | Iowa Wesleyan University (W)
+- Gracie Figueroa | Menlo
+place 1 Adaugo Nwachukwu
+place 2 Gracie Figueroa
+place 3 Emily Se
+place 4 Paige Respicio
+place 5 Diana Dzasezeva
+place 6 Randi Robison
+place 7 Ellyana Kuzma
+place 8 Samanatha Barragan
+
+@ 143
+- Susana Mondragon | Avila University (W)
+- Audrey Driskell | Lincoln
+- Brianne Whited | Central Methodist (W)
+- Elizabeth Ramirez | University of St. Mary's (W)
+- Sidalie Jaramillo | University of St. Mary's (W)
+- Ku'uipo Chan | Waldorf (W)
+- Sydney Boyle | York (W)
+- Morgan Mackey | Providence (W)
+- Kailee Godinez | Cumberlands (W)
+- Brelane Huber | Campbellsville (W)
+- Ingrid Beltran-Gonzaga | Ottawa (W)
+- Nayeli Maston | Eastern Oregon (W)
+- Taylor Whitehurst | Cumberlands (W)
+- Ashlee Vaughan | Oklahoma City (W)
+- Tess Kinne | Missouri Valley (W)
+- Lianna Souza | Wayland Baptist (W)
+- Kaylee Narlock | Jamestown (W)
+- Andrea Montoya | Central Methodist (W)
+- Sadie Forman | Wayland Baptist (W)
+- Kai Morrison | Avila University (W)
+- Derriane Morrison | Ottawa (W)
+- Ramona Jimenez | Southern Oregon (W)
+- Kaydince Turner | Hastings (W)
+- Marianyeli Mercado | Brewton Parker (W)
+- Ashleigh Denny | William Penn (W)
+- Carley Anderson | Indiana Tech (W)
+- Morgan Shines | Eastern Oregon (W)
+- Maryellen Lafferty | Texas Wesleyan (W)
+- Josette Partney | Missouri Baptist (W)
+- Madison Diaz | Grand View (W)
+- Samantha Snow | Indiana Tech (W)
+- Alexis Gomez | Grand View (W)
+- Destiny Lyng | Oklahoma City (W)
+- Emma Walker | Campbellsville (W)
+place 1 Destiny Lyng
+place 2 Emma Walker
+place 3 Alexis Gomez
+place 4 Samantha Snow
+place 5 Madison Diaz
+place 6 Maryellen Lafferty
+place 7 Josette Partney
+place 8 Morgan Shines
+
+@ 155
+- Gabrielle Tata-Rodrigues | Corban (W)
+- Priscilla Luevano | Lyon
+- Emma Schrieber | Missouri Baptist (W)
+- Haylee McDonald | Central Christian (W)
+- Ilaisaane Latu | Hastings (W)
+- Brittani Burgess | Ottawa (W)
+- Shianne Whited | Central Methodist (W)
+- Jennifer Jimenez | Waldorf (W)
+- Mandy Camacho | Jamestown (W)
+- Autumn Terhune | Indiana Tech (W)
+- Marissa Salazar | Friends University (W)
+- Irene Sanchez Figuera | Oklahoma City (W)
+- Gabriella Escamilla | Oklahoma City (W)
+- Kimberly Pollak | Hastings (W)
+- Tyeisha Takamori | Midland (W)
+- Toyia Griffin | William Penn (W)
+- McKenzie Cook | Lincoln
+- Alexys Zepeda | Corban (W)
+- Vanessa Bautista | University of St. Mary's (W)
+- Leilani Hernandez | Texas Wesleyan (W)
+- Berenice Espino | Waldorf (W)
+- Sienna Ramirez | Southern Oregon (W)
+- Dempsi Talkington | Eastern Oregon (W)
+- Alia Abushi | Menlo
+- Mahealani Ramirez | Missouri Valley (W)
+- Tenley Swope | Eastern Oregon (W)
+- Tiyanha Askew | Missouri Baptist (W)
+- India Page | Brewton Parker (W)
+- Salima Omari | William Penn (W)
+- Brooke-Lynn Rush | Missouri Valley (W)
+- Destinee Rivera | Life (W)
+- Kendra Thompson | Campbellsville (W)
+- Sadie Antoque | Providence (W)
+- Kenya Sloan | Campbellsville (W)
+- Kaylynn Albrecht | Baker (W)
+place 1 Kenya Sloan
+place 2 Kaylynn Albrecht
+place 3 Sienna Ramirez
+place 4 Sadie Antoque
+place 5 Destinee Rivera
+place 6 Kendra Thompson
+place 7 India Page
+place 8 Alia Abushi
+
+@ 170
+- Grace Doering | Indiana Tech (W)
+- MayLee Edwards | William Penn (W)
+- Jolette Miner-Ho | Providence (W)
+- Aalyah Villarreal | Texas Wesleyan (W)
+- Catherine McNulty | Indiana Tech (W)
+- Raziyah Thomas | Avila University (W)
+- Jasmin Ballesteros | Midland (W)
+- Abby Beeck | Hastings (W)
+- Angelina Adams | Oklahoma City (W)
+- Jordan Roberts | Missouri Baptist (W)
+- Danielle Saldivar | Missouri Valley (W)
+- Andrea Smith | William Penn (W)
+- Charity Goldsmith-Ding | York (W)
+- Jordan Nelson | Life (W)
+- Abby McIntyre | Grand View (W)
+- Sierra Talmadge | Jamestown (W)
+- Brittyn Corbishley | Texas Wesleyan (W)
+- Chamira Cooper | Cumberlands (W)
+- Bailey Dennis | Southern Oregon (W)
+- Dymond Guilford | Cumberlands (W)
+- Olivia Robinson | Eastern Oregon (W)
+place 1 Dymond Guilford
+place 2 Olivia Robinson
+place 3 Jordan Nelson
+place 4 Brittyn Corbishley
+place 5 Chamira Cooper
+place 6 Bailey Dennis
+place 7 Abby McIntyre
+place 8 Sierra Talmadge
+
+@ 191
+- Alyandina Makanalani Bushe | Missouri Valley (W)
+- Elisa Holley | St. Andrews (W)
+- Kelly LaCost | Jamestown (W)
+- Jazlind Warren | Hastings (W)
+- Alexis Tupuola | Providence (W)
+- Lessly Sandoval | University of St. Mary's (W)
+- Grace Todhunter | Jamestown (W)
+- Ryann Rumsey | Oklahoma City (W)
+- Jojo Hendricks | Waldorf (W)
+- Grace Montierth | Hastings (W)
+- Maquoia Bernabe | Cumberlands (W)
+- Grace Brown | Grand View (W)
+- Natalia Villegas | Grand View (W)
+- De'Zirae White | Missouri Valley (W)
+- Samantha Ruano | William Penn (W)
+- Lucero Cuevas | Friends University (W)
+- Lilliana Vergara | Campbellsville (W)
+- Elisa Robinson | Baker (W)
+- Karrah Smith | Southern Oregon (W)
+- Emily Sandoval | Menlo
+- Jesse Kirby | Cumberlands (W)
+- Tavia Heildelberg-Tilliston | Menlo
+- Gabrielle Hamilton | Life (W)
+- Kelani Corbett | Lyon
+place 1 Kelani Corbett
+place 2 Gabrielle Hamilton
+place 3 Tavia Heildelberg-Tilliston
+place 4 Jesse Kirby
+place 5 Lilliana Vergara
+place 6 Natalia Villegas
+place 7 Elisa Robinson
+place 8 Karrah Smith
+

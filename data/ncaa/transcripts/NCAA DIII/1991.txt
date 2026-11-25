@@ -1,0 +1,182 @@
+# NCAA Division III Championships 1991 — source: NCAA III 1991.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Jason O'Brien | St. Thomas
+- Steve Rivera | College of New Jersey
+- Kevin Sheehan | Plymouth State
+- Nick Fornicola | Augsburg
+- Tyrone Fambro | Upper Iowa
+- Tedd Engle | Olivet
+- Brett Christensen | Buena Vista
+- Randy Rowray | Simpson
+place 1 Jason O'Brien
+place 2 Steve Rivera
+place 3 Kevin Sheehan
+place 4 Nick Fornicola
+place 5 Tyrone Fambro
+place 6 Tedd Engle
+place 7 Brett Christensen
+place 8 Randy Rowray
+
+@ 126
+- Chad Beck | Central College IA
+- John Chapman | Monmouth IL
+- David Regina | SUNY-Oneonta
+- Kurt Christensen | Loras College
+- John Topoly | Mount Union
+- Fritz Zagorski | SUNY-Brockport
+- Russ Terlecki | College of New Jersey
+- Kurt Schneck | Lycoming
+place 1 Chad Beck
+place 2 John Chapman
+place 3 David Regina
+place 4 Kurt Christensen
+place 5 John Topoly
+place 6 Fritz Zagorski
+place 7 Russ Terlecki
+place 8 Kurt Schneck
+
+@ 134
+- Craig Wagner | Augustana Illinois
+- Rich Elliot | St. Thomas
+- T.J. McStravik | Glassboro
+- Chris Stevens | SUNY-Brockport
+- Kenny Johnson | Cornell Iowa
+- Joe Hoialmen | Augsburg
+- Keith Trotman | College of New Jersey
+- Brian Allen | Rhode Island College
+place 1 Craig Wagner
+place 2 Rich Elliot
+place 3 T.J. McStravik
+place 4 Chris Stevens
+place 5 Kenny Johnson
+place 6 Joe Hoialmen
+place 7 Keith Trotman
+place 8 Brian Allen
+
+@ 142
+- Frank Croce | Kean
+- Dave Welland | Thiel
+- Rich Venuto | College of New Jersey
+- Van Fronhofer | SUNY-Albany
+- Tim Fader | Augustana Illinois
+- Bob Mokrynchuk | Delaware Valley
+- Ilias Diakomhalls | RIT
+- James Barbera | Rhode Island College
+place 1 Frank Croce
+place 2 Dave Welland
+place 3 Rich Venuto
+place 4 Van Fronhofer
+place 5 Tim Fader
+place 6 Bob Mokrynchuk
+place 7 Ilias Diakomhalls
+place 8 James Barbera
+
+@ 150
+- Travis Young | Simpson
+- Tim Tousignant | Augsburg
+- David Yonney | Moravian
+- Sandy Womack | Mount Union
+- Bill Mallin | SUNY-Albany
+- Tom Hogan | Wartburg
+- Keith Albert | Loras College
+- D.J. Simonton | SUNY-Brockport
+place 1 Travis Young
+place 2 Tim Tousignant
+place 3 David Yonney
+place 4 Sandy Womack
+place 5 Bill Mallin
+place 6 Tom Hogan
+place 7 Keith Albert
+place 8 D.J. Simonton
+
+@ 158
+- Bob Llorca | Wisconsin-Whitewater
+- Matt Kretlow | Augsburg
+- Kevin Ahern | St. Thomas
+- Mark Ambrose | Delaware Valley
+- Etienne Miszczak | Glassboro
+- Scott Carlsten | Rhode Island College
+- Mike DeStefano | College of New Jersey
+- Monte Merz | Buena Vista
+place 1 Bob Llorca
+place 2 Matt Kretlow
+place 3 Kevin Ahern
+place 4 Mark Ambrose
+place 5 Etienne Miszczak
+place 6 Scott Carlsten
+place 7 Mike DeStefano
+place 8 Monte Merz
+
+@ 167
+- John McGovern | Central College IA
+- Leo Costello | Loras College
+- Judd Smith | John Carroll
+- Willie Lake | Olivet
+- Matt Opacity | College of New Jersey
+- Gary Ridout | Simpson
+- Kurt Habeck | Augsburg
+- Dave Ciocca | RIT
+place 1 John McGovern
+place 2 Leo Costello
+place 3 Judd Smith
+place 4 Willie Lake
+place 5 Matt Opacity
+place 6 Gary Ridout
+place 7 Kurt Habeck
+place 8 Dave Ciocca
+
+@ 177
+- Peter Wang | Chicago University
+- Jim Sloan | Montclair State
+- Steve Rusk | Augustana Illinois
+- Bill Gabler | Augsburg
+- Jon Welch | SUNY-Cortland
+- Jeff Vacca | Illinois College
+- Greg Hoing | Buena Vista
+- Dane Delozier | Elizabethtown
+place 1 Peter Wang
+place 2 Jim Sloan
+place 3 Steve Rusk
+place 4 Bill Gabler
+place 5 Jon Welch
+place 6 Jeff Vacca
+place 7 Greg Hoing
+place 8 Dane Delozier
+
+@ 190
+- Scott Vega | Montclair State
+- Brian Quick | SUNY-Brockport
+- Andy Watkins | Susquehanna
+- Jon Dawley | Wartburg
+- Al Beck | Coe College
+- Glen Sandull | College of New Jersey
+- John Roy | WPI
+- Bill Hadsell | Ithaca
+place 1 Scott Vega
+place 2 Brian Quick
+place 3 Andy Watkins
+place 4 Jon Dawley
+place 5 Al Beck
+place 6 Glen Sandull
+place 7 John Roy
+place 8 Bill Hadsell
+
+@ 275
+- Chester Grauberger | Augsburg
+- John Brigham | Norwich
+- Ives Viola | Kean
+- Dan Bobish | Mount Union
+- Bob Goeller | Upper Iowa
+- Jared Kruse | Wartburg
+- Tom Mashek | Buena Vista
+- Matt Randolph | Heidelberg
+place 1 Chester Grauberger
+place 2 John Brigham
+place 3 Ives Viola
+place 4 Dan Bobish
+place 5 Bob Goeller
+place 6 Jared Kruse
+place 7 Tom Mashek
+place 8 Matt Randolph
+

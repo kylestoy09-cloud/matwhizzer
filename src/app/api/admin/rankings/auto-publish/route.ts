@@ -84,19 +84,22 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // 3. Batch-fetch school names via wrestler_school_history
+  // 3. Batch-fetch school names: the school on each wrestler's most recent rating (wrestler_school_history
+  //    was never filled, so it gave no names; 2026-11-11)
   const schoolMap = new Map<string, string>()
   for (let i = 0; i < wrestlerIds.length; i += 100) {
     const { data } = await supabase
-      .from('wrestler_school_history')
-      .select('wrestler_id, schools(display_name)')
+      .from('wrestler_hammer_scores')
+      .select('wrestler_id, season, school_id')
       .in('wrestler_id', wrestlerIds.slice(i, i + 100))
-      .is('end_date', null)
-      .order('start_date', { ascending: false })
-    for (const h of (data ?? []) as unknown as { wrestler_id: string; schools: { display_name: string }[] | null }[]) {
-      const name = Array.isArray(h.schools) ? h.schools[0]?.display_name : (h.schools as { display_name: string } | null)?.display_name
-      if (!schoolMap.has(h.wrestler_id) && name) schoolMap.set(h.wrestler_id, name)
-    }
+      .not('school_id', 'is', null)
+      .order('season', { ascending: false })
+    const latest = new Map<string, number>()
+    for (const h of (data ?? []) as { wrestler_id: string; school_id: number }[]) if (!latest.has(h.wrestler_id)) latest.set(h.wrestler_id, h.school_id)
+    const sids = [...new Set(latest.values())]
+    const { data: ss } = sids.length ? await supabase.from('schools').select('id, display_name').in('id', sids) : { data: [] }
+    const nameOf = new Map((ss ?? []).map((x: { id: number; display_name: string }) => [x.id, x.display_name]))
+    for (const [w, sid] of latest) { const name = nameOf.get(sid); if (name) schoolMap.set(w, name) }
   }
 
   // 4. Group scores by (scope_type, scope_id, weight_class)

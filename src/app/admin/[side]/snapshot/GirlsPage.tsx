@@ -1,3 +1,4 @@
+import { getSeasons } from '@/lib/seasons-server'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import { SnapshotClient } from './SnapshotClient'
@@ -15,12 +16,13 @@ export default async function SnapshotGirlsPage() {
   const { data: seasons } = await supabase
     .from('seasons')
     .select('id, label')
+    .in('id', (await getSeasons()).map(x => x.id))   // not Playoff History seasons
     .order('id', { ascending: false })
 
   return (
     <div className="max-w-7xl mx-auto px-4 pt-4 pb-16">
       <h1 className="text-xl font-bold text-slate-900 mb-1">Snap Shot — Girls</h1>
-      <p className="text-sm text-slate-500 mb-6">Daily overview of match results, streaks, and rankings.</p>
+      <p className="text-sm text-slate-500 mb-6">Daily overview of match results, streaks, and rankings, and the end-of-season report.</p>
       <SnapshotClient seasons={seasons ?? []} gender="F" />
     </div>
   )

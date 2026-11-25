@@ -1,0 +1,608 @@
+{
+ "finishes": [
+  {
+   "id": 3109,
+   "level": "state",
+   "year": 1998,
+   "region": null,
+   "weight": "152",
+   "place": 3,
+   "tie": null,
+   "name": "Scott Garren",
+   "school": "Oakcrest",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "e583e36f-7b5b-490a-a6a7-ac9e57f2a170",
+   "school_id": 284
+  },
+  {
+   "id": 1031,
+   "level": "state",
+   "year": 1967,
+   "region": null,
+   "weight": "Hwt",
+   "place": 4,
+   "tie": null,
+   "name": "Frank Wynkoop",
+   "school": "Washington",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "9adbd885-f82b-4922-8ea4-d94ec8f07b30",
+   "school_id": 67
+  },
+  {
+   "id": 1067,
+   "level": "state",
+   "year": 1966,
+   "region": null,
+   "weight": "157",
+   "place": 4,
+   "tie": null,
+   "name": "Neil McDonald",
+   "school": "Washington",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "d9837d5b-ec91-4ab3-ba1f-913afa547f57",
+   "school_id": 67
+  },
+  {
+   "id": 1079,
+   "level": "state",
+   "year": 1966,
+   "region": null,
+   "weight": "Hwt",
+   "place": 4,
+   "tie": null,
+   "name": "Frank Wynkoop",
+   "school": "Washington",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "9adbd885-f82b-4922-8ea4-d94ec8f07b30",
+   "school_id": 67
+  },
+  {
+   "id": 5637,
+   "level": "state",
+   "year": 2021,
+   "region": null,
+   "weight": "126",
+   "place": 3,
+   "tie": null,
+   "name": "Brady Conlin",
+   "school": "Washington Township",
+   "note": "corrected 2026-11-13 from the 2021 state export (NJWH repeated the 120 placers)",
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": null,
+   "school_id": null
+  },
+  {
+   "id": 7062,
+   "level": "region",
+   "year": 1971,
+   "region": 1,
+   "weight": "178",
+   "place": 1,
+   "tie": null,
+   "name": "Donald Haines",
+   "school": "Washington",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "0f561f2b-2a5f-461a-b2c0-564ef0dcd0be",
+   "school_id": 67
+  },
+  {
+   "id": 7109,
+   "level": "region",
+   "year": 1967,
+   "region": 1,
+   "weight": "168",
+   "place": 1,
+   "tie": null,
+   "name": "Sam Muni",
+   "school": "Washington",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "99dfd34c-a52c-4d20-8a1b-bf2c5e4a8802",
+   "school_id": 67
+  },
+  {
+   "id": 7111,
+   "level": "region",
+   "year": 1967,
+   "region": 1,
+   "weight": "Hwt",
+   "place": 1,
+   "tie": null,
+   "name": "Frank Wynkoop",
+   "school": "Washington",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "9adbd885-f82b-4922-8ea4-d94ec8f07b30",
+   "school_id": 67
+  },
+  {
+   "id": 7120,
+   "level": "region",
+   "year": 1966,
+   "region": 1,
+   "weight": "157",
+   "place": 1,
+   "tie": null,
+   "name": "Neil McDonald",
+   "school": "Washington",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "d9837d5b-ec91-4ab3-ba1f-913afa547f57",
+   "school_id": 67
+  },
+  {
+   "id": 7121,
+   "level": "region",
+   "year": 1966,
+   "region": 1,
+   "weight": "168",
+   "place": 1,
+   "tie": null,
+   "name": "Terry McWhirter",
+   "school": "Washington",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "7ee87475-c837-4bd9-9d4f-31facb38af79",
+   "school_id": 67
+  },
+  {
+   "id": 7123,
+   "level": "region",
+   "year": 1966,
+   "region": 1,
+   "weight": "Hwt",
+   "place": 1,
+   "tie": null,
+   "name": "Frank Wynkoop",
+   "school": "Washington",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "9adbd885-f82b-4922-8ea4-d94ec8f07b30",
+   "school_id": 67
+  },
+  {
+   "id": 1806,
+   "level": "state",
+   "year": 1970,
+   "region": null,
+   "weight": "115",
+   "place": 3,
+   "tie": null,
+   "name": "Lyle Hough",
+   "school": "Pascack Hills",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "82b009c0-6b94-4e0b-b0a4-ec53b7c0358c",
+   "school_id": 15
+  },
+  {
+   "id": 927,
+   "level": "state",
+   "year": 1969,
+   "region": null,
+   "weight": "168",
+   "place": 4,
+   "tie": null,
+   "name": "Chris Carey",
+   "school": "North Hunterdon",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "8792192f-9f02-479e-9765-78aeaee1c1cd",
+   "school_id": 135
+  },
+  {
+   "id": 10186,
+   "level": "region",
+   "year": 1995,
+   "region": 5,
+   "weight": "172",
+   "place": 1,
+   "tie": null,
+   "name": "Ken Hall",
+   "school": "Voorhees",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "7871d426-5b7c-4956-8266-c11adb488fa0",
+   "school_id": 146
+  },
+  {
+   "id": 1230,
+   "level": "state",
+   "year": 1962,
+   "region": null,
+   "weight": "106",
+   "place": 3,
+   "tie": null,
+   "name": "Ralph Zobel",
+   "school": "Collingswood",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "af661eab-c926-4e0e-a22e-78df9192ca38",
+   "school_id": 238
+  },
+  {
+   "id": 1618,
+   "level": "state",
+   "year": 1974,
+   "region": null,
+   "weight": "122",
+   "place": 3,
+   "tie": null,
+   "name": "Larry Otsuka",
+   "school": "Northern Burlington",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "5061b8e4-a61b-4cca-9a4a-65af25da2c0d",
+   "school_id": 388
+  },
+  {
+   "id": 1681,
+   "level": "state",
+   "year": 1973,
+   "region": null,
+   "weight": "148",
+   "place": 2,
+   "tie": null,
+   "name": "Dean Guyton",
+   "school": "Glassboro",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "8c4dfba2-2563-46fa-85a6-ee535dddbb41",
+   "school_id": 305
+  },
+  {
+   "id": 1666,
+   "level": "state",
+   "year": 1973,
+   "region": null,
+   "weight": "123",
+   "place": 3,
+   "tie": null,
+   "name": "Victor Hargett",
+   "school": "Paterson Catholic",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "e6926386-ed3b-4a5c-a18b-9847c17911f9",
+   "school_id": 1230
+  },
+  {
+   "id": 9430,
+   "level": "region",
+   "year": 1987,
+   "region": 4,
+   "weight": "Hwt",
+   "place": 1,
+   "tie": null,
+   "name": "Anthony DiPasquale",
+   "school": "Emerson",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "9de437cb-2e7c-489e-9364-0c2f517f9d01",
+   "school_id": 3
+  },
+  {
+   "id": 2883,
+   "level": "state",
+   "year": 1996,
+   "region": null,
+   "weight": "112",
+   "place": 2,
+   "tie": null,
+   "name": "Donnie DeFilippis",
+   "school": "Seton Hall Prep",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "d671b063-fa1b-42f3-9c50-39e5eedf02fa",
+   "school_id": 127
+  },
+  {
+   "id": 3081,
+   "level": "state",
+   "year": 1998,
+   "region": null,
+   "weight": "130",
+   "place": 6,
+   "tie": null,
+   "name": "Mitz Sumilang",
+   "school": "Ridgefield",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "3ceb2303-92a3-4238-b004-792758c76dec",
+   "school_id": 357
+  },
+  {
+   "id": 8390,
+   "level": "region",
+   "year": 2001,
+   "region": 3,
+   "weight": "152",
+   "place": 1,
+   "tie": null,
+   "name": "Evan Galipeau",
+   "school": "Parsippany Hills",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "d0244f6a-403a-49ab-ab55-0206c62b40e9",
+   "school_id": 78
+  },
+  {
+   "id": 3502,
+   "level": "state",
+   "year": 2002,
+   "region": null,
+   "weight": "112",
+   "place": 6,
+   "tie": null,
+   "name": "Sal Irizarry",
+   "school": "Don Bosco",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "b1064f06-fcd6-48d5-8ebe-5a813811d5b5",
+   "school_id": 11
+  },
+  {
+   "id": 8377,
+   "level": "region",
+   "year": 2002,
+   "region": 3,
+   "weight": "160",
+   "place": 1,
+   "tie": null,
+   "name": "John Hesse",
+   "school": "Parsippany Hills",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "9765e217-9995-454c-8402-d9c1b96deed1",
+   "school_id": 78
+  },
+  {
+   "id": 4058,
+   "level": "state",
+   "year": 2007,
+   "region": null,
+   "weight": "112",
+   "place": 4,
+   "tie": null,
+   "name": "Dan Hughes",
+   "school": "Delsea",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "3719f547-510d-4521-adb4-e759c8031378",
+   "school_id": 290
+  },
+  {
+   "id": 6593,
+   "level": "region",
+   "year": 2007,
+   "region": 1,
+   "weight": "135",
+   "place": 1,
+   "tie": null,
+   "name": "Troy Hernandez",
+   "school": "Jefferson",
+   "note": null,
+   "source": "njwh",
+   "gender": "M",
+   "region_name": null,
+   "wrestler_id": "6cd2232c-8280-47b0-99f6-d9e47b65c1b3",
+   "school_id": 4
+  }
+ ],
+ "merges": [
+  {
+   "keep": "de91205d-4a6c-4e17-a334-56f8753f521a",
+   "drop": "82b009c0-6b94-4e0b-b0a4-ec53b7c0358c",
+   "name": "Lyle Hough"
+  },
+  {
+   "keep": "9ca05c8f-ee5c-49d5-ab5b-cc568bf88079",
+   "drop": "ffea416d-6429-4eca-9663-6a23745708df",
+   "name": "Jack Shawde"
+  },
+  {
+   "keep": "105e392e-8f02-4876-a487-ce9ff0f6ff01",
+   "drop": "6d6b04cc-d2a0-47ed-878b-db2ed53aed88",
+   "name": "James Shields"
+  },
+  {
+   "keep": "a4ab1e02-f6f8-41c7-8b0f-653c1e0e3cbc",
+   "drop": "55ec9204-1807-4b8f-9556-4ac96551d9a5",
+   "name": "John Villecco"
+  },
+  {
+   "keep": "63633a97-f209-49c1-8162-d3f524d8d589",
+   "drop": "8792192f-9f02-479e-9765-78aeaee1c1cd",
+   "name": "Chris Carey"
+  },
+  {
+   "keep": "c5181a53-540e-4572-bc91-fd0c3a2dd9a9",
+   "drop": "7871d426-5b7c-4956-8266-c11adb488fa0",
+   "name": "Ken Hall"
+  },
+  {
+   "keep": "e000e0da-9788-44f9-9cce-26712dfbf903",
+   "drop": "99dfd34c-a52c-4d20-8a1b-bf2c5e4a8802",
+   "name": "Sam Muni"
+  },
+  {
+   "keep": "be0a27a6-ea81-4c96-8afa-f0757d5ad940",
+   "drop": "7ee87475-c837-4bd9-9d4f-31facb38af79",
+   "name": "Terry McWhirter"
+  },
+  {
+   "keep": "1ad3ea14-5814-498e-a90a-7f3004a29f55",
+   "drop": "65773270-4502-4e9e-8762-ffae8d853bbb",
+   "name": "Ron Leverich"
+  },
+  {
+   "keep": "9ff3b0a0-38ad-4385-a503-09ba80076bdc",
+   "drop": "af661eab-c926-4e0e-a22e-78df9192ca38",
+   "name": "Ralph Zobel"
+  },
+  {
+   "keep": "7474a997-62ba-4692-baa7-a7e32d8e3b99",
+   "drop": "76b22576-2fbd-4bb3-9cd0-662e368ecbc9",
+   "name": "Clarence Richardson"
+  },
+  {
+   "keep": "25dd3012-2ff5-4fc8-91c6-8cfac057e20c",
+   "drop": "762484a0-94c6-4731-a5b7-f337b21a09b7",
+   "name": "Sal Picone"
+  },
+  {
+   "keep": "b851504f-04f6-4939-b913-5440ba26164a",
+   "drop": "d5abbfd5-ceb6-4f30-af5a-19a65497ab90",
+   "name": "Darren Magda"
+  },
+  {
+   "keep": "d60a5120-79fc-4466-98aa-1f1265c3224a",
+   "drop": "5061b8e4-a61b-4cca-9a4a-65af25da2c0d",
+   "name": "Larry Otsuka"
+  },
+  {
+   "keep": "8cff0187-1bfe-4701-94f8-a2a55aefea4e",
+   "drop": "8c4dfba2-2563-46fa-85a6-ee535dddbb41",
+   "name": "Dean Guyton"
+  },
+  {
+   "keep": "9a64f6ad-efa9-41b3-91bd-506a0b12f78d",
+   "drop": "e6926386-ed3b-4a5c-a18b-9847c17911f9",
+   "name": "Victor Hargett"
+  },
+  {
+   "keep": "eda760e2-b044-43ec-a664-862e19c50afe",
+   "drop": "8bb0cec4-cd68-4043-a8bc-2c53cf55a40f",
+   "name": "Paul Martinelli"
+  },
+  {
+   "keep": "e94fde55-e623-47df-9253-2bec50a3053c",
+   "drop": "34c01515-6061-467d-b856-ff8c70a307ed",
+   "name": "Frank Jackson"
+  },
+  {
+   "keep": "56f6792f-239c-4506-aa9f-c8bbc4ec15ca",
+   "drop": "8c15dbe8-44f9-4440-9149-9b737154a55d",
+   "name": "Jeff Gauthier"
+  },
+  {
+   "keep": "3b0a7a46-cfb1-4ce1-b5eb-5ddc7c9f71c4",
+   "drop": "9de437cb-2e7c-489e-9364-0c2f517f9d01",
+   "name": "Anthony DiPasquale"
+  },
+  {
+   "keep": "e62b089c-d1f6-4827-97a7-e4bb3242eca9",
+   "drop": "1f9e2ec9-0527-438c-a5bc-9485df954a71",
+   "name": "Victor Gonzalez"
+  },
+  {
+   "keep": "cb17b801-8943-4dcf-acca-3a3ef15c4ca1",
+   "drop": "d671b063-fa1b-42f3-9c50-39e5eedf02fa",
+   "name": "Donnie DeFilippis"
+  },
+  {
+   "keep": "2c6c440a-7ebd-4979-8831-b60906450b45",
+   "drop": "3ceb2303-92a3-4238-b004-792758c76dec",
+   "name": "Mitz Sumilang"
+  },
+  {
+   "keep": "2bd52d91-0d5a-480d-989a-71a35ce6eff2",
+   "drop": "a75a5e43-4b5e-4b15-b5a6-1a836804dba3",
+   "name": "Anthony Rendina"
+  },
+  {
+   "keep": "ed81e49d-328e-40f4-8f7c-eb46dbd6ad5c",
+   "drop": "d0244f6a-403a-49ab-ab55-0206c62b40e9",
+   "name": "Evan Galipeau"
+  },
+  {
+   "keep": "8bccd415-2d72-4094-a12b-b01b54aaf216",
+   "drop": "b1064f06-fcd6-48d5-8ebe-5a813811d5b5",
+   "name": "Sal Irizarry"
+  },
+  {
+   "keep": "00fe7f2c-ec85-4249-be28-422564dc112f",
+   "drop": "9765e217-9995-454c-8402-d9c1b96deed1",
+   "name": "John Hesse"
+  },
+  {
+   "keep": "10975aca-a68d-471a-a634-9ad71fde9967",
+   "drop": "47ed4f6a-a6cd-4817-a176-56450a8eb58b",
+   "name": "Mike Bonora"
+  },
+  {
+   "keep": "33f0c363-f0b6-496d-8f07-cc8835784e3e",
+   "drop": "3719f547-510d-4521-adb4-e759c8031378",
+   "name": "Dan Hughes"
+  },
+  {
+   "keep": "cb1bc0e8-c88c-4f18-8eb7-75118889fbf5",
+   "drop": "6cd2232c-8280-47b0-99f6-d9e47b65c1b3",
+   "name": "Troy Hernandez"
+  },
+  {
+   "keep": "2f4f6830-bb8e-4c5f-87b0-58a448760d37",
+   "drop": "a16e9e8c-28df-4a5b-af0c-cfbdd6167aa7",
+   "name": "Anthony D'Amico"
+  },
+  {
+   "keep": "329926ed-1cc2-4f4c-b59e-d5dbc2bd642e",
+   "drop": "44e9c277-e3c9-4dbc-9d92-a41001c368af",
+   "name": "Greg Webb"
+  }
+ ]
+}

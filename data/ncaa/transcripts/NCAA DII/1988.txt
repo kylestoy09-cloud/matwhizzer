@@ -1,0 +1,182 @@
+# NCAA Division II Championships 1988 — source: NCAA II 1988.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Roger Singleton | Grand Valley State
+- Dave Calliguri | North Dakota State
+- Mark Piterski | Southern Connecticut
+- Don Vanmourik | Ferris State
+- Rich Dicola | Ashland
+- Brian Guzzo | South Dakota State
+- Steve Jakl | Nebraska-Omaha
+- Loren Baum | Liberty
+place 1 Roger Singleton
+place 2 Dave Calliguri
+place 3 Mark Piterski
+place 4 Don Vanmourik
+place 5 Rich Dicola
+place 6 Brian Guzzo
+place 7 Steve Jakl
+place 8 Loren Baum
+
+@ 126
+- Rick Goeb | North Dakota State
+- Joe Stukes | North Carolina-Pembroke
+- Haig Brown | Portland State
+- Phil Johns | SIU-Edwardsville
+- Tony Ramirez | Cal State-Chico
+- Robert Lilly | Central Missouri
+- Sean Haight | Gannon
+- Mike Centanni | Lake Superior
+place 1 Rick Goeb
+place 2 Joe Stukes
+place 3 Haig Brown
+place 4 Phil Johns
+place 5 Tony Ramirez
+place 6 Robert Lilly
+place 7 Sean Haight
+place 8 Mike Centanni
+
+@ 134
+- Pat Dorn | South Dakota State
+- Bob Berceau | Northern Michigan
+- Tim Failing | Springfield
+- Walter Ulrich | Cal State-Chico
+- Duane Barnhart | North Dakota
+- Kerwyn Adderly | Norfolk State
+- Larry Robey | Pittsburgh-Johnstown
+- Mike Bruner | Lake Superior
+place 1 Pat Dorn
+place 2 Bob Berceau
+place 3 Tim Failing
+place 4 Walter Ulrich
+place 5 Duane Barnhart
+place 6 Kerwyn Adderly
+place 7 Larry Robey
+place 8 Mike Bruner
+
+@ 142
+- Warren Stewart | Liberty
+- Duane Maue | Colorado Mines
+- Bob Ray | Pittsburgh-Johnstown
+- Jeff Ocel | North Dakota State
+- Andy Leier | North Dakota
+- Eric Morgan | SIU-Edwardsville
+- Brian Thomas | Nebraska-Omaha
+- Tom Paveglio | Ferris State
+place 1 Warren Stewart
+place 2 Duane Maue
+place 3 Bob Ray
+place 4 Jeff Ocel
+place 5 Andy Leier
+place 6 Eric Morgan
+place 7 Brian Thomas
+place 8 Tom Paveglio
+
+@ 150
+- Dan Russell | Portland State
+- Kip Kristoff | SIU-Edwardsville
+- Shaun O'Hearn | Springfield
+- Perry Fink | South Dakota State
+- Bourck Cashmore | North Dakota State
+- Ben Dagley | Ashland
+- Mike Curley | Grand Valley State
+- Rich Shaffer | Pittsburgh-Johnstown
+place 1 Dan Russell
+place 2 Kip Kristoff
+place 3 Shaun O'Hearn
+place 4 Perry Fink
+place 5 Bourck Cashmore
+place 6 Ben Dagley
+place 7 Mike Curley
+place 8 Rich Shaffer
+
+@ 158
+- Kory Mosher | North Dakota
+- Brad Hildebrandt | Nebraska-Omaha
+- Kurt Johnson | Ferris State
+- Gene Green | North Dakota State
+- Steve Harmon | SIU-Edwardsville
+- John Mansfield | California PA
+- Andre Taylor | Portland State
+- Wills Mouzon | Winston-Salem
+place 1 Kory Mosher
+place 2 Brad Hildebrandt
+place 3 Kurt Johnson
+place 4 Gene Green
+place 5 Steve Harmon
+place 6 John Mansfield
+place 7 Andre Taylor
+place 8 Wills Mouzon
+
+@ 167
+- Mark Kristoff | SIU-Edwardsville
+- Jeff Randall | Nebraska
+- Kevin Frame | Liberty
+- Brad Morris | Ferris State
+- Todd Kendle | Augustana SD
+- Chris Mihfield | Central Missouri
+- Brent Hoffner | North Dakota
+- William Johnson | Northern Colorado
+place 1 Mark Kristoff
+place 2 Jeff Randall
+place 3 Kevin Frame
+place 4 Brad Morris
+place 5 Todd Kendle
+place 6 Chris Mihfield
+place 7 Brent Hoffner
+place 8 William Johnson
+
+@ 177
+- R.J. Nebe | Nebraska-Omaha
+- Denzil Forrester | Southern Connecticut
+- Doug Mooney | Ferris State
+- Pat Johannes | North Dakota State
+- Dwight Downs | SIU-Edwardsville
+- Steve Miller | Ashland
+- Joe Wypiszenski | Northern Michigan
+- Don Zeman | California-Davis
+place 1 R.J. Nebe
+place 2 Denzil Forrester
+place 3 Doug Mooney
+place 4 Pat Johannes
+place 5 Dwight Downs
+place 6 Steve Miller
+place 7 Joe Wypiszenski
+place 8 Don Zeman
+
+@ 190
+- Ken Hackman | California PA
+- Matt Palmer | North Dakota State
+- Antonio Kilpatrick | North Carolina-Pembroke
+- Doug Chapman | Ferris State
+- Paul Koenig | South Dakota State
+- Dave Pippin | Nebraska-Omaha
+- Nate Toedter | St. Cloud State
+- Russ Witzig | SIU-Edwardsville
+place 1 Ken Hackman
+place 2 Matt Palmer
+place 3 Antonio Kilpatrick
+place 4 Doug Chapman
+place 5 Paul Koenig
+place 6 Dave Pippin
+place 7 Nate Toedter
+place 8 Russ Witzig
+
+@ 275
+- Carlton Haselrig | Pittsburgh-Johnstown
+- Randy Seiler | Lake Superior
+- Clark Schnepel | Nebraska-Omaha
+- Jair Toedter | North Dakota
+- Tim Lajcik | California-Davis
+- Kurt Bednar | SIU-Edwardsville
+- Craig Brooks | Northern Michigan
+- Tim Pennie | Virginia State
+place 1 Carlton Haselrig
+place 2 Randy Seiler
+place 3 Clark Schnepel
+place 4 Jair Toedter
+place 5 Tim Lajcik
+place 6 Kurt Bednar
+place 7 Craig Brooks
+place 8 Tim Pennie
+

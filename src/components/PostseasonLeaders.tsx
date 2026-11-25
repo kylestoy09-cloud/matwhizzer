@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
+import { CALCULATED_TEAM_NOTE } from '@/lib/teamScoreNote'
 
 type TeamScoreRow = {
   school: string
@@ -21,11 +22,13 @@ export function PostseasonLeaders({
   schoolBase,
   accentColor = 'slate',
   gender = 'boys',
+  calculated = false,
 }: {
   rows: TeamScoreRow[]
   schoolBase: string
   accentColor?: 'slate' | 'rose'
   gender?: 'boys' | 'girls'
+  calculated?: boolean   // a Playoff History season: totals from the bouts
 }) {
   const [visible, setVisible] = useState(10)
   const shown = rows.slice(0, visible)
@@ -73,6 +76,7 @@ export function PostseasonLeaders({
           </tbody>
         </table>
       </div>
+      {calculated && <p className="mt-1 text-xs text-slate-400">{CALCULATED_TEAM_NOTE}</p>}
       {hasMore && (
         <button
           onClick={() => setVisible(v => Math.min(v + 10, rows.length))}

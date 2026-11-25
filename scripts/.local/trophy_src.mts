@@ -1,0 +1,6 @@
+import { createClient } from '@supabase/supabase-js'
+const db = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+const h = await db.from('history_finishes').select('year, weight, level, place, name, school, region').or('name.ilike.%Mendez%,name.ilike.%Almeyda%,name.ilike.%Beadling%,name.ilike.%Bouchard%,name.ilike.%Sgambellone%,name.ilike.%Christie%,name.ilike.%Roy Lucas%,name.ilike.%Fragola%,name.ilike.%Serpico%,name.ilike.%Racanelli%,name.ilike.%Lewis%,name.ilike.%Corrigan%,name.ilike.%Neil McDonald%,name.ilike.%McWhirter%,name.ilike.%Auletta%,name.ilike.%Sancho%,name.ilike.%Rebecca Brown%,name.ilike.%Mia Bruno%,name.ilike.%Gavasheli%,name.ilike.%Giumarello%,name.ilike.%Horst%,name.ilike.%Begraft%,name.ilike.%Vohnden%,name.ilike.%Ziacoma%,name.ilike.%Webb%,name.ilike.%Chrustic%').gte('year', 1939)
+for (const r of h.data ?? []) console.log('H', r.year, r.weight, r.level, r.place, r.name, '|', r.school, r.region ?? '')
+const e = await db.from('playoff_history_entrants').select('season_id, kind, num, weight, place, name, team').or('name.ilike.%Racanelli%,name.ilike.%D_Arcy%,name.ilike.%McClave%,name.ilike.%Paretti%,name.ilike.%Marques%,name.ilike.%Maniero%').eq('place', 1)
+for (const r of e.data ?? []) console.log('E', r.season_id, r.kind, r.num, r.weight, r.place, r.name, '|', r.team)

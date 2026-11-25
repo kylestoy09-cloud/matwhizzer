@@ -3,6 +3,7 @@
 // site, so they can't drift. Server loading: src/lib/siteLookServer.ts; pages read it through
 // src/components/site/SiteLookProvider.tsx.
 
+import { BRACKET_LOOK_DEFAULT, type BracketLook } from './bracketLook'
 import { BOYS_REGION_BG, GIRLS_REGION_BG, regionTile, type StencilFont, type TileColors } from './siteTheme'
 
 // each page's summary line, editable in the tool ('about' is Insight's)
@@ -35,6 +36,7 @@ export type SiteLook = {
   border: boolean
   showLogo: boolean
   headerLayout: 'live' | 'proposed'   // proposed: hamburger left of the logo, Boys / Girls left of the search
+  bracket: BracketLook        // the bracket format (Aesthetic tool → Brackets)
 }
 
 export const DEFAULT_LOOK: SiteLook = {
@@ -42,11 +44,12 @@ export const DEFAULT_LOOK: SiteLook = {
   boysOddFg: null, boysEvenFg: null,
   font: 'Saira Stencil One', titleFont: 'Site default', titleSize: 24, summaries: { ...SUMMARY_DEFAULTS },
   size: 72, radius: 0, border: true, showLogo: false, headerLayout: 'proposed',
+  bracket: { ...BRACKET_LOOK_DEFAULT },
 }
 
 // a saved look over the defaults: settings added to the tool later get their default until saved
 export function mergeLook(x: Partial<SiteLook> | null | undefined): SiteLook {
-  return { ...DEFAULT_LOOK, ...(x ?? {}), summaries: { ...DEFAULT_LOOK.summaries, ...(x?.summaries ?? {}) } }
+  return { ...DEFAULT_LOOK, ...(x ?? {}), summaries: { ...DEFAULT_LOOK.summaries, ...(x?.summaries ?? {}) }, bracket: { ...DEFAULT_LOOK.bracket, ...(x?.bracket ?? {}) } }
 }
 
 // the fonts the tool offers: Google Fonts family + the weights it loads

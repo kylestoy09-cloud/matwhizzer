@@ -1,0 +1,382 @@
+# NAIA Championships 2024 — source: 2024_NAIA_Men_s_Wrestling_Championships_-_Final_Results.pdf (entrants from the PDF text; places read off the bracket pages, 2026-11-18)
+# qualifiers and places only (no bouts)
+
+@ 125
+1 Aden Reeves | Grand View | 20-3
+- Landon Smith | Embry-Riddle | 19-12
+16 Allen Calderon | Indiana Tech | 26-13
+9 Austin Franco | Cumberlands | 20-5
+- Dominic De'altonaga | Vanguard | 10-6
+- Clarence Lee Green | Lindsey Wilson | 13-5
+8 Angel Banda | Reinhardt | 17-5
+5 Izaeah Beavers | Campbellsville | 23-1
+- David Corretjer | Central Baptist | 21-6
+12 Nick Rodriguez | Lourdes | 17-3
+13 Nicolas Aguilar | Menlo | 9-1
+- Conner Hueck | St. Thomas | 8-3
+- Jeffrey Bailey | Cornerstone | 16-8
+4 Brody Gee | Saint Mary | 31-3
+3 Hunter Sparks | Eastern Oregon | 16-1
+- Braden Potts | Oklahoma City | 16-2
+14 Nathan Rizek | Doane | 16-7
+11 Antonio Saldate | Life | 10-5
+- Chris Busutil | Cumberland | 18-10
+- Trevor Borom | Southeastern | 26-10
+6 Trevor Marsman | Cornerstone | 23-6
+7 Conner Diamond | Lindsey Wilson | 13-1
+- Vonn Fenn | Southern Oregon | 24-11
+- Jose Gonzalez | Dickinson State | 13-7
+10 Adonis Boyd | Cumberlands | 25-7
+15 Allan Hendricks | Embry-Riddle | 12-5
+- Gabriel Gray | Wayland Baptist | 4-5
+2 Brandon Orum | Life | 7-1
+place 1 Sparks
+place 2 Aguilar
+place 3 Reeves
+place 4 Orum
+place 5 Marsman
+place 6 Calderon
+place 7 Gee
+place 8 Beavers
+
+@ 133
+1 Carson Taylor | Grand View | 18-1
+- Cooper Mahaffey | Oklahoma City | 16-10
+16 Nate Becker | Lindsey Wilson | 11-3
+9 Simon Graeber | Southern Oregon | 21-4
+- Devin Avedissian | Doane | 18-9
+- Braden Ledford | Ottawa | 21-12
+8 Andrew Voiles | Southeastern | 13-4
+5 Jackson Cockrell | Grand View | 27-5
+- Anthony Hughes | Marian | 20-11
+12 Freddy Barajas | Saint Mary | 27-5
+13 Braden Carson | Eastern Oregon | 15-9
+- Jarrod Gilliam | Briar Cliff | 16-10
+- Colby Evens | Embry-Riddle | 15-11
+4 Thaddeus Long | Life | 9-4
+3 Sammy Shires | Cumberland | 16-2
+- Cole McKinley | Lourdes | 19-11
+- Roman De La Cruz | Saint Mary | 16-9
+14 Haden Hernandez | Missouri Valley | 24-8
+11 Jeramiah Steele | Menlo | 22-9
+- Devan Johnson | Cornerstone | 13-9
+6 Dominic Chavez | Texas Wesleyan | 10-2
+7 CaRon Watson | Briar Cliff | 15-6
+- Bobby Robinson | Ottawa | 3-2
+- Randy Frailey | Siena Heights | 22-2
+10 Alex Pena | Wayland Baptist | 25-7
+15 Dillon Witt | Missouri Baptist | 22-10
+- Isaiah Miller | Jamestown | 24-6
+2 Jovan Garcia | Menlo | 17-1
+place 1 Garcia
+place 2 Long
+place 3 Carson Taylor
+place 4 Chavez
+place 5 Watson
+place 6 Cockrell
+place 7 Voiles
+place 8 Shires
+
+@ 141
+1 Evan Potter | Southern Oregon | 24-1
+- Domenico DiGena | Reinhardt | 24-10
+- Kyler Adams | Midway
+16 Thomas Williams | St. Thomas | 13-5
+9 Bret Minor | Life | 11-5
+- Carson Coy | Embry-Riddle | 13-9
+8 Jared Dinh | Cumberland | 13-6
+5 Kael Brisker | Southeastern | 22-7
+- Donte Lopez | Oklahoma Wesleyan | 19-13
+12 Edrich Nortje | Dickinson State | 9-3
+13 Donavan Parn | Missouri Valley | 18-9
+- Luke Jensen | Corban | 25-9
+- Zach Zitek | Dakota Wesleyan | 21-7
+4 Nicholas Yancey | Campbellsville | 24-3
+3 Tyree Johnson | Life | 15-3
+- Anthony Perez Guerrero | Southern Oregon | 13-11
+- Aric Williams | Dakota Wesleyan | 10-3
+14 Taylor Vasquez | Morningside | 25-9
+11 Jackson Wenberg | Graceland | 27-8
+- Gage Hudson | Cumberlands | 14-11
+6 Adrian Ayala | Lindsey Wilson | 12-3
+7 Cade Manion | Oklahoma City | 19-2
+- Bo Davis | Corban | 18-9
+- Elijah Griffin | Cumberland | 12-9
+10 Creighton Baughman | Concordia | 31-6
+15 Hartwell Taylor | Saint Mary | 33-4
+- Christian Lopez | Embry-Riddle | 18-12
+2 Logan Wagner | Marian | 27-4
+place 1 Hartwell Taylor
+place 2 Potter
+place 3 Yancey
+place 4 Brisker
+place 5 Manion
+place 6 Hudson
+place 7 Nortje
+place 8 Aric Williams
+
+@ 149
+1 Blake Gonzalez | Grand View | 22-1
+- Travis Thorpe | Southern Oregon | 14-10
+16 Dawson Bates | Reinhardt | 16-7
+9 Blake Haney | Grand View | 21-9
+- Aundre Beatty | Marian | 19-13
+- Irish Furthmyre | Ottawa | 18-3
+8 Drake Vannoy | Oklahoma City | 21-6
+5 Jack Latimer | Cumberland | 17-3
+- Jalen Vladic | Providence | 27-12
+- Kaleb Clark | Midway | 12-11
+12 Nick Moore | Campbellsville | 12-9
+13 Jonah Chew | Embry-Riddle | 27-5
+- Dallas Koelzer | Baker | 13-7
+4 Parker Dobrocky | Southeastern | 16-1
+3 Chase Zollmann | Missouri Valley | 22-3
+- Mike Loney | Indiana Tech | 15-15
+- Gunnar Henderson | Friends | 18-8
+14 AJ Rockwell | Eastern Oregon | 11-8
+11 Bryant Avila | Vanguard | 16-8
+- Tyler Okada | Waldorf | 22-11
+6 Jace Luchau | Cumberlands | 19-3
+7 Victor Guzman | Cumberland | 15-4
+- Ethan Krey | Briar Cliff | 21-9
+10 Bryce Nickel | Cumberlands | 17-6
+15 Chris Kelly | Southeastern | 20-5
+- Seth Johnson | Marian | 16-10
+- Austin Almaguer | Saint Mary | 18-11
+2 Nathan Lendt | Doane | 21-1
+place 1 Zollmann
+place 2 Latimer
+place 3 Dobrocky
+place 4 Gonzalez
+place 5 Haney
+place 6 Lendt
+place 7 Vannoy
+place 8 Nickel
+
+@ 157
+1 Brevin Balmeceda | Life | 12-2
+- Eli Clemmons | Cumberland | 17-9
+16 Aden Graves | Providence | 14-6
+9 Francis Morrissey | Ottawa | 14-3
+- Dylan Straley | Southern Oregon | 23-13
+- Kael Bunce | William Penn | 18-8
+8 Keegan Luton | Oklahoma City | 21-4
+5 Salvador Silva | Southeastern | 16-3
+- Josey Jernegan | Saint Mary | 29-7
+- Jake Hurst | Campbellsville | 17-7
+12 Trevor Burdick | Reinhardt | 12-3
+13 Ben Miller | Doane | 21-7
+- Elijah Chacon | Indiana Tech | 21-11
+4 Kanaipono Tapia | Menlo | 27-4
+3 David Rubio | Corban | 28-2
+- Tyson Johnson | Dakota Wesleyan | 13-7
+14 Andreus Bond | Southeastern | 14-6
+11 Aaron Gandara | Southern Oregon | 14-4
+- Johnathon Vincent | York (Neb.) | 10-7
+- Weston Melvin | Cumberlands | 19-9
+6 Dylan Whitt | Grand View | 21-11
+7 Nate Wheeler | Indiana Tech | 17-1
+- Juan Lopez | Graceland | 15-11
+10 Bridger Hall | Providence | 20-9
+15 Donald Griffin | Central Methodist | 22-12
+- Noah Styskal | Morningside | 17-13
+- Ben Mitchell | Ottawa | 17-8
+2 Antwuan Burns | Campbellsville | 16-2
+place 1 Balmeceda
+place 2 Rubio
+place 3 Tapia
+place 4 Burdick
+place 5 Burns
+place 6 Wheeler
+place 7 Morrissey
+place 8 Whitt
+
+@ 165
+1 Steven Villalobos | Life | 14-1
+- Richard Motas | Vanguard | 4-7
+- Cameron Hargrove | William Penn | 29-12
+16 Elliott Rodgers | Marian | 10-6
+9 Jordan Komac | Providence | 14-6
+- Tommy Wentz | Concordia | 12-6
+8 Matt Jenkins | Reinhardt | 22-3
+5 Turner Black | Cumberlands | 16-2
+- Kaleb Bigelow | Dakota Wesleyan | 15-2
+12 Trace Braun | Southeastern | 20-9
+13 Hunter Hobbs | Providence | 24-8
+- Carlo Castagnaro | Arizona Christian | 16-11
+- Hayden Brown | Oklahoma City | 22-10
+4 Keller Rock | Embry-Riddle | 26-5
+3 Jonathan Kervin | Indiana Tech | 32-5
+- Derick Coleman | Lourdes | 13-6
+14 Dayton Hill | Ottawa | 14-3
+11 Seth Borba | Menlo | 17-8
+- Zander Ernst | Morningside | 22-7
+- Sheldon Cole | Embry-Riddle | 6-3
+6 Shadrick Slone | Campbellsville | 20-3
+7 Braeden Baller | Texas Wesleyan | 30-5
+- Sean Houston | Brewton-Parker | 20-8
+- Roman Garcia | Central Methodist | 15-6
+10 Kevon Freeman | Ottawa | 7-0
+15 Devin Crawford | Montana State-Northern | 24-11
+- Diego Machado | St. Ambrose | 14-20
+2 Rysan Leong | Menlo | 29-5
+place 1 Kervin
+place 2 Rock
+place 3 Leong
+place 4 Villalobos
+place 5 Garcia
+place 6 Slone
+place 7 Braun
+place 8 Ernst
+
+@ 174
+1 Riley Smucker | Life | 18-1
+- Landon Buchanan | Indiana Tech | 17-13
+16 Cade Gubler | Montana State-Northern | 10-8
+9 Alex Hernandez | Southern Oregon | 27-7
+- Brenden Parks | Missouri Valley | 16-9
+- Tyson Stover | Corban | 31-13
+8 Cory Cannan | Lindsey Wilson | 14-5
+5 Alex Reynolds | Grand View | 24-6
+- Noah Hollendonner | Marian | 20-13
+12 Gabe Martinez | Campbellsville | 18-8
+13 Maximus Zamora | Menlo | 11-7
+- Anthony Pyron | Cumberland | 24-10
+- Cael Jordan | Doane | 12-6
+4 NaKoda Siegel | Montana State-Northern | 19-4
+3 Abel Nava | Providence | 14-2
+- Joseph Teguia | Graceland | 19-11
+14 Michael Scarponi | Doane | 9-5
+11 Tre Morrisette | Life | 26-6
+- Dylan Preston | Cumberlands | 27-13
+- Alex Vandyke | Morningside | 13-9
+6 Braden Anderson | Ottawa | 19-1
+7 Daniil Gorshkov | Embry-Riddle | 28-10
+- Tate Nordby | Dickinson State | 11-10
+- Sam York | Indiana Tech | 11-5
+10 Graham Calhoun | Southeastern | 13-4
+15 Ledger Petracek | Menlo | 22-10
+- Tony Connor | Missouri Baptist | 19-16
+2 Cole Smith | Cumberland | 19-3
+place 1 Reynolds
+place 2 Calhoun
+place 3 Nava
+place 4 Smith
+place 5 Smucker
+place 6 Scarponi
+place 7 Zamora
+place 8 Hernandez
+
+@ 184
+1 Isaiah Luellen | Grand View | 17-2
+- John Roberts | Southeastern | 15-2
+16 Rocco Horvath | Cumberland | 24-6
+9 Luke Jenness | Northwestern (Iowa) | 20-6
+- Thomas Ketchen-Carter | Cumberlands | 11-5
+- Jordan Lomeli | Ottawa | 14-6
+8 Kyle Knudtson | Eastern Oregon | 33-5
+5 Tyson Beauperthuy | Doane | 28-1
+- Isaiah Twait | Corban | 20-7
+- Hunter McCarty | Wayland Baptist | 6-7
+12 Jackson King | Dickinson State | 20-8
+13 Brett Bober | Baker | 15-8
+- Rylin Burns | Montana State-Northern | 18-8
+4 William Speight | Lourdes | 22-1
+3 J.D. Perez | Ottawa | 20-1
+- Jakob Francksen-Small | Northwestern (Iowa) | 19-10
+14 Daryus Webb | Avila | 24-8
+11 Alan Badley | Providence | 19-5
+- Drake Tipton | Missouri Valley | 14-10
+- Chandler Woenker | Campbellsville | 14-7
+6 Hayden Wempen | Morningside | 18-8
+7 Isaiah Morales | Menlo | 20-7
+- Gabe Chesbro | Saint Mary | 10-6
+- Tobias Garrison | Cumberlands | 21-11
+10 Jameel Coles | Grand View | 12-4
+15 Austin Vanek | Montana State-Northern | 16-11
+- KJ Fry | Graceland | 13-12
+2 Kyle Homet | Life | 22-3
+place 1 Luellen
+place 2 Homet
+place 3 Perez
+place 4 Speight
+place 5 Burns
+place 6 Webb
+place 7 Coles
+place 8 Knudtson
+
+@ 197
+1 Bradley Antesberger | Doane | 17-0
+- Isaiah Hernandez | Vanguard | 8-9
+- Jake Rau | Jamestown | 17-9
+16 Carl Hansen | Montana State-Northern | 19-13
+9 Tucker Tomlinson | Ottawa | 10-3
+- Andrew Herrera | Southern Oregon | 25-10
+8 Garavous Kouekabakilaho | Grand View | 24-7
+5 Sawyer Hobbs | Providence | 11-1
+- Mason Garcia | Concordia | 15-9
+12 Elijah Hynes | Missouri Valley | 21-10
+13 Nikolas Perovic | Lindsey Wilson | 17-2
+- Carter Kroll | Lourdes | 14-7
+- John Lovett | Reinhardt | 19-9
+4 Nathan Critchfield | Indiana Tech | 24-3
+3 Owen Braungardt | Grand View | 12-4
+- Caleb Werner | Providence | 21-12
+- Gentry Smith | Southeastern | 18-11
+14 Jay Smith | Eastern Oregon | 22-10
+11 Curtis Thomas | Reinhardt | 26-6
+- Kyle Scott | Rochester Christian | 21-9
+6 Kasten Grape | Doane | 21-3
+7 Malachi Karibo | Baker | 12-2
+- Hunter James | Menlo | 18-11
+10 Ryker Blackburn | Saint Mary | 32-7
+15 Cameron Cornman | Central Methodist | 25-14
+- Michael Moreno | Arizona Christian | 12-12
+- Brahn Howard | Texas Wesleyan | 13-10
+2 Demarco Lee | Life | 15-3
+place 1 Kouekabakilaho
+place 2 Braungardt
+place 3 Karibo
+place 4 Grape
+place 5 Hynes
+place 6 Herrera
+place 7 Antesberger
+place 8 Cornman
+
+@ 285
+1 Greg Hagan | Grand View | 29-1
+- Sven Lukner | Corban | 21-11
+- Bruce Wagers | Rio Grande | 25-8
+16 Jackson Schenk | Rochester Christian | 22-10
+9 Gabe Craig | Campbellsville | 21-3
+- Ethan DeRoche | Providence | 21-7
+8 Trevion Sample | Dakota Wesleyan | 10-1
+5 Joshua Isaac | Missouri Valley | 19-3
+- Ian Nelson | William Woods | 12-9
+12 Carlos Figueroa | Lindsey Wilson | 10-3
+13 Jacob Vincent | Simpson (Calif.) | 21-7
+- Wilkinson Saul | Brewton-Parker | 18-6
+- Eli Criblez | Doane | 27-13
+4 Gabe Jacobs | Southeastern | 17-3
+3 Zane Lanham | Life | 24-2
+- Alton Allen | Briar Cliff | 22-13
+- Gavin Harper | Reinhardt | 23-17
+14 Kawaun Deboe | Cumberland | 5-1
+11 Kenneth Copley | Embry-Riddle | 22-9
+- Excell Brooks | Marian | 18-17
+6 Antonio Dacosta | Menlo | 10-4
+7 Hunter DeJong | Morningside | 19-4
+- Wylie Dunn | Cumberlands | 16-18
+10 Jakob Jerabek | Morningside | 9-4
+15 Braydon Erb | Indiana Tech | 19-4
+- Tanner Hawkins | York (Neb.) | 24-6
+- Austin Foye | Central Methodist | 16-6
+2 KC Buday | Providence | 27-3
+place 1 Lanham
+place 2 Hagan
+place 3 Buday
+place 4 DeJong
+place 5 Isaac
+place 6 Jacobs
+place 7 Dacosta
+place 8 Copley

@@ -11,6 +11,11 @@ import { NumberTileGrid, type NumberTile } from '@/components/site/NumberTileGri
 import { boysRegionOfDistrict, girlsRegionOfDistrict, type TileColors } from '@/lib/siteTheme'
 
 import { SUMMARY_DEFAULTS, type SummaryKey } from '@/lib/siteLook'
+import { AboutClient, type CalendarRow } from '@/app/(site)/about/AboutClient'
+import { MockHomeVideo } from './MockHomeVideo'
+import { OffseasonBoard } from '@/components/site/OffseasonBoard'
+import type { OffseasonBoardData } from '@/lib/offseasonPublic'
+import { BOYS_DOCS_2027, GIRLS_DOCS_2027 } from '@/app/(site)/about/njsiaaDocs2027'
 export { SUMMARY_DEFAULTS, type SummaryKey }
 
 export type MockLook = {
@@ -27,7 +32,7 @@ export type MockLook = {
   girlsTile: (region: number) => TileColors
 }
 
-type Page = 'main' | 'home' | 'schedule' | 'standings' | 'leaderboards' | 'tournaments' | 'ps-team' | 'ps-individual' | 'region' | 'district' | 'state' | 'h2h' | 'about'
+type Page = 'main' | 'home' | 'schedule' | 'standings' | 'leaderboards' | 'tournaments' | 'ps-team' | 'ps-individual' | 'region' | 'district' | 'state' | 'h2h' | 'about' | 'school' | 'wrestler' | 'colleges' | 'college' | 'college-wrestler'
 // as in HeaderNav: Standings opens on click and has a Group / Conference menu; Post Season is menu only
 const NAV: { key: Page | 'postseason'; label: string; menuOnly?: boolean; menu?: { key: Page; label: string; view?: string }[] }[] = [
   { key: 'schedule', label: 'Scores' },
@@ -36,10 +41,13 @@ const NAV: { key: Page | 'postseason'; label: string; menuOnly?: boolean; menu?:
   { key: 'tournaments', label: 'Tournaments' },
   { key: 'postseason', label: 'Post Season', menuOnly: true, menu: [{ key: 'ps-team', label: 'Team' }, { key: 'ps-individual', label: 'Individual' }] },
   { key: 'h2h', label: 'H2H' },
-  { key: 'about', label: 'Insight' },
+  // Insight opens a menu of its tabs (Kyle 2026-11-18), as HeaderNav
+  { key: 'about', label: 'Insight', menu: ['Daily Report', 'Rankings', 'Daily Challenge', 'Polls', 'Off-Season', 'Collegiate', 'About'].map(t => ({ key: 'about' as Page, label: t, view: t })) },
 ]
 // the live team bracket's group tabs (TeamBracketClient.tsx)
-const INSIGHT_TABS = ['Daily Report', 'Rankings', 'Daily Challenge', 'Polls', 'About']
+// Off-Season (Kyle 2026-11-13): after Polls, before About
+// Collegiate (Kyle 2026-11-18): the college list, before About
+const INSIGHT_TABS = ['Daily Report', 'Rankings', 'Daily Challenge', 'Polls', 'Off-Season', 'Collegiate', 'About']
 const TEAM_GROUPS = ['Group 1', 'Group 2', 'Group 3', 'Group 4', 'Group 5', 'Non-Public']
 const BOYS_WEIGHTS = [106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285]
 const GIRLS_WEIGHTS = [100, 107, 114, 120, 126, 132, 138, 145, 152, 165, 185, 235]
@@ -220,7 +228,26 @@ const TOURNAMENTS: Record<string, (string | number)[][]> = {
   February: [['2/7', 'Hunterdon County', 'Hunterdon Central', 10, 'Hunterdon Central'], ['2/14', 'Bergen County', 'Ridgewood', 30, 'Bergen Catholic']],
 }
 
-export function MockSite({ look }: { look: MockLook }) {
+// Jamborees (Kyle 2026-11-11): their own tab beside Tournaments, same month tabs. The top team is the one with
+// the most team points by standard dual scoring across its pairings (record = its pairings won-lost-tied).
+// Girls only (the boys have no jamborees, so no tab). Girls 2025-26 figures from the jamboree pairings.
+const JAMBOREES: Record<string, (string | number)[][]> = {
+  December: [['12/12', 'Del Val Kickoff', 3, 'Robbinsville / Delaware Valley (tie)', 36, '1-1'], ['12/13', 'Opening Jamboree', 7, 'Lawrence', 93, '4-1-1'], ['12/15', 'Montville Jam', 9, 'East Brunswick', 176, '3-3-2'], ['12/20', 'Freehold Boro Jamboree', 7, 'Freehold Borough', 76, '3-3'], ['12/28', 'Hillsborough Holiday Brawl', 25, 'Rancocas Valley', 143, '13-4-1'], ['12/29', 'Duals for Danny', 6, 'Lawrence', 107, '4-0']],
+  January: [['1/10', 'Dover Jamboree', 3, 'Union', 54, '1-0-1'], ['1/12', 'Parsippany Hills Mini Jam', 11, 'Parsippany Hills', 102, '3-2-1'], ['1/14', 'John P. Stevens Multi-Dual', 8, 'Middlesex-Dunellen', 50, '3-1-1'], ['1/16', 'Jack Welch', 6, 'Cinnaminson', 61, '2-2']],
+  February: [['2/1', 'Bound Brook Lady Crusaders Jamboree', 41, 'Kingsway', 105, '13-6-1'], ['2/1', 'Passaic County Jamboree', 30, 'Clifton', 108, '7-6-3'], ['2/6', 'Middlesex Jamboree', 8, 'North Plainfield', 93, '3-2-1'], ['2/7', 'Howell Jamboree', 43, 'Howell', 166, '14-15-3'], ['2/20', 'Nutley Jamboree', 9, 'Parsippany Hills', 120, '3-4-1'], ['2/21', 'Lakewood Jamboree', 18, 'Delran', 151, '8-4']],
+}
+
+// Previews of live pages with new parts switched on (Kyle 2026-11-13; all live 2026-11-14): the real school profile (Trophy Case) and
+// wrestler profile (2026 Offseason table, match order), rendered on the server, and the Insight Off-Season board
+export type MockPreviews = {
+  offseason: { M: OffseasonBoardData | null; F: OffseasonBoardData | null }
+  school: { M: ReactNode; F: ReactNode }
+  wrestler: { M: ReactNode; F: ReactNode }
+  // College (Kyle 2026-11-17), not live: the college list (both sides, a tab per level), one college's page and a wrestler with college years (boys)
+  college?: { list: ReactNode; girlsList: ReactNode; page: ReactNode; wrestler: ReactNode }
+}
+
+export function MockSite({ look, aboutRows = [], previews }: { look: MockLook; aboutRows?: CalendarRow[]; previews?: MockPreviews }) {
   const [page, setPage] = useState<Page>('ps-individual')
   const [girls, setGirls] = useState(false)
   const [menu, setMenu] = useState<string | null>(null)
@@ -228,6 +255,7 @@ export function MockSite({ look }: { look: MockLook }) {
   const [lbSide, setLbSide] = useState('individual')
   const [lbCat, setLbCat] = useState('wins')
   const [month, setMonth] = useState('December')
+  const [eventKind, setEventKind] = useState<'tournaments' | 'jamborees'>('tournaments')
   const [regionNum, setRegionNum] = useState(2)
   const [districtNum, setDistrictNum] = useState(5)
   const [teamGroup, setTeamGroup] = useState('')
@@ -273,11 +301,15 @@ export function MockSite({ look }: { look: MockLook }) {
       </section>
     ),
     home: (
-      // the side's home page stays as live; the Boys / Girls toggle lands here
-      <section className="border border-slate-200 bg-slate-50 px-6 py-12 text-center">
-        <p className="text-xs font-bold uppercase tracking-widest text-slate-400">{P} home page</p>
-        <p className="mt-2 text-sm text-slate-600">The {P.toLowerCase()} home page, as it is on the site now.</p>
-      </section>
+      // the side's home page stays as live, with one proposed addition at the top: the weekly classic match
+      // video from the Home Video tool (Kyle 2026-11-12). The Boys / Girls toggle lands here
+      <div className="space-y-10">
+        <MockHomeVideo girls={girls} />
+        <section className="border border-slate-200 bg-slate-50 px-6 py-12 text-center">
+          <p className="text-xs font-bold uppercase tracking-widest text-slate-400">{P} home page</p>
+          <p className="mt-2 text-sm text-slate-600">The rest of the {P.toLowerCase()} home page, as it is on the site now.</p>
+        </section>
+      </div>
     ),
     schedule: <>
       {header(`${P} Scores`, 'schedule')}
@@ -315,8 +347,13 @@ export function MockSite({ look }: { look: MockLook }) {
     </>,
     tournaments: <>
       {header(`${P} Tournaments`, 'tournaments',
-        <SiteTabs items={Object.keys(TOURNAMENTS).map(m => ({ key: m, label: m, onClick: () => setMonth(m) }))} active={month} />)}
-      <div className="pt-2"><Table cols={['Date', 'Tournament', 'Host', 'Teams', 'Winner']} rows={TOURNAMENTS[month]} /></div>
+        <>
+          {girls && <SiteTabs items={[['tournaments', 'Tournaments'], ['jamborees', 'Jamborees']].map(([k, l]) => ({ key: k, label: l, onClick: () => setEventKind(k as 'tournaments' | 'jamborees') }))} active={eventKind} />}
+          <SiteTabs level={girls ? 2 : 1} items={Object.keys(girls && eventKind === 'jamborees' ? JAMBOREES : TOURNAMENTS).map(m => ({ key: m, label: m, onClick: () => setMonth(m) }))} active={month} />
+        </>)}
+      {girls && eventKind === 'jamborees'
+        ? <div className="pt-2"><Table cols={['Date', 'Jamboree', 'Teams', 'Top Team', 'Pts', 'Record']} rows={JAMBOREES[month] ?? []} /></div>
+        : <div className="pt-2"><Table cols={['Date', 'Tournament', 'Host', 'Teams', 'Winner']} rows={TOURNAMENTS[month]} /></div>}
     </>,
     'ps-team': <>
       {header(`${P} Team Post Season`, 'ps-team',
@@ -366,10 +403,22 @@ export function MockSite({ look }: { look: MockLook }) {
         <SiteTabs items={INSIGHT_TABS.map(k => ({ key: k, label: k, onClick: () => setInsightTab(k) }))} active={insightTab} />
         {insightTab === 'Daily Report' && <SiteTabs level={2} items={['7 Things', 'Report'].map(k => ({ key: k, label: k, onClick: () => setReportTab(k) }))} active={reportTab} />}
       </>, true)}
-      {insightTab === 'About'
-        ? <div className="space-y-3 text-sm text-slate-700 max-w-2xl"><p>The current About page (Mat Whizzer and NJSIAA tabs, dates and rules) sits here as it is.</p></div>
+      {insightTab === 'Collegiate' && previews?.college
+        ? (girls ? previews.college.girlsList : previews.college.list)
+        : insightTab === 'Off-Season' && previews
+        ? <OffseasonBoard data={girls ? previews.offseason.F : previews.offseason.M} side={girls ? 'girls' : 'boys'} />
+        : insightTab === 'About'
+        // About for this side only (Kyle 2026-11-11): its own NJSIAA calendar for the coming season and its own
+        // 2026-27 rule documents. The live About still shows the boys calendar and documents on both sides.
+        ? <AboutClient embedded calendarRows={aboutRows} rowCount={aboutRows.length} side={girls ? 'girls' : 'boys'} docs={girls ? GIRLS_DOCS_2027 : BOYS_DOCS_2027} />
         : <section className="border border-slate-200 bg-slate-50 px-6 py-12 text-center"><p className="text-xs font-bold uppercase tracking-widest text-slate-400">Coming soon</p><p className="mt-2 text-sm text-slate-600">{insightTab === 'Daily Report' ? reportTab : insightTab} is on its way.</p></section>}
     </>,
+    // the live pages themselves (not copies), with the new parts on; links inside them go to the live site
+    school: previews ? (girls ? previews.school.F : previews.school.M) : null,
+    wrestler: previews ? (girls ? previews.wrestler.F : previews.wrestler.M) : null,
+    colleges: previews?.college ? <div className="-my-10">{girls ? previews.college.girlsList : previews.college.list}</div> : null,
+    college: previews?.college && !girls ? <div className="-my-10">{previews.college.page}</div> : null,
+    'college-wrestler': previews?.college && !girls ? previews.college.wrestler : null,
   }
 
   const proposed = look.headerLayout === 'proposed'
@@ -414,7 +463,7 @@ export function MockSite({ look }: { look: MockLook }) {
                   {menu === n.key && (
                     <div className="absolute left-0 top-full pt-1.5 z-50">
                       <div className={`w-44 rounded-none border border-black overflow-hidden ${girls ? 'bg-rose-800 border-rose-700' : 'bg-slate-800 border-slate-700'}`}>
-                        {n.menu.map(m => <button key={m.label} onClick={() => { setPage(m.key); if (m.view) setStandView(m.view); setMenu(null) }} className={`block w-full text-left px-4 py-2 text-sm text-slate-100 ${girls ? 'hover:bg-rose-700' : 'hover:bg-slate-700'} hover:text-white transition-colors`}>{m.label}</button>)}
+                        {n.menu.map(m => <button key={m.label} onClick={() => { setPage(m.key); if (m.view && m.key === 'about') setInsightTab(m.view); else if (m.view) setStandView(m.view); setMenu(null) }} className={`block w-full text-left px-4 py-2 text-sm text-slate-100 ${girls ? 'hover:bg-rose-700' : 'hover:bg-slate-700'} hover:text-white transition-colors`}>{m.label}</button>)}
                       </div>
                     </div>
                   )}
@@ -433,6 +482,28 @@ export function MockSite({ look }: { look: MockLook }) {
           </div>
         </div>
       </header>
+      {previews && (
+        // these went live 2026-11-14 (Kyle confirmed 2026-11-16); the mock still opens them for a look
+        <div className="bg-emerald-50 border-b border-emerald-200 px-4 py-1.5 text-xs text-slate-700 flex items-center gap-3 flex-wrap">
+          <span className="font-semibold text-emerald-800">Live on the site:</span>
+          <button onClick={() => { setPage('about'); setInsightTab('Off-Season') }} className="underline hover:text-black">Insight · Off-Season</button>
+          <button onClick={() => setPage('school')} className="underline hover:text-black">School profile · Trophy Case</button>
+          <button onClick={() => setPage('wrestler')} className="underline hover:text-black">Wrestler profile · offseason table and match order</button>
+          {(page === 'school' || page === 'wrestler') && <span className="text-slate-500">The real page with the new parts on; pick another school or wrestler above the mock.</span>}
+        </div>
+      )}
+      {previews?.college && (
+        // shipped 2026-11-18 (Kyle: "everything looks great, you can ship that"); the mock still opens them for a look
+        <div className="bg-emerald-50 border-b border-emerald-200 px-4 py-1.5 text-xs text-slate-700 flex items-center gap-3 flex-wrap">
+          <span className="font-semibold text-emerald-800">Live on the site (2026-11-18):</span>
+          <button onClick={() => { setPage('about'); setInsightTab('Collegiate') }} className="underline hover:text-black">Insight · Collegiate</button>
+          {!girls && <button onClick={() => setPage('college')} className="underline hover:text-black">College page</button>}
+          {!girls && <button onClick={() => setPage('college-wrestler')} className="underline hover:text-black">Wrestler profile · college</button>}
+          <button onClick={() => setPage('school')} className="underline hover:text-black">School profile · stats board</button>
+          <button onClick={() => setPage('wrestler')} className="underline hover:text-black">Wrestler profile · Super 32 / Fargo badges</button>
+          {['colleges', 'college', 'college-wrestler'].includes(page) && <span className="text-slate-500">Pick another college or wrestler above the mock (College id / College wrestler id). Links inside are off.</span>}
+        </div>
+      )}
       <div className="bg-white px-4 sm:px-8 py-8">{body[page]}</div>
     </div>
   )

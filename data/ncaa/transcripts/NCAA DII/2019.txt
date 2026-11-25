@@ -1,0 +1,542 @@
+# NCAA Division II Championships 2019 — source: 2019.pdf (entrants from the PDF text; bouts typed from the bracket pages, 2026-11-17)
+# no seeds printed; a pigtail loser appears only as initial + last name with no college (college ?)
+
+@ 125
+- Carlos Jacquez | Lindenwood (Mo) | 30-0
+- Melvin Rubio | Queens (NC) | 9-9
+- Brendan Howard | Pitt.-Johnstown | 21-8
+- Maleek Williams | Upper Iowa | 22-12
+- Nick Daggett | UNC Pembroke | 27-8
+- Josiah Seaton | Colorado St.-Pueblo | 18-16
+- Jonathan Andreatta | Adams St. | 21-6
+- Cole Laya | Wheeling Jesuit | 22-3
+- Josh Portillo | Neb.-Kearney | 32-7
+- Robert Campos | Notre Dame (OH) | 22-15
+- Cole Jones | MSU Moorhead | 29-10
+- Marcus Povlick | McKendree | 32-13
+- Tyler Kreith | Maryville (MO) | 34-13
+- Brandon Lucas | Bellarmine | 24-20
+- Anthony Tripke | Ohio Valley | 11-10
+- Brett Velasquez | St. Cloud St. | 23-5
+- J. Renne | ?
+- J. Dunlop | ?
+pigtail Seaton > Renne | MD 10-1
+pigtail Povlick > Dunlop | Dec 6-2
+r1 Jacquez > Rubio | MD 13-3
+r1 Howard > Williams | Dec 9-6
+r1 Daggett > Seaton | Dec 5-2
+r1 Laya > Andreatta | Dec 2-1
+r1 Portillo > Campos | Dec 8-3
+r1 Jones > Povlick | Dec 7-4
+r1 Kreith > Lucas | MD 10-1
+r1 Velasquez > Tripke | Fall 4:16
+qf Jacquez > Howard | Dec 10-6
+qf Laya > Daggett | Dec 5-3
+qf Portillo > Jones | Dec 14-9
+qf Velasquez > Kreith | Dec 8-1
+sf Jacquez > Laya | Dec 4-1
+sf Portillo > Velasquez | Dec 5-3
+f Jacquez > Portillo | Dec 5-3
+cpig Lucas > Renne | Fall 1:31
+cpig Williams > Dunlop | MD 12-3
+c1 Rubio > Williams | Fall 1:41
+c1 Andreatta > Seaton | Dec 5-2
+c1 Povlick > Campos | Dec 6-2
+c1 Lucas > Tripke | Dec 11-8
+c2 Kreith > Rubio | Dec 8-1
+c2 Jones > Andreatta | Dec 10-6
+c2 Povlick > Daggett | Dec 8-1
+c2 Howard > Lucas | Dec 11-6
+cqf Kreith > Jones | Dec 2-1
+cqf Povlick > Howard | Dec 8-3
+csf Laya > Kreith | Fall 6:41
+csf Velasquez > Povlick | Dec 4-3
+3rd Laya > Velasquez | Dec 6-4
+5th Povlick > Kreith | Fall 3:48
+7th Jones > Howard | MD 13-5
+
+@ 133
+- Tyler Warner | Wheeling Jesuit | 29-1
+- Jordan Gurrola | San Fran. St. | 26-9
+- Sha'Mun Smith | Limestone | 19-12
+- Ana Abduljelil | UIndy | 17-11
+- Tanner Hitchcock | Lindenwood (Mo) | 21-9
+- Austin Hertel | Gannon | 13-8
+- Timmy Martinez | Newberry | 9-3
+- Tate Barnhardt | Mary | 25-7
+- Garrett Vos | St. Cloud St. | 22-5
+- Hunter Bray | Notre Dame (OH) | 29-5
+- Taylor Jokerst | Maryville (MO) | 13-12
+- Justin Folley | Upper Iowa | 31-9
+- Wesley Dawkins | Neb.-Kearney | 27-10
+- John Feeney | Central Mo. | 7-11
+- Alexis Soriano | Mercyhurst | 26-13
+- D'andre Brumfield | Colorado St.-Pueblo | 25-6
+- R. Pietro | ?
+- A. Diltz | ?
+pigtail Brumfield > Pietro | Dec 6-1
+pigtail Gurrola > Diltz | TF-1.5 6:45 (19-2)
+r1 Warner > Gurrola | TB-2 4-3
+r1 Smith > Abduljelil | Dec 8-5
+r1 Hitchcock > Hertel | Dec 6-3
+r1 Barnhardt > Martinez | Dec 4-0
+r1 Bray > Vos | Dec 6-3
+r1 Folley > Jokerst | MD 11-0
+r1 Dawkins > Feeney | TF-1.5 6:49 (16-1)
+r1 Brumfield > Soriano | Dec 5-2
+qf Warner > Smith | Dec 6-2
+qf Barnhardt > Hitchcock | Dec 8-2
+qf Bray > Folley | Dec 4-3
+qf Dawkins > Brumfield | Dec 6-1
+sf Warner > Barnhardt | Dec 4-2
+sf Dawkins > Bray | SV-1 3-1
+f Warner > Dawkins | Dec 4-1
+cpig Martinez > Pietro | Dec 4-3
+cpig Vos > Diltz | Fall 5:52
+c1 Gurrola > Abduljelil | Fall 1:09
+c1 Hertel > Martinez | Dec 5-3
+c1 Vos > Jokerst | MD 11-0
+c1 Soriano > Feeney | SV-1 6-4
+c2 Gurrola > Brumfield | Dec 7-6
+c2 Folley > Hertel | MD 11-3
+c2 Vos > Hitchcock | Dec 9-5
+c2 Soriano > Smith | Dec 6-1
+cqf Gurrola > Folley | Dec 9-4
+cqf Vos > Soriano | MD 12-4
+csf Gurrola > Barnhardt | Dec 7-1
+csf Bray > Vos | TB-1 7-6
+3rd Bray > Gurrola | Dec 5-3
+5th Barnhardt > Vos | Fall 4:17
+7th Folley > Soriano | Dec 8-3
+
+@ 141
+- Brandon Ball | Fort Hays St. | 28-2
+- Angelo Robles | UIndy | 21-13
+- Jered Sublet | Minot St. | 11-11
+- Jared Donahue | Wheeling Jesuit | 29-7
+- Travis Swanson | St. Cloud St. | 25-6
+- Jonathan Miller | UNC Pembroke | 23-14
+- Dylan Udero | Adams St. | 14-10
+- Isaiah Royal | Newberry | 29-7
+- Joey Alessandro | Pitt.-Johnstown | 22-4
+- Troy Gregor | Belmont Abbey | 16-3
+- Danny Swan | Lindenwood (Mo) | 20-8
+- Eduardo Penha | Colorado Mesa | 27-5
+- Jose Rodriguez | Notre Dame (OH) | 20-2
+- Louie Sanders | Minnesota St. | 15-7
+- Jason Hanenberg | Western Colo. | 19-12
+- Joseph Calderone | LIU Post | 21-4
+- D. Nace | ?
+- N. Keim | ?
+pigtail Ball > Nace | Dec 9-2
+pigtail Rodriguez > Keim | MD 15-2
+r1 Ball > Robles | Dec 1-0
+r1 Donahue > Sublet | SV-1 8-6
+r1 Swanson > Miller | Dec 8-6
+r1 Royal > Udero | Dec 8-3
+r1 Alessandro > Gregor | Fall 4:15
+r1 Swan > Penha | Fall 2:39
+r1 Rodriguez > Sanders | MD 14-0
+r1 Calderone > Hanenberg | MD 8-0
+qf Ball > Donahue | Dec 3-0
+qf Royal > Swanson | SV-2 8-6
+qf Swan > Alessandro | Dec 10-6
+qf Rodriguez > Calderone | Dec 8-5
+sf Royal > Ball | SV-1 6-4
+sf Rodriguez > Swan | MD 13-4
+f Rodriguez > Royal | MD 16-5
+cpig Nace > Gregor | Fall 3:32
+cpig Keim > Miller | Dec 7-6
+c1 Robles > Sublet | Dec 4-0
+c1 Keim > Udero | Dec 8-5
+c1 Penha > Nace | Dec 7-4
+c1 Sanders > Hanenberg | Dec 9-7
+c2 Calderone > Robles | TB-1 2-1
+c2 Alessandro > Keim | Dec 2-1
+c2 Penha > Swanson | Dec 8-4
+c2 Donahue > Sanders | Fall 6:41
+cqf Alessandro > Calderone | Dec 5-1
+cqf Penha > Donahue | Dec 9-6
+csf Ball > Alessandro | Dec 7-3
+csf Penha > Swan | Dec 11-5
+3rd Penha > Ball | SV-1 4-2
+5th Alessandro > Swan | Dec 4-0
+7th Calderone > Donahue | Dec 3-0
+
+@ 149
+- Chris Eddins Jr | Pitt.-Johnstown | 23-0
+- John Gahagan | Belmont Abbey | 15-6
+- Kaleb Warner | UNC Pembroke | 14-14
+- Gavin Londoff | Lindenwood (Mo) | 31-9
+- Isaiah Kemper | McKendree | 37-13
+- Gage Branson | Bellarmine | 33-8
+- Noah Ottum | Colo. Sch. of Mines | 13-10
+- Kyle Rathman | Minnesota St. | 19-5
+- Trey Grine | Tiffin | 20-2
+- Noah Hermosillo | Adams St. | 12-9
+- Faris Messai | Gannon | 16-7
+- Josh Wimer | Findlay | 22-11
+- Kameron Frame | Newman | 20-6
+- Matthew Rose | Limestone | 10-2
+- Chase Clasen | Chadron St. | 18-7
+- James Pleski | St. Cloud St. | 29-3
+- P. Sheppard | ?
+- A. Shaw | ?
+pigtail Rose > Sheppard | Dec 5-0
+pigtail Londoff > Shaw | Dec 8-1
+r1 Eddins Jr > Gahagan | Fall 2:41
+r1 Londoff > Warner | Dec 6-2
+r1 Kemper > Branson | MD 14-6
+r1 Rathman > Ottum | Dec 5-1
+r1 Grine > Hermosillo | MD 15-6
+r1 Wimer > Messai | Dec 6-3
+r1 Frame > Rose | Dec 7-4
+r1 Pleski > Clasen | SV-1 3-1
+qf Eddins Jr > Londoff | Dec 3-1
+qf Kemper > Rathman | Dec 2-1
+qf Grine > Wimer | Fall 1:56
+qf Frame > Pleski | TB-2 3-2
+sf Eddins Jr > Kemper | Dec 7-4
+sf Grine > Frame | Fall 0:45
+f Eddins Jr > Grine | Dec 7-2
+cpig Branson > Sheppard | MD 12-3
+cpig Messai > Shaw | Dec 7-4
+c1 Warner > Gahagan | Dec 9-2
+c1 Branson > Ottum | Dec 11-5
+c1 Messai > Hermosillo | Dec 12-5
+c1 Clasen > Rose | Dec 10-3
+c2 Pleski > Warner | SV-1 5-3
+c2 Wimer > Branson | Dec 4-1
+c2 Rathman > Messai | Dec 9-4
+c2 Londoff > Clasen | Dec 4-0
+cqf Pleski > Wimer | TB-2 4-3
+cqf Londoff > Rathman | Dec 3-1
+csf Pleski > Kemper | SV-1 3-1
+csf Londoff > Frame | M. For.
+3rd Londoff > Pleski | Dec 3-2
+5th Kemper > Frame | Inj. 0:00
+7th Rathman > Wimer | Dec 6-3
+
+@ 157
+- Matt Malcom | Neb.-Kearney | 29-5
+- Nick Boggs | Lake Erie | 30-6
+- Kevin Almond | Emmanuel (GA) | 29-16
+- Blake Clevenger | Drury | 26-4
+- Nate Smalling | McKendree | 33-15
+- Austin Palmer | Newberry | 23-5
+- Baltazar Gonzalez | American Int`l | 30-5
+- Jake Barzowski | St. Cloud St. | 25-3
+- Cortez Arredondo | Southwest Minn. St. | 25-7
+- Skyler Lykins | Colo. Sch. of Mines | 12-8
+- Colin Ayers | Augustana (SD) | 31-12
+- George McGuire | Gannon | 20-5
+- James Wimer | Findlay | 29-14
+- Tyler Makosy | UNC Pembroke | 23-15
+- Heath Lange | UIndy | 8-7
+- Tyler Mies | Newman | 30-5
+- I. Diggs | ?
+- C. Falleroni | ?
+pigtail McGuire > Diggs | MD 15-6
+pigtail Palmer > Falleroni | MD 15-4
+r1 Malcom > Boggs | Dec 8-1
+r1 Almond > Clevenger | Dec 6-3
+r1 Smalling > Palmer | Dec 6-3
+r1 Barzowski > Gonzalez | Fall 1:42
+r1 Lykins > Arredondo | Dec 9-8
+r1 Ayers > McGuire | Dec 9-4
+r1 Wimer > Makosy | MD 13-3
+r1 Mies > Lange | Dec 8-5
+qf Malcom > Almond | TF-1.5 7:00 (17-2)
+qf Smalling > Barzowski | Dec 7-4
+qf Ayers > Lykins | Dec 12-9
+qf Wimer > Mies | Dec 9-5
+sf Malcom > Smalling | TF-1.5 4:50 (16-0)
+sf Ayers > Wimer | TB-1 7-5
+f Malcom > Ayers | Dec 9-4
+cpig Clevenger > Diggs | Dec 8-3
+cpig Falleroni > Makosy | Dec 6-0
+c1 Clevenger > Boggs | Dec 4-3
+c1 Palmer > Gonzalez | Fall 5:30
+c1 McGuire > Arredondo | Dec 7-3
+c1 Falleroni > Lange | Fall 5:34
+c2 Mies > Clevenger | Dec 6-4
+c2 Palmer > Lykins | Dec 13-6
+c2 Barzowski > McGuire | Dec 7-6
+c2 Almond > Falleroni | Dec 11-8
+cqf Mies > Palmer | MD 16-4
+cqf Barzowski > Almond | Dec 3-0
+csf Smalling > Mies | MD 16-6
+csf Barzowski > Wimer | Dec 5-4
+3rd Barzowski > Smalling | Dec 6-4
+5th Mies > Wimer | Dec 5-3
+7th Palmer > Almond | Fall 2:19
+
+@ 165
+- Shane Ruhnke | Millersville | 27-3
+- Logan Saltou | Minnesota St. | 18-9
+- Anthony Dailey | Notre Dame (OH) | 16-12
+- Devin Fitzpatrick | St. Cloud St. | 26-6
+- Bret Romanzak | Ashland | 30-7
+- Devin Austin | Pitt.-Johnstown | 17-9
+- Brock Benitz | Upper Iowa | 16-7
+- Matthew Rodriquez-Kirkl | Limestone | 19-7
+- Koery Windham | Adams St. | 19-8
+- Tyler Harrington | Maryville (MO) | 35-10
+- Nick Giantono | Newberry | 13-17
+- Calvin Ochs | Neb.-Kearney | 13-3
+- Dan Fillipek | McKendree | 28-13
+- Jason Buhr | Colorado Mesa | 20-7
+- Kyle Jolas | Lindenwood (Mo) | 23-13
+- Rodney Shepard | UNC Pembroke | 23-6
+- L. Grass | ?
+- S. Struble | ?
+pigtail Windham > Grass | Dec 9-4
+pigtail Rodriquez-Kirkl > Struble | Dec 11-4
+r1 Ruhnke > Saltou | Fall 5:32
+r1 Dailey > Fitzpatrick | Dec 6-3
+r1 Austin > Romanzak | Dec 5-2
+r1 Benitz > Rodriquez-Kirkl | Dec 4-3
+r1 Windham > Harrington | Dec 6-4
+r1 Ochs > Giantono | TF-1.5 6:50 (17-2)
+r1 Buhr > Fillipek | Dec 14-10
+r1 Shepard > Jolas | Dec 10-5
+qf Ruhnke > Dailey | Fall 1:02
+qf Austin > Benitz | Dec 5-0
+qf Windham > Ochs | Dec 2-1
+qf Shepard > Buhr | Dec 10-5
+sf Ruhnke > Austin | Fall 2:52
+sf Shepard > Windham | SV-1 3-1
+f Ruhnke > Shepard | DQ
+cpig Grass > Saltou | TF-1.5 2:27 (17-0)
+cpig Jolas > Struble | Dec 2-0
+c1 Fitzpatrick > Grass | Dec 8-2
+c1 Rodriquez-Kirkl > Romanzak | M. For.
+c1 Harrington > Giantono | Fall 1:45
+c1 Fillipek > Jolas | Dec 10-5
+c2 Fitzpatrick > Buhr | Fall 2:05
+c2 Rodriquez-Kirkl > Ochs | MD 13-3
+c2 Harrington > Benitz | Dec 7-2
+c2 Dailey > Fillipek | Dec 10-4
+cqf Fitzpatrick > Rodriquez-Kirkl | Dec 10-6
+cqf Harrington > Dailey | Fall 3:20
+csf Austin > Fitzpatrick | Fall 1:49
+csf Harrington > Windham | Fall 6:38
+3rd Austin > Harrington | Dec 5-2
+5th Windham > Fitzpatrick | Dec 6-5
+7th Rodriquez-Kirkl > Dailey | Fall 5:33
+
+@ 174
+- Brandon Supernaw | Western Colo. | 18-3
+- Phillip Springsteen | Mary | 21-6
+- Robert Gambrell | Colo. Sch. of Mines | 19-5
+- Connor Price | Wis.-Parkside | 17-9
+- Nick Foster | McKendree | 36-5
+- Faris Teia | UNC Pembroke | 8-6
+- Gino Sita | Alderson Broaddus | 34-6
+- TC Warner | Kutztown | 19-2
+- Connor Craig | Wheeling Jesuit | 32-1
+- Kody Eichlin | King (TN) | 18-8
+- Christian Price | Ashland | 25-9
+- Michael Raccioppi | East Stroudsburg | 30-5
+- Cornell Beachem | Notre Dame (OH) | 25-11
+- Damon Greenwald | Seton Hill | 19-16
+- Zach Stodden | Neb.-Kearney | 14-14
+- Kolton Eischens | St. Cloud St. | 25-4
+- M. Pratt | ?
+- D. Crawl | ?
+pigtail Springsteen > Pratt | Fall 2:40
+pigtail Beachem > Crawl | MD 15-3
+r1 Supernaw > Springsteen | Dec 9-5
+r1 Gambrell > Connor Price | Dec 7-4
+r1 Foster > Teia | Dec 3-1
+r1 Warner > Sita | MD 14-0
+r1 Craig > Eichlin | Fall 5:06
+r1 Raccioppi > Christian Price | TF-1.5 7:00 (17-2)
+r1 Beachem > Greenwald | Fall 6:50
+r1 Eischens > Stodden | Dec 4-2
+qf Supernaw > Gambrell | Dec 16-9
+qf Foster > Warner | Dec 3-2
+qf Craig > Raccioppi | Dec 7-3
+qf Eischens > Beachem | Dec 6-4
+sf Foster > Supernaw | TB-1 4-3
+sf Craig > Eischens | Dec 9-2
+f Craig > Foster | Dec 6-2
+cpig Pratt > Eichlin | MD 8-0
+cpig Teia > Crawl | Dec 4-1
+c1 Springsteen > Connor Price | Dec 3-2
+c1 Sita > Teia | TB-1 6-5
+c1 Pratt > Christian Price | Dec 1-0
+c1 Greenwald > Stodden | Dec 10-4
+c2 Springsteen > Beachem | Dec 10-3
+c2 Raccioppi > Sita | Fall 2:03
+c2 Warner > Pratt | SV-1 4-2
+c2 Greenwald > Gambrell | Fall 0:32
+cqf Raccioppi > Springsteen | MD 11-3
+cqf Warner > Greenwald | MD 11-2
+csf Raccioppi > Supernaw | Fall 3:12
+csf Eischens > Warner | Fall 2:30
+3rd Raccioppi > Eischens | Fall 3:39
+5th Warner > Supernaw | Dec 6-2
+7th Springsteen > Greenwald | Dec 8-1
+
+@ 184
+- Jeff Reimel | Kutztown | 18-3
+- Brandon Sloop | UNC Pembroke | 25-12
+- Griffin Osing | Southwest Minn. St. | 20-11
+- Brock Biddle | Pitt.-Johnstown | 27-4
+- Konnor Schmidt | Western Colo. | 23-6
+- ZeBrandon Gant | Newberry | 22-10
+- Justin Pichedwatana | San Fran. St. | 27-13
+- Michael Pixley | McKendree | 18-2
+- Chance Helmick | St. Cloud St. | 16-2
+- Anthony Collins | Limestone | 10-7
+- Kaden Campbell | Northern St. | 17-10
+- Tony Vezzetti | Notre Dame (OH) | 19-7
+- Tarrence Williams | Colorado St.-Pueblo | 8-3
+- Bailey Kelly | Maryville (MO) | 27-12
+- Brody Conner | UIndy | 18-10
+- Heath Gray | Central Okla. | 36-2
+- A. Pasiuk | ?
+- N. Bowlen | ?
+pigtail Pichedwatana > Pasiuk | Dec 3-2
+pigtail Helmick > Bowlen | Dec 3-2
+r1 Reimel > Sloop | Fall 2:58
+r1 Osing > Biddle | Dec 6-5
+r1 Schmidt > Gant | Fall 6:35
+r1 Pixley > Pichedwatana | Fall 4:19
+r1 Helmick > Collins | Dec 3-2
+r1 Vezzetti > Campbell | Dec 10-4
+r1 Williams > Kelly | Dec 14-8
+r1 Gray > Conner | Dec 11-4
+qf Reimel > Osing | Dec 4-1
+qf Pixley > Schmidt | Fall 3:38
+qf Vezzetti > Helmick | Dec 10-5
+qf Gray > Williams | Dec 7-5
+sf Pixley > Reimel | DQ
+sf Vezzetti > Gray | Dec 3-2
+f Pixley > Vezzetti | Dec 4-1
+cpig Pasiuk > Conner | Dec 9-2
+cpig Sloop > Bowlen | Dec 8-4
+c1 Biddle > Sloop | Fall 3:36
+c1 Pichedwatana > Gant | Dec 8-5
+c1 Collins > Campbell | MD 11-2
+c1 Pasiuk > Kelly | Fall 1:18
+c2 Biddle > Williams | MD 16-5
+c2 Pichedwatana > Helmick | Dec 3-2
+c2 Collins > Schmidt | M. For.
+c2 Pasiuk > Osing | TF-1.5 4:46 (18-1)
+cqf Biddle > Pichedwatana | Dec 9-7
+cqf Pasiuk > Collins | Dec 11-6
+csf Biddle > Reimel | SV-1 15-13
+csf Gray > Pasiuk | MD 12-2
+3rd Gray > Biddle | Dec 8-2
+5th Pasiuk > Reimel | M. For.
+7th Pichedwatana > Collins | Dec 6-1
+
+@ 197
+- Vince Dietz | St. Cloud St. | 31-1
+- Khalil Gipson | Adams St. | 11-13
+- Wade French | Chadron St. | 19-9
+- Nick Baumler | Upper Iowa | 26-8
+- Ethan Sherertz | Maryville (MO) | 20-9
+- Clayton Wahlstrom | Augustana (SD) | 32-15
+- Freddie Nixon | Gannon | 20-10
+- Ryan Vasbinder | McKendree | 36-12
+- Nicholas Mason | Tiffin | 27-7
+- Clif-Steve Decius | Limestone | 10-5
+- Dylan McBride | Western Colo. | 15-4
+- Logan Kemp | West Liberty | 16-5
+- Elijah Seay | King (TN) | 20-4
+- Colton Dull | Millersville | 15-8
+- Nick Weldon | Newberry | 6-5
+- Levi Niebauer | Pitt.-Johnstown | 12-2
+- B. Wagner | ?
+- J. McKindley | ?
+pigtail Nixon > Wagner | Dec 9-4
+pigtail McBride > McKindley | MD 13-1
+r1 Dietz > Gipson | MD 10-2
+r1 Baumler > French | Dec 9-4
+r1 Wahlstrom > Sherertz | Dec 6-4
+r1 Vasbinder > Nixon | Dec 6-2
+r1 Mason > Decius | Fall 4:24
+r1 McBride > Kemp | Dec 9-4
+r1 Dull > Seay | Fall 4:24
+r1 Weldon > Niebauer | Fall 2:35
+qf Dietz > Baumler | Fall 6:56
+qf Wahlstrom > Vasbinder | Dec 4-1
+qf Mason > McBride | Fall 5:20
+qf Dull > Weldon | Dec 8-4
+sf Dietz > Wahlstrom | Dec 4-3
+sf Mason > Dull | Fall 2:39
+f Mason > Dietz | Dec 5-2
+cpig Niebauer > Wagner | Dec 8-2
+cpig French > McKindley | Dec 5-3
+c1 Gipson > French | Dec 6-1
+c1 Sherertz > Nixon | Dec 4-3
+c1 Kemp > Decius | Dec 12-5
+c1 Seay > Niebauer | Fall 5:42
+c2 Gipson > Weldon | Dec 8-3
+c2 Sherertz > McBride | Fall 0:49
+c2 Vasbinder > Kemp | MD 18-8
+c2 Baumler > Seay | Dec 5-2
+cqf Sherertz > Gipson | SV-1 6-4
+cqf Baumler > Vasbinder | Dec 7-6
+csf Wahlstrom > Sherertz | Dec 9-7
+csf Baumler > Dull | Dec 3-2
+3rd Baumler > Wahlstrom | Dec 5-2
+5th Dull > Sherertz | Fall 4:38
+7th Vasbinder > Gipson | Dec 10-5
+
+@ 285
+- Terrance Fanning | Wheeling Jesuit | 26-4
+- Jordan Magnuson | MSU Moorhead | 5-7
+- Logan Radik | Maryville (MO) | 28-13
+- Patton Gossett | Newberry | 25-9
+- Jarrod Hinrichs | Neb.-Kearney | 35-8
+- Jacob Robb | Mercyhurst | 30-13
+- Ciaran Ball | Simon Fraser | 15-6
+- Tristen Weirich | Ashland | 29-11
+- Andrew Dunn | Kutztown | 26-2
+- Daniel Bland | Limestone | 8-6
+- Derek Berberick | Shippensburg | 16-9
+- Courvoisie Morrow | Lindenwood (Mo) | 15-9
+- Jordan Will | Minot St. | 17-6
+- Greg Wilson | Central Okla. | 13-6
+- Ramon Correa | Coker | 14-7
+- Kameron Teacher | Notre Dame (OH) | 26-7
+- G. Jaime | ?
+- W. Hunt | ?
+pigtail Gossett > Jaime | Fall 3:39
+pigtail Wilson > Hunt | Dec 3-2
+r1 Fanning > Magnuson | Dec 9-3
+r1 Gossett > Radik | Fall 4:27
+r1 Hinrichs > Robb | Dec 4-1
+r1 Weirich > Ball | Dec 5-2
+r1 Dunn > Bland | MD 13-4
+r1 Morrow > Berberick | Dec 5-2
+r1 Wilson > Will | Dec 8-4
+r1 Teacher > Correa | Fall 6:46
+qf Fanning > Gossett | TF-1.5 5:00 (18-2)
+qf Hinrichs > Weirich | SV-1 5-3
+qf Dunn > Morrow | Dec 8-2
+qf Teacher > Wilson | Dec 11-5
+sf Hinrichs > Fanning | SV-1 9-7
+sf Dunn > Teacher | Dec 7-6
+f Dunn > Hinrichs | Dec 2-1
+cpig Berberick > Jaime | Fall 5:24
+cpig Hunt > Robb | Dec 9-4
+c1 Radik > Magnuson | Dec 2-1
+c1 Ball > Hunt | Dec 4-3
+c1 Berberick > Bland | MD 14-1
+c1 Correa > Will | Fall 0:45
+c2 Wilson > Radik | Fall 2:05
+c2 Ball > Morrow | TB-1 2-1
+c2 Weirich > Berberick | Fall 1:35
+c2 Gossett > Correa | Fall 5:18
+cqf Ball > Wilson | MD 8-0
+cqf Weirich > Gossett | Dec 6-5
+csf Fanning > Ball | Dec 8-5
+csf Teacher > Weirich | MD 14-5
+3rd Teacher > Fanning | MD 14-6
+5th Ball > Weirich | Dec 4-1
+7th Gossett > Wilson | Dec 8-3

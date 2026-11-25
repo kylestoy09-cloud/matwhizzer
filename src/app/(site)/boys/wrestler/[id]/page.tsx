@@ -8,5 +8,5 @@ export default async function BoysWrestlerPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  return <WrestlerProfileCore wrestlerId={id} />
+  return <WrestlerProfileCore wrestlerId={id} preview={{ offseason: true, order: true }} />
 }

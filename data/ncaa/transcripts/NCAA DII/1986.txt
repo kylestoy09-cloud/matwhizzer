@@ -1,0 +1,182 @@
+# NCAA Division II Championships 1986 — source: NCAA II 1986.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Tim Wright | SIU-Edwardsville
+- Perry Ainscough | Liberty
+- John Christen | North Dakota
+- Brett McNamar | Cal State-Chico
+- Roger Singleton | Grand Valley State
+- Pat Ingold | Northern Michigan
+- Brian Guzzo | South Dakota State
+- Rick Goodwin | San Francisco State
+place 1 Tim Wright
+place 2 Perry Ainscough
+place 3 John Christen
+place 4 Brett McNamar
+place 5 Roger Singleton
+place 6 Pat Ingold
+place 7 Brian Guzzo
+place 8 Rick Goodwin
+
+@ 126
+- Alan Grammer | SIU-Edwardsville
+- Tony Amado | Portland State
+- Joe Stukes | North Carolina-Pembroke
+- Paul Anderson | St. Cloud State
+- Tim Begley | Wright State
+- Rick Travis | California PA
+- Rick Goeb | North Dakota State
+- Alan Paradise | Cal State-Bakersfield
+place 1 Alan Grammer
+place 2 Tony Amado
+place 3 Joe Stukes
+place 4 Paul Anderson
+place 5 Tim Begley
+place 6 Rick Travis
+place 7 Rick Goeb
+place 8 Alan Paradise
+
+@ 134
+- Steve Stearns | SIU-Edwardsville
+- David Ray | Edinboro
+- Ira Cheatham | Norfolk State
+- Bill O'Connor | Truman State
+- Richard Ellingsen | San Francisco State
+- Tony Molchak | Ashland
+- Tony Trabucco | Cal State-Chico
+- Robert Burrows | Central Missouri
+place 1 Steve Stearns
+place 2 David Ray
+place 3 Ira Cheatham
+place 4 Bill O'Connor
+place 5 Richard Ellingsen
+place 6 Tony Molchak
+place 7 Tony Trabucco
+place 8 Robert Burrows
+
+@ 142
+- Greg Wright | Edinboro
+- Mark Danner | Central Missouri
+- Shawn Murdock | Lake Superior
+- Mike Frazier | North Dakota State
+- John Sanderson | Grand Valley State
+- Perry Fink | South Dakota State
+- Kip Kristoff | SIU-Edwardsville
+- Bill Newton | Cal State-Bakersfield
+place 1 Greg Wright
+place 2 Mark Danner
+place 3 Shawn Murdock
+place 4 Mike Frazier
+place 5 John Sanderson
+place 6 Perry Fink
+place 7 Kip Kristoff
+place 8 Bill Newton
+
+@ 150
+- Bob Kauffman | Edinboro
+- Brian McTague | SIU-Edwardsville
+- Vinnie Hanlon | California PA
+- Matt Olejnik | Cal State-Bakersfield
+- Lance Rogers | North Dakota State
+- Jim Martinson | North Dakota
+- Gerry Bell | Lake Superior
+- Keith Lawver | Northern Michigan
+place 1 Bob Kauffman
+place 2 Brian McTague
+place 3 Vinnie Hanlon
+place 4 Matt Olejnik
+place 5 Lance Rogers
+place 6 Jim Martinson
+place 7 Gerry Bell
+place 8 Keith Lawver
+
+@ 158
+- Paul Huyck | Cal State-Bakersfield
+- Mike Hahesy | Edinboro
+- Gene Green | North Dakota State
+- Todd Kendle | Augustana SD
+- Bob Dahm | SIU-Edwardsville
+- Ken Davis | Wright State
+- Darrin Arberry | Indianapolis
+- Brad Hildebrandt | Nebraska-Omaha
+place 1 Paul Huyck
+place 2 Mike Hahesy
+place 3 Gene Green
+place 4 Todd Kendle
+place 5 Bob Dahm
+place 6 Ken Davis
+place 7 Darrin Arberry
+place 8 Brad Hildebrandt
+
+@ 167
+- Darryl Pope | Cal State-Bakersfield
+- Mark Kristoff | SIU-Edwardsville
+- John Barrett | St. Cloud State
+- John Morgan | North Dakota State
+- John Solomonson | Oakland
+- Mike Wood | Norfolk State
+- Fred Meyer | Southern Connecticut
+- Dave Held | Edinboro
+place 1 Darryl Pope
+place 2 Mark Kristoff
+place 3 John Barrett
+place 4 John Morgan
+place 5 John Solomonson
+place 6 Mike Wood
+place 7 Fred Meyer
+place 8 Dave Held
+
+@ 177
+- Marvin Jones | Cal State-Bakersfield
+- Paul Jones | Nebraska-Omaha
+- Ray Porter | Ashland
+- Wayne Love | Northwest Missouri
+- Matt Furey | Edinboro
+- Pat Bussey | Liberty
+- Pat Johannes | North Dakota State
+- Dean Wygal | Portland State
+place 1 Marvin Jones
+place 2 Paul Jones
+place 3 Ray Porter
+place 4 Wayne Love
+place 5 Matt Furey
+place 6 Pat Bussey
+place 7 Pat Johannes
+place 8 Dean Wygal
+
+@ 190
+- Koln Knight | Augustana SD
+- Derrick Munos | Northern Michigan
+- R.J. Nebe | Nebraska-Omaha
+- Tim Gleeson | San Francisco State
+- Ernie Badger | SIU-Edwardsville
+- Jay Stainback | North Carolina-Pembroke
+- Mike Arnold | Lake Superior
+- Matt Palmer | North Dakota State
+place 1 Koln Knight
+place 2 Derrick Munos
+place 3 R.J. Nebe
+place 4 Tim Gleeson
+place 5 Ernie Badger
+place 6 Jay Stainback
+place 7 Mike Arnold
+place 8 Matt Palmer
+
+@ 285
+- Dean Hall | Edinboro
+- Mike Hatch | Liberty
+- Carlton Haselrig | Pittsburgh-Johnstown
+- Al Holleman | South Dakota
+- Craig Brooks | Oakland
+- Alex Koehler | San Francisco State
+- Ed Christensen | St. Cloud State
+- William Martin | Norfolk State
+place 1 Dean Hall
+place 2 Mike Hatch
+place 3 Carlton Haselrig
+place 4 Al Holleman
+place 5 Craig Brooks
+place 6 Alex Koehler
+place 7 Ed Christensen
+place 8 William Martin
+

@@ -1,10 +1,13 @@
+import { WeightHistoryView } from '@/components/site/TournamentHistory'
 import { supabase } from '@/lib/supabase/public-cached'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getActiveSeason } from '@/lib/get-season'
+import { getPostseasonSeason } from '@/lib/get-season'
+import { seasonWeights, regionLabels } from '@/lib/postseasonSeason'
 import { getSeasonLabel } from '@/lib/seasons-server'
 import { BracketPoll, type BracketEntry, type DistrictChamp } from '@/components/BracketPoll'
-import { PageHeader } from '@/components/PageHeader'
+import { StdHeader } from '@/components/site/StdPage'
+import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { orderChampMatchesBySeed } from '@/lib/bracketOrder'
 import { getSchoolLogos } from '@/lib/school-logos'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
@@ -42,7 +45,7 @@ type MatchRow = {
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-const VALID_REGIONS = new Set(['1', '2', '3', '4'])
+const VALID_REGIONS = new Set(['1', '2', '3', '4', '5'])   // 5 = North (2018-19 to 2021-22)
 
 const CARD_H = 72
 
@@ -56,6 +59,8 @@ const ROUND_LABEL: Record<string, string> = {
   C2:          'Cons. R2',
   C3:          'Cons. Qtrs',
   C4:          'Cons. Semis',
+  C5:          'Cons. R5',
+  C6:          'Cons. R6',
   '3rd_Place': '3rd Place',
   '5th_Place': '5th Place',
 }
@@ -560,7 +565,10 @@ export default async function GirlsRegionBracketPage({
 
   if (!VALID_REGIONS.has(region) || !weight) notFound()
 
-  const season = await getActiveSeason('F')
+  const { season, options: seasonOptions } = await getPostseasonSeason('F')
+
+  const weights = await seasonWeights('F', season, WEIGHTS)   // the season's own classes (Playoff History)
+  const rl = await regionLabels('F', season)   // the region's own name, else "Region N"
   const seasonLbl = await getSeasonLabel(season)
 
   const [{ data: matchData }, { data: entryData }, { data: champData }, logos] = await Promise.all([
@@ -616,8 +624,11 @@ export default async function GirlsRegionBracketPage({
   // Championship display: R1 → R2 → QF → SF → F
   const champRounds = (['R1', 'R2', 'QF', 'SF', 'F'] as const).filter(r => (champOrdered.get(r) ?? []).length > 0)
 
-  // Consolation display: C1 → C2 → C3 → C4 → 3rd_Place → 5th_Place
-  const consolRounds = (['C1', 'C2', 'C3', 'C4'] as const).filter(r => (matchesByRound.get(r) ?? []).length > 0)
+  // Consolation display: C1 → … → C4 (C5, C6 when a bracket ran six rounds: 2018-19, 2021-22) → 3rd_Place → 5th_Place
+  const consolRounds = (['C1', 'C2', 'C3', 'C4', 'C5', 'C6'] as const).filter(r => (matchesByRound.get(r) ?? []).length > 0)
+  // six rounds: the semis are C6, so C4 is just a round
+  const deep = consolRounds.includes('C6')
+  const consolLabel = (r: string) => (deep ? ({ C4: 'Cons. R4', C5: 'Cons. R5', C6: 'Cons. Semis' } as Record<string, string>)[r] ?? ROUND_LABEL[r] : ROUND_LABEL[r])
   const thirdPlaceMatches = champOrdered.get('3rd_Place') ?? matchesByRound.get('3rd_Place') ?? []
   const fifthPlaceMatches = matchesByRound.get('5th_Place') ?? []
 
@@ -649,12 +660,10 @@ export default async function GirlsRegionBracketPage({
         ← Region {region}
       </Link>
 
-      <div className="mb-8 text-center">
-        <PageHeader title={`Region ${region} · ${weight} lb`} />
-        <p className="text-slate-500 text-sm mt-1">NJSIAA {seasonLbl ?? season} · Girls postseason</p>
-      </div>
+      <StdHeader title={`Girls ${rl.label(Number(region))} · ${weight} lb`} summaryKey="region" hideSummary noLogo
+        picker={<><InlineSeasonPicker arrows gender="F" activeSeason={season} options={seasonOptions} /></>} />
 
-      <WeightNav weights={WEIGHTS} current={weight} base={`/girls/regions/${region}`} />
+      <WeightNav weights={weights} current={weight} base={`/girls/regions/${region}`} />
 
       <div className="mt-8 space-y-8">
         {/* ── Bracket / Entries ── */}
@@ -675,7 +684,7 @@ export default async function GirlsRegionBracketPage({
               {champRounds.map(round => (
                 <BracketColumn
                   key={round}
-                  label={ROUND_LABEL[round]}
+                  label={consolLabel(round)}
                   matches={champOrdered.get(round) ?? []}
                   totalH={champTotalH}
                   entrySlot={entrySlot}
@@ -756,7 +765,9 @@ export default async function GirlsRegionBracketPage({
         )}
       </div>
 
-      <WeightNav weights={WEIGHTS} current={weight} base={`/girls/regions/${region}`} />
+      <WeightNav weights={weights} current={weight} base={`/girls/regions/${region}`} />
+
+      <WeightHistoryView gender="F" level="region" num={Number(region)} regionName={rl.label(Number(region))} seasons={seasonOptions.map(o => o.id)} weight={weight} />
     </div>
   )
 }

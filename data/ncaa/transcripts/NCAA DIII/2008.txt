@@ -1,0 +1,182 @@
+# NCAA Division III Championships 2008 — source: NCAA III 2008.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 125
+- Seth Flodeen | Augsburg
+- Clayton Rush | Coe College
+- Chris Heilman | Cornell Iowa
+- Robert Struthers | Wartburg
+- Jake Oster | Elmhurst
+- Chris Sheetz | Delaware Valley
+- Munkhbaatar Baatar | St. John's
+- Jon Gregory | Ithaca
+place 1 Seth Flodeen
+place 2 Clayton Rush
+place 3 Chris Heilman
+place 4 Robert Struthers
+place 5 Jake Oster
+place 6 Chris Sheetz
+place 7 Munkhbaatar Baatar
+place 8 Jon Gregory
+
+@ 133
+- David Morgan | King's College
+- Jacob Helvey | Wartburg
+- Adam Johnson | North Central Illinois
+- Jordan Kolinski | Wisconsin-La Crosse
+- Travis Lang | Augsburg
+- Nicholas Northern | Cornell Iowa
+- Zac Bartlett | Luther
+- Jestin Hulegaard | Buena Vista
+place 1 David Morgan
+place 2 Jacob Helvey
+place 3 Adam Johnson
+place 4 Jordan Kolinski
+place 5 Travis Lang
+place 6 Nicholas Northern
+place 7 Zac Bartlett
+place 8 Jestin Hulegaard
+
+@ 141
+- Michael Bonora | Rhode Island College
+- Jason Adams | Augsburg
+- Stephen Hult | New York University
+- Travis Grawin | Luther
+- Matt Kelly | Wartburg
+- Niles Mercer | Coe College
+- Austin Bautista | Wisconsin-Whitewater
+- David Manoogian | Case-Western Reserve
+place 1 Michael Bonora
+place 2 Jason Adams
+place 3 Stephen Hult
+place 4 Travis Grawin
+place 5 Matt Kelly
+place 6 Niles Mercer
+place 7 Austin Bautista
+place 8 David Manoogian
+
+@ 149
+- Jacob Naig | Wartburg
+- Elliott Spence | Mount St. Josephs
+- Willy Holst | Augsburg
+- Aaron Cook | Buena Vista
+- Jeff Kastel | Elmhurst
+- Matt Mauseth | Wisconsin-La Crosse
+- Paul LeBlanc | SUNY-Cortland
+- Johanson Quist | Luther
+place 1 Jacob Naig
+place 2 Elliott Spence
+place 3 Willy Holst
+place 4 Aaron Cook
+place 5 Jeff Kastel
+place 6 Matt Mauseth
+place 7 Paul LeBlanc
+place 8 Johanson Quist
+
+@ 157
+- Aaron Wernimont | Wartburg
+- Jason Brew | Olivet
+- Ryan Herwig | Delaware Valley
+- Josh Terrell | Dubuque
+- Takafumi Hashimoto | New York University
+- Jesse Milks | Wisconsin-Platteville
+- Pat McAuley | Cornell Iowa
+- Andrew Goldstein | Gettysburg
+place 1 Aaron Wernimont
+place 2 Jason Brew
+place 3 Ryan Herwig
+place 4 Josh Terrell
+place 5 Takafumi Hashimoto
+place 6 Jesse Milks
+place 7 Pat McAuley
+place 8 Andrew Goldstein
+
+@ 165
+- Tyler Burkle | Coe College
+- Benjamin Hoover | Maranatha Baptist Bible
+- Shaheim Bradshaw | SUNY-Brockport
+- Ben Youel | North Central Illinois
+- Tim Palmer | Wisconsin-La Crosse
+- Gino Russo | Baldwin Wallace
+- Justin Hanson | Wartburg
+- Justin Bonitatas | College of New Jersey
+place 1 Tyler Burkle
+place 2 Benjamin Hoover
+place 3 Shaheim Bradshaw
+place 4 Ben Youel
+place 5 Tim Palmer
+place 6 Gino Russo
+place 7 Justin Hanson
+place 8 Justin Bonitatas
+
+@ 174
+- Josh Chelf | Wisconsin-La Crosse
+- Tyler Jentz | Coe College
+- Brandon MacWhinnie | Stevens Institute
+- Kyle Vanderhyde | Olivet
+- Eric Bath | Wisconsin-Stevens Point
+- Kyle Kehrli | Cornell Iowa
+- Gregory Osgoodby | College of New Jersey
+- Jerome Owens | Johnson & Wales
+place 1 Josh Chelf
+place 2 Tyler Jentz
+place 3 Brandon MacWhinnie
+place 4 Kyle Vanderhyde
+place 5 Eric Bath
+place 6 Kyle Kehrli
+place 7 Gregory Osgoodby
+place 8 Jerome Owens
+
+@ 184
+- Romeo Djoumessi | Wartburg
+- Michael Wilcox | Delaware Valley
+- Robbie Gotreau | Augsburg
+- Gabe Youel | North Central Illinois
+- Joshua Zabel | Wisconsin-La Crosse
+- Bryan Lenhardt | Johnson & Wales
+- Elliot Smith | Springfield
+- Eric Fishel | Johns Hopkins
+place 1 Romeo Djoumessi
+place 2 Michael Wilcox
+place 3 Robbie Gotreau
+place 4 Gabe Youel
+place 5 Joshua Zabel
+place 6 Bryan Lenhardt
+place 7 Elliot Smith
+place 8 Eric Fishel
+
+@ 197
+- Matthew Miller | Lycoming
+- Tyler Miller | Wartburg
+- Craig Bollig | Wisconsin-Stevens Point
+- Rob Kramer | Coe College
+- Alec Bonander | Luther
+- Josh Holforty | Wisconsin-Eau Clair
+- Ryan Fogliano | Heidelberg
+- Anthony Neumann | Concordia MN
+place 1 Matthew Miller
+place 2 Tyler Miller
+place 3 Craig Bollig
+place 4 Rob Kramer
+place 5 Alec Bonander
+place 6 Josh Holforty
+place 7 Ryan Fogliano
+place 8 Anthony Neumann
+
+@ 285
+- Dan Laurent | Wisconsin-La Crosse
+- Brian Borchers | Wartburg
+- Glenn Geesman | MIT
+- Trevor Hiffa | SUNY-Oneonta
+- Kyle Bilquist | Delaware Valley
+- Ryan Bowers | Heidelberg
+- Mark Corsello | Elmhurst
+- Jaran Rutledge | Knox
+place 1 Dan Laurent
+place 2 Brian Borchers
+place 3 Glenn Geesman
+place 4 Trevor Hiffa
+place 5 Kyle Bilquist
+place 6 Ryan Bowers
+place 7 Mark Corsello
+place 8 Jaran Rutledge
+

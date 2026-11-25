@@ -32,6 +32,30 @@ function winPct(w: number, l: number, t: number): number {
   return total > 0 ? (w + t / 2) / total : 0
 }
 
+// A Power Points tie goes to the team that went further in the team playoffs (Kyle 2026-11-16: "make the tie
+// breaker, who actually won in the playoffs"): more playoff wins first, then the playoff meeting between them
+export type Playoffs = { wins: Map<number, number>; beat: Set<string> }
+export async function playoffResults(dbGender: 'M' | 'F', season: number): Promise<Playoffs> {
+  const { data } = await supabase.from(dbGender === 'F' ? 'dual_meets_girls' : 'dual_meets')
+    .select('team1_school_id, team2_school_id, team1_score, team2_score').eq('season_id', season).eq('is_playoff', true)
+  const wins = new Map<number, number>(), beat = new Set<string>()
+  for (const m of (data ?? []) as { team1_school_id: number; team2_school_id: number; team1_score: number | null; team2_score: number | null }[]) {
+    if (m.team1_score == null || m.team2_score == null || m.team1_score === m.team2_score) continue
+    const [w, l] = m.team1_score > m.team2_score ? [m.team1_school_id, m.team2_school_id] : [m.team2_school_id, m.team1_school_id]
+    wins.set(w, (wins.get(w) ?? 0) + 1)
+    beat.add(`${w}>${l}`)
+  }
+  return { wins, beat }
+}
+/** between two schools tied on points: the one further in the playoffs first (negative = a first) */
+export function playoffTiebreak(po: Playoffs, a: number | undefined, b: number | undefined): number {
+  return (po.wins.get(b ?? 0) ?? 0) - (po.wins.get(a ?? 0) ?? 0)
+    || (po.beat.has(`${b}>${a}`) ? 1 : po.beat.has(`${a}>${b}`) ? -1 : 0)
+}
+function byPoints(po: Playoffs) {
+  return (a: PPStandingsRow, b: PPStandingsRow) => b.power_points - a.power_points || playoffTiebreak(po, a.id, b.id)
+}
+
 export async function buildPowerPointStandings(
   schools: SchoolRow[],
   gender: string,
@@ -43,6 +67,7 @@ export async function buildPowerPointStandings(
   if (schoolIds.length === 0) return []
 
   const dbGender = gender === 'girls' ? 'F' : 'M'
+  const po = await playoffResults(dbGender, season)
   const { data } = await supabase
     .from('power_points')
     .select('school_id, power_points, frozen_power_points, overall_wins, overall_losses, overall_ties')
@@ -76,7 +101,7 @@ export async function buildPowerPointStandings(
       }
     })
 
-  rows.sort((a, b) => b.power_points - a.power_points)
+  rows.sort(byPoints(po))
   rows.forEach((r, i) => { r.rank = i + 1 })
   return rows
 }
@@ -89,7 +114,7 @@ export type GirlsPPGroups = { north: PPStandingsRow[]; south: PPStandingsRow[]; 
 export async function buildGirlsPowerPointGroups(season: number): Promise<GirlsPPGroups> {
   // Schools inactive that season (their girls wrestle for a co-op, listed under the co-op's
   // name) keep their official 0-0 rows in power_points but aren't shown.
-  const [{ data }, { data: inactive }, names] = await Promise.all([supabase
+  const [{ data }, { data: inactive }, names, po] = await Promise.all([supabase
     .from('power_points')
     .select('school_id, power_points, frozen_power_points, overall_wins, overall_losses, overall_ties, pp_group, schools!inner(id, display_name, mascot, primary_color, logo_url, header_background)')
     .eq('season_id', season)
@@ -99,6 +124,7 @@ export async function buildGirlsPowerPointGroups(season: number): Promise<GirlsP
     .order('school_id'),
     supabase.from('inactive_school_seasons').select('school_id').eq('season_id', season).eq('gender', 'F'),
     getSchoolSeasonNames(supabase as never, season, 'F'),
+    playoffResults('F', season),
   ])
   const out = new Set((inactive ?? []).map(r => r.school_id as number))
 
@@ -121,7 +147,7 @@ export async function buildGirlsPowerPointGroups(season: number): Promise<GirlsP
     })
   }
   for (const rows of Object.values(groups)) {
-    rows.sort((a, b) => b.power_points - a.power_points)
+    rows.sort(byPoints(po))
     rows.forEach((r, i) => { r.rank = i + 1 })
   }
   return groups

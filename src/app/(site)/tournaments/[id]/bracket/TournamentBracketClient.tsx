@@ -1,18 +1,23 @@
 'use client'
 
 import { useState } from 'react'
-import { BracketTree, type PublicBracketSlot } from '@/components/bracket/BracketTree'
+import { BoutBracket } from '@/components/bracket/BoutBracket'
+import { SplitBracket } from '@/components/bracket/SplitBracket'
+import type { BracketLook } from '@/lib/bracketLook'
+import type { WeightBracket } from '@/lib/boutBracket'
 
 interface Props {
   tournamentName: string
   weights: number[]
-  byWeight: Record<number, PublicBracketSlot[]>
+  brackets: Record<number, WeightBracket>
+  // the saved bracket format (Aesthetic tool → Brackets): the split, compact format once it's saved on for the site
+  look?: BracketLook
+  mixed?: boolean
 }
 
-export function TournamentBracketClient({ tournamentName, weights, byWeight }: Props) {
+export function TournamentBracketClient({ tournamentName, weights, brackets, look, mixed = false }: Props) {
   const [selectedWeight, setSelectedWeight] = useState<number>(weights[0] ?? 0)
-
-  const slots = byWeight[selectedWeight] ?? []
+  const bracket = brackets[selectedWeight]
 
   return (
     <div>
@@ -36,12 +41,11 @@ export function TournamentBracketClient({ tournamentName, weights, byWeight }: P
         ))}
       </div>
 
-      {/* Bracket */}
-      {slots.length > 0 ? (
-        <BracketTree slots={slots} />
+      {bracket && (bracket.champ.length || bracket.cons.length) ? (
+        look?.live ? <SplitBracket bracket={bracket} look={look} mixed={mixed} /> : <BoutBracket bracket={bracket} />
       ) : (
         <div className="border border-dashed border-slate-300 py-12 text-center">
-          <p className="text-sm text-slate-400">No bracket data for {selectedWeight} lbs yet.</p>
+          <p className="text-sm text-slate-400">No bouts for {selectedWeight} lbs.</p>
         </div>
       )}
     </div>

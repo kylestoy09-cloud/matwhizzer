@@ -7,18 +7,20 @@ import { IndividualRankingsShellBoys } from '../rankings/individual/IndividualRa
 import { TeamRankingsClientBoys } from '../rankings/team/TeamRankingsClientBoys'
 import { ArchiveClient } from '../rankings/archive/ArchiveClient'
 import { RATING_NAME } from '@/lib/rating'
+import { WhizRankWorkbench } from './WhizRankWorkbench'
 
-type Tool = 'hammer' | 'individual' | 'team' | 'archive'
+type Tool = 'whiz' | 'hammer' | 'individual' | 'team' | 'archive'
 
 const TABS: { id: Tool; label: string }[] = [
+  { id: 'whiz',       label: 'Whiz Rank' },
   { id: 'hammer',     label: RATING_NAME },
-  { id: 'individual', label: 'Individual Rankings' },
+  { id: 'individual', label: 'Old Individual Rankings' },
   { id: 'team',       label: 'Team Rankings' },
   { id: 'archive',    label: 'Archive' },
 ]
 
 export function RankingsHubClientBoys({ currentSeason }: { currentSeason: string }) {
-  const [tool, setTool] = useState<Tool>('hammer')
+  const [tool, setTool] = useState<Tool>('whiz')
 
   return (
     <div className="flex flex-col h-full">
@@ -39,6 +41,7 @@ export function RankingsHubClientBoys({ currentSeason }: { currentSeason: string
       </div>
 
       <div className="flex-1 overflow-y-auto p-6">
+        {tool === 'whiz' && <WhizRankWorkbench />}
         {tool === 'hammer' && (
           <div className="space-y-6">
             <RankingsClientBoys />

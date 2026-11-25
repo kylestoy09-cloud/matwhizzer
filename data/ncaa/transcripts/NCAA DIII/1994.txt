@@ -1,0 +1,182 @@
+# NCAA Division III Championships 1994 — source: NCAA III 1994.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Zane Braggs | Wartburg
+- Jeff O'Gara | Wisconsin-La Crosse
+- Brett Christensen | Buena Vista
+- Chris Matteotti | Ithaca
+- Ken Herishen | College of New Jersey
+- Will Rance | Kean
+- J.R. Richner | Mount Union
+- Dave Janaszak | Augsburg
+place 1 Zane Braggs
+place 2 Jeff O'Gara
+place 3 Brett Christensen
+place 4 Chris Matteotti
+place 5 Ken Herishen
+place 6 Will Rance
+place 7 J.R. Richner
+place 8 Dave Janaszak
+
+@ 126
+- Kurt Schneck | Lycoming
+- Dan Gabrielson | Central College IA
+- Jesse Armbruster | Augsburg
+- Dan Ambroziak | Mount Union
+- Ken Staten | Norwich
+- Matt Colucci | John Carroll
+- Chris Ristau | Wartburg
+- George Chu | Springfield
+place 1 Kurt Schneck
+place 2 Dan Gabrielson
+place 3 Jesse Armbruster
+place 4 Dan Ambroziak
+place 5 Ken Staten
+place 6 Matt Colucci
+place 7 Chris Ristau
+place 8 George Chu
+
+@ 134
+- Billy Cotter | Rhode Island College
+- Max Bjerke | Cornell Iowa
+- Chris Steinbacher | Kean
+- Dave Ciacci | Case-Western Reserve
+- Mike Wedding | Wisconsin-Whitewater
+- Zach Geary | Wartburg
+- Doug Knight | Baldwin Wallace
+- Jere Hamel | Wisconsin-Stevens Point
+place 1 Billy Cotter
+place 2 Max Bjerke
+place 3 Chris Steinbacher
+place 4 Dave Ciacci
+place 5 Mike Wedding
+place 6 Zach Geary
+place 7 Doug Knight
+place 8 Jere Hamel
+
+@ 142
+- Raphael Wilson | Augsburg
+- John Johnson | College of New Jersey
+- Jamal Fox | Wartburg
+- Heath Grimm | Luther
+- Tim Godoy | SUNY-Cortland
+- Brian Malloy | Mount Union
+- Mike Meunier | Wisconsin-Oshkosh
+- Mike Tressel | Cornell Iowa
+place 1 Raphael Wilson
+place 2 John Johnson
+place 3 Jamal Fox
+place 4 Heath Grimm
+place 5 Tim Godoy
+place 6 Brian Malloy
+place 7 Mike Meunier
+place 8 Mike Tressel
+
+@ 150
+- Brian Stewart | Buena Vista
+- Kent Maslin | Ithaca
+- Stuart Nutting | Augsburg
+- Steve Giordano | Kean
+- Joe Telesky | SUNY-Brockport
+- Mario Springer | Chicago University
+- Andy Koch | Moravian
+- Rick Mokros | Ohio Northern
+place 1 Brian Stewart
+place 2 Kent Maslin
+place 3 Stuart Nutting
+place 4 Steve Giordano
+place 5 Joe Telesky
+place 6 Mario Springer
+place 7 Andy Koch
+place 8 Rick Mokros
+
+@ 158
+- Cory McCauley | Wisconsin-Stout
+- Matt Sorochinsky | Ithaca
+- Chris Connelly | John Carroll
+- Etienne Miszczak | College of New Jersey
+- Brandon Penzkover | Wisconsin-La Crosse
+- Jason Black | Buena Vista
+- Dave Wellmeier | Ohio Northern
+- Cliff Casteel | Augsburg
+place 1 Cory McCauley
+place 2 Matt Sorochinsky
+place 3 Chris Connelly
+place 4 Etienne Miszczak
+place 5 Brandon Penzkover
+place 6 Jason Black
+place 7 Dave Wellmeier
+place 8 Cliff Casteel
+
+@ 167
+- Chris Ricklic | Case-Western Reserve
+- Eric Reed | Wisconsin-La Crosse
+- Randy Eastman | Augsburg
+- Marty Wyckoff | SUNY-Binghampton
+- Rick Schneckenberger | St. John's
+- Joey Roby | Ohio Northern
+- Anthony Vitola | College of New Jersey
+- Michael Doyle | Wartburg
+place 1 Chris Ricklic
+place 2 Eric Reed
+place 3 Randy Eastman
+place 4 Marty Wyckoff
+place 5 Rick Schneckenberger
+place 6 Joey Roby
+place 7 Anthony Vitola
+place 8 Michael Doyle
+
+@ 177
+- Frank Field | Norwich
+- Kelly Keenan | Baldwin Wallace
+- Colin Green | Wisconsin-Stevens Point
+- Jon Schlosser | SUNY-Albany
+- Mike Murtha | Ithaca
+- Tony Fabri | Kings
+- James Brophy | Loras College
+- Jeff Santos | Plymouth State
+place 1 Frank Field
+place 2 Kelly Keenan
+place 3 Colin Green
+place 4 Jon Schlosser
+place 5 Mike Murtha
+place 6 Tony Fabri
+place 7 James Brophy
+place 8 Jeff Santos
+
+@ 190
+- Steve Farr | Ithaca
+- Jon Dawley | Wartburg
+- Tom Jackson | Heidelberg
+- Travis Ebner | Wisconsin-Stevens Point
+- Tucker McLean | Trinity
+- Sean Pellerite | John Carroll
+- John Aebly | SUNY-Brockport
+- Mike Mazzacco | Thiel
+place 1 Steve Farr
+place 2 Jon Dawley
+place 3 Tom Jackson
+place 4 Travis Ebner
+place 5 Tucker McLean
+place 6 Sean Pellerite
+place 7 John Aebly
+place 8 Mike Mazzacco
+
+@ 275
+- Glen Sandull | College of New Jersey
+- Eric Thomas | Olivet
+- Eric Betterman | Augsburg
+- Jason Weigand | Mount Union
+- Luke Rakoczy | SUNY-Albany
+- Lonny Morris | Rhode Island College
+- Bruce Rivard | Wisconsin-River Falls
+- Brendon Rogers | SUNY-Oswego
+place 1 Glen Sandull
+place 2 Eric Thomas
+place 3 Eric Betterman
+place 4 Jason Weigand
+place 5 Luke Rakoczy
+place 6 Lonny Morris
+place 7 Bruce Rivard
+place 8 Brendon Rogers
+

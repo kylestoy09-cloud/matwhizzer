@@ -1,0 +1,186 @@
+# source: 2020_NCWWC_Championship_Brackets.pdf (Cliff Keen WCWC: qualifiers and places, no bouts)
+
+@ 101
+- Jaclyn McNichols | King University
+- Kaylie Catalano | Colorado Mesa University
+- Alisha Elizalde | Ferrum College
+- Iesha Washington | Emmanuel College
+- Johnvaniqu Porter | MacMurray
+- Jennesis Martinez | Colorado Mesa University
+- Angela Goldwire | Adrian College
+- Trinity Oredina | Tiffin University
+- Alice Todryk | University Of Wisconsin At Stevens Point
+- Ashly Gomez | King University
+- Pauline Granados | McKendree University
+place 1 Pauline Granados
+place 2 Iesha Washington
+place 3 Jennesis Martinez
+place 4 Jaclyn McNichols
+place 5 Trinity Oredina
+place 6 Alisha Elizalde
+place 7 Alice Todryk
+place 8 Johnvaniqu Porter
+
+@ 109
+- Emily Shilson | Augsburg University
+- Alyssa Garza | Limestone University
+- Lakiesha Sullivan | East Stroudsburg University
+- Jocelyne Hernandez | MacMurray
+- Carly Valleroy | McKendree University
+- Brooke Thurber | University Of Wisconsin At Stevens Point
+- Allicia Mahoe | Schreiner University
+- Natalia Sovero | Tiffin University
+- Ciara McCrae | Simon Fraser University
+- Sugey Ceja | Tiffin University
+- Angela LoRusso | Adrian College
+- Clare Garcia | Emmanuel College
+- Natalie Reyna | McKendree University
+- Aleeah Gould | King University
+- Cassy Lopez | Presbyterian College
+- angeliqu terrones-cru | Lindenwood
+- Angelina Graff | North Central College
+- Tatyanna Ortiz | East Stroudsburg University
+place 1 Emily Shilson
+place 2 Sugey Ceja
+
+@ 123
+- Cheyenne Sisenstein | King University
+- Isabella Badon | Presbyterian College
+- jasmine ward | Lindenwood
+- Alexandr Herle | Emmanuel College
+- Allie Mahoe | Schreiner University
+- Payton Stroud | McKendree University
+- Phoenix Dubose | King University
+- Skylar Yates | Limestone University
+- Vayle Baker | Augsburg University
+- Marissa Gallegos | Colorado Mesa University
+- Trynadii Rocha | Emmanuel College
+- Stephani Mondragon | Tiffin University
+- Asia Nguyen-Smith | North Central College
+- Kassidy Block | Adrian College
+- Kamille Begeal | Schreiner University
+- Theresa Rankin | McKendree University
+- Jacey King | Limestone University
+- Katelynn Gunderson | Lakeland
+- Alexandr Hedrick | Simon Fraser University
+place 1 Alexandr Hedrick
+place 2 Cheyenne Sisenstein
+
+@ 130
+- Nicole Depa | Simon Fraser University
+- Acoya Pate | Limestone University
+- Katrina Anderson | Ferrum College
+- Lillian Humphries | Presbyterian College
+- Gabby Skidmore | Augsburg University
+- Alexia Ward | McKendree University
+- Christia Bush | MacMurray
+- natalie cregger | Lindenwood
+- Serena Cervantes | Schreiner University
+- Josselin Campos | East Stroudsburg University
+- Addison Young | University Of Wisconsin At Stevens Point
+- Alyssa Aceval | King University
+- Amanda Martinez | North Central College
+- Haven Pennington | Presbyterian College
+- Destiny Benjamin | Ferrum College
+- Cassy Favela | Schreiner University
+- Shaina Murray | McKendree University
+- Alexis Altamira | Lindenwood
+- Sierra Brown Ton | Colorado Mesa University
+- Cindy Zepeda | Colorado Mesa University
+- Ashton Hall | Limestone University
+- Passion Hollins | Emmanuel College
+- Eunique Davis | Tiffin University
+- Allison Petix | King University
+place 1 Alexia Ward
+place 2 Amanda Martinez
+
+@ 136
+- Emma Bruntil | McKendree University
+- Jolynn Harris | Colorado Mesa University
+- Ariah Snyder | Tiffin University
+- Stephani Floor | Gannon University
+- Ana Luciano | King University
+- Timmory Pisciotta | East Stroudsburg University
+- Hannah McElroy | Presbyterian College
+- Zoe Nowicki | Adrian College
+- Dalia Garibay | Colorado Mesa University
+- Caitlynn Richardson | Ferrum College
+- Megan Struble | University Of Wisconsin At Stevens Point
+- Sydney Sims | Adrian College
+- Julia Padilla | Emmanuel College
+- Mia Dow | MacMurray
+- Caroline Camarillo | Gannon University
+- Michiko Yoshimitsu | Presbyterian College
+- Lauren Mason | Simon Fraser University
+place 1 Emma Bruntil
+place 2 Dalia Garibay
+
+@ 143
+- Ana Godinez Gonzalez | Simon Fraser University
+- Sidney Ramos | Tiffin University
+- Alexis Lopez | MacMurray
+- Amalani Latu | Limestone University
+- Sara Brinkac | Simon Fraser University
+- kennedy cox | Lindenwood
+- MacKenzi Matta | Adrian College
+- Jezebel Garcia | Gannon University
+- Morgan Norris | Presbyterian College
+- Alara Boyd | McKendree University
+- Julianna Moreno | MacMurray
+- Kahlea Jolly | Augsburg University
+- Alma Mendoza | Colorado Mesa University
+- Kaylee Lacy | Colorado Mesa University
+- Alyssa Marinaccio | East Stroudsburg University
+- Melody Barrows | Adrian College
+- Paulina Jimenez | Emmanuel College
+- Ashlynn Ortega | King University
+place 1 Ana Godinez Gonzalez
+place 2 Alara Boyd
+
+@ 170
+- Korinahe Bullock | McKendree University
+- Talum Smith | Ferrum College
+- Daniela Morales Dardon | Gannon University
+- Mikayla Mata | Schreiner University
+- Emily Cue | Simon Fraser University
+- Mayte Villada | Colorado Mesa University
+- Issa Salgado | Limestone University
+- Jessika Rottier | University Of Wisconsin At Stevens Point
+- Andrea Sennett | McKendree University
+- maya shimizu | Lindenwood
+- Shola Casen | East Stroudsburg University
+- Nia Crosdale | King University
+- Rebekah Trudel | Simon Fraser University
+- Melissa Jacobs | Augsburg University
+- Elvira Arevalo | Emmanuel College
+- Yelena Makoyed | North Central College
+place 1 Jessika Rottier
+place 2 Yelena Makoyed
+place 3 Emily Cue
+place 4 Nia Crosdale
+place 5 Korinahe Bullock
+place 6 Andrea Sennett
+place 7 Rebekah Trudel
+place 8 Mikayla Mata
+
+@ 191
+- Sydnee Kimber | McKendree University
+- Angelina Kirkpatrick | North Central College
+- Serena Woldring | Simon Fraser University
+- Miriam De La Garza | Schreiner University
+- Cristina Santoyo | Emmanuel College
+- Jessie Lee | Tiffin University
+- Destiny Baltierra | Limestone University
+- Kendall McGarity | Gannon University
+- Kaylee Seabolt | Emmanuel College
+- Sebrina Albury | Lindenwood
+- Tavi Heidelberg | King University
+place 1 Sydnee Kimber
+place 2 Tavi Heidelberg
+place 3 Serena Woldring
+place 4 Cristina Santoyo
+place 5 Jessie Lee
+place 6 Kendall McGarity
+place 7 Kaylee Seabolt
+place 8 Angelina Kirkpatrick
+

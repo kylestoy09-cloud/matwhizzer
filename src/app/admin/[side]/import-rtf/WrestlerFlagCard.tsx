@@ -4,7 +4,7 @@ import { GradeControl } from '@/components/admin/GradeControl'
 import type { GradeChoice, GradeSuggestion } from '@/lib/rosterGradeSuggest'
 
 import { useState, useCallback, useEffect, useRef } from 'react'
-import type { WrestlerFlag, WrestlerOverride, MsProfileCandidate, MsProfileLink } from './types'
+import type { WrestlerFlag, WrestlerOverride, ProspectCandidate, ProspectLink } from './types'
 
 function splitName(raw: string): { first_name: string; last_name: string } {
   const parts = raw.trim().split(/\s+/)
@@ -23,46 +23,35 @@ function Spinner() {
 
 type SearchResult = { id: string; display_name: string }
 
-function ordinal(n: number): string {
-  const s = ['th', 'st', 'nd', 'rd']
-  const v = n % 100
-  return n + (s[(v - 20) % 10] || s[v] || s[0])
-}
 
-function MsCandidateRow({
+function ProspectCandidateRow({
   candidate,
   isLinked,
   onConfirm,
 }: {
-  candidate: MsProfileCandidate
+  candidate: ProspectCandidate
   isLinked: boolean
-  onConfirm: (c: MsProfileCandidate) => void
+  onConfirm: (c: ProspectCandidate) => void
 }) {
   const [expanded, setExpanded] = useState(false)
-  const bestCredit = candidate.best_credit
   return (
     <div className={`border text-xs ${isLinked ? 'border-indigo-300 bg-indigo-50' : 'border-slate-200 bg-white'}`}>
       <div className="flex items-center gap-2 px-2 py-1.5 flex-wrap">
         <span className="font-medium text-slate-800">{candidate.primary_name}</span>
         <span className="bg-slate-100 text-slate-500 px-1 rounded text-[10px]">{candidate.score}% match</span>
-        <span className="text-slate-400">{candidate.placements.length} placement{candidate.placements.length !== 1 ? 's' : ''}</span>
-        {bestCredit > 0 && (
-          <span className="text-indigo-600 font-medium">up to {bestCredit} credit</span>
-        )}
+        <span className="text-slate-400">{candidate.finishes.length} podium{candidate.finishes.length !== 1 ? 's' : ''}</span>
         <button onClick={() => setExpanded(v => !v)} className="text-slate-400 hover:text-slate-600 ml-auto">
           {expanded ? '▲' : '▼'}
         </button>
       </div>
       {expanded && (
         <div className="px-2 pb-1.5 space-y-0.5">
-          {candidate.placements.map(p => (
+          {candidate.finishes.map(p => (
             <div key={p.id} className="flex items-center gap-2 text-[10px] text-slate-600">
               <span className="text-slate-400">{p.season}</span>
               <span>{p.tournament_name}</span>
-              <span className="text-slate-400">({p.tier_name})</span>
-              <span>{p.weight_class} lb</span>
-              <span className="font-medium">{ordinal(p.place)}</span>
-              {p.credit != null && <span className="text-indigo-600">+{p.credit} credit</span>}
+              <span>{p.weight}</span>
+              <span className="font-medium">{p.label}</span>
             </div>
           ))}
         </div>
@@ -86,12 +75,12 @@ type Props = {
   override: WrestlerOverride | undefined
   onOverride: (key: string, o: WrestlerOverride | undefined) => void
   gender: 'M' | 'F'
-  msProfileLink?: MsProfileLink
-  onMsLink?: (key: string, link: MsProfileLink | undefined) => void
+  prospectLink?: ProspectLink
+  onProspectLink?: (key: string, link: ProspectLink | undefined) => void
   gradeSuggestion?: GradeSuggestion
 }
 
-export function WrestlerFlagCard({ flag, override, onOverride, gender, msProfileLink, onMsLink, gradeSuggestion }: Props) {
+export function WrestlerFlagCard({ flag, override, onOverride, gender, prospectLink, onProspectLink, gradeSuggestion }: Props) {
   const defaultNames = splitName(flag.raw_name)
   const [mode, setMode] = useState<'default' | 'edit' | 'confirmed' | 'search'>(() => {
     if (override?.type === 'create') return 'confirmed'
@@ -344,52 +333,53 @@ export function WrestlerFlagCard({ flag, override, onOverride, gender, msProfile
             </div>
           )}
 
-          {/* MS Prospect section — only for new NJ wrestlers with MS database matches */}
-          {flag.is_new && !flag.is_oos && (flag.ms_candidates?.length ?? 0) > 0 && onMsLink && (
+          {/* Hub prospect section — only for new NJ wrestlers who look like a Middle School / Offseason Hub prospect */}
+          {flag.is_new && !flag.is_oos && (flag.prospect_candidates?.length ?? 0) > 0 && onProspectLink && (
             <div className="border-t border-indigo-100 bg-indigo-50/40 px-3 py-2 space-y-1.5">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-[10px] font-semibold text-indigo-600 uppercase tracking-wide">MS Record</span>
-                {msProfileLink?.type === 'confirm' && (
-                  <span className="text-[10px] text-indigo-700 font-medium">✓ linked — {msProfileLink.canonical_name}</span>
+                <span className="text-[10px] font-semibold text-indigo-600 uppercase tracking-wide">Hub prospect</span>
+                {prospectLink?.type === 'confirm' && (
+                  <span className="text-[10px] text-indigo-700 font-medium">✓ linked — {prospectLink.canonical_name}</span>
                 )}
-                {msProfileLink?.type === 'skip' && (
+                {prospectLink?.type === 'skip' && (
                   <span className="text-[10px] text-slate-400">skipped</span>
                 )}
-                {msProfileLink && (
-                  <button onClick={() => onMsLink(flag.key, undefined)} className="text-[10px] text-slate-400 hover:text-red-500 ml-auto">clear</button>
+                {prospectLink && (
+                  <button onClick={() => onProspectLink(flag.key, undefined)} className="text-[10px] text-slate-400 hover:text-red-500 ml-auto">clear</button>
                 )}
               </div>
-              {!msProfileLink && (
+              {!prospectLink && (
                 <>
                   <div className="space-y-1">
-                    {flag.ms_candidates!.map(c => (
-                      <MsCandidateRow
-                        key={c.ms_wrestler_id}
+                    {flag.prospect_candidates!.map(c => (
+                      <ProspectCandidateRow
+                        key={`${c.pool}${c.prospect_id}`}
                         candidate={c}
                         isLinked={false}
-                        onConfirm={c2 => onMsLink(flag.key, {
+                        onConfirm={c2 => onProspectLink(flag.key, {
                           type: 'confirm',
-                          ms_wrestler_id: c2.ms_wrestler_id,
+                          pool: c2.pool,
+                          prospect_id: c2.prospect_id,
                           canonical_name: c2.primary_name,
                         })}
                       />
                     ))}
                   </div>
                   <button
-                    onClick={() => onMsLink(flag.key, { type: 'skip' })}
+                    onClick={() => onProspectLink(flag.key, { type: 'skip' })}
                     className="text-[10px] text-slate-400 hover:text-slate-600 underline"
                   >
-                    Skip — no MS link
+                    Skip — not this kid
                   </button>
                 </>
               )}
-              {msProfileLink?.type === 'confirm' && (
+              {prospectLink?.type === 'confirm' && (
                 <div className="space-y-1">
-                  {flag.ms_candidates!
-                    .filter(c => c.ms_wrestler_id === msProfileLink.ms_wrestler_id)
+                  {flag.prospect_candidates!
+                    .filter(c => c.prospect_id === prospectLink.prospect_id && c.pool === (prospectLink.pool ?? c.pool))
                     .map(c => (
-                      <MsCandidateRow
-                        key={c.ms_wrestler_id}
+                      <ProspectCandidateRow
+                        key={`${c.pool}${c.prospect_id}`}
                         candidate={c}
                         isLinked={true}
                         onConfirm={() => {}}

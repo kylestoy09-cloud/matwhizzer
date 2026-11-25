@@ -1,0 +1,182 @@
+# NCAA Division III Championships 1985 — source: NCAA III 1985.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Tim Jacoutot | College of New Jersey
+- Steven Gliva | Augsburg
+- Tony Auletta | John Carroll
+- Scott Arneson | Wisconsin-Platteville
+- Dan Pippenger | Coast Guard
+- Randy Cook | Mount Union
+- Steve Bird | Wisconsin-Whitewater
+- Clay Hathaway | Widener
+place 1 Tim Jacoutot
+place 2 Steven Gliva
+place 3 Tony Auletta
+place 4 Scott Arneson
+place 5 Dan Pippenger
+place 6 Randy Cook
+place 7 Steve Bird
+place 8 Clay Hathaway
+
+@ 126
+- Nick Milonas | Montclair State
+- John Pecora | Wisconsin-Whitewater
+- Mike Pantaleo | Olivet
+- Tom Kessler | York
+- Jay VanCleve | Cornell Iowa
+- Lee McFerren | SUNY-Albany
+- Bob Carr | Luther
+- Mike Sessor | Mount Union
+place 1 Nick Milonas
+place 2 John Pecora
+place 3 Mike Pantaleo
+place 4 Tom Kessler
+place 5 Jay VanCleve
+place 6 Lee McFerren
+place 7 Bob Carr
+place 8 Mike Sessor
+
+@ 134
+- Scott DeTore | SUNY-Brockport
+- Bart Morrow | Ithaca
+- Ed Ergenbright | Central College IA
+- Dean Miller | Cornell Iowa
+- Ralph Venuto | College of New Jersey
+- Phil Corbet | St. Thomas
+- Jerry Tennant | Mount Union
+- Tom Dowler | SUNY-Albany
+place 1 Scott DeTore
+place 2 Bart Morrow
+place 3 Ed Ergenbright
+place 4 Dean Miller
+place 5 Ralph Venuto
+place 6 Phil Corbet
+place 7 Jerry Tennant
+place 8 Tom Dowler
+
+@ 142
+- Shawn Smith | Delaware Valley
+- Dan Pantaleo | Olivet
+- Tom Bennett | John Carroll
+- Paul VanOosbree | Buena Vista
+- Tom Hall | Augsburg
+- Ed Brady | Wisconsin-Whitewater
+- Dave Recor | SUNY-Brockport
+- Andy Komarek | SUNY-Buffalo
+place 1 Shawn Smith
+place 2 Dan Pantaleo
+place 3 Tom Bennett
+place 4 Paul VanOosbree
+place 5 Tom Hall
+place 6 Ed Brady
+place 7 Dave Recor
+place 8 Andy Komarek
+
+@ 150
+- Larry Disimone | College of New Jersey
+- ike Truncale | SUNY-Binghampton
+- Daryl Stumph | Hiram
+- Mike Schimp | Buena Vista
+- John Leone | SUNY-Brockport
+- Dave Hickson | SUNY-Buffalo
+- Joe Crispo | Wisconsin-Platteville
+- Jason Barnett | John Carroll
+place 1 Larry Disimone
+place 2 ike Truncale
+place 3 Daryl Stumph
+place 4 Mike Schimp
+place 5 John Leone
+place 6 Dave Hickson
+place 7 Joe Crispo
+place 8 Jason Barnett
+
+@ 158
+- Andy Seras | SUNY-Albany
+- Scott Bouslog | Luther
+- Todd Slade | SUNY-Brockport
+- Dwayne Standridge | College of New Jersey
+- Dan Dresser | Buena Vista
+- Paul Wyman | Wisconsin-Platteville
+- Pete Rao | SUNY-Buffalo
+- Kevin Troche | Hiram
+place 1 Andy Seras
+place 2 Scott Bouslog
+place 3 Todd Slade
+place 4 Dwayne Standridge
+place 5 Dan Dresser
+place 6 Paul Wyman
+place 7 Pete Rao
+place 8 Kevin Troche
+
+@ 167
+- John Monaco | Montclair State
+- Rod Wilt | Thiel
+- Steve Klein | SUNY-Buffalo
+- Brian Keller | Wisconsin-River Falls
+- Karl Lietzen | Chicago University
+- Keith Cavayero | SUNY-Binghampton
+- Jeff Bryner | Ohio Northern
+- Mike Price | SUNY-Potsdam
+place 1 John Monaco
+place 2 Rod Wilt
+place 3 Steve Klein
+place 4 Brian Keller
+place 5 Karl Lietzen
+place 6 Keith Cavayero
+place 7 Jeff Bryner
+place 8 Mike Price
+
+@ 177
+- Dave Brandvold | Wisconsin-River Falls
+- Tom Jobin | SUNY-Buffalo
+- Dave Kittany | Ithaca
+- Sam Walker | John Carroll
+- Duane Lawrence | Central College IA
+- Todd Peterson | Montclair State
+- Tim Kemp | Bethel
+- Terry Schuler | Wisconsin-Whitewater
+place 1 Dave Brandvold
+place 2 Tom Jobin
+place 3 Dave Kittany
+place 4 Sam Walker
+place 5 Duane Lawrence
+place 6 Todd Peterson
+place 7 Tim Kemp
+place 8 Terry Schuler
+
+@ 190
+- Leland Rogers | St. Lawrence
+- Dale Lawrence | Central College IA
+- Steve Deckard | Susquehanna
+- Gary Solomon | Western New England
+- Terry Burnat | SUNY-Potsdam
+- Doyle Naig | Buena Vista
+- Kevin Wolff | Millikin
+- Mark Gaspich | Montclair State
+place 1 Leland Rogers
+place 2 Dale Lawrence
+place 3 Steve Deckard
+place 4 Gary Solomon
+place 5 Terry Burnat
+place 6 Doyle Naig
+place 7 Kevin Wolff
+place 8 Mark Gaspich
+
+@ 285
+- Matt Renn | Wisconsin-River Falls
+- Scott Storjohann | Central College IA
+- Jim O'Halloran | Salisbury
+- Sal D'Angelo | John Carroll
+- Tim Hessing | Augustana Illinois
+- Greg Chemlik | Augsburg
+- Larry Stern | Lycoming
+- Mark Lickman | SUNY-Oswego
+place 1 Matt Renn
+place 2 Scott Storjohann
+place 3 Jim O'Halloran
+place 4 Sal D'Angelo
+place 5 Tim Hessing
+place 6 Greg Chemlik
+place 7 Larry Stern
+place 8 Mark Lickman
+

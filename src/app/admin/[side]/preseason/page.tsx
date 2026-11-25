@@ -1,10 +1,12 @@
 import { redirect } from 'next/navigation'
 import { createSupabaseServer } from '@/lib/supabase/server'
+import { previousSeasonLabel, rolloverStatus, seasonTournaments } from '@/lib/tournamentSlate'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 import { fetchAllRows } from '@/lib/fetchAllRows'
 import { boysRosterGradeCounts, girlsRosterGradeCounts } from '@/lib/rosterGrades'
 import { boysProgramSchoolIds, girlsProgramSchoolIds } from '@/lib/genderPrograms'
 import { PreseasonDashboard } from './PreseasonDashboard'
+import { streamingLinks } from '@/lib/streamingLinks'
 import { getNewestSeason, getRosterImportSeason, getWorkingSeason } from '@/lib/season-context'
 import type { GenderPreseasonStats } from './PreseasonHeader'
 
@@ -75,6 +77,10 @@ export default async function PreseasonPage() {
     girlsGrades,
     { data: boysCompleteRows },
     { data: girlsCompleteRows },
+    { data: boysStreamRows },
+    { data: girlsStreamRows },
+    { data: transferTasks },
+    { data: slateRows },
   ] = await Promise.all([
     db.from('boys_coaches').select('school_id').in('school_id', boysIds).not('name', 'is', null),
     db.from('girls_coaches').select('school_id').in('school_id', girlsIds).not('name', 'is', null),
@@ -107,7 +113,24 @@ export default async function PreseasonPage() {
     girlsRosterGradeCounts(db, girlsIds),
     getRosterImportSeason(db, 'M').then(s => db.from('roster_grade_school_complete').select('school_id').eq('gender', 'M').eq('season_id', s.id)),
     getRosterImportSeason(db, 'F').then(s => db.from('roster_grade_school_complete').select('school_id').eq('gender', 'F').eq('season_id', s.id)),
+    // streaming links: one per program, entered for the upcoming season like coaches
+    // Hudl and NFHS Network counted apart (Kyle 2026-11-19)
+    getNewestSeason().then(s => streamingLinks(db, 'M', s.id)).then(m => ({ data: [...m].map(([school_id, l]) => ({ school_id, hudl: !!l.hudl, nfhs: !!l.nfhs })) })),
+    getNewestSeason().then(s => streamingLinks(db, 'F', s.id)).then(m => ({ data: [...m].map(([school_id, l]) => ({ school_id, hudl: !!l.hudl, nfhs: !!l.nfhs })) })),
+    // Transfers: 0% or 100% from the dashboard's "Complete Transfers" task (Kyle 2026-11-11). Tasks are not
+    // kept per season, so it counts when it was completed during this season's preseason (from Aug 1).
+    db.from('admin_tasks').select('gender, process_key, completed_at').eq('dashboard', 'preseason').eq('process_key', 'transfers'),
+    // Tournament Rollover: last season's tournaments rolled over or marked not returning (src/lib/tournamentSlate.ts)
+    Promise.all((['M', 'F'] as const).map(async g => {
+      const season = g === 'M' ? seasonLabelM : seasonLabelF
+      if (!/^\d{4}-\d{2}$/.test(season)) return 0
+      const [cur, prior] = await Promise.all([seasonTournaments(db, g, season), seasonTournaments(db, g, previousSeasonLabel(season))])
+      return rolloverStatus(prior, cur).pct
+    })).then(([M, F]) => ({ data: { M, F } })),
   ])
+  const slatePct = (g: 'M' | 'F') => slateRows?.[g] ?? 0
+  const taskDone = (gender: 'M' | 'F', seasonId: number, processKey: string) =>
+    (transferTasks ?? []).some(t => t.gender === gender && t.process_key === processKey && t.completed_at && t.completed_at >= `${seasonId - 1}-08-01`) ? 100 : 0
 
   const ids = (rows: { school_id: number }[] | null) => new Set((rows ?? []).map(r => r.school_id))
   const scheduleIds = (rows: { team1_school_id: number; team2_school_id: number }[] | null) =>
@@ -122,6 +145,9 @@ export default async function PreseasonPage() {
     rosterSet: Set<number>,
     gradeReviewSet: Set<number>,
     grades: { roster: number; graded: number },
+    streams: { school_id: number; hudl: boolean; nfhs: boolean }[],
+    pctTransfers: number,
+    pctTournamentRollover: number,
   ): GenderPreseasonStats {
     const total = programIds.length
     const count = (f: (id: number) => unknown) => programIds.filter(id => f(id)).length
@@ -142,7 +168,10 @@ export default async function PreseasonPage() {
       pctCoachEmail:   pct(count(id => coachEmailSet.has(id)), total),
       pctSchedules:    pct(count(id => scheduleSet.has(id)),   total),
       pctRosters:      pct(count(id => rosterSet.has(id)),     total),
-      pctCompleted:    pct(count(id => coachSet.has(id) && schoolById.get(id)?.town && scheduleSet.has(id) && rosterSet.has(id)), total),
+      pctHudl:         pct(count(id => streams.some(x => x.school_id === id && x.hudl)), total),
+      pctNfhs:         pct(count(id => streams.some(x => x.school_id === id && x.nfhs)), total),
+      pctTransfers,
+      pctTournamentRollover,
     }
   }
 
@@ -150,8 +179,8 @@ export default async function PreseasonPage() {
     <PreseasonDashboard
       seasonLabelM={seasonLabelM}
       seasonLabelF={seasonLabelF}
-      statsM={buildStats(boysIds,  ids(boysCoachRows),  ids(boysEmailRows),  scheduleIds(boysScheduleRows),  ids(boysRosterRows),  ids([...(boysGradeReviewRows ?? []), ...(boysCompleteRows ?? [])]),  boysGrades)}
-      statsF={buildStats(girlsIds, ids(girlsCoachRows), ids(girlsEmailRows), scheduleIds(girlsScheduleRows), ids(girlsRosterRows), ids([...(girlsGradeReviewRows ?? []), ...(girlsCompleteRows ?? [])]), girlsGrades)}
+      statsM={buildStats(boysIds,  ids(boysCoachRows),  ids(boysEmailRows),  scheduleIds(boysScheduleRows),  ids(boysRosterRows),  ids([...(boysGradeReviewRows ?? []), ...(boysCompleteRows ?? [])]),  boysGrades,  boysStreamRows ?? [],  taskDone('M', rosterSeasonM, 'transfers'), slatePct('M'))}
+      statsF={buildStats(girlsIds, ids(girlsCoachRows), ids(girlsEmailRows), scheduleIds(girlsScheduleRows), ids(girlsRosterRows), ids([...(girlsGradeReviewRows ?? []), ...(girlsCompleteRows ?? [])]), girlsGrades, girlsStreamRows ?? [], taskDone('F', rosterSeasonF, 'transfers'), slatePct('F'))}
       directorySeasonM={rosterSeasonM}
       directorySeasonF={rosterSeasonF}
       coachSeasonId={(await getNewestSeason()).id}

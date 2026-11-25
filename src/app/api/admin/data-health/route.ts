@@ -54,7 +54,6 @@ export async function GET() {
     confStandingsRes,
     precomputedRes,
     placementsRes,
-    pendingTransfersRes,
     staleImportsRes,
     nullWrestlerBoutsRes,
     nullWrestlerBoutsGirlsRes,
@@ -80,11 +79,6 @@ export async function GET() {
     fetchAllRows((from, to) => supabase.from('placements')
       .select('id, entry_id, weight_class_id, place, tournament_id')
       .order('id').range(from, to)),
-    supabase.from('pending_wrestler_transfers')
-      .select('id, wrestler_id, detected_via, created_at', { count: 'exact' })
-      .eq('status', 'pending')
-      .order('created_at', { ascending: false })
-      .limit(5),
     supabase.from('import_queue')
       .select('id, label, admin_email, updated_at', { count: 'exact' })
       .eq('status', 'ready_for_review')
@@ -112,8 +106,6 @@ export async function GET() {
   const nullWrestlerBouts = nullWrestlerBoutsRes.data ?? []
   const nullWrestlerBoutCount = (nullWrestlerBoutsRes.count ?? nullWrestlerBouts.length) + (nullWrestlerBoutsGirlsRes.count ?? 0)
   const placements = placementsRes.data ?? []
-  const pendingTransfers = pendingTransfersRes.data ?? []
-  const pendingTransferCount = pendingTransfersRes.count ?? pendingTransfers.length
   const staleImports = staleImportsRes.data ?? []
   const staleImportCount = staleImportsRes.count ?? staleImports.length
 
@@ -398,22 +390,6 @@ export async function GET() {
   })
 
   // ── IMPORTS ────────────────────────────────────────────────────────────────
-
-  checks.push({
-    ...(check(
-      'transfers_pending_review',
-      'Pending wrestler transfers awaiting review',
-      'imports',
-      pendingTransfers,
-      t => {
-        const r = t as { id: string; wrestler_id: string; detected_via: string; created_at: string }
-        return { id: r.id, wrestler_id: r.wrestler_id, detected_via: r.detected_via }
-      },
-      pendingTransfersRes.error?.message,
-    )),
-    count: pendingTransferCount,
-    linkTo: '/admin/wrestlers/pending-transfers',
-  })
 
   checks.push({
     ...(check(

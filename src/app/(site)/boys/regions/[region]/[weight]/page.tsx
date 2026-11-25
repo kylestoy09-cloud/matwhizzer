@@ -1,10 +1,13 @@
+import { WeightHistoryView } from '@/components/site/TournamentHistory'
 import { supabase } from '@/lib/supabase/public-cached'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getActiveSeason } from '@/lib/get-season'
+import { getPostseasonSeason } from '@/lib/get-season'
+import { seasonWeights, regionLabels } from '@/lib/postseasonSeason'
 import { getSeasonLabel } from '@/lib/seasons-server'
 import { BracketPoll, type BracketEntry, type DistrictChamp } from '@/components/BracketPoll'
-import { PageHeader } from '@/components/PageHeader'
+import { StdHeader } from '@/components/site/StdPage'
+import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { orderChampMatchesBySeed } from '@/lib/bracketOrder'
 import { getSchoolLogos } from '@/lib/school-logos'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
@@ -52,6 +55,7 @@ const ROUND_LABEL: Record<string, string> = {
   F:           'Finals',
   C1:          'Cons. R1',
   C2:          'Cons. R2',
+  C3:          'Cons. Semis',
   '3rd_Place': '3rd Place',
   '5th_Place': '5th Place',
 }
@@ -562,7 +566,10 @@ export default async function RegionBracketPage({
 
   if (!region || region < 1 || region > 8 || !weight) notFound()
 
-  const season = await getActiveSeason('M')
+  const { season, options: seasonOptions } = await getPostseasonSeason('M')
+  const rl = await regionLabels('M', season)   // the region's own name, else "Region N"
+
+  const weights = await seasonWeights('M', season, WEIGHTS)   // the season's own classes (Playoff History)
   const seasonLbl = await getSeasonLabel(season)
 
   const [{ data: matchData }, { data: entryData }, { data: champData }, logos] = await Promise.all([
@@ -637,8 +644,9 @@ export default async function RegionBracketPage({
   // Championship display: Combined → QF → SF → F
   const champRounds = (['QF', 'SF', 'F'] as const).filter(r => (champOrdered.get(r) ?? []).length > 0)
 
-  // Consolation display: C1 → C2 → 3rd_Place → 5th_Place
-  const consolRounds = (['C1', 'C2'] as const).filter(r => (matchesByRound.get(r) ?? []).length > 0)
+  // Consolation display: C1 → C2 → C3 → 3rd_Place → 5th_Place. The consolation semis are stored as C3 (2024-25 and
+  // 2025-26 regions, and the Playoff History seasons); the page drew only C1 and C2 until 2026-11-13 (Kyle: put it live)
+  const consolRounds = (['C1', 'C2', 'C3'] as const).filter(r => (matchesByRound.get(r) ?? []).length > 0)
   const thirdPlaceMatches = champOrdered.get('3rd_Place') ?? matchesByRound.get('3rd_Place') ?? []
   const fifthPlaceMatches = matchesByRound.get('5th_Place') ?? []
 
@@ -667,12 +675,10 @@ export default async function RegionBracketPage({
         ← Region {region}
       </Link>
 
-      <div className="mb-8 text-center">
-        <PageHeader title={`Region ${region} · ${weight} lb`} />
-        <p className="text-slate-500 text-sm mt-1">NJSIAA {seasonLbl ?? season} · Boys postseason</p>
-      </div>
+      <StdHeader title={`Boys ${rl.label(region)} · ${weight} lb`} summaryKey="region" hideSummary noLogo
+        picker={<><InlineSeasonPicker arrows gender="M" activeSeason={season} options={seasonOptions} /></>} />
 
-      <WeightNav weights={WEIGHTS} current={weight} base={`/boys/regions/${region}`} />
+      <WeightNav weights={weights} current={weight} base={`/boys/regions/${region}`} />
 
       {matches.length === 0 ? (
         <BracketPoll
@@ -779,7 +785,9 @@ export default async function RegionBracketPage({
           districtChamps={districtChamps}
         />
       )}
-      <WeightNav weights={WEIGHTS} current={weight} base={`/boys/regions/${region}`} />
+      <WeightNav weights={weights} current={weight} base={`/boys/regions/${region}`} />
+
+      <WeightHistoryView gender="M" level="region" num={region} seasons={seasonOptions.map(o => o.id)} weight={weight} />
     </div>
   )
 }

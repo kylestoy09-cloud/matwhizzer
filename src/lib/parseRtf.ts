@@ -602,13 +602,17 @@ function parseFormatB(lines: string[]): [ParsedBout[], ParsedPlacement[], RawEnt
       const weight = parseInt(wkey.slice(0, pipe), 10)
       const bracket = wkey.slice(pipe + 1)
 
-      const s_w1 = wbouts.filter(b => normalizeSchool(b.wrestler1_school) === trackedNorm).length
-      const s_w2 = wbouts.filter(b => normalizeSchool(b.wrestler2_school) === trackedNorm).length
-      const trackedSide = s_w1 >= s_w2 ? 1 : 2
-
       const best = wbouts.reduce((a, b) =>
         (ROUND_PRIORITY[b.round.toLowerCase().trim()] ?? 0) > (ROUND_PRIORITY[a.round.toLowerCase().trim()] ?? 0) ? b : a
       )
+      // our wrestler's side in the placing bout itself (2026-11-20). It used to be the side the school sat on most
+      // often across the weight's bouts — when our wrestler was on the other side in the final, the placement took the
+      // opponent's name with our school (Powerade 2025-26: Norwin's Landon Sidun filed 1st for St. Joseph (Montvale)).
+      const inBest1 = normalizeSchool(best.wrestler1_school) === trackedNorm
+      const inBest2 = normalizeSchool(best.wrestler2_school) === trackedNorm
+      const s_w1 = wbouts.filter(b => normalizeSchool(b.wrestler1_school) === trackedNorm).length
+      const s_w2 = wbouts.filter(b => normalizeSchool(b.wrestler2_school) === trackedNorm).length
+      const trackedSide = inBest1 && !inBest2 ? 1 : inBest2 && !inBest1 ? 2 : s_w1 >= s_w2 ? 1 : 2
       const rn = best.round.toLowerCase().trim()
       const won = best.winner === trackedSide
       const name = trackedSide === 1 ? best.wrestler1_name : best.wrestler2_name
@@ -1392,6 +1396,9 @@ function extractVenueBlock(lines: string[], startIdx: number, endIdx: number): {
 
 // ── Top-level ─────────────────────────────────────────────────────────────────
 
+// "Buena, NJ 08310" — the last line of a venue address
+const ADDRESS_LINE_RE = /,\s*[A-Z]{2}\.?\s+\d{5}(?:-\d{4})?\s*$/
+
 export function parseRtfText(text: string, only?: string): ParsedTournament[] {
   const lines = text.split('\n')
   const cleaned = lines.map(cleanLine)
@@ -1442,7 +1449,10 @@ export function parseRtfText(text: string, only?: string): ParsedTournament[] {
     // Handles TrackWrestling copy-paste where the title line has no " - date" suffix.
     // seenNames prevents firing on Format B repetitions where the tournament name
     // appears before every school's data block (each followed by a TW nav line).
+    // The venue's "City, ST 12345" line can sit right above the nav block too — it
+    // is part of the header above, never a tournament (Cape Atlantic League 2026).
     if (line && line.length >= 5 && line.length <= 120 &&
+        !ADDRESS_LINE_RE.test(line) &&
         !seenNames.has(line.toLowerCase()) &&
         !TW_META_RE.test(line) && !WEIGHT_RE.test(line) &&
         !line.includes('(') && !/\bover\b/i.test(line)) {

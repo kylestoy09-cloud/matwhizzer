@@ -1,0 +1,282 @@
+# NCAA Division III Championships 2022 — source: 2022NCAADivisionIIIWrestlingChampionships.csv (TrackWrestling bout export: qualifiers + places, 2026-11-18)
+
+@ 125
+- Tommy Russell | Millikin University
+- Terry Adams | Ursinus College
+- Riley Parker | Washington And Lee University
+- Derek Steele | Augsburg University
+- Isaac Wiegel | University Of Wisconsin-Platteville
+- Justin Lopez | Johnson & Wales University (Rhode Island)
+- Jacob Decatur | Baldwin Wallace University
+- Brandon Murphy | University Of Wisconsin-La Crosse
+- Nicholas Arborio | Western New England University
+- Shandon Akeo | Central College (Iowa)
+- Joey Lamparelli | Muhlenberg College
+- Brady Kyner | Wartburg College
+- Austin Fashouer | Wilkes University
+- Samuel Braswell | Averett University
+- Jack Stanley | University Of Mount Union
+- Matt Caccamise | College At Brockport
+- Carlos Champagne | Wabash College
+- Joey Manginelli | Springfield College
+place 1 Jacob Decatur
+place 2 Carlos Champagne
+place 3 Shandon Akeo
+place 4 Samuel Braswell
+place 5 Brady Kyner
+place 6 Riley Parker
+place 7 Nicholas Arborio
+place 8 Tommy Russell
+
+@ 133
+- David Massey | University Of Mount Union
+- Bryce Parke | Coe College
+- Zach Thompson | University Of Wisconsin-Platteville
+- Luis Hernandez | Ithaca College
+- Diego Santiago | New England College
+- Tyler Fleetwood | University Of Wisconsin-Eau Claire
+- Matt Berlin | University Of Wisconsin-Stevens Point
+- Jaden Hinton | Baldwin Wallace University
+- Andrew Perelka | John Carroll University
+- Kyle Kaiser | Roger Williams University
+- Zach Levey | College At Brockport
+- Dalton Rohrbaugh | York College (Pennsylvania)
+- Robbie Precin | North Central College
+- Josh Wilson | Greensboro College
+- Luke Kowalski | Gettysburg College
+- Joe Pins | Wartburg College
+- Jayden Cardenas | State University Of New York At Cortland
+- Gabriel Leo-Esparolini | Johnson & Wales University (Rhode Island)
+place 1 Robbie Precin
+place 2 Andrew Perelka
+place 3 Dalton Rohrbaugh
+place 4 Matt Berlin
+place 5 Josh Wilson
+place 6 David Massey
+place 7 Zach Thompson
+place 8 Joe Pins
+
+@ 141
+- Xavier Pena | Centenary University (New Jersey)
+- Brock Henderson | Coe College
+- Jimmy McAuliffe | Elmhurst College
+- James Rodriguez | Castleton University
+- Javen Estrada | North Central College
+- Zach Sato | University Of Wisconsin-Eau Claire
+- Jordin James | University Of Mount Union
+- Josiah Gehr | Messiah University
+- Jacob Reed | Ohio Northern University
+- Joseph Rossetti | Williams College
+- Travis Jones | Ithaca College
+- Brandon Woody | Averett University
+- Sam Stuhl | Augsburg University
+- Kyle Slendorn | Stevens Institute Of Technology
+- Daniel Uribe | Wabash College
+- Hayden Brown | Johnson & Wales University (Rhode Island)
+- Domenic Difrancescantonio | The College Of New Jersey
+- Zayren Terukina | Wartburg College
+place 1 Jordin James
+place 2 Zayren Terukina
+place 3 Jacob Reed
+place 4 Kyle Slendorn
+place 5 Jimmy McAuliffe
+place 6 Brandon Woody
+place 7 Josiah Gehr
+place 8 James Rodriguez
+
+@ 149
+- Ryan Fleck | University Of Chicago
+- Alex Barr | Wabash College
+- Colby Frost | University Of Southern Maine
+- Hunter Campbell | Averett University
+- Brandon Bowles | Muhlenberg College
+- Chandler Merwin | State University Of New York At Cortland
+- Kristian Rumph | Wartburg College
+- Jake Burford | University Of Wisconsin-Whitewater
+- Chase Sumner | Ohio Northern University
+- Michael Conklin | The College Of New Jersey
+- Tony Ulaszek | U.S. Coast Guard Academy
+- Michael Petrella | Baldwin Wallace University
+- Hai Siu | Greensboro College
+- Alex Villar | North Central College
+- Brett Kaliner | Stevens Institute Of Technology
+- Kyle Merritt | Norwich University
+- Robert Areyano | Central College (Iowa)
+- Jake Drexler | University Of Wisconsin-Eau Claire
+place 1 Brett Kaliner
+place 2 Michael Petrella
+place 3 Alex Barr
+place 4 Alex Villar
+place 5 Kristian Rumph
+place 6 Ryan Fleck
+place 7 Kyle Merritt
+place 8 Michael Conklin
+
+@ 157
+- Kaidon Winters | Rochester Institute Of Technology
+- Trent Furman | New York University
+- Zarik Anderson | University Of Dubuque
+- Nick Barnhart | Messiah University
+- Zeke Smith | Loras College
+- Jeff Johnson | New Jersey City University
+- David Hollingsworth | Wartburg College
+- Joe Chapman | U.S. Coast Guard Academy
+- Tyler Shilson | Augsburg University
+- Eric Hutchinson | York College (Pennsylvania)
+- Schuyler Caprella | Ohio Northern University
+- Nathan Lackman | Rhode Island College
+- Ryan Luth | Washington And Lee University
+- Matthew Sacco | The College Of New Jersey
+- Nolan Hertel | University Of Wisconsin-La Crosse
+- Stanley Bleich | Baldwin Wallace University
+- Darian Estevez | University Of Chicago
+- Luke Reicosky | John Carroll University
+place 1 Nathan Lackman
+place 2 Kaidon Winters
+place 3 Tyler Shilson
+place 4 Ryan Luth
+place 5 Nolan Hertel
+place 6 David Hollingsworth
+place 7 Luke Reicosky
+place 8 Darian Estevez
+
+@ 165
+- Bradan Birt | Millikin University
+- Alex Turley | Averett University
+- Austin Lamb | Rochester Institute Of Technology
+- Preston Morgan | University Of Wisconsin-Oshkosh
+- Isaac Mathews | Oswego State
+- Fox Maxwell | Bridgewater State University
+- Dalton Leightner | Baldwin Wallace University
+- Jaden Datz | Washington And Jefferson College
+- Seth Brossard | University Of Wisconsin-La Crosse
+- Patrick McGraw | John Carroll University
+- Philip Rogers | U.S. Coast Guard Academy
+- Matt Lackman | Alvernia University
+- Gabe Fiser | Loras College
+- Will Esmoil | Coe College
+- Dominick Reyes | Johns Hopkins University
+- Chase Schmidt | University Of Wisconsin-Eau Claire
+- Cooper Pontelandolfo | New York University
+- Kyle Hatch | Wabash College
+place 1 Bradan Birt
+place 2 Kyle Hatch
+place 3 Chase Schmidt
+place 4 Will Esmoil
+place 5 Matt Lackman
+place 6 Cooper Pontelandolfo
+place 7 Seth Brossard
+place 8 Austin Lamb
+
+@ 174
+- Demitreus Henry | State University Of New York At Cortland
+- Jared Stricker | University Of Wisconsin-Eau Claire
+- Yousseff Ait Boulahri | Delaware Valley University
+- Cooper Fleming | Castleton University
+- Donovan Palmer | Baldwin Wallace University
+- Kade Kravits | King`s College (Pennsylvania)
+- Michael Ross | Johnson & Wales University (Rhode Island)
+- Zane Mulder | Wartburg College
+- Zach Stedeford | Rochester Institute Of Technology
+- Solomon Nielsen | Augsburg University
+- Cornell Beachem | Mount St. Joseph University
+- Stefan Major | Stevens Institute Of Technology
+- Ben Sarasin | University Of Chicago
+- Jacob Krakow | Loras College
+- Marco Gaita | Wesleyan University (Connecticut)
+- Charlie Grygas | Oswego State
+- Daniel Devera | John Carroll University
+- Tristin Westphal | Coe College
+place 1 Cornell Beachem
+place 2 Michael Ross
+place 3 Jacob Krakow
+place 4 Zane Mulder
+place 5 Solomon Nielsen
+place 6 Zach Stedeford
+place 7 Stefan Major
+place 8 Demitreus Henry
+
+@ 184
+- Ryan Schott | Coe College
+- Brian Torres | State University Of New York At Cortland
+- Mahlic Sallah | Roanoke College
+- Edwin Morales | Bridgewater State University
+- Jason Geyer | New York University
+- Nick Rogge | Augsburg University
+- Paul Detwiler | U.S. Coast Guard Academy
+- Kyle Briggs | Wartburg College
+- Maguire Pecci | University Of Chicago
+- Chibueze Chukwuezi | Ithaca College
+- Isaac Kassis | Alvernia University
+- Antonio McCloud | Mount St. Joseph University
+- Daniel Surich | The College Of New Jersey
+- Lucas Salmon | Baldwin Wallace University
+- Colton Babcock | Wilkes University
+- Shane Liegel | Loras College
+- Jaritt Shinhoster | University Of Wisconsin-Whitewater
+- Charles Baczek | Wabash College
+place 1 Jaritt Shinhoster
+place 2 Paul Detwiler
+place 3 Kyle Briggs
+place 4 Shane Liegel
+place 5 Chibueze Chukwuezi
+place 6 Charles Baczek
+place 7 Mahlic Sallah
+place 8 Daniel Surich
+
+@ 197
+- Camden Farrow | York College (Pennsylvania)
+- Gage Linahon | Central College (Iowa)
+- Travis Arata | Roger Williams University
+- Dylan Wellbaum | Adrian College
+- Josh Harkless | Rochester Institute Of Technology
+- Matthew Kelly | New York University
+- Jack Heldt | Wabash College
+- Gable Crebs | Lycoming College
+- Donovan Corn | Luther College
+- Mauro Pellot | Alvernia University
+- Beau Yineman | University Of Wisconsin-Oshkosh
+- Jarrod Setliff | Otterbein University
+- Bentley Schwanebeck-Ostermann | Augsburg University
+- Quinn Haddad | The College Of New Jersey
+- Cody Baldridge | North Central College
+- Tyler Hannah | University Of Wisconsin-Platteville
+- Jordan Wallace | Ithaca College
+- Coy Spooner | U.S. Coast Guard Academy
+place 1 Cody Baldridge
+place 2 Jack Heldt
+place 3 Beau Yineman
+place 4 Camden Farrow
+place 5 Coy Spooner
+place 6 Bentley Schwanebeck-Ostermann
+place 7 Gable Crebs
+place 8 Jordan Wallace
+
+@ 285
+- Tyler Kim | Augsburg University
+- Brayan Reyes | Millikin University
+- Ben Kawcyznski | University Of Wisconsin-La Crosse
+- Owen Miller | Albion College
+- Palmer Rodenhaber | Alvernia University
+- Addison Boisvert | Roger Williams University
+- Donovan King | Olivet College
+- Jake Peavey | University Of Southern Maine
+- Kaleb Reeves | Coe College
+- Robby Bates | North Central College
+- Max Bishop | Wabash College
+- Liridon Leka | Johnson & Wales University (Rhode Island)
+- Edwin Rubio | Ithaca College
+- Thomas Marretta | The College Of New Jersey
+- John Fulmer | Lycoming College
+- Jordan Lemcke | University Of Wisconsin-Oshkosh
+- Hank Behaeghel | Johns Hopkins University
+- Nico Ramirez | Southern Virginia University
+place 1 Jordan Lemcke
+place 2 Donovan King
+place 3 Kaleb Reeves
+place 4 Tyler Kim
+place 5 Nico Ramirez
+place 6 Robby Bates
+place 7 John Fulmer
+place 8 Hank Behaeghel
+

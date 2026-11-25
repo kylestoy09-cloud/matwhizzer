@@ -1,0 +1,12 @@
+# NCAA DII colleges and the spellings the scanned 1963–2002 files use (scripts/add_college_group.mts) — existing colleges, aliases only
+Adams State (CO) | | | | Adams St
+Ashland (OH) | | | | Ashland Univ
+Carson-Newman (TN) | | | | Carson Newman
+Central Missouri (MO) | | | | Cent. Missouri State
+Central Washington (WA) | | | | Cent. Washington Univ
+Colorado Mines (CO) | | | | Colo. School of Mines
+Minnesota State (MN) | | | | Minnesota Mankato
+MSU Moorhead (MN) | | | | Minnesota Moorhead
+Pitt-Johnstown (PA) | | | | Pitt - Johnstown
+SIU Edwardsville (IL) | | | | S. Ill. Univ. Edwardsville
+Wisconsin-Parkside (WI) | | | | Wisconsin Parkside

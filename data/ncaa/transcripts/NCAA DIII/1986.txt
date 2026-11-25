@@ -1,0 +1,182 @@
+# NCAA Division III Championships 1986 — source: NCAA III 1986.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Shawn Sheldon | SUNY-Albany
+- Peter Gonzalez | Montclair State
+- Tim Jacoutot | College of New Jersey
+- Rick Williams | Delaware Valley
+- Guy Bowers | SUNY-Cortland
+- Paul Schuman | Ithaca
+- Tim Eberhard | Concordia MN
+- Pete Regalado | Augustana Illinois
+place 1 Shawn Sheldon
+place 2 Peter Gonzalez
+place 3 Tim Jacoutot
+place 4 Rick Williams
+place 5 Guy Bowers
+place 6 Paul Schuman
+place 7 Tim Eberhard
+place 8 Pete Regalado
+
+@ 126
+- Nick Milonas | Montclair State
+- Tim Hackel | Central College IA
+- Randy Simpson | Capital
+- Pete Hayek | John Carroll
+- Glenn Cogwell | Ithaca
+- Keith Gliva | Augustana Illinois
+- Jay VanCleve | Cornell Iowa
+- Pat Hart | SUNY-Binghampton
+place 1 Nick Milonas
+place 2 Tim Hackel
+place 3 Randy Simpson
+place 4 Pete Hayek
+place 5 Glenn Cogwell
+place 6 Keith Gliva
+place 7 Jay VanCleve
+place 8 Pat Hart
+
+@ 134
+- Mark Shortsleeve | St. Lawrence
+- Scott DeTore | SUNY-Brockport
+- Ralph Venuto | College of New Jersey
+- Dean Miller | Cornell Iowa
+- Darren Scott | Ohio Northern
+- Gregg Roehrick | St. Olaf
+- Dail Fellin | Buena Vista
+- Phil Corbet | St. Thomas
+place 1 Mark Shortsleeve
+place 2 Scott DeTore
+place 3 Ralph Venuto
+place 4 Dean Miller
+place 5 Darren Scott
+place 6 Gregg Roehrick
+place 7 Dail Fellin
+place 8 Phil Corbet
+
+@ 142
+- Shawn Smith | Delaware Valley
+- Mark Gumble | SUNY-Binghampton
+- Paul VanOosbree | Buena Vista
+- Pete Mankowich | Ithaca
+- Rob Allison | SUNY-Brockport
+- Mark Nace | Montclair State
+- Karl Monaco | College of New Jersey
+- Roy Wilt | Thiel
+place 1 Shawn Smith
+place 2 Mark Gumble
+place 3 Paul VanOosbree
+place 4 Pete Mankowich
+place 5 Rob Allison
+place 6 Mark Nace
+place 7 Karl Monaco
+place 8 Roy Wilt
+
+@ 150
+- Brian Barrett | Glassboro
+- John Leone | SUNY-Brockport
+- Kevin Azinger | Central College IA
+- Joe Darling | SUNY-Oswego
+- Daryl Stumph | Hiram
+- Jim Fox | SUNY-Albany
+- Jeff Payne | Allegheny
+- Mike Schimp | Buena Vista
+place 1 Brian Barrett
+place 2 John Leone
+place 3 Kevin Azinger
+place 4 Joe Darling
+place 5 Daryl Stumph
+place 6 Jim Fox
+place 7 Jeff Payne
+place 8 Mike Schimp
+
+@ 158
+- Todd Slade | SUNY-Brockport
+- Dan Dresser | Buena Vista
+- Dwayne Standridge | College of New Jersey
+- Rick Spaulding | St. Lawrence
+- Kelly McGovern | Central College IA
+- Jason Barnett | John Carroll
+- Dave Zariczny | SUNY-Cortland
+- Roger Forystek | St. Olaf
+place 1 Todd Slade
+place 2 Dan Dresser
+place 3 Dwayne Standridge
+place 4 Rick Spaulding
+place 5 Kelly McGovern
+place 6 Jason Barnett
+place 7 Dave Zariczny
+place 8 Roger Forystek
+
+@ 167
+- Steve Klein | SUNY-Buffalo
+- Steve Hile | Ithaca
+- Rod Wilt | Thiel
+- Brian Keller | Wisconsin-River Falls
+- Jeff Schlieff | Augsburg
+- Willie Lake | Olivet
+- Tony DeCarlo | John Carroll
+- Jay Hines | Mount Union
+place 1 Steve Klein
+place 2 Steve Hile
+place 3 Rod Wilt
+place 4 Brian Keller
+place 5 Jeff Schlieff
+place 6 Willie Lake
+place 7 Tony DeCarlo
+place 8 Jay Hines
+
+@ 177
+- John Monaco | Montclair State
+- Sam Walker | John Carroll
+- Kevin Besch | Buena Vista
+- Rick Kichman | Lebanon Valley
+- Terry Schuler | Wisconsin-Whitewater
+- Joe Adam | Trinity
+- Tom Tuomi | Concordia MN
+- Steve Goodall | Cornell Iowa
+place 1 John Monaco
+place 2 Sam Walker
+place 3 Kevin Besch
+place 4 Rick Kichman
+place 5 Terry Schuler
+place 6 Joe Adam
+place 7 Tom Tuomi
+place 8 Steve Goodall
+
+@ 190
+- Mike Himes | Upper Iowa
+- Gene Shin | Chicago University
+- Dwayne Fischer | Wisconsin-Oshkosh
+- Steve Kopecky | Wisconsin-Whitewater
+- Dan Dugan | Glassboro
+- Greg Finnan | John Carroll
+- Todd McArdel | SUNY-Cortland
+- Dean Gavin | Wartburg
+place 1 Mike Himes
+place 2 Gene Shin
+place 3 Dwayne Fischer
+place 4 Steve Kopecky
+place 5 Dan Dugan
+place 6 Greg Finnan
+place 7 Todd McArdel
+place 8 Dean Gavin
+
+@ 285
+- Chris Tironi | SUNY-Albany
+- Jim Petty | Montclair State
+- Rusty Middlebrook | SUNY-Brockport
+- Rich Kane | Ithaca
+- Rolf Carlson | St. Olaf
+- Dave Witt | Wisconsin-Stout
+- Craig Hanson | Buena Vista
+- Russ Sutherland | SUNY-Buffalo
+place 1 Chris Tironi
+place 2 Jim Petty
+place 3 Rusty Middlebrook
+place 4 Rich Kane
+place 5 Rolf Carlson
+place 6 Dave Witt
+place 7 Craig Hanson
+place 8 Russ Sutherland
+

@@ -1,0 +1,272 @@
+# NCAA Division III Championships 2012 — source: 2012.pdf (entrants from the PDF text; places read off the bracket pages, 2026-11-18)
+# qualifiers and places only (no bouts)
+
+@ 125
+1 Nathan Fitzenreider | North Central (IL)
+- Charlie Frankel | Delaware Valley
+- Zach Mueller | Wisconsin-Oshkosh
+- Ben Presler | Concordia-Moorhead
+8 Stephen Hinton | Lycoming
+5 Daniel Mendoza | Luther
+- Nathanie Giorgio | Coast Guard
+- Sean Ambrocio | Concordia (WI)
+- Robert Bidlingmaier | Olivet
+4 Riki Reynolds | Mount Union
+3 Jimmy Gotto | Coe
+- Tyler Marlow | Brockport State
+- Brandon Gauthier | Rhode Island College
+- Mike Fuenffinger | Augsburg
+6 Grant Sutter | Wisconsin-Whitewater
+7 Timothy Hood | Cornell College
+- Christop Parker | Centenary (NJ)
+- Paul Bewak | Johns Hopkins
+- Michael Fleck | Wilkes
+2 Kenneth Anderson | Wartburg
+place 1 Anderson
+place 2 Fitzenreider
+place 3 Sutter
+place 4 Giorgio
+place 5 Presler
+place 6 Gotto
+place 7 Bewak
+place 8 Frankel
+
+@ 133
+1 Seth Ecker | Ithaca
+- Thomas Mirocha | Wartburg
+- Joseph Schwartz | Wesleyan (CT)
+- Jeremy Jones | Ohio Northern
+8 Timothy Wunnicke | Wisconsin-Platteville
+5 Jake Fredricksen | Wisconsin-Whitewater
+- Eric McCann | Delaware Valley
+- Joe Mileski | Wisconsin-Stevens Point
+4 Daron Hohbein | Concordia-Moorhead
+3 Adam Sheley | Wisconsin-La Crosse
+- Alex Blank | Ursinus
+- Dan Herr | The College Of New Jersey
+6 Joseph Grippi | Springfield
+7 Jordan Westfall | Coe
+- Dalton Bullard | Elmhurst
+- Tigue Snider | Cornell College
+- Chad Henle | St. Johns (MN)
+2 Corey Brown | Thiel
+place 1 Ecker
+place 2 Westfall
+place 3 Bullard
+place 4 Mileski
+place 5 Herr
+place 6 Sheley
+place 7 Grippi
+place 8 Brown
+
+@ 141
+1 Bebeto Yewah | Wisconsin-La Crosse
+- Ryan Wilson | Wilkes
+- Michael Buhr | Cornell College
+8 Brian Bistis | SUNY-Cortland
+5 Ryan Timmerman | St. Olaf
+- Ces Antista | Williams College
+- Paul Marcello | Johns Hopkins
+4 Will Keeter | Augsburg
+3 Chris Albright | York (PA)
+- Jake Denhof | Elmhurst
+- Shawn Giblin | Rhode Island College
+6 Andrew Zobac | North Central (IL)
+7 Josh Malave | Mount Union
+- Kyle Windquist | Luther
+- Josh Etzel | Washington And Jefferson
+2 Kodie Silvestri | Wartburg
+place 1 Silvestri
+place 2 Yewah
+place 3 Keeter
+place 4 Timmerman
+place 5 Zobac
+place 6 Albright
+place 7 Malave
+place 8 Bistis
+
+@ 149
+1 Tony Valek | Augsburg
+- Mike Willey | Plymouth State
+- Alberto Quiros | Augustana (IL)
+8 Joe Wood | Loras
+5 James Locke | Coe
+- Henry Stauber | Johns Hopkins
+- Drew Wagenhoffer | Wartburg
+4 Jeremy Stierly | Ithaca
+3 Zac Andrews | Delaware Valley
+- Joseph Hauser | Oneonta State
+- Ryan Earley | Elmhurst
+6 Cameryn Brady | Manchester
+7 Cade Sarbacker | Wisconsin-Whitewater
+- Ryan Warcynksi | Dubuque
+- Kevin Shadrach | Mount Union
+2 Anthony Dattolo | Wilkes
+place 1 Stierly
+place 2 Dattolo
+place 3 Valek
+place 4 Wood
+place 5 Andrews
+place 6 Wagenhoffer
+place 7 Locke
+place 8 Willey
+
+@ 157
+1 Orlando Ponce | Augsburg
+- Joseph Atwell | Central (IA)
+- Terner Gott | John Carroll
+8 Derek Brenon | Ithaca
+5 Dale Handley | Coe
+- Chris Stevermer | St. Johns (MN)
+- Ryan McGilvray | Springfield
+- Michael Letcher | Ohio Northern
+4 Chris Burdge | Centenary (NJ)
+3 Elias Larson | Trine University
+- Matt Fusaro | Johns Hopkins
+- Jacob Bohler | St. Olaf
+- John Darling | The College Of New Jersey
+6 Isaac Dukes | Case Western Reserve
+7 Cole Welter | Wartburg
+- Ben Strobel | Wisconsin-Stevens Point
+- Troy Sterling | SUNY-Cortland
+2 Nazar Kulchytskyy | Wisconsin-Oshkosh
+place 1 Kulchytskyy
+place 2 Ponce
+place 3 Handley
+place 4 Larson
+place 5 Burdge
+place 6 Darling
+place 7 Dukes
+place 8 Brenon
+
+@ 165
+1 Nick LeClere | Coe
+- Tom Teigen | Augsburg
+- Quint Eno | Elizabethtown
+8 James Myers | Olivet
+5 Derrick Longo | Springfield
+- Matt Burns | Augustana (IL)
+- Nick Bach | Centenary (NJ)
+4 Joey Favia | Stevens Institute Of Tech
+3 Nicholas Sanko | Ithaca
+- Kevin Obrien | Wisconsin-La Crosse
+- Collin Crowell | Roger Williams
+6 Zach Thomson | Gettysburg
+7 Joseph Hambleton | Cornell College
+- Ryan Renon | Lakeland
+- William Painter | Ohio Northern
+2 Landon Williams | Wartburg
+place 1 Williams
+place 2 LeClere
+place 3 Longo
+place 4 Obrien
+place 5 Favia
+place 6 Myers
+place 7 Sanko
+place 8 Eno
+
+@ 174
+1 Jules Doliscar | Ithaca
+- Josh Kohler | Augsburg
+- Dan Schiferl | Wisconsin-Oshkosh
+8 Mathew Pfarr | St. Johns (MN)
+5 Scott King | Coe
+- Jordan Richardson | Augustana (IL)
+- Kyle Roosa | Wesleyan (CT)
+4 Bradley Banks | Wartburg
+3 Kyle Kwiat | Ohio Northern
+- Ryan Dormann | Stevens Institute Of Tech
+- James Roach | St. Olaf
+6 Logan Einerson | Dubuque
+7 Trevor Tyler | Olivet
+- Matt Cross | Messiah
+- Matt Heisey | York (PA)
+2 Michael Schmitz | Wisconsin-La Crosse
+place 1 Kwiat
+place 2 Banks
+place 3 Schmitz
+place 4 Pfarr
+place 5 Cross
+place 6 King
+place 7 Doliscar
+place 8 Richardson
+
+@ 184
+1 Mike Denver | The College Of New Jersey
+- Andy Jenkins | Mount Union
+- Ethan Ball | Coe
+- Ryan Pieper | Trine University
+8 Mitchell Hagen | St. Johns (MN)
+5 David Dwyer | Wisconsin-Whitewater
+- Brian Broll | Buena Vista
+- Carl Korpi | SUNY-Cortland
+4 Alex Martocello | York (PA)
+3 Dylan Azinger | Wartburg
+- Greg Rhoads | Wabash
+- Samuel Pennisi | Chicago
+6 Michael Reilly | King`s (PA)
+7 Sam Engelland | Wisconsin-Oshkosh
+- Timothy Stewart | Messiah
+- Jefferso Ajayi | Wesleyan (CT)
+- Erik Schott | Merchant Marine
+2 Josef Rau | Elmhurst
+place 1 Denver
+place 2 Reilly
+place 3 Rau
+place 4 Azinger
+place 5 Martocello
+place 6 Stewart
+place 7 Ajayi
+place 8 Rhoads
+
+@ 197
+1 Byron Tate | Wartburg
+- Darren Faber | Wheaton (IL)
+- Andrew Lovins | Heidelberg
+8 Adam Latella | Wisconsin-Whitewater
+5 Trent Flegel | Luther
+- Musa De'Reese | Hunter
+- Paul Glover | Brockport State
+4 Brad Baus | Augsburg
+3 Dustin Baxter | St. Johns (MN)
+- Sam Johnson | Dubuque
+- Reid Mosquera | Johns Hopkins
+6 Nathan Schmitz | Concordia-Moorhead
+7 William Meaney | Elizabethtown
+- Justin Leonard | Olivet
+- Luke Erickson | Wesleyan (CT)
+- Alex Coolidge | Cornell College
+2 Jared Myhrberg | SUNY-Cortland
+place 1 Tate
+place 2 Baxter
+place 3 Myhrberg
+place 4 Baus
+place 5 Schmitz
+place 6 Flegel
+place 7 Meaney
+place 8 Mosquera
+
+@ 285
+1 Derick Hesson | Mount Union
+- George Saliba | York (PA)
+- Joey Giaramita | SUNY-Cortland
+8 Tom Bouressa | Concordia-Moorhead
+5 Ryan Fank | Wartburg
+- Kevin Poplaski | Gettysburg
+- Matthew Mahon | Ithaca
+4 Corey Anderson | Wisconsin-Whitewater
+3 Joseph Zitone | Centenary (NJ)
+- Brian Brooks | Elmhurst
+6 William Mayer | Wisconsin-La Crosse
+7 Logan Renas | Olivet
+- Patrick Walsh | Bridgewater State Univers
+- Conner Herman | Luther
+2 Chad Johnson | Augsburg
+place 1 Johnson
+place 2 Anderson
+place 3 Hesson
+place 4 Fank
+place 5 Mayer
+place 6 Saliba
+place 7 Zitone
+place 8 Giaramita

@@ -1,0 +1,414 @@
+# NAIA Championships 2011 — source: NAIA-M_2011.pdf (qualifiers from the Championship pages, college short names translated in scripts/transcribe/draft_kreider_codes.py — "C Baptist" / "CBC" read as Central Baptist, not proven; places read off the bracket pages, 2026-11-18)
+# qualifiers and places only (no bouts)
+# NAIA Championships 2011 — source: NAIA-M_2011.pdf (qualifiers from the Championship pages, college short names translated in scripts/transcribe/draft_kreider_codes.py — "C Baptist" / "CBC" read as Central Baptist, not proven; places read off the bracket pages, 2026-11-18)
+
+@ 125
+- Sergio Martinez | Dickinson State
+- Drake Medieros | Menlo
+- Johnny Papesh | Campbellsville
+- Venel Rene | Waldorf
+- Brandon Benvenuti | Lindenwood
+- Diego Quintana | Northwestern (Iowa)
+- Robert Herrera | Minot State
+- Larone Madison | Cumberlands
+- Taylor Louie | William Penn
+- Sean Silva | Embry-Riddle
+- Clayden McKim | Midland
+- Skylor Davis | Simon Fraser
+- Noah Hunt | Cumberland
+- Jarrod Wiens | Hastings
+- Paulie Hansen | Missouri Valley
+- Dante Rini | Notre Dame OH
+- Kellan Zietz | Minot State
+- AJ Gassman | Baker
+- Jordan Fowlkes | Concordia
+- Kidd Gomez | Oklahoma City
+- Justin Forrest | Lindenwood
+- Anthony Hawkins | Calumet
+- Richard Leal | Wayland Baptist
+- Sean Blumhardt | Jamestown
+- Akmal Adilov | Great Falls
+- Myron Bradbury | Lindsey Wilson
+- Jason Moorhouse | Menlo
+- Kory Kistner | Morningside
+- Peter Martinez | Cumberlands
+- Alex Peitz | Grand View
+place 1 Rini
+place 2 Papesh
+place 3 Forrest
+place 4 Benvenuti
+place 5 Blumhardt
+place 6 Madison
+place 7 Adilov
+place 8 Hansen
+
+@ 133
+- Josh Haugen | Baker
+- Clint Jones | Shorter
+- Richard Rios | Dakota Wesleyan
+- Sam Loggins | Minot State
+- Wade Lowe | McKendree
+- Jeremy Mazon | Embry-Riddle
+- Jared Miller | Jamestown
+- Tyler Alsip | Campbellsville
+- Emerson Negley | York (Neb.)
+- Ty Costa | Midland
+- Rashad Riley | McKendree
+- Scott Schlosser | Great Falls
+- Joshua Rogers | Briar Cliff
+- Michael Lovitt | Lindsey Wilson
+- Omi Acosta | Grand View
+- Jake McManigal | Morningside
+- Calob Perkins | Cumberlands
+- Travis Patrick | Concordia
+- Jared Dalgleish | Southern Oregon
+- Jered Medina | Cumberlands
+- Jordan McGuire | Baker
+- Matt Katusin | Midland
+- Ethan Miller | Lindsey Wilson
+- Jeff Ohnemus | Waldorf
+- Nathan Galloway | Shorter
+- Luis Carranza | Great Falls
+- Travis Evans | Grand View
+- Adam Joseph | Concordia
+- Matt Ruby | Minot State
+- Joshua Chappa | Cumberland
+- Cameron Neiss | MSU-Northern
+- Christian Hernandez | Bacone
+- Eric Garcia | Menlo
+- Anton Prater | Missouri Baptist
+- Cody Hilzendeger | Dickinson State
+- Tim Thurston | Campbellsville
+- Alfonso Valles | Embry-Riddle
+place 1 Lowe
+place 2 Katusin
+place 3 Thurston
+place 4 Riley
+place 5 Valles
+place 6 Evans
+place 7 Neiss
+place 8 Prater
+
+@ 141
+- Myles Mazurkiewicz | Great Falls
+- Colby Rinehart | Shorter
+- Alex Rostvet | Concordia
+- Blake Nichols | Bacone
+- Tommy Pretty | Campbellsville
+- JL Mayo | Northwestern (Iowa)
+- Christian Martinez | Menlo
+- Dustin Davidson | Cumberlands
+- Nick Coffman | Grand View
+- Kyle Williams | McKendree
+- Zach Fish | Hannibal-LaGrange
+- Jared Wilmert | Midland
+- Derrick Weller | Lindenwood
+- Anthony Varnell | Great Falls
+- Jesse Knott | Missouri Valley
+- Garth Ginder | Hastings
+- Dexter Bushart | Cumberland
+- Justin Eldred | Southern Oregon
+- Matt Dowell | Northwestern (Iowa)
+- Deon Buhl | Minot State
+- Ryan McKenzie | Cumberland
+- John Walters | West Virginia Tech
+- Jeff Rau | Grand View
+- Marty Carlson | Notre Dame OH
+- Justin Ferguson | Hastings
+- Isaac Thomas | Lindsey Wilson
+- Phillip Henes | Baker
+- Kyle Wirkuty | Southern Oregon
+- Josiah Simburger | York (Neb.)
+- Adam Orton | Dickinson State
+- Jacob Janes | Lindenwood
+- Eddie McCray | Midland
+- Brandon Leliefeld | MSU-Northern
+- Hunter Muskratt | Oklahoma City
+- Jesse Miller | Shorter
+- Ryan Roach | Dakota Wesleyan
+- Brett Freeman | Notre Dame OH
+- Drew Smith | Morningside
+place 1 Varnell
+place 2 McCray
+place 3 Pretty
+place 4 Wirkuty
+place 5 Mazurkiewicz
+place 6 Smith
+place 7 Freeman
+place 8 Williams
+
+@ 149
+- Brad Steele | Dickinson State
+- Bryan Williams | York (Neb.)
+- Jake Waterkotte | Missouri Baptist
+- Joshua Chang | Embry-Riddle
+- Jeffrey Pelton | Notre Dame OH
+- Jarell Price | Baker
+- Jacob Stephens | Cumberlands
+- Brandon Roehrich | Jamestown
+- Anthony Weerheim | MSU-Northern
+- Ryan Jahn | McKendree
+- Clint McKee | Sioux Falls
+- Willie Delk | Oklahoma City
+- Jordan Ewen | Dickinson State
+- Alex Stemer | Simon Fraser
+- Brandon Starkey | Concordia
+- Zach McCormick | Lindsey Wilson
+- Shay Shive | Missouri Valley
+- Josh Johnson | Lindsey Wilson
+- Ray Rickenbach | Dakota Wesleyan
+- Jimmy Eggemeyer | Southern Oregon
+- Matt Milton | Campbellsville
+- Adam Kurimski | Grand View
+- Ryan Leonard | Great Falls
+- Esmond Ford | Missouri Baptist
+- Jerod Flores | Northwestern (Iowa)
+- Matthew Hamilton | Embry-Riddle
+- Justin Truckenmiller | Morningside
+- Andy Shoultz | Cumberland
+- Eric Burgey | William Penn
+- James Gubler | Jamestown
+- Robbie Collum | Shorter
+- Jon Wilson | Minot State
+- Ashtin Primus | Notre Dame OH
+- Matt Burns | Grand View
+place 1 Burns
+place 2 Primus
+place 3 Pelton
+place 4 Jahn
+place 5 Burgey
+place 6 Shive
+place 7 Price
+place 8 Kurimski
+
+@ 157
+- Mark Meyer | Oklahoma City
+- Tyler Harshbarger | Lindsey Wilson
+- Marcus Wilson | Minot State
+- Thomas Straughn | Notre Dame OH
+- Justin Mills | Southern Oregon
+- Brandon Smith | William Penn
+- Jeff Shell | Missouri Baptist
+- Taylor Todd | MSU-Northern
+- Brad Cusatis | Hastings
+- Nick Waldrop | Campbellsville
+- Nick Hutcheson | Dakota Wesleyan
+- Tylar Clarke | Menlo
+- Nick Haferkamp | McKendree
+- Nathan Sommer | Baker
+- Kyle Conley | Midland
+- Donald Woods | Lindenwood
+- Bryce Alexander | Hannibal-LaGrange
+- Michael Hader | Great Falls
+- Jeremy Padilla | Waldorf
+- Conor Young | Campbellsville
+- Jared Wildeboer | Morningside
+- Vince Hannon | Lindenwood
+- Coby Carson | Minot State
+- Josh Ballard | McKendree
+- Taylor Boyce | Hastings
+- Gian Traverso | Missouri Valley
+- Zachary Mullins | Briar Cliff
+- Harrison Courtney | Lindsey Wilson
+- Bryce Neff | Cumberlands
+- Tommie Norton/Hooper | Southern Oregon
+- Cameron Ream | Oklahoma City
+- Josh Kelleher | Missouri Baptist
+- Cody Miller | MSU-Northern
+- Samuel Brown | Jamestown
+- Corey Bleaken | Cumberland
+- Tyler Chang | Embry-Riddle
+place 1 Bleaken
+place 2 Straughn
+place 3 Chang
+place 4 Hannon
+place 5 Tommie Norton/Hooper
+place 6 Conley
+place 7 Padilla
+place 8 Haferkamp
+
+@ 165
+- Carlos Soto | Menlo
+- Tanner LaValliere | Dakota Wesleyan
+- John Tyler | Calumet
+- Ian Taylor | Hannibal-LaGrange
+- Clayton MacFarlane | Lindenwood
+- Nick Zumwalt | Dickinson State
+- Hunter Field | Minot State
+- James Casadaban | Cumberland
+- Ty Knowler | Grand View
+- Cody Butzer | Notre Dame OH
+- Jakob Price | Baker
+- Pat Nord | Jamestown
+- Noah Hatton | Great Falls
+- Damon Jackson | Missouri Valley
+- David Clemens | Campbellsville
+- Tyson Campbell | Oklahoma City
+- Joe Sievert | Morningside
+- Zeke Hunt | Cumberland
+- Adam Obad | Menlo
+- Jake McCoy | York (Neb.)
+- Raleigh Abbott | Shorter
+- Blake Augustyn | Concordia
+- Lupe Sillas | Bacone
+- Ross Mosher | Great Falls
+- Rashad Moss | Waldorf
+- Drae Cox | Lindenwood
+- Tucker Van Matre | Southern Oregon
+- Jameon Rush | Hastings
+- Jared Miller | MSU-Northern
+- Tyler Sarringar | Dakota Wesleyan
+- Isaiah Gonzalez | McKendree
+- Brandon Perkins | Missouri Valley
+- Kevin Hardy | Notre Dame OH
+- Ben Knight | Morningside
+place 1 Mosher
+place 2 Hatton
+place 3 Hardy
+place 4 MacFarlane
+place 5 Cox
+place 6 Knight
+place 7 Casadaban
+place 8 Clemens
+
+@ 174
+- Andrew Anthofer | Morningside
+- Gabe Vasquez | Waldorf
+- Dirk Hurrin | Lindenwood
+- Parker Owen | Baker
+- Kody Kersten | Midland
+- Caleb Browner | Campbellsville
+- Austin Vanderford | Southern Oregon
+- Jon Bittenger | Notre Dame OH
+- Jake McClure | Shorter
+- Cameron Scrempp | Dickinson State
+- Tyler Thomas | Southern Oregon
+- Kyle Hanner | McKendree
+- Glenn Rhees | Grand View
+- Chris Chionuma | Lindenwood
+- Dan Capp | Hannibal-LaGrange
+- Anthony Clay | Jamestown
+- Derek Peperas | Oklahoma City
+- John Vogt | McKendree
+- Max Payne | MSU-Northern
+- Brian Block | Morningside
+- Ben Wood | West Virginia Tech
+- Josh Ashbrook | Campbellsville
+- Arminder Virk | Simon Fraser
+- Josh Cook | Shorter
+- Alex McKinney | Missouri Valley
+place 1 Chionuma
+place 2 Rhees
+place 3 Bittenger
+place 4 Vanderford
+place 5 Block
+place 6 McKinney
+place 7 Hurrin
+place 8 Scrempp
+
+@ 184
+- Chris Diaz | William Penn
+- Kevin Young | Midland
+- Andrew Hairston | Lindsey Wilson
+- Derek Rottenberg | Southern Oregon
+- Mitch Burnaugh | Hannibal-LaGrange
+- Luke Evjen | Northwestern (Iowa)
+- Allen Scruggs | Campbellsville
+- Jamel Wheatley | York (Neb.)
+- Jesse Alter | Missouri Valley
+- Casey Finnicum | Sioux Falls
+- Scott Stewart | Cumberland
+- Evan Hinebauch | MSU-Northern
+- Kyle Reid | McKendree
+- Ronald Lee | Southern Oregon
+- Jarid Price | Baker
+- Michael French | Great Falls
+- Alex Denman | Notre Dame OH
+- James Brigance | Oklahoma City
+- Steven Urquizo | Dickinson State
+- Tommy Perez | Grand View
+- Hanna Malak | Menlo
+- Clayton Olsson | Missouri Baptist
+- John Sievert | Morningside
+- Joe Hinchman | Shorter
+- Clete Hanson | Simon Fraser
+place 1 Hinebauch
+place 2 French
+place 3 Reid
+place 4 Urquizo
+place 5 Perez
+place 6 Rottenberg
+place 7 Hanson
+place 8 Hairston
+
+@ 197
+- Wade Weppler | Minot State
+- Jake Mabry | Oklahoma City
+- Deron Winn | Lindenwood
+- Joe Skow | Sioux Falls
+- Justin Cooper | Lindsey Wilson
+- Charlie Gibbs | Missouri Valley
+- Derek Foore | Notre Dame OH
+- Tyler Kacmarynski | Morningside
+- Shawn Michalek | Embry-Riddle
+- James Alter | Missouri Valley
+- Ben Yura | Menlo
+- Spencer Adams | Campbellsville
+- Jon Wilbourne | Midland
+- Andrew Sanchez | McKendree
+- Shea Klooster | Sioux Falls
+- Manuel Rocha | Wayland Baptist
+- Julian Silva | Concordia
+- Arthur Grubba | Calumet
+- Derek Nightser | Grand View
+- Levi Morgan | Great Falls
+- Cody Millard | Midland
+- Brandon Gebhardt | Baker
+- Jacob Bradford | Lindsey Wilson
+- Jeff Roman | Waldorf
+- Kody Reed | MSU-Northern
+- Raymond Mosely | Jamestown
+place 1 Sanchez
+place 2 Foore
+place 3 Winn
+place 4 Gibbs
+place 5 Nightser
+place 6 Roman
+place 7 Adams
+place 8 Bradford
+
+@ 285
+- Tyler Thompson | Morningside
+- John Lopez | Central Baptist
+- Orlando Scales | Notre Dame OH
+- Levi Calhoun | Baker
+- Eric Gruis | Dakota Wesleyan
+- Mike Wakim | Missouri Baptist
+- Gurjot Kooner | Simon Fraser
+- Andrew Davis | McKendree
+- Ray Johnson | York (Neb.)
+- Aaron Field | Jamestown
+- Leonard Romero | Menlo
+- Matthew Solomon | Briar Cliff
+- Travis Ewart | Missouri Valley
+- Steven Butler | Lindenwood
+- Jacob Nowak | Baker
+- Cody Jamtgaard | Dickinson State
+- Bojan Djukic | Grand View
+- Josh Geppert | Dakota Wesleyan
+- Rudy Schaffroth | MSU-Northern
+- Levi Roberson | Midland
+- Zach Freet | West Virginia Tech
+- Joe Kent | Missouri Baptist
+- Juan Enriquez | Great Falls
+- Teddy Furnish | Lindsey Wilson
+- Frank Ayala | Concordia
+- Carl Lawrence | Missouri Valley
+place 1 Scales
+place 2 Roberson
+place 3 Ewart
+place 4 Calhoun
+place 5 Schaffroth
+place 6 Geppert
+place 7 Butler
+place 8 Djukic

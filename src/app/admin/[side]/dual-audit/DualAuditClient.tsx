@@ -229,6 +229,10 @@ export function DualAuditClient({ meets }: { meets: DualMeetOption[] }) {
             ))}
           </select>
         )}
+        {/* the meet's page has the Edit meet panel (date, time, stream, premier — Kyle 2026-11-18) */}
+        {mode === 'meet' && mid && (
+          <a href={`/meets/${mid}`} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold text-slate-600 underline hover:text-black whitespace-nowrap">Edit meet ↗</a>
+        )}
         {mode === 'queue' && (
           <button
             onClick={() => {

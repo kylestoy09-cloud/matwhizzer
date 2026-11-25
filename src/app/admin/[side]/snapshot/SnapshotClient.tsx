@@ -7,11 +7,12 @@ import type {
   TeamRankEntry, TeamUpsetRow, FinalBoutRow,
   SpeedRecord, TeamStoppageRow, TeamBonusPctRow,
   TeamScoreRow, TeamMarginRow, FirstWinRow, DualMatTimeRow,
-  TournamentsData, TeamSeasonHighRow, SeasonHighsBundle,
+  TournamentsData, TournamentBiggestUpset, TeamSeasonHighRow, SeasonHighsBundle,
 } from '@/lib/snapshot/types'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { SECTION_SCOPE_NAMES } from '@/lib/snapshot/types'
 import { RATING_SHORT } from '@/lib/rating'
+import { EndOfSeasonPanel } from './EndOfSeasonPanel'
 
 // ── Utils ─────────────────────────────────────────────────────────────────────
 
@@ -230,6 +231,20 @@ function UpsetByGapTable({ rows }: { rows: UpsetByGapRow[] }) {
         </TR>
       ))}
     </Table>
+  )
+}
+
+function TourUpset({ u }: { u: TournamentBiggestUpset | null }) {
+  if (u == null) return <Empty msg="No tournament upset data" />
+  return (
+    <div className="text-sm text-slate-700 flex flex-wrap gap-4">
+      <div><span className="text-slate-400 text-xs">Tournament</span><br />{u.tournament_name}</div>
+      <div><span className="text-slate-400 text-xs">Weight</span><br />{u.weight_class}</div>
+      <div><span className="text-slate-400 text-xs">Winner</span><br />{u.winner_name} ({u.winner_school}) <span className="font-mono">{u.winner_hammer.toFixed(1)}</span></div>
+      <div><span className="text-slate-400 text-xs">Loser</span><br />{u.loser_name} ({u.loser_school}) <span className="font-mono">{u.loser_hammer.toFixed(1)}</span></div>
+      <div><span className="text-slate-400 text-xs">{RATING_SHORT} Gap</span><br /><span className="font-mono font-bold text-orange-600">{u.gap.toFixed(1)}</span></div>
+      <div><span className="text-slate-400 text-xs">Result</span><br />{u.result_type}</div>
+    </div>
   )
 }
 
@@ -477,18 +492,11 @@ function TournamentsPanel({ data }: { data: TournamentsData }) {
         }
       </Panel>
 
-      <Panel title={`Biggest Upset (by ${RATING_SHORT} Gap)`}>
-        {data.biggest_upset == null
-          ? <Empty msg="No tournament upset data" />
-          : <div className="text-sm text-slate-700 flex flex-wrap gap-4">
-              <div><span className="text-slate-400 text-xs">Tournament</span><br />{data.biggest_upset.tournament_name}</div>
-              <div><span className="text-slate-400 text-xs">Weight</span><br />{data.biggest_upset.weight_class}</div>
-              <div><span className="text-slate-400 text-xs">Winner</span><br />{data.biggest_upset.winner_name} ({data.biggest_upset.winner_school})</div>
-              <div><span className="text-slate-400 text-xs">Loser</span><br />{data.biggest_upset.loser_name} ({data.biggest_upset.loser_school})</div>
-              <div><span className="text-slate-400 text-xs">{RATING_SHORT} Gap</span><br /><span className="font-mono font-bold text-orange-600">{data.biggest_upset.gap.toFixed(1)}</span></div>
-              <div><span className="text-slate-400 text-xs">Result</span><br />{data.biggest_upset.result_type}</div>
-            </div>
-        }
+      <Panel title={`Biggest Upset (by ${RATING_SHORT} Gap)`} badge="rated winner">
+        <TourUpset u={data.biggest_upset} />
+      </Panel>
+      <Panel title={`Biggest Upset by an Unrated Winner`} badge={`winner's ${RATING_SHORT} was 0`}>
+        <TourUpset u={data.biggest_upset_unrated ?? null} />
       </Panel>
     </div>
   )
@@ -537,8 +545,11 @@ function SectionPanel({ data, highs }: { data: SectionData; highs: SeasonHighsBu
       <Panel title="Top 10 Highest-Rated Upsets" badge={`by loser ${RATING_SHORT}`}>
         <RatedMatchTable rows={data.top_rated_upsets} />
       </Panel>
-      <Panel title={`Top 10 Upsets by ${RATING_SHORT} Gap`}>
+      <Panel title={`Top 10 Upsets by ${RATING_SHORT} Gap`} badge="rated winners">
         <UpsetByGapTable rows={data.top_upsets_by_gap} />
+      </Panel>
+      <Panel title="Top 10 Upsets by Unrated Winners" badge={`winner's ${RATING_SHORT} was 0`}>
+        <UpsetByGapTable rows={data.top_upsets_by_gap_unrated ?? []} />
       </Panel>
 
       {/* Rankings */}
@@ -643,7 +654,25 @@ type TabId = typeof TABS[number]['id']
 
 type Season = { id: number; label: string }
 
+// Daily (one day's report) and End of Season (the whole season, saved once it's over: Kyle 2026-11-11)
 export function SnapshotClient({ seasons, gender }: { seasons: Season[]; gender: 'M' | 'F' }) {
+  const [mode, setMode] = useState<'daily' | 'season'>('daily')
+  return (
+    <div>
+      <div className="flex border-b border-slate-200 mb-4">
+        {([['daily', 'Daily'], ['season', 'End of Season']] as const).map(([k, l]) => (
+          <button key={k} onClick={() => setMode(k)}
+            className={`px-4 py-2 text-sm font-semibold whitespace-nowrap transition-colors border-b-2 -mb-px ${mode === k ? 'border-blue-600 text-blue-700' : 'border-transparent text-slate-500 hover:text-slate-800'}`}>
+            {l}
+          </button>
+        ))}
+      </div>
+      {mode === 'daily' ? <DailySnapshot seasons={seasons} gender={gender} /> : <EndOfSeasonPanel seasons={seasons} gender={gender} />}
+    </div>
+  )
+}
+
+function DailySnapshot({ seasons, gender }: { seasons: Season[]; gender: 'M' | 'F' }) {
   const apiPath = gender === 'M' ? '/api/admin/snapshot' : '/api/admin/snapshot-girls'
   const today = new Date().toISOString().slice(0, 10)
   const [date, setDate] = useState(today)

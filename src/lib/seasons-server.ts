@@ -4,16 +4,38 @@ import { liveSeasonId, seasonLabel, type Gender, type SeasonInfo } from '@/lib/s
 
 const PUBLIC_STAGES = new Set(['season', 'postseason', 'archived'])
 
-export const getSeasons = cache(async (): Promise<SeasonInfo[]> => {
+// Playoff History seasons (stage 'history', 2013-2020 boys; Kyle 2026-11-13) hold only a rebuilt postseason. They are
+// left out of getSeasons() so nothing that works on seasons (pickers, ratings' previous season, rollovers, admin
+// tools) sees them; the district / region / state pages and the review tool read them with getHistorySeasons().
+const loadSeasonRows = cache(async () => {
   const db = createSupabaseAdmin()
   const [seasonsRes, stateRes] = await Promise.all([
     db.from('seasons').select('id, year_label, label, start_year, end_year').order('start_year', { ascending: false }),
-    db.from('season_gender_state').select('season_id, gender, stage, is_public_default'),
+    // '*' so this works before and after 20261113_playoff_history.sql adds history_public
+    db.from('season_gender_state').select('*'),
   ])
   if (seasonsRes.error) throw new Error(`Failed to load seasons: ${seasonsRes.error.message}`)
   if (stateRes.error) throw new Error(`Failed to load season state: ${stateRes.error.message}`)
-  const state = stateRes.data ?? []
-  return (seasonsRes.data ?? []).map(s => {
+  return { seasons: seasonsRes.data ?? [], state: (stateRes.data ?? []) as { season_id: number; gender: string; stage: string; is_public_default: boolean; history_public?: boolean }[] }
+})
+
+/** A history season for a gender: its postseason rebuilt, public once Kyle switches it on. */
+export type HistorySeason = { id: number; label: string; end_year: number; public: boolean }
+
+export const getHistorySeasons = cache(async (gender: Gender): Promise<HistorySeason[]> => {
+  const { seasons, state } = await loadSeasonRows()
+  return seasons.flatMap(s => {
+    const r = state.find(x => x.season_id === s.id && x.gender === gender && x.stage === 'history')
+    return r ? [{ id: s.id, label: s.year_label ?? s.label, end_year: s.end_year, public: !!r.history_public }] : []
+  })
+})
+
+export const getSeasons = cache(async (): Promise<SeasonInfo[]> => {
+  const { seasons, state: allState } = await loadSeasonRows()
+  const state = allState.filter(r => r.stage !== 'history')
+  const real = new Set(state.map(r => r.season_id))
+  const historyOnly = new Set(allState.filter(r => r.stage === 'history' && !real.has(r.season_id)).map(r => r.season_id))
+  return seasons.filter(s => !historyOnly.has(s.id)).map(s => {
     const rows = state.filter(r => r.season_id === s.id)
     return {
       id: s.id,

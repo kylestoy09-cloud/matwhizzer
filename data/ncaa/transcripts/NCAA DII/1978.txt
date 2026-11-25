@@ -1,0 +1,142 @@
+# NCAA Division II Championships 1978 — source: NCAA II 1978.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- John Azevedo | Cal State-Bakersfield
+- Dave Prehn | Northern Iowa
+- Bill DePaoli | California PA
+- Tom Reed | SIU-Edwardsville
+- Steve Fontana | C.W. Post
+- Curtis Ellis | Morgan State
+place 1 John Azevedo
+place 2 Dave Prehn
+place 3 Bill DePaoli
+place 4 Tom Reed
+place 5 Steve Fontana
+place 6 Curtis Ellis
+
+@ 126
+- Sam Herriman | Augustana SD
+- Jene Burris | Cal State-Chico
+- Rhett Hilzendeger | Minnesota State-Moorhead
+- Neal Seagren | Northern Michigan
+- Mark Anderson | North Dakota State
+- Paul Bulzomi | Southern Connecticut
+place 1 Sam Herriman
+place 2 Jene Burris
+place 3 Rhett Hilzendeger
+place 4 Neal Seagren
+place 5 Mark Anderson
+place 6 Paul Bulzomi
+
+@ 134
+- Frank Gonzales | Nebraska-Omaha
+- Franc Affentranger | Cal State-Bakersfield
+- Matt Long | South Dakota State
+- Kevin Finn | Northern Iowa
+- Doug Robinson | SIU-Edwardsville
+- Bob McGuinn | Eastern Illinois
+place 1 Frank Gonzales
+place 2 Franc Affentranger
+place 3 Matt Long
+place 4 Kevin Finn
+place 5 Doug Robinson
+place 6 Bob McGuinn
+
+@ 142
+- Ralph McCausland | Eastern Illinois
+- Dru Meshes | SIU-Edwardsville
+- Mark Salge | Central Connecticut
+- Fred Madigan | Minnesota State-Mankato
+- Rod Balch | Cal State-Bakersfield
+- Lon Kvanli | Augustana SD
+place 1 Ralph McCausland
+place 2 Dru Meshes
+place 3 Mark Salge
+place 4 Fred Madigan
+place 5 Rod Balch
+place 6 Lon Kvanli
+
+@ 150
+- Kirk Simet | South Dakota State
+- Steve Spangenberg | Northern Michigan
+- Dick Briggs | Northern Iowa
+- Tom Gongora | Cal State-Bakersfield
+- Jerry Huls | St. Cloud State
+- Andy Wilson | Cal State-Sacramento
+place 1 Kirk Simet
+place 2 Steve Spangenberg
+place 3 Dick Briggs
+place 4 Tom Gongora
+place 5 Jerry Huls
+place 6 Andy Wilson
+
+@ 158
+- Gary Bentrim | Northern Iowa
+- William Smith | Morgan State
+- Ed Egan | Northern Michigan
+- Dan Reichenberg | Cal State-Sacramento
+- Steve Cook | San Francisco State
+- Jim Harstad | St. Cloud State
+place 1 Gary Bentrim
+place 2 William Smith
+place 3 Ed Egan
+place 4 Dan Reichenberg
+place 5 Steve Cook
+place 6 Jim Harstad
+
+@ 167
+- Keith Poolman | Northern Iowa
+- Brian Parlet | Augustana SD
+- Rick Lafnitzgegger | Western Illinois
+- Ken Lewis | Eastern Illinois
+- Ron Marker | Central Missouri
+- Ron Hilgart | North Dakota State
+place 1 Keith Poolman
+place 2 Brian Parlet
+place 3 Rick Lafnitzgegger
+place 4 Ken Lewis
+place 5 Ron Marker
+place 6 Ron Hilgart
+
+@ 177
+- Steve Draper | Cal State-Bakersfield
+- Mark Hattendorf | SIU-Edwardsville
+- Sean Bilodeau | Southern Connecticut
+- Joe Gormally | Northern Iowa
+- Rick Waggoner | Western State
+- Glen Zenor | Northwest Missouri
+place 1 Steve Draper
+place 2 Mark Hattendorf
+place 3 Sean Bilodeau
+place 4 Joe Gormally
+place 5 Rick Waggoner
+place 6 Glen Zenor
+
+@ 190
+- Kirk Myers | Northern Iowa
+- Robin Ayres | Eastern Illinois
+- Pete Kozlowski | North Dakota State
+- Mike Johnson | Cal State-Bakersfield
+- Ray Barker | Florida Tech
+- Les Gatrel | Central Missouri
+place 1 Kirk Myers
+place 2 Robin Ayres
+place 3 Pete Kozlowski
+place 4 Mike Johnson
+place 5 Ray Barker
+place 6 Les Gatrel
+
+@ 285
+- Jeff Blatnick | Springfield
+- Joe Williams | Nebraska-Omaha
+- Jeff Grier | Augustana SD
+- Bill Stout | Puget Sound
+- John Pasholk | Western Illinois
+- Joe Johnson | Minnesota State-Mankato
+place 1 Jeff Blatnick
+place 2 Joe Williams
+place 3 Jeff Grier
+place 4 Bill Stout
+place 5 John Pasholk
+place 6 Joe Johnson
+

@@ -3,6 +3,11 @@
 import { useState, useEffect, useCallback } from 'react'
 import { parseEventList, type ParsedEvent } from './parseEventList'
 import { useAdminGender } from '@/components/admin/AdminGenderContext'
+import type { SlateLink, SlateMatch } from '@/lib/tournamentSlate'
+
+type Cand = { id: string; name: string; start_date: string | null }
+const linkValue = (l: SlateLink) => (l.kind === 'new' ? 'new' : `${l.kind}:${l.id}`)
+const parseLink = (v: string): SlateLink => (v === 'new' ? { kind: 'new' } : { kind: v.split(':')[0] as 'current' | 'prior', id: v.slice(v.indexOf(':') + 1) })
 
 type RegistryEvent = {
   id: string
@@ -62,6 +67,11 @@ export function TournamentRegistryClient({ seasonByGender }: { seasonByGender: R
   const [preview, setPreview] = useState<ParsedEvent[] | null>(null)
   const [importing, setImporting] = useState(false)
   const [importMsg, setImportMsg] = useState<string | null>(null)
+  // each preview row's tournament in our system (src/lib/tournamentSlate.ts)
+  const [links, setLinks] = useState<SlateLink[]>([])
+  const [suggest, setSuggest] = useState<(SlateMatch | null)[]>([])
+  const [cands, setCands] = useState<{ current: Cand[]; prior: Cand[] }>({ current: [], prior: [] })
+  const [matching, setMatching] = useState(false)
 
   // Inline edit state
   const [editingId, setEditingId] = useState<string | null>(null)
@@ -86,17 +96,36 @@ export function TournamentRegistryClient({ seasonByGender }: { seasonByGender: R
   )].sort()
 
   const filtered = events.filter(e => {
-    if (filterType !== 'all' && e.event_type !== filterType) return false
+    if (gender === 'F' && filterType !== 'all' && e.event_type !== filterType) return false   // boys have no type filter
     if (filterImport === 'imported' && !e.imported) return false
     if (filterImport === 'pending' && e.imported) return false
     if (filterMonth !== 'all' && (!e.date_start || !e.date_start.startsWith(filterMonth))) return false
     return true
   })
 
-  function handlePreview() {
+  async function handlePreview() {
     const parsed = parseEventList(pasteText, gender)
     setPreview(parsed)
     setImportMsg(null)
+    setMatching(true)
+    try {
+      const d = await (await fetch('/api/admin/tournament-registry', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'match', gender, season, events: parsed }),
+      })).json()
+      if (d.error) { setImportMsg(`Error: ${d.error}`); return }
+      const m = d.matches as { pick: SlateMatch | null; suggestion: SlateMatch | null }[]
+      setLinks(m.map(x => x.pick?.link ?? { kind: 'new' }))
+      setSuggest(m.map(x => x.suggestion))
+      setCands({ current: d.current, prior: d.prior })
+    } finally { setMatching(false) }
+  }
+
+  // drop a wrong line from the preview (the pasted text is left as it was)
+  function removePreviewRow(i: number) {
+    setPreview(p => (p ? p.filter((_, j) => j !== i) : p))
+    setLinks(ls => ls.filter((_, j) => j !== i))
+    setSuggest(ss => ss.filter((_, j) => j !== i))
   }
 
   async function handleImport() {
@@ -105,15 +134,13 @@ export function TournamentRegistryClient({ seasonByGender }: { seasonByGender: R
     const res = await fetch('/api/admin/tournament-registry', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        events: preview.map(e => ({ ...e, season })),
-      }),
+      body: JSON.stringify({ gender, season, rows: preview.map((event, i) => ({ event, link: links[i] ?? { kind: 'new' } })) }),
     })
     const data = await res.json()
     if (data.error) {
       setImportMsg(`Error: ${data.error}`)
     } else {
-      setImportMsg(`✓ Imported ${data.inserted} events`)
+      setImportMsg(`✓ ${data.linked} matched to our tournaments, ${data.created} tournaments set up for ${season}${data.registryOnly ? `, ${data.registryOnly} jamborees` : ''}${data.skipped ? `, ${data.skipped} already on the list` : ''}${data.errors?.length ? ` — ${data.errors.length} failed: ${data.errors.join('; ')}` : ''}`)
       setPasteText('')
       setPreview(null)
       setShowImport(false)
@@ -159,15 +186,15 @@ export function TournamentRegistryClient({ seasonByGender }: { seasonByGender: R
       {/* Controls bar */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-2">
-          {/* Type filter */}
-          <div className="flex border border-slate-300 overflow-hidden text-xs">
+          {/* Type filter: girls only (boys have no jamborees, Kyle 2026-11-16) */}
+          {gender === 'F' && <div className="flex border border-slate-300 overflow-hidden text-xs">
             {(['all', 'tournament', 'jamboree'] as FilterType[]).map(t => (
               <button key={t} onClick={() => setFilterType(t)}
                 className={`px-3 py-1.5 font-medium transition-colors ${filterType === t ? 'bg-black text-white' : 'bg-white text-slate-600 hover:bg-slate-50'} ${t !== 'all' ? 'border-l border-slate-300' : ''}`}>
                 {t === 'all' ? 'All types' : t === 'tournament' ? 'Tournaments' : 'Jamborees'}
               </button>
             ))}
-          </div>
+          </div>}
           {/* Import filter */}
           <div className="flex border border-slate-300 overflow-hidden text-xs">
             {(['all', 'pending', 'imported'] as FilterImport[]).map(t => (
@@ -207,7 +234,7 @@ export function TournamentRegistryClient({ seasonByGender }: { seasonByGender: R
             </h3>
           </div>
           <p className="text-xs text-slate-500">
-            Paste the tournament list in the format: <code className="bg-white border border-slate-200 px-1">12/12 — Event Name, NJ</code> with month headers like <code className="bg-white border border-slate-200 px-1">December 2025</code>
+            Paste the schedule, one event a line: <code className="bg-white border border-slate-200 px-1">12/12/2026 - Event Name, NJ</code> or <code className="bg-white border border-slate-200 px-1">12/11 - 12/12/2026 - Event Name, OH</code>. Preview matches each event to a tournament in our system (last season&apos;s carries over with its settings); the rest are set up as new.
           </p>
           <textarea
             className="w-full h-48 text-xs font-mono border border-slate-300 p-3 focus:outline-none focus:ring-1 focus:ring-black resize-y"
@@ -226,10 +253,10 @@ export function TournamentRegistryClient({ seasonByGender }: { seasonByGender: R
             {preview && (
               <button
                 onClick={handleImport}
-                disabled={importing || preview.length === 0}
+                disabled={importing || matching || preview.length === 0}
                 className="px-3 py-1.5 text-xs font-medium bg-black text-white hover:bg-slate-800 disabled:opacity-40 transition-colors"
               >
-                {importing ? 'Importing…' : `Confirm import (${preview.length})`}
+                {importing ? 'Importing…' : matching ? 'Matching…' : `Confirm import (${preview.length})`}
               </button>
             )}
             {importMsg && <span className="text-xs text-green-700">{importMsg}</span>}
@@ -245,6 +272,8 @@ export function TournamentRegistryClient({ seasonByGender }: { seasonByGender: R
                     <th className="text-left px-2 py-1 font-medium text-slate-600">Name</th>
                     <th className="text-left px-2 py-1 font-medium text-slate-600">Type</th>
                     <th className="text-left px-2 py-1 font-medium text-slate-600">State</th>
+                    <th className="text-left px-2 py-1 font-medium text-slate-600">In our system</th>
+                    <th className="px-2 py-1"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -256,6 +285,33 @@ export function TournamentRegistryClient({ seasonByGender }: { seasonByGender: R
                       <td className="px-2 py-1 text-slate-800">{e.name}</td>
                       <td className="px-2 py-1"><TypeBadge type={e.event_type} /></td>
                       <td className="px-2 py-1 text-slate-500">{e.state}</td>
+                      <td className="px-2 py-1">
+                        {e.event_type === 'jamboree' ? <span className="text-slate-400">Jamboree (registry only)</span> : matching || !links[i] ? <span className="text-slate-400">…</span> : (
+                          <div className="flex flex-wrap items-center gap-1.5">
+                            <span className={`px-1.5 py-0.5 text-[10px] font-semibold uppercase ${links[i].kind === 'new' ? 'bg-sky-100 text-sky-700' : 'bg-emerald-100 text-emerald-700'}`}>
+                              {links[i].kind === 'new' ? 'New' : links[i].kind === 'current' ? 'Set up' : 'Active'}
+                            </span>
+                            <select value={linkValue(links[i])} onChange={ev => setLinks(ls => ls.map((l, j) => (j === i ? parseLink(ev.target.value) : l)))}
+                              className="max-w-[18rem] border border-slate-300 bg-white px-1 py-0.5 text-xs">
+                              <option value="new">New tournament</option>
+                              {cands.current.length > 0 && <optgroup label={`Already set up for ${season}`}>
+                                {cands.current.map(c => <option key={c.id} value={`current:${c.id}`} disabled={links.some((l, j) => j !== i && l.kind === 'current' && l.id === c.id)}>{c.name} ({fmtDate(c.start_date)})</option>)}
+                              </optgroup>}
+                              <optgroup label="Last season (carries over)">
+                                {cands.prior.map(c => <option key={c.id} value={`prior:${c.id}`} disabled={links.some((l, j) => j !== i && l.kind === 'prior' && l.id === c.id)}>{c.name} ({fmtDate(c.start_date)})</option>)}
+                              </optgroup>
+                            </select>
+                            {links[i].kind === 'new' && suggest[i] && !links.some(l => l.kind !== 'new' && suggest[i]!.link.kind !== 'new' && l.id === suggest[i]!.link.id) && (
+                              <button onClick={() => setLinks(ls => ls.map((l, j) => (j === i ? suggest[i]!.link : l)))} className="text-[11px] text-amber-700 underline">
+                                Same as {suggest[i]!.name}?
+                              </button>
+                            )}
+                          </div>
+                        )}
+                      </td>
+                      <td className="px-2 py-1 text-right">
+                        <button onClick={() => removePreviewRow(i)} title="Remove from this import" className="px-1 text-slate-400 hover:text-red-700">✕</button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -355,7 +411,7 @@ export function TournamentRegistryClient({ seasonByGender }: { seasonByGender: R
       {events.length > 0 && (
         <div className="flex gap-6 text-xs text-slate-400 pt-1">
           <span>{events.filter(e => e.event_type === 'tournament').length} tournaments</span>
-          <span>{events.filter(e => e.event_type === 'jamboree').length} jamborees</span>
+          {gender === 'F' && <span>{events.filter(e => e.event_type === 'jamboree').length} jamborees</span>}
           <span>{events.filter(e => e.imported).length} imported</span>
           <span>{events.filter(e => !e.imported).length} pending</span>
         </div>

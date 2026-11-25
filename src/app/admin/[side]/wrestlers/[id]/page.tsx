@@ -2,6 +2,7 @@ import { notFound, redirect } from 'next/navigation'
 import { createClient } from '@supabase/supabase-js'
 import { AdminBackButton } from '@/app/admin/AdminBackButton'
 import { WrestlerProfileClient } from './WrestlerProfileClient'
+import { latestTransfers } from '@/lib/transfers'
 
 export const dynamic = 'force-dynamic'
 
@@ -33,6 +34,9 @@ export default async function WrestlerProfilePage({ params }: Params) {
     .single()
 
   if (error || !wrestler) notFound()
+  // status (out for season / deceased): undefined before 20261117_wrestler_status_whiz_notices.sql
+  const { data: statusRow, error: statusErr } = await supabase.from('wrestlers').select('status, status_note').eq('id', id).maybeSingle()
+  if (statusErr) console.warn('wrestler status:', statusErr.message)
   // A wrestler belongs to one side: opened from the other, move to the right one
   const wrestlerSide = (wrestler as unknown as { gender: string }).gender === 'F' ? 'girls' : 'boys'
   if (wrestlerSide !== side) redirect(`/admin/${wrestlerSide}/wrestlers/${id}`)
@@ -53,6 +57,13 @@ export default async function WrestlerProfilePage({ params }: Params) {
     const openRow = (hist as unknown as { end_date: string | null; schools: { id: number; display_name: string } }[])
       .find(r => !r.end_date)
     if (openRow?.schools) currentSchool = openRow.schools
+  }
+
+  // a logged transfer (Transfers tool) is their team now
+  const moved = (await latestTransfers(supabase, [id])).get(id)
+  if (moved) {
+    const { data: sc } = await supabase.from('schools').select('id, display_name').eq('id', moved.school_id).maybeSingle()
+    if (sc) currentSchool = sc as { id: number; display_name: string }
   }
 
   if (!currentSchool) {
@@ -102,6 +113,7 @@ export default async function WrestlerProfilePage({ params }: Params) {
         )}
       </div>
       <WrestlerProfileClient
+        status={statusRow ? { status: statusRow.status ?? null, note: statusRow.status_note ?? null } : undefined}
         wrestler={wrestler as unknown as Parameters<typeof WrestlerProfileClient>[0]['wrestler']}
         currentSchool={currentSchool}
         schoolHistory={schoolHistory as Parameters<typeof WrestlerProfileClient>[0]['schoolHistory']}

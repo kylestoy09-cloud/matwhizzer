@@ -1,12 +1,11 @@
 import { createClient } from '@supabase/supabase-js'
-import fs from 'fs'
 const db = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
-const names = new Map((await db.from('schools').select('id, display_name')).data!.map((r: any) => [r.id, r.display_name]))
-const a = JSON.parse(fs.readFileSync('docs/migrations/backups/20261105_split_five_and_links_before.json', 'utf8'))
-const b = JSON.parse(fs.readFileSync('docs/migrations/backups/20261105_split_six_before.json', 'utf8'))
-const seniors = [...Object.keys(a), ...Object.keys(b)].filter(k => !k.includes(' '))
-for (const id of seniors) {
-  const w = (await db.from('wrestlers').select('first_name, last_name').eq('id', id)).data![0]
-  const rows = (await db.from('roster_grade_import').select('first_name_raw, last_name_raw, grade, school_id, season_id').eq('wrestler_id', id)).data ?? []
-  console.log(`${w.first_name} ${w.last_name} (senior): Track rows still linked ${rows.length ? rows.map((r: any) => `${r.first_name_raw} ${r.last_name_raw} ${r.grade} @ ${names.get(r.school_id)} ${r.season_id}`).join(', ') : 'none'}`)
+const all = async (q: (f: number, t: number) => any) => { const out: any[] = []; for (let f = 0; ; f += 1000) { const { data, error } = await q(f, f + 999); if (error) throw error; out.push(...data); if (data.length < 1000) return out } }
+const tours = await all((f, t) => db.from('tournaments').select('id, name, season_id, gender').in('tournament_type', ['districts','regions','girls_regions','boys_state','girls_state']).range(f, t))
+const tn = new Map(tours.map(t => [t.id, t]))
+const ids = tours.map(t => t.id); const odd: any[] = []
+for (let i = 0; i < ids.length; i += 60) {
+  const rows = await all((f, t) => db.from('matches').select('id, tournament_id, win_type, winner_score, loser_score, fall_time_seconds').in('tournament_id', ids.slice(i, i + 60)).in('win_type', ['DEC','MD','TF','TF-1.5']).order('id').range(f, t))
+  for (const m of rows) { const d = (m.winner_score ?? 0) - (m.loser_score ?? 0); if (m.winner_score == null) continue; if ((m.win_type === "DEC" || m.win_type === "MD") && d >= 15) odd.push({ ...m, t: tn.get(m.tournament_id) }); if (m.win_type.startsWith('TF') && (!m.fall_time_seconds || m.fall_time_seconds > 360 || d < 15)) odd.push({ ...m, t: tn.get(m.tournament_id) }) }
 }
+console.log(odd.length); for (const o of odd.slice(0, 40)) console.log(o.t.gender, o.t.season_id, o.t.name, o.win_type, `${o.winner_score}-${o.loser_score}`, o.fall_time_seconds)

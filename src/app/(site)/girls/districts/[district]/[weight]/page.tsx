@@ -1,8 +1,10 @@
+import { WeightHistoryView } from '@/components/site/TournamentHistory'
 import { supabase } from '@/lib/supabase/public-cached'
 import { getSeasonIdsWithTournamentType } from '@/lib/seasons-server'
-import { getActiveSeason } from '@/lib/get-season'
+import { getPostseasonSeason } from '@/lib/get-season'
 import { getSeasonLabel } from '@/lib/seasons-server'
-import { PageHeader } from '@/components/PageHeader'
+import { StdHeader } from '@/components/site/StdPage'
+import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { orderChampMatchesBySeed } from '@/lib/bracketOrder'
@@ -438,8 +440,9 @@ export default async function GirlsDistrictBracketPage({
 
   // Girls districts only exist from season 2 onward
   const districtSeasons = await getSeasonIdsWithTournamentType('districts', 'F')
-  const activeSeason = await getActiveSeason('F')
-  const season = districtSeasons.includes(activeSeason) ? activeSeason : (districtSeasons[0] ?? activeSeason)
+  const { season: picked, options } = await getPostseasonSeason('F')
+  const season = districtSeasons.includes(picked) ? picked : (districtSeasons[0] ?? picked)
+  const seasonOptions = options.filter(o => districtSeasons.includes(o.id))
   const seasonLbl = await getSeasonLabel(season)
 
   const [{ data }, logos] = await Promise.all([
@@ -497,10 +500,8 @@ export default async function GirlsDistrictBracketPage({
         ← District {district}
       </Link>
 
-      <div className="mb-8 text-center">
-        <PageHeader title={`District ${district} · ${weight} lb`} />
-        <p className="text-slate-500 text-sm mt-1">NJSIAA {seasonLbl ?? season} · Girls postseason</p>
-      </div>
+      <StdHeader title={`Girls District ${district} · ${weight} lb`} summaryKey="district" hideSummary noLogo
+        picker={<><InlineSeasonPicker arrows gender="F" activeSeason={season} options={seasonOptions} /></>} />
 
       <WeightNav weights={WEIGHTS} current={weight} base={`/girls/districts/${district}`} />
 
@@ -591,6 +592,8 @@ export default async function GirlsDistrictBracketPage({
 
       <EntryRoster roster={buildRoster(matches)} logos={logos} />
       <WeightNav weights={WEIGHTS} current={weight} base={`/girls/districts/${district}`} />
+
+      <WeightHistoryView gender="F" level="district" num={district} seasons={seasonOptions.map(o => o.id)} weight={weight} />
     </div>
   )
 }

@@ -1,0 +1,182 @@
+# NCAA Division II Championships 1996 — source: NCAA II 1996.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Scott Goodale | Colorado Mines
+- John Strittmatter | Pittsburgh-Johnstown
+- Johnny Vigil | Western State
+- LeConte Merrell | Ashland
+- Travis Phippen | San Francisco State
+- Manuel Guzman | Southern Colorado
+- Aaron Gonzalez | Northern Colorado
+- Chad Short | Nebraska-Omaha
+place 1 Scott Goodale
+place 2 John Strittmatter
+place 3 Johnny Vigil
+place 4 LeConte Merrell
+place 5 Travis Phippen
+place 6 Manuel Guzman
+place 7 Aaron Gonzalez
+place 8 Chad Short
+
+@ 126
+- Lee Schickel | Pittsburgh-Johnstown
+- Michael Barreras | Adams State
+- Matt Goodson | Central Oklahoma
+- Marc Schulze | Minnesota State-Mankato
+- Braumon Creighton | Nebraska-Omaha
+- Jessie Shaffer | Colorado Mines
+- Carlos Sumulong | San Francisco State
+- Brian Anderson | SIU-Edwardsville
+place 1 Lee Schickel
+place 2 Michael Barreras
+place 3 Matt Goodson
+place 4 Marc Schulze
+place 5 Braumon Creighton
+place 6 Jessie Shaffer
+place 7 Carlos Sumulong
+place 8 Brian Anderson
+
+@ 134
+- Corey Kline | Ashland
+- Tony Benallo | Northern Colorado
+- Jason Reitmeier | Augustana SD
+- Richard Guiterrez | San Francisco State
+- Jeff Bricker | Pittsburgh-Johnstown
+- George Thompson | North Dakota State
+- Tony Johnson | Nebraska-Omaha
+- Ryan Vratil | Central Oklahoma
+place 1 Corey Kline
+place 2 Tony Benallo
+place 3 Jason Reitmeier
+place 4 Richard Guiterrez
+place 5 Jeff Bricker
+place 6 George Thompson
+place 7 Tony Johnson
+place 8 Ryan Vratil
+
+@ 142
+- Jerry Best | Central Oklahoma
+- Tony Albertelli | Pittsburgh-Johnstown
+- Steve Hilas | San Francisco State
+- Travis King | South Dakota State
+- Scott Hewit | Northern Colorado
+- Dmitriy Shlemanov | Southern Connecticut
+- Matt Mentzer | Shippensburg
+- Jayson Querciagrossa | SIU-Edwardsville
+place 1 Jerry Best
+place 2 Tony Albertelli
+place 3 Steve Hilas
+place 4 Travis King
+place 5 Scott Hewit
+place 6 Dmitriy Shlemanov
+place 7 Matt Mentzer
+place 8 Jayson Querciagrossa
+
+@ 150
+- Shawn Bateman | Central Oklahoma
+- Andy Reigstad | St. Cloud State
+- James Branch | West Liberty State
+- Chris Blair | Nebraska-Omaha
+- Troy Barbush | Pittsburgh-Johnstown
+- Jay Stephan | Northern State
+- Eddie Woody | Fort Hays State
+- Justin Kipp | Minnesota State-Mankato
+place 1 Shawn Bateman
+place 2 Andy Reigstad
+place 3 James Branch
+place 4 Chris Blair
+place 5 Troy Barbush
+place 6 Jay Stephan
+place 7 Eddie Woody
+place 8 Justin Kipp
+
+@ 158
+- Mark Cunningham | Central Oklahoma
+- James Kagen | North Dakota  # 5th-place bout: both disqualified, no 5th or 6th awarded
+- Dave Vizzini | Portland State  # (the same)
+- Danny Giammo | Carson-Newman
+- Matt Lucas | Northern Colorado
+- Nate Hendrickson | Minnesota State-Moorhead
+- Rich Foston | West Liberty State
+- Mark Blaschko | Nebraska-Kearney
+place 1 Mark Cunningham
+place 2 Danny Giammo
+place 3 Matt Lucas
+place 4 Nate Hendrickson
+place 7 Rich Foston
+place 8 Mark Blaschko
+vacant 5  # not on the sheet
+vacant 6  # not on the sheet
+
+@ 167
+- Roy Dillow | Colorado Mines
+- Jason Wagner | North Dakota
+- T.J. Deaguero | Northern Colorado
+- Kevin O'Neil | Pittsburgh-Johnstown
+- Sean Harrington | Massachusetts-Lowell
+- Jeron Quincy | Central Missouri
+- Pat Timm | South Dakota State
+- Miles Muckerheide | Wisconsin-Parkside
+place 1 Roy Dillow
+place 2 Jason Wagner
+place 3 T.J. Deaguero
+place 4 Kevin O'Neil
+place 5 Sean Harrington
+place 6 Jeron Quincy
+place 7 Pat Timm
+place 8 Miles Muckerheide
+
+@ 177
+- Scott Shipman | West Liberty State
+- Jeremie Ott | Wisconsin-Parkside
+- Jeremy Pascoe | South Dakota State
+- Corry Royal | Nebraska-Omaha
+- Sean Smyth | Southern Connecticut
+- Robert Finneseth | North Dakota State
+- Matt Brucklacher | Northern Colorado
+- Irwin Brambley | Pittsburgh-Johnstown
+place 1 Scott Shipman
+place 2 Jeremie Ott
+place 3 Jeremy Pascoe
+place 4 Corry Royal
+place 5 Sean Smyth
+place 6 Robert Finneseth
+place 7 Matt Brucklacher
+place 8 Irwin Brambley
+
+@ 190
+- Chad Lamer | South Dakota State
+- Brandon Hinkel | West Liberty State
+- Joe Bunning | Adams State
+- Pat Kelley | Nebraska-Omaha
+- Ryan Wolters | North Dakota State
+- Ross Johnson | Minnesota State-Mankato
+- Doug Keldsen | Portland State
+- Lee Lofton | San Francisco State
+place 1 Chad Lamer
+place 2 Brandon Hinkel
+place 3 Joe Bunning
+place 4 Pat Kelley
+place 5 Ryan Wolters
+place 6 Ross Johnson
+place 7 Doug Keldsen
+place 8 Lee Lofton
+
+@ 275
+- Tony Kenning | Minnesota State-Mankato
+- Shane Carwin | Western State
+- Wade Kroeze | Nebraska-Omaha
+- Ryan Resel | South Dakota State
+- Robert Clayton | West Liberty State
+- Tony Teuscher | Portland State
+- Jeff Pease | Central Oklahoma
+- Scott Croyle | Pittsburgh-Johnstown
+place 1 Tony Kenning
+place 2 Shane Carwin
+place 3 Wade Kroeze
+place 4 Ryan Resel
+place 5 Robert Clayton
+place 6 Tony Teuscher
+place 7 Jeff Pease
+place 8 Scott Croyle
+

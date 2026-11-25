@@ -1,0 +1,47 @@
+[
+ {
+  "id": 3054,
+  "tournament_id": 146,
+  "school_name": "Bergen Catholic",
+  "total_points": 345,
+  "season_id": 2026,
+  "tournament_type": "boys_districts",
+  "school_id": 21
+ },
+ {
+  "id": 3057,
+  "tournament_id": 146,
+  "school_name": "Fair Lawn",
+  "total_points": 132,
+  "season_id": 2026,
+  "tournament_type": "boys_districts",
+  "school_id": 52
+ },
+ {
+  "id": 3123,
+  "tournament_id": 153,
+  "school_name": "Bound Brook",
+  "total_points": 72.5,
+  "season_id": 2026,
+  "tournament_type": "boys_districts",
+  "school_id": 322
+ },
+ {
+  "id": 3117,
+  "tournament_id": 153,
+  "school_name": "North Hunterdon",
+  "total_points": 252,
+  "season_id": 2026,
+  "tournament_type": "boys_districts",
+  "school_id": 135
+ },
+ {
+  "id": 3140,
+  "tournament_id": 155,
+  "school_name": "Scotch Plains-Fanwood",
+  "total_points": 96,
+  "season_id": 2026,
+  "tournament_type": "boys_districts",
+  "school_id": 126
+ }
+]

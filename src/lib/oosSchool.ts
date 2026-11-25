@@ -4,6 +4,7 @@
 //   alias: the name as the import printed it, so the next import matches exactly
 // Non-NJSIAA New Jersey schools (Blair, Peddie, ...) are out-of-state records too and take NJ.
 
+import { stName } from '@/lib/saintNames'
 import { isNjLookalike } from '@/lib/matchSchools'
 import { US_STATES } from '@/lib/usStates'
 
@@ -48,7 +49,7 @@ export async function createOosSchool(db: Db, printedName: string, state: string
   const shown = printedName === printedName.toUpperCase() && /[A-Z]{2}/.test(printedName)
     ? printedName.toLowerCase().replace(/\b\w/g, c => c.toUpperCase())
     : printedName
-  const display_name = withStateTag(shown, state)
+  const display_name = withStateTag(stName(shown), state)   // saint schools are "St. …" (Kyle 2026-11-14)
   const existing = await db.from('schools').select('id, display_name').eq('display_name', display_name).eq('is_nj', false).maybeSingle()
   let school = existing.data as { id: number; display_name: string } | null
   if (!school) {

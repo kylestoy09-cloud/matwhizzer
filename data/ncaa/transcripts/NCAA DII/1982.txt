@@ -1,0 +1,182 @@
+# NCAA Division II Championships 1982 — source: NCAA II 1982.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Adam Cuestas | Cal State-Bakersfield
+- Jerry Hoy | Minnesota-Duluth
+- Tim Schultz | Northern Michigan
+- Reggie Johnson | Ashland
+- Tim Smelser | Ferris State
+- Dave McGowan | Pittsburgh-Johnstown
+- Steve Werner | North Dakota State
+- Alfredo Gonzales | Cal State-Sacramento
+place 1 Adam Cuestas
+place 2 Jerry Hoy
+place 3 Tim Schultz
+place 4 Reggie Johnson
+place 5 Tim Smelser
+place 6 Dave McGowan
+place 7 Steve Werner
+place 8 Alfredo Gonzales
+
+@ 126
+- Dan Cuestas | Cal State-Bakersfield
+- Don Stevens | SIU-Edwardsville
+- Lyle Clem | North Dakota State
+- Kirk Strand | Northwest Missouri
+- Willie Ingold | Northern Michigan
+- Jim Kattleman | Southwest Missouri
+- Adrian Levexier | San Francisco State
+- Jack Sathe | South Dakota State
+place 1 Dan Cuestas
+place 2 Don Stevens
+place 3 Lyle Clem
+place 4 Kirk Strand
+place 5 Willie Ingold
+place 6 Jim Kattleman
+place 7 Adrian Levexier
+place 8 Jack Sathe
+
+@ 134
+- Mike Garcia | Central Missouri
+- Charlie Cheney | Cal State-Bakersfield
+- Pete Dalaker | Southern Connecticut
+- Ted Navare | Eastern Washington
+- Dan Winter | Wisconsin-Parkside
+- George Stone | Northern Michigan
+- Jay Patterson | Morgan State
+- Mario Decaro | San Francisco State
+place 1 Mike Garcia
+place 2 Charlie Cheney
+place 3 Pete Dalaker
+place 4 Ted Navare
+place 5 Dan Winter
+place 6 George Stone
+place 7 Jay Patterson
+place 8 Mario Decaro
+
+@ 142
+- Mike Langlais | North Dakota State
+- Steve Nickell | Cal State-Bakersfield
+- Ryan Kauffman | Nebraska-Omaha
+- Charlie Lucas | Portland State
+- Dorr Granger | Grand Valley State
+- Don Williams | Cal State-Chico
+- Gregory Georgas | Springfield
+- Rich Keller | Minnesota State-Mankato
+place 1 Mike Langlais
+place 2 Steve Nickell
+place 3 Ryan Kauffman
+place 4 Charlie Lucas
+place 5 Dorr Granger
+place 6 Don Williams
+place 7 Gregory Georgas
+place 8 Rich Keller
+
+@ 150
+- Gary Erwin | Jacksonville State
+- Craig Noble | Cal State-Bakersfield
+- Mark Black | Ashland
+- Randy Mieir | Northern Michigan
+- D.J. West | Northern Colorado
+- Robert Kuintzle | Cal State-Chico
+- Randy Goette | South Dakota State
+- William Weiskopf | California-Davis
+place 1 Gary Erwin
+place 2 Craig Noble
+place 3 Mark Black
+place 4 Randy Mieir
+place 5 D.J. West
+place 6 Robert Kuintzle
+place 7 Randy Goette
+place 8 William Weiskopf
+
+@ 158
+- Perry Shea | Cal State-Bakersfield
+- Kevin Newsome | San Francisco State
+- John Davis | Morgan State
+- Bill Wofford | Nebraska-Omaha
+- Tim Jones | North Dakota State
+- Glenn Jarvis | Mansfield State
+- Lanny Paulson | Northern Colorado
+- John Revesz | Pittsburgh-Johnstown
+place 1 Perry Shea
+place 2 Kevin Newsome
+place 3 John Davis
+place 4 Bill Wofford
+place 5 Tim Jones
+place 6 Glenn Jarvis
+place 7 Lanny Paulson
+place 8 John Revesz
+
+@ 167
+- Mike Cribbs | Lake Superior
+- Eric Gritz | California-Davis
+- Greg Veal | Morgan State
+- Gregg Stensgard | North Dakota State
+- Booker Benford | SIU-Edwardsville
+- Scott Teuscher | Cal State-Bakersfield
+- Russ Pierce | Nebraska-Omaha
+- John Howard | Southwest Missouri
+place 1 Mike Cribbs
+place 2 Eric Gritz
+place 3 Greg Veal
+place 4 Gregg Stensgard
+place 5 Booker Benford
+place 6 Scott Teuscher
+place 7 Russ Pierce
+place 8 John Howard
+
+@ 177
+- Mark Loomis | Cal State-Bakersfield
+- Koln Knight | Augustana SD
+- Joe Loose | Minnesota State-Mankato
+- Bill Leveille | Cal State-Sacramento
+- Kyle Heaton | Lake Superior
+- Dave Iverson | Northern Michigan
+- Phil Herbold | St. Cloud State
+- Willard Crews | Morgan State
+place 1 Mark Loomis
+place 2 Koln Knight
+place 3 Joe Loose
+place 4 Bill Leveille
+place 5 Kyle Heaton
+place 6 Dave Iverson
+place 7 Phil Herbold
+place 8 Willard Crews
+
+@ 190
+- Jeff Esmont | Ashland
+- Dave Hass | North Dakota State
+- Mark Young | Augustana SD
+- Joe  Glasder | SIU-Edwardsville
+- Garen McDonald | Cal State-Bakersfield
+- Karl Pope | Portland State
+- Steven Bailey | Humboldt State
+- Ed Lohr | South Dakota State
+place 1 Jeff Esmont
+place 2 Dave Hass
+place 3 Mark Young
+place 4 Joe  Glasder
+place 5 Garen McDonald
+place 6 Karl Pope
+place 7 Steven Bailey
+place 8 Ed Lohr
+
+@ 285
+- Mark Rigatuso | Nebraska-Omaha
+- Al Sears | SIU-Edwardsville
+- Jerome Larson | North Dakota
+- Robert Herrera | Cal State-Bakersfield
+- Wade Hall | Indianapolis
+- Bill Kropoq | Cal State-Chico
+- Charles Valois | Southern Connecticut
+- William Ruggenstein | Grand Valley State
+place 1 Mark Rigatuso
+place 2 Al Sears
+place 3 Jerome Larson
+place 4 Robert Herrera
+place 5 Wade Hall
+place 6 Bill Kropoq
+place 7 Charles Valois
+place 8 William Ruggenstein
+

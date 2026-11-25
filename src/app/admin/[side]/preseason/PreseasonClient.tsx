@@ -30,7 +30,7 @@ const TOOL_LINKS = [
   { label: 'School Profiles',       href: '/schools' },
   { label: 'Seasons & Roster',      href: '/seasons' },
   { label: 'Bulk Schedule',         href: '/schedule/bulk-import' },
-  { label: 'Tournament Rollover',   href: '/tournaments/rollover' },
+  { label: 'Tournament Hub',        href: '/tournament-hub' },
   { label: 'Rankings Hub',          href: '/rankings-hub' },
 ]
 
@@ -69,7 +69,7 @@ const STEP_CONFIG: Record<string, { label: string; href: string }> = {
   roster_rollover:     { label: 'Advance wrestler grades',                           href: '/seasons' },
   schedule_import:     { label: 'Import bulk schedule',                              href: '/schedule/bulk-import' },
   school_list:         { label: 'Verify active school list',                         href: '/schools' },
-  tournament_rollover: { label: 'Roll over tournament list',                         href: '/tournaments/rollover' },
+  tournament_rollover: { label: 'Set up the season\'s tournaments (paste in Registry, finish in Hub)', href: '/tournament-hub' },
   rankings_setup:      { label: 'Configure individual rankings',                     href: '/rankings-hub' },
 }
 

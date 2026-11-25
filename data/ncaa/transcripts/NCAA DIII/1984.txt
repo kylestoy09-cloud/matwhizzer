@@ -1,0 +1,182 @@
+# NCAA Division III Championships 1984 — source: NCAA III 1984.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Steven Gliva | Augsburg
+- Bob Panariello | Ithaca
+- John Leo | SUNY-Binghampton
+- Scott Jehle | Cornell Iowa
+- Dick Gruber | Wisconsin-Oshkosh
+- Shawn Sheldon | SUNY-Albany
+- Bryant Hancock | Central College IA
+- Ed Morales | SUNY-Brockport
+place 1 Steven Gliva
+place 2 Bob Panariello
+place 3 John Leo
+place 4 Scott Jehle
+place 5 Dick Gruber
+place 6 Shawn Sheldon
+place 7 Bryant Hancock
+place 8 Ed Morales
+
+@ 126
+- Dave Averill | SUNY-Albany
+- Orlando Caceras | College of New Jersey
+- Keith Crowingsheld | St. Lawrence
+- Glenn Cogswell | Ithaca
+- Rich Wileczek | York
+- Tim Hardy | Wisconsin-Whitewater
+- Murray Anderson | Central College IA
+- Dan Canale | Bucknell
+place 1 Dave Averill
+place 2 Orlando Caceras
+place 3 Keith Crowingsheld
+place 4 Glenn Cogswell
+place 5 Rich Wileczek
+place 6 Tim Hardy
+place 7 Murray Anderson
+place 8 Dan Canale
+
+@ 134
+- Pat McMahon | Augustana Illinois
+- Bart Morrow | Ithaca
+- Paul VanOosbree | Buena Vista
+- Bob Yilek | Coe College
+- Pat Whitteking | SUNY-Oswego
+- Tom Bennett | Augsburg
+- Bill McHugh | Ohio Northern
+- John Egitto | SUNY-Binghampton
+place 1 Pat McMahon
+place 2 Bart Morrow
+place 3 Paul VanOosbree
+place 4 Bob Yilek
+place 5 Pat Whitteking
+place 6 Tom Bennett
+place 7 Bill McHugh
+place 8 John Egitto
+
+@ 142
+- Dan Pantaleo | Olivet
+- Marty Jospeh | John Carroll
+- Larry Disimone | College of New Jersey
+- Andy Komarek | SUNY-Buffalo
+- Dave Recor | SUNY-Brockport
+- Tom Hall | Augsburg
+- John Parry | Salisbury
+- Fred McColl | Glassboro
+place 1 Dan Pantaleo
+place 2 Marty Jospeh
+place 3 Larry Disimone
+place 4 Andy Komarek
+place 5 Dave Recor
+place 6 Tom Hall
+place 7 John Parry
+place 8 Fred McColl
+
+@ 150
+- Shea Kennedy | Augsburg
+- Ron Bussey | College of New Jersey
+- ike Truncale | SUNY-Binghampton
+- Daryl Stumph | Hiram
+- John Leone | SUNY-Brockport
+- Ed Trizzino | Mount Union
+- Kelly McGovern | Central College IA
+- Dennis McNamara | Wisconsin-River Falls
+place 1 Shea Kennedy
+place 2 Ron Bussey
+place 3 ike Truncale
+place 4 Daryl Stumph
+place 5 John Leone
+place 6 Ed Trizzino
+place 7 Kelly McGovern
+place 8 Dennis McNamara
+
+@ 158
+- Bob Glaberman | College of New Jersey
+- Bruce Arvold | Augsburg
+- Mike McInerney | Salisbury
+- Terry Keller | Rutgers-Newark
+- Scott Bouslog | Luther
+- Don Valesky | Thiel
+- Tom Diamond | Mount Union
+- Dave Van Tine | Montclair State
+place 1 Bob Glaberman
+place 2 Bruce Arvold
+place 3 Mike McInerney
+place 4 Terry Keller
+place 5 Scott Bouslog
+place 6 Don Valesky
+place 7 Tom Diamond
+place 8 Dave Van Tine
+
+@ 167
+- Chris Casey | Augustana Illinois
+- Bryan Solomon | Western New England
+- Keith Cavayero | SUNY-Binghampton
+- Dave Labreque | Olivet
+- Tom Jobin | SUNY-Buffalo
+- Karl Lietzen | Chicago University
+- Brian Keller | Wisconsin-River Falls
+- Brian Stamm | Wheaton
+place 1 Chris Casey
+place 2 Bryan Solomon
+place 3 Keith Cavayero
+place 4 Dave Labreque
+place 5 Tom Jobin
+place 6 Karl Lietzen
+place 7 Brian Keller
+place 8 Brian Stamm
+
+@ 177
+- Tom Pillari | SUNY-Binghampton
+- Paul Lancaster | Wheaton
+- Dave Kittany | Ithaca
+- Mark Morgan | Lycoming
+- John Scesa | SUNY-Cortland
+- Dave Brandvold | Wisconsin-River Falls
+- Don Elfstrom | Wisconsin-Whitewater
+- Dwayne Standridge | College of New Jersey
+place 1 Tom Pillari
+place 2 Paul Lancaster
+place 3 Dave Kittany
+place 4 Mark Morgan
+place 5 John Scesa
+place 6 Dave Brandvold
+place 7 Don Elfstrom
+place 8 Dwayne Standridge
+
+@ 190
+- Doug Morse | SUNY-Oswego
+- Nick D'Angelo | John Carroll
+- Bob Henig | College of New Jersey
+- Gene Shin | Chicago University
+- Gary Solomon | Western New England
+- Rob Klime | Wheaton
+- Dale Lawrence | Central College IA
+- Bill Condon | Ithaca
+place 1 Doug Morse
+place 2 Nick D'Angelo
+place 3 Bob Henig
+place 4 Gene Shin
+place 5 Gary Solomon
+place 6 Rob Klime
+place 7 Dale Lawrence
+place 8 Bill Condon
+
+@ 285
+- Mike Connors | St. Lawrence
+- Mark Sullivan | John Carroll
+- Mike Suk | Glassboro
+- Mike Baker | Ohio Northern
+- Rick Ruhm | Simpson
+- Larry Stern | Lycoming
+- Jay Bean | Wartburg
+- Greg Chemlik | Augsburg
+place 1 Mike Connors
+place 2 Mark Sullivan
+place 3 Mike Suk
+place 4 Mike Baker
+place 5 Rick Ruhm
+place 6 Larry Stern
+place 7 Jay Bean
+place 8 Greg Chemlik
+

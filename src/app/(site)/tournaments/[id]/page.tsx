@@ -2,6 +2,7 @@ import { supabase } from '@/lib/supabase/public-cached'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { isAdminUser } from '@/lib/auth/isAdminUser'
 import Link from 'next/link'
+import { fullBracket } from '@/lib/boutBracket'
 import { notFound } from 'next/navigation'
 import { TournamentPageClient } from './TournamentPageClient'
 import { personLabel } from '@/lib/personName'
@@ -56,7 +57,7 @@ export default async function TournamentDetailPage({
     wrestler1_school:schools!wrestler1_school_id(id, display_name, is_nj, logo_url, header_background),
     wrestler2_school:schools!wrestler2_school_id(id, display_name, is_nj, logo_url, header_background)
   `
-  const TOURN_SELECT = 'id, name, start_date, end_date, location, source_format, tournament_type, podium_depth'
+  const TOURN_SELECT = 'id, name, start_date, end_date, location, source_format, tournament_type, podium_depth, is_oos'
   const PAGE = 1000
 
   // Try boys table first; fall back to girls table. IDs are globally unique UUIDs.
@@ -68,6 +69,28 @@ export default async function TournamentDetailPage({
   const boutTable  = isGirls ? 'tournament_bouts_girls'     : 'tournament_bouts'
   const istTable   = isGirls ? 'in_season_tournaments_girls' : 'in_season_tournaments'
   const tournBase  = boysTournBase ?? girlsTournBase
+  // the page's stream link (20261118_meet_stream_and_details.sql) — read apart, so the page works before the column exists
+  let streamUrl: string | null = null
+  if (tournBase) {
+    const { data: st, error: stErr } = await supabase.from(istTable).select('stream_url').eq('id', id).maybeSingle()
+    if (!stErr) streamUrl = (st as { stream_url: string | null } | null)?.stream_url ?? null
+  }
+
+  // the edition before / after (Kyle 2026-11-19: "previous year and next year buttons"): linked by prior_id, which the
+  // Tournament Registry fills as each season's slate is matched — read apart, so the page works without it
+  let prevEdition: { id: string; season: string | null } | null = null, nextEdition: { id: string; season: string | null } | null = null
+  if (tournBase) {
+    const [{ data: me }, { data: after }] = await Promise.all([
+      supabase.from(istTable).select('prior_id').eq('id', id).maybeSingle(),
+      supabase.from(istTable).select('id, season, start_date').eq('prior_id', id).order('start_date', { ascending: false }).limit(1),
+    ])
+    const priorId = (me as { prior_id: string | null } | null)?.prior_id ?? null
+    if (priorId) {
+      const { data: p } = await supabase.from(istTable).select('id, season').eq('id', priorId).maybeSingle()
+      if (p) prevEdition = p as { id: string; season: string | null }
+    }
+    if (after?.[0]) nextEdition = after[0] as { id: string; season: string | null }
+  }
 
   const [
     { data: boutsPage0 },
@@ -148,12 +171,21 @@ export default async function TournamentDetailPage({
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
-      <Link
-        href={isGirls ? '/girls/tournaments' : '/boys/tournaments'}
-        className="text-sm text-slate-500 hover:text-slate-700 hover:underline mb-4 inline-block"
-      >
-        ← All Tournaments
-      </Link>
+      <div className="flex items-center justify-between gap-3 mb-4">
+        <Link
+          href={isGirls ? '/girls/tournaments' : '/boys/tournaments'}
+          className="text-sm text-slate-500 hover:text-slate-700 hover:underline inline-block"
+        >
+          ← All Tournaments
+        </Link>
+        {(prevEdition || nextEdition) && (
+          <div className="flex items-center gap-1 text-sm">
+            <Link href={`/tournaments/${id}/history`} className="px-2 py-0.5 border border-slate-300 text-slate-700 font-semibold hover:bg-slate-50 mr-1">History</Link>
+            {prevEdition && <Link href={`/tournaments/${prevEdition.id}`} title="This tournament the season before" className="px-2 py-0.5 border border-amber-300 bg-amber-50 text-amber-800 font-semibold hover:bg-amber-100">‹ {prevEdition.season ?? 'Previous year'}</Link>}
+            {nextEdition && <Link href={`/tournaments/${nextEdition.id}`} title="This tournament the season after" className="px-2 py-0.5 border border-amber-300 bg-amber-50 text-amber-800 font-semibold hover:bg-amber-100">{nextEdition.season ?? 'Next year'} ›</Link>}
+          </div>
+        )}
+      </div>
       <TournamentPageClient
         tournament={tournData as any}
         allBouts={bouts as any}
@@ -162,7 +194,11 @@ export default async function TournamentDetailPage({
         bannerBg={bannerBg}
         bannerFg={bannerFg}
         isAdmin={isAdmin}
-        hasBracket={(bracketCount ?? 0) > 0}
+        // the bracket is built from the bouts (src/lib/boutBracket.ts): only when they make full brackets — an event
+        // loaded from NJ teams' results holds only our wrestlers' bouts (Kyle 2026-11-21)
+        hasBracket={fullBracket(bouts as never, !!(tournData as { is_oos?: boolean | null } | null)?.is_oos || (tournData as { tournament_type?: string | null } | null)?.tournament_type === 'outside')}
+        streamUrl={streamUrl}
+        tournamentGender={isGirls ? 'F' : 'M'}
       />
     </div>
   )

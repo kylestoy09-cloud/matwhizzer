@@ -1,0 +1,272 @@
+# NCAA Division III Championships 2011 — source: 2011.pdf (entrants from the PDF text; places read off the bracket pages, 2026-11-18)
+# qualifiers and places only (no bouts)
+
+@ 125
+4 Jacob Scholten | Augustana | 37-6
+- Brandon Gauthier | RI College | 36-6
+- Max Cohen | Ithaca | 17-8
+6 Ben Presler | Conc MHead | 21-12
+- Timothy Hood | Cornell | 22-13
+8 Alex Crown | Waynesburg | 30-2
+- Kalen Greiner | Central | 17-12
+- Dave Colagiovanni | SUNY Cort | 11-4
+5 Riki Reynolds | Mount Union | 23-6
+- Carl Deluca | Oshkosh | 18-11
+3 Lloyd McKinney | La Crosse | 18-7
+2 Mark Kist | Wartburg | 28-6
+- Jordan Alfaro | Merch Mar | 23-9
+7 Daniel Mendoza | Luther | 17-10
+- Steve Godine | TCNJ | 24-14
+- Mack Drees | Platteville | 31-14
+1 Clayton Rush | Coe | 31-1
+place 1 Rush
+place 2 McKinney
+place 3 Kist
+place 4 Crown
+place 5 Colagiovanni
+place 6 Reynolds
+place 7 Gauthier
+place 8 Hood
+
+@ 133
+2 Nathan Fitzenreider | North Central
+- Jake Fredrickson | Whitewater
+7 Dan Herr | TCNJ
+- Tigue Snider | Cornell
+- Tom DAlessandro | Heidelberg
+- Paul Marcello | Johns Hopkins
+- Matt Holmes | Loras
+8 Thomas Mirocha | Wartburg
+- William Cole | S Maine
+- Daron Hohbein | Conc MHead
+6 Corey Brown | Thiel
+5 Adam Sheley | La Crosse
+- Chad Henle | St Johns
+1 William Livingston | Centenary
+3 Seth Ecker | Ithaca | 28-3
+4 Mike McInally | Roch Inst | 34-3
+place 1 Ecker
+place 2 McInally
+place 3 Fitzenreider
+place 4 Mirocha
+place 5 Sheley
+place 6 Livingston
+place 7 Henle
+place 8 Brown
+
+@ 141
+4 Chris Albright | York | 31-1
+- Matt Ulrich | Del Valley | 19-8
+- Kevin Bokoski | Luther | 16-7
+- Joseph Grippi | Springfield | 18-6
+6 Kevin Donahue | Cornell | 27-5
+- Chris LeClere | Coe | 22-11
+- Andrew Zobac | North Central | 39-7
+8 David Alsieux | Centenary | 26-4
+- Ces Antista | Williams College | 25-2
+- Chris Sandy | St Johns | 21-5
+5 Ryan Bridge | Stvns Inst | 11-2
+- Josh Malave | Mount Union | 30-6
+3 Aljamain Sterling | SUNY Cort | 24-5
+2 Jeremy Stierly | Ithaca | 19-1
+- Ryan Timmerman | St Olaf | 28-5
+7 Matt Kelly | Wartburg | 9-4
+- Nick Garber | Waynesburg | 20-4
+- Jacob Narveson | MSOE | 36-10
+1 Bebeto Yewah | La Crosse | 23-2
+place 1 Yewah
+place 2 Stierly
+place 3 Timmerman
+place 4 Donahue
+place 5 Albright
+place 6 Sterling
+place 7 Bridge
+place 8 Bokoski
+
+@ 149
+4 Tony Valek | Augsburg | 34-5
+- Jacob Schwebke | Cornell | 27-15
+- Kris Magruder | Stevens Pt | 25-11
+6 Matt Mauseth | La Crosse | 22-9
+- Andrew Johnson | Heidelberg | 19-13
+8 Isaiah Britton | Lycoming | 27-4
+- Martin Bell | Merch Mar | 19-11
+- Cameryn Brady | Manchester | 33-9
+5 Anthony Dattolo | Wilkes | 27-2
+- James Locke | Coe | 21-11
+- Corey Paulish | Williams College | 25-7
+3 Minga Batsukh | St Johns | 22-1
+2 Blaine Woszczak | Ithaca | 32-2
+- Eric Oyster | North Central | 19-7
+7 Jacob Groth | Wartburg | 26-9
+- Zac Andrews | Del Valley | 26-6
+1 Isaac Dukes | Case West Res | 33-4
+place 1 Batsukh
+place 2 Valek
+place 3 Dukes
+place 4 Woszczak
+place 5 Andrews
+place 6 Groth
+place 7 Locke
+place 8 Dattolo
+
+@ 157
+4 Jesse Harrington | Del Valley | 22-6
+- Erik Hanson | Loras | 29-4
+- Ryan Warczynski | Dubuque | 19-13
+6 Elias Larson | Trine | 28-5
+- Mike Willey | Plymouth St | 23-1
+8 Dan Twito | Merch Mar | 17-5
+- Chris Burdge | Centenary | 14-6
+- Troy Sterling | SUNY Cort | 29-8
+5 Justin Berns | Conc MHead | 26-4
+- Cade Sarbacker | Whitewater | 26-8
+- Eduardo Delgado | Hunter | 20-4
+3 Carrington Banks | Wartburg | 27-3
+2 Orlando Ponce | Augsburg | 31-5
+- Michael Letcher | Ohio N | 28-7
+7 Nicholas Loughlin | Cornell | 25-9
+- Isaac Roberson | Lakeland | 23-3
+1 Derek Brenon | Ithaca | 23-1
+place 1 Twito
+place 2 Ponce
+place 3 Larson
+place 4 Banks
+place 5 Berns
+place 6 Hanson
+place 7 Harrington
+place 8 Burdge
+
+@ 165
+4 Vincent Renaut | Merch Mar | 11-5
+- Josef Waples | St Olaf | 20-7
+- Adam Weber | Wartburg | 10-6
+- Jordan Graham | Augustana | 32-13
+6 Nick LeClere | Coe | 27-5
+- Nicholas Sanko | Ithaca | 17-5
+8 Cory Ferguson | La Crosse | 17-7
+- Matt Magill | NYU | 35-9
+- Joseph Hambleton | Cornell | 29-14
+5 Luke Miller | Ohio N | 25-4
+- James Myers | Olivet | 26-4
+3 Justin Bonitatis | TCNJ | 34-2
+2 Matt Baarson | St Johns | 24-3
+- Jordan Schulte | Stevens Pt | 19-12
+7 Matt Curley | Heidelberg | 30-6
+- Ethan Raymond | Bridgewater St | 28-7
+1 Josh Terrell | Dubuque | 33-3
+place 1 Terrell
+place 2 LeClere
+place 3 Miller
+place 4 Baarson
+place 5 Bonitatis
+place 6 Myers
+place 7 Renaut
+place 8 Waples
+
+@ 174
+2 Michael Schmitz | La Crosse
+- Scott King | Coe
+- Reid Dickerson | Whitewater
+6 Brian Broderick | TCNJ
+- Stephan Birt | Loras
+- Zachary Bates | Bridgewater St
+- Kyle Roosa | Wesleyan
+- Trevor Tyler | Olivet
+- Ryan Dormann | Stvns Inst
+7 David Priest | Ithaca
+- Frank Savegnago | Elmhurst
+5 Mathew Pfarr | St Johns
+1 Kyle Kwiat | Ohio N
+4 Michael Reilly | Kings
+3 Zach Molitor | Augsburg | 25-3
+8 Bradley Banks | Wartburg | 16-5
+place 1 Molitor
+place 2 Banks
+place 3 Schmitz
+place 4 Priest
+place 5 Kwiat
+place 6 Reilly
+place 7 Pfarr
+place 8 Savegnago
+
+@ 184
+4 Brennan Ward | John Wales | 31-2
+- Seth Rehn | Coe | 18-13
+- Greg Rhoads | Wabash | 38-14
+6 Alex Martocello | York | 28-4
+- Timothy Stewart | Messiah | 30-8
+8 Dustin Baxter | St Johns | 20-7
+- Scott Lowe | Merch Mar | 22-6
+- Andy Jenkins | Mount Union | 23-11
+5 Dylan Azinger | Wartburg | 24-3
+- Andrew Roberts | Cornell | 27-16
+3 Mike Denver | TCNJ | 36-3
+2 Ben Engelland | Stevens Pt | 22-1
+- Mitch Artist | La Crosse | 15-8
+7 Josef Rau | Elmhurst | 28-3
+- Sam Engelland | Oshkosh | 29-6
+- Justin Marble | Wheaton | 37-13
+1 Phil Moenkedick | Conc MHead | 31-1
+place 1 Moenkedick
+place 2 Ben Engelland
+place 3 Baxter
+place 4 Martocello
+place 5 Rehn
+place 6 Denver
+place 7 Rau
+place 8 Rhoads
+
+@ 197
+3 Bill Schindel | Mount Union
+- Brian Broll | Buena Vista
+7 Adam Latella | Whitewater
+6 Tim Lutke | Centenary
+- Reid Mosquera | Johns Hopkins
+- Nathan Schmitz | Conc MHead
+- Chad Gregory | Stevens Pt
+- Sam Johnson | Dubuque
+- Alex Fleet | Trine
+- Tony Willaert | St Johns
+- William Mulligan | John Wales
+5 Jared Myhrberg | SUNY Cort
+8 Aaron Karns | Del Valley
+4 Ryan Malo | Williams College
+2 Jared Massey | Augsburg | 17-1
+1 Byron Tate | Wartburg | 38-1
+place 1 Tate
+place 2 Massey
+place 3 Schindel
+place 4 Malo
+place 5 Latella
+place 6 Johnson
+place 7 Lutke
+place 8 Mulligan
+
+@ 285
+4 Brock Glotfelty | McDaniel | 30-2
+- Jeremy Klein | Loras | 25-15
+- Brandon Fedorka | Waynesburg | 18-4
+6 Corey James | SUNY Cort | 28-1
+- Tom Foote | Williams College | 16-4
+- Joseph Zitone | Centenary | 20-7
+8 Chad Johnson | Augsburg | 29-9
+- Matthew Mahon | Ithaca | 20-8
+- James Zarate | Whitewater | 23-15
+5 Alex Burkle | Coe | 25-8
+- Tom Bouressa | Conc MHead | 23-6
+- Ron Fusco | Springfield | 29-7
+3 Judson Connell | Merch Mar | 30-2
+2 Mark Corsello | Elmhurst | 31-0
+- Derick Hesson | Mount Union | 26-9
+7 William Mayer | La Crosse | 19-7
+- Nick Cambi | Roger Wms | 33-5
+1 John Helgerson | Wartburg | 41-4
+place 1 Helgerson
+place 2 Corsello
+place 3 Glotfelty
+place 4 Bouressa
+place 5 Hesson
+place 6 Mayer
+place 7 Johnson
+place 8 Connell

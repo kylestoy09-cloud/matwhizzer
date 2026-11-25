@@ -1,0 +1,182 @@
+# NCAA Division III Championships 2006 — source: NCAA III 2006.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 125
+- Tyler Hubbard | Wartburg
+- Ty Klofta | Ohio Northern
+- Brian Dempsey | College of New Jersey
+- Nate Hansen | Luther
+- Terry Morgan | Loras College
+- Felipe Queiroz | Wilkes
+- Chris Heilman | Cornell Iowa
+- John Spinner | SUNY-Oswego
+place 1 Tyler Hubbard
+place 2 Ty Klofta
+place 3 Brian Dempsey
+place 4 Nate Hansen
+place 5 Terry Morgan
+place 6 Felipe Queiroz
+place 7 Chris Heilman
+place 8 John Spinner
+
+@ 133
+- Mike Lopez | Luther
+- Jafari Vanier | Augsburg
+- Jestin Hulegaard | Buena Vista
+- Jonathan Sheets | Manchester
+- Derrick Goduto | Montclair State
+- David Morgan | King's College
+- Adam Johnson | North Central Illinois
+- Zac McKay | Wartburg
+place 1 Mike Lopez
+place 2 Jafari Vanier
+place 3 Jestin Hulegaard
+place 4 Jonathan Sheets
+place 5 Derrick Goduto
+place 6 David Morgan
+place 7 Adam Johnson
+place 8 Zac McKay
+
+@ 141
+- Dustin Hinschberger | Wartburg
+- Dustin Brewer | Simpson
+- Andy LaCroix | Roger Williams
+- Paul LeBlanc | SUNY-Cortland
+- Mike Gaeta | Springfield
+- Tim Bohlman | York
+- Joel Burdick | Wisconsin-Stevens Point
+- Danny Song | Merchant Marine
+place 1 Dustin Hinschberger
+place 2 Dustin Brewer
+place 3 Andy LaCroix
+place 4 Paul LeBlanc
+place 5 Mike Gaeta
+place 6 Tim Bohlman
+place 7 Joel Burdick
+place 8 Danny Song
+
+@ 149
+- Jake Larsen | Wisconsin-La Crosse
+- Jacob Naig | Wartburg
+- Jason Roush | Mount St. Josephs
+- Jared Evans | Augsburg
+- Matt Pyle | Luther
+- Carl Amerine | Wilmington
+- Sean Connelly | Mount Union
+- Donny Ooton | SUNY-Brockport
+place 1 Jake Larsen
+place 2 Jacob Naig
+place 3 Jason Roush
+place 4 Jared Evans
+place 5 Matt Pyle
+place 6 Carl Amerine
+place 7 Sean Connelly
+place 8 Donny Ooton
+
+@ 157
+- Joe Pflug | Heidelberg
+- Jeremy Anderson | Augsburg
+- Ross Needham | Wisconsin-La Crosse
+- Jacob Malone | St. John's
+- Bobby Gingerich | North Central Illinois
+- Shaheim Bradshaw | SUNY-Brockport
+- Jad Duca | Ithaca
+- Elliott Spence | Mount St. Josephs
+place 1 Joe Pflug
+place 2 Jeremy Anderson
+place 3 Ross Needham
+place 4 Jacob Malone
+place 5 Bobby Gingerich
+place 6 Shaheim Bradshaw
+place 7 Jad Duca
+place 8 Elliott Spence
+
+@ 165
+- Derek Sikora | Wisconsin-Eau Clair
+- Ryan Valek | Augsburg
+- Dustin Blevin | Wartburg
+- Steve Martell | Johnson & Wales
+- Gerald Bowne | York
+- Tim Maxworthy | Heidelberg
+- Tony Howard | McDaniel
+- Scott Dorn | Wisconsin-La Crosse
+place 1 Derek Sikora
+place 2 Ryan Valek
+place 3 Dustin Blevin
+place 4 Steve Martell
+place 5 Gerald Bowne
+place 6 Tim Maxworthy
+place 7 Tony Howard
+place 8 Scott Dorn
+
+@ 174
+- Stef Sair | SUNY-Cortland
+- Scott Kauffman | Wartburg
+- Josh Chelf | Wisconsin-La Crosse
+- Robbie Gotreau | Augsburg
+- Matthias Keib | Ithaca
+- John Dolan | Williams
+- Al Stacilauskas | Wisconsin-Stevens Point
+- Ryan Hagerty | Loras College
+place 1 Stef Sair
+place 2 Scott Kauffman
+place 3 Josh Chelf
+place 4 Robbie Gotreau
+place 5 Matthias Keib
+place 6 John Dolan
+place 7 Al Stacilauskas
+place 8 Ryan Hagerty
+
+@ 184
+- Duane Bastress | York
+- Akeem Carter | Wartburg
+- Jason Lulloff | Wisconsin-La Crosse
+- Brad Tupa | Augsburg
+- Mike Troutman | Ursinus
+- Terry Madden | Hunter College
+- Dan Willaert | St. John's
+- Robert Stubbs | Ithaca
+place 1 Duane Bastress
+place 2 Akeem Carter
+place 3 Jason Lulloff
+place 4 Brad Tupa
+place 5 Mike Troutman
+place 6 Terry Madden
+place 7 Dan Willaert
+place 8 Robert Stubbs
+
+@ 197
+- Jamall Johnson | Delaware Valley
+- Jim Swanson | Wisconsin-La Crosse
+- Brandon Kelly | Wilkes
+- Tyler Miller | Wartburg
+- Mike McCabe | Coe College
+- Matt Loesch | Muhlenberg
+- Dustin Docter | North Central Illinois
+- Matt Chrzanowski | York
+place 1 Jamall Johnson
+place 2 Jim Swanson
+place 3 Brandon Kelly
+place 4 Tyler Miller
+place 5 Mike McCabe
+place 6 Matt Loesch
+place 7 Dustin Docter
+place 8 Matt Chrzanowski
+
+@ 285
+- Ryan Allen | Wisconsin-La Crosse
+- Blake Gillis | Wartburg
+- Mike Hayes | Wisconsin-Stevens Point
+- Pat Bennett | SUNY-Brockport
+- Tommy Snyder | Lycoming
+- Brett Christensen | Simpson
+- Mike Blair | Trinity
+- John Miller | Luther
+place 1 Ryan Allen
+place 2 Blake Gillis
+place 3 Mike Hayes
+place 4 Pat Bennett
+place 5 Tommy Snyder
+place 6 Brett Christensen
+place 7 Mike Blair
+place 8 John Miller
+

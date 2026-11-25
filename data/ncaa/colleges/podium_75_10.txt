@@ -1,0 +1,60 @@
+# Colleges and spellings of the wrestlingstats place-winner sheets (NCAA DII 1975–2001, DIII 1974–2010) — scripts/add_college_group.mts
+# existing colleges: the sheets' spellings as aliases
+Kutztown | | | | Kutztown State
+CSU Pueblo | | | | Southern Colorado
+Rowan | | | | Glassboro
+Hunter | | | | Hunter College
+King's (PA) | | | | King's College
+Loras | | | | Loras College
+Maranatha Baptist | | | | Maranatha Baptist Bible
+MSOE | | | | Milwaukee Engineering
+Mount St. Joseph | | | | Mount St. Josephs
+Muskingum | | | | Muskigum
+Pacific (OR) | | | | Pacific Oregon
+St. John's (MN) | | | | St. John's
+Stevens | | | | Stevens Institute
+Wisconsin-Eau Claire | | | | Wisconsin-Eau Clair
+# new — Division II programs (most since dropped)
+Bemidji State | Bemidji | MN | Beavers |
+Sacramento State | Sacramento | CA | Hornets | Cal State-Sacramento
+Elizabeth City State | Elizabeth City | NC | Vikings |
+Florida International | Miami | FL | Panthers |
+Florida Tech | Melbourne | FL | Panthers |
+Fort Lewis | Durango | CO | Skyhawks |
+West Alabama | Livingston | AL | Tigers | Livingston
+Longwood | Farmville | VA | Lancers |
+Mansfield | Mansfield | PA | Mountaineers | Mansfield State
+UMBC | Baltimore | MD | Retrievers | Maryland-Baltimore
+UMass Lowell | Lowell | MA | River Hawks | Massachusetts-Lowell
+Oakland | Rochester | MI | Golden Grizzlies |
+Pfeiffer | Misenheimer | NC | Falcons | Pfeifer
+Puget Sound | Tacoma | WA | Loggers |
+Saginaw Valley State | University Center | MI | Cardinals | Saginaw
+South Dakota | Vermillion | SD | Coyotes |
+Winston-Salem State | Winston-Salem | NC | Rams | Winston-Salem
+# new — Division III programs (most since dropped)
+Bethel (MN) | St. Paul | MN | Royals | Bethel
+Stanislaus State | Turlock | CA | Warriors | Cal State-Stanislaus
+Capital | Columbus | OH | Crusaders |
+Clarkson | Potsdam | NY | Golden Knights |
+Concordia (IL) | River Forest | IL | Cougars | Concordia IL
+Gallaudet | Washington | DC | Bison |
+Grove City | Grove City | PA | Wolverines |
+Illinois College | Jacksonville | IL | Blueboys |
+Juniata | Huntingdon | PA | Eagles | Junita
+Kalamazoo | Kalamazoo | MI | Hornets |
+Kean | Union | NJ | Cougars |
+Lebanon Valley | Annville | PA | Flying Dutchmen |
+Massachusetts Maritime | Buzzards Bay | MA | Buccaneers |
+Monmouth (IL) | Monmouth | IL | Fighting Scots | Monmouth IL
+Oberlin | Oberlin | OH | Yeomen |
+Rensselaer | Troy | NY | Engineers | RPI
+Ripon | Ripon | WI | Red Hawks |
+Rutgers-Newark | Newark | NJ | Scarlet Raiders |
+Susquehanna | Selinsgrove | PA | River Hawks |
+Union (NY) | Schenectady | NY | Dutchmen | Union
+Upsala | East Orange | NJ | Vikings |
+Widener | Chester | PA | Pride |
+Wisconsin-Stout | Menomonie | WI | Blue Devils |
+Wittenberg | Springfield | OH | Tigers |
+St. Thomas (MN) | St. Paul | MN | Tommies |

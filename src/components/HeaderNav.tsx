@@ -1,5 +1,7 @@
 'use client'
 
+import { INSIGHT_TABS } from '@/components/insight/InsightShell'
+import { schoolIlikeOr } from '@/lib/saintNames'
 import { useState, useRef, useEffect } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -89,7 +91,9 @@ export function HeaderNav({ layout = 'proposed' }: { layout?: 'live' | 'proposed
         ? [{ href: '/postseason/team', label: 'Team' }, { href: '/postseason/individual/boys', label: 'Individual' }]
         : [{ href: '/postseason/team/girls', label: 'Team' }, { href: '/postseason/individual/girls', label: 'Individual' }] },
     { href: isBoys ? '/boys/h2h'         : '/girls/h2h',                         label: 'H2H'          },
-    { href: isBoys ? '/boys/insight'     : '/girls/insight',                     label: 'Insight'      },
+    // Insight: a menu of all its pages (Kyle 2026-11-18), the same list as its tabs (InsightShell)
+    { href: isBoys ? '/boys/insight'     : '/girls/insight',                     label: 'Insight',
+      menu: INSIGHT_TABS.map(t => ({ href: `${isBoys ? '/boys' : '/girls'}/insight/${t.key}`, label: t.label })) },
   ]
 
   // ── Auth ─────────────────────────────────────────────────────────────────
@@ -194,7 +198,7 @@ export function HeaderNav({ layout = 'proposed' }: { layout?: 'live' | 'proposed
       const schoolQuery = supabase
         .from('schools')
         .select('id, display_name, logo_url')
-        .ilike('display_name', `%${q}%`)
+        .or(schoolIlikeOr(q))   // "st", "st." and "saint" all find the St. schools
         .eq('is_nj', true)
         .limit(5)
 

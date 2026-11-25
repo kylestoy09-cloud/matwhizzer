@@ -2,6 +2,2469 @@
 
 ---
 
+## 2026-11-21 — Bracket seeds; tighter bracket format; Powerade school fixes
+
+- Kyle: "can we also seed them?" Brackets read seeds from `in_season_tournament_seeds[_girls]` (src/lib/tournamentBrackets.ts) and show them before the name (live and the Aesthetic tool's format). Seeds from the FloWrestling bracket PDFs (`scripts/flo_pdf_rounds.py`, `--seeds-only` for a CSV that has its rounds → `data/history/seeds/<file>`); the history import writes them (a seed already on file stays): Powerade 2025-26 336, Iron Man 2025-26 463.
+- Two wrong schools found while loading seeds, fixed with the rules behind them: (1) a state-tagged team ("Franklin-MA") must not take the year's plain-name school (the importer's first-import lookup now skips tagged names) — two Franklin (MA) seeds re-pointed to their profiles; their stray profiles' name links removed (2 profiles left with no records). (2) a state-tagged team took any same-name school on file ("St. Francis-NY" → St. Francis (CA)): importer and dry run now take only a school of that state (or one with no state in its name). Its 35 Powerade bouts (34 + 1 from the first import), 2 placements, 8 seeds and 8 name links → new St. Francis (NY) #1267 (`scripts/fix_powerade_st_francis_ny_20261121.mts`, backups `docs/migrations/backups/20261121_powerade_st_francis_ny*.json`).
+- Aesthetic tool bracket format: packed from the first round up (byes leave no gaps), its own first-round line height.
+
+## 2026-11-21 — Iron Man 2025-26 full bracket; history import: teams named like NJ schools at events outside NJ
+
+- Iron Man's 2025 FloWrestling export has no round names. `scripts/flo_pdf_rounds.py` reads them from the bracket PDF (each bout box's number and its two wrestlers → the CSV bout; championship rounds = the PDF's columns, the final on its own page; consolation rounds from each wrestler's path; 3rd/5th/7th from the placement page) into `data/history/rounds/2025Ironman.csv` — all 1,572 bouts (men's and women's), placements checked against the PDF. The history import and dry run read that copy in place of the original.
+- Iron Man 2025-26 loaded (`--only=ironman --season=2025-26`): +760 bouts (832), 90 placements (102 of 112); 116 bouts wait on teams in the review, 16 on NJ wrestlers. New out-of-state schools: Marmion Academy (IL), Massillon Perry (OH).
+- Kyle's events outside NJ hold teams named like NJ schools (Iron Man's Westfield = Indiana, Edison / Columbia / Highland / Clay = Ohio). History import + dry run: at Powerade and Iron Man an untagged team counts as the NJ school only when two of its wrestlers there (one, if it brought one or two) are on file at that school; else it goes to the review for that tournament only ("westfield @ iron man tournament", 10 items, each with a guess — `data/history/team_guesses.json`). A year already on file takes each team's school from its first (reviewed) import. Iron Man no longer defaults unknown teams to Ohio (it draws Illinois, Indiana …): those wait in the review (≈120 more teams, with search buttons). Beast of the East and the ECCC keep the name rule (they're full of NJ teams).
+
+## 2026-11-21 — Every bout stored; Powerade 2025-26 full bracket
+
+- Kyle: "let's start storing all bout info moving forward and let's go back and get the bracket info for the brackets we have … attack the easier tournaments first". The RTF import (`/api/admin/rtf/match` + `/import`) dropped bouts between two out-of-state wrestlers whenever an NJ school was in the event; it now keeps every bout. (The CSV import already did.) Saved import texts (`rtf_import_drafts`) were checked against what's stored: the filter cost NJ tournaments only a few bouts (Sam Cali 3); the out-of-state events' gap is their source — NJ teams' results only.
+- Powerade 2025-26 filled from the FloWrestling file (`scripts/import_tournament_history_20261120.mts --only=powerade --season=2025-26`, new `--season` option): +1,055 bouts (1,174 total), 104 placements (8 a weight); 59 bouts wait on the history review. A first run failed on `source_format 'flo_csv'` (not allowed; the importer writes 'csv' now) after creating 403 profiles; the rerun reused them by name (`--reuse=`), leaving 2 with no records.
+- "Franklin Regional" (PA) was taken as NJ Franklin: the school matcher drops "Regional", and the history import took that "exact" match as NJ. Fixed: `scripts/_literalNj.mts` — an NJ match counts only when the printed name is the school's own name or alias, else two of the team's wrestlers must already be on file there (importer + dry run). Data: its 41 bouts, 1 placement and name links → Franklin (PA) #1199 (alias "Franklin Regional" added), its 12 new profiles is_oos; the 3 already on file there (Firestine, Montgomery, T. Colangelo) kept, the run's doubles' 10 bouts re-pointed to them (`scripts/fix_powerade_franklin_regional_20261121.mts` — its backup was overwritten empty by a rerun; values were all school 169 → 1199 — and `…_b_20261121.mts`, backup `docs/migrations/backups/20261121_powerade_franklin_regional_b.json`). Alias "Homewood Flossmoor" moved from the run's new Homewood Flossmoor (IL) #1262 to Homewood-Flossmoor (IL) #765; #1262 has no records — deleted with Kyle's OK 2026-11-21, with the 5 empty profiles (2 from the failed run, 3 doubles) (`scripts/delete_empty_records_20261121.mts`, references counted first; backup `docs/migrations/backups/20261121_empty_records.json`).
+
+## 2026-11-21 — 2026 NCAA Women's Championships loaded
+
+- Kyle: "we also need to import the 2026 ncaa girls tournament". Source: NCAA Tournament/Womens/NCAA/ (FloWrestling CSV + bracket PDF; moved into an NCAA folder like the other levels). The CSV names only the prelims' rounds, so `scripts/build_ncaa_women_2026_transcript.py` rebuilds every round — championship side from the PDF's bracket slots, wrestlebacks from each wrestler's path, a pair who met twice tried both ways — into `data/ncaa/transcripts/women/NCAA/2026.txt` (all 340 bouts, 80 places, bracket-path check clean). Colleges: Bridgeport (CT) and Illinois Wesleyan (IL) added; printed spellings for Delaware State, Elmira, Frostburg State, Marymount, Northern Michigan, William Jewell (`scripts/add_ncaa_women_2026_colleges_20261121.mts`). Loaded with `scripts/load_ncaa_transcripts.mts NCAA --girls --apply`: 180 entrants, 340 bouts, 11 NJSIAA wrestlers matched automatically, 0 to review. College weight audit: nothing flagged. Admin Progress grid: `src/lib/ncaa/sourceYears.ts` regenerated (girls NCAA 2026).
+
+## 2026-11-21 — Out-of-state tournament team scores credited to NJ schools; history podiums
+
+- Kyle: "last year's powerade has two franklins and williamstown listed as nj schools … none of them are nj schools. how were these matches confirmed?" They weren't: the team-score paste matched each printed team to a school by name alone. 11 boys team scores at out-of-state tournaments (2025-26) re-pointed, each checked against the tournament's bouts / the files / a lookup (`scripts/fix_oos_team_scores_20261120.mts`, backup `docs/migrations/backups/20261120_oos_team_scores.json`): Powerade Franklin Regional → Franklin (PA) #1199 (where its bouts already were), Franklin → Franklin (MA), Williamstown → Williamstown (WV); Iron Man Warren Township (IL), Westfield (IN), Edison → Milan Edison (OH), Highland (OH), Columbia (OH); Beast Ridgefield Memorial → Ridgefield (CT); ECCC Notre Dame → Notre Dame (CT); Bethlehem Delaware Valley → Delaware Valley (PA). New out-of-state schools: Franklin (MA), Warren Township (IL), Westfield (IN), Milan Edison (OH), Highland (OH), Columbia (OH); Franklin Regional (PA) #1248 was created and then left unused (0 references); deleted with Kyle's OK 2026-11-21 (backup `docs/migrations/backups/20261121_school_1248_franklin_regional_pa.json`). Girls: Ralph Wetzel Classic "Overbrook HS" → Overbrook (NJ) is left for Kyle.
+- Root cause fixed: `/api/admin/parse-team-scores` now takes a printed name's school from the tournament's own bouts, and at an out-of-state tournament an NJ school with none of its wrestlers in the bouts is only offered (amber), not chosen. New integrity rule: "NJ school team score at an out-of-state tournament with none of its wrestlers in the bouts".
+- Tournament history import: an edition already on file now gets the placements it's missing (Powerade 2025-26 had only its 16 NJ placers); the high school bracket in files that mix youth / junior high brackets in (Powerade 2015–2017) is traced back from its final (`scripts/_largestBracket.mts`), as a name in two brackets joined them; a place two matches claim is left out and reported. Public history page: All / NJSIAA only toggle.
+
+## 2026-11-20 — Tournament history review: school guesses
+
+- Kyle: "have you run these schools against the schools we have in the system? … should have a bunch of aliases to match automatically" / "you should at least give me a match guess." The dry run took a school only on an exact name / alias; the matcher often has the school as a close alternate ("Bullis" → Bullis Prep (MD) 0.90). `scripts/_schoolAlternate.mts`: the matcher's alternate is taken automatically when it scores ≥ 0.85, beats the next by 0.15+ and one name holds the other's words; a weaker, untied one is a suggestion. Claude's own guesses for the rest (`data/history/team_guesses.json`: an existing NJ school — St. Joseph Regional → St. Joseph (Montvale), Old Tappan, Passaic Tech, St. Mary (Rutherford)… — or a state for a new out-of-state school, the less-sure ones marked). Review: the guess is a one-click button (amber = less sure), "Accept all school suggestions"; a decision can now be any existing school (`{ schoolId }`). Teams to place: 132, all but a few with a guess.
+
+## 2026-11-20 — Tournament history: the name matcher checks years
+
+- Kyle: "what's the pool you are using to compare names" — every profile on record at the same NJ school (postseason entries, in-season bouts, dual meets), any year: a 2015 name could be offered a 2024 wrestler. `scripts/_wrestlerSeasons.mts`: a profile's seasons on record; a candidate more than 4 seasons from the bout is not him. Review: each candidate shows its years ("Same as Ronny Crane (2016–2019)"), the bout's season is in bold; 164 out-of-range candidates dropped, 15 wrestlers left with none became new and left the review (452 wrestlers, 166 teams). Import: an exact / strong name match outside the 4 seasons is a different wrestler (a father and son of one name).
+
+## 2026-11-20 — Tournament history: importer (dry run) and the public History page (code only)
+
+- `scripts/import_tournament_history_20261120.mts` (dry run unless --apply): the FloWrestling CSVs → past editions (linked by prior_id), bouts (rounds from `src/lib/historyRounds.ts`; "Championship Round 1" is no longer read as the final), placements from the placement matches; schools / wrestlers as the dry run decided plus Kyle's review (`history_import_review`); bouts whose team or NJ wrestler is still waiting are held back. Powerade 2015–2017 mix youth brackets into the event (38 "weights", 2–3 finals per high school weight): it keeps the series' high school weights and each weight's largest bracket. An edition already on file only gets bouts it doesn't have (matched by both wrestlers, or one wrestler and the other's printed name). Dry run with the review open: 48 new editions, ~35,000 bouts, ~10,000 held back.
+- Public `/tournaments/[id]/history` (linked from a tournament page's year buttons): a year's podium by weight (with its results and bracket), multi-time champions, multi-time placers, most consolation wins career and in one year (`src/lib/tournamentSeriesHistory.ts`; years through prior_id both ways plus the same name).
+
+## 2026-11-20 — Tournament history review moves into the Hub's History tab
+
+- **Schema: `docs/migrations/20261120_history_import_review.sql`** (Kyle runs it): `history_import_review` — the teams and NJ wrestlers the history import couldn't settle, with Kyle's decisions (team → NJ school or a state; wrestler → a profile or new). Written by the dry run (items refreshed, decisions kept); read by the import.
+- Kyle: "put these reviews in the history tab so that i can match with a school, same with the wrestlers. make it easier." Tournament Hub → History → Review: teams with an NJ school search, the guessed school, the states the files tagged, and a state picker; wrestlers with the candidate profiles as buttons (each links to the profile) and New wrestler, the suggestion marked, "Accept all suggestions". Replaces the review CSVs (none had been filled in).
+
+## 2026-11-20 — Tournament history: East Coast Catholic Classic, Robin Leff, Sam Cali files added (code + review sheets)
+
+- Kyle added History/East Coast Catholic Classic (CSVs 2022–2025), Robin Leff (CSVs 2012–2024; the two 2012 files are identical — duplicates are skipped by content), Sam Cali (CSVs 2018–2025). Inventory rerun (131 tournament-seasons with files); the Hub History grid shows them. Dry run: 1,351 team names (NJ 234, out-of-state on file 374, to create 577, unclear 166), 3,889 NJ wrestlers, 12,536 out-of-state.
+- Review sheets part 2 (the first sheets left as they are): `docs/reviews/tournament_history_review_teams_part2.csv` (39 teams), `..._nj_wrestlers_part2.csv` (346 wrestlers, 298 prefilled — nickname, spelling, close spelling ≤ 2 letters with the same initials → same; a different first name with the same last name → new — 48 left).
+
+## 2026-11-20 — Tournament Hub: History tab (what's loaded for every past year) (code only)
+
+- Kyle: a History tab on the admin Tournament Hub "similar to the college spreadsheet" for the tournaments getting the history treatment — boys Iron Man, Beast of the East, Powerade, Escape the Rock, East Coast Catholic Classic, Sam Cali, Robin Leff, Morris / Burlington / Essex / Somerset County, Shore Conference, Hunterdon/Warren/Sussex, CVC (`src/lib/tournamentHistorySeries.ts`; the girls side lists its own). Per season: P podium, B bouts (bouts from 2012-13 on; placements only before). ✓ in the system, yellow a file we can parse (with how deep its podium goes), orange a file we can't (a scan), red nothing yet, grey bouts before 2012-13. Out-of-state tournaments loaded from NJ teams' results show "NJ".
+- What's in the History folder comes from `scripts/build_tournament_history_sources.py` → `src/lib/tournamentHistorySources.ts` (rerun after adding files): 105 tournament-seasons with files — Powerade 1967-68 → 2025-26 (finals only from the "History-by-Year" PDF before 2000), Beast of the East 1993-94 → 2025-26 (the 1993-94 edition was the "Delaware Mid Atlantic Classic"; "10th.pdf" = 2002-03, a scan), Iron Man 2012-13 → 2025-26; girls Beast of the East 2022-23 → 2024-25, Women of Ironman 2024-25 → 2025-26. Found: Burlington County 2025-26 has bouts but no placements.
+
+## 2026-11-20 — Tournament brackets built from the bouts (code only)
+
+- Kyle: "we have tbd as if the tournament didn't happen yet … we should have access to brackets from year to year." The bracket page read `tournament_bracket_slots`, filled for one tournament (Sam Cali 2025-26) and half-way (13 of 14 finals empty → "TBD"). It now builds every tournament's bracket from its bouts (`src/lib/boutBracket.ts`, `src/components/bracket/BoutBracket.tsx`): the championship side as a tree hung from the final (each wrestler's previous championship bout under them, any size, byes as gaps), the consolation rounds in order, championship bouts the tree can't reach listed under "Other bouts"; names from profiles, schools from school records. "View Bracket" shows for any tournament with championship bouts. Out-of-state tournaments hold only NJ wrestlers' bouts, so their brackets say "Partial bracket". Checked on 2025-26: Sam Cali, Beast of the East, Hunterdon Central, Battle at the Brook build full trees.
+
+## 2026-11-20 — Tournament pages: non-NJSIAA teams minimized; Tournaments list shows the top NJ team (code only)
+
+- Kyle: "minimize non-njsiaa teams and give the option to expand … sam cali and a school from ct is the best nj school on the leaderboard." Team Scores shows NJSIAA teams by default with their official places (Sam Cali: Greens Farms Academy (CT) won; Paramus Catholic shows as 2nd), "Show N non-NJSIAA teams" brings the full official standings back; the school list's Non-NJSIAA section is collapsed behind the same toggle. The Tournaments list's "Winner" column is now "Top NJ Team" (the best-placed NJSIAA school). Site snapshot re-baselined.
+- Found for the next step: bracket data exists for one tournament only (Sam Cali 2025-26), half-filled (262 of 518 slots with an empty side, 13 of 14 finals) — hence "TBD" on a finished tournament.
+
+## 2026-11-20 — srobs's Stream Account microchecks released back to the pool
+
+- **Data only.** Kyle: "srobs did a bunch of microchecks yesterday sorting streaming sites. all of them were wrong. can you reverse them and release them back into the pool." `scripts/release_srobs_stream_checks_20261120.mts --apply` (backup `docs/migrations/backups/20261120_srobs_stream_checks.json`): the 39 boys streaming picks by srobsmail@yahoo.com on 2026-11-19 (NFHS 21, Both 12, Hudl 4, Neither 2) cleared — those schools show both links again — and his 39 matching `microcheck_task_log` entries removed, so the Stream Account check deals those schools again. No girls picks. The other 9 picks on file (three other people, 2026-11-19) untouched.
+
+## 2026-11-20 — Review of the edge / weight / buckets projection work (no changes needed)
+
+- The tracker's own edge and weight for every 2025-26 bout (simulated, writes intercepted) match what the two migrations filled in: 0 differences of 61,883 boys / 18,308 girls; no bout would be frozen a toss-up. A dual's edge side is the home team: wrestler B's school is team 2 (the match card's Home) in 3,000 of 3,000 sampled bouts per side. Head-to-head answers with any `weight` (285, 106, junk) and the edge / seed parameters (HTTP 200; no effect while the weight levers are off). Weight snapping: 286 → 285, 105 → 106, 160 → 150–157; girls 99 → 100, 236 → 235. Version 1 differs from the original formula only where two WRRs are exactly equal (the 2026-11-20 fix). Active: Version 4 both sides; finish-or-decision and weight levers off.
+
+## 2026-11-20 — Weight groups: tracked bouts carry their weight; two test levers; by-weight table
+
+- **Schema: `docs/migrations/20261120_match_projections_weight.sql`** (Kyle runs it): `match_projections.weight_class`, filled from the source bouts; new bouts get it from the tracker. `src/lib/weightGroups.ts`: boys groups (Kyle) 106 | 113–120 | 126–132 | 138–144 | 150–157 | 165–175 | 190–215 | 285; girls (mirroring) 100 | 107–114 | 120–126 | 132–138 | 145–152 | 165–185 | 235. 2025-26: who wins is flat across weights (boys ~80%, girls 74.7–77.9%); how bouts end isn't — boys techs 17% at 106 → 3% at 285, 285 the most decisions (19%) and OT (3%); girls pins 80% → 89%. Head-to-head takes `?weight=` (the match card sends it).
+- Lever Lab "Weight groups" (off): each group's finish mix nudges the odds; a winner's pin / tech record blended with the group's. Held out on 2025-26 (`scripts/projection_weight_test_20261120.mts`) it barely moves anything — boys finish-or-decision 78.7% either way; exact type +0.8 only by calling fewer techs (5.9% → 2.9% of picks); girls unchanged. Recommended off. Projection Accuracy gains a by-weight-group table.
+
+## 2026-11-20 — Tracked bouts carry who gets a dead-even projection
+
+- **Schema: `docs/migrations/20261120_match_projections_edge.sql`** (Kyle runs it). `match_projections.edge` ('a' / 'b'): the side that gets a dead-even projection, by the site's rules — a dual's home slot (team 2), the postseason's lower seed (unseeded lowest), an in-season tournament's second-listed wrestler. Filled for the bouts on file; new bouts get it from `src/lib/projectionTrack.ts`, which now also projects them with it (no frozen toss-ups from here on). Lever Lab replays use it, so its toss-up count matches the site (none). Kyle: "when i did that, toss ups didn't change" — finish levers never decide a dead-even bout; the lab had no home / seed context to.
+
+## 2026-11-20 — Projection Accuracy: "Picked the winner" counts every bout (code only)
+
+- The winner percentage left toss-ups out, so widening the toss-up band raised it by skipping the hardest bouts (boys Version 4: 80.1% → 83.0% at a band of 2, with 5,831 bouts unanswered). It now counts every bout, a toss-up as half (the site gives every toss-up to the home side or the lower seed): boys Version 4 79.9% at either setting. Kyle's 80% → 76% drop reproduced against every lever: only the blend weights (WRR only: 76.7%) and the strength rating (off: 78.6%) move the boys winner pick; finish levers don't; girls Version 4 is 76.2%.
+
+## 2026-11-20 — "Finish or decision" projection lever (code only)
+
+- Kyle: "finish and decision. finish will defer to wrestler's most common finish. decision is more figurative. major at the high scale, ot at the low scale." New Lever Lab lever (needs Outcome odds; off until a version is saved with it): the projected winner = the side with the better chance; the odds of a finish (pin + tech) vs a decision (major + decision + OT) pick the bucket — a decision once its share reaches `decisionFrom`; a finish is the winner's own most common one (more techs than pins → Tech Fall, else Pin); a decision follows the winner's chance — OT under 55%, Major from 85%, else Decision. 2025-26 (`scripts/projection_buckets_test.mts`), boys: winner 80.6% (Version 4 80.1%); techs 6.4% of picks (0.5%); decision ≥ 0.40 keeps the finish-or-decision call at 78.7% (78.6%) with decisions 5.7% of picks, ≥ 0.35 → 10.3% of picks at 78.1%, ≥ 0.30 → 19.5% at 74.7%. Girls: winner 76.6% (76.2%); decisions stay under 1% of picks at any setting (pins are 82.5% of girls bouts). Season mix 2025-26: boys pin / tech 74.2%, major 8.9%, decision / OT 17.0%; girls 86.1%, 4.1%, 9.7%.
+
+## 2026-11-20 — Review of the Version 2–4 projection work (code only)
+
+- Verified: both sides' active Version 4 carries its speed bands, odds table (boys 61,883 / girls 18,308 bouts), win curve and strength 50%, win-type labels; the tracker records new bouts with Version 4 and strengths on every row, and what it freezes equals the Lever Lab's replay (0 differences, simulated on 2025-26 with writes intercepted); dead-even rules checked live (home edge, lower seed, unseeded lowest, second wrestler without context).
+- Fixed: the head-to-head projection skipped the strength rating unless both wrestlers had a strength for the live season — none exist for a season until its bouts are rebuilt, so from the season switch until each wrestler's first bout the projections would have dropped it. A wrestler without one now gets the strength rating's own starting value, 1500 + 8 × their WRR.
+- Noted for Kyle: Version 4 picks a pin in 98% of boys / 99.9% of girls bouts (decisions only between strong, close wrestlers) — that is what the odds say.
+
+## 2026-11-20 — Projection Version 4: win type only, no top three, toss-ups go to someone
+
+- **Data (projection_settings):** Version 4 for each side (`scripts/save_projection_v4_20261120.mts --apply`) = Version 3 with the site's labels showing the win type only ("Pin", "Tech Fall", "Major Decision", "Decision", "OT") — Kyle: "stop putting times for predictions, but still use them for weighting results." Times still weight the WRR and the projection grading. Version 3 kept.
+- Code: the match card no longer shows the top three with percentages, just the pick (the head-to-head API still returns them). A dead-even projection goes to someone (Kyle: "give the home team the edge … at a tournament, give it to the lower seed just for fun because it's a coin flip"): the head-to-head API takes `edge=a|b` (the match card sends the home side, slot B) or `seedA` / `seedB` (the bigger seed number; unseeded counts lowest), else the second wrestler. Tracked bouts still record a dead-even bout as a toss-up. Exactly equal WRRs are now even — they had given the first-listed wrestler (on a match card, the away side) a small head start.
+
+## 2026-11-20 — Projection Version 2 saved (Kyle) and Version 3 (the odds and the pick agree)
+
+- **Data (projection_settings).** Kyle saved Version 2 for each side: speed bands, strength rating 50%, outcome odds on (boys also finish-from-records / hard-to-pin / rating-level, girls finish-from-records / pin↔tech / rating-level — overridden by the odds). A Version 2 pick could name one wrestler while the odds' top line named the other (the pick's winner came from the blend with strength, the odds' split from the table alone): 9.9% of boys / 9.6% of girls bouts. Version 3 (`scripts/save_projection_v3_20261120.mts --apply`, active for both sides; Version 2 kept) = Version 2 + a win curve: each side's share of the odds follows the full projection's chance, calibrated on 2025-26, and the pick is the odds' top line. Held out on 2025-26: they never disagree; winner 80.0% boys / 76.0% girls (Version 2: 80.3 / 76.2%); actual result in the top three 78.3% / 88.4% (76.3 / 88.0%). The Lever Lab's Save builds the curve from now on.
+
+## 2026-11-20 — Speed bands can be saved as a live projection version (code only)
+
+- Kyle: "speed bands can't be saved even though they are a huge upgrade." A version on the speed scale now saves with its own band cutoffs (built from the season shown, kept in `projection_settings.params.bands`); its projections read "Pin under 0:25" / "Tech 1:30–1:51" on head-to-head and match cards (team points still read pin / tech from the label); bouts it projects are graded on its bands, clock versions on the clock. An outcome-odds pick on speed bands stands for the 25–50% band. The WRR stays on the clock scale.
+
+## 2026-11-20 — Tournament placements carried another team's school (Powerade: Landon Sidun on the NJSIAA podium)
+
+- **Data only, no schema change.** Kyle: Norwin (PA)'s Landon Sidun was on the NJSIAA podium at Powerade 2025-26. The RTF importer (`src/lib/parseRtf.ts`, school-tracking placements) picked a team's side by where its school sat most often across a weight's bouts, not in the placing bout — so a placement could carry the opponent's name with the team's school, or the school of the team whose report it was (every Battle at the Brook placement said Union City). Fixed: the side comes from the placing bout itself.
+- `scripts/fix_placements_from_place_bouts_20261120.mts --apply` (backup `docs/migrations/backups/20261120_placements_before_place_bout_fix.json`): every placement with a placing bout (F, 3rd / 5th / 7th place) checked against it; 129 set to the bout's wrestler and school (boys 125 in 19 tournaments, 36 of them across the NJ / non-NJ line; girls 4) — only where it's the same wrestler and the two name different schools. Dover Holiday Tournament 2025-26: 5 placements moved from Dover (DE) to Dover (NJ) — the source labeled Dover's team "Dover, DE"; the bouts had them right (Dover NJ wrestlers, e.g. Leo Lorenzo's 27 duals). After: boys 4,560 / girls 1,744 placements match their bout; integrity check unchanged (the 2 known failures).
+- Left for Kyle (12): two profiles with one name (Benjamin Almonte, Edison; James Cook, Schalick; Jose Rodriguez, Raritan; Gabriel Rodrigiuez, Westwood; Mason Ontiveros, Pitman / Pitman (CA); Paul Kim, Demarest); a different name on the placement than the bout (Sam Cali: 138 #4 Amari Vann vs Ryan Yang, 132 #4 AJ Stover vs Eli Glover, 285 #1 Ryan Schnieder vs Ryan Schneider); St. John Bosco (CA) vs (GA) for Michael Madda; Battle at the Brook 175 3rd / 4th (two placing bouts).
+
+## 2026-11-20 — Strength rating for projections; tournament bouts replay in round order; cron secret check
+
+- **Schema: `docs/migrations/20261120_strength_rating.sql`** (Kyle runs it). `wrestler_strength` (each wrestler's strength per season, service role only) and `match_projections.a_strength` / `b_strength` (strengths going in). `src/lib/strengthRating.ts`: an Elo-style "who beats whom" rating — every bout moves both wrestlers by how surprising the result was, bonus wins more; a season starts at 1500 + 8 × the WRR at a wrestler's first bout; updated a day at a time. Written at every WRR rebuild with the tracker; filled for 2025-26 by `scripts/backfill_strength_20261120.mts --apply`. New "Strength rating" winner lever (off; share of the blend). WRR, rankings and the resume don't change. 2025-26 (`scripts/projection_strength_test.mts`): a 50% blend picks the winner 80.3% boys / 76.2% girls vs version 1's 78.4 / 74.8%, better in every group.
+- **Rating replay order (code; changes ratings only when a season is rebuilt).** In-season tournament bouts used to replay in random id order and postseason bouts in lookup order, so an early round's "pre-match" WRR could hold a later round from the same day. Now each tournament replays in an order that keeps every wrestler's own rounds in sequence (`src/lib/boutOrder.ts`). Dry run of 2025-26: boys 506 / girls 358 ratings move more than 0.1, 33 / 24 more than 0.5, largest ±1.15, none missing. 2025-26 (locked) is not rebuilt unless Kyle says so.
+- Security: the WRR rebuild and leaderboard refresh routes no longer accept "Bearer undefined" if CRON_SECRET were ever unset (the site-wide proxy already refused it; production has the secret).
+
+## 2026-11-20 — Review of the projection tracking plumbing (Kyle: "make sure it's accurate before we start trusting it")
+
+- **Verified, no change needed:** every 2025-26 NJ-vs-NJ bout in the WRR log is tracked once (boys 61,883, girls 18,308; 0 missing, 0 twice); every row agrees with its log pair (ratings going in, winner, result: 0 mismatches); each wrestler's record going in recounted by hand for a 1-in-50 sample matches (0 wrong); winner / finish type / exact recomputed by hand match the page (boys 78.4 / 22.7 / 7.6%, girls 74.8 / 23.2 / 7.6%); this season's postseason results reach a rating only after every in-season bout; a tournament's placement points only after its bouts; version 1 = the old formula (0 differences in 200,000 matchups).
+- **Fixed (code):** a tracked row is now matched to its bout by match_source + source_id alone (`src/lib/projectionTrack.ts`). Before, a rebuild that flipped which side had the higher WRR, or a wrestler merge, would have recorded the bout a second time (none had happened). A merge now moves the row to the new id; a bout no longer in the log is counted (`orphaned` in the rebuild's response), not deleted. Tested with simulated flips, merges and deletes.
+- **Found, not changed (rating replay order):** bouts inside an in-season tournament replay in random id order, and postseason bouts by winner/loser lookup order, not by round — so a wrestler's "pre-match" WRR for an early round can include a later round from the same day. Small: the WRR moves a median 0.17 within a tournament day (90%: 0.8). It doesn't flatter the accuracy numbers (the bouts it could have flipped were picked right 54.8% of the time) or the seed comparison (with them left out: boys seeds 80.2% vs ours 81.8%, girls 76.7% vs 76.7%). Fixing it changes ratings slightly — left for Kyle.
+- **Rating finding:** in 62% of boys bouts and 78% of girls bouts at least one wrestler's WRR going in is under 1 — most wrestlers sit bunched near 0, where the rating can't tell them apart.
+
+## 2026-11-20 — Outcome odds: the likeliest outcome plus the top three with their chances (code only)
+
+- No schema change (a saved version keeps its odds table in `projection_settings.params`). Kyle: "show the % against the top 3 predictions … i don't want pin to be the guess for a 76 vs 77 … a 3v4 is fish on fish." `src/lib/projectionOdds.ts`: odds over ten outcomes (the WRR favorite or the underdog winning by pin / tech / major / decision / OT) from past bouts at the same rating level (favorite's WRR: under 10, 10–20, 20–30, 30–45, 45–60, 60+) and spread (under 2, 2–5, 5–10, 10–16, 16–24, 24–32, 32+); thin groups lean on neighboring groups, then the spread's overall mix; each side's record shifts how they win. New "Outcome odds" lever (off): the finish = the likeliest one for the projected winner. Projection Accuracy shows the odds graded on held-out halves, an honesty check, and a try-a-matchup box; head-to-head returns the top three when the active version has odds; the admin match card shows them (public head-to-head unchanged).
+- 2025-26, held out: boys pick right 49.2% (always "favorite by pin" 48.9%), actual outcome in the top three 76.3% (66.4%); girls 62.1% (62.1%), 88.0% (67.9%). Odds honest within a few points at every level. Boys 77 vs 76 → 77 by decision 31% · 76 by decision 25% · 76 by major 8%; 4 vs 3 → 4 by pin 45%. As a finish lever: boys finish type 63.9% / exact 20.5% vs always-pin 63.6% / 20.3%; girls equal. Script: `scripts/projection_odds_test.mts`.
+
+## 2026-11-20 — Projection Accuracy: spread chart, rating-level lever, always-pin baseline (code only)
+
+- No schema or data change. Projection Accuracy (tab on the WRR Formula page) adds the spread chart (every bout from both sides at the WRR spread −32…+32, most common result vs the ladder's assumption, exact-hit strip; Clock / Speed bands / Win type only views) and a "Finish by rating level" test lever (close bouts: a pin under a set WRR, a decision above it). Every Lever Lab test now shows an "Always pin" column (every bout a 1st Period Pin for the WRR favorite).
+- Finding (2025-26): always projecting a 1st Period Pin beats every finish lever tried — boys finish type 63.6% / exact 20.3%, girls 84.4% / 25.9% — because pins are most of all wins (boys 64%, girls 85%). Picking one finish per bout can't do much better than the base rate; finish levers are judged against that bar. Scripts: `scripts/projection_level_test.mts`, `scripts/seed_accuracy_20261120.mts` (NJSIAA higher seed won 79.6% boys / 76.2% girls in 2025-26 vs our 81.2% / 75.6% on the same bouts).
+
+## 2026-11-19 — Speed-band test scale; projection breakdowns every two weeks and by bouts so far
+
+- **Schema: `docs/migrations/20261119_match_projections_fall_times.sql`** (Kyle runs it). `match_projections` gets `fall_time_seconds` and `time_estimated`, filled for the bouts on file from their source rows (dual meet bouts, tournament bouts, postseason matches); new bouts get them from `src/lib/projectionTrack.ts`.
+- Kyle: rank pins and techs by how fast they are among their own kind ("make a 5% pin time closer to a 5% tech time"), test only. 2025-26 timed falls: boys pins 5% 0:25 / 10% 0:35 / 25% 1:00 / median 1:42; techs 1:30 / 1:51 / 2:37 / 3:43 — a 1:30 tech (top 5%) ranked below a 1:00 pin on the clock scale. `src/lib/speedBands.ts`: six bands (fastest 5%, 5–10%, 10–25%, 25–50%, 50–75%, slowest 25%), a pin and a tech level in each, cutoffs from the season's own timed bouts (estimated times left out), boys and girls separately. Lever Lab: "Result scale" Clock (live) / Speed bands (test only — can't be saved as a live version); the WRR formula stays on the clock scale.
+- Kyle: "understand early season trends versus later season form … every other week." Projection Accuracy adds every-two-weeks and bouts-so-far (the less-experienced wrestler) breakdowns. `scripts/projection_speed_test.mts` prints the same from the command line.
+
+## 2026-11-19 — Projection tracking: every bout's projection vs what happened; Projection Accuracy page
+
+- **Schema: `docs/migrations/20261119_match_projection_tracking.sql`** (Kyle runs it). `projection_settings` — versioned projection settings per gender, one active (version 1 seeded for each side = the formula as it stood). `match_projections` — one row per NJ-vs-NJ bout: both WRRs going in, the projection's inputs (shared-opponent and past-meeting scores, each wrestler's wins / pins / techs / majors / losses / times pinned / teched so far, from earlier days only), the settings version, the projection (frozen when first recorded) and the result (refreshed if corrected). Service role only.
+- Kyle: "track every single match we enter this season. what were their scores pre match, what was our prediction, what was the outcome … figure out what levers need to either be initiated, or moved." Projections come from one function (`src/lib/projection.ts`) for the site (H2H API → head-to-head and match cards) and the tracker (`src/lib/projectionTrack.ts`); version 1 gives the old answers exactly (checked on 200,000 random matchups). The WRR formula keeps its own ladder — no projection setting changes a rating. Every WRR rebuild records the season's new bouts (`recalculate-hammer-scores` reports `projections`; a tracking failure never fails the rating run).
+- New page **Projection Accuracy** (`/admin/{boys,girls}/projection-accuracy`, side menu): as-projected accuracy (winner, finish type, exact result, tiers off) by month, WRR gap, settings version; projected-vs-happened grid; rating matchups (how often the higher WRR won, by band); worst finish calls and biggest upsets; a Lever Lab that replays any change over the season's bouts before "Save as next version" makes it live. Levers (all off in version 1): finish from the records, pin ↔ tech by style, hard to pin, bonus cap; blend weights; toss-up band; the result ladder.
+- **Data (after the migration):** `scripts/backfill_match_projections_20261119.mts --apply` records 2025-26 with version 1 (`recorded_how` 'backfill'). `scripts/projection_lab.mts` grades the levers straight from the match log. 2025-26 under version 1: boys 61,883 bouts — winner 78.4%, finish type 22.7%; girls 18,308 — 74.8%, 23.2%. Finish from the records (3+ wins): boys finish type 51.2%, girls 65.8%; winner unchanged.
+
+## 2026-11-19 — Microcheck Task Order saves every change right away
+
+- Kyle: "Ad has been turned off and it's still feeding ad micro checks." The Task Order page changed only the screen until "Save order" at the bottom was pressed (On/Off, Do next, school limits, order); leaving the page or pressing Reset dropped the change. Every change now saves as it's made (`src/app/admin/microcheck/priorities/page.tsx`); the dealer itself always honored Off. **Data:** AD name and AD email set off as Kyle intended, and the AD task still held released.
+
+## 2026-11-19 — Review of the last two days' work (Kyle: "a deep review of everything we did")
+
+- Checks run: type check (clean), lint of the 100 changed site files (only the older `any` / setState-in-effect patterns), integrity check (the 2 known failures only), site snapshot (only the intended changes; re-baselined), 56 live pages on both sides (all load, no error text), admin pages / APIs refuse signed-out requests, and a read-only data audit (`scripts/review_audit_20261119.mts`) of the college results, Offseason Hub, history links, streaming and microcheck tables.
+- **Data only, no schema change.** `scripts/review_fixes_20261119.mts --apply` (backup `docs/migrations/backups/20261119_review_fixes.json`): the six college years the timing script sent to review now carry the wrestler as the review card's candidate (they kept `wrestler_id` with an empty candidate list); colors for six colleges NJ girls were matched to (North Central (IL), Northern Michigan, Alvernia, Western New England, Cumberlands, Life); Palmyra's NFHS link https; Joseph Aragona's and Adrian DeJesus's two Offseason Hub prospects each merged into one.
+- Code: offseason badges are filed in the season they belong to — an event held June–December is the next season's (Nick Suriano's October 2012 Super 32 title had sat in 2011–12, before his freshman year; `src/lib/offseasonBadges.ts`); a medal pill from a tournament other than district / region / State says that tournament in its hover; the college spot check looks up a career's name and high school only when it's dealt (microcheck load 2.3 s → 1.2 s).
+- Left as found, for Kyle: 20 boys DII 2019 entrants whose school the sheet printed as "?"; the 2026 Super 32 / USAW uploads put a few same-name wrestlers on one prospect (two Carson Owens at 138 and 190, Owen Miller 144 / 165, Sky Ramos girls 100 / 106, two Cadet entries) — those files carry no state to tell them apart.
+
+## 2026-11-19 — Streaming: Hudl and NFHS links, Stream Account microcheck, resettable checks, college spot check
+
+- **Schema: `docs/migrations/20261119_streaming_two_links_microcheck_reset.sql`** (Kyle runs it). `{boys,girls}_streaming_links` get `hudl_url`, `nfhs_url`, `choice` ('hudl' | 'nfhs' | 'both' | 'neither'), `choice_at`, `choice_by` (the old single `url` stays, unused, now nullable). `microcheck_task_types.reset_at` — any school check (and the college spot check) can be reset from the Task Order page: answers before the reset stop counting and data on file no longer counts by itself, so every school is asked again with what's on file shown ("Still right" or change it). New task types: Stream Account (boys / girls, field `stream_choice`) and College spot check (boys / girls, queue `college_spot`).
+- Kyle: "schools have both nfhs and hudl so i grabbed both … remove all the broken ones". `scripts/streams_check_lookup_20261119.mts` checked every link in Whizzer Upload/Stream (boys Hudl, boys NFHS, girls both): a link must name the school (every distinctive word of its name) and, on Hudl, be a wrestling team of the right side; a failing or missing link was looked up (Hudl's public search → the school's varsity wrestling team; NFHS Network's search → the school's /wrestling page), taken only when one NJ school fits — results in `docs/reviews/streaming_links_checked.csv`. `scripts/load_streams_two_links_20261119.mts --apply` (after the migration) replaces the season's links with the checked ones (old rows backed up to `docs/migrations/backups/20261119_streaming_links_before_two_links.json`).
+- Site: the school page shows "Stream @ Hudl" and / or "Stream @ NFHS Network" (both until the Stream Account microcheck picks; none for Neither); the match card's "Possible Stream" names both; the preseason directory has Hudl and NFHS columns and the dashboard Hudl / NFHS pills.
+- College spot check (Kyle: "confirm college matches randomly"): a shuffled queue of careers the importer matched by itself; search links (name + college, name + college + high school); Confirmed → 'confirmed', Not him → 'not_ours', Can't tell → left as is until a reset (`src/lib/ncaa/spotCheck.ts`).
+
+## 2026-11-19 — August Hibler merged; 2017 Super 32 "Jojo Aragona" linked
+
+- **Data only.** Kyle: "august is same guy", "jojo is pope john". `scripts/merge_hibler_link_aragona_20261119.mts --apply`: the 2022 Bergen Catholic August Hibler (2 tournament entries, 2 Playoff History entrants, 1 profile row) merged into the 2024 Leonia/Palisades Park one (Playoff History span 2022–2024); the emptied profile deleted after a recount found nothing left. The 2017 Super 32 138 6th ("Jojo Aragona", PA) linked to Joseph Aragona (Pope John XXIII). Rows backed up to `docs/migrations/backups/20261119_hibler_merge_aragona.json`.
+- Who's Number One now gives a badge (a bout won at it, from the Offseason Hub's bouts) — none loaded yet (`src/lib/offseasonBadges.ts`).
+
+## 2026-11-19 — College matching checks weight (Cory Ferguson isn't Wisconsin–La Crosse's)
+
+- **Data only, no schema change.** Kyle: Collingswood's Cory Ferguson (215) didn't wrestle 165 for Wisconsin–La Crosse — "a giant man won't shrink." The college matcher (`src/lib/ncaa/match.ts`) now weighs a candidate's last high school season's weight against the college weight (`collegeWeightFits`): more than 30 lbs under the bottom of his high school class (a heavyweight class taken as 205 boys / 180 girls) = not him; 15–30 under, or half again heavier, = review instead of an automatic match. The career carry-over in `src/lib/ncaa/save.ts` checks it too.
+- `scripts/college_weight_audit.mts --apply` (rerun after any college import; rows backed up to `docs/migrations/backups/20261119_college_weight_audit.json`): of 1,557 boys and 57 girls matched years, 13 careers set not ours (Cory Ferguson, Eric Barnett — Wisconsin 125 vs Cherry Hill West 220 —, Jeff Weiss, Jose Diaz, James Davis, Evan Davis, Dylan Brown, Ethan Hardy, Alex Diaz, Henry Forte, David Pierson, Josh Johnson, Zach Thompson) and 37 years back to review (big cuts — Matt Hill, Ryan Goodman, Steve Best, Scott Goodale — and big gains, mostly to heavyweight). Anthony Ashnault and Nick Gravina's 2019 Rutgers years (sixth years) set confirmed.
+
+## 2026-11-19 — Women's college championships loaded (NCWWC 2020–2025, NAIA 2021–2026)
+
+- **Data only, no schema change.** Kyle: "we have all the collegiate girls tournaments uploaded … import them just like the boys." Source files in `History/Girls` (copied to `NCAA Tournament/Womens/<level>/` for the Progress grid). Transcripts in `data/ncaa/transcripts/women/{NCWWC,NAIA}/`, loaded with `scripts/load_ncaa_transcripts.mts <level> --girls --apply` into `girls_college_events / _entries / _bouts`: 2,630 entrants, 3,778 bouts, 57 entries auto-matched to our NJ girls (all fit the high school timing; 0 for review). Integrity check before and after: the 2 known failures only.
+  - NCWWC 2021–2025, NAIA 2021, 2023–2025: TrackWrestling bout exports → `scripts/transcribe/tw_csv.py --bouts` (every bout, its round mapped for 16-, 32- and 64-man brackets; byes the export leaves out put back on each wrestler's path).
+  - NAIA 2022: 64-man brackets at four weights — qualifiers and places only. NAIA 2026: the export has no round names — qualifiers from it, places from the Flo bracket PDF (`flo_places.py`).
+  - NCWWC 2020 (the Cliff Keen WCWC): `scripts/transcribe/wcwc2020.py` — 8 weights in the file (no 116 / 155); 109–143 print the championship side only (1st / 2nd); school codes written out from where their wrestlers were in later years.
+  - NAIA 2020: not loaded — the PDF is the pre-tournament bracket of the canceled event (as the boys' canceled 2020 NCAA DI isn't).
+- Colleges: `scripts/add_women_colleges_20261119.mts --apply` — 14 new colleges (D'Youville, Elmira, Emory & Henry, Eureka, Fontbonne, Huntingdon, Lincoln Memorial, Linfield, Marymount, Presbyterian, Texas Woman's, Utica, William Jewell, Jarvis Christian; colors unchecked) and 107 spellings as aliases of colleges already on file. `LEVEL_COLLEGE_FIXES.NAIA`: a bare "York" is York (NE), "Simpson" is Simpson (CA). Westminster (one non-NJ entrant a year, 2021–23) taken as Westminster (MO).
+
+## 2026-11-19 — College matches with impossible timing unlinked (Pat Smith, Oklahoma State)
+
+- **Data only, no schema change.** `scripts/college_unlink_bad_timing_20261119.mts --apply` (rows backed up to `docs/migrations/backups/20261119_college_bad_timing.json`). Kyle: Oklahoma State's Pat Smith is not Seton Hall Prep's. Cause: the college loader carried a match into the same name's other years at the same college without the timing check (`src/lib/ncaa/save.ts`, now checked with `collegeTimingFits` in `src/lib/ncaa/match.ts`). An audit of all 1,582 matched college years found 17 outside the wrestler's high school timing:
+  - not ours, every year at that college (19 entries): Pat Smith (Oklahoma State 1990–94), Joshua Rodriguez (NDSU 2015–17), Ryan Jack (NC State 2022–26), Mike Mann (Iowa State 1979–83), Pat Murphy (Chattanooga 1980–83) — college years before or during his high school years.
+  - back to review (6): Keith Taylor (West Virginia 1995), Jim Sloan (Montclair State DIII 1993), Trent Johnson (Lindsey Wilson NAIA 2019–23; only 2019 clashes with Pennsville's class of 2019).
+  - kept: Anthony Ashnault and Nick Gravina (Rutgers 2019, sixth years).
+
+## 2026-11-18 — Colors for the colleges that had none
+
+- **Data only, no schema change.** `scripts/fill_college_colors_20261118.mts --apply`: `colleges.primary_color` / `secondary_color` for the 93 colleges with NJ wrestlers and no colors (mostly DIII and NAIA; Wilkes navy and gold per Kyle). Only empty rows written; `colors_checked` stays false for Kyle to check.
+
+## 2026-11-18 — Super 32 Challenge 2000–2015 podiums in the Offseason Hub, NJ placers linked
+
+- **Data only, no schema change.** `scripts/import_super32_older_20261118.mts --apply`, one year at a time: the high school boys podiums of every Super 32 before 2016 (no girls division then) — 1,518 placements in `boys_hub_placements` under new `boys_hub_events` of "Super 32 Challenge" (tournament 18, season = the year held), 1,277 new prospects. Every year 2000–2026 is now in the Hub. Integrity check before and after each year: the 2 known failures only.
+- Sources (Off Season Stuff/Non-NJSIAA Seasons/Super 32), read into place lists by:
+  - `scripts/transcribe/super32_rtf.py` — 2000–2004 (`2000 - 2004 Super 32.rtf`, a different layout each year; places 1–4 only).
+  - `scripts/transcribe/super32_brackets.py` — the Brute bracket PDFs: 2005 (`HS (1).pdf`), 2006 (`HS.pdf`), 2007 (`bracket07.pdf`), 2008, and 2013 138–220. The two undated files were dated by their wrestlers' grades against 2007's. Places from the Champion / 3rd / 5th / 7th boxes; a 7th-place "No-Contest" = tied 7th. A few weights read off the page images (listed in the script).
+  - `scripts/transcribe/super32_lists.py` — 2009 (finals + consolation finals text), 2010–2012 (PlaceWinners Report).
+  - `scripts/transcribe/super32_2013.py` — 2013 106–132 and 285 (one-page day-2 brackets).
+  - 2014: a scan — `scripts/transcribe/super32_2014_places.tsv`, read off the 14 "Sunday" pages (220 has no 6th: that wrestler was disqualified).
+  - `scripts/transcribe/super32_2015.py` — 2015 (TrackWrestling print; no states).
+- Linking (same rules as 2016–2025): an NJ placer gets our wrestler when exactly one NJ wrestler fits the name (as listed, without a suffix, a nickname form) and class. 2006 and 2015 print no states: a placer there is linked only when one NJ wrestler fits the name and class *and* wrestled for the school printed. Two of our wrestlers with one name were settled by weights and school (Nick Suriano — Bergen Catholic, not Southern Regional; Wayne Stinson — the 2010s one, not the 1979; Ryan Callahan — Wallkill Valley); "Jojo" Aragona 2015 = Joseph Aragona (Pope John). 100 NJ placers, 92 linked; the other 8 are on `docs/reviews/super32_older_review_applied.txt` (no NJ wrestler of the name — per Kyle, didn't wrestle NJSIAA — and Matthew Moore 2012, held back as a common name).
+- Shows as Super 32 badges: 185 boys now have a Super 32 podium (76 of them from 2000–2015).
+
+## 2026-11-18 — Super 32 Challenge 2016–2025 podiums in the Offseason Hub, NJ placers linked
+
+- **Data only, no schema change.** `scripts/import_super32_history_20261118.mts --apply`: places 1–8 of the high school boys (2016–2025) and high school girls (2017–2025) brackets — 1,903 placements in `{boys,girls}_hub_placements` under new `{boys,girls}_hub_events` of "Super 32 Challenge" (season = the year held, as the 2026 event), 1,300 new prospects. Integrity check before and after: the 2 known failures only. 2026 (already loaded) untouched.
+- Source per year: the TrackWrestling bout CSV (every bout; places by the hub's own reader, `src/lib/hubFiles.ts`) and the Flo bracket PDF (which bracket is boys / girls high school — the CSV doesn't name divisions; the PDF prints the 14 boys weights first, the girls last). 2024 girls: a 7th-place pool's final sat in the same bracket as the real final — the real one is between the semifinal winners, the other is 7th / 8th. 2024 and 2025 girls were wrestled freestyle (saved as such).
+- Linking: a New Jersey placer gets our wrestler when exactly one wrestler of that side has the name — as listed, without a suffix, or a nickname form — and a class that fits (the season + 1 … + 5, or unknown). 102 of 127 NJ placers linked; 25 listed for Kyle in `docs/reviews/super32_history_review_applied.txt` (mostly girls not in our records; two Adrian DeJesus and three Alex Reyes records).
+- Shows as Super 32 badges on profiles: 149 boys and 52 girls now have offseason badges.
+- 2000–2015: see the entry above.
+
+## 2026-11-18 — Collegiate: Colleges / Leaders views per level (code only)
+
+- Each level of Insight · Collegiate (and the mock) has two views (`CollegeLevelViews`): Colleges — the colleges table — and Leaders — National Champions (multi-time champions first), Medals by Year (every top-8 finish: year, place, weight, college; newest year first, then by place) and Back Side Warriors (most consolation wins). Every board sortable (`SortableBoard` gains a tie-break order). Pinners dropped. `njCollegeCareers` finishes carry their college.
+
+## 2026-11-18 — Insight · Collegiate; Insight menu (code only)
+
+- The college list moved into Insight as a tab, Collegiate (before About) (`/boys/insight/collegiate`, `/girls/insight/collegiate`): the levels (DI / DII / DIII / NAIA; girls NCWWC / NAIA / NCAA) as the second row of tabs, each level's summary under them, then the colleges and leader boards (`CollegeListCore embedded`). `/boys/college` and `/girls/college` redirect there; a college's page (`/boys/college/[id]`) stays its own, its "All Colleges" link back to Collegiate.
+- The header's Insight opens a menu of all its pages — Daily Report, Rankings, Daily Challenge, Polls, Off-Season, Collegiate, About (from `INSIGHT_TABS`, the same list as the tabs). The Aesthetic mock matches.
+- Site snapshot before: no change.
+
+## 2026-11-18 — Shipped from the mock: college pages, college on wrestler profiles, offseason badges, navy stats board (code only)
+
+Kyle approved the mock ("everything looks great, you can ship that"):
+- New public routes: `/boys/college` (DI / DII / DIII / NAIA tabs, colleges + sortable leader boards), `/boys/college/[id]` (header, stats board, NJ wrestlers with awards by year), `/girls/college` (NCWWC / NAIA / NCAA — empty until girls results load). Data cached 5 minutes per level / per college (`src/lib/ncaa/collegePublic.ts`; NJSIAA medals in the public view — `hsAccolades` takes seeHidden). Not in the site menu yet (placement for Kyle).
+- Wrestler profiles: college bars under the header (linking to the boys college page), NCAA medals in the medal case, the College section; for a wrestler with college years the NJSIAA heading, oldest-first medal rows and joined season tables. Offseason badges (Super 32 / Fargo podiums; Ironman and world titles when loaded) in every profile's medal case.
+- School profiles: the navy-header stats board replaces the white one (old `StatChip` / `RankChip` removed).
+- Site snapshot before: no change.
+
+## 2026-11-18 — College list leader boards (sortable); conference rank label smaller (code only)
+
+- College list (`/boys/college`, not in the site nav yet; Aesthetic mock): each level gets four leader boards — Champions (titles, title years and weights), All-Americans (AA count, best finish, every top-8 finish), Back Side Warriors (consolation wins), Pinners (falls) — every NJ wrestler who qualifies, sortable by any column (`src/components/site/SortableBoard.tsx`; long lists scroll inside the box). `njCollegeCareers` now returns each wrestler's placing years (`finishes`).
+- School profile (live and the mock board): the Conference Rankings box's conference · division line set much smaller (8px) and allowed to wrap, so it fits in the box. Site snapshot before: no change.
+
+## 2026-11-18 — Mock: stats board sized, profile tables joined, college list header, offseason badges, awards by year (code only)
+
+- Aesthetic mock only (live pages unchanged; site snapshot before: no change):
+  - Stats board (`src/components/site/StatBoard.tsx`, shared): boxes the old size, the navy header two lines tall. The school profile's board and the college page's ("NJ Wrestlers at the College Championships": wrestlers, years, All-Americans, titles, falls, techs, cons. wins) use it.
+  - Wrestler profile (college preview): the NJSIAA season tables joined into one stack, and the NCAA year boxes the same.
+  - Offseason badges (`src/lib/offseasonBadges.ts`, read from the Offseason Hub through the linked prospect): Super 32 Challenge and Fargo (16U / Junior, by style) podiums — top 8 — and Ironman and world titles once loaded; in the profile's medal case by season (`preview.badges`). Loaded now: Super 32 Challenge 2026, Fargo 2026.
+- College list / college page (`/boys/college`, not in the site nav yet): each level's summary in the standard header (`StdHeader` takes the page's own line), standard width; the wrestler dropdown shows his awards one row per season — NJSIAA medals, offseason badges, NCAA finish — the bouts stay on his profile.
+
+## 2026-11-18 — Broken stream links hidden; Edit meet panel; stream link on meets and tournament pages
+
+- **Data:** `scripts/hide_bad_streaming_links_20261118.mts --apply` removed 159 links (88 boys, 71 girls; 89 schools) loaded from Streaming Sites.csv: 10 that open another school (Westfield → Livingston, Hammonton → Manalapan, …) and 79 Hudl links with no organization number (".../organization/paulsboro-high-school" errors). Rows saved first: `docs/migrations/backups/20261118_streaming_links_hidden.json`; fix list `docs/reviews/streaming_links_to_fix.csv`. Left: 229 boys, 195 girls. Integrity check before and after: the 2 known failures only.
+- **Migration file:** `docs/migrations/20261118_meet_stream_and_details.sql` — **APPLIED** in the Supabase SQL editor 2026-11-18 (verify: six counts of 0). Adds `stream_url`, `premier_label` to `dual_meets` / `dual_meets_girls` and `stream_url` to `in_season_tournaments` / `_girls`.
+- **Edit meet** (`src/components/admin/MeetEditPanel.tsx`): admins only, on the public meet page and the Match Card (Dual Hub's meet picker links to the meet page). Date, time, stream link, premier label, home / away (only before any bouts or adjustments are entered), counts toward record (girls duals). Reads `/api/admin/meet-edit` (admin-only; the panel shows nothing to anyone else, so the meet page stays cached for fans); saves `PATCH /api/admin/dual-meets` (now takes those fields; Dual Hub / Past Seasons score edits unchanged).
+- Match Card: the meet's own link shows "Stream ↗", else the home program's page "Possible Stream ↗"; a saved premier label opens the card as a premier dual.
+- Tournament pages: "Stream ↗" in the banner only once set; admins set it there ("+ Stream link", `PATCH /api/admin/tournament-stream`). The page reads the column apart, so it works before the migration.
+- Site snapshot before: no change.
+
+## 2026-11-18 — School page: streaming pill live; navy stats board in the mock (code only)
+
+- Live (both sides): the program's streaming page as a pill in the district / region / group row under the season picker, "Stream @ Hudl" or "Stream @ NFHS Network" (`SchoolHeader` streamUrl; `SchoolProfileCore` reads it on the server with `streamingLinkFor`). Site snapshot before: no change.
+- Aesthetic mock only (`preview.statBar`): the stats board with each category in a navy (#16284A) header, the number large and bold under it, its state rank below (`BoardCell` in SchoolTabs.tsx). The live board is unchanged until Kyle approves.
+
+## 2026-11-18 — Polls: any number of answers
+
+- **Migration file:** `docs/migrations/20261118_poll_any_number_of_answers.sql` — **APPLIED** in the Supabase SQL editor 2026-11-18 (verify: polls_answers_some, poll_votes_choice_index; the old 4-answer and 0–3 checks gone). Drops `polls.answers` = exactly 4 and `poll_votes.choice` 0–3; adds `polls_answers_some` (at least one answer) and `poll_votes_choice_index` (choice ≥ 0). Existing polls and votes unchanged.
+- Code: admin Polls form adds / removes answers (starts with two); `/api/admin/polls` takes any number (at least one, none blank) and counts votes per answer; once a poll has votes its answers can be added to or reworded but not removed (votes are kept by answer position). `/api/poll` counts and accepts a vote for however many answers the poll has.
+
+## 2026-11-18 — Streaming links loaded for every program (2026-27); Watch link on the match card and (mock) school profile
+
+- **Data, no schema change.** `scripts/load_streaming_links_20261118.mts --apply`: Whizzer Upload/Extra/Streaming Sites.csv (school_id, name, NFHS / Hudl link) → `boys_streaming_links` (317 — every boys program) and `girls_streaming_links` (266 — every girls program) for season 2026-27 (id 2027), through `src/lib/streamingLinks.ts`. Verified in the tables after. Integrity check before and after: the 2 known failures only.
+- Not loaded (no such school id — old co-op ids): 360 Buena Regional/Vineland, 363 Cherry Hill East/West, 385 Morris Hills-Morris Knolls, 392 Ramsey/Northern Highlands, 365 Cliffside Park/Ridgefield Memorial, 372 Jefferson-Sparta, 55 Lodi. Girls programs given a boys team page (Hudl "boys-varsity-wrestling"): Woodbridge, Hawthorne, Pingry, Hackensack. Kyle 2026-11-18: leave the 7 old ids off (every program has a link) and keep those 4 girls links as they are.
+- `streamingLinkFor` (src/lib/streamingLinks.ts): a program's link carried forward like coaches (that season's, else the latest earlier, else the newest on file).
+- Admin Match Card (test harness): the home team's link centered under the matchup, "Possible Stream ↗" — `/api/admin/match-card` returns `stream_b`.
+- School profile header: a "Watch ↗" pill beside Website — behind `preview.streaming` (Aesthetic Tool only; the live page is unchanged until Kyle approves). Site snapshot before: no change.
+
+## 2026-11-18 — Place winners for NCAA DII 1975–2001 and DIII 1974–2010; DIII 2022, 2023, 2025 and DII 2025 completed (data + code)
+
+- **Data only, no schema change.** Integrity check before and after each batch: the 2 known failures only.
+- Kyle added wrestlingstats "Champions and Place Winners" sheets (`NCAA DIII/NCAA II 1975…2001.pdf`, `NCAA III 1974…2010.pdf`). `scripts/transcribe/podium.py` reads them by position (two columns: odd places left, even right; two sheets print sideways). Saved as place-winner-only years: DII 1975–2001 (27 years, 2,080 entrants — 17 auto, 5 review), DIII 1974–2010 except 2004/2009 (35 years, 2,699 — 138 auto, 23 review). 1974–1978 placed 6.
+- Not awarded: DII 1996 158 5th/6th (both wrestlers disqualified — on the sheet, in the transcript as qualifiers with no place) and DIII 1997 118 6th (blank on the sheet). New transcript line `vacant N` (`src/lib/ncaa/transcript.ts`) so the place check allows the gap.
+- DIII 2022 / 2023 from TrackWrestling bout exports (`…Championships.csv`; `scripts/transcribe/tw_csv.py`): every wrestler + places, no bouts (Kyle: DIII / NAIA keep no bouts) — 180 + 180 entrants (22+19 auto, 4+6 review). `NCAA DIII/2023.pdf` is the DII 2023 results, not DIII (Kyle to know). DIII 2025: places from its CSV added to the qualifiers already saved (19 auto, 7 review).
+- DII 2025: places from the finished FloWrestling brackets (`2025 brackets.pdf`; `scripts/transcribe/flo_places.py` — the winner's line is set in the heavy face) added to the qualifiers already saved (4 auto, 5 review). Its bouts are in the file too; not loaded yet.
+- Colleges: `data/ncaa/colleges/podium_75_10.txt` — 42 new (programs since dropped: Bemidji State, UMBC, Kean, Upsala, Rutgers-Newark, St. Thomas (MN) …) + 14 spellings of existing ones; `data/ncaa/colleges/diii_trackwrestling.txt` — the exports' full names ("Augsburg University") as 53 aliases. DIII's bare "St. Thomas" means St. Thomas (MN) (`LEVEL_COLLEGE_FIXES`, src/lib/ncaa/colleges.ts) — NAIA's took that alias for Florida. Not proven: DIII 1976–78 "Maryville" left on Maryville (MO).
+
+## 2026-11-18 — NCAA DII 2002 loaded from the scan (qualifiers + places 1–8, no bouts)
+
+- **Data only, no schema change.** `scripts/load_ncaa_transcripts.mts "NCAA DII" 2002 --apply`: 160 entrants, 80 places. Integrity check before and after: the 2 known failures only.
+- Qualifiers OCR'd (`scripts/transcribe/ocr.swift` + `ocr_kreider.py`) and every name checked against the page image: the scan cuts off the first letter of some names on the left edge — read from the image or from the "I. Last" bout lines (marked in the transcript: Sion King, Evan Love, Lyneil Mitchell). Places read off zoomed consolation crops (`scripts/transcribe/zoom_pairs.py`).
+- `data/ncaa/colleges/dii_scans.txt` (+ `--apply`): 11 spellings of the scans added as aliases of existing colleges (e.g. "Minnesota Mankato" → Minnesota State, "Cent. Missouri State" → Central Missouri).
+
+## 2026-11-18 — NAIA 2022 loaded (qualifiers + places 1–8, no bouts) — first OCR'd championship
+
+- **Data only, no schema change.** `scripts/load_ncaa_transcripts.mts NAIA 2022 --apply`: 279 entrants, 80 places. Matches: 2 auto, 2 review. Integrity check before and after: the 2 known failures only.
+- The PDF's text layer is unreadable, so its pages were read with macOS Vision OCR (`scripts/transcribe/ocr.swift`, no install; `scripts/transcribe/ocr_draft.py` turns the bracket lines into qualifiers). OCR'd college typos corrected by hand (e.g. "Cumbutlands", "Fenory-Riddle"); 4 qualifiers OCR skipped (lines that wrap) added from the page and marked in the transcript; places read off the bracket pages. Non-placer names are as OCR read them — a misspelling there is possible.
+- New college Lincoln (IL) (spelled "Lincoln (Ill.)" — bare "Lincoln" is Lincoln (MO) on our list).
+- NAIA now loaded 2009–2026 (all 18 years). Not yet: 1959–2005 (scans).
+
+## 2026-11-18 — NAIA 2010–2012 loaded (qualifiers + places 1–8, no bouts)
+
+- **Data only, no schema change.** `scripts/load_ncaa_transcripts.mts NAIA 2010 2011 2012 --apply`: 914 entrants, 80 places a year. Matches: 4 auto, 4 review. Integrity check before and after: the 2 known failures only.
+- 2010 from the PDF's own report pages (`scripts/transcribe/kreider_reports.py`: Team Results = every qualifier with his college, Finals Summary = places 1–8). 2011–2012 from the Kreider Championship pages ("Dante Rini (No Dame)"; short college names translated per year in `scripts/transcribe/draft_kreider_codes.py`), places read off the bracket pages. 64-line brackets with pigtails, so 30–38 qualifiers a weight.
+- Not proven: 2011 "C Baptist" / 2012 "CBC" (one wrestler, John Lopez, both years) read as Central Baptist (AR), the "CBC" of 2013; it could be California Baptist.
+- Aliases: "Notre Dame OH" → Notre Dame (OH), "Calumet College of St. Joseph" → Calumet St. Joseph. 2010's bare "Northwestern" / "York" written as "Northwestern (Iowa)" / "York (Neb.)".
+- NAIA now loaded: 2009–2021, 2023–2026. Not yet: 2022 (PDF text unreadable), 1959–2005 (scans).
+
+## 2026-11-18 — NAIA 2013–2018 loaded (qualifiers + places 1–8, no bouts); 4 more NAIA colleges
+
+- **Data only, no schema change.** `scripts/load_ncaa_transcripts.mts NAIA 2013 … 2018 --apply`: 1,347 entrants, 80 places a year. Matches: 16 auto, 12 review. Integrity check before and after: the 2 known failures only.
+- Qualifiers from the PDF text (`scripts/transcribe/draft_naia_tw.py`): 2013–2015 print a college code ("Gabe Roman, MBU, 32-5") — translated per year inside the script (codes differ between years, e.g. 2015's "BU" is Baker), not added as aliases; 2016–2018 print the college. Places read off the bracket pages (`scripts/transcribe/finals_sheet.py`).
+- `data/ncaa/colleges/naia.txt` (+ `--apply`): St. Catharine (KY), Allen (SC), Davenport (MI), Central Christian (KS); aliases "Wvu Tech" → West Virginia Tech, "Truett-McConnell" → Truett McConnell. Checked: every NAIA spelling resolves to the right school.
+
+## 2026-11-18 — College Progress grid (admin) + reviewed flag on college championships
+
+- **Migration file:** `docs/migrations/20261118_college_event_reviewed.sql` — **APPLIED** in the Supabase SQL editor 2026-11-18 (check: 0 / 0). Adds `reviewed_at`, `reviewed_by` to `{boys,girls}_college_events`.
+- Admin → Non-NJSIAA → College: new first tab **Progress** (`src/app/admin/[side]/college/ProgressGrid.tsx`): tournaments down the left, years across the top (newest first), Q / P / B cells per year; red until the year is marked reviewed (only when nobody is waiting), then green. API: `/api/admin/college` events view adds bouts + reviewed; PATCH `event_reviewed`.
+
+## 2026-11-18 — NAIA 2009, 2019–2021, 2023–2026 loaded (qualifiers + places 1–8, no bouts); 79 NAIA colleges added
+
+- **Data only, no schema change.** `scripts/add_college_group.mts data/ncaa/colleges/naia.txt --apply`: 74 new `colleges` rows (NAIA programs) + 120 `college_aliases` (the spellings these files print, e.g. "Concordia (Neb.)", "MSU-Northern", "Campbellsvile").
+- `scripts/load_ncaa_transcripts.mts NAIA --apply`: `boys_college_events` / `_entries` for 2019, 2020, 2021, 2023, 2024, 2025, 2026 (level "NAIA") — 1,876 entrants, 80 places each year, no bouts (Kyle: typed years skip bouts). Matches: 21 auto, 14 review.
+- Transcripts in `data/ncaa/transcripts/NAIA/<year>.txt`: entrants from the PDF text (`scripts/transcribe/draft_naia.py`), places read off the bracket pages (finals sheet `scripts/transcribe/finals_sheet.py`; place-bout winners also checked by `scripts/transcribe/tw_places.py`).
+- 2009 from the bout-by-bout text (`scripts/transcribe/bout_list.py`; 278 entrants, places from the place bouts).
+- Same-name colleges: NAIA's Northwestern, York, Simpson and Rochester are other schools than the DI/DIII ones those names already pointed to, so the transcripts print them as "Northwestern (Iowa)", "York (Neb.)", "Simpson (Calif.)", "Rochester Christian", with new colleges Northwestern (IA), York (NE), Simpson (CA) (+ Bacone, Dana). "Great Falls" (2009) is an alias of Providence (MT) (the same school, renamed 2017). Checked after the re-save: those 65 entrants point to the right colleges; no NAIA entrant without a college.
+- Not yet: NAIA 2022 (garbled text), 2010–2018 (other layouts), 1959–2005 scans.
+
+## 2026-11-18 — NCAA DI 1935–1998, DII 2003–2010, DIII text years loaded; ~330 more colleges (data + code)
+
+**Tables affected:** `colleges` (+~330), `college_aliases`, `boys_college_events` / `_entries` / `_bouts`
+
+**What changed:**
+- **NCAA DI 1935–1998** (61 years) from the wrestlingstats printouts with the existing reader, after fixes in `src/lib/ncaa/parse.ts`: place lines without "[seed]" (1930s–40s), "UNL" read as the heavyweight (285), places per year as printed (4 to 1962, 6 to 1978, 8 since), a tie for a place, "automatic" advances, the 1930s round lists as entrants, the consolation side named from its last rounds (1979–1998 wrestled back in fewer rounds), a wrestler listed twice kept once (`src/lib/ncaa/save.ts`). Bouts kept from 1979 on; before that entrants + places only. 188 historic DI colleges (`scripts/add_di_history_colleges_20261118.mts`).
+- **NCAA DII 2003–2010** typed from the scans (Kreider sheets) with bouts: `data/ncaa/specs/DII-<year>.py` → `scripts/transcribe/kreider.py` → transcript. All pass the bracket-path check.
+- **NCAA DIII 2004, 2011–2019, 2024–2026**: qualifiers from the PDF text, places read off the brackets, no bouts (Kyle: "just pull schools, names, and all american status") — `scripts/transcribe/places.py`. 2013 via the official reader (codes as aliases, `data/ncaa/colleges/diii_codes.txt`; Powell's 7th at 165 added in `src/lib/ncaa/corrections.ts`). 2025 is the pre-tournament bracket (qualifiers only). 2024: the pigtail-round wrestlers print last names only — the two placers listed by last name. ~70 DIII colleges + spellings (`data/ncaa/colleges/diii.txt`, `scripts/add_college_group.mts`); every college's own name added as an alias (`scripts/college_names_as_aliases.mts`).
+- Totals on file: DI 88 years (1935–2026), DII 23 (2003–2026), DIII 13. Matches: 1,213 auto, 168 to review (Microcheck College Review).
+
+**Reversible?** Yes — delete the events (entries / bouts cascade) and the added colleges
+**Verified?** Every transcript passes its checks; integrity check unchanged (2 known failures)
+
+---
+
+## 2026-11-18 — NCAA Division II 2011–2026 loaded from transcripts; 72 DII colleges (data + code)
+
+**Tables affected:** `colleges` (+72), `college_aliases` (+147), `boys_college_events` / `_entries` / `_bouts` (15 DII years)
+
+**What changed:**
+- Kyle: "all dii is collected". The DII files are scans (1963–2010) or a different layout nearly every year (2011–2026), so each year is typed up from its bracket pages into a plain-text transcript, `data/ncaa/transcripts/NCAA DII/<year>.txt` (format and checks: `src/lib/ncaa/transcript.ts`). Every transcript must pass: each wrestler's bouts follow the bracket (where he can come from into each round), nobody loses too often, the champion is unbeaten, places 1–8 complete. Years with text are also checked word for word against the PDF (`scripts/check_transcript_text.mts`): every name, college, record and result found (2023's text is unreadable; 2013 prints "Jacobd. Horn").
+- 2011–2026 (no 2020 tournament): 2,524 entrants, 4,284 bouts with rounds; 2025's file is the pre-tournament bracket (entrants only, no places). `scripts/load_ncaa_transcripts.mts "NCAA DII" --apply`: 64 matched to NJ wrestlers automatically, 31 to review (Microcheck College Review). 45 NJ wrestlers.
+- `scripts/add_dii_colleges_20261118.mts --apply`: 72 DII colleges with city, state, conference, mascot, colors (colors_checked false) and every printed spelling as an alias. Millersville, East Stroudsburg etc. already on the list from DI keep their one row.
+- Code: result labels from older sheets — "Pin" = fall, "Maj" = major, "I-D" = injury default, "FF" = forfeit (`resultType`, src/lib/ncaa/parse.ts).
+
+**Reversible?** Yes — delete the DII events (entries and bouts cascade) and the 72 colleges
+**Verified?** All 15 transcripts pass the checks; integrity check unchanged (same failures before and after)
+
+---
+
+## 2026-11-17 — College details (city, state, conference, mascot) and NCAA bout rounds (schema + code)
+
+**Tables affected:** `colleges` (+ city, state, conference, mascot; 104 rows filled), `boys_college_bouts` / `girls_college_bouts` (+ round)
+
+**What changed:**
+- Migration `docs/migrations/20261117_college_details_rounds.sql`. Conference = the wrestling conference for 2026-27 (Pac-12 now has Air Force, Northern Colorado, NDSU, SDSU, NIU), or the last one for a dropped program; NULL for BYU, Eastern Illinois, Marquette, Millersville, Seton Hall, Slippery Rock (not confirmed).
+- Rounds read from the bracket columns (`src/lib/ncaa/parse.ts`): pigtail r1 r2 qf sf f · cpig c1–c4 cqf csf · 3rd 5th 7th. Checked on every year: no round over its bracket count; 2017–2026 complete (64 a weight). Filled by reloading the D1 years after the migration (`scripts/load_ncaa_d1_20261117.mts`, keeps decisions).
+- Code (Aesthetic Tool mock only): college page header like a high school's, table apart, "NCAA Qualifier", dropdown (NJSIAA medals then NCAA bouts, `src/lib/ncaa/hsAccolades.ts`); Back Side Warriors / Pinners boards; profile college bar joined to the HS banner, qualifier years, medals oldest first with NCAA after NJSIAA, NJSIAA header, Round column, Cons. Wins.
+- Code (live): a graduated wrestler's "Active" years run over every season with a medal or award too.
+
+**APPLIED** — Kyle ran the migration 2026-11-17 (104 with a city, 98 with a conference); D1 1999–2026 reloaded: 15,915 bouts, every one with a round; 1999 added (20 auto, 1 review: John Van Doren, Lehigh); 149 decisions kept
+- Parser fix in the same reload: two wrestlers with the same last name who met (Scott / Cliff Moore 2003, Bo / Isaac Jordan 2015) — the winner is now read by full name, not the first listed.
+- Code (mock): the college list has a tab per level (boys DI / DII / DIII / NAIA / Juco, girls NCWWC / NAIA / NCAA; `COLLEGE_LEVELS` in `src/lib/ncaa/stats.ts`, also the admin upload list); girls list in the mock.
+
+**Reversible?** Yes — rollback lines in the migration
+**Verified?** Round counts checked on a dry parse of all 26 years; type check + prebuild pass
+
+---
+
+## 2026-11-17 — Rick / Ricky LaForge merged; nickname scan (data)
+
+**Migration file:** none. Backup `docs/migrations/backups/20261117_merge_f3387229_into_c8639a19.json`.
+- Kyle: "rick laforge has two profiles. they are the same". Rick LaForge (Delbarton 1998: Region 3 champ, State 6th) merged into Ricky LaForge (Indian Hills, Region 2 champ 2000, 2001; Hofstra 2003, 2005). Missed by the same-name scan (printed "Rick" vs "Ricky").
+- Nickname scan (sameFirst, different schools, inside 4 seasons): 2 more for Kyle — Mike / Michael Leta (North Hunterdon 1957, North Plainfield 1958) and Joe / Joseph Sisia (Springfield 1956, Clark 1957–58). Nothing changed.
+
+---
+
+## 2026-11-17 — College misprints: "Pittsburg State" → Pittsburgh, "Northwest Missouri" → Northwestern in the D1 files (data + code)
+
+**Migration file:** none. Backups `docs/migrations/backups/20261117_college_pittsburg_state_before.json`, `…_college_northwest_missouri_before.json`.
+- Kyle: Jimmy Conroy showed Pittsburg State and Pittsburgh — both Pitt. The 2009 D1 file printed "Pittsburg State" (a Division II school, never at the D1 championships); the only entry with that name in 26 years. Also 2014 "Northwest Missouri" = Michael McMullan of Northwestern. Both entries re-pointed (college_id; printed name kept).
+- `LEVEL_COLLEGE_FIXES` (src/lib/ncaa/colleges.ts), used by saveCollegeYear: a level's misprinted names resolve to the college they mean, so a re-import keeps the fix; the Division II schools keep their names for DII files.
+
+---
+
+## 2026-11-17 — College review: one card per wrestler at a college (code)
+
+**Migration file:** none.
+- Kyle: "why aren't you making one joseph langel rutgers profile … why are you doing one profile for every season?" Results stay one row per NCAA year (each has its own bouts and place), but Review and Microcheck now show one card per name at a college with every year listed (`loadReviewRows` groups; `ReviewRow.years`); one decision covers them all (decideCollegeEntry already applied to the same name + college). At the change: 24 years waiting → 15 cards.
+
+---
+
+## 2026-11-17 — History: Kyle's school picks for the 16 one-wrestler ties; North Edison = John P. Stevens (data + code)
+
+**Migration file:** none. Backup `docs/migrations/backups/20261117_history_tie_schools_before.json`.
+- `scripts/history_tie_schools_20261117.mts --apply` — 20 finishes. North Edison → John P. Stevens (all 5 finishes, 1969–72; matcher `northedison: 151` in src/lib/historySchools.ts, shown "North Edison (John P. Stevens)"). Villecco 1968–69 and McWhirter 1966 → West Deptford (Kyle). By region title (Kyle: "go with region placement"): Leverich → Westwood, Richardson → Seton Hall Prep, Picone → Phillipsburg Catholic, Magda → Warren Hills, Gauthier → TR East, Gonzalez → Don Bosco Tech, Rendina → Edison, D'Amico → Nutley, Webb → Paul VI. Claude's picks (Kyle deferred): Frank Jackson → Westfield, Martinelli → JFK-Paterson, Bonora → Nutley.
+
+---
+
+## 2026-11-17 — History: same-person merges (32), schools from his other seasons, Washington Region 1 = Washington Township, Garren 1998 (data + code)
+
+**Migration file:** none. Backups: `docs/migrations/backups/20261117_history_same_person_before.json` (every finish changed + merge list) and one `…_merge_<drop>_into_<keep>.json` per merge.
+- Scan `scripts/history_same_name_pairs_20261117.mts`: 68 same-name pairs at different schools; 37 fit inside one 4-season career (all finishes within 4 seasons, any shared season at the same or a close weight).
+- `scripts/history_same_person_fixes_20261117.mts --apply` (Kyle: "the first two groups are the same person … just use the school from other seasons"):
+  - Garren 1998 State 3rd → Paulsboro (Kyle).
+  - "Washington" Region 1 (1966, 1967, 1971; Region 1 was South Jersey through 1971) → Washington Township (302), with the state medals that follow those region titles: 10 finishes. Matcher rule `BY_REGION.washington` in src/lib/historySchools.ts (Region 2 / 3 stays Warren Hills; a state finish without a region title falls back to Warren Hills).
+  - 32 pairs merged into one profile each. 15 had one school with more of his finishes: the odd finish moved to it (school_id and printed name, which the Trophy Case reads). 16 ties (one finish at each school) keep both schools until Kyle picks.
+- `scripts/college_rematch_review_20261117.mts`: college entrants in review re-matched after the merges — Donnie DeFilippis 2000, 2001 now automatic.
+
+---
+
+## 2026-11-17 — Scott Garren merged (Oakcrest + Paulsboro); reusable profile merge script (data + code)
+
+**Migration file:** none.
+- Kyle: "scott garren from oakcrest and paulsboro are the same". `scripts/merge_wrestler_profiles.mts <keep> <drop> [--first=] [--why=]` (generalized from the Zargo merge): Oakcrest profile d2e3028d (1997 Region champ, 1998 State 3rd) merged into Paulsboro e583e36f (1998 Region champ, 1999 State champ); 2 finishes moved; emptied profile kept inactive. Backup `docs/migrations/backups/20261117_merge_d2e3028d_into_e583e36f.json`. He wasn't joined at creation because both schools have a 1998 finish.
+- His NC State college years (2000, 2003, 2004) re-matched: now the only Scott Garren → automatic.
+- Found 35 more same-name pairs with finishes at two schools in the same or next year (most: State place at one school, Region at another, same year and weight) — listed for Kyle, nothing changed.
+
+---
+
+## 2026-11-17 — College review in Microcheck; Google search adds year + NCAA (data + code)
+
+**Migration file:** `docs/migrations/20261117_microcheck_college_review.sql` — APPLIED by Claude 2026-11-17 (service role, same statement): task types `boys_college_review` / `girls_college_review` (queue 'college_review', order 15 / 16, on).
+- Kyle: "make the college review a micro check — basically have everything in the box". Microcheck deals one college entrant at a time (newest year first) with the whole review card (`src/components/admin/CollegeReviewCard.tsx`, also used on the College page's Review tab): name, college, year / level / weight / place / seed, Google, Not ours, each candidate with This is him, search for someone else. Skip for now and the 10-minute hold work as for other tasks.
+- One decision path for both (`src/lib/ncaa/review.ts` decideCollegeEntry): covers the same name at the same college in every year. In Microcheck the decision also writes a completed `microcheck_tasks` row (task_type 'college_review') so it counts on the scoreboard.
+- Google: "Name" + college + wrestling + NCAA year + NCAA (Kyle: "add year for ncaa").
+- 87 boys entrants waiting at the time.
+
+---
+
+## 2026-11-17 — College display moved to the Aesthetic Tool mock (off the live site until approved) (code)
+
+**Migration file:** none.
+- The college pages and profile college parts went live without a mock (mock-first rule). Pulled back the same day: `/boys/college` routes removed; the profile's college bar / NCAA medals / College section render only with `preview.college`.
+- Mock: Aesthetic Tool → "New, not live" bar (boys): Colleges list, College page (College id, default Rutgers 91), Wrestler profile · college (College wrestler id, default Anthony Ashnault). Shared components `src/components/site/CollegePages.tsx` (list uses the standard page header) and `CollegeProfile.tsx`; links inside are off in the mock.
+
+---
+
+## 2026-11-17 — College bouts loaded; career carry-over; public college pages + profile college section (data + code)
+
+**Migration file:** none (uses `20261117_college_bouts.sql`, applied).
+- `scripts/load_ncaa_d1_20261117.mts` rerun with bouts: 15,383 boys_college_bouts (2000–2026); decisions kept (55); 100 left in review.
+- Career carry-over: a year with the same name at the same college as a matched year (within 6 years) is the same wrestler — `saveCollegeYear` for new imports; backfill `scripts/college_carry_career_20261117.mts` (backup `docs/migrations/backups/20261117_college_carry_career_before.json`): 9 years (Ashnault 2019 title — 6 years after HS — Gravina, Ryan Jack ×3, Eric Barnett ×2, Joshua Rodriguez ×2).
+- Completeness: 447 of 476 matched college years end the way a bracket must; the other 29 (mostly 2001–2007 printouts, the 2015 pre-finals file) are shown with * "record incomplete" (`recordComplete`, src/lib/ncaa/stats.ts).
+- Public (boys site): `/boys/college` (62 colleges, 243 NJ wrestlers: count, All-Americans, titles, years) and `/boys/college/[id]` (bar in the college's colors; each NJ wrestler with high school, NCAA years and places, best finish, AA, record, falls / techs / majors). Cached 5 min per college (`src/lib/ncaa/collegePublic.ts`). Not yet in the site nav (layout change → mock first).
+- Wrestler profile (`src/components/site/CollegeProfile.tsx`): a bar per college under the header (college colors, years, best finish, AA count, links to the college page); NCAA medals in the medal case; a College section after high school (NCAA record / falls / techs / majors / AA, then a box per NCAA year with a college-color header and every bout). A college not on our list shows TBD (no printed abbreviations on the site).
+
+---
+
+## 2026-11-17 — College review: decisions cover every year; Google link; Joseph Zargo merged (data + code)
+
+**Migration file:** none.
+- Kyle: "if i say no once, it's still no the second time". "Not ours" now applies to the same name at the same college in every year (as "This is him" already did, now also over automatic matches); imports reuse a decision made in any year (`saveCollegeYear`). Backfill `scripts/college_decisions_across_years_20261117.mts` (backup `docs/migrations/backups/20261117_college_entries_before_cross_year.json`): 22 decisions on file, 2 more years settled; 101 left to review.
+- Review cards: "Google him ↗" searches "Name" + college + wrestling.
+- Kyle: Joey Zargo = Joe Zargo = Joseph Zargo. `scripts/merge_zargo_20261117.mts`: Joey (South River 2016-17, 3 postseason entries) merged into Joe (Bergen Catholic 2017-18 – 2018-19), renamed Joseph; emptied profile kept inactive (delete guard). Backup `docs/migrations/backups/20261117_merge_zargo.json`. His four Wisconsin entries (2022–2026) confirmed. Joe Zargo of Monroe (2012-13 – 2014-15) left as a different wrestler.
+
+---
+
+## 2026-11-17 — College bout readers (both layouts); bouts saved with each championship (code; table pending)
+
+**Migration file:** `docs/migrations/20261117_college_bouts.sql` — **APPLIED** in the Supabase SQL editor 2026-11-17 (check: 0 / 0). `{boys,girls}_college_bouts` (winner / loser entry, result as printed, result_type, fall_secs).
+- `parseOfficialBouts` (official NCAA layout): a bout's two wrestlers are the names printed between the previous column of bout numbers and its number, inside its box; championship / wrestleback sides kept apart; final and 3rd place from their labels; pigtail = the leftmost lone championship bout, won by whoever is also on a first-round line. Clean (no impossible records, every weight complete) for 2019, 2021–2026 (~640 bouts a year, ~620 with a result). 2017 / 2018: a few flagged; 2015's file stops before the finals.
+- `parseStatsBouts` (wrestlingstats printout 2000–2014, 2016): bracket columns each half the one before — the i-th winner came from items 2i, 2i+1 (consolation columns also carry wrestlers dropping in); sideways pages swap axes; byes advance as a bare name; place bouts from "Third Place: … / Fourth Place: …"; pigtail page. A round is used only when its counts line up (no shifted pairings). Most years 530–610 of ~620 bouts; a few weights partial.
+- `checkBouts`: nobody over 2 losses (6th and 8th may have 3 — a place bout after elimination), champion unbeaten, bout counts. `resultType` maps printed results (incl. WDF / WBF / MFF codes; a plain score of 8+ = major, 15+ = tech) to dec / md / tf / fall / sv / tb / inj / for / dq.
+- Saved by `saveCollegeYear` (bouts tied to the year's entrants); the College upload reads and checks bouts in the browser.
+
+---
+
+## 2026-11-17 — Men's NCAA DI 2000–2026 loaded and matched; College page (Non-NJSIAA → College) (data + code)
+
+**Migration file:** none (tables from 20261117_college_results.sql).
+- `scripts/load_ncaa_d1_20261117.mts`: 26 championships (no 2020) into boys_college_events / _entries — 8,378 entrants, 80 places every year (2015 = 2015.pdf entrants + 2015b.pdf places; a weight's places come whole from the file with the most; places attach by name + college across spellings, else last name + college, else the place winner is added as an entrant: 2004 Joe Dubuque, Cory Cooperman; 2008 Cody Cleveland; 2009 James Kennedy; 2015 Michael Kroelis). Every college name recognized.
+- Matching (`src/lib/ncaa/match.ts`): graduation year from the profile, else a postseason grade, else last season … first + 3. 'auto' only for the exact full name, the only NJ wrestler with it, 1–5 years after HS (Kyle: 100% matches go in): 437. 'review' (nickname, shared name, 6–7 years from 2020): 142. 7,799 with no NJ candidate. Spot-checked autos: Garay (Rahway → BC), Valenti (Kittatinny → Penn), Dubuque (Glen Ridge → Indiana), Green (Willingboro → Nebraska), Mekhi Lewis (Bound Brook → VT).
+- `/admin/{side}/college` (`CollegeClient.tsx`, API `/api/admin/college`): Review (candidates with school, class, years after HS, why; "This is him" also confirms the same name + college in his other waiting years; Not ours; search someone else), Matched (undo), Championships (counts; upload PDFs read in the browser, Save and match; re-import keeps decisions). Flyout: Non-NJSIAA → College.
+
+---
+
+## 2026-11-17 — A profile for every pre-2013 place winner (data + code)
+
+**Migration file:** `docs/migrations/20261117_history_profiles.sql` — **APPLIED** in the Supabase SQL editor 2026-11-17 (check: 0 / 0). `history_finishes.wrestler_id`, `history_finishes.school_id`, `wrestlers.origin` ('history'), `wrestlers.history_note`.
+- Kyle: "give everyone a profile". `src/lib/historyPeople.ts` groups the 9,554 boys NJ Wrestling History finishes 1934–2012 (State 1–8, Region titles) into 5,055 wrestlers: same school, last name equal or one letter off (R. McKeedy 1941 = Rob McKeeby), first name equal / nickname / initial, within four seasons; transfers (same full name, two schools, ≤4 seasons, never the same year, weight gain ≤ ~30 lb a season; not for common last names or initial-only names). Kyle's calls: Nick Lopez (Williamstown → Washington Twp) is one; Gilliand, Reeves, John Brennan, Jim Smith stay two each with a ★ history_note naming the other.
+- `scripts/create_history_profiles_20261117.mts --apply`: 4,978 new wrestlers (origin 'history', inactive, no name links so imports never offer them; 39 with only a last name in the source get first name '?'), 77 linked to existing profiles (careers into 2012-13, incl. initials: BJ Clagon → Bryant Clagon); every finish's wrestler_id + school_id set. Ids in `docs/migrations/backups/20261117_history_profiles_created.json`. Integrity check unchanged.
+- Profile page: linked finishes become the medal badges (instead of the name match), school from the latest finish, "Active 1938-39 – 1940-41", ★ note, NJ Wrestling History credit; a profile with finishes but no bouts no longer stops at "No match records found."
+- History tabs count multi-time champions by profile (wrestler_id on old finishes): State 4x 5 (Grey, Campolattano, Ashnault, Suriano, Knox), 3x 33 — matches NJ Wrestling History. Fixed on the way: "Freehold" 1934–64 → Freehold Borough; "Thomas Jefferson" → Elizabeth; "Kearney" → Kearny; Sussex Tech (NJ, 1247) added.
+
+---
+
+## 2026-11-17 — Four more history schools connected; their placeholders removed (data + code)
+
+**Migration file:** none.
+- Kyle: Burlington = Burlington City (228), North Edison = Edison (178), South Freehold = Freehold Borough (199), Green Brook = Watchung Hills (147) — connected in `src/lib/historySchools.ts` with "Old (New)" labels.
+- The inactive placeholders created earlier today (1243 Burlington, 1244 North Edison, 1245 South Freehold, 1246 Green Brook) had 0 references across 19 school-linked tables; backup `docs/migrations/backups/20261117_placeholder_history_schools.json`; deleted by Kyle in the SQL editor with the protected-delete switch (left over: 0).
+- Boys history finishes still 12,634 / 12,634 matched.
+
+---
+
+## 2026-11-17 — Old / closed schools in the history connected or added: every boys history finish now has a school (data + code)
+
+**Migration file:** none (rows in `schools`; maps in code).
+- Kyle: closed schools "must have folded into new or existing schools, let's connect those"; else keep the old name as an inactive school; a connected one reads "Old name (New school)".
+- `src/lib/historySchools.ts`: HISTORY_NAMES / HISTORY_RAW / BY_REGION connect Washington → Warren Hills, Franklin (Regions 1/3, Sussex) → Wallkill Valley, Madison Twp / Madison Central / Cedar Ridge → Old Bridge, Dayton / Dayton Regional / Springfield / Kenilworth → Brearley-Dayton, Bridgewater East/West → Bridgewater-Raritan, Middletown (pre-1975) → Middletown South, Toms River → Toms River South, Wayne → Wayne Valley, West Windsor → WW-P South, Englewood → Dwight Morrow, JFK-Willingboro → Willingboro, Glassboro → Clayton/Glassboro, Woodbury → Gateway/Woodbury, Bogota → Ridgefield Park/Bogota, Palisades Park → Leonia-Palisades, Park Ridge → Emerson-Park Ridge. `historySchoolLabel` gives "Old (New)"; shown in the school Trophy Case (next to the wrestler) and the History tabs. Pinned "Don Bosco" → Don Bosco Prep and "Burlington Twp" → Burlington Township (the new schools made them ambiguous).
+- 20 inactive schools (no program rows): Bayley-Ellard 1227, Essex Catholic 1228, Don Bosco Tech 1229, Paterson Catholic 1230, Phillipsburg Catholic 1231, St. Cecilia 1232, St. James 1233, Sacred Heart 1234, Vailsburg 1235, Bergen Tech 1236, Bridgeton 1237, Midland Park 1238, Montclair Kimberley 1239, Newark Central 1240, Pleasantville 1241, Woodrow Wilson 1242; not sure of the successor so kept under the old name: Burlington 1243, North Edison 1244, South Freehold 1245, Green Brook 1246. `scripts/add_history_schools_20261117.mts`.
+- Result: boys history finishes matched to a school 12,634 / 12,634 (was 12,018); girls unchanged (1,932 / 1,934). Caches bumped (tournament-history-v5, pre-record-finishes-v2, boys-team-history-v3). Checked live: Warren Hills Trophy Case shows 125 "Washington (Warren Hills)" rows.
+
+---
+
+## 2026-11-17 — College results: tables, D1 college list, NCAA PDF readers
+
+**Migration file:** `docs/migrations/20261117_college_results.sql` — **APPLIED** in the Supabase SQL editor 2026-11-17 (check: all empty). Colleges loaded: 104, 226 aliases. `colleges` + `college_aliases` (shared), `{boys,girls}_college_events`, `{boys,girls}_college_entries` (entrant, college, seed, record, place 1–8, match to our wrestler with status auto / review / confirmed / not_ours / none). Separate from the NJSIAA tables.
+- Readers `src/lib/ncaa/parse.ts` for the three layouts of the men's D1 PDFs (wrestlingstats printout 2000–2014/2016; official NCAA 2015, 2017–2019, 2021–2026; a 2024 two-page variant) + `src/lib/ncaa/corrections.ts` (places the files lack: 2016 141 7th Joseph Ward; 2017 184 6th Nolan Boyd; 2018 133 4th Luke Pletcher, 6th Scott Delvecchio — Kyle). All 26 years read: entrants + 80/80 places (2015 places from 2015b.pdf).
+- College list `src/lib/ncaa/colleges.ts`: 104 colleges covering all 205 names / abbreviations in the files; colors filled by Claude from each school's official set, for Kyle to check (colors_checked). Loader `scripts/load_colleges_20261117.mts` (after the migration).
+
+---
+
+## 2026-11-17 — Profile header: status note under the name; "Wrestled 2024-2026" for a wrestler who has passed away (code only)
+
+**Migration file:** none.
+- Kyle: move Chase Sudano's note under his name in the header, and show "Wrestled 2024-2026" in place of his grade. `WrestlerHeader` takes `note` (italic, under the name) and `activeText` (replaces the grade line); `WrestlerProfileCore` passes them — for status 'deceased' the grade is dropped and the line reads "Wrestled <first season start year>-<last season end year>". Checked live: Chase Sudano | Gone too early, Chase's energy will be missed. | Wrestled 2024-2026.
+
+---
+
+## 2026-11-17 — Statuses set: Jackson Weller out for 2026-27; Chase Sudano deceased with profile note (data)
+
+**Migration file:** none.
+- `scripts/set_statuses_20261117.mts` (backup `docs/migrations/backups/20261117_weller_sudano_status.json`): Weller → out_for_season (2027); Sudano → deceased, inactive, note "Gone too early, Chase's energy will be missed." Neither was on a saved board (0 pulled).
+- Checked: Weller not on the boys 157 Central board; Sudano not on 126 South; the note shows in italics on Chase's live profile. "Deceased" appears nowhere on the public site (only status_note is read there).
+
+---
+
+## 2026-11-17 — Wrestler status (out for season / deceased); Whiz Rank follows transfers and statuses
+
+**Migration file:** `docs/migrations/20261117_wrestler_status_whiz_notices.sql` — **APPLIED** in the Supabase SQL editor 2026-11-17 (check: 0 statuses, 0 notices). `wrestlers.status` ('out_for_season' | 'deceased'), status_season_id, status_note, status_set_at/by; new `whiz_rank_notices`.
+- Kyle: Jackson Weller (Delran) likely out for the season → off the boards completely; Chase Sudano (St. Augustine) passed away → note "Gone too early, Chase's energy will be missed." in italics on his profile. (Statuses to be set once the migration runs.)
+- Admin wrestler page: Status section (Normal / Out for the season / Deceased + public note). Out for season = this season only; deceased also sets is_active false. Public profile shows status_note in italics under the header.
+- Whiz Rank boards: a logged transfer is the wrestler's school right away (no ratings run); out-for-season (that season) and deceased wrestlers are left off. `pullFromBoards`: a transfer to another section, or a status, takes the wrestler off every unpublished week's saved board (ranks below move up; a submitted board reopens and the week stops being ready) with a notice on that board — and for a transfer, on the new section's board ("place him"). Notices clear when the board is submitted; the weight grid marks boards with notices (!). Published weeks unchanged.
+
+---
+
+## 2026-11-17 — Review of the rating-school fix: season sources first; 20 rows' section / group / conference filled (data + code)
+
+**Migration file:** none.
+- Data check: all 604 filled schools match the school on that wrestler's own 2025-26 bouts (none had bouts at 2+ schools).
+- Code (`recalculate-hammer-scores`): (1) the season's in-season tournament bouts are now a school source (latest tournament's school), right after duals / transfers / last season; (2) the current-school lookup (`schoolIdsOfWrestlers`) moved to the very end, after postseason entries, so a past-season run can't give a since-transferred wrestler their new school; (3) every school found after the first pass gets its section / group / conference (schools from postseason entries used to get none).
+- Data: `scripts/fill_rating_school_attrs_20261117.mts` filled section / classification / conference on 20 2025-26 rows that had a school but none of the three. Backup `docs/migrations/backups/20261117_rating_rows_without_section.json`. Integrity check unchanged.
+- Not run end to end: the next ratings run (manual, or nightly from 12/7) is the first to use the new order.
+
+---
+
+## 2026-11-17 — Ratings without a school filled (604 rows); ratings run falls back to the site's school lookup (data + code)
+
+**Migration file:** none.
+- 290 rated 2026-27 wrestlers (191 boys, 99 girls) had no school, carried from their 2025-26 rows (314 more), so they sat on no Whiz Rank board. Cause: the ratings run takes a school from duals, transfers, last season's row and postseason entries, never from in-season tournament bouts. All had name links; top WRR 26.5.
+- Code: `recalculate-hammer-scores` now fills anyone still without a school from `schoolIdsOfWrestlers` (transfer → roster row → latest bout → name link) before resolving section / group / conference.
+- Data: `scripts/fill_rating_schools_20261117.mts` filled school_id + conference / section / classification on the 604 rows (2025-26 and 2026-27) the same way, no rerun. Backup `docs/migrations/backups/20261117_rating_rows_without_school.json`. After: 0 rows without a school in either season; integrity check unchanged from the 2026-11-16 baseline.
+
+---
+
+## 2026-11-17 — Non-Public schools' locale sections set (data)
+
+**Migration file:** none (column from 20260909_snapshot_schema.sql).
+- Kyle approved 8 per section: North I — Don Bosco, Bergen Catholic, St. Joseph (Montvale), Saddle River Day, DePaul, Pioneer Academy, Mary Help of Christians, Pope John; North II — St. Benedict's, St. Peter's Prep, St. Mary (Rutherford), Seton Hall Prep, Delbarton, Pingry, Newark Academy, Paramus Catholic; Central — Notre Dame, St. Thomas Aquinas, St. Joseph (Metuchen), Red Bank Catholic, St. John Vianney, Christian Brothers, Immaculata, Rutgers Prep; South — Camden Catholic, Gloucester Catholic, Paul VI, St. Augustine, St. Joseph (Hammonton), Holy Spirit, Donovan Catholic, Holy Cross. Chosen by town / county / wrestling region against public schools' sections. `scripts/set_np_locale_sections_20261117.mts`, backup `docs/migrations/backups/20261117_np_locale_sections.json` (all were empty).
+- Readers: Whiz Rank sections (`schoolSections`), the daily report (`effectiveScope` in src/lib/snapshot/compute*.ts).
+- Checked: boys 120 boards — North I 103 (JoJo Burke, St. Joseph Montvale, #1 by WRR), North II 102 (Cameron Sontz, Delbarton), Central 105, South 103. Still off every board: 2026-27 rating rows with no school (191 boys, 99 girls; 7 at boys 120).
+
+---
+
+## 2026-11-17 — Publisher hourly; Whiz Rank off-season rank from the Off-Season board; week-12/7 migration fixed
+
+**Migration file:** `docs/migrations/20261117_ranking_week_dec7.sql` corrected (the first version re-added the 1–20 cap before renumbering, so +100 failed; it rolled back). The cap now goes back on after the renumbering. APPLIED 2026-11-17.
+- Publisher cron `/api/cron/publish` now hourly at :00 (Kyle: "60 minutes late is fine"); 8 AM events still go at 8:00.
+- Whiz Rank Off-Season rank = place on the Off-Season board's weight list (Kyle's saved order from the Offseason Hub "Public board" tab, then by score; `loadOffseasonBoard`, cached) — no recalculation, so a board loads fast.
+
+---
+
+## 2026-11-17 — Whiz Rank: first week 12/7; Non-Public by locale section; notable wins/losses
+
+**Migration file:** `docs/migrations/20261117_ranking_week_dec7.sql` — **APPLIED** in the Supabase SQL editor 2026-11-17 (check: 10 weeks per side, 12/7 8:00 → 2/8 8:00 ET). Adds week 1 = 12/6 (publishes Mon 12/7 8 AM ET) per side, renumbers the rest 2–10, week cap 1–20. No 2026-27 rankings saved (checked: 0 rows in individual_rankings / individual_ranking_completion for those weeks).
+- Sections (`schoolSections`): a Non-Public school ranks in its `schools.locale_section` (the rule the daily report uses), not by region. All 32 Non-Public schools have it empty today → their wrestlers aren't on any board yet; the board shows how many (e.g. boys 120: 35).
+- Row drop-down: record for the 7 days before the ranking; up to 3 notable wins (strongest opponents beaten, last 20 rated bouts) and 3 notable losses (furthest below expectation, last 20).
+- Off-Season rank ignores a score of 0 (wrestled, never placed).
+- Tested on live data: boys 120 North I (97 rated, WRR order), girls 120 North (87).
+
+---
+
+## 2026-11-17 — Article Hub + Whiz Rank plumbing; publisher cron; CRON_SECRET set
+
+**Migration file:** `docs/migrations/20261117_article_rankings_hubs.sql` — **APPLIED** in the Supabase SQL editor 2026-11-17 (check: 0 events each side, every week has a publish time, first 2026-12-14 08:00 ET). New `boys_article_events` / `girls_article_events`; `{g}_articles.event_id`, section check adds 'north' (girls North/South), article_type adds 'rankings', 'feature'; `individual_ranking_weeks` gets publish_at (Monday 8 AM Eastern), ready_at, ready_by, published_at.
+- Kyle's plan (2026-11-17): season competition starts 12/7; preseason articles 11/30–12/6; match-day articles 8 AM the day after a match day; Whiz Rank weekly, published Monday 8 AM; top 25 per weight × section (boys North I / North II / Central / South, girls North / South).
+- `CRON_SECRET` added in Vercel (Production). New cron `/api/cron/publish` every 5 minutes (`src/app/api/cron/publish`): publishes ready article events and ready ranking weeks at their time; an article event not ready by then is marked missed. The nightly ratings/leaderboard crons skip themselves before the season's start date (`src/lib/cronGuard.ts`); manual runs unaffected.
+- Article Hub (`src/lib/articleHub.ts`, `/api/admin/article-hub`, `/admin/{side}/content/article-hub`, flyout Articles → Article Hub): events (preseason week + ranking weeks created by "Create automatic events"; features by hand; match-day events will come from the master schedule), each section saved (finalized), then the whole article (ready); red Emergency Extension = a new time picked by hand.
+- Whiz Rank (`src/lib/whizRank.ts`, `/api/admin/whiz-rank`, Rankings Hub → Whiz Rank tab, first): board per week × weight × section from `wrestler_hammer_scores` (2026-27), order saved → previous week → WRR; columns Whiz, last week (movement), WRR rank in the board + score, last season district/region/State place, Off-Season Hub rank at the weight; Save / Submit (individual_rankings stage 'section' + individual_ranking_completion) → week ready when all weights × sections are in. Row drop-down: the week's record (Sunday back 6 days) and the last 10 rated bouts — opponent, opponent Whiz Rank, opponent WRR before the bout, expected result (getExpectedOutcomeRank on the WRR gap), actual, above / below / as expected. Sections: boys public schools by their section, Non-Public by region (1–2 North I, 3–4 North II, 5–6 Central, 7–8 South); girls by region (North I/II = North, Central/South = South; 2025-26 alignment until 2026-27's).
+- Old Individual Rankings tab renamed "Old Individual Rankings".
+
+---
+
+## 2026-11-17 — Wrestler profile medal badges: one row per season, colored by level (code only)
+
+**Migration file:** none.
+- Kyle: each year's awards on their own row; district badges light gray, region navy, State unchanged (gold). `WrestlerProfileCore.tsx` placements section: rows newest season first; in a row districts, regions, State, then ⚡ awards. Region navy = #16284A (the site's State Tournament tile navy). Checked live: Cameron Sontz ('26, '25, '24 rows: D → R → State).
+
+---
+
+## 2026-11-17 — Wrestler profiles: every postseason-only season starred (code only)
+
+**Migration file:** none.
+- Kyle: the ★ "postseason results only" note named only 2024-25, but every Playoff History season before it is postseason only too. `WrestlerProfileCore.tsx`: ★ on every season up to and including the first regular season on file (2024-25), and the note gives the wrestler's range ("★ 2023-24 to 2024-25: postseason results only."). The "Records begin with 2024-25" line now shows only when no earlier history seasons exist. Checked live: Cameron Sontz.
+
+---
+
+## 2026-11-16 — Tournament Rollover % = last season's tournaments rolled over or not returning; Hub "Not returning"
+
+**Migration file:** `docs/migrations/20261116_tournament_not_returning.sql` — **APPLIED** in the Supabase SQL editor 2026-11-16 (check: 0 boys, 0 girls marked). Adds `not_returning_at` to `in_season_tournaments` and `in_season_tournaments_girls`.
+- Kyle: the preseason Tournament Rollover % should be the share of last season's tournaments rolled over. Since some never come back, a Hub "Not returning" mark counts too: % = (rolled over + not returning) / last season's tournaments (`rolloverStatus` in `src/lib/tournamentSlate.ts`). Boys 2026-27 today: 44 of 74 = 59%; girls 0 of 37.
+- Hub "Not set up" rows: Not returning button; a rollover line with the % and a "show not returning" list with Undo. PATCH action `not_returning` {prior_id, on}.
+- Replaces the earlier "pasted schedule set up" % (always 100% right after a paste).
+
+---
+
+## 2026-11-16 — "Roll Over Tournaments" removed from the preseason task list (data + code)
+
+**Migration file:** none (rows only).
+- Deleted the two `admin_tasks` rows with process_key `tournament_rollover` (boys, girls; never completed). `scripts/remove_rollover_tasks_20261116.mts`, backup `docs/migrations/backups/20261116_rollover_tasks.json`. The task's workspace (`TournamentRolloverWorkspace`) is removed. The preseason % "Tournament Rollover" stays (registry tournaments set up).
+
+---
+
+## 2026-11-16 — Roll Over Tournaments retired; preseason Tournament Rollover % is real (code only)
+
+**Migration file:** none.
+- Removed `/admin/[side]/tournaments/rollover` and `/api/admin/tournament-rollover` (Kyle agreed: the Registry paste + Tournament Hub do the job, and the old tool never wrote registry rows, so its tournaments were missing from the Hub). The preseason task "Tournament Rollover" now opens the Tournament Hub; dashboard/preseason links point to the Hub.
+- Preseason Tournament Rollover % = the preseason season's registry tournaments linked to a tournament in our system (was hard-coded 0). Boys 2026-27: 50/50 = 100%. Girls: 0 until their schedule is pasted.
+
+---
+
+## 2026-11-16 — Tournament Hub: merge a New tournament into last season's; boys hub without jamborees (data + code)
+
+**Migration file:** none (uses `prior_id` from 20261116_tournament_prior_edition.sql).
+- Data: 2026-27 "Gary Vittorio Holiday Classic" linked as this season's edition of 2025-26 "Parsippany Hills Holiday Tournament" (Kyle: same tournament); settings copied (inside, full_bracket, 1 pt); name and dates kept. `scripts/merge_vittorio_parsippany_20261116.mts`, backup `docs/migrations/backups/20261116_merge_vittorio_parsippany.json`. Boys 2026-27: 44 Active, 6 New.
+- Hub: clicking a **New** badge opens a search of last season's tournaments not set up yet; picking one merges (PATCH `merge_prior`: prior_id + last season's settings; this season's name and dates kept).
+- WRR: a tournament linked by prior_id takes its first edition's name as its key, so a renamed edition counts as the same tournament (`recalculate-hammer-scores`).
+- Boys hub: type filter, Type column, jamboree count and the detail page's Event Type field hidden (girls keep them).
+
+---
+
+## 2026-11-16 — Tournament slate: schedule paste matches our tournaments; Hub marks Active / New / Not set up
+
+**Migration file:** `docs/migrations/20261116_tournament_prior_edition.sql` — **APPLIED** in the Supabase SQL editor 2026-11-16 (check: 0 boys, 0 girls linked). Adds `prior_id` (last season's edition) to `in_season_tournaments` and `in_season_tournaments_girls`.
+- Kyle: the registry paste should match each event to the tournament already in our system and create the ones that aren't; the Tournament Hub lists the season's tournaments and marks which are active for the new year, which are new, and which haven't been set up yet.
+- `src/lib/tournamentSlate.ts`: `matchSlate` scores names (year/edition dropped, "Ironman" = "Iron Man", one distinctive shared word = candidate) plus dates (last season + 364 days: near = boost, a month off = penalty), each of our tournaments used once; ≥70 picked, 40–69 suggested only. Kyle's 51-event 2026-27 boys list: 41 picked, 2 suggested (Marinelli EHT, Escape Gloucester County Cell Block), 8 new. `applySlate` saves registry rows linked to this season's tournaments; a matched event becomes a new edition with last season's settings and name (so WRR's name key keeps linking) and `prior_id`; new events are created from the paste (is_oos from the state). Girls jamborees: registry only.
+- Registry preview: "In our system" column (New / Active / Set up, dropdown to change, "Same as …?" for suggestions). API `/api/admin/tournament-registry` POST `{action:'match'}` and `{rows}`.
+- Tournament Hub: a column for the season (Active / New), filter This season / Active / New / Not set up, and a "Not set up for <season>" list of last season's tournaments with no edition this season (Set up = copy with dates +364 days).
+- Tournament Rollover: sets `prior_id`; fixed its boys list (it asked for a `gender` column the boys table doesn't have, so the boys list came back empty).
+
+---
+
+## 2026-11-16 — Tournament Registry paste: boys have no jamborees; dates with years read on every line (code only)
+
+**Migration file:** none.
+- Boys side: no jamboree type (paste saves every boys event as a tournament; type filter and jamboree count hidden). Girls unchanged. No boys rows were jamborees (73 boys 2025-26 rows, all tournaments).
+- `parseEventList.ts`: event lines read "12/12/2026 - Name, ST", "12/11 - 12/12/2026 - Name, ST" and the older "12/12 — Name, ST"; a start date without a year takes the end date's year (Dec–Jan wraps), a line without any year takes the season of the lines before it, and a bad year ("02/14/202") counts as none. Kyle's 51-line 2026-27 boys list: 51/51 read with correct dates.
+- Import skips events already on the list (same name, start date, side, season) and says how many it skipped.
+
+---
+
+## 2026-11-16 — Transfers tool replaces the transfer scan; boys_transfers / girls_transfers
+
+**Migration file:** `docs/migrations/20261116_transfers.sql` — **APPLIED** in the Supabase SQL editor 2026-11-16 (check: 0 boys, 0 girls rows; pending_wrestler_transfers dropped).
+- Kyle: "search existing wrestlers, change their team and it will get logged as a transfer for this season ... keep the list running for the season and then it will complete at the end of the season and we will have the list for each year."
+- New tables `boys_transfers` / `girls_transfers` (season_id, wrestler_id, from_school_id, to_school_id, link_added, notes, created_by). A season's list is open while `season_gender_state.stage` isn't 'archived'; archiving the season completes it (read-only). Transfers go to the newest open season (2026-27 now).
+- Logging a transfer adds the wrestler's name link (`wrestler_name_aliases`) at the new school, so the next upload there matches the same profile; never over a namesake's link. Undo (open season only) removes that link unless they already have bouts there.
+- Readers of the new team: `schoolsOfWrestlers` / new `schoolIdsOfWrestlers` (`src/lib/hubSchools.ts`: a transfer beats a roster row from the same season or earlier), the preseason ratings run (no bout yet this season → rates at the transfer school), the admin wrestler page (the school dropdown there is replaced by a link to Transfers).
+- Tool: `/admin/{boys,girls}/wrestlers/transfers` and the preseason task "Complete Transfers" (`TransfersTool.tsx`), API `/api/admin/transfers`.
+- Removed: the automatic scan (`/api/admin/wrestler-transfers`, `/wrestlers/pending-transfers`, the Data Health "pending transfers" check). `pending_wrestler_transfers` (411 unreviewed flags) is dropped by the migration; backup `docs/migrations/backups/20261116_pending_wrestler_transfers.json`. `wrestlerDelete.ts` and the merge/delete scripts now list the new tables.
+- Until the SQL runs: the tool says to run it; everything else skips the missing tables.
+
+---
+
+## 2026-11-16 — NJ Wrestling History only fills gaps: Team History and Trophy Case use our brackets (code only)
+
+**Migration file:** none.
+- Kyle: njwrestlinghistory.info "only fills in gaps for years we don't have bracket info"; every season we have, and all future ones, come from our uploads.
+- Team History (`src/lib/teamHistory.ts`): boys champions come from our team brackets for every season with confirmed `playoff_seeds` (`boysTeamChampions`: a sectional champion is the team unbeaten in the meets between its seeds; a group's state champion is unbeaten in cross-section meets within the group — some 2025-26 playoff-flagged meets fall after the finals, so "last meet" picked wrong teams). `history_team_titles` only for earlier years; credit reads "Team champions before 2025-26 are from NJ Wrestling History". Checked: 27/27 of our 2025-26 champions match NJ Wrestling History's 2025-26 list.
+- Trophy Case (`src/lib/trophyCase.ts`): boys state podiums and region titles from our `placements` for every season we have them (2012-13 on); NJ Wrestling History rows only for earlier years. Team titles: ours, then NJ Wrestling History before them. Girls history rows (TrackWrestling, not NJ Wrestling History) unchanged.
+
+---
+
+## 2026-11-16 — Team Post Season History tab; girls team State tab (code only)
+
+**Migration file:** none.
+- Boys Team Post Season: Brackets / History tabs. History (`/postseason/team?view=history&grp=…`): one tab per group (1–5, Non-Public A, B); rows State, then the sectionals; years across the top, scrolling sideways like Champions by Weight. From `history_team_titles` (NJ Wrestling History, credited), schools matched as on the Trophy Case (`src/lib/teamHistory.ts`, cached 1 h). Year alignment checked: 2026 South Group 2 = Lower Cape May, matching our 2025-26 bracket.
+- Girls Team Post Season: Brackets / History tabs; the bracket view's tabs are now State / North / South (State = the final and both brackets), so North or South can go back. History: State, North, South champions from our girls team brackets (2025-26 only on file).
+- Components: `src/components/site/TeamHistory.tsx`; `GIRLS_TEAM_SEASONS` exported from `src/lib/girlsTeamBracket.ts`; `TeamBracketClient` takes `viewTabs`.
+
+---
+
+## 2026-11-16 — State page Quickest Deck / Tech: State tournament only (code only)
+
+**Migration file:** none.
+- The boys and girls State pages' Quickest Deck and Quickest Tech read the State tournament's own matches (`stateQuickest` in `src/lib/stateData/shared.ts`), not the lb_p_* / lb_gp_* "state pool" (every postseason match of state qualifiers). Kyle: "since this is the state tournament page, it should just show that tournament."
+- The Terminators stay the whole postseason, now noted "Total Postseason Mat Time (districts, regions and State)".
+- Region and district pages already read only their own tournament (region_/district_fastest_* RPCs); unchanged.
+- Verified live: girls 2025-26 Quickest Tech is Eliza Toth 1:35 (matching the History tab), no longer Neldju Alfred's 0:37 from Region 11.
+
+---
+
+## 2026-11-16 — Boys school pages slow (~2 s a click): Trophy Case cache fixed (code only)
+
+**Migration file:** none.
+- Cause (from the Vercel logs): the boys Trophy Case index (every school at once) is 2.46 MB, over Next's 2 MB data-cache limit, so it was never saved and every boys school page view — each tab click, each school opened — rebuilt it ("items over 2MB can not be cached"). Girls was under the limit.
+- Fix (`src/lib/trophyCase.ts`): each school's Trophy Case is cached on its own (5 min); the index is built at most once per server instance per 5 minutes.
+- Verified: /boys/schools/276 tabs went from ~1.9–2.6 s to ~0.25–0.3 s; no oversized-cache warnings from the new deployment.
+
+---
+
+## 2026-11-16 — Wrestler stats board leaderboard ranks; multi-time champs order (code only)
+
+**Migration file:** none.
+- Wrestler profile stats board: WRR, Pins, Tech Falls and Bonus % show "#N State" when the wrestler is top 25 in the state that season, else "#N <section>" when top 25 in their school's section (Kyle). Read from `lb_rs_wrestler` (the Leaders page table) in `src/lib/wrestlerStatRanks.ts`, ordered as the Leaders page orders (ties on pins/techs to the faster average; bonus % min 5 matches); ties share a rank. Cached an hour.
+- History tab Multi-Time Champs: state lists go from the first to reach the count to the most recent; region and district lists go most recent first (by the year of the last title).
+- Verified live: Braeden Valley Pins "#1 State"; Andrew Avent (41st in the state on pins) Pins "#10 North II".
+
+---
+
+## 2026-11-16 — Power Points ties go to the team further in the playoffs (code only)
+
+**Migration file:** none.
+- When two schools have the same Power Points, the one with more team-playoff wins ranks first (Kyle). If those are equal, the winner of their playoff meeting ranks first. Playoff results come from `dual_meets` / `dual_meets_girls` with `is_playoff`.
+- Applies to the section/group lists (`buildPowerPointStandings`), the girls North / South / Non-classified lists, the Groups page, and the school profile's Power Rankings box. Official points are unchanged; only the order of ties changes.
+- 2025-26 boys had 11 such ties. For example, South Group 2: Lower Cape May (4 playoff wins) now ranks ahead of Collingswood (2), both at 43.00.
+
+---
+
+## 2026-11-16 — School profile Power / Conference Rankings boxes; Aesthetic Tool shows live features (code only)
+
+**Migration file:** none.
+- **Power Rankings box:** shows the school's place in its section/group Power Points list (e.g. "1st / 14 · North II Group 4"), linking to that list.
+  - Girls use the North / South / Non-classified lists.
+  - Same data and order as the Sections page (`power_points`, official figures).
+- **Conf. Rankings box:** shows the place in its conference division (e.g. "3rd / 5 · Shore Conference · Division B"), linking to the conference page. Same order as the conference page: division record, then overall record, then points for.
+  - Girls have no conference standings on file yet, so the box shows "—".
+- Both boxes use the page's season (`src/lib/schoolRankBoxes.ts`).
+- **Aesthetic Tool:** the banner listing Insight · Off-Season, School Trophy Case, and the wrestler offseason table and match order now reads "Live on the site". All three have been live since 2026-11-14.
+
+---
+
+## 2026-11-16 — Playoff History seasons switched on; ghost badges in History; wrestler stats board
+
+**Data change (no schema):** `scripts/publish_history_seasons_20261116.mts --apply` (Kyle: "you can make the hidden season visible").
+- `season_gender_state.history_public = true` for all 18 loaded history seasons: boys 2013–2024, girls 2019–2024. Same as the Playoff History tool's switch.
+- Backup: `docs/migrations/backups/20261116_season_gender_state_history.json`. **Reversible?** Yes: set `history_public` back to false, or use the tool's switch.
+- Integrity check before and after: the same 2 known failures (Delsea dual score, 36 same-name pairs).
+
+**Code:**
+- **Champions by Weight and weight podiums:** 👻 on a champion seeded 5th or lower, the same rule as the brackets. `HistPlacer.seed` comes from `tournament_entries`; cache key `tournament-history-v4`.
+- **Wrestler profiles:** a stats board under the header for the latest season on file: Record, WRR, Pins, Tech Falls, Bonus %, with "· postseason only" for the first season and Playoff History years. The WRR is the newest row, since it carries across seasons.
+- **WRR reads on profiles:** `wrestler_hammer_scores` returns no rows to the anon key, so the profile now reads only `season, hammer_score` with the service role. This also fixes the upset-win marks, which never showed for visitors.
+
+---
+
+## 2026-11-16 — All-time boys champions in History; dead YouTube videos hidden; start-year notes (code only)
+
+**Migration file:** none.
+- **Boys region and state History tabs** now include the years before our brackets, from `history_finishes` (NJ Wrestling History): state from 1933-34, regions from 1960-61.
+  - Champions by Weight and Leaders include those years.
+  - Weight pages show those podiums.
+  - The state page has a new State Champions by School table (all schools: count, first, latest).
+  - Schools are matched as on the Trophy Case (`historyFinishSchools`). A closed school that isn't one of ours shows the name NJ Wrestling History uses (e.g. Washington, Dayton Regional, Essex Catholic). Old heavyweight shows as "Hwt" in the 285 row.
+  - Every table that uses those years credits <NjwhLink>.
+  - Those years show to every visitor (not limited by the hidden-season switch, which covers 2013 on).
+  - Cache key `tournament-history-v3`.
+- **"Goes back to 2012-13" notes** on boys History tables drawn only from our brackets: Team Champions, High Scores, Quickest, team titles, district tables, and district weight podiums.
+- **YouTube:** `src/lib/youtubeAvailable.ts` asks YouTube's oEmbed endpoint, checked once a day per video. A removed, private or embed-blocked video is left off:
+  - region pages (all 8 region streams on file, 2025-26, were gone and are now hidden);
+  - the Home Video, which skips to the latest earlier video that still plays.
+- **District and region pages:** the "Brackets, placewinners and team scores" summary line is removed (`hideSummary`).
+- **History tab layout (Kyle, later the same day):**
+  - "Goes back to …" now sits under each table's title rather than below the table.
+  - "{State|Region|District} Champions by School" appears on every level: 10 rows, then 20 more per click.
+  - Multi-Time Champs has 4x / 3x / 2x tabs, 10 rows then 10 more per click (`src/components/site/HistoryLists.tsx`).
+  - The redundant Individual Champs leader table is removed.
+
+---
+
+## 2026-11-16 — Girls region history by name; "No Pins" / "No Techs" (code only)
+
+**Migration file:** none.
+- **Girls region History tab and weight-page history** now follow the region's name, not its number. The numbers moved in 2025-26, when Central became 1. The 2018-19 to 2021-22 North region counts as North I (Kyle). So:
+  - North I and South have every year since 2018-19;
+  - North II and Central start in 2022-23.
+- The history tabs are the season's four regions, the same as the bracket tabs; the old "R5" tab is gone. `tournamentHistory(..., regionName)`, cache key v2.
+- **Empty Quickest Deck / Quickest Tech boxes** (district, region and state pages, and the History tab's by-year table) say "No Pins" / "No Techs" instead of "No data" or a dash.
+
+---
+
+## 2026-11-16 — Vercel firewall: more crawlers blocked, cloud scrapers challenged (no database change)
+
+**Migration file:** none (Vercel firewall, published with Kyle's approval).
+- **Why:** a check a week after the 2026-11-09 block. That rule had stopped Amazonbot, PetalBot, Semrush, the OpenAI bots and others (about 11,250 requests denied). Daily requests fell from 22–42k to 10–13k, and CPU fell from 19–37 to 10–12 min/day. Two things were still getting through:
+  - Amzn-SearchBot: 12,840 requests in 4 days, not matched by "Amazonbot".
+  - Scrapers on Tencent, Huawei Cloud and Alibaba Cloud: about 24k requests in 7 days, all following internal links, with rotating fake Chrome names.
+- **Rule "Block AI and data crawlers" (deny):** added Amzn-SearchBot, meta-webindexer, BacklinksExtendedBot, ExaSearchBot, ExaUser and Exabot to the user-agent regex.
+- **New rule "Challenge cloud scrapers" (challenge):** AS numbers 132203 and 45090 (Tencent), 55990 (Huawei Cloud) and 45102 (Alibaba). It challenges rather than denies, so a real person on a VPN can still get in. Amazon's network is deliberately not included, since it also carries legitimate link-preview fetchers.
+- **Verified:** Amzn-SearchBot gets 403; Googlebot and a normal browser get 200.
+- **Reversible?** Yes: `vercel firewall rules update/remove`, then `firewall publish`.
+
+---
+
+## 2026-11-14 — Daily Challenge Seeds tab (code only)
+
+**Migration file:** none.
+- New Seeds tab: every seed with its best finish, how many times that seed reached it, and the top 3 finishes from that seed (best place, then the most recent).
+- It covers States, Regions and Districts. Seeds are on file for every state bracket, and for districts and regions in the most recent seasons.
+- `/api/admin/history/bouts` now also sends `placed`: every placer with a seed, read from `placements` and `tournament_entries.seed`. The cache key is now v2.
+
+---
+
+## 2026-11-14 — History wrestler profiles for admins, years active, year wrestler search (code only)
+
+**Migration file:** none.
+- Wrestler profiles:
+  - Admins now see hidden Playoff History seasons, and so does a `REVIEW_HIDDEN_SEASONS` preview (`canSeeHiddenHistory` in `src/lib/get-season.ts`). Visitors still see only switched-on seasons.
+  - A wrestler with no grade on file shows "Active 2012-13 – 2015-16" under their name (`WrestlerHeader` `active`).
+- Individual Post Season page:
+  - New "Find a Wrestler" box (`YearWrestlerSearch.tsx`, `/api/postseason/wrestlers`). It searches everyone entered in that year's districts, regions and states.
+  - Later the same day (Kyle): the box became a "Search wrestlers" bar beside the year picker, shown only for past years. The page's description under the picker was removed (`StdHeader` `hideSummary`).
+  - Each result shows school (the school's name that season), furthest event and place, and links to the profile.
+  - A hidden season answers only admins.
+
+---
+
+## 2026-11-14 — Three history finishes get their schools; Trophy Case level tabs; Daily Challenge bout tabs
+
+**Migration file:** none.
+- `history_finishes`: the three rows with no school get the schools Kyle named (`scripts/history_missing_schools_20261114.mts`, backup `docs/migrations/backups/20261114_history_missing_schools.json`):
+  - id 3279 Rob Jimenez 2000 → Brick Memorial
+  - id 3106 Dave Castellini 1998 → Buena
+  - id 53 L. Valenti 1938 → Roselle Park
+  - Readers: Daily Challenge tabs, Trophy Case.
+- Trophy Case Individual has four tabs: All, District Champs, Region Champs, States.
+- Daily Challenge:
+  - The "listed as" note is gone; each school shows one spelling.
+  - New tabs (`BoutsTabs.tsx`, `/api/admin/history/bouts`, admin only, cached an hour):
+    - **Pins & Techs:** every fall and tech fall at districts, regions and states with its time, counted by wrestler, school, year, weight, event or bout.
+    - **Low-Seed Champs:** state champions by seed, sortable by weight. It reads `placements` place 1 plus `tournament_entries.seed`.
+
+---
+
+## 2026-11-14 — Playoff History placements (1st–8th) from the placing bouts
+
+**Migration file:** none (data insert, `scripts/history_placements_20261114.mts`; added ids in `docs/migrations/backups/20261114_history_placements_added.json`).
+
+Kyle's hidden-year review: those years' playoff pages had no State Champions, because only the live seasons had rows in `placements`.
+- 29,085 rows were added for every loaded history season (boys 2012-13 to 2023-24, girls 2018-19 to 2023-24). Per weight: the final's winner and loser are 1st and 2nd, then the 3rd_Place, 5th_Place and 7th_Place bouts. The dry run found no conflicts, so no weight was skipped.
+- 2012-13 District 24 has no bouts, so it has no rows; its podium stays in `history_podiums`.
+- Readers:
+  - `state_champions` (overview State Champions)
+  - `ghost_champions`: state-level ghosts now show for history years. Only the state brackets carry seeds there.
+  - `district_wrestler_points`
+  - `tw_boys_entry_points`: same place as its placing-bout fallback, so totals are unchanged and stored team totals were not recalculated.
+  - Season report and freshman hub.
+- Code: `buildPlacements` in `src/lib/playoffHistory/load.ts`. Load now runs it, and Unload deletes a season's placements before its entries.
+- Reversible: delete the ids in the backup file (protected-delete guard, so in the SQL editor).
+- Verified: integrity check unchanged (only the 2 known failures). State Champions appear on every history year (preview check).
+
+---
+
+## 2026-11-14 — Hidden-year page fixes, team-score note, Explorer school names (code only)
+
+- Post Season overview:
+  - Counts a district that has only a podium on file (2012-13 District 24 → 32 buttons).
+  - History years show names without today's grade (`withoutGrade`, also on the state page).
+  - The state button now reads "State Tournament".
+- Boys district page:
+  - A podium-only year shows team scoring and placements only, with no bracket tiles, leaders or Bracket Buster.
+  - 2020-21 says there were no districts instead of showing empty boards.
+- Girls district pages follow the Post Season year pick. The picker lists only years with girls districts, and the pages have the back link.
+- Team Scoring cards and the Postseason Point Leaders note: "Team scores before 2024-25 are calculated from match results and don't include team point deductions." The cards show it when their totals are `source = 'calculated'` (`src/lib/teamScoreNote.ts`).
+- `src/lib/historySchools.ts` (Daily Challenge Explorer: the same school listed several times):
+  - The source's typos now map to our schools (Audobon, Phillpsburg, Pt. Beach, St. Joe's Montvale, …).
+  - Renamed schools map too (East Paterson → Elmwood Park, Edgewood → Winslow, Monsignor Donovan → Donovan Catholic, Clark → Johnson, Berkeley Heights → Governor Livingston).
+  - Historic schools get one spelling each.
+  - Corrections:
+    - "Washington" 1938–71 (Regions 1–3) is Washington (Warren County), not Washington Township; 125 finishes are off WT's Trophy Case.
+    - "Madison Twp" 1972–76 is Old Bridge, not Madison.
+    - A bare Franklin in Regions 1/3 is Franklin (Sussex).
+    - A bare Manchester is Manchester Township.
+  - `historyFinishSchools` is shared by the Explorer API and the Trophy Case. A state finish's region-title fallback is now limited to the name's own candidate schools.
+  - The Explorer API sends the merged name and keeps the original as `school_listed` (shown as "listed as").
+  - Boys go from 533 spellings to 350 schools.
+- `src/lib/get-season.ts`: `REVIEW_HIDDEN_SEASONS=1` lets a preview deployment show hidden seasons for review. It only works when `VERCEL_ENV === 'preview'`, so it does nothing in production.
+
+---
+
+## 2026-11-14 — 2012-13 boys District 24 official team scores
+
+**Migration file:** none (data insert, `scripts/district24_2013_team_scores_20261114.mts`).
+
+Kyle 2026-11-14 copied the standings into `History/2013/District 24 Brackets/Team Scores.rtf`.
+- 11 rows into `precomputed_team_scores` (tournament 243, `source = 'official'`), from Southern Regional 194 and TR South 193 down to Lakewood 16.
+- The file's 1st/2nd/3rd counts per school match the `history_podiums` podium exactly. Schools come from the podium's team-order rows.
+- Read by the district page's team standings and `top_postseason_team_scores` (Post Season leaderboard, 2012-13: TR South 336.5, 17th; Southern 258, 32nd).
+- The district page note now credits only the placers to the Shore Conference archives when official scores exist.
+- Integrity unchanged (the 2 known). Hidden season.
+
+---
+
+## 2026-11-14 — Region buttons back to the Aesthetic tool's numbers
+
+**Migration file:** none (code).
+
+Kyle 2026-11-14: "just the number as we originally created with the aesthetic tool and i approved exactly as is." He had never asked for the word "Region". I added it ("Region 1") and called it the standard; that was my own choice, wrongly presented as his.
+- Buttons and tiles are restored to the last commit (05721da): overview buttons "1"…"8", region page pills "R1"…"R8", boys region list big number, girls region list as it was.
+- Only a named region shows its name in place of the number: boys 2020-21 and girls 2022-23 on (North I, North II, Central, South); girls 2018-19 to 2021-22 (North, South).
+- `regionLabels` gives `button` (number or name), `pill` (R-number or name) and `label` (page titles, which were already "Region N").
+- Snapshot: boys region pills back to R1-R8; re-baselined.
+
+---
+
+## 2026-11-14 — Region labels: one source for every season (girls' named regions)
+
+**Migration file:** none (code).
+
+Kyle 2026-11-14: "did you update the region buttons yet?" The first pass missed places.
+- `regionLabels(g, season)` in `src/lib/postseasonSeason.ts` works for any season: the region's own name (boys 2020-21 and girls 2022-23 on: North I / North II / Central / South; girls 2018-19 to 2021-22: North / South), else "Region N". Its order is North I, North II, Central, South, then by number (girls 2025-26 numbers them Central 1, North I 2, North II 3).
+- Used by: the overview buttons, the boys/girls region lists, region page tabs and titles, and weight page titles.
+- Before this, live girls seasons showed Region 1-4. The boys list showed a bare number when a logo was missing. Girls titles read "Region North".
+- **Outage, about 5 minutes:** the first deploy passed a function to the client-side overview buttons, so `/postseason/individual/*` errored for any year with buttons. Fixed: plain labels are passed.
+- Snapshot: girls region 1 pages show the names; re-baselined.
+
+---
+
+## 2026-11-14 — 2012-13 boys District 24: wrong event removed, real podium added (history_podiums)
+
+**Migration file:** `docs/migrations/20261114_district24_2013_podium.sql` (APPLIED 2026-11-14 by Kyle, third run; the first two rolled back with nothing changed: a DELETE on the `wrestler_completeness` view, then untyped NULLs in the team-order insert. Check: 42 placers, 11 team rows, 0 bouts, 0 entries, Kevin Corrigan at 113. Integrity unchanged (the 2 known), snapshot unchanged, code deployed).
+
+Kyle 2026-11-14: approved with the counts in hand ("yeah").
+
+**The problem.** FloWrestling's "NJSIAA District 24" (2/22/2013), CSV and brackets PDF alike, is not that year's district:
+- Its wrestlers wrestled other weights at 2012-13 Region 6.
+- None of Region 6's District 24 qualifiers are in it (Kevin Corrigan, Region 6 champion and state runner-up, among them).
+- Its champions match neither the real 2012-13 nor 2013-14 District 24 champions (Shore Conference archives).
+- Region 6 2012-13 is right: at every weight, the 3 placers who qualified are at the state tournament at the same weight.
+
+**Removed** (backup `docs/migrations/backups/20261114_district24_2013_wrong_event.json`):
+- Tournament 243's 134 bouts, 11 calculated team scores and 134 entries.
+- 134 + 134 staged rows.
+- 13 profiles that existed only because of the file (made by the import; only their completeness rows referenced them).
+- The tournament row stays. Hidden season only.
+
+**Added.**
+- New table `history_podiums`: a podium with no bracket. Columns: tournament, weight (NULL for a team-order row), place, wrestler, school, source. Read by everyone, written by service role.
+- The 42 placers (1st-3rd at 14 weights) and the 11-team order, from the Shore Conference Wrestling Archives 2013 team pages. Every placer is linked to his 2012-13 Region 6 profile.
+- `district_placements` (the live 5th/6th version) falls back to `history_podiums` when a district has no placement bouts.
+
+**Code** (deployed after the migration).
+- Boys district page: team order (no points) and a "Bracket not available — from the …" note.
+- District weight page: shows the podium instead of a 404.
+- Trophy Case: reads podium champions; the temporary `NOT_THE_DISTRICT` skip is removed.
+- Wrestler profile: placement chips include podium finishes.
+- `TeamScoreCard`: points are optional.
+
+---
+
+## 2026-11-14 — Trophy Case review: spelling joins, school matching, 2012-13 District 24
+
+**Migration file:** none (code; no data changed).
+
+Kyle 2026-11-14: "review the trophy case, dan scheets and dan sheets are the same wrestler."
+
+**Rows (`src/lib/trophyRows.ts`).**
+- Rows at one school, year and weight are one wrestler when last names are close: within 2 letters (3 for long names or the same first name), one inside the other (Napoli/DiNapoli), Jr/II ignored, or a lone first name ("Doug" / Doug Kanach). Before, they joined on an exact last name.
+- About 150 doubled rows became one, Dan Sheets/Scheets (Collingswood 238, 2000-01, 189) among them. The state list's spelling shows.
+- A "So - " class tag in a source name is stripped.
+
+**School matching (`src/lib/historySchools.ts`, readers: Trophy Case, admin history research tabs, Playoff History school suggestions).**
+- A saint's possessive is dropped ("St Joseph's - Metuchen" = St. Joseph Metuchen 186; its 18 rows had gone to Montvale 394).
+- The starts-with rule never lands on a school tagged with another state.
+- `HISTORY_NAMES` corrects names that rule put at the wrong school: Paterson Eastside, Middletown South, Passaic Tech, Warren Hills. Schools we don't have show nowhere instead: Madison Central, Springfield, Montclair Kimberley, Phillipsburg Catholic, Newark Central, Palisades Park, St. James, Bogota.
+- A bare "St. Joseph" (50 rows) goes by its region (2 = Montvale, 8 = Hammonton). A bare-name state finish takes the school of that wrestler's region title.
+- Before/after diff of every name was reviewed; nothing else moved.
+
+**2012-13 boys District 24 is not the varsity district.**
+- Its "champions" wrestled other weights at Region 6 that week (Owen McClave won "113" at districts, wrestled 106 at regions). Region 6's champions from those schools (Kevin Corrigan, Rich Lewis, Chris Serpico) aren't in it.
+- All 352 other district files pass the same check (every champion is at his region).
+- Kept off the Trophy Case (`NOT_THE_DISTRICT`) until Kyle re-downloads it. The hidden 2012-13 District 24 page still shows it.
+
+**Left as the sources have them:** 14 year-and-weight spots with two different wrestlers at one school (old Newton state lists 1946-1960, Delbarton 2002 Mangione/Cholish weights swapped, Washington 1966, Triton 1962, St. Joseph 2023 138, girls 2019 state Raritan/Hunterdon Central/Kingsway).
+
+Snapshot unchanged.
+
+---
+
+## 2026-11-14 — NJ Wrestling History credit line removed from the Trophy Case (for now)
+
+**Migration file:** none (code).
+
+Kyle 2026-11-14: "remove Historical results courtesy of NJ Wrestling History … for now — i haven't confirmed with them yet."
+- The credit line under the Trophy Case is off. `trophy.credit` still marks schools whose rows come from njwrestlinghistory.info, so it can come back with one line.
+- The NJWH-sourced rows themselves (boys state placers, region titles, sectional/state team titles) still show.
+- **Reversed the same day** (Kyle: "put it back actually"): the credit line is back.
+
+---
+
+## 2026-11-14 — Back link to the year's Post Season page
+
+**Migration file:** none (code).
+
+Kyle 2026-11-14: "when we go into a season and then pull up a region, we need a link to go back to that season's post season home page."
+- `PostseasonHomeLink` ("← 2016-17 Boys Post Season" → `/postseason/individual/<side>`, which shows the same remembered season).
+- Added on: boys/girls region pages, boys district pages, boys/girls state pages, and the boys region/district and girls region lists.
+- Bracket pages already link back to their region or district.
+- Snapshot: only the new link line on five pages; re-baselined.
+
+---
+
+## 2026-11-14 — Girls region Terminators board empty: duplicate function
+
+**Migration file:** `docs/migrations/20261114_drop_girls_region_mat_time_int.sql` (APPLIED 2026-11-14 by Kyle; one version left, text. Girls Region 1 2025-26 board: 8 champions, Ella Poalillo first).
+
+**Found while checking the Terminators fix:** `girls_region_mat_time` exists twice (p_region integer and p_region text), both from `20261103_school_names_by_season.sql`. The page passes the region as text; the API can't choose between the two (PGRST203), so the live girls region pages' Terminators board has been empty since then. The migration drops the integer one. No other girls region function is duplicated.
+
+**Other boards after the Terminators migration:** all champions only.
+- 2025-26 boys region 1: Cristian Alvarez.
+- Boys district 7: champions (3 wins each, as districts are).
+- Girls state: Ella Poalillo, Eva Barry.
+- Boys 2012-13 state: Bryan Dobzanski, Anthony Ashnault.
+
+---
+
+## 2026-11-14 — Terminators = champions (migration pending); standard region labels; wider stat boards (preview)
+
+**Migration file:** `docs/migrations/20261114_terminators_champions_only.sql` (APPLIED 2026-11-14 by Kyle; 2025-26 boys state board: 8 rows, all state champions, Jayden James 11 wins 12:15 first).
+
+**Terminators.** Kyle: "some leaders for the state page have 3 wins".
+- **Cause:** the five mat-time boards (`lb_p_mat_time`, `lb_gp_mat_time`, `region_mat_time`, `district_mat_time`, `girls_region_mat_time`) ranked anyone unbeaten with 3+ wins, ignoring forfeit losses. A wrestler who won 3 district bouts and medical-forfeited out topped the 2025-26 state board (Anthony Jackson, 3 wins, 1:47) over champions (Jayden James, 11 wins).
+- **Fix:** only champions of the board's level (state / region / district final winners), unbeaten on the way, ranked by mat time. The girls region board also stops counting losses as 6:00 bouts.
+
+**Region labels.** Kyle: "they should never change … for the season with 4 regions, call them North I, North II, Central and South".
+- Boys 2020-21's four super regions renamed in `regions` (#14-17: North I, North II, Central, South); used only by the hidden 2020-21 tournaments.
+- Every region button and pill reads "Region N" or the year's own name (Post Season overview was a bare number; region pills were "R1").
+
+**Stat boards** (Terminators, Quickest Deck …): at most three across on the state, region and district pages (were five on wide screens, about 200px each). A layout change, so on a preview deployment for Kyle first. Kyle: "wider boards look better now"; live 2026-11-14 with the region labels. Snapshot changes were labels only (R1 → Region 1); re-baselined.
+
+---
+
+## 2026-11-14 — Post Season · Individual (the year's playoff page) reaches the history years
+
+**Migration file:** none (code).
+
+Kyle 2026-11-14: "so you didn't create a master playoff page for each year then?"
+- `/postseason/individual/boys|girls` (`IndividualPostseason.tsx`) now uses `getPostseasonSeason`: public seasons, switched-on history years, and hidden ones for an admin.
+- Its region buttons carry a history year's region names. Its year label falls back to the season id (keyed by end year).
+- The year's team totals, state placers and champions come from the loaded data (2012-13 boys top: South Plainfield 634.5, Bergen Catholic 592.5, St. Peter's Prep 574.5).
+- Site snapshot unchanged.
+
+---
+
+## 2026-11-14 — History season names (solo schools) and Wood-Ridge as its own team
+
+**Migration file:** none (data; `scripts/playoff_history_names_woodridge_20261114.mts`, backup `backups/20261114_season_names_woodridge.json`).
+
+**Kyle 2026-11-14:**
+- **Solo names:** 58 `school_season_names` rows. A school that's a co-op today but wrestled alone that season shows as it was: Lodi, Lenape Valley, Leonia, Middlesex, Bordentown Regional, Clayton, Lyndhurst, Becton (Becton/Wallington in 2013-14), girls Bogota (2019-20) / Ridgefield Park (2020-21).
+  - Hyphenated single schools (Bridgewater-Raritan, Scotch Plains-Fanwood, Rumson-Fair Haven, WW-P North/South) need none.
+  - Seasons with a co-op name already set keep it.
+- **Wood-Ridge** was its own team: boys "Wood Ridge" (2015-16) and "Wood-Ridge" (2016-17 to 2019-20), with Becton printed separately.
+  - 52 entries moved from Becton-Wood-Ridge (#321) to Wood Ridge (#1223, Kyle's new school, unused until now); the spellings re-pointed.
+  - 2015-16 to 2019-20 team scores recalculated.
+- Integrity unchanged (the known Delsea score and the 36 genuinely different same-name pairs).
+
+---
+
+## 2026-11-14 — Playoff History pages (admin preview), season weights / regions, calculated team scores
+
+**Migration file:** none (code; team scores are data via `calcTeamScores`).
+
+**Pickers** (`getPostseasonSeason`, `src/lib/get-season.ts`; `InlineSeasonPicker options`): the 13 boys/girls district, region and state pages (girls districts unchanged: no girls history districts) offer the public seasons, the history seasons Kyle has switched on, and for an admin the hidden ones marked "(hidden — admin preview)". A remembered hidden pick falls back to the live season for visitors (checked: no 2012-13 anywhere). Other pages never accept history seasons.
+
+**Per-season lists** (`src/lib/postseasonSeason.ts`):
+- **Weights:** the weights a history season used (boys 145/152… before 2021-22; girls' changing classes), on weight tiles, tables and bracket weight nav, and in the state loaders.
+- **Region names and lists:** boys 2020-21's four super regions; girls 2018-19 to 2021-22 North (r5) / South. The girls region pages accept region 5.
+- **Districts:** the boys district list for 2020-21 says there were no districts.
+- **Girls region brackets:** draw C5 and C6. In a six-round consolation, C6 is labelled Cons. Semis.
+
+**Team scores:** `calcTeamScores` (now also run by every Load) writes each history tournament's totals from the site's formula (`district_team_score`, `girls_region_team_score`, `state_team_score`; boys regions summed from `region_team_pts`) into `precomputed_team_scores` with source 'calculated', labelled as the pages read them.
+- Done for all 18 loaded seasons: boys about 670 school totals a season, girls 109-243.
+- Integrity label rule passes.
+
+---
+
+## 2026-11-14 — Live: Trophy Case, Insight · Off-Season, wrestler offseason table + match order
+
+**Migration file:** none (code). Kyle 2026-11-14: "you can put those live".
+- **School pages** (`/boys|girls/schools/[school]?tab=trophy`): Trophy Case tab (Team / Individual; state → region → district; 👑 state titles; district titles from 2013; NJ Wrestling History credit).
+- **Insight · Off-Season** (`/boys|girls/insight/off-season`, between Polls and About): by weight + Most Notable Overall, Kyle's order from the Public board tab, every event and notable result per wrestler. Cached 5 minutes.
+- **Wrestler profiles:** the offseason table (for wrestlers on the board) and match order (final first, first round last; a graduated wrestler's history oldest first).
+- The Aesthetic Tool keeps its preview, building the board fresh (`preview.fresh`).
+- **Site snapshot:** intended changes only (Trophy Case tab; one profile's offseason table); re-baselined.
+
+---
+
+## 2026-11-14 — Hidden history leaked onto live profiles (fixed); Steven Krakower → St. Rose
+
+**Migration file:** none (code; data via `scripts/fix_krakower_20261114.mts`, backup `backups/20261114_krakower.json`).
+
+**Leak:** after the loads, the site snapshot showed a live girls wrestler profile with a hidden 2023-24 history season ("S2024"). Wrestler profiles read every postseason entry with no season filter. Live for about an hour; fixed and deployed (snapshot back to "no change"):
+- **Wrestler profile:** entries of history seasons not switched on are left out; switched-on ones get their label ("2023-24"). The profile's weight is taken newest season first; tournament ids aren't in season order, since past seasons were loaded later.
+- **Head-to-head API:** postseason bouts from history seasons only once switched on.
+- **Personalized home "recent matches":** limited to the live season. It sorted by tournament id, which now puts loaded past seasons first.
+- Other public readers checked: all take a season, or only read grade labels (null for history).
+
+**Steven Krakower** (Kyle: "he went to st. rose"): the 2013 District 23 export left his school blank on every row.
+- He now has a profile (St. Rose, #1218) and an entry in the loaded 2013 District 23 at 152.
+- His quarterfinal win over Conor Dowd is added, and his semifinal (Ruggiero) and 3rd-place (Scott) losses are re-attached.
+- `district_bracket` reads it back correctly.
+
+**Integrity after the merges:** "two profiles with the same name at the same school" is down from 1,615 to 36: the pairs Kyle marked Different, plus same names too far apart or in the same season (different wrestlers).
+
+---
+
+## 2026-11-14 — Playoff History loaded (hidden): girls 2019-2024, boys 2013-2024; gap-year merges; transfer name links
+
+**Migration file:** none (data; `scripts/.local/load_all.mts` → `loadSeason`; `scripts/playoff_history_gap_merge_20261114.mts`; `scripts/playoff_history_transfer_links_20261114.mts`).
+
+**Loaded** (every season still hidden; history_public false):
+- Girls 2018-19 to 2023-24: 3-5 events each, 3,241 entries, 4,660 bouts.
+- Boys 2012-13 to 2023-24: 41 events a season (2020-21: 5), about 5,300 entries and 6,300-6,550 bouts a season.
+- Old weight classes added once: boys 145/152/160/170/182/195/220; girls 105/111/118/127/136/147/161 and 121/128/135/143/151/180/215.
+- 1 bout skipped: 2013 District 23 152 QF, winner with no team in the export.
+
+**Checks:**
+- Read back through `state_placements` / `girls_region_bracket`: girls 2023-24 96/96 state placers.
+- Other seasons agree with the history placers apart from spellings (Isabela/Isabella, Melamund/Melamud, Napoli/DiNapoli…).
+
+**Gap years** (Kyle 2026-11-14: "Merge them"):
+- The integrity check showed 1,615 same-name/same-school profile pairs: the automatic rule joined back-to-back seasons only, so a skipped postseason made two profiles.
+- **Merged:** boys 1,503, girls 78. Seasons fit one four-season window (inside a kept existing profile's class year), no shared season, at most one existing profile (kept), and none Kyle marked Different.
+- **Kept apart:** 13 Kyle Different, 3 outside the window, 1 sharing a season, 1 with two existing profiles.
+- Emptied import-made profiles deleted only after a recount found no references. Backup `backups/20261114_gap_year_merges.json`.
+- The automatic rule (`personSeasons`) now joins same name + school within four seasons, across a gap.
+
+**Transfer name links** (Kyle: "Add name links"): 58 current wrestlers whose history adds an earlier school got a name link there (the export's printed name), as the 11-11 review did. Limited to the integrity rule's case; 1,163 profiles with no links anywhere were not touched. Backup `backups/20261114_transfer_name_links.json`.
+
+---
+
+## 2026-11-14 — Playoff History: profiles created for boys; Load / Unload built (needs grants)
+
+**Migration file:** `docs/migrations/20261114_playoff_history_load_grants.sql` (APPLIED 2026-11-14 by Kyle; all seven tables insert/delete true).
+
+**Profiles:**
+- Boys: Kyle cleared the last six conflicts (1A 2A 3A 4A, 5/6 different) and ran Create profiles. 59,569 entries got their wrestler (128 empty-slot placeholder teams have none); 21,451 new profiles, 2,170 existing (31 took two history lines).
+- Integrity and site snapshot unchanged.
+
+**Load / Unload** (`src/lib/playoffHistory/load.ts`, tool buttons, `POST action load|unload`):
+- **Load writes:** tournaments (names and types the pages query, dates, district/region ids), any old weight classes, entries (school, Flo state seed), bouts (round, side, result, score, fall time, `score_raw`) and co-op names (`school_season_names`).
+- **Named regions:** boys 2021's four super regions and girls 2019-22's North get their own `regions` rows.
+- **Unload** removes exactly that; refused while the season is switched on.
+- **Admin Post-Season Bracket tool:** lists only current seasons' state tournaments and today's weight classes.
+
+**First test load (girls 2023-24):** stopped at "permission denied for table tournaments". service_role could read but not write it (postseason tournaments were only ever made in the SQL editor). Nothing was written; the season is still staged. The grants migration fixes it.
+
+---
+
+## 2026-11-14 — Same wrestler guard fixed: whole lines, one season per wrestler, class year at Create profiles
+
+**Migration file:** none (code).
+
+**Why:** Create profiles refused Joseph Brown and Gabe Jimenez (more than four seasons) though each click had passed. The click guard (`sameConflict`) identified a history line by one end's season, so a line named by its first season in one maybe and its last in another wasn't joined.
+
+**Changes:**
+- Lines are now keyed by school + all seasons + names. A first fix without names merged different wrestlers sharing a school and seasons; caught by the scan and corrected before deploy.
+- New rule: one wrestler can't be on two lines in the same season.
+- Create profiles now checks the same three rules (four seasons, one line per season, class year).
+- `sameConflict(…, every)` scans all saved calls.
+
+**Scan of saved calls:** girls none. Boys 6:
+- Joseph Brown: West Milford + New Egypt both 2015-16.
+- Alexander Rodriguez: Newark East Side + Clifton 2015-16.
+- CJ Thompson: Maple Shade + Elmwood Park 2017-18.
+- Gabe Jimenez: 2018-19 to 2022-23.
+- Harrison Talman and Carlos Murcia: 2023-24 vs class of 2028.
+
+---
+
+## 2026-11-14 — Same wrestler review: automatic profile joins shown on history lines
+
+**Migration file:** none (code + Kyle's calls via the guarded API).
+
+**Why:** Kyle 2026-11-14 couldn't match Sean Brown (Newton 215 = Newton 285) or Nicholas Gonzalez (Hasbrouck Heights 120 = 132). Both were already joined automatically (exact name, same school, class fits), so they never appeared as maybes. The maybes he saw were other wrestlers of the same name (Seton Hall 120, Union 190). The guard refused Seton Hall → Newton because Seton Hall was already tied to Sparta.
+
+**Changes:**
+- A history line that joins one of our profiles on its own now says so in green ("→ joins our profile automatically (Newton, class of 2026)"). All maybes were refreshed.
+- **Decisions set for Kyle:**
+  - Sean Brown: #883 Seton Hall ↔ Sparta profile = same (with his #775); #776 and #884 Seton Hall ↔ Newton = different.
+  - Nicholas Gonzalez: #777 and #891 Union 190 ↔ Hasbrouck Heights = different (down 9 classes). decided_by "local".
+
+---
+
+## 2026-11-14 — Same wrestler review: sort by weight jump, names kept together, Same guard
+
+**Migration file:** none (code).
+
+Kyle 2026-11-14: "let me sort by that" / "put the profiles with the same name all near each other … make this easy on me."
+- **Sort:** By name / biggest weight jump first / smallest first.
+- **"Keep each name together"** (on by default): maybes sharing a name or a side are one group under a header listing every name in it. With a jump sort, groups sort by their largest jump.
+- **Server guard on Same** (`sameConflict`): Kyle's Same calls plus the new one, grouped, may hold one existing profile and four seasons, inside the profile's class.
+  - Otherwise it refuses with the reason (409) and writes nothing.
+  - Tested: Sean Brown's two different profiles refused, both left pending.
+
+---
+
+## 2026-11-14 — Same wrestler review: weight-class jump (transfers, existing profiles)
+
+**Migration file:** none (code).
+
+Kyle 2026-11-14: "for the transfers, show me how many weight classes they jump" / "same for existing profile, other school."
+- Each transfer shows its last weight at the old school → first weight at the new one. Each existing-profile maybe shows its last history weight → first weight with us.
+- Classes are counted within each season's own class list, since the lists changed in 2021-22. Colours: 2 classes amber, 3+ red.
+- Girls decisions done (73: 67 same, 6 different).
+- Create profiles run for girls: 3,241 entries, 1,853 profiles (1,377 new, 476 existing; three existing profiles each took two history lines). Integrity unchanged.
+
+**Boys transfer jumps:** 0: 100, 1: 110, 2: 66, 3+: 70.
+
+---
+
+## 2026-11-14 — Same wrestler review: our seasons, the gap, and the four-year window
+
+**Migration file:** none (code; `src/lib/playoffHistory/identity.ts`, the tool).
+
+**Kyle 2026-11-14:**
+- "show me the weight we have for them. show me if there was a gap or no gap."
+- "only 4 years of eligibility … make sure everyone you are trying to merge has the data match up in the 4 year window."
+
+**Changes:**
+- An existing-profile candidate shows our data season by season (weights, school; postseason entries + duals from 2024-25) and the gap after the history's last season: No gap / Gap: seasons missing / Overlap (both have one season).
+- The history side lists each season with its weight.
+- `window4()`: everything joined into one wrestler must fit four consecutive seasons and, with a class year, run from three seasons before it through it.
+  - Automatic profile links now require it.
+  - Candidates that break it are flagged in red with the reason (filter "Outside 4 years").
+  - Create profiles refuses any "same" that makes a wrestler span more than four seasons.
+- Rerunning Find refreshes the context on rows already listed; Kyle's calls are kept.
+
+**Now:**
+- Boys 907 candidates, 52 outside the window (e.g. Josh Lewis 2012-13 to 2016-17).
+- Girls 73, 4 outside (e.g. Stephanie Diaz 2022-23 vs class of 2028).
+
+---
+
+## 2026-11-14 — Trophy Case (mock): state → region → district; district titles from 2013 on
+
+**Migration file:** none (code). `20261114_playoff_history_people.sql` APPLIED by Kyle (columns verified).
+
+**Changes** (Kyle 2026-11-14):
+- Each row lists state first, then region, then district.
+- District titles: our district brackets (finals; 2024-25 on), plus the Playoff History seasons staged from the exports (2013-2024 boys) until they load as brackets. Profile names once assigned; nickname brackets dropped meanwhile.
+- Flagged "*" with "District champions are on file from 2013 on."
+- Rows join by year, weight and last name, because sources spell first names differently and history writes heavyweight as "Hwt".
+
+**Checked:**
+- Paulsboro 65 district titles, Bergen Catholic 147 (2013-2026, no 2021).
+- DePaul girls 1 (girls districts began 2025-26).
+
+---
+
+## 2026-11-14 — Playoff History, part 3: who is who (Same wrestler review, Create profiles)
+
+**Migration file:** `docs/migrations/20261114_playoff_history_people.sql` (PENDING: Kyle runs it).
+- `playoff_history_joins` gets `b_wrestler_id` (a candidate can be an existing profile), `a_school`, `b_school` and `context` (seasons, schools, weights, places for the tool).
+- New `playoff_history_profiles`: every profile the import made or linked, so a load can be undone.
+
+**Code** (`src/lib/playoffHistory/identity.ts`, `people.ts`):
+- **Person-seasons:** normalized name (nickname in brackets, suffix and backticks dropped) + school.
+- **Automatic joins:** same name + same school in back-to-back seasons (Kyle's rule), cut after four seasons. A history wrestler also links to exactly one same-named existing profile that wrestled at that school (name links, postseason entries, duals) when the class year fits.
+- **Candidates for Kyle:** name variants (same school, same last name, first name a nickname/initial/one letter off: Tom/Thomas Flannigan, "Mchael" VanBrill), transfers (same name, other school), more than four seasons, and existing profiles at another school (class fits) or with the class year off.
+- **Create profiles:** union of the automatic joins + Kyle's "same" + profile links. New profiles (inactive, name split by `splitName`: suffix kept, De La Cruz together, "jack bauer" → Jack Bauer) are made 500 at a time, then `playoff_history_entrants.wrestler_id` is set. A rerun keeps assigned entries.
+
+**Tool:** Same wrestler tab: find candidates, Same / Different (one or a page at a time), Undo, Create profiles once none are pending. API actions `find_joins`, `decide`, `assign_people`.
+
+**Dry run** (before the migration):
+
+| | Entries | Person-seasons | Automatic joins | Linked to existing profiles | Candidates |
+|---|---|---|---|---|---|
+| Boys | 59,697 | 40,202 | 15,846 | 2,144 | about 875 |
+| Girls | 3,241 | 2,464 | 681 | 435 | about 52 |
+
+The prebuild check prints failures with "✖": a deploy failed on a "2024-25" in help text (fixed).
+
+---
+
+## 2026-11-13 — History fixes for 2021; 2024 Region 7 rebuilt from its Flo bracket
+
+**Migration file:** none (data; `scripts/fix_history_2021_20261113.mts`, backup `backups/20261113_history_2021_fix.json`).
+
+**history_finishes 2021** (Kyle: "yes please fix those errors" / "make any fixes so that the 2021 results show correctly"):
+- **State 126, places 2-8:** NJWH repeated the 120 placers. Replaced with the real placers from the 2021 state export (the Flo bracket agrees), each with its school and a note. A scan of every year 2013-2024 found no other copied list.
+- **2021 regions (56 rows):** NJWH numbers the four COVID super regions 1/3/5/7. They now carry region_name "Super Region North 1 / North 2 / Central / South", so the history tabs show them by name and they don't count as Regions 1/3/5/7.
+- Integrity check before and after: only the known Delsea failure.
+
+**2024 Region 7:** the re-downloaded export again has no round names and its rows out of wrestled order. Kyle added the FloWrestling Region 7 bracket PDF.
+- `src/lib/playoffHistory/floBoutOrder.ts` reads each bout's number from the PDF (word positions: the number printed twice, its two wrestlers just left of it).
+- Rows are sorted by bout number and the normal builder works out the rounds.
+- A pair that met twice is told apart by the printed result (win type, then score); each PDF bout is used once.
+- A bout missing from the PDF (Hunnewell over Carter, 175) is slotted after the loser's last bout and the winner's first loss.
+- **Result:** all 14 weights have places 1-6. Region champions agree with NJWH (one spelling: Weright/Wright). Championship wins per wrestler agree with the PDF except finalists, whose final is on the PDF's second page.
+
+**Restaged:** every boys season 2013-2024. 2021 state is now 104/104 vs NJWH; 2024 region champions 101/104 (spellings).
+
+---
+
+## 2026-11-13 — Playoff History: boys 2021-2024 staged
+
+**Migration file:** none (staging data).
+
+**Staged:**
+- **2021** (COVID): four super regions (North 1, North 2, Central, South; `BOYS_NAMED_REGION`) and a 16-man state, no districts.
+- **2022-2024:** 32 districts, 8 regions, state. "MFFL" and "M FOR" read as forfeits; "NC" skipped.
+
+**Found:**
+- **2024 Region 7:** the export has no round names on any of its 294 rows, and its rows aren't in wrestled order. Its brackets can't be rebuilt reliably: 53 problems listed. Asked Kyle to re-download it.
+- **NJ Wrestling History's 2021 state 126 list is wrong.** Its 2nd-8th repeat the 120 placers. The export and the Flo PDF agree the 126 placers were Santaniello, Cangro, Conlin, Fernandez, Wasilewski, Tandurella, Fitt, Malone. FIXED (see the entry above).
+- NJWH numbers 2021's super regions 1/3/5/7, so the region-champion check shows 12/26 that year: a numbering difference, not a results difference.
+
+---
+
+## 2026-11-13 — Playoff History staged: boys 2013-2020, girls 2019-2024
+
+**Migration file:** none (staging data; `scripts/playoff_history_stage.mts`, `--girls`).
+
+**Staged:**
+- **Boys 2013-2020:** about 6,300 bouts and 5,300 entries a season. Export gaps: 2.
+- **Girls 2019-2024:** 380-1,230 bouts a season. Every state placer and region champion agrees with the saved girls history.
+
+**Team names:**
+- Boys 515: 430 matched, 84 for Kyle, 1 empty slot.
+- Girls 310: 277 matched, 33 for Kyle.
+
+**Changes:**
+- The "district then vs now" flag was dropped: NJ redrew districts after 2020, so it flagged 279 of 430.
+- It's replaced by a check for two spellings matched to one school that wrestled in different districts (girls: regions) the same season. Boys 0, girls 0. The same spelling in two girls 2019 regions is a school split across North and South, not a match error.
+- Kyle's calls are never overwritten on a restage (only their seasons update).
+- **New school** action in the tool for closed schools (`POST action new_school`): inserts an NJ school named as Kyle types it and refuses a name that already exists.
+
+---
+
+## 2026-11-13 — Playoff History, part 2: girls 2019-2024, seasons 2021-2024, per-side school names
+
+**Migration file:** `docs/migrations/20261113_playoff_history_2021_24_girls.sql` (APPLIED 2026-11-13 by Kyle: boys 12 history seasons 2013-2024, girls 6 2019-2024, all hidden).
+
+**Why:** Kyle 2026-11-13: "fill out the individual tournament for the girls data we have as well … the state brackets can be recreated, match data will have to do for districts and regions. this match data can also go into wrestler profiles."
+
+**Girls files:** Kyle's 2019-2024 region + state exports and the Flo state PDFs, copied to `History/Girls/<year>/`. The originals stay in `Whizzer Upload/Girls History`, which `load_girls_history_20261113.mts` reads. Girls had no districts before 2025-26.
+
+**Builder changes:**
+- **Girls codes** (as the girls pages and 2024-25/2025-26 hold them):
+  - Regions: R1 R2 QF SF F, C1-C4 (C4 = consolation semis), 3rd, 5th. 2019 and 2022 regions ran up to six consolation rounds → C1-C6.
+  - State: a 16-man first round is R1.
+- **Region names:** girls regions keyed 1 North I, 2 North II, 3 Central, 4 South, 5 North (2020-22).
+- **2019's single region file** is split into its brackets by who wrestled whom, each named by its schools' 2020 region.
+- **NC** (no contest) skipped.
+- **Round order** now comes from each weight's own rows. One file listed a weight's 3rd-place bouts before another weight's Cons. Round 3.
+- **Seed reader:** handles the small one-page girls brackets (2019-22) and weights printed beside a "BYE" (2023-24). Seed lines need the full name.
+
+**Checked:**
+- Girls state placers match the saved girls history 456/456; every bracket builds.
+- Boys unchanged (813/832, the 2 export gaps).
+- Every girls seed read matches a state entrant.
+
+**Tool:** the tool is now on both sides (Tools → Admin Tools). The API and team-name decisions are per side: `playoff_history_schools` key becomes (gender, raw_name).
+
+**Bout order:** the exports list each bracket's bouts in no bracket order (it varies by weight and year), so seeds can't be read from them. First-round pairs do follow standard seeding (seeds summing to N+1).
+
+---
+
+## 2026-11-13 — Playoff History: past boys postseasons (2013-2020) staged for review
+
+**Migration file:** `docs/migrations/20261113_playoff_history.sql` (APPLIED 2026-11-13 by Kyle: 8 seasons, stage history, hidden).
+
+**Why:** Kyle 2026-11-13 loaded 2013-2020 boys district, region and state exports (TrackWrestling), plus the FloWrestling state brackets, in `~/Desktop/wrestling_brackets/History/<year>/`: "basically need to recreate the playoff pages for those years". Girls already have theirs. He is gathering 2021-2024.
+
+**Kyle's calls:**
+- Each season loads hidden and is switched on in the new boys tool (Tools → Admin Tools → Playoff History Review).
+- Same name + same school in back-to-back seasons joins automatically; everything else goes to review.
+- Co-ops show that season's name.
+- Team scores for these seasons are CALCULATED with our formula (`precomputed_team_scores.source = 'calculated'`), an exception to copied-official.
+
+**Migration:**
+- Seasons 2012-13 … 2019-20.
+- A `history` stage: postseason pages only; `history_public` is the on/off switch.
+- `precomputed_team_scores.source`.
+- Staging tables `playoff_history_{seasons,bouts,entrants,schools,joins}`.
+
+**Code:**
+- **Reading the files:**
+  - `src/lib/playoffHistory/readFiles.ts`: reads the exports.
+  - `brackets.ts`: works out each bout's round from the bracket itself, since the labels vary about 60 ways. Byes and TrackWrestling placeholders ("Forfeit Forfeit", "A Forfeit", "Joe Wrestler", "Unknown3") are skipped.
+  - `stateSeeds.ts`: reads seeds from the Flo PDFs.
+  - `schoolNames.ts`: expands abbreviations, then matches strictly (no starts-with: "Passaic Co Tech" ≠ Passaic). The two Kennedys are told apart.
+- **Staging:** `scripts/playoff_history_stage.mts` writes the staging tables.
+- **Review tool:** `/admin/boys/playoff-history` (`/api/admin/playoff-history`).
+- **Season list:** `getSeasons()` leaves history-only seasons out, so pickers, ratings' previous season, rollovers and admin season tools are unchanged. `getHistorySeasons()` serves the postseason pages. The seasons route and both Snap Shot pages filter them out too.
+
+**Checked (dry run, all 8 seasons):**
+- Every bracket builds.
+- State placers match NJ Wrestling History 813/832; the other 19 are the same placement under a spelling or nickname (Mike/Michael Russo).
+- Round shapes match 2024-25's (2017-20 state: R1 224, R2 112, QF 56, SF 28, F 14, C1-C6, 3rd/5th/7th).
+- Export gaps: 2 (2017 D3 113 is missing a semifinal; 2018 D27 160 is missing two quarterfinals).
+- Seeds read from every PDF match a state entrant.
+- Team names: 520. 431 match on their own, 6 are placeholders, 83 wait for Kyle.
+- Site snapshot: unchanged after deploy.
+
+**Found:** live boys region bracket pages didn't draw the consolation semifinals (C3; 224 bouts each in 2024-25 and 2025-26). The girls page draws C1-C4. FIXED 2026-11-13 (Kyle: "put it live"): `boys/regions/[region]/[weight]` draws C1 → C2 → C3. Region 1 106 2025-26 shows 16/16 bouts. Site snapshot re-baselined.
+
+---
+
+## 2026-11-13 — Joseph Vezzosi's profiles merged; backtick names cleaned in saved Snap Shot reports
+
+**Migration file:** none (data; service role scripts).
+
+**Vezzosi** (Kyle 2026-11-13: "go ahead and merge joseph's profiles"). `scripts/merge_vezzosi_20261113.mts --into-mako`:
+- **Kept:** dbd3844f, renamed "Joseph Vezzosi". It held his 16 duals, 3 in-season bouts, District 32, roster row and name link.
+- **Merged from:** 1bbd9c6b, which held 4 postseason entries (2024-25 District 27 and Region 7; 2025-26 Region 8 and States). Red Bank Catholic, 120, class of 2027; no event in common.
+- **Hub prospects:** 404 merged into 6367 (Super 32, Journeymen, USAW-NJ). The unlinked "J. Mako Vezzosi" prospect 1786 (Super 32 Early Qualifier: 1 placement, 3 bouts; no event in common) also merged into 6367 (`scripts/merge_vezzosi_prospect_1786_20261113.mts`). He is listed once on the hubs.
+- **Rebuilt:** 2025-26 boys ratings as archive (7,424, one fewer) and 2026-27 preseason (5,591). Boys leaderboards refreshed for 2025-2027.
+- **Deleted:** `--delete` recounted 0 references, then deleted profile 1bbd9c6b and prospects 404 and 1786.
+- **Backups:** `backups/20261113_vezzosi_merge_before.json`, `backups/20261113_vezzosi_prospect_1786.json`.
+
+**Saved Snap Shot reports** kept the backtick names from when they were saved: boys 53 of 68 reports (603 strings), girls 55 of 74 (392). Cleaned by the same rule as the migration (`scripts/fix_backtick_names_in_reports_20261113.mts`; backup `backups/20261113_backtick_names_reports.json`). A rerun finds none.
+
+**Checks:**
+- Integrity: before and after, only the known Delsea vs Council Rock North failure.
+- Site snapshot: one change, the intended "Na`ilah" → "Na'ilah" on /girls/state; re-baselined.
+- Saved reports: no reference to the deleted profile.
+
+---
+
+## 2026-11-13 — Backtick names cleaned (O`Neill → O'Neill) + trigger; Off-Season board cache per deploy
+
+**Migration file:** `docs/migrations/20261113_backtick_names.sql` (APPLIED 2026-11-13 by Kyle; verify as expected: wrestlers 1, prospects 1 (the two Vezzosi rows, since merged), schools 0, history 0, test "O'Neill / Brandon / Yurovskyi").
+
+**Why:** Kyle 2026-11-13: "Abigail O`Neill" on the Off-Season board. TrackWrestling exports apostrophes as backticks.
+- **Cleaned:** wrestlers 121, prospects 33, schools 5, history_finishes 23.
+- **Trigger:** cleans every future write to those name columns, whatever import writes it.
+- **Not changed:** name links and school aliases keep the imported text (imports match on it).
+- **Held:** Joseph "`Mako` Vezzosi" (dbd3844f), a second profile of Joseph Vezzosi (1bbd9c6b, class of 2027). Waiting on Kyle.
+- **Backup:** `docs/migrations/backups/20261113_backtick_names.json`. Integrity check before: clean.
+
+**Also (code):** Tristan Rosemeyer still showed Williamstown on the mock's Off-Season board, though the board built fresh shows Lower Cape May. The board's 5-minute cache outlived deploys and wasn't refreshing.
+- The mock and the profile preview now build the board fresh.
+- The site cache for the board and the Trophy Case is keyed per deploy.
+
+---
+
+## 2026-11-13 — Off-Season board: every wrestler who wrestled this offseason
+
+**Migration file:** none (code only).
+
+**Kyle 2026-11-13:** "the public board should show every wrestler who wrestled in the off season."
+- The board no longer requires a podium score or a notable result. It lists every wrestler of ours (linked to one of our schools, classes 2027-2029) with a placement or a bout this offseason.
+- Boys go from 455 to 627 and girls from 144 to 172. That includes 92 boys and 25 girls with bouts only (mostly NHSCA National Duals).
+- Events wrestled without a placement now show as "Wrestled" in the board's dropdown and in the profile's offseason table (`HubLeaderRow.wrestled`). No record is shown.
+- Order within each list is unchanged: Kyle's saved order, then by score. Most Notable Overall stays the top 20.
+
+---
+
+## 2026-11-13 — Review fixes: Off-Season board opponents, order save, school lookup batches
+
+**Migration file:** none (code only).
+
+- **Board opponents:** notable-result opponents who are our wrestlers now show their profile name and link to their profile, not the imported name (37 of 120 boys notables). Others keep the imported name and state.
+- **Order save (`/api/admin/hub/board` PUT):** writes the new order first, then removes anyone taken off, so a failed write keeps the old order. Tested on boys 106 and reset; Kyle's saved boys Most Notable Overall order (20 rows) was not touched.
+- **School lookup (`schoolsOfWrestlers`):** the latest-bout lookup goes 80 wrestlers at a time (both id lists go in the request address).
+- **Checked, no change needed:**
+  - no wrestler listed twice on either board;
+  - the board and trophy caches stay under the 2 MB limit (boys trophy index ≈ 1.2 MB);
+  - the offseason table sits between 2026-27 and 2025-26 (after 2025-26 for graduates);
+  - the graduate flip doesn't change season W-L.
+- **Live site:** snapshot check unchanged.
+
+---
+
+## 2026-11-13 — Hubs: a linked wrestler's school is their current school, not their newest name link
+
+**Migration file:** none (code only: `schoolsOfWrestlers` in `src/lib/hubSchools.ts`).
+
+**Why:** Kyle 2026-11-13: Tristan Rosemeyer showed Williamstown, not Lower Cape May. He wrestled for Williamstown as a freshman (2024-25), and the 2026-11-11 no-alias review rightly added that link. But the hub showed whichever name link was newest.
+- **New rule:**
+  1. The school on the wrestler's newest roster import row.
+  2. Otherwise, for anyone linked at more than one school, the school of their latest dual or in-season tournament bout.
+  3. Otherwise their one linked school.
+- **Effect:** 33 of 1,596 hub-linked wrestlers change school (spot-checked against the 2025-26 rosters). 5 who had no school now get one. No data changed.
+- **Readers:** hub leaderboard, tournaments and prospects; the Off-Season board (mock).
+
+---
+
+## 2026-11-13 — offseason_board_order: Kyle's order for the Insight Off-Season board
+
+**Migration file:** `docs/migrations/20261113_offseason_board_order.sql` (new table, granted to service_role).
+
+**Why:** Kyle 2026-11-13: "i also need a way for me to edit the order in which these wrestlers are displayed."
+- One row per wrestler placed in a list (a weight, or 'overall' for Most Notable Overall), per side and offseason.
+- Set on the admin Offseason Hub's new "Public board" tab (`/api/admin/hub/board`).
+- A weight list = Kyle's order, then anyone new by score. Most Notable Overall = exactly his list once saved.
+- Saving clears the board's 5-minute cache.
+
+Also in the mock (Off-Season board): the WRR column was removed, and opening a wrestler now lists every event they placed at, then their notable results.
+
+---
+
+## 2026-11-13 — In the Aesthetic mock (not live): Trophy Case, Insight Off-Season, wrestler offseason table and match order
+
+**Migration file:** none (code only, deployed; the live site is unchanged — site snapshot check: no change).
+
+**Kyle 2026-11-13; review in the Aesthetic Tool mock first:**
+- **School profile · Trophy Case** (`src/lib/trophyCase.ts`, `SchoolTabs` prop `trophy`):
+  - Team tab: sectional and state group titles.
+  - Individual tab: every state podium finish and region title.
+  - From the history tables, school names matched by `src/lib/historySchools.ts` (shared with the Explorer's sections). njwrestlinghistory.info is credited.
+- **Insight · Off-Season** (between Polls and About; `src/lib/offseasonPublic.ts`, `src/components/site/OffseasonBoard.tsx`):
+  - The latest offseason's NJ wrestlers at our schools, classes of 2027-2029 (this season's classes but the incoming one).
+  - By weight, plus "Most Notable Overall" (top 20). No club, score, best win or bout record. Every notable result opens under its wrestler.
+  - "Notable offseason performances, not all tournaments and matches included."
+- **Wrestler profile** (`WrestlerProfileCore` prop `preview`):
+  - A "2026 Offseason" table for anyone on that board, between the 2026-27 season and 2025-26.
+  - Tournaments list the final first, the first round last.
+  - A graduated wrestler's history reads oldest first.
+- The hub leaderboard now lives in `src/lib/hubLeaderboard.ts`, shared by the admin hub and the public board.
+
+**To go live:** turn the previews on in the live pages (school and wrestler routes; an Insight route for Off-Season) once Kyle approves.
+
+---
+
+## 2026-11-13 — Daily Challenge Explorer: schools by section
+
+**Migration file:** none (code only, deployed).
+
+**Purpose (Kyle 2026-11-13):** "sort schools by section in the explore page of the daily challenge."
+
+**Code:**
+- `/api/admin/history` returns each school name's NJSIAA section, when exactly one of our schools matches: by name, a school alias, the name cleaned (HS / Regional / Township / Jr-Sr; Pt. Boro = Point Pleasant Boro; Saint = St), or one name starting the other.
+- Explorer: a sortable Section column when counting by School or Wrestler, a "Count by Section" option, and an "All sections" filter on every research tab.
+- Coverage: boys 12,018 of 12,634 finishes (95%); girls 1,923 of 1,934. Unmatched: closed or merged schools (Dayton, Essex Catholic, Queen of Peace, Thomas Jefferson, Edgewood, Bishop Ahr…) and names that fit two schools (Manchester, Middletown before its split).
+
+---
+
+## 2026-11-13 — History: one wrestler per career; damaged names fixed
+
+**Migration file:** none. Data via `scripts/fix_history_names_20261113.mts` (backup `docs/migrations/backups/20261113_history_names.json`).
+
+**Purpose (Kyle 2026-11-13):** "joe duca shows as having region titles in the 70's and 2000's ... split any same names that are obviously different people."
+
+**Data (history_finishes, boys):** 87 names fixed.
+- 82 carried the wrestler's grade from the source as a prefix ("Jr - Joe Duca" = Joe Duca as a junior): prefix removed.
+- Four cut-off copies repaired: Tom Armino (Seton Hall), Adam Derengowski (Paul VI), John Garriques, Antonio Mangione.
+- "Shelomi (hohn" (Morristown 2007), garbled in the source too, is Shelomi Hohn (Kyle).
+
+**Code (deployed):** the research tabs count a wrestler per high-school career (`assignPeople` in HistoryTabs.tsx). Finishes under one name and school stay together within four seasons of the first; a later one starts another wrestler, labeled with each career's years. 8 name + school pairs split: Joe Duca, Ken Hall, James LaVelle, Chuck Zeisloft, Wayne Stinson, Carlos Garay, Albert Smith, Dan Halsey.
+
+---
+
+## 2026-11-13 — Middle School Hub split by side; Daily Challenge boys/girls switch and "since" any year
+
+**Migration file:** none (code only, deployed).
+
+**Middle School Hub (Kyle: "has a gender toggle and shouldnt. the boys side should only show boys and girls only show girl"):**
+- The leaderboard's Boys/Girls switch is gone. Every tab — tournament list (NJ counts and podiums), leaderboard, prospects (and its HS search), event pages — shows the side's own kids.
+- `src/lib/hubSex.ts`: a mixed-pool kid's side is their linked wrestler's gender, else girls when they placed in a girls division, else boys.
+- An event page's "clear to re-import" says it removes both sides' rows (one import holds both).
+
+**Daily Challenge research:**
+- A Boys/Girls switch (starts on the side's own; the one contest uses both).
+- Years: All years · Since 1996 (today's weights, boys) · Since any year typed (e.g. 2020). The range applies to every tab, team titles included.
+
+---
+
+## 2026-11-13 — Nickname links; the import offers other name forms
+
+**Migration file:** none (data via `scripts/link_nicknames_20261113.mts`; weights via `scripts/set_weights_v2_20261113.mts`).
+
+**Purpose (Kyle 2026-11-13):** "zach akers had off season matches, but isn't on the leaderboard" — he was, as "Zach Akers", but unlinked to our Zachary Akers (exact-name matching only), so he had no school and dropped out of "Our wrestlers only".
+
+**Data:**
+- 15 NJ kids listed under another form of one of our wrestlers' first names (same last name, wrestler unlinked) were linked with Kyle's OK: Zach Akers, Robert Penman, Michael Graham, Chris Amato, William Stapleton, Joseph Cutruzzula, Matthew Gorbatuk, Samuel Mazin, Nick Mahler, Alexander Jena, Alex Teal, Christopher Ward, Nico Carvajal, Nicholas Sneddon, Joseph Alvarez.
+- Jack Brown (Evil Empire) → John Brown left out.
+- 2026-27 weights re-run: 2 changed.
+
+**Code (deployed):** `src/lib/nicknames.ts`. The hub import also looks under other forms of a first name (Zach/Zachary, Matt/Matthew/Matty, Bobby/Robbie/Robert…) and offers that wrestler, leaving the kid to choose. It never fills it in.
+
+---
+
+## 2026-11-13 — Review: hubs, Daily Challenge (girls), Home Video
+
+**Migration file:** none. Script `scripts/girls_history_school_names_20261113.mts` (backup `docs/migrations/backups/20261113_girls_history_school_names.json`).
+
+**Data:**
+- **Girls history school names:** 451 rows renamed where the difference was only cosmetic and one school matched ("High Point Regional" → High Point, "Bound Brook HS" → Bound Brook, "Mt. Olive"…); 273 names → 217.
+- **Left as written** where the program then was a different configuration (Lodi before Saddle Brook, Ridgefield Park before Bogota, Mount Olive before Randolph, Newton…) or no single school matched (Immaculate Conception Lodi variants, Becton variants, Schalick/Cumberland, Vernon/Wallkill Valley).
+- **Dual tournaments shown again** (Kyle): NHSCA National Duals, AAU Scholastic Duals (boys, girls); NHSCA National Duals (MS Division).
+
+**Code (deployed):**
+- **Speed:** hub tournaments list counts bouts per event and reads bout kids only for events without places, with lookups in parallel (boys ~5 s → ~3 s). Leaderboard reads its pages in parallel (boys ~8 s → ~2.6 s).
+- **Import matching:** a name-only match (no state, no known club) stands only when the team has 2+ of them or carries the wrestler's school in its name.
+- **Upload page:** reads duals copies (bouts only → "Review bouts for this hub"); how-to covers Flo Results pages and duals.
+- **Clubs tab:** the "not on the club list" section lists clubs with NJ kids first (940 names in all).
+- **Home Video:** "Watch on YouTube" is built from the video id.
+- **Daily Challenge:** the region hint no longer names a boys region.
+
+---
+
+## 2026-11-13 — Eight tournaments removed from the Offseason lists
+
+**Migration file:** none (data; `scripts/remove_hub_tournaments_20261113.mts`, backup `docs/migrations/backups/20261113_removed_hub_tournaments.json`).
+
+**Data (Kyle 2026-11-13, "permanently remove"):** Who's Number One, Beast of the East, Walsh Jesuit Ironman, PowerAde, Escape the Rock, National Prep, UWW U17 & U20 World Team Trials, and Tyrant Fall & Spring Duals were deleted from the boys and girls Offseason lists (16 rows). All had been hidden. Each was counted first: no seasons, places or bouts on any of them. None were on the Middle School list.
+
+**Reversible?** Yes — re-insert from the backup.
+
+---
+
+## 2026-11-13 — AAU Scholastic Duals girls bouts
+
+**Migration file:** none (data via `scripts/load_duals_20261113.mts` EVENT=aau DIVISION=HSG).
+
+**Data:**
+- Kyle appended the AAU girls pages to the AAU copy. 2,445 girls bouts loaded on the girls Offseason event "AAU Scholastic Duals (Disney Duals)" 2026; the girls results appear twice in the copy, and repeated pairings at one weight are skipped. No links to our wrestlers (out-of-state teams; 2 lone name matches left unlinked).
+- The boys loaded earlier (7,667, from the first copy) are kept; this copy holds fewer boys duals.
+- **Reader:** the division comes from the page title that ends each copied page ("… Boys - Results", "… - Girls Natl - Participants"), the next one below a dual.
+
+---
+
+## 2026-11-13 — Duals: reader fixes, National Duals reloaded (boys, girls, elementary), AAU Scholastic Duals boys
+
+**Migration file:** none (data). Scripts `scripts/reload_duals_20261113.mts` (backup `docs/migrations/backups/20261113_national_duals_bouts.json`), `scripts/load_duals_20261113.mts` (EVENT=nhsca|aau, DIVISION=HSB|HSG|MS|EL).
+
+**Reader (`parseDualCopy`, src/lib/hubFiles.ts):**
+- **Teams without a division suffix:** the page heading says Boys or Girls (AAU).
+- **Names:** "J. Paul Dubay" / 'A. "Gus" Golliher' try the last word as the last name. Siblings with one initial on a team are told apart by the bout's weight (exact, or 12+ lb nearer). Names the copy lists under the other team are swapped back; the earlier load had winner and loser reversed on those rows.
+- Unexpanded names dropped from 76 to 7, all siblings at the same weight (e.g. Brayden / Bryce Collins, TNWC Big Macs, both 195).
+
+**Data:**
+- **National Duals (May 23-25):** today's earlier bouts (boys 8,339, girls 2,160, elementary 3,379) and 59 prospects made only for unexpanded names were backed up and removed, then reloaded with the fixed reader: boys 8,339, girls 2,160 (the girls duals appear twice in the copy; repeats skipped), elementary 3,379 on the Middle School Hub. Links to our wrestlers unchanged.
+- **AAU Scholastic Duals (Disney Duals, June 24-29):** boys 7,667 bouts (of 8,071 read; repeated pairings at one weight are skipped, as the copy has no round labels). The copy holds no girls section. No new links (out-of-state teams; 4 lone name matches left unlinked).
+- No wrestler on two prospects; integrity check unchanged.
+
+---
+
+## 2026-11-13 — NHSCA National Duals 2026 (High School Boys) bouts
+
+**Migration file:** none (data via `scripts/load_duals_20261113.mts`; reader `parseDualCopy` in `src/lib/hubFiles.ts`).
+
+**Data:**
+- Kyle's copy of the NHSCA National Duals page (May 23-25, 2026; the CSV wouldn't download): roster + 743 High School Boys duals → 8,339 bouts (forfeits left out).
+- Stored on the boys Offseason event "NHSCA National Duals" 2026, a hidden tournament: bouts only, no places.
+- Names are expanded from the roster ("N. Schuman" + team → full name); 42 couldn't be.
+- **Matching:** as every hub import, plus a team rule: a name match to one of our wrestlers stands when the team has 2+ such matches or carries the wrestler's school in its name. 13 lone matches on other teams (VA26 Elite, Indiana Ares, Ohio Titan…) became new prospects. 111 kids linked; 1,805 new prospects.
+- The copy has no girls, middle school or elementary duals (Flo shows one division at a time).
+- No wrestler on two prospects; integrity check unchanged.
+
+**Effect:** notable results on the boys leaderboard 2026: 91 NJ kids with a notable win (was 79), 53 with a close loss (was 46). Kids with dual bouts only now appear on the leaderboard with a record and no score.
+
+---
+
+## 2026-11-13 — Head-to-head bouts loaded; notable results on the hub leaderboard
+
+**Migration file:** none (existing `{boys,girls,mixed}_hub_bouts` tables; data via `scripts/load_hub_bouts_20261113.mts`; plans shared in `scripts/.local/hub_plans.mts`).
+
+**Purpose (Kyle 2026-11-13):** "if a nj wrestler beats or has a close match with a highly ranked wrestler, we can see that."
+
+**Data:**
+- 37,019 bouts from the tournament bout files already used for placements: Super 32, Early Qualifier, Journeymen, NHSCA, War at the Shore, NJ FS, NJ Scholastic 2023–2026, Brawl.
+- Each bout is read with its bracket's division and weight (same split as the placements) and tied to the same prospects as the placements in that division and weight.
+- **Skipped:** bouts in untracked divisions (Brawl duals, War at the Shore second-chance/adult, Greco); 58 bouts between kids on two pools.
+- Fargo, the Northeast Regional and Mobbin have placements only, so no bouts.
+- Integrity check unchanged.
+
+**Code (deployed):**
+- `src/lib/hubFiles.ts` keeps each bout's result and returns bouts with division and weight.
+- Hub leaderboard: "Best win" column and sort, plus "Notable results" when a row is opened: wins over a kid with an offseason score of 75+, and losses to one by 1–2 points or in overtime / tiebreakers. Forfeits, defaults, injury defaults and DQs (folk and freestyle codes) are excluded.
+- The Bouts W-L and Events columns now include these bouts.
+
+---
+
+## 2026-11-13 — Brawl at the Beach added and loaded
+
+**Migration file:** none (data, service role; `scripts/.local/add_brawl.mts`, `brawl_details.mts`, `load_more.mts` "Brawl").
+
+**Data:**
+- Brawl at the Beach (Kyle: "middle school and hs for boys and girls"; roster: Jul 15-17, 2026, Bally's Atlantic City) added to the boys and girls Offseason lists and the Middle School list ("Brawl at the Beach (MS Division)"); level left for Kyle.
+- **Individual brackets loaded:** boys 83 (HS, 15U, HS freestyle); girls 53 (HS folkstyle and freestyle); Middle School Hub 304 (13U and under, girls 6-8 / K-5, MS and K-6 freestyle), season 2026-27.
+- **Not loaded:** the Duals divisions (team duals; individual tournaments only) and the adult divisions.
+- No wrestler on two prospects; integrity check unchanged.
+
+---
+
+## 2026-11-13 — Wrong name links split off; import matching guard; 2026-27 weights by the new rule; leaderboard weights
+
+**Migration file:** none (data, service role). Scripts `scripts/unlink_wrong_links_20261113.mts`, `scripts/set_weights_v2_20261113.mts`. Backups `docs/migrations/backups/20261113_unlinked_results.json`, `20261113_projected_weights_v2.json`.
+
+**Data (Kyle 2026-11-13, "yes ... review all of this"):**
+- **Review:** every result linked to an HS wrestler (2,181) was checked against the wrestler's 2025-26 weight and class.
+- **Moved to new, unlinked prospects:** 13 results that can't be theirs: Christian Wolf ← Super 32 113; Aiden Gonzalez ← NHSCA Soph 120; Angel Mendoza, Chase Colon, Miguel Cruz, Sebastian Santos ← War at the Shore (NY schools); Max Garcia ← Journeymen 14U 90; Anthony Messina ← two 14U results; Brody Brown, Edward Lee ← NER 14U; Angelica Garcia ← NER 105; Noah Hernandez ← Early Qualifier 132 (Broad Axe; his 126 Ruthless result stays).
+- **Left linked:** results that could be theirs (Cadet entries with an odd grade; 106-pounders at 98 in March).
+- **2026-27 weights:** the NJSIAA weight wrestled most at tournaments after 9/1, a tie to the most recent. Written for 135 (22 changed). The 8 held (one Mobbin result, 3+ classes up) were written once Kyle confirmed Mobbin's weights ("that is 150") — `scripts/.local/write_held8.mts`.
+
+**Code (deployed):**
+- **Hub import:** no automatic match to an HS wrestler (or a prospect linked to one) when the result is 3+ weight classes below their last weight, or a 14U-and-under division past 9th grade at the event.
+- **Hub leaderboard:** lists each kid at the weight they wrestled most in the season shown (closest NJSIAA weight on the Offseason Hub; a tie to the most recent), with an Events column (tournaments on our list they wrestled).
+
+---
+
+## 2026-11-13 — 2023 and 2024 NJ Kids Scholastic States loaded; Freshman year tab
+
+**Migration file:** none (data, service role, `scripts/.local/load_more.mts` "NJ Scholastic 2023" / "NJ Scholastic 2024", with Kyle's roster copies).
+
+**Data:**
+- **2024 (3/9/2024):** Middle School Hub 1,669 places; boys Cadets 70, girls 16U 14.
+- **2023 (3/11/2023):** Middle School Hub 1,533 places; boys Cadets 73, girls 16U 31.
+- No wrestler on two prospects; integrity check unchanged.
+
+**Code (deployed):**
+- **Shared reader** (`src/lib/hubFiles.ts`): one division under two names ("Cadets" and "Cadets (9th & 10th Grade)", as 2023's roster lists every Cadet) counts once, in naming a bracket and in splitting joined draws. That fixed 2023's 11 unnamed Cadet brackets and Intermediate 160, joined to the Cadet 160 draw through Edwin Fajardo.
+- **Middle School Hub · Freshman year** (`/api/admin/hub/freshman`, `FreshmanTab.tsx`): a middle school tournament's 1st–8th placers matched to this side's wrestlers by name + the class year an 8th grader would have, with their freshman district / region / state result. Sortable, filterable by year / division; summary by MS finish (click a cell to list it).
+
+---
+
+## 2026-11-13 — Offseason score tables; 2025 NJ Kids Scholastic States loaded; MS-to-freshman report
+
+**Migration file:** none.
+
+**Code (deployed):** `src/lib/offseasonScore.ts` now uses Kyle's tables for the 90 / 75 / 50 tiers: places 1–8, then 9–12, 13–16, 17–24, 25–32. A rating without a table (local 25) takes the 50 table scaled to it until Kyle gives one.
+
+**Data (service role, `scripts/.local/load_more.mts` "NJ Scholastic 2025"):** the 2025 USAW-NJ Kids/Cadet Scholastic States (3/15/2025) with its roster.
+- Middle School Hub: 1,765 places (Tot through Intermediate).
+- Offseason 2025: boys Cadets 118, girls 16U 31.
+
+Kyle's "Middle School Championships" files for 2026 are byte-for-byte the NJ Scholastic file loaded 2026-11-12; 2023 and 2024 have no roster, so their divisions are unknown and they are not loaded. Division ages, from the 2025 roster's weights: Intermediate (to 275) is the 7th–8th grade group, Junior (to 220) younger.
+
+**Report:** `scripts/ms_to_freshman_20261113.mts` → `Notes & Reports/ms_states_to_freshman_postseason_20261113.csv`. 1st–8th placers at the 2024 and 2025 Kids States were matched to our wrestlers by name + class year (2028 / 2029), 202 matched, with their freshman district / region / state result.
+
+---
+
+## 2026-11-13 — Girls postseason history (region and state podiums) in the Daily Challenge workspace
+
+**Tables affected:** `history_finishes` (new `gender` char(1) default 'M', new `region_name`)
+
+**Migration file:** `docs/migrations/20261113_history_girls.sql`
+
+**Purpose (Kyle 2026-11-13):** "start tracking all of the girls post season history ... extract the podium for all region and states ... add this data to the Daily Challenge work space. It will be the only time girls data touches the boy side since there is only one trivia question."
+
+**Data (after the migration; `scripts/load_girls_history_20261113.mts`):**
+- **2019–2024:** from Kyle's TrackWrestling bout exports (`Whizzer Upload/Girls History`), exact places from the finals and placement bouts.
+- **2025–2026:** from MatWhizzer's placements; regions r1–r4 = North I, North II, Central, South, checked by schools against 2024.
+- **2019's single region file** was split North/South by each bracket's schools' 2020 region.
+- **2019 state** labels every placement bout "Placement Matches": unbeaten pair = 1st, 2nd-wrestleback winners = 3rd, losers = 5th.
+- **Counts:** 1,934 rows. State champions per year: 10, 11, 11, 12, 12, 12, 12, 12.
+
+**Code:**
+- `/api/admin/history?gender=`; the research tabs read their side's history. Region labels are named for girls; "Region titles" counts 1st places only. "Since 1996" and team titles are boys only.
+- `placesFrom` (src/lib/hubFiles.ts) reads "3rd Place Match" / "3rd place" as well as "3rd Place". No hub file used those labels.
+
+**APPLIED** 2026-11-13 — Kyle ran it (12,634 existing rows all boys); 1,934 girls rows loaded; deployed.
+
+**Reversible?** Yes — `DELETE FROM history_finishes WHERE gender = 'F'`, then the migration's ROLLBACK.
+**Verified?** Yes — migration check; the history API returns boys 12,634 / girls 1,934.
+
+---
+
+## 2026-11-13 — Journeymen brackets corrected to Flo's places; NJ Freestyle 12U completed
+
+**Migration file:** none (data, service role). Scripts `scripts/.local/fix_jm_17.mts`, `load_more.mts` "Journeymen Flo" / "NJ FS Flo" (ONLY=…). Backup `docs/migrations/backups/20261113_journeymen_17_brackets.json`.
+
+**Data:**
+- **Journeymen (Kyle "1 - ok"):** 17 brackets whose bout-file places differed from Flo's copy were replaced: 158 rows removed, Flo's places loaded; places deeper than Flo lists were kept (Over 170: 29). All 58 Flo brackets now agree.
+- **NJ FS 12U (Kyle added it to the copy):** six brackets added (12 places: 67, 108 and four single-entrant weights). All 94 Flo brackets agree.
+
+**Code (deployed):** `parseFloResults` reads a tie Flo lists as two kids at one place ("6th", "6th" in 17th-24th) as a shared place, 22nd–23rd.
+
+**Checks:** no wrestler on two prospects; integrity check unchanged.
+
+---
+
+## 2026-11-13 — Flo placements fill Journeymen and NJ Freestyle; NJ Scholastic loaded
+
+**Migration file:** none (data, service role, `scripts/.local/load_more.mts` "Journeymen Flo" / "NJ FS Flo" / "NJ Scholastic", ONLY=…; `rebuild_upload_lines.mts`).
+
+**Data (Kyle 2026-11-13):**
+- **Flo copies:** Kyle copied FloArena's Results pages for Journeymen and NJ Freestyle & Greco. New reader `parseFloResults` (src/lib/hubFiles.ts): division, "75 lbs" or "106 lbs - 9th-16th" groups; pool standings skipped; image lines ignored.
+- **Brackets the bout files couldn't place, added from Flo:** Journeymen Main 120/135/145/152/160/170 and Over 120/135/145/152/160/215 (196 places; Over top 4); NJ FS 28 brackets (55 boys, 11 girls), including single-entrant brackets.
+- **Checked against Flo:** NJ FS — all 53 shared brackets agree. Journeymen — 29 agree, 17 differ (swapped places in small round robins, Main 215), awaiting Kyle's OK to replace.
+- **NJ Scholastic (3/20/2026):** boys Cadets 106, girls 16U 11, Middle School 1,880 (Tot through Junior; "Junior → middle school", Kyle).
+- Every event's per-division upload lines were rebuilt from what is loaded.
+- No wrestler on two prospects; integrity check unchanged.
+
+---
+
+## 2026-11-13 — Hub corrections, Local leagues, 2026-27 weights from fall tournaments, offseason score
+
+**Migration file:** none (data, service role). Scripts: `scripts/.local/set_local.mts`, `fix_two_20261113.mts`, `load_more.mts` (ONLY=…), `fix_upload_line.mts`, `set_weights_20261113.mts`. Backups: `docs/migrations/backups/20261113_hub_two_corrections.json`, `20261113_projected_weights_before.json`.
+
+**Data (Kyle 2026-11-13):**
+- **Local (25):** the four middle school league events (JSJWL, SJMSWL, Raritan Valley, Tri-County). Mobbin dated 9/13/2026.
+- **Correction 1, "1 - yes":** NHSCA Junior 152 (boys) replaced, 130 rows. Two Freshmen wrestled up into it, so places 17–32 shift. The event's Junior upload line was rebuilt.
+- **Correction 2:** Northeast Regional 14U (161 places) moved from the Middle School list to the boys (98) and girls (63) Offseason lists. 14U/16U go to high school unless the roster grade is 8th or below, and this file has no grades. "USAW Northeast Regional Championships (14U)" is hidden on the Middle School list; the 110 mixed prospects it created stay.
+- **2026-27 weights:** each linked NJ wrestler's 2026-27 weight comes from their most recent tournament after 9/1 (Super 32 10/24, Journeymen 10/2, Mobbin 9/13), at the closest NJ weight (a tie goes up). It is written to `wrestlers.projected_weight_class` and their 2026-27 rating row's `weight_class`. 113 written (boys 90, girls 23); 76 changed weight.
+- **Held for Kyle:** 20 moves of more than two weight classes, e.g. Max Garcia 190 → a Journeymen 14U 90 and Anthony Messina 132 → a 14U 100, both likely another kid with the same name.
+
+**Code (deployed):**
+- The WRR recalculation uses this season's bouts first, then `projected_weight_class`, then last season's weight.
+- Hub leaderboard: offseason score (`src/lib/offseasonScore.ts`, provisional). The best single result counts: champion rating, less 10% per place through 8th, tied places 0, freestyle = folkstyle.
+- Sorted by weight then score, or by score or podiums; filter by weight and any set of class years. The Middle School leaderboard splits boys/girls: a linked wrestler's gender, else a girls division = girl.
+- WRR beside NJ placements. Wrestler lookups are chunked: ~900 linked ids in one request had failed silently.
+
+**Integrity check:** before and after, only the known Delsea vs Council Rock North dual.
+
+---
+
+## 2026-11-12 — Local tier (25) for hub tournaments; Journeymen and NJ Freestyle loaded
+
+**Tables affected:** `boys_/girls_/mixed_hub_tournaments` (level check now allows 'local')
+
+**Migration file:** `docs/migrations/20261112_hub_local_tier.sql`
+
+**Purpose (Kyle 2026-11-12):** "add a local tier worth 25 points for the middle school tournaments." The code already treats local as 25 (`HUB_LEVELS`); saving a tournament as Local needs the migration.
+
+**APPLIED** 2026-11-13 — Kyle ran it (all three checks allow 'local').
+
+**Data, same day (service role, `scripts/.local/load_more.mts`):** Kyle: "aren't all of the wrestler divisions listed in the roster". They are. The roster reader dropped every kid whose name sat on its own line above their row (153 of NJ FS/GR's kids, 444 of Journeymen's); that is fixed. The reader also now:
+- splits joined draws by roster division, by a kid's club as written ("Este Built WC" freestyle / "Estebuilt WC" Greco), by once-per-round, and by double-elimination paths;
+- places Journeymen's pool + crossover format, with tiers ranked by pool record.
+
+Loaded:
+- **Journeymen (10/2/2026):** boys 482 (Main, Over, 14U), girls 167, Middle School 56 (11U).
+- **NJ Freestyle & Greco (5/17/2026):** boys 196 and girls 68 (14U / 16U / Junior freestyle), Middle School 68 (12U and under, plus 14U kids with a roster grade of 8th or below). Greco not tracked.
+
+Rule (Kyle): 14U and 16U go to the high school hub unless the roster grade is 8th or below. Still not placed, and noted on the event: Journeymen Main 120/135/145/152/160, and 16 NJ freestyle brackets.
+
+**Reversible?** Yes — see the migration's ROLLBACK; clear an event's results on its page.
+**Verified?** Yes — the migration check; data checked with `hub_after.mts`: no wrestler on two prospects.
+
+---
+
+## 2026-11-12 — 2026 offseason results loaded: Early Qualifier, NHSCA, War at the Shore, Northeast Regional, Mobbin
+
+**Migration file:** none (data through the hub import route, service role). Scripts: `scripts/.local/build_podiums.mts` (reads files exactly like the upload page), `load_more.mts` (plan per event, dry run, then save), `hub_after.mts` (check).
+
+**Purpose (Kyle 2026-11-12):** "can you run the upload for the additional tournaments?"
+
+**Data (places):**
+
+| Event | Boys | Girls | Middle School list |
+|---|---|---|---|
+| Super 32 NJ Early Qualifier (8/30/2026) | 357 | 22 (freestyle) | 87, Middle School + Elementary, on a new "Super 32 NJ Early Qualifier (MS / Youth)" (state), 2026-27 |
+| NHSCA (3/26/2026) | 4,185 (Freshman–Senior) | 760 | 790 on NHSCA Middle School Nationals, 2025-26 |
+| War at the Shore (4/3/2026) | 667 HS + 90 freestyle | 135 + 81 freestyle | 1,187 youth/MS on War at the Shore, 2025-26 |
+| Northeast Regional (5/8/2026, freestyle) | 188 | 178 | 161 (14U) on a new "USAW Northeast Regional Championships (14U)" (regional) |
+| Mobbin (date not in the PDFs; 2026) | 56 | 21 | — |
+
+**Not loaded:**
+- War at the Shore second-chance brackets, Adults, and two unlabeled tot brackets.
+- Journeymen and NJ Freestyle & Greco States are held. Their seasons are entered (Journeymen boys, girls and MS; NJ FS/GR boys, girls, and a new "USAW-NJ Freestyle & Greco State Championships (Youth / 14U)"), with no places. The bout exports join draws that can't be told apart: Journeymen's tiered hammer brackets (26 weights with several finals), and kids in both freestyle and Greco at one weight (38 brackets). Placements copies have been asked for.
+- NJ Scholastic States: only the roster was provided, no bout export.
+
+**Matching:** as the upload page proposes.
+- An NJ kid or a kid with no state links to a single same-name NJ wrestler, unless the roster grade is 2+ years from the wrestler's class (one year off = last year's grade given at an August event; accepted).
+- Out-of-state kids link only to our out-of-state wrestler in their state; none in the mixed pool.
+- Picked where the listed team names the school: Anthony Russo (RBC) → Red Bank Catholic, Aiden Gonzalez → North Brunswick, Matthew Miller → Bloomfield.
+- Left as new prospects for Kyle: Anthony Russo (Yale Street), Colton Jones (VA), Gabriel Jones.
+
+**Code, same day (deployed):** `src/lib/hubFiles.ts` — `podiumsFromBouts` is shared by the upload page and scripts. Several pools at one weight are labeled "96 Pool A/B". A bracket whose kids' roster divisions separate it (NHSCA Junior/Freshman 152, joined through two Isaac Youngs and two Freshmen wrestling up) is split. A bracket with more than one final that can't be split is left out and named on the upload page. FloArena lines copied twice count once.
+
+**Totals after:** boys 6,217 prospects (894 linked) / 7,357 places; girls 1,522 (238) / 1,857; mixed 2,711 / 2,957. No wrestler on two prospects. Integrity check before and after: only the known Delsea vs Council Rock North dual.
+
+**APPLIED** 2026-11-12. **Reversible?** Yes — "Clear to re-import" per event, or delete placements by event_id (prospects stay).
+
+---
+
+## 2026-11-12 — Champion rating per division on the hub tournaments
+
+**Tables affected:** `boys_/girls_/mixed_hub_tournaments` (new `division_ratings` jsonb, default `{}`)
+
+**Migration file:** `docs/migrations/20261112_hub_division_ratings.sql`
+
+**Purpose (Kyle 2026-11-12, agreed):** NHSCA runs a separate bracket per grade, so a Freshman champion only beat freshmen. Each division takes the tournament's champion rating unless it is given its own (`{"Freshman": 75}`). The same applies to Fargo 16U / Junior and the Northeast Regional 14U / 16U / Junior. Set it under "Champion rating by division" when the tournament is opened; the list shows the divisions any season was uploaded with; blank = the tournament's rating.
+
+**APPLIED** 2026-11-12 — Kyle ran it (column on all three lists). Deployed.
+
+**Reversible?** Yes — see the migration's ROLLBACK.
+**Verified?** Yes — the migration's check (3 rows).
+
+---
+
+## 2026-11-12 — Hub review: tournament levels and ratings, upload record, listed clubs
+
+**Tables affected:** `boys_/girls_/mixed_hub_tournaments` (new `level`, `champion_rating`), `boys_/girls_/mixed_hub_events` (new `uploaded_at`, `upload_files`, `upload_divisions`), `boys_/girls_/mixed_prospects` (new `club_listed`)
+
+**Migration file:** `docs/migrations/20261112_hub_levels_uploads.sql`
+
+**Purpose (Kyle 2026-11-12, Offseason Hub review):**
+- Every tournament is National, Regional or State with a champion rating for rating out-of-state wrestlers: "let's go 90, 75, 50". War at the Shore is State; Journeymen is Regional. The rating starts from the level and is editable.
+- Each event records its upload (when, which files, and per division its style, weights, places and depth) so the list shows "✓ Uploaded" for the season. Super 32 and Fargo are backfilled from when their places went in.
+- Prospects keep the club as the results list it, so clubs show before the club is on the club list. The Clubs tab lists names seen in results that aren't on the list; adding one or another spelling links the kids already loaded.
+- Code: the tournament list shows level, champion rating, uploaded status, places and depth, and the NJ count. Opening a tournament shows the upload, the divisions, NJ wrestlers competed, the NJ podium and NJ placed below 8th; the notes and platform write-ups are gone. The leaderboard's "High school" column showed the linked wrestler's name and now shows the school; the club comes from the results when it isn't linked.
+
+**Data, same day (service role, no migration):** hidden (`is_active` false, not deleted; none had seasons entered) on the boys and girls Offseason lists: Beast of the East, Walsh Jesuit Ironman, PowerAde, Escape the Rock (in season), National Prep Championship (not NJSIAA), UWW U17 & U20 World Team Trials ("hide for now"). Earlier the same day: the 8 dual events. Scripts `scripts/.local/hide_duals.mts`, `hide_inseason.mts`.
+
+**APPLIED** 2026-11-12 — Kyle ran it (levels: each offseason list 3 national / 2 regional / 5 state; middle school 3 / 5 / 5; 5 loaded events marked uploaded). Deployed.
+
+**Reversible?** Yes — see the migration's ROLLBACK; "Show hidden" → "Show in the list" brings a tournament back.
+**Verified?** Yes — the migration check, plus the tournaments, leaderboard and clubs APIs run against live data (boys Super 32: NJ 66, podium 5, below 8th 61).
+
+---
+
+## 2026-11-12 — Tied places on the tournament hubs (place_to)
+
+**Tables affected:** `boys_hub_placements`, `girls_hub_placements`, `mixed_hub_placements` (new column `place_to`; unique key now includes the prospect)
+
+**Migration file:** `docs/migrations/20261112_hub_tied_places.sql`
+
+**Purpose (Kyle 2026-11-12):** "go as high as you can and then for the tournament on the admin page, just say how high you went." Bout files give exact places 1st–8th; below that, double elimination ties everyone eliminated in the same consolation round (9th–12th, 13th–16th, 17th–24th, 25th–32nd…). A placement row can be a tied group (place 9, place_to 12), so a group holds several kids. Podium imports read "9-12" / "9th–12th"; "1st - Name (PA)" reads PA as the wrestler's state. The event page lists tied groups under each weight and shows "placed through Nth"; so does the Tournaments tab. Leaderboard and prospect podium counts stay top 8 only. Also (data, same day): seeded timing corrected from the results files — Super 32 Challenge "Late October" (was Mid-October), Super 32 NJ Early Qualifier "Late August" (was September), Super 32 (MS Division) "Late October".
+
+**APPLIED** 2026-11-12 — Kyle ran it (place_to on all three tables). Deployed.
+
+**Reversible?** Yes — see the migration's ROLLBACK (only while no tied groups are loaded).
+**Verified?** Yes — the migration's check; parser test: "9-12" → 9th–12th, "25th–32nd", "(NJ)" read as the state.
+
+---
+
+## 2026-11-12 — Super 32 2026 loaded into the hubs
+
+**Migration file:** none (data through the hub import, service role). Scripts: `scripts/.local/s32_roster.py`, `s32_podiums.py`, `s32_preview.mts`, `s32_save.mts`.
+
+**Purpose:** Kyle's Super 32 2026 bout export (all divisions in one file) split into its 60 brackets by who wrestled whom, each labeled from `Super 32 Roster.rtf` (High School Boys 14, High School Girls 12, Middle School 16, 11U 12, 8U 6; every bracket unanimous); podiums from the placement bouts (round robins by record — Middle School 180 has a three-way 1-4 tie for 4th–6th, flagged to Kyle). Podium files: `Off Season Stuff/2026/Super 32 2026 podiums/`.
+
+**Data:** boys Offseason · Super 32 Challenge · 2026: 112 places (NJ: Blewett, Sontz, George, Yarussi, Hodgins linked to their HS profiles); girls Offseason · 2026: 96 places (Ella Poalillo linked; Marie Sharp, Victoria Carbonaro of Blair new prospects); mixed Middle School · Super 32 Challenge (MS Division) · 2026-27: 228 places (Middle School, 11U, 8U divisions), all new prospects, class years from roster grades (8th grade = class of 2031). Out-of-state kids linked to our wrestler only when the school's state matched (boys 43, girls 14; none in the mixed pool). Prospects: boys 112, girls 96, mixed 228.
+
+**APPLIED** 2026-11-12. **Reversible?** Yes — clear the three events' podiums on their event pages; remove the prospects they created.
+
+**Added the same day:** Super 32 tied places below 8th for every elimination bracket, to the bottom of each draw (boys 1,446, girls 308, mixed 504), and Fargo 2026 freestyle top 8 from Kyle's USA Bracketing copy (boys 256 in 16U + Junior, girls 256; Greco left out) on the Offseason Hub "USAW 16U & Junior National Championships (Fargo)" · 2026. Kyle's decisions: Christian Ramirez = St. Peter's Prep, Matthew Mulligan = Bergen Catholic; name forms confirmed (Alexander→Alex Spagnuolo, J. Mako→Joseph Vezzosi, William→Will Cruz, Chris→Christian Wolf, Terrence James→Terrance Fearon, Bobby→Robert Duffy, Ellie→"Elllie" Kisselbach). Totals after: boys 1,710 prospects (296 linked) / 1,814 places; girls 573 (68) / 660; mixed 732 / 732. No wrestler has two prospects; no name+state appears twice. Scripts `scripts/.local/s32_groups.py`, `fargo_parse.py`, `batch_preview.mts`, `batch_save.mts`.
+
+---
+
+## 2026-11-12 — Middle School Hub is one mixed pool (mixed_hub_*)
+
+**Tables affected:** `mixed_hub_tournaments`, `mixed_hub_events`, `mixed_prospects`, `mixed_hub_placements`, `mixed_hub_bouts` (new); `boys_hub_tournaments` / `girls_hub_tournaments` (their middle school rows moved out)
+
+**Migration file:** `docs/migrations/20261112_ms_hub_mixed.sql`
+
+**Purpose (Kyle 2026-11-12):** middle school and youth divisions mix boys and girls (Super 32's Middle School, 11U, 8U) and results don't say which kids are girls: "we can't tell gender, we just have to make the middle school pool mixed." The Middle School Hub now uses mixed_ tables on both admin sides (`hubPool` in `src/lib/hub.ts`, gender 'X'); a mixed prospect can be linked to a boys or girls HS wrestler. The HS import review offers prospects from the side's Offseason list and the mixed pool (`loadUnlinkedProspects`). The Offseason Hub stays per side. The 17 seeded middle school tournaments move to the mixed pool (the migration refuses if a side already has middle school events — none did). Youth divisions (11U, 8U) are tracked on the Middle School Hub as divisions ("might as well track what nj kids are doing").
+
+**APPLIED** 2026-11-12 — Kyle ran it: mixed_ms 17, boys_ms 0, girls_ms 0. Deployed.
+
+**Reversible?** Yes — see the migration's ROLLBACK.
+**Verified?** Yes — the migration's check (17 / 0 / 0).
+
+---
+
+## 2026-11-12 — Home Video (weekly historical match video, per side)
+
+**Tables affected:** `boys_home_videos`, `girls_home_videos`, `home_video_settings` (new; settings seeded off for both sides)
+
+**Migration file:** `docs/migrations/20261112_home_videos.sql`
+
+**Purpose (Kyle 2026-11-12):** a historical match video on each side's home page, changed weekly, with credit to the original poster. Admin tool Articles → Home Video: the on/off switch per side, and one line per week (weeks start Monday, Eastern) for the YouTube link, match title, creator name and channel link, and team notes. The home page shows the current week's video, or the latest earlier one if a week was left empty (`currentHomeVideo` in `src/lib/homeVideo.ts`); nothing when the switch is off. Any YouTube link form is accepted (watch, youtu.be, shorts, live, embed); others are refused. Not on the home page yet: the placement goes in the homepage mock first.
+
+**APPLIED** 2026-11-12 — Kyle ran the migration (both sides off, 0 videos). Deployed.
+
+**Reversible?** Yes — DROP the three tables.
+**Verified?** Yes — `scripts/.local/hv_test.mts` on both sides: a week saved; a non-Monday and a non-YouTube link refused; switch off = nothing shows; switch on with this week empty = last week's video with its credit link; test rows removed and both switches back off.
+
+---
+
+## 2026-11-12 — Daily Challenge game and polls (one contest for boys and girls)
+
+**Tables affected:** `daily_challenges`, `daily_challenge_plays`, `daily_challenge_weeks`, `daily_challenge_claims`, `polls`, `poll_votes` (new); `boys_/girls_daily_challenges`, `boys_/girls_polls` (dropped — empty, created earlier the same day)
+
+**Migration file:** `docs/migrations/20261112_daily_challenge_game.sql`
+
+**Purpose (Kyle 2026-11-12):** the game behind the Daily Challenge. One contest across boys and girls trivia: one question per date (12:00 AM – 11:59 PM Eastern), multiple choice or a ranking of four, with a time limit (30 s default). Signed-in fans click "Today's Challenge"; the server starts and keeps the clock (refreshing doesn't reset it); one attempt; late (past the limit + 1.5 s grace) = wrong; the correct answer shows after. Weekly standings (Monday–Sunday Eastern): most correct, then least total time on correct answers, then whoever finished first. Two winners a week (the top player; one random player who answered at least once), picked the first time the game is used after the week ends (no cron needed), emailed through Resend with a link to `/challenge/claim` (shirt size + mailing address); admin Winners list with "mailed". Polls: one site-wide list; signed-in fans vote once, then see percentages. `sandbox` rows belong to the admin Challenge Sandbox (any date, named test players, never emailed). All access through the server; no public grants. Code: `src/lib/challenge.ts`, `src/lib/challengeServer.ts`, `/api/challenge*`, `/api/poll`, `/api/admin/daily-challenge|polls|challenge-winners`, `src/components/challenge/*`. Not on the public site yet (front end later); `/challenge/claim` exists for the winner email.
+
+**APPLIED** 2026-11-12 — Kyle ran the migration (all 0). Deployed.
+
+**Reversible?** Yes — see the migration's ROLLBACK.
+**Verified?** Yes — `scripts/.local/game_test.mts`, a full sandbox week through the real routes (31 checks): question hidden until started; the clock survives a second start; right / wrong / ranking order / late past 5 s + grace / opened-and-left all scored right; one attempt; standings A 3, B 1, C 0; no winners before the week ends; next Monday A top, random from B or C, decided once; prize form validated, another player can't send it, admin sees size and address; poll percentages after voting, one vote each. Test data removed.
+
+---
+
+## 2026-11-12 — Daily Challenge, Polls and the NJ wrestling history tables
+
+**Tables affected:** `history_finishes`, `history_team_titles`, `boys_daily_challenges`, `girls_daily_challenges`, `boys_polls`, `girls_polls` (all new)
+
+**Migration file:** `docs/migrations/20261112_daily_challenge_polls_history.sql`; data: `scripts/load_history_20261112.mts`
+
+**Purpose (Kyle 2026-11-12):** two tools under Articles. Daily Challenge: one question per date per side (question, answer, notes); past dates are the archive (the API refuses edits to past dates and removals of today or earlier). Its research tabs (Explorer, Schools, Wrestlers, Team titles, All finishes — boys only) read the NJ boys history scraped 2026-11-02 (`data/njwh/`): state placers 1938–2026 and champions 1934–2026 (champions' names from state_champions.json), region champions 1961–2026 (each 2021 Super Region once, under its first region), group and sectional team titles. Run as is: no region podiums or districts. Polls: question + four answers per side, archivable, not tied to the challenge. Admin only; no public grants; the site front end comes later.
+
+**APPLIED** 2026-11-12 — Kyle ran the migration (all 0); loaded history_finishes 12,634 (state 6,321 + region 6,313), history_team_titles 1,223. Deployed.
+
+**Reversible?** Yes — DROP the six tables.
+**Verified?** Yes — APIs answer for the page (history 12,634 / 1,223); a future question saved, a past date refused, the test question removed; a poll created, archived, a poll missing answers refused, the test poll removed. Spot checks: most Region 7 champions Camden Catholic 72; most state titles: five 4-timers.
+
+---
+
+## 2026-11-12 — Past seasons keep their own school directory (school_season_details)
+
+**Tables affected:** `boys_school_season_details`, `girls_school_season_details` (new). Lock script inserts 2025-26 rows into them and 2025-26 rows into `boys_coaches` / `girls_coaches`.
+
+**Migration file:** `docs/migrations/20261112_school_season_details.sql`; data: `scripts/lock_2025_26_directory_20261112.mts` (inserts only).
+
+**Purpose (Kyle 2026-11-12):** Past Seasons gets the preseason dashboard's spreadsheet as its first tab (Directory), showing and editing that season's data: "lock in the current data for 2025-26's data and then i will update the 2026-27 data". Address, website, Twitter, Facebook, AD, AD email (`schools`) and section/group (`{g}_school_profiles`) have one value per school, so editing for 2026-27 overwrote 2025-26; the new tables hold a past season's values per program, and the live columns stay the current season's. The 2025-26 coaches had been rolled over to 2026-27 (2025-26: boys 0, girls 2), so today's coach is copied into 2025-26 wherever 2025-26 has none. Kyle corrects anything already changed for 2026-27 on the Directory tab (edits there write only the past season: `archive` mode in `/api/admin/school-directory` and `-girls`). Conferences, districts, regions, inactive marks and streaming links were already per season. Also new: the Schools, Wrestlers, Coaches, Tournaments, Leaderboards, Playoffs and End of Season tabs (`/api/admin/past-seasons/tab`).
+
+**APPLIED** 2026-11-12 — Kyle ran the migration (0/0); lock applied: boys 317 directory rows + 313 coaches (2025-26), girls 266 rows + 189 coaches (191 with the 2 already there). Deployed.
+
+**Reversible?** Yes — DROP the two tables; delete the 2025-26 coach rows added (boys 313, girls 189; created 2026-11-12).
+**Verified?** Yes — the Directory tab reads 2025-26 (boys 317 rows: 313 coaches, 315 sections; girls 266: 191, 266); an edit in past-season mode wrote only the 2025-26 row, `schools` unchanged, test value restored. All six new tabs answer for both sides.
+
+---
+
+## 2026-11-12 — WRR season carry (wrestler_rating_carry) and the new rating rules
+
+**Tables affected:** `wrestler_rating_carry` (new). On the rebuild: `wrestler_hammer_scores` and `wrestler_match_score_log` (2025-26 rewritten), `wrestler_rating_carry` (2025-26 written).
+
+**Migration file:** `docs/migrations/20261112_wrestler_rating_carry.sql`
+
+**Purpose (Kyle 2026-11-12):** the rating is continuous — "the end of one season and the start of the next season is no different than day 45 to day 46." Each run saves every rated wrestler's end state (last 20 match scores, latest result at each tournament, final postseason score, weight); the next season continues from it (no placeholders, no replay of last season's postseason bouts; returning active wrestlers are rated from day 1 at last season's weight). 2025-26, the first season with regular-season bouts, still starts the old way. Rule changes in `recalculate-hammer-scores` that ship with it:
+- Postseason part: only an improvement on the carried score counts during the postseason; once state results are in, this season's result, or the average after a medical exit (injury default, medical forfeit, region qualifier who withdrew), or 75% of last season's after missing the postseason (a wrestler holding the in-season 20 keeps it). A top-4 region finish counts as making state when regions load.
+- In-season 20: no postseason entry last season + a winning record over 2+ bouts against NJ opponents with a postseason score above 20 (replaces "beat one opponent with 20+"); drops back if the record stops winning.
+- Tournament part: latest result at each tournament, 12-month rolling (a new edition replaces the old; injury default at the new one averages the two, 0 if no place); wins worth less than the average are removed and the rest re-averaged until stable (order no longer matters). Tournaments are linked across seasons by name until the tournament rollover links them.
+- The unused MS tier credit was removed earlier today.
+
+**Dry runs (2025-26, nothing written):** `{ season, dryRun: true }` on the route; scripts in `scripts/.local/wrr_*.mts`.
+
+**APPLIED** 2026-11-12 — Kyle ran the migration (0 rows), then OK'd step 2: 2025-26 rebuilt with archive (boys 7,425, girls 2,377 ratings; logs 139,191 / 40,014 bouts; carry rows 7,425 / 2,377); 2026-27 run for preseason ratings (boys 5,592, girls 1,903: no graduated or inactive wrestlers, every one with a weight, a 300-row sample equal to the final 2025-26 rating); both End of Season reports re-saved; deployed.
+
+**Backup:** `docs/migrations/backups/20261112_wrr_2025_26_before_rebuild.json` (9,802 rows, `scripts/backup_wrr_2025_26_20261112.mts`).
+
+**Known, not from this change:** the saved 2025-26 match part differs from the dry run for 32 boys by at most 0.29 — same-day bouts are read in no fixed order, so the scoring order can vary between runs (also behind the 104 boys whose old live rating differed). Fix: order the bout and match reads.
+
+**Reversible?** Yes — DROP the table (the next run starts the season the old way); 2025-26 ratings restorable from the backup.
+**Verified?** Yes — saved 2025-26 ratings equal the dry run (girls all; boys all but the 32 above); integrity check unchanged (1 pre-existing failure: Delsea vs Council Rock North dual score).
+
+---
+
+## 2026-11-12 — Tournament hubs (Middle School Hub, Offseason Hub)
+
+**Tables affected:** `wrestling_clubs` (new, shared); `boys_hub_tournaments`, `boys_hub_events`, `boys_prospects`, `boys_hub_placements`, `boys_hub_bouts` and the same five `girls_` tables (all new)
+
+**Migration files:** `docs/migrations/20261112_tournament_hubs.sql` (tables), then `docs/migrations/20261112_tournament_hubs_seed.sql` (rows)
+
+**Purpose:** Kyle 2026-11-12: a hub for middle school tournaments and one for offseason tournaments, admin only, to help with rankings. Each tournament has a year (event) per time it runs; each year holds podiums by weight (folkstyle and freestyle kept apart, no Greco) and, for duals-style events, the bouts so each kid's record there is known. Everyone on a podium or in a bout becomes a prospect (one list per side, across both hubs) and is linked to their high school wrestler once known: in the hub import (exact name matches offered, Kyle confirms) or in the HS import review for a new wrestler. A prospect's state comes from the source, the matched wrestler or the club; the leaderboard shows NJ kids by default. Clubs are shared like schools.
+
+**Seed:** the 17 middle school and 20 offseason tournaments researched Aug 30–31 (`Off Season Stuff/*.csv`) on both sides, except "National Freestyle Duals (MS Boys Division)" (boys only): boys 17 + 20, girls 16 + 20. The NJ club list (`Off Season Stuff/NJ Wrestling Clubs.csv`): 71 clubs (67 NJ, 3 NY, 1 PA); the file's trailing source-note row is left out.
+
+**Readers / writers:** `/api/admin/hub/*` (tournaments, events, event, import, leaderboard, prospects, clubs); pages `/admin/{boys,girls}/ms-hub` and `/offseason-hub` (+ `/event/[id]`); `src/lib/matchProspect.ts` (RTF import review: prospect candidates for a new NJ wrestler; `rtf/import` sets `wrestler_id` on confirm); `src/lib/wrestlerDelete.ts` (a prospect link blocks deleting the wrestler); `oos-wrestlers` merge and `scripts/merge_duplicate_profiles.mts` / `delete_empty_profiles.mts` (re-point / count `wrestler_id`).
+
+**APPLIED** 2026-11-12 — Kyle ran both: 11 tables; boys ms 17 / offseason 20, girls ms 16 / offseason 20, clubs 71. Deployed after.
+
+**Seasons (Kyle, same day):** `hub_events.season` is the offseason's calendar year (the 2026 offseason = events dated in 2026), or for middle school the year its June–May season ends (June 2025 – May 2026 = 2026, shown 2025-26) — `hubSeasonOfDate` in `src/lib/hub.ts`. The hub opens on the season today falls in, with a picker 10 back; a start date must fall in its season; the leaderboard is one season or all.
+
+**Reversible?** Yes — DROP the 11 tables (listed in the migration's ROLLBACK).
+**Verified?** Yes — `scripts/.local/hub_test.mts` round trip on both sides (event, prospects, placement, bout, read, duplicate place refused, test rows removed); pages and API refuse non-admins.
+
+---
+
+## 2026-11-12 — Drop the unused Aug 2026 middle school / offseason tables
+
+**Tables affected:** `ms_placements`, `ms_wrestlers`, `ms_tournaments`, `ms_tournament_tiers`, `hs_offseason_placements`, `hs_offseason_tournaments`, `nonnjsiaa_clubs` (dropped)
+
+**Migration file:** `docs/migrations/20261112_drop_old_ms_offseason.sql`
+
+**Purpose:** Built 2026-08-29/30 (`20260829_ms_prospect_schema.sql`, `20260830_nonnjsiaa_schema.sql`) and never used: all 7 tables empty (counted 2026-11-12). Replaced by the tournament hubs above. Removed with them: the old Non-NJSIAA pages and APIs (`/admin/[side]/ms/*`, `/admin/[side]/nonnjsiaa/*`, `/api/admin/ms/*`, `/api/admin/nonnjsiaa/*`), `src/lib/matchMsWrestler.ts`, `src/lib/parseMsResults.ts`, the unused `AdminSidebar.tsx`, and the MS "tier credit" floor in `recalculate-hammer-scores` (it read the empty tables, so no rating changes; Kyle: the hubs are tracking only, no WRR effect). The migration refuses to drop a table with rows.
+
+**APPLIED** 2026-11-12 — Kyle ran it after the hub deploy; verify returned 0 rows.
+
+**Reversible?** Yes — re-run the two Aug migrations (empty tables).
+**Verified?** Yes — the REST API returns 404 for all 7 tables.
+
+---
+
+## 2026-11-12 — Drop preseason_completion (duplicate of the Complete Transfers task)
+
+**Tables affected:** `preseason_completion` (dropped)
+
+**Migration file:** `docs/migrations/20261112_drop_preseason_completion.sql`
+
+**Purpose:** The preseason dashboard already has a "Complete Transfers" task per gender (`admin_tasks`, process_key 'transfers'). The table added earlier today duplicated it, so the dashboard's Transfers % (0 or 100) now reads that task: complete when its completed_at falls in this season's preseason (from Aug 1). The table was never written to; the migration refuses to drop it if it has rows. The extra Mark complete button and `/api/admin/preseason-completion` are removed. Streaming link tables stay.
+
+**APPLIED** 2026-11-12 — Kyle ran it; verify returned 0 rows, and the REST API now returns 404 for the table.
+
+**Reversible?** Yes — re-create from `20261112_preseason_streaming_and_completion.sql`.
+**Verified?** Yes — table gone (REST 404)
+
+---
+
+## 2026-11-12 — Grade-review marks carried to 2026-27
+
+**Migration file:** none (data change through the service role). Script: `scripts/carry_grade_reviews_20261112.mts`.
+
+**Purpose:** The grade reviews for the 2026-27 preseason were marked complete on 2026-11-04 (`roster_grade_school_complete`, season 2026, while the roster pool was keyed 2026). The 2026-11-11 Season Rollovers moved the roster pool to 2027 but not these marks, so the preseason dashboard (it reads the roster import season) lost them: girls Grade Reviews showed 19% (Kyle: "long completed"). Each 2026 mark was copied to 2027 with the same completed_at / completed_by; the 2026 rows are kept.
+
+**Data:** girls 253, boys 297 marks copied. Dashboard Grade Reviews: girls 95% (254/266), boys 96% (301/315).
+
+**Backup:** `docs/migrations/backups/20261112_carry_grade_reviews.json` (the 2026 rows copied).
+
+**APPLIED** 2026-11-12.
+**Reversible?** Yes — `DELETE FROM roster_grade_school_complete WHERE season_id = 2027;` (no 2027 marks existed before).
+**Verified?** Yes — 2027 counts match 2026 for both genders.
+
+---
+
+## 2026-11-12 — Preseason dashboard: streaming links + preseason completion marks
+
+**Tables affected:** `boys_streaming_links`, `girls_streaming_links`, `preseason_completion` (all new)
+
+**Migration file:** `docs/migrations/20261112_preseason_streaming_and_completion.sql`
+
+**Purpose:** Kyle 2026-11-11. The preseason dashboard gets a completed bar (average of the essential categories) and two new categories:
+- Streaming links: one link per program per season (school_id, season_id), entered in the preseason school directory for the upcoming season like coaches. Non-essential (shown, not counted in the bar).
+- Transfers: 0% or 100%, from a "Mark complete" in the Transfers tool, kept per season and gender in `preseason_completion` (item 'transfers'). Tracking transfers continues in-season regardless.
+Code: `src/app/admin/[side]/preseason/` (page, PreseasonHeader), `src/app/api/admin/preseason-completion`, the two school-directory routes and workspaces, `TransfersWorkspace`.
+
+**APPLIED** 2026-11-12 — run in Supabase SQL editor.
+
+**Reversible?** Yes — `DROP TABLE boys_streaming_links, girls_streaming_links, preseason_completion;`
+**Verified?** Yes — Kyle's verify query: boys_links 0, girls_links 0, completion_marks 0.
+
+---
+
+## 2026-11-11 — Snap Shot streaks count every bout; 2025-26 daily reports and End of Season reports rebuilt
+
+**Migration file:** none (code change; snapshot tables rebuilt through the service role). Code: `src/lib/snapshot/streaks.ts`, `results.ts`, `compute.ts`, `compute-girls.ts`. Script: `scripts/backfill_snapshots.mts` (now saves its reads; `--reuse` reruns from them).
+
+**Purpose:** Kyle 2026-11-11: streaks count everything (duals, jamboree pairings, in-season tournaments, postseason), in the order wrestled (date → event entry order → card order / bracket round); forfeit-type wins keep a win streak but skip pin/tech/bonus; any loss ends every streak. Out-of-state (is_oos) wrestlers get no streaks. Saved streak state is written only for the day's wrestlers, with start dates taken from the bouts.
+
+**Data:** 2025-26 rebuilt — boys 68 days (snapshot_streak_state 30,460 rows), girls 74 days (9,624). Season highs: boys win 43 Paul Boyle, pin 31 Mateo Vinciguerra, bonus 34 Jacob Inserra, tech 6 Tyler Oden; girls win 40 Jocelyn Danbe, pin 25 Saharia Quamina, bonus 35 Ava Bonilla, tech 4 Olivia Georges. Both End of Season reports re-saved.
+
+**Backup:** `docs/migrations/backups/20261112_snapshot_backfill_{boys,girls}.json` (reports, streak state, season highs, team highs before).
+
+**APPLIED** 2026-11-11.
+**Reversible?** Yes: restore the backups (or the earlier `20261111_snapshot_backfill_*` ones).
+**Verified?** Yes: all days rebuilt; every streak leader is an NJ wrestler.
+
+---
+
+## 2026-11-11 — Grades set from class year for 21 wrestlers (11 boys, 10 girls)
+
+**Migration file:** none (data change through the service role). Script: `scripts/fix_grade_from_class_year_20261111.mts`.
+
+**Purpose:** 21 wrestlers had a grade and graduation_year that disagreed by one year: the 11 boys from the boys rollover entry below, and 10 girls found before the girls rollover. Kyle 2026-11-11: "for all of them just use the grad year". Each grade is set from the class year for the season `grade_season` describes (boys 2027, girls 2026, before the girls rollover); a class already graduated is set inactive, as the rollover does.
+
+**Data:**
+- Boys (season 2026-27): Braviel Rodriguez, Matteo Mosco (class of 2026) → graduated, inactive; Juan Velasquez, Mekhi Dicks, Sebastian Quintero, Stepan Harutyunyan Jr → Sr; William Minarcik, Shane Young, Joshua Schwarz, Leonard Riley, Triston Festa So → Jr.
+- Girls (season 2025-26, before rollover): Rachel Springer, Emily Garcia, Sophia Klecha, Perjia Dupont Jr → Sr (class of 2026, so the girls rollover graduates them); Xiomora Alvarez, Arianna Sottile, Madison McKoy, Sofia Sgalambro, Sofia Pedroso, Sophia Parzero So → Jr.
+- grade_confirmed_source 'manual'.
+
+**Backup:** `docs/migrations/backups/20261111_grade_from_class_year.json` (the 21 rows before).
+
+**APPLIED** 2026-11-11.
+**Reversible?** Yes: write the backup's grade and is_active back.
+**Verified?** Yes: 21 updated; graduation_year unchanged for all 21 after the trigger.
+
+---
+
+## 2026-11-11 — Boys grade rollover finished by script (route batching fix)
+
+**Migration file:** none (data change through the service role). Script: `scripts/finish_boys_grade_rollover_20261111.mts`.
+
+**Purpose:** Kyle ran boys Season Rollover. It moved `grade_season` M to 2027 and advanced the roster pool (season 2027, 678 graduated), then every wrestler update failed: one `.in('id', ...)` with ~1,450–2,300 ids made the request too long (400 Bad Request). Rerunning would have bumped grade_season and the roster pool twice, so the script did only the wrestler step: same selection (active, graded, NJ boys), batched by 300. Both rollover routes (`season-rollover`, `season-rollover-girls`) now batch these updates.
+
+**Data:** 7,666 boys wrestlers: 1,451 Fr→So, 1,935 So→Jr, 2,285 Jr→Sr, 1,995 Sr graduated (is_active false). The graduation-year trigger kept every class except 11 whose grade and graduation_year already disagreed; their old graduation_year was restored so the rollover settled nothing (Braviel Rodriguez, Matteo Mosco, Shane Young, William Minarcik, Juan Velasquez, Joshua Schwarz, Leonard Riley, Mekhi Dicks, Sebastian Quintero, Stepan Harutyunyan, Triston Festa — for Kyle to review).
+
+**Backup:** `docs/migrations/backups/20261111_boys_grade_rollover.json` (id, grade, is_active, graduation_year before).
+
+**APPLIED** 2026-11-11.
+**Reversible?** Yes: write the backup's grade and is_active back (graduation_year unchanged), and set grade_season M to 2026.
+**Verified?** Yes: 7,666 changed; graduation years unchanged after the 11 restores.
+
+---
+
+## 2026-11-11 — Split Peter Terranova (Delbarton / Edison)
+
+**Migration file:** `docs/migrations/20261111_split_peter_terranova.sql`
+
+**Purpose:** One boys profile (a7427d2e) held two wrestlers: Delbarton's Peter Terranova (132, state qualifier, class of 2027) and Edison's (126, So in 2025-26). The Delbarton wrestler's rating made the Edison wrestler's losses top the season's biggest-upset lists (Kyle 2026-11-11: split them). The Edison wrestler gets new profile 0ff75f06 with every row at school 178: 26 dual bouts, 7 in-season tournament bouts, 1 district entry, the Edison alias and roster row.
+
+**Backup:** `docs/migrations/backups/20261111_split_peter_terranova.json` (profile and every referencing row).
+
+**APPLIED** 2026-11-11 (Kyle). Then: 2025-26 boys ratings rebuilt (archive), leaderboards refreshed, boys daily Snap Shots rebuilt, End of Season report saved again.
+**Reversible?** Yes: rollback statements at the bottom of the file.
+**Verified?** Yes: new = 26 / 7 / 1 / 1, old = 5 / 10 / 6 / 1 (Kyle's verify).
+
+---
+
+## 2026-11-11 — Out-of-state dual opponents rated even; 2025-26 ratings and daily Snap Shots rebuilt
+
+**Migration file:** none (data rebuild only, no schema change). Code: `src/app/api/admin/recalculate-hammer-scores/route.ts` (recordMatch).
+
+**Purpose:** In duals, a non-NJ (out-of-state or unknown) opponent was rated 0 because the default (55/60/65) is chosen by bracket round and duals have no round. Kyle (2026-11-11): such an opponent is rated equal to the NJ wrestler's own effective rating. Brackets keep the round default. The Snap Shot upset lists now split upsets by winners who already had a rating from those by winners whose pre-match rating was 0 (`top_upsets_by_gap_unrated`, `biggest_upset_unrated`).
+
+**Data:** 2025-26 rebuilt as an archive season for both sides (`{"season":"2025-26","archive":true}`), leaderboards refreshed, all 2025-26 daily Snap Shots rebuilt (boys 68, girls 74) and the End of Season reports saved again.
+- Non-NJ dual opponents no longer at 0: boys 759 bouts, girls 41 (still 0 only where the NJ wrestler was also 0: boys 48 + 1, girls 2).
+- The girls rebuild also logged the 2 Schalick–Delran bouts the integrity check had flagged.
+
+**Backups:** `docs/migrations/backups/20261111_ratings_before_oos_dual_default.json` (9,801 rating rows), `20261111_snapshot_backfill_boys.json`, `20261111_snapshot_backfill_girls.json`.
+
+**APPLIED** 2026-11-11.
+**Reversible?** Revert the code and rebuild; the backups hold the previous ratings and Snap Shots.
+**Verified?** Yes: integrity check only shows the known Delsea–Council Rock North dual.
+
+---
+
+## 2026-11-11 — End-of-season Snap Shot reports
+
+**Migration file:** `docs/migrations/20261111_snapshot_season_reports.sql`
+
+**Purpose:** The Snap Shot page has a new End of Season tab: one saved report per season, per program, built by `src/lib/snapshot/seasonReport.ts`. It contains:
+- **Season totals:** schools, wrestlers and matches, and how matches ended, split by duals, tournaments and the postseason.
+- **NJSIAA vs non-NJSIAA:** NJ's record, and how those wins and losses ended.
+- **Season bests:** every daily-report category over the whole season, taken from the saved daily Snap Shots.
+- **Postseason:** district entrants, region and state qualifiers, state placers and the state champions.
+
+**Tables:** new `snapshot_season_reports` and `snapshot_season_reports_girls` (season text PK, payload jsonb). Service role only. API: `/api/admin/snapshot-season` (GET loads a saved report; POST builds and saves it).
+
+**APPLIED** 2026-11-11 (Kyle).
+
+**Reversible?** Yes: drop both tables.
+**Verified?** Yes: boys 0, girls 0 after creation. The 2025-26 reports for both sides were then computed and saved (the payload also counts duals, jamborees and in-season and postseason tournaments).
+
+---
+
+## 2026-11-11 — Girls dual-meet status (new for 2026-27)
+
+**Migration file:** `docs/migrations/20261111_girls_dual_status.sql`
+
+**Purpose:** The 2026-27 Girls Team Tournament Regulations make each school declare dual-meet status by December 15.
+- Declared schools are classified.
+- Every regular-season event a declared school wrestles counts as a dual in Power Points.
+- Forfeits count only between two declared teams.
+
+**New table:** `girls_dual_status`, one row per school and season (`declared` true/false; no row = not recorded). Set it in the girls school directory's new Dual Status column. Anon can read it.
+
+**Code using it:**
+- **`scripts/compute_power_points.mts`:** for girls from 2026-27, every regular-season meet between two declared schools counts, including jamboree pairings, and only declared schools get a row. Meets against undeclared schools are left out: the regulations don't say, and Kyle's call (2026-11-11) is no for now.
+- **Boys Power Points from 2026-27:** 80% of meets, at least 9, rounded up (`ppMeetsCounted`, `src/lib/power-points.ts`). The 2025-26 figures are unchanged: a dry run counted the same meets for every school.
+
+**Tables affected:** new `girls_dual_status`
+
+**APPLIED** — 2026-11-11, Kyle
+
+**Reversible?** Yes: `DROP TABLE girls_dual_status`.
+**Verified?** Yes: the table exists and is empty, and the anon read returned 0 rows rather than a permission error.
+
+---
+
+## 2026-11-11 — Girls 2026-27 opened for preseason; girls 2025-26 marked complete
+
+**Migration file:** `docs/migrations/20261111_girls_2026_27_preseason.sql`
+
+**Purpose:** Girls had no 2026-27 row in `season_gender_state`, so every girls preseason tool still worked on 2025-26. Boys 2026-27 was opened on 2026-09-14. This adds girls 2026-27 at stage 'preseason' (not live), and archives girls 2025-26 the way boys 2025-26 is. Girls 2025-26 stays the live season until 2026-27 is set live; archiving locks its rankings and Power Points.
+
+**Tables affected:** `season_gender_state` (+1 row, 1 stage)
+
+**APPLIED** — 2026-11-11, Kyle
+
+**Reversible?** Yes, with the rollback lines in the file.
+**Verified?** Yes: girls 2024-25 archived; 2025-26 archived and live; 2026-27 preseason, not live.
+
+---
+
+## 2026-11-11 — 2026-27 season calendar filled from the NJSIAA documents
+
+**No migration** (data; service role, `scripts/season_calendar_2026_27_20261111.mts --apply`).
+
+**Source:** "NJSIAA Docs/Boys 2026-27/Boys Dates.rtf" and "Girls 2026-27/Girls Dates.rtf", plus the team and individual regulations posted 11/9/26.
+
+**Before:** the 2026-27 calendar held 23 boys and shared rows and no girls rows, and the boys region seeding sat on the girls dates (2/16–17).
+
+**Updated (8 rows):**
+- Boys region seeding moved to 2/15–16.
+- "First Day of Season" renamed "Competition May Begin".
+- Individual state seeding became a boys row; a girls one was added.
+- Locations added: Phillipsburg HS for the boys team finals; 32 / 8 sites for boys districts / regions; Boardwalk Hall for states.
+
+**Added (16 rows):**
+- **Shared:** the scrimmage date (12/3–5), the one-pound allowances (12/26 and 1/2), the first Power Points calculation (12/26), the team entry period (1/5–15) and the conflict-of-interest form (1/15).
+- **Girls:** the dual-meet status deadline (12/15) and the team playoff (2/2, 2/4 and 2/7 at Phillipsburg). Also district seeding and districts (2/11, 2/14), region seeding and regions (2/16–17, 2/21), state seeding (2/23) and states (2/25–27).
+
+Event types follow the 2025-26 vocabulary. The live site still reads 2025-26 until the new season is set live.
+
+**Tables affected:** `season_calendar` (2026-27: 23 → 39 rows)
+
+**APPLIED** — 2026-11-11, service-role script
+
+**Reversible?** Yes: `docs/migrations/backups/20261111_season_calendar_2026_27.json` (prior rows and the added ids).
+**Verified?** Yes, 39 rows. The mock's About reads them per side.
+
+---
+
+## 2026-11-11 — Schalick–Delran girls dual: 2 missing bouts
+
+**Migration file:** `docs/migrations/20261111_schalick_delran_missing_bouts.sql`
+
+**Cause:** A.P. Schalick 23–24 Delran (1/19/2026) was imported before 2026-11-06, when the dual importer still dropped bouts at non-NJ weights instead of mapping them. Its stored bouts added to 17–18.
+
+**Added:**
+- 128 → 126: River Wojcik's fall (Schalick), 6–0.
+- 135 → 132: Everleigh Whitham's forfeit win (Delran), 0–6.
+
+**Left as is (Kyle):** Delsea 73–6 Council Rock North (PA), 2/11/2026. Only the 215 and 285 bouts are stored; the source has 14, at Pennsylvania weights, with two at 285. It remains the one boys integrity failure.
+
+**Tables affected:** `dual_meet_matches_girls` (+2)
+
+**APPLIED** — 2026-11-11, Kyle
+
+**Reversible?** Yes, with the rollback line in the file.
+**Verified?** Yes: 23, 24, 11 bouts. The girls rule "final score differs from bout points" is now clean.
+
+---
+
+## 2026-11-11 — No-alias list worked through (77 → 1); Sydney Johnson split
+
+**No migration for the links** (data; service role, `scripts/apply_no_alias_review_20261111.mts --apply`). The Sydney Johnson split is `docs/migrations/20261111_split_sydney_johnson.sql` (APPLIED 2026-11-11 by Kyle; verify: 2 bouts on the new profile at Boiling Springs (SC), 1 on the old at Liberty - Bethlehem (PA)).
+
+**Source:** `docs/reviews/no_alias_review.csv`, from `scripts/no_alias_review_20261111.mts`, reviewed by Kyle.
+- **Transfers (53):** 45 Kyle checked today, 5 he confirmed, and 3 he settled on 2026-11-10 (Pazinko, Valeri, Thompson). Seven of them came from Jackson Liberty, which folded into Jackson Township.
+- **Program changes (12):** the wrestler's 2024-25 school joined a co-op in 2025-26: Jefferson-Sparta, Ramsey-Northern Highlands, Cherry Hill East-West, Buena-Vineland and Lodi/Saddle Brook. These co-ops are recorded in `school_season_names`; `school_coops` holds only 4 old rows.
+- **Name link on the wrong school (11):** Gloucester (VA) wrestlers whose name link was saved at NJ Gloucester (259). The link moves to Gloucester (VA) (771).
+
+**Applied:** 76 name links added, one per row, each under the name printed at that school; no existing link was repointed. 11 wrong links at Gloucester (259) were removed.
+
+**Tables affected:** `wrestler_name_aliases` (+76, −11)
+
+**APPLIED** — 2026-11-11, service-role script
+
+**Reversible?** Yes: `docs/migrations/backups/20261111_no_alias_review.json` (added ids; removed rows in full).
+**Verified?** Yes. The integrity rule went from 77 to 1, and the 1 is Sydney Johnson (the pending split). The other rules are unchanged.
+
+---
+
+## 2026-11-11 — Jamborees: small events reviewed (10 renamed, 7 back to plain pairings)
+
+**No migration** (data; service role, `scripts/jamboree_cleanup_20261111.mts --apply`).
+
+**Why:** Kyle asked whether the small jamborees were really tri meets. None ran as one. A tri meet would show full dual lineups with one bout per weight. Instead, these events had girls wrestling the same school more than once at a weight, or 3+ matches.
+- **Renamed to "… Jamboree" (10):** the "Tri"/"Quad" events that ran jamboree-style: Cliffside Park, Deptford/Clayton/Palmyra/Sterling, Scotch Plains-Fanwood, Hightstown, Verona, Cherry Hill East, Delran, Bridgewater-Raritan, Pascack Hills and Pemberton/Riverside/Hamilton West/Burlington City.
+- **Back to plain pairings, no event (7):** events with 1 bout per pairing and 2–4 bouts in all: Metuchen, Point Pleasant Beach Round Robin, Lakeland, Immaculata, Long Branch, Seneca and New Providence/Montgomery/Glen Rock/Westfield.
+  - Their 15 pairings keep `meet_kind='jamboree'`, so W-L is unchanged.
+  - Their registry rows are removed, except Pt. Beach Round Robin's original schedule row, which stays, unlinked.
+
+**Result:** 35 girls jamborees, 988 linked pairings.
+
+**Follow-up (Kyle):** a name that only lists the schools becomes the first school + "Jamboree" (jamborees_girls and their registry rows):
+- Lenape Valley / Montville / Mount Olive → Lenape Valley Jamboree
+- Deptford / Clayton / Palmyra / Sterling → Deptford Jamboree
+- Pemberton / Riverside / Hamilton West / Burlington City → Pemberton Jamboree
+
+**Tables affected:** `jamborees_girls` (−7, 10 names), `dual_meets_girls` (15 `jamboree_id` cleared), `tournament_registry` (6 rows removed, 1 unlinked, 10 names)
+
+**APPLIED** — 2026-11-11, service-role script
+
+**Reversible?** Yes, from `docs/migrations/backups/20261111_jamboree_cleanup.json`.
+**Verified?** Yes. The script reported 35 jamborees and 988 linked pairings.
+
+---
+
+## 2026-11-11 — Cape Atlantic League Tournament (girls, 2/6/2026) loaded
+
+**No migration** (data; service role, `scripts/load_cape_atlantic_girls_20261111.mts --apply`, add-only).
+
+**Source:** the Cape Atlantic section of "2025-26 - Girls February Tournament.rtf" (Buena Regional). It had never been loaded: the tournament parser read the venue's "Buena, NJ 08310" line as a new event (fixed earlier today).
+
+**Weights:** the league used its own classes, so each moves to the nearest NJ class (Kyle approved):
+
+| League weight | NJ weight |
+|---|---|
+| 121 | 120 |
+| 128 | 126 |
+| 135 | 132 |
+| 143 | 145 |
+| 151 | 152 |
+| 161 | 165 |
+| 180 | 185 |
+
+Track's team views label some bouts with the neighboring weight, so 132/135 and 143/145 are one bracket each. Exodus Hollander's "1st Place Match over Unknown (For.)" under 143 is left out: it would make a second 145 champion with no opponent.
+
+**Loaded:**
+- 48 bouts: 10 schools and 47 wrestlers, all matched; no new profiles.
+- 33 placements.
+- The venue.
+
+**Not loaded:** 2 forfeits over "Unknown", which have no opponent profile. Cabarcas Rincon's 185 title is still in the placements.
+
+**No standings:** none are on Kyle's list.
+
+**Tables affected:** `tournament_bouts_girls` (+48), `tournament_placements` (+33), `in_season_tournaments_girls` (venue, source_format)
+
+**APPLIED** — 2026-11-11, service-role script
+
+**Reversible?** Yes: delete by the ids in `docs/migrations/backups/20261111_cape_atlantic_girls.json`.
+**Verified?** Yes. After rebuilding girls ratings and both girls leaderboards, the integrity check shows only the 3 known failures.
+
+---
+
+## 2026-11-11 — Tournaments and jamborees separated; 42 girls jamborees; tournament names cleaned; Central Regional removed
+
+**Migration file:** `docs/migrations/20261111_jamborees.sql` (generated by `scripts/build_jamborees_20261111.mts`)
+
+**Purpose:** Kyle wants a firm split between tournaments and jamborees (a Jamborees tab beside Tournaments, same month layout, with each jamboree's best team by standard dual scoring), and tournament names without a year or edition number since they repeat every season.
+- **New tables:** `jamborees` and `jamborees_girls` (one per program), plus `dual_meets(_girls).jamboree_id` for a jamboree's pairings and `tournament_registry.jamboree_id`. Anon can read them (the public pages use the anon client).
+- **Girls 2025-26:** 42 jamborees, 1,003 pairings linked.
+  - A jamboree is an "Other" event where 3+ schools wrestled and a school met 2+ of them. Two-school events stay plain pairings.
+  - The list comes from the importer report, `docs/reviews/girls_other_events_report_20261111.json`. Names and counts are in `docs/reviews/girls_jamborees_2025_26.csv`.
+  - Del Val Kickoff, Hillsborough Holiday Brawl and Jack Welch move from the tournament list and keep their ids. Their registry rows now point at the jamboree.
+  - Pt. Beach Round Robin's registry row was linked to the East Brunswick Lady Bear tournament by mistake; it now points at the jamboree.
+- **Central Regional Tournament (girls, 1/25/2026) removed:** it didn't happen (Kyle). It had no bouts, placements, standings, participants, seeds or registry row; a guard in the migration checks all of these before deleting.
+- **Names:** 49 renames for 2025-26 (21 boys, 28 girls), dropping the year, edition number, "Girls", "Wrestling" and "High School", with a few typos fixed. Linked registry rows get the same names. Future RTF imports, CSV imports and the season rollover clean names the same way (`src/lib/eventName.ts`).
+- Lady Viking Jamboree stays a tournament: it has brackets and 36 placements.
+
+**Tables affected:** new `jamborees`, `jamborees_girls`; `dual_meets(_girls)` (+`jamboree_id`); `tournament_registry` (+`jamboree_id`, 4 rows repointed, 38 added, renames); `in_season_tournaments_girls` (−4 rows); 49 tournament names.
+
+**APPLIED** — 2026-11-11, Kyle (Supabase SQL editor)
+
+**Reversible?** Names: the RENAMES list in the build script. Tables: drop them. The 4 removed tournament rows had no data attached.
+**Verified?** Yes. The verify query returned 42 jamborees, 1,003 linked pairings, 0 removed rows left, 42 registry jamborees, 21 boys and 28 girls names.
+
+---
+
+## 2026-11-11 — Girls jamboree bouts the Other-events import missed; Jack Welch loaded
+
+**No migration** (data; service role, `scripts/load_girls_jamboree_gaps_20261111.mts --apply`, add-only apart from 20 meet scores).
+
+**Cause:** The jamboree parser (`src/lib/parseJamboreeGirls.ts`) didn't recognize these weight labels, so it dropped every bout under them:
+- pool labels with a number ("107C1", "120B2");
+- crossover pools ("114-120", "126-126 A").
+
+As a result, 2026 Middlesex Girls Jamboree (2/6) loaded nothing and Howell Girls Jamboree (2/7) lost 54 bouts. The parser now reads both label types; a crossover pool uses its lighter weight. Pairings and weights that were already stored are unchanged by the re-parse (1 weight differs: a 2/14 dual stored from the dual file).
+
+**Loaded:**
+- **New pairings:** 57 pairings with 123 bouts:
+  - Middlesex: 17 pairings, 62 bouts;
+  - Howell: 32 pairings, 33 bouts;
+  - Jack Welch (1/16, 6 teams, round robin; Kyle: "it might not be a tourney"): 8 pairings, 28 bouts, from "Jack Welch - 2026.rtf".
+- **Added to existing pairings:** 21 Howell bouts in 20 stored pairings, with their team points added to the meet scores (old scores saved in the backup).
+- **New wrestlers:** 4 (Amy Yero, Jenna Balioni, Aloni Mora, Anette Nunez Conforme), with 4 name aliases.
+- **Not loaded:**
+  - Immaculata vs Bridgewater-Raritan 1/14: 1 bout with no weight in the source.
+  - Hackensack 2/18: a forfeit over "Unknown".
+
+**Also:** `src/lib/parseRtf.ts` no longer reads a venue's "City, ST 12345" line as a new tournament. Cape Atlantic League's bouts had been filed under "Buena, NJ 08310"; a re-parse of every 2025-26 tournament file changes nothing else.
+
+**Tables affected:** `dual_meets_girls` (+57, 20 scores), `dual_meet_matches_girls` (+144), `wrestlers` (+4), `wrestler_name_aliases` (+4)
+
+**APPLIED** — 2026-11-11, service-role script
+
+**Reversible?** Yes: delete by the ids in `docs/migrations/backups/20261111_girls_jamboree_gaps.json` and restore `topupScores`.
+**Verified?** Yes. A re-run finds every source pairing and bout stored. The integrity check is back to the 3 known failures, after rebuilding girls ratings and both girls leaderboards.
+
+---
+
 ## 2026-11-11 — Tournament standings from Kyle's TrackWrestling copy; 4 out-of-state schools created
 
 **No migration** (data; service role, `scripts/load_tournament_standings_20261111.mts --apply`, add-only).
@@ -7175,3 +9638,73 @@ No real athletes affected. `matches` and `precomputed_team_scores` for these sch
 
 **Reversible?** Yes — `DROP TABLE public.admin_tool_registry;`
 **Verified?** No — pending
+
+---
+
+## 2026-11-14 — Pre-2012-13 medals on profiles (no DB change)
+
+**Tables affected:** none (reads `history_finishes`)
+
+**What changed:**
+- Profiles whose postseason starts in the first Playoff History season (boys 2012-13) show state places and region titles from the four seasons before, matched from `history_finishes` (njwrestlinghistory.info) by same school + same name (exact, common nickname, or unique initials like BJ → Bryant). `src/lib/preRecordFinishes.ts`, cached 1 hour.
+- Those profiles get the note "Postseason data only goes back to 2012-13" (plus the njwrestlinghistory.info credit when earlier medals show).
+
+**Reversible?** Yes — code only
+**Verified?** Yes — review preview (Ashnault, Clagon, Trombetta) and deployed to production
+
+---
+
+## 2026-11-14 — Untimed pins/techs set to 6:00; postseason History tabs
+
+**Tables affected:** `matches` (106 rows, `fall_time_seconds`)
+
+**What changed:**
+- Kyle: a pin or tech fall with no time counts as 6:00. `scripts/untimed_pins_six_minutes_20261114.mts --apply` set `fall_time_seconds = 360` on the 106 FALL/TF bouts with none (all postseason, 2013-2024 history + girls regions). Backup of ids: `docs/migrations/backups/20261114_untimed_pins.json`. `playoffHistory/load.ts` now does the same on load.
+- Tech falls of 0:15 or under aren't honored in Quickest Tech (district/region cards, leaderboards, Daily Challenge explorer, History tab) — one bout today (2025 boys District 31 QF, 0:15).
+- Code only: History tab on district/region/state pages (`src/lib/tournamentHistory.ts`, `src/components/site/TournamentHistory.tsx`), weight-page podium history, standard header on bracket pages, Individual Post Season opens on the live season (?season=), wider girls region tiles.
+
+**Reversible?** Yes — null the backed-up ids' `fall_time_seconds`
+**Verified?** Yes — 0 untimed left; integrity check unchanged (2 known failures); deployed
+
+---
+
+## 2026-11-14 — Impossible times to 6:00; saint schools named "St."
+
+**Tables affected:** `matches` (19 rows, `fall_time_seconds`), `schools` (16 rows, `display_name`)
+
+**What changed:**
+- Kyle: times that can't happen count as 6:00 — 6 tech falls over 6:00 (e.g. 40:08, 10:03) and 13 pins over 8:00 (the longest a match runs). `scripts/impossible_times_six_minutes_20261114.mts --apply`; old times in `docs/migrations/backups/20261114_impossible_times.json`.
+- Kyle: every saint school is "St. …" (Saint Rose → St. Rose, St Joseph (Montvale) HS → St. Joseph (Montvale) HS, 16 schools incl. out-of-state). `scripts/saint_names_20261114.mts --apply`; old names in `docs/migrations/backups/20261114_saint_names.json`. New out-of-state schools get the same rule (`src/lib/oosSchool.ts`). School searches treat "st", "st." and "saint" alike, matching at a word's start (`src/lib/saintNames.ts`: header search, admin school search, schools directory, side home).
+- Code only: NJ Wrestling History credits link to http://njwrestlinghistory.info (their https certificate is invalid); Daily Challenge "Medal Table" tab.
+
+**Reversible?** Yes — restore from the backups
+**Verified?** Yes — integrity check unchanged (2 known failures); snapshot change = the renamed schools only; deployed
+
+---
+
+## 2026-11-14 — Schools directory: last season until the new one starts; boys_/girls_schools saint names + read grant
+
+**Tables affected:** `boys_schools`, `girls_schools` (5 names; SELECT grant)
+
+**What changed:**
+- Code: the Schools directory (and side-home school lookup) shows the season before the live one until the live season's "Competition May Begin" date on season_calendar (2026-27: 2026-12-07), via `getDirectorySeason()` in `src/lib/get-season.ts`.
+- The directory had been empty for visitors in every season: `school_directory` runs as the visitor and anon has no read on `girls_schools` / `boys_schools` ("permission denied"). Pages now call it with the server key.
+- Migration `docs/migrations/20261114_saint_names_gender_tables.sql`: the 5 saint names in boys_/girls_schools → "St. …" (service role can't update these tables) and SELECT grants for anon/authenticated.
+
+**APPLIED** — run in Supabase SQL editor 2026-11-14 (check: 3 boys + 2 girls rows all "St. …"); visitors read school_directory again, so the pages went back to the cached public client
+
+**Reversible?** Yes — see the undo line in the migration
+**Verified?** Code deployed; directory lists 310 boys / 234 girls schools for 2025-26. Names pending the migration.
+
+---
+
+## 2026-11-25 — Deleted 2 stray profiles from the Franklin-MA seeds mix-up
+
+**Tables affected:** `wrestlers` (2 rows deleted)
+
+**What changed:**
+- On 2026-11-21 the seeds import treated "Franklin-MA" as the year's plain "Franklin" and created second profiles for John Woodall (114) and Jack Sauer (139). Their seeds were pointed back at the original profiles (f54adee4…, 57b329cb…) that day, which left the new ones empty.
+- Kyle approved deleting them: a5205384-2f8a-4181-ab76-5c13231ab403 (John Woodall), a271d4b8-71b1-471d-a480-8000c9927125 (Jack Sauer). Before deleting, all 53 wrestler-reference columns from the migrations and the delete script, plus followers, had 0 rows for both. Backup: `docs/migrations/backups/20261125_franklin_ma_stray_profiles_deleted.json`.
+
+**Reversible?** Yes — re-insert from the backup
+**Verified?** Yes — integrity check unchanged before/after (the usual 3 items)

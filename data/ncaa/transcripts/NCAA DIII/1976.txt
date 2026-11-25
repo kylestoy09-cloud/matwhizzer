@@ -1,0 +1,142 @@
+# NCAA Division III Championships 1976 — source: NCAA III 1976.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Jack Mulhall | John Carroll
+- Peter Berti | SUNY-Binghampton
+- George Kacavas | Montclair State
+- Scott Puzia | College of New Jersey
+- Mike Tobin | Massachusetts Maritime
+- Bob Ortenzio | Gettysburg
+place 1 Jack Mulhall
+place 2 Peter Berti
+place 3 George Kacavas
+place 4 Scott Puzia
+place 5 Mike Tobin
+place 6 Bob Ortenzio
+
+@ 126
+- Vince Tundo | Montclair State
+- Craig Helmuth | Gettysburg
+- Andy Zook | Millersville
+- Mike Rossetti | College of New Jersey
+- John Ciotoli | SUNY-Cortland
+- Al Evangilista | John Carroll
+place 1 Vince Tundo
+place 2 Craig Helmuth
+place 3 Andy Zook
+place 4 Mike Rossetti
+place 5 John Ciotoli
+place 6 Al Evangilista
+
+@ 134
+- Mark Hawald | John Carroll
+- Mike Blakely | Montclair State
+- Abe Lang | SUNY-Brockport
+- Mel Harris | Cal State-Stanislaus
+- Gil Waterman | Wheaton
+- Gerald Bouchard | SUNY-Potsdam
+place 1 Mark Hawald
+place 2 Mike Blakely
+place 3 Abe Lang
+place 4 Mel Harris
+place 5 Gil Waterman
+place 6 Gerald Bouchard
+
+@ 142
+- Rick Freitas | Montclair State
+- Nick Hobbs | Coe College
+- Harold Shaw | Lycoming
+- Alex Massiello | Hiram
+- John Bittenbender | Kutztown State
+- Bob Harr | Humboldt State
+place 1 Rick Freitas
+place 2 Nick Hobbs
+place 3 Harold Shaw
+place 4 Alex Massiello
+place 5 John Bittenbender
+place 6 Bob Harr
+
+@ 150
+- Tony Peraza | SUNY-Potsdam
+- Fred Wideman | MacMurray State
+- Greg DiGioacchino | Montclair State
+- Graig Savitsky | Lycoming
+- Doug Burton | Ohio Northern
+- Rory Whipple | SUNY-Cortland
+place 1 Tony Peraza
+place 2 Fred Wideman
+place 3 Greg DiGioacchino
+place 4 Graig Savitsky
+place 5 Doug Burton
+place 6 Rory Whipple
+
+@ 158
+- Jim Weir | John Carroll
+- Robert Harris | Massachusetts Maritime
+- Mitch Brown | St. Lawrence
+- Steve Borja | Lycoming
+- Jerome Stewart | Simpson
+- Mike Karges | Humboldt State
+place 1 Jim Weir
+place 2 Robert Harris
+place 3 Mitch Brown
+place 4 Steve Borja
+place 5 Jerome Stewart
+place 6 Mike Karges
+
+@ 167
+- Dante Caprio | Montclair State
+- Clayton Barnard | Ashland
+- Ken Meditz | John Carroll
+- Kris Henry | Humboldt State
+- David Bauchman | Grove City
+- Wayne Dunn | Maryville
+place 1 Dante Caprio
+place 2 Clayton Barnard
+place 3 Ken Meditz
+place 4 Kris Henry
+place 5 David Bauchman
+place 6 Wayne Dunn
+
+@ 177
+- Dom DiGioacchino | Montclair State
+- Brad Bowman | John Carroll
+- Doug Cope | Delaware Valley
+- Allen Grinde | Luther
+- Skip Fair | Ashland
+- Ronald Bates | Olivet
+place 1 Dom DiGioacchino
+place 2 Brad Bowman
+place 3 Doug Cope
+place 4 Allen Grinde
+place 5 Skip Fair
+place 6 Ronald Bates
+
+@ 190
+- Eric Guyll | Millersville
+- Frank Kuennen | Upper Iowa
+- Ed Hissa | Ashland
+- Leon Dunnam | Massachusetts Maritime
+- Kevin Hinkel | John Carroll
+- Robert Valentine | Maryville
+place 1 Eric Guyll
+place 2 Frank Kuennen
+place 3 Ed Hissa
+place 4 Leon Dunnam
+place 5 Kevin Hinkel
+place 6 Robert Valentine
+
+@ 285
+- Ron Pelligra | St. Lawrence
+- Erland Van Lidth de Jeude | MIT
+- Steve Caldwell | Montclair State
+- Steve McRoberts | Wheaton
+- Steve Reiss | Luther
+- Joe Collins | Ashland
+place 1 Ron Pelligra
+place 2 Erland Van Lidth de Jeude
+place 3 Steve Caldwell
+place 4 Steve McRoberts
+place 5 Steve Reiss
+place 6 Joe Collins
+

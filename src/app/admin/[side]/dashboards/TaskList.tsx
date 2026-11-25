@@ -98,6 +98,7 @@ export function TaskList({ dashboard, processTasks, freestyleTasks, selectedTask
       await supabase.from('admin_tasks').update({ completed_at: new Date().toISOString(), completed_by: currentUser }).eq('id', task.id)
     }
     onTasksChanged()
+    window.dispatchEvent(new Event('preseason-data-changed'))   // e.g. Complete Transfers moves the dashboard's Transfers %
   }
 
   async function addTask() {

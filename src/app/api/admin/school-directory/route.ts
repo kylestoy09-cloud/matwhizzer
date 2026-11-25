@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getNewestSeason } from '@/lib/season-context'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin }  from '@/lib/supabase/service'
+import { setStreamingLink, streamingLinks } from '@/lib/streamingLinks'
 import { boysRosterGradeCounts } from '@/lib/rosterGrades'
 
 export const dynamic = 'force-dynamic'
@@ -27,6 +28,10 @@ export async function GET(req: NextRequest) {
   // differ from the season the directory shows; the preseason dashboard sends it as coach_season_id
   const coachSeasonParam = req.nextUrl.searchParams.get('coach_season_id')
   const coachSeasonId = coachSeasonParam ? Number(coachSeasonParam) : seasonId
+  // archive=1: a past season (Past Seasons page). Its per-school values (address, website, social, AD,
+  // section, group) come from the season's own rows (boys_school_season_details), and its names from
+  // school_season_names; the live columns are the current season's.
+  const archive = req.nextUrl.searchParams.get('archive') === '1'
   const db = createSupabaseAdmin()
 
   const [
@@ -73,6 +78,9 @@ export async function GET(req: NextRequest) {
       .eq('season_id', seasonId),
   ])
 
+  // Streaming link (one per program), entered for the upcoming season like coaches (coachSeasonId)
+  const streamMap = await streamingLinks(db, 'M', coachSeasonId)
+
   const gradeCounts = await boysRosterGradeCounts(db, (boysSchoolsRes.data ?? []).map(bs => bs.school_id))
 
   // Build lookup maps
@@ -111,9 +119,33 @@ export async function GET(req: NextRequest) {
         roster_count:   gc?.roster ?? 0,
         graded_count:   gc?.graded ?? 0,
         active:         !inactiveSet.has(bs.school_id),
+        // Hudl and NFHS Network, a column each (Kyle 2026-11-19)
+        hudl_url:       streamMap.get(bs.school_id)?.hudl ?? null,
+        nfhs_url:       streamMap.get(bs.school_id)?.nfhs ?? null,
       }
     })
     .sort((a, b) => a.display_name.localeCompare(b.display_name))
+
+  if (archive) {
+    const [{ data: details }, { data: names }] = await Promise.all([
+      db.from('boys_school_season_details')
+        .select('school_id, address, website_url, twitter_handle, facebook_url, ad_name, ad_email, section, classification')
+        .eq('season_id', seasonId),
+      db.from('school_season_names').select('school_id, display_name').eq('season_id', seasonId).eq('gender', 'M'),
+    ])
+    const dMap = new Map((details ?? []).map(d => [d.school_id, d]))
+    const nMap = new Map((names ?? []).map(n => [n.school_id, n.display_name as string]))
+    for (const row of schools) {
+      const d = dMap.get(row.id)
+      Object.assign(row, {
+        address: d?.address ?? null, website_url: d?.website_url ?? null, twitter_handle: d?.twitter_handle ?? null,
+        facebook_url: d?.facebook_url ?? null, ad_name: d?.ad_name ?? null, ad_email: d?.ad_email ?? null,
+        section: d?.section ?? null, classification: d?.classification ?? null,
+        display_name: nMap.get(row.id) ?? row.display_name,
+      })
+    }
+    schools.sort((a, b) => a.display_name.localeCompare(b.display_name))
+  }
 
   // Conference options from existing data
   const uniqueConferences = [...new Set(
@@ -152,18 +184,27 @@ export async function PATCH(req: NextRequest) {
   const user = await requireAdmin()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const { school_id, field, value, season_id, coach_season_id } = await req.json() as {
+  const { school_id, field, value, season_id, coach_season_id, archive } = await req.json() as {
     school_id: number
     field:     string
     value:     string | null
     season_id: number
     coach_season_id?: number
+    archive?:  boolean   // a past season: per-school values go to that season's own row
   }
   const coachSeason = coach_season_id ?? season_id
   if (!school_id || !field) return NextResponse.json({ error: 'Missing params' }, { status: 400 })
 
   const db  = createSupabaseAdmin()
   const val = value?.trim() || null
+
+  if (archive && ['address', 'website_url', 'twitter_handle', 'facebook_url', 'ad_name', 'ad_email', 'section', 'classification'].includes(field)) {
+    if (!season_id) return NextResponse.json({ error: 'Missing season' }, { status: 400 })
+    const { error } = await db.from('boys_school_season_details')
+      .upsert({ school_id, season_id, [field]: val, updated_at: new Date().toISOString() }, { onConflict: 'school_id,season_id' })
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json({ ok: true })
+  }
 
   if (field === 'active') {
     // Active / Inactive for this season: only the inactive mark changes (inactive_school_seasons,
@@ -179,6 +220,11 @@ export async function PATCH(req: NextRequest) {
   } else if (['address', 'website_url', 'twitter_handle', 'facebook_url', 'ad_name', 'ad_email'].includes(field)) {
     const { error } = await db.from('schools').update({ [field]: val }).eq('id', school_id)
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+
+  } else if (field === 'hudl_url' || field === 'nfhs_url') {
+    const { error, url } = await setStreamingLink(db, 'M', school_id, coachSeason, field === 'hudl_url' ? 'hudl' : 'nfhs', val)
+    if (error) return NextResponse.json({ error }, { status: error === 'Not a web address' ? 400 : 500 })
+    return NextResponse.json({ ok: true, value: url })   // the address as saved (https:// added)
 
   } else if (field === 'coach_name') {
     const { data: existing } = await db.from('boys_coaches')

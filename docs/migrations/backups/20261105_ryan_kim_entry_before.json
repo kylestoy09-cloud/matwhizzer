@@ -1,0 +1,44 @@
+{
+ "entry": {
+  "id": "667efa21-acd3-4c0b-9e3c-d99fcf1c0576",
+  "wrestler_id": "b2731464-9d88-4ddc-a645-d67a4a26e286",
+  "tournament_id": 97,
+  "school_id": 42,
+  "weight_class_id": 61,
+  "seed": 2,
+  "grade": 11,
+  "grade_label": "Jr",
+  "wins": 0,
+  "losses": 0,
+  "record_snapshot": null,
+  "region_placement": null,
+  "school_context_raw": "Fort Lee",
+  "bracket_position": null,
+  "seed_source": null,
+  "team_points": 0,
+  "tournaments": {
+   "name": "Boy_s Districts District 5",
+   "season_id": 2025
+  }
+ },
+ "log": [
+  {
+   "id": "44cbcad1-bcef-48ff-aaaa-59dd01582a02",
+   "season": "2025-26",
+   "match_source": "postseason",
+   "source_id": "fc3e5cc4-7010-43bc-9031-7beb3c2b543b"
+  },
+  {
+   "id": "6083b73e-b17f-4834-8b93-1f7a8191bccf",
+   "season": "2025-26",
+   "match_source": "postseason",
+   "source_id": "bc3c9af7-0da0-4ffa-9f92-613e5bb0afe0"
+  },
+  {
+   "id": "5075ad21-0182-44a9-9aa0-220b57252745",
+   "season": "2025-26",
+   "match_source": "postseason",
+   "source_id": "e12aafa2-1a19-4d82-9c6c-4e07dce4ffef"
+  }
+ ]
+}

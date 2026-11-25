@@ -10,8 +10,10 @@ import { matchWrestler, clearWrestlerCache, reloadAliases } from '@/lib/matchWre
 import { isPlaceholderName, stripNickname } from '@/lib/personName'
 import { saveNameLinks } from '@/lib/nameLinks'
 import { matchTournament } from '@/lib/matchTournaments'
+import { cleanEventName } from '@/lib/eventName'
 import { seasonIdForDate } from '@/lib/seasons'
-import type { SchoolFlag, ImportResult, SchoolOverride, WrestlerOverride, TournamentOverride, MsProfileLink } from '@/app/admin/[side]/import-rtf/types'
+import { hubTables } from '@/lib/hub'
+import type { SchoolFlag, ImportResult, SchoolOverride, WrestlerOverride, TournamentOverride, ProspectLink } from '@/app/admin/[side]/import-rtf/types'
 import { nonNjSchools } from '@/lib/schoolIsOos'
 import { isAdminUser } from '@/lib/auth/isAdminUser'
 import { createOosSchool, needsStateMessage, overridesMissingState } from '@/lib/oosSchool'
@@ -106,7 +108,7 @@ export async function POST(req: NextRequest) {
   let tournamentTypes: Record<string, string>
   let tournamentVenues: Record<string, { venue_name: string; venue_address: string }>
   let tournamentOverrides: Record<string, TournamentOverride>
-  let msProfileLinks: Record<string, MsProfileLink>
+  let prospectLinks: Record<string, ProspectLink>
   let boutReview: Record<string, Record<string, string>>
   let force: boolean
   let registry_id: string | undefined
@@ -123,7 +125,7 @@ export async function POST(req: NextRequest) {
     tournamentTypes = body.tournamentTypes ?? {}
     tournamentVenues = body.tournamentVenues ?? {}
     tournamentOverrides = body.tournamentOverrides ?? {}
-    msProfileLinks = body.msProfileLinks ?? {}
+    prospectLinks = body.prospectLinks ?? {}
     boutReview = body.boutReview ?? {}
     force = body.force ?? false
     gender = body.gender ?? 'M'
@@ -283,7 +285,7 @@ export async function POST(req: NextRequest) {
         }
       } else if (tOverride?.type === 'new') {
         const ins = await client.from(istTable).insert({
-          name: t.name,
+          name: cleanEventName(t.name),
           season: SEASON,
           start_date: dates.start_date,
           end_date: dates.end_date ?? undefined,
@@ -297,8 +299,9 @@ export async function POST(req: NextRequest) {
         tid = ins.data.id
       } else {
         // Auto: try exact name match first, then fuzzy
-        const exactMatch = await client.from(istTable).select('id, source_format').eq('name', t.name).eq('season', SEASON).maybeSingle()
-        let resolvedExisting: { id: string; source_format: string | null } | null = exactMatch.data ?? null
+        // stored names are cleaned (no year or edition number), so the printed name can match either way
+        const exactMatch = await client.from(istTable).select('id, source_format').in('name', [...new Set([t.name, cleanEventName(t.name)])]).eq('season', SEASON).limit(1)
+        let resolvedExisting: { id: string; source_format: string | null } | null = exactMatch.data?.[0] ?? null
 
         if (!resolvedExisting) {
           const { best } = matchTournament(t.name, tournamentCandidates)
@@ -321,7 +324,7 @@ export async function POST(req: NextRequest) {
           }
         } else {
           const ins = await client.from(istTable).insert({
-            name: t.name,
+            name: cleanEventName(t.name),
             season: SEASON,
             start_date: dates.start_date,
             end_date: dates.end_date ?? undefined,
@@ -381,21 +384,9 @@ export async function POST(req: NextRequest) {
         await client.from('in_season_tournament_team_scores').delete().eq('tournament_id', tid)
       }
 
-      // Only drop OOS-vs-OOS bouts when at least one NJ school (exact/high confidence) is
-      // present in the tournament. For fully-OOS tournaments (e.g. an out-of-state girls
-      // invitational) keep everything — the filter would otherwise wipe all bouts.
-      const hasNjSchool = dedupedBoutsAll.some(b => {
-        const c1 = schoolCache.get(b.wrestler1_school)?.confidence
-        const c2 = schoolCache.get(b.wrestler2_school)?.confidence
-        return c1 === 'exact' || c1 === 'high' || c2 === 'exact' || c2 === 'high'
-      })
-      const dedupedBouts = hasNjSchool
-        ? dedupedBoutsAll.filter(b => {
-            const c1 = schoolCache.get(b.wrestler1_school)?.confidence
-            const c2 = schoolCache.get(b.wrestler2_school)?.confidence
-            return !(c1 === 'oos' && c2 === 'oos')
-          })
-        : dedupedBoutsAll
+      // every bout, out-of-state against out-of-state too (Kyle 2026-11-21: "let's start storing all bout info moving
+      // forward") — an event's full brackets, not only our wrestlers' path through them
+      const dedupedBouts = dedupedBoutsAll
 
       // Collect new wrestlers, respecting overrides
       type NewWrestler = { name: string; school_id: number; first_name: string; last_name: string; is_oos: boolean }
@@ -472,18 +463,18 @@ export async function POST(req: NextRequest) {
       gradesSetTotal += gradeResult.graded
       gradesFromRosterTotal += gradeResult.fromRoster
 
-      // Apply MS prospect links for newly-created NJ wrestlers
+      // Link confirmed tournament hub prospects to the newly-created NJ wrestlers they became
       for (const [nkey, newId] of newWrestlerMap.entries()) {
-        // Find any msProfileLink for this wrestler (key = name|school_id|weight_class, we match on prefix)
-        const matchingLink = Object.entries(msProfileLinks).find(([k, v]) =>
+        // Find any prospect link for this wrestler (key = name|school_id|weight_class, we match on prefix)
+        const matchingLink = Object.entries(prospectLinks).find(([k, v]) =>
           k.startsWith(`${nkey}|`) && v.type === 'confirm'
         )
         if (!matchingLink) continue
-        const link = matchingLink[1] as Extract<MsProfileLink, { type: 'confirm' }>
-        // Set hs_wrestler_id on the ms_wrestler record — credit computed on-the-fly from placements
-        await client.from('ms_wrestlers')
-          .update({ hs_wrestler_id: newId })
-          .eq('id', link.ms_wrestler_id)
+        const link = matchingLink[1] as Extract<ProspectLink, { type: 'confirm' }>
+        await client.from(hubTables(link.pool ?? gender).prospects)
+          .update({ wrestler_id: newId })
+          .eq('id', link.prospect_id)
+          .is('wrestler_id', null)
       }
 
       // Also alias confirmed existing/accept overrides so they resolve instantly next time

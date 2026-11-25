@@ -157,6 +157,24 @@ const suspect = (v: any[]) => { const nj = v.filter(s => s.is_nj !== false), oos
   return nj.length > 1 || (oos.length > 1 && !DISTINCT_OOS.some(p => oos.every(s => p.includes(s.id)))) }
 rule('school names that collapse to the same name (possible duplicate records)', [...byNorm.values()].filter(v => v.length > 1 && suspect(v)).map(v => v.map(s => `${s.display_name}#${s.id}${s.is_nj === false ? '*' : ''}`).join(' = ')))
 
+// an NJ school credited with a team score at an out-of-state tournament none of whose wrestlers are in its bouts
+// (Kyle 2026-11-20: Powerade 2025-26's "Franklin Regional" / "Williamstown" taken as the NJ schools by name)
+{
+  const bad: string[] = []
+  const njSet = new Set(schools.filter(x => x.is_nj !== false).map(x => x.id))
+  for (const [tt, bt] of [['in_season_tournaments', 'tournament_bouts'], ['in_season_tournaments_girls', 'tournament_bouts_girls']]) {
+    const ts = (await all(tt, 'id, name, season, is_oos, tournament_type')).filter(t => t.is_oos || t.tournament_type === 'outside')
+    for (const t of ts) {
+      const sc = (await all('in_season_tournament_team_scores', 'id, place, school_name, school_id', q => q.eq('tournament_id', t.id))).filter(r => njSet.has(r.school_id))
+      if (!sc.length) continue
+      const b = await all(bt, 'id, wrestler1_school_id, wrestler2_school_id', q => q.eq('in_season_tournament_id', t.id))
+      const inB = new Set(b.flatMap(x => [x.wrestler1_school_id, x.wrestler2_school_id]))
+      for (const r of sc) if (!inB.has(r.school_id)) bad.push(`${t.name} ${t.season}: #${r.place} "${r.school_name}"`)
+    }
+  }
+  rule('NJ school team score at an out-of-state tournament with none of its wrestlers in the bouts', bad)
+}
+
 // one person on two profiles: same name, same school, both with bouts
 const keyOf = new Map<string, string[]>()
 for (const [w, m] of rec) { const ww = W.get(w); if (!ww) continue; for (const s of m.keys()) { const k = `${ww.gender}|${`${ww.first_name}${ww.last_name}`.toLowerCase().replace(/[^a-z]/g, '')}|${s}`; (keyOf.get(k) ?? keyOf.set(k, []).get(k)!).push(w) } }

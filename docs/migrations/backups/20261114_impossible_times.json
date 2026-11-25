@@ -1,0 +1,135 @@
+[
+ {
+  "id": "9f5fd430-0f88-435f-915a-a01eaa1acfae",
+  "tournament_id": 99,
+  "win_type": "TF-1.5",
+  "fall_time_seconds": 424,
+  "score_raw": "TF-1.5 18-1"
+ },
+ {
+  "id": "99afbc02-88a9-457f-bea0-1f5515b71b30",
+  "tournament_id": 116,
+  "win_type": "TF-1.5",
+  "fall_time_seconds": 2220,
+  "score_raw": "TF-1.5 16-1"
+ },
+ {
+  "id": "60ac600b-31b3-4231-95dd-764cb080acbb",
+  "tournament_id": 188,
+  "win_type": "TF-1.5",
+  "fall_time_seconds": 3030,
+  "score_raw": null
+ },
+ {
+  "id": "649340eb-99a8-4036-b33d-d1b15a39cc0e",
+  "tournament_id": 347,
+  "win_type": "TF",
+  "fall_time_seconds": 450,
+  "score_raw": "16-1 7:30"
+ },
+ {
+  "id": "703403de-1c12-4024-a1d3-9a95aa613eed",
+  "tournament_id": 355,
+  "win_type": "TF",
+  "fall_time_seconds": 603,
+  "score_raw": "16-1 10:03"
+ },
+ {
+  "id": "f3d98dee-4356-4991-bf7f-f2bea5cfe6d7",
+  "tournament_id": 376,
+  "win_type": "TF",
+  "fall_time_seconds": 2408,
+  "score_raw": "23-8 40:08"
+ },
+ {
+  "id": "162a7b66-266b-43ae-b870-c7425c34097a",
+  "tournament_id": 135,
+  "win_type": "FALL",
+  "fall_time_seconds": 492,
+  "score_raw": null
+ },
+ {
+  "id": "8e5194b9-6b48-4864-9a74-0b44241fee02",
+  "tournament_id": 216,
+  "win_type": "FALL",
+  "fall_time_seconds": 1389,
+  "score_raw": "0-0 23:09"
+ },
+ {
+  "id": "8d9fea0e-88f1-491b-8282-52c589364175",
+  "tournament_id": 252,
+  "win_type": "FALL",
+  "fall_time_seconds": 504,
+  "score_raw": "0-0 8:24"
+ },
+ {
+  "id": "67f16f1f-1d2d-4d68-aab8-447e8dee56c5",
+  "tournament_id": 275,
+  "win_type": "FALL",
+  "fall_time_seconds": 496,
+  "score_raw": "0-0 8:16"
+ },
+ {
+  "id": "2cafb464-2fd0-4517-a517-87d94dd99dd8",
+  "tournament_id": 281,
+  "win_type": "FALL",
+  "fall_time_seconds": 672,
+  "score_raw": "0-0 11:12"
+ },
+ {
+  "id": "459f1524-c806-4f5d-9c85-8655b1ee5bb6",
+  "tournament_id": 335,
+  "win_type": "FALL",
+  "fall_time_seconds": 510,
+  "score_raw": "0-0 8:30 UTB"
+ },
+ {
+  "id": "5d2ee7f2-ccfa-46d7-a407-1e93b00ae34c",
+  "tournament_id": 378,
+  "win_type": "FALL",
+  "fall_time_seconds": 503,
+  "score_raw": "0-0 8:23"
+ },
+ {
+  "id": "28c8b1e5-6e11-4fbd-a51b-61d5e4f98520",
+  "tournament_id": 411,
+  "win_type": "FALL",
+  "fall_time_seconds": 582,
+  "score_raw": "0-0 9:42"
+ },
+ {
+  "id": "e90b2727-4a67-4eb4-9ed5-20633e07a04d",
+  "tournament_id": 419,
+  "win_type": "FALL",
+  "fall_time_seconds": 487,
+  "score_raw": "0-0 8:07"
+ },
+ {
+  "id": "98325c04-52e5-4eb7-9def-52b9f75d1235",
+  "tournament_id": 442,
+  "win_type": "FALL",
+  "fall_time_seconds": 506,
+  "score_raw": "1-1 8:26"
+ },
+ {
+  "id": "cafe6837-63d4-4655-9022-d18813ede453",
+  "tournament_id": 514,
+  "win_type": "FALL",
+  "fall_time_seconds": 509,
+  "score_raw": "0-0 8:29 SV"
+ },
+ {
+  "id": "b1f713f0-f47e-4b53-a0e7-7c11401acfcd",
+  "tournament_id": 611,
+  "win_type": "FALL",
+  "fall_time_seconds": 636,
+  "score_raw": "4-0 10:36"
+ },
+ {
+  "id": "9d8c132c-3d49-412e-9ab2-842acba86c13",
+  "tournament_id": 634,
+  "win_type": "FALL",
+  "fall_time_seconds": 505,
+  "score_raw": "2-2 8:25"
+ }
+]

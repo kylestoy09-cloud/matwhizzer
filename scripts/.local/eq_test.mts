@@ -1,0 +1,5 @@
+const { matchWeights, equivalents, weightLabel, TODAYS_14 } = await import('../../src/app/admin/[side]/content/daily-challenge/HistoryTabs')
+const H = await import('../../src/app/api/admin/history/route')
+const h = await (await H.GET()).json()
+const eq = equivalents(matchWeights(h.finishes))
+console.log(TODAYS_14.map(w => weightLabel(w, eq)).join(' | '))

@@ -1,0 +1,182 @@
+# NCAA Division III Championships 1995 — source: NCAA III 1995.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Chris Matteotti | Ithaca
+- Anton Atterbury | College of New Jersey
+- Mark Kessler | SUNY-Cortland
+- J.J. Huszczu | John Carroll
+- Dan Bailey | Augustana Illinois
+- Mike DeLuca | Montclair State
+- Craig Kaper | SUNY-Oswego
+- Charles Strunk | Manchester
+place 1 Chris Matteotti
+place 2 Anton Atterbury
+place 3 Mark Kessler
+place 4 J.J. Huszczu
+place 5 Dan Bailey
+place 6 Mike DeLuca
+place 7 Craig Kaper
+place 8 Charles Strunk
+
+@ 126
+- Jesse Armbruster | Augsburg
+- Tom Smith | Wartburg
+- George Chu | WPI
+- Keith Johnson | Wisconsin-River Falls
+- Chad Tunick | Buena Vista
+- Fritz Zagorski | SUNY-Brockport
+- Mike Kohl | SUNY-Oswego
+- Brad Bruhl | Wisconsin-La Crosse
+place 1 Jesse Armbruster
+place 2 Tom Smith
+place 3 George Chu
+place 4 Keith Johnson
+place 5 Chad Tunick
+place 6 Fritz Zagorski
+place 7 Mike Kohl
+place 8 Brad Bruhl
+
+@ 134
+- Scott Stefl | Loras College
+- Fabian Chavez | Manchester
+- Justin Barbush | Elizabethtown
+- Jere Hamel | Wisconsin-Stevens Point
+- Dan Gabrielson | Central College IA
+- Chris Beagan | Montclair State
+- Dan Ambroziak | Mount Union
+- Dusty Rhodes | Wartburg
+place 1 Scott Stefl
+place 2 Fabian Chavez
+place 3 Justin Barbush
+place 4 Jere Hamel
+place 5 Dan Gabrielson
+place 6 Chris Beagan
+place 7 Dan Ambroziak
+place 8 Dusty Rhodes
+
+@ 142
+- Raphael Wilson | Augustana Illinois
+- Jamal Fox | Wartburg
+- Van Fronhofer | SUNY-Albany
+- John Demoors | St. Lawrence
+- Nate Skaar | Luther
+- Rick Demario | Wisconsin-Stevens Point
+- Dan Tschudi | St. John's
+- Jeremy Krings | Wisconsin-Stout
+place 1 Raphael Wilson
+place 2 Jamal Fox
+place 3 Van Fronhofer
+place 4 John Demoors
+place 5 Nate Skaar
+place 6 Rick Demario
+place 7 Dan Tschudi
+place 8 Jeremy Krings
+
+@ 150
+- Tom Layte | Augsburg
+- Joe Telesky | SUNY-Brockport
+- John Johnson | College of New Jersey
+- Darin Keim | Lycoming
+- Brian Zeamer | Elizabethtown
+- Tim Godoy | SUNY-Cortland
+- Eric Fajerman | Delaware Valley
+- Rick Mokros | Ohio Northern
+place 1 Tom Layte
+place 2 Joe Telesky
+place 3 John Johnson
+place 4 Darin Keim
+place 5 Brian Zeamer
+place 6 Tim Godoy
+place 7 Eric Fajerman
+place 8 Rick Mokros
+
+@ 158
+- Brandon Totten | Delaware Valley
+- Dan O'Cone | College of New Jersey
+- Rick Schneckenberger | St. John's
+- Jason Jones | Mount Union
+- Don Roberts | Augustana Illinois
+- John LaScala | Roger Williams
+- Michael Doyle | Wartburg
+- Jamell Pollack | Williams
+place 1 Brandon Totten
+place 2 Dan O'Cone
+place 3 Rick Schneckenberger
+place 4 Jason Jones
+place 5 Don Roberts
+place 6 John LaScala
+place 7 Michael Doyle
+place 8 Jamell Pollack
+
+@ 167
+- Chris Ricklic | Case-Western Reserve
+- Randy Eastman | Augsburg
+- Jason Black | Buena Vista
+- Etienne Miszczak | College of New Jersey
+- Brandon Penzkover | Wisconsin-La Crosse
+- Dale Vernon | Heidelberg
+- Chad Beach | Thiel
+- Phil Wolf | Wisconsin-Platteville
+place 1 Chris Ricklic
+place 2 Randy Eastman
+place 3 Jason Black
+place 4 Etienne Miszczak
+place 5 Brandon Penzkover
+place 6 Dale Vernon
+place 7 Chad Beach
+place 8 Phil Wolf
+
+@ 177
+- James Meyer | Wisconsin-La Crosse
+- Shane Holm | Wisconsin-Stevens Point
+- Randy Shaw | SUNY-Albany
+- Marcus Lambdin | Mount Union
+- Ben Bivens | Kean
+- Anthony Vitola | College of New Jersey
+- Ben Weiland | Ithaca
+- Caleb Campbell | Wheaton
+place 1 James Meyer
+place 2 Shane Holm
+place 3 Randy Shaw
+place 4 Marcus Lambdin
+place 5 Ben Bivens
+place 6 Anthony Vitola
+place 7 Ben Weiland
+place 8 Caleb Campbell
+
+@ 190
+- Jason Bovenzi | Ithaca
+- Dave Simmons | Coe College
+- Tucker McLean | Trinity
+- Chris Rea | Montclair State
+- John Aebly | SUNY-Brockport
+- Dan Lewandowski | Augsburg
+- Paul Elsen | Wheaton
+- Brad Wagner | Messiah
+place 1 Jason Bovenzi
+place 2 Dave Simmons
+place 3 Tucker McLean
+place 4 Chris Rea
+place 5 John Aebly
+place 6 Dan Lewandowski
+place 7 Paul Elsen
+place 8 Brad Wagner
+
+@ 275
+- Jay Huff | Buena Vista
+- Nick Primozic | Manchester
+- Jason Spector | SUNY-Brockport
+- Aaron Sheets | John Carroll
+- Jason Weigand | Mount Union
+- Eric Betterman | Augsburg
+- Perry Miller | Wisconsin-Stevens Point
+- Rusty Vanwetzinga | Augustana Illinois
+place 1 Jay Huff
+place 2 Nick Primozic
+place 3 Jason Spector
+place 4 Aaron Sheets
+place 5 Jason Weigand
+place 6 Eric Betterman
+place 7 Perry Miller
+place 8 Rusty Vanwetzinga
+

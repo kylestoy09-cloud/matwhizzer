@@ -2,7 +2,9 @@
 
 import { useAdminGender } from '@/components/admin/AdminGenderContext'
 import { useState, useEffect } from 'react'
+import { HeaderNav } from '@/components/HeaderNav'
 import { LiveScoringPanel } from './LiveScoringPanel'
+import { MeetEditPanel } from '@/components/admin/MeetEditPanel'
 import { logoFlipStyle } from '@/lib/logo-direction'
 
 // ─── Types ─────────────────────────────────────────────────────────────────
@@ -64,6 +66,9 @@ type MeetDetail = {
     logo_b: string | null
     logo_dir_a: string | null
     logo_dir_b: string | null
+    stream_b?: { label: string; url: string }[]   // the home team's Hudl and / or NFHS Network pages
+    stream_url?: string | null // the meet's own stream (set in Edit meet) — "Stream", ahead of stream_b's "Check for streaming at …"
+    premier_label?: string | null
   }
   matches: Match[]
 }
@@ -119,6 +124,7 @@ type H2HData = {
     score: number
     hammerA: number | null
     hammerB: number | null
+    odds?: { winner: 'a' | 'b'; kind: string; pct: number }[]
   }
 }
 
@@ -208,11 +214,12 @@ function WinnerPoll({ schoolA, schoolB, phase, meetId }: {
                 key={side}
                 onClick={() => handleVote(side)}
                 disabled={locked || vote !== null}
-                className={`flex-1 rounded border px-3 py-1.5 text-center transition-all ${
+                // white buttons on the heather card (Kyle 2026-11-19); the pick keeps its blue outline
+                className={`flex-1 rounded border bg-white px-3 py-1.5 text-center transition-all ${
                   canVote
                     ? 'border-slate-300 hover:border-slate-600 cursor-pointer'
                     : isVoted
-                    ? 'border-blue-500 bg-blue-50'
+                    ? 'border-blue-500 ring-1 ring-blue-500'
                     : 'border-slate-200 cursor-default'
                 }`}
               >
@@ -306,6 +313,13 @@ function SchoolLogoHeader({ logoUrl, direction, position, schoolName, bgColor }:
   )
 }
 
+const NAVY = '#16284A'
+// light heather gray: a soft gray with a faint grain (an SVG noise tile over the color)
+const HEATHER: React.CSSProperties = {
+  backgroundColor: '#ECEDEF',
+  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E")`,
+}
+
 function MatchHeader({ meet, phase, isPremier, premierLabel, homeColor, boutPredictions }: {
   meet: MeetDetail['meet']; phase: Phase; isPremier: boolean; premierLabel: string; homeColor: string
   boutPredictions: BoutPredMap
@@ -320,11 +334,12 @@ function MatchHeader({ meet, phase, isPremier, premierLabel, homeColor, boutPred
     else projB += pts
   }
   return (
-    <div className="border border-slate-200 bg-white rounded-lg overflow-hidden">
-      {/* Home-team colored header bar — contains optional premier label + date */}
+    // Kyle 2026-11-19: the card on a light heather gray with a little noise, the date bar navy
+    <div className="border border-slate-200 rounded-lg overflow-hidden" style={HEATHER}>
+      {/* Navy header bar — optional premier label + date */}
       <div
         className="px-5 py-3 text-center space-y-0.5"
-        style={{ backgroundColor: homeColor }}
+        style={{ backgroundColor: NAVY }}
       >
         {isPremier && (
           <div className="flex items-center justify-center gap-1.5 mb-1">
@@ -389,6 +404,17 @@ function MatchHeader({ meet, phase, isPremier, premierLabel, homeColor, boutPred
           </div>
         </div>
 
+        {/* centered under the matchup: the meet's own stream ("Stream"), else the home team's page(s) ("Check for streaming at …") */}
+        {(meet.stream_url || meet.stream_b?.length) ? (
+          <div className="text-center text-[11px] font-semibold text-slate-700">
+            {meet.stream_url
+              ? <a href={meet.stream_url} target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-900">Stream ↗</a>
+              // the home team's page(s), named (Kyle 2026-11-19: "check for streaming at" then the link or links) —
+              // both until the Stream Account microcheck picks one
+              : <>Check for streaming at {meet.stream_b!.map((x, i) => <span key={x.url}>{i > 0 && ' or '}<a href={x.url} target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-900">{x.label} ↗</a></span>)}</>}
+          </div>
+        ) : null}
+
         {/* Whizzer Prediction — future phase only */}
         {phase === 'future' && (
           <WhizzerPrediction projA={projA} projB={projB} boutCount={boutCount} tossups={tossups} />
@@ -416,7 +442,9 @@ function H2HPanel({ match, nameA, nameB, meetId, gender, onPrediction }: {
   useEffect(() => {
     if (!match.wrestler_a_id || !match.wrestler_b_id) return
     setLoading(true); setErr(null)
-    const params = new URLSearchParams({ a: match.wrestler_a_id, b: match.wrestler_b_id, gender })
+    // a dead-even projection goes to the home side (slot B on the card)
+    const params = new URLSearchParams({ a: match.wrestler_a_id, b: match.wrestler_b_id, gender, edge: 'b' })
+    if (match.weight_class) params.set('weight', String(match.weight_class))
     if (meetId) params.set('exclude_meet', meetId)
     fetch(`/api/h2h?${params}`)
       .then(r => r.json())
@@ -1276,7 +1304,7 @@ function TestControls({ meets, meetId, onMeetChange, phase, onPhaseChange, isPre
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
-export function MatchCardTestClient() {
+export function MatchCardTestClient({ headerLayout = 'proposed' }: { headerLayout?: 'live' | 'proposed' }) {
   const { gender: sideGender } = useAdminGender()
   const [meets, setMeets] = useState<RawMeet[]>([])
   const [meetId, setMeetId] = useState('')
@@ -1284,6 +1312,7 @@ export function MatchCardTestClient() {
   const [phase, setPhase] = useState<Phase>('future')
   const [isPremier, setIsPremier] = useState(false)
   const [premierLabel, setPremierLabel] = useState('')
+  const [reload, setReload] = useState(0)   // bumped after Edit meet saves
   const [homeColor, setHomeColor] = useState('#1a3a6b')
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState<string | null>(null)
@@ -1300,7 +1329,7 @@ export function MatchCardTestClient() {
     setBoutPredictions({})
     const bouts = detail.matches.filter(m => m.wrestler_a_id && m.wrestler_b_id)
     for (const match of bouts) {
-      fetch(`/api/h2h?a=${match.wrestler_a_id}&b=${match.wrestler_b_id}&gender=${detail.meet.gender === 'F' ? 'F' : 'M'}&exclude_meet=${detail.meet.id}`)
+      fetch(`/api/h2h?a=${match.wrestler_a_id}&b=${match.wrestler_b_id}&gender=${detail.meet.gender === 'F' ? 'F' : 'M'}&exclude_meet=${detail.meet.id}&edge=b${match.weight_class ? `&weight=${match.weight_class}` : ''}`)
         .then(r => r.json())
         .then(d => {
           if (d.prediction) handleBoutPrediction(match.id, d.prediction.favoredWrestler, d.prediction.outcomeLabel)
@@ -1325,13 +1354,15 @@ export function MatchCardTestClient() {
       .then(d => {
         if (d.error) throw new Error(d.error)
         setDetail(d)
+        // a premier dual saved on the meet (Edit meet) opens as one
+        setIsPremier(!!d.meet?.premier_label); setPremierLabel(d.meet?.premier_label ?? '')
         // Use real school primary_color if available, otherwise hash fallback
         if (d.meet?.color_b) setHomeColor(d.meet.color_b)
         else if (d.meet?.school_b) setHomeColor(hashColor(d.meet.school_b))
       })
       .catch(e => setErr(String(e)))
       .finally(() => setLoading(false))
-  }, [meetId, sideGender])
+  }, [meetId, sideGender, reload])
 
   return (
     <div className="p-4 space-y-4">
@@ -1369,6 +1400,9 @@ export function MatchCardTestClient() {
             overflow: 'hidden',
           } : {}}>
             <div className="space-y-4" style={mobileView ? { padding: 0 } : {}}>
+              {/* the site header, as it sits over the card on the site (not sticky inside the preview) */}
+              <div className="[&>header]:!static"><HeaderNav layout={headerLayout} /></div>
+              <MeetEditPanel meetId={detail.meet.id} onSaved={() => setReload(n => n + 1)} />
               <MatchHeader meet={detail.meet} phase={phase} isPremier={isPremier} premierLabel={premierLabel} homeColor={homeColor} boutPredictions={boutPredictions} />
               <BoutCard detail={detail} phase={phase} meetId={detail.meet.id} onBoutPrediction={handleBoutPrediction} />
             </div>

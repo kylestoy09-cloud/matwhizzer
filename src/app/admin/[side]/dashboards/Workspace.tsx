@@ -4,7 +4,6 @@ import type React from 'react'
 import type { Task } from './GlobalTaskPanel'
 import { RosterRolloverWorkspace }    from './tools/RosterRolloverWorkspace'
 import { TransfersWorkspace }         from './tools/TransfersWorkspace'
-import { TournamentRolloverWorkspace } from './tools/TournamentRolloverWorkspace'
 import { CoachesImportWorkspace }     from './tools/CoachesImportWorkspace'
 import { TournamentScheduleWorkspace } from './tools/TournamentScheduleWorkspace'
 
@@ -37,7 +36,6 @@ function Empty() {
 const TOOL_COMPONENTS: Record<string, React.ComponentType> = {
   roster_rollover:    RosterRolloverWorkspace,
   transfers:          TransfersWorkspace,
-  tournament_rollover: TournamentRolloverWorkspace,
   coaches_import:     CoachesImportWorkspace,
   tournament_schedule: TournamentScheduleWorkspace,
   schedule_import:    ScheduleImportStub,

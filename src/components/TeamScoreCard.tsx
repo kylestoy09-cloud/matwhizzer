@@ -3,14 +3,16 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
+import { CALCULATED_TEAM_NOTE } from '@/lib/teamScoreNote'
 
 type TeamScoreRow = {
   school: string
   school_name: string | null
   school_id: number | null
-  total_points: number
+  total_points: number | null   // null = a team order with no points on file (history_podiums)
   logo_url?: string | null
   bg_color?: string | null
+  calculated?: boolean          // a Playoff History total worked out from the bouts
 }
 
 export function TeamScoreCard({
@@ -49,10 +51,11 @@ export function TeamScoreCard({
                 <span className="text-sm font-medium text-slate-800 truncate block">{r.school_name || r.school}</span>
               )}
             </div>
-            <span className="text-sm font-semibold text-slate-700 shrink-0">{r.total_points} pts</span>
+            {r.total_points != null && <span className="text-sm font-semibold text-slate-700 shrink-0">{r.total_points} pts</span>}
           </div>
         ))}
       </div>
+      {rows.some(r => r.calculated) && <p className="px-4 py-2 border-t border-slate-100 text-xs text-slate-400">{CALCULATED_TEAM_NOTE}</p>}
       {(hasMore || visibleCount > 10) && (
         <div className="flex items-center gap-4 px-4 py-2 border-t border-slate-100">
           {hasMore && (

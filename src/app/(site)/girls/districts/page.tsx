@@ -2,16 +2,19 @@ import Link from 'next/link'
 import { getSeasonIdsWithTournamentType } from '@/lib/seasons-server'
 import Image from 'next/image'
 import { supabase } from '@/lib/supabase/public-cached'
-import { getActiveSeason } from '@/lib/get-season'
+import { getPostseasonSeason } from '@/lib/get-season'
+import { PostseasonHomeLink } from '@/components/site/PostseasonHomeLink'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { PageHeader } from '@/components/PageHeader'
 
 export const revalidate = 300
 
 export default async function GirlsDistrictsPage() {
+  // only the years girls had districts (Kyle 2026-11-14); a year picked elsewhere without them opens the newest
   const districtSeasons = await getSeasonIdsWithTournamentType('districts', 'F')
-  const activeSeason = await getActiveSeason('F')
-  const season = districtSeasons.includes(activeSeason) ? activeSeason : (districtSeasons[0] ?? activeSeason)
+  const { season: picked, options } = await getPostseasonSeason('F')
+  const season = districtSeasons.includes(picked) ? picked : (districtSeasons[0] ?? picked)
+  const seasonOptions = options.filter(o => districtSeasons.includes(o.id))
 
   const { data: districtRows } = await supabase
     .from('districts')
@@ -35,11 +38,12 @@ export default async function GirlsDistrictsPage() {
         ← Girls Search
       </Link>
 
+      <PostseasonHomeLink side="girls" season={season} options={seasonOptions} />
       <div className="mb-8 text-center">
         <PageHeader title="Girls District Brackets" />
         <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
           <span>NJSIAA</span>
-          <InlineSeasonPicker gender="F" activeSeason={season} seasons={districtSeasons} />
+          <InlineSeasonPicker arrows gender="F" activeSeason={season} options={seasonOptions} />
           <span>· Select a district</span>
         </div>
       </div>

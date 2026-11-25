@@ -52,6 +52,7 @@ export function ImportJamboreeClientGirls() {
   const [seasonId,           setSeasonId]           = useState<number>(() => liveSeasonId(seasons, 'F') ?? 0)
   const [rawText,            setRawText]            = useState('')
   const [jamboreeDate,       setJamboreeDate]       = useState('')  // MM/DD/YYYY
+  const [jamboreeName,       setJamboreeName]       = useState('')  // the event, saved without year or number
   const [meets,              setMeets]              = useState<ParsedMeet[]>([])
   const [schoolResolutions,  setSchoolResolutions]  = useState<Record<string, SchoolMatch>>({})
   const [schoolOverrides,    setSchoolOverrides]    = useState<Record<string, SchoolOverride>>({})
@@ -435,6 +436,7 @@ export function ImportJamboreeClientGirls() {
           seasonId,
           meetKind:     'jamboree',
           jamboreeDate: jamboreeDate.trim(),
+          jamboreeName: jamboreeName.trim(),
         }),
       })
       if (!resp.ok) {
@@ -572,6 +574,16 @@ export function ImportJamboreeClientGirls() {
 
           <div className="flex items-end gap-4 flex-wrap">
             <div>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">Jamboree Name</label>
+              <input
+                type="text"
+                value={jamboreeName}
+                onChange={e => setJamboreeName(e.target.value)}
+                placeholder="Howell Jamboree"
+                className="border border-black px-3 py-1.5 text-sm outline-none focus:ring-1 focus:ring-black bg-white w-64"
+              />
+            </div>
+            <div>
               <label className="block text-xs font-semibold text-slate-700 mb-1">Jamboree Date</label>
               <input
                 type="text"
@@ -617,7 +629,7 @@ export function ImportJamboreeClientGirls() {
 
           <button
             onClick={() => handleProcess()}
-            disabled={!rawText.trim() || !jamboreeDate.trim()}
+            disabled={!rawText.trim() || !jamboreeDate.trim() || !jamboreeName.trim()}
             className="px-5 py-2 bg-black text-white text-sm font-semibold hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             Parse &amp; Match →

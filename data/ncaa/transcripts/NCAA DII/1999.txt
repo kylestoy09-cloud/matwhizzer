@@ -1,0 +1,182 @@
+# NCAA Division II Championships 1999 — source: NCAA II 1999.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 125
+- Jody Strittmatter | Pittsburgh-Johnstown
+- Mack LaRock | Nebraska-Omaha
+- Ryan Lewis | North Dakota State
+- Max Schurkamp | San Francisco State
+- Eddie Ponce | Southern Colorado
+- Chris Peretti | Ashland
+- Rob Jankowski | Wisconsin-Parkside
+- Naret Viravong | Carson-Newman
+place 1 Jody Strittmatter
+place 2 Mack LaRock
+place 3 Ryan Lewis
+place 4 Max Schurkamp
+place 5 Eddie Ponce
+place 6 Chris Peretti
+place 7 Rob Jankowski
+place 8 Naret Viravong
+
+@ 133
+- John Strittmatter | Pittsburgh-Johnstown
+- Scott Braun | South Dakota State
+- Brock Moore | Central Oklahoma
+- Michael Barreras | Adams State
+- Jeremy Rhodes | Gardner-Webb
+- Ryan Hintz | Central Missouri
+- Kris Nelson | North Dakota State
+- Dugan Bentley | Ashland
+place 1 John Strittmatter
+place 2 Scott Braun
+place 3 Brock Moore
+place 4 Michael Barreras
+place 5 Jeremy Rhodes
+place 6 Ryan Hintz
+place 7 Kris Nelson
+place 8 Dugan Bentley
+
+@ 141
+- Braumon Creighton | Nebraska-Omaha
+- Paul Konechne | South Dakota State
+- Travis Shives | Minnesota State-Mankato
+- Matt Mentzer | Shippensburg
+- Tony Clark | Pittsburgh-Johnstown
+- Tony Pelnar | Fort Hays State
+- Marcus Mays | Central Washington
+- Dwight Ballou | Minnesota State-Moorhead
+place 1 Braumon Creighton
+place 2 Paul Konechne
+place 3 Travis Shives
+place 4 Matt Mentzer
+place 5 Tony Clark
+place 6 Tony Pelnar
+place 7 Marcus Mays
+place 8 Dwight Ballou
+
+@ 149
+- Chris Currier | Southern Colorado
+- Lazaro Reinoso | Carson-Newman
+- Issac Greeley | Pittsburgh-Johnstown
+- Boyce Voorhees | Nebraska-Omaha
+- Troy Szydel | Minnesota State-Mankato
+- Joe Privitere | SUNY-Binghampton
+- Chris Zink | North Dakota State
+- Pete Dickinson | Minnesota State-Moorhead
+place 1 Chris Currier
+place 2 Lazaro Reinoso
+place 3 Issac Greeley
+place 4 Boyce Voorhees
+place 5 Troy Szydel
+place 6 Joe Privitere
+place 7 Chris Zink
+place 8 Pete Dickinson
+
+@ 157
+- Scott Hewit | Northern Colorado
+- Allen Hankins | Augustana SD
+- Matt Petsinger | Minnesota State-Mankato
+- Wayne Mooney | North Dakota State
+- Benny Charles | Chadron State
+- Joe Veras | Ashland
+- Alan Cartwright | Nebraska-Omaha
+- Royce Johnson | Western State
+place 1 Scott Hewit
+place 2 Allen Hankins
+place 3 Matt Petsinger
+place 4 Wayne Mooney
+place 5 Benny Charles
+place 6 Joe Veras
+place 7 Alan Cartwright
+place 8 Royce Johnson
+
+@ 165
+- Troy Barbush | Pittsburgh-Johnstown
+- Chris Blair | Nebraska-Omaha
+- Klaus Alberts | St. Cloud State
+- Calvin Buhler | Truman State
+- Chance Van Gundy | Ashland
+- Jason Tapia | Southern Colorado
+- Joe Callahan | Chadron State
+- Lance Schwabenbauer | Gannon
+place 1 Troy Barbush
+place 2 Chris Blair
+place 3 Klaus Alberts
+place 4 Calvin Buhler
+place 5 Chance Van Gundy
+place 6 Jason Tapia
+place 7 Joe Callahan
+place 8 Lance Schwabenbauer
+
+@ 174
+- Trent Monlux | Southern Colorado
+- Steve Saxlund | North Dakota State
+- Tyler Jones | South Dakota State
+- Kevin Allison | Chadron State
+- Albert Harrold | Nebraska-Omaha
+- B.J. Friedrichs | Minnesota State-Moorhead
+- Steve Massouh | West Liberty State
+- Nick Mayer | Indianapolis
+place 1 Trent Monlux
+place 2 Steve Saxlund
+place 3 Tyler Jones
+place 4 Kevin Allison
+place 5 Albert Harrold
+place 6 B.J. Friedrichs
+place 7 Steve Massouh
+place 8 Nick Mayer
+
+@ 184
+- Edwin Lorne | Central Oklahoma
+- Ethan Brownback | Pittsburgh-Johnstown
+- John Simpson | Colorado Mines
+- Conrad Johnson | Adams State
+- Charlie Higdon | Carson-Newman
+- Ryan Rettke | Minnesota State-Mankato
+- Scott Antoniak | Nebraska-Omaha
+- Brent Henriksen | Augustana SD
+place 1 Edwin Lorne
+place 2 Ethan Brownback
+place 3 John Simpson
+place 4 Conrad Johnson
+place 5 Charlie Higdon
+place 6 Ryan Rettke
+place 7 Scott Antoniak
+place 8 Brent Henriksen
+
+@ 197
+- Jermiah Constant | Central Oklahoma
+- Shawn Ange | Minnesota State-Mankato
+- Jose Medina | Nebraska-Omaha
+- Jaison Klingensmith | Pittsburgh-Johnstown
+- Ryan Marx | St. Cloud State
+- Trevell Smittick | Fort Hays State
+- Dale Daugherty | Northern State
+- Josh Waugh | West Liberty State
+place 1 Jermiah Constant
+place 2 Shawn Ange
+place 3 Jose Medina
+place 4 Jaison Klingensmith
+place 5 Ryan Marx
+place 6 Trevell Smittick
+place 7 Dale Daugherty
+place 8 Josh Waugh
+
+@ 285
+- Shane Carwin | Western State
+- Ryan Resel | South Dakota State
+- Jerry Corner | Nebraska-Omaha
+- Keith Blaske | Fort Hays State
+- Claude Davis | Central Oklahoma
+- Todd Proper | Gannon
+- Brady Van Vooren | Southwest Missouri
+- James Garvey | Augustana SD
+place 1 Shane Carwin
+place 2 Ryan Resel
+place 3 Jerry Corner
+place 4 Keith Blaske
+place 5 Claude Davis
+place 6 Todd Proper
+place 7 Brady Van Vooren
+place 8 James Garvey
+

@@ -1,0 +1,182 @@
+# NCAA Division II Championships 1995 — source: NCAA II 1995.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Brian Kapusta | North Dakota State
+- Lim Prim | Nebraska-Omaha
+- Keith Kizzar | Central Oklahoma
+- Scott Goodale | Colorado Mines
+- Travis McDermott | Chadron State
+- Johnny Vigil | Western State
+- Craig Otto | Portland State
+- Karega Scott | Truman State
+place 1 Brian Kapusta
+place 2 Lim Prim
+place 3 Keith Kizzar
+place 4 Scott Goodale
+place 5 Travis McDermott
+place 6 Johnny Vigil
+place 7 Craig Otto
+place 8 Karega Scott
+
+@ 126
+- Brian Melchiori | Central Oklahoma
+- George Thompson | North Dakota State
+- Chris Nelson | Northern Colorado
+- Jimmy Foster | Nebraska-Omaha
+- Lee Schickel | Pittsburgh-Johnstown
+- Chris Cardillo | Adams State
+- Ben Foust | SIU-Edwardsville
+- Brent Campbell | North Carolina-Pembroke
+place 1 Brian Melchiori
+place 2 George Thompson
+place 3 Chris Nelson
+place 4 Jimmy Foster
+place 5 Lee Schickel
+place 6 Chris Cardillo
+place 7 Ben Foust
+place 8 Brent Campbell
+
+@ 134
+- Mike Keim | Central Oklahoma
+- Martin Segovia | Nebraska-Kearney
+- Steve Costanzo | Nebraska-Omaha
+- Francis Aquino | San Francisco State
+- Corey Williams | Norfolk State
+- Jeff Bricker | Pittsburgh-Johnstown
+- Ben Berogan | North Dakota
+- Ron Lavender | Ashland
+place 1 Mike Keim
+place 2 Martin Segovia
+place 3 Steve Costanzo
+place 4 Francis Aquino
+place 5 Corey Williams
+place 6 Jeff Bricker
+place 7 Ben Berogan
+place 8 Ron Lavender
+
+@ 142
+- Jerry Best | Central Oklahoma
+- Bret Stubblefield | Wisconsin-Parkside
+- James McCord | Carson-Newman
+- Josh Sammons | South Dakota State
+- Tony Albertelli | Pittsburgh-Johnstown
+- Jeremy LaVigne | North Dakota State
+- Chris Cargill | Adams State
+- Matt Mentzer | Shippensburg
+place 1 Jerry Best
+place 2 Bret Stubblefield
+place 3 James McCord
+place 4 Josh Sammons
+place 5 Tony Albertelli
+place 6 Jeremy LaVigne
+place 7 Chris Cargill
+place 8 Matt Mentzer
+
+@ 150
+- Brian Zanders | Nebraska-Omaha
+- Shawn Bateman | Central Oklahoma
+- Dennis Skatzka | Adams State
+- John Belyea | North Dakota
+- Anthony Brockman | Southern Connecticut
+- Corey Carter | American International
+- Dave Vizzini | Portland State
+- Mark Pazdemik | North Dakota State
+place 1 Brian Zanders
+place 2 Shawn Bateman
+place 3 Dennis Skatzka
+place 4 John Belyea
+place 5 Anthony Brockman
+place 6 Corey Carter
+place 7 Dave Vizzini
+place 8 Mark Pazdemik
+
+@ 158
+- Gene Hanemann | St. Cloud State
+- Mark Cunningham | Central Oklahoma
+- Ryan Braden | Western State
+- Steve Kimpel | Southern Colorado
+- Bernard Valentin | Southern Connecticut
+- John Giuffre | San Francisco State
+- Danny Giammo | Carson-Newman
+- Jason Kerkusz | Kutztown State
+place 1 Gene Hanemann
+place 2 Mark Cunningham
+place 3 Ryan Braden
+place 4 Steve Kimpel
+place 5 Bernard Valentin
+place 6 John Giuffre
+place 7 Danny Giammo
+place 8 Jason Kerkusz
+
+@ 167
+- Ralphael Kizzee | Nebraska-Omaha
+- Justin Smith | Minnesota State-Mankato
+- Charles Daniels | Norfolk State
+- Sean Harrington | Massachusetts-Lowell
+- Polo Ornelas | San Francisco State
+- Jason Wagner | North Dakota
+- Jim Plane | Adams State
+- Deon Brimmage | Indianapolis
+place 1 Ralphael Kizzee
+place 2 Justin Smith
+place 3 Charles Daniels
+place 4 Sean Harrington
+place 5 Polo Ornelas
+place 6 Jason Wagner
+place 7 Jim Plane
+place 8 Deon Brimmage
+
+@ 177
+- Chad Lamer | South Dakota State
+- Craig Thurber | Pittsburgh-Johnstown
+- Travis Bonneau | Portland State
+- Mike McCormick | North Dakota State
+- Tony Dammen | Chadron State
+- Robert Higdon | North Carolina-Pembroke
+- Scott Setzer | Mansfield State
+- Myles Muckerheide | Wisconsin-Parkside
+place 1 Chad Lamer
+place 2 Craig Thurber
+place 3 Travis Bonneau
+place 4 Mike McCormick
+place 5 Tony Dammen
+place 6 Robert Higdon
+place 7 Scott Setzer
+place 8 Myles Muckerheide
+
+@ 190
+- Ryan Wolters | North Dakota State
+- Andy McNeff | Nebraska-Kearney
+- Chad Humphrey | Central Oklahoma
+- Pat Kelley | Nebraska-Omaha
+- Jared Kuleck | Pittsburgh-Johnstown
+- Eric Gray | Western State
+- Ryan Fitzgerald | Wisconsin-Parkside
+- Sean Hadwiger | Northern Colorado
+place 1 Ryan Wolters
+place 2 Andy McNeff
+place 3 Chad Humphrey
+place 4 Pat Kelley
+place 5 Jared Kuleck
+place 6 Eric Gray
+place 7 Ryan Fitzgerald
+place 8 Sean Hadwiger
+
+@ 275
+- Tony Kenning | Minnesota State-Mankato
+- Jeff Pease | Central Oklahoma
+- Jerome Howes | Southern Colorado
+- Wade Kroeze | Nebraska-Omaha
+- Brad Loeffler | South Dakota State
+- Bjorn Tomsen | Nebraska-Kearney
+- Josh Gooch | Fort Hays State
+- Buddy Batson | North Carolina-Pembroke
+place 1 Tony Kenning
+place 2 Jeff Pease
+place 3 Jerome Howes
+place 4 Wade Kroeze
+place 5 Brad Loeffler
+place 6 Bjorn Tomsen
+place 7 Josh Gooch
+place 8 Buddy Batson
+

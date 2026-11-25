@@ -1,7 +1,7 @@
 'use client'
 // Insight (2026-11-07, Kyle): the nav's Insight section (was About), one per side at /boys/insight and
-// /girls/insight. The standard page header, then five tabs: Daily Report, Rankings, Daily Challenge,
-// Polls, About. Each tab is its own page under the side's insight folder; the tab follows the URL.
+// /girls/insight. The standard page header, then its tabs: Daily Report, Rankings, Daily Challenge,
+// Polls, Off-Season, Collegiate, About (the header's Insight menu lists the same). Each tab is its own page under the side's insight folder; the tab follows the URL.
 import { usePathname } from 'next/navigation'
 import type { ReactNode } from 'react'
 import { StdHeader } from '@/components/site/StdPage'
@@ -12,6 +12,8 @@ export const INSIGHT_TABS = [
   { key: 'rankings', label: 'Rankings' },
   { key: 'daily-challenge', label: 'Daily Challenge' },
   { key: 'polls', label: 'Polls' },
+  { key: 'off-season', label: 'Off-Season' },   // Kyle 2026-11-13: after Polls, before About (live 2026-11-14)
+  { key: 'collegiate', label: 'Collegiate' },   // Kyle 2026-11-18: the college list, before About
   { key: 'about', label: 'About' },
 ] as const
 

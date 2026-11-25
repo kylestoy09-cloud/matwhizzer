@@ -1,0 +1,819 @@
+# source: 2024 NAIA women (TrackWrestling export)
+
+@ 101
+- Devyn Gomez | Life (Ga.)
+- Sofia Abramson | Oklahoma City
+- Liana Ferreira | Southern Oregon
+- Teya Garner | William Penn (Iowa)
+- Makayla Young | Indiana Tech
+- Shanna Morris | Lourdes (Ohio)
+- Abbeygael Cabuag | Vanguard (Calif.)
+- Sage Beltran | Missouri Valley College
+- Karly Scott | Southern Oregon
+- Audalie Cruz | Wayland Baptist (Texas)
+- Karina Vang | Doane (Neb.)
+- Alyssa Quezaire | Missouri Baptist
+- Riley Banyas | Campbellsville (Ky.)
+- Elizabeth Dosado | Cumberlands (Ky.)
+- Zoe Omura | Midland University (Neb.)
+- Kayla Mckinley-Johnson | Menlo (Calif.)
+- Esther Walker | Midland University (Neb.)
+- Erin Hikiji | Providence (Mont.)
+- Stefana Jelacic | Lourdes (Ohio)
+r1 Erin Hikiji > Teya Garner | VFA 0:34 4-0
+r1 Alyssa Quezaire > Shanna Morris | VPO1 5-1
+r1 Kayla Mckinley-Johnson > Sofia Abramson | VSU 10-0 0:50
+r1 Elizabeth Dosado > bye
+r1 Abbeygael Cabuag > bye
+r2 Elizabeth Dosado > Abbeygael Cabuag | VPO1 8-8
+r1 Karina Vang > bye
+r2 Erin Hikiji > Karina Vang | VSU 10-0 2:27
+r1 Stefana Jelacic > bye
+r1 Liana Ferreira > bye
+r2 Stefana Jelacic > Liana Ferreira | VFA 1:08 5-0
+r1 Riley Banyas > bye
+r1 Audalie Cruz > bye
+r2 Riley Banyas > Audalie Cruz | VPO1 7-5
+r1 Karly Scott > bye
+r2 Alyssa Quezaire > Karly Scott | VSU 10-0 6:00
+r1 Esther Walker > bye
+r1 Devyn Gomez > bye
+r2 Esther Walker > Devyn Gomez | VSU1 13-3 4:00
+r1 Sage Beltran > bye
+r2 Kayla Mckinley-Johnson > Sage Beltran | VSU 10-0 1:57
+r1 Zoe Omura > bye
+r1 Makayla Young > bye
+r2 Zoe Omura > Makayla Young | VPO1 11-10
+qf Esther Walker > Alyssa Quezaire | VPO1 3-1
+qf Stefana Jelacic > Elizabeth Dosado | VSU 10-0 0:44
+qf Erin Hikiji > Riley Banyas | VSU 10-0 1:03
+qf Kayla Mckinley-Johnson > Zoe Omura | VIN 0:03 0-0
+c1 Sofia Abramson > bye
+c2 Devyn Gomez > Sofia Abramson | VFA 1:43 8-8
+c1 Teya Garner > bye
+c2 Liana Ferreira > Teya Garner | VFA 0:55 4-0
+c1 Shanna Morris > bye
+c2 Makayla Young > Shanna Morris | VPO1 5-2
+c2 Abbeygael Cabuag > bye
+c3 Liana Ferreira > Abbeygael Cabuag | VSU 10-0 4:56
+c2 Sage Beltran > bye
+c3 Makayla Young > Sage Beltran | VSU 10-0 2:06
+c2 Karly Scott > bye
+c3 Devyn Gomez > Karly Scott | VSU1 18-7 5:24
+c2 Audalie Cruz > bye
+c2 Karina Vang > bye
+c3 Audalie Cruz > Karina Vang | VSU1 16-6 2:52
+sf Stefana Jelacic > Kayla Mckinley-Johnson | VSU1 12-1 4:00
+sf Erin Hikiji > Esther Walker | VFA 1:47 10-0
+c4 Liana Ferreira > Alyssa Quezaire | VFA 5:46 15-7
+c4 Makayla Young > Riley Banyas | VPO1 8-1
+c4 Devyn Gomez > Elizabeth Dosado | VFA 5:42 10-5
+c4 Audalie Cruz > Zoe Omura | VIN 4:31 11-6
+cqf Liana Ferreira > Makayla Young | VPO1 15-9
+cqf Audalie Cruz > Devyn Gomez | VSU 10-0 1:36
+csf Kayla Mckinley-Johnson > Liana Ferreira | VPO1 9-4
+csf Esther Walker > Audalie Cruz | VPO1 12-7
+7th Makayla Young > Devyn Gomez | VSU1 15-4 4:32
+5th Liana Ferreira > Audalie Cruz | VFA 1:21 2-6
+3rd Kayla Mckinley-Johnson > Esther Walker | VFA 5:03 10-8
+f Stefana Jelacic > Erin Hikiji | VPO1 12-3
+
+@ 109
+- Kylee Slyter | Baker (Kan.)
+- Gracie Elliott | Cumberlands (Ky.)
+- Nizhoni Tallman | Evergreen (Wash.)
+- Aynsley Fink | Ottawa (Kan.)
+- Angie Dill | Vanguard (Calif.)
+- Judy Sandoval | Grand View (Iowa)
+- Hailey Holland | Missouri Valley College
+- Rayana Sahagun | Jamestown (N.D.)
+- Gabrielle Medeiros | Campbellsville (Ky.)
+- Liv Villanueva | Southern Oregon
+- Valeria Ahumada | Siena Heights (Mich.)
+- Alyssa King | Missouri Baptist
+- Emma Baertlein | Southern Oregon
+- Tristan Nitta | Grand View (Iowa)
+- Tehani Soares | Indiana Tech
+- Alexsys Jacquez | St. Mary (Kan.)
+- Paige Morales | Providence (Mont.)
+- Diana Gonzalez | Life (Ga.)
+- Jasmine Howard | Texas Wesleyan
+- Mia Palumbo | William Penn (Iowa)
+r1 Jasmine Howard > Gracie Elliott | VFO 0-0
+r1 Alexsys Jacquez > Judy Sandoval | VFA 0:34 2-0
+r1 Valeria Ahumada > Rayana Sahagun | VPO1 8-6
+r1 Tristan Nitta > Aynsley Fink | VFA 2:51 4-3
+r1 Liv Villanueva > bye
+r2 Jasmine Howard > Liv Villanueva | VFA 2:47 9-0
+r1 Emma Baertlein > bye
+r2 Emma Baertlein > Valeria Ahumada | VSU 10-0 3:20
+r1 Diana Gonzalez > bye
+r1 Nizhoni Tallman > bye
+r2 Diana Gonzalez > Nizhoni Tallman | VPO1 12-3
+r1 Gabrielle Medeiros > bye
+r2 Tristan Nitta > Gabrielle Medeiros | VSU 10-0 1:50
+r1 Tehani Soares > bye
+r1 Hailey Holland > bye
+r2 Tehani Soares > Hailey Holland | VPO1 12-5
+r1 Mia Palumbo > bye
+r1 Angie Dill > bye
+r2 Mia Palumbo > Angie Dill | VSU1 13-3 4:23
+r1 Paige Morales > bye
+r1 Kylee Slyter > bye
+r2 Paige Morales > Kylee Slyter | VSU 10-0 0:58
+r1 Alyssa King > bye
+r2 Alexsys Jacquez > Alyssa King | VFA 3:36 13-4
+qf Diana Gonzalez > Alexsys Jacquez | VPO1 12-7
+qf Jasmine Howard > Tehani Soares | VPO1 10-3
+qf Mia Palumbo > Tristan Nitta | VSU 10-0 2:15
+qf Paige Morales > Emma Baertlein | VPO1 10-4
+c1 Gracie Elliott > bye
+c2 Kylee Slyter > Gracie Elliott | VFO 0-0
+c1 Aynsley Fink > bye
+c2 Nizhoni Tallman > Aynsley Fink | VSU1 12-2 4:41
+c1 Judy Sandoval > bye
+c2 Angie Dill > Judy Sandoval | VSU1 12-1 2:11
+c1 Rayana Sahagun > bye
+c2 Hailey Holland > Rayana Sahagun | VSU1 16-3 5:01
+c2 Gabrielle Medeiros > bye
+c3 Angie Dill > Gabrielle Medeiros | VFA 5:00 9-4
+c2 Liv Villanueva > bye
+c3 Liv Villanueva > Hailey Holland | VFA 2:06 6-4
+c2 Valeria Ahumada > bye
+c3 Kylee Slyter > Valeria Ahumada | VSU 10-0 2:06
+c2 Alyssa King > bye
+c3 Nizhoni Tallman > Alyssa King | VPO1 10-5
+sf Mia Palumbo > Paige Morales | VPO1 10-6
+sf Jasmine Howard > Diana Gonzalez | VPO 8-0
+c4 Emma Baertlein > Nizhoni Tallman | VPO1 5-2
+c4 Tristan Nitta > Liv Villanueva | VFA 2:39 6-2
+c4 Tehani Soares > Angie Dill | VFA 0:59 4-0
+c4 Alexsys Jacquez > Kylee Slyter | VSU 10-0 2:07
+cqf Alexsys Jacquez > Tehani Soares | VPO1 8-4
+cqf Emma Baertlein > Tristan Nitta | VPO1 5-4
+csf Paige Morales > Alexsys Jacquez | VPO1 9-7
+csf Emma Baertlein > Diana Gonzalez | VPO 8-0
+7th Tehani Soares > Tristan Nitta | VPO1 5-2
+5th Alexsys Jacquez > Diana Gonzalez | VFA 1:06 2-4
+3rd Emma Baertlein > Paige Morales | VFA 4:31 2-8
+f Mia Palumbo > Jasmine Howard | VPO1 3-1
+
+@ 116
+- Irma Retano | Eastern Oregon
+- Jamesa Robinson | Brewton Parker (Ga.)
+- Addison Saporito | Ottawa (Kan.)
+- Markayla Lottie | Avila (Mo.)
+- Emma Jones | Indiana Tech
+- Jo'Neisha Kennedy | Wayland Baptist (Texas)
+- Isabelle Asuncion | Providence (Mont.)
+- Arieana Arias | Providence (Mont.)
+- Kaylee Annis | Southern Oregon
+- Catherine Steinkamp | William Penn (Iowa)
+- Marissa Kurtz | Southern Oregon
+- Ajayzee Zaballos | Menlo (Calif.)
+- Ariana Martinez | Life (Ga.)
+- Icart Galumette | Campbellsville (Ky.)
+- Katherine Heath | Baker (Kan.)
+- Avery Ashley | Oklahoma City
+- Juliana Diaz | Missouri Baptist
+- Camille Fournier | Texas Wesleyan
+r1 Avery Ashley > Jamesa Robinson | VSU 10-0 1:21
+r1 Irma Retano > Markayla Lottie | VPO1 10-9
+r1 Marissa Kurtz > bye
+r1 Isabelle Asuncion > bye
+r2 Marissa Kurtz > Isabelle Asuncion | VPO1 4-4
+r1 Icart Galumette > bye
+r1 Kaylee Annis > bye
+r2 Icart Galumette > Kaylee Annis | VPO 6-0
+r1 Addison Saporito > bye
+r2 Avery Ashley > Addison Saporito | VSU 11-0 1:17
+r1 Juliana Diaz > bye
+r2 Juliana Diaz > Irma Retano | VFA 1:26 10-2
+r1 Ajayzee Zaballos > bye
+r1 Jo'Neisha Kennedy > bye
+r2 Ajayzee Zaballos > Jo'Neisha Kennedy | VSU 10-0 1:21
+r1 Ariana Martinez > bye
+r1 Catherine Steinkamp > bye
+r2 Ariana Martinez > Catherine Steinkamp | VPO1 3-2
+r1 Katherine Heath > bye
+r1 Emma Jones > bye
+r2 Katherine Heath > Emma Jones | VSU1 12-2 3:34
+r1 Camille Fournier > bye
+r1 Arieana Arias > bye
+r2 Camille Fournier > Arieana Arias | VFA 4:27 12-9
+qf Avery Ashley > Ariana Martinez | VSU 10-0 1:18
+qf Juliana Diaz > Marissa Kurtz | VSU 11-0 4:42
+qf Katherine Heath > Ajayzee Zaballos | VPO1 7-6
+qf Camille Fournier > Icart Galumette | VPO1 13-5
+c1 Jamesa Robinson > bye
+c2 Irma Retano > Jamesa Robinson | VPO1 6-5
+c1 Markayla Lottie > bye
+c2 Addison Saporito > Markayla Lottie | VFA 5:30 17-8
+c2 Emma Jones > bye
+c2 Jo'Neisha Kennedy > bye
+c3 Emma Jones > Jo'Neisha Kennedy | VFA 2:44 6-2
+c2 Isabelle Asuncion > bye
+c3 Irma Retano > Isabelle Asuncion | VSU 10-0 1:48
+c2 Arieana Arias > bye
+c2 Kaylee Annis > bye
+c3 Arieana Arias > Kaylee Annis | VPO1 6-4
+c2 Catherine Steinkamp > bye
+c3 Addison Saporito > Catherine Steinkamp | VPO1 4-3
+sf Camille Fournier > Avery Ashley | VSU1 12-1 3:42
+sf Juliana Diaz > Katherine Heath | VPO1 7-4
+c4 Marissa Kurtz > Arieana Arias | VFA 1:12 5-0
+c4 Ajayzee Zaballos > Addison Saporito | VSU 10-0 1:31
+c4 Ariana Martinez > Emma Jones | VFA 2:30 4-9
+c4 Icart Galumette > Irma Retano | VFA 0:35 2-0
+cqf Icart Galumette > Ariana Martinez | VSU 10-0 2:02
+cqf Ajayzee Zaballos > Marissa Kurtz | VPO1 12-5
+csf Katherine Heath > Icart Galumette | VFA 2:38 8-2
+csf Ajayzee Zaballos > Avery Ashley | VSU 10-0 2:31
+7th Marissa Kurtz > Ariana Martinez | VFA 1:37 5-2
+5th Icart Galumette > Avery Ashley | VIN 0:00 0-0
+3rd Katherine Heath > Ajayzee Zaballos | VFA 2:08 4-0
+f Juliana Diaz > Camille Fournier | VPO1 7-6
+
+@ 123
+- Loretta Lopez | Vanguard (Calif.)
+- Kaitlin Castro | Cumberlands (Ky.)
+- Alicia Frank | Providence (Mont.)
+- Paige Chafin | Eastern Oregon
+- Carolina Rios | Texas Wesleyan
+- Fernanda Lopez | Southern Oregon
+- Cameron Ortiz | Campbellsville (Ky.)
+- Isabelle Silva | Indiana Tech
+- Allison Hynes | Central Methodist (Mo.)
+- Josie Davis | Campbellsville (Ky.)
+- Larissa Kaz | Hastings (Neb.)
+- Trinity Howard | Montreat (N.C.)
+- Ellabelle Taylor | Evergreen (Wash.)
+- Haley Narahara | Menlo (Calif.)
+- Alana Vivas | Menlo (Calif.)
+- Anna Krejsa | Life (Ga.)
+- Catharine Campbell | Grand View (Iowa)
+- Emily Paulino | Midland University (Neb.)
+- Joanna Vanderwood | William Penn (Iowa)
+- Sophia Smith | Oklahoma City
+- Maya Davis | Grand View (Iowa)
+- Cristelle Rodriguez | Doane (Neb.)
+r1 Maya Davis > Carolina Rios | VFA 4:25 7-0
+r1 Emily Paulino > Josie Davis | VFA 2:10 4-0
+r1 Larissa Kaz > Kaitlin Castro | VFA 1:15 2-3
+r1 Catharine Campbell > Cameron Ortiz | VSU1 13-3 5:38
+r1 Anna Krejsa > Alicia Frank | VFA 0:37 4-0
+r1 Cristelle Rodriguez > Trinity Howard | VFA 1:59 8-0
+r1 Joanna Vanderwood > bye
+r2 Joanna Vanderwood > Larissa Kaz | VSU 12-0 3:20
+r1 Ellabelle Taylor > bye
+r2 Maya Davis > Ellabelle Taylor | VSU 10-0 5:24
+r1 Allison Hynes > bye
+r2 Anna Krejsa > Allison Hynes | VSU 10-0 6:00
+r1 Sophia Smith > bye
+r1 Fernanda Lopez > bye
+r2 Sophia Smith > Fernanda Lopez | VFO 0-0
+r1 Haley Narahara > bye
+r2 Catharine Campbell > Haley Narahara | VPO 5-0
+r1 Loretta Lopez > bye
+r2 Cristelle Rodriguez > Loretta Lopez | VSU 10-0 0:51
+r1 Alana Vivas > bye
+r1 Isabelle Silva > bye
+r2 Alana Vivas > Isabelle Silva | VPO1 6-2
+r1 Paige Chafin > bye
+r2 Emily Paulino > Paige Chafin | VPO1 14-9
+qf Joanna Vanderwood > Alana Vivas | VPO1 11-10
+qf Cristelle Rodriguez > Catharine Campbell | VSU1 12-2 0:43
+qf Maya Davis > Emily Paulino | VPO1 8-4
+qf Sophia Smith > Anna Krejsa | VPO 9-0
+c1 Kaitlin Castro > bye
+c2 Loretta Lopez > Kaitlin Castro | VSU 10-0 2:33
+c1 Alicia Frank > bye
+c2 Alicia Frank > Paige Chafin | VFA 4:58 14-6
+c1 Carolina Rios > bye
+c2 Carolina Rios > Fernanda Lopez | VFO 0-0
+c1 Cameron Ortiz > bye
+c2 Cameron Ortiz > Isabelle Silva | VFA 5:45 10-6
+c1 Josie Davis > bye
+c2 Allison Hynes > Josie Davis | VPO1 11-2
+c1 Trinity Howard > bye
+c2 Larissa Kaz > Trinity Howard | VPO1 14-12
+c2 Ellabelle Taylor > bye
+c3 Alicia Frank > Ellabelle Taylor | VFA 3:59 12-9
+c3 Larissa Kaz > Cameron Ortiz | VFA 3:45 11-5
+c2 Haley Narahara > bye
+c3 Haley Narahara > Loretta Lopez | VSU 10-0 1:17
+c3 Allison Hynes > Carolina Rios | VSU 10-0 5:22
+sf Maya Davis > Joanna Vanderwood | VPO 9-0
+sf Cristelle Rodriguez > Sophia Smith | VSU 10-0 1:37
+c4 Alana Vivas > Allison Hynes | VSU 10-0 5:15
+c4 Anna Krejsa > Larissa Kaz | VSU1 14-4 1:32
+c4 Catharine Campbell > Alicia Frank | VSU1 12-2 5:41
+c4 Haley Narahara > Emily Paulino | VFA 5:15 7-0
+cqf Anna Krejsa > Catharine Campbell | VPO1 6-4
+cqf Alana Vivas > Haley Narahara | VPO1 4-1
+csf Joanna Vanderwood > Anna Krejsa | VPO1 9-4
+csf Alana Vivas > Sophia Smith | VFA 4:12 2-1
+7th Haley Narahara > Catharine Campbell | VPO1 10-6
+5th Sophia Smith > Anna Krejsa | VSU 11-0 5:25
+3rd Alana Vivas > Joanna Vanderwood | VPO1 8-2
+f Cristelle Rodriguez > Maya Davis | VSU 10-0 1:38
+
+@ 130
+- Madeline Santana | Missouri Valley College
+- Peyton Hand | Ottawa (Kan.)
+- Olivia Messerly | Campbellsville (Ky.)
+- Bryce White | Oklahoma City
+- Alisha Van Scoy | St. Mary (Kan.)
+- Nonnie Justice | Central Methodist (Mo.)
+- Ellyana Kuzma | Indiana Tech
+- Destiny Campbell | Oklahoma City
+- Erica Grant | Evergreen (Wash.)
+- Anna Rodriguez | Eastern Oregon
+- Paige Respico | Providence (Mont.)
+- Riley Dalrymple | Life (Ga.)
+- Chloe Herrick | Missouri Baptist
+- Devin Patton | William Penn (Iowa)
+- Louisa Schwab | Menlo (Calif.)
+- Lillian Avalos | Vanguard (Calif.)
+- Elizabeth Duvall | Texas Wesleyan
+- Janiah Jones | Missouri Baptist
+- Alysaa Randles | Providence (Mont.)
+- Sarah Savidge | Life (Ga.)
+- Carolina Moreno | Southern Oregon
+r1 Sarah Savidge > Destiny Campbell | VSU 12-0 2:57
+r1 Carolina Moreno > Nonnie Justice | VFA 2:13 6-2
+r1 Alysaa Randles > Bryce White | VSU 11-0 4:16
+r1 Elizabeth Duvall > Erica Grant | VFA 2:27 6-0
+r1 Olivia Messerly > Madeline Santana | VFA 0:59 4-0
+r1 Devin Patton > bye
+r1 Paige Respico > bye
+r2 Devin Patton > Paige Respico | VSU1 13-3 3:30
+r1 Peyton Hand > bye
+r2 Alysaa Randles > Peyton Hand | VSU1 12-2 2:04
+r1 Lillian Avalos > bye
+r1 Chloe Herrick > bye
+r2 Lillian Avalos > Chloe Herrick | VSU 10-0 3:40
+r1 Ellyana Kuzma > bye
+r2 Carolina Moreno > Ellyana Kuzma | VFA 1:33 6-0
+r1 Riley Dalrymple > bye
+r2 Elizabeth Duvall > Riley Dalrymple | VFA 4:30 10-6
+r1 Alisha Van Scoy > bye
+r2 Sarah Savidge > Alisha Van Scoy | VFA 2:53 10-0
+r1 Janiah Jones > bye
+r1 Anna Rodriguez > bye
+r2 Janiah Jones > Anna Rodriguez | VFA 5:02 5-3
+r1 Louisa Schwab > bye
+r2 Louisa Schwab > Olivia Messerly | VFA 3:59 6-1
+qf Carolina Moreno > Lillian Avalos | VSU 10-0 2:29
+qf Sarah Savidge > Devin Patton | VSU 10-0 2:18
+qf Janiah Jones > Louisa Schwab | VPO1 4-2
+qf Alysaa Randles > Elizabeth Duvall | VFA 4:10 6-10
+c1 Madeline Santana > bye
+c2 Madeline Santana > Peyton Hand | VFA 0:56 4-2
+c1 Bryce White > bye
+c2 Olivia Messerly > Bryce White | VPO1 8-7
+c1 Nonnie Justice > bye
+c2 Alisha Van Scoy > Nonnie Justice | VFA 4:46 4-5
+c1 Destiny Campbell > bye
+c2 Ellyana Kuzma > Destiny Campbell | VFA 4:56 15-8
+c1 Erica Grant > bye
+c2 Erica Grant > Anna Rodriguez | VSU 10-0 0:31
+c3 Erica Grant > Olivia Messerly | VFA 4:07 11-16
+c2 Paige Respico > bye
+c3 Paige Respico > Alisha Van Scoy | VFA 1:27 10-0
+c2 Riley Dalrymple > bye
+c3 Riley Dalrymple > Madeline Santana | VSU 10-0 1:47
+c2 Chloe Herrick > bye
+c3 Ellyana Kuzma > Chloe Herrick | VFA 5:16 8-5
+sf Carolina Moreno > Alysaa Randles | VSU 10-0 3:36
+sf Sarah Savidge > Janiah Jones | VPO1 6-4
+c4 Devin Patton > Riley Dalrymple | VSU 13-0 5:49
+c4 Louisa Schwab > Ellyana Kuzma | VSU 11-0 4:18
+c4 Lillian Avalos > Erica Grant | VSU 10-0 1:20
+c4 Elizabeth Duvall > Paige Respico | VPO1 15-6
+cqf Lillian Avalos > Elizabeth Duvall | VFA 1:54 6-4
+cqf Devin Patton > Louisa Schwab | VFA 0:30 3-1
+csf Lillian Avalos > Janiah Jones | VPO1 12-11
+csf Devin Patton > Alysaa Randles | VPO1 10-6
+7th Louisa Schwab > Elizabeth Duvall | VFA 4:47 6-6
+5th Janiah Jones > Alysaa Randles | VPO 3-0
+3rd Devin Patton > Lillian Avalos | VSU 10-0 1:50
+f Carolina Moreno > Sarah Savidge | VSU 11-0 4:07
+
+@ 136
+- Keilani Guillermo | Wayland Baptist (Texas)
+- Aniseta Acosta | Missouri Valley College
+- Jalynn Patino | Texas Wesleyan
+- Natalia Posada | Oklahoma City
+- Desinee Lopez | Southern Oregon
+- Angie Prado | Life (Ga.)
+- Aileen Lester | Ottawa (Kan.)
+- Gabriella Perez | Campbellsville (Ky.)
+- Lilly Gough | Central Methodist (Mo.)
+- Piper Hall | Vanguard (Calif.)
+- Gianna Moreno | Friends (Kan.)
+- Bridgette Sotomayor | Doane (Neb.)
+- Mattison Parker | Texas Wesleyan
+- Willow Barnes | Missouri Valley College
+- Samantha Barragan | Menlo (Calif.)
+- Carley Anderson | Indiana Tech
+- Kaydince Turner | Hastings (Neb.)
+- Tiyahna Askew | Missouri Baptist
+- Stephanie Chavez | Menlo (Calif.)
+- Addison Messerly | Campbellsville (Ky.)
+- River Todd | Vanguard (Calif.)
+- Andrea Schlabach | Grand View (Iowa)
+- Waipuilani Estrella-Beauchamp | Providence (Mont.)
+- Adaugo Nwachukwu | William Penn (Iowa)
+- Zaynah McBryde | Life (Ga.)
+r1 Stephanie Chavez > Gabriella Perez | VPO 7-0
+r1 Lilly Gough > Mattison Parker | VPO1 10-2
+r1 Adaugo Nwachukwu > Angie Prado | VFA 0:28 4-0
+r1 Desinee Lopez > Bridgette Sotomayor | VSU1 12-2 5:40
+r1 Aileen Lester > Natalia Posada | VFA 1:36 6-0
+r1 Samantha Barragan > Aniseta Acosta | VFA 2:31 8-8
+r1 Willow Barnes > Piper Hall | VPO1 10-6
+r1 Waipuilani Estrella-Beauchamp > Carley Anderson | VSU 10-0 1:05
+r1 Zaynah McBryde > Keilani Guillermo | VSU 11-0 2:18
+r1 Addison Messerly > bye
+r2 Addison Messerly > Lilly Gough | VPO1 8-4
+r1 Jalynn Patino > bye
+r2 Stephanie Chavez > Jalynn Patino | VFA 2:33 6-0
+r1 Andrea Schlabach > bye
+r2 Andrea Schlabach > Desinee Lopez | VPO1 3-2
+r1 Gianna Moreno > bye
+r2 Adaugo Nwachukwu > Gianna Moreno | VFA 2:35 10-0
+r1 Tiyahna Askew > bye
+r2 Tiyahna Askew > Willow Barnes | VFA 0:46 2-0
+r1 Kaydince Turner > bye
+r2 Waipuilani Estrella-Beauchamp > Kaydince Turner | VFA 1:32 7-2
+r2 Zaynah McBryde > Samantha Barragan | VSU 10-0 1:46
+r1 River Todd > bye
+r2 River Todd > Aileen Lester | VFA 2:27 6-4
+c1 Keilani Guillermo > Aniseta Acosta | VFA 4:14 14-11
+qf Adaugo Nwachukwu > Stephanie Chavez | VFA 3:33 8-0
+qf Waipuilani Estrella-Beauchamp > Tiyahna Askew | VPO1 9-3
+qf Andrea Schlabach > River Todd | VFA 3:22 11-1
+qf Zaynah McBryde > Addison Messerly | VSU 11-0 1:32
+c1 Natalia Posada > bye
+c2 Jalynn Patino > Natalia Posada | VFA 4:01 7-2
+c1 Angie Prado > bye
+c2 Desinee Lopez > Angie Prado | VFA 3:24 6-0
+c1 Gabriella Perez > bye
+c2 Aileen Lester > Gabriella Perez | VPO1 4-2
+c1 Piper Hall > bye
+c2 Lilly Gough > Piper Hall | VPO1 8-3
+c1 Bridgette Sotomayor > bye
+c2 Gianna Moreno > Bridgette Sotomayor | VSU 10-0 1:18
+c1 Mattison Parker > bye
+c2 Mattison Parker > Willow Barnes | VPO1 13-12
+c1 Carley Anderson > bye
+c2 Samantha Barragan > Carley Anderson | VFA 1:22 4-0
+c2 Kaydince Turner > Keilani Guillermo | VFA 3:35 8-4
+c3 Gianna Moreno > Jalynn Patino | VSU1 12-2 2:43
+c3 Desinee Lopez > Aileen Lester | VPO1 7-3
+c3 Samantha Barragan > Lilly Gough | VSU 10-0 3:24
+c3 Mattison Parker > Kaydince Turner | VSU 11-0 4:09
+sf Adaugo Nwachukwu > Waipuilani Estrella-Beauchamp | VFA 4:58 16-6
+sf Zaynah McBryde > Andrea Schlabach | DSQ
+c4 Tiyahna Askew > Desinee Lopez | VPO1 2-1
+c4 Stephanie Chavez > Samantha Barragan | VPO1 7-2
+c4 Gianna Moreno > Addison Messerly | VFA 0:28 4-0
+c4 River Todd > Mattison Parker | VPO1 12-8
+cqf Gianna Moreno > River Todd | VSU 10-0 0:30
+cqf Tiyahna Askew > Stephanie Chavez | VSU 11-0 5:09
+csf Tiyahna Askew > Andrea Schlabach | VFO 0-0
+csf Waipuilani Estrella-Beauchamp > Gianna Moreno | VFA 2:24 4-1
+7th Stephanie Chavez > River Todd | VFA 1:12 3-0
+5th Gianna Moreno > Andrea Schlabach | VFO 0-0
+3rd Waipuilani Estrella-Beauchamp > Tiyahna Askew | VFA 3:56 8-4
+f Adaugo Nwachukwu > Zaynah McBryde | VFA 2:16 9-2
+
+@ 143
+- Desiree Jones | Menlo (Calif.)
+- Livia Swift | Ottawa (Kan.)
+- Makayla Munoz | Oklahoma City
+- Naida Abdijanovic | William Penn (Iowa)
+- Serenity De La Garza | Missouri Valley College
+- Marish Wahl | Dickinson State (N.D.)
+- Marissa Jimenez | Oklahoma City
+- Kailey Rees | Providence (Mont.)
+- Reagen Gallaway | Hastings (Neb.)
+- Maria Slaughter | Missouri Valley College
+- Maia Crumb | Indiana Tech
+- Isabelle Hawley | William Penn (Iowa)
+- Randie Scoon | Ottawa (Kan.)
+- Micah Fisher | Cumberlands (Ky.)
+- Mea Mohler | Texas Wesleyan
+- Krista Warren | Grand View (Iowa)
+- Alexandra Lopez | Menlo (Calif.)
+- Madison Diaz | Grand View (Iowa)
+- Bella Amaro | Southern Oregon
+- Jamilah McBryde | Life (Ga.)
+- Emma Walker | Campbellsville (Ky.)
+r1 Desiree Jones > Marissa Jimenez | VPO1 12-9
+r1 Bella Amaro > Makayla Munoz | VFA 1:26 4-0
+r1 Maia Crumb > Marish Wahl | VFA 0:22 2-0
+r1 Alexandra Lopez > Reagen Gallaway | VPO1 9-3
+r1 Kailey Rees > Livia Swift | VSU 10-0 1:58
+r1 Madison Diaz > bye
+r2 Madison Diaz > Desiree Jones | VPO1 10-1
+r1 Isabelle Hawley > bye
+r2 Bella Amaro > Isabelle Hawley | VPO1 6-2
+r1 Jamilah McBryde > bye
+r1 Serenity De La Garza > bye
+r2 Jamilah McBryde > Serenity De La Garza | VSU 10-0 1:22
+r1 Krista Warren > bye
+r2 Krista Warren > Kailey Rees | VFA 1:16 2-2
+r1 Micah Fisher > bye
+r1 Naida Abdijanovic > bye
+r2 Micah Fisher > Naida Abdijanovic | VFA 2:49 10-0
+r1 Emma Walker > bye
+r1 Maria Slaughter > bye
+r2 Emma Walker > Maria Slaughter | VFA 0:50 4-0
+r1 Mea Mohler > bye
+r2 Mea Mohler > Maia Crumb | VFA 2:01 12-2
+r1 Randie Scoon > bye
+r2 Alexandra Lopez > Randie Scoon | VFA 4:59 6-0
+qf Jamilah McBryde > Micah Fisher | VSU 11-0 2:09
+qf Bella Amaro > Mea Mohler | VPO1 4-3
+qf Madison Diaz > Alexandra Lopez | VFA 2:31 6-1
+qf Emma Walker > Krista Warren | VPO1 6-5
+c1 Livia Swift > bye
+c2 Desiree Jones > Livia Swift | VSU 10-0 1:39
+c1 Makayla Munoz > bye
+c2 Makayla Munoz > Naida Abdijanovic | VPO1 10-5
+c1 Marish Wahl > bye
+c2 Serenity De La Garza > Marish Wahl | VFA 1:19 8-2
+c1 Marissa Jimenez > bye
+c2 Marissa Jimenez > Kailey Rees | VFA 0:35 4-0
+c1 Reagen Gallaway > bye
+c2 Reagen Gallaway > Maria Slaughter | VFA 1:10 2-0
+c3 Serenity De La Garza > Makayla Munoz | VFA 2:29 9-2
+c2 Maia Crumb > bye
+c2 Isabelle Hawley > bye
+c3 Maia Crumb > Isabelle Hawley | VFA 0:33 2-0
+c2 Randie Scoon > bye
+c3 Desiree Jones > Randie Scoon | VPO1 4-2
+c3 Reagen Gallaway > Marissa Jimenez | VSU 10-0 2:50
+sf Jamilah McBryde > Madison Diaz | VSU 10-0
+sf Emma Walker > Bella Amaro | VPO1 6-2
+c4 Reagen Gallaway > Micah Fisher | VSU1 13-2 4:16
+c4 Mea Mohler > Desiree Jones | VSU 10-0 2:13
+c4 Serenity De La Garza > Krista Warren | VPO1 10-7
+c4 Alexandra Lopez > Maia Crumb | VFA 2:14 10-8
+cqf Mea Mohler > Serenity De La Garza | VSU1 12-2 1:37
+cqf Alexandra Lopez > Reagen Gallaway | VPO1 9-6
+csf Madison Diaz > Mea Mohler | VPO1 6-3
+csf Bella Amaro > Alexandra Lopez | VPO1 2-1
+7th Reagen Gallaway > Serenity De La Garza | VSU1 12-1 3:00
+5th Mea Mohler > Alexandra Lopez | VSU 10-0 0:29
+3rd Bella Amaro > Madison Diaz | VPO1 7-1
+f Jamilah McBryde > Emma Walker | VSU 10-0 2:50
+
+@ 155
+- Leilani Hernandez | Texas Wesleyan
+- Elisa Falcetti | Missouri Valley College
+- Cydney Bassett | Indiana Tech
+- Haidyn Snyder | Grand View (Iowa)
+- Kendra Thompson | Campbellsville (Ky.)
+- Ariana Pereira | Cumberlands (Ky.)
+- Anastasia Hardin | Missouri Baptist
+- Lisa Hoeflich | Hastings (Neb.)
+- Allyssa Johnson | Jamestown (N.D.)
+- Aspen Barber | Doane (Neb.)
+- Presley McCandlish | Oklahoma City
+- Josette Partney | Missouri Baptist
+- Sadie Antoque | Providence (Mont.)
+- Taydem Khamjoi | Texas Wesleyan
+- Shannon Workinger | Menlo (Calif.)
+- Flor Parker-Borreo | Evergreen (Wash.)
+- Liv Wieber | Eastern Oregon
+- Latifah McBryde | Life (Ga.)
+- Caitlyn Davis | Southern Oregon
+r1 Shannon Workinger > Ariana Pereira | VSU 11-0 4:37
+r1 Latifah McBryde > Elisa Falcetti | VFA 0:41 4-0
+r1 Caitlyn Davis > Cydney Bassett | VSU 10-0 3:00
+r1 Haidyn Snyder > bye
+r2 Latifah McBryde > Haidyn Snyder | VFA 1:25 6-0
+r1 Josette Partney > bye
+r1 Allyssa Johnson > bye
+r2 Josette Partney > Allyssa Johnson | VIN 5:37 10-6
+r1 Liv Wieber > bye
+r1 Lisa Hoeflich > bye
+r2 Liv Wieber > Lisa Hoeflich | VSU 13-0 1:59
+r1 Leilani Hernandez > bye
+r2 Caitlyn Davis > Leilani Hernandez | VPO 8-0
+r1 Flor Parker-Borreo > bye
+r1 Kendra Thompson > bye
+r2 Flor Parker-Borreo > Kendra Thompson | VFA 1:22 6-0
+r1 Sadie Antoque > bye
+r1 Presley McCandlish > bye
+r2 Sadie Antoque > Presley McCandlish | VPO1 4-1
+r1 Anastasia Hardin > bye
+r2 Shannon Workinger > Anastasia Hardin | VFA 4:34 7-0
+r1 Taydem Khamjoi > bye
+r1 Aspen Barber > bye
+r2 Taydem Khamjoi > Aspen Barber | VFA 1:24 10-0
+qf Liv Wieber > Shannon Workinger | VPO1 3-2
+qf Flor Parker-Borreo > Josette Partney | VFA 1:01 4-1
+qf Caitlyn Davis > Sadie Antoque | VPO1 3-1
+qf Latifah McBryde > Taydem Khamjoi | VSU1 18-5 3:48
+c1 Elisa Falcetti > bye
+c2 Leilani Hernandez > Elisa Falcetti | VSU1 15-4 2:44
+c1 Cydney Bassett > bye
+c2 Cydney Bassett > Haidyn Snyder | VSU 10-0 1:59
+c1 Ariana Pereira > bye
+c2 Kendra Thompson > Ariana Pereira | VSU 10-0 5:13
+c2 Anastasia Hardin > bye
+c2 Lisa Hoeflich > bye
+c3 Anastasia Hardin > Lisa Hoeflich | VFA 1:31 2-0
+c2 Allyssa Johnson > bye
+c3 Kendra Thompson > Allyssa Johnson | VFO 0-0
+c2 Aspen Barber > bye
+c3 Aspen Barber > Cydney Bassett | VFA 2:19 5-4
+c2 Presley McCandlish > bye
+c3 Leilani Hernandez > Presley McCandlish | VFA 1:16 4-0
+sf Caitlyn Davis > Flor Parker-Borreo | VSU 13-0 5:34
+sf Latifah McBryde > Liv Wieber | VSU 10-0 4:24
+c4 Josette Partney > Aspen Barber | VPO1 9-7
+c4 Sadie Antoque > Anastasia Hardin | VPO1 5-1
+c4 Kendra Thompson > Taydem Khamjoi | VFA 5:24 10-2
+c4 Shannon Workinger > Leilani Hernandez | VPO 6-0
+cqf Shannon Workinger > Kendra Thompson | VPO1 7-4
+cqf Josette Partney > Sadie Antoque | VFA 2:00 4-0
+csf Shannon Workinger > Flor Parker-Borreo | VPO1 11-6
+csf Josette Partney > Liv Wieber | VPO1 10-4
+7th Sadie Antoque > Kendra Thompson | VPO 6-0
+5th Liv Wieber > Flor Parker-Borreo | VIN 0:00 0-0
+3rd Shannon Workinger > Josette Partney | VFA 4:29 9-2
+f Caitlyn Davis > Latifah McBryde | VPO1 4-2
+
+@ 170
+- Saiheron Preciado-Meza | Cumberlands (Ky.)
+- Abena Adu | Vanguard (Calif.)
+- Lily El-Masri | Vanguard (Calif.)
+- Aime Hernandez-Perez | York (Neb.)
+- Kaley Rice | Texas Wesleyan
+- Grace Doering | Indiana Tech
+- Chamira Cooper | Cumberlands (Ky.)
+- Katelyn Lewis | Providence (Mont.)
+- Jaclyn Daley | Baker (Kan.)
+- Kacey Lee-Pua | Providence (Mont.)
+- Payton Curley | Lourdes (Ohio)
+- Siara Arrington | Ottawa (Kan.)
+- Victoria Guinard | Hastings (Neb.)
+- Mahogoney Casel | Wayland Baptist (Texas)
+- Gabrielle Holloway | St. Andrews (N.C.)
+- Bo Geibe | Siena Heights (Mich.)
+- Maggie Graham | Life (Ga.)
+- Faith Macharia | Missouri Baptist
+- Aalyah Villarreal | Texas Wesleyan
+- Shenita Lawson | Southern Oregon
+- Kalila Shrive | Menlo (Calif.)
+- Abby McIntyre | Grand View (Iowa)
+- Ashley Lekas | William Penn (Iowa)
+r1 Jaclyn Daley > Mahogoney Casel | VPO1 9-3
+r1 Abby McIntyre > Siara Arrington | VFA 1:59 8-2
+r1 Kalila Shrive > Katelyn Lewis | VFA 5:42 10-0
+r1 Gabrielle Holloway > Aime Hernandez-Perez | VPO1 2-2
+r1 Ashley Lekas > Kaley Rice | VSU 10-0 0:26
+r1 Victoria Guinard > Kacey Lee-Pua | VFA 3:29 6-2
+r1 Faith Macharia > Abena Adu | VFA 2:45 5-2
+r1 Shenita Lawson > bye
+r2 Shenita Lawson > Gabrielle Holloway | VPO1 7-2
+r1 Saiheron Preciado-Meza > bye
+r2 Kalila Shrive > Saiheron Preciado-Meza | VFA 4:07 8-0
+r1 Grace Doering > bye
+r2 Abby McIntyre > Grace Doering | VFA 1:34 3-0
+r1 Payton Curley > bye
+r2 Ashley Lekas > Payton Curley | VSU 10-0 1:23
+r1 Aalyah Villarreal > bye
+r1 Lily El-Masri > bye
+r2 Aalyah Villarreal > Lily El-Masri | VFA 2:06 4-2
+r1 Chamira Cooper > bye
+r2 Faith Macharia > Chamira Cooper | VFA 3:22 6-0
+r1 Maggie Graham > bye
+r2 Maggie Graham > Jaclyn Daley | VSU 10-0 3:13
+r1 Bo Geibe > bye
+r2 Bo Geibe > Victoria Guinard | VFA 2:52 6-6
+qf Kalila Shrive > Aalyah Villarreal | VFA 2:20 8-0
+qf Ashley Lekas > Bo Geibe | VSU 10-0 1:05
+qf Abby McIntyre > Maggie Graham | VFA 0:38 4-0
+qf Shenita Lawson > Faith Macharia | VFA 2:27 4-0
+c1 Abena Adu > bye
+c2 Saiheron Preciado-Meza > Abena Adu | VFA 2:30 6-4
+c1 Aime Hernandez-Perez > bye
+c2 Lily El-Masri > Aime Hernandez-Perez | VFA 4:53 9-2
+c1 Kaley Rice > bye
+c2 Kaley Rice > Grace Doering | VPO1 4-4
+c1 Katelyn Lewis > bye
+c2 Chamira Cooper > Katelyn Lewis | VPO 7-0
+c1 Kacey Lee-Pua > bye
+c2 Jaclyn Daley > Kacey Lee-Pua | VPO1 5-3
+c1 Siara Arrington > bye
+c2 Payton Curley > Siara Arrington | VFA 2:16 6-4
+c1 Mahogoney Casel > bye
+c2 Victoria Guinard > Mahogoney Casel | VSU1 14-3 4:03
+c3 Lily El-Masri > Saiheron Preciado-Meza | VPO1 8-4
+c3 Victoria Guinard > Payton Curley | VFA 4:09 6-2
+c3 Kaley Rice > Jaclyn Daley | VFA 1:43 4-2
+c2 Gabrielle Holloway > bye
+c3 Chamira Cooper > Gabrielle Holloway | VPO 9-0
+sf Abby McIntyre > Kalila Shrive | VSU 10-0 4:55
+sf Ashley Lekas > Shenita Lawson | VPO 8-0
+c4 Bo Geibe > Lily El-Masri | VSU1 15-2 5:01
+c4 Chamira Cooper > Maggie Graham | VFA 1:23 2-3
+c4 Faith Macharia > Kaley Rice | VSU1 17-5 5:09
+c4 Aalyah Villarreal > Victoria Guinard | VFA 4:18 4-10
+cqf Chamira Cooper > Aalyah Villarreal | VSU 10-0 5:05
+cqf Bo Geibe > Faith Macharia | VFA 4:43 14-4
+csf Shenita Lawson > Chamira Cooper | VPO1 10-2
+csf Kalila Shrive > Bo Geibe | VPO1 9-6
+7th Aalyah Villarreal > Faith Macharia | VFA 3:24 10-1
+5th Bo Geibe > Chamira Cooper | VFA 2:18 4-4
+3rd Kalila Shrive > Shenita Lawson | VPO1 4-2
+f Ashley Lekas > Abby McIntyre | VPO1 4-2
+
+@ 191
+- Andjela Prijovic | Grand View (Iowa)
+- Melissa De La Torre | Morningside (Iowa)
+- Madeline Welch | Life (Ga.)
+- Tiffany Curry | Texas Wesleyan
+- Naomi Duenas | Cumberlands (Ky.)
+- Emma Shreiber | Missouri Baptist
+- Elisa Robinson | Baker (Kan.)
+- Trinity Tafoya | Eastern Oregon
+- Agatha Andrews | Jamestown (N.D.)
+- Shan Briggs | Avila (Mo.)
+- Samyra Thomas | Jarvis Christian (Texas)
+- Ryann Rumsey | Oklahoma City
+- Payton Sholander | Wayland Baptist (Texas)
+- Marissa Patterson | Hastings (Neb.)
+- Jannell Avila | Baker (Kan.)
+- Olivia Brown | Grand View (Iowa)
+- Kenisha Jacsaint | Doane (Neb.)
+- Maquoia Bernabe | Cumberlands (Ky.)
+- Lessly Sandoval | St. Mary (Kan.)
+- Tavia Heidelberg-Tillitson | Menlo (Calif.)
+- Joanna Hendricks | Waldorf (Iowa)
+r1 Tavia Heidelberg-Tillitson > Elisa Robinson | VFA 3:15 8-2
+r1 Olivia Brown > Shan Briggs | VFA 2:23 6-0
+r1 Joanna Hendricks > Naomi Duenas | VFA 0:35 4-0
+r1 Lessly Sandoval > Andjela Prijovic | VSU 13-0 5:50
+r1 Kenisha Jacsaint > Madeline Welch | VPO1 8-4
+r1 Payton Sholander > bye
+r2 Olivia Brown > Payton Sholander | VFA 1:15 6-0
+r1 Maquoia Bernabe > bye
+r1 Melissa De La Torre > bye
+r2 Maquoia Bernabe > Melissa De La Torre | VSU 10-0 2:32
+r1 Emma Shreiber > bye
+r2 Tavia Heidelberg-Tillitson > Emma Shreiber | VSU 13-0 3:22
+r1 Ryann Rumsey > bye
+r2 Kenisha Jacsaint > Ryann Rumsey | VFA 1:49 4-0
+r1 Marissa Patterson > bye
+r1 Tiffany Curry > bye
+r2 Marissa Patterson > Tiffany Curry | VPO1 7-4
+r1 Jannell Avila > bye
+r1 Agatha Andrews > bye
+r2 Jannell Avila > Agatha Andrews | VSU 10-0 1:46
+r1 Trinity Tafoya > bye
+r2 Joanna Hendricks > Trinity Tafoya | VFA 1:22 8-0
+r1 Samyra Thomas > bye
+r2 Lessly Sandoval > Samyra Thomas | VFA 4:59 9-8
+qf Maquoia Bernabe > Kenisha Jacsaint | VFA 4:11 3-2
+qf Tavia Heidelberg-Tillitson > Olivia Brown | VPO1 5-1
+qf Lessly Sandoval > Marissa Patterson | VFA 1:39 10-6
+qf Joanna Hendricks > Jannell Avila | VFA 1:11 4-0
+c1 Andjela Prijovic > bye
+c2 Andjela Prijovic > Melissa De La Torre | VFA 1:25 6-0
+c1 Madeline Welch > bye
+c2 Madeline Welch > Tiffany Curry | VPO1 8-2
+c1 Naomi Duenas > bye
+c2 Naomi Duenas > Emma Shreiber | VSU1 12-2 2:53
+c1 Elisa Robinson > bye
+c2 Elisa Robinson > Trinity Tafoya | VFA 0:41 4-4
+c1 Shan Briggs > bye
+c2 Agatha Andrews > Shan Briggs | VFA 0:50 6-0
+c3 Elisa Robinson > Agatha Andrews | VFA 1:08 6-0
+c2 Samyra Thomas > bye
+c3 Samyra Thomas > Madeline Welch | VFA 0:22 4-0
+c2 Ryann Rumsey > bye
+c3 Andjela Prijovic > Ryann Rumsey | VFA 1:36 4-0
+c2 Payton Sholander > bye
+c3 Naomi Duenas > Payton Sholander | VFA 0:49 4-1
+sf Joanna Hendricks > Lessly Sandoval | VPO1 9-4
+sf Tavia Heidelberg-Tillitson > Maquoia Bernabe | VPO1 3-1
+c4 Naomi Duenas > Marissa Patterson | VPO1 9-8
+c4 Jannell Avila > Andjela Prijovic | VPO1 7-7
+c4 Olivia Brown > Samyra Thomas | VPO1 10-1
+c4 Elisa Robinson > Kenisha Jacsaint | VFA 2:45 7-0
+cqf Naomi Duenas > Jannell Avila | VFA 5:42 12-3
+cqf Olivia Brown > Elisa Robinson | VPO1 7-1
+csf Maquoia Bernabe > Naomi Duenas | VFA 0:52 2-0
+csf Olivia Brown > Lessly Sandoval | VFA 4:59 10-0
+7th Jannell Avila > Elisa Robinson | VPO1 10-4
+5th Naomi Duenas > Lessly Sandoval | VFA 2:04 8-2
+3rd Olivia Brown > Maquoia Bernabe | VPO1 4-1
+f Tavia Heidelberg-Tillitson > Joanna Hendricks | VPO1 4-3
+

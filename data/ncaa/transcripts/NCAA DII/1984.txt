@@ -1,0 +1,182 @@
+# NCAA Division II Championships 1984 — source: NCAA II 1984.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Tim Wright | SIU-Edwardsville
+- Chuck Kennedy | Morgan State
+- Willie Ingold | Northern Michigan
+- Jose Martinez | California-Davis
+- Mark Weston | Nebraska-Omaha
+- Joe Arroyo | Springfield
+- Scott Knowlen | North Dakota
+- Mike Brown | Northwest Missouri
+place 1 Tim Wright
+place 2 Chuck Kennedy
+place 3 Willie Ingold
+place 4 Jose Martinez
+place 5 Mark Weston
+place 6 Joe Arroyo
+place 7 Scott Knowlen
+place 8 Mike Brown
+
+@ 126
+- Don Stevens | SIU-Edwardsville
+- John Loomis | Cal State-Bakersfield
+- Kyle Pressler | Augustana SD
+- Dave Morell | Ashland
+- Tim Begley | Wright State
+- Jack Maughan | North Dakota State
+- Craig Kosinksi | Springfield
+- George Acosta | Cal State-Chico
+place 1 Don Stevens
+place 2 John Loomis
+place 3 Kyle Pressler
+place 4 Dave Morell
+place 5 Tim Begley
+place 6 Jack Maughan
+place 7 Craig Kosinksi
+place 8 George Acosta
+
+@ 134
+- Steve Markey | Cal State-Bakersfield
+- Pat Hughes | Springfield
+- Alan Grammer | SIU-Edwardsville
+- Steve Carr | North Dakota State
+- Dave Navarre | Humboldt State
+- Rick Sielhamer | Liberty
+- Tom Churchard | Grand Valley State
+- John Craig | Oakland
+place 1 Steve Markey
+place 2 Pat Hughes
+place 3 Alan Grammer
+place 4 Steve Carr
+place 5 Dave Navarre
+place 6 Rick Sielhamer
+place 7 Tom Churchard
+place 8 John Craig
+
+@ 142
+- Jesse Reyes | Cal State-Bakersfield
+- Maurice Brown | SIU-Edwardsville
+- Boyd Goodpaster | Portland State
+- Mike Frazier | North Dakota State
+- Jon Groskreutz | Augustana SD
+- Eric Lessley | Humboldt State
+- Rich Friberg | Northern Michigan
+- Trent Smith | Central Florida
+place 1 Jesse Reyes
+place 2 Maurice Brown
+place 3 Boyd Goodpaster
+place 4 Mike Frazier
+place 5 Jon Groskreutz
+place 6 Eric Lessley
+place 7 Rich Friberg
+place 8 Trent Smith
+
+@ 150
+- Mike Langlais | North Dakota State
+- Mark Kristoff | SIU-Edwardsville
+- Jeff Schumacher | North Dakota
+- Rob Yahner | Pittsburgh-Johnstown
+- Mark Manning | Nebraska-Omaha
+- Terry Osborne | Cal State-Bakersfield
+- Glenn Sartorelli | Northern Michigan
+- Dan Wilson | Liberty
+place 1 Mike Langlais
+place 2 Mark Kristoff
+place 3 Jeff Schumacher
+place 4 Rob Yahner
+place 5 Mark Manning
+place 6 Terry Osborne
+place 7 Glenn Sartorelli
+place 8 Dan Wilson
+
+@ 158
+- John Davis | Morgan State
+- John Barrett | St. Cloud State
+- Don Cox | South Dakota State
+- Brad Dodds | Humboldt State
+- Jerry Umin | Oakland
+- Mike Specht | Augustana SD
+- John Scott | Portland State
+- John Schenk | Central Florida
+place 1 John Davis
+place 2 John Barrett
+place 3 Don Cox
+place 4 Brad Dodds
+place 5 Jerry Umin
+place 6 Mike Specht
+place 7 John Scott
+place 8 John Schenk
+
+@ 167
+- Dave Cornemann | South Dakota State
+- Tim Jones | Northern Michigan
+- John Morgan | North Dakota State
+- Todd Yde | Wisconsin-Parkside
+- Doug Hassell | Nebraska-Omaha
+- Dale Delaney | Humboldt State
+- Randy Strayer | Indiana PA
+- Pat Allen | Springfield
+place 1 Dave Cornemann
+place 2 Tim Jones
+place 3 John Morgan
+place 4 Todd Yde
+place 5 Doug Hassell
+place 6 Dale Delaney
+place 7 Randy Strayer
+place 8 Pat Allen
+
+@ 177
+- Booker Benford | SIU-Edwardsville
+- Wayne Love | Northwest Missouri
+- Steve Hammers | North Dakota State
+- Craig McManaman | Grand Valley State
+- Bob Button | Cal State-Bakersfield
+- Rick Heckendorn | Nebraska-Omaha
+- Dave Bonifas | Ferris State
+- Rich Bonaccorsi | Indiana PA
+place 1 Booker Benford
+place 2 Wayne Love
+place 3 Steve Hammers
+place 4 Craig McManaman
+place 5 Bob Button
+place 6 Rick Heckendorn
+place 7 Dave Bonifas
+place 8 Rich Bonaccorsi
+
+@ 190
+- Ernie Badger | SIU-Edwardsville
+- Jay Stainback | North Carolina-Pembroke
+- Paul Jungck | Ferris State
+- Noel Nemitz | St. Cloud State
+- Russ Jones | Cal State-Sacramento
+- John Vorrice | Morgan State
+- Dave Maiorana | Ashland
+- Bill Eaton | Northwest Missouri
+place 1 Ernie Badger
+place 2 Jay Stainback
+place 3 Paul Jungck
+place 4 Noel Nemitz
+place 5 Russ Jones
+place 6 John Vorrice
+place 7 Dave Maiorana
+place 8 Bill Eaton
+
+@ 285
+- Morris Johnson | San Francisco State
+- Mike Blaske | Cal State-Bakersfield
+- Jeff Green | Morgan State
+- Al Sears | SIU-Edwardsville
+- Bruce Lambert | Pfeifer
+- Ronnie Locust | Winston-Salem
+- Frank Shepard | Chicago State
+- Al Holleman | South Dakota State
+place 1 Morris Johnson
+place 2 Mike Blaske
+place 3 Jeff Green
+place 4 Al Sears
+place 5 Bruce Lambert
+place 6 Ronnie Locust
+place 7 Frank Shepard
+place 8 Al Holleman
+

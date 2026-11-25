@@ -11,6 +11,8 @@ type SchoolRow = {
   website_url:    string | null
   twitter_handle: string | null
   facebook_url:   string | null
+  hudl_url:       string | null
+  nfhs_url:       string | null
   ad_name:        string | null
   ad_email:       string | null
   coach_name:     string | null
@@ -23,6 +25,7 @@ type SchoolRow = {
   roster_count:   number
   graded_count:   number
   active:         boolean   // false = marked inactive for this season
+  dual_status:    'declared' | 'not_declared' | null   // dual-meet status this season (null = not recorded)
 }
 
 type Options = {
@@ -36,18 +39,22 @@ type Options = {
 type ColDef = {
   key:        string
   label:      string
-  type:       'readonly' | 'text' | 'url' | 'email' | 'conference' | 'district' | 'region' | 'group' | 'section' | 'active'
+  type:       'readonly' | 'text' | 'url' | 'email' | 'conference' | 'district' | 'region' | 'group' | 'section' | 'active' | 'dual'
   width:      number
 }
 
 const COLUMNS: ColDef[] = [
   { key: 'display_name',   label: 'School',        type: 'readonly',    width: 160 },
   { key: 'active',         label: 'Active',         type: 'active',      width: 90  },
+  { key: 'dual_status',    label: 'Dual Status',    type: 'dual',        width: 110 },
   { key: 'grade_pct',      label: 'Grade %',        type: 'readonly',    width: 110 },
   { key: 'address',        label: 'Address',        type: 'text',        width: 200 },
   { key: 'website_url',    label: 'Website',        type: 'url',         width: 160 },
   { key: 'twitter_handle', label: 'Twitter',        type: 'text',        width: 120 },
   { key: 'facebook_url',   label: 'Facebook',       type: 'url',         width: 160 },
+  // the streaming column split in two (Kyle 2026-11-19: "schools have both nfhs and hudl")
+  { key: 'hudl_url',       label: 'Hudl',           type: 'url',         width: 180 },
+  { key: 'nfhs_url',       label: 'NFHS',           type: 'url',         width: 180 },
   { key: 'coach_name',     label: 'Coach',          type: 'text',        width: 140 },
   { key: 'coach_email',    label: 'Coach Email',    type: 'email',       width: 180 },
   { key: 'ad_name',        label: 'AD',             type: 'text',        width: 140 },
@@ -59,11 +66,15 @@ const COLUMNS: ColDef[] = [
   { key: 'section',        label: 'Section',        type: 'section',     width: 90  },
 ]
 
-const DROPDOWN_TYPES = new Set(['conference', 'district', 'region', 'group', 'section', 'active'])
+const DROPDOWN_TYPES = new Set(['conference', 'district', 'region', 'group', 'section', 'active', 'dual'])
+const DUAL_LABELS: Record<string, string> = { declared: 'Declared', not_declared: 'Not declared' }
 
-type Props = { seasonId: number; coachSeasonId: number }
+// archive: a past season on the Past Seasons page — its own locked values, no Grade % (that's today's roster
+// pool), no adding schools
+type Props = { seasonId: number; coachSeasonId: number; archive?: boolean }
 
-export function SchoolDirectoryWorkspaceGirls({ seasonId, coachSeasonId }: Props) {
+export function SchoolDirectoryWorkspaceGirls({ seasonId, coachSeasonId, archive = false }: Props) {
+  const columns = archive ? COLUMNS.filter(c => c.key !== 'grade_pct') : COLUMNS
   const [rows,     setRows]     = useState<SchoolRow[]>([])
   const [options,  setOptions]  = useState<Options>({ districts: [], regions: [], conferences: [], sections: [], groups: [] })
   const [cantFind, setCantFind] = useState<Set<string>>(new Set())
@@ -87,7 +98,7 @@ export function SchoolDirectoryWorkspaceGirls({ seasonId, coachSeasonId }: Props
   const load = useCallback(async () => {
     setLoading(true)
     try {
-      const res  = await fetch(`/api/admin/school-directory-girls?season_id=${seasonId}&coach_season_id=${coachSeasonId}`)
+      const res  = await fetch(`/api/admin/school-directory-girls?season_id=${seasonId}&coach_season_id=${coachSeasonId}${archive ? '&archive=1' : ''}`)
       const data = await res.json()
       if (!data.error) {
         setRows(data.schools ?? [])
@@ -97,7 +108,7 @@ export function SchoolDirectoryWorkspaceGirls({ seasonId, coachSeasonId }: Props
     } finally {
       setLoading(false)
     }
-  }, [seasonId, coachSeasonId])
+  }, [seasonId, coachSeasonId, archive])
 
   useEffect(() => { load() }, [load])
 
@@ -115,6 +126,7 @@ export function SchoolDirectoryWorkspaceGirls({ seasonId, coachSeasonId }: Props
       return options.regions.find(r => r.id === row.region_id)?.name ?? ''
     }
     if (col.key === 'active') return row.active ? 'Active' : 'Inactive'
+    if (col.key === 'dual_status') return row.dual_status ? DUAL_LABELS[row.dual_status] : ''
     if (col.key === 'grade_pct') {
       // no wrestlers linked to the school: say so instead of leaving the cell blank
       if (!row.roster_count) return 'No wrestlers'
@@ -147,7 +159,7 @@ export function SchoolDirectoryWorkspaceGirls({ seasonId, coachSeasonId }: Props
       const res = await fetch('/api/admin/school-directory-girls', {
         method:  'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ school_id: row.id, field: col.key, value: value.trim() || null, season_id: seasonId, coach_season_id: coachSeasonId }),
+        body:    JSON.stringify({ school_id: row.id, field: col.key, value: value.trim() || null, season_id: seasonId, coach_season_id: coachSeasonId, archive }),
       })
       const data = await res.json()
       if (data.error) throw new Error(data.error)
@@ -155,12 +167,13 @@ export function SchoolDirectoryWorkspaceGirls({ seasonId, coachSeasonId }: Props
       // Update local row
       setRows(prev => prev.map(r => {
         if (r.id !== row.id) return r
-        const updated = { ...r, [col.key]: col.type === 'active' ? value === 'true' : (value.trim() || null) }
+        const updated = { ...r, [col.key]: col.type === 'active' ? value === 'true' : 'value' in data ? data.value : (value.trim() || null) }
         // If district/region changed, the ID is already set correctly
         return updated
       }))
 
       setFlash(p => ({ ...p, [key]: 'ok' }))
+      window.dispatchEvent(new Event('preseason-data-changed'))   // the dashboard's percentages refresh
       setTimeout(() => setFlash(p => { const n = { ...p }; delete n[key]; return n }), 1200)
     } catch {
       setFlash(p => ({ ...p, [key]: 'err' }))
@@ -217,12 +230,12 @@ export function SchoolDirectoryWorkspaceGirls({ seasonId, coachSeasonId }: Props
           className="text-sm border border-slate-200 rounded px-2.5 py-1 w-48 focus:outline-none focus:ring-1 focus:ring-slate-400"
         />
         <span className="text-xs text-slate-400 ml-1">{filtered.length} schools</span>
-        <button
+        {!archive && <button
           onClick={() => { setShowAdd(true); setAddForm({}); setAddError(null) }}
           className="ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded bg-slate-900 text-white text-xs font-semibold hover:bg-slate-700"
         >
           <span className="text-base leading-none">+</span> Add School
-        </button>
+        </button>}
       </div>
 
       {/* Table */}
@@ -235,7 +248,7 @@ export function SchoolDirectoryWorkspaceGirls({ seasonId, coachSeasonId }: Props
           <table className="text-xs border-separate border-spacing-0 w-max min-w-full">
             <thead>
               <tr>
-                {COLUMNS.map((col, i) => (
+                {columns.map((col, i) => (
                   <th
                     key={col.key}
                     className={`sticky top-0 bg-slate-50 px-3 py-2 text-left font-semibold text-slate-500 border-b border-slate-200 whitespace-nowrap ${i === 0 ? 'left-0 z-30' : 'z-20'}`}
@@ -249,7 +262,7 @@ export function SchoolDirectoryWorkspaceGirls({ seasonId, coachSeasonId }: Props
             <tbody>
               {filtered.map((row, ri) => (
                 <tr key={row.id} className={ri % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}>
-                  {COLUMNS.map((col, ci) => {
+                  {columns.map((col, ci) => {
                     const cellKey    = `${row.id}_${col.key}`
                     const isEditing  = editCell === cellKey
                     const isSaving   = saving.has(cellKey)
@@ -257,7 +270,7 @@ export function SchoolDirectoryWorkspaceGirls({ seasonId, coachSeasonId }: Props
                     const dispVal    = displayValue(row, col)
 
                     const cfKey     = `${row.id}:${col.key}`
-                    const isCantFind = col.type !== 'readonly' && col.type !== 'active' && cantFind.has(cfKey) && !dispVal
+                    const isCantFind = col.type !== 'readonly' && col.type !== 'active' && col.type !== 'dual' && cantFind.has(cfKey) && !dispVal
 
                     const baseCls = `px-3 py-1.5 border-b border-slate-100 ${ci === 0 ? 'sticky left-0 z-10 font-medium text-slate-800' : 'text-slate-600 cursor-pointer'}`
                     const rowBg   = ci === 0 ? (ri % 2 === 0 ? 'bg-white' : 'bg-slate-50') : ''
@@ -286,6 +299,7 @@ export function SchoolDirectoryWorkspaceGirls({ seasonId, coachSeasonId }: Props
                                    : col.type === 'conference'  ? options.conferences.map(c => ({ id: c, label: c }))
                                    : col.type === 'group'       ? options.groups.map(g => ({ id: g, label: g }))
                                    : col.type === 'active'      ? [{ id: 'true', label: 'Active' }, { id: 'false', label: 'Inactive' }]
+                                   : col.type === 'dual'        ? Object.entries(DUAL_LABELS).map(([id, label]) => ({ id, label }))
                                    : options.sections.map(s => ({ id: s, label: s }))
                         return (
                           <td key={col.key} className={`${baseCls} ${rowBg} !p-0`} style={{ minWidth: col.width }}>

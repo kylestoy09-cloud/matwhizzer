@@ -1,0 +1,423 @@
+{
+ "_about": "Claude's guesses for the history review's unplaced teams (2026-11-20), from what the schools are known to be \u2014 school: an existing NJ school's id; state: a new out-of-state school's state; unsure: shown as a less-sure guess. Kyle confirms in Tournament Hub \u2192 History \u2192 Review.",
+ "st. joseph regional": {
+  "school": 394
+ },
+ "northern valley regional - old tappan": {
+  "school": 6
+ },
+ "passaic county tech girls": {
+  "school": 391
+ },
+ "passaic county tech": {
+  "school": 391
+ },
+ "st. mary`s rutherford": {
+  "school": 88
+ },
+ "st. peter prep": {
+  "school": 167
+ },
+ "st. benedict's prep": {
+  "school": 118
+ },
+ "jefferson/sparta girls": {
+  "school": 4,
+  "unsure": true
+ },
+ "waldwick/midland park": {
+  "school": 9,
+  "unsure": true
+ },
+ "immaculata wrestling": {
+  "school": 73
+ },
+ "pope john paul xiii": {
+  "school": 117,
+  "unsure": true
+ },
+ "pittman": {
+  "school": 311,
+  "unsure": true
+ },
+ "seneca valley": {
+  "school": 1088
+ },
+ "greens farms academy": {
+  "state": "CT"
+ },
+ "good counsel": {
+  "state": "MD"
+ },
+ "good council": {
+  "state": "MD"
+ },
+ "mount saint joseph": {
+  "state": "MD"
+ },
+ "benedictine college preparatory school": {
+  "state": "VA"
+ },
+ "frazier": {
+  "state": "PA"
+ },
+ "western reserve academy": {
+  "state": "OH"
+ },
+ "wilson hs": {
+  "state": "PA",
+  "unsure": true
+ },
+ "st. frances academy": {
+  "state": "MD"
+ },
+ "st frances academy": {
+  "state": "MD"
+ },
+ "roanoke catholic": {
+  "state": "VA"
+ },
+ "st christophers": {
+  "state": "VA"
+ },
+ "greeneville": {
+  "state": "TN"
+ },
+ "ponagansett": {
+  "state": "RI"
+ },
+ "ponaganset chieftains": {
+  "state": "RI"
+ },
+ "springfield central": {
+  "state": "MA"
+ },
+ "penninsula catholic": {
+  "state": "VA"
+ },
+ "bishop mcnamara": {
+  "state": "MD"
+ },
+ "st marks": {
+  "state": "DE"
+ },
+ "simsbury": {
+  "state": "CT"
+ },
+ "simbury": {
+  "state": "CT"
+ },
+ "landon school": {
+  "state": "MD"
+ },
+ "wantagh": {
+  "state": "NY"
+ },
+ "wantagh sr high": {
+  "state": "NY"
+ },
+ "wheeling park": {
+  "state": "WV"
+ },
+ "roman catholic": {
+  "state": "PA"
+ },
+ "saint mary?s ryken": {
+  "state": "MD"
+ },
+ "east stroudsburg south": {
+  "state": "PA"
+ },
+ "copley": {
+  "state": "OH"
+ },
+ "wc rustin": {
+  "state": "PA"
+ },
+ "hope": {
+  "state": "RI",
+  "unsure": true
+ },
+ "appoquinimink": {
+  "state": "DE"
+ },
+ "dematha catholic": {
+  "state": "MD"
+ },
+ "somerset": {
+  "state": "PA",
+  "unsure": true
+ },
+ "saint john paul the great": {
+  "state": "VA"
+ },
+ "teays valley": {
+  "state": "OH"
+ },
+ "saint john?s college": {
+  "state": "DC"
+ },
+ "shenendehowa": {
+  "state": "NY"
+ },
+ "bishop ireton": {
+  "state": "VA"
+ },
+ "nansemond river": {
+  "state": "VA"
+ },
+ "st. anselm`s abbey school": {
+  "state": "DC"
+ },
+ "uintah": {
+  "state": "UT"
+ },
+ "atlee": {
+  "state": "VA"
+ },
+ "liberty bealton": {
+  "state": "VA"
+ },
+ "liberty bealeton": {
+  "state": "VA"
+ },
+ "st stephens school": {
+  "state": "VA"
+ },
+ "sanford": {
+  "state": "DE"
+ },
+ "lakeway christian academy": {
+  "state": "TN"
+ },
+ "yorktown": {
+  "state": "VA",
+  "unsure": true
+ },
+ "northfield mount hermon": {
+  "state": "MA"
+ },
+ "deep run": {
+  "state": "VA"
+ },
+ "hanover": {
+  "state": "VA",
+  "unsure": true
+ },
+ "heritage (lynchburg)": {
+  "state": "VA"
+ },
+ "lower dauphin high school": {
+  "state": "PA"
+ },
+ "collegiate school": {
+  "state": "VA"
+ },
+ "pope john paull ii": {
+  "state": "PA"
+ },
+ "topsail": {
+  "state": "NC"
+ },
+ "indian creek": {
+  "state": "OH"
+ },
+ "wilson memorial": {
+  "state": "VA"
+ },
+ "newtown": {
+  "state": "CT",
+  "unsure": true
+ },
+ "north desoto": {
+  "state": "LA"
+ },
+ "forrest park": {
+  "state": "VA"
+ },
+ "new fairfield": {
+  "state": "CT"
+ },
+ "penncrest": {
+  "state": "PA"
+ },
+ "st pauls school": {
+  "state": "MD"
+ },
+ "st paul`s school": {
+  "state": "MD"
+ },
+ "the kiski school": {
+  "state": "PA"
+ },
+ "chenango forks": {
+  "state": "NY"
+ },
+ "nashoba regional": {
+  "state": "MA"
+ },
+ "newburgh free academy": {
+  "state": "NY"
+ },
+ "attica batavia": {
+  "state": "NY"
+ },
+ "bellport": {
+  "state": "NY"
+ },
+ "south county": {
+  "state": "VA"
+ },
+ "coventry": {
+  "state": "RI"
+ },
+ "scituate": {
+  "state": "MA",
+  "unsure": true
+ },
+ "ai dupont": {
+  "state": "DE"
+ },
+ "fox lane": {
+  "state": "NY"
+ },
+ "green hill": {
+  "state": "TN"
+ },
+ "lake forrest": {
+  "state": "DE"
+ },
+ "liberty christian": {
+  "state": "VA"
+ },
+ "liberty christian academy": {
+  "state": "VA"
+ },
+ "maggie walker gov school": {
+  "state": "VA"
+ },
+ "massapequa": {
+  "state": "NY"
+ },
+ "mount st charles": {
+  "state": "RI"
+ },
+ "nyack": {
+  "state": "NY"
+ },
+ "oceanside": {
+  "state": "NY"
+ },
+ "polytech": {
+  "state": "DE"
+ },
+ "wakefield": {
+  "state": "VA",
+  "unsure": true
+ },
+ "brother martin": {
+  "state": "LA"
+ },
+ "st elizabeth": {
+  "state": "DE"
+ },
+ "st johns prep": {
+  "state": "MA",
+  "unsure": true
+ },
+ "james a garfield": {
+  "state": "OH"
+ },
+ "ladue": {
+  "state": "MO"
+ },
+ "lockport (twp.)": {
+  "state": "IL"
+ },
+ "londonberry": {
+  "state": "NH"
+ },
+ "radford": {
+  "state": "VA"
+ },
+ "sulphur": {
+  "state": "LA"
+ },
+ "culpepper county": {
+  "state": "VA"
+ },
+ "herricks": {
+  "state": "NY"
+ },
+ "lewis mills": {
+  "state": "CT"
+ },
+ "randolph henry": {
+  "state": "VA"
+ },
+ "salem (virginia beach)": {
+  "state": "VA"
+ },
+ "sheehan": {
+  "state": "CT"
+ },
+ "tamarac": {
+  "state": "NY"
+ },
+ "the kings academy": {
+  "state": "TN",
+  "unsure": true
+ },
+ "valwood school": {
+  "state": "GA"
+ },
+ "abbott technical school": {
+  "state": "CT"
+ },
+ "amelia county": {
+  "state": "VA"
+ },
+ "cape henry colligiate": {
+  "state": "VA"
+ },
+ "indian land": {
+  "state": "SC"
+ },
+ "mcquaid": {
+  "state": "NY"
+ },
+ "new utrecht high school": {
+  "state": "NY"
+ },
+ "fulton": {
+  "state": "NY",
+  "unsure": true
+ },
+ "tabor academy": {
+  "state": "MA"
+ },
+ "edison @ iron man tournament": {
+  "school": 1252
+ },
+ "westfield @ iron man tournament": {
+  "school": 1251
+ },
+ "clay @ iron man tournament": {
+  "state": "OH"
+ },
+ "orange @ iron man tournament": {
+  "state": "OH",
+  "unsure": true
+ },
+ "st marys @ iron man tournament": {
+  "state": "OH",
+  "unsure": true
+ },
+ "delbarton @ powerade": {
+  "school": 82
+ },
+ "edison @ powerade": {
+  "school": 178,
+  "unsure": true
+ }
+}

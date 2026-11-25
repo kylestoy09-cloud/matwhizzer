@@ -1,0 +1,502 @@
+[
+ {
+  "id": 72487,
+  "event_id": 192,
+  "weight": 158,
+  "name": "Pat Smith",
+  "college_id": 79,
+  "college_raw": "Oklahoma State",
+  "seed": 1,
+  "record": null,
+  "place": 1,
+  "wrestler_id": "c2893cf6-4ad0-4f8d-86c0-d64f4cd9fe1a",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name; 5–7 yrs after HS; the only NJ wrestler with this name\",\"candidates\":[{\"wrestler_id\":\"c2893cf6-4ad0-4f8d-86c0-d64f4cd9fe1a\",\"name\":\"Pat Smith\",\"schools\":\"Seton Hall Prep\",\"hs\":\"class of 1983–1985\",\"gap\":\"5–7 yrs after HS\",\"why\":\"same name\"}]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 1990,
+   "level": "NCAA DI"
+  }
+ },
+ {
+  "id": 72807,
+  "event_id": 193,
+  "weight": 158,
+  "name": "Pat Smith",
+  "college_id": 79,
+  "college_raw": "Oklahoma State",
+  "seed": 1,
+  "record": null,
+  "place": 1,
+  "wrestler_id": "c2893cf6-4ad0-4f8d-86c0-d64f4cd9fe1a",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name at the same college as his matched years (1990, 1992, 1994)\",\"candidates\":[]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 1991,
+   "level": "NCAA DI"
+  }
+ },
+ {
+  "id": 73126,
+  "event_id": 194,
+  "weight": 158,
+  "name": "Pat Smith",
+  "college_id": 79,
+  "college_raw": "Oklahoma State",
+  "seed": 1,
+  "record": null,
+  "place": 1,
+  "wrestler_id": "c2893cf6-4ad0-4f8d-86c0-d64f4cd9fe1a",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name at the same college as his matched years (1990, 1991, 1994)\",\"candidates\":[]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 1992,
+   "level": "NCAA DI"
+  }
+ },
+ {
+  "id": 73760,
+  "event_id": 196,
+  "weight": 158,
+  "name": "Pat Smith",
+  "college_id": 79,
+  "college_raw": "Oklahoma State",
+  "seed": 1,
+  "record": null,
+  "place": 1,
+  "wrestler_id": "c2893cf6-4ad0-4f8d-86c0-d64f4cd9fe1a",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name at the same college as his matched years (1990, 1991, 1992)\",\"candidates\":[]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 1994,
+   "level": "NCAA DI"
+  }
+ },
+ {
+  "id": 46975,
+  "event_id": 16,
+  "weight": 125,
+  "name": "Joshua Rodriguez",
+  "college_id": 70,
+  "college_raw": "NDSU",
+  "seed": 14,
+  "record": "20-8",
+  "place": null,
+  "wrestler_id": "d6eafc11-5f6f-4553-a9eb-c9544d7ede19",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name at the same college as his matched years (2016, 2017)\",\"candidates\":[]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 2015,
+   "level": "NCAA DI"
+  }
+ },
+ {
+  "id": 47305,
+  "event_id": 17,
+  "weight": 125,
+  "name": "Joshua Rodriguez",
+  "college_id": 70,
+  "college_raw": "North Dakota State",
+  "seed": 14,
+  "record": null,
+  "place": null,
+  "wrestler_id": "d6eafc11-5f6f-4553-a9eb-c9544d7ede19",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name at the same college as his matched years (2015, 2017)\",\"candidates\":[]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 2016,
+   "level": "NCAA DI"
+  }
+ },
+ {
+  "id": 47613,
+  "event_id": 18,
+  "weight": 125,
+  "name": "Joshua Rodriguez",
+  "college_id": 70,
+  "college_raw": "NDSU",
+  "seed": 9,
+  "record": "25-4",
+  "place": null,
+  "wrestler_id": "d6eafc11-5f6f-4553-a9eb-c9544d7ede19",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name; 1–1 yrs after HS; the only NJ wrestler with this name\",\"candidates\":[{\"wrestler_id\":\"d6eafc11-5f6f-4553-a9eb-c9544d7ede19\",\"name\":\"Joshua Rodriguez\",\"schools\":\"Vineland\",\"hs\":\"class of 2016–2019\",\"gap\":\"1–1 yrs after HS\",\"why\":\"same name\"}]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 2017,
+   "level": "NCAA DI"
+  }
+ },
+ {
+  "id": 49020,
+  "event_id": 22,
+  "weight": 141,
+  "name": "Ryan Jack",
+  "college_id": 68,
+  "college_raw": "NCST",
+  "seed": 18,
+  "record": "18-9",
+  "place": null,
+  "wrestler_id": "83a5b0f6-79bf-471e-bd11-c89afdda5944",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name at the same college as his matched years (2023, 2024, 2026)\",\"candidates\":[]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 2022,
+   "level": "NCAA DI"
+  }
+ },
+ {
+  "id": 49329,
+  "event_id": 23,
+  "weight": 141,
+  "name": "Ryan Jack",
+  "college_id": 68,
+  "college_raw": "NCST",
+  "seed": 5,
+  "record": "21-5",
+  "place": null,
+  "wrestler_id": "83a5b0f6-79bf-471e-bd11-c89afdda5944",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name at the same college as his matched years (2022, 2024, 2026)\",\"candidates\":[]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 2023,
+   "level": "NCAA DI"
+  }
+ },
+ {
+  "id": 49666,
+  "event_id": 24,
+  "weight": 141,
+  "name": "Ryan Jack",
+  "college_id": 68,
+  "college_raw": "NCST",
+  "seed": 4,
+  "record": "22-5",
+  "place": 7,
+  "wrestler_id": "83a5b0f6-79bf-471e-bd11-c89afdda5944",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name at the same college as his matched years (2022, 2023, 2026)\",\"candidates\":[]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 2024,
+   "level": "NCAA DI"
+  }
+ },
+ {
+  "id": 50313,
+  "event_id": 26,
+  "weight": 141,
+  "name": "Ryan Jack",
+  "college_id": 68,
+  "college_raw": "NCST",
+  "seed": 16,
+  "record": "16-9",
+  "place": null,
+  "wrestler_id": "83a5b0f6-79bf-471e-bd11-c89afdda5944",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name; 1–2 yrs after HS; the only NJ wrestler with this name\",\"candidates\":[{\"wrestler_id\":\"83a5b0f6-79bf-471e-bd11-c89afdda5944\",\"name\":\"Ryan Jack\",\"schools\":\"Jefferson\",\"hs\":\"class of 2024–2026\",\"gap\":\"1–2 yrs after HS\",\"why\":\"same name\"}]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 2026,
+   "level": "NCAA DI"
+  }
+ },
+ {
+  "id": 69077,
+  "event_id": 181,
+  "weight": 190,
+  "name": "Mike Mann",
+  "college_id": 49,
+  "college_raw": "Iowa State",
+  "seed": 7,
+  "record": null,
+  "place": 7,
+  "wrestler_id": "5d311dc6-65cc-401a-9288-5ce6a52be707",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name at the same college as his matched years (1983)\",\"candidates\":[]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 1979,
+   "level": "NCAA DI"
+  }
+ },
+ {
+  "id": 69385,
+  "event_id": 182,
+  "weight": 190,
+  "name": "Mike Mann",
+  "college_id": 49,
+  "college_raw": "Iowa State",
+  "seed": 4,
+  "record": null,
+  "place": 4,
+  "wrestler_id": "5d311dc6-65cc-401a-9288-5ce6a52be707",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name at the same college as his matched years (1979, 1983)\",\"candidates\":[]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 1980,
+   "level": "NCAA DI"
+  }
+ },
+ {
+  "id": 70035,
+  "event_id": 184,
+  "weight": 190,
+  "name": "Mike Mann",
+  "college_id": 49,
+  "college_raw": "Iowa State",
+  "seed": 2,
+  "record": null,
+  "place": 2,
+  "wrestler_id": "5d311dc6-65cc-401a-9288-5ce6a52be707",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name at the same college as his matched years (1979, 1980, 1983)\",\"candidates\":[]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 1982,
+   "level": "NCAA DI"
+  }
+ },
+ {
+  "id": 70353,
+  "event_id": 185,
+  "weight": 190,
+  "name": "Mike Mann",
+  "college_id": 49,
+  "college_raw": "Iowa State",
+  "seed": 1,
+  "record": null,
+  "place": 2,
+  "wrestler_id": "5d311dc6-65cc-401a-9288-5ce6a52be707",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name; 1–1 yrs after HS; the only NJ wrestler with this name\",\"candidates\":[{\"wrestler_id\":\"5d311dc6-65cc-401a-9288-5ce6a52be707\",\"name\":\"Mike Mann\",\"schools\":\"Sussex Tech\",\"hs\":\"class of 1982–1985\",\"gap\":\"1–1 yrs after HS\",\"why\":\"same name\"}]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 1983,
+   "level": "NCAA DI"
+  }
+ },
+ {
+  "id": 69384,
+  "event_id": 182,
+  "weight": 190,
+  "name": "Pat Murphy",
+  "college_id": 23,
+  "college_raw": "Tennessee-Chattanooga",
+  "seed": null,
+  "record": null,
+  "place": null,
+  "wrestler_id": "fae9d67c-c033-4564-8ec6-7b4964ee4674",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name at the same college as his matched years (1981, 1982, 1983)\",\"candidates\":[]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 1980,
+   "level": "NCAA DI"
+  }
+ },
+ {
+  "id": 69715,
+  "event_id": 183,
+  "weight": 190,
+  "name": "Pat Murphy",
+  "college_id": 23,
+  "college_raw": "Tennessee-Chattanooga",
+  "seed": null,
+  "record": null,
+  "place": null,
+  "wrestler_id": "fae9d67c-c033-4564-8ec6-7b4964ee4674",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name; 1–1 yrs after HS; the only NJ wrestler with this name\",\"candidates\":[{\"wrestler_id\":\"fae9d67c-c033-4564-8ec6-7b4964ee4674\",\"name\":\"Pat Murphy\",\"schools\":\"Morristown\",\"hs\":\"class of 1980–1983\",\"gap\":\"1–1 yrs after HS\",\"why\":\"same name\"}]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 1981,
+   "level": "NCAA DI"
+  }
+ },
+ {
+  "id": 70048,
+  "event_id": 184,
+  "weight": 190,
+  "name": "Pat Murphy",
+  "college_id": 23,
+  "college_raw": "Tennessee-Chattanooga",
+  "seed": null,
+  "record": null,
+  "place": null,
+  "wrestler_id": "fae9d67c-c033-4564-8ec6-7b4964ee4674",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name; 1–2 yrs after HS; the only NJ wrestler with this name\",\"candidates\":[{\"wrestler_id\":\"fae9d67c-c033-4564-8ec6-7b4964ee4674\",\"name\":\"Pat Murphy\",\"schools\":\"Morristown\",\"hs\":\"class of 1980–1983\",\"gap\":\"1–2 yrs after HS\",\"why\":\"same name\"}]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 1982,
+   "level": "NCAA DI"
+  }
+ },
+ {
+  "id": 70354,
+  "event_id": 185,
+  "weight": 190,
+  "name": "Pat Murphy",
+  "college_id": 23,
+  "college_raw": "Tennessee-Chattanooga",
+  "seed": null,
+  "record": null,
+  "place": null,
+  "wrestler_id": "fae9d67c-c033-4564-8ec6-7b4964ee4674",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name; 1–3 yrs after HS; the only NJ wrestler with this name\",\"candidates\":[{\"wrestler_id\":\"fae9d67c-c033-4564-8ec6-7b4964ee4674\",\"name\":\"Pat Murphy\",\"schools\":\"Morristown\",\"hs\":\"class of 1980–1983\",\"gap\":\"1–3 yrs after HS\",\"why\":\"same name\"}]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 1983,
+   "level": "NCAA DI"
+  }
+ },
+ {
+  "id": 74023,
+  "event_id": 197,
+  "weight": 142,
+  "name": "Keith Taylor",
+  "college_id": 102,
+  "college_raw": "West Virginia",
+  "seed": null,
+  "record": null,
+  "place": null,
+  "wrestler_id": "594ee716-dc2e-4d97-b580-65fdb0b48575",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name at the same college as his matched years (1994)\",\"candidates\":[]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 1995,
+   "level": "NCAA DI"
+  }
+ },
+ {
+  "id": 88857,
+  "event_id": 358,
+  "weight": 177,
+  "name": "Jim Sloan",
+  "college_id": 282,
+  "college_raw": "Montclair State",
+  "seed": null,
+  "record": null,
+  "place": 1,
+  "wrestler_id": "893ca287-651b-4682-b496-79b33ab35151",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name at the same college as his matched years (1991)\",\"candidates\":[]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 1993,
+   "level": "NCAA DIII"
+  }
+ },
+ {
+  "id": 80783,
+  "event_id": 286,
+  "weight": 141,
+  "name": "Trent Johnson",
+  "college_id": 477,
+  "college_raw": "Lindsey Wilson",
+  "seed": 3,
+  "record": "28-3",
+  "place": null,
+  "wrestler_id": "3b476605-9f8a-4c00-8683-505ba788b1a7",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name at the same college as his matched years (2020, 2021, 2023)\",\"candidates\":[]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 2019,
+   "level": "NAIA"
+  }
+ },
+ {
+  "id": 81021,
+  "event_id": 287,
+  "weight": 141,
+  "name": "Trent Johnson",
+  "college_id": 477,
+  "college_raw": "Lindsey Wilson",
+  "seed": 12,
+  "record": "6-4",
+  "place": 4,
+  "wrestler_id": "3b476605-9f8a-4c00-8683-505ba788b1a7",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name; 1 yr after HS; the only NJ wrestler with this name\",\"candidates\":[{\"wrestler_id\":\"3b476605-9f8a-4c00-8683-505ba788b1a7\",\"name\":\"Trent Johnson\",\"schools\":\"Pennsville\",\"hs\":\"class of 2019\",\"gap\":\"1 yr after HS\",\"why\":\"same name\"}]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 2020,
+   "level": "NAIA"
+  }
+ },
+ {
+  "id": 81274,
+  "event_id": 288,
+  "weight": 149,
+  "name": "Trent Johnson",
+  "college_id": 477,
+  "college_raw": "Lindsey Wilson",
+  "seed": 1,
+  "record": "14-0",
+  "place": null,
+  "wrestler_id": "3b476605-9f8a-4c00-8683-505ba788b1a7",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name; 2 yr after HS; the only NJ wrestler with this name\",\"candidates\":[{\"wrestler_id\":\"3b476605-9f8a-4c00-8683-505ba788b1a7\",\"name\":\"Trent Johnson\",\"schools\":\"Pennsville\",\"hs\":\"class of 2019\",\"gap\":\"2 yr after HS\",\"why\":\"same name\"}]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 2021,
+   "level": "NAIA"
+  }
+ },
+ {
+  "id": 81535,
+  "event_id": 289,
+  "weight": 149,
+  "name": "Trent Johnson",
+  "college_id": 477,
+  "college_raw": "Lindsey Wilson",
+  "seed": 13,
+  "record": "10-3",
+  "place": 7,
+  "wrestler_id": "3b476605-9f8a-4c00-8683-505ba788b1a7",
+  "match_status": "auto",
+  "match_note": "{\"note\":\"same name; 4 yr after HS; the only NJ wrestler with this name\",\"candidates\":[{\"wrestler_id\":\"3b476605-9f8a-4c00-8683-505ba788b1a7\",\"name\":\"Trent Johnson\",\"schools\":\"Pennsville\",\"hs\":\"class of 2019\",\"gap\":\"4 yr after HS\",\"why\":\"same name\"}]}",
+  "reviewed_at": null,
+  "reviewed_by": null,
+  "event": {
+   "year": 2023,
+   "level": "NAIA"
+  }
+ }
+]

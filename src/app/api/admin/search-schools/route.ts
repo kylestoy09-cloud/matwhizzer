@@ -1,3 +1,4 @@
+import { schoolIlikeOr } from '@/lib/saintNames'
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
@@ -45,7 +46,7 @@ export async function GET(req: NextRequest) {
   const { data: nameData, error } = await supabase
     .from('schools')
     .select('id, display_name')
-    .ilike('display_name', `%${q}%`)
+    .or(schoolIlikeOr(q))   // "st", "st." and "saint" all find the St. schools
     .eq('is_nj', !oos)
     .order('display_name')
     .limit(limit)

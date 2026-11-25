@@ -1,0 +1,85 @@
+{
+ "schools": [
+  {
+   "id": 641,
+   "display_name": "St Paul VI Catholic (VA)",
+   "short_name": null
+  },
+  {
+   "id": 656,
+   "display_name": "St Georges (DE)",
+   "short_name": null
+  },
+  {
+   "id": 636,
+   "display_name": "St John's College (DC)",
+   "short_name": null
+  },
+  {
+   "id": 697,
+   "display_name": "St James Academy (VA)",
+   "short_name": null
+  },
+  {
+   "id": 683,
+   "display_name": "St John Paul the Great (VA)",
+   "short_name": null
+  },
+  {
+   "id": 1013,
+   "display_name": "St Josephs Preparatory (PA)",
+   "short_name": null
+  },
+  {
+   "id": 680,
+   "display_name": "Mount St Joes (MD)",
+   "short_name": null
+  },
+  {
+   "id": 527,
+   "display_name": "St Xavier (OH)",
+   "short_name": null
+  },
+  {
+   "id": 519,
+   "display_name": "St Edward (OH)",
+   "short_name": null
+  },
+  {
+   "id": 1218,
+   "display_name": "Saint Rose",
+   "short_name": null
+  },
+  {
+   "id": 490,
+   "display_name": "St Vincent-St Mary (OH)",
+   "short_name": null
+  },
+  {
+   "id": 619,
+   "display_name": "Saint Mark's (DE)",
+   "short_name": null
+  },
+  {
+   "id": 234,
+   "display_name": "Saint Thomas Aquinas",
+   "short_name": null
+  },
+  {
+   "id": 628,
+   "display_name": "Saint Mary's Ryken (MD)",
+   "short_name": null
+  },
+  {
+   "id": 394,
+   "display_name": "St Joseph (Montvale) HS",
+   "short_name": null
+  },
+  {
+   "id": 243,
+   "display_name": "Saint John Vianney",
+   "short_name": null
+  }
+ ],
+ "seasonNames": []
+}

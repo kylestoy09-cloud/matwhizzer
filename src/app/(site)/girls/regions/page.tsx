@@ -1,5 +1,7 @@
 import Link from 'next/link'
-import { getActiveSeason } from '@/lib/get-season'
+import { PostseasonHomeLink } from '@/components/site/PostseasonHomeLink'
+import { getPostseasonSeason } from '@/lib/get-season'
+import { regionLabels } from '@/lib/postseasonSeason'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { PageHeader } from '@/components/PageHeader'
 
@@ -11,7 +13,10 @@ const REGIONS = [
 ]
 
 export default async function GirlsRegionsPage() {
-  const season = await getActiveSeason('F')
+  const { season, options: seasonOptions } = await getPostseasonSeason('F')
+  // the season's regions by name, in one order (North I, North II, Central, South; 2018-19 to 2021-22 North, South)
+  const rl = await regionLabels('F', season)
+  const regions = rl.order.length ? rl.order.map(n => ({ slug: String(n), label: REGIONS.find(x => x.slug === String(n) && rl.button(n) === String(n))?.label ?? rl.button(n) })) : REGIONS
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-10">
@@ -22,17 +27,18 @@ export default async function GirlsRegionsPage() {
         ← Girls Search
       </Link>
 
+      <PostseasonHomeLink side="girls" season={season} options={seasonOptions} />
       <div className="mb-8 text-center">
         <PageHeader title="Girls Region Brackets" />
         <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
           <span>NJSIAA</span>
-          <InlineSeasonPicker gender="F" activeSeason={season} />
+          <InlineSeasonPicker arrows gender="F" activeSeason={season} options={seasonOptions} />
           <span>· Select a region</span>
         </div>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        {REGIONS.map(r => (
+        {regions.map(r => (
           <Link
             key={r.slug}
             href={`/girls/regions/${r.slug}`}

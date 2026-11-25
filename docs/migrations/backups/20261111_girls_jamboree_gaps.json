@@ -1,0 +1,198 @@
+{
+ "wrestlers": [
+  "ce83846d-164b-4fe1-806f-2456baada72a",
+  "4b8f3184-5212-4a10-bbe5-19b8fa4b43b8",
+  "030e2c3d-ff25-4f57-8afe-6e03f91156ba",
+  "3bd8d00e-16f2-41d8-a7a0-69d20ec8ef84"
+ ],
+ "meets": [
+  "877dbace-1c5a-4f02-9f2e-0f765e210ca4",
+  "f0db5eb8-9396-4b10-bc30-eaf518e119d7",
+  "4a870356-fcae-4b89-83b9-aac86683221a",
+  "24c61357-5ae8-4d84-aed8-bbb7f96a898d",
+  "f2d4dc99-1ba2-4dcd-b430-7fbaf6943056",
+  "4cb49f8d-f46c-4967-b218-77c5601e3440",
+  "50173b61-073f-4458-a36a-ebfbd130fe65",
+  "f270120b-e75a-418a-a9eb-8e94874140c1",
+  "b863183f-460d-483a-8590-32d8206138d2",
+  "dfbe45a8-a59a-4aab-a77e-de486c42b203",
+  "67223ec4-6013-406a-b13b-7fcc80934835",
+  "6bbd787e-142c-4703-a566-2c9518c891c1",
+  "66ddd03a-660b-41e4-8362-450702817415",
+  "069430d3-616a-4790-bb75-41e12b82253a",
+  "93691136-b415-4541-a1e9-d6cd8c8a36fd",
+  "85036fbc-bdf1-4c17-8689-36a85b82bdd3",
+  "a7e9b67f-9223-45f4-8bce-da874468973c",
+  "6a3deb73-3f5b-44b6-8671-f2f15188446a",
+  "934d7039-814d-408b-9bf6-4df147537722",
+  "c36cc7f0-f7bf-4e39-b525-1ac4e6d3b22a",
+  "179d1874-e73d-43d0-81a6-134686542eeb",
+  "9abf9239-8ffd-4cfb-91b9-dce02cab40e2",
+  "c55d385b-26d3-4445-a0fd-8cf3129501ea",
+  "eb2ed26c-07e4-4d12-8752-f7a22bd7ae77",
+  "071f34ea-8f7f-41bc-bfc7-04f3e23917fe",
+  "bf7292c2-6a38-45c7-935e-d4b572e6866a",
+  "bb76476b-20b3-49a1-af6d-bec1fdd3c5e1",
+  "cd973ac4-f9ef-482e-82fe-7db13c50253d",
+  "82072b03-e75a-4866-ba7c-9e55e7c47368",
+  "59744819-6717-456d-a8bb-800e1cdbe0b5",
+  "ba34cbce-e466-479e-87fd-4384f6e2758c",
+  "c0b25062-cb16-4d4c-b7bb-f0ff906b25b2",
+  "d9e7653c-bcde-4465-8640-cae418255f44",
+  "65cdb5bf-137c-4495-869f-5e667f35d1a1",
+  "bf2eb7c0-00cd-4632-bb48-7b77a3af4597",
+  "13d1d155-47b7-4c93-b447-d168226e1072",
+  "5df7e04e-5d2a-46eb-9188-6c0d1c3110a8",
+  "ab24164e-b135-4c00-8eac-d9775982aba3",
+  "1d6969a9-cb92-4f0a-8aaf-1877ee6ea314",
+  "0f65c551-11bc-41d0-9daf-e8647514086c",
+  "b53106cc-a889-405d-9719-134f68944e7b",
+  "8d3f6372-2a8a-4dd4-95da-d10bf5c0cba9",
+  "67eb8d6c-9200-40c9-a49f-14b69de8f603",
+  "de9262cf-bb03-4fe6-ac7d-afe3771aea97",
+  "b6822c69-c562-4606-9360-14a1b591415e",
+  "f304c98c-0a8d-4c15-9957-f25d401c30cc",
+  "523a4671-eaa9-4bfc-8fcd-37656e9edbfb",
+  "1adf6962-96e5-44e9-a3d7-47abb68cc2bc",
+  "4e854b34-cfcb-474c-a398-ffb4f92830ad",
+  "3599bd5d-5a30-493c-a4c5-c4af98bcdad1",
+  "00b852f7-3b2c-4f23-98fb-3ca8eb49f9f9",
+  "c6166a28-3e7a-4b8e-b5c7-75b82e7f36b5",
+  "993721f7-980e-4ad0-bfea-3ddf3abdb732",
+  "dc407edb-ff33-4b04-89f9-0de29193e10b",
+  "eb5a8b1c-6747-4011-8e91-f04cc2ef620f",
+  "3690ddaa-55fd-452d-bbc0-365b19a8a34e",
+  "be784155-7b02-4630-ad8b-1e09b0be2d19"
+ ],
+ "aliases": [
+  53191,
+  53192,
+  53193,
+  53194
+ ],
+ "topupBouts": [
+  "d1ed9817-9fc0-48f4-a396-24d8dfc47815",
+  "cfc9b870-1efb-4204-a2bb-064f88b95256",
+  "1cc9161b-339e-4bfe-a45f-2a1576a29aab",
+  "bd68f346-75cf-4e70-ac18-67288cda6615",
+  "e0a8d9e9-60ec-486b-a3bf-615813637d68",
+  "1d7cfb38-644c-4ced-ac9d-c083a779fd40",
+  "cf4c6400-c561-4eb9-a370-f1251b37bc85",
+  "19d5766a-b686-4f96-9896-91515af1200e",
+  "3e449960-4cf3-4cfe-96ef-29959c5a47f2",
+  "0f54edd0-b810-497f-8f9b-8602b5813b43",
+  "893c5c03-11a6-4570-a63b-5afa955ee685",
+  "12999a5b-99bd-4c2f-9b57-5e84941eb55c",
+  "9cd70b35-4b7d-4b23-827c-5a6700ac92a8",
+  "f5134162-b704-4e4c-a68c-0277ba7c23e1",
+  "9a77eeff-d9eb-436b-b2ea-9b4f05eb0ae3",
+  "79f8bbdc-5951-4e5c-9c50-41bfb353d8ce",
+  "dce749b3-2bf8-4dfe-811c-c57128ce2339",
+  "d79499b9-3b44-45ee-b262-44fa82ea6995",
+  "194f65b1-1309-43d3-9f57-35500d8e4482",
+  "543b662f-323d-4d53-9d6f-07ed2bb71cc6",
+  "f93c742a-5658-4b7e-b5f9-d0f38aa4310b"
+ ],
+ "topupScores": [
+  {
+   "id": "98c420c9-9079-4bdf-ad8e-825cc32daa5a",
+   "team1_score": 6,
+   "team2_score": 6
+  },
+  {
+   "id": "a923ba6c-3dbd-4115-8389-c8d2458e1728",
+   "team1_score": 6,
+   "team2_score": 0
+  },
+  {
+   "id": "6f42e190-73dd-4c26-9243-25bdc8e43706",
+   "team1_score": 0,
+   "team2_score": 3
+  },
+  {
+   "id": "ebde9532-a070-4663-8e5f-086d6b01f8e0",
+   "team1_score": 4,
+   "team2_score": 0
+  },
+  {
+   "id": "d36873fc-03e5-4be5-a675-4a2bb93bbb75",
+   "team1_score": 0,
+   "team2_score": 3
+  },
+  {
+   "id": "67f929d0-4d50-4655-8196-efd738fe54d2",
+   "team1_score": 12,
+   "team2_score": 6
+  },
+  {
+   "id": "85e2e09e-3e10-487e-a62c-c231e04d370b",
+   "team1_score": 3,
+   "team2_score": 0
+  },
+  {
+   "id": "e2030cbf-8178-4b5a-8506-e85872b11fcc",
+   "team1_score": 0,
+   "team2_score": 12
+  },
+  {
+   "id": "74f6e693-bb2d-4e6e-bf7d-fc8aa1cc3047",
+   "team1_score": 9,
+   "team2_score": 6
+  },
+  {
+   "id": "c3fb9df2-276b-4f50-944b-dd1e1ff83e9a",
+   "team1_score": 3,
+   "team2_score": 6
+  },
+  {
+   "id": "75e0b327-7b60-42df-a076-4076e13d32ec",
+   "team1_score": 6,
+   "team2_score": 0
+  },
+  {
+   "id": "26ed8815-e3c1-4d25-a25a-1e1a5a37d885",
+   "team1_score": 0,
+   "team2_score": 6
+  },
+  {
+   "id": "76865b85-bea8-45d2-95a7-909523b44f98",
+   "team1_score": 0,
+   "team2_score": 6
+  },
+  {
+   "id": "49c4387d-2cc5-41f4-a91b-f89898340d3a",
+   "team1_score": 0,
+   "team2_score": 6
+  },
+  {
+   "id": "fc7fc1f4-0bbf-4664-92c1-239deb918715",
+   "team1_score": 6,
+   "team2_score": 0
+  },
+  {
+   "id": "92978927-f949-438c-935f-6aef570ce3bb",
+   "team1_score": 0,
+   "team2_score": 6
+  },
+  {
+   "id": "7fe19a6a-d8ec-468a-8e65-4f50721dc182",
+   "team1_score": 0,
+   "team2_score": 6
+  },
+  {
+   "id": "d3f0fe77-e47d-4be2-8d33-92ee217c7067",
+   "team1_score": 0,
+   "team2_score": 6
+  },
+  {
+   "id": "c44edc5f-2b60-4c81-8a3a-0e3b9e7c6c27",
+   "team1_score": 0,
+   "team2_score": 6
+  },
+  {
+   "id": "8170db11-f091-40e9-a982-8f5ac2891191",
+   "team1_score": 0,
+   "team2_score": 6
+  }
+ ]
+}

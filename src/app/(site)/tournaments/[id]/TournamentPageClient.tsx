@@ -1,7 +1,9 @@
 'use client'
 
+import { TournamentStreamEdit } from '@/components/admin/TournamentStreamEdit'
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
+import { NjIcon } from '@/components/site/NjIcon'
 import { SchoolTagView, badgeOfSchool } from '@/components/SchoolTagView'
 import { Stardos_Stencil } from 'next/font/google'
 import { TournamentBoutList } from './TournamentBoutList'
@@ -160,8 +162,11 @@ type Leaders = {
   fastestTech:  { bout: Bout; winnerName: string; winnerSchool: string } | null
 }
 
-function computeLeaders(teamStats: Map<number, TeamStat>, bouts: Bout[]): Leaders {
-  const teams = [...teamStats.values()]
+// NJSIAA teams and wrestlers only (Kyle 2026-11-21: the leaders were "littered with non-njsiaa teams" once out-of-state
+// events carried their full brackets)
+function computeLeaders(teamStats: Map<number, TeamStat>, allBouts: Bout[]): Leaders {
+  const teams = [...teamStats.values()].filter(t => t.isNj)
+  const bouts = allBouts.filter(b => (b.winner === 1 ? b.wrestler1_school : b.wrestler2_school)?.is_nj === true)
 
   const mostWins = teams.length
     ? [...teams].sort((a, b) => b.wins - a.wins || a.totalBonusTimeSecs - b.totalBonusTimeSecs)[0]
@@ -287,6 +292,8 @@ export function TournamentPageClient({
   bannerFg,
   isAdmin,
   hasBracket = false,
+  streamUrl = null,
+  tournamentGender = 'M',
 }: {
   tournament: Tournament
   allBouts: Bout[]
@@ -296,6 +303,8 @@ export function TournamentPageClient({
   bannerFg: string
   isAdmin: boolean
   hasBracket?: boolean
+  streamUrl?: string | null           // shown only once an admin has set one (Kyle 2026-11-18)
+  tournamentGender?: 'M' | 'F'
 }) {
   // ── State ────────────────────────────────────────────────────────────────
 
@@ -307,6 +316,9 @@ export function TournamentPageClient({
   const [selectedSchool, setSelectedSchool] = useState<number | null>(null)
   const [selectedWeight, setSelectedWeight] = useState<number | null>(weights[0] ?? null)
   const [showAllScores, setShowAllScores]   = useState(false)
+  // non-NJSIAA teams minimized until asked for (Kyle 2026-11-20: Sam Cali's CT winner sat atop the NJ leaderboard)
+  const [showOosTeams, setShowOosTeams]     = useState(false)
+  const [podiumNjOnly, setPodiumNjOnly]     = useState(true)
 
   // ── Derived data ─────────────────────────────────────────────────────────
 
@@ -365,21 +377,11 @@ export function TournamentPageClient({
 
   const podiumDepth = tournament.podium_depth ?? 3
 
-  // OOS: show only NJ placers, trust school.is_nj directly from placements table
-  const njPodium = useMemo(() => placements.filter(p =>
-    p.place <= podiumDepth && p.school?.is_nj
-  ), [placements, podiumDepth])
-
-  // In-state: show all placers up to podiumDepth
-  const podiumByWeight = useMemo(() => {
-    const map = new Map<number, Placement[]>()
-    for (const p of placements) {
-      if (p.place > podiumDepth) continue
-      if (!map.has(p.weight_class)) map.set(p.weight_class, [])
-      map.get(p.weight_class)!.push(p)
-    }
-    return map
-  }, [placements, podiumDepth])
+  // the podium: NJSIAA placers first (the default), every placer on "All"
+  const podiumAll = useMemo(() => placements.filter(p => p.place <= podiumDepth), [placements, podiumDepth])
+  const podiumHasOthers = podiumAll.some(p => p.school?.is_nj !== true)
+  const shownPodium = podiumNjOnly && podiumHasOthers ? podiumAll.filter(p => p.school?.is_nj === true) : podiumAll
+  const podiumWeights = [...new Set(shownPodium.map(p => p.weight_class))].sort((a, b) => a - b)
 
   const hasPlacementData = placements.length > 0
 
@@ -396,9 +398,12 @@ export function TournamentPageClient({
   const dateStr = formatDateRange(tournament.start_date, tournament.end_date)
   const hasScores = teamScores.length > 0
   const SCORE_CUTOFF = 20
-  const displayedScores = hasScores && !showAllScores && teamScores.length > SCORE_CUTOFF
-    ? teamScores.slice(0, 8)
-    : teamScores
+  // the official standings, NJSIAA teams only until "show non-NJSIAA" — places stay the official ones
+  const oosTeamCount = teamScores.filter(s => s.school?.is_nj === false).length
+  const visibleScores = showOosTeams ? teamScores : teamScores.filter(s => s.school?.is_nj !== false)
+  const displayedScores = hasScores && !showAllScores && visibleScores.length > SCORE_CUTOFF
+    ? visibleScores.slice(0, 8)
+    : visibleScores
 
   function selectFromScores(schoolId: number) {
     setSelectedSchool(schoolId)
@@ -423,6 +428,10 @@ export function TournamentPageClient({
           <p className="text-xs mt-0.5 opacity-60">{tournament.venue_address}</p>
         )}
         <p className="text-xs mt-1 opacity-70">{dateStr}</p>
+        {streamUrl && (
+          <a href={streamUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 mr-2 text-xs font-semibold underline opacity-90 hover:opacity-100">Stream ↗</a>
+        )}
+        {isAdmin && <div className="mt-2"><TournamentStreamEdit id={tournament.id} gender={tournamentGender} current={streamUrl} /></div>}
         {isOutside && (
           <span className="inline-block mt-2 text-[10px] px-1.5 py-0.5 rounded-full bg-blue-900 text-white">Out of State</span>
         )}
@@ -493,14 +502,21 @@ export function TournamentPageClient({
               </tbody>
             </table>
           </div>}
-          {teamScores.length > SCORE_CUTOFF && (
-            <button
-              onClick={() => setShowAllScores(v => !v)}
-              className="mt-2 text-xs text-slate-500 hover:text-slate-800 hover:underline"
-            >
-              {showAllScores ? 'Show less' : `Show all ${teamScores.length} teams ▾`}
-            </button>
-          )}
+          <div className="mt-2 flex flex-wrap gap-4">
+            {visibleScores.length > SCORE_CUTOFF && (
+              <button
+                onClick={() => setShowAllScores(v => !v)}
+                className="text-xs text-slate-500 hover:text-slate-800 hover:underline"
+              >
+                {showAllScores ? 'Show less' : `Show all ${visibleScores.length} teams ▾`}
+              </button>
+            )}
+            {oosTeamCount > 0 && (
+              <button onClick={() => setShowOosTeams(v => !v)} className="text-xs text-slate-500 hover:text-slate-800 hover:underline">
+                {showOosTeams ? 'Hide non-NJSIAA teams' : `Show ${oosTeamCount} non-NJSIAA team${oosTeamCount === 1 ? '' : 's'} ▾`}
+              </button>
+            )}
+          </div>
         </div>
       )}
 
@@ -536,14 +552,16 @@ export function TournamentPageClient({
               )}
               {oosSchools.length > 0 && (
                 <>
-                  <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">Non-NJSIAA Schools</p>
-                  <div className="flex flex-wrap gap-1.5">
+                  <button onClick={() => setShowOosTeams(v => !v)} className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2 hover:text-slate-700">
+                    Non-NJSIAA Schools ({oosSchools.length}) {showOosTeams ? '▴' : '▾'}
+                  </button>
+                  {showOosTeams && <div className="flex flex-wrap gap-1.5">
                     {oosSchools.map(s => isOutside ? (
                       <span key={s.id} className="px-2.5 py-0.5 text-xs font-medium border border-slate-200 bg-slate-50 text-slate-400">{s.display_name}</span>
                     ) : (
                       <SchoolButton key={s.id} school={s} selectedSchool={selectedSchool} allBouts={allBouts} weights={weights} setSelectedSchool={setSelectedSchool} setSelectedWeight={setSelectedWeight} />
                     ))}
-                  </div>
+                  </div>}
                 </>
               )}
             </>
@@ -560,113 +578,49 @@ export function TournamentPageClient({
       {/* ── All Teams view ── */}
       {selectedSchool === null && (
         <>
-          {/* Podium */}
-          {hasPlacementData && (
+          {/* Podium (Kyle 2026-11-21): the history page's table — weights down the side, places across — starting on
+              NJSIAA placers, with "All" for everyone; an NJSIAA wrestler carries the NJ outline where others are listed */}
+          {hasPlacementData && podiumWeights.length > 0 && (
             <div className="mb-8">
-              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-3">
-                {isOutside ? `NJSIAA on the Podium (Top ${podiumDepth})` : `Top ${podiumDepth}`}
-              </p>
-
-              {/* OOS: list NJ placers sorted by weight then place */}
-              {isOutside && njPodium.length > 0 && (
-                <div className="overflow-x-auto">
-                  <table className="min-w-[420px] w-full text-[13px]">
-                    <thead>
-                      <tr className="bg-slate-900 text-white">
-                        <th className="text-left px-3 py-1 text-xs font-bold uppercase tracking-wide whitespace-nowrap w-14">Wt</th>
-                        <th className="text-left px-3 py-1 text-xs font-bold uppercase tracking-wide whitespace-nowrap">Wrestler</th>
-                        <th className="text-left px-3 py-1 text-xs font-bold uppercase tracking-wide whitespace-nowrap">School</th>
-                        <th className="text-left px-3 py-1 text-xs font-bold uppercase tracking-wide whitespace-nowrap w-14">Place</th>
+              <div className="flex flex-wrap items-center gap-3 mb-3">
+                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Podium (Top {podiumDepth})</p>
+                {podiumHasOthers && (
+                  <div className="ml-auto flex border border-slate-300 text-xs">
+                    {([[true, 'NJSIAA'], [false, 'All']] as const).map(([v, label]) => (
+                      <button key={label} onClick={() => setPodiumNjOnly(v)} className={`px-2.5 py-0.5 ${podiumNjOnly === v ? 'bg-slate-900 text-white' : 'bg-white text-slate-700 hover:bg-slate-50'}`}>{label}</button>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="border border-black overflow-x-auto">
+                <table className="min-w-max w-full text-[13px]">
+                  <thead><tr className="bg-slate-900 text-white">
+                    <th className="text-left px-3 py-1 text-xs font-bold uppercase tracking-wide whitespace-nowrap">Weight</th>
+                    {Array.from({ length: podiumDepth }, (_, i) => <th key={i} className="text-left px-3 py-1 text-xs font-bold uppercase tracking-wide whitespace-nowrap">{PLACE_LABEL[i + 1] ?? `${i + 1}th`}</th>)}
+                  </tr></thead>
+                  <tbody>
+                    {podiumWeights.map((wt, i) => (
+                      <tr key={wt} className={`border-t border-slate-100 ${i % 2 ? 'bg-slate-50' : 'bg-white'}`}>
+                        <td className="px-3 py-1 font-semibold tabular-nums">{wt}</td>
+                        {Array.from({ length: podiumDepth }, (_, k) => {
+                          const p = shownPodium.find(x => x.weight_class === wt && x.place === k + 1)
+                          return (
+                            <td key={k} className="px-3 py-1 align-top">
+                              {p ? <>
+                                <span className="flex items-center gap-1 whitespace-nowrap">
+                                  {p.school?.is_nj && podiumHasOthers && <NjIcon />}
+                                  {p.wrestler_id ? <Link href={`/wrestler/${p.wrestler_id}`} className={`text-slate-800 hover:underline ${k === 0 ? 'font-semibold' : ''}`}>{p.wrestler_name}</Link> : <span className="text-slate-800">{p.wrestler_name}</span>}
+                                </span>
+                                <span className="block text-[11px] text-slate-400 whitespace-nowrap">{p.school?.display_name ?? ''}</span>
+                              </> : <span className="text-slate-300">—</span>}
+                            </td>
+                          )
+                        })}
                       </tr>
-                    </thead>
-                    <tbody>
-                      {[...njPodium].sort((a, b) => a.weight_class - b.weight_class || a.place - b.place).map((p, i) => (
-                        <tr key={i} className={`border-t border-slate-100 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
-                          <td className="px-3 py-1 text-xs font-semibold text-slate-400">{p.weight_class}</td>
-                          <td className="px-3 py-1 text-xs font-medium">
-                            {p.wrestler_id ? (
-                              <Link href={`/wrestler/${p.wrestler_id}`} className="text-slate-800 hover:underline">{p.wrestler_name}</Link>
-                            ) : (
-                              <span className="text-slate-800">{p.wrestler_name}</span>
-                            )}
-                          </td>
-                          <td className="px-3 py-1 text-xs text-slate-400">{p.wrestler_id && <SchoolTagView id={p.school?.id} name={p.school?.display_name} badge={badgeOfSchool(p.school)} className="text-xs text-slate-400" />}</td>
-                          <td className="px-3 py-1 text-xs font-semibold text-slate-500">{PLACE_LABEL[p.place] ?? `${p.place}th`}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-
-              {/* In-state small (depth ≤ 3): horizontal table Wt | 1st | 2nd | 3rd */}
-              {!isOutside && podiumDepth <= 3 && podiumByWeight.size > 0 && (
-                <div className="overflow-x-auto">
-                  <table className="min-w-[420px] w-full text-[13px]">
-                    <thead>
-                      <tr className="bg-slate-900 text-white">
-                        <th className="text-left px-3 py-1 text-xs font-bold uppercase tracking-wide whitespace-nowrap w-14">Wt</th>
-                        {Array.from({ length: podiumDepth }, (_, i) => (
-                          <th key={i} className="text-left px-3 py-1 text-xs font-bold uppercase tracking-wide whitespace-nowrap">
-                            {PLACE_LABEL[i + 1]}
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {[...podiumByWeight.entries()].sort(([a], [b]) => a - b).map(([wt, places], i) => {
-                        const cell = (place: number) => {
-                          const p = places.find(x => x.place === place)
-                          return p ? (
-                            <span>
-                              {p.wrestler_id ? (
-                                <Link href={`/wrestler/${p.wrestler_id}`} className="font-medium text-slate-800 hover:underline">{p.wrestler_name}</Link>
-                              ) : (
-                                <span className="font-medium text-slate-800">{p.wrestler_name}</span>
-                              )}
-                              {p.wrestler_id && <span className="ml-1 inline-flex align-middle"><SchoolTagView id={p.school?.id} name={p.school?.display_name} badge={badgeOfSchool(p.school)} className="text-xs text-slate-400" /></span>}
-                            </span>
-                          ) : <span className="text-slate-300">—</span>
-                        }
-                        return (
-                          <tr key={wt} className={`border-t border-slate-100 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
-                            <td className="px-3 py-1 text-xs font-semibold text-slate-400">{wt}</td>
-                            {Array.from({ length: podiumDepth }, (_, j) => (
-                              <td key={j} className="px-3 py-1 text-xs">{cell(j + 1)}</td>
-                            ))}
-                          </tr>
-                        )
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-
-              {/* In-state large (depth > 3): cards per weight class */}
-              {!isOutside && podiumDepth > 3 && podiumByWeight.size > 0 && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                  {[...podiumByWeight.entries()].sort(([a], [b]) => a - b).map(([wt, places]) => (
-                    <div key={wt} className="border border-black bg-white text-[13px]">
-                      <div className="bg-slate-900 text-white px-3 py-1 text-xs font-bold">{wt}</div>
-                      <div className="divide-y divide-slate-100">
-                        {[...places].sort((a, b) => a.place - b.place).map(p => (
-                          <div key={p.place} className="px-3 py-1.5 flex items-baseline gap-2">
-                            <span className="text-[11px] font-semibold text-slate-400 w-7 shrink-0">{PLACE_LABEL[p.place] ?? `${p.place}th`}</span>
-                            <span className="min-w-0">
-                              {p.wrestler_id ? (
-                                <Link href={`/wrestler/${p.wrestler_id}`} className="font-medium text-slate-800 hover:underline">{p.wrestler_name}</Link>
-                              ) : (
-                                <span className="font-medium text-slate-800">{p.wrestler_name}</span>
-                              )}
-                              {p.wrestler_id && <span className="ml-1 inline-flex align-middle"><SchoolTagView id={p.school?.id} name={p.school?.display_name} badge={badgeOfSchool(p.school)} className="text-[11px] text-slate-400" /></span>}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           )}
 
@@ -674,7 +628,7 @@ export function TournamentPageClient({
           {teamStats.size > 1 && (
             <div className="mb-8">
               <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-3">
-                {hasOosTeams ? 'NJ Leaders' : 'Leaders'}
+                {hasOosSchools ? 'NJSIAA Leaders' : 'Leaders'}
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {leaders.mostWins && leaders.mostWins.wins > 0 && (

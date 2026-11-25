@@ -1,6 +1,11 @@
 import { ROUND_ORDER, ROUND_LABEL, TOURNAMENT_TYPE_LABEL } from '@/lib/supabase'
 import { supabase } from '@/lib/supabase/public-cached'
+import { createSupabaseAdmin } from '@/lib/supabase/service'
+import { offseasonBadges, BADGE_LOOK } from '@/lib/offseasonBadges'
 import Link from 'next/link'
+import { Fragment } from 'react'
+import { offseasonFor, offseasonMatches } from '@/lib/offseasonPublic'
+import { OffseasonProfileTable } from '@/components/site/OffseasonBoard'
 import { personLabel } from '@/lib/personName'
 import { SchoolTag } from '@/components/SchoolTag'
 import { notFound } from 'next/navigation'
@@ -8,7 +13,17 @@ import { WrestlerHeader } from '@/components/WrestlerHeader'
 import { StatsTable } from '@/components/StatsTable'
 import { conferenceToSlug } from '@/lib/conferences'
 import { sectionToSlug, groupToSlug } from '@/lib/sections'
-import { getSeasons } from '@/lib/seasons-server'
+import { getSeasons, getHistorySeasons } from '@/lib/seasons-server'
+import { canSeeHiddenHistory } from '@/lib/get-season'
+import { preRecordFinishes } from '@/lib/preRecordFinishes'
+import { NjwhLink } from '@/components/site/NjwhLink'
+import { collegeCareer } from '@/lib/ncaa/stats'
+import { CollegeBars, CollegeMedals, CollegeSection } from '@/components/site/CollegeProfile'
+import { RATING_NAME, RATING_SHORT } from '@/lib/rating'
+import { profileWhizRank } from '@/lib/whizRank'
+import { IconHint } from '@/components/site/IconHint'
+import { placementHint, badgeHint, terminatorHint, tournamentPlaceHint } from '@/lib/awardHints'
+import { wrestlerStatRanks, type StatKey } from '@/lib/wrestlerStatRanks'
 import { liveSeasonId, seasonLabel as lookupSeasonLabel, type SeasonInfo } from '@/lib/seasons'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -205,7 +220,10 @@ function classInSeason(graduationYear: number | null | undefined, seasonId: numb
   return CLASS_NAMES[12 - (graduationYear - seasonId)] ?? null
 }
 
-export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }) {
+// offseason = the offseason table for a wrestler on the Insight Off-Season board; order = tournaments listed final
+// first, first round last, and a graduated wrestler's history oldest first (Kyle 2026-11-13; live 2026-11-14 — the site
+// routes pass both); fresh = build the board now rather than from the 5-minute cache (the Aesthetic Tool)
+export async function WrestlerProfileCore({ wrestlerId, preview }: { wrestlerId: string; preview?: { offseason?: boolean; order?: boolean; fresh?: boolean } }) {
   const [allSeasons, calendarRes] = await Promise.all([
     getSeasons(),
     supabase
@@ -241,12 +259,44 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
     .single()
 
   if (!wrestler) notFound()
+  // a line set on the admin wrestler page (Status), shown in italics under the name in the header (Kyle 2026-11-17)
+  const { data: statusRow } = await supabase.from('wrestlers').select('status, status_note').eq('id', id).maybeSingle()
+  const statusNote = (statusRow as { status_note?: string | null } | null)?.status_note ?? null
+  // Finishes from before our records tied to this profile (Kyle 2026-11-17: a profile for every pre-2013 place winner;
+  // docs/migrations/20261117_history_profiles.sql), and the line Kyle adds when a same-named wrestler elsewhere may
+  // be the same person. Nothing before the migration.
+  const histDb = createSupabaseAdmin()
+  const [{ data: linkedRows }, { data: histMeta }] = await Promise.all([
+    histDb.from('history_finishes').select('year, level, region, region_name, weight, place, school, school_id').eq('wrestler_id', id).order('year'),
+    histDb.from('wrestlers').select('origin, history_note').eq('id', id).maybeSingle(),
+  ])
+  const linked = ((linkedRows ?? []) as { year: number; level: string; region: number | null; region_name: string | null; weight: string; place: number; school: string | null; school_id: number | null }[])
+    .filter(f => f.level === 'state' || f.place === 1)
+  const historyNote = (histMeta as { history_note?: string | null } | null)?.history_note ?? null
+  // college years (NCAA championships; src/lib/ncaa/stats.ts): bars under the header, medals, a section after HS —
+  // in the Aesthetic Tool mock only until Kyle approves (preview.college)
+  // college years (live 2026-11-18): bars under the header, NCAA medals, the College section after high school
+  const college = await collegeCareer(histDb, wrestler.gender === 'F' ? 'F' : 'M', id)
+  // offseason badges — Super 32 / Fargo podiums, Ironman and world titles (src/lib/offseasonBadges.ts): in the medal
+  // case with the season they belong to (live 2026-11-18)
+  const badges = (await offseasonBadges(histDb, wrestler.gender === 'F' ? 'F' : 'M', [id])).get(id) ?? []
+  // a wrestler who has passed away shows the years he wrestled in place of a grade ("Wrestled 2024-2026")
+  const inMemory = (statusRow as { status?: string | null } | null)?.status === 'deceased'
+
+  // Playoff History seasons (2013 on): shown only once switched on (history_public); until then their entries are left
+  // out entirely (2026-11-14: a hidden 2023-24 showed on a live girls profile) — except for an admin, who sees them to
+  // check before switching them on (Kyle 2026-11-14). The seasons shown get their labels.
+  const [historySeasons, seeHidden] = await Promise.all([getHistorySeasons(wrestler.gender === 'F' ? 'F' : 'M'), canSeeHiddenHistory()])
+  const hiddenSeasons = new Set(seeHidden ? [] : historySeasons.filter(h => !h.public).map(h => h.id))
+  const labelSeasons: SeasonInfo[] = [...allSeasons, ...historySeasons.filter(h => !hiddenSeasons.has(h.id)).map(h => ({ id: h.id, label: h.label, start_year: h.end_year - 1, end_year: h.end_year, public_genders: [], live_genders: [], stages: {} }))]
+  const shown = <T,>(rows: T[] | null) => (rows ?? []).filter(r => { const t = (r as { tournament?: { season_id?: number } | { season_id?: number }[] | null }).tournament; const sid = Array.isArray(t) ? t[0]?.season_id : t?.season_id; return sid == null || !hiddenSeasons.has(sid) })
 
   // 2. All entries for this wrestler (include school, grade, season record, and season via tournament join)
-  const { data: entries } = await supabase
+  const { data: entriesAll } = await supabase
     .from('tournament_entries')
     .select('id, school_id, school:schools(id, display_name), grade_label, wins, losses, tournament:tournaments(season_id, tournament_type)')
     .eq('wrestler_id', id)
+  const entries = shown(entriesAll)
 
   const entryIds = (entries ?? []).map((e: { id: string }) => e.id)
 
@@ -274,7 +324,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
     currentEntries.find(e => e.school_id) ?? typedEntries.find(e => e.school_id) ?? null
   const primarySchool = primarySchoolEntry?.school?.display_name ?? null
   const primarySchoolId = primarySchoolEntry?.school_id ?? null
-  const primaryGrade =
+  const primaryGrade = inMemory ? null :
     currentEntries.find(e => e.grade_label)?.grade_label ??
     typedEntries.find(e => e.grade_label)?.grade_label ?? null
 
@@ -355,16 +405,22 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
 
   // Fetch school profile (colors, logo, section, conference) and wrestler's weight
   const schoolSelect = 'id, display_name, primary_color, secondary_color, logo_url, section, classification, athletic_conference, mascot, header_background'
-  const [{ data: schoolProfileData }, { data: weightData }] = await Promise.all([
-    (primarySchoolId ?? boutSchoolId ?? dualSchoolId)
-      ? supabase.from('schools').select(schoolSelect).eq('id', primarySchoolId ?? boutSchoolId ?? dualSchoolId).maybeSingle()
+  // a profile from the history alone: the school of his latest finish
+  const historySchoolId = [...linked].reverse().find(f => f.school_id != null)?.school_id ?? null
+  const headSchoolId = primarySchoolId ?? boutSchoolId ?? dualSchoolId ?? historySchoolId
+  const [{ data: schoolProfileData }, { data: weightDataAll }] = await Promise.all([
+    headSchoolId
+      ? supabase.from('schools').select(schoolSelect).eq('id', headSchoolId).maybeSingle()
       : Promise.resolve({ data: null }),
     supabase.from('tournament_entries')
       .select('weight_class:weight_classes(weight), tournament:tournaments(tournament_type, season_id)')
       .eq('wrestler_id', wrestler.id)
       .order('tournament_id', { ascending: false })
-      .limit(10),
+      .limit(200),
   ])
+  // newest season first (tournament ids aren't in season order: Playoff History seasons were loaded later)
+  const seasonOf = (r: unknown) => { const t = (r as { tournament?: { season_id?: number } | { season_id?: number }[] | null }).tournament; return (Array.isArray(t) ? t[0]?.season_id : t?.season_id) ?? 0 }
+  const weightData = shown(weightDataAll).sort((a, b) => seasonOf(b) - seasonOf(a)).slice(0, 10)
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const schoolProfile = schoolProfileData as any ?? {
@@ -533,8 +589,9 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
 
   // Sort matches within each group by round order
   for (const g of groups.values()) {
-    g.matches.sort((a, b) =>
-      (ROUND_ORDER[a.round ?? ''] ?? 99) - (ROUND_ORDER[b.round ?? ''] ?? 99)
+    g.matches.sort((a, b) => preview?.order
+      ? (ROUND_ORDER[b.round ?? ''] ?? 0) - (ROUND_ORDER[a.round ?? ''] ?? 0)   // final first, first round last
+      : (ROUND_ORDER[a.round ?? ''] ?? 99) - (ROUND_ORDER[b.round ?? ''] ?? 99)
     )
   }
 
@@ -844,7 +901,22 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
     if (!unifiedBySeason.has(ev.seasonId)) unifiedBySeason.set(ev.seasonId, [])
     unifiedBySeason.get(ev.seasonId)!.push(ev)
   }
-  const unifiedSeasonIds = [...unifiedBySeason.keys()].sort((a, b) => b - a)
+  let unifiedSeasonIds = [...unifiedBySeason.keys()].sort((a, b) => b - a)
+  // a graduated wrestler's history reads oldest first: seasons, events and rounds (preview)
+  const graduated = !!preview?.order && wrestler.graduation_year != null && wrestler.graduation_year < Math.max(...allSeasons.map(s => s.id))
+  if (graduated) {
+    unifiedSeasonIds = [...unifiedSeasonIds].reverse()
+    for (const evs of unifiedBySeason.values()) {
+      evs.reverse()
+      for (const ev of evs) ev.rows.reverse()
+    }
+  }
+  // the offseason table (preview): on the Off-Season board → their offseason results, placed in time order
+  const offseason = preview?.offseason ? await offseasonFor(id, wrestler.gender === 'F' ? 'F' : 'M', !!preview?.fresh) : null
+  // their matches at offseason events with no placement (duals): the record and every match (Kyle 2026-11-21)
+  const offseasonBouts = offseason && offseason.entry.wrestled.length
+    ? Object.fromEntries(await offseasonMatches(wrestler.gender === 'F' ? 'F' : 'M', offseason.entry.prospect_id, offseason.entry.wrestled.map(w => w.event_id)))
+    : {}
 
   // Revenge win keys for row-level pill detection
   const revengeWinKeys = new Set<string>(
@@ -856,12 +928,19 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
   const allOpponentIds = [...new Set(
     unifiedEvents.flatMap(ev => ev.rows.map(r => r.opponentId)).filter((x): x is string => x != null)
   )]
+  // the visitor's key can't read wrestler_hammer_scores (its formula columns stay private), so the server reads
+  // only the score itself: the WRR on the stats board and the upset-win marks
+  const ratingDb = createSupabaseAdmin()
+  // Whiz Rank box (Kyle 2026-11-19): the highest group ranking in the latest published week of the live season
+  const whizSeason = liveSeasonId(allSeasons, wrestler.gender === 'F' ? 'F' : 'M')
+  const whizP = whizSeason ? profileWhizRank(ratingDb, wrestler.gender === 'F' ? 'F' : 'M', whizSeason, id).catch(() => null) : Promise.resolve(null)
   const [ownHammerRes, oppHammerRes] = await Promise.all([
-    supabase.from('wrestler_hammer_scores').select('season, hammer_score').eq('wrestler_id', id),
+    ratingDb.from('wrestler_hammer_scores').select('season, hammer_score').eq('wrestler_id', id),
     allOpponentIds.length > 0
-      ? supabase.from('wrestler_hammer_scores').select('wrestler_id, season, hammer_score').in('wrestler_id', allOpponentIds)
+      ? ratingDb.from('wrestler_hammer_scores').select('wrestler_id, season, hammer_score').in('wrestler_id', allOpponentIds)
       : Promise.resolve({ data: [] }),
   ])
+  const whiz = await whizP
   const ownHammerBySeason = new Map<string, number>(
     ((ownHammerRes.data ?? []) as { season: string; hammer_score: number }[]).map(r => [r.season, Number(r.hammer_score)])
   )
@@ -879,13 +958,14 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
   const wins   = nonBye.filter(m => m.result === 'W').length
   const losses = nonBye.filter(m => m.result === 'L').length
 
-  // The first season on file has postseason results only (★ on profiles); a wrestler who was a
-  // sophomore or older then has earlier high school seasons we have no records for
-  const firstSeasonId = Math.min(...allSeasons.map(s => s.id))
+  // The first season on file and every Playoff History season before it have postseason results only (★ on
+  // profiles; Kyle 2026-11-17); a wrestler who was a sophomore or older then has earlier seasons we have no records for
+  const firstSeasonId = Math.min(...allSeasons.map(s => s.id))   // getSeasons(): Playoff History seasons are left out
   const gradYear = (wrestler as { graduation_year?: number | null }).graduation_year ?? null
   const firstSeasonClass = classInSeason(gradYear, firstSeasonId)
   const olderThanRecords = !!firstSeasonClass && firstSeasonClass[1] !== 'Fr'
-  const star = (seasonId: number) => (seasonId === firstSeasonId ? ' ★' : '')
+  const postseasonOnly = (seasonId: number) => seasonId <= firstSeasonId
+  const star = (seasonId: number) => (postseasonOnly(seasonId) ? ' ★' : '')
 
   // Career stats computation
   type SeasonStat = {
@@ -962,6 +1042,8 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
     s.bonusPct = contestedMatches > 0 ? Math.round(((s.pins + s.tfs + s.mds) / contestedMatches) * 100) : 0
   }
   const seasonStats = [...seasonStatsMap.values()].sort((a, b) => b.seasonId - a.seasonId)
+  // the stats board's leaderboard ranks: top 25 in the state, else top 25 in the section
+  const statRanks = seasonStats[0] ? await wrestlerStatRanks(wrestler.gender === 'F' ? 'F' : 'M', seasonStats[0].seasonId, id) : {}
   const careerTotals = seasonStats.reduce((acc, s) => ({
     wins: acc.wins + s.wins, losses: acc.losses + s.losses,
     pins: acc.pins + s.pins, tfs: acc.tfs + s.tfs, mds: acc.mds + s.mds,
@@ -1020,6 +1102,28 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
       }
     }
   }
+
+  // A postseason finish with no bracket on file (history_podiums: e.g. the 2012-13 boys District 24 podium from the Shore
+  // Conference archives, Kyle 2026-11-14) — same chips as a bracket finish
+  {
+    const { data: pods } = await supabase.from('history_podiums').select('place, tournament:tournaments(name, tournament_type, season_id)').eq('wrestler_id', id).not('weight', 'is', null)
+    for (const p of shown((pods ?? []) as unknown as { place: number; tournament: { name: string; tournament_type: string; season_id: number } | null }[])) {
+      if (!p.tournament || placements.some(x => x.tournament === p.tournament!.name && x.seasonId === p.tournament!.season_id)) continue
+      placements.push({ tournament: p.tournament.name, place: p.place, tournamentType: p.tournament.tournament_type, seasonId: p.tournament.season_id })
+    }
+  }
+
+  // Medals from before our postseason records begin (Kyle 2026-11-14): state places and region titles on file only in
+  // history_finishes (njwrestlinghistory.info), matched by school and name (src/lib/preRecordFinishes.ts)
+  const recordsFrom = historySeasons.length ? Math.min(...historySeasons.map(h => h.id)) : null
+  // finishes tied to the profile (2026-11-17) are used as they are; the name match is only for a profile without them
+  const preRecord = linked.length ? linked.filter(f => recordsFrom == null || f.year < recordsFrom).map(f => ({ year: f.year, level: f.level as 'state' | 'region', region: f.region, weight: f.weight, place: f.place }))
+    : recordsFrom == null ? [] : await preRecordFinishes(wrestler.gender === 'F' ? 'F' : 'M', recordsFrom, wrestler,
+      typedEntries.map(e => ({ season: (unwrap(e.tournament) as { season_id: number } | null)?.season_id ?? 0, school_id: e.school_id })).filter(x => x.season > 0))
+  for (const f of preRecord) {
+    placements.push({ tournament: f.level === 'state' ? 'State' : `Region ${f.region}`, place: f.place, tournamentType: f.level === 'state' ? (wrestler.gender === 'F' ? 'girls_state' : 'boys_state') : 'regions', seasonId: f.year })
+  }
+  const inFirstRecords = recordsFrom != null && entrySeasons.includes(recordsFrom)   // their postseason may have begun before our records
 
   // Primary weight from current season
   const currentWeights = currentGroups.map(g => g.weight).filter(w => w > 0)
@@ -1112,7 +1216,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
         .filter(s => s.is_visible).map(s => s.section_key)
     : DEFAULT_WRESTLER_SECTIONS
 
-  if (unifiedEvents.length === 0) {
+  if (unifiedEvents.length === 0 && !linked.length) {   // a history profile has finishes but no bouts: it renders below
     return (
       <div className="max-w-3xl mx-auto px-4 py-10">
         <BackLink gender={wrestler.gender} />
@@ -1127,6 +1231,15 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
   const baseName = [wrestler.first_name, wrestler.last_name, wrestler.suffix]
     .filter(Boolean).join(' ')
   const displayName = primaryGrade ? `${baseName}, ${primaryGrade}` : baseName
+
+  // Years active (Kyle 2026-11-14), for a wrestler with no grade on file (Playoff History, graduated): first season to last —
+  // every season he has a medal or award in counts too (Kyle 2026-11-17: a 4-time placer whose bout records begin in
+  // his senior year was "Active 2012-13" only)
+  const activeIds = [...new Set([...entrySeasons, ...seasonStats.map(x => x.seasonId)].filter(Boolean))].sort((a, b) => a - b)
+  const histYears = [...new Set(linked.map(f => f.year))].sort((a, b) => a - b)
+  const spanYears = [...new Set([...activeIds, ...histYears, ...placements.map(p => p.seasonId), ...awards.map(a => a.seasonId)].filter(y => y > 0))].sort((a, b) => a - b)
+  // as calendar years, first fall to last spring (Kyle 2026-11-19: "2014-2018", not "2014-15-2017-18")
+  const activeYears = primaryGrade || !spanYears.length ? null : `${spanYears[0] - 1}–${spanYears[spanYears.length - 1]}`
 
   const totalTournaments = groups.size
   const pc = schoolProfile.primary_color ?? '#1a1a2e'
@@ -1159,49 +1272,133 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
         headerBackground={headerBackground}
         wrestlerName={baseName}
         grade={primaryGrade}
-        primaryWeight={bestWeight}
+        active={activeYears}
+        primaryWeight={bestWeight ?? (linked.length ? (/^h/i.test(linked[linked.length - 1].weight) ? null : Number(linked[linked.length - 1].weight) || null) : null)}
         schoolLink={schoolLink}
+        note={statusNote}
+        activeText={inMemory && activeIds.length ? `Wrestled ${activeIds[0] - 1}–${activeIds[activeIds.length - 1]}` : null}
       />
+      <CollegeBars years={college} linkBase={wrestler.gender === 'F' ? '/girls/college' : '/boys/college'} />
 
       <div className="max-w-3xl mx-auto px-4 py-6">
       <BackLink gender={wrestler.gender} />
+      {historyNote && <p className="mb-3 text-sm text-slate-600">★ {historyNote}</p>}
+      {linked.length > 0 && !typedEntries.length && (
+        <p className="mb-4 text-xs text-slate-500">Finishes from <NjwhLink />{recordsFrom != null && lookupSeasonLabel(labelSeasons, recordsFrom) ? <>; our bout-by-bout records begin in {lookupSeasonLabel(labelSeasons, recordsFrom)}</> : null}.</p>
+      )}
+
+      {/* the high school part gets its own header when a college part follows (Kyle 2026-11-17; mock only for now) */}
+      {college.length > 0 && <h2 className="mb-2 text-lg font-bold text-slate-900">NJSIAA</h2>}
+      {/* Stats board (Kyle 2026-11-16), like the school page's: the latest season on file */}
+      {(() => {
+        const s = seasonStats[0]
+        if (!s) return null
+        const label = lookupSeasonLabel(labelSeasons, s.seasonId) ?? ''
+        // the WRR carries from season to season: the newest on file is the wrestler's rating now
+        const wrr = [...ownHammerBySeason.entries()].sort((x, y) => y[0].localeCompare(x[0]))[0]?.[1]
+        const chips: [string, string, StatKey?][] = [
+          ['Record', `${s.wins}-${s.losses}`],
+          // the rating written out (Kyle 2026-11-19), and the Whiz Rank beside it
+          [RATING_NAME, wrr != null ? wrr.toFixed(1) : '—', 'wrr'],
+          ['Whiz Rank', whiz === null ? '—' : whiz === 'unranked' ? 'Unranked' : whiz.text],
+          ['Pins', String(s.pins), 'pins'],
+          ['Tech Falls', String(s.tfs), 'techs'],
+          ['Bonus %', `${s.bonusPct}%`, 'bonus'],
+        ]
+        return (
+          <div className="mb-6">
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-px bg-slate-200 border border-slate-200 overflow-hidden rounded-lg">
+              {chips.map(([k, v, rk]) => {
+                const r = rk ? statRanks[rk] : undefined
+                return (
+                  <div key={k} className="bg-white px-2 py-3 text-center min-w-0">
+                    <div className={`${v.length > 8 ? 'text-sm py-0.5' : 'text-lg'} font-bold tabular-nums text-slate-900 leading-tight`}>{v}</div>
+                    <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide mt-0.5 leading-tight" title={k === RATING_NAME ? RATING_SHORT : undefined}>{k}</div>
+                    {r ? <div className="text-[10px] font-semibold text-emerald-600 mt-0.5 leading-tight">#{r.rank} {r.where}</div> : <div className="h-3 mt-0.5" />}
+                  </div>
+                )
+              })}
+            </div>
+            <p className="mt-1 text-[11px] text-slate-400">{label}{postseasonOnly(s.seasonId) || !allSeasons.some(x => x.id === s.seasonId) ? ' · postseason only' : ''}</p>
+          </div>
+        )
+      })()}
 
       {activeSectionKeys.map(key => {
         switch (key) {
           case 'placements':
-            return (placements.length > 0 || awards.length > 0) ? (
-              <div key="placements" className="mb-5 flex flex-wrap gap-1.5">
-                {[...placements]
-                  .sort((a, b) =>
-                    b.seasonId - a.seasonId ||
-                    (TOURNAMENT_TYPE_ORDER[a.tournamentType] ?? 9) - (TOURNAMENT_TYPE_ORDER[b.tournamentType] ?? 9) ||
-                    a.place - b.place
-                  )
-                  .map((p, i) => {
-                    const short = placementShortLabel(p.tournament, p.tournamentType)
-                    const yr = seasonShort(p.seasonId)
-                    const medal = p.place === 1 ? '\u{1F947}' : p.place === 2 ? '\u{1F948}' : p.place === 3 ? '\u{1F949}' : null
-                    return (
-                      <span key={i} className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800">
-                        {medal ? <span>{medal}</span> : <span className="opacity-75">{p.place}th</span>}
-                        <span>{short}</span>
-                        {yr && <span className="opacity-60">{yr}</span>}
-                      </span>
-                    )
-                  })}
-                {[...awards]
-                  .sort((a, b) => b.seasonId - a.seasonId)
-                  .map((a, i) => {
-                    const yr = seasonShort(a.seasonId)
-                    const icon = '\u{26A1}'
-                    return (
-                      <span key={`award-${i}`} className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 border border-slate-300 text-slate-700">
-                        <span>{icon}</span>
-                        <span>{a.label}</span>
-                        {yr && <span className="opacity-60">{yr}</span>}
-                      </span>
-                    )
-                  })}
+            return (placements.length > 0 || awards.length > 0 || college.length > 0 || badges.length > 0) ? (
+              // One row per season, newest first; districts, regions, State, then awards (Kyle 2026-11-17).
+              // District light gray, region navy, State gold. In the college mock: oldest first, NCAA after NJSIAA in
+              // the college's colors (Kyle 2026-11-17).
+              // Medal Bin (Kyle 2026-11-19): the medals in a table, a row per season — NJSIAA medals, offseason
+              // badges, awards, then that year's college finish
+              <div key="placements" className="mb-8">
+                <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">Medal Bin</h3>
+                <div className="border border-black overflow-x-auto">
+                <table className="w-full text-[13px]">
+                  <thead><tr className="bg-slate-900 text-white"><th className="px-3 py-1 text-left text-xs font-bold uppercase tracking-wide w-24">Season</th><th className="px-3 py-1 text-left text-xs font-bold uppercase tracking-wide">Medals</th></tr></thead>
+                  <tbody>
+                {[...new Set([...placements.map(p => p.seasonId), ...awards.map(a => a.seasonId), ...badges.map(b => b.season), ...college.map(y => y.year)])].sort((x, y) => (college.length > 0 ? x - y : y - x)).map((seasonId, row) => (
+                  <tr key={seasonId} className={`border-t border-slate-100 ${row % 2 ? 'bg-slate-50' : 'bg-white'}`}>
+                  <td className="px-3 py-1.5 align-top whitespace-nowrap font-semibold tabular-nums text-slate-600">{seasonId - 1}–{String(seasonId).slice(2)}</td>
+                  <td className="px-2 py-1.5">
+                  <div className="flex flex-wrap gap-1.5">
+                    {placements.filter(p => p.seasonId === seasonId)
+                      .sort((a, b) => (TOURNAMENT_TYPE_ORDER[a.tournamentType] ?? 9) - (TOURNAMENT_TYPE_ORDER[b.tournamentType] ?? 9) || a.place - b.place)
+                      .map((p, i) => {
+                        const short = placementShortLabel(p.tournament, p.tournamentType)
+                        const yr = seasonShort(p.seasonId)
+                        const medal = p.place === 1 ? '\u{1F947}' : p.place === 2 ? '\u{1F948}' : p.place === 3 ? '\u{1F949}' : null
+                        const level = TOURNAMENT_TYPE_ORDER[p.tournamentType]
+                        const look = level === 0 ? 'bg-slate-50 border-slate-200 text-slate-700'
+                          : level === 1 ? 'bg-[#16284A] border-[#16284A] text-white'
+                          : 'bg-amber-50 border-amber-200 text-amber-800'
+                        const lvl = p.tournamentType.includes('state') ? 'state' : level === 1 ? 'region' : 'district'
+                        const num = Number(short.slice(1)) || null
+                        return (
+                          <IconHint key={i} hint={level == null ? tournamentPlaceHint(p.place, cleanTournamentName(p.tournament), p.seasonId) : placementHint(p.place, lvl, num, p.seasonId)}>
+                          <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full border ${look}`}>
+                            {medal ? <span>{medal}</span> : <span className="opacity-75">{p.place}th</span>}
+                            <span>{short}</span>
+                            {yr && <span className="opacity-60">{yr}</span>}
+                          </span>
+                          </IconHint>
+                        )
+                      })}
+                    {badges.filter(b => b.season === seasonId).map((b, i) => {
+                      const medal = b.place === 1 ? '\u{1F947}' : b.place === 2 ? '\u{1F948}' : b.place === 3 ? '\u{1F949}' : null
+                      return (
+                        <IconHint key={`badge-${i}`} hint={badgeHint(b.kind, b.label, b.place, b.year)}>
+                        <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full border ${BADGE_LOOK[b.kind]}`}>
+                          {medal ? <span>{medal}</span> : <span className="opacity-75">{b.place}th</span>}
+                          <span>{b.label}</span>
+                          <span className="opacity-60">{`'${String(b.year).slice(2)}`}</span>
+                        </span>
+                        </IconHint>
+                      )
+                    })}
+                    {awards.filter(a => a.seasonId === seasonId).map((a, i) => {
+                      const yr = seasonShort(a.seasonId)
+                      const icon = '\u{26A1}'
+                      return (
+                        <IconHint key={`award-${i}`} hint={terminatorHint(a.label, a.seasonId)}>
+                        <span className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 border border-slate-300 text-slate-700">
+                          <span>{icon}</span>
+                          <span>{a.label}</span>
+                          {yr && <span className="opacity-60">{yr}</span>}
+                        </span>
+                        </IconHint>
+                      )
+                    })}
+                    <CollegeMedals years={college.filter(y => y.year === seasonId)} />
+                  </div>
+                  </td>
+                  </tr>
+                ))}
+                  </tbody>
+                </table>
+                </div>
               </div>
             ) : null
 
@@ -1215,7 +1412,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
                       <span className="font-bold text-sm uppercase tracking-wide">Ghost Champion</span>
                       <span className="text-xs text-slate-400">
                         #{gc.seed} seed &middot; {cleanTournamentName(gc.tournament_name)} &middot; {gc.weight}lb
-                        {seasonIds.length > 1 && ` · ${lookupSeasonLabel(allSeasons, gc.season_id as number) ?? ''}`}
+                        {seasonIds.length > 1 && ` · ${lookupSeasonLabel(labelSeasons, gc.season_id as number) ?? ''}`}
                       </span>
                     </div>
                     {gc.wins_on_path && gc.wins_on_path.length > 0 && (
@@ -1254,7 +1451,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
                     { key: 'avgTf',     label: 'Avg TF',   align: 'center', numeric: false },
                   ]}
                   rows={seasonStats.map(s => ({
-                    season:    `${lookupSeasonLabel(allSeasons, s.seasonId) ?? `S${s.seasonId}`}${classInSeason(gradYear, s.seasonId) ? ` · ${classInSeason(gradYear, s.seasonId)![1]}` : ''}${star(s.seasonId)}`,
+                    season:    `${lookupSeasonLabel(labelSeasons, s.seasonId) ?? `S${s.seasonId}`}${classInSeason(gradYear, s.seasonId) ? ` · ${classInSeason(gradYear, s.seasonId)![1]}` : ''}${star(s.seasonId)}`,
                     wl:        `${s.wins}-${s.losses}`,
                     pins:      s.pins,
                     tfs:       s.tfs,
@@ -1272,13 +1469,18 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
                     avgTf:     careerTotals.tfs  > 0 ? formatPinTimeStat(Math.round(careerTotals.tfTimeSecs  / careerTotals.tfs))  : '—',
                   } : undefined}
                 />
-                {(seasonStats.some(s => s.seasonId === firstSeasonId) || olderThanRecords) && (
+                {(seasonStats.some(s => postseasonOnly(s.seasonId)) || (olderThanRecords && recordsFrom == null) || inFirstRecords) && (
                   <div className="mt-2 space-y-0.5 text-xs text-slate-500">
-                    {seasonStats.some(s => s.seasonId === firstSeasonId) && (
-                      <p>★ {lookupSeasonLabel(allSeasons, firstSeasonId)}: postseason results only.</p>
+                    {inFirstRecords && (
+                      <p>Postseason data only goes back to {lookupSeasonLabel(labelSeasons, recordsFrom!)}{preRecord.length > 0 && <>; earlier medals are from <NjwhLink /></>}.</p>
                     )}
-                    {olderThanRecords && (
-                      <p>Records begin with the {lookupSeasonLabel(allSeasons, firstSeasonId)} season; earlier seasons aren&apos;t included.</p>
+                    {seasonStats.some(s => postseasonOnly(s.seasonId)) && (() => {
+                      const ids = seasonStats.map(s => s.seasonId).filter(postseasonOnly)
+                      const lo = Math.min(...ids), hi = Math.max(...ids)
+                      return <p>★ {lookupSeasonLabel(labelSeasons, lo)}{hi !== lo ? ` to ${lookupSeasonLabel(labelSeasons, hi)}` : ''}: postseason results only.</p>
+                    })()}
+                    {olderThanRecords && recordsFrom == null && (
+                      <p>Records begin with the {lookupSeasonLabel(labelSeasons, firstSeasonId)} season; earlier seasons aren&apos;t included.</p>
                     )}
                   </div>
                 )}
@@ -1286,16 +1488,25 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
             ) : null
 
 
-          case 'match_history':
-            return unifiedSeasonIds.length > 0 ? (
-              <div key="match_history" className="space-y-8">
-                {unifiedSeasonIds.map(seasonId => {
+          case 'match_history': {
+            // the offseason of year Y sits between season Y+1 (above, newest first) and season Y (below)
+            const offAt = offseason ? (graduated
+              ? unifiedSeasonIds.filter(sid => sid <= offseason.season).length
+              : unifiedSeasonIds.filter(sid => sid > offseason.season).length) : -1
+            const offTable = offseason ? <OffseasonProfileTable key="offseason" entry={offseason.entry} season={offseason.season} matches={offseasonBouts} /> : null
+            return unifiedSeasonIds.length > 0 || offTable ? (
+              // the college mock: the NJSIAA season tables joined into one stack (Kyle 2026-11-18)
+              <div key="match_history" className={college.length > 0 ? '' : 'space-y-8'}>
+                {offAt === unifiedSeasonIds.length && offTable}
+                {unifiedSeasonIds.map((seasonId, si) => {
                   const seasonEvents = unifiedBySeason.get(seasonId) ?? []
-                  const label = lookupSeasonLabel(allSeasons, seasonId) ?? `Season ${seasonId}`
+                  const label = lookupSeasonLabel(labelSeasons, seasonId) ?? `Season ${seasonId}`
                   const seasonWins   = seasonEvents.flatMap(e => e.rows).filter(r => !r.isBye && r.result === 'W').length
                   const seasonLosses = seasonEvents.flatMap(e => e.rows).filter(r => !r.isBye && r.result === 'L').length
                   return (
-                    <div key={seasonId} className="rounded-lg border border-slate-200 overflow-hidden">
+                    <Fragment key={seasonId}>
+                    {si === offAt && offTable}
+                    <div className={college.length > 0 ? `border border-slate-300 overflow-hidden ${si > 0 ? '-mt-px' : ''}` : 'rounded-lg border border-slate-200 overflow-hidden'}>
                       <div className="px-4 py-2 bg-slate-50 border-b border-slate-200 flex items-center gap-2">
                         <span className="text-xs font-semibold text-slate-700 uppercase tracking-widest">{label}{star(seasonId)}</span>
                         {schoolBySeason.get(seasonId) && (
@@ -1323,7 +1534,7 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
                           </thead>
                           <tbody>
                             {seasonEvents.flatMap(ev => ev.rows).map((r, ri) => {
-                              const seasonLabel = lookupSeasonLabel(allSeasons, seasonId) ?? ''
+                              const seasonLabel = lookupSeasonLabel(labelSeasons, seasonId) ?? ''
                               const isRevengeWin = !r.isBye && r.result === 'W' && r.opponentId != null &&
                                 revengeWinKeys.has(`${r.opponentId}||${r.eventName}||${r.round}`)
                               const isUpsetWin = !r.isBye && r.result === 'W' && r.opponentId != null && (() => {
@@ -1397,15 +1608,18 @@ export async function WrestlerProfileCore({ wrestlerId }: { wrestlerId: string }
                   </table>
                 </div>
               </div>
+                    </Fragment>
             )
           })}
         </div>
       ) : null
+          }
 
           default:
             return null
         }
       })}
+      <CollegeSection years={college} />
       </div>
     </>
   )

@@ -1,0 +1,389 @@
+{
+ "profiles": [
+  {
+   "id": "fb40c6eb-f7be-424f-8e06-b2d647820d5c",
+   "first_name": "Dan",
+   "last_name": "Vargas",
+   "suffix": null,
+   "gender": "M",
+   "graduation_year": null,
+   "created_at": "2026-08-06T01:30:22.564093+00:00",
+   "tw_id": null,
+   "is_stub": false,
+   "is_oos": true,
+   "main_weight": "175",
+   "grade": null,
+   "grade_confirmed_at": null,
+   "grade_confirmed_source": null,
+   "projected_weight_class": null,
+   "confirmed_weight_class": null,
+   "is_active": true
+  },
+  {
+   "id": "116da31b-1a49-48ea-a571-3dd1b023b245",
+   "first_name": "Michael",
+   "last_name": "Romero",
+   "suffix": null,
+   "gender": "M",
+   "graduation_year": null,
+   "created_at": "2026-08-03T03:21:31.572684+00:00",
+   "tw_id": null,
+   "is_stub": false,
+   "is_oos": true,
+   "main_weight": null,
+   "grade": null,
+   "grade_confirmed_at": null,
+   "grade_confirmed_source": null,
+   "projected_weight_class": null,
+   "confirmed_weight_class": null,
+   "is_active": true
+  },
+  {
+   "id": "7395bc73-0512-4575-a19c-4c8b5613cca0",
+   "first_name": "Jesse",
+   "last_name": "Grajeda",
+   "suffix": null,
+   "gender": "M",
+   "graduation_year": null,
+   "created_at": "2026-08-03T03:21:30.884399+00:00",
+   "tw_id": null,
+   "is_stub": false,
+   "is_oos": true,
+   "main_weight": null,
+   "grade": null,
+   "grade_confirmed_at": null,
+   "grade_confirmed_source": null,
+   "projected_weight_class": null,
+   "confirmed_weight_class": null,
+   "is_active": true
+  },
+  {
+   "id": "b1bedf51-7da1-433b-9780-4e7ca084b74a",
+   "first_name": "Jorge",
+   "last_name": "Rios",
+   "suffix": null,
+   "gender": "M",
+   "graduation_year": null,
+   "created_at": "2026-08-03T03:21:27.009843+00:00",
+   "tw_id": null,
+   "is_stub": false,
+   "is_oos": true,
+   "main_weight": null,
+   "grade": null,
+   "grade_confirmed_at": null,
+   "grade_confirmed_source": null,
+   "projected_weight_class": null,
+   "confirmed_weight_class": null,
+   "is_active": true
+  },
+  {
+   "id": "1d4e57cc-eb4e-46f7-815e-784611ea74cd",
+   "first_name": "Theodore",
+   "last_name": "Egolf",
+   "suffix": null,
+   "gender": "M",
+   "graduation_year": null,
+   "created_at": "2026-11-02T20:39:58.079089+00:00",
+   "tw_id": null,
+   "is_stub": false,
+   "is_oos": true,
+   "main_weight": null,
+   "grade": null,
+   "grade_confirmed_at": null,
+   "grade_confirmed_source": null,
+   "projected_weight_class": null,
+   "confirmed_weight_class": null,
+   "is_active": true
+  },
+  {
+   "id": "32c1f806-8608-4dc2-8305-150ab6445f6e",
+   "first_name": "Storm",
+   "last_name": "Hoffman",
+   "suffix": null,
+   "gender": "M",
+   "graduation_year": null,
+   "created_at": "2026-11-02T20:40:03.610365+00:00",
+   "tw_id": null,
+   "is_stub": false,
+   "is_oos": true,
+   "main_weight": null,
+   "grade": null,
+   "grade_confirmed_at": null,
+   "grade_confirmed_source": null,
+   "projected_weight_class": null,
+   "confirmed_weight_class": null,
+   "is_active": true
+  },
+  {
+   "id": "823b6bbd-f364-4011-bd47-f58206dd52c9",
+   "first_name": "Luca",
+   "last_name": "Cenatiempo",
+   "suffix": null,
+   "gender": "M",
+   "graduation_year": null,
+   "created_at": "2026-08-08T20:42:51.727615+00:00",
+   "tw_id": null,
+   "is_stub": false,
+   "is_oos": true,
+   "main_weight": "175",
+   "grade": null,
+   "grade_confirmed_at": null,
+   "grade_confirmed_source": null,
+   "projected_weight_class": null,
+   "confirmed_weight_class": null,
+   "is_active": true
+  },
+  {
+   "id": "9005432c-1b6c-4b75-8705-9481d7a589e7",
+   "first_name": "Brody",
+   "last_name": "Kelly",
+   "suffix": null,
+   "gender": "M",
+   "graduation_year": null,
+   "created_at": "2026-11-02T20:40:06.70849+00:00",
+   "tw_id": null,
+   "is_stub": false,
+   "is_oos": true,
+   "main_weight": null,
+   "grade": null,
+   "grade_confirmed_at": null,
+   "grade_confirmed_source": null,
+   "projected_weight_class": null,
+   "confirmed_weight_class": null,
+   "is_active": true
+  }
+ ],
+ "aliases": [
+  {
+   "id": 51759,
+   "raw_name": "Theodore Egolf",
+   "school_id": 814,
+   "wrestler_id": "1d4e57cc-eb4e-46f7-815e-784611ea74cd",
+   "created_at": "2026-11-02T20:39:58.209941+00:00"
+  },
+  {
+   "id": 51784,
+   "raw_name": "Storm Hoffman",
+   "school_id": 814,
+   "wrestler_id": "32c1f806-8608-4dc2-8305-150ab6445f6e",
+   "created_at": "2026-11-02T20:40:03.683832+00:00"
+  },
+  {
+   "id": 41214,
+   "raw_name": "Luca Cenatiempo",
+   "school_id": 522,
+   "wrestler_id": "823b6bbd-f364-4011-bd47-f58206dd52c9",
+   "created_at": "2026-08-08T20:42:55.739294+00:00"
+  },
+  {
+   "id": 51803,
+   "raw_name": "Brody Kelly",
+   "school_id": 832,
+   "wrestler_id": "9005432c-1b6c-4b75-8705-9481d7a589e7",
+   "created_at": "2026-11-02T20:40:06.791327+00:00"
+  }
+ ],
+ "bouts": {
+  "fb40c6eb-f7be-424f-8e06-b2d647820d5c": {
+   "dual": [],
+   "tourn": []
+  },
+  "116da31b-1a49-48ea-a571-3dd1b023b245": {
+   "dual": [],
+   "tourn": []
+  },
+  "7395bc73-0512-4575-a19c-4c8b5613cca0": {
+   "dual": [],
+   "tourn": []
+  },
+  "b1bedf51-7da1-433b-9780-4e7ca084b74a": {
+   "dual": [],
+   "tourn": []
+  },
+  "1d4e57cc-eb4e-46f7-815e-784611ea74cd": {
+   "dual": [],
+   "tourn": [
+    {
+     "id": "0be2e1ba-7a19-4959-9426-ebc48a6292e3",
+     "in_season_tournament_id": "70adba68-8cee-4665-ae0e-932f951ecbee",
+     "weight_class": 157,
+     "round": "CSF",
+     "wrestler1_id": "1d4e57cc-eb4e-46f7-815e-784611ea74cd",
+     "wrestler1_name_raw": "Theodore Egolf",
+     "wrestler1_school_id": 814,
+     "wrestler1_school_raw": "Delmar Junior-Senior H S",
+     "wrestler2_id": "ee55b42c-40dd-44bc-af32-ad5b82732bd2",
+     "wrestler2_name_raw": "Luke Tompkins",
+     "wrestler2_school_id": 32,
+     "wrestler2_school_raw": "High Point",
+     "winner": 1,
+     "result_type": "Dec",
+     "result_detail": "1-0",
+     "fall_time_seconds": null,
+     "created_at": "2026-07-30T01:41:40.260375+00:00",
+     "source_format": "rtf",
+     "result_time_estimated": false,
+     "winner_score": 1,
+     "loser_score": 0
+    }
+   ]
+  },
+  "32c1f806-8608-4dc2-8305-150ab6445f6e": {
+   "dual": [],
+   "tourn": [
+    {
+     "id": "a3b4c65f-907b-4eb6-951f-6b9ddcaaa67a",
+     "in_season_tournament_id": "70adba68-8cee-4665-ae0e-932f951ecbee",
+     "weight_class": 120,
+     "round": "QF",
+     "wrestler1_id": "32c1f806-8608-4dc2-8305-150ab6445f6e",
+     "wrestler1_name_raw": "Storm Hoffman",
+     "wrestler1_school_id": 814,
+     "wrestler1_school_raw": "Delmar Junior-Senior H S",
+     "wrestler2_id": "42e18bb2-258e-40aa-b613-2ee84c8aa333",
+     "wrestler2_name_raw": "Brady Conklin",
+     "wrestler2_school_id": 32,
+     "wrestler2_school_raw": "High Point",
+     "winner": 1,
+     "result_type": "Dec",
+     "result_detail": "7-4",
+     "fall_time_seconds": null,
+     "created_at": "2026-07-30T01:41:40.260375+00:00",
+     "source_format": "rtf",
+     "result_time_estimated": false,
+     "winner_score": 7,
+     "loser_score": 4
+    }
+   ]
+  },
+  "823b6bbd-f364-4011-bd47-f58206dd52c9": {
+   "dual": [
+    {
+     "id": "7160fb41-72b4-4b4d-a848-c50f6b91e0a1",
+     "dual_meet_id": "5a38500d-e736-4ce9-ad2d-284781f473f9",
+     "weight_class": 175,
+     "wrestler_a_id": "d6aae514-fa5d-436b-9d0d-5373ce9071a3",
+     "wrestler_b_id": "823b6bbd-f364-4011-bd47-f58206dd52c9",
+     "school_a_id": 394,
+     "school_b_id": 522,
+     "winner_id": "d6aae514-fa5d-436b-9d0d-5373ce9071a3",
+     "result_type": "Fall",
+     "result_detail": null,
+     "fall_time_seconds": 360,
+     "team1_points": 6,
+     "team2_points": 0,
+     "is_double_forfeit": false,
+     "is_forfeit_win": false,
+     "validated": false,
+     "created_at": "2026-08-08T20:42:52.484985+00:00",
+     "wrestler_a_name_raw": "Benjamin Marques",
+     "wrestler_b_name_raw": "Luca Cenatiempo",
+     "result_time_estimated": true,
+     "winner_score": null,
+     "loser_score": null,
+     "order_index": 10
+    }
+   ],
+   "tourn": []
+  },
+  "9005432c-1b6c-4b75-8705-9481d7a589e7": {
+   "dual": [],
+   "tourn": [
+    {
+     "id": "f594cde2-2421-469b-b9a3-e428d4eddfab",
+     "in_season_tournament_id": "bb71400d-6a29-42e2-aa14-f6b83650bec0",
+     "weight_class": 175,
+     "round": "3rd_Place",
+     "wrestler1_id": "9005432c-1b6c-4b75-8705-9481d7a589e7",
+     "wrestler1_name_raw": "Brody Kelly",
+     "wrestler1_school_id": 832,
+     "wrestler1_school_raw": "IC Catholic Prep - INACTIVE",
+     "wrestler2_id": "0cf32220-fa3b-422a-80fb-3e66038b0c97",
+     "wrestler2_name_raw": "Gabe Logan",
+     "wrestler2_school_id": 82,
+     "wrestler2_school_raw": "Delbarton School",
+     "winner": 1,
+     "result_type": "SV-1",
+     "result_detail": "6-5",
+     "fall_time_seconds": null,
+     "created_at": "2026-07-29T22:37:47.980063+00:00",
+     "source_format": "rtf",
+     "result_time_estimated": false,
+     "winner_score": 6,
+     "loser_score": 5
+    }
+   ]
+  }
+ },
+ "snapshot": {
+  "snapshot_streak_state": [
+   {
+    "wrestler_id": "fb40c6eb-f7be-424f-8e06-b2d647820d5c",
+    "season": "2025-26",
+    "streak_type": "pin",
+    "current_len": 0,
+    "started_on": null,
+    "last_updated": "2026-03-12"
+   },
+   {
+    "wrestler_id": "fb40c6eb-f7be-424f-8e06-b2d647820d5c",
+    "season": "2025-26",
+    "streak_type": "tech",
+    "current_len": 0,
+    "started_on": null,
+    "last_updated": "2026-03-12"
+   },
+   {
+    "wrestler_id": "fb40c6eb-f7be-424f-8e06-b2d647820d5c",
+    "season": "2025-26",
+    "streak_type": "bonus",
+    "current_len": 0,
+    "started_on": null,
+    "last_updated": "2026-03-12"
+   },
+   {
+    "wrestler_id": "fb40c6eb-f7be-424f-8e06-b2d647820d5c",
+    "season": "2025-26",
+    "streak_type": "win",
+    "current_len": 0,
+    "started_on": null,
+    "last_updated": "2026-03-12"
+   },
+   {
+    "wrestler_id": "823b6bbd-f364-4011-bd47-f58206dd52c9",
+    "season": "2025-26",
+    "streak_type": "pin",
+    "current_len": 0,
+    "started_on": null,
+    "last_updated": "2026-03-12"
+   },
+   {
+    "wrestler_id": "823b6bbd-f364-4011-bd47-f58206dd52c9",
+    "season": "2025-26",
+    "streak_type": "tech",
+    "current_len": 0,
+    "started_on": null,
+    "last_updated": "2026-03-12"
+   },
+   {
+    "wrestler_id": "823b6bbd-f364-4011-bd47-f58206dd52c9",
+    "season": "2025-26",
+    "streak_type": "bonus",
+    "current_len": 0,
+    "started_on": null,
+    "last_updated": "2026-03-12"
+   },
+   {
+    "wrestler_id": "823b6bbd-f364-4011-bd47-f58206dd52c9",
+    "season": "2025-26",
+    "streak_type": "win",
+    "current_len": 0,
+    "started_on": null,
+    "last_updated": "2026-03-12"
+   }
+  ],
+  "snapshot_season_highs": "column snapshot_season_highs.wrestler_id does not exist",
+  "snapshot_streak_state_girls": [],
+  "snapshot_season_highs_girls": "column snapshot_season_highs_girls.wrestler_id does not exist"
+ }
+}

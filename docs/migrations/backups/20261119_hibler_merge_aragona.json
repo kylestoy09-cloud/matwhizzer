@@ -1,0 +1,128 @@
+{
+ "wrestler": [
+  {
+   "id": "5bcbf575-c742-4d12-8987-71c96dc0f47b",
+   "first_name": "August",
+   "last_name": "Hibler",
+   "suffix": null,
+   "gender": "M",
+   "graduation_year": null,
+   "created_at": "2026-11-14T05:17:56.124992+00:00",
+   "tw_id": null,
+   "is_stub": false,
+   "is_oos": false,
+   "main_weight": null,
+   "grade": null,
+   "grade_confirmed_at": null,
+   "grade_confirmed_source": null,
+   "projected_weight_class": null,
+   "confirmed_weight_class": null,
+   "is_active": false,
+   "status": null,
+   "status_season_id": null,
+   "status_note": null,
+   "status_set_at": null,
+   "status_set_by": null,
+   "origin": null,
+   "history_note": null
+  }
+ ],
+ "profiles": [
+  {
+   "wrestler_id": "22210b79-7c2f-48aa-b5a3-a280af0ffe6f",
+   "gender": "M",
+   "created": true,
+   "first_season": 2024,
+   "last_season": 2024,
+   "created_at": "2026-11-14T05:17:59.470567+00:00"
+  },
+  {
+   "wrestler_id": "5bcbf575-c742-4d12-8987-71c96dc0f47b",
+   "gender": "M",
+   "created": true,
+   "first_season": 2022,
+   "last_season": 2022,
+   "created_at": "2026-11-14T05:17:58.944668+00:00"
+  }
+ ],
+ "prospect": [
+  {
+   "id": 10688,
+   "first_name": "Jojo",
+   "last_name": "Aragona",
+   "state": "PA",
+   "club_id": null,
+   "class_year": null,
+   "wrestler_id": null,
+   "notes": null,
+   "created_at": "2026-11-19T00:01:51.061939+00:00",
+   "club_listed": null
+  }
+ ],
+ "tournament_entries.wrestler_id": [
+  {
+   "id": "e8d64fa8-7504-4760-b0ad-bb820de359dd",
+   "wrestler_id": "5bcbf575-c742-4d12-8987-71c96dc0f47b",
+   "tournament_id": 557,
+   "school_id": 21,
+   "weight_class_id": 60,
+   "seed": null,
+   "grade": null,
+   "grade_label": null,
+   "wins": 0,
+   "losses": 0,
+   "record_snapshot": null,
+   "region_placement": null,
+   "school_context_raw": "Bergen Catholic",
+   "bracket_position": null,
+   "seed_source": null,
+   "team_points": 0
+  },
+  {
+   "id": "ef513d56-c55a-4b83-b881-4121bb8ea69f",
+   "wrestler_id": "5bcbf575-c742-4d12-8987-71c96dc0f47b",
+   "tournament_id": 586,
+   "school_id": 21,
+   "weight_class_id": 60,
+   "seed": null,
+   "grade": null,
+   "grade_label": null,
+   "wins": 0,
+   "losses": 0,
+   "record_snapshot": null,
+   "region_placement": null,
+   "school_context_raw": "Bergen Catholic",
+   "bracket_position": null,
+   "seed_source": null,
+   "team_points": 0
+  }
+ ],
+ "playoff_history_entrants.wrestler_id": [
+  {
+   "id": 241883,
+   "season_id": 2022,
+   "gender": "M",
+   "kind": "district",
+   "num": 5,
+   "weight": 150,
+   "name": "August Hibler",
+   "team": "Bergen Catholic",
+   "seed": null,
+   "place": 1,
+   "wrestler_id": "5bcbf575-c742-4d12-8987-71c96dc0f47b"
+  },
+  {
+   "id": 245035,
+   "season_id": 2022,
+   "gender": "M",
+   "kind": "region",
+   "num": 2,
+   "weight": 150,
+   "name": "August Hibler",
+   "team": "Bergen Catholic",
+   "seed": null,
+   "place": 6,
+   "wrestler_id": "5bcbf575-c742-4d12-8987-71c96dc0f47b"
+  }
+ ]
+}

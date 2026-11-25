@@ -218,10 +218,12 @@ export function PersonalizedHome() {
       if (allSchoolIds.length > 0) {
         try {
           // Get recent tournament entries for user's schools
+          // the live season's postseason only (tournament ids aren't in season order: past seasons were loaded later)
           const { data: entries } = await supabase
             .from('tournament_entries')
-            .select('id')
+            .select('id, tournaments!inner(season_id)')
             .in('school_id', allSchoolIds)
+            .eq('tournaments.season_id', liveSeasonId(seasons, gender === 'F' ? 'F' : 'M') ?? 0)
             .order('tournament_id', { ascending: false })
             .limit(200)
 

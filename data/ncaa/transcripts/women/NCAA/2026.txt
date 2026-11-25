@@ -1,0 +1,541 @@
+# source: 2026 NCAA Women's Championships (FloWrestling CSV; rounds from the bracket PDF slots and each wrestler's path)
+
+@ 103
+1 Heather Crull | McKendree
+16 Alyssa Sedillo | D'Youville
+- Sloane Kruger | Presbyterian
+8 Alexis Winecke | Wis.-Stevens Point
+5 Madison Avila | North Central (IL)
+12 Olivia Klein | East Stroudsburg
+13 Emily Doolittle | Felician
+4 Rayana Sahagun | Grand Valley St.
+3 Mia Zuniga | Colorado Mesa
+14 Aaliyah Payne-Parris | Sacred Heart
+11 Brianna Vollendroff | Chadron St.
+6 Trinity Pendergrass | Quincy
+7 Genesis Ramirez | Aurora
+10 Lilian Prendergast | Mount Olive
+15 Rebekah Jean-Baptiste | Emmanuel (GA)
+2 Valarie Solorio | Iowa
+- Madeline Gavares | Ursinus
+- Jesenia Camargo | Eastern
+pigtail Sloane Kruger > Madeline Gavares | F 2-0 1:03
+pigtail Lilian Prendergast > Jesenia Camargo | TF 12-2 4:04
+r1 Mia Zuniga > Aaliyah Payne-Parris | F 4-2 2:30
+r1 Valarie Solorio > Rebekah Jean-Baptiste | TF 11-0 2:24
+r1 Genesis Ramirez > Lilian Prendergast | DEC 4-0
+r1 Trinity Pendergrass > Brianna Vollendroff | DEC 8-7
+r1 Rayana Sahagun > Emily Doolittle | F 12-1 3:38
+r1 Alexis Winecke > Sloane Kruger | DEC 8-3
+r1 Heather Crull > Alyssa Sedillo | TF 10-0 1:37
+r1 Madison Avila > Olivia Klein | F 8-0 1:38
+cpig Olivia Klein > Jesenia Camargo | DEC 8-0
+cpig Brianna Vollendroff > Madeline Gavares | F 6-0 0:41
+c1 Brianna Vollendroff > Aaliyah Payne-Parris | DEC 9-0
+c1 Sloane Kruger > Alyssa Sedillo | F 9-4 5:51
+c1 Rebekah Jean-Baptiste > Lilian Prendergast | DEC 9-7
+c1 Olivia Klein > Emily Doolittle | F 10-1 1:58
+qf Trinity Pendergrass > Mia Zuniga | DEC 12-4
+qf Heather Crull > Alexis Winecke | TF 15-5 5:55
+qf Rayana Sahagun > Madison Avila | F 4-3 5:11
+qf Valarie Solorio > Genesis Ramirez | DEC 7-1
+c2 Alexis Winecke > Rebekah Jean-Baptiste | TF 10-0 1:32
+c2 Genesis Ramirez > Sloane Kruger | DEC 10-1
+c2 Madison Avila > Brianna Vollendroff | TF 10-0 3:52
+c2 Mia Zuniga > Olivia Klein | DEC 8-6
+sf Valarie Solorio > Trinity Pendergrass | F 4-0 0:40
+sf Rayana Sahagun > Heather Crull | DEC 7-7
+cqf Genesis Ramirez > Mia Zuniga | DEC 11-8
+cqf Madison Avila > Alexis Winecke | TF 12-2 3:13
+csf Madison Avila > Trinity Pendergrass | DEC 5-3
+csf Genesis Ramirez > Heather Crull | DEC 4-3
+7th Alexis Winecke > Mia Zuniga | DEC 11-9
+5th Trinity Pendergrass > Heather Crull | DEC 11-10
+3rd Genesis Ramirez > Madison Avila | DEC 6-5
+f Valarie Solorio > Rayana Sahagun | TF 13-1 5:06
+
+@ 110
+1 Audrey Jimenez | Lehigh
+- Abby Duke | Elmira
+- Adriana Gomez | Colorado Mesa
+8 Afftynn Stusse | Wartburg
+5 Nyla Valencia | Iowa
+14 Kellie Kennedy | Otterbein
+13 Victoria Orender | Western New Eng.
+4 Gabriele Tedesco | McKendree
+3 Kaelani Shufeldt | North Central (IL)
+12 Emily Mendez | William Jewell
+11 Theresa Zeppetelli | Felician
+6 Chloe Dearwester | Presbyterian
+7 Teegan Sibble | East Stroudsburg
+- Alexandra Tchekounova | Quincy
+15 Sylvyn Parham | Muhlenberg
+2 Sage Mortimer | Grand Valley St.
+- Avery Kibelbek | King (TN)
+- Katie Simmons | Mount Olive
+pigtail Alexandra Tchekounova > Avery Kibelbek | DEC 5-3
+pigtail Adriana Gomez > Katie Simmons | TF 11-0 1:36
+r1 Audrey Jimenez > Abby Duke | TF 10-0 1:11
+r1 Teegan Sibble > Alexandra Tchekounova | F 4-0 0:20
+r1 Nyla Valencia > Kellie Kennedy | TF 10-0 0:30
+r1 Kaelani Shufeldt > Emily Mendez | TF 13-2 4:51
+r1 Sage Mortimer > Sylvyn Parham | TF 10-0 1:07
+r1 Adriana Gomez > Afftynn Stusse | DEC 3-2
+r1 Chloe Dearwester > Theresa Zeppetelli | F 6-0 0:50
+r1 Gabriele Tedesco > Victoria Orender | TF 16-5 2:33
+cpig Theresa Zeppetelli > Katie Simmons | F 12-8 4:24
+cpig Avery Kibelbek > Kellie Kennedy | TF 11-0 4:46
+c1 Afftynn Stusse > Abby Duke | TF 10-0 2:46
+c1 Emily Mendez > Theresa Zeppetelli | F 10-2 5:15
+c1 Avery Kibelbek > Victoria Orender | TF 14-3 2:09
+c1 Alexandra Tchekounova > Sylvyn Parham | TF 10-0 3:33
+qf Sage Mortimer > Teegan Sibble | TF 20-8 5:29
+qf Nyla Valencia > Gabriele Tedesco | DEC 4-4
+qf Audrey Jimenez > Adriana Gomez | TF 10-0 3:35
+qf Chloe Dearwester > Kaelani Shufeldt | DQ 0-2
+c2 Teegan Sibble > Afftynn Stusse | F 7-10 5:00
+c2 Gabriele Tedesco > Emily Mendez | TF 11-0 2:39
+c2 Avery Kibelbek > Kaelani Shufeldt | FOR 0-0
+c2 Adriana Gomez > Alexandra Tchekounova | DEC 10-2
+sf Sage Mortimer > Chloe Dearwester | M FOR 0-0
+sf Audrey Jimenez > Nyla Valencia | TF 13-2 4:45
+cqf Teegan Sibble > Avery Kibelbek | DEC 8-6
+cqf Gabriele Tedesco > Adriana Gomez | TF 10-0 4:25
+csf Gabriele Tedesco > Chloe Dearwester | M FOR 0-0
+csf Nyla Valencia > Teegan Sibble | TF 12-1 2:17
+7th Avery Kibelbek > Adriana Gomez | TF 10-0 3:38
+5th Teegan Sibble > Chloe Dearwester | DEF 0-0
+3rd Gabriele Tedesco > Nyla Valencia | M FOR 0-0
+f Audrey Jimenez > Sage Mortimer | F 6-1 1:50
+
+@ 117
+1 Yu Sakamoto | McKendree
+16 Jenna Anderson | Presbyterian
+9 Maddie Ripley | Western New Eng.
+8 Leiannah Landreth | Fort Hays St.
+5 Brianna Gonzalez | Iowa
+12 Josey Wehr | Eastern
+13 Icart Galumette | Delaware St.
+4 Alexandra Waitsman | William Jewell
+3 Riley Rayome | North Central (IL)
+11 Nohea Moniz | Sacred Heart
+14 Kiely Tabaldo | Grand Valley St.
+6 Abigail Cooper | Lehigh
+7 Shea Reisel | Dubuque
+- Carleigh Czerneski | Adrian
+15 Trinity Howard | West Liberty
+2 Karissa Turnwall | Emmanuel (GA)
+- Dianna Pineda | Alfred St.
+- Gable Hemann | Wartburg
+pigtail Carleigh Czerneski > Dianna Pineda | TF 10-0 1:51
+pigtail Maddie Ripley > Gable Hemann | F 8-0 1:08
+r1 Maddie Ripley > Leiannah Landreth | F 8-8 3:47
+r1 Karissa Turnwall > Trinity Howard | TF 10-0 1:48
+r1 Icart Galumette > Alexandra Waitsman | F 6-10 2:40
+r1 Riley Rayome > Nohea Moniz | F 4-0 0:49
+r1 Shea Reisel > Carleigh Czerneski | DEC 8-4
+r1 Abigail Cooper > Kiely Tabaldo | TF 11-1 2:35
+r1 Yu Sakamoto > Jenna Anderson | TF 13-2 4:28
+r1 Brianna Gonzalez > Josey Wehr | TF 12-0 3:00
+cpig Gable Hemann > Kiely Tabaldo | F 6-0 1:30
+cpig Josey Wehr > Dianna Pineda | TF 12-2 4:48
+c1 Gable Hemann > Nohea Moniz | F 6-0 1:56
+c1 Jenna Anderson > Leiannah Landreth | DEC 8-4
+c1 Alexandra Waitsman > Josey Wehr | TF 10-0 2:42
+c1 Carleigh Czerneski > Trinity Howard | TF 12-1 5:51
+qf Karissa Turnwall > Shea Reisel | TF 11-1 4:27
+qf Riley Rayome > Abigail Cooper | DEC 9-4
+qf Yu Sakamoto > Maddie Ripley | DEC 11-7
+qf Brianna Gonzalez > Icart Galumette | F 16-10 5:03
+c2 Gable Hemann > Icart Galumette | F 4-4 1:28
+c2 Carleigh Czerneski > Maddie Ripley | DEC 6-0
+c2 Jenna Anderson > Shea Reisel | TF 12-1 4:06
+c2 Abigail Cooper > Alexandra Waitsman | DEC 8-5
+sf Yu Sakamoto > Brianna Gonzalez | DEC 17-10
+sf Riley Rayome > Karissa Turnwall | TF 12-2 5:57
+cqf Carleigh Czerneski > Gable Hemann | DEC 7-2
+cqf Jenna Anderson > Abigail Cooper | F 10-2 5:03
+csf Karissa Turnwall > Carleigh Czerneski | TF 14-4 6:00
+csf Brianna Gonzalez > Jenna Anderson | DEC 3-2
+7th Abigail Cooper > Gable Hemann | DEC 7-1
+5th Carleigh Czerneski > Jenna Anderson | DEC 7-4
+3rd Brianna Gonzalez > Karissa Turnwall | DEC 4-2
+f Yu Sakamoto > Riley Rayome | DEC 4-3
+
+@ 124
+1 Sara Sterner | North Central (IL)
+16 Megan Edwards | Elmira
+9 Annesley Day | Tiffin
+8 Alyssa Mahan | Presbyterian
+5 Aspen Blasko | Grand Valley St.
+12 Linda Holeman | Western New Eng.
+14 Cali Leng | Iowa
+4 Shelby Moore | McKendree
+3 Xochitl Mota-Pettis | Quincy
+13 Laura Alcantar Soto | Simon Fraser
+11 Brianna Holcomb | Frostburg St
+6 Savannah Witt | Eastern
+7 Lorianna Piestewa | Colorado Mesa
+- Mariah Mills | West Liberty
+15 Lauren Nguyen | Sacred Heart
+2 Virginia Foard | King (TN)
+- Jayleah Pletz | Lock Haven
+- Sophie Bowers | Wartburg
+pigtail Annesley Day > Jayleah Pletz | F 6-3 4:38
+pigtail Mariah Mills > Sophie Bowers | DEC 6-2
+r1 Lorianna Piestewa > Mariah Mills | TF 11-0 5:06
+r1 Alyssa Mahan > Annesley Day | TF 11-0 2:28
+r1 Sara Sterner > Megan Edwards | TF 11-0 2:07
+r1 Savannah Witt > Brianna Holcomb | F 5-0 0:34
+r1 Xochitl Mota-Pettis > Laura Alcantar Soto | TF 12-1 3:12
+r1 Aspen Blasko > Linda Holeman | TF 11-0 2:55
+r1 Virginia Foard > Lauren Nguyen | F 6-0 0:40
+r1 Shelby Moore > Cali Leng | DEC 1-1
+cpig Brianna Holcomb > Jayleah Pletz | F 3-4 3:38
+cpig Sophie Bowers > Linda Holeman | TF 10-0 2:47
+c1 Cali Leng > Sophie Bowers | F 7-0 5:48
+c1 Mariah Mills > Lauren Nguyen | DEC 12-7
+c1 Megan Edwards > Annesley Day | DEC 16-10
+c1 Laura Alcantar Soto > Brianna Holcomb | DEC 18-11
+qf Lorianna Piestewa > Virginia Foard | DEC 8-5
+qf Xochitl Mota-Pettis > Savannah Witt | F 8-5 4:33
+qf Sara Sterner > Alyssa Mahan | TF 11-1 5:45
+qf Shelby Moore > Aspen Blasko | DEC 9-0
+c2 Aspen Blasko > Laura Alcantar Soto | F 7-0 4:23
+c2 Virginia Foard > Megan Edwards | TF 10-0 3:00
+c2 Savannah Witt > Cali Leng | DEC 9-1
+c2 Alyssa Mahan > Mariah Mills | TF 10-0 5:21
+sf Xochitl Mota-Pettis > Lorianna Piestewa | TF 10-0 1:29
+sf Shelby Moore > Sara Sterner | DEC 7-4
+cqf Virginia Foard > Savannah Witt | DEC 16-9
+cqf Aspen Blasko > Alyssa Mahan | DEC 10-8
+csf Sara Sterner > Virginia Foard | TF 11-0 3:33
+csf Lorianna Piestewa > Aspen Blasko | DEC 12-3
+7th Savannah Witt > Alyssa Mahan | DEC 11-4
+5th Aspen Blasko > Virginia Foard | TF 10-0 2:29
+3rd Sara Sterner > Lorianna Piestewa | DEC 10-5
+f Xochitl Mota-Pettis > Shelby Moore | TF 10-0 5:49
+
+@ 131
+1 Cameron Guerin | McKendree
+16 Christina Borgmann | Felician
+9 Madeline Barton | Quincy
+8 Kassey Daugherty | Presbyterian
+5 Abigail Mozden | Mount Union
+12 Piper Cadden | Chadron St.
+13 Makayla Paclib | Pitt.-Johnstown
+4 Karlee Brooks | Iowa
+3 Alexis Janiak | Aurora
+14 Jazmene Molina | Western New Eng.
+11 Lindsey Rywolt | Bridgeport
+6 Yele Aycock | North Central (IL)
+7 Janida Garcia | Emmanuel (GA)
+- Cassia Zammit | West Liberty
+15 Isis Severe | Allen
+2 Aubre Krazer | Lehigh
+- Mackenzie Childers | Wartburg
+- Agnia Krakovska | Simon Fraser
+pigtail Cassia Zammit > Mackenzie Childers | DEC 11-4
+pigtail Madeline Barton > Agnia Krakovska | DEC 11-4
+r1 Alexis Janiak > Jazmene Molina | TF 10-0 2:29
+r1 Cameron Guerin > Christina Borgmann | F 4-0 1:01
+r1 Kassey Daugherty > Madeline Barton | TF 10-0 2:40
+r1 Abigail Mozden > Piper Cadden | F 8-2 2:32
+r1 Aubre Krazer > Isis Severe | TF 10-0 1:43
+r1 Karlee Brooks > Makayla Paclib | TF 12-2 5:06
+r1 Cassia Zammit > Janida Garcia | DEC 3-0
+r1 Lindsey Rywolt > Yele Aycock | F 4-0 0:49
+cpig Piper Cadden > Mackenzie Childers | DEC 5-0
+cpig Agnia Krakovska > Yele Aycock | DEC 6-1
+c1 Janida Garcia > Isis Severe | TF 11-0 4:37
+c1 Madeline Barton > Christina Borgmann | F 2-1 3:40
+c1 Jazmene Molina > Agnia Krakovska | DEC 4-2
+c1 Makayla Paclib > Piper Cadden | DEC 4-1
+qf Alexis Janiak > Lindsey Rywolt | TF 10-0 2:59
+qf Cameron Guerin > Kassey Daugherty | DEC 5-1
+qf Aubre Krazer > Cassia Zammit | F 4-3 2:48
+qf Abigail Mozden > Karlee Brooks | F 4-7 1:48
+c2 Makayla Paclib > Lindsey Rywolt | DEC 9-2
+c2 Janida Garcia > Kassey Daugherty | F 4-0 0:31
+c2 Karlee Brooks > Jazmene Molina | DEC 14-7
+c2 Cassia Zammit > Madeline Barton | TF 12-1 4:43
+sf Alexis Janiak > Aubre Krazer | DEC 4-0
+sf Cameron Guerin > Abigail Mozden | TF 14-4 3:28
+cqf Janida Garcia > Karlee Brooks | DEC 3-2
+cqf Cassia Zammit > Makayla Paclib | DEC 6-4
+csf Cassia Zammit > Abigail Mozden | DEC 13-8
+csf Aubre Krazer > Janida Garcia | TF 10-0 1:56
+7th Karlee Brooks > Makayla Paclib | TF 10-0 3:28
+5th Abigail Mozden > Janida Garcia | F 2-0 0:19
+3rd Aubre Krazer > Cassia Zammit | DEC 3-2
+f Cameron Guerin > Alexis Janiak | DEC 5-5
+
+@ 138
+1 Katerina Lange | Grand Valley St.
+11 Tanya Teneva | Western New Eng.
+- Aine Moffit | Augustana (IL)
+8 Carina Giangeruso | Presbyterian
+5 Jacinda Espinosa | Lindenwood
+12 Maura White | York
+13 Kalyse Hill | Mount Olive
+4 Lilly Luft | Iowa
+3 Haylie Jaffe | McKendree
+14 Kryssceah Ravenelle | Lehigh
+16 Sophia Ball | Aurora
+6 Jaclyn Dehney | New England Col.
+7 Kylie Rule | Wartburg
+10 Ragan Retell | East Stroudsburg
+15 Ella Finding | Simon Fraser
+2 Claire DiCugno | North Central (IL)
+- Ruby Julien-Newsom | King (TN)
+- Lina Rodriguez | Felician
+pigtail Ragan Retell > Ruby Julien-Newsom | F 4-0 0:24
+pigtail Aine Moffit > Lina Rodriguez | F 10-0 2:27
+r1 Haylie Jaffe > Kryssceah Ravenelle | DEC 5-0
+r1 Aine Moffit > Carina Giangeruso | F 6-9 3:33
+r1 Jacinda Espinosa > Maura White | DEC 15-8
+r1 Katerina Lange > Tanya Teneva | TF 10-0 3:59
+r1 Kylie Rule > Ragan Retell | F 4-1 1:55
+r1 Sophia Ball > Jaclyn Dehney | F 8-3 4:05
+r1 Claire DiCugno > Ella Finding | TF 10-0 4:59
+r1 Lilly Luft > Kalyse Hill | F 12-0 2:45
+cpig Ruby Julien-Newsom > Maura White | DEC 8-7
+cpig Jaclyn Dehney > Lina Rodriguez | F 4-0 1:25
+c1 Ruby Julien-Newsom > Kalyse Hill | F 11-0 4:30
+c1 Kryssceah Ravenelle > Jaclyn Dehney | F 4-3 2:51
+c1 Carina Giangeruso > Tanya Teneva | TF 13-2 1:57
+c1 Ragan Retell > Ella Finding | F 4-0 2:05
+qf Katerina Lange > Aine Moffit | DEC 7-2
+qf Haylie Jaffe > Sophia Ball | DEC 10-2
+qf Lilly Luft > Jacinda Espinosa | DEC 4-1
+qf Claire DiCugno > Kylie Rule | TF 11-1 3:36
+c2 Jacinda Espinosa > Kryssceah Ravenelle | DEC 12-4
+c2 Ruby Julien-Newsom > Sophia Ball | DEC 10-10
+c2 Kylie Rule > Carina Giangeruso | TF 14-4 6:00
+c2 Aine Moffit > Ragan Retell | DEC 7-7
+sf Katerina Lange > Lilly Luft | DEC 4-3
+sf Claire DiCugno > Haylie Jaffe | TF 11-0 2:31
+cqf Jacinda Espinosa > Aine Moffit | F 6-2 2:10
+cqf Kylie Rule > Ruby Julien-Newsom | DEC 10-2
+csf Haylie Jaffe > Jacinda Espinosa | TF 10-0 5:31
+csf Lilly Luft > Kylie Rule | TF 12-2 3:34
+7th Aine Moffit > Ruby Julien-Newsom | DEC 8-1
+5th Kylie Rule > Jacinda Espinosa | DEC 7-2
+3rd Haylie Jaffe > Lilly Luft | DEC 5-3
+f Katerina Lange > Claire DiCugno | DEC 4-1
+
+@ 145
+1 Reese Larramendy | Iowa
+16 Nichole Moore | Fort Hays St.
+9 Cloe Charlesworth | Ursinus
+8 Madeline Kubicki | Presbyterian
+5 Alexandra Szkotnicki | McKendree
+12 Aniyah Kelly | Wartburg
+13 Selina Moore | East Stroudsburg
+4 Alissa Caltagirone | Northern Mich.
+3 Zoey Lints | Elmira
+- Alexandra Ford | Emmanuel (GA)
+15 Margaret Buurma | Grand Valley St.
+6 Annelise Obermark | Simpson
+7 Liv Wieber | Simon Fraser
+- Louise Juitt | Delaware St.
+11 Sanyah Queen | Western New Eng.
+2 Bella Mir | North Central (IL)
+- Zoey Haines | Eastern
+- Selena Sifuentes Shaffer | Sacred Heart
+pigtail Louise Juitt > Zoey Haines | F 4-0 1:16
+pigtail Cloe Charlesworth > Selena Sifuentes Shaffer | TF 10-0 2:58
+r1 Reese Larramendy > Nichole Moore | TF 11-1 5:35
+r1 Liv Wieber > Louise Juitt | F 6-0 1:47
+r1 Alissa Caltagirone > Selina Moore | TF 12-0 1:15
+r1 Alexandra Ford > Zoey Lints | DEC 5-3
+r1 Alexandra Szkotnicki > Aniyah Kelly | F 8-0 3:37
+r1 Bella Mir > Sanyah Queen | TF 11-0 2:41
+r1 Annelise Obermark > Margaret Buurma | TF 13-2 4:13
+r1 Madeline Kubicki > Cloe Charlesworth | F 6-4 2:00
+cpig Margaret Buurma > Selena Sifuentes Shaffer | TF 10-0 2:54
+cpig Zoey Haines > Aniyah Kelly | F 4-5 4:18
+c1 Nichole Moore > Cloe Charlesworth | TF 11-0 4:07
+c1 Louise Juitt > Sanyah Queen | F 4-0 2:21
+c1 Margaret Buurma > Zoey Lints | DEC 8-2
+c1 Zoey Haines > Selina Moore | F 4-1 0:53
+qf Alexandra Szkotnicki > Alissa Caltagirone | TF 10-0 3:17
+qf Annelise Obermark > Alexandra Ford | TF 12-1 4:43
+qf Reese Larramendy > Madeline Kubicki | TF 12-2 3:31
+qf Bella Mir > Liv Wieber | TF 10-0 0:52
+c2 Margaret Buurma > Alissa Caltagirone | DEC 4-4
+c2 Zoey Haines > Alexandra Ford | F 4-2 0:57
+c2 Liv Wieber > Nichole Moore | DEC 5-1
+c2 Madeline Kubicki > Louise Juitt | F 4-0 2:17
+sf Bella Mir > Annelise Obermark | TF 10-0 2:11
+sf Reese Larramendy > Alexandra Szkotnicki | TF 13-1 4:50
+cqf Liv Wieber > Zoey Haines | F 4-2 2:31
+cqf Madeline Kubicki > Margaret Buurma | TF 10-0 3:00
+csf Liv Wieber > Alexandra Szkotnicki | F 3-10 5:02
+csf Madeline Kubicki > Annelise Obermark | F 8-0 1:02
+7th Margaret Buurma > Zoey Haines | DEC 15-7
+5th Annelise Obermark > Alexandra Szkotnicki | DEC 11-10
+3rd Liv Wieber > Madeline Kubicki | F 4-2 1:45
+f Bella Mir > Reese Larramendy | F 5-0 2:26
+
+@ 160
+1 Kennedy Blades | Iowa
+16 Vida Beckel | Emmanuel (GA)
+9 Lene McCrackin | Simon Fraser
+8 Keeley Kehrli | Simpson
+5 May Cuyler | Presbyterian
+12 Sky De Leon | Western New Eng.
+13 Love Daley | Sacred Heart
+4 Stella Steigler | King (TN)
+3 Tiffani Baublitz | East Stroudsburg
+11 Alexis Burton | Fort Hays St.
+14 Presley Mccandlish | Lock Haven
+6 Taylor Graveman | North Central (IL)
+7 Alexandra Hofrichter | Dubuque
+- Noelle Gaffney | Grand Valley St.
+15 Sophia Bassino | Northern Mich.
+2 Savannah Gomez | McKendree
+- Olivia Kinder | Eastern
+- Tehana Savory | New Jersey City
+pigtail Noelle Gaffney > Olivia Kinder | TF 10-0 5:50
+pigtail Lene McCrackin > Tehana Savory | TF 13-2 1:59
+r1 Taylor Graveman > Presley Mccandlish | TF 10-0 2:15
+r1 Tiffani Baublitz > Alexis Burton | DEC 12-3
+r1 Noelle Gaffney > Alexandra Hofrichter | DEC 5-2
+r1 Savannah Gomez > Sophia Bassino | TF 12-0 2:46
+r1 May Cuyler > Sky De Leon | F 12-5 2:53
+r1 Stella Steigler > Love Daley | TF 12-2 5:49
+r1 Keeley Kehrli > Lene McCrackin | F 4-0 0:28
+r1 Kennedy Blades > Vida Beckel | F 10-0 2:03
+cpig Presley Mccandlish > Tehana Savory | DEC 16-8
+cpig Sky De Leon > Olivia Kinder | DEC 12-7
+c1 Love Daley > Sky De Leon | F 5-0 0:21
+c1 Alexis Burton > Presley Mccandlish | DEC 3-3
+c1 Alexandra Hofrichter > Sophia Bassino | F 8-9 4:49
+c1 Lene McCrackin > Vida Beckel | F 5-3 3:00
+qf Savannah Gomez > Noelle Gaffney | DEC 8-3
+qf Stella Steigler > May Cuyler | TF 10-0 4:45
+qf Kennedy Blades > Keeley Kehrli | TF 10-0 2:50
+qf Tiffani Baublitz > Taylor Graveman | TF 12-2 5:26
+c2 Keeley Kehrli > Alexandra Hofrichter | DEC 14-6
+c2 May Cuyler > Alexis Burton | F 8-0 1:12
+c2 Love Daley > Taylor Graveman | TF 10-0 1:52
+c2 Noelle Gaffney > Lene McCrackin | F 7-4 5:36
+sf Tiffani Baublitz > Savannah Gomez | DEC 2-1
+sf Kennedy Blades > Stella Steigler | DEC 9-1
+cqf Love Daley > Noelle Gaffney | F 9-6 5:58
+cqf May Cuyler > Keeley Kehrli | F 9-5 4:34
+csf Savannah Gomez > May Cuyler | TF 11-0 1:29
+csf Stella Steigler > Love Daley | DEC 11-4
+7th Keeley Kehrli > Noelle Gaffney | F 4-0 2:44
+5th May Cuyler > Love Daley | F 11-2 4:09
+3rd Stella Steigler > Savannah Gomez | DEC 5-0
+f Kennedy Blades > Tiffani Baublitz | F 6-0 1:19
+
+@ 180
+1 Kylie Welker | Iowa
+16 Genevieve An | Lehigh
+- Azariah Moore | Lock Haven
+8 Kara Kuge | Wis.-Stevens Point
+5 Abbie Miles | Northern Mich.
+11 Paige Maher | Simon Fraser
+13 Madeline Hodges | Sacred Heart
+4 Shenita Lawson | North Central (IL)
+3 Isabella Renfro | Fort Hays St.
+14 Isabella Gretzinger | Presbyterian
+12 Mia Gaetjens | Adrian
+6 Maryam Ndiaye | Augustana (IL)
+7 Isabella Phillips | Gannon
+9 Ay`Seante Ross | Norwich
+15 Atiyana Williams | Western New Eng.
+2 Destiny Rodriguez | McKendree
+- Journey Land | Mount Olive
+- Gemma Templeman | Emmanuel (GA)
+pigtail Ay`Seante Ross > Journey Land | F 13-8 4:12
+pigtail Azariah Moore > Gemma Templeman | TF 10-0 4:09
+r1 Isabella Renfro > Isabella Gretzinger | TF 11-0 2:12
+r1 Kylie Welker > Genevieve An | F 6-0 0:35
+r1 Paige Maher > Abbie Miles | TF 10-0 4:05
+r1 Isabella Phillips > Ay`Seante Ross | TF 11-0 2:25
+r1 Shenita Lawson > Madeline Hodges | TF 10-0 5:44
+r1 Azariah Moore > Kara Kuge | TF 10-0 4:10
+r1 Destiny Rodriguez > Atiyana Williams | DEC 5-0
+r1 Mia Gaetjens > Maryam Ndiaye | F 15-6 5:37
+cpig Journey Land > Abbie Miles | DEC 4-4
+cpig Gemma Templeman > Maryam Ndiaye | DEC 10-5
+c1 Madeline Hodges > Journey Land | DEC 9-2
+c1 Gemma Templeman > Isabella Gretzinger | DEC 4-4
+c1 Genevieve An > Kara Kuge | TF 10-0 2:23
+c1 Atiyana Williams > Ay`Seante Ross | TF 11-0 2:31
+qf Destiny Rodriguez > Isabella Phillips | DEC 5-4
+qf Kylie Welker > Azariah Moore | TF 11-0 1:43
+qf Shenita Lawson > Paige Maher | DEC 4-2
+qf Isabella Renfro > Mia Gaetjens | F 6-0 0:58
+c2 Azariah Moore > Atiyana Williams | TF 10-0 5:56
+c2 Paige Maher > Gemma Templeman | F 6-0 4:12
+c2 Mia Gaetjens > Madeline Hodges | F 6-0 1:09
+c2 Isabella Phillips > Genevieve An | TF 12-1 5:56
+sf Destiny Rodriguez > Isabella Renfro | F 5-3 2:53
+sf Kylie Welker > Shenita Lawson | F 10-0 1:53
+cqf Azariah Moore > Paige Maher | DEC 7-3
+cqf Isabella Phillips > Mia Gaetjens | TF 12-0 2:58
+csf Isabella Renfro > Azariah Moore | F 6-0 0:50
+csf Shenita Lawson > Isabella Phillips | DEC 4-1
+7th Paige Maher > Mia Gaetjens | F 6-0 1:24
+5th Isabella Phillips > Azariah Moore | DEC 7-2
+3rd Shenita Lawson > Isabella Renfro | DEC 7-2
+f Kylie Welker > Destiny Rodriguez | TF 11-0 3:00
+
+@ 207
+1 Tristan Kelly | McKendree
+16 Lindsay Laws | Lock Haven
+9 Alivia Davey | Ill. Wesleyan
+8 Maria Aiono | Presbyterian
+5 Katja Osteen | Iowa
+12 Talisha Lewis | Felician
+13 Esther Peters | Chadron St.
+4 Rewa Chababo | Wartburg
+3 Caroline Ward | North Central (IL)
+14 Elizabeth Stricklin | D'Youville
+11 Katianna Martinez | Marymount (VA)
+6 Jayleen Sekona | Colorado Mesa
+7 Josephine Larson | Sacred Heart
+10 Peyton Fries | York
+15 Zaria Robinson | Mount Olive
+2 Sabrina Nauss | Grand Valley St.
+- Jamie Shapton | West Liberty
+- Jasmin Ocampo | Carthage
+pigtail Alivia Davey > Jamie Shapton | DEC 6-0
+pigtail Peyton Fries > Jasmin Ocampo | F 2-0 1:32
+r1 Katja Osteen > Talisha Lewis | F 13-0 1:13
+r1 Caroline Ward > Elizabeth Stricklin | F 7-0 1:21
+r1 Rewa Chababo > Esther Peters | DEC 2-1
+r1 Jayleen Sekona > Katianna Martinez | M FOR 0-0
+r1 Sabrina Nauss > Zaria Robinson | F 11-0 1:28
+r1 Josephine Larson > Peyton Fries | F 4-0 1:08
+r1 Maria Aiono > Alivia Davey | DEC 9-0
+r1 Tristan Kelly > Lindsay Laws | TF 10-0 4:02
+cpig Jamie Shapton > Katianna Martinez | M FOR 0-0
+cpig Talisha Lewis > Jasmin Ocampo | F 8-1 2:06
+c1 Esther Peters > Talisha Lewis | DEC 3-1
+c1 Lindsay Laws > Alivia Davey | DEC 8-0
+c1 Elizabeth Stricklin > Jamie Shapton | DEC 3-1
+c1 Peyton Fries > Zaria Robinson | F 2-0 0:58
+qf Rewa Chababo > Katja Osteen | DEC 2-1
+qf Sabrina Nauss > Josephine Larson | F 6-0 1:35
+qf Caroline Ward > Jayleen Sekona | DEC 6-2
+qf Tristan Kelly > Maria Aiono | TF 10-0 4:21
+c2 Maria Aiono > Peyton Fries | TF 12-2 4:31
+c2 Katja Osteen > Elizabeth Stricklin | F 9-0 0:51
+c2 Jayleen Sekona > Esther Peters | DEC 10-5
+c2 Josephine Larson > Lindsay Laws | TF 11-0 3:49
+sf Sabrina Nauss > Caroline Ward | F 8-0 1:54
+sf Tristan Kelly > Rewa Chababo | TF 11-0 1:14
+cqf Katja Osteen > Maria Aiono | DEC 9-4
+cqf Jayleen Sekona > Josephine Larson | F 6-0 5:14
+csf Jayleen Sekona > Caroline Ward | F 9-2 2:52
+csf Rewa Chababo > Katja Osteen | DEC 2-1
+7th Maria Aiono > Josephine Larson | DEC 4-1
+5th Katja Osteen > Caroline Ward | DEC 8-4
+3rd Rewa Chababo > Jayleen Sekona | DEC 3-2
+f Tristan Kelly > Sabrina Nauss | TF 11-0 3:43

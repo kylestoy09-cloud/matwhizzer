@@ -1,0 +1,182 @@
+[
+ {
+  "id": 20,
+  "season_id": 2019,
+  "gender": "F",
+  "stage": "history",
+  "is_public_default": false,
+  "created_at": "2026-11-13T23:56:15.849848+00:00",
+  "finalized_at": null,
+  "history_public": false
+ },
+ {
+  "id": 17,
+  "season_id": 2020,
+  "gender": "F",
+  "stage": "history",
+  "is_public_default": false,
+  "created_at": "2026-11-13T23:56:15.849848+00:00",
+  "finalized_at": null,
+  "history_public": false
+ },
+ {
+  "id": 21,
+  "season_id": 2021,
+  "gender": "F",
+  "stage": "history",
+  "is_public_default": false,
+  "created_at": "2026-11-13T23:56:15.849848+00:00",
+  "finalized_at": null,
+  "history_public": false
+ },
+ {
+  "id": 19,
+  "season_id": 2022,
+  "gender": "F",
+  "stage": "history",
+  "is_public_default": false,
+  "created_at": "2026-11-13T23:56:15.849848+00:00",
+  "finalized_at": null,
+  "history_public": false
+ },
+ {
+  "id": 24,
+  "season_id": 2023,
+  "gender": "F",
+  "stage": "history",
+  "is_public_default": false,
+  "created_at": "2026-11-13T23:56:15.849848+00:00",
+  "finalized_at": null,
+  "history_public": false
+ },
+ {
+  "id": 15,
+  "season_id": 2024,
+  "gender": "F",
+  "stage": "history",
+  "is_public_default": false,
+  "created_at": "2026-11-13T23:56:15.849848+00:00",
+  "finalized_at": null,
+  "history_public": false
+ },
+ {
+  "id": 10,
+  "season_id": 2013,
+  "gender": "M",
+  "stage": "history",
+  "is_public_default": false,
+  "created_at": "2026-11-13T23:45:40.825448+00:00",
+  "finalized_at": null,
+  "history_public": false
+ },
+ {
+  "id": 12,
+  "season_id": 2014,
+  "gender": "M",
+  "stage": "history",
+  "is_public_default": false,
+  "created_at": "2026-11-13T23:45:40.825448+00:00",
+  "finalized_at": null,
+  "history_public": false
+ },
+ {
+  "id": 14,
+  "season_id": 2015,
+  "gender": "M",
+  "stage": "history",
+  "is_public_default": false,
+  "created_at": "2026-11-13T23:45:40.825448+00:00",
+  "finalized_at": null,
+  "history_public": false
+ },
+ {
+  "id": 13,
+  "season_id": 2016,
+  "gender": "M",
+  "stage": "history",
+  "is_public_default": false,
+  "created_at": "2026-11-13T23:45:40.825448+00:00",
+  "finalized_at": null,
+  "history_public": false
+ },
+ {
+  "id": 9,
+  "season_id": 2017,
+  "gender": "M",
+  "stage": "history",
+  "is_public_default": false,
+  "created_at": "2026-11-13T23:45:40.825448+00:00",
+  "finalized_at": null,
+  "history_public": false
+ },
+ {
+  "id": 11,
+  "season_id": 2018,
+  "gender": "M",
+  "stage": "history",
+  "is_public_default": false,
+  "created_at": "2026-11-13T23:45:40.825448+00:00",
+  "finalized_at": null,
+  "history_public": false
+ },
+ {
+  "id": 8,
+  "season_id": 2019,
+  "gender": "M",
+  "stage": "history",
+  "is_public_default": false,
+  "created_at": "2026-11-13T23:45:40.825448+00:00",
+  "finalized_at": null,
+  "history_public": false
+ },
+ {
+  "id": 7,
+  "season_id": 2020,
+  "gender": "M",
+  "stage": "history",
+  "is_public_default": false,
+  "created_at": "2026-11-13T23:45:40.825448+00:00",
+  "finalized_at": null,
+  "history_public": false
+ },
+ {
+  "id": 22,
+  "season_id": 2021,
+  "gender": "M",
+  "stage": "history",
+  "is_public_default": false,
+  "created_at": "2026-11-13T23:56:15.849848+00:00",
+  "finalized_at": null,
+  "history_public": false
+ },
+ {
+  "id": 18,
+  "season_id": 2022,
+  "gender": "M",
+  "stage": "history",
+  "is_public_default": false,
+  "created_at": "2026-11-13T23:56:15.849848+00:00",
+  "finalized_at": null,
+  "history_public": false
+ },
+ {
+  "id": 23,
+  "season_id": 2023,
+  "gender": "M",
+  "stage": "history",
+  "is_public_default": false,
+  "created_at": "2026-11-13T23:56:15.849848+00:00",
+  "finalized_at": null,
+  "history_public": false
+ },
+ {
+  "id": 16,
+  "season_id": 2024,
+  "gender": "M",
+  "stage": "history",
+  "is_public_default": false,
+  "created_at": "2026-11-13T23:56:15.849848+00:00",
+  "finalized_at": null,
+  "history_public": false
+ }
+]

@@ -1,0 +1,182 @@
+# NCAA Division II Championships 1994 — source: NCAA II 1994.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Brian Kapusta | North Dakota State
+- Randy Zellner | Central Oklahoma
+- Lim Prim | Nebraska-Omaha
+- Greg Alexander | Northern Colorado
+- Dennis Friedland | Adams State
+- Tom Cardinal | Minnesota-Duluth
+- Scott Goodale | Colorado Mines
+- James Mathis | Carson-Newman
+place 1 Brian Kapusta
+place 2 Randy Zellner
+place 3 Lim Prim
+place 4 Greg Alexander
+place 5 Dennis Friedland
+place 6 Tom Cardinal
+place 7 Scott Goodale
+place 8 James Mathis
+
+@ 126
+- Brian Melchiori | Central Oklahoma
+- Chris Nelson | Northern Colorado
+- Flint McCollins | Ashland
+- Cam Candelaria | Adams State
+- Kris Hayward | SIU-Edwardsville
+- Jeff Kapusta | North Dakota State
+- Tony Johnson | Chadron State
+- Aaron Flack | Lake Superior
+place 1 Brian Melchiori
+place 2 Chris Nelson
+place 3 Flint McCollins
+place 4 Cam Candelaria
+place 5 Kris Hayward
+place 6 Jeff Kapusta
+place 7 Tony Johnson
+place 8 Aaron Flack
+
+@ 134
+- Ryan Martin | Central Oklahoma
+- Martin Segovia | Nebraska-Kearney
+- Steve Costanzo | Nebraska-Omaha
+- Jeff Bricker | Pittsburgh-Johnstown
+- Francis Aquino | San Francisco State
+- Jerold Stauffacher | Minnesota State-Mankato
+- Ben Loggains | Fort Hays State
+- Jeremy LaVigne | North Dakota State
+place 1 Ryan Martin
+place 2 Martin Segovia
+place 3 Steve Costanzo
+place 4 Jeff Bricker
+place 5 Francis Aquino
+place 6 Jerold Stauffacher
+place 7 Ben Loggains
+place 8 Jeremy LaVigne
+
+@ 142
+- Jerry Best | Central Oklahoma
+- Ron McClure | Minnesota-Duluth
+- Lynn McChesney | North Dakota
+- Lyle Geyer | Southern Colorado
+- Anthony Brockman | Southern Connecticut
+- Jason Christiansen | Nebraska-Kearney
+- Chuck Hays | Adams State
+- Chris Como | Pittsburgh-Johnstown
+place 1 Jerry Best
+place 2 Ron McClure
+place 3 Lynn McChesney
+place 4 Lyle Geyer
+place 5 Anthony Brockman
+place 6 Jason Christiansen
+place 7 Chuck Hays
+place 8 Chris Como
+
+@ 150
+- Haig Brown | Portland State
+- Jim Gale | Minnesota State-Mankato
+- Brian Zanders | Nebraska-Omaha
+- Dax Charles | Southern Colorado
+- Mark Ecchevarria | South Dakota State
+- Mark Cunningham | Central Oklahoma
+- Matt Doolittle | Ferris State
+- Ron Glenn | Western State
+place 1 Haig Brown
+place 2 Jim Gale
+place 3 Brian Zanders
+place 4 Dax Charles
+place 5 Mark Ecchevarria
+place 6 Mark Cunningham
+place 7 Matt Doolittle
+place 8 Ron Glenn
+
+@ 158
+- Wes White | Central Oklahoma
+- Joel Vettel | North Dakota State
+- Aaron Casetta | Adams State
+- Steve Kimpel | Wisconsin-Parkside
+- Gene Hanemann | Southern Connecticut
+- Troy Haglund | Minnesota-Duluth
+- Joel Thoreson | Minnesota State-Mankato
+- James Kisge | North Dakota
+place 1 Wes White
+place 2 Joel Vettel
+place 3 Aaron Casetta
+place 4 Steve Kimpel
+place 5 Gene Hanemann
+place 6 Troy Haglund
+place 7 Joel Thoreson
+place 8 James Kisge
+
+@ 167
+- Justin Smith | Minnesota State-Mankato
+- Keith Cunningham | Central Oklahoma
+- Clint Pipher | Southern Colorado
+- Kevin O'Neil | Pittsburgh-Johnstown
+- Charles Daniels | Norfolk State
+- Jason Anderson | North Dakota
+- Justin Naumovitz | Truman State
+- Mike Bertarelli | Southern Connecticut
+place 1 Justin Smith
+place 2 Keith Cunningham
+place 3 Clint Pipher
+place 4 Kevin O'Neil
+place 5 Charles Daniels
+place 6 Jason Anderson
+place 7 Justin Naumovitz
+place 8 Mike Bertarelli
+
+@ 177
+- Chad Lamer | South Dakota State
+- Eric Roberson | Nebraska-Omaha
+- Tony Abbott | Indianapolis
+- Gregg Nelson | Minnesota State-Mankato
+- Tony Dammen | Chadron State
+- Craig Thurber | Pittsburgh-Johnstown
+- Ted Gallegos | Northern Colorado
+- Darin Tiedt | Wisconsin-Parkside
+place 1 Chad Lamer
+place 2 Eric Roberson
+place 3 Tony Abbott
+place 4 Gregg Nelson
+place 5 Tony Dammen
+place 6 Craig Thurber
+place 7 Ted Gallegos
+place 8 Darin Tiedt
+
+@ 190
+- Justin Blasius | South Dakota State
+- Larry Kaufman | Ashland
+- Greg Eddy | Southern Colorado
+- James Hayes | Norfolk State
+- Chad Humphrey | Central Oklahoma
+- Jared Kuleck | Pittsburgh-Johnstown
+- Paul Pagel | Minnesota State-Mankato
+- Robert Finneseth | North Dakota State
+place 1 Justin Blasius
+place 2 Larry Kaufman
+place 3 Greg Eddy
+place 4 James Hayes
+place 5 Chad Humphrey
+place 6 Jared Kuleck
+place 7 Paul Pagel
+place 8 Robert Finneseth
+
+@ 275
+- Jim Bezotte | Wisconsin-Parkside
+- Jason Bingaman | Lake Superior
+- Lee Pulse | Augustana SD
+- Brad Henry | Minnesota State-Mankato
+- Brad Loeffler | South Dakota State
+- Dan Transue | Springfield
+- Bjorn Tomsen | Nebraska-Kearney
+- Harley Roesler | SIU-Edwardsville
+place 1 Jim Bezotte
+place 2 Jason Bingaman
+place 3 Lee Pulse
+place 4 Brad Henry
+place 5 Brad Loeffler
+place 6 Dan Transue
+place 7 Bjorn Tomsen
+place 8 Harley Roesler
+

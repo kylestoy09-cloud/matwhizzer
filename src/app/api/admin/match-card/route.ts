@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 import { isAdminUser } from '@/lib/auth/isAdminUser'
+import { streamingLinkFor, shownStreams } from '@/lib/streamingLinks'
 
 export const dynamic = 'force-dynamic'
 
@@ -60,6 +61,12 @@ export async function GET(req: NextRequest) {
     const { data: mtRow } = await db.from(meetsTable).select('meet_time').eq('id', id).single()
     meetTime = (mtRow as any)?.meet_time ?? null
   } catch {}
+  // the meet's own stream link and premier label (20261118_meet_stream_and_details.sql) — fetched apart, like meet_time
+  let meetStream: string | null = null, premierLabel: string | null = null
+  {
+    const { data: extra, error: xErr } = await db.from(meetsTable).select('stream_url, premier_label').eq('id', id).maybeSingle()
+    if (!xErr && extra) { meetStream = (extra as { stream_url: string | null }).stream_url; premierLabel = (extra as { premier_label: string | null }).premier_label }
+  }
 
   const { data: rawMatches } = await db
     .from(matchesTable)
@@ -142,6 +149,10 @@ export async function GET(req: NextRequest) {
   const schoolA = (meet.team1_school_id ? nameMap.get(meet.team1_school_id) : null) ?? 'TBD'
   const schoolB = (meet.team2_school_id ? nameMap.get(meet.team2_school_id) : null) ?? 'TBD'
 
+  // the home team's streaming link (Kyle 2026-11-18: "add it to the match card for the home team")
+  // Hudl and / or NFHS Network: both until the microcheck picks the home account (Kyle 2026-11-19)
+  const streamB = meet.team2_school_id ? shownStreams(await streamingLinkFor(db, gender, meet.team2_school_id, meet.season_id ?? null)).map(s => ({ label: s.label, url: s.url })) : []
+
   return NextResponse.json({
     meet: {
       ...meet,
@@ -157,6 +168,9 @@ export async function GET(req: NextRequest) {
       logo_dir_a: meet.team1_school_id ? (dirMap.get(meet.team1_school_id) ?? null) : null,
       logo_dir_b: meet.team2_school_id ? (dirMap.get(meet.team2_school_id) ?? null) : null,
       meet_time: meetTime,
+      stream_b: streamB,
+      stream_url: meetStream,        // the meet's own stream: shown as "Stream", ahead of the home team's page
+      premier_label: premierLabel,
     },
     matches: enrichedMatches,
   })

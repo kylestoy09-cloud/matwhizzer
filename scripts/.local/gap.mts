@@ -1,15 +1,15 @@
-// inactive boys whose exact name matches an unmatched 2025-26 Track row at a school they're linked to
 import { createClient } from '@supabase/supabase-js'
+import fs from 'fs'
 const db = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
-async function all(q: (f: number, t: number) => any) { const out: any[] = []; for (let i = 0; ; i += 1000) { const { data, error } = await q(i, i + 999); if (error) throw new Error(error.message); out.push(...data); if (data.length < 1000) break } return out }
-const key = (s: string) => (s ?? '').toLowerCase().replace(/[^a-z]/g, '')
-const inact = await all((f, t) => db.from('wrestlers').select('id, first_name, last_name, grade').eq('gender', 'M').eq('is_active', false).order('id').range(f, t))
-const schoolsOf = new Map<string, Set<number>>(); const add = (w: string, s: number | null) => { if (s) (schoolsOf.get(w) ?? schoolsOf.set(w, new Set()).get(w)!).add(s) }
-for (const a of await all((f, t) => db.from('wrestler_name_aliases').select('wrestler_id, school_id').order('id').range(f, t))) add(a.wrestler_id, a.school_id)
-for (const e of await all((f, t) => db.from('tournament_entries').select('wrestler_id, school_id').order('id').range(f, t))) add(e.wrestler_id, e.school_id)
-const ro = await all((f, t) => db.from('roster_grade_import').select('school_id, first_name_raw, last_name_raw, grade, status, wrestler_id').eq('gender', 'M').eq('season_id', 2026).is('wrestler_id', null).order('id').range(f, t))
-const roBy = new Map<string, any[]>(); for (const r of ro) { const k = `${r.school_id}|${key(r.first_name_raw + r.last_name_raw)}`; (roBy.get(k) ?? roBy.set(k, []).get(k)!).push(r) }
-const hits = inact.filter((w: any) => [...(schoolsOf.get(w.id) ?? [])].some(s => roBy.has(`${s}|${key(w.first_name + w.last_name)}`)))
-const tally = hits.reduce((m: any, w: any) => { const r = [...schoolsOf.get(w.id)!].flatMap(s => roBy.get(`${s}|${key(w.first_name + w.last_name)}`) ?? [])[0]; const k = `profile ${w.grade ?? '-'} → Track ${r.grade}`; m[k] = (m[k] ?? 0) + 1; return m }, {})
-console.log(`inactive boys with an unmatched 2025-26 Track row by name at their school: ${hits.length}`, JSON.stringify(tally))
-console.log('unmatched boys 2025-26 Track rows in total:', ro.length)
+const WC: Record<number, number> = {106:53,113:54,120:55,126:56,132:57,138:58,144:59,150:60,157:61,165:62,175:63,190:64,215:65,285:66}
+const csv = (f: string) => { const [h, ...r] = fs.readFileSync(f, 'utf8').trim().split('\n'); const H = h.split(','); return r.map(l => Object.fromEntries(l.split(',').map((v, i) => [H[i], v]))) }
+const src = new Map<string, any[]>()
+for (const [f, col, base] of [['../parsed_s2_districts.csv', 'district_num', 139], ['../parsed_s2_regions.csv', 'region_num', 171], ['../parsed_s1_districts.csv', 'district_num', 92], ['../parsed_s1_regions.csv', 'region_num', 124]] as const)
+  for (const r of csv(f)) { if (!r.winner_name) continue; const k = `${base + Number(r[col])}|${WC[Number(r.weight)]}`; (src.get(k) ?? src.set(k, []).get(k))!.push(r) }
+const out: string[] = []; let miss = 0
+for (const [k, rows] of src) {
+  const [tid, wc] = k.split('|').map(Number)
+  const n = (await db.from('matches').select('id', { count: 'exact', head: true }).eq('tournament_id', tid).eq('weight_class_id', wc)).count ?? 0
+  if (n < rows.length) { miss += rows.length - n; out.push(`${tid} wc${wc}: source ${rows.length}, db ${n}`) }
+}
+console.log(`brackets checked ${src.size}; short brackets ${out.length}; bouts short ${miss}`); console.log(out.join('\n'))

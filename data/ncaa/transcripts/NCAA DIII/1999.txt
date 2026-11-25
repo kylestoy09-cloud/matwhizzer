@@ -1,0 +1,182 @@
+# NCAA Division III Championships 1999 — source: NCAA III 1999.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 125
+- Zac Weiglein | Wartburg
+- Darin Bertram | Augsburg
+- Anthony Conte | College of New Jersey
+- Brian Olson | Wisconsin-Platteville
+- Michael Jones | Delaware Valley
+- Russ Peloquin | Wisconsin-La Crosse
+- Brandon Newill | Capital
+- Ryan Cunningham | Central College IA
+place 1 Zac Weiglein
+place 2 Darin Bertram
+place 3 Anthony Conte
+place 4 Brian Olson
+place 5 Michael Jones
+place 6 Russ Peloquin
+place 7 Brandon Newill
+place 8 Ryan Cunningham
+
+@ 133
+- John Marchette | Augsburg
+- Shawn Thomas | Pacific Oregon
+- Stas Khaitin | Wartburg
+- Tom Hall | Ithaca
+- Nick Dorhmann | Cornell Iowa
+- Josh Moyer | Ursinus
+- Frank Palumbo | SUNY-Brockport
+- Bob Ulrich | Norwich
+place 1 John Marchette
+place 2 Shawn Thomas
+place 3 Stas Khaitin
+place 4 Tom Hall
+place 5 Nick Dorhmann
+place 6 Josh Moyer
+place 7 Frank Palumbo
+place 8 Bob Ulrich
+
+@ 141
+- Justin Totten | College of New Jersey
+- Nick Mitchell | Wartburg
+- Matt Young | Simpson
+- Jeremy Reynolds | SUNY-Brockport
+- Rob Anderson | Wisconsin-La Crosse
+- Brad Fisher | Augsburg
+- Rick Healy | Loras College
+- Brent Arbogast | Plymouth State
+place 1 Justin Totten
+place 2 Nick Mitchell
+place 3 Matt Young
+place 4 Jeremy Reynolds
+place 5 Rob Anderson
+place 6 Brad Fisher
+place 7 Rick Healy
+place 8 Brent Arbogast
+
+@ 149
+- Ben Shane | Wartburg
+- Josh Cagle | Augsburg
+- Craig Collins | Loras College
+- Darrell Carr | Manchester
+- Jimmy Wallace | Wilmington
+- Steve Jones | SUNY-Cortland
+- Ross Buchinger | Wisconsin-Stevens Point
+- Joel Dzeidzic | Wisconsin-Oshkosh
+place 1 Ben Shane
+place 2 Josh Cagle
+place 3 Craig Collins
+place 4 Darrell Carr
+place 5 Jimmy Wallace
+place 6 Steve Jones
+place 7 Ross Buchinger
+place 8 Joel Dzeidzic
+
+@ 157
+- Dominic Dellagatta | Montclair State
+- Ted Kemmerling | Lebanon Valley
+- Jimmy Wandsnider | Mount St. Josephs
+- Scott Pressman | College of New Jersey
+- Ryan Hess | Wartburg
+- Craig Vedrani | Springfield
+- Mike Helm | Messiah
+- Daryl Becker | Buena Vista
+place 1 Dominic Dellagatta
+place 2 Ted Kemmerling
+place 3 Jimmy Wandsnider
+place 4 Scott Pressman
+place 5 Ryan Hess
+place 6 Craig Vedrani
+place 7 Mike Helm
+place 8 Daryl Becker
+
+@ 165
+- Andy Krueger | Buena Vista
+- Ray DeMartino | College of New Jersey
+- Darren Linton | Augsburg
+- Andy Brener | McDaniel
+- Chris Roggie | Messiah
+- Chris Fertig | Coast Guard
+- Michael Grandchamp | Scranton
+- Rob Murray | Loras College
+place 1 Andy Krueger
+place 2 Ray DeMartino
+place 3 Darren Linton
+place 4 Andy Brener
+place 5 Chris Roggie
+place 6 Chris Fertig
+place 7 Michael Grandchamp
+place 8 Rob Murray
+
+@ 174
+- John Newman | St. John's
+- Jim Peterson | Augsburg
+- Bryan Ray | Wilmington
+- John Roden | Springfield
+- Sevond Cole | Buena Vista
+- Jeff Friedhof | Luther
+- Nathan Reiff | Concordia IL
+- Peter Rapps | Montclair State
+place 1 John Newman
+place 2 Jim Peterson
+place 3 Bryan Ray
+place 4 John Roden
+place 5 Sevond Cole
+place 6 Jeff Friedhof
+place 7 Nathan Reiff
+place 8 Peter Rapps
+
+@ 184
+- Ryan Birt | Upper Iowa
+- Nik Lewandowski | Augsburg
+- Jim Ayers | John Carroll
+- Barndon Holmberg | Wartburg
+- Ryan Tietz | St. John's
+- Mike Pamulak | Buena Vista
+- Tyras Bookman | New York University
+- Joe Perez | SUNY-Brockport
+place 1 Ryan Birt
+place 2 Nik Lewandowski
+place 3 Jim Ayers
+place 4 Barndon Holmberg
+place 5 Ryan Tietz
+place 6 Mike Pamulak
+place 7 Tyras Bookman
+place 8 Joe Perez
+
+@ 197
+- Matt Hamill | RIT
+- Eric Vaughan | SUNY-Brockport
+- Josh Dodd | Wartburg
+- Josh Clausen | Augsburg
+- Tag Noel | Buena Vista
+- Mike Gaydos | Springfield
+- Todd Going | Montclair State
+- Justin Kerr | John Carroll
+place 1 Matt Hamill
+place 2 Eric Vaughan
+place 3 Josh Dodd
+place 4 Josh Clausen
+place 5 Tag Noel
+place 6 Mike Gaydos
+place 7 Todd Going
+place 8 Justin Kerr
+
+@ 285
+- Rich Eslich | John Carroll
+- Mike Bucci | SUNY-Cortland
+- Brian Springberg | Pacific Oregon
+- Rob Cosper | Lycoming
+- Ryan Collins | Capital
+- Kris O'Rear | Wartburg
+- Jason Ott | Wisconsin-La Crosse
+- Carlos Dolmo | SUNY-Oswego
+place 1 Rich Eslich
+place 2 Mike Bucci
+place 3 Brian Springberg
+place 4 Rob Cosper
+place 5 Ryan Collins
+place 6 Kris O'Rear
+place 7 Jason Ott
+place 8 Carlos Dolmo
+

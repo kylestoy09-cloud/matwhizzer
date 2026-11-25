@@ -3,6 +3,8 @@
 // live in boys.ts / girls.ts.
 import { supabase } from '@/lib/supabase/public-cached'
 import { getSchoolLogos } from '@/lib/school-logos'
+import { historySeasonInfo, withoutGrade } from '@/lib/postseasonSeason'
+import { getSchoolSeasonNames } from '@/lib/schoolSeasonNames'
 
 type Logos = Awaited<ReturnType<typeof getSchoolLogos>>
 export type PlacementRow = {
@@ -50,6 +52,31 @@ export function withLogo<T extends { school_id?: number | null }>(rows: T[], log
   return rows.map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
 }
 
+// Quickest Deck and Quickest Tech from the State tournament's own matches only (Kyle 2026-11-16: "the leader boards
+// should stick to that tournament"); the eight fastest, a tech of 0:15 or under isn't honored
+export async function stateQuickest(gender: 'M' | 'F', season: number, stateType: 'boys_state' | 'girls_state', logos: Logos) {
+  const { data: t } = await supabase.from('tournaments').select('id').eq('gender', gender).eq('season_id', season).eq('tournament_type', stateType)
+  const ids = (t ?? []).map(x => x.id as number)
+  if (!ids.length) return { fastPin: [] as FastestPinRow[], fastTf: [] as FastestTfRow[] }
+  type M = { win_type: string; fall_time_seconds: number; weight_classes: { weight: number } | null
+    entry: { school_id: number | null; wrestler_id: string; school: { display_name: string } | null; wrestler: { first_name: string | null; last_name: string | null } | null } | null }
+  const [{ data, error }, names] = await Promise.all([
+    supabase.from('matches')
+      .select('win_type, fall_time_seconds, weight_classes(weight), entry:tournament_entries!winner_entry_id(school_id, wrestler_id, school:schools(display_name), wrestler:wrestlers(first_name, last_name))')
+      .in('tournament_id', ids).eq('validated', true).in('win_type', ['FALL', 'TF', 'TF-1', 'TF-1.5']).gt('fall_time_seconds', 0).order('fall_time_seconds').limit(1000),
+    getSchoolSeasonNames(supabase as never, season, gender),
+  ])
+  if (error) throw new Error(error.message)
+  const rows = ((data ?? []) as unknown as M[]).filter(m => m.entry?.wrestler_id).map(m => {
+    const sid = m.entry!.school_id
+    const school = sid != null ? names.get(sid) ?? m.entry!.school?.display_name ?? null : null
+    return { tech: m.win_type !== 'FALL', wrestler_id: m.entry!.wrestler_id, wrestler_name: `${m.entry!.wrestler?.first_name ?? ''} ${m.entry!.wrestler?.last_name ?? ''}`.trim(),
+      school, school_name: school, school_id: sid, fall_time_seconds: m.fall_time_seconds, weight: m.weight_classes?.weight ?? 0 }
+  })
+  const pick = (tech: boolean) => withLogo(rows.filter(r => r.tech === tech && (!tech || r.fall_time_seconds > 15)).slice(0, 8).map(({ tech: _t, ...r }) => r), logos)
+  return { fastPin: pick(false), fastTf: pick(true) }
+}
+
 export async function loadStateCommon(gender: 'M' | 'F', season: number, stateType: 'boys_state' | 'girls_state') {
   const [placementsRes, distStrengthRes, marginsRes, podiumDistRes, ghostRes, stateEntriesRes, logos] = await Promise.all([
     supabase.rpc('state_placements',           { p_gender: gender, p_season: season }),
@@ -68,8 +95,9 @@ export async function loadStateCommon(gender: 'M' | 'F', season: number, stateTy
   for (const e of ((stateEntriesRes.data ?? []) as { wrestler_id: string; seed: number | null }[])) {
     if (e.wrestler_id && e.seed) seedMap.set(e.wrestler_id, e.seed)
   }
+  const history = !!(await historySeasonInfo(gender, season))   // a Playoff History year: names without today's grade
   return {
-    placements: (placementsRes.data ?? []) as PlacementRow[],
+    placements: ((placementsRes.data ?? []) as PlacementRow[]).map(p => history ? { ...p, wrestler_name: withoutGrade(p.wrestler_name) } : p),
     distStrength: ((distStrengthRes.data ?? []) as StateData['distStrength']).sort((a, b) => b.state_qualifiers - a.state_qualifiers),
     podiumDist: (podiumDistRes.data ?? []) as StateData['podiumDist'],
     margins: ((marginsRes.data ?? []) as StateData['margins']).sort((a, b) => Number(a.avg_margin) - Number(b.avg_margin)),

@@ -1,0 +1,182 @@
+# NCAA Division III Championships 2010 — source: NCAA III 2010 podium.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 125
+- Clayton Rush | Coe College
+- Tyler Erdman | Elizabethtown
+- Jake Oster | Elmhurst
+- Joshua Roberts | Augsburg
+- Austin Mogg | Buena Vista
+- Jayson Swanson | Luther
+- Terrance Clendenin | Delaware Valley
+- Jordan Alfaro | Merchant Marine
+place 1 Clayton Rush
+place 2 Tyler Erdman
+place 3 Jake Oster
+place 4 Joshua Roberts
+place 5 Austin Mogg
+place 6 Jayson Swanson
+place 7 Terrance Clendenin
+place 8 Jordan Alfaro
+
+@ 133
+- Bebeto Yewah | Wisconsin-La Crosse
+- Paul Bjorkstrand | Augsburg
+- William Livingston | Centenary
+- Aljamain Sterling | SUNY-Cortland
+- Nicholas Nothern | Cornell Iowa
+- Chad Winowich | Ithaca
+- Nick Garber | Waynesburg
+- Corey Brown | Thiel
+place 1 Bebeto Yewah
+place 2 Paul Bjorkstrand
+place 3 William Livingston
+place 4 Aljamain Sterling
+place 5 Nicholas Nothern
+place 6 Chad Winowich
+place 7 Nick Garber
+place 8 Corey Brown
+
+@ 141
+- Myanganbayar Batsukh | St. John's
+- Jeremy Stierly | Ithaca
+- Matt Kelly | Wartburg
+- Kevin Donahue | Cornell Iowa
+- Ryan Bridge | Stevens Institute
+- Matt Ulrich | Southern Maine
+- John Starzyk | North Central Illinois
+- Austin Bautista | Wisconsin-Whitewater
+place 1 Myanganbayar Batsukh
+place 2 Jeremy Stierly
+place 3 Matt Kelly
+place 4 Kevin Donahue
+place 5 Ryan Bridge
+place 6 Matt Ulrich
+place 7 John Starzyk
+place 8 Austin Bautista
+
+@ 149
+- Issac Dukes | Case-Western Reserve
+- Tony Valek | Augsburg
+- Matt Mauseth | Wisconsin-La Crosse
+- Blaine Woszczak | Ithaca
+- John Marsh | Bridgewater State
+- Jason Pyle | Luther
+- Justin Berns | Concordia MN
+- Charlie Curran | Elmhurst
+place 1 Issac Dukes
+place 2 Tony Valek
+place 3 Matt Mauseth
+place 4 Blaine Woszczak
+place 5 John Marsh
+place 6 Jason Pyle
+place 7 Justin Berns
+place 8 Charlie Curran
+
+@ 157
+- Luke Miller | Ohio Northern
+- Zach Mizer | Heidelberg
+- Jason Adams | Augsburg
+- Jesse Milks | Wisconsin-Platteville
+- Jesse Harrington | Delaware Valley
+- Adam Weber | Wartburg
+- William Horwath | Ithaca
+- Matt Magil | New York University
+place 1 Luke Miller
+place 2 Zach Mizer
+place 3 Jason Adams
+place 4 Jesse Milks
+place 5 Jesse Harrington
+place 6 Adam Weber
+place 7 William Horwath
+place 8 Matt Magil
+
+@ 165
+- Vincent Renaut | Merchant Marine
+- Orlando Ponce | Augsburg
+- Josh Terrell | Dubuque
+- Nick LeClere | Coe College
+- Michael Morin | Southern Maine
+- Justin Barowski | Delaware Valley
+- Carrington Banks | Wartburg
+- Cory Ferguson | Wisconsin-La Crosse
+place 1 Vincent Renaut
+place 2 Orlando Ponce
+place 3 Josh Terrell
+place 4 Nick LeClere
+place 5 Michael Morin
+place 6 Justin Barowski
+place 7 Carrington Banks
+place 8 Cory Ferguson
+
+@ 174
+- Michael Schmitz | Wisconsin-La Crosse
+- Evan Brown | Dubuque
+- Zach Molitor | Augsburg
+- Kyle Kwiat | Ohio Northern
+- Chris Wade | SUNY-Oneonta
+- Dylan Azinger | Wartburg
+- Seth Rehn | Coe College
+- Ross Dankers | Concordia MN
+place 1 Michael Schmitz
+place 2 Evan Brown
+place 3 Zach Molitor
+place 4 Kyle Kwiat
+place 5 Chris Wade
+place 6 Dylan Azinger
+place 7 Seth Rehn
+place 8 Ross Dankers
+
+@ 184
+- Phil Moenkedick | Concordia MN
+- Brennan Ward | Johnson & Wales
+- Tyler Burkle | Coe College
+- Ben Engelland | Wisconsin-Stevens Point
+- Ben Youel | North Central Illinois
+- Josh Wake | SUNY-Oneonta
+- Mike Denver | College of New Jersey
+- Ben Adams | John Carroll
+place 1 Phil Moenkedick
+place 2 Brennan Ward
+place 3 Tyler Burkle
+place 4 Ben Engelland
+place 5 Ben Youel
+place 6 Josh Wake
+place 7 Mike Denver
+place 8 Ben Adams
+
+@ 197
+- Byron Tate | Wartburg
+- Ryan Malo | Williams
+- Jared Massey | Augsburg
+- Andy Moore | Wisconsin-La Crosse
+- Zach Pizarro | Wilkes
+- Martin Porter | Delaware Valley
+- Bill Schindel | Mount Union
+- Martino Sottile | SUNY-Cortland
+place 1 Byron Tate
+place 2 Ryan Malo
+place 3 Jared Massey
+place 4 Andy Moore
+place 5 Zach Pizarro
+place 6 Martin Porter
+place 7 Bill Schindel
+place 8 Martino Sottile
+
+@ 285
+- Dan Laurent | Wisconsin-La Crosse
+- John Helgerson | Wartburg
+- Adam Sutter | Lakeland
+- Kyle Bilquist | Delaware Valley
+- Jon Schmidt | Wisconsin-Whitewater
+- Allyn Plattner | Luther
+- Mitch Sander | Coe College
+- Andrew Witzel | Augsburg
+place 1 Dan Laurent
+place 2 John Helgerson
+place 3 Adam Sutter
+place 4 Kyle Bilquist
+place 5 Jon Schmidt
+place 6 Allyn Plattner
+place 7 Mitch Sander
+place 8 Andrew Witzel
+

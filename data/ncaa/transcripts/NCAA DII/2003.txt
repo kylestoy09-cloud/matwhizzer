@@ -1,0 +1,482 @@
+# NCAA Division II Championships 2003 — source: 2003.pdf (scan; typed from the bracket pages, 2026-11-18; no records printed)
+# Spelled as the 2004–2005 sheets print them: Joey Simcoe (printed Simco), Andre VanderVelde (Vandervelde), Plamen Paskalev (Pasklev). UNC = Northern Colorado, UNCP = UNC Pembroke
+
+@ 125
+- James Phillips | Ashland
+- Aaron Graumann | Augustana SD
+- Jared Haberman | Western State College
+- Desmond Radunz | Minnesota State Moorhead
+- Dan Hilario | Nebraska-Omaha
+- Donald Dew | Findlay
+- Drew Passley | Central Missouri
+- Bryce Abbey | Nebraska-Kearney
+- Joey Bareng | San Francisco State
+- Wiley Craft | Indianapolis
+- Ryon Mazzocco | Pitt-Johnstown
+- Matt Strawser | North Dakota State
+- Mark Dodgen | Central Oklahoma
+- Aaron Mann | Central Washington
+- Mark Hastings | Univ Northern Colorado
+- Doug Curnes | West Liberty State
+r1 Phillips > Graumann | TB-1 2-1
+r1 Haberman > Radunz | MD 14-1
+r1 Hilario > Dew | Dec 8-2
+r1 Abbey > Passley | Dec 6-4
+r1 Bareng > Craft | Dec 6-4
+r1 Strawser > Mazzocco | Fall 4:09
+r1 Dodgen > Mann | Dec 10-5
+r1 Curnes > Hastings | Dec 7-5
+qf Haberman > Phillips | Dec 7-2
+qf Abbey > Hilario | Dec 3-1
+qf Strawser > Bareng | TB-1 2-2
+qf Dodgen > Curnes | Dec 2-0
+sf Haberman > Abbey | Dec 8-2
+sf Dodgen > Strawser | Dec 7-1
+f Dodgen > Haberman | Fall 3:53
+c1 Graumann > Radunz | Dec 6-1
+c1 Passley > Dew | MD 11-3
+c1 Craft > Mazzocco | Dec 7-4
+c1 Mann > Hastings | Dec 5-4
+c2 Graumann > Curnes | Dec 3-2
+c2 Passley > Bareng | Dec 3-2
+c2 Craft > Hilario | Dec 6-1
+c2 Mann > Phillips | Dec 2-1
+cqf Graumann > Passley | Dec 7-5
+cqf Mann > Craft | Fall 5:56
+csf Abbey > Graumann | Dec 6-4
+csf Strawser > Mann | Dec 12-7
+3rd Abbey > Strawser | Dec 6-1
+5th Mann > Graumann | MD 9-1
+7th Passley > Craft | Fall 1:16
+
+@ 133
+- Joey Simcoe | Findlay
+- Ross Kondo | Central Washington
+- Earl Wilson | Indianapolis
+- Andre VanderVelde | Augustana SD
+- Donald Lockett | San Francisco State
+- Zach Meissner | Ashland
+- Mitch Waite | Nebraska-Omaha
+- Matt Jacobs | Wisconsin-Parkside
+- Cole Province | Central Oklahoma
+- Nick Magee | North Dakota State
+- Curry Pickard | UNC Pembroke
+- Adam Keiswetter | Nebraska-Kearney
+- Tony Fratzke | Minnesota State Mankato
+- Keefer Jensen | Southwest State
+- Adam Mars | Adams State
+- Thad Benton | Pitt-Johnstown
+r1 Simcoe > Kondo | TF-1.5 6:00 (17-0)
+r1 VanderVelde > Wilson | Dec 9-4
+r1 Lockett > Meissner | TF-1.5 3:57 (16-1)
+r1 Waite > Jacobs | Dec 7-3
+r1 Province > Magee | MD 10-2
+r1 Keiswetter > Pickard | Dec 11-9
+r1 Fratzke > Jensen | Fall 6:18
+r1 Benton > Mars | Fall 6:51
+qf Simcoe > VanderVelde | MD 13-2
+qf Waite > Lockett | TB-1 2-1
+qf Province > Keiswetter | Dec 6-4
+qf Fratzke > Benton | Dec 5-3
+sf Waite > Simcoe | Dec 6-5
+sf Province > Fratzke | MD 12-4
+f Province > Waite | Dec 6-1
+c1 Wilson > Kondo | Fall 2:49
+c1 Meissner > Jacobs | Dec 4-3
+c1 Pickard > Magee | Fall 2:57
+c1 Mars > Jensen | Fall 5:31
+c2 Benton > Wilson | Fall 1:41
+c2 Keiswetter > Meissner | Dec 5-3
+c2 Pickard > Lockett | Dec 14-8
+c2 Mars > VanderVelde | MD 17-6
+cqf Benton > Keiswetter | Dec 6-2
+cqf Mars > Pickard | Dec 10-6
+csf Simcoe > Benton | Dec 4-3
+csf Fratzke > Mars | Dec 12-5
+3rd Fratzke > Simcoe | Dec 8-2
+5th Benton > Mars | Fall 2:45
+7th Keiswetter > Pickard | Fall 3:19
+
+@ 141
+- Ronald Paterniti | Gannon
+- Mitch Jackson | Minnesota State Moorhead
+- Jeremy Roe | South Dakota State
+- Shaine Jaime | Central Washington
+- Merrick Meyer | Truman State
+- Zach Leathers | Shippensburg
+- Pacifico Garcia | San Francisco State
+- Ronald Stafford | Univ Northern Colorado
+- Roderick Ratcliff | Nebraska-Omaha
+- RC LaHaye | Western State College
+- Will Tedder | Mercyhurst
+- Brad Russell | Wisconsin-Parkside
+- Shane Barnes | Adams State
+- Ryan King | Augustana SD
+- Matt Dodgen | Central Oklahoma
+- Jason Nestor | Pitt-Johnstown
+r1 Paterniti > Jackson | Dec 13-7
+r1 Jaime > Roe | Dec 7-2
+r1 Meyer > Leathers | Fall 2:18
+r1 Garcia > Stafford | Dec 3-1
+r1 LaHaye > Ratcliff | MD 12-0
+r1 Russell > Tedder | Dec 8-2
+r1 Barnes > King | Dec 6-2
+r1 Nestor > Dodgen | TB-1 1-1
+qf Jaime > Paterniti | Dec 3-2
+qf Meyer > Garcia | Dec 6-1
+qf Russell > LaHaye | MD 14-4
+qf Barnes > Nestor | TB-1 2-1
+sf Meyer > Jaime | Fall 3:23
+sf Barnes > Russell | Dec 3-1
+f Barnes > Meyer | MD 15-3
+c1 Jackson > Roe | MD 12-3
+c1 Stafford > Leathers | Dec 13-12
+c1 Tedder > Ratcliff | Dec 6-1
+c1 Dodgen > King | Dec 6-0
+c2 Nestor > Jackson | Dec 2-1
+c2 Stafford > LaHaye | Dec 8-7
+c2 Garcia > Tedder | M. For.
+c2 Paterniti > Dodgen | Dec 9-5
+cqf Stafford > Nestor | Dec 2-0
+cqf Paterniti > Garcia | Dec 9-3
+csf Jaime > Stafford | TB-1 1-1
+csf Russell > Paterniti | Dec 2-1
+3rd Jaime > Russell | Dec 4-2
+5th Stafford > Paterniti | Dec 8-4
+7th Garcia > Nestor | Dec 6-3
+
+@ 149
+- Waylon Lowe | Findlay
+- Loren Hutchins | Univ Northern Colorado
+- Andy Messersmith | Adams State
+- Brad Becker | Wisconsin-Parkside
+- Austin Scarset | Augustana SD
+- Brendon Bosco | Gannon
+- Mitch Napier | Indianapolis
+- Luke Santos | San Francisco State
+- Brandon Pfizenmaier | Nebraska-Kearney
+- Jerrod Goodwin | Central Oklahoma
+- Ryan Ickes | Pitt-Johnstown
+- Jared Barnes | South Dakota State
+- Eric Pizzi | Central Missouri
+- Jared Webster | Chadron State
+- Zach Stevens | North Dakota State
+- Aaron Monseau | West Liberty State
+r1 Lowe > Hutchins | MD 13-5
+r1 Messersmith > Becker | Dec 13-8
+r1 Bosco > Scarset | MD 14-6
+r1 Napier > Santos | Dec 4-3
+r1 Pfizenmaier > Goodwin | Dec 5-3
+r1 Ickes > Barnes | Dec 4-0
+r1 Pizzi > Webster | Dec 5-4
+r1 Monseau > Stevens | Dec 11-8
+qf Lowe > Messersmith | Dec 7-4
+qf Napier > Bosco | Dec 6-4
+qf Pfizenmaier > Ickes | Dec 8-7
+qf Monseau > Pizzi | TB-1 4-4
+sf Lowe > Napier | MD 15-7
+sf Pfizenmaier > Monseau | Dec 8-3
+f Lowe > Pfizenmaier | Dec 5-3
+c1 Becker > Hutchins | Fall 6:45
+c1 Santos > Scarset | Dec 4-3
+c1 Goodwin > Barnes | Dec 5-2
+c1 Stevens > Webster | SV-1 7-3
+c2 Becker > Pizzi | Dec 6-3
+c2 Santos > Ickes | Dec 9-7
+c2 Goodwin > Bosco | Dec 4-1
+c2 Messersmith > Stevens | Dec 10-9
+cqf Santos > Becker | Dec 9-4
+cqf Messersmith > Goodwin | MD 14-2
+csf Napier > Santos | Dec 4-1
+csf Messersmith > Monseau | TF-1.5 3:00 (15-0)
+3rd Messersmith > Napier | MD 16-8
+5th Santos > Monseau | Dec 5-3
+7th Goodwin > Becker | MD 11-3
+
+@ 157
+- Adam Morris | Findlay
+- Travis Peak | Chadron State
+- Jared Cooley | Southwest State
+- Daniel Dutch | St. Cloud State
+- Travis Koppenhafer | Adams State
+- Skyler Waddell | Gannon
+- Brody Olson | Univ Northern Colorado
+- Dan Dempsey | Wisconsin-Parkside
+- Corey Crandall | Truman State
+- Matt McDougall | Augustana SD
+- Gary Skoch | Ashland
+- Aaron Dalton | Nebraska-Kearney
+- Paul Carlson | North Dakota State
+- Ryan Hunter | Central Missouri
+- Jack Quintana | Western State College
+- Bruno Iorfido | Pitt-Johnstown
+r1 Morris > Peak | Dec 10-6
+r1 Cooley > Dutch | Dec 10-3
+r1 Koppenhafer > Waddell | MD 20-7
+r1 Olson > Dempsey | MD 16-7
+r1 Crandall > McDougall | Dec 7-5
+r1 Skoch > Dalton | Dec 7-4
+r1 Carlson > Hunter | MD 16-4
+r1 Iorfido > Quintana | SV-1 4-2
+qf Morris > Cooley | Dec 12-7
+qf Olson > Koppenhafer | Dec 5-2
+qf Skoch > Crandall | Fall 8:13
+qf Carlson > Iorfido | Dec 10-3
+sf Olson > Morris | Dec 3-1
+sf Carlson > Skoch | Dec 3-2
+f Carlson > Olson | Dec 2-1
+c1 Peak > Dutch | Dec 4-3
+c1 Dempsey > Waddell | Fall 3:43
+c1 Dalton > McDougall | Dec 17-11
+c1 Quintana > Hunter | MD 8-0
+c2 Iorfido > Peak | Dec 3-1
+c2 Dempsey > Crandall | MD 11-3
+c2 Koppenhafer > Dalton | MD 13-5
+c2 Quintana > Cooley | Fall 6:46
+cqf Dempsey > Iorfido | Fall 1:16
+cqf Quintana > Koppenhafer | SV-1 14-12
+csf Dempsey > Morris | Dec 10-5
+csf Quintana > Skoch | Dec 7-2
+3rd Quintana > Dempsey | Dec 7-3
+5th Morris > Skoch | M. For.
+7th Koppenhafer > Iorfido | Fall 5:43
+
+@ 165
+- Dwayne Coward | UNC Pembroke
+- Lee Gatlin | Central Missouri
+- Tyler Bryant | South Dakota State
+- Josh McDonald | San Francisco State
+- Shawn Silvis | Central Oklahoma
+- Anthony Corpora | Kutztown
+- Riley Ross | Nebraska-Kearney
+- Jared Deaguero | Univ Northern Colorado
+- Jake Emerick | Minnesota State Mankato
+- Jordan Johnson | Chadron State
+- Matt Neely | Ashland
+- Fred Joseph | Wisconsin-Parkside
+- Greg Chirieleison | Colorado School of Mines
+- Matt Neumuller | St. Cloud State
+- Derek Donelson | Indianapolis
+- Lucas Mackesey | Findlay
+r1 Coward > Gatlin | Dec 15-9
+r1 Bryant > McDonald | Dec 5-2
+r1 Silvis > Corpora | Dec 7-1
+r1 Ross > Deaguero | Dec 4-2
+r1 Emerick > Johnson | MD 19-6
+r1 Neely > Joseph | SV-1 3-1
+r1 Chirieleison > Neumuller | Dec 5-0
+r1 Mackesey > Donelson | MD 11-3
+qf Coward > Bryant | SV-1 5-3
+qf Silvis > Ross | Dec 5-2
+qf Emerick > Neely | Fall 6:19
+qf Mackesey > Chirieleison | TB-1 2-1
+sf Silvis > Coward | Dec 14-7
+sf Emerick > Mackesey | Dec 10-3
+f Silvis > Emerick | Dec 8-4
+c1 McDonald > Gatlin | Dec 11-9
+c1 Deaguero > Corpora | Fall 3:30
+c1 Johnson > Joseph | Fall 5:49
+c1 Neumuller > Donelson | Dec 6-5
+c2 Chirieleison > McDonald | Dec 8-3
+c2 Deaguero > Neely | MD 18-6
+c2 Ross > Johnson | MD 14-3
+c2 Neumuller > Bryant | TB-1 4-1
+cqf Deaguero > Chirieleison | Dec 7-3
+cqf Neumuller > Ross | Dec 10-3
+csf Deaguero > Coward | Fall 3:44
+csf Neumuller > Mackesey | Dec 9-2
+3rd Neumuller > Deaguero | Dec 5-2
+5th Coward > Mackesey | Fall 6:43
+7th Ross > Chirieleison | Dec 3-2
+
+@ 174
+- Randy Pyle | Pitt-Johnstown
+- Tanner Linsacum | Univ Northern Colorado
+- Cameron Bretz | Western State College
+- Drew Bouwman | Southwest State
+- Jon Duncombe | St. Cloud State
+- Careef Robertson | Anderson College
+- Jason Tapia | Central Oklahoma
+- Erich Singer | Fort Hays State
+- Frank Kuchera | Nebraska-Kearney
+- Brett Barbarick | Central Missouri
+- Tommy Bauer | Ashland
+- Thad Pike | North Dakota State
+- Zach Stephens | SIU Edwardsville
+- Don Ortega | Adams State
+- Bryan Cowdin | South Dakota State
+- Nick Brumbaugh | Kutztown
+r1 Linsacum > Pyle | Dec 3-1
+r1 Bouwman > Bretz | MD 9-1
+r1 Duncombe > Robertson | MD 15-2
+r1 Tapia > Singer | Fall 4:12
+r1 Kuchera > Barbarick | Fall 4:23
+r1 Pike > Bauer | Dec 3-1
+r1 Stephens > Ortega | Dec 10-3
+r1 Brumbaugh > Cowdin | Fall 3:59
+qf Linsacum > Bouwman | TB-1 8-7
+qf Duncombe > Tapia | Dec 5-3
+qf Kuchera > Pike | Dec 4-1
+qf Stephens > Brumbaugh | Dec 10-4
+sf Duncombe > Linsacum | Dec 12-5
+sf Kuchera > Stephens | Dec 3-1
+f Kuchera > Duncombe | Dec 3-2
+c1 Bretz > Pyle | Dec 7-3
+c1 Robertson > Singer | Dec 4-1
+c1 Bauer > Barbarick | Dec 11-5
+c1 Cowdin > Ortega | MD 14-5
+c2 Brumbaugh > Bretz | Fall 1:57
+c2 Pike > Robertson | Dec 5-2
+c2 Bauer > Tapia | Dec 7-4
+c2 Cowdin > Bouwman | Dec 4-3
+cqf Pike > Brumbaugh | Dec 6-3
+cqf Bauer > Cowdin | MD 13-5
+csf Pike > Linsacum | Dec 12-6
+csf Stephens > Bauer | Dec 8-7
+3rd Pike > Stephens | TB-1 1-1
+5th Linsacum > Bauer | M. For.
+7th Cowdin > Brumbaugh | Fall 1:56
+
+@ 184
+- Derek Brunson | UNC Pembroke
+- Ben Holscher | Chadron State
+- Rory Herring | Wisconsin-Parkside
+- Sam Kenton | Augustana SD
+- Mauricio Wright | San Francisco State
+- Kris Klepacz | Findlay
+- Zach Stalder | Nebraska-Omaha
+- Tim Johns | Southwest State
+- Jeff Henning | Central Oklahoma
+- Joel Schrimpf | Minnesota State Mankato
+- Ben McAvinew | Mercyhurst
+- Jordan Nichols | Fort Hays State
+- Tyler Jones | South Dakota State
+- Ryan Kopiasz | Minnesota State Moorhead
+- Mark Dubrovich | Colorado School of Mines
+- John Burda | Pitt-Johnstown
+r1 Brunson > Holscher | Dec 11-5
+r1 Kenton > Herring | Dec 11-9
+r1 Wright > Klepacz | TF-1.5 5:23 (18-1)
+r1 Stalder > Johns | TF-1.5 7:00 (26-9)
+r1 Henning > Schrimpf | Fall 5:23
+r1 McAvinew > Nichols | Dec 12-5
+r1 Jones > Kopiasz | Fall 4:13
+r1 Burda > Dubrovich | TB-1 2-1
+qf Brunson > Kenton | Dec 5-3
+qf Wright > Stalder | Dec 5-4
+qf Henning > McAvinew | MD 15-6
+qf Jones > Burda | TF-1.5 5:26 (18-1)
+sf Wright > Brunson | Dec 11-5
+sf Jones > Henning | Dec 8-2
+f Wright > Jones | Dec 3-2
+c1 Herring > Holscher | Fall 4:26
+c1 Klepacz > Johns | Dec 9-7
+c1 Nichols > Schrimpf | Dec 12-5
+c1 Dubrovich > Kopiasz | Dec 7-4
+c2 Burda > Herring | MD 13-5
+c2 McAvinew > Klepacz | Dec 5-2
+c2 Stalder > Nichols | Dec 4-2
+c2 Kenton > Dubrovich | Dec 5-3
+cqf McAvinew > Burda | Dec 7-3
+cqf Stalder > Kenton | Dec 3-1
+csf Brunson > McAvinew | Dec 10-5
+csf Henning > Stalder | Dec 4-0
+3rd Henning > Brunson | TF-1.5 4:58 (18-2)
+5th Stalder > McAvinew | Dec 3-2
+7th Burda > Kenton | SV-1 4-2
+
+@ 197
+- Ryan Kirst | Ashland
+- John Goral | Wisconsin-Parkside
+- Brian Kraemer | North Dakota State
+- Jeff Sylvester | Nebraska-Kearney
+- Seth Shippy | Central Missouri
+- Corey Winston | UNC Pembroke
+- Drew Dunbar | San Francisco State
+- Mike Engelmann | Minnesota State Mankato
+- Chad Wallace | Nebraska-Omaha
+- DC Hazen | Central Washington
+- Justin Mautz | Mercyhurst
+- Brian Tesch | Southwest State
+- Jeff Rusher | Chadron State
+- Tim Boldt | South Dakota State
+- Cory Wellnitz | Northern State
+- Clinton Salisbury | Findlay
+r1 Kirst > Goral | Fall 4:25
+r1 Kraemer > Sylvester | Dec 12-5
+r1 Winston > Shippy | Dec 11-4
+r1 Dunbar > Engelmann | Dec 8-6
+r1 Wallace > Hazen | MD 19-7
+r1 Mautz > Tesch | Fall 5:22
+r1 Rusher > Boldt | Dec 13-10
+r1 Salisbury > Wellnitz | Fall 6:45
+qf Kraemer > Kirst | SV-1 7-5
+qf Dunbar > Winston | Dec 11-7
+qf Wallace > Mautz | Dec 8-2
+qf Rusher > Salisbury | Dec 15-8
+sf Kraemer > Dunbar | MD 11-2
+sf Wallace > Rusher | SV-1 7-5
+f Wallace > Kraemer | Dec 10-3
+c1 Sylvester > Goral | TF-1.5 3:14 (16-0)
+c1 Shippy > Engelmann | Fall 5:31
+c1 Hazen > Tesch | Dec 6-4
+c1 Boldt > Wellnitz | MD 9-1
+c2 Sylvester > Salisbury | MD 9-1
+c2 Mautz > Shippy | Dec 7-3
+c2 Hazen > Winston | Dec 6-5
+c2 Boldt > Kirst | Fall 6:32
+cqf Mautz > Sylvester | Dec 9-3
+cqf Boldt > Hazen | MD 10-1
+csf Mautz > Dunbar | Dec 10-9
+csf Rusher > Boldt | Dec 6-2
+3rd Rusher > Mautz | M. For.
+5th Boldt > Dunbar | Dec 7-1
+7th Sylvester > Hazen | Fall 2:42
+
+@ 285
+- Lyneil Mitchell | Gannon
+- Joe Bryce | North Dakota State
+- Andrew Ubben | Fort Hays State
+- Evan Love | Indianapolis
+- Les Sigman | Nebraska-Omaha
+- Aldo Campea | Ashland
+- Baron Blanchard | Northern State
+- Chuck Halstead | Colorado School of Mines
+- Bob Murphy | Nebraska-Kearney
+- Celester O'Garro | Carson-Newman
+- Howard Bell | Pitt-Johnstown
+- Dusty Hoffschneider | Univ Northern Colorado
+- Plamen Paskalev | Central Missouri
+- Luke Roberts | Central Washington
+- Dustin Darveaux | St. Cloud State
+- Tom Poe | West Liberty State
+r1 Mitchell > Bryce | Fall 3:25
+r1 Ubben > Love | Dec 3-1
+r1 Sigman > Campea | Dec 6-0
+r1 Blanchard > Halstead | Dec 6-1
+r1 Murphy > O'Garro | Dec 5-3
+r1 Bell > Hoffschneider | Dec 4-2
+r1 Paskalev > Roberts | Dec 13-6
+r1 Darveaux > Poe | Dec 9-4
+qf Ubben > Mitchell | Fall 4:32
+qf Sigman > Blanchard | Dec 6-1
+qf Bell > Murphy | Dec 6-0
+qf Darveaux > Paskalev | Dec 7-1
+sf Sigman > Ubben | Dec 10-5
+sf Darveaux > Bell | MD 11-2
+f Sigman > Darveaux | Dec 6-0
+c1 Bryce > Love | TB-1 3-2
+c1 Campea > Halstead | Dec 3-2
+c1 Hoffschneider > O'Garro | Dec 9-6
+c1 Roberts > Poe | Dec 10-4
+c2 Paskalev > Bryce | Dec 2-1
+c2 Campea > Murphy | Dec 3-2
+c2 Blanchard > Hoffschneider | Dec 5-2
+c2 Mitchell > Roberts | MD 10-2
+cqf Paskalev > Campea | TB-1 4-2
+cqf Mitchell > Blanchard | Fall 4:53
+csf Paskalev > Ubben | Dec 5-3
+csf Mitchell > Bell | M. For.
+3rd Mitchell > Paskalev | Dec 5-4
+5th Ubben > Bell | M. For.
+7th Blanchard > Campea | Dec 3-0

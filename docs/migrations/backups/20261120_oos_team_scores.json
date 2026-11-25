@@ -1,0 +1,145 @@
+[
+ {
+  "id": "1cac1728-52f6-4e41-aff7-0dd17abb59f6",
+  "tournament_id": "930fc38c-966e-43b7-928b-66328ae2513b",
+  "place": 32,
+  "school_name": "Franklin Regional",
+  "school_id": 169,
+  "score": 47,
+  "created_at": "2026-08-02T05:12:23.868908+00:00",
+  "school": {
+   "is_nj": true,
+   "display_name": "Franklin"
+  }
+ },
+ {
+  "id": "4663ec7f-86b5-4149-8a35-b7cfa64c4409",
+  "tournament_id": "930fc38c-966e-43b7-928b-66328ae2513b",
+  "place": 68,
+  "school_name": "Franklin",
+  "school_id": 169,
+  "score": 11.5,
+  "created_at": "2026-08-02T05:12:23.868908+00:00",
+  "school": {
+   "is_nj": true,
+   "display_name": "Franklin"
+  }
+ },
+ {
+  "id": "6b74d611-8598-4200-80cb-12b068da6a89",
+  "tournament_id": "930fc38c-966e-43b7-928b-66328ae2513b",
+  "place": 65,
+  "school_name": "Williamstown",
+  "school_id": 303,
+  "score": 13,
+  "created_at": "2026-08-02T05:12:23.868908+00:00",
+  "school": {
+   "is_nj": true,
+   "display_name": "Williamstown"
+  }
+ },
+ {
+  "id": "bfc3c714-122a-4032-93aa-e0718d9be61e",
+  "tournament_id": "bb71400d-6a29-42e2-aa14-f6b83650bec0",
+  "place": 28,
+  "school_name": "Warren Township",
+  "school_id": 67,
+  "score": 36.5,
+  "created_at": "2026-08-02T05:12:23.868908+00:00",
+  "school": {
+   "is_nj": true,
+   "display_name": "Warren Hills"
+  }
+ },
+ {
+  "id": "0d6d334f-9792-43f8-86cc-5635cc53a4d1",
+  "tournament_id": "bb71400d-6a29-42e2-aa14-f6b83650bec0",
+  "place": 38,
+  "school_name": "Westfield",
+  "school_id": 128,
+  "score": 31.5,
+  "created_at": "2026-08-02T05:12:23.868908+00:00",
+  "school": {
+   "is_nj": true,
+   "display_name": "Westfield"
+  }
+ },
+ {
+  "id": "6a14136f-7aaa-40e2-8c7f-66ef09e75c5a",
+  "tournament_id": "bb71400d-6a29-42e2-aa14-f6b83650bec0",
+  "place": 44,
+  "school_name": "Edison",
+  "school_id": 178,
+  "score": 26.5,
+  "created_at": "2026-08-02T05:12:23.868908+00:00",
+  "school": {
+   "is_nj": true,
+   "display_name": "Edison"
+  }
+ },
+ {
+  "id": "bbf9703c-f601-4c3c-9a15-8a00538a4d35",
+  "tournament_id": "bb71400d-6a29-42e2-aa14-f6b83650bec0",
+  "place": 63,
+  "school_name": "Highland",
+  "school_id": 369,
+  "score": 15,
+  "created_at": "2026-08-02T05:12:23.868908+00:00",
+  "school": {
+   "is_nj": true,
+   "display_name": "Highland"
+  }
+ },
+ {
+  "id": "6b1b213d-0b04-4f4c-839f-fe54b12dcdfb",
+  "tournament_id": "bb71400d-6a29-42e2-aa14-f6b83650bec0",
+  "place": 83,
+  "school_name": "Columbia",
+  "school_id": 121,
+  "score": 7.5,
+  "created_at": "2026-08-02T05:12:23.868908+00:00",
+  "school": {
+   "is_nj": true,
+   "display_name": "Columbia"
+  }
+ },
+ {
+  "id": "e101b571-a895-4204-a9d1-f8bb3f3bc5d4",
+  "tournament_id": "efeb41cc-d1a5-4b65-aa1e-b0956d89abaf",
+  "place": 114,
+  "school_name": "Ridgefield Memorial",
+  "school_id": 357,
+  "score": 14,
+  "created_at": "2026-08-02T05:12:23.868908+00:00",
+  "school": {
+   "is_nj": true,
+   "display_name": "Ridgefield Memorial"
+  }
+ },
+ {
+  "id": "a6dacaa2-c159-41d2-8a82-bb9de947e5e0",
+  "tournament_id": "1d0e6aea-c5ce-4753-9111-b51545355560",
+  "place": 12,
+  "school_name": "Notre Dame",
+  "school_id": 213,
+  "score": 73,
+  "created_at": "2026-11-11T15:41:26.336095+00:00",
+  "school": {
+   "is_nj": true,
+   "display_name": "Notre Dame"
+  }
+ },
+ {
+  "id": "4da0d5c6-4751-41db-9796-740ca1dc8bc9",
+  "tournament_id": "a0c41c59-f686-425d-8c59-29e255e5c266",
+  "place": 26,
+  "school_name": "Delaware Valley",
+  "school_id": 141,
+  "score": 42,
+  "created_at": "2026-08-02T05:12:23.868908+00:00",
+  "school": {
+   "is_nj": true,
+   "display_name": "Delaware Valley"
+  }
+ }
+]

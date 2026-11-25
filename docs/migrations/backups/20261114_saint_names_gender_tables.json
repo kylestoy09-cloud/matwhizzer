@@ -1,0 +1,26 @@
+{
+ "boys_schools": [
+  {
+   "school_id": 394,
+   "display_name": "St Joseph (Montvale) HS"
+  },
+  {
+   "school_id": 243,
+   "display_name": "Saint John Vianney"
+  },
+  {
+   "school_id": 234,
+   "display_name": "Saint Thomas Aquinas"
+  }
+ ],
+ "girls_schools": [
+  {
+   "school_id": 243,
+   "display_name": "Saint John Vianney"
+  },
+  {
+   "school_id": 234,
+   "display_name": "Saint Thomas Aquinas"
+  }
+ ]
+}

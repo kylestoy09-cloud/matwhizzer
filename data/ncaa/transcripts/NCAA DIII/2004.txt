@@ -1,0 +1,262 @@
+# NCAA Division III Championships 2004 — source: 2004.pdf (entrants from the PDF text; places read off the bracket pages, 2026-11-18)
+# qualifiers and places only (no bouts)
+
+@ 125
+3 Dustin Brewer | Simpson
+- Salvador Cruz | Brockport St
+- Jim Fascetta | Millikin
+- Brian Dempsey | TCNJ
+- Dan Stanton | Augustana
+4 Matt Vos | St Johns
+- Ty Klofta | Ohio N
+- Jacob Clackett | Messiah
+- John Rombca | UW Whitewater
+7 Eddie Murray | Ursinus
+6 Mitchell Marcks | Kings College
+- Terry Morgan | Loras
+8 Justin McClintock | Wartburg
+1 Tom Prairie | Williams
+2 Matt Shankey | Augsburg
+5 Jason Peck | Cortland St
+place 1 Shankey
+place 2 Peck
+place 3 Brewer
+place 4 Prairie
+place 5 McClintock
+place 6 Murray
+place 7 Marcks
+place 8 Dempsey
+
+@ 133
+3 Barry Wise | Delaware Valley
+- Phillip Davidson | Millikin
+- Quent Christensen | Simpson
+6 Nick Morphew | Lawrence
+- Dan Jacobs | Williams
+- Mike Troast | York
+- Tim Lennox | John Carroll
+- Nate Lefebvre | St Johns
+7 Cliff Medina | Hunter
+- Brian Boland | Ursinus
+5 Brady Holtz | UW Stevens Pt
+8 Tony DAmbra | Brockport St
+4 Tenkoran Agyeman | Oswego St
+2 Mark Matzek | Augsburg
+1 Ozzie Saxson | Wartburg
+place 1 Matzek
+place 2 Saxson
+place 3 Wise
+place 4 Agyeman
+place 5 Troast
+place 6 Holtz
+place 7 Christensen
+place 8 Medina
+
+@ 141
+4 Nick Karls | UW Whitewater
+- Dan Hall | Delaware Valley
+- Mike Gaeta | Springfield
+- Justin Edwards | Millikin
+6 Dan Roberts | Brockport St
+- Larry Amedio | Augustana
+8 Kevin Owens | Central
+- Jason Chase | Cortland St
+- Mike Russo | Gettysburg
+5 Taylor Wood | Buena Vista
+- Garret Miyake | Pacific U
+3 Pat Brady | TCNJ
+2 Jamell Tidwell | Augsburg
+- Joel Burdick | UW Stevens Pt
+7 Jeff Patzke | Luther
+- Sayre Wuhr | Baldwin Wallace
+1 Dustin Hinschberger | Wartburg
+place 1 Hinschberger
+place 2 Tidwell
+place 3 Brady
+place 4 Karls
+place 5 Gaeta
+place 6 Patzke
+place 7 Roberts
+place 8 Owens
+
+@ 149
+4 Zak Kallai | Case WRU
+- Dan Whelan | Norwich
+- Dan Song | Brockport St
+6 Tony Patrizi | Heidelberg
+- Ross Babcock | UW Whitewater
+8 Dusty Dahlblom | Augsburg
+- Jim Russial | York
+- Rory Tobias | Oneonta St
+5 Matt Pyle | Luther
+- David Icenhower | TCNJ
+3 Troy Fabry | UW LaCrosse
+2 Clint Manny | Simpson
+- Ryan Hlinak | U of Chicago
+7 Jim Morgan | Kings College
+- Jason Roush | Mt St Joseph
+- Dale Mills | Muhlenberg
+1 Bart Mehlert | Wartburg
+place 1 Mehlert
+place 2 Manny
+place 3 Pyle
+place 4 Icenhower
+place 5 Fabry
+place 6 Dahlblom
+place 7 Babcock
+place 8 Kallai
+
+@ 157
+2 Greg Ilaria | TCNJ
+- Rick Lamas | Elmhurst
+- Alex McElroy | Heidelberg
+- KC Beach | Ithaca
+- Jacob Rodriquez | Millikin
+- Daniel Irwin | Manchester
+- Jason Smith | Lycoming
+- Tony Wright | UW Whitewater
+- Romaine Malcolm | Brockport St
+7 Joe Moskowitz | Worcester Poly
+6 Charlie Bishop | Loras
+5 Scott Roesch | Ursinus
+8 Ryan LeBeau | Luther
+4 Brent Rider | Cortland St
+3 Cory Connell | Wartburg
+1 Marcus LeVesseur | Augsburg
+place 1 LeVesseur
+place 2 Connell
+place 3 Bishop
+place 4 LeBeau
+place 5 Ilaria
+place 6 Rider
+place 7 Beach
+place 8 Malcolm
+
+@ 165
+4 Pat Wilsbacher | Buena Vista
+- Derek Sikora | UW Eau Claire
+- Brad Bishop | Loras
+6 Sean Flynn | TCNJ
+- Aaron Gibbs | Thiel
+8 Sean Howard | Ursinus
+- Andrew Knaack | Wartburg
+- Ryan Valek | Augsburg
+5 Marc Israel | Ithaca
+- Joe Arnone | Kings College
+3 Garrett South | Luther
+2 Jarald Ridley | Manchester
+- Ryan Ficco | John Carroll
+7 Frank Petrucci | Oswego St
+- Brian Daly | Augustana
+- Scott Koser | US Coast Guard
+1 Artie Weidler | Brockport St
+place 1 Weidler
+place 2 South
+place 3 Sikora
+place 4 Ridley
+place 5 Arnone
+place 6 Wilsbacher
+place 7 Valek
+place 8 Bishop
+
+@ 174
+4 Mark Sturm | Wartburg
+- Mark Hawald | John Carroll
+- Matthias Keib | Ithaca
+- Duane Bastrass | York
+6 Paul Vaccaro | TCNJ
+- Jeff Zastrow | UW Whitewater
+8 Tim Ruberg | Johnson Wales
+- Kyle Capella | Ursinus
+- Shamar Bailey | Maranatha BBC
+5 Jason Shivak | Delaware Valley
+- Nick Patenaude | UW LaCrosse
+3 Joe Moon | Augsburg
+2 Cody Koenig | UW Stevens Pt
+- Lon Welsh | Luther
+7 Chris Healy | Wabash
+- Brian Viglione | Springfield
+1 Eduard Aliakseynka | Montclair St
+place 1 Moon
+place 2 Aliakseynka
+place 3 Hawald
+place 4 Koenig
+place 5 Sturm
+place 6 Shivak
+place 7 Patenaude
+place 8 Vaccaro
+
+@ 184
+6 Craig Buckley | Bridgewater St
+- Ben Locke | Cortland St
+- Joe Krugler | Millikin
+3 Jason Lulloff | UW LaCrosse
+- Danny Adams | Luther
+- Matt Sassolino | Elmhurst
+8 Mike Troutman | Ursinus
+- Mitch Hager | Loras
+7 Ken Ware | Coe
+- Pat Healy | Augustana
+5 Artie Mauser | John Carroll
+- Ben Dictus | Lawrence
+1 Denny Gaul | Montclair St
+2 Ryan Sturm | Wartburg
+4 Josh Housekeeper | Delaware Valley
+place 1 Sturm
+place 2 Housekeeper
+place 3 Ware
+place 4 Lulloff
+place 5 Gaul
+place 6 Buckley
+place 7 Sassolino
+place 8 Locke
+
+@ 197
+3 Robert Cuffie | Brockport St
+- Lance Marcus | Wilmington
+7 Bart George | Simpson
+- Josh Schmidt | Case WRU
+4 Todd Carone | Montclair St
+- Matt Loesch | Muhlenberg
+- Ben Stum | Baptist BC
+- Dan Fiecke | St Johns
+- Tom Medonis | Springfield
+6 Joe Cullen | Augsburg
+- Wyatt Reyerson | Luther
+8 Nick Vinciguerra | TCNJ
+5 Andrew Helms | Delaware Valley
+2 Yan White | UW Stevens Pt
+1 Akeem Carter | Wartburg
+place 1 Carter
+place 2 White
+place 3 Helms
+place 4 Cuffie
+place 5 Fiecke
+place 6 Reyerson
+place 7 Cullen
+place 8 George
+
+@ 285
+3 Mike Blair | Trinity
+- Bryan Morgan | Millikin
+- Brett Christensen | Simpson
+- Derek Ankney | John Carroll
+- Adam Buthe | Buena Vista
+- Arnold Frost | Brockport St
+8 Tommy Snyder | Lycoming
+- Drew Reinecker | McDaniel
+7 Matt Schoenherr | Milw S Engr
+6 Keith Bjorhus | TCNJ
+5 Justin Deveau | Rhode Island
+- Nick McTee | Coe
+4 Mark Simmonds | Augsburg
+2 Blake Gillis | Wartburg
+1 Ryan Allen | UW LaCrosse
+place 1 Allen
+place 2 Gillis
+place 3 Blair
+place 4 Simmonds
+place 5 Ankney
+place 6 Frost
+place 7 Morgan
+place 8 Schoenherr

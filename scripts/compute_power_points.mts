@@ -8,7 +8,10 @@
  *   set -a && source .env.local && set +a && npx tsx scripts/compute_power_points.mts --season 2027 --gender M
  *   --season  championship (ending) year, e.g. 2027 for 2026-27. Required.
  *   --gender  M or F. Required. Boys read dual_meets; girls read dual_meets_girls
- *             and skip meets with counts_toward_record = false (jamborees).
+ *             and skip meets with counts_toward_record = false (jamborees). Girls from 2026-27
+ *             (dual-meet status, 2026-27 Girls Team Tournament Regulations): every regular-season
+ *             meet between two schools that declared dual-meet status counts, jamboree pairings
+ *             included, and only declared schools get a row (girls_dual_status).
  *   --cutoff  YYYY-MM-DD override. Default: the season's "Power Points Close"
  *             date in season_calendar (gender-specific row preferred).
  *   --dry-run compute and print, write nothing (--out <file> saves the rows as JSON)
@@ -19,7 +22,8 @@
  *   3. flat DEFAULT_PP for everyone
  *
  * Algorithm (work in progress — does not yet reproduce NJSIAA exactly):
- *   Each school's PP = average of best 9 meet values (one per opponent), where
+ *   Each school's PP = average of the counted meet values (one per opponent; ppMeetsCounted: best 9, or for
+ *   boys from 2026-27 80% of their meets, at least 9), where
  *   each meet value is looked up in the RANKING_SCALE using:
  *     - The OPPONENT'S prior-season final PP as the row index
  *     - The score margin and win/loss as the column index
@@ -29,7 +33,7 @@
 
 import { createClient } from '@supabase/supabase-js'
 import { readFileSync, writeFileSync, existsSync } from 'fs'
-import { computePowerPoints, computeRecord, type SchoolMeets } from '../src/lib/power-points.ts'
+import { computePowerPoints, computeRecord, ppMeetsCounted, type SchoolMeets } from '../src/lib/power-points.ts'
 
 const SUPABASE_URL = 'https://vhffduvgcljvhtlyqgcd.supabase.co'
 const SERVICE_KEY  = process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -240,6 +244,18 @@ const { data: allNjSchools, error: schoolErr } = await supabase
 
 if (schoolErr || !allNjSchools) { console.error('Failed to load schools:', schoolErr?.message); process.exit(1) }
 
+// Girls from 2026-27: the schools that declared dual-meet status. Every regular-season event between two of
+// them counts as a dual; a school without a declaration gets no Power Points row. The regulations don't say
+// whether a declared team's meet against an undeclared school counts — this counts only declared vs declared.
+const GIRLS_DUAL_STATUS = GENDER === 'F' && SEASON >= 2027
+const declared = new Set<number>()
+if (GIRLS_DUAL_STATUS) {
+  const { data, error } = await supabase.from('girls_dual_status').select('school_id').eq('season_id', SEASON).eq('declared', true)
+  if (error) { console.error('Failed to load girls_dual_status:', error.message); process.exit(1) }
+  for (const r of data ?? []) declared.add(r.school_id as number)
+  if (!declared.size) console.warn('No girls schools have declared dual-meet status for this season yet (girls school directory, Dual Status).')
+}
+
 // Load dual meets (paginate to avoid the 1000-row Supabase default limit).
 // Girls: only meets that count toward team record (skips jamborees and any meet
 // switched off via counts_toward_record).
@@ -257,11 +273,11 @@ for (let from = 0; ; from += PAGE) {
     .not('team2_school_id', 'is', null)
     .not('team1_score', 'is', null)
     .not('team2_score', 'is', null)
-  q = GENDER === 'F' ? q.eq('counts_toward_record', true) : q.eq('gender', GENDER)
+  q = GENDER === 'M' ? q.eq('gender', GENDER) : GIRLS_DUAL_STATUS ? q : q.eq('counts_toward_record', true)
   const { data, error: meetErr } = await q.range(from, from + PAGE - 1)
   if (meetErr) { console.error('Failed to load dual meets:', meetErr.message); process.exit(1) }
   if (!data || data.length === 0) break
-  meets.push(...(data as MeetRow[]))
+  meets.push(...(data as MeetRow[]).filter(m => !GIRLS_DUAL_STATUS || (declared.has(m.team1_school_id) && declared.has(m.team2_school_id))))
   if (data.length < PAGE) break
 }
 
@@ -277,7 +293,7 @@ if (GENDER === 'F') {
     for (const r of data ?? []) inGirls.add(r.school_id as number)
   }
   for (const m of meets) { inGirls.add(m.team1_school_id); inGirls.add(m.team2_school_id) }
-  schools = allNjSchools.filter(s => inGirls.has(s.id as number))
+  schools = allNjSchools.filter(s => GIRLS_DUAL_STATUS ? declared.has(s.id as number) : inGirls.has(s.id as number))
 }
 
 const { data: aliasRows } = await supabase
@@ -360,7 +376,7 @@ for (const [id, pp] of sorted.slice(0, 20)) {
 const rows = schools.map(s => {
   const schoolMeets = meetMap.get(s.id as number) ?? []
   const { wins, losses } = computeRecord(schoolMeets)
-  // meets_counted = number of unique opponents in top 9 (same as NJSIAA)
+  // meets_counted = how many unique opponents' values count (same as NJSIAA)
   const uniqueOpps = new Set(schoolMeets.map(m => m.opponentId)).size
   return {
     school_id:      s.id as number,
@@ -369,7 +385,7 @@ const rows = schools.map(s => {
     power_points:   ppMap.get(s.id as number) ?? DEFAULT_PP,
     overall_wins:   wins,
     overall_losses: losses,
-    meets_counted:  Math.min(uniqueOpps, 9),
+    meets_counted:  ppMeetsCounted(uniqueOpps, GENDER, SEASON),
     cutoff_date:    CUTOFF,
     computed_at:    new Date().toISOString(),
   }
@@ -458,7 +474,8 @@ function computePowerPointsWithSeeds(
       const existing = bestPerOpp.get(m.opponentId) ?? -Infinity
       if (myVal > existing) bestPerOpp.set(m.opponentId, myVal)
     }
-    const vals = [...bestPerOpp.values()].sort((a, b) => b - a).slice(0, 9)
+    const best = [...bestPerOpp.values()].sort((a, b) => b - a)
+    const vals = best.slice(0, ppMeetsCounted(best.length, GENDER as 'M' | 'F', SEASON))
     pp.set(schoolId, vals.length === 0
       ? (oppRefPP.get(schoolId) ?? defaultPP)
       : Math.round(vals.reduce((s, v) => s + v, 0) / vals.length * 100) / 100)

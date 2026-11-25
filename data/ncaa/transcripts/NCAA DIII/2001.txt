@@ -1,0 +1,182 @@
+# NCAA Division III Championships 2001 — source: NCAA III 2001.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 125
+- Darin Bertram | Augsburg
+- Anthony Conte | College of New Jersey
+- Jamie Taxted | Buena Vista
+- Carlos Restrepo | Ithaca
+- Brian Olson | Wisconsin-Platteville
+- Mike Shaw | SUNY-Brockport
+- Vinny Pedalino | McDaniel
+- Robin Propete | SUNY-Oneonta
+place 1 Darin Bertram
+place 2 Anthony Conte
+place 3 Jamie Taxted
+place 4 Carlos Restrepo
+place 5 Brian Olson
+place 6 Mike Shaw
+place 7 Vinny Pedalino
+place 8 Robin Propete
+
+@ 133
+- Frank Palumbo | SUNY-Brockport
+- Dan Flounders | College of New Jersey
+- Josh Habek | Wisconsin-La Crosse
+- Mike Corsiglia | Coe College
+- Jamie Pales | Augustana Illinois
+- Jason Rogers | Wisconsin-Whitewater
+- Joe Havig | Wartburg
+- Bryan Miller | Augsburg
+place 1 Frank Palumbo
+place 2 Dan Flounders
+place 3 Josh Habek
+place 4 Mike Corsiglia
+place 5 Jamie Pales
+place 6 Jason Rogers
+place 7 Joe Havig
+place 8 Bryan Miller
+
+@ 141
+- Lenny Baker | SUNY-Brockport
+- Brad Fisher | Augsburg
+- Florian Ghinea | Montclair State
+- Rick Healy | Loras College
+- Brady Cudd | Wisconsin-La Crosse
+- Mark Foresi | Trinity
+- Shawn Whyte | Waynesburg
+- Jason McLean | Muhlenberg
+place 1 Lenny Baker
+place 2 Brad Fisher
+place 3 Florian Ghinea
+place 4 Rick Healy
+place 5 Brady Cudd
+place 6 Mark Foresi
+place 7 Shawn Whyte
+place 8 Jason McLean
+
+@ 149
+- Garrett Kurth | Luther
+- Andrew Vogel | Messiah
+- Cory Beckerman | Upper Iowa
+- Mike Markovic | John Carroll
+- Kurt Nelson | Wartburg
+- Zak Kallai | Case-Western Reserve
+- Nathan Cross | Augustana Illinois
+- Craig Collins | Loras College
+place 1 Garrett Kurth
+place 2 Andrew Vogel
+place 3 Cory Beckerman
+place 4 Mike Markovic
+place 5 Kurt Nelson
+place 6 Zak Kallai
+place 7 Nathan Cross
+place 8 Craig Collins
+
+@ 157
+- Royce Eyer | Lycoming
+- Ryan Ciotoli | Ithaca
+- Jimmy Wallace | Wilmington
+- Matt Moscatello | College of New Jersey
+- Jesse Reyerson | Luther
+- Chris Nader | Case-Western Reserve
+- Troy Hall | Pacific Oregon
+- Dmitry Tarasov | Central College IA
+place 1 Royce Eyer
+place 2 Ryan Ciotoli
+place 3 Jimmy Wallace
+place 4 Matt Moscatello
+place 5 Jesse Reyerson
+place 6 Chris Nader
+place 7 Troy Hall
+place 8 Dmitry Tarasov
+
+@ 165
+- Dan Weber | Wheaton
+- Chris Fertig | Coast Guard
+- Robert Padilla | SUNY-Brockport
+- Tony Abbott | Augsburg
+- Danny Anderson | Mount Union
+- Dustin Cichocki | Olivet
+- Ben Barclay | Luther
+- James Henderson | College of New Jersey
+place 1 Dan Weber
+place 2 Chris Fertig
+place 3 Robert Padilla
+place 4 Tony Abbott
+place 5 Danny Anderson
+place 6 Dustin Cichocki
+place 7 Ben Barclay
+place 8 James Henderson
+
+@ 174
+- Nick Ackerman | Simpson
+- Nick Slack | Augsburg
+- Ross Mueller | Lawrence
+- Justin Dix | Cornell Iowa
+- Rob Murray | Loras College
+- Sean Clark | Thiel
+- Brad Christie | Montclair State
+- Wes Kapping | Wisconsin-Stevens Point
+place 1 Nick Ackerman
+place 2 Nick Slack
+place 3 Ross Mueller
+place 4 Justin Dix
+place 5 Rob Murray
+place 6 Sean Clark
+place 7 Brad Christie
+place 8 Wes Kapping
+
+@ 184
+- Nik Lewandowski | Augsburg
+- Jeremy Miller | Wisconsin-La Crosse
+- Andy Kazik | Lawrence
+- Dave Doebel | Buena Vista
+- Eduard Aliakseynka | Montclair State
+- Andy Povenski | Delaware Valley
+- Sonny Alvarez | Wartburg
+- Jason Schlingman | Kings
+place 1 Nik Lewandowski
+place 2 Jeremy Miller
+place 3 Andy Kazik
+place 4 Dave Doebel
+place 5 Eduard Aliakseynka
+place 6 Andy Povenski
+place 7 Sonny Alvarez
+place 8 Jason Schlingman
+
+@ 197
+- Brandon Novak | St. John's
+- Matt Buskohl | Wartburg
+- Bart Bly | Wisconsin-La Crosse
+- Cliff Thompson | Upper Iowa
+- Jarrod Martin | Mount St. Josephs
+- Kevin Rasmussen | Augsburg
+- Wade Chapman | Muskigum
+- Bill Kopecky | Chicago University
+place 1 Brandon Novak
+place 2 Matt Buskohl
+place 3 Bart Bly
+place 4 Cliff Thompson
+place 5 Jarrod Martin
+place 6 Kevin Rasmussen
+place 7 Wade Chapman
+place 8 Bill Kopecky
+
+@ 285
+- Ben Bauer | Augsburg
+- Jamie Salazar | Manchester
+- Jason Ott | Wisconsin-La Crosse
+- Brett Stender | Luther
+- Eric Urdzik | John Carroll
+- Leroy Gardner | Wartburg
+- Anthony Casciano | College of New Jersey
+- Dax Doran | Buena Vista
+place 1 Ben Bauer
+place 2 Jamie Salazar
+place 3 Jason Ott
+place 4 Brett Stender
+place 5 Eric Urdzik
+place 6 Leroy Gardner
+place 7 Anthony Casciano
+place 8 Dax Doran
+

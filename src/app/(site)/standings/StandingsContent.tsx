@@ -23,7 +23,7 @@ export async function StandingsHeader({ gender, view, base }: { gender: 'boys' |
   const season = await getActiveSeason(gender === 'girls' ? 'F' : 'M')
   return (
     <StdHeader title={`${gender === 'girls' ? 'Girls' : 'Boys'} Standings`} summaryKey="standings"
-      picker={<InlineSeasonPicker gender={gender === 'girls' ? 'F' : 'M'} activeSeason={season} />}
+      picker={<InlineSeasonPicker arrows gender={gender === 'girls' ? 'F' : 'M'} activeSeason={season} />}
       tabs={<StandingsTabs base={base} view={view} />} />
   )
 }

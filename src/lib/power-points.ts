@@ -5,7 +5,8 @@
  * pages 5-6. Implements the Ranking Scale lookup used to determine how many
  * Power Points each dual meet is worth.
  *
- * Final Power Points = average of best 9 qualifying meet values.
+ * Final Power Points = average of the counted meet values (ppMeetsCounted): the best 9 through 2025-26; from
+ * 2026-27 the boys count 80% of their meets (2026-27 Boys Team Tournament Regulations, "Compiling Points").
  */
 
 // ── Ranking Scale ─────────────────────────────────────────────────────────────
@@ -88,6 +89,19 @@ export function meetPointValue(
   return raw
 }
 
+// ── How many meets count ──────────────────────────────────────────────────────
+
+/**
+ * How many of a school's meet values count toward its Power Points (one value per opponent, best first).
+ * Through 2025-26, and for girls in 2026-27: the best 9. Boys from 2026-27: 80% of the school's matches
+ * against NJSIAA members, at least 9 (all of them when there are fewer). The regulations don't say how 80% is
+ * rounded; this rounds up (12 opponents → 10 count).
+ */
+export function ppMeetsCounted(opponents: number, gender: 'M' | 'F', seasonEnd: number): number {
+  if (gender === 'M' && seasonEnd >= 2027) return Math.min(opponents, Math.max(9, Math.ceil(opponents * 0.8)))
+  return Math.min(opponents, 9)
+}
+
 // ── Iterative calculation ─────────────────────────────────────────────────────
 
 export type DualMeetResult = {
@@ -113,6 +127,7 @@ export function computePowerPoints(
   allSchools: SchoolMeets[],
   initialPP = 23.0,
   iterations = 10,
+  counted: (opponents: number) => number = n => Math.min(n, 9),
 ): Map<number, number> {
   const pp = new Map<number, number>()
   for (const s of allSchools) pp.set(s.schoolId, initialPP)
@@ -148,8 +163,9 @@ export function computePowerPoints(
         if (myVal > prev_) bestPerOpponent.set(m.opponentId, myVal)
       }
 
-      // Sort all best values descending, take top 9, average
-      const vals = [...bestPerOpponent.values()].sort((a, b) => b - a).slice(0, 9)
+      // Sort all best values descending, take the counted ones, average
+      const best = [...bestPerOpponent.values()].sort((a, b) => b - a)
+      const vals = best.slice(0, counted(best.length))
       if (vals.length === 0) {
         pp.set(schoolId, initialPP)
       } else {

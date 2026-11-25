@@ -1,0 +1,312 @@
+# NCAA Division III Championships 2025 — source: 2025.pdf (the bracket printed before the tournament: qualifiers and seeds) + 2025NCAADIIIWrestlingChampionships.csv (places, from the TrackWrestling bout export, 2026-11-18)
+
+@ 125
+1 Joziah Fry | JWU (Providence) | 38-0
+- Kaden Majcher | Lycoming | 32-4
+- Quintin Wolbert | Wis.-La Crosse | 22-9
+- Connor Fiser | Loras | 22-9
+8 Jalen Dunson | Wis.-Whitewater | 25-4
+5 Benyamin Kamali | Olivet | 27-2
+- Isaic Paulino | Roanoke | 20-6
+- Malik Asfour | Delaware Valley | 25-6
+- Lee Rubin | RIT | 17-12
+4 Mason Barrett | Averett | 26-4
+3 Zach Beckner | Ferrum | 19-0
+- Brett Birchman | Wartburg | 16-10
+- Matt Griffin | TCNJ | 21-11
+- Brayden Parke | Coe | 24-5
+6 Jake Craig | Southern Me. | 25-5
+7 Gavin Bradley | Castleton | 34-6
+- Wyatt Kaczrowski | Augsburg | 21-7
+- Tomah Gummow | Ithaca | 33-13
+- Keito Shaw | Alvernia University | 23-7
+- Thomas Turner | Pacific (OR) | 24-8
+2 Christian Guzman | North Central | 31-0
+place 1 Joziah Fry
+place 2 Christian Guzman
+place 3 Mason Barrett
+place 4 Zach Beckner
+place 5 Brayden Parke
+place 6 Jake Craig
+place 7 Benyamin Kamali
+place 8 Keito Shaw
+
+@ 133
+1 Chase Randall | Coast Guard | 23-0
+- Jacob Blair | Delaware Valley | 17-6
+- Elijah Moshenek | Alfred St. | 31-12
+- Chance Suddeth | Augsburg | 26-6
+8 James Day | Wabash | 35-5
+5 Jaden Hinton | Baldwin Wallace | 28-6
+- Connor Kidd | Luther | 19-11
+- Coby Haney | Millikin | 27-4
+- Wyatt Magolski | Wis.-La Crosse | 26-9
+- Daniel Haws | Centenary | 22-6
+4 Dominik Mallinder | Wis.-Whitewater | 21-2
+3 Garrett Totten | TCNJ | 19-0
+- Isaias Torres | Ithaca | 25-7
+- Brody Toledo | Wis.-Oshkosh | 10-16
+- Caden Frost | New England Col. | 25-10
+6 Jonah Paulino | Roanoke | 23-2
+7 Bryce Parke | Coe | 23-4
+- Vincent Ziccardi | Wash. & Lee | 24-12
+- Aiden Evans | Loras | 13-4
+- Jacob Venezia | NYU | 22-9
+2 Peyton Ellis | JWU (Providence) | 28-2
+place 1 Chase Randall
+place 2 Bryce Parke
+place 3 Jaden Hinton
+place 4 James Day
+place 5 Dominik Mallinder
+place 6 Garrett Totten
+place 7 Chance Suddeth
+place 8 Connor Kidd
+
+@ 141
+1 Josh Wilson | Greensboro | 27-1
+- Bradley Rosen | North Central | 20-2
+- Sean O`Toole | Delaware Valley | 24-10
+- Jalen Schropp | Loras | 11-4
+8 Luke Hoerle | Stevens | 14-3
+5 Mark Samuel | Roanoke | 23-4
+- Cole Becker | Augsburg | 7-4
+- Joseph Innamorato | Centenary | 26-13
+- Tommy Thongseng | Wartburg | 24-8
+- Andrew Loniewski | Muhlenberg | 30-12
+4 Ty Bisek | Concordia-M`head | 25-0
+3 Pierre Baldwin | Central | 23-1
+- James Rodriguez | Castleton | 31-5
+- Hayden Myers | Wesleyan (CT) | 30-6
+- Sam Kotch | TCNJ | 25-7
+6 Sam Lorenz | Wis.-La Crosse | 8-1
+7 Jake Eckerle | JWU (Providence) | 19-3
+- Dylan Phelps | Olivet | 29-7
+- Sean Conway | Chicago | 36-10
+- Noah Hunt | Penn College | 19-6
+2 Jacob Reed | Ohio Northern | 32-1
+place 1 Mark Samuel
+place 2 Sean Conway
+place 3 Bradley Rosen
+place 4 Ty Bisek
+place 5 Josh Wilson
+place 6 Pierre Baldwin
+place 7 Tommy Thongseng
+place 8 Luke Hoerle
+
+@ 149
+1 Hayden Brown | JWU (Providence) | 35-1
+- Chase Fiser | Loras | 20-6
+- Chance Babb | Alvernia University | 21-6
+- Tyler Herrema | Olivet | 30-4
+8 Zach Sato | Wis.-Eau Claire | 34-3
+5 Thomas Monn | McDaniel | 30-1
+- Brett Back | Dubuque | 27-9
+- Mike Glynn | RIT | 24-2
+- Xavier Pena | Centenary | 26-7
+4 Matt Randolph | Augsburg | 28-2
+3 Colby Frost | Southern Me. | 34-1
+- Tyler Starr | North Central | 25-12
+- Aidan Ruddy | Concordia-M`head | 17-10
+- Cael Vanderhorst | Ohio Northern | 29-9
+6 Kyler Romero | Wartburg | 27-1
+7 Daniel Uribe | Wabash | 26-2
+- Taylor Smith | Wash. & Jeff. | 15-1
+- Elijah Cyr | Castleton | 26-12
+- Michael Conklin | TCNJ | 32-5
+- Evan Lindner | Wash. & Lee | 29-4
+2 Angelo Centrone | Cortland | 26-0
+place 1 Hayden Brown
+place 2 Angelo Centrone
+place 3 Kyler Romero
+place 4 Matt Randolph
+place 5 Thomas Monn
+place 6 Colby Frost
+place 7 Michael Conklin
+place 8 Mike Glynn
+
+@ 157
+1 Michael Petrella | Baldwin Wallace | 36-0
+- Jason Rezac | Alvernia University | 19-3
+- Darian Estevez | Chicago | 12-3
+- Jared Lee | RIT | 22-7
+8 Clayton McDonough | Luther | 30-6
+5 Aiden Smith | Adrian | 28-1
+- Demetri Teddlie | Ozarks | 23-6
+- Michael Macias | Augustana | 18-11
+- Anthony Taylor | Averett | 21-7
+- Gavin Pascoe | Gettysburg | 10-5
+4 Eric Kinkaid | Loras | 22-3
+3 Cooper Pontelandolfo | NYU | 31-0
+- Rhenzo Augusto | Elmhurst | 33-3
+- Zaren Anderson | Carthage College | 25-11
+- Jacob Woodburn | Coast Guard | 19-6
+6 Ryan Smith | Stevens | 22-4
+7 Tyler Goebel | Wis.-La Crosse | 25-2
+- Nate Camiscioli | Castleton | 29-9
+- Tyler Rossini | Oswego St. | 28-8
+- Casey Smith | Wash. & Jeff. | 20-3
+2 Peter Kane | Williams | 37-0
+place 1 Michael Petrella
+place 2 Cooper Pontelandolfo
+place 3 Eric Kinkaid
+place 4 Aiden Smith
+place 5 Peter Kane
+place 6 Tyler Goebel
+place 7 Ryan Smith
+place 8 Clayton McDonough
+
+@ 165
+1 Matt Lackman | Alvernia University | 33-2
+- Josh Heuss | Wis.-Stevens Point | 29-12
+- Alex Villar | North Central | 23-6
+- Jake Deguire | Springfield | 28-8
+8 Dustin Bohren | Loras | 24-5
+5 Andrew Supers | Baldwin Wallace | 37-4
+- Mawuli Nevis | Wabash | 23-12
+- Nicholas Sacco | TCNJ | 19-8
+- Justin Richey | Gettysburg | 24-7
+4 CJ Christopher Shea | Wesleyan (CT) | 34-1
+3 Cooper Willis | Augsburg | 27-1
+- Brian Petry | Cornell College | 31-8
+- Kaiden Wagner | Lycoming | 11-2
+- Carson Martinson | Central | 15-3
+6 Jack Richardson | JWU (Providence) | 28-5
+7 Brayden Peet | Wis.-Whitewater | 21-4
+- Konrad Parker | Ithaca | 29-4
+- Mark Troni | Wash. & Lee | 27-8
+- Teagan Hendricks | Ohio Northern | 31-13
+- Christopher Stathopoulos | Stevens | 23-6
+2 Tanner Gerber | Wis.-La Crosse | 16-1
+place 1 Matt Lackman
+place 2 Cooper Willis
+place 3 Tanner Gerber
+place 4 Brayden Peet
+place 5 Andrew Supers
+place 6 Jake Deguire
+place 7 CJ Christopher Shea
+place 8 Nicholas Sacco
+
+@ 174
+1 Jared Stricker | Wis.-Eau Claire | 39-0
+- Tyler Bodovetz | Ohio Wesleyan | 29-10
+- Austin Brass | Messiah | 35-10
+- Connor Gregory | Castleton | 30-12
+8 Javen Estrada | North Central | 18-3
+5 LJ Richardson | Coe | 22-4
+- Adam Myers | Ohio Northern | 19-9
+- Nick Rogers | Springfield | 22-10
+- Harrison Hinojosa | Stevens | 22-9
+4 Hunter Mays | TCNJ | 26-6
+3 Nathan Lackman | Alvernia University | 33-2
+- Cam Hines | Western New Eng. | 26-4
+- Xavier Preston | Roanoke | 19-7
+- Nolen Zeigler | Lycoming | 31-4
+6 Dejon Glaster | Millikin | 30-2
+7 Seth Goetzinger | Augsburg | 21-4
+- Zane Pannell | Dubuque | 22-8
+- Cale Callahan | Otterbein | 16-3
+- Jackson Gray | Ithaca | 32-4
+- Eddie Simes | Wis.-La Crosse | 28-9
+2 Zeb Gnida | Loras | 19-0
+place 1 Jared Stricker
+place 2 Nathan Lackman
+place 3 Seth Goetzinger
+place 4 Dejon Glaster
+place 5 Hunter Mays
+place 6 LJ Richardson
+place 7 Zeb Gnida
+place 8 Javen Estrada
+
+@ 184
+1 Jack Ryan | Oneonta St. | 30-1
+- Remington Bauer | Baldwin Wallace | 27-8
+- Ganon Smith | Elizabethtown | 32-3
+- Vincenzo Corvetto | Roanoke | 27-7
+8 Blake Williams | Adrian | 28-4
+5 Marcus Orlandoni | Wis.-La Crosse | 17-3
+- Ryder Slayton | Messiah | 38-7
+- Jack McCusker | Wash. & Lee | 11-8
+- Austen Wetzel | Westminster (MO) | 35-5
+4 Sampson Wilkins | Castleton | 28-2
+3 Brandt Bombard | Augsburg | 24-5
+- Wills Bronson | John Carroll | 28-8
+- Jamie Evarts | Williams | 29-6
+- Joel Martsinovsky | Stevens | 21-8
+- Gavin Graham | MSOE | 34-16
+6 Jared Voss | Coe | 23-4
+7 Tyler Withers | Merchant Marine | 30-3
+- Gavin Kohel | Wis.-Whitewater | 28-16
+- Gabe Monroe | Coast Guard | 17-8
+- Xavier Pommells | Ithaca | 27-10
+2 Kasey Ross | Wartburg | 27-1
+place 1 Marcus Orlandoni
+place 2 Brandt Bombard
+place 3 Jack Ryan
+place 4 Ganon Smith
+place 5 Kasey Ross
+place 6 Tyler Withers
+place 7 Jared Voss
+place 8 Xavier Pommells
+
+@ 197
+1 Massoma Endene | Wartburg | 16-0
+- Gavin Layman | Ohio Northern | 30-7
+- Will Davis | Elizabethtown | 30-2
+- Carson Licastri | Oneonta St. | 39-5
+8 Dj Henry | TCNJ | 26-6
+5 Charles Baczek | Wabash | 25-2
+- Haven Tatarek | Castleton | 30-11
+- Blaise Wagner | Stevens | 30-5
+- Gunnar Garriques | Chicago | 18-4
+- Pilo Perez | Dubuque | 7-2
+4 Parker Venz | Augsburg | 19-5
+3 Ben Kawczynski | Wis.-La Crosse | 20-5
+- Jackson Punzel | Wheaton (IL) | 12-6
+- Matthew Kelly | Rhode Island Col. | 22-4
+- Ben Strehlow | Luther | 23-11
+6 Joseph Petrella | Baldwin Wallace | 23-2
+7 Dylan Harr | JWU (Providence) | 8-3
+- Ian Pepple | Wis.-Eau Claire | 33-11
+- Sawyer Dereszynski | Messiah | 29-15
+- Bryce McCloskey | Mount Union | 21-7
+2 Cameron Butka | Wilkes | 35-2
+place 1 Massoma Endene
+place 2 Cameron Butka
+place 3 Charles Baczek
+place 4 Joseph Petrella
+place 5 Dylan Harr
+place 6 Ian Pepple
+place 7 Ben Kawczynski
+place 8 Jackson Punzel
+
+@ 285
+1 Michael Douglas | Wis.-La Crosse | 23-1
+- Robby Bates | North Central | 24-4
+- Christian McChesney | Wash. & Jeff. | 27-7
+- Josh Woodrey | Augustana | 16-4
+8 Carl DiGiorgio | Coast Guard | 24-2
+5 Austin Cooley | Schreiner | 26-2
+- Myles Johnson | Ohio Northern | 38-4
+- Caleb Burkhart | Wilkes | 39-7
+- Nick Franco | Brockport | 23-5
+4 Walter West | Luther | 20-1
+3 Josh Harkless | RIT | 28-0
+- Logan Flynn | Delaware Valley | 24-4
+- Leno Campbell | Millikin | 21-11
+- Mitch Williamson | Wartburg | 18-1
+6 Mauro Pellot | Alvernia University | 16-3
+7 Reid Garrison | Merchant Marine | 25-2
+- Titus Waters | Wabash | 32-9
+- Evan Day | Castleton | 26-5
+- Adolfo Betancur | JWU (Providence) | 22-6
+- Cam`ron Harper | Aurora | 31-9
+2 Rayshawn Dixon | Ferrum | 27-0
+place 1 Mitch Williamson
+place 2 Carl DiGiorgio
+place 3 Josh Harkless
+place 4 Rayshawn Dixon
+place 5 Austin Cooley
+place 6 Adolfo Betancur
+place 7 Mauro Pellot
+place 8 Robby Bates
+

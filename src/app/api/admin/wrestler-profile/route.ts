@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseServer } from '@/lib/supabase/server'
+import { transferSeasons } from '@/lib/transfers'
+import { pullFromBoards } from '@/lib/whizRank'
 import { createClient } from '@supabase/supabase-js'
 
 export const dynamic = 'force-dynamic'
@@ -158,6 +160,24 @@ export async function PATCH(req: NextRequest) {
       .update(updates)
       .eq('id', id)
     if (updateErr) return NextResponse.json({ error: updateErr.message }, { status: 500 })
+  }
+
+  // Status (Kyle 2026-11-17): out for the season (this season only) or deceased; off the Whiz Rank boards either way
+  // (pullFromBoards), and deceased also goes inactive so no roster check, transfer match or import offers him.
+  // status_note = an optional line shown in italics on the public profile.
+  if (body.status !== undefined) {
+    const status = body.status === 'out_for_season' || body.status === 'deceased' ? body.status : null
+    const g = existing.gender === 'F' ? 'F' : 'M'
+    const season = (await transferSeasons(supabase, g)).find(x => x.open)
+    const patch: Record<string, unknown> = {
+      status, status_season_id: status === 'out_for_season' ? season?.id ?? null : null,
+      status_note: typeof body.status_note === 'string' && body.status_note.trim() ? body.status_note.trim() : null,
+      status_set_at: new Date().toISOString(), status_set_by: email,
+    }
+    if (status === 'deceased') patch.is_active = false
+    const { error: sErr } = await supabase.from('wrestlers').update(patch).eq('id', id)
+    if (sErr) return NextResponse.json({ error: sErr.message }, { status: 500 })
+    if (status && season) await pullFromBoards(supabase, g, season.id, id, status === 'deceased' ? 'deceased' : 'out for the season', null)
   }
 
   // Handle school change (if enrollment migration applied + wrestler_school_history exists)

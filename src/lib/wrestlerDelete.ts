@@ -6,6 +6,7 @@
 // follows. Track roster rows it was matched to go back to 'no_match' (the grade pool keeps them).
 
 import { createSupabaseAdmin } from '@/lib/supabase/service'
+import { tableMissing } from '@/lib/transfers'
 
 type Db = ReturnType<typeof createSupabaseAdmin>
 
@@ -21,6 +22,7 @@ const RECORDS: [string, string, string][] = [
   ['in_season_tournament_seeds', 'wrestler_id', 'Tournament seeds'], ['in_season_tournament_seeds_girls', 'wrestler_id', 'Tournament seeds'],
   ['individual_rankings', 'wrestler_id', 'Rankings'],
   ['individual_upsets', 'winner_id', 'Upsets'], ['individual_upsets', 'loser_id', 'Upsets'],
+  ['boys_prospects', 'wrestler_id', 'Hub prospect link'], ['girls_prospects', 'wrestler_id', 'Hub prospect link'], ['mixed_prospects', 'wrestler_id', 'Hub prospect link'],
 ]
 // derived from the profile, or pointing at it: removed with it
 const CLEANUP: [string, string, string][] = [
@@ -30,11 +32,12 @@ const CLEANUP: [string, string, string][] = [
   ['snapshot_streak_state', 'wrestler_id', 'Streak snapshots'], ['snapshot_streak_state_girls', 'wrestler_id', 'Streak snapshots'],
   ['wrestler_name_aliases', 'wrestler_id', 'Name aliases'],
   ['wrestler_school_history', 'wrestler_id', 'School history'],
-  ['pending_wrestler_transfers', 'wrestler_id', 'Pending transfers'],
+  ['boys_transfers', 'wrestler_id', 'Transfers'], ['girls_transfers', 'wrestler_id', 'Transfers'],
 ]
 
 async function count(db: Db, t: string, c: string, id: string) {
   const { count: n, error } = await db.from(t).select('*', { count: 'exact', head: true }).eq(c, id)
+  if (error && tableMissing(error)) return 0   // the transfer logs, before their migration
   if (error) throw new Error(`${t}.${c}: ${error.message}`)
   return n ?? 0
 }
@@ -66,12 +69,12 @@ export async function deleteWrestler(db: Db, id: string): Promise<{ ok: true; re
   const rows = async (t: string) => (await db.from(t).select('*').eq('wrestler_id', id)).data ?? []
   const removed: Removed = {
     aliases: await rows('wrestler_name_aliases'), roster: await rows('roster_grade_import'),
-    history: await rows('wrestler_school_history'), transfers: await rows('pending_wrestler_transfers'),
+    history: await rows('wrestler_school_history'), transfers: [...await rows('boys_transfers'), ...await rows('girls_transfers')],
     followers: ((await db.from('users').select('id').contains('followed_wrestler_ids', [id])).data ?? []).map(u => u.id as string),
   }
   for (const [t, c] of CLEANUP) {
     const { error } = await db.from(t).delete().eq(c, id)
-    if (error) return { ok: false, error: `${t}: ${error.message}`, removed }
+    if (error && !tableMissing(error)) return { ok: false, error: `${t}: ${error.message}`, removed }
   }
   const { error: rErr } = await db.from('roster_grade_import').update({ wrestler_id: null, status: 'no_match' }).eq('wrestler_id', id)
   if (rErr) return { ok: false, error: `roster_grade_import: ${rErr.message}`, removed }

@@ -1,0 +1,182 @@
+# NCAA Division II Championships 1990 — source: NCAA II 1990.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Broderick Lee | Portland State
+- Rich Douglas | St. Cloud State
+- Bret Maughan | North Dakota State
+- Jon Zuccala | Ferris State
+- Scott Marvin | Grand Valley State
+- Robert Symans | Lake Superior
+- Donnell Rawls | Winston-Salem
+- Larry Hohman | Pittsburgh-Johnstown
+place 1 Broderick Lee
+place 2 Rich Douglas
+place 3 Bret Maughan
+place 4 Jon Zuccala
+place 5 Scott Marvin
+place 6 Robert Symans
+place 7 Donnell Rawls
+place 8 Larry Hohman
+
+@ 126
+- Mark Burrell | Central Missouri
+- Phil Johns | SIU-Edwardsville
+- David Rowan | Cal State-Chico
+- Ron Higdon | Nebraska-Omaha
+- Rick Goodwin | San Francisco State
+- Michael Pankratz | South Dakota State
+- Scott Gates | Northern Colorado
+- LaShawn Ratliff | Ferris State
+place 1 Mark Burrell
+place 2 Phil Johns
+place 3 David Rowan
+place 4 Ron Higdon
+place 5 Rick Goodwin
+place 6 Michael Pankratz
+place 7 Scott Gates
+place 8 LaShawn Ratliff
+
+@ 134
+- Mike Pantoya | Northern Colorado
+- Dennis DuChene | Wisconsin-Parkside
+- Jeff Gowens | Central Oklahoma
+- Haig Brown | Virginia State
+- Avery Winford | North Carolina-Pembroke
+- Duane Barnhart | North Dakota
+- Glen Frank | Colorado Mines
+- Dave Kruszewski | Gannon
+place 1 Mike Pantoya
+place 2 Dennis DuChene
+place 3 Jeff Gowens
+place 4 Haig Brown
+place 5 Avery Winford
+place 6 Duane Barnhart
+place 7 Glen Frank
+place 8 Dave Kruszewski
+
+@ 142
+- James Sisson | Portland State
+- Kris Pressler | North Dakota
+- Scott Ruff | Nebraska-Omaha
+- Jimmy Fillippo | Central Oklahoma
+- Samuel Mantegna | Cheyney
+- Marty Kouyoumtjian | Cal State-Chico
+- John Modrell | Central Missouri
+- Marty Vigil | Northern Colorado
+place 1 James Sisson
+place 2 Kris Pressler
+place 3 Scott Ruff
+place 4 Jimmy Fillippo
+place 5 Samuel Mantegna
+place 6 Marty Kouyoumtjian
+place 7 John Modrell
+place 8 Marty Vigil
+
+@ 150
+- Johnny Nimmo | Central Oklahoma
+- Travis West | Portland State
+- Larry Thompson | Nebraska-Omaha
+- James Kennedy | Massachusetts-Lowell
+- Michael Swift | California PA
+- Scott Bolan | Lake Superior
+- Mark Savoia | Ashland
+- Mike French | Augustana SD
+place 1 Johnny Nimmo
+place 2 Travis West
+place 3 Larry Thompson
+place 4 James Kennedy
+place 5 Michael Swift
+place 6 Scott Bolan
+place 7 Mark Savoia
+place 8 Mike French
+
+@ 158
+- Dan Russell | Portland State
+- Kip Kristoff | SIU-Edwardsville
+- Tim Briggs | Nebraska-Omaha
+- Mark Cosby | Grand Valley State
+- Wills Mouzon | Winston-Salem
+- Andy Howington | Central Oklahoma
+- Rich Wright | Ashland
+- Eric Cluck | Lake Superior
+place 1 Dan Russell
+place 2 Kip Kristoff
+place 3 Tim Briggs
+place 4 Mark Cosby
+place 5 Wills Mouzon
+place 6 Andy Howington
+place 7 Rich Wright
+place 8 Eric Cluck
+
+@ 167
+- Howard Moore | Central Oklahoma
+- Ted Price | Wisconsin-Parkside
+- Tom Kirpach | North Dakota State
+- William Stanbro | SUNY-Buffalo
+- Paul Coffland | Ashland
+- Jim Price | Grand Valley State
+- Mike Gohde | Northern Colorado
+- Dave Yahner | Pittsburgh-Johnstown
+place 1 Howard Moore
+place 2 Ted Price
+place 3 Tom Kirpach
+place 4 William Stanbro
+place 5 Paul Coffland
+place 6 Jim Price
+place 7 Mike Gohde
+place 8 Dave Yahner
+
+@ 177
+- Tony Champion | Portland State
+- Joe Wypiszenski | Nebraska-Omaha
+- Doug Mooney | Ferris State
+- David Grabenstatter | SUNY-Buffalo
+- Brett Beams | Central Oklahoma
+- Russ Witzig | SIU-Edwardsville
+- Mike Mason | Ashland
+- Brian Loeffler | South Dakota State
+place 1 Tony Champion
+place 2 Joe Wypiszenski
+place 3 Doug Mooney
+place 4 David Grabenstatter
+place 5 Brett Beams
+place 6 Russ Witzig
+place 7 Mike Mason
+place 8 Brian Loeffler
+
+@ 190
+- Greg Oplotnik | Central Oklahoma
+- Dale Herbst | North Dakota
+- Bryan Nelson | North Dakota State
+- Jim Koerber | Grand Valley State
+- John Oldach | Gannon
+- David Surofcheck | Ferris State
+- Pat Gentzler | Nebraska-Omaha
+- Greg Sayler | South Dakota State
+place 1 Greg Oplotnik
+place 2 Dale Herbst
+place 3 Bryan Nelson
+place 4 Jim Koerber
+place 5 John Oldach
+place 6 David Surofcheck
+place 7 Pat Gentzler
+place 8 Greg Sayler
+
+@ 275
+- Matt Blevin | San Francisco State
+- Paul Koenig | South Dakota State
+- Greg Matheis | Indianapolis
+- Jair Toedter | North Dakota
+- Rick Hufnus | Wisconsin-Parkside
+- Tim Pennie | Virginia State
+- Charles Guptill | SUNY-Buffalo
+- Aaron Williams | Pittsburgh-Johnstown
+place 1 Matt Blevin
+place 2 Paul Koenig
+place 3 Greg Matheis
+place 4 Jair Toedter
+place 5 Rick Hufnus
+place 6 Tim Pennie
+place 7 Charles Guptill
+place 8 Aaron Williams
+

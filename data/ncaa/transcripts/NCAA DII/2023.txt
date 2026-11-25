@@ -1,0 +1,541 @@
+# NCAA Division II Championships 2023 — source: 2023.pdf (typed from the bracket pages, 2026-11-17)
+
+@ 125
+1 Cole Laya | West Liberty | 22-5
+- Kevin Radcliff | Limestone | 8-3
+- Zach Shupp | Newberry | 14-17
+8 Dawson Collins | Colorado Mesa | 23-11
+5 Jaxson Rohman | Augustana (SD) | 18-6
+- Jose Diaz | Gannon | 12-10
+- Caden Howard | Drury | 19-10
+4 Shane Corrigan | Wisconsin-Parkside | 33-8
+3 James Joplin | Lander | 23-4
+- Oscar Nellis | Minot State (N.D.) | 19-6
+- Brandon Mendoza | Tiffin | 18-10
+6 Studd Morris | Central Oklahoma | 34-7
+7 Patrick Allis | Western Colorado | 20-6
+- Christian Mejia | McKendree | 28-8
+- Trevon Gray | Pitt-Johnstown | 23-6
+2 Brendon Garcia | Adams State | 23-3
+- Brady Carter | East Stroudsburg | 14-6
+- Graham Shore | Findlay | 5-5
+pigtail Shupp > Carter | Fall 6:38
+pigtail Mejia > Shore | Dec 8-7
+r1 Laya > Radcliff | Inj. 3:40
+r1 Collins > Shupp | TF-1.5 5:48 (18-0)
+r1 Rohman > Diaz | Dec 8-3
+r1 Corrigan > Howard | TF-1.5 5:00 (17-2)
+r1 Joplin > Nellis | Dec 11-4
+r1 Mendoza > Morris | Dec 2-0
+r1 Allis > Mejia | Dec 9-8
+r1 Garcia > Gray | Dec 9-2
+qf Laya > Collins | Dec 4-0
+qf Rohman > Corrigan | Dec 6-4
+qf Joplin > Mendoza | MD 16-7
+qf Garcia > Allis | Dec 8-2
+sf Rohman > Laya | Dec 4-3
+sf Garcia > Joplin | Dec 8-4
+f Garcia > Rohman | Dec 4-2
+cpig Diaz > Shore | MD 15-4
+cpig Morris > Carter | MD 15-3
+c1 Shupp > Radcliff | M. For.
+c1 Diaz > Howard | Dec 9-3
+c1 Morris > Nellis | Dec 13-6
+c1 Mejia > Gray | Dec 9-3
+c2 Allis > Shupp | TF-1.5 6:40 (20-4)
+c2 Mendoza > Diaz | Fall 6:20
+c2 Corrigan > Morris | Dec 13-10
+c2 Mejia > Collins | Dec 4-3
+cqf Allis > Mendoza | MD 9-1
+cqf Mejia > Corrigan | Dec 8-5
+csf Allis > Laya | M. For.
+csf Joplin > Mejia | Dec 3-2
+3rd Allis > Joplin | MD 10-1
+5th Mejia > Laya | M. For.
+7th Corrigan > Mendoza | Dec 5-0
+
+@ 133
+1 Quentrevion Campbell | Chadron State | 19-2
+- Byron Daubert | Pitt-Johnstown | 11-11
+- Caleb Meekins | St. Cloud State | 18-10
+8 Dylan Lucas | Central Oklahoma | 23-6
+5 Devin Flannery | Millersville | 32-6
+- Breyden Bailey | Indianapolis | 20-6
+- Ryan Wehner | Lake Erie | 18-10
+4 Elijah Lusk | Lander | 30-8
+3 Gavin Quiocho | Glenville State College | 38-5
+- Weston DiBlasi | Colorado School of Mines | 18-11
+- Harold Robinson | Mount Olive | 10-12   # printed Harold `Taylor` Robinson
+6 Reece Barnhardt | Mary | 31-8
+7 Vincent Scollo | West Liberty | 25-9
+- Tommy Frezza | Central Missouri | 23-9
+- Logan Robinson | UNC Pembroke | 18-8
+2 Eric Bartos | Mercyhurst | 31-4
+- James Davis | Minot State (N.D.) | 12-9
+- Collin Metzgar | Colorado Mesa | 23-9
+pigtail Meekins > Metzgar | Fall 4:08
+pigtail Frezza > Davis | MD 12-3
+r1 Campbell > Daubert | Dec 9-3
+r1 Lucas > Meekins | Fall 1:59
+r1 Flannery > Bailey | Dec 6-4
+r1 Lusk > Wehner | Dec 3-1
+r1 Quiocho > DiBlasi | MD 11-0
+r1 Barnhardt > Harold Robinson | Fall 2:54
+r1 Scollo > Frezza | MD 10-1
+r1 Bartos > Logan Robinson | Fall 6:12
+qf Campbell > Lucas | Dec 5-3
+qf Flannery > Lusk | Dec 9-6
+qf Quiocho > Barnhardt | Dec 7-4
+qf Scollo > Bartos | Dec 7-3
+sf Campbell > Flannery | MD 16-5
+sf Quiocho > Scollo | Dec 4-1
+f Quiocho > Campbell | Dec 4-3
+cpig Bailey > Davis | Dec 8-5
+cpig Metzgar > Harold Robinson | Dec 5-4
+c1 Meekins > Daubert | Fall 5:41
+c1 Bailey > Wehner | Dec 4-2
+c1 Metzgar > DiBlasi | SV-1 11-9
+c1 Frezza > Logan Robinson | Fall 1:45
+c2 Bartos > Meekins | MD 10-0
+c2 Barnhardt > Bailey | Dec 3-2
+c2 Lusk > Metzgar | MD 16-5
+c2 Lucas > Frezza | Fall 3:46
+cqf Bartos > Barnhardt | Dec 6-1
+cqf Lucas > Lusk | Dec 3-0
+csf Bartos > Flannery | Fall 2:22
+csf Lucas > Scollo | Dec 5-2
+3rd Lucas > Bartos | Dec 10-3
+5th Flannery > Scollo | Dec 4-1
+7th Barnhardt > Lusk | Dec 10-3
+
+@ 141
+1 Zeth Brower | Lander | 33-2
+- Ray Rioux | Indianapolis | 24-13
+- James Ryan | Gannon | 14-8
+8 Tate Murty | Upper Iowa | 29-9
+5 Peter Kuster | Drury | 22-5
+- Dean Noble | Western Colorado | 17-12
+- Caleb Morris | Pitt-Johnstown | 19-7
+4 Christian Small | Lake Erie | 26-3
+3 Zackary Donathan | Tiffin | 13-1
+- Josh Blatt | Newberry | 14-9
+- Grayston DiBlasi | Colorado School of Mines | 28-7
+6 Nate Keim | Central Oklahoma | 28-7
+7 Hunter Burnett | Augustana (SD) | 4-4
+- Jake Niffenegger | Mercyhurst | 25-9
+- John Carayiannis | Belmont Abbey | 19-7
+2 Cayden Henschel | Wisconsin-Parkside | 26-5
+- Ethan Hardy | Glenville State College | 22-8
+- Nick James | Nebraska-Kearney | 20-6
+pigtail Ryan > Hardy | Dec 7-2
+pigtail Niffenegger > James | SV-1 6-4
+r1 Brower > Rioux | MD 11-3
+r1 Murty > Ryan | Dec 5-4
+r1 Kuster > Noble | Dec 5-1
+r1 Small > Morris | Dec 5-0
+r1 Donathan > Blatt | Fall 0:52
+r1 Keim > DiBlasi | Dec 8-2
+r1 Niffenegger > Burnett | Dec 8-5
+r1 Carayiannis > Henschel | Dec 8-5
+qf Brower > Murty | MD 11-0
+qf Small > Kuster | Dec 3-0
+qf Donathan > Keim | Fall 0:30
+qf Carayiannis > Niffenegger | Dec 12-8
+sf Small > Brower | Dec 8-6
+sf Donathan > Carayiannis | Fall 1:32
+f Donathan > Small | Dec 2-1
+cpig James > Noble | MD 23-10
+cpig DiBlasi > Hardy | Dec 7-5
+c1 Ryan > Rioux | Dec 4-2
+c1 James > Morris | Fall 5:33
+c1 Blatt > DiBlasi | Fall 2:20
+c1 Henschel > Burnett | Dec 3-2
+c2 Niffenegger > Ryan | Dec 7-6
+c2 Keim > James | Dec 11-9
+c2 Kuster > Blatt | Dec 2-1
+c2 Murty > Henschel | Dec 6-3
+cqf Keim > Niffenegger | Dec 6-2
+cqf Kuster > Murty | Dec 5-3
+csf Keim > Brower | Dec 7-4
+csf Kuster > Carayiannis | Fall 1:52
+3rd Keim > Kuster | Fall 4:18
+5th Brower > Carayiannis | Dec 6-1
+7th Niffenegger > Murty | Dec 10-6
+
+@ 149
+1 Jacob Ealy | Pitt-Johnstown | 30-2
+- Jack Tangen | Lander | 14-9
+- Jacob Simpson | West Liberty | 25-9
+8 Brik Filippo | Central Oklahoma | 27-12
+5 Jason Hanenberg | Western Colorado | 31-6
+- Phillip Sims | Quincy | 13-9
+- John Burger | Nebraska-Kearney | 12-10
+4 Joey Bianchini | St. Cloud State | 16-3
+3 Nick Young | Gannon | 29-7
+- Devan Moore | Newberry | 27-14
+- Darick LaPaglia | Central Missouri | 23-7
+6 Jalen Spuhler | Wisconsin-Parkside | 31-9
+7 Wyatt Turnquist | Northern State | 25-4
+- Dallas Wilson | Mount Olive | 27-6
+- Evan Davis | Ashland | 9-8
+2 Josiah Rider | Adams State | 27-3
+- Tommy Nichols | American International | 19-10
+- Austin Fietz | Lake Erie | 14-9
+pigtail Simpson > Nichols | SV-1 4-3
+pigtail Wilson > Fietz | Dec 5-2
+r1 Ealy > Tangen | Dec 7-2
+r1 Filippo > Simpson | Dec 10-3
+r1 Hanenberg > Sims | Fall 2:22
+r1 Bianchini > Burger | Dec 9-2
+r1 Young > Moore | TF-1.5 3:51 (16-0)
+r1 Spuhler > LaPaglia | Dec 6-4
+r1 Turnquist > Wilson | TF-1.5 3:56 (21-2)
+r1 Rider > Davis | MD 14-1
+qf Ealy > Filippo | Fall 0:47
+qf Hanenberg > Bianchini | Fall 6:06
+qf Spuhler > Young | Dec 9-4
+qf Rider > Turnquist | Dec 8-3
+sf Hanenberg > Ealy | Dec 7-1
+sf Rider > Spuhler | Fall 1:10
+f Rider > Hanenberg | Fall 3:46
+cpig Sims > Fietz | MD 11-3
+cpig LaPaglia > Nichols | MD 12-0
+c1 Simpson > Tangen | Dec 8-4
+c1 Sims > Burger | Dec 5-2
+c1 Moore > LaPaglia | Dec 2-1
+c1 Wilson > Davis | MD 12-0
+c2 Turnquist > Simpson | MD 9-0
+c2 Young > Sims | MD 10-0
+c2 Moore > Bianchini | Dec 10-4
+c2 Filippo > Wilson | Dec 3-0
+cqf Turnquist > Young | Dec 8-6
+cqf Filippo > Moore | Dec 9-3
+csf Turnquist > Ealy | Dec 8-4
+csf Spuhler > Filippo | Dec 11-4
+3rd Turnquist > Spuhler | Dec 10-5
+5th Ealy > Filippo | Dec 9-6
+7th Young > Moore | Fall 2:34
+
+@ 157
+1 Noah Hermosillo | Adams State | 25-1
+- Maxwell Kiel | Belmont Abbey | 14-12
+- Carter Noehre | Colorado School of Mines | 15-9
+8 Dominic Means | Gannon | 28-9
+5 Logan Bailey | Indianapolis | 33-5
+- Jack Haskin | Lake Erie | 15-9
+- Jace Fisher | Newman | 23-9
+4 Casey Barnett | Tiffin | 17-4
+3 Gabe Johnson | Central Oklahoma | 33-7
+- Trent Mahoney | King | 36-12
+- Devin Bahr | Northern State | 6-6
+6 Nathan Smith | Pitt-Johnstown | 23-6
+7 Jamar Williams | West Liberty | 17-3
+- Avery Shay | Shippensburg | 16-5
+- Ryan Wheeler | Colorado Mesa | 20-9
+2 Nick Novak | St. Cloud State | 27-0
+- Eric Faught | Upper Iowa | 23-8
+- Gage Bernall | Lander | 14-5
+pigtail Noehre > Faught | TF-1.5 2:25 (18-0)
+pigtail Shay > Bernall | Dec 4-0
+r1 Hermosillo > Kiel | MD 10-1
+r1 Means > Noehre | Dec 5-2
+r1 Bailey > Haskin | Dec 5-4
+r1 Barnett > Fisher | Fall 3:46
+r1 Mahoney > Johnson | Dec 9-3
+r1 Smith > Bahr | Dec 4-3
+r1 Shay > Williams | Dec 1-0
+r1 Novak > Wheeler | Dec 7-4
+qf Means > Hermosillo | Dec 7-6
+qf Bailey > Barnett | Dec 6-4
+qf Smith > Mahoney | Dec 5-2
+qf Novak > Shay | Dec 8-1
+sf Bailey > Means | Dec 6-3
+sf Novak > Smith | Dec 9-2
+f Novak > Bailey | Dec 3-1
+cpig Bernall > Haskin | Dec 7-3
+cpig Bahr > Faught | SV-1 5-3
+c1 Noehre > Kiel | Dec 2-0
+c1 Bernall > Fisher | SV-1 4-2
+c1 Johnson > Bahr | Dec 6-3
+c1 Williams > Wheeler | Fall 4:33
+c2 Shay > Noehre | Dec 5-2
+c2 Mahoney > Bernall | Dec 10-8
+c2 Johnson > Barnett | Dec 4-2
+c2 Hermosillo > Williams | Dec 7-5
+cqf Mahoney > Shay | TF-1.5 6:32 (20-4)
+cqf Hermosillo > Johnson | Dec 8-5
+csf Means > Mahoney | Dec 6-2
+csf Hermosillo > Smith | Dec 9-3
+3rd Hermosillo > Means | Dec 6-2
+5th Smith > Mahoney | Dec 5-2
+7th Johnson > Shay | Fall 2:19
+
+@ 165
+1 Shane Gantz | Wisconsin-Parkside | 32-2
+- Patrick Wunderlich | Newberry | 11-11
+- Dalton Gimbor | Kutztown | 20-9
+8 Hunter Mullin | Western Colorado | 26-7
+5 Jack Eiteljorge | Indianapolis | 22-7
+- Alec Cook | West Liberty | 25-13
+- Anthony Herrera | St. Cloud State | 18-8
+4 David Hunsberger | Lander | 32-5
+3 Chase Luensman | Upper Iowa | 32-3
+- Kaden Hart | Nebraska-Kearney | 14-12
+- Brandon Connor | Millersville | 20-8
+6 Aaden Valdez | Adams State | 19-4
+7 Ty Lucas | Central Oklahoma | 21-11
+- Mike Vernagallo | Mount Olive | 23-8
+- Will Kuster | Drury | 21-7
+2 Alex Farenchak | Gannon | 15-2
+- Guy Deleonardis | Glenville State College | 28-15
+- Drew Wiechers | Ashland | 19-9
+pigtail Gimbor > Deleonardis | Dec 9-5
+pigtail Vernagallo > Wiechers | MD 26-15
+r1 Gantz > Wunderlich | MD 9-0
+r1 Mullin > Gimbor | Dec 4-3
+r1 Cook > Eiteljorge | SV-1 7-5
+r1 Hunsberger > Herrera | Dec 11-6
+r1 Luensman > Hart | Dec 7-2
+r1 Valdez > Connor | MD 13-0
+r1 Lucas > Vernagallo | Dec 3-2
+r1 Farenchak > Kuster | Dec 6-5
+qf Mullin > Gantz | Dec 7-6
+qf Hunsberger > Cook | Fall 0:57
+qf Luensman > Valdez | Dec 10-5
+qf Lucas > Farenchak | Dec 5-2
+sf Mullin > Hunsberger | Dec 10-6
+sf Luensman > Lucas | Dec 8-2
+f Luensman > Mullin | Dec 9-7
+cpig Wiechers > Eiteljorge | MD 14-2
+cpig Deleonardis > Connor | MD 10-2
+c1 Gimbor > Wunderlich | Dec 9-7
+c1 Herrera > Wiechers | TF-1.5 6:24 (17-2)
+c1 Deleonardis > Hart | MD 14-4
+c1 Vernagallo > Kuster | Dec 14-12
+c2 Farenchak > Gimbor | Dec 8-3
+c2 Herrera > Valdez | Dec 9-4
+c2 Cook > Deleonardis | Dec 3-2
+c2 Vernagallo > Gantz | Fall 0:34
+cqf Farenchak > Herrera | Dec 6-4
+cqf Cook > Vernagallo | Fall 6:20
+csf Hunsberger > Farenchak | TF-1.5 6:00 (23-6)
+csf Lucas > Cook | SV-1 3-1
+3rd Lucas > Hunsberger | Dec 3-2
+5th Farenchak > Cook | Dec 8-3
+7th Herrera > Vernagallo | Inj. 0:20
+
+@ 174
+1 Abner Romero | St. Cloud State | 20-1
+- Nate Barrett | Ashland | 18-8
+- Cole Casilio | Gannon | 11-10
+8 Kolby Kost | Augustana (SD) | 20-9
+5 Anthony Des Vigne | Central Oklahoma | 33-8
+- Calan Staub | Mount Olive | 14-3
+- Owen Butler | Indianapolis | 21-16
+4 Cade Lindsey | Fort Hays State | 35-8
+3 Austin Eldredge | Nebraska-Kearney | 28-4
+- Zeke Waltz | McKendree | 28-11
+- Jack MacKiernan | American International | 23-11
+6 Cole Hernandez | Western Colorado | 28-12
+7 Dillon Walker | Mercyhurst | 19-7
+- James Penfold | Lake Erie | 20-8
+- Chase Morgan | West Liberty | 17-13
+2 Max Bruss | Mary | 33-6
+- Hunter Haven | Limestone | 19-8
+- Dayton Fields | Newberry | 17-12
+pigtail Casilio > Haven | SV-1 10-4
+pigtail Penfold > Fields | SV-1 8-6
+r1 Romero > Barrett | Dec 10-4
+r1 Kost > Casilio | MD 12-1
+r1 Des Vigne > Staub | Dec 7-3
+r1 Lindsey > Butler | Dec 7-0
+r1 Eldredge > Waltz | TF-1.5 3:09 (16-0)
+r1 Hernandez > MacKiernan | MD 10-2
+r1 Penfold > Walker | Fall 5:57
+r1 Morgan > Bruss | Dec 4-3
+qf Romero > Kost | Fall 4:23
+qf Lindsey > Des Vigne | Fall 1:41
+qf Eldredge > Hernandez | TF-1.5 1:46 (16-0)
+qf Penfold > Morgan | MD 10-2
+sf Romero > Lindsey | Fall 4:30
+sf Eldredge > Penfold | MD 18-4
+f Eldredge > Romero | MD 12-4
+cpig Staub > Fields | Dec 12-10
+cpig Haven > MacKiernan | Fall 5:32
+c1 Barrett > Casilio | Inj. 2:55
+c1 Butler > Staub | Dec 8-4
+c1 Waltz > Haven | TF-1.5 6:31 (20-4)
+c1 Bruss > Walker | Dec 3-2
+c2 Barrett > Morgan | Dec 3-2
+c2 Hernandez > Butler | Dec 9-2
+c2 Des Vigne > Waltz | Dec 4-2
+c2 Bruss > Kost | Fall 4:28
+cqf Hernandez > Barrett | Dec 13-7
+cqf Bruss > Des Vigne | Fall 3:31
+csf Lindsey > Hernandez | Dec 9-3
+csf Penfold > Bruss | Dec 7-6
+3rd Lindsey > Penfold | Dec 3-1
+5th Bruss > Hernandez | Dec 11-5
+7th Des Vigne > Barrett | Dec 5-3
+
+@ 184
+1 Billy Higgins | Nebraska-Kearney | 26-5
+- Clinton Morrisette | King | 22-14
+- Alex Kauffman | Central Oklahoma | 15-6
+8 Matt Weinberg | Kutztown | 27-3
+5 Reece Worachek | Wisconsin-Parkside | 32-6
+- Shylik Scriven | UNC Pembroke | 24-7
+- Colter Bye | Upper Iowa | 16-12
+4 Logan Hall | Lander | 33-4
+3 Ty McGeary | West Liberty | 27-1
+- Joey Williams | Maryville | 23-10
+- Keegan Gehlhausen | Chadron State | 15-12
+6 Brock Biddle | Pitt-Johnstown | 25-8
+7 Josh Jones | McKendree | 26-10
+- Cole Houser | Glenville State College | 37-11
+- Hunter Tobiasson | Adams State | 20-10
+2 Daniel Beemer | Ashland | 28-2
+- Cade Mueller | Augustana (SD) | 18-7
+- Austin Gibson | Fairmont State | 23-18
+pigtail Kauffman > Mueller | Dec 3-2
+pigtail Houser > Gibson | TF-1.5 4:49 (18-2)
+r1 Higgins > Morrisette | TF-1.5 5:35 (16-0)
+r1 Kauffman > Weinberg | Fall 5:26
+r1 Worachek > Scriven | MD 14-4
+r1 Hall > Colter Bye | Dec 8-3
+r1 McGeary > Williams | Dec 3-2
+r1 Gehlhausen > Biddle | Dec 7-5
+r1 Jones > Houser | Dec 6-4
+r1 Beemer > Tobiasson | Dec 5-3
+qf Higgins > Kauffman | Dec 3-2
+qf Hall > Worachek | Dec 3-2
+qf McGeary > Gehlhausen | Dec 8-6
+qf Beemer > Jones | Fall 1:32
+sf Hall > Higgins | Dec 3-2
+sf McGeary > Beemer | Dec 6-3
+f McGeary > Hall | SV-1 3-1
+cpig Scriven > Gibson | Dec 13-9
+cpig Biddle > Mueller | MD 15-4
+c1 Weinberg > Morrisette | TF-1.5 7:00 (15-0)
+c1 Colter Bye > Scriven | SV-1 7-5
+c1 Biddle > Williams | Fall 0:47
+c1 Houser > Tobiasson | Dec 12-5
+c2 Weinberg > Jones | Fall 6:16
+c2 Colter Bye > Gehlhausen | Dec 4-3
+c2 Worachek > Biddle | Dec 13-9
+c2 Kauffman > Houser | Dec 7-6
+cqf Weinberg > Colter Bye | Dec 12-10
+cqf Kauffman > Worachek | SV-1 6-4
+csf Weinberg > Higgins | Fall 4:03
+csf Beemer > Kauffman | Dec 6-2
+3rd Beemer > Weinberg | Dec 3-1
+5th Kauffman > Higgins | M. For.
+7th Worachek > Colter Bye | Dec 6-2
+
+@ 197
+1 Dalton Abney | Central Oklahoma | 23-2
+- Jacob Noon | Tiffin | 16-13
+- Anderson Salisbury | Colorado School of Mines | 23-7
+8 Luke McGonigal | Mercyhurst | 23-6
+5 Cole Huss | Northern State | 19-7
+- Bryce Walker | UNC Pembroke | 12-5
+- Logan Kvien | McKendree | 23-11
+4 Dominic Murphy | St. Cloud State | 29-5
+3 Tereus Henry | Fort Hays State | 38-4
+- Jacob Kowalski | Findlay | 11-13
+- Dakoda Rodger | Pitt-Johnstown | 23-10
+6 Anthony Yacovetti | Lander | 27-6
+7 Joel Leise | Gannon | 11-4
+- Kash Anderson | Colorado Mesa | 22-11
+- Matt Kaylor | Mary | 29-12
+2 Derek Blubaugh | Indianapolis | 33-3
+- Micha Clemson | Emmanuel | 13-8
+- Brylan Clouse | Lake Erie | 13-11
+pigtail Salisbury > Clemson | Dec 6-4
+pigtail Anderson > Clouse | Dec 6-3
+r1 Abney > Noon | Fall 2:29
+r1 McGonigal > Salisbury | Dec 7-2
+r1 Huss > Walker | Fall 7:26
+r1 Murphy > Kvien | Dec 7-6
+r1 Henry > Kowalski | MD 14-3
+r1 Rodger > Yacovetti | SV-1 3-1
+r1 Anderson > Leise | Dec 5-1
+r1 Blubaugh > Kaylor | Dec 2-1
+qf Abney > McGonigal | MD 9-1
+qf Murphy > Huss | SV-1 3-1
+qf Henry > Rodger | MD 19-1
+qf Blubaugh > Anderson | Dec 8-3
+sf Abney > Murphy | SV-1 4-2
+sf Blubaugh > Henry | Dec 7-3
+f Abney > Blubaugh | Dec 1-0
+cpig Clouse > Walker | Dec 7-5
+cpig Yacovetti > Clemson | Fall 1:50
+c1 Salisbury > Noon | Fall 1:34
+c1 Kvien > Clouse | Fall 2:08
+c1 Yacovetti > Kowalski | Fall 4:09
+c1 Kaylor > Leise | Dec 6-5
+c2 Anderson > Salisbury | Dec 5-0
+c2 Kvien > Rodger | MD 10-2
+c2 Huss > Yacovetti | Dec 8-2
+c2 Kaylor > McGonigal | Dec 5-4
+cqf Kvien > Anderson | Dec 4-3
+cqf Kaylor > Huss | M. For.
+csf Murphy > Kvien | Dec 3-2
+csf Henry > Kaylor | Dec 6-1
+3rd Henry > Murphy | Dec 7-5
+5th Kaylor > Kvien | Dec 3-2
+7th Anderson > Huss | M. For.
+
+@ 285
+1 Shawn Streck | Central Oklahoma | 26-0
+- La'Ron Parks | Notre Dame (Ohio) | 33-7
+- Taniela Feliciano-Takafua | Simon Fraser | 27-8
+8 Juan Edmond-Holmes | Lander | 21-7
+5 Francesco Borsellino | West Liberty | 21-6
+- Mason Watt | Chadron State | 18-6
+- Devon Rice | Newberry | 22-14
+4 Johnny Green | Ouachita Baptist | 24-5
+3 Jared Campbell | Glenville State College | 32-2
+- Isaiah Vance | Pitt-Johnstown | 20-6
+- Daniel Scheib | Shippensburg | 16-6
+6 Darrell Mason | Minnesota State | 17-4
+7 John Meyers | Seton Hill | 16-3
+- Cale Gray | Indianapolis | 21-9
+- Luke Tweeton | Mary | 23-13
+2 Lee Herrington | Nebraska-Kearney | 27-6
+- Jake Swirple | Minot State (N.D.) | 18-9
+- Nico Ramirez | Mount Olive | 14-13
+pigtail Feliciano-Takafua > Swirple | SV-1 3-1
+pigtail Gray > Ramirez | Dec 3-1
+r1 Streck > Parks | Dec 8-4
+r1 Edmond-Holmes > Feliciano-Takafua | MD 9-1
+r1 Borsellino > Watt | MD 10-1
+r1 Green > Rice | Fall 4:07
+r1 Campbell > Vance | Dec 8-2
+r1 Mason > Scheib | Fall 7:01
+r1 Gray > Meyers | MD 10-2
+r1 Herrington > Tweeton | Dec 2-1
+qf Streck > Edmond-Holmes | Dec 8-3
+qf Green > Borsellino | SV-1 3-1
+qf Campbell > Mason | Dec 6-2
+qf Gray > Herrington | Dec 9-8
+sf Streck > Green | Dec 6-3
+sf Campbell > Gray | MD 9-0
+f Streck > Campbell | Dec 8-3
+cpig Watt > Ramirez | Fall 4:47
+cpig Swirple > Scheib | Dec 4-0
+c1 Parks > Feliciano-Takafua | Dec 6-3
+c1 Watt > Rice | Fall 4:14
+c1 Swirple > Vance | SV-1 3-1
+c1 Meyers > Tweeton | SV-1 3-1
+c2 Herrington > Parks | Dec 3-1
+c2 Mason > Watt | Dec 3-2
+c2 Swirple > Borsellino | 2-OT 2-2
+c2 Edmond-Holmes > Meyers | Fall 6:18
+cqf Mason > Herrington | Dec 8-3
+cqf Edmond-Holmes > Swirple | Fall 0:58
+csf Mason > Green | Dec 2-0
+csf Gray > Edmond-Holmes | Fall 3:36
+3rd Mason > Gray | Dec 9-5
+5th Green > Edmond-Holmes | Dec 2-1
+7th Herrington > Swirple | Dec 3-2

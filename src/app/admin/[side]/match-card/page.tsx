@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { HubShell } from '../dashboards/HubShell'
 import { MatchCardTestClient } from './MatchCardTestClient'
+import { getSiteLook } from '@/lib/siteLookServer'
 
 export const dynamic = 'force-dynamic'
 
@@ -20,9 +21,11 @@ export default async function MatchCardPage() {
     </div>
   )
 
+  // the site's own header over the card (Kyle 2026-11-19: "this still needs to display the site header"), in the saved look
+  const look = await getSiteLook()
   return (
     <HubShell header={header}>
-      <MatchCardTestClient />
+      <MatchCardTestClient headerLayout={look.headerLayout} />
     </HubShell>
   )
 }

@@ -1,0 +1,182 @@
+# NCAA Division III Championships 2000 — source: NCAA III 2000.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 125
+- Zac Weiglein | Wartburg
+- Darin Bertram | Augsburg
+- Anthony Conte | College of New Jersey
+- Michael Jones | Delaware Valley
+- Vinny Pedalino | McDaniel
+- Felix Martinez | Ithaca
+- Nick Hessler | Augustana Illinois
+- Greg Lehman | Illinois College
+place 1 Zac Weiglein
+place 2 Darin Bertram
+place 3 Anthony Conte
+place 4 Michael Jones
+place 5 Vinny Pedalino
+place 6 Felix Martinez
+place 7 Nick Hessler
+place 8 Greg Lehman
+
+@ 133
+- Jesus Wilson | Upper Iowa
+- Rick Schweitzberger | Buena Vista
+- Ben Kritsonis | Wartburg
+- John Conte | Wilkes
+- Frank Palumbo | SUNY-Brockport
+- John Marchette | Augsburg
+- Mike Corsiglia | Coe College
+- Francisco Bermundez | Millikin
+place 1 Jesus Wilson
+place 2 Rick Schweitzberger
+place 3 Ben Kritsonis
+place 4 John Conte
+place 5 Frank Palumbo
+place 6 John Marchette
+place 7 Mike Corsiglia
+place 8 Francisco Bermundez
+
+@ 141
+- Florian Ghinea | Montclair State
+- Rob Anderson | Wisconsin-La Crosse
+- Keith Poloskey | Springfield
+- Bryan Klass | Delaware Valley
+- Brian Jones | Augsburg
+- Casey Doyle | Wartburg
+- Mark Van Beck | Buena Vista
+- Shawn Whyte | Waynesburg
+place 1 Florian Ghinea
+place 2 Rob Anderson
+place 3 Keith Poloskey
+place 4 Bryan Klass
+place 5 Brian Jones
+place 6 Casey Doyle
+place 7 Mark Van Beck
+place 8 Shawn Whyte
+
+@ 149
+- Josh Cagle | Augsburg
+- Rami Ratel | Montclair State
+- Nick Mitchell | Wartburg
+- Royce Eyer | Lycoming
+- Jimmy Wallace | Wilmington
+- Nathan Cross | Augustana Illinois
+- Craig Collins | Loras College
+- Brad Rowe | SUNY-Brockport
+place 1 Josh Cagle
+place 2 Rami Ratel
+place 3 Nick Mitchell
+place 4 Royce Eyer
+place 5 Jimmy Wallace
+place 6 Nathan Cross
+place 7 Craig Collins
+place 8 Brad Rowe
+
+@ 157
+- Mike Helm | Messiah
+- Ryan Ciotoli | Ithaca
+- Dan Weber | Wheaton
+- Chris Smith | Wartburg
+- Ben Barclay | Luther
+- James Henderon | College of New Jersey
+- Ron Johns | McDaniel
+- Pete Doucet | Roger Williams
+place 1 Mike Helm
+place 2 Ryan Ciotoli
+place 3 Dan Weber
+place 4 Chris Smith
+place 5 Ben Barclay
+place 6 James Henderon
+place 7 Ron Johns
+place 8 Pete Doucet
+
+@ 165
+- Dominic Dellagatta | Montclair State
+- Chris Fertig | Coast Guard
+- Eric Walker | Lycoming
+- Chris Roggie | Messiah
+- Andy Krueger | Buena Vista
+- Danny Anderson | Mount Union
+- Jeff Friedhof | Luther
+- Mike Ferris | SUNY-Brockport
+place 1 Dominic Dellagatta
+place 2 Chris Fertig
+place 3 Eric Walker
+place 4 Chris Roggie
+place 5 Andy Krueger
+place 6 Danny Anderson
+place 7 Jeff Friedhof
+place 8 Mike Ferris
+
+@ 174
+- Nick Slack | Augsburg
+- John Roden | Springfield
+- Ross Mueller | Lawrence
+- Rob Murray | Loras College
+- Brad Christie | Montclair State
+- Sevond Cole | Buena Vista
+- Tony Wallace | RIT
+- Kevin Atkins | Baldwin Wallace
+place 1 Nick Slack
+place 2 John Roden
+place 3 Ross Mueller
+place 4 Rob Murray
+place 5 Brad Christie
+place 6 Sevond Cole
+place 7 Tony Wallace
+place 8 Kevin Atkins
+
+@ 184
+- Jeremy Miller | Wisconsin-La Crosse
+- Ian Courter | Pacific Oregon
+- Nik Lewandowski | Augsburg
+- Andy Povenski | Delaware Valley
+- Joe Perez | SUNY-Brockport
+- Gene Adams | Luther
+- Tyras Bookman | New York University
+- Charlie Conaway | McDaniel
+place 1 Jeremy Miller
+place 2 Ian Courter
+place 3 Nik Lewandowski
+place 4 Andy Povenski
+place 5 Joe Perez
+place 6 Gene Adams
+place 7 Tyras Bookman
+place 8 Charlie Conaway
+
+@ 197
+- Josh Clausen | Augsburg
+- Eric Vaughan | SUNY-Brockport
+- Brandon Novak | St. John's
+- Matt Buskohl | Wartburg
+- Titus Folden | Pacific Oregon
+- Cliff Thompson | Upper Iowa
+- Paul Grigsby | Ohio Northern
+- Andy Lausier | Lycoming
+place 1 Josh Clausen
+place 2 Eric Vaughan
+place 3 Brandon Novak
+place 4 Matt Buskohl
+place 5 Titus Folden
+place 6 Cliff Thompson
+place 7 Paul Grigsby
+place 8 Andy Lausier
+
+@ 285
+- Ben Bauer | Augsburg
+- Rob Cosper | Lycoming
+- Brett Stender | Luther
+- Jason Turner | SUNY-Oswego
+- Don LeRoux | Loras College
+- Kris O'Rear | Wartburg
+- Eric Urdzik | John Carroll
+- Ryan Mills | Wabash
+place 1 Ben Bauer
+place 2 Rob Cosper
+place 3 Brett Stender
+place 4 Jason Turner
+place 5 Don LeRoux
+place 6 Kris O'Rear
+place 7 Eric Urdzik
+place 8 Ryan Mills
+

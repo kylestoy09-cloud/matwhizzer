@@ -19,6 +19,7 @@ import type {
   SeasonHighs,
 } from './types'
 import { DB_SECTION_TO_SCOPE } from './types'
+import { loadStreakEvents, streaksOn, type StreakSeason } from './streaks'
 
 // Every lookup must succeed. A failed query used to read as "no rows", so a
 // busy day could be saved with whole sections silently missing.
@@ -103,6 +104,7 @@ export async function computeSnapshot(
   seasonId: number,   // integer FK — dual_meets, in_season_tournaments
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   db: SupabaseClient<any>,
+  preloaded?: StreakSeason,   // the season's bouts for streaks, loaded once by a full-season backfill
 ): Promise<{
   payload:          SnapshotPayload
   seasonHighUpdates: SeasonHighs
@@ -140,14 +142,11 @@ export async function computeSnapshot(
   // ── 3. Fetch supporting data in parallel ──────────────────────────────────
 
   const [
-    streakStateRes,
     hammersRes,
     matchLogRes,
     tourneyRes,
     teamRankingsRes,
-    histMeetsRes,
   ] = await Promise.all([
-    db.from('snapshot_streak_state').select('*').eq('season', season),
     db.from('wrestler_hammer_scores').select('wrestler_id, hammer_score').eq('season', season).eq('gender', 'M'),
     db.from('wrestler_match_score_log').select(`
       wrestler_id, opponent_wrestler_id,
@@ -164,7 +163,6 @@ export async function computeSnapshot(
       .lte('published_at', `${date}T23:59:59.999Z`)   // as of the report date (backfills must not see later rankings)
       .order('published_at', { ascending: false })
       .limit(20),
-    db.from('dual_meets').select('id, meet_date, team1:schools!team1_school_id(id, display_name), team2:schools!team2_school_id(id, display_name)').eq('season_id', seasonId).lt('meet_date', date),
   ])
 
   // ── 4. Build lookup maps ─────────────────────────────────────────────────
@@ -172,12 +170,6 @@ export async function computeSnapshot(
   const hammerMap = new Map<string, number>()
   for (const h of must(hammersRes, 'hammers')) {
     hammerMap.set(h.wrestler_id, parseFloat(h.hammer_score))
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const streakStateBefore = new Map<string, any>()
-  for (const s of must(streakStateRes, 'streakState')) {
-    streakStateBefore.set(`${s.wrestler_id}:${s.streak_type}`, s)
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -220,57 +212,6 @@ export async function computeSnapshot(
         school: schB?.display_name ?? '',
         school_id: b.school_b_id ?? null,
       })
-    }
-  }
-
-  // ── 4b. Full-season bouts for accurate streak computation ────────────────
-  // Fetch history for ALL wrestlers in the season so the streak leaderboard
-  // shows everyone with an active streak, not just today's wrestlers.
-
-  const histMeetDateMap = new Map<string, string>()
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const histSchoolNameMap = new Map<number, string>()
-  for (const m of must(histMeetsRes, 'histMeets')) {
-    histMeetDateMap.set(String(m.id), m.meet_date)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    for (const team of [m.team1, m.team2] as any[]) {
-      if (team?.id) histSchoolNameMap.set(team.id, team.display_name ?? '')
-    }
-  }
-  const histMeetIds = [...histMeetDateMap.keys()]
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let histBouts: any[] = []
-  if (histMeetIds.length > 0) {
-    histBouts = await inChunks(histMeetIds, ids => db.from('dual_meet_matches')
-      .select('wrestler_a_id, wrestler_b_id, winner_id, result_type, dual_meet_id, is_double_forfeit, wrestler_a_name_raw, wrestler_b_name_raw, school_a_id, school_b_id')
-      .in('dual_meet_id', ids), 'history bouts')
-    histBouts.sort((a: any, b: any) => {
-      const da  = histMeetDateMap.get(String(a.dual_meet_id)) ?? ''
-      const db2 = histMeetDateMap.get(String(b.dual_meet_id)) ?? ''
-      return db2.localeCompare(da)  // most recent first
-    })
-  }
-
-  // Per-wrestler history (most recent first) + name lookup from history
-  const wrestlerHistBouts = new Map<string, Array<{ won: boolean; result_type: string }>>()
-  const wrestlerHistNames = new Map<string, { name: string; school: string; school_id: number | null }>()
-  for (const b of histBouts) {
-    if (b.is_double_forfeit) continue
-    for (const [wid, won, nameRaw, schId] of [
-      [b.wrestler_a_id, b.winner_id === b.wrestler_a_id, b.wrestler_a_name_raw, b.school_a_id],
-      [b.wrestler_b_id, b.winner_id === b.wrestler_b_id, b.wrestler_b_name_raw, b.school_b_id],
-    ] as [string | null, boolean, string | null, number | null][]) {
-      if (!wid) continue
-      if (!wrestlerHistBouts.has(wid)) wrestlerHistBouts.set(wid, [])
-      wrestlerHistBouts.get(wid)!.push({ won, result_type: b.result_type ?? '' })
-      if (!wrestlerHistNames.has(wid) && nameRaw) {
-        wrestlerHistNames.set(wid, {
-          name: nameRaw,
-          school: schId != null ? (histSchoolNameMap.get(schId) ?? '') : '',
-          school_id: schId ?? null,
-        })
-      }
     }
   }
 
@@ -337,70 +278,12 @@ export async function computeSnapshot(
     if (b) ratedBoutSource.set(i, b.dual_meet_id)
   })
 
-  // ── 6. Streaks ──────────────────────────────────────────────────────────
-
-  const wrestlerTodayBouts = new Map<string, Array<{ won: boolean; result_type: string }>>()
-  for (const b of bouts.sort((a, b) => (a.order_index ?? 0) - (b.order_index ?? 0))) {
-    if (b.is_double_forfeit) continue
-    for (const [wid, won] of [
-      [b.wrestler_a_id, b.winner_id === b.wrestler_a_id],
-      [b.wrestler_b_id, b.winner_id === b.wrestler_b_id],
-    ] as [string | null, boolean][]) {
-      if (!wid) continue
-      if (!wrestlerTodayBouts.has(wid)) wrestlerTodayBouts.set(wid, [])
-      wrestlerTodayBouts.get(wid)!.push({ won, result_type: b.result_type ?? '' })
-    }
-  }
-
-  function qualifies(bout: { won: boolean; result_type: string }, type: StreakKey): boolean {
-    if (!bout.won) return false
-    if (type === 'pin')   return bout.result_type === PIN_TYPE
-    if (type === 'tech')  return bout.result_type === TECH_TYPE
-    if (type === 'bonus') return BONUS_TYPES.has(bout.result_type)
-    return true
-  }
-
-  const updatedStreaks = new Map<string, { len: number; startedOn: string | null }>()
-  const snappedStreaks = new Map<string, { was: number; result_type: string }>()
-
-  // All wrestlers active in the season = everyone in history + everyone who wrestled today
-  const allSeasonWrestlerIds = new Set<string>([
-    ...wrestlerHistBouts.keys(),
-    ...wrestlerTodayBouts.keys(),
-  ])
-
-  for (const wid of allSeasonWrestlerIds) {
-    for (const type of STREAK_KEYS) {
-      const stateKey = `${wid}:${type}`
-
-      // Pre-today streak from full match history (most-recent-first)
-      const hist = wrestlerHistBouts.get(wid) ?? []
-      let prevLen = 0
-      for (const h of hist) {
-        if (qualifies(h, type)) { prevLen++ }
-        else { break }
-      }
-      const before = streakStateBefore.get(stateKey)
-      const prevStart: string | null = prevLen > 0 ? (before?.started_on ?? null) : null
-
-      // Apply today's bouts on top
-      const todayBouts = wrestlerTodayBouts.get(wid) ?? []
-      let curLen = prevLen, curStart = prevStart, snapped = false, snapType = ''
-      for (const bout of todayBouts) {
-        if (qualifies(bout, type)) {
-          if (curLen === 0) curStart = date
-          curLen++
-        } else {
-          if (prevLen > 0 && !snapped) { snapped = true; snapType = bout.result_type }
-          curLen = 0; curStart = null
-        }
-      }
-      updatedStreaks.set(stateKey, { len: curLen, startedOn: curStart })
-      if (type !== 'win' && snapped && prevLen >= 2) {
-        snappedStreaks.set(stateKey, { was: prevLen, result_type: snapType })
-      }
-    }
-  }
+  // ── Streaks: every bout of the season (duals, tournaments, postseason) ──
+  // Kyle 2026-11-11; order, forfeits and the loader are in src/lib/snapshot/streaks.ts
+  bouts.sort((a, b) => (a.order_index ?? 0) - (b.order_index ?? 0))   // later sections read the card in order
+  const streakSeason = preloaded ?? await loadStreakEvents(db, 'M', seasonId, season)
+  const { updated: updatedStreaks, changed: changedStreaks, snapped: snappedStreaks, active: allSeasonWrestlerIds } =
+    streaksOn(streakSeason, date)
 
   function buildStreakRows(type: StreakKey): StreakRow[] {
     const rows: StreakRow[] = []
@@ -409,7 +292,7 @@ export async function computeSnapshot(
       const len = updatedStreaks.get(stateKey)?.len ?? 0
       if (len === 0) continue
       // Name lookup: today's meets first, then historical bouts
-      const info = wrestlerNames.get(wid) ?? wrestlerHistNames.get(wid)
+      const info = streakSeason.names.get(wid) ?? wrestlerNames.get(wid)
       if (!info) continue
       rows.push({ wrestler_id: wid, wrestler_name: info.name, school_name: info.school, school_id: info.school_id, streak_len: len, season_high: len })
     }
@@ -421,7 +304,7 @@ export async function computeSnapshot(
     for (const [key, { was, result_type }] of snappedStreaks) {
       if (!key.endsWith(`:${type}`)) continue
       const wid = key.replace(`:${type}`, '')
-      const info = wrestlerNames.get(wid) ?? wrestlerHistNames.get(wid)
+      const info = streakSeason.names.get(wid) ?? wrestlerNames.get(wid)
       if (!info) continue
       rows.push({ wrestler_id: wid, wrestler_name: info.name, school_name: info.school, school_id: info.school_id, streak_was: was, result_type })
     }
@@ -802,7 +685,7 @@ export async function computeSnapshot(
     return { tournament_id: t.id, tournament_name: t.name, total_seconds: total, bout_count: tb.length, avg_seconds: tb.length > 0 ? Math.round(total / tb.length) : 0 }
   })
 
-  let biggestTourUpset: TournamentBiggestUpset | null = null
+  let biggestTourUpset: TournamentBiggestUpset | null = null, biggestTourUpsetUnrated: TournamentBiggestUpset | null = null
   if (tourIds.length > 0) {
     const tourLogRes = await db.from('wrestler_match_score_log').select('wrestler_id, pre_match_hammer, opponent_pre_match_hammer, is_winner, source_id').eq('match_date', date).eq('season', season).eq('gender', 'M').eq('match_source', 'tournament_bout')
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -815,17 +698,20 @@ export async function computeSnapshot(
     for (const [boutId, pair] of tPairs) {
       if (!pair.winner || !pair.loser || pair.loser.pre_match_hammer <= pair.winner.pre_match_hammer) continue
       const gap = pair.loser.pre_match_hammer - pair.winner.pre_match_hammer
-      if (!biggestTourUpset || gap > biggestTourUpset.gap) {
+      const unrated = Number(pair.winner.pre_match_hammer) === 0
+      const cur = unrated ? biggestTourUpsetUnrated : biggestTourUpset
+      if (!cur || gap > cur.gap) {
         const b = tourBoutById.get(boutId)
         if (!b) continue
         const tour = tournaments.find(t => t.id === b.in_season_tournament_id)
         const w1 = b.winner === 1
-        biggestTourUpset = { tournament_id: b.in_season_tournament_id, tournament_name: tour?.name ?? '', weight_class: b.weight_class, winner_name: w1 ? (b.wrestler1_name_raw ?? '') : (b.wrestler2_name_raw ?? ''), winner_school: w1 ? (b.wrestler1_school_raw ?? '') : (b.wrestler2_school_raw ?? ''), loser_name: w1 ? (b.wrestler2_name_raw ?? '') : (b.wrestler1_name_raw ?? ''), loser_school: w1 ? (b.wrestler2_school_raw ?? '') : (b.wrestler1_school_raw ?? ''), gap, winner_hammer: pair.winner.pre_match_hammer, loser_hammer: pair.loser.pre_match_hammer, result_type: b.result_type ?? '' }
+        const row: TournamentBiggestUpset = { tournament_id: b.in_season_tournament_id, tournament_name: tour?.name ?? '', weight_class: b.weight_class, winner_name: w1 ? (b.wrestler1_name_raw ?? '') : (b.wrestler2_name_raw ?? ''), winner_school: w1 ? (b.wrestler1_school_raw ?? '') : (b.wrestler2_school_raw ?? ''), loser_name: w1 ? (b.wrestler2_name_raw ?? '') : (b.wrestler1_name_raw ?? ''), loser_school: w1 ? (b.wrestler2_school_raw ?? '') : (b.wrestler1_school_raw ?? ''), gap, winner_hammer: pair.winner.pre_match_hammer, loser_hammer: pair.loser.pre_match_hammer, result_type: b.result_type ?? '' }
+        if (unrated) biggestTourUpsetUnrated = row; else biggestTourUpset = row
       }
     }
   }
 
-  const tournamentsData: TournamentsData = { top_champs: champRows.slice(0, 10), lowest_seed_wins: lowestSeedWins, mat_times: matTimes, biggest_upset: biggestTourUpset }
+  const tournamentsData: TournamentsData = { top_champs: champRows.slice(0, 10), lowest_seed_wins: lowestSeedWins, mat_times: matTimes, biggest_upset: biggestTourUpset, biggest_upset_unrated: biggestTourUpsetUnrated }
 
   // ── 15. Assemble per-section views ───────────────────────────────────────
 
@@ -854,7 +740,9 @@ export async function computeSnapshot(
       snapped:  { pin: isState ? snappedData.pin : snappedData.pin.filter(r => secWrIds.has(r.wrestler_id)), tech: isState ? snappedData.tech : snappedData.tech.filter(r => secWrIds.has(r.wrestler_id)), bonus: isState ? snappedData.bonus : snappedData.bonus.filter(r => secWrIds.has(r.wrestler_id)) },
       top_rated_matches:    filterRated(allRatedSorted).slice(0, 10),
       top_rated_upsets:     filterRated(allUpsetsByLoser).slice(0, 10),
-      top_upsets_by_gap:    filterRated(allUpsetsByGap).slice(0, 10),
+      // an unrated winner (pre-match rating 0) gets its own list (Kyle 2026-11-11)
+      top_upsets_by_gap:    filterRated(allUpsetsByGap.filter(r => r.winner_hammer !== 0)).slice(0, 10),
+      top_upsets_by_gap_unrated: filterRated(allUpsetsByGap.filter(r => r.winner_hammer === 0)).slice(0, 10),
       top25_teams:          getTop25Teams(scope),
       team_upsets:          isState ? teamUpsets : teamUpsets.filter(u => secSchIds.has(u.winner_school_id) || secSchIds.has(u.loser_school_id)),
       final_bout_wins:      finalBoutWins(secMeets),
@@ -911,7 +799,7 @@ export async function computeSnapshot(
       tournaments: tournamentsData,
     },
     seasonHighUpdates,
-    updatedStreaks,
+    updatedStreaks: changedStreaks,   // saved state: only the wrestlers who wrestled today
     todayTeamHighs,
   }
 }

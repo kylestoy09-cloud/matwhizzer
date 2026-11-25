@@ -34,7 +34,7 @@ the row backed up), or leave it.
 - ~~8 girls whose 2025-26 postseason entries have no school~~ — resolved 2026-11-02: bracket filler names, not wrestlers (only forfeit losses, no duals). Removed with 11 other filler entries (`20261102_remove_placeholder_entries.sql`).
 
 - ~~Falls under 10 seconds~~ — Kyle 2026-11-10: under 10 s can happen; only 0:00–0:02 falls are wrong; tech falls under 0:13 and tech falls / injury defaults with no time likewise → 6:00 (`20261110_bout_times_to_6_00.sql`, 432 bouts).
-- 229 boys / 42 girls duals where the final score differs from the bout points, mostly by 1 point (likely team deductions; not verified).
+- ~~229 boys / 42 girls duals where the final score differs from the bout points~~ — 2026-11-11: down to 2 once deductions and tiebreak points count. Schalick–Delran (girls) fixed; Delsea 73–6 Council Rock North (PA) 2/11/2026 left as is (Kyle): PA weights, two 285 bouts.
 - Duplicate school records: ~~"Blair Academy (B Team)"~~ gone (one Blair record left); "Hodgson" (1108) → "Hodgson Vo Tech School" (1118), merge approved 2026-11-10 (`20261110_merge_hodgson.sql`).
 
 ## 5. Before the 2026-27 season (pinned 2026-11-02)

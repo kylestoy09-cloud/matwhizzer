@@ -17,6 +17,7 @@ type TaskType = {
   enabled:       boolean
   pinned_at:     string | null
   school_ids:    number[] | null
+  reset_at?:     string | null
   scope_schools: { id: number; name: string }[]
   open?:         number
   total?:        number
@@ -54,10 +55,14 @@ export default function TaskOrderPage() {
   }
   useEffect(() => { load() }, [])
 
+  // Every change saves right away (Kyle 2026-11-19: AD turned off kept dealing — the toggle only changed the screen
+  // until "Save order" at the bottom was pressed, and leaving the page or a Reset dropped it)
+  const saveSeq = useRef(0)
   function change(next: TaskType[]) {
-    setItems(next.map((t, i) => ({ ...t, sort_order: i + 1 })))
-    setDirty(true)
+    const rows = next.map((t, i) => ({ ...t, sort_order: i + 1 }))
+    setItems(rows)
     setSaved(false)
+    void save(rows)
   }
   function moveTo(from: number, to: number) {
     if (to < 0 || to >= items.length || from === to) return
@@ -68,23 +73,36 @@ export default function TaskOrderPage() {
   }
   const update = (i: number, patch: Partial<TaskType>) => change(items.map((t, j) => (j === i ? { ...t, ...patch } : t)))
 
-  async function save() {
+  async function save(rows: TaskType[]) {
+    const seq = ++saveSeq.current
     setSaving(true)
+    setDirty(true)
     setError(null)
     try {
       const res = await fetch('/api/admin/microcheck/task-types', {
         method:  'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ types: items.map(t => ({
+        body:    JSON.stringify({ types: rows.map(t => ({
           key: t.key, sort_order: t.sort_order, enabled: t.enabled, pinned: !!t.pinned_at, school_ids: t.school_ids,
         })) }),
       })
       const d = await res.json()
-      if (d.error) { setError(d.error); return }
+      if (seq !== saveSeq.current) return          // a newer change is saving
+      if (d.error) { setError(`Not saved: ${d.error}`); return }
       setSaved(true)
-      await load()
-    } catch { setError('Save failed') }
-    finally { setSaving(false) }
+      setDirty(false)
+    } catch { if (seq === saveSeq.current) setError('Not saved — check your connection and try again') }
+    finally { if (seq === saveSeq.current) setSaving(false) }
+  }
+
+  // Reset a check: every school is asked again, with what's on file shown to confirm or change
+  async function resetCheck(t: TaskType) {
+    if (dirty) { alert('Wait for the last change to save, then reset.'); return }
+    if (!confirm(`Reset "${t.group_label} · ${t.label}"? Every school comes back into the queue to be checked again (what's on file is shown to confirm or change).`)) return
+    const res = await fetch('/api/admin/microcheck/task-types', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ reset: t.key }) })
+    const data = await res.json()
+    if (data.error) { alert(data.error); return }
+    await load()
   }
 
   async function removeFocus(f: Focus) {
@@ -116,7 +134,8 @@ export default function TaskOrderPage() {
         <h1 className="text-2xl font-bold text-slate-900 mb-1">Task Order</h1>
         <p className="text-sm text-slate-500 mb-6">
           One queue for boys and girls. Whoever asks for a task gets the first open one, in this order;
-          schools go A→Z within a check. Pinned checks go first. Changes take effect when you save.
+          schools go A→Z within a check. Pinned checks go first. Every change saves as you make it and applies to the
+          next task anyone asks for.
         </p>
 
         {focus.length > 0 && (
@@ -162,6 +181,13 @@ export default function TaskOrderPage() {
                   className={`text-xs px-2 py-0.5 rounded border shrink-0 ${t.enabled ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : 'border-slate-200 text-slate-400'}`}>
                   {t.enabled ? 'On' : 'Off'}
                 </button>
+                {/* Kyle 2026-11-19: every check can be run again (coaches, ADs, links change year to year) */}
+                {t.source === 'school_field' && (
+                  <button onClick={() => resetCheck(t)} title={t.reset_at ? `Last reset ${new Date(t.reset_at).toLocaleDateString()}` : 'Ask every school again'}
+                    className="text-xs px-2 py-0.5 rounded border border-slate-200 text-slate-500 hover:bg-slate-50 shrink-0">
+                    Reset{t.reset_at ? ` · ${new Date(t.reset_at).toLocaleDateString(undefined, { month: 'numeric', day: 'numeric' })}` : ''}
+                  </button>
+                )}
                 <div className="flex flex-col shrink-0">
                   <button onClick={() => moveTo(i, i - 1)} disabled={i === 0} aria-label="Move up" className="text-slate-400 hover:text-slate-800 disabled:opacity-20 text-xs leading-none">▲</button>
                   <button onClick={() => moveTo(i, i + 1)} disabled={i === items.length - 1} aria-label="Move down" className="text-slate-400 hover:text-slate-800 disabled:opacity-20 text-xs leading-none">▼</button>
@@ -185,11 +211,9 @@ export default function TaskOrderPage() {
           ))}
         </div>
 
-        {error && <p className="text-sm text-red-600 mb-3">{error}</p>}
-        <button onClick={save} disabled={saving || !dirty}
-          className="w-full py-3 rounded-xl bg-slate-900 text-white text-sm font-semibold disabled:opacity-40">
-          {saving ? 'Saving…' : saved && !dirty ? 'Saved ✓' : dirty ? 'Save order' : 'No changes'}
-        </button>
+        <p className={`w-full py-3 text-center text-sm font-semibold ${error ? 'text-red-600' : 'text-slate-500'}`}>
+          {error ?? (saving ? 'Saving…' : saved ? 'Saved ✓' : 'Changes save as you make them')}
+        </p>
       </div>
     </div>
   )

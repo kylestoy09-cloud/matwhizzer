@@ -1,0 +1,182 @@
+# NCAA Division III Championships 1979 — source: NCAA III 1979.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Ed Bailey | Salisbury
+- Henry Callie | Millersville
+- Tom Jacoutot | SUNY-Buffalo
+- Kirby Frank | Minnesota-Morris
+- Andy Zuckerman | College of New Jersey
+- Marty Nellis | Humboldt State
+- Dan Stefancin | John Carroll
+- George Werling | Ashland
+place 1 Ed Bailey
+place 2 Henry Callie
+place 3 Tom Jacoutot
+place 4 Kirby Frank
+place 5 Andy Zuckerman
+place 6 Marty Nellis
+place 7 Dan Stefancin
+place 8 George Werling
+
+@ 126
+- Mike Rossetti | College of New Jersey
+- Ed Tyrrell | SUNY-Buffalo
+- Bob Ortenzio | Gettysburg
+- Steve Fernandez | Western New England
+- Jerry McGinty | Salisbury
+- Erick Rea | Ursinus
+- Mike Arnold | Ashland
+- Chris Moberly | Wheaton
+place 1 Mike Rossetti
+place 2 Ed Tyrrell
+place 3 Bob Ortenzio
+place 4 Steve Fernandez
+place 5 Jerry McGinty
+place 6 Erick Rea
+place 7 Mike Arnold
+place 8 Chris Moberly
+
+@ 134
+- Ken Mallory | Montclair State
+- Mike Jacoutot | College of New Jersey
+- John Ciotoli | Cleveland State
+- Doug Calhoun | Upper Iowa
+- Barry Barone | St. Lawrence
+- Steve Crooks | Kalamazoo
+- Mark Hettinger | Ashland
+- Chris Meyer | St. John's
+place 1 Ken Mallory
+place 2 Mike Jacoutot
+place 3 John Ciotoli
+place 4 Doug Calhoun
+place 5 Barry Barone
+place 6 Steve Crooks
+place 7 Mark Hettinger
+place 8 Chris Meyer
+
+@ 142
+- Dan Boos | Luther
+- Mike Fredenburg | Humboldt State
+- Mike Sickles | Montclair State
+- Wilbur Borrero | Minnesota-Morris
+- John Parisella | SUNY-Brockport
+- Glenn Jarvis | Mansfield State
+- Brad Keith | Cal State-Stanislaus
+- Pete Rossi | SUNY-Cortland
+place 1 Dan Boos
+place 2 Mike Fredenburg
+place 3 Mike Sickles
+place 4 Wilbur Borrero
+place 5 John Parisella
+place 6 Glenn Jarvis
+place 7 Brad Keith
+place 8 Pete Rossi
+
+@ 150
+- Gary Wood | William Penn
+- Jon Sylvia | Humboldt State
+- Joe Giani | SUNY-Brockport
+- Tom Elcott | Allegheny
+- Mark Jensen | Concordia MN
+- Joe Paskill | Junita
+- Kelvin LeClair | Minnesota-Morris
+- John Parreira | Cal State-Stanislaus
+place 1 Gary Wood
+place 2 Jon Sylvia
+place 3 Joe Giani
+place 4 Tom Elcott
+place 5 Mark Jensen
+place 6 Joe Paskill
+place 7 Kelvin LeClair
+place 8 John Parreira
+
+@ 158
+- Jeff Freedman | Ashland
+- Woody Vandenburg | SUNY-Brockport
+- Kevin Ruhnke | Upper Iowa
+- Rick Armstrong | SUNY-Cortland
+- Alex Martello | Montclair State
+- Dave DePasquale | Millersville
+- Don Mason | Muskigum
+- Tom Lynn | Hunter
+place 1 Jeff Freedman
+place 2 Woody Vandenburg
+place 3 Kevin Ruhnke
+place 4 Rick Armstrong
+place 5 Alex Martello
+place 6 Dave DePasquale
+place 7 Don Mason
+place 8 Tom Lynn
+
+@ 167
+- Tom Beyer | Minnesota-Morris
+- Britt Mock | College of New Jersey
+- Prince Greene | SUNY-Brockport
+- Brett Stamm | Wheaton
+- Mark Johnson | Baldwin Wallace
+- Rick Roberts | St. Lawrence
+- Tim Spruill | Lycoming
+- Mike Danis | Delaware Valley
+place 1 Tom Beyer
+place 2 Britt Mock
+place 3 Prince Greene
+place 4 Brett Stamm
+place 5 Mark Johnson
+place 6 Rick Roberts
+place 7 Tim Spruill
+place 8 Mike Danis
+
+@ 177
+- Mark Jarosz | Salisbury
+- Chris Termel | Lycoming
+- Paul Petrella | Baldwin Wallace
+- Mark Miller | York
+- Rich Sippel | SUNY-Brockport
+- Ralph Salem | Ithaca
+- Andy Davidson | William Penn
+- Mario Alemagno | John Carroll
+place 1 Mark Jarosz
+place 2 Chris Termel
+place 3 Paul Petrella
+place 4 Mark Miller
+place 5 Rich Sippel
+place 6 Ralph Salem
+place 7 Andy Davidson
+place 8 Mario Alemagno
+
+@ 190
+- Joe Jarosz | Salisbury
+- Tony Smith | SUNY-Brockport
+- Chuck Bronder | Montclair State
+- Mike Trautman | John Carroll
+- Dale Derr | Kutztown State
+- Mike Burggraf | William Penn
+- Bill Francke | SUNY-Binghampton
+- Jesse Canayaggia | Washington & Jefferson
+place 1 Joe Jarosz
+place 2 Tony Smith
+place 3 Chuck Bronder
+place 4 Mike Trautman
+place 5 Dale Derr
+place 6 Mike Burggraf
+place 7 Bill Francke
+place 8 Jesse Canayaggia
+
+@ 285
+- Gene Rowell | Dubuque
+- Paul Curka | SUNY-Buffalo
+- Wayne Witmer | Millersville
+- Eric Templin | Allegheny
+- Mickey Aikens | College of New Jersey
+- John Patt | SUNY-Potsdam
+- Tom Hanson | Minnesota-Morris
+- Joel Chenevey | Ashland
+place 1 Gene Rowell
+place 2 Paul Curka
+place 3 Wayne Witmer
+place 4 Eric Templin
+place 5 Mickey Aikens
+place 6 John Patt
+place 7 Tom Hanson
+place 8 Joel Chenevey
+

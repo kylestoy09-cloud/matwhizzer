@@ -1,0 +1,182 @@
+# NCAA Division III Championships 1992 — source: NCAA III 1992.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Steve Rivera | College of New Jersey
+- Kevin Sheehan | Plymouth State
+- Matt McClenahan | New York University
+- Marat Lempert | SUNY-Oneonta
+- Randy Rowray | Simpson
+- Sal Jafarace | Thiel
+- Chris Matteotti | Ithaca
+- Nick Fornicola | Augsburg
+place 1 Steve Rivera
+place 2 Kevin Sheehan
+place 3 Matt McClenahan
+place 4 Marat Lempert
+place 5 Randy Rowray
+place 6 Sal Jafarace
+place 7 Chris Matteotti
+place 8 Nick Fornicola
+
+@ 126
+- Pete Maldonado | Ithaca
+- Tyrone Fambro | Upper Iowa
+- Brian Merrifield | Delaware Valley
+- Frank Arado | Chicago University
+- Armondo Nardone | Montclair State
+- Walt Karrenbauer | John Carroll
+- Tom Wilder | Hunter
+- Mike Pfeffer | Augsburg
+place 1 Pete Maldonado
+place 2 Tyrone Fambro
+place 3 Brian Merrifield
+place 4 Frank Arado
+place 5 Armondo Nardone
+place 6 Walt Karrenbauer
+place 7 Tom Wilder
+place 8 Mike Pfeffer
+
+@ 134
+- Raphael Wilson | Augustana Illinois
+- Chris Stevens | SUNY-Brockport
+- Rick Pawlewicz | St. Lawrence
+- Jeff Bartkowiak | Wisconsin-Stevens Point
+- Rich Staub | Wisconsin-Whitewater
+- Lenny Bruehwiler | Ithaca
+- Mike Lewis | Thiel
+- David Buckiso | John Carroll
+place 1 Raphael Wilson
+place 2 Chris Stevens
+place 3 Rick Pawlewicz
+place 4 Jeff Bartkowiak
+place 5 Rich Staub
+place 6 Lenny Bruehwiler
+place 7 Mike Lewis
+place 8 David Buckiso
+
+@ 142
+- Mike Gillmor | John Carroll
+- Craig Wagner | Augsburg
+- Adam Miller | Glassboro
+- Brian Chu | WPI
+- Matt McLeannan | SUNY-Brockport
+- Kent Maslin | Ithaca
+- Ken Kaufman | SUNY-Binghampton
+- Ben Fielding | Thiel
+place 1 Mike Gillmor
+place 2 Craig Wagner
+place 3 Adam Miller
+place 4 Brian Chu
+place 5 Matt McLeannan
+place 6 Kent Maslin
+place 7 Ken Kaufman
+place 8 Ben Fielding
+
+@ 150
+- Travis Young | Simpson
+- Tom Hogan | Wartburg
+- David Yonney | Moravian
+- D.J. Simonton | SUNY-Brockport
+- Eric Reed | Wisconsin-La Crosse
+- Shawn O'Meara | College of New Jersey
+- Rick Habeck | Augsburg
+- Brad Kreiner | Central College IA
+place 1 Travis Young
+place 2 Tom Hogan
+place 3 David Yonney
+place 4 D.J. Simonton
+place 5 Eric Reed
+place 6 Shawn O'Meara
+place 7 Rick Habeck
+place 8 Brad Kreiner
+
+@ 158
+- Gary Kroells | Augsburg
+- Alex Skaar | Luther
+- Scott Carlsten | Rhode Island College
+- Nelson Colley | SUNY-Brockport
+- Matt Broderick | Loras College
+- Etienne Miszczak | Glassboro
+- Joel Marsden | Central College IA
+- Dan Hulten | Baldwin Wallace
+place 1 Gary Kroells
+place 2 Alex Skaar
+place 3 Scott Carlsten
+place 4 Nelson Colley
+place 5 Matt Broderick
+place 6 Etienne Miszczak
+place 7 Joel Marsden
+place 8 Dan Hulten
+
+@ 167
+- John McGovern | Central College IA
+- Tom Weix | Wisconsin-Stevens Point
+- Lance Christensen | Wartburg
+- Leo Costello | Loras College
+- Chris Perry | College of New Jersey
+- Steve Amyot | SUNY-Oswego
+- Dale Kaprosky | John Carroll
+- Anthony Spagnola | Moravian
+place 1 John McGovern
+place 2 Tom Weix
+place 3 Lance Christensen
+place 4 Leo Costello
+place 5 Chris Perry
+place 6 Steve Amyot
+place 7 Dale Kaprosky
+place 8 Anthony Spagnola
+
+@ 177
+- Peter Wang | Chicago University
+- Steve Rusk | Augustana Illinois
+- Bruce Kuennen | Central College IA
+- Bill Gabler | Augsburg
+- Judd Smith | John Carroll
+- Matt Opacity | College of New Jersey
+- Mike Murtha | Ithaca
+- Colin Green | Wisconsin-Stevens Point
+place 1 Peter Wang
+place 2 Steve Rusk
+place 3 Bruce Kuennen
+place 4 Bill Gabler
+place 5 Judd Smith
+place 6 Matt Opacity
+place 7 Mike Murtha
+place 8 Colin Green
+
+@ 190
+- Brian Quick | SUNY-Brockport
+- Ron Welch | SUNY-Cortland
+- Jason Bovenzi | St. Lawrence
+- Dan Uhteg | Ithaca
+- Jon Dawley | Wartburg
+- Tom Jackson | Heidelberg
+- John Roy | WPI
+- Andy Watkins | Susquehanna
+place 1 Brian Quick
+place 2 Ron Welch
+place 3 Jason Bovenzi
+place 4 Dan Uhteg
+place 5 Jon Dawley
+place 6 Tom Jackson
+place 7 John Roy
+place 8 Andy Watkins
+
+@ 275
+- Dan Bobish | Mount Union
+- Shawn Cavanaugh | SUNY-Cortland
+- Bret Sharp | Augsburg
+- Tom Mashek | Buena Vista
+- P.J. Wendel | SUNY-Brockport
+- Brad Henry | Simpson
+- Jack Withstandley | College of New Jersey
+- Scott Flannery | Ursinus
+place 1 Dan Bobish
+place 2 Shawn Cavanaugh
+place 3 Bret Sharp
+place 4 Tom Mashek
+place 5 P.J. Wendel
+place 6 Brad Henry
+place 7 Jack Withstandley
+place 8 Scott Flannery
+

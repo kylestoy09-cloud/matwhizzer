@@ -1,6 +1,8 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
+import { CollegeTask, collegeClaimKey, type CollegeReviewTask } from './CollegeTask'
+import { SpotTask, spotClaimKey, type CollegeSpotTask } from './SpotTask'
 
 // Each gender's roster import has its own API routes
 const rosterApi = (g: 'M' | 'F') => g === 'F' ? '/api/admin/roster-grade-import-girls' : '/api/admin/roster-grade-import'
@@ -46,8 +48,10 @@ type TaskInfo = {
   gender:      'M' | 'F'
   field:       string
   label:       string
-  input_type:  'text' | 'url' | 'email' | 'roster'
+  input_type:  'text' | 'url' | 'email' | 'roster' | 'stream_choice'
   placeholder: string
+  current?:    string | null                              // what's on file (a reset check: confirm or change)
+  links?:      { hudl: string | null; nfhs: string | null } // stream_choice: both pages to look at
 }
 
 type TieTask = {
@@ -92,7 +96,7 @@ type PendingDecision = { importEntryId: string | null; status: 'wrestler_matched
 const FIELD_LABELS: Record<string, string> = {
   address: 'Address', website_url: 'Website', twitter_handle: 'Twitter / X',
   facebook_url: 'Facebook', coach_name: 'Coach Name', coach_email: 'Coach Email',
-  ad_name: 'AD Name', ad_email: 'AD Email', roster_match: 'Roster Match',
+  ad_name: 'AD Name', ad_email: 'AD Email', roster_match: 'Roster Match', stream_choice: 'Stream Account',
 }
 
 // Coach tasks belong to one program: search for that program's coach
@@ -125,11 +129,13 @@ function SearchButton({ field, schoolName, gender }: { field: string; schoolName
   )
 }
 
-type View = 'home' | 'task' | 'tie' | 'done'
+type View = 'home' | 'task' | 'tie' | 'college' | 'spot' | 'done'
 
 export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
   const [tab,          setTab]          = useState<'tasks' | 'cantfind' | 'flagged'>('tasks')
   const [view,         setView]         = useState<View>('home')
+  const [college,      setCollege]      = useState<CollegeReviewTask | null>(null)
+  const [spot,         setSpot]         = useState<CollegeSpotTask | null>(null)
   const [task,         setTask]         = useState<TaskInfo | null>(null)
   const [tie,          setTie]          = useState<TieTask | null>(null)
   // Tasks passed over this session; the queue covers boys and girls
@@ -229,15 +235,19 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
       .finally(() => setRosterLoading(false))
   }, [task])
 
-  function showTask(t: TaskInfo | TieTask | null) {
+  function showTask(t: TaskInfo | TieTask | CollegeReviewTask | CollegeSpotTask | null) {
     setValue('')
+    setCollege(null)
+    setSpot(null)
     if (!t) { setView('done'); setTask(null); setTie(null); return }
     if (t.task_type === 'tie_resolution') { setTie(t); setTask(null); setView('tie'); return }
+    if (t.task_type === 'college_review') { setCollege(t); setTask(null); setTie(null); setView('college'); return }
+    if (t.task_type === 'college_spot') { setSpot(t); setTask(null); setTie(null); setView('spot'); return }
     setTask(t); setTie(null); setView('task')
   }
 
   function skipCurrent() {
-    const key = tie ? `queue:${tie.task_id}` : task ? `${task.task_key}:${task.school_id}` : null
+    const key = tie ? `queue:${tie.task_id}` : college ? collegeClaimKey(college) : spot ? spotClaimKey(spot) : task ? `${task.task_key}:${task.school_id}` : null
     if (!key) return
     const next = [...skipped, key]
     setSkipped(next)
@@ -275,7 +285,8 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
     finally { setLoading(false) }
   }
 
-  async function submit(status: 'completed' | 'cant_find') {
+  // over: a set answer instead of the typed one — a stream pick, or "Still right" on what's on file (unchanged)
+  async function submit(status: 'completed' | 'cant_find', over?: { value: string; unchanged?: boolean }) {
     if (!task) return
     setSubmitting(true)
     setError(null)
@@ -329,7 +340,8 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
           gender:    task.gender,
           field:     task.field,
           status,
-          value:     status === 'completed' && task.input_type !== 'roster' ? value.trim() || null : null,
+          value:     over ? over.value : status === 'completed' && task.input_type !== 'roster' ? value.trim() || null : null,
+          unchanged: over?.unchanged ?? false,
         }),
       })
       const data = await res.json()
@@ -460,8 +472,39 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
 
                 {/* Task body */}
                 <div className="flex-1 overflow-y-auto px-4 pb-2">
-                  {!isRoster ? (
+                  {task.input_type === 'stream_choice' ? (
+                    // Kyle 2026-11-19: open both, pick the account their meets are broadcast from
+                    <div className="space-y-3">
+                      <p className="text-sm text-slate-500">Open both pages. Which is the home account their meets are broadcast from?</p>
+                      <div className="grid grid-cols-2 gap-2">
+                        {(['nfhs', 'hudl'] as const).map(p => {
+                          const url = task.links?.[p]
+                          return url
+                            ? <a key={p} href={url} target="_blank" rel="noopener noreferrer" className="block text-center py-2 rounded-lg border border-slate-300 text-sm font-semibold text-blue-700 hover:bg-slate-50">{p === 'nfhs' ? 'NFHS Network' : 'Hudl'} ↗</a>
+                            : <span key={p} className="block text-center py-2 rounded-lg border border-dashed border-slate-200 text-sm text-slate-400">No {p === 'nfhs' ? 'NFHS' : 'Hudl'} link</span>
+                        })}
+                      </div>
+                      <div className="grid grid-cols-2 gap-2">
+                        {([['nfhs', 'NFHS'], ['hudl', 'Hudl'], ['both', 'Both'], ['neither', 'Neither']] as const).map(([v, label]) => (
+                          <button key={v} disabled={submitting || ((v === 'nfhs' || v === 'both') && !task.links?.nfhs) || ((v === 'hudl' || v === 'both') && !task.links?.hudl)}
+                            onClick={() => submit('completed', { value: v })}
+                            className={`py-2.5 rounded-lg text-sm font-semibold disabled:opacity-30 ${v === 'neither' ? 'bg-slate-100 text-slate-700' : 'bg-slate-900 text-white'}`}>{label}</button>
+                        ))}
+                      </div>
+                      <p className="text-xs text-slate-500"><span className="font-semibold">When in doubt, just keep both.</span> Neither = both pages look wrong or dead (the site then shows no stream link).</p>
+                    </div>
+                  ) : !isRoster ? (
                     <>
+                      {task.current && (
+                        // a reset check: what's on file, to confirm or change
+                        <div className="mb-3 rounded-lg bg-slate-50 border border-slate-200 px-3 py-2">
+                          <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">On file</div>
+                          <div className="text-sm text-slate-800 break-all">{task.current}</div>
+                          <button disabled={submitting} onClick={() => submit('completed', { value: task.current!, unchanged: true })}
+                            className="mt-2 w-full py-2 rounded-lg bg-emerald-600 text-white text-sm font-semibold disabled:opacity-40">Still right</button>
+                          <p className="mt-1 text-[11px] text-slate-500">Changed? Type the new one below and hit Done.</p>
+                        </div>
+                      )}
                       <div className="flex items-center justify-between mb-3">
                         <p className="text-sm text-slate-500">Find their {task.label}</p>
                         <SearchButton field={task.field} schoolName={task.school_name} gender={task.gender} />
@@ -497,14 +540,14 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
 
                 {/* Footer buttons */}
                 <div className="px-4 pb-4 space-y-2 shrink-0 border-t border-slate-100 pt-3">
-                  <button
+                  {task.input_type !== 'stream_choice' && <button
                     disabled={submitting || !canSubmit}
                     onClick={() => submit('completed')}
                     className="w-full py-2.5 rounded-lg bg-slate-900 text-white text-sm font-semibold disabled:opacity-40"
                   >
                     {submitting ? '…' : noRoster ? 'Mark No Roster' : isRoster ? `Save Matches (${pendingDecisions.size}/${liveWrestlers.length})` : 'Done'}
-                  </button>
-                  {!isRoster && (
+                  </button>}
+                  {!isRoster && task.input_type !== 'stream_choice' && (
                     <button disabled={submitting} onClick={() => submit('cant_find')} className="w-full py-2 rounded-lg bg-slate-100 text-slate-600 text-sm font-medium disabled:opacity-40">
                       Can't Find
                     </button>
@@ -517,6 +560,18 @@ export function MicrocheckPanel({ onClose }: { onClose: () => void }) {
                   </button>
                 </div>
               </div>
+            )}
+
+            {/* College review view */}
+            {view === 'college' && college && (
+              <CollegeTask compact task={college} onSkip={skipCurrent} onBack={() => { setView('home'); setCollege(null) }}
+                onNext={async t => { await loadScore(); showTask(t as TaskInfo | TieTask | CollegeReviewTask | null) }} />
+            )}
+
+            {/* College spot check view */}
+            {view === 'spot' && spot && (
+              <SpotTask compact task={spot} onSkip={skipCurrent} onBack={() => { setView('home'); setSpot(null) }}
+                onNext={async t => { await loadScore(); showTask(t as TaskInfo | TieTask | CollegeReviewTask | CollegeSpotTask | null) }} />
             )}
 
             {/* Tie view */}

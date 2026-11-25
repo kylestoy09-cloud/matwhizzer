@@ -82,6 +82,8 @@ export interface SchoolHeaderProps {
   athleticConference: string | null
   websiteUrl: string | null
   twitterHandle: string | null
+  streamUrl?: string | null   // the program's streaming page (NFHS / Hudl)
+  streams?: { label: string; url: string }[]   // its Hudl and / or NFHS Network pages (Kyle 2026-11-19: both until the microcheck picks)
   headCoach?: string | null
   address?: string | null      // street address, under the mascot
   otherGenderHasProgram?: boolean
@@ -114,6 +116,8 @@ export function SchoolHeader({
   athleticConference,
   websiteUrl,
   twitterHandle,
+  streamUrl,
+  streams,
   headCoach,
   address,
   otherGenderHasProgram = true,
@@ -242,6 +246,12 @@ export function SchoolHeader({
             Website ↗
           </a>
         )}
+        {/* the program's streaming page, named for the site it's on (Kyle 2026-11-18) */}
+        {(streams ?? (streamUrl ? [{ label: /hudl\./i.test(streamUrl) ? 'Hudl' : /nfhsnetwork\./i.test(streamUrl) ? 'NFHS Network' : new URL(streamUrl).hostname.replace(/^www\./, ''), url: streamUrl }] : [])).map(s => (
+          <a key={s.url} href={s.url} target="_blank" rel="noopener noreferrer" className={pillClass} style={{ color: textColor }}>
+            Stream @ {s.label}
+          </a>
+        ))}
         {twitterHandle && (
           <a
             href={`https://x.com/${twitterHandle.replace('@', '')}`}

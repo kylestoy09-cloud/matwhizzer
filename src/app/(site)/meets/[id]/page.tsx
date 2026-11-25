@@ -6,6 +6,7 @@ import { personLabel } from '@/lib/personName'
 import { notFound } from 'next/navigation'
 import { getSeasonLabel } from '@/lib/seasons-server'
 import { logoFlipStyle } from '@/lib/logo-direction'
+import { MeetEditPanel } from '@/components/admin/MeetEditPanel'
 
 /* eslint-disable @next/next/no-img-element */
 type School = {
@@ -258,6 +259,9 @@ export default async function DualMeetPage({
         <span>/</span>
         <span>Dual Meet</span>
       </nav>
+
+      {/* admins only: the meet's date, time, stream, premier label (the panel shows nothing to anyone else) */}
+      <MeetEditPanel meetId={id} />
 
       {/* Meta */}
       <p className="text-sm text-slate-500 mb-1">{dateStr} · {genderLabel} · {seasonLabel}</p>

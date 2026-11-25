@@ -1,0 +1,182 @@
+# NCAA Division III Championships 1980 — source: NCAA III 1980.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Tom Jacoutot | SUNY-Buffalo
+- Ed Bailey | Salisbury
+- Marty Nellis | Humboldt State
+- David Parisi | SUNY-Oswego
+- Henry Callie | Millersville
+- Dan Tafoya | Cal State-Stanislaus
+- Frank Famiano | SUNY-Brockport
+- Tim Sullivan | Western New England
+place 1 Tom Jacoutot
+place 2 Ed Bailey
+place 3 Marty Nellis
+place 4 David Parisi
+place 5 Henry Callie
+place 6 Dan Tafoya
+place 7 Frank Famiano
+place 8 Tim Sullivan
+
+@ 126
+- Kevin Richard | SUNY-Brockport
+- Mike Jacques | College of New Jersey
+- Dave Wilson | WPI
+- Steve Batanian | John Carroll
+- Joe Benenati | SUNY-Binghampton
+- Rodney Smith | Montclair State
+- Mike Colwell | Cornell Iowa
+- Steve Zehnder | Humboldt State
+place 1 Kevin Richard
+place 2 Mike Jacques
+place 3 Dave Wilson
+place 4 Steve Batanian
+place 5 Joe Benenati
+place 6 Rodney Smith
+place 7 Mike Colwell
+place 8 Steve Zehnder
+
+@ 134
+- John Dolch | Salisbury
+- Pat Holmes | Swarthmore
+- Bob Carbo | SUNY-Oswego
+- Jude Bervinchak | Elizabethtown
+- Dan Browning | Hiram
+- Barry Barone | St. Lawrence
+- Dan Battoglia | SUNY-Cortland
+- Jim Soares | Rhode Island College
+place 1 John Dolch
+place 2 Pat Holmes
+place 3 Bob Carbo
+place 4 Jude Bervinchak
+place 5 Dan Browning
+place 6 Barry Barone
+place 7 Dan Battoglia
+place 8 Jim Soares
+
+@ 142
+- Mike Fredenburg | Humboldt State
+- John Parisella | SUNY-Brockport
+- Lou Lazzari | Rutgers-Newark
+- Darryl Leslie | RIT
+- Gerald Johnson | College of New Jersey
+- Duane Maurer | Elizabethtown
+- Rick Dawson | Buena Vista
+- Mark Bowman | SUNY-Oswego
+place 1 Mike Fredenburg
+place 2 John Parisella
+place 3 Lou Lazzari
+place 4 Darryl Leslie
+place 5 Gerald Johnson
+place 6 Duane Maurer
+place 7 Rick Dawson
+place 8 Mark Bowman
+
+@ 150
+- Tom Elcott | Allegheny
+- Joe Giani | SUNY-Brockport
+- Kelvin LeClair | Minnesota-Morris
+- Marty Hozella | Humboldt State
+- John Misita | College of New Jersey
+- Kirk Anderson | Elizabethtown
+- Chris Shaner | Lycoming
+- Dan Boos | Luther
+place 1 Tom Elcott
+place 2 Joe Giani
+place 3 Kelvin LeClair
+place 4 Marty Hozella
+place 5 John Misita
+place 6 Kirk Anderson
+place 7 Chris Shaner
+place 8 Dan Boos
+
+@ 158
+- Jeff Bouslog | Luther
+- Marty Breithoff | College of New Jersey
+- Adrian Smedley | Humboldt State
+- Charles Catanzarite | John Carroll
+- Glenn Jarvis | Mansfield
+- Steve Taylor | Cornell Iowa
+- Scott Steele | Wesleyan
+- Scott Cook | Clarkson
+place 1 Jeff Bouslog
+place 2 Marty Breithoff
+place 3 Adrian Smedley
+place 4 Charles Catanzarite
+place 5 Glenn Jarvis
+place 6 Steve Taylor
+place 7 Scott Steele
+place 8 Scott Cook
+
+@ 167
+- Brett Stamm | Wheaton
+- Britt Mock | College of New Jersey
+- Steve Smith | RIT
+- Tom Beyer | Minnesota-Morris
+- Woody Vandenburg | SUNY-Brockport
+- John Antosiewicz | Montclair State
+- Juan DeJusus | SUNY-Oneonta
+- Roy Coudright | Humboldt State
+place 1 Brett Stamm
+place 2 Britt Mock
+place 3 Steve Smith
+place 4 Tom Beyer
+place 5 Woody Vandenburg
+place 6 John Antosiewicz
+place 7 Juan DeJusus
+place 8 Roy Coudright
+
+@ 177
+- Mark Jarosz | Salisbury
+- Tom Martucci | College of New Jersey
+- Prince Greene | SUNY-Brockport
+- Mike Conner | Millersville
+- Richard Sykes | Humboldt State
+- Mark Sawyer | Lycoming
+- Warren Robertson | Delaware Valley
+- Paul Hornbach | SUNY-Albany
+place 1 Mark Jarosz
+place 2 Tom Martucci
+place 3 Prince Greene
+place 4 Mike Conner
+place 5 Richard Sykes
+place 6 Mark Sawyer
+place 7 Warren Robertson
+place 8 Paul Hornbach
+
+@ 190
+- Dennis Koslowski | Minnesota-Morris
+- Tony Smith | SUNY-Brockport
+- Phil Lanzatella | St. Lawrence
+- Joe Jarosz | Salisbury
+- Mike Malkovich | Humboldt State
+- Joe Roth | John Carroll
+- Ed Allen | Lycoming
+- Mike Burggraf | William Penn
+place 1 Dennis Koslowski
+place 2 Tony Smith
+place 3 Phil Lanzatella
+place 4 Joe Jarosz
+place 5 Mike Malkovich
+place 6 Joe Roth
+place 7 Ed Allen
+place 8 Mike Burggraf
+
+@ 285
+- Don Wagner | Millersville
+- Lester Ware | SUNY-Binghampton
+- Art Sopelsa | Montclair State
+- Joe Rust | Wabash
+- Jeff Bartholomew | Delaware Valley
+- Malcom McLeod | Concordia MN
+- Larry Grimes | Muskigum
+- Terry Ryan | RIT
+place 1 Don Wagner
+place 2 Lester Ware
+place 3 Art Sopelsa
+place 4 Joe Rust
+place 5 Jeff Bartholomew
+place 6 Malcom McLeod
+place 7 Larry Grimes
+place 8 Terry Ryan
+

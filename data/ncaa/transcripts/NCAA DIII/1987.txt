@@ -1,0 +1,182 @@
+# NCAA Division III Championships 1987 — source: NCAA III 1987.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Tim Jacoutot | College of New Jersey
+- Shawn Sheldon | SUNY-Albany
+- Bob Panariello | Ithaca
+- John Conty | St. Lawrence
+- Dan French | North Central Illinois
+- Rick Williams | Delaware Valley
+- Matt Diehl | Central College IA
+- Rob Beck | SUNY-Buffalo
+place 1 Tim Jacoutot
+place 2 Shawn Sheldon
+place 3 Bob Panariello
+place 4 John Conty
+place 5 Dan French
+place 6 Rick Williams
+place 7 Matt Diehl
+place 8 Rob Beck
+
+@ 126
+- Tim Hackel | Central College IA
+- John Beatty | Augsburg
+- Peter Gonzalez | Montclair State
+- Pete Hayek | John Carroll
+- Keith Crowingsheld | St. Lawrence
+- Mike Pantaleo | Olivet
+- Jose Munoz | SUNY-Brockport
+- Rich Widmer | College of New Jersey
+place 1 Tim Hackel
+place 2 John Beatty
+place 3 Peter Gonzalez
+place 4 Pete Hayek
+place 5 Keith Crowingsheld
+place 6 Mike Pantaleo
+place 7 Jose Munoz
+place 8 Rich Widmer
+
+@ 134
+- Darren Scott | Ohio Northern
+- Ralph Venuto | College of New Jersey
+- Desmond Basnight | SUNY-Oneonta
+- Gregg Roehrick | St. Olaf
+- Paul Veak | Central College IA
+- Steve Irving | SUNY-Buffalo
+- Andy Lonning | Luther
+- Keith Peavy | SUNY-Brockport
+place 1 Darren Scott
+place 2 Ralph Venuto
+place 3 Desmond Basnight
+place 4 Gregg Roehrick
+place 5 Paul Veak
+place 6 Steve Irving
+place 7 Andy Lonning
+place 8 Keith Peavy
+
+@ 142
+- Karl Monaco | Montclair State
+- Shawn Smith | Delaware Valley
+- Mark Gumble | SUNY-Binghampton
+- Rodney Smith | Western New England
+- Dean Salvaggio | SUNY-Buffalo
+- Shawn Voight | Cornell Iowa
+- Don Donahoe | Ursinus
+- Todd Hibbs | Mount Union
+place 1 Karl Monaco
+place 2 Shawn Smith
+place 3 Mark Gumble
+place 4 Rodney Smith
+place 5 Dean Salvaggio
+place 6 Shawn Voight
+place 7 Don Donahoe
+place 8 Todd Hibbs
+
+@ 150
+- Ed Brady | Wisconsin-Whitewater
+- Bryan Barratt | Glassboro
+- Dave Recor | SUNY-Brockport
+- Dave Hickson | SUNY-Buffalo
+- Ed Fogarty | St. Thomas
+- Tom Bennett | John Carroll
+- Jay Peichel | Swarthmore
+- John Verdes | Heidelberg
+place 1 Ed Brady
+place 2 Bryan Barratt
+place 3 Dave Recor
+place 4 Dave Hickson
+place 5 Ed Fogarty
+place 6 Tom Bennett
+place 7 Jay Peichel
+place 8 John Verdes
+
+@ 158
+- John Leone | SUNY-Brockport
+- Dwayne Standridge | College of New Jersey
+- State Raczek | Wisconsin-Platteville
+- Ken Mansell | MacMurray State
+- Dale Massop | St. Thomas
+- Tom Mankowich | Ithaca
+- Jay McGovern | Central College IA
+- Dave McLaughlin | William Penn
+place 1 John Leone
+place 2 Dwayne Standridge
+place 3 State Raczek
+place 4 Ken Mansell
+place 5 Dale Massop
+place 6 Tom Mankowich
+place 7 Jay McGovern
+place 8 Dave McLaughlin
+
+@ 167
+- John Monaco | Montclair State
+- Matt Ryan | SUNY-Albany
+- Todd Slade | SUNY-Brockport
+- Jason Barnett | John Carroll
+- Jeff Honig | Buena Vista
+- Randy Worrell | Delaware Valley
+- Jay Hines | Mount Union
+- Dennis McNamara | St. Thomas
+place 1 John Monaco
+place 2 Matt Ryan
+place 3 Todd Slade
+place 4 Jason Barnett
+place 5 Jeff Honig
+place 6 Randy Worrell
+place 7 Jay Hines
+place 8 Dennis McNamara
+
+@ 177
+- Greg McDonald | College of New Jersey
+- Terry Schuler | Wisconsin-Whitewater
+- Marty Pidel | SUNY-Albany
+- Tim Servies | Wabash
+- Joe Errigo | SUNY-Buffalo
+- Jim Hunter | SUNY-Cortland
+- Kevin Besch | Buena Vista
+- Garth Lakitsky | Delaware Valley
+place 1 Greg McDonald
+place 2 Terry Schuler
+place 3 Marty Pidel
+place 4 Tim Servies
+place 5 Joe Errigo
+place 6 Jim Hunter
+place 7 Kevin Besch
+place 8 Garth Lakitsky
+
+@ 190
+- Vic Pozsonyi | College of New Jersey
+- Mike Himes | Upper Iowa
+- Paul Bailey | SUNY-Buffalo
+- John Raut | Olivet
+- Tom Tuomi | Concordia MN
+- Steve Kopecky | Wisconsin-Whitewater
+- Ed Smith | Montclair State
+- Brad Eggers | Central College IA
+place 1 Vic Pozsonyi
+place 2 Mike Himes
+place 3 Paul Bailey
+place 4 John Raut
+place 5 Tom Tuomi
+place 6 Steve Kopecky
+place 7 Ed Smith
+place 8 Brad Eggers
+
+@ 275
+- Chris Tironi | SUNY-Albany
+- Mark Sullivan | John Carroll
+- Pat Conners | St. Lawrence
+- Rolf Carlson | St. Olaf
+- Jon Buhner | SUNY-Oswego
+- Russ Sutherland | SUNY-Buffalo
+- Rusty Middlebrook | SUNY-Brockport
+- Al Nardone | Kean
+place 1 Chris Tironi
+place 2 Mark Sullivan
+place 3 Pat Conners
+place 4 Rolf Carlson
+place 5 Jon Buhner
+place 6 Russ Sutherland
+place 7 Rusty Middlebrook
+place 8 Al Nardone
+

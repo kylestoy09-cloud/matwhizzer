@@ -1,0 +1,88 @@
+{
+ "prospect": [
+  {
+   "id": 1786,
+   "first_name": "J. Mako",
+   "last_name": "Vezzosi",
+   "state": null,
+   "club_id": null,
+   "class_year": 2027,
+   "wrestler_id": null,
+   "notes": null,
+   "created_at": "2026-11-13T03:22:37.604226+00:00",
+   "club_listed": "Triumph Trained"
+  }
+ ],
+ "placements": [
+  {
+   "id": 1904,
+   "event_id": 4,
+   "style": "folkstyle",
+   "division": "High School Boys",
+   "weight": "120",
+   "place": 17,
+   "name_listed": "J. Mako Vezzosi",
+   "club_listed": "Triumph Trained",
+   "club_id": null,
+   "prospect_id": 1786,
+   "created_at": "2026-11-13T03:22:49.262566+00:00",
+   "place_to": 24
+  }
+ ],
+ "bouts": [
+  {
+   "id": 3225,
+   "event_id": 4,
+   "style": "folkstyle",
+   "division": "High School Boys",
+   "weight": "120",
+   "bout_date": "2026-08-30",
+   "round": "Consi of 16 #1",
+   "winner_listed": "J. Mako Vezzosi",
+   "winner_club_listed": "Triumph Trained",
+   "winner_prospect_id": 1786,
+   "loser_listed": "Jayden Anthony",
+   "loser_club_listed": "Cross",
+   "loser_prospect_id": 1790,
+   "win_type": "DEC",
+   "score": "7-0",
+   "created_at": "2026-11-13T15:50:53.266571+00:00"
+  },
+  {
+   "id": 3236,
+   "event_id": 4,
+   "style": "folkstyle",
+   "division": "High School Boys",
+   "weight": "120",
+   "bout_date": "2026-08-30",
+   "round": "Consi of 16 #2",
+   "winner_listed": "Danny D'Arcy",
+   "winner_club_listed": "St. Benedict's Prep",
+   "winner_prospect_id": 1775,
+   "loser_listed": "J. Mako Vezzosi",
+   "loser_club_listed": "Triumph Trained",
+   "loser_prospect_id": 1786,
+   "win_type": "F",
+   "score": "1-1 5:30",
+   "created_at": "2026-11-13T15:50:53.266571+00:00"
+  },
+  {
+   "id": 3268,
+   "event_id": 4,
+   "style": "folkstyle",
+   "division": "High School Boys",
+   "weight": "120",
+   "bout_date": "2026-08-30",
+   "round": "Round of 32",
+   "winner_listed": "Camil Cruz",
+   "winner_club_listed": "Savage Wrestling Academy",
+   "winner_prospect_id": 1788,
+   "loser_listed": "J. Mako Vezzosi",
+   "loser_club_listed": "Triumph Trained",
+   "loser_prospect_id": 1786,
+   "win_type": "DEC",
+   "score": "10-6 SV",
+   "created_at": "2026-11-13T15:50:53.266571+00:00"
+  }
+ ]
+}

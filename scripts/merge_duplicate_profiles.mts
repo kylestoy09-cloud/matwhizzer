@@ -18,15 +18,14 @@ const resume = process.argv.includes('--resume')
 const chk = (r: any, w: string) => { if (r.error) throw new Error(`${w}: ${r.error.message}`); return r.data as any[] }
 async function all(t: string, cols: string, f?: (q: any) => any) { const out: any[] = []; let last: any = null
   for (;;) { let q = db.from(t).select(cols).order('id').limit(1000); if (f) q = f(q); if (last != null) q = q.gt('id', last); const d = chk(await q, t); out.push(...d); if (d.length < 1000) break; last = d[d.length - 1].id } return out }
-// Every reference to wrestlers.id (the API's foreign-key list, 2026-11-02; ms_placements.ms_wrestler_id
-// is listed there but is a bigint key to ms_wrestlers)
+// Every reference to wrestlers.id (the API's foreign-key list, 2026-11-02)
 const REFS: [string, string][] = [
   ['bracket_picks', 'pick_1st'], ['bracket_picks', 'pick_2nd'], ['bracket_picks', 'pick_3rd'], ['bracket_picks', 'pick_4th'],
   ['dual_meet_matches', 'winner_id'], ['dual_meet_matches', 'wrestler_a_id'], ['dual_meet_matches', 'wrestler_b_id'],
   ['dual_meet_matches_girls', 'winner_id'], ['dual_meet_matches_girls', 'wrestler_a_id'], ['dual_meet_matches_girls', 'wrestler_b_id'],
-  ['hs_offseason_placements', 'hs_wrestler_id'], ['in_season_tournament_seeds', 'wrestler_id'], ['in_season_tournament_seeds_girls', 'wrestler_id'],
+  ['boys_prospects', 'wrestler_id'], ['girls_prospects', 'wrestler_id'], ['mixed_prospects', 'wrestler_id'], ['in_season_tournament_seeds', 'wrestler_id'], ['in_season_tournament_seeds_girls', 'wrestler_id'],
   ['individual_rankings', 'wrestler_id'], ['individual_upsets', 'loser_id'], ['individual_upsets', 'winner_id'],
-  ['ms_wrestlers', 'hs_wrestler_id'], ['pending_wrestler_transfers', 'wrestler_id'], ['roster_grade_import', 'wrestler_id'],
+  ['boys_transfers', 'wrestler_id'], ['girls_transfers', 'wrestler_id'], ['roster_grade_import', 'wrestler_id'],
   ['tournament_bouts', 'wrestler1_id'], ['tournament_bouts', 'wrestler2_id'], ['tournament_bouts_girls', 'wrestler1_id'], ['tournament_bouts_girls', 'wrestler2_id'],
   ['tournament_bracket_slots', 'bottom_wrestler_id'], ['tournament_bracket_slots', 'top_wrestler_id'], ['tournament_bracket_slots', 'winner_wrestler_id'],
   ['tournament_entries', 'wrestler_id'], ['tournament_placements', 'wrestler_id'], ['wrestler_name_aliases', 'wrestler_id'], ['wrestler_school_history', 'wrestler_id'],

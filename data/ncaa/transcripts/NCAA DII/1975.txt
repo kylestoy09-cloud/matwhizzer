@@ -1,0 +1,142 @@
+# NCAA Division II Championships 1975 — source: NCAA II 1975.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Randy Batten | Tennessee-Chattanooga
+- Dave Cunningham | Northern Iowa
+- Rich Molina | Cal State-Bakersfield
+- Tom Fink | Bloomsburg
+- Doug Gruber | St. Cloud State
+- Greg Kesserling | Akron
+place 1 Randy Batten
+place 2 Dave Cunningham
+place 3 Rich Molina
+place 4 Tom Fink
+place 5 Doug Gruber
+place 6 Greg Kesserling
+
+@ 126
+- Alex Gonzales | San Francisco State
+- Jack Eustice | Minnesota State-Mankato
+- Mike Dalheimer | St. Cloud State
+- Terry Mulrenin | SIU-Edwardsville
+- Mike McCarthy | Old Dominion
+- John Niebur | Western Illinois
+place 1 Alex Gonzales
+place 2 Jack Eustice
+place 3 Mike Dalheimer
+place 4 Terry Mulrenin
+place 5 Mike McCarthy
+place 6 John Niebur
+
+@ 134
+- Jim Miller | Northern Iowa
+- Larry Pruitt | SIU-Edwardsville
+- John Kalvelage | Tennessee-Chattanooga
+- Russell Waag | Western State
+- Dave Keller | Minnesota State-Mankato
+- Jeff Andvik | North Dakota State
+place 1 Jim Miller
+place 2 Larry Pruitt
+place 3 John Kalvelage
+place 4 Russell Waag
+place 5 Dave Keller
+place 6 Jeff Andvik
+
+@ 142
+- Ken Snyder | Northern Iowa
+- Harvey Dalton | Western State
+- Brad Dodds | North Dakota State
+- Tony Defendis | C.W. Post
+- James Haub | Central Missouri
+- Nehemiah Jackson | Morgan State
+place 1 Ken Snyder
+place 2 Harvey Dalton
+place 3 Brad Dodds
+place 4 Tony Defendis
+place 5 James Haub
+place 6 Nehemiah Jackson
+
+@ 150
+- Randy Watts | Bloomsburg
+- Gary Kessel | East Stroudsburg
+- Mike Taylor | SIU-Edwardsville
+- Rodney Hines | South Dakota
+- Rich Munroe | Springfield
+- Dan Houtchens | Cal State-Bakersfield
+place 1 Randy Watts
+place 2 Gary Kessel
+place 3 Mike Taylor
+place 4 Rodney Hines
+place 5 Rich Munroe
+place 6 Dan Houtchens
+
+@ 158
+- Turner Jackson | Tennessee-Chattanooga
+- Bob Stetler | East Stroudsburg
+- Craig Artist | Nebraska-Omaha
+- Al Ordonez | Eastern Illinois
+- Bill Kalivas | Cal State-Bakersfield
+- Jerry Schmitz | St. Cloud State
+place 1 Turner Jackson
+place 2 Bob Stetler
+place 3 Craig Artist
+place 4 Al Ordonez
+place 5 Bill Kalivas
+place 6 Jerry Schmitz
+
+@ 167
+- Lloyd Teasley | San Francisco State
+- Rick Nelson | Western Illinois
+- Steve Wenker | St. Cloud State
+- John Hittler | Northern Michigan
+- Dennis Byrne | SIU-Edwardsville
+- Nick Porillo | Springfield
+place 1 Lloyd Teasley
+place 2 Rick Nelson
+place 3 Steve Wenker
+place 4 John Hittler
+place 5 Dennis Byrne
+place 6 Nick Porillo
+
+@ 177
+- Gary Christensen | Minnesota State-Mankato
+- Dick Erickson | Northern Iowa
+- Steve Scheib | Bloomsburg
+- David Weeks | Tennessee-Chattanooga
+- Richard Lee | North Dakota
+- Robert Wilson | Northern Michigan
+place 1 Gary Christensen
+place 2 Dick Erickson
+place 3 Steve Scheib
+place 4 David Weeks
+place 5 Richard Lee
+place 6 Robert Wilson
+
+@ 190
+- Brad Rheingans | North Dakota State
+- Frank Savegnago | SIU-Edwardsville
+- Kurt Kuehl | Minnesota State-Mankato
+- Mike Bull | Cal State-Bakersfield
+- Matthew Tydor | Bloomsburg
+- Scott Johnson | Western State
+place 1 Brad Rheingans
+place 2 Frank Savegnago
+place 3 Kurt Kuehl
+place 4 Mike Bull
+place 5 Matthew Tydor
+place 6 Scott Johnson
+
+@ 285
+- Randy Omvig | Northern Iowa
+- Bruce Thomas | Southeast Missouri
+- Dalfin Blaske | North Dakota State
+- Glenn Maiolino | San Francisco State
+- Gene Pouliot | Eastern Illinois
+- Fred Swanson | East Stroudsburg
+place 1 Randy Omvig
+place 2 Bruce Thomas
+place 3 Dalfin Blaske
+place 4 Glenn Maiolino
+place 5 Gene Pouliot
+place 6 Fred Swanson
+

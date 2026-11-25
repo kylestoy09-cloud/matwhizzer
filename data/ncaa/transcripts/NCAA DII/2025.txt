@@ -1,0 +1,282 @@
+# NCAA Division II Championships 2025 — source: 2025.pdf (the bracket printed before the tournament: seeds and entrants) + 2025 brackets.pdf (places, from the finished FloWrestling brackets — winner in the heavy face; scripts/transcribe/flo_places.py, 2026-11-18)
+
+@ 125
+1 Jakason Burks | Central Mo. | 27-4
+- Conor Knopick | St. Cloud St. | 17-5
+8 Trevon Gray | Pitt-Johnstown | 23-6
+5 Dayson Torgerson | Colorado Mesa | 20-6
+- Colt Brown | Montevallo | 11-3
+- Nathan Smith | UIndy | 13-10
+4 Anthony Aniciete | Tiffin | 10-1
+3 Jaxson Rohman | Augustana (SD) | 3-0
+- Bryce Beatty | Millersville | 3-1
+- Logan Sallot | Gannon | 22-6
+6 Zachary Ourada | Neb.-Kearney | 15-4
+7 Isaiah Gamez | Adams St. | 19-3
+- Luke Acuna | Ashland | 27-9
+2 Studd Morris | Central Okla. | 25-2
+- Corey Gallivan | Coker | 14-6
+- Colton Drousias | Glenville St. | 26-13
+- Kaden Kuenzi | Lander | 9-3
+- Shane Corrigan | Wis.-Parkside | 10-3
+place 1 Burks
+place 2 Ourada
+place 3 Rohman
+place 4 Gray
+place 5 Corrigan
+place 6 Aniciete
+place 7 Torgerson
+place 8 Drousias
+
+@ 133
+1 Peter Rolle | Central Okla. | 18-3
+- Elijah Boyd | Belmont Abbey | 16-5
+8 Maximus Shore | Tiffin | 9-3
+5 James Anderson | Ouachita Baptist | 18-4
+- Eddie Bowman | CSU Pueblo | 20-8
+- Thierno Diallo | Frostburg St. | 7-1
+4 Hector Serratos | Neb.-Kearney | 20-5
+3 Reece Barnhardt | UMary | 26-3
+- James Wright | Central Mo. | 14-14
+- James Armstrong Jr | West Liberty | 27-9
+6 Sam Spencer | St. Cloud St. | 24-4
+7 Brian Melamud | Felician | 21-4
+- Anthony Sagaris | Lake Erie | 15-12
+2 Christian Davis | Lander | 19-2
+- Jeremiah Echevarria | Gannon | 23-4
+- Jakob Romero | Adams St. | 7-2
+- Logan Robinson | UNC Pembroke | 6-3
+- Ryan Henningson | MSU Moorhead | 2-1
+place 1 Barnhardt
+place 2 Rolle
+place 3 Davis
+place 4 Anderson
+place 5 Serratos
+place 6 Spencer
+place 7 Echevarria
+place 8 Shore
+
+@ 141
+1 Christian Small | Lake Erie | 20-4
+- Luke Kunath | Belmont Abbey | 12-6
+8 Johnny Lopez | San Fran. St. | 3-1
+5 Colton Stoneking | Fairmont St. | 3-0
+- Colton Hush | Minnesota St. | 4-1
+- Angel Flores | Adams St. | 11-5
+4 Ronan Schuelke | McKendree | 23-4
+3 Brayden Lowery | UIndy | 17-7
+- Khyvon Grace | West Liberty | 12-6
+- Caleb Chaves | Gannon | 8-4
+6 Joseph Airola | Neb.-Kearney | 17-7
+7 Isham Peace | Lander | 14-1
+- Braden Tatum | Newberry | 12-8
+2 Sean Solis | UMary | 23-6
+- Nicholas Cottone | Millersville | 3-1
+- Sabian Russell | Quincy | 30-7
+- Pedro Velazquez | MSU Moorhead | 2-1
+- Brock Durbin | Ashland | 23-15
+place 1 Lopez
+place 2 Grace
+place 3 Solis
+place 4 Airola
+place 5 Stoneking
+place 6 Peace
+place 7 Schuelke
+place 8 Kunath
+
+@ 149
+1 Chris Donathan | Grand Valley St. | 12-0
+- Brennan Watkins | King (TN) | 11-8
+8 Ethen Doty | Upper Iowa | 29-9
+5 Colby Njos | St. Cloud St. | 15-3
+- Joey Semerad | McKendree | 24-6
+- Gabriel Onorato | Glenville St. | 23-9
+4 Nick James | Neb.-Kearney | 4-0
+3 Kenny Kiser | Gannon | 15-3
+- Torry Early | Chadron St. | 16-7
+- John Carayiannis | Belmont Abbey | 17-2
+6 Dean Noble | Western Colo. | 19-3
+7 Jackson Hoover | UIndy | 15-2
+- Jake Piccirilli | UNC Pembroke | 11-3
+2 Cael Larson | Augustana (SD) | 3-0
+- Dylan Brown | Central Okla. | 15-5
+- James Ryan | Kutztown | 22-7
+- Hayden Kuhn | Ashland | 29-7
+- Chad Ozias | Pitt-Johnstown | 13-9
+place 1 Larson
+place 2 James
+place 3 Watkins
+place 4 Noble
+place 5 Hoover
+place 6 Donathan
+place 7 Semerad
+place 8 Onorato
+
+@ 157
+1 Joel Jesuroga | St. Cloud St. | 23-0
+- Thomas Nichols | American Int | 17-6
+8 John Ridle | Central Mo. | 24-6
+5 Aaden Valdez | Adams St. | 17-1
+- Mike Zacur | Seton Hill | 8-1
+- Caleb Meunier | Minnesota St. | 3-1
+4 Casey Barnett | Tiffin | 6-0
+3 Jake Nicolosi | Mount Olive | 28-6
+- Owen Cline | Colorado Mesa | 13-4
+- Nathan Conley | UIndy | 12-11
+6 Guy Deleonardis | Glenville St. | 32-7
+7 Trent Mahoney | King (TN) | 18-4
+- Ethan Richner | Gannon | 17-8
+2 Gabe Johnson | Central Okla. | 22-1
+- Kaden Renner | UMary | 14-8
+- Noah Roulo | Lander | 8-3
+- Cael Robb | Neb.-Kearney | 12-12
+- Lance Overmyer | Ashland | 27-12
+place 1 Johnson
+place 2 Jesuroga
+place 3 Valdez
+place 4 Cline
+place 5 Meunier
+place 6 Ridle
+place 7 Renner
+place 8 Barnett
+
+@ 165
+1 David Hunsberger | Lander | 12-2
+- Edward Terreri | Felician | 19-9
+8 Cory Peterson | McKendree | 18-6
+5 Hunter Jump | Central Okla. | 17-5
+- Bailey Gimbor | Kutztown | 25-2
+- Ivan Smith Jr. | N.M. Highlands | 4-0
+4 Nick Novak | St. Cloud St. | 22-3
+3 Nolan Gessler | Tiffin | 10-3
+- Kyle Botelho | San Fran. St. | 2-1
+- Jakob Chisolm | Montevallo | 12-5
+6 Dajun Johnson | Wis.-Parkside | 13-3
+7 Trenton Munoz | Neb.-Kearney | 20-6
+- Jace Fisher | Newman | 27-6
+2 Jack Haskin | Lake Erie | 23-3
+- Nate Barrett | Ashland | 28-10
+- Leo Mushinsky | UMary | 11-7
+- Brent Nicolosi | Mount Olive | 28-5
+- Nicholas Coreno | Gannon | 16-11
+place 1 Hunsberger
+place 2 Haskin
+place 3 Johnson
+place 4 Novak
+place 5 Peterson
+place 6 Fisher
+place 7 Gessler
+place 8 Gimbor
+
+@ 174
+1 Hayden Pummel | Glenville St. | 37-5
+- Augustus Dalton | Colorado Mesa | 11-11
+8 Lawson Losee | Upper Iowa | 25-10
+5 Cole Ritter | Maryville (MO) | 28-7
+- Patrick Jackson | Gannon | 22-6
+- Owen Butler | Frostburg St. | 19-4
+4 Sevriano Garza | Ashland | 28-3
+3 Bryce Dagel | St. Cloud St. | 23-3
+- Nathan Buckovich | Lander | 17-4
+- Dalton Gimbor | Kutztown | 19-6
+6 Jacobi Deal | Neb.-Kearney | 19-4
+7 Matt Ortiz | McKendree | 20-9
+- Wyatt Reisz | Colo. Sch. of Mines | 23-4
+2 Joshua Kenny | Grand Valley St. | 17-5
+- Jeremiah Halter | Drury | 19-18
+- Clinton Morrisette | King (TN) | 17-2
+- Drake Hayward | Minnesota St. | 3-1
+- Maxwell Kiel | Belmont Abbey | 14-4
+place 1 Ritter
+place 2 Deal
+place 3 Hayward
+place 4 Dagel
+place 5 Ortiz
+place 6 Losee
+place 7 Kenny
+place 8 Gimbor
+
+@ 184
+1 Ty McGeary | West Liberty | 30-1
+- Calan Staub | Mount Olive | 15-8
+8 Kyle Homet | Glenville St. | 35-8
+5 Reece Worachek | Wis.-Parkside | 10-2
+- Jacari Deal | Neb.-Kearney | 10-3
+- Noah Gnibus | Pitt-Johnstown | 17-10
+4 Cade Mueller | Augustana (SD) | 4-0
+3 Keegan Gehlhausen | Chadron St. | 19-2
+- Bryce Fitzpatrick | St. Cloud St. | 18-7
+- Austin Gibson | Fairmont St. | 4-1
+6 Garrett Wells | Central Okla. | 18-4
+7 Brayden Mirjavadi | Grand Valley St. | 20-11
+- Zeke Waltz | McKendree | 17-9
+2 Matt Weinberg | Kutztown | 28-0
+- Andrew Reed | Newberry | 17-7
+- Damon Ashworth | Central Mo. | 22-7
+- Matthew Rodriguez | Fort Hays St. | 16-17
+- Kyler Pickard | Belmont Abbey | 19-9
+place 1 McGeary
+place 2 Gehlhausen
+place 3 Weinberg
+place 4 Ashworth
+place 5 Mueller
+place 6 Wells
+place 7 Homet
+place 8 Deal
+
+@ 197
+1 Dominic Murphy | St. Cloud St. | 24-0
+- Marvelous Rutledge | Lander | 15-7
+8 Tereus Henry | Fort Hays St. | 13-6
+5 Jackson Kinsella | Neb.-Kearney | 19-7
+- Eli Reese | Gannon | 12-8
+- Wyatt Miller | Grand Valley St. | 8-7
+4 Max Ramberg | Augustana (SD) | 2-1
+3 Derek Blubaugh | UIndy | 17-3
+- Wayne McIntyre | Kutztown | 21-4
+- Kaine Morris | Ashland | 23-10
+6 Dakoda Rodgers | Pitt-Johnstown | 24-1
+7 Nicholas Johnson | Glenville St. | 28-5
+- David Bertrand | King (TN) | 3-1
+2 Logan Kvien | McKendree | 18-1
+- Jeramiah Larson | Maryville (MO) | 17-9
+- John Parker-Wilson | Newberry | 29-7
+- Gabriel Carranza | Colorado Mesa | 15-7
+- Chase Stegall | Wis.-Parkside | 7-4
+place 1 Blubaugh
+place 2 Henry
+place 3 Kinsella
+place 4 Ramberg
+place 5 Johnson
+place 6 Miller
+place 7 Rutledge
+place 8 Murphy
+
+@ 285
+1 Crew Howard | Neb.-Kearney | 24-0
+- Freddie Retter | Kutztown | 9-1
+8 Luke Tweeton | UMary | 16-6
+5 Isaiah Vance | Pitt-Johnstown | 23-4
+- Cale Gray | UIndy | 22-7
+- Cody Pinkerton | Chadron St. | 17-6
+4 Dorian Crosby | Gannon | 22-3
+3 Carter Blough | Grand Valley St. | 26-4
+- Tyler Haynes | McKendree | 11-6
+- Ogden Atwood | UNC Pembroke | 12-2
+6 Jake Swirple | Minot St. | 9-0
+7 Lloyd Reynolds | Wis.-Parkside | 12-4
+- Kale Schrader | Newberry | 16-10
+2 Ryan Herman | Maryville (MO) | 24-2
+- Isaiha Casto | Glenville St. | 24-6
+- Tyler Doyle | Colorado Mesa | 22-5
+- Wyatt Bailey | Ashland | 19-10
+- Isaac Sheeren | Lander | 15-4
+place 1 Herman
+place 2 Vance
+place 3 Crosby
+place 4 Howard
+place 5 Retter
+place 6 Swirple
+place 7 Doyle
+place 8 Blough
+

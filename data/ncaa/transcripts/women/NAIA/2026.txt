@@ -1,0 +1,312 @@
+# source: 2026 NAIA women (TrackWrestling export: qualifiers — no round names, so no bouts; places from the Flo bracket PDF)
+
+@ 103
+- Alexsys Jacquez | Saint Mary
+- Karina Vang | Doane
+- Destiny Jones | Saint Mary
+- Makennah Craft | Campbellsville
+- Isabelle Apple | Grand View
+- Liana Ferreira | Southern Oregon
+- Calli Connally | Wayland Baptist
+- Alexandra Evans | Rio Grande
+- Lita Cruz | Grand View
+- Aynsley Fink | Ottawa
+- Zoey Haney | Indiana Tech
+- Alexis Miller | Oklahoma City
+- Makayla Young | Indiana Tech
+- Morgan Repasky | Montreat
+- Mackenzie Gilbert | Waldorf
+- Isabella Bocanegra | Providence
+- Zoey Mzeru | Central Methodist
+- Erin Hikiji | Providence
+- Kimberly Navarette | Doane
+place 1 Hikiji
+place 2 Haney
+place 3 Craft
+place 4 Jacquez
+place 5 Cruz
+place 6 Miller
+place 7 Fink
+place 8 Apple
+
+@ 110
+- Kayla McNatt | Arizona Christian
+- Tristan Nitta | Grand View
+- Reagan Thomas | Lindsey Wilson
+- Kayla Shota | Providence
+- Avery Ashley | Oklahoma City
+- Chloe Brewis | Hastings
+- De`yton Young | Missouri Baptist
+- Kylie Robledo | Baker
+- Paige Morales | Providence
+- Emma Jones | Indiana Tech
+- Jenna Gerhardt | Dickinson State
+- Eliana Martinez | Grand View
+- Kaylynn Martin | Friends
+- Gracie Elliott | Texas Wesleyan
+- Diana Gonzalez | Life
+- Julia Snyder | Rochester Christian
+- Myriam Riley | Dickinson State
+- Makenize Smith | Indiana Tech
+- Avy Perez | William Penn
+- Mia Palumbo | William Penn
+- Raquel Garcia | Missouri Valley
+- Nizhoni Tallman | Evergreen State
+- Raelynn O`Connor | Hastings
+place 1 Palumbo
+place 2 Ashley
+place 3 Nitta
+place 4 Robledo
+place 5 McNatt
+place 6 Morales
+place 7 McNatt
+place 8 Morales
+
+@ 117
+- Joely Slyter | Providence
+- Angelica Vicente Gonzalez | Doane
+- Grace Lashinsky | Lindsey Wilson
+- Salyna Shotwell | Life
+- Gloria Diaz | Eastern Oregon
+- Zao Estrada | Missouri Valley
+- Cailin Campbell | Grand View
+- Mayangelie Colon | Grand View
+- Christianah Ogunsanya | William Penn
+- Addison Saporito | Ottawa
+- Chloe Herrick | Baker
+- Callie Payton | Lindsey Wilson
+- Taylor Hood | Midland
+- Carolina Rios | Texas Wesleyan
+- Sigrun Metzger | Ottawa
+- Yusneiry Agrazal | Central Methodist
+- Lakota Rogers | Bismarck State
+- Sarah Pineda | Missouri Valley
+- Mariah Dillard | Wayland Baptist
+- Mikayla Jardine | Dickinson State
+place 1 Ogunsanya
+place 2 Shotwell
+place 3 Estrada
+place 4 Campbell
+place 5 Lashinsky
+place 6 Rios
+place 7 Lashinsky
+place 8 Rios
+
+@ 124
+- Vicky Baez-Dilone | William Penn
+- Rei Ogden | Bismarck State
+- Maya Davis | Grand View
+- Jasmina Immaeva | Missouri Valley
+- Cristelle Rodriguez | Doane
+- Kaitlin Castro | Cumberlands
+- Ellabelle Taylor | Evergreen State
+- Lola Barkby | Indiana Tech
+- Tati Paragas | William Penn
+- Addison Messerly | Campbellsville
+- Berlin Kiddoo | Central Methodist
+- Catherine Campbell | Grand View
+- Tess Barnett | Wayland Baptist
+- Anna Krejsa | Life
+- Alyssa Randles | Providence
+- Kamilah Brooks | Lindsey Wilson
+- Daniela Espinal | Montreat
+- Myia Weiler | Southern Oregon
+- Rose Kaplan | Indiana Tech
+- Jazmine Turner | Dickinson State
+- Isla Baeza | Missouri Valley
+- Jes`Onia Barefield | Georgetown
+- Kaylee Annis | Southern Oregon
+place 1 Rodriguez
+place 2 Kaplan
+place 3 Baez-Dilone
+place 4 Ogden
+place 5 Brooks
+place 6 Randles
+place 7 Brooks
+place 8 Randles
+
+@ 131
+- Olivia Mottley | Life
+- Jill High | York
+- Elizabeth Duvall | Texas Wesleyan
+- Andrea Hernandez | Indiana Tech
+- Alexis Schneider | Bismarck State
+- Madison Pena | Wayland Baptist
+- Waipuilani Estrella-Beauchamp | Providence
+- Sarah Savidge | Life
+- Jumoke Adekoye | Dickinson State
+- Makenna Duran | Eastern Oregon
+- Larissa Kaz | Hastings
+- Kendall Bostelman | William Penn
+- Bronwyn Brenneman | William Penn
+- Olivia Messerly | Campbellsville
+- Jade Morales | Southern Oregon
+- Lexie Garza | Eastern Oregon
+- Mary Jane Porter | Cumberlands
+- Ashlee Palimo`o | Doane
+- Jeila Ramos | Lindsey Wilson
+- Aileya Sath | Baker
+- Bryce White | Oklahoma City
+place 1 Adekoye
+place 2 Mottley
+place 3 Bostelman
+place 4 Ramos
+place 5 Bostelman
+place 6 Ramos
+place 7 Bostelman
+place 8 Ramos
+
+@ 138
+- Samantha Barragan | Texas Wesleyan
+- Lexi Ritchie | Lindsey Wilson
+- Zoe Fries | Missouri Baptist
+- Emily Neumann | Central Methodist
+- Maci Avila | Midland
+- Aileen Lester | Ottawa
+- Esther Kolawole | William Penn
+- Christina Jaen | Life
+- Haley Le | Evergreen State
+- Esther Han | Providence
+- Makayla Correa | Southern Oregon
+- Zaynah McBryde | Life
+- Brielle Bibla | Lindsey Wilson
+- Reagen Gallaway | Hastings
+- Teani Medeiros-Maielua | William Woods
+- Skylur Lewis | Saint Mary
+- Kinnley Smith | Indiana Tech
+- Ruth Jimenez | Cumberlands
+- Serenity De La Garza | Missouri Valley
+- Natalia Posada | Oklahoma City
+- Lisa Hoeflich | Hastings
+place 1 Kolawole
+place 2 McBryde
+place 3 Barragan
+place 4 Avila
+place 5 Le
+place 6 Lester
+place 7 Gallaway
+place 8 Lewis
+
+@ 145
+- Brooke-Lynn Rush | Missouri Valley
+- Alyvia Ming | Cumberlands
+- Jordan Suarez | Wayland Baptist
+- Bridgette Sotomayor | Doane
+- Kori Campbell | Lindsey Wilson
+- Gabriella Perez | Campbellsville
+- Hayden Newberg | Indiana Tech
+- Emma Stice | Hastings
+- Niah Smith | Waldorf
+- Sarina Bertram | Missouri Valley
+- Alexis Means | Friends
+- Genesis Gilmore | Cumberlands
+- Naida Abdijanovic | William Penn
+- Elise Twait | Providence
+- Madison Diaz | Grand View
+- Maggie Ortmann | Missouri Baptist
+- Jamilah McBryde | Life
+- Holland Wieber | Southern Oregon
+- Amelia Fawcett | Life
+- Corin Lowe | Oklahoma City
+- Veil Foreman | Eastern Oregon
+place 1 McBryde
+place 2 Suarez
+place 3 Campbell
+place 4 Wieber
+place 5 Diaz
+place 6 Rush
+place 7 Newberg
+place 8 Ortmann
+
+@ 160
+- Bo Geibe | Indiana Tech
+- Kylee Tait | Campbellsville
+- Vida Boskovic | Southern Oregon
+- Justice Thomas | Ottawa
+- Micah Fisher-Miller | Cumberlands
+- Nicole Olson | Grand View
+- Mercy Adekuoroye | Wayland Baptist
+- Hailee Crosland | Baker
+- Allyssa Johnson | Central Methodist
+- Quilaztli Miguel-Lapham | Southern Oregon
+- Shannon Workinger | Evergreen State
+- Aspen Dodge | Providence
+- Darby Weidl | Ottawa
+- Hailey Sutton | Providence
+- Maria Slaughter | Missouri Valley
+- Ja`Nya Banks | Midland
+- Mohagany Casel | Wayland Baptist
+- Latifah McBryde | Life
+- Sierra Mefford | Cumberlands
+- Makayla Munoz | Oklahoma City
+- Berlyn Davis | Westcliff
+- Jayla Ford | Hastings
+place 1 Adekuoroye
+place 2 Workinger
+place 3 McBryde
+place 4 Boskovic
+place 5 Geibe
+place 6 Sutton
+place 7 Geibe
+place 8 Sutton
+
+@ 180
+- Kathryn Hingano | Southern Oregon
+- Ambre Chevreau | Wayland Baptist
+- Hannah Jackson | Ottawa
+- Abby Piper | William Woods
+- Autumn Perez | Missouri Valley
+- Payton Sholander | Wayland Baptist
+- Yazmin Belk | Doane
+- Kassidy Sigda | Providence
+- Piper Fowler | William Penn
+- Siara Arrington | Ottawa
+- Margaret Jordan | Baker
+- Reka Busa | Life
+- Saiheron Preciado-Meza | Cumberlands
+- Katelyn Lewis | Lindsey Wilson
+- Bailee Nelson | Friends
+- Johanna Carrasco | Baker
+- Andjela Prijovic | Grand View
+- Diara Pomares | William Penn
+- Kenlee Fish | Missouri Baptist
+place 1 Fowler
+place 2 Prijovic
+place 3 Busa
+place 4 Hingano
+place 5 Arrington
+place 6 Jackson
+place 7 Arrington
+place 8 Jackson
+
+@ 207
+- Lillian Gradillas-Flores | Southern Oregon
+- Cheyenne Cruce | Lindsey Wilson
+- Madeline Welch | Life
+- Hayeni Costa | Lindsey Wilson
+- Selena Mares | Grand View
+- Kiona Michel | Eastern Oregon
+- Taylor Rickley | Hastings
+- Carla Campos | Texas Wesleyan
+- Leilani Sanchez | Wayland Baptist
+- Faith Wooley | Wayland Baptist
+- Kylee Lindsley | Ottawa
+- Destiny Marquez | Cumberlands
+- Naomi Duenas | Cumberlands
+- Kena Leonard | Ottawa
+- Phoebe Burt | William Penn
+- Haley Ward | Avila
+- Madeleine Stone | Baker
+- Alexis Llamas | Hastings
+- Fernanda Canedo | Westcliff
+- Skyler Bruno | Waldorf
+- Jessica Rodriguez | Doane
+place 1 Gradillas-Flores
+place 2 Ward
+place 3 Sanchez
+place 4 Campos
+place 5 Mares
+place 6 Welch
+place 7 Lindsley
+place 8 Costa
+

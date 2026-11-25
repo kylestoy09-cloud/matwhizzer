@@ -1,13 +1,18 @@
 'use client'
 
+import { StatBoard, BoardCell } from '@/components/site/StatBoard'
+import { NjwhLink } from '@/components/site/NjwhLink'
+import { groupTrophyRows, cleanTrophyName } from '@/lib/trophyRows'
 import { useEffect, useMemo, useState } from 'react'
+import type { TrophyCaseData } from '@/lib/trophyCase'
+import type { RankBox } from '@/lib/schoolRankBoxes'
 import Link from 'next/link'
 import { personLabel } from '@/lib/personName'
 import { SHOW_WRESTLER_TEAM_POINTS } from '@/lib/wrestlerTeamPoints'
 import { SchoolTagView, badgeOfSchool } from '@/components/SchoolTagView'
 import { useRouter } from 'next/navigation'
 import { StatsTable } from '@/components/StatsTable'
-import { supabase } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase/browser-cached'
 import { fetchAllRows } from '@/lib/fetchAllRows'
 import { useSeasons } from '@/components/SeasonsProvider'
 
@@ -132,21 +137,22 @@ function PlaceBadge({ placement, short }: { placement: string | null; short?: st
   )
 }
 
-function StatChip({ label, value, rank }: { label: string; value: string | null; rank?: number | null }) {
+const ordinal = (n: number) => `${n}${n % 100 >= 11 && n % 100 <= 13 ? 'th' : ['th', 'st', 'nd', 'rd'][n % 10] ?? 'th'}`
+
+// a Power / Conference Rankings box: the place, the list it's in underneath (a link to that list)
+// the stats board's boxes: navy headers (src/components/site/StatBoard.tsx; live 2026-11-18)
+function BoardStat({ label, value, rank }: { label: string; value: string | null; rank?: number | null }) {
   return (
-    <div className="bg-white px-2 py-3 text-center min-w-0">
-      {value !== null ? (
-        <div className="text-lg font-bold tabular-nums text-slate-900 leading-tight">{value}</div>
-      ) : (
-        <div className="h-6 w-12 bg-slate-100 animate-pulse rounded mx-auto" />
-      )}
-      <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide mt-0.5 leading-tight">{label}</div>
-      {rank != null && rank <= 100 ? (
-        <div className="text-[10px] font-semibold text-emerald-600 mt-0.5">#{rank} State</div>
-      ) : (
-        <div className="h-3 mt-0.5" />
-      )}
-    </div>
+    <BoardCell label={label} sub={rank != null && rank <= 100 ? `#${rank} State` : null}>
+      {value !== null ? value : <span className="inline-block h-6 w-12 bg-slate-100 animate-pulse rounded align-middle" />}
+    </BoardCell>
+  )
+}
+function BoardRank({ label, box }: { label: string; box: RankBox | null | undefined }) {
+  return (
+    <BoardCell label={label} sub={box ? <span className="block text-[8px] leading-[1.15]">{box.href ? <a href={box.href} className="hover:underline">{box.label}</a> : box.label}</span> : null}>
+      {box ? <>{ordinal(box.place)}<span className="text-sm font-bold text-slate-400"> / {box.of}</span></> : '—'}
+    </BoardCell>
   )
 }
 
@@ -212,6 +218,7 @@ export function SchoolTabs({
   totalPts, totalWins, stateMedalists, tourneyLabel,
   activeSeason: activeSeason,
   basePath,
+  trophy, localTabs = false, rankBoxes,
 }: {
   school: string; gender: string; activeTab: string; primaryColor: string
   schoolData: SchoolData
@@ -223,9 +230,20 @@ export function SchoolTabs({
   tourneyLabel: Record<string, string>
   activeSeason: number
   basePath?: string
+  // preview (Aesthetic mock only until Kyle approves, 2026-11-13): the Trophy Case tab, and tabs that switch in
+  // place (the mock can't follow the site's tab links)
+  trophy?: TrophyCaseData | null
+  localTabs?: boolean
+  rankBoxes?: { power: RankBox | null; conference: RankBox | null }   // place in the section/group and conference division lists
 }) {
   const { label: seasonLabelOf } = useSeasons()
   const router = useRouter()
+  const [localTab, setLocalTab] = useState(activeTab)
+  activeTab = localTabs ? localTab : activeTab
+  const tabs = trophy ? [...TABS, { id: 'trophy', label: 'Trophy Case' }] : TABS
+  const [trophySub, setTrophySub] = useState<'team' | 'individual'>('team')
+  // Individual: All, then one tab per level (Kyle 2026-11-14)
+  const [trophyLevel, setTrophyLevel] = useState<'all' | 'district' | 'region' | 'state'>('all')
   const resolvedBase = basePath ?? `/schools/${school}`
 
   // Always name the tab: the default differs by side (boys open on Schedule, girls on Post
@@ -727,50 +745,28 @@ export function SchoolTabs({
   return (
     <>
       {/* Stats board */}
-      <div className="grid grid-cols-4 sm:grid-cols-7 gap-px bg-slate-200 border border-slate-200 mb-4 overflow-hidden rounded-lg">
-        <StatChip
+      <StatBoard cols="grid-cols-4 sm:grid-cols-7">
+        <BoardStat
           label="Record"
           value={dualStats ? `${dualStats.teamWins}-${dualStats.teamLosses}${dualStats.teamTies ? `-${dualStats.teamTies}` : ''}` : null}
         />
-        <StatChip
-          label="Power Rankings"
-          value="—"
-        />
-        <StatChip
-          label="Conf. Rankings"
-          value="—"
-        />
-        <StatChip
-          label="Pts / Dual"
-          value={dualStats && dualStats.meets > 0 ? (dualStats.totalPts / dualStats.meets).toFixed(1) : null}
-          rank={dualStats?.ptsDualRank}
-        />
-        <StatChip
-          label="Pins"
-          value={seasonLoaded ? String(seasonTotals.pins) : null}
-          rank={dualStats?.pinsRank}
-        />
-        <StatChip
-          label="Tech Falls"
-          value={seasonLoaded ? String(seasonTotals.techs) : null}
-          rank={dualStats?.techsRank}
-        />
-        <StatChip
-          label="Bonus %"
-          value={seasonLoaded ? `${seasonTotals.bonusPct}%` : null}
-          rank={dualStats?.bonusPctRank}
-        />
-      </div>
+        <BoardRank label="Power Rankings" box={rankBoxes?.power} />
+        <BoardRank label="Conf. Rankings" box={rankBoxes?.conference} />
+        <BoardStat label="Pts / Dual" value={dualStats && dualStats.meets > 0 ? (dualStats.totalPts / dualStats.meets).toFixed(1) : null} rank={dualStats?.ptsDualRank} />
+        <BoardStat label="Pins" value={seasonLoaded ? String(seasonTotals.pins) : null} rank={dualStats?.pinsRank} />
+        <BoardStat label="Tech Falls" value={seasonLoaded ? String(seasonTotals.techs) : null} rank={dualStats?.techsRank} />
+        <BoardStat label="Bonus %" value={seasonLoaded ? `${seasonTotals.bonusPct}%` : null} rank={dualStats?.bonusPctRank} />
+      </StatBoard>
 
       {/* Tab nav — sticky, pins below the school logo bar */}
       <div
         className="flex gap-1 border-b border-slate-200 mb-6 overflow-x-auto sticky z-10 bg-white"
         style={{ top: tabStickyTop }}
       >
-        {TABS.map(t => (
+        {tabs.map(t => (
           <button
             key={t.id}
-            onClick={() => router.push(tabUrl(t.id), { scroll: false })}
+            onClick={() => (localTabs ? setLocalTab(t.id) : router.push(tabUrl(t.id), { scroll: false }))}
             className={`px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-colors border-b-2 -mb-px ${
               activeTab === t.id
                 ? 'text-slate-900'
@@ -782,6 +778,73 @@ export function SchoolTabs({
           </button>
         ))}
       </div>
+
+      {/* ── Tab: Trophy Case (preview) ── */}
+      {activeTab === 'trophy' && trophy && (
+        <div className="space-y-4">
+          <div className="flex gap-1 border-b border-slate-200">
+            {(['team', 'individual'] as const).map(st => (
+              <button key={st} onClick={() => setTrophySub(st)}
+                className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px transition-colors ${trophySub === st ? 'border-slate-900 text-slate-900' : 'border-transparent text-slate-400 hover:text-slate-600'}`}>
+                {st === 'team' ? 'Team' : 'Individual'}
+              </button>
+            ))}
+          </div>
+          {trophySub === 'team' ? (
+            trophy.team.length === 0 ? <p className="text-sm text-slate-500">No sectional or state team titles on file.</p> : (
+              <div className="overflow-x-auto border border-black">
+                <table className="w-full text-[13px]">
+                  <thead><tr className="bg-slate-900 text-white"><th className="px-3 py-1 text-left text-xs font-bold uppercase tracking-wide">Year</th><th className="px-3 py-1 text-left text-xs font-bold uppercase tracking-wide">Title</th></tr></thead>
+                  {/* one row a year, the highest title: a state title means the sectional was won too (Kyle 2026-11-13) */}
+                  <tbody>{trophy.team.filter((t, j) => trophy.team.findIndex(x => x.year === t.year) === j).map((t, i) => (
+                    <tr key={t.year} className={i % 2 ? 'bg-slate-50' : 'bg-white'}>
+                      <td className="px-3 py-1 tabular-nums">{t.year}</td>
+                      <td className="px-3 py-1">{t.kind === 'group' ? <><span className="font-semibold">👑 State champion</span> · {t.grp}</> : <>Sectional champion · {[t.section, t.grp].filter(Boolean).join(' ')}</>}</td>
+                    </tr>
+                  ))}</tbody>
+                </table>
+              </div>
+            )
+          ) : (
+            <div className="space-y-3">
+            <div className="flex gap-1 flex-wrap">
+              {([['all', 'All'], ['district', 'District Champs'], ['region', 'Region Champs'], ['state', 'States']] as const).map(([k, label]) => (
+                <button key={k} onClick={() => setTrophyLevel(k)}
+                  className={`px-3 py-1 text-sm border ${trophyLevel === k ? 'bg-slate-900 text-white border-slate-900' : 'border-slate-300 text-slate-600 hover:border-slate-900'}`}>{label}</button>
+              ))}
+            </div>
+            {(() => { const rows = trophyLevel === 'all' ? trophy.individual : trophy.individual.filter(f => f.level === trophyLevel); return rows.length === 0 ? <p className="text-sm text-slate-500">{({ all: 'No state podiums, region titles or district titles on file.', district: 'No district titles on file.', region: 'No region titles on file.', state: 'No state podiums on file.' })[trophyLevel]}</p> : (
+              <div className="overflow-x-auto border border-black">
+                <table className="w-full text-[13px]">
+                  <thead><tr className="bg-slate-900 text-white">{['Year', 'Wrestler', 'Wt', 'Finish'].map(h => <th key={h} className="px-3 py-1 text-left text-xs font-bold uppercase tracking-wide">{h}</th>)}</tr></thead>
+                  {/* one row per wrestler a year, every achievement on it: state, then region, then district; 👑 = a state
+                      title (Kyle 2026-11-13). Rows join by year, weight and a close last name (groupTrophyRows) */}
+                  <tbody>{groupTrophyRows(rows).map((fs, i) => {
+                    const LEVEL = { state: 0, region: 1, district: 2 }
+                    const sorted = [...fs].sort((a, b) => LEVEL[a.level] - LEVEL[b.level])
+                    return (
+                      <tr key={i} className={i % 2 ? 'bg-slate-50' : 'bg-white'}>
+                        <td className="px-3 py-1 tabular-nums">{fs[0].year}</td>
+                        <td className="px-3 py-1 font-medium">{(() => { const wid = sorted.find(f => f.wid)?.wid; const nm = cleanTrophyName(sorted[0].name); return wid ? <Link href={`/${gender}/wrestler/${wid}`} className="hover:underline">{nm}</Link> : nm })()}{sorted[0].as && <span className="ml-1.5 text-xs font-normal text-slate-500">{sorted[0].as}</span>}</td>
+                        <td className="px-3 py-1 tabular-nums">{sorted[0].weight}</td>
+                        <td className="px-3 py-1">{sorted.map((f, j) => (
+                          <span key={j}>{j > 0 && <span className="text-slate-400"> · </span>}{f.level === 'state'
+                            ? <span className={f.place === 1 ? 'font-semibold' : ''}>{f.place === 1 ? '👑 State champion' : `State ${f.tie ?? ['', '1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th'][f.place] ?? f.place}`}</span>
+                            : f.level === 'region' ? <>{f.region ?? 'Region'} champion</>
+                            : <>{f.region ?? 'District'} champion<span className="text-slate-400">*</span></>}</span>
+                        ))}</td>
+                      </tr>
+                    )
+                  })}</tbody>
+                </table>
+              </div>
+            ) })()}
+            </div>
+          )}
+          {trophySub === 'individual' && (trophyLevel === 'all' || trophyLevel === 'district') && trophy.individual.some(f => f.level === 'district') && <p className="text-xs text-slate-400">* District champions are on file from 2013 on.</p>}
+          {trophy.credit && <p className="text-xs text-slate-400">Historical results courtesy of <NjwhLink />.</p>}
+        </div>
+      )}
 
       {/* ── Tab: Post Season ── */}
       {activeTab === 'postseason' && (

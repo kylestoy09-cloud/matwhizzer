@@ -1,0 +1,1 @@
+{"extends": "../../tsconfig.json", "compilerOptions": {"baseUrl": "../..", "paths": {"@/lib/auth/isAdminUser": ["scripts/.local/stub_admin.ts"], "@/lib/supabase/server": ["scripts/.local/stub_server.ts"], "@/*": ["src/*"]}}}

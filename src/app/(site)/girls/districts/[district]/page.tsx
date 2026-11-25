@@ -1,9 +1,11 @@
+import { TournamentHistoryView, HistoryTabs } from '@/components/site/TournamentHistory'
 import Link from 'next/link'
 import { IconHint } from '@/components/site/IconHint'
 import { getSeasonIdsWithTournamentType } from '@/lib/seasons-server'
 import { notFound } from 'next/navigation'
 import { supabase } from '@/lib/supabase/public-cached'
-import { getActiveSeason } from '@/lib/get-season'
+import { getPostseasonSeason } from '@/lib/get-season'
+import { PostseasonHomeLink } from '@/components/site/PostseasonHomeLink'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { StdHeader } from '@/components/site/StdPage'
 import { WeightTiles, NumberPills } from '@/components/site/PostseasonParts'
@@ -108,12 +110,14 @@ function StatCard<T extends { wrestler_id: string; wrestler_name: string; school
   subtitle,
   value,
   note,
+  empty = 'No data',
 }: {
   title: string
   rows: T[]
   subtitle: (r: T) => string
   value: (r: T) => string
   note?: string
+  empty?: string
 }) {
   return (
     <div className="bg-white rounded-none border border-black shadow-none overflow-hidden">
@@ -123,7 +127,7 @@ function StatCard<T extends { wrestler_id: string; wrestler_name: string; school
       </div>
       <div className="divide-y divide-slate-100">
         {rows.length === 0 && (
-          <p className="px-4 py-3 text-sm text-slate-400">No data</p>
+          <p className="px-4 py-3 text-sm text-slate-400">{empty}</p>
         )}
         {rows.map((r, i) => (
           <div key={`${r.wrestler_id}-${i}`} className="flex items-center gap-2 px-4 py-2.5">
@@ -149,18 +153,32 @@ function StatCard<T extends { wrestler_id: string; wrestler_name: string; school
 // ── Page ─────────────────────────────────────────────────────────────────────
 
 export default async function GirlsDistrictSummaryPage({
-  params,
+  params, searchParams,
 }: {
   params: Promise<{ district: string }>
+  searchParams: Promise<{ view?: string }>
 }) {
+  const view = (await searchParams).view === 'history' ? 'history' : 'brackets'
   const { district: raw } = await params
   const d = Number(raw)
   if (!d || d < 1 || d > 12) notFound()
 
-  // Girls districts only exist from season 2 onward
+  // Girls districts only exist from 2025-26: the picker lists just the years girls had districts (Kyle 2026-11-14), and
+  // a year picked elsewhere without them opens the newest
   const districtSeasons = await getSeasonIdsWithTournamentType('districts', 'F')
-  const activeSeason = await getActiveSeason('F')
-  const season = districtSeasons.includes(activeSeason) ? activeSeason : (districtSeasons[0] ?? activeSeason)
+  const { season: picked, options } = await getPostseasonSeason('F')
+  const season = districtSeasons.includes(picked) ? picked : (districtSeasons[0] ?? picked)
+  const seasonOptions = options.filter(o => districtSeasons.includes(o.id))
+  // History tab (Kyle 2026-11-14): every year on file in the picker's seasons
+  if (view === 'history') return (
+    <div className="max-w-6xl mx-auto px-4 py-10">
+      <PostseasonHomeLink side="girls" season={season} options={seasonOptions} />
+      <StdHeader title={`Girls District ${d}`} summaryKey="district" hideSummary
+        tabs={<div className="space-y-3"><NumberPills items={Array.from({ length: 12 }, (_, i) => i + 1).map(dn => ({ key: dn, label: `D${dn}`, href: `/girls/districts/${dn}?view=history` }))} active={d} /><HistoryTabs base={`/girls/districts/${d}`} view="history" /></div>} />
+      <TournamentHistoryView gender="F" level="district" num={d} seasons={seasonOptions.map(o => o.id)} />
+    </div>
+  )
+
 
   const [placementsRes, matTimeRes, fastPinRes, fastTfRes, schoolsRes, teamScoreRows, stateEntRes, ghostRes, distEntriesRes, statePlacementsRes, logos] =
     await Promise.all([
@@ -189,7 +207,8 @@ export default async function GirlsDistrictSummaryPage({
   const placements = (placementsRes.data ?? []) as PlacementRow[]
   const matTime    = ((matTimeRes.data   ?? []) as MatTimeRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
   const fastPin    = ((fastPinRes.data   ?? []) as FastestPinRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
-  const fastTf     = ((fastTfRes.data    ?? []) as FastestTfRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
+  // a tech of 0:15 or under isn't honored (Kyle 2026-11-14)
+  const fastTf     = ((fastTfRes.data    ?? []) as FastestTfRow[]).filter(r => r.fall_time_seconds > 15).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
   const schools    = (schoolsRes.data    ?? []) as SchoolRow[]
   const teamScore  = (teamScoreRows as TeamScoreRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
   const stateQualIds = new Set(
@@ -219,9 +238,10 @@ export default async function GirlsDistrictSummaryPage({
     <div>
 
       <div className="max-w-5xl mx-auto px-4 py-10">
-      <StdHeader title={`Girls District ${d}`} summaryKey="district"
-        picker={<InlineSeasonPicker gender="F" activeSeason={season} seasons={districtSeasons} />}
-        tabs={<NumberPills items={Array.from({ length: 12 }, (_, i) => i + 1).map(dn => ({ key: dn, label: `D${dn}`, href: `/girls/districts/${dn}` }))} active={d} />} />
+      <PostseasonHomeLink side="girls" season={season} options={seasonOptions} />
+      <StdHeader title={`Girls District ${d}`} summaryKey="district" hideSummary
+        picker={<InlineSeasonPicker arrows gender="F" activeSeason={season} options={seasonOptions} />}
+        tabs={<div className="space-y-3"><NumberPills items={Array.from({ length: 12 }, (_, i) => i + 1).map(dn => ({ key: dn, label: `D${dn}`, href: `/girls/districts/${dn}` }))} active={d} /><HistoryTabs base={`/girls/districts/${d}`} view="brackets" /></div>} />
 
       {/* ── Bracket grid ── */}
       <div className="mb-8"><WeightTiles side="girls" hrefBase={`/girls/districts/${d}`} weights={WEIGHTS} /></div>
@@ -324,7 +344,7 @@ export default async function GirlsDistrictSummaryPage({
       {/* ── District Leaders ── */}
       <section className="mb-10">
         <h2 className="text-base font-semibold text-slate-800 mb-3">District Leaders</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
           <StatCard<MatTimeRow>
             title="The Terminators"
@@ -336,6 +356,7 @@ export default async function GirlsDistrictSummaryPage({
 
           <StatCard<FastestPinRow>
             title="Quickest Deck"
+            empty="No Pins"
             rows={fastPin}
             subtitle={r => `${r.school_id != null ? r.school_name : 'TBD'} · ${r.weight} lb`}
             value={r => fmtTime(r.fall_time_seconds)}
@@ -343,6 +364,7 @@ export default async function GirlsDistrictSummaryPage({
 
           <StatCard<FastestTfRow>
             title="Quickest Tech"
+            empty="No Techs"
             rows={fastTf}
             subtitle={r => `${r.school_id != null ? r.school_name : 'TBD'} · ${r.weight} lb`}
             value={r => fmtTime(r.fall_time_seconds)}

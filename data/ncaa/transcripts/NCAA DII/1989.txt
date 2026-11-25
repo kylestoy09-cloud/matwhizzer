@@ -1,0 +1,182 @@
+# NCAA Division II Championships 1989 — source: NCAA II 1989.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Broderick Lee | Portland State
+- Robert Symans | Lake Superior
+- Rich Douglas | St. Cloud State
+- Scott Marvin | Grand Valley State
+- Brian Guzzo | South Dakota State
+- Dave Calliguri | North Dakota State
+- Mike Frizzell | Central Missouri
+- Duane Wilson | North Carolina-Pembroke
+place 1 Broderick Lee
+place 2 Robert Symans
+place 3 Rich Douglas
+place 4 Scott Marvin
+place 5 Brian Guzzo
+place 6 Dave Calliguri
+place 7 Mike Frizzell
+place 8 Duane Wilson
+
+@ 126
+- Mark Burrell | Central Missouri
+- Rick Travis | California PA
+- Mark Passer | Nebraska-Omaha
+- David Rowan | Cal State-Chico
+- Phil Johns | SIU-Edwardsville
+- Glen Frank | Colorado Mines
+- Scott Gates | Northern Colorado
+- James McLinnahan | Winston-Salem
+place 1 Mark Burrell
+place 2 Rick Travis
+place 3 Mark Passer
+place 4 David Rowan
+place 5 Phil Johns
+place 6 Glen Frank
+place 7 Scott Gates
+place 8 James McLinnahan
+
+@ 134
+- James Sisson | Portland State
+- Kerwyn Adderly | Norfolk State
+- Dan Collins | North Dakota State
+- Skip Goerner | Lake Superior
+- Larry Robey | Pittsburgh-Johnstown
+- Pat Dorn | South Dakota State
+- Kevin Phelps | Nebraska-Omaha
+- Marvin Jones | North Carolina-Pembroke
+place 1 James Sisson
+place 2 Kerwyn Adderly
+place 3 Dan Collins
+place 4 Skip Goerner
+place 5 Larry Robey
+place 6 Pat Dorn
+place 7 Kevin Phelps
+place 8 Marvin Jones
+
+@ 142
+- Travis West | Portland State
+- Alan Beaney | Ashland
+- Duane Maue | Colorado Mines
+- Pat Lambrecht | Grand Valley State
+- Jeff Ocel | North Dakota State
+- Roy Heverly | North Carolina-Pembroke
+- Greg Muscarella | Springfield
+- Mike French | Augustana SD
+place 1 Travis West
+place 2 Alan Beaney
+place 3 Duane Maue
+place 4 Pat Lambrecht
+place 5 Jeff Ocel
+place 6 Roy Heverly
+place 7 Greg Muscarella
+place 8 Mike French
+
+@ 150
+- Dan Russell | Portland State
+- Ben Dagley | Ashland
+- Tim Monahan | Humboldt State
+- Perry Fink | South Dakota State
+- Jon Lantz | Augustana SD
+- Paul Koupal | North Dakota State
+- Gary Hoopes | Ferris State
+- Tom Blaha | SIU-Edwardsville
+place 1 Dan Russell
+place 2 Ben Dagley
+place 3 Tim Monahan
+place 4 Perry Fink
+place 5 Jon Lantz
+place 6 Paul Koupal
+place 7 Gary Hoopes
+place 8 Tom Blaha
+
+@ 158
+- Tim Briggs | North Dakota
+- Jeff Howard | SUNY-Buffalo
+- Mark Miley | North Dakota State
+- Steve Harmon | SIU-Edwardsville
+- Jessie Smith | Nebraska-Omaha
+- Johnell Gainey | Norfolk State
+- Craig Friesen | Colorado Mines
+- Kurt Johnson | Ferris State
+place 1 Tim Briggs
+place 2 Jeff Howard
+place 3 Mark Miley
+place 4 Steve Harmon
+place 5 Jessie Smith
+place 6 Johnell Gainey
+place 7 Craig Friesen
+place 8 Kurt Johnson
+
+@ 167
+- Ted Price | Wisconsin-Parkside
+- Brad Morris | Ferris State
+- Todd Kendle | Augustana SD
+- Dave Yahner | Pittsburgh-Johnstown
+- John Richter | North Dakota
+- Jim Capone | SUNY-Buffalo
+- Chad Cox | Colorado Mines
+- Chris Pugliese | Indianapolis
+place 1 Ted Price
+place 2 Brad Morris
+place 3 Todd Kendle
+place 4 Dave Yahner
+place 5 John Richter
+place 6 Jim Capone
+place 7 Chad Cox
+place 8 Chris Pugliese
+
+@ 177
+- Tony Champion | Portland State
+- Doug Mooney | Ferris State
+- Joe Wypiszenski | Nebraska-Omaha
+- Russ Witzig | SIU-Edwardsville
+- Don Zeman | California-Davis
+- Bill Luzik | Pittsburgh-Johnstown
+- Wayne Englebretson | North Dakota
+- Jim Price | Grand Valley State
+place 1 Tony Champion
+place 2 Doug Mooney
+place 3 Joe Wypiszenski
+place 4 Russ Witzig
+place 5 Don Zeman
+place 6 Bill Luzik
+place 7 Wayne Englebretson
+place 8 Jim Price
+
+@ 190
+- Ken Hackman | California PA
+- Doug Chapman | Ferris State
+- Nate Toedter | St. Cloud State
+- Dale Herbst | North Dakota
+- Raybon Johnson | Cal State-Chico
+- Scott Smith | Ashland
+- Bill Wansley | Virginia State
+- Lew Prough | Mansfield State
+place 1 Ken Hackman
+place 2 Doug Chapman
+place 3 Nate Toedter
+place 4 Dale Herbst
+place 5 Raybon Johnson
+place 6 Scott Smith
+place 7 Bill Wansley
+place 8 Lew Prough
+
+@ 275
+- Carlton Haselrig | Pittsburgh-Johnstown
+- Clark Schnepel | Nebraska-Omaha
+- Mike Gohn | Grand Valley State
+- Eric Drenth | South Dakota State
+- Ellis Wojciechowski | North Dakota State
+- Jason Math | Minnesota State-Mankato
+- Tim Pennie | Virginia State
+- Marty Rutledge | Cheyney
+place 1 Carlton Haselrig
+place 2 Clark Schnepel
+place 3 Mike Gohn
+place 4 Eric Drenth
+place 5 Ellis Wojciechowski
+place 6 Jason Math
+place 7 Tim Pennie
+place 8 Marty Rutledge
+

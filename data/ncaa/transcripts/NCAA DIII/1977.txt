@@ -1,0 +1,142 @@
+# NCAA Division III Championships 1977 — source: NCAA III 1977.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Eric Mast | Elizabethtown
+- Scott Puzia | College of New Jersey
+- Joe Smith | Upper Iowa
+- Jerome Goodfellow | SUNY-Brockport
+- Bob Ortenzio | Gettysburg
+- Keith Fabrizi | Hiram
+place 1 Eric Mast
+place 2 Scott Puzia
+place 3 Joe Smith
+place 4 Jerome Goodfellow
+place 5 Bob Ortenzio
+place 6 Keith Fabrizi
+
+@ 126
+- Andy Zook | Millersville
+- Jeff Mase | Montclair State
+- Steve Cella | SUNY-Brockport
+- Ralph Melia | Maryville
+- Doug Englert | Cornell Iowa
+- Mike Arnold | Ashland
+place 1 Andy Zook
+place 2 Jeff Mase
+place 3 Steve Cella
+place 4 Ralph Melia
+place 5 Doug Englert
+place 6 Mike Arnold
+
+@ 134
+- Ken Mallory | Montclair State
+- Peter Rossi | SUNY-Cortland
+- Steve Deike | Wartburg
+- Steve Holley | Augustana Illinois
+- Gary Heim | Elizabethtown
+- Dan Ireland | Millersville
+place 1 Ken Mallory
+place 2 Peter Rossi
+place 3 Steve Deike
+place 4 Steve Holley
+place 5 Gary Heim
+place 6 Dan Ireland
+
+@ 142
+- Steve Cavayero | SUNY-Binghampton
+- Jim Luster | Humboldt State
+- Gary Wood | William Penn
+- Harold Shaw | Lycoming
+- Scott Hill | SUNY-Brockport
+- Charles Breithoff | College of New Jersey
+place 1 Steve Cavayero
+place 2 Jim Luster
+place 3 Gary Wood
+place 4 Harold Shaw
+place 5 Scott Hill
+place 6 Charles Breithoff
+
+@ 150
+- Frank Presley | Millersville
+- Graig Savitsky | Lycoming
+- Bob Brenton | SUNY-Brockport
+- Mike Harr | Humboldt State
+- Dick Krueger | Upper Iowa
+- Kevin Brandenburg | Hiram
+place 1 Frank Presley
+place 2 Graig Savitsky
+place 3 Bob Brenton
+place 4 Mike Harr
+place 5 Dick Krueger
+place 6 Kevin Brandenburg
+
+@ 158
+- Mitch Brown | St. Lawrence
+- Mike Karges | Humboldt State
+- Jeff Freedman | Ashland
+- Bill Rawlings | Swarthmore
+- Steve Borja | Lycoming
+- Rick Armstrong | SUNY-Cortland
+place 1 Mitch Brown
+place 2 Mike Karges
+place 3 Jeff Freedman
+place 4 Bill Rawlings
+place 5 Steve Borja
+place 6 Rick Armstrong
+
+@ 167
+- Jim Weir | John Carroll
+- Kris Henry | Humboldt State
+- Jim Bruck | Coe College
+- Mike Carra | SUNY-Binghampton
+- Matt Staples | Plymouth State
+- Bill Genthert | St. Lawrence
+place 1 Jim Weir
+place 2 Kris Henry
+place 3 Jim Bruck
+place 4 Mike Carra
+place 5 Matt Staples
+place 6 Bill Genthert
+
+@ 177
+- Rich Sippel | SUNY-Brockport
+- Brad Bowman | John Carroll
+- Wayne Dunn | Maryville
+- Mike Paquette | Union
+- Tom Littauer | Wheaton
+- Alan Callahan | Ursinus
+place 1 Rich Sippel
+place 2 Brad Bowman
+place 3 Wayne Dunn
+place 4 Mike Paquette
+place 5 Tom Littauer
+place 6 Alan Callahan
+
+@ 190
+- Eric Woolsey | Humboldt State
+- Bob Menz | SUNY-Cortland
+- Paul Guillaume | Wartburg
+- Robert Valentine | Maryville
+- Leon Dunnam | Massachusetts Maritime
+- John Truscello | Lebanon Valley
+place 1 Eric Woolsey
+place 2 Bob Menz
+place 3 Paul Guillaume
+place 4 Robert Valentine
+place 5 Leon Dunnam
+place 6 John Truscello
+
+@ 285
+- Mackey Tindall | SUNY-Brockport
+- Gary Long | Coe College
+- Bill Kahl | John Carroll
+- Art Sopelsa | Montclair State
+- Kevin Andrew | Upper Iowa
+- James Hauptfleisch | SUNY-Oswego
+place 1 Mackey Tindall
+place 2 Gary Long
+place 3 Bill Kahl
+place 4 Art Sopelsa
+place 5 Kevin Andrew
+place 6 James Hauptfleisch
+

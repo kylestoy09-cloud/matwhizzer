@@ -262,13 +262,13 @@ function OverviewTab({ data, onRefresh }: { data: DetailData; onRefresh: () => v
             {[1, 5, 10, 15, 20].map(v => <option key={v} value={v}>{v} pts</option>)}
           </select>
         </div>
-        <div>
+        {gender === 'F' && <div>{/* boys have no jamborees */}
           <label className="block text-xs font-semibold text-slate-600 mb-1">Event Type</label>
           <select className={field} value={eventType} onChange={e => setEventType(e.target.value as 'tournament' | 'jamboree')}>
             <option value="tournament">Tournament</option>
             <option value="jamboree">Jamboree</option>
           </select>
-        </div>
+        </div>}
         <div>
           <label className="block text-xs font-semibold text-slate-600 mb-1">Notes</label>
           <textarea className={`${field} h-20 resize-y`} value={notes} onChange={e => setNotes(e.target.value)} />

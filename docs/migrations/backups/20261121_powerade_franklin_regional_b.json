@@ -1,0 +1,212 @@
+{
+ "merge": [
+  {
+   "name": "John Montgomery",
+   "from": "7a4dcd5e-6598-43d7-8837-b2ac52cb59eb",
+   "to": "98688ed5-fa8f-420c-bc1b-cf11773fe707",
+   "link": 53867
+  },
+  {
+   "name": "Max Firestine",
+   "from": "b2ac7573-d1f1-4571-bd28-8ac6b19f9695",
+   "to": "18c46cd9-b29d-4a7c-ae9b-3bd961b370bf",
+   "link": 53647
+  },
+  {
+   "name": "Titus Colangelo",
+   "from": "2e9dbfab-1123-4df8-9bcf-301f02f97d39",
+   "to": "786d8187-6aac-4686-a2a0-e79931805312",
+   "link": 53420
+  }
+ ],
+ "move": [
+  {
+   "id": 53709,
+   "raw_name": "Jordan Perks",
+   "school_id": 169,
+   "wrestler_id": "7f7aa5c8-ed33-40a2-ab37-b0b5fb00e7b4",
+   "created_at": "2026-11-21T17:42:43.913124+00:00"
+  },
+  {
+   "id": 53688,
+   "raw_name": "Michael Ruane",
+   "school_id": 169,
+   "wrestler_id": "6f872446-f17f-4529-8fca-6f77ddb24a53",
+   "created_at": "2026-11-21T17:42:43.913124+00:00"
+  },
+  {
+   "id": 53340,
+   "raw_name": "Salvatore Colangelo",
+   "school_id": 169,
+   "wrestler_id": "aa810b42-9c72-4776-b599-13a0a23d7c9d",
+   "created_at": "2026-11-21T17:42:43.913124+00:00"
+  },
+  {
+   "id": 53521,
+   "raw_name": "Salvatore Nassif",
+   "school_id": 169,
+   "wrestler_id": "a4f07665-027e-4dce-bb3d-5b8c60104829",
+   "created_at": "2026-11-21T17:42:43.913124+00:00"
+  }
+ ],
+ "bA": [
+  {
+   "id": "290e2b83-0a31-45c9-9044-3313a5c1bb28",
+   "wrestler1_id": "2e9dbfab-1123-4df8-9bcf-301f02f97d39",
+   "wrestler2_id": "bbbf6fb4-062e-4328-84f2-180e11bac1fa"
+  },
+  {
+   "id": "8dbffac2-07fc-40e1-b463-001f28c30336",
+   "wrestler1_id": "4746031f-8e76-4483-889f-fe50b2ed75ca",
+   "wrestler2_id": "2e9dbfab-1123-4df8-9bcf-301f02f97d39"
+  },
+  {
+   "id": "cba8c979-0721-4282-97d0-60cf50b38ec4",
+   "wrestler1_id": "1d4ac487-60fc-442a-8da6-9db7dc059f09",
+   "wrestler2_id": "b2ac7573-d1f1-4571-bd28-8ac6b19f9695"
+  },
+  {
+   "id": "b015da77-79ee-462d-9bac-6a5d4c65f4ab",
+   "wrestler1_id": "07e86aaf-c6de-4de1-a97b-486076a48538",
+   "wrestler2_id": "7a4dcd5e-6598-43d7-8837-b2ac52cb59eb"
+  },
+  {
+   "id": "804bc992-3610-48c5-a288-8b8f20f1dc0a",
+   "wrestler1_id": "2e9dbfab-1123-4df8-9bcf-301f02f97d39",
+   "wrestler2_id": "0ec3942d-2598-404c-bdf4-48723800b437"
+  },
+  {
+   "id": "f6ab2a80-1d11-4e35-858d-5c8b442471f5",
+   "wrestler1_id": "2e9dbfab-1123-4df8-9bcf-301f02f97d39",
+   "wrestler2_id": "bfaa6360-3df2-4920-b1cd-1bc0ed7976cc"
+  },
+  {
+   "id": "09d4adfa-e4c1-43f5-b36c-063a0df15836",
+   "wrestler1_id": "b2ac7573-d1f1-4571-bd28-8ac6b19f9695",
+   "wrestler2_id": "bcfaed34-69d8-45ac-be5a-bed3795d0a89"
+  },
+  {
+   "id": "649fc2f6-029d-49b2-a902-ec001a7a19df",
+   "wrestler1_id": "c488c251-8e29-4f59-b02d-e947fa5fe3fe",
+   "wrestler2_id": "b2ac7573-d1f1-4571-bd28-8ac6b19f9695"
+  },
+  {
+   "id": "95c1c808-f4bf-4247-93b2-d1838a683c96",
+   "wrestler1_id": "7a4dcd5e-6598-43d7-8837-b2ac52cb59eb",
+   "wrestler2_id": "de1ab239-3763-497d-b1df-1a150db8eb25"
+  },
+  {
+   "id": "160011cd-eebc-4509-879d-341dc3ce45b3",
+   "wrestler1_id": "89f282c7-34d5-46c9-bb91-34c1bf642133",
+   "wrestler2_id": "7a4dcd5e-6598-43d7-8837-b2ac52cb59eb"
+  }
+ ],
+ "pA": [],
+ "links": [
+  {
+   "id": 53597,
+   "raw_name": "Chase Smith",
+   "school_id": 1199,
+   "wrestler_id": "b0ee0f76-557e-456c-8fc3-ae0fbdaeb566",
+   "created_at": "2026-11-21T17:42:43.913124+00:00"
+  },
+  {
+   "id": 53390,
+   "raw_name": "Connor Visnick",
+   "school_id": 1199,
+   "wrestler_id": "2d6f4385-3f3f-4d3e-ae37-f5e03724b895",
+   "created_at": "2026-11-21T17:42:43.913124+00:00"
+  },
+  {
+   "id": 53888,
+   "raw_name": "Dylan Corso",
+   "school_id": 1199,
+   "wrestler_id": "b18d5b0e-f5bc-4739-9e8d-195181673cc0",
+   "created_at": "2026-11-21T17:42:43.913124+00:00"
+  },
+  {
+   "id": 53776,
+   "raw_name": "Ethan Cartwright",
+   "school_id": 1199,
+   "wrestler_id": "856bb641-e983-4fe0-b261-c7a06470b428",
+   "created_at": "2026-11-21T17:42:43.913124+00:00"
+  },
+  {
+   "id": 53806,
+   "raw_name": "Evan McManis",
+   "school_id": 1199,
+   "wrestler_id": "0e12f662-5588-4a6a-a088-cd68b06bb42d",
+   "created_at": "2026-11-21T17:42:43.913124+00:00"
+  },
+  {
+   "id": 53867,
+   "raw_name": "John Montgomery",
+   "school_id": 169,
+   "wrestler_id": "7a4dcd5e-6598-43d7-8837-b2ac52cb59eb",
+   "created_at": "2026-11-21T17:42:43.913124+00:00"
+  },
+  {
+   "id": 51366,
+   "raw_name": "John Montgomery",
+   "school_id": 1199,
+   "wrestler_id": "98688ed5-fa8f-420c-bc1b-cf11773fe707",
+   "created_at": "2026-09-24T15:41:12.809343+00:00"
+  },
+  {
+   "id": 53709,
+   "raw_name": "Jordan Perks",
+   "school_id": 169,
+   "wrestler_id": "7f7aa5c8-ed33-40a2-ab37-b0b5fb00e7b4",
+   "created_at": "2026-11-21T17:42:43.913124+00:00"
+  },
+  {
+   "id": 53647,
+   "raw_name": "Max Firestine",
+   "school_id": 169,
+   "wrestler_id": "b2ac7573-d1f1-4571-bd28-8ac6b19f9695",
+   "created_at": "2026-11-21T17:42:43.913124+00:00"
+  },
+  {
+   "id": 51364,
+   "raw_name": "Max Firestine",
+   "school_id": 1199,
+   "wrestler_id": "18c46cd9-b29d-4a7c-ae9b-3bd961b370bf",
+   "created_at": "2026-09-24T15:41:12.809343+00:00"
+  },
+  {
+   "id": 53688,
+   "raw_name": "Michael Ruane",
+   "school_id": 169,
+   "wrestler_id": "6f872446-f17f-4529-8fca-6f77ddb24a53",
+   "created_at": "2026-11-21T17:42:43.913124+00:00"
+  },
+  {
+   "id": 53340,
+   "raw_name": "Salvatore Colangelo",
+   "school_id": 169,
+   "wrestler_id": "aa810b42-9c72-4776-b599-13a0a23d7c9d",
+   "created_at": "2026-11-21T17:42:43.913124+00:00"
+  },
+  {
+   "id": 53521,
+   "raw_name": "Salvatore Nassif",
+   "school_id": 169,
+   "wrestler_id": "a4f07665-027e-4dce-bb3d-5b8c60104829",
+   "created_at": "2026-11-21T17:42:43.913124+00:00"
+  },
+  {
+   "id": 53420,
+   "raw_name": "Titus Colangelo",
+   "school_id": 169,
+   "wrestler_id": "2e9dbfab-1123-4df8-9bcf-301f02f97d39",
+   "created_at": "2026-11-21T17:42:43.913124+00:00"
+  },
+  {
+   "id": 51365,
+   "raw_name": "Titus Colangelo",
+   "school_id": 1199,
+   "wrestler_id": "786d8187-6aac-4686-a2a0-e79931805312",
+   "created_at": "2026-09-24T15:41:12.809343+00:00"
+  }
+ ]
+}

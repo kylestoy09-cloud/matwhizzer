@@ -1,6 +1,7 @@
+import { schoolNameMatches } from '@/lib/saintNames'
 import { supabase } from '@/lib/supabase/public-cached'
 import Link from 'next/link'
-import { getActiveSeason } from '@/lib/get-season'
+import { getDirectorySeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { PageHeader } from '@/components/PageHeader'
 import { getSchoolLogos } from '@/lib/school-logos'
@@ -29,9 +30,9 @@ export default async function GirlsSchoolsPage({
   searchParams: Promise<{ q?: string; conf?: string; group?: string; section?: string }>
 }) {
   const { q: raw, conf, group, section } = await searchParams
-  const q = raw?.trim().toLowerCase() ?? ''
+  const q = raw?.trim() ?? ''
 
-  const season = await getActiveSeason('F')
+  const season = await getDirectorySeason('F')   // last season's directory until the new one starts
 
   const [{ data }, logos, { data: schoolData }] = await Promise.all([
     supabase.rpc('school_directory', { p_gender: 'F', p_season: season }),
@@ -57,7 +58,7 @@ export default async function GirlsSchoolsPage({
   const isFiltered = !!(q || conf || group || section)
 
   const rows = all.filter(r => {
-    if (q && !r.school_name.toLowerCase().includes(q) && !r.school.toLowerCase().includes(q)) return false
+    if (q && !schoolNameMatches(r.school_name, q) && !schoolNameMatches(r.school, q)) return false   // "st", "st." and "saint" alike
     if (conf || group || section) {
       if (!r.school_id) return false
       const m = meta.get(r.school_id)

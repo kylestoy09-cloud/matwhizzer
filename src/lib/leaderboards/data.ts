@@ -68,7 +68,7 @@ function individualOrder(q: Q, p: Params, minMatches: number): Q {
   switch (p.cat) {
     case 'quickest':
       return p.sort === 'tech'
-        ? q.not('fastest_tf', 'is', null).order('fastest_tf').order('fastest_pin', LAST)
+        ? q.gt('fastest_tf', 15).order('fastest_tf').order('fastest_pin', LAST)   // a tech of 0:15 or under isn't honored (Kyle 2026-11-14)
         : q.not('fastest_pin', 'is', null).order('fastest_pin').order('fastest_tf', LAST)
     case 'most': {
       // a tie on the count goes to the faster average time

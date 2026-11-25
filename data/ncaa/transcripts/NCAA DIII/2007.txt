@@ -1,0 +1,182 @@
+# NCAA Division III Championships 2007 — source: NCAA III 2007.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 125
+- Nate Hansen | Luther
+- Seth Flodeen | Augsburg
+- Brandon McDonough | Johnson & Wales
+- Chris Heilman | Cornell Iowa
+- Eracleo Vallejo | Manchester
+- Kyle Flickinger | York
+- Jake Oster | Elmhurst
+- Brian Clement | Coe College
+place 1 Nate Hansen
+place 2 Seth Flodeen
+place 3 Brandon McDonough
+place 4 Chris Heilman
+place 5 Eracleo Vallejo
+place 6 Kyle Flickinger
+place 7 Jake Oster
+place 8 Brian Clement
+
+@ 133
+- David Morgan | Kings
+- Jafari Vanier | Augsburg
+- Adam Johnson | North Central Illinois
+- Jestin Hulegaard | Buena Vista
+- Jacob Helvey | Wartburg
+- Jordan Kolinski | Wisconsin-La Crosse
+- Justin Seifried | Ithaca
+- Gannon Hjerleid | Coe College
+place 1 David Morgan
+place 2 Jafari Vanier
+place 3 Adam Johnson
+place 4 Jestin Hulegaard
+place 5 Jacob Helvey
+place 6 Jordan Kolinski
+place 7 Justin Seifried
+place 8 Gannon Hjerleid
+
+@ 141
+- Quincy Osborn | Augsburg
+- Richard LaForge | Delaware Valley
+- Jared Creason | Coe College
+- Zach Chambers | Wisconsin-Platteville
+- Mike Gaeta | Springfield
+- Michael Bonora | Rhode Island College
+- Travis Grawin | Luther
+- Tyler Branham | College of New Jersey
+place 1 Quincy Osborn
+place 2 Richard LaForge
+place 3 Jared Creason
+place 4 Zach Chambers
+place 5 Mike Gaeta
+place 6 Michael Bonora
+place 7 Travis Grawin
+place 8 Tyler Branham
+
+@ 149
+- Matt Pyle | Luther
+- Jason Roush | Mount St. Josephs
+- Joe Pflug | Heidelberg
+- Jared Evans | Augsburg
+- Donny Ooton | SUNY-Brockport
+- Jake Larsen | Wisconsin-La Crosse
+- Tim Bohlman | York
+- Ryan Higgins | Wisconsin-Platteville
+place 1 Matt Pyle
+place 2 Jason Roush
+place 3 Joe Pflug
+place 4 Jared Evans
+place 5 Donny Ooton
+place 6 Jake Larsen
+place 7 Tim Bohlman
+place 8 Ryan Higgins
+
+@ 157
+- Jeremy Anderson | Augsburg
+- Joe Galante | College of New Jersey
+- Bobby Gingerich | North Central Illinois
+- Ross Needham | Wisconsin-La Crosse
+- Jacob Malone | St. John's
+- Aaron Wernimont | Wartburg
+- Pat McAuley | Cornell Iowa
+- Elliott Spence | Mount St. Josephs
+place 1 Jeremy Anderson
+place 2 Joe Galante
+place 3 Bobby Gingerich
+place 4 Ross Needham
+place 5 Jacob Malone
+place 6 Aaron Wernimont
+place 7 Pat McAuley
+place 8 Elliott Spence
+
+@ 165
+- Marcus LeVesseur | Augsburg
+- Mike Guenther | College of New Jersey
+- Tim Palmer | Wisconsin-La Crosse
+- Shaheim Bradshaw | SUNY-Brockport
+- Jason Knipp | Wartburg
+- Gino Russo | Baldwin Wallace
+- Steve Martell | Johnson & Wales
+- Phil Kruzel | Chicago University
+place 1 Marcus LeVesseur
+place 2 Mike Guenther
+place 3 Tim Palmer
+place 4 Shaheim Bradshaw
+place 5 Jason Knipp
+place 6 Gino Russo
+place 7 Steve Martell
+place 8 Phil Kruzel
+
+@ 174
+- Josh Chelf | Wisconsin-La Crosse
+- Kyle Vanderhyde | Olivet
+- Eric Bath | Wisconsin-Stevens Point
+- John Dolan | Williams
+- Robbie Gotreau | Augsburg
+- Andrew Winfield | McDaniel
+- Treavor LeBlanc | SUNY-Cortland
+- Adam Dorner | Wisconsin-Oshkosh
+place 1 Josh Chelf
+place 2 Kyle Vanderhyde
+place 3 Eric Bath
+place 4 John Dolan
+place 5 Robbie Gotreau
+place 6 Andrew Winfield
+place 7 Treavor LeBlanc
+place 8 Adam Dorner
+
+@ 184
+- Terry Madden | Hunter
+- Stef Sair | SUNY-Cortland
+- Jason Lulloff | Wisconsin-La Crosse
+- Romeo Djoumessi | Wartburg
+- Nicholas Calandrino | Ithaca
+- Nick Coleman | New York University
+- Jay Figgins | Loras College
+- Ryan Summers | John Carroll
+place 1 Terry Madden
+place 2 Stef Sair
+place 3 Jason Lulloff
+place 4 Romeo Djoumessi
+place 5 Nicholas Calandrino
+place 6 Nick Coleman
+place 7 Jay Figgins
+place 8 Ryan Summers
+
+@ 197
+- Tyler Miller | Wartburg
+- Ben Strandberg | Buena Vista
+- Alec Bonander | Luther
+- Jason Reilly | Kings
+- Keith Garrard | Wabash
+- Matt Loesch | Muhlenberg
+- Phil Archer | SUNY-Cortland
+- Wally O'Connor | Augsburg
+place 1 Tyler Miller
+place 2 Ben Strandberg
+place 3 Alec Bonander
+place 4 Jason Reilly
+place 5 Keith Garrard
+place 6 Matt Loesch
+place 7 Phil Archer
+place 8 Wally O'Connor
+
+@ 285
+- Blake Gillis | Wartburg
+- Bryan Kmetz | Baldwin Wallace
+- Jaran Rutledge | Knox
+- Trevor Hiffa | SUNY-Oneonta
+- Andrew Neumann | Augsburg
+- Arkadiy Levitin | Hunter
+- Wade Hammen | Buena Vista
+- Kyle Brown | Thiel
+place 1 Blake Gillis
+place 2 Bryan Kmetz
+place 3 Jaran Rutledge
+place 4 Trevor Hiffa
+place 5 Andrew Neumann
+place 6 Arkadiy Levitin
+place 7 Wade Hammen
+place 8 Kyle Brown
+

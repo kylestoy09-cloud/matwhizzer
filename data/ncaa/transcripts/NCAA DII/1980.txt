@@ -1,0 +1,182 @@
+# NCAA Division II Championships 1980 — source: NCAA II 1980.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Joe Gonzales | Cal State-Bakersfield
+- Matt Hawes | Springfield
+- Tom Reed | SIU-Edwardsville
+- Eddie Franco | Cal State-Sacramento
+- Reggie Johnson | Ashland
+- Randy Blackman | Eastern Illinois
+- Guy Kimball | North Dakota State
+- Robert Wimberly | Central Florida
+place 1 Joe Gonzales
+place 2 Matt Hawes
+place 3 Tom Reed
+place 4 Eddie Franco
+place 5 Reggie Johnson
+place 6 Randy Blackman
+place 7 Guy Kimball
+place 8 Robert Wimberly
+
+@ 126
+- John Azevedo | Cal State-Bakersfield
+- Brent Hagen | Northern Iowa
+- Paul Bulzomi | Southern Connecticut
+- Brad Morton | Cal State-Chico
+- Steve Fontana | C.W. Post
+- Brent Means | SIU-Edwardsville
+- Harvey Kruckenberg | North Dakota
+- Willie Dye | North Carolina-Pembroke
+place 1 John Azevedo
+place 2 Brent Hagen
+place 3 Paul Bulzomi
+place 4 Brad Morton
+place 5 Steve Fontana
+place 6 Brent Means
+place 7 Harvey Kruckenberg
+place 8 Willie Dye
+
+@ 134
+- Craig Jordan | Minnesota State-Mankato
+- Doug House | Florida International
+- Bob McGuinn | Eastern Illinois
+- Jesse Reyes | Cal State-Bakersfield
+- Doug Peters | Central Florida
+- Jay Swanson | South Dakota State
+- Dan Winter | Wisconsin-Parkside
+- Bob Melfi | Southern Connecticut
+place 1 Craig Jordan
+place 2 Doug House
+place 3 Bob McGuinn
+place 4 Jesse Reyes
+place 5 Doug Peters
+place 6 Jay Swanson
+place 7 Dan Winter
+place 8 Bob Melfi
+
+@ 142
+- Steve Spangenberg | Northern Michigan
+- D.J. West | Northern Colorado
+- Tim Ervin | SIU-Edwardsville
+- John Monolakis | San Francisco State
+- Lee Noble | Cal State-Bakersfield
+- Craig Miller | Wright State
+- Paul Marquart | North Dakota
+- Randy Goette | South Dakota State
+place 1 Steve Spangenberg
+place 2 D.J. West
+place 3 Tim Ervin
+place 4 John Monolakis
+place 5 Lee Noble
+place 6 Craig Miller
+place 7 Paul Marquart
+place 8 Randy Goette
+
+@ 150
+- Ken Gallagher | Northern Iowa
+- Scott Madigan | Minnesota State-Mankato
+- Marty Maciel | Cal State-Bakersfield
+- Jim Paddock | Minnesota-Duluth
+- Phil Brown | Morgan State
+- Mike Duffy | Truman State
+- Tony Starks | Indianapolis
+- Bruce Wilson | Fort Lewis
+place 1 Ken Gallagher
+place 2 Scott Madigan
+place 3 Marty Maciel
+place 4 Jim Paddock
+place 5 Phil Brown
+place 6 Mike Duffy
+place 7 Tony Starks
+place 8 Bruce Wilson
+
+@ 158
+- William Smith | Morgan State
+- Kevin Dugan | Cal State-Bakersfield
+- Bob Gruner | Wisconsin-Parkside
+- Kevin Newsome | San Francisco State
+- Ed Egan | Northern Michigan
+- Rich Dombrowski | Central Florida
+- Tim Homan | Augustana SD
+- Cliff Verron | Southern Connecticut
+place 1 William Smith
+place 2 Kevin Dugan
+place 3 Bob Gruner
+place 4 Kevin Newsome
+place 5 Ed Egan
+place 6 Rich Dombrowski
+place 7 Tim Homan
+place 8 Cliff Verron
+
+@ 167
+- Jon Lundberg | Augustana SD
+- Bob Stout | Eastern Illinois
+- Brad Bitterman | Northern Michigan
+- John Newell | Nebraska-Omaha
+- Mark Hall | Cal State-Bakersfield
+- Dion Cobb | Northern Iowa
+- Kent Haake | South Dakota State
+- Scott Lowery | Southwest Missouri
+place 1 Jon Lundberg
+place 2 Bob Stout
+place 3 Brad Bitterman
+place 4 John Newell
+place 5 Mark Hall
+place 6 Dion Cobb
+place 7 Kent Haake
+place 8 Scott Lowery
+
+@ 177
+- Brian Parlet | Augustana SD
+- Efonda Sproles | Northern Iowa
+- Norm Mitchell | SIU-Edwardsville
+- Derrick Hardy | Chicago State
+- Jeff Hohertz | South Dakota State
+- Dan Revesz | Pittsburgh-Johnstown
+- Tim Harris | Northern Michigan
+- Sam Carson | Eastern Illinois
+place 1 Brian Parlet
+place 2 Efonda Sproles
+place 3 Norm Mitchell
+place 4 Derrick Hardy
+place 5 Jeff Hohertz
+place 6 Dan Revesz
+place 7 Tim Harris
+place 8 Sam Carson
+
+@ 190
+- Kirk Myers | Northern Iowa
+- Geno Savegnago | Eastern Illinois
+- Les Gatrel | Central Missouri
+- Tim Cahill | Nebraska-Omaha
+- Jeff Esmont | Ashland
+- Greg Shealy | North Carolina-Pembroke
+- Willard Crews | Morgan State
+- Herb Alamed | Springfield
+place 1 Kirk Myers
+place 2 Geno Savegnago
+place 3 Les Gatrel
+place 4 Tim Cahill
+place 5 Jeff Esmont
+place 6 Greg Shealy
+place 7 Willard Crews
+place 8 Herb Alamed
+
+@ 285
+- Ron Essink | Grand Valley State
+- Dave Klemm | Eastern Illinois
+- Jeff Grier | Augustana SD
+- Mike Howe | Northern Michigan
+- Jerome Larson | North Dakota
+- Kevin Kurth | Northern Iowa
+- Josh Bryant | Livingston
+- Jeff Schanhals | Northern Colorado
+place 1 Ron Essink
+place 2 Dave Klemm
+place 3 Jeff Grier
+place 4 Mike Howe
+place 5 Jerome Larson
+place 6 Kevin Kurth
+place 7 Josh Bryant
+place 8 Jeff Schanhals
+

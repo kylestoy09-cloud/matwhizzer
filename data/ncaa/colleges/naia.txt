@@ -1,0 +1,87 @@
+# NAIA colleges and the spellings the 2019–2026 files use (scripts/add_college_group.mts)
+Arizona Christian | Glendale | AZ | Firestorm |
+Avila | Kansas City | MO | Eagles |
+Baker | Baldwin City | KS | Wildcats |
+Benedictine (KS) | Atchison | KS | Ravens | Benedictine
+Bethany (KS) | Lindsborg | KS | Swedes | Bethany; Bethany (Kan.)
+Bismarck State | Bismarck | ND | Mystics |
+Bluefield | Bluefield | VA | Rams |
+Brewton-Parker | Mount Vernon | GA | Barons | Brewton-Parker (Ga.)
+Briar Cliff | Sioux City | IA | Chargers |
+Calumet St. Joseph | Whiting | IN | Crimson Wave | Calumet; Calumet St. Joseph (Ind.); Calumet College of St. Joseph
+Campbellsville | Campbellsville | KY | Tigers | Campbellsvile; Campbellsville (Ky.)
+Central Baptist | Conway | AR | Mustangs |
+Central Methodist | Fayette | MO | Eagles |
+Cleary | Howell | MI | Cougars |
+Concordia (NE) | Seward | NE | Bulldogs | Concordia; Concordia (Neb.)
+Corban | Salem | OR | Warriors | Corban (Ore.)
+Cornerstone | Grand Rapids | MI | Golden Eagles |
+Cumberland (TN) | Lebanon | TN | Phoenix | Cumberland; Cumberland (Tenn.)
+Cumberlands | Williamsburg | KY | Patriots | Cumberlands (Ky.); University of the Cumberlands
+Dakota Wesleyan | Mitchell | SD | Tigers | Dakota Wesleyan (SD)
+Dickinson State | Dickinson | ND | Blue Hawks |
+Doane | Crete | NE | Tigers |
+Eastern Oregon | La Grande | OR | Mountaineers |
+Embry-Riddle (AZ) | Prescott | AZ | Eagles | Embry Riddle; Embry-Riddle; Embry-Riddle (Ariz.)
+Evergreen State | Olympia | WA | Geoducks | Evergreen
+Friends | Wichita | KS | Falcons |
+Georgetown (KY) | Georgetown | KY | Tigers | Georgetown
+Graceland | Lamoni | IA | Yellowjackets |
+Grand View | Des Moines | IA | Vikings | Grand View (Iowa)
+Hannibal-LaGrange | Hannibal | MO | Trojans |
+Hastings | Hastings | NE | Broncos | Hastings (Neb.)
+Indiana Tech | Fort Wayne | IN | Warriors |
+Iowa Wesleyan | Mount Pleasant | IA | Tigers |
+Jamestown | Jamestown | ND | Jimmies |
+Kansas Wesleyan | Salina | KS | Coyotes |
+Keiser | West Palm Beach | FL | Seahawks |
+Life | Marietta | GA | Running Eagles | Life (Ga.); Life University
+Life Pacific | San Dimas | CA | Warriors | Life Pacific (Calif.)
+Lindenwood-Belleville | Belleville | IL | Lynx | Lindenwood-Bellville
+Lindsey Wilson | Columbia | KY | Blue Raiders | Lindsey Wilson (Ky.)
+Lourdes | Sylvania | OH | Gray Wolves | Lourdes (Ohio)
+Lyon | Batesville | AR | Scots |
+Marian (IN) | Indianapolis | IN | Knights | Marian; Marian (Ind.)
+Menlo | Atherton | CA | Oaks | Menlo (Calif.)
+Midway | Midway | KY | Eagles |
+Missouri Baptist | St. Louis | MO | Spartans |
+Missouri Valley | Marshall | MO | Vikings |
+Montana State-Northern | Havre | MT | Lights | MSU-Northern; Montana State - Northern
+Montreat | Montreat | NC | Cavaliers |
+Oklahoma City | Oklahoma City | OK | Stars |
+Oklahoma Wesleyan | Bartlesville | OK | Eagles |
+Ottawa (KS) | Ottawa | KS | Braves | Ottawa; Ottawa University
+Providence (MT) | Great Falls | MT | Argonauts | Providence; Great Falls
+Reinhardt | Waleska | GA | Eagles | Reinhardt (Ga.)
+Rio Grande | Rio Grande | OH | RedStorm |
+Rochester Christian | Rochester Hills | MI | Warriors |
+Saint Mary (KS) | Leavenworth | KS | Spires | Saint Mary; St. Mary
+Siena Heights | Adrian | MI | Saints | Sienna Heights
+Southeastern (FL) | Lakeland | FL | Fire | Southeastern; Southeastern (Fla.)
+St. Andrews | Laurinburg | NC | Knights | St Andrews
+St. Thomas (FL) | Miami Gardens | FL | Bobcats | St. Thomas
+Texas Wesleyan | Fort Worth | TX | Rams |
+Thomas More | Crestview Hills | KY | Saints |
+Truett McConnell | Cleveland | GA | Bears | Truett-McConnell
+Vanguard | Costa Mesa | CA | Lions | Vanguard (Calif.)
+Waldorf | Forest City | IA | Warriors |
+Warner Pacific | Portland | OR | Knights |
+Wayland Baptist | Plainview | TX | Pioneers |
+West Virginia Tech | Beckley | WV | Golden Bears |
+Westcliff | Irvine | CA | Warriors |
+William Woods | Fulton | MO | Owls |
+Williams Baptist | Walnut Ridge | AR | Eagles |
+Morningside | Sioux City | IA | Mustangs |
+Midland | Fremont | NE | Warriors |
+Northwestern (IA) | Orange City | IA | Red Raiders | Northwestern (Iowa)
+York (NE) | York | NE | Panthers | York (Neb.)
+Simpson (CA) | Redding | CA | Red Hawks | Simpson (Calif.)
+Bacone | Muskogee | OK | Warriors |
+Dana | Blair | NE | Vikings |
+St. Catharine | Springfield | KY | Patriots |
+Allen | Columbia | SC | Yellow Jackets |
+Davenport | Grand Rapids | MI | Panthers |
+Central Christian | McPherson | KS | Tigers |
+West Virginia Tech | | | | Wvu Tech
+Notre Dame (OH) | | | | Notre Dame OH
+Lincoln (IL) | Lincoln | IL | Lynx | Lincoln (Ill.)

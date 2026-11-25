@@ -1,3 +1,4 @@
+import { playoffResults, playoffTiebreak } from '@/lib/standings'
 import { supabase } from '@/lib/supabase/public-cached'
 import { withSeasonNames } from '@/lib/schoolSeasonNames'
 import Link from 'next/link'
@@ -76,8 +77,10 @@ export default async function GroupPage({
     bySectionPP.get(sec)?.push({ ...s, pp: ppMap.get(s.id) ?? null })
   }
 
+  const po = await playoffResults(dbGender, season)   // a tie on points goes to the team further in the playoffs
+  const pts = (r: { pp: PPRow | null }) => (r.pp ? Number(r.pp.frozen_power_points ?? r.pp.power_points) : 0)
   for (const [, rows] of bySectionPP) {
-    rows.sort((a, b) => (b.pp ? (b.pp.frozen_power_points ?? b.pp.power_points) : 0) - (a.pp ? (a.pp.frozen_power_points ?? a.pp.power_points) : 0))
+    rows.sort((a, b) => pts(b) - pts(a) || playoffTiebreak(po, a.id, b.id))
   }
 
   const hasPP = ppData && ppData.length > 0
@@ -100,7 +103,7 @@ export default async function GroupPage({
             <Link href={`/groups/${slug}?gender=boys`} className={`px-3 py-1.5 font-medium transition-colors ${gender === 'boys' ? 'bg-slate-900 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}>Boys</Link>
             <Link href={`/groups/${slug}?gender=girls`} className={`px-3 py-1.5 font-medium transition-colors ${gender === 'girls' ? 'bg-rose-700 text-white' : 'bg-white text-slate-500 hover:bg-slate-50'}`}>Girls</Link>
           </div>
-          <div className="text-xs text-slate-400"><InlineSeasonPicker gender={gender === 'girls' ? 'F' : 'M'} activeSeason={season} /></div>
+          <div className="text-xs text-slate-400"><InlineSeasonPicker arrows gender={gender === 'girls' ? 'F' : 'M'} activeSeason={season} /></div>
         </div>
       </div>
 

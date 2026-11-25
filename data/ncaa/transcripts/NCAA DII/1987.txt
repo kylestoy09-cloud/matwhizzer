@@ -1,0 +1,182 @@
+# NCAA Division II Championships 1987 — source: NCAA II 1987.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Tim Wright | SIU-Edwardsville
+- Roger Singleton | Grand Valley State
+- Mark Piterski | Southern Connecticut
+- John Christen | North Dakota
+- Loren Baum | Liberty
+- Don Vanmourik | Ferris State
+- Tony Ramirez | Cal State-Chico
+- Rick Goodwin | San Francisco State
+place 1 Tim Wright
+place 2 Roger Singleton
+place 3 Mark Piterski
+place 4 John Christen
+place 5 Loren Baum
+place 6 Don Vanmourik
+place 7 Tony Ramirez
+place 8 Rick Goodwin
+
+@ 126
+- Haig Brown | Portland State
+- Mike Dallas | Cal State-Bakersfield
+- Cliff Lentz | San Francisco State
+- Joe Stukes | North Carolina-Pembroke
+- Rick Goeb | North Dakota State
+- Chris Gelvin | Wright State
+- Paul Anderson | St. Cloud State
+- Dennis Duechen | Wisconsin-Parkside
+place 1 Haig Brown
+place 2 Mike Dallas
+place 3 Cliff Lentz
+place 4 Joe Stukes
+place 5 Rick Goeb
+place 6 Chris Gelvin
+place 7 Paul Anderson
+place 8 Dennis Duechen
+
+@ 134
+- Pat Dorn | South Dakota State
+- Andy Leier | North Dakota
+- Rick Travis | California PA
+- Skip Smith | Wright State
+- Dan Collins | North Dakota State
+- Robert Burrows | Central Missouri
+- Dean Branstetter | Indianapolis
+- Walter Ulrich | Cal State-Chico
+place 1 Pat Dorn
+place 2 Andy Leier
+place 3 Rick Travis
+place 4 Skip Smith
+place 5 Dan Collins
+place 6 Robert Burrows
+place 7 Dean Branstetter
+place 8 Walter Ulrich
+
+@ 142
+- Junior Saunders | Cal State-Bakersfield
+- Brian McTague | SIU-Edwardsville
+- Rick Lapaglia | Ashland
+- Jeff Ocel | North Dakota State
+- Mark Danner | Central Missouri
+- Bob Ray | Pittsburgh-Johnstown
+- John Wachsmuth | Portland State
+- Duane Maue | Colorado Mines
+place 1 Junior Saunders
+place 2 Brian McTague
+place 3 Rick Lapaglia
+place 4 Jeff Ocel
+place 5 Mark Danner
+place 6 Bob Ray
+place 7 John Wachsmuth
+place 8 Duane Maue
+
+@ 150
+- Kip Kristoff | SIU-Edwardsville
+- Carlos Levexier | San Francisco State
+- Tim Morris | Liberty
+- Brad Solberg | North Dakota
+- Lance Rogers | North Dakota State
+- Hazen Bye | South Dakota State
+- Wayne Trosino | Portland State
+- Rich Shaffer | Pittsburgh-Johnstown
+place 1 Kip Kristoff
+place 2 Carlos Levexier
+place 3 Tim Morris
+place 4 Brad Solberg
+place 5 Lance Rogers
+place 6 Hazen Bye
+place 7 Wayne Trosino
+place 8 Rich Shaffer
+
+@ 158
+- Kory Mosher | North Dakota
+- Lloyd Hygelund | Portland State
+- Bob Dahm | SIU-Edwardsville
+- Darrin Arberry | Indianapolis
+- Brad Hildebrandt | Nebraska-Omaha
+- Kevin Frame | Liberty
+- Joe Juliar | Minnesota State-Mankato
+- Craig Settles | San Francisco State
+place 1 Kory Mosher
+place 2 Lloyd Hygelund
+place 3 Bob Dahm
+place 4 Darrin Arberry
+place 5 Brad Hildebrandt
+place 6 Kevin Frame
+place 7 Joe Juliar
+place 8 Craig Settles
+
+@ 167
+- Marty Morgan | North Dakota State
+- Brad Morris | Ferris State
+- Jeff Randall | Nebraska-Omaha
+- Robert Watkins | Humboldt State
+- Ted Price | Wisconsin-Parkside
+- William Johnson | Northern Colorado
+- Willie Mays | North Carolina-Pembroke
+- Mike Root | Lake Superior
+place 1 Marty Morgan
+place 2 Brad Morris
+place 3 Jeff Randall
+place 4 Robert Watkins
+place 5 Ted Price
+place 6 William Johnson
+place 7 Willie Mays
+place 8 Mike Root
+
+@ 177
+- Darryl Pope | Cal State-Bakersfield
+- R.J. Nebe | Nebraska-Omaha
+- Pat Johannes | North Dakota State
+- John Solomonson | Ferris State
+- Denzil Forrester | Southern Connecticut
+- Steve Miller | Ashland
+- Kip Fennelly | Liberty
+- Phil Scott | Cal State-Chico
+place 1 Darryl Pope
+place 2 R.J. Nebe
+place 3 Pat Johannes
+place 4 John Solomonson
+place 5 Denzil Forrester
+place 6 Steve Miller
+place 7 Kip Fennelly
+place 8 Phil Scott
+
+@ 190
+- Eric Mittlestead | Cal State-Bakersfield
+- Ken Hackman | California PA
+- Doug Chapman | Ferris State
+- Mike Arnold | Lake Superior
+- Craig Whitaken | West Chester
+- Dave Pippin | Nebraska-Omaha
+- Nate Toedter | St. Cloud State
+- Antonio Kilpatrick | North Carolina-Pembroke
+place 1 Eric Mittlestead
+place 2 Ken Hackman
+place 3 Doug Chapman
+place 4 Mike Arnold
+place 5 Craig Whitaken
+place 6 Dave Pippin
+place 7 Nate Toedter
+place 8 Antonio Kilpatrick
+
+@ 275
+- Carlton Haselrig | Pittsburgh-Johnstown
+- Mike Hatch | Liberty
+- Mike Monroe | Cal State-Bakersfield
+- Clark Schnepel | Nebraska-Omaha
+- Randy Seiler | Lake Superior
+- Ed Christensen | St. Cloud State
+- Kyle Jensen | South Dakota State
+- Tim Lajcik | California-Davis
+place 1 Carlton Haselrig
+place 2 Mike Hatch
+place 3 Mike Monroe
+place 4 Clark Schnepel
+place 5 Randy Seiler
+place 6 Ed Christensen
+place 7 Kyle Jensen
+place 8 Tim Lajcik
+

@@ -1,0 +1,481 @@
+# NCAA Division II Championships 2007 — source: 2007.pdf (scan; typed from the bracket pages, 2026-11-18; the 149 page is printed upside down). "2007 (1).pdf" is the same file.
+
+@ 125
+- Payne Lint | Mercyhurst | 18-15
+- Tyler Zukerman | Central Oklahoma | 15-9
+- Tyler Mumbulo | Upper Iowa | 18-5
+- Devlon Webb | Chadron State | 26-15
+- John Fleming | Indianapolis | 34-10
+- Adam Dedmon | UNC Pembroke | 13-18
+- Arsenia Barksdale | Adams State | 21-5
+- Chris Trampe | Augustana SD | 24-9
+- Nick Smith | Minnesota State Mankato | 15-8
+- Eddie Lopez | Western State College | 20-11
+- Chris Neidermeier | Belmont Abbey | 24-5
+- Kody Pierson | Carson-Newman | 36-10
+- Trevor Charbonneau | Nebraska-Kearney | 25-8
+- Chas Welch | Northern State | 19-3
+- Brandon Kircher | Wisconsin-Parkside | 14-16
+- Derrek Bosso | Pitt-Johnstown | 24-9
+r1 Zukerman > Lint | Fall 6:10
+r1 Mumbulo > Webb | Dec 6-4
+r1 Fleming > Dedmon | MD 11-0
+r1 Barksdale > Trampe | Dec 4-2
+r1 Smith > Lopez | SV-1 5-3
+r1 Neidermeier > Pierson | Dec 7-3
+r1 Charbonneau > Welch | Dec 7-4
+r1 Bosso > Kircher | Dec 6-5
+qf Zukerman > Mumbulo | Dec 5-1
+qf Barksdale > Fleming | Dec 5-3
+qf Neidermeier > Smith | Fall 6:17
+qf Charbonneau > Bosso | Dec 6-3
+sf Zukerman > Barksdale | MD 10-2
+sf Charbonneau > Neidermeier | SV-1 3-1
+f Charbonneau > Zukerman | Dec 5-2
+c1 Webb > Lint | Dec 7-3
+c1 Trampe > Dedmon | MD 13-4
+c1 Lopez > Pierson | Dec 5-2
+c1 Welch > Kircher | TB-1 5-4
+c2 Bosso > Webb | Dec 7-4
+c2 Trampe > Smith | Dec 8-1
+c2 Lopez > Fleming | Dec 8-3
+c2 Mumbulo > Welch | Dec 6-0
+cqf Bosso > Trampe | Dec 3-2
+cqf Lopez > Mumbulo | Dec 8-6
+csf Barksdale > Bosso | SV-1 3-1
+csf Lopez > Neidermeier | Fall 5:40
+3rd Barksdale > Lopez | Dec 9-5
+5th Neidermeier > Bosso | SV-2 3-1
+7th Trampe > Mumbulo | MD 12-4
+
+@ 133
+- Joe Kemmerer | Kutztown | 28-3
+- Troy Macfarland | Minnesota State Moorhead | 15-16
+- Marques Bravo | Western State College | 24-13
+- Craig DeGreef | Wisconsin-Parkside | 27-13
+- Jeff Pfaffinger | Minnesota State Mankato | 31-9
+- Matt Mossor | West Liberty State | 26-11
+- Shane Perkey | Indianapolis | 25-7
+- William Eller | Colorado School of Mines | 16-11
+- Brett Allgood | Nebraska-Kearney | 25-5
+- Jared Henning | Central Oklahoma | 28-7
+- Brandon Reasy | Pitt-Johnstown | 29-10
+- Jeff Rau | Nebraska-Omaha | 18-17
+- Andy Uhl | Findlay | 26-5
+- Derek Patterson | Fort Hays State | 19-11
+- Nathan Naumann | Upper Iowa | 14-9
+- Andrew Young | Newberry | 9-3
+r1 Kemmerer > Macfarland | MD 11-0
+r1 DeGreef > Bravo | Fall 5:18
+r1 Mossor > Pfaffinger | Dec 7-3
+r1 Perkey > Eller | MD 13-4
+r1 Henning > Allgood | SV-1 7-5
+r1 Reasy > Rau | TB-1 5-4
+r1 Uhl > Patterson | Dec 5-2
+r1 Naumann > Young | Dec 1-0
+qf Kemmerer > DeGreef | Dec 8-2
+qf Perkey > Mossor | Dec 9-5
+qf Henning > Reasy | Dec 8-5
+qf Uhl > Naumann | Dec 9-4
+sf Kemmerer > Perkey | Dec 3-0
+sf Henning > Uhl | Dec 6-4
+f Kemmerer > Henning | Dec 1-0
+c1 Bravo > Macfarland | Dec 11-4
+c1 Pfaffinger > Eller | MD 13-3
+c1 Allgood > Rau | MD 14-6
+c1 Patterson > Young | Dec 3-2
+c2 Bravo > Naumann | Dec 6-2
+c2 Reasy > Pfaffinger | TB-1 4-3
+c2 Allgood > Mossor | MD 11-3
+c2 Patterson > DeGreef | Fall 3:26
+cqf Reasy > Bravo | TB-4 5-4
+cqf Allgood > Patterson | Dec 12-8
+csf Perkey > Reasy | Dec 3-2
+csf Allgood > Uhl | Dec 3-2
+3rd Allgood > Perkey | TF-1.5 7:00 (17-2)
+5th Reasy > Uhl | TB-1 3-2
+7th Bravo > Patterson | Dec 4-0
+
+@ 141
+- Steven Fittery | Shippensburg | 25-3
+- Jeff Rutledge | Nebraska-Kearney | 23-15
+- Anthony Iovine | Ashland | 11-6
+- Yasiim Bribieseca | Nebraska-Omaha | 24-11
+- Kenneth Montour | New Mexico Highlands | 18-8
+- Shane Valko | Pitt-Johnstown | 29-12
+- John Gamble | Upper Iowa | 19-8
+- Craig Becker | Wisconsin-Parkside | 30-8
+- Kyle Evans | Central Oklahoma | 35-0
+- Kelly Janke | Minnesota State Moorhead | 15-18
+- JJ Zanetta | Mercyhurst | 28-6
+- Joseph Deaguero | Adams State | 30-14
+- Travis Elg | Minnesota State Mankato | 24-6
+- Matt Irwin | Indianapolis | 14-14
+- James Annon | Fort Hays State | 16-10
+- Doug Surra | West Liberty State | 26-11
+r1 Fittery > Rutledge | Dec 9-3
+r1 Bribieseca > Iovine | Dec 6-3
+r1 Valko > Montour | Dec 5-2
+r1 Gamble > Becker | TF-1.5 7:00 (16-1)
+r1 Evans > Janke | MD 9-1
+r1 Zanetta > Deaguero | Dec 10-8
+r1 Elg > Irwin | MD 12-3
+r1 Surra > Annon | Dec 6-0
+qf Fittery > Bribieseca | Dec 4-0
+qf Gamble > Valko | Fall 3:53
+qf Evans > Zanetta | MD 13-0
+qf Surra > Elg | Fall 0:49
+sf Fittery > Gamble | Dec 6-1
+sf Evans > Surra | SV-1 4-2
+f Evans > Fittery | Dec 7-0
+c1 Rutledge > Iovine | Fall 7:00
+c1 Montour > Becker | Dec 11-6
+c1 Deaguero > Janke | Dec 5-2
+c1 Irwin > Annon | Dec 6-5
+c2 Rutledge > Elg | Dec 11-5
+c2 Zanetta > Montour | Dec 8-6
+c2 Deaguero > Valko | Dec 5-3
+c2 Bribieseca > Irwin | For.
+cqf Rutledge > Zanetta | Fall 2:45
+cqf Deaguero > Bribieseca | Def.
+csf Gamble > Rutledge | SV-1 14-10
+csf Surra > Deaguero | Dec 10-6
+3rd Gamble > Surra | Dec 8-7
+5th Rutledge > Deaguero | Dec 8-3
+7th Zanetta > Bribieseca | M. For.
+
+@ 149
+- Don Cummings | Mercyhurst | 19-5
+- Mark Carey | Central Missouri | 18-15
+- Todd Meneely | Nebraska-Omaha | 31-3
+- Matt True | Nebraska-Kearney | 21-9
+- Shea Timothy | Central Oklahoma | 20-7
+- Chris Chambers | Kutztown | 20-12
+- Camille DuPont | Western State College | 22-11
+- Monterrious Adams | Upper Iowa | 11-6
+- Jason Rhoten | Minnesota State Mankato | 30-8
+- Mikel Delk | Fort Hays State | 16-6
+- Latra Collick | Newberry | 12-10
+- Charlie Pingleton | Indianapolis | 31-7
+- Mark Pfeifer | Chadron State | 30-10
+- Shane Walton | Minnesota State Moorhead | 16-14
+- Mike Rogers | Carson-Newman | 9-2
+- Willie Hilton | UNC Pembroke | 31-7
+r1 Cummings > Carey | Dec 14-7
+r1 Meneely > True | SV-1 5-3
+r1 Timothy > Chambers | MD 9-0
+r1 DuPont > Adams | Dec 11-5
+r1 Rhoten > Delk | Dec 4-1
+r1 Pingleton > Collick | Dec 9-5
+r1 Pfeifer > Walton | Dec 9-2
+r1 Rogers > Hilton | Fall 3:21
+qf Meneely > Cummings | MD 15-4
+qf Timothy > DuPont | Dec 7-0
+qf Rhoten > Pingleton | Fall 6:00
+qf Rogers > Pfeifer | Fall 2:33
+sf Meneely > Timothy | Dec 8-2
+sf Rogers > Rhoten | Fall 5:26
+f Meneely > Rogers | Dec 3-2
+c1 True > Carey | SV-1 5-3
+c1 Chambers > Adams | MD 14-3
+c1 Delk > Collick | Dec 2-1
+c1 Hilton > Walton | Dec 5-1
+c2 Pfeifer > True | Dec 3-1
+c2 Pingleton > Chambers | Dec 12-8
+c2 Delk > DuPont | Dec 5-4
+c2 Hilton > Cummings | Dec 3-2
+cqf Pfeifer > Pingleton | Dec 10-4
+cqf Delk > Hilton | Fall 2:59
+csf Timothy > Pfeifer | Dec 5-4
+csf Rhoten > Delk | Dec 6-4
+3rd Rhoten > Timothy | MD 11-1
+5th Pfeifer > Delk | Dec 14-8
+7th Pingleton > Hilton | MD 13-4
+
+@ 157
+- Andrew Lamancusa | Mercyhurst | 19-6
+- Kyle Trout | Minnesota State Moorhead | 32-8
+- Kenneth Packard | San Francisco State | 13-11
+- Jason Leavitt | Central Oklahoma | 30-7
+- Brandon Girtz | Minnesota State Mankato | 35-7
+- Jacob Wilson | Shippensburg | 15-14
+- Bradley Becker | Wisconsin-Parkside | 12-6
+- Danny Grater | Fort Hays State | 25-10
+- Joe Ellenberger | Nebraska-Kearney | 39-9
+- Michael Horton | Indianapolis | 29-11
+- Zack McKendree | Gannon | 20-5
+- Austin Scarset | Augustana SD | 18-4
+- Antonio Guerra | Findlay | 27-4
+- Michael Gallegos | Adams State | 20-7
+- Travis Eggers | Upper Iowa | 19-8
+- Joe Strittmatter | Pitt-Johnstown | 25-13
+r1 Lamancusa > Trout | Dec 6-5
+r1 Leavitt > Packard | MD 11-3
+r1 Girtz > Wilson | MD 17-5
+r1 Becker > Grater | Fall 5:39
+r1 Ellenberger > Horton | Dec 9-2
+r1 Scarset > McKendree | Dec 6-0
+r1 Guerra > Gallegos | Dec 6-3
+r1 Eggers > Strittmatter | Fall 6:50
+qf Leavitt > Lamancusa | Dec 8-3
+qf Becker > Girtz | TB-1 8-7
+qf Ellenberger > Scarset | Dec 6-2
+qf Guerra > Eggers | Dec 3-1
+sf Leavitt > Becker | Dec 4-3
+sf Guerra > Ellenberger | Dec 6-5
+f Guerra > Leavitt | TB-1 2-1
+c1 Trout > Packard | Dec 3-2
+c1 Grater > Wilson | MD 13-5
+c1 Horton > McKendree | Dec 8-7
+c1 Gallegos > Strittmatter | Dec 10-7
+c2 Trout > Eggers | Dec 8-1
+c2 Scarset > Grater | Dec 7-3
+c2 Girtz > Horton | Dec 5-3
+c2 Lamancusa > Gallegos | MD 15-6
+cqf Scarset > Trout | Dec 5-2
+cqf Lamancusa > Girtz | TB-1 11-9
+csf Scarset > Becker | Dec 7-2
+csf Ellenberger > Lamancusa | Dec 8-7
+3rd Ellenberger > Scarset | MD 14-6
+5th Becker > Lamancusa | Fall 2:39
+7th Girtz > Trout | Dec 10-8
+
+@ 165
+- Kevin Kalbach | Kutztown | 16-1
+- Evan Copeland | Adams State | 26-11
+- Eric Lakia | Ashland | 22-4
+- Mitch Norton | Upper Iowa | 20-6
+- Brett Hunter | Chadron State | 31-7
+- Hudson Harrison | Mercyhurst | 18-13
+- Nathan Baker | Minnesota State Moorhead | 17-5
+- Blake Peterson | Truman State | 24-15
+- Justin Wood | Central Oklahoma | 30-7
+- Ross Taplin | Nebraska-Omaha | 32-11
+- Phil Bliss | Belmont Abbey | 23-6
+- Zachary Lee | Western State College | 28-5
+- Andy Pickar | Minnesota State Mankato | 20-1
+- John Ficht | SIU Edwardsville | 19-15
+- Taylor May | Nebraska-Kearney | 15-16
+- J.J. Davis | UNC Pembroke | 25-5
+r1 Copeland > Kalbach | Dec 9-5
+r1 Lakia > Norton | Dec 7-5
+r1 Hunter > Harrison | MD 12-3
+r1 Baker > Peterson | Dec 8-5
+r1 Taplin > Wood | Dec 2-1
+r1 Lee > Bliss | Dec 5-0
+r1 Pickar > Ficht | Dec 5-3
+r1 May > Davis | Dec 5-2
+qf Lakia > Copeland | Dec 12-5
+qf Hunter > Baker | Dec 4-2
+qf Lee > Taplin | Dec 5-0
+qf Pickar > May | Dec 3-2
+sf Hunter > Lakia | Dec 6-4
+sf Pickar > Lee | Dec 2-1
+f Hunter > Pickar | Fall 2:37
+c1 Norton > Kalbach | Dec 7-4
+c1 Peterson > Harrison | MD 16-2
+c1 Wood > Bliss | Fall 0:36
+c1 Ficht > Davis | MD 8-0
+c2 May > Norton | MD 15-5
+c2 Peterson > Taplin | Dec 11-4
+c2 Baker > Wood | Fall 4:26
+c2 Copeland > Ficht | Dec 6-4
+cqf Peterson > May | Fall 6:53
+cqf Baker > Copeland | Fall 3:41
+csf Lakia > Peterson | Fall 5:48
+csf Baker > Lee | Dec 3-2
+3rd Baker > Lakia | Dec 5-3
+5th Peterson > Lee | Dec 3-0
+7th Copeland > May | Dec 12-8
+
+@ 174
+- Tommy Clark | West Liberty State | 41-6
+- Daniel Morrison | Central Oklahoma | 17-14
+- Cody Henriksen | Augustana SD | 20-6
+- William Simmons | San Francisco State | 6-8
+- Michael Jackson | Indianapolis | 29-6
+- Quinn Tolbert | Newberry | 22-10
+- James Reynolds | Adams State | 22-13
+- Tyler Tubbs | Minnesota State Moorhead | 17-5
+- Jeremiah Naig | Nebraska-Omaha | 38-7
+- Matt Weingart | Chadron State | 22-18
+- Zach Schafer | Mercyhurst | 26-7
+- Albert Morgan | Wisconsin-Parkside | 20-10
+- Larry Wilbanks | Western State College | 24-9
+- Tim Matheson | Minnesota State Mankato | 26-17
+- Justin Ferguson | Ashland | 11-7
+- Eli Garshnick | Pitt-Johnstown | 15-9
+r1 Morrison > Clark | Dec 4-2
+r1 Henriksen > Simmons | Dec 7-2
+r1 Jackson > Tolbert | Fall 2:09
+r1 Reynolds > Tubbs | Dec 7-4
+r1 Naig > Weingart | MD 14-1
+r1 Schafer > Morgan | SV-1 3-1
+r1 Wilbanks > Matheson | MD 14-5
+r1 Garshnick > Ferguson | Dec 5-2
+qf Henriksen > Morrison | Dec 3-2
+qf Jackson > Reynolds | Dec 12-8
+qf Naig > Schafer | Dec 7-2
+qf Wilbanks > Garshnick | Dec 9-3
+sf Jackson > Henriksen | Dec 12-9
+sf Naig > Wilbanks | Dec 7-5
+f Naig > Jackson | MD 13-1
+c1 Clark > Simmons | Dec 6-1
+c1 Tolbert > Tubbs | Dec 7-4
+c1 Weingart > Morgan | Dec 8-2
+c1 Ferguson > Matheson | Fall 0:55
+c2 Garshnick > Clark | Dec 5-4
+c2 Schafer > Tolbert | TB-1 5-3
+c2 Weingart > Reynolds | SV-1 3-1
+c2 Ferguson > Morrison | Dec 7-5
+cqf Garshnick > Schafer | Dec 5-1
+cqf Weingart > Ferguson | Dec 4-1
+csf Henriksen > Garshnick | Dec 12-5
+csf Wilbanks > Weingart | Dec 8-3
+3rd Henriksen > Wilbanks | Fall 2:39
+5th Garshnick > Weingart | Fall 0:55
+7th Schafer > Ferguson | Dec 6-2
+
+@ 184
+- Mark Murphy | Shippensburg | 13-6
+- Nicolas Wilkes | St. Cloud State | 18-6
+- Matt Farrell | Nebraska-Kearney | 29-4
+- Matt Allen | Ashland | 12-8
+- Austin Boehm | Nebraska-Omaha | 25-12
+- Pino Scavella | Gannon | 24-17
+- Nathan Jones | Carson-Newman | 42-6
+- Charlie Pipher | Western State College | 26-10
+- Jared Deaguero | Adams State | 14-5
+- Jeremy Hudson | Central Missouri | 26-16
+- Mike Corcetti | Pitt-Johnstown | 31-1
+- Cale Cornemann | Northern State | 10-4
+- Jared Hess | Central Oklahoma | 27-4
+- Mike Howell | Fort Hays State | 12-10
+- Travis Krinkie | Minnesota State Mankato | 22-9
+- Keeno Griffin | Newberry | 24-12
+r1 Murphy > Wilkes | Fall 1:57
+r1 Farrell > Allen | Dec 7-0
+r1 Boehm > Scavella | Fall 1:39
+r1 Pipher > Jones | Dec 7-4
+r1 Deaguero > Hudson | TF-1.5 5:30 (18-1)
+r1 Corcetti > Cornemann | Fall 6:34
+r1 Hess > Howell | Dec 3-1
+r1 Krinkie > Griffin | Dec 7-2
+qf Murphy > Farrell | TB-2 1-1
+qf Boehm > Pipher | Fall 0:28
+qf Deaguero > Corcetti | Dec 9-3
+qf Hess > Krinkie | Dec 3-2
+sf Boehm > Murphy | Dec 6-5
+sf Deaguero > Hess | Dec 6-1
+f Deaguero > Boehm | MD 9-1
+c1 Allen > Wilkes | Dec 8-5
+c1 Scavella > Jones | Fall 3:40
+c1 Hudson > Cornemann | Dec 5-3
+c1 Howell > Griffin | Dec 8-2
+c2 Krinkie > Allen | MD 11-3
+c2 Corcetti > Scavella | Dec 9-3
+c2 Pipher > Hudson | Fall 1:27
+c2 Farrell > Howell | Fall 2:54
+cqf Corcetti > Krinkie | Dec 8-3
+cqf Farrell > Pipher | Dec 12-5
+csf Corcetti > Murphy | M. For.
+csf Hess > Farrell | Dec 4-1
+3rd Hess > Corcetti | Dec 3-2
+5th Farrell > Murphy | M. For.
+7th Krinkie > Pipher | MD 12-3
+
+@ 197
+- Derek Brunson | UNC Pembroke | 27-4
+- Josh Majerus | Chadron State | 25-11
+- John Treml | Wisconsin-Parkside | 26-14
+- Jacob Marrs | Nebraska-Omaha | 35-7
+- Casey Woodall | Adams State | 26-8
+- Kelly Anundson | Newberry | 24-10
+- Nate Buys | Augustana SD | 23-3
+- David Crowley | Ashland | 16-14
+- Heath Jolley | Central Oklahoma | 20-9
+- Ben Janike | Minnesota State Mankato | 23-10
+- Michael Fowler | Pitt-Johnstown | 28-8
+- Tyler Gonzales | Fort Hays State | 18-11
+- Ryan Phillips | Upper Iowa | 25-5
+- Andrejs Zalaiskalns | Findlay | 18-23
+- Kelsey Empting | Nebraska-Kearney | 24-13
+- Chris Taylor | West Liberty State | 14-5
+r1 Majerus > Brunson | Fall 3:20
+r1 Treml > Marrs | Fall 2:13
+r1 Woodall > Anundson | Dec 8-4
+r1 Buys > Crowley | Dec 7-0
+r1 Jolley > Janike | Dec 4-0
+r1 Fowler > Gonzales | Dec 6-3
+r1 Phillips > Zalaiskalns | MD 15-4
+r1 Taylor > Empting | Dec 4-3
+qf Majerus > Treml | Fall 6:39
+qf Buys > Woodall | Dec 8-2
+qf Fowler > Jolley | Dec 4-2
+qf Phillips > Taylor | MD 11-0
+sf Majerus > Buys | Dec 5-4
+sf Phillips > Fowler | Dec 5-2
+f Phillips > Majerus | MD 12-0
+c1 Brunson > Marrs | Dec 12-7
+c1 Anundson > Crowley | Fall 4:41
+c1 Gonzales > Janike | Dec 5-3
+c1 Empting > Zalaiskalns | Dec 10-4
+c2 Brunson > Taylor | Dec 6-2
+c2 Jolley > Anundson | Dec 6-2
+c2 Woodall > Gonzales | Dec 3-2
+c2 Empting > Treml | Dec 7-3
+cqf Jolley > Brunson | Fall 4:27
+cqf Woodall > Empting | Dec 5-3
+csf Buys > Jolley | Fall 5:14
+csf Fowler > Woodall | Dec 5-2
+3rd Buys > Fowler | MD 8-0
+5th Jolley > Woodall | TB-1 3-2
+7th Brunson > Empting | Dec 8-2
+
+@ 285
+- Jason Groller | Shippensburg | 13-4
+- Loyde Braidlow | Truman State | 30-19
+- Dan Goodson | Upper Iowa | 23-10
+- Lars Lueders | Western State College | 17-13
+- Josh Leadingfox | Central Oklahoma | 26-5
+- Cy Wainwright | Newberry | 23-10
+- Andrew Ubben | Fort Hays State | 21-7
+- Anthony Lewis | Nebraska-Omaha | 29-15
+- Brady Wilson | Minnesota State Mankato | 39-8
+- Shane Odell | Chadron State | 15-16
+- Christopher Dempsey | Pitt-Johnstown | 22-12
+- Travis Clark | Findlay | 22-11
+- Tervel Dlagnev | Nebraska-Kearney | 44-1
+- Ray O'Connor | Augustana SD | 13-12
+- Jose Navarro | Indianapolis | 22-8
+- William Moss | Limestone | 26-13
+r1 Groller > Braidlow | Dec 5-3
+r1 Goodson > Lueders | Dec 4-0
+r1 Leadingfox > Wainwright | Dec 8-4
+r1 Ubben > Lewis | Dec 5-2
+r1 Wilson > Odell | Fall 6:34
+r1 Clark > Dempsey | Dec 11-6
+r1 Dlagnev > O'Connor | MD 16-6
+r1 Navarro > Moss | Dec 6-3
+qf Groller > Goodson | SV-1 4-2
+qf Leadingfox > Ubben | Dec 3-2
+qf Wilson > Clark | Fall 3:36
+qf Dlagnev > Navarro | Fall 3:58
+sf Leadingfox > Groller | Dec 6-0
+sf Dlagnev > Wilson | MD 13-3
+f Dlagnev > Leadingfox | Fall 3:16
+c1 Lueders > Braidlow | SV-1 6-4
+c1 Wainwright > Lewis | SV-1 4-2
+c1 Dempsey > Odell | Dec 7-3
+c1 Moss > O'Connor | Dec 6-2
+c2 Navarro > Lueders | Dec 3-2
+c2 Clark > Wainwright | Dec 5-3
+c2 Ubben > Dempsey | MD 11-3
+c2 Goodson > Moss | Dec 1-0
+cqf Clark > Navarro | TB-2 6-5
+cqf Ubben > Goodson | Dec 4-3
+csf Clark > Groller | Fall 6:42
+csf Ubben > Wilson | Dec 5-2
+3rd Ubben > Clark | Dec 4-2
+5th Wilson > Groller | MD 9-1
+7th Navarro > Goodson | Dec 3-2

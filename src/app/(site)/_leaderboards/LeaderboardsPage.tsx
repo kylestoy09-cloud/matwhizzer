@@ -50,7 +50,7 @@ export async function LeaderboardsPage({ gender, searchParams }: { gender: Gende
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
       <StdHeader title={`${gender === 'M' ? 'Boys' : 'Girls'} Leaders`} summaryKey="leaderboards"
-        picker={<InlineSeasonPicker gender={gender} activeSeason={season} />}
+        picker={<InlineSeasonPicker arrows gender={gender} activeSeason={season} />}
         tabs={<>
           <TabRow items={phaseTabs} active={p.tab === 'regular' ? 'regular' : 'postseason'} />
           {p.tab !== 'regular' && <TabRow items={postseasonTabs} active={p.tab} level={2} />}

@@ -39,7 +39,7 @@ export type WrestlerFlag = {
   wrestler_id: string | null
   display_name: string | null
   alternates: { wrestler_id: string; display_name: string; score: number }[]
-  ms_candidates?: MsProfileCandidate[]
+  prospect_candidates?: ProspectCandidate[]
 }
 
 export type WrestlerOverride =
@@ -49,27 +49,26 @@ export type WrestlerOverride =
   | { type: 'accept' }
   | { type: 'skip' }
 
-export type MsPlacementInfo = {
+// A tournament hub prospect (Middle School / Offseason Hub) offered for a new high school wrestler
+export type ProspectFinish = {
   id: number
   tournament_name: string
-  tier_name: string
   season: string
-  weight_class: number
+  weight: string
   place: number
-  school_name: string | null
-  credit: number | null
+  label: string
 }
 
-export type MsProfileCandidate = {
-  ms_wrestler_id: number
+export type ProspectCandidate = {
+  pool: 'M' | 'F' | 'X'   // the side's own list, or the mixed Middle School pool
+  prospect_id: number
   primary_name: string
   score: number
-  placements: MsPlacementInfo[]
-  best_credit: number
+  finishes: ProspectFinish[]
 }
 
-export type MsProfileLink =
-  | { type: 'confirm'; ms_wrestler_id: number; canonical_name: string }
+export type ProspectLink =
+  | { type: 'confirm'; pool?: 'M' | 'F' | 'X'; prospect_id: number; canonical_name: string }
   | { type: 'skip' }
 
 export type TournamentType = 'outside' | 'inside_outside' | 'inside'

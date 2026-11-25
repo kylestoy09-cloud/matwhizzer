@@ -30,7 +30,8 @@ function normalize(s: string): string {
     .trim()
 }
 
-function scoreNames(parsed: string, existing: string): number {
+/** Name similarity 0–100 (100 = same name once the generic words are gone) */
+export function scoreNames(parsed: string, existing: string): number {
   const p = normalize(parsed)
   const e = normalize(existing)
   if (!p || !e) return 0

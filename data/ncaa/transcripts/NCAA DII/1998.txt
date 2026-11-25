@@ -1,0 +1,182 @@
+# NCAA Division II Championships 1998 — source: NCAA II 1998.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Jody Strittmatter | Pittsburgh-Johnstown
+- Damion Broadbent | San Francisco State
+- Brock Moore | Central Oklahoma
+- Chad Wickman | South Dakota State
+- Mike Bailey | Central Missouri
+- Mack LaRock | Nebraska-Omaha
+- Jeff Putt | Shippensburg
+- Karega Scott | Truman State
+place 1 Jody Strittmatter
+place 2 Damion Broadbent
+place 3 Brock Moore
+place 4 Chad Wickman
+place 5 Mike Bailey
+place 6 Mack LaRock
+place 7 Jeff Putt
+place 8 Karega Scott
+
+@ 126
+- Matt Goodson | Central Oklahoma
+- Jesse Clark | Ashland
+- Craig Otto | Western State
+- Kris Nelson | North Dakota State
+- Kohlby O'Donnell | Kutztown State
+- Jessie Montez | SIU-Edwardsville
+- Erin Razo | North Dakota
+- Lucas Trujillo | Southern Colorado
+place 1 Matt Goodson
+place 2 Jesse Clark
+place 3 Craig Otto
+place 4 Kris Nelson
+place 5 Kohlby O'Donnell
+place 6 Jessie Montez
+place 7 Erin Razo
+place 8 Lucas Trujillo
+
+@ 134
+- Braumon Creighton | Nebraska-Omaha
+- Issac Greeley | Pittsburgh-Johnstown
+- George Thompson | North Dakota State
+- Ryan Mizushima | Western State
+- Kurt Karjalainen | Nebraska-Kearney
+- Paul Konechne | South Dakota State
+- Marshall Hahn | Northern Colorado
+- Chris Stivers | Chadron State
+place 1 Braumon Creighton
+place 2 Issac Greeley
+place 3 George Thompson
+place 4 Ryan Mizushima
+place 5 Kurt Karjalainen
+place 6 Paul Konechne
+place 7 Marshall Hahn
+place 8 Chris Stivers
+
+@ 142
+- Troy Szydel | Minnesota State-Mankato
+- Chris Currier | Southern Colorado
+- Jason Cuperius | North Dakota State
+- Joe Renfro | Nebraska-Kearney
+- Frankly James | Carson-Newman
+- Gable Sullivan | Central Oklahoma
+- Corey Kline | Ashland
+- Boyce Voorhees | Nebraska-Omaha
+place 1 Troy Szydel
+place 2 Chris Currier
+place 3 Jason Cuperius
+place 4 Joe Renfro
+place 5 Frankly James
+place 6 Gable Sullivan
+place 7 Corey Kline
+place 8 Boyce Voorhees
+
+@ 150
+- Travis King | South Dakota State
+- Jody Marple | Central Oklahoma
+- Matt Petsinger | Minnesota State-Mankato
+- Benny Charles | Southern Colorado
+- Scott Hewit | Northern Colorado
+- Lazaro Reinoso | Carson-Newman
+- Wayne Mooney | North Dakota State
+- Justin Hoopman | Chadron State
+place 1 Travis King
+place 2 Jody Marple
+place 3 Matt Petsinger
+place 4 Benny Charles
+place 5 Scott Hewit
+place 6 Lazaro Reinoso
+place 7 Wayne Mooney
+place 8 Justin Hoopman
+
+@ 158
+- Mark Pazdemik | North Dakota State
+- Justin Edwards | Southern Colorado
+- Greg Jackson | San Francisco State
+- Titus Taylor | SIU-Edwardsville
+- Troy Barbush | Pittsburgh-Johnstown
+- Mark Blashko | Nebraska-Kearney
+- Jake Holscher | Chadron State
+- Joe Veras | Ashland
+place 1 Mark Pazdemik
+place 2 Justin Edwards
+place 3 Greg Jackson
+place 4 Titus Taylor
+place 5 Troy Barbush
+place 6 Mark Blashko
+place 7 Jake Holscher
+place 8 Joe Veras
+
+@ 167
+- Steve Saxlund | North Dakota State
+- Myron Ellegood | Fort Hays State
+- T.J. Deaguero | Northern Colorado
+- Deon Brimmage | Indianapolis
+- Brandon Terry | Nebraska-Kearney
+- Nate Hendrickson | Minnesota State-Moorhead
+- Trent Monlux | Southern Colorado
+- Eric Hage | Augustana SD
+place 1 Steve Saxlund
+place 2 Myron Ellegood
+place 3 T.J. Deaguero
+place 4 Deon Brimmage
+place 5 Brandon Terry
+place 6 Nate Hendrickson
+place 7 Trent Monlux
+place 8 Eric Hage
+
+@ 177
+- John Simpson | Colorado Mines
+- Jeremie Ott | Wisconsin-Parkside
+- Pat Timm | South Dakota State
+- Conrad Johnson | Adams State
+- Matt Johnson | Central Missouri
+- Brent Henriksen | Augustana SD
+- Irwin Brambley | Pittsburgh-Johnstown
+- Joe Pistone | American International
+place 1 John Simpson
+place 2 Jeremie Ott
+place 3 Pat Timm
+place 4 Conrad Johnson
+place 5 Matt Johnson
+place 6 Brent Henriksen
+place 7 Irwin Brambley
+place 8 Joe Pistone
+
+@ 190
+- Link Steffen | Southwest Missouri
+- Mike Schadwinkel | Adams State
+- Ryan Wolters | North Dakota State
+- Jose Medina | Nebraska-Omaha
+- Edwin Lorne | Central Oklahoma
+- Jaison Klingensmith | Pittsburgh-Johnstown
+- Shawn Ange | Minnesota State-Mankato
+- Jason Moehlman | Central Missouri
+place 1 Link Steffen
+place 2 Mike Schadwinkel
+place 3 Ryan Wolters
+place 4 Jose Medina
+place 5 Edwin Lorne
+place 6 Jaison Klingensmith
+place 7 Shawn Ange
+place 8 Jason Moehlman
+
+@ 275
+- Ryan Resel | South Dakota State
+- Tim Croft | Carson-Newman
+- Jerry Corner | Nebraska-Omaha
+- Chris Villalobos | Northern Colorado
+- Keith Blaske | Fort Hays State
+- Mike Wicker | Western State
+- Dave Claymer | North Dakota State
+- Mark Rose | Ashland
+place 1 Ryan Resel
+place 2 Tim Croft
+place 3 Jerry Corner
+place 4 Chris Villalobos
+place 5 Keith Blaske
+place 6 Mike Wicker
+place 7 Dave Claymer
+place 8 Mark Rose
+

@@ -7,7 +7,7 @@ import { matchSchoolNames, isNjLookalike } from '@/lib/matchSchools'
 import { matchWrestler, oosSchoolHasPrior, clearWrestlerCache, reloadAliases } from '@/lib/matchWrestlers'
 import { isPlaceholderName, stripNickname } from '@/lib/personName'
 import { matchTournament } from '@/lib/matchTournaments'
-import { findMsProfileCandidates, msSeasonsForHsSeason, type MsWrestlerRow } from '@/lib/matchMsWrestler'
+import { findProspectCandidates, loadUnlinkedProspects } from '@/lib/matchProspect'
 import type { SchoolFlag, WrestlerFlag, ReviewedTournament, SchoolOverride, TournamentType } from '@/app/admin/[side]/import-rtf/types'
 import { isAdminUser } from '@/lib/auth/isAdminUser'
 import { createOosSchool, needsStateMessage, overridesMissingState } from '@/lib/oosSchool'
@@ -137,58 +137,8 @@ export async function POST(req: NextRequest) {
     start_date: r.start_date as string | null,
   }))
 
-  // Load ms_wrestlers (unlinked, 3-year lookback) to surface MS candidates for new NJ wrestlers
-  const msSeasons = msSeasonsForHsSeason(SEASON)
-  const { data: msWrestlerRows } = await client
-    .from('ms_wrestlers')
-    .select(`
-      id,
-      canonical_name,
-      ms_placements (
-        id,
-        weight_class,
-        place,
-        school_name,
-        ms_tournament:ms_tournaments!inner (
-          name,
-          season,
-          tier:ms_tournament_tiers!inner (
-            name,
-            credit_1, credit_2, credit_3, credit_4, credit_5, credit_6, credit_7, credit_8
-          )
-        )
-      )
-    `)
-    .is('hs_wrestler_id', null)  // only unlinked — already-linked wrestlers don't need surfacing
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const msWrestlersFlat: MsWrestlerRow[] = (msWrestlerRows ?? []).map((w: any) => {
-    const placements = (w.ms_placements ?? [])
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .filter((p: any) => msSeasons.includes(p.ms_tournament?.season))
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .map((p: any) => {
-        const tier = p.ms_tournament?.tier ?? {}
-        const credit = tier[`credit_${p.place}`] != null ? Number(tier[`credit_${p.place}`]) : null
-        return {
-          id: p.id,
-          tournament_name: p.ms_tournament?.name ?? '?',
-          tier_name: tier.name ?? '?',
-          season: p.ms_tournament?.season ?? '?',
-          weight_class: p.weight_class as number,
-          place: p.place as number,
-          school_name: p.school_name as string | null,
-          credit,
-        }
-      })
-    const best_credit = placements.reduce((max: number, p: { credit: number | null }) => Math.max(max, p.credit ?? 0), 0)
-    return {
-      ms_wrestler_id: w.id as number,
-      canonical_name: w.canonical_name as string,
-      placements,
-      best_credit,
-    }
-  }).filter((w: MsWrestlerRow) => w.placements.length > 0)
+  // Tournament hub prospects not yet linked to a HS wrestler, offered for new NJ wrestlers
+  const hubProspects = await loadUnlinkedProspects(client, parseGender(gender))
 
   const reviewed: ReviewedTournament[] = []
 
@@ -249,18 +199,9 @@ export async function POST(req: NextRequest) {
       if (seen.has(key)) return false
       seen.add(key); return true
     })
-    const hasNjSchool = dedupedBoutsAll.some(b => {
-      const c1 = schoolCache.get(b.wrestler1_school)?.confidence
-      const c2 = schoolCache.get(b.wrestler2_school)?.confidence
-      return c1 === 'exact' || c1 === 'high' || c2 === 'exact' || c2 === 'high'
-    })
-    const dedupedBouts = hasNjSchool
-      ? dedupedBoutsAll.filter(b => {
-          const c1 = schoolCache.get(b.wrestler1_school)?.confidence
-          const c2 = schoolCache.get(b.wrestler2_school)?.confidence
-          return !(c1 === 'oos' && c2 === 'oos')
-        })
-      : dedupedBoutsAll
+    // every bout, out-of-state against out-of-state too (Kyle 2026-11-21: "let's start storing all bout info moving
+    // forward") — an event's full brackets, not only our wrestlers' path through them
+    const dedupedBouts = dedupedBoutsAll
 
     const schoolFlagMap = new Map<string, SchoolFlag>()
     for (const b of dedupedBouts) {
@@ -337,8 +278,8 @@ export async function POST(req: NextRequest) {
             ? (wm.confidence === 'low' || oosNewAtKnownSchool)
             : (wm.confidence === 'low' || wm.confidence === 'none'))
           if (shouldFlag) {
-            const ms_candidates = (!isOos && wm.isNew)
-              ? findMsProfileCandidates(name, msWrestlersFlat)
+            const prospect_candidates = (!isOos && wm.isNew)
+              ? findProspectCandidates(name, hubProspects)
               : undefined
             wrestlerFlagMap.set(fkey, {
               key: fkey,
@@ -352,7 +293,7 @@ export async function POST(req: NextRequest) {
               wrestler_id: wm.wrestlerId,
               display_name: wm.displayName,
               alternates: wm.alternates.map(a => ({ wrestler_id: a.wrestlerId, display_name: a.displayName, score: a.score })),
-              ms_candidates,
+              prospect_candidates,
             })
           }
         }

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
+import { PUBLIC_CDN_HEADERS } from '@/lib/supabase/public-cached'
 
 export const dynamic = 'force-dynamic'
 
@@ -50,7 +51,7 @@ export async function GET(req: NextRequest) {
     .maybeSingle()
 
   if (!completion) {
-    return NextResponse.json({ rankings: [], prev_rankings: [], upsets: [], is_published: false, week })
+    return NextResponse.json({ rankings: [], prev_rankings: [], upsets: [], is_published: false, week }, { headers: PUBLIC_CDN_HEADERS })
   }
 
   // ── Current rankings ──────────────────────────────────────────────────────────
@@ -111,22 +112,34 @@ export async function GET(req: NextRequest) {
 
   const allIds = [...new Set([...currentRows.map(r => r.wrestler_id), ...prevRows.map(r => r.wrestler_id)])]
   const nameMap = new Map<string, { name: string; school: string; school_id: number | null; school_logo: string | null; school_bg: string | null; grade: string | null }>()
-  for (const ids of chunk(allIds, 100)) {
-    const { data } = await db
-      .from('wrestlers')
-      .select('id, first_name, last_name, grade, schools(id, display_name, logo_url, header_background)')
-      .in('id', ids)
-    for (const r of (data ?? []) as any[]) {
-      nameMap.set(r.id, {
-        name:   `${r.first_name ?? ''} ${r.last_name ?? ''}`.trim(),
-        school: (r.schools as any)?.display_name ?? '',
-        school_id: (r.schools as any)?.id ?? null,
-        school_logo: (r.schools as any)?.logo_url ?? null,
-        school_bg: (r.schools as any)?.header_background ?? null,
-        grade:  r.grade ?? null,
-      })
+  // wrestlers has no school column: a ranked wrestler's school is the one on their most recent rating
+  // (the old wrestlers → schools embed failed, leaving every name '—', 2026-11-11)
+  async function loadNames(ids: string[]) {
+    for (const part of chunk(ids, 100)) {
+      const [{ data: ws }, { data: rated }] = await Promise.all([
+        db.from('wrestlers').select('id, first_name, last_name, grade').in('id', part),
+        db.from('wrestler_hammer_scores').select('wrestler_id, school_id, season').in('wrestler_id', part).eq('gender', gender).order('season', { ascending: false }),
+      ])
+      const schoolIdOf = new Map<string, number>()
+      for (const h of (rated ?? []) as any[]) if (h.school_id != null && !schoolIdOf.has(h.wrestler_id)) schoolIdOf.set(h.wrestler_id, h.school_id)
+      const sids = [...new Set(schoolIdOf.values())]
+      const { data: ss } = sids.length ? await db.from('schools').select('id, display_name, logo_url, header_background').in('id', sids) : { data: [] }
+      const schoolById = new Map((ss ?? []).map((x: any) => [x.id as number, x]))
+      const schoolOf = new Map([...schoolIdOf].map(([w, id]) => [w, schoolById.get(id)]))
+      for (const r of (ws ?? []) as any[]) {
+        const sc = schoolOf.get(r.id)
+        nameMap.set(r.id, {
+          name:   `${r.first_name ?? ''} ${r.last_name ?? ''}`.trim(),
+          school: sc?.display_name ?? '',
+          school_id: sc?.id ?? null,
+          school_logo: sc?.logo_url ?? null,
+          school_bg: sc?.header_background ?? null,
+          grade:  r.grade ?? null,
+        })
+      }
     }
   }
+  await loadNames(allIds)
 
   // ── Published upsets for this scope ──────────────────────────────────────────
 
@@ -153,22 +166,7 @@ export async function GET(req: NextRequest) {
     upsetWrestlerIds.add(u.loser_id  as string)
   }
   const upsetMissingIds = [...upsetWrestlerIds].filter(id => !nameMap.has(id))
-  for (const ids of chunk(upsetMissingIds, 100)) {
-    const { data } = await db
-      .from('wrestlers')
-      .select('id, first_name, last_name, grade, schools(id, display_name, logo_url, header_background)')
-      .in('id', ids)
-    for (const r of (data ?? []) as any[]) {
-      nameMap.set(r.id, {
-        name:   `${r.first_name ?? ''} ${r.last_name ?? ''}`.trim(),
-        school: (r.schools as any)?.display_name ?? '',
-        school_id: (r.schools as any)?.id ?? null,
-        school_logo: (r.schools as any)?.logo_url ?? null,
-        school_bg: (r.schools as any)?.header_background ?? null,
-        grade:  r.grade ?? null,
-      })
-    }
-  }
+  await loadNames(upsetMissingIds)
 
   // ── Assemble response ─────────────────────────────────────────────────────────
 
@@ -213,5 +211,5 @@ export async function GET(req: NextRequest) {
     }
   })
 
-  return NextResponse.json({ rankings, prev_rankings, upsets, is_published: true, week })
+  return NextResponse.json({ rankings, prev_rankings, upsets, is_published: true, week }, { headers: PUBLIC_CDN_HEADERS })
 }

@@ -573,8 +573,11 @@ function parseFormatTwo(rawText: string, date: string): ParsedMeetGirls[] {
 // ─────────────────────────────────────────────────────────────────────────────
 
 // Optional pool letter: "114C" is pool C at 114.
-const WEIGHT_STANDALONE_RE   = new RegExp(`^(${WEIGHT_ALT})[A-Z]?$`)   // used against individual lines (no m flag needed)
-const WEIGHT_STANDALONE_RE_M = new RegExp(`^(${WEIGHT_ALT})[A-Z]?$`, 'm') // used against full text
+// "114", pool labels "114C" / "120B2", and crossover pools "114-120" / "126-126 A" (the
+// first weight is used: the pool's lighter class)
+const WEIGHT_LABEL           = `(${WEIGHT_ALT})(?:[A-Z]\\d?|-(?:${WEIGHT_ALT})(?: ?[A-Z]\\d?)?)?`
+const WEIGHT_STANDALONE_RE   = new RegExp(`^${WEIGHT_LABEL}$`)        // used against individual lines (no m flag needed)
+const WEIGHT_STANDALONE_RE_M = new RegExp(`^${WEIGHT_LABEL}$`, 'm')   // used against full text
 
 // Lines that are pure noise from TW table copy-paste. The wildcard alternatives
 // ("…high school…", "…jamboree…") match anywhere in the line, so this is only

@@ -1,0 +1,2 @@
+import { cleanEventName } from '../../src/lib/eventName'
+for (const n of ["2026 NJAC Girls' Wrestling Championships","Greater Middlesex Conference Tournament- 01/23","12th Annual Laker Holiday Tournament","Garfield Girl`s Jamboree","Del Val Jamboree (Girls)","3rd Annual Bound Brook Lady Crusaders Wrestling Jamboree","Ricky I Memorial Tournament","Girls","Women of Ironman","Queen of the East","Lady Viking Jamboree"]) console.log(JSON.stringify(n), '→', JSON.stringify(cleanEventName(n)))

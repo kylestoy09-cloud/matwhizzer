@@ -2,6 +2,8 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import { useSeasons } from '@/components/SeasonsProvider'
+import { CollegeTask, collegeClaimKey, type CollegeReviewTask } from './CollegeTask'
+import { SpotTask, spotClaimKey, type CollegeSpotTask } from './SpotTask'
 
 type SchoolProfileTask = {
   task_type:   'school_profile'
@@ -33,7 +35,7 @@ type TieResolutionTask = {
   dual_table:      string
 }
 
-type TaskInfo = SchoolProfileTask | TieResolutionTask
+type TaskInfo = SchoolProfileTask | TieResolutionTask | CollegeReviewTask | CollegeSpotTask
 
 type ScoreEntry = { admin_id: string; name: string; completed: number }
 
@@ -78,7 +80,7 @@ export function MicrocheckClient() {
 
   function skipTask() {
     if (typeof task !== 'object' || task === null) return
-    const key = task.task_type === 'tie_resolution' ? `queue:${task.task_id}` : `${task.task_key}:${task.school_id}`
+    const key = task.task_type === 'tie_resolution' ? `queue:${task.task_id}` : task.task_type === 'college_review' ? collegeClaimKey(task) : task.task_type === 'college_spot' ? spotClaimKey(task) : `${task.task_key}:${task.school_id}`
     const next = [...skipped, key]
     setSkipped(next)
     fetchNext(next)
@@ -217,6 +219,24 @@ export function MicrocheckClient() {
       <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 px-6 text-center">
         <p className="text-red-600 text-sm mb-4">{error ?? 'Something went wrong'}</p>
         <button onClick={() => fetchNext(skipped)} className="px-4 py-2 rounded-lg bg-slate-200 text-sm">Retry</button>
+      </div>
+    )
+  }
+
+  // ── College review card ────────────────────────────────────────────────────
+
+  if (task.task_type === 'college_review') {
+    return (
+      <div className="min-h-screen bg-slate-50">
+        <CollegeTask task={task} onSkip={skipTask} onNext={t => { setTask((t as TaskInfo | null) ?? 'done'); loadScoreboard() }} />
+      </div>
+    )
+  }
+
+  if (task.task_type === 'college_spot') {
+    return (
+      <div className="min-h-screen bg-slate-50">
+        <SpotTask task={task} onSkip={skipTask} onNext={t => { setTask((t as TaskInfo | null) ?? 'done'); loadScoreboard() }} />
       </div>
     )
   }

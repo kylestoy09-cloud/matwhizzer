@@ -5,6 +5,6 @@ import { AboutClient } from '@/app/(site)/about/AboutClient'
 export const revalidate = 86400
 
 export default async function Page() {
-  const p = await loadAbout()
+  const p = await loadAbout('M')
   return <AboutClient {...p} embedded />
 }

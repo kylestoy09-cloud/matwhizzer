@@ -1,0 +1,142 @@
+# NCAA Division II Championships 1977 — source: NCAA II 1977.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Brent Hagen | Minnesota State-Mankato
+- Ken Bellmard | Augustana SD
+- Kent Taylor | Central Oklahoma
+- Doug Weisz | North Dakota State
+- Haruki Kawamukai | Florida Tech
+- Dave Prehn | Northern Iowa
+place 1 Brent Hagen
+place 2 Ken Bellmard
+place 3 Kent Taylor
+place 4 Doug Weisz
+place 5 Haruki Kawamukai
+place 6 Dave Prehn
+
+@ 126
+- Randy Batten | Tennessee-Chattanooga
+- Neal Seagren | Northern Michigan
+- Dave James | Central Oklahoma
+- Sam Herriman | Augustana SD
+- Jeff Melvin | Northern Iowa
+- Terry Mulrenin | SIU-Edwardsville
+place 1 Randy Batten
+place 2 Neal Seagren
+place 3 Dave James
+place 4 Sam Herriman
+place 5 Jeff Melvin
+place 6 Terry Mulrenin
+
+@ 134
+- Franc Affentranger | Cal State-Bakersfield
+- Rick Jensen | South Dakota State
+- Jack Eustice | Minnesota State-Mankato
+- Steve Martinson | North Dakota State
+- Dave Nelson | San Francisco State
+- Scott Kollings | Northern Iowa
+place 1 Franc Affentranger
+place 2 Rick Jensen
+place 3 Jack Eustice
+place 4 Steve Martinson
+place 5 Dave Nelson
+place 6 Scott Kollings
+
+@ 142
+- Gary Bentrim | Northern Iowa
+- Richard Clark | St. Cloud State
+- Ray Yocum | Cal State-Bakersfield
+- Lon Brew | North Dakota State
+- Dru Meshes | SIU-Edwardsville
+- Ralph McCausland | Eastern Illinois
+place 1 Gary Bentrim
+place 2 Richard Clark
+place 3 Ray Yocum
+place 4 Lon Brew
+place 5 Dru Meshes
+place 6 Ralph McCausland
+
+@ 150
+- Mark Reimnitz | North Dakota State
+- Rod Balch | Cal State-Bakersfield
+- Pat Flaherty | Augustana SD
+- Dick Briggs | Northern Iowa
+- Barry Hintze | Eastern Illinois
+- Ron Weller | St. Cloud State
+place 1 Mark Reimnitz
+place 2 Rod Balch
+place 3 Pat Flaherty
+place 4 Dick Briggs
+place 5 Barry Hintze
+place 6 Ron Weller
+
+@ 158
+- Ed Torrejon | Eastern Illinois
+- William Smith | Morgan State
+- Bob Rinehart | Cal State-Chico
+- Jerry Esses | San Francisco State
+- John Newell | Nebraska-Omaha
+- William Ewing | C.W. Post
+place 1 Ed Torrejon
+place 2 William Smith
+place 3 Bob Rinehart
+place 4 Jerry Esses
+place 5 John Newell
+place 6 William Ewing
+
+@ 167
+- Flo Rocha | Cal State-Bakersfield
+- Brian Parlet | Augustana SD
+- David Byrne | SIU-Edwardsville
+- Keith Poolman | Northern Iowa
+- Bob Stout | Eastern Illinois
+- Tim Neumann | Northern Michigan
+place 1 Flo Rocha
+place 2 Brian Parlet
+place 3 David Byrne
+place 4 Keith Poolman
+place 5 Bob Stout
+place 6 Tim Neumann
+
+@ 177
+- Jeff Hohertz | South Dakota State
+- Mike Anderson | Cal State-Bakersfield
+- Mark Hattendorf | SIU-Edwardsville
+- John Mulligan | Springfield
+- Don Lubbert | Augustana SD
+- Jack Weisenborn | Western Illinois
+place 1 Jeff Hohertz
+place 2 Mike Anderson
+place 3 Mark Hattendorf
+place 4 John Mulligan
+place 5 Don Lubbert
+place 6 Jack Weisenborn
+
+@ 190
+- Jerry Washington | SIU-Edwardsville
+- Mike Bull | Cal State-Bakersfield
+- Steven Lovrien | South Dakota
+- Scott Eckland | Augustana SD
+- Don Cahill | Nebraska-Omaha
+- Ed Herman | Northern Iowa
+place 1 Jerry Washington
+place 2 Mike Bull
+place 3 Steven Lovrien
+place 4 Scott Eckland
+place 5 Don Cahill
+place 6 Ed Herman
+
+@ 285
+- Dave Klemm | Eastern Illinois
+- Jeff Blatnick | Springfield
+- Glen Geraets | South Dakota
+- Richard Long | Central Oklahoma
+- Ralph Zinger | Tennessee-Chattanooga
+- Don Meyer | North Dakota State
+place 1 Dave Klemm
+place 2 Jeff Blatnick
+place 3 Glen Geraets
+place 4 Richard Long
+place 5 Ralph Zinger
+place 6 Don Meyer
+

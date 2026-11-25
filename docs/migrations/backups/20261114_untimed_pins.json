@@ -1,0 +1,532 @@
+[
+ {
+  "id": "087e1d72-f14d-4e0e-9f14-65a0254f19cc",
+  "tournament_id": 207,
+  "win_type": "FALL"
+ },
+ {
+  "id": "3f908797-79a9-481c-a9bf-76a94ea889ba",
+  "tournament_id": 198,
+  "win_type": "FALL"
+ },
+ {
+  "id": "f7594fb9-f634-48dd-be72-77b67b396648",
+  "tournament_id": 207,
+  "win_type": "FALL"
+ },
+ {
+  "id": "cab8a68f-966a-4875-a468-4bb53806736e",
+  "tournament_id": 207,
+  "win_type": "FALL"
+ },
+ {
+  "id": "4b47888f-43fe-4a4f-8ce2-a061d7b0217c",
+  "tournament_id": 213,
+  "win_type": "FALL"
+ },
+ {
+  "id": "7df1a64f-f2d7-4541-80d0-d45991bac4eb",
+  "tournament_id": 213,
+  "win_type": "FALL"
+ },
+ {
+  "id": "a0d0e4a9-6297-43b5-bdca-57021a41e603",
+  "tournament_id": 213,
+  "win_type": "FALL"
+ },
+ {
+  "id": "ec0fbbb8-496b-48cb-8d24-74741ce4425a",
+  "tournament_id": 213,
+  "win_type": "FALL"
+ },
+ {
+  "id": "9da15c02-aa78-487d-9844-6295bfcb24d2",
+  "tournament_id": 213,
+  "win_type": "FALL"
+ },
+ {
+  "id": "9e833759-8990-4a2c-bbf1-6798a352dd0e",
+  "tournament_id": 213,
+  "win_type": "FALL"
+ },
+ {
+  "id": "2e12924c-7364-4bc6-9a1b-7512a2740efc",
+  "tournament_id": 213,
+  "win_type": "FALL"
+ },
+ {
+  "id": "4ecaec7f-518f-45d2-8756-d14f3313cf18",
+  "tournament_id": 213,
+  "win_type": "FALL"
+ },
+ {
+  "id": "c10be5c1-2359-4c7e-a49d-31aac8fb1629",
+  "tournament_id": 218,
+  "win_type": "FALL"
+ },
+ {
+  "id": "163bfbe2-8966-4cfc-aefe-04afc6bb7571",
+  "tournament_id": 218,
+  "win_type": "FALL"
+ },
+ {
+  "id": "49fff62f-fd94-48d2-bbae-50d9f977d150",
+  "tournament_id": 218,
+  "win_type": "FALL"
+ },
+ {
+  "id": "1c4d2ed6-8f16-4bc1-bcc6-df96b3741924",
+  "tournament_id": 218,
+  "win_type": "FALL"
+ },
+ {
+  "id": "805c1142-6f4b-4dba-8a42-2e46175d6944",
+  "tournament_id": 218,
+  "win_type": "FALL"
+ },
+ {
+  "id": "e74282de-af90-4be2-9845-cab5afe4f4a6",
+  "tournament_id": 218,
+  "win_type": "FALL"
+ },
+ {
+  "id": "80b619f4-8493-4ea6-a47d-0c5b66380c24",
+  "tournament_id": 218,
+  "win_type": "FALL"
+ },
+ {
+  "id": "efc1a26a-1620-44bd-8ea5-d6e3ea5aaa5f",
+  "tournament_id": 218,
+  "win_type": "FALL"
+ },
+ {
+  "id": "a24eef30-6859-457e-8822-3f1fe663e4e8",
+  "tournament_id": 218,
+  "win_type": "FALL"
+ },
+ {
+  "id": "88c79f92-bbb0-4ced-ad6d-57c88af59ac0",
+  "tournament_id": 218,
+  "win_type": "FALL"
+ },
+ {
+  "id": "2ae05456-cf84-4292-88cd-787c6245bc65",
+  "tournament_id": 218,
+  "win_type": "FALL"
+ },
+ {
+  "id": "0b9e3079-1a66-4072-bf06-077b64a505b6",
+  "tournament_id": 218,
+  "win_type": "FALL"
+ },
+ {
+  "id": "856797d0-54ce-4cf8-b28d-595015b1ff74",
+  "tournament_id": 218,
+  "win_type": "FALL"
+ },
+ {
+  "id": "302ff8e5-bc65-45c5-99ed-f5cd09509afa",
+  "tournament_id": 218,
+  "win_type": "FALL"
+ },
+ {
+  "id": "d3871b59-872f-4dc5-b1f7-6dd20137036b",
+  "tournament_id": 227,
+  "win_type": "FALL"
+ },
+ {
+  "id": "f39d7725-6078-46d1-920d-ce844e790942",
+  "tournament_id": 227,
+  "win_type": "FALL"
+ },
+ {
+  "id": "eb5ad616-e475-46ff-91b5-e649e097e902",
+  "tournament_id": 230,
+  "win_type": "FALL"
+ },
+ {
+  "id": "a7b5c13b-41f2-4512-83c5-ce67bbfc1b44",
+  "tournament_id": 246,
+  "win_type": "FALL"
+ },
+ {
+  "id": "d5be8cb8-47a4-4f3c-a095-72605276cb43",
+  "tournament_id": 256,
+  "win_type": "FALL"
+ },
+ {
+  "id": "c53ce393-d577-4c75-ac6f-08ad375ea0b9",
+  "tournament_id": 264,
+  "win_type": "FALL"
+ },
+ {
+  "id": "033c80b7-9b7b-430b-b23c-6546d325054d",
+  "tournament_id": 281,
+  "win_type": "FALL"
+ },
+ {
+  "id": "1a5271a6-8b4f-458d-a62d-0f88807b61da",
+  "tournament_id": 286,
+  "win_type": "FALL"
+ },
+ {
+  "id": "6fedc64e-96db-46e9-969f-ff2c9d94eae0",
+  "tournament_id": 286,
+  "win_type": "FALL"
+ },
+ {
+  "id": "1b73f175-5f2a-40a4-9b31-e8e1db2a4a7c",
+  "tournament_id": 297,
+  "win_type": "FALL"
+ },
+ {
+  "id": "74320027-7d45-4af0-82b2-e882dcd0dd6a",
+  "tournament_id": 351,
+  "win_type": "FALL"
+ },
+ {
+  "id": "eebdb45e-13ff-49c7-9a93-501c4d2ebc7e",
+  "tournament_id": 365,
+  "win_type": "FALL"
+ },
+ {
+  "id": "e23433e1-a5ad-40db-adfe-d50a6a95ef3a",
+  "tournament_id": 365,
+  "win_type": "FALL"
+ },
+ {
+  "id": "4ba2801a-6c98-4eb7-830e-10226b5bb721",
+  "tournament_id": 393,
+  "win_type": "FALL"
+ },
+ {
+  "id": "c6907424-1e41-4d21-ad4f-9b9a8d2aa91b",
+  "tournament_id": 374,
+  "win_type": "FALL"
+ },
+ {
+  "id": "cc8fa497-42d6-435c-b5d1-988e19e7f336",
+  "tournament_id": 428,
+  "win_type": "FALL"
+ },
+ {
+  "id": "e73d9226-6d8a-4689-b318-5aef48e3ae3a",
+  "tournament_id": 428,
+  "win_type": "FALL"
+ },
+ {
+  "id": "e52adc94-9384-4ef6-8a97-0fa73fa69294",
+  "tournament_id": 428,
+  "win_type": "FALL"
+ },
+ {
+  "id": "d1896f40-bb67-46b7-8f23-5dece8988dc1",
+  "tournament_id": 428,
+  "win_type": "FALL"
+ },
+ {
+  "id": "53a22d6a-0cf7-436d-9931-35fe7309981f",
+  "tournament_id": 428,
+  "win_type": "FALL"
+ },
+ {
+  "id": "924249ac-be40-4bc7-a3ee-db4345d82420",
+  "tournament_id": 428,
+  "win_type": "FALL"
+ },
+ {
+  "id": "90ea32bc-c863-4238-86e0-f7062f7d4e6e",
+  "tournament_id": 438,
+  "win_type": "FALL"
+ },
+ {
+  "id": "0ca939e2-c5e8-476e-a6bc-f1756ac78ae7",
+  "tournament_id": 447,
+  "win_type": "FALL"
+ },
+ {
+  "id": "1a15d76d-e810-4572-9297-4b657e6743aa",
+  "tournament_id": 477,
+  "win_type": "FALL"
+ },
+ {
+  "id": "fb33e583-2234-462b-8f24-a967d2585916",
+  "tournament_id": 490,
+  "win_type": "FALL"
+ },
+ {
+  "id": "430bb357-7d64-4229-911e-6f48367d0275",
+  "tournament_id": 490,
+  "win_type": "FALL"
+ },
+ {
+  "id": "9985e044-b903-4436-9010-8da7cf560993",
+  "tournament_id": 493,
+  "win_type": "FALL"
+ },
+ {
+  "id": "65667ff3-0640-4058-8f10-5a202e024e20",
+  "tournament_id": 493,
+  "win_type": "FALL"
+ },
+ {
+  "id": "ca1b54d8-29d6-46c4-acd1-4c03819e504b",
+  "tournament_id": 494,
+  "win_type": "FALL"
+ },
+ {
+  "id": "0e399c08-6418-4eba-a8c0-5cbe8d01fc89",
+  "tournament_id": 494,
+  "win_type": "FALL"
+ },
+ {
+  "id": "d748f7f9-8d51-4d75-a7dc-1b7bff8825fb",
+  "tournament_id": 513,
+  "win_type": "FALL"
+ },
+ {
+  "id": "5d6da135-0dd1-4e35-8239-9194f1b8c596",
+  "tournament_id": 520,
+  "win_type": "FALL"
+ },
+ {
+  "id": "6457ddf3-a5da-485f-a8eb-1770524da642",
+  "tournament_id": 525,
+  "win_type": "FALL"
+ },
+ {
+  "id": "c5efe2c1-8cf6-4713-bc30-899b5fa1c467",
+  "tournament_id": 528,
+  "win_type": "FALL"
+ },
+ {
+  "id": "1c9ebf95-1cba-480a-900f-263ca73f639c",
+  "tournament_id": 535,
+  "win_type": "FALL"
+ },
+ {
+  "id": "8c427396-db50-45e2-ab11-e575b89e9bbe",
+  "tournament_id": 535,
+  "win_type": "FALL"
+ },
+ {
+  "id": "6476b6d4-f258-4fde-b32b-34afefadcfbc",
+  "tournament_id": 537,
+  "win_type": "FALL"
+ },
+ {
+  "id": "3ec52591-1b8d-415a-a5a9-cdcc4c556250",
+  "tournament_id": 537,
+  "win_type": "FALL"
+ },
+ {
+  "id": "c8a6b1e9-5413-470b-a4f3-4836f123d5c5",
+  "tournament_id": 537,
+  "win_type": "FALL"
+ },
+ {
+  "id": "8edfc51a-3c83-478b-ad41-97cf2603b38b",
+  "tournament_id": 548,
+  "win_type": "FALL"
+ },
+ {
+  "id": "96793120-192e-4175-a464-fb5cebc28199",
+  "tournament_id": 548,
+  "win_type": "FALL"
+ },
+ {
+  "id": "3e6c179e-40b9-4294-9f88-aa3260358855",
+  "tournament_id": 553,
+  "win_type": "FALL"
+ },
+ {
+  "id": "ced1dc0e-8009-4c05-8677-957552e5cc51",
+  "tournament_id": 553,
+  "win_type": "FALL"
+ },
+ {
+  "id": "f7f48e6e-fd95-4775-8b02-c8031a6e657f",
+  "tournament_id": 561,
+  "win_type": "FALL"
+ },
+ {
+  "id": "c0019a82-9b96-41e7-944c-76e819189599",
+  "tournament_id": 575,
+  "win_type": "FALL"
+ },
+ {
+  "id": "84ccfb55-d03c-41a1-b634-11cc2cb20a03",
+  "tournament_id": 594,
+  "win_type": "FALL"
+ },
+ {
+  "id": "27baec36-af7c-4366-b092-19409c2d4451",
+  "tournament_id": 606,
+  "win_type": "FALL"
+ },
+ {
+  "id": "0d1b236a-6996-4eb5-80d3-d12b5dc11eed",
+  "tournament_id": 606,
+  "win_type": "FALL"
+ },
+ {
+  "id": "5fbb1688-918b-4dbd-bb65-3142a44d2173",
+  "tournament_id": 606,
+  "win_type": "FALL"
+ },
+ {
+  "id": "85f49cf4-0891-454b-a469-6d316666f634",
+  "tournament_id": 615,
+  "win_type": "FALL"
+ },
+ {
+  "id": "7a079109-ccb7-4c2c-87a8-45f7c966ddbc",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "34e8c54e-39ee-4267-970e-7e46a879a139",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "ef215ec3-9255-4d26-8561-df7eb7a55ae0",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "7e7729d3-3e49-4d0f-878d-59f469d8e6e6",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "0968dc57-213a-45fb-90da-a447dd311007",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "abf159e2-3a5f-4406-b377-5533389b554d",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "746743da-aa95-4239-a61e-f12c6cdec7dc",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "31e8201d-9e87-4ccb-ac16-252b1605d611",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "1fd729d1-db2e-4622-aec4-a3a3475b158f",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "d12fae92-72d5-469e-abc9-325aa962d7a8",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "b9474a17-2879-4e50-bc0f-97cec3ed6d2b",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "29703390-c925-4967-86a8-f5f9ecd08cb3",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "4346b30e-7261-4e86-a3e2-2bf14b70ec96",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "4a32a1cf-06a9-4d35-ae16-2c311bab8cea",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "1c7473af-ea19-4c54-9464-86b071997106",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "4dce7087-6727-4382-a51f-d56d9cfe44a3",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "d8cef000-3c77-4b5c-be48-267bb38f6183",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "b446845a-9411-4eda-9c30-262b046eadea",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "db676bd4-33af-4aa1-9d45-e1ff18d2b296",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "06a1f73a-5597-49d9-bc96-c07206efcb0f",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "3940f8cd-2740-4ee8-926c-9ad1015499cc",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "6333d74e-cb29-49cf-a9c3-dbc21f5391f0",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "65099df9-866f-46b9-9bab-307539cf692e",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "31d7512e-3fd8-4e01-ac69-ce1d1426137e",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "10e1a82e-721f-42ef-9533-aeebd40754a3",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "320a755e-4fa4-49e8-b7ae-3079feea7bde",
+  "tournament_id": 623,
+  "win_type": "FALL"
+ },
+ {
+  "id": "4d4690c6-01eb-489f-bc77-3ffc13224ef8",
+  "tournament_id": 628,
+  "win_type": "FALL"
+ },
+ {
+  "id": "f83b3747-224a-4c7d-8428-26756902f5b0",
+  "tournament_id": 646,
+  "win_type": "FALL"
+ },
+ {
+  "id": "e62866ad-006f-494d-929b-e98f4d1d0411",
+  "tournament_id": 661,
+  "win_type": "FALL"
+ },
+ {
+  "id": "accaf189-2307-49b8-a9f0-7b32211c04cb",
+  "tournament_id": 665,
+  "win_type": "FALL"
+ }
+]

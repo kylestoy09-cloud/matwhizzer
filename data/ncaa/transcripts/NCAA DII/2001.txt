@@ -1,0 +1,182 @@
+# NCAA Division II Championships 2001 — source: NCAA II 2001.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 125
+- Adam Mars | Adams State
+- Mack LaRock | Nebraska-Omaha
+- Mark Dodgen | Central Oklahoma
+- Brandon Newill | Pittsburgh-Johnstown
+- Lester Berrios | Minnesota State-Mankato
+- Ryan O'Conner | South Dakota State
+- Carl Valley | Southern Colorado
+- Victor Juarez | Wisconsin-Parkside
+place 1 Adam Mars
+place 2 Mack LaRock
+place 3 Mark Dodgen
+place 4 Brandon Newill
+place 5 Lester Berrios
+place 6 Ryan O'Conner
+place 7 Carl Valley
+place 8 Victor Juarez
+
+@ 133
+- Cole Province | Central Oklahoma
+- Brian Luna | Southern Colorado
+- Jacob Ramos | Augustana SD
+- Chris Shears | Ashland
+- Wesley Watson | West Liberty State
+- Lucas Christianson | North Dakota State
+- Kohlby O'Donnell | Kutztown State
+- Benjamin Sprunger | Carson-Newman
+place 1 Cole Province
+place 2 Brian Luna
+place 3 Jacob Ramos
+place 4 Chris Shears
+place 5 Wesley Watson
+place 6 Lucas Christianson
+place 7 Kohlby O'Donnell
+place 8 Benjamin Sprunger
+
+@ 141
+- Paul Konechne | South Dakota State
+- Jay Yates | Indianapolis
+- Zac Stratton | Western State
+- Jerod Timothy | Southern Colorado
+- Stas Khaitin | Central Missouri
+- Hannon Hisek | Minnesota State-Mankato
+- Roderick Ratcliff | Nebraska-Omaha
+- Dugan Bentley | Ashland
+place 1 Paul Konechne
+place 2 Jay Yates
+place 3 Zac Stratton
+place 4 Jerod Timothy
+place 5 Stas Khaitin
+place 6 Hannon Hisek
+place 7 Roderick Ratcliff
+place 8 Dugan Bentley
+
+@ 149
+- Nick Spencer | West Liberty State
+- Gable Sullivan | Central Oklahoma
+- Aaron Veskrna | South Dakota State
+- Marshall Hahn | Northern Colorado
+- Joe Lloyd | Pittsburgh-Johnstown
+- Jared Cooley | Southwest State
+- Jason Dye | Chadron State
+- Aaron Bradley | Longwood
+place 1 Nick Spencer
+place 2 Gable Sullivan
+place 3 Aaron Veskrna
+place 4 Marshall Hahn
+place 5 Joe Lloyd
+place 6 Jared Cooley
+place 7 Jason Dye
+place 8 Aaron Bradley
+
+@ 157
+- Matt Petsinger | Minnesota State-Mankato
+- Lazaro Reinoso | Carson-Newman
+- Shad Benton | Pittsburgh-Johnstown
+- Alan Cartwright | Nebraska-Omaha
+- Justin Willuweit | Nebraska-Kearney
+- Ryan Wirtzberger | Ashland
+- Travis Koppenhafer | Adams State
+- Matt LaMotte | West Liberty State
+place 1 Matt Petsinger
+place 2 Lazaro Reinoso
+place 3 Shad Benton
+place 4 Alan Cartwright
+place 5 Justin Willuweit
+place 6 Ryan Wirtzberger
+place 7 Travis Koppenhafer
+place 8 Matt LaMotte
+
+@ 165
+- Dave Vondy | Western State
+- Matt Ballard | Central Washington
+- Lance Schwabenbauer | Gannon
+- Tyler Bryant | South Dakota State
+- Matt Gadient | Minnesota State-Mankato
+- Tony Morgan | Carson-Newman
+- Jeff LaMotte | West Liberty State
+- Grady Wolf | North Dakota State
+place 1 Dave Vondy
+place 2 Matt Ballard
+place 3 Lance Schwabenbauer
+place 4 Tyler Bryant
+place 5 Matt Gadient
+place 6 Tony Morgan
+place 7 Jeff LaMotte
+place 8 Grady Wolf
+
+@ 174
+- Todd Fuller | North Dakota State
+- Mike Mitchell | American International
+- Mauricio Wright | San Francisco State
+- Zach Stalder | Nebraska-Omaha
+- Paul Arens | St. Cloud State
+- Travis Nagel | Minnesota State-Moorhead
+- Matt Johnson | Central Missouri
+- Drew Bouwman | Southwest State
+place 1 Todd Fuller
+place 2 Mike Mitchell
+place 3 Mauricio Wright
+place 4 Zach Stalder
+place 5 Paul Arens
+place 6 Travis Nagel
+place 7 Matt Johnson
+place 8 Drew Bouwman
+
+@ 184
+- Steve Saxlund | North Dakota State
+- Muhammed Lawal | Central Oklahoma
+- Todd Paszek | South Dakota State
+- John Rolling | Central Missouri
+- Scott Antoniak | Nebraska-Omaha
+- Cory Hintz | Southern Colorado
+- Ryan Courtney | West Liberty State
+- Chris Canale | Ashland
+place 1 Steve Saxlund
+place 2 Muhammed Lawal
+place 3 Todd Paszek
+place 4 John Rolling
+place 5 Scott Antoniak
+place 6 Cory Hintz
+place 7 Ryan Courtney
+place 8 Chris Canale
+
+@ 197
+- Doug Joseph | Gannon
+- Kevin Lochner | Southern Colorado
+- Jason McMillan | Central Missouri
+- Chad Wallace | Nebraska-Omaha
+- Luke Wren | St. Cloud State
+- Brian Kraemer | North Dakota State
+- Andy Sistek | Nebraska-Kearney
+- Howard Bell | Pittsburgh-Johnstown
+place 1 Doug Joseph
+place 2 Kevin Lochner
+place 3 Jason McMillan
+place 4 Chad Wallace
+place 5 Luke Wren
+place 6 Brian Kraemer
+place 7 Andy Sistek
+place 8 Howard Bell
+
+@ 285
+- Nick Severson | North Dakota State
+- Jon Madsen | South Dakota State
+- Todd Proper | Gannon
+- James Garvey | Augustana SD
+- Willie McCowan | Central Missouri
+- Josh Hendricks | Ashland
+- Dustin Darveaux | St. Cloud State
+- Doug Smith | Southern Colorado
+place 1 Nick Severson
+place 2 Jon Madsen
+place 3 Todd Proper
+place 4 James Garvey
+place 5 Willie McCowan
+place 6 Josh Hendricks
+place 7 Dustin Darveaux
+place 8 Doug Smith
+

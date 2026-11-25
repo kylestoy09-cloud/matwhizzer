@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import type { RolloverStatus } from '@/lib/rolloverStatus'
 
 type PreviewRow = { id: string; name: string; from: string; to: string }
 type GradRow    = { id: string; name: string }
@@ -13,6 +14,8 @@ type Preview = {
 
 type Phase = 'idle' | 'loading' | 'preview' | 'confirming' | 'done' | 'error'
 
+const fmtWhen = (iso: string) => new Date(iso).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' })
+
 export function SeasonRolloverClient({ gender }: { gender: 'M' | 'F' }) {
   const api = gender === 'F' ? '/api/admin/season-rollover-girls' : '/api/admin/season-rollover'
   const [migrationPending, setMigrationPending] = useState<boolean | null>(null)
@@ -23,12 +26,14 @@ export function SeasonRolloverClient({ gender }: { gender: 'M' | 'F' }) {
   const [pool,     setPool]     = useState<{ advancing: number; graduating: number } | null>(null)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const [showAll,  setShowAll]  = useState(false)
+  const [status,   setStatus]   = useState<RolloverStatus | null>(null)
+  const [statusError, setStatusError] = useState<string | null>(null)
 
-  useEffect(() => {
-    fetch(`${api}?check=1`)
-      .then(r => r.json())
-      .then(d => setMigrationPending(d.migrationPending ?? false))
-  }, [api])
+  const loadStatus = () => fetch(`${api}?check=1`)
+    .then(r => r.json())
+    .then(d => { setMigrationPending(d.migrationPending ?? false); setStatus(d.status ?? null); setStatusError(d.statusError ?? null) })
+
+  useEffect(() => { loadStatus() }, [api]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const loadPreview = async () => {
     setPhase('loading')
@@ -55,6 +60,7 @@ export function SeasonRolloverClient({ gender }: { gender: 'M' | 'F' }) {
       if (d.error) { setErrorMsg(d.error); setPhase('error'); return }
       setResult({ advanced: d.advanced, graduated: d.graduated, poolAdvanced: d.rosterPlayersAdvanced, poolGraduated: d.rosterPlayersGraduated })
       setPhase('done')
+      loadStatus()
     } catch (e) {
       setErrorMsg(String(e))
       setPhase('error')
@@ -83,8 +89,27 @@ export function SeasonRolloverClient({ gender }: { gender: 'M' | 'F' }) {
         </p>
       </div>
 
+      {status && (
+        <div className={`px-5 py-3 border-b text-sm ${status.rolled ? 'bg-green-50 border-green-200 text-green-800' : 'bg-amber-50 border-amber-200 text-amber-800'}`}>
+          {status.rolled
+            ? <p className="font-semibold">Rolled over to {status.gradesSeason}</p>
+            : <p className="font-semibold">Not rolled over yet: grades describe {status.gradesSeason}, the working season is {status.workingSeason}</p>}
+          {status.rolled && status.last && (
+            <p className="text-xs mt-0.5">
+              {fmtWhen(status.last.at)}{status.last.by ? ` · ${status.last.by}` : ''}
+              {status.last.advanced != null && ` · ${status.last.advanced.toLocaleString()} advanced`}
+              {status.last.graduated != null && ` · ${status.last.graduated.toLocaleString()} graduated`}
+            </p>
+          )}
+          {status.rolled && !status.last && status.movedAt && <p className="text-xs mt-0.5">{fmtWhen(status.movedAt)}</p>}
+          {status.rolled && <p className="text-xs mt-0.5">The next rollover opens when {status.workingSeason} is finished and the following season becomes the working season.</p>}
+        </div>
+      )}
+      {statusError && <div className="px-5 py-3 border-b border-red-200 bg-red-50 text-sm text-red-700">Rollover status: {statusError}</div>}
+
       <div className="px-5 py-5">
-        {phase === 'idle' && (
+        {status?.rolled && phase === 'idle' && <p className="text-sm text-slate-400">Nothing to do until the next season.</p>}
+        {!status?.rolled && phase === 'idle' && (
           <button
             onClick={loadPreview}
             className="px-4 py-2 bg-slate-900 text-white text-sm rounded font-medium"

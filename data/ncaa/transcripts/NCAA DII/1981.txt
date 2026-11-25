@@ -1,0 +1,182 @@
+# NCAA Division II Championships 1981 — source: NCAA II 1981.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Adam Cuestas | Cal State-Bakersfield
+- Tom Reed | SIU-Edwardsville
+- Reggie Johnson | Ashland
+- Chuck Jones | North Carolina-Pembroke
+- Tim Smelser | Ferris State
+- Bryan Murphy | Eastern Illinois
+- Alfredo Gonzales | Cal State-Sacramento
+- Curtis Ellis | Morgan State
+place 1 Adam Cuestas
+place 2 Tom Reed
+place 3 Reggie Johnson
+place 4 Chuck Jones
+place 5 Tim Smelser
+place 6 Bryan Murphy
+place 7 Alfredo Gonzales
+place 8 Curtis Ellis
+
+@ 126
+- Dan Cuestas | Cal State-Bakersfield
+- Marty Nellis | Humboldt State
+- Steve Fontana | C.W. Post
+- Derek Porter | Eastern Illinois
+- Pat Halloran | North Dakota State
+- Joe Arrante | Springfield
+- Jim Valerian | Central Connecticut
+- Antonio Lopez | Cal State-Sacramento
+place 1 Dan Cuestas
+place 2 Marty Nellis
+place 3 Steve Fontana
+place 4 Derek Porter
+place 5 Pat Halloran
+place 6 Joe Arrante
+place 7 Jim Valerian
+place 8 Antonio Lopez
+
+@ 134
+- Mark Bower | Augustana SD
+- Bob Hoffman | Nebraska-Omaha
+- Dan Winter | Wisconsin-Parkside
+- Mike Garcia | C.W. Post
+- Kevin Smith | California-Davis
+- Doug Shafer | Eastern Illinois
+- Tom Pringle | Morgan State
+- Joe Gaughan | Minnesota State-Moorhead
+place 1 Mark Bower
+place 2 Bob Hoffman
+place 3 Dan Winter
+place 4 Mike Garcia
+place 5 Kevin Smith
+place 6 Doug Shafer
+place 7 Tom Pringle
+place 8 Joe Gaughan
+
+@ 142
+- Ryan Kauffman | Nebraska-Omaha
+- Tim Ervin | SIU-Edwardsville
+- Dorr Granger | Grand Valley State
+- Mike Langlais | North Dakota State
+- John Monolakis | San Francisco State
+- Don Williams | Cal State-Chico
+- Steve Nickell | Cal State-Bakersfield
+- Horace Williams | Winston-Salem
+place 1 Ryan Kauffman
+place 2 Tim Ervin
+place 3 Dorr Granger
+place 4 Mike Langlais
+place 5 John Monolakis
+place 6 Don Williams
+place 7 Steve Nickell
+place 8 Horace Williams
+
+@ 150
+- Glen Cooper | Cal State-Bakersfield
+- Gary Erwin | Jacksonville State
+- Bruce Moe | Winona State
+- Mark Black | Ashland
+- Ted Husar | Nebraska-Omaha
+- Dan Yoder | Lake Superior
+- Robert Kuintzle | Cal State-Chico
+- Phil Brown | Morgan State
+place 1 Glen Cooper
+place 2 Gary Erwin
+place 3 Bruce Moe
+place 4 Mark Black
+place 5 Ted Husar
+place 6 Dan Yoder
+place 7 Robert Kuintzle
+place 8 Phil Brown
+
+@ 158
+- Perry Shea | Cal State-Bakersfield
+- Mike Polz | Eastern Illinois
+- Adrian Smedley | Humboldt State
+- Tim Jones | North Dakota State
+- Lanny Paulson | Northern Colorado
+- John Davis | Morgan State
+- Bob McLaughlin | Cal State-Chico
+- Dave Bonk | St. Cloud State
+place 1 Perry Shea
+place 2 Mike Polz
+place 3 Adrian Smedley
+place 4 Tim Jones
+place 5 Lanny Paulson
+place 6 John Davis
+place 7 Bob McLaughlin
+place 8 Dave Bonk
+
+@ 167
+- Mark Gronowski | Eastern Illinois
+- Richard Sykes | Humboldt State
+- Greg Veal | Morgan State
+- Eric Gritz | California-Davis
+- Mike Cribbs | Lake Superior
+- Rik Carter | Western Illinois
+- Dave Rothman | Central Connecticut
+- Jeff Tescher | North Dakota
+place 1 Mark Gronowski
+place 2 Richard Sykes
+place 3 Greg Veal
+place 4 Eric Gritz
+place 5 Mike Cribbs
+place 6 Rik Carter
+place 7 Dave Rothman
+place 8 Jeff Tescher
+
+@ 177
+- Jeff Hohertz | South Dakota State
+- Dennis McCormick | Eastern Illinois
+- Mark Loomis | Cal State-Bakersfield
+- Mike Dyer | Western Illinois
+- Tim Homan | Augustana SD
+- Joe Glowacki | Central Connecticut
+- Phil Herbold | St. Cloud State
+- Rex Luckage | Youngstown State
+place 1 Jeff Hohertz
+place 2 Dennis McCormick
+place 3 Mark Loomis
+place 4 Mike Dyer
+place 5 Tim Homan
+place 6 Joe Glowacki
+place 7 Phil Herbold
+place 8 Rex Luckage
+
+@ 190
+- Geno Savegnago | Eastern Illinois
+- Jeff Esmont | Ashland
+- Mark Hall | Cal State-Bakersfield
+- Dave Cameron | Central Connecticut
+- Greg Wilcox | Nebraska-Omaha
+- John Heisick | Minnesota-Duluth
+- Dave Christian | Northern Colorado
+- Anthony Harris | Norfolk State
+place 1 Geno Savegnago
+place 2 Jeff Esmont
+place 3 Mark Hall
+place 4 Dave Cameron
+place 5 Greg Wilcox
+place 6 John Heisick
+place 7 Dave Christian
+place 8 Anthony Harris
+
+@ 285
+- Mike Howe | Northern Michigan
+- Sean Isgan | Pittsburgh-Johnstown
+- Craig Schoene | Cal State-Bakersfield
+- Rick Brunot | Youngstown State
+- Steve Pfiefer | North Dakota State
+- Jeff Schanhals | Northern Colorado
+- Wally Zastrow | South Dakota State
+- Larry Lee | Cal State-Sacramento
+place 1 Mike Howe
+place 2 Sean Isgan
+place 3 Craig Schoene
+place 4 Rick Brunot
+place 5 Steve Pfiefer
+place 6 Jeff Schanhals
+place 7 Wally Zastrow
+place 8 Larry Lee
+

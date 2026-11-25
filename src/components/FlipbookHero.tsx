@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
+import { StdTiles, useSideColors } from '@/components/site/StdPage'
 
 // Sprite: 10 cols × 10 rows grid, 600×600 px per cell → 6000×6000 px AVIF canvas.
 // 96 real frames + 4 padding copies of 97.png fill all 100 cells.
@@ -39,6 +39,7 @@ const Y_DUR_MS   = FRAME_MS * COLS * COLS     // 4 000 ms total
 const AVIF_PROBE = 'data:image/avif;base64,AAAAHGZ0eXBhdmlmAAAAAG1pZjFhdmlmbWlhZgAAANZtZXRhAAAAAAAAACFoZGxyAAAAAAAAAABwaWN0AAAAAAAAAAAAAAAAAAAAAA5waXRtAAAAAAABAAAAImlsb2MAAAAAREAAAQABAAAAAAD6AAEAAAAAAAAAFwAAACNpaW5mAAAAAAABAAAAFWluZmUCAAAAAAEAAGF2MDEAAAAAVmlwcnAAAAA4aXBjbwAAAAxhdjFDgSACAAAAABRpc3BlAAAAAAAAAAEAAAABAAAAEHBpeGkAAAAAAwgICAAAABZpcG1hAAAAAAAAAAEAAQOBAgMAAAAfbWRhdBIACgc4AAYQENBpMgoYAAAAQAX172To'
 
 export function FlipbookHero() {
+  const boys = useSideColors('boys').accent, girls = useSideColors('girls').accent
   const [done,          setDone]          = useState(false)
   const [reducedMotion, setReducedMotion] = useState(false)
   const [avifSupported, setAvifSupported] = useState(false)
@@ -156,39 +157,11 @@ export function FlipbookHero() {
           animation:     (done && !showStatic) ? 'mw-rise 0.3s ease-out forwards' : undefined,
         }}
       >
-        <Link
-          href="/boys"
-          className={[
-            'flex items-center justify-center gap-2',
-            'w-36 py-3',
-            'bg-blue-600 text-white font-bold text-lg',
-            'border-2 border-blue-600',
-            'rounded-full',
-            'hover:bg-blue-700 hover:border-blue-700',
-            'transition-colors',
-            'focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2',
-          ].join(' ')}
-        >
-          Boys
-          <span aria-hidden="true">→</span>
-        </Link>
-
-        <Link
-          href="/girls"
-          className={[
-            'flex items-center justify-center gap-2',
-            'w-36 py-3',
-            'bg-rose-800 text-white font-bold text-lg',
-            'border-2 border-rose-800',
-            'rounded-full',
-            'hover:bg-rose-900 hover:border-rose-900',
-            'transition-colors',
-            'focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-800 focus-visible:ring-offset-2',
-          ].join(' ')}
-        >
-          Girls
-          <span aria-hidden="true">→</span>
-        </Link>
+        {/* the standard buttons (Kyle 2026-11-16): the look's font, size, corners and border; each side's accent */}
+        <StdTiles tiles={[
+          { key: 'boys', label: 'Boys', href: '/boys', ...boys },
+          { key: 'girls', label: 'Girls', href: '/girls', ...girls },
+        ]} center widthScale={2.2} />
       </div>
     </section>
   )

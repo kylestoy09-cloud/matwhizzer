@@ -1,0 +1,142 @@
+# NCAA Division III Championships 1978 — source: NCAA III 1978.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Henry Callie | Millersville
+- Gary Frank | Minnesota-Morris
+- Joe Smith | Upper Iowa
+- George White | Humboldt State
+- Raymond Porteus | SUNY-Brockport
+- James Pecori | St. Lawrence
+place 1 Henry Callie
+place 2 Gary Frank
+place 3 Joe Smith
+place 4 George White
+place 5 Raymond Porteus
+place 6 James Pecori
+
+@ 126
+- Mike Rossetti | College of New Jersey
+- Mike Jacoutot | SUNY-Buffalo
+- Steven Darling | SUNY-Binghampton
+- Alain Arnold | Ashland
+- Craig Helmuth | Gettysburg
+- John Little | Millersville
+place 1 Mike Rossetti
+place 2 Mike Jacoutot
+place 3 Steven Darling
+place 4 Alain Arnold
+place 5 Craig Helmuth
+place 6 John Little
+
+@ 134
+- Ken Mallory | Montclair State
+- Peter Rossi | SUNY-Cortland
+- Andy Zook | Millersville
+- Steve Deike | Wartburg
+- Barry Barone | St. Lawrence
+- Steve Crooks | Kalamazoo
+place 1 Ken Mallory
+place 2 Peter Rossi
+place 3 Andy Zook
+place 4 Steve Deike
+place 5 Barry Barone
+place 6 Steve Crooks
+
+@ 142
+- Steve Cavayero | SUNY-Binghampton
+- Dan Boos | Luther
+- Rafael Soto | SUNY-Brockport
+- Mike Blakely | Montclair State
+- Stephen Hohl | Ohio Northern
+- Chris Donaldson | Coe College
+place 1 Steve Cavayero
+place 2 Dan Boos
+place 3 Rafael Soto
+place 4 Mike Blakely
+place 5 Stephen Hohl
+place 6 Chris Donaldson
+
+@ 150
+- Frank Presley | Millersville
+- Mark Jensen | Concordia MN
+- Kirk Anderson | SUNY-Buffalo
+- Doug Burton | Ohio Northern
+- Kevin Brandenburg | Hiram
+- Mike Sickles | Montclair State
+place 1 Frank Presley
+place 2 Mark Jensen
+place 3 Kirk Anderson
+place 4 Doug Burton
+place 5 Kevin Brandenburg
+place 6 Mike Sickles
+
+@ 158
+- Rick Armstrong | SUNY-Cortland
+- Ron Reedy | SUNY-Binghampton
+- Mitch Brown | St. Lawrence
+- Tom Pender | Humboldt State
+- Bruce Hadsell | SUNY-Buffalo
+- Kevin McNamer | St. Thomas
+place 1 Rick Armstrong
+place 2 Ron Reedy
+place 3 Mitch Brown
+place 4 Tom Pender
+place 5 Bruce Hadsell
+place 6 Kevin McNamer
+
+@ 167
+- Jim Weir | John Carroll
+- Ken Berry | Hiram
+- Roy Pikulski | Mansfield State
+- Wayne Dunn | Maryville
+- Mark Jarosz | Salisbury
+- David Baughman | Grove City
+place 1 Jim Weir
+place 2 Ken Berry
+place 3 Roy Pikulski
+place 4 Wayne Dunn
+place 5 Mark Jarosz
+place 6 David Baughman
+
+@ 177
+- Paul Petrella | Baldwin Wallace
+- Wayne Nickerson | Humboldt State
+- Charles White | Millersville
+- Dave Mitchell | SUNY-Buffalo
+- Joe Jarosz | Salisbury
+- Rich Sippel | SUNY-Brockport
+place 1 Paul Petrella
+place 2 Wayne Nickerson
+place 3 Charles White
+place 4 Dave Mitchell
+place 5 Joe Jarosz
+place 6 Rich Sippel
+
+@ 190
+- Eric Woolsey | Humboldt State
+- Bob Menz | SUNY-Cortland
+- Dan Harmon | SUNY-Brockport
+- Jeff Wheeler | SUNY-Buffalo
+- Dennis Koslowski | Minnesota-Morris
+- Mike Broghammer | Wartburg
+place 1 Eric Woolsey
+place 2 Bob Menz
+place 3 Dan Harmon
+place 4 Jeff Wheeler
+place 5 Dennis Koslowski
+place 6 Mike Broghammer
+
+@ 285
+- Barry Bennett | Concordia MN
+- Ken Wilcox | Mount Union
+- Paul Curka | SUNY-Buffalo
+- Loren Hacker | Minnesota-Morris
+- David Hudson | St. Lawrence
+- John Patt | SUNY-Potsdam
+place 1 Barry Bennett
+place 2 Ken Wilcox
+place 3 Paul Curka
+place 4 Loren Hacker
+place 5 David Hudson
+place 6 John Patt
+

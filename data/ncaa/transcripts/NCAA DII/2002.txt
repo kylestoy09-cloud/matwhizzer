@@ -1,0 +1,263 @@
+# NCAA Division II Championships 2002 — source: 2002.pdf (a scan: qualifiers read with OCR, scripts/transcribe/ocr.swift + ocr_kreider.py; places read off the bracket pages, 2026-11-18)
+# qualifiers and places only (no bouts)
+# NCAA Division II Championships 2002 — source: 2002.pdf (a scan: qualifiers read with OCR, scripts/transcribe/ocr.swift + ocr_kreider.py; places read off the bracket pages, 2026-11-18)
+
+@ 125
+- Brandon Newill | Pitt - Johnstown
+- Dan Hilario | Nebraska Omaha
+- Brian Pitts | Adams St
+- Dante Lewis | Minnesota Morris
+- Matt Strawser | North Dakota State
+- Doug Curnes | West Liberty State
+- Joey Charles | Wisconsin Parkside
+- Anthony Guillen | Western State
+- Bryce Abbey | Nebraska Kearney
+- Grant Strickland | Truman State
+- Jim Phillips | Ashland Univ
+- Lester Berrios | Minnesota Mankato
+- Chris Saferite | Central Oklahoma
+- Seth Groff | Chadron State
+- Aron Graumann | Augustana
+- Brian Burzynski | Kutztown
+place 1 Newill
+place 2 Saferite
+place 3 Pitts
+place 4 Abbey
+place 5 Strawser
+place 6 Guillen
+place 7 Burzynski
+place 8 Berrios
+
+@ 133
+- Chris Peretti | Ashland Univ
+- Jared Haberman | Western State
+- Rob Jankowski | Wisconsin Parkside
+- Jake Thielbar | North Dakota State
+- Jimmy Melek | Adams St
+- Curry Pickard | UNC Pembroke
+- Eli Dominguez | Nebraska Omaha
+- Luke Shaw | Cent. Missouri State
+- Cole Province | Central Oklahoma
+- Jacob Ramos | Augustana
+- Joey Simcoe | Findlay
+- Adam Keiswetter | Nebraska Kearney
+- Tony Fratzke | Minnesota Mankato
+- Josh Soupir | Southwest State
+- Armando Orozco | San Francisco State
+- Kohlby O'Donnell | Kutztown
+place 1 Province
+place 2 Melek
+place 3 Haberman
+place 4 Fratzke
+place 5 Shaw
+place 6 Simcoe
+place 7 O'Donnell
+place 8 Jankowski
+
+@ 141
+- Jason Nestor | Pitt - Johnstown
+- Drew Passley | Cent. Missouri State
+- Ronnie Stafford | Northern Colorado
+- Lincoln Thomas | Colo. School of Mines
+- Matt Dodgen | Central Oklahoma
+- Jacob Squire | Mercyhurst
+- Cole Dennison | Cent. Washington Univ
+- Lucas Christianson | North Dakota State
+- Jeremy Roe | South Dakota State
+- Chad Flores | Nebraska Kearney
+- Chris Shears | Ashland Univ
+- Merrick Meyer | Truman State
+- Shane Barnes | Adams St
+- Roderick Ratcliff | Nebraska Omaha
+- Brad Russell | Wisconsin Parkside
+- Abi Mestre | American International
+place 1 Dodgen
+place 2 Shears
+place 3 Stafford
+place 4 Ratcliff
+place 5 Dennison
+place 6 Russell
+place 7 Barnes
+place 8 Christianson
+
+@ 149
+- Waylon Lowe | Findlay
+- Simon Hoepfner | Northern Colorado
+- Nate Peterson | Colo. School of Mines
+- Nathan Graumenz | S. Ill. Univ. Edwardsville
+- Hannon Hisek | Minnesota Mankato
+- Aaron Monseau | West Liberty State
+- Eric Pizzi | Cent. Missouri State
+- Brandon Pfizenmaier | Nebraska Kearney
+- Adrian Jiron | Western State
+- Mitchell Napier | Indianapolis
+- Brendan Bosko | Gannon Univ
+- Collin Kelly | North Dakota State
+- Michael Barreras | Central Oklahoma
+- Ricky Garcia | San Francisco State
+- Cody Ritter | Nebraska Omaha
+- Ryan Wirtzberger | Ashland Univ
+place 1 Lowe
+place 2 Jiron
+place 3 Pfizenmaier
+place 4 Barreras
+place 5 Garcia
+place 6 Wirtzberger
+place 7 Napier
+place 8 Bosko
+
+@ 157
+- Shad Benton | Pitt - Johnstown
+- Jared Novak | Cent. Washington Univ
+- Jared Lein | Cent. Missouri State
+- Brody Olson | Northern Colorado
+- Travis Koppenhafer | Adams St
+- Wes Sindlinger | Findlay
+- Aaron Veskrna | South Dakota State
+- Nate Hanson | Minnesota Moorhead
+- Nathan Gomez | Central Oklahoma
+- Cory Beckman | Minnesota Mankato
+- Gary Skoch | Ashland Univ
+- Peter Koster | Fort Hays State
+- Paul Carlson | North Dakota State
+- Dan Dempsey | Wisconsin Parkside
+- Josh Schommer | Chadron State
+- Luke Main | West Liberty State
+place 1 Benton
+place 2 Carlson
+place 3 Veskrna
+place 4 Skoch
+place 5 Koster
+place 6 Novak
+place 7 Olson
+place 8 Beckman
+
+@ 165
+- Zach Davis | Ashland Univ
+- Tony Morgan | Carson Newman
+- Kurt Bohaboj | Nebraska Omaha
+- Jordan Johnson | Chadron State
+- Shawn Silvis | Central Oklahoma
+- Chamie Hooks | Gannon Univ
+- Dave Vondy | Western State
+- Mike Fiedler | North Dakota State
+- Todd Kirkpatrick | Augustana
+- Kyle Smith | Cent. Washington Univ
+- David Lamotte | West Liberty State
+- Andy Mueller | Wisconsin Parkside
+- Riley Ross | Nebraska Kearney
+- Tyler Bryant | South Dakota State
+- Jason Warthan | Indianapolis
+- Lucas Mackesy | Findlay
+place 1 Silvis
+place 2 Bryant
+place 3 Fiedler
+place 4 Kirkpatrick
+place 5 Ross
+place 6 Davis
+place 7 Mackesy
+place 8 Vondy
+
+@ 174
+- James Tietema | Findlay
+- Jon Duncombe | St Cloud State
+- Frank Kuchera | Nebraska Kearney
+- Nathan Moorman | Carson Newman
+- Todd Fuller | North Dakota State
+- Tom Bauer | Ashland Univ
+- Cory Anderson | Northern State
+- Matt Sleder | Fort Hays State
+- Joe Callahan | Chadron State
+- Mike Richards | Minnesota Moorhead
+- Randy Pyle | Pitt - Johnstown
+- Bob Edmonds | Nebraska Omaha
+- Zach Stephens | S. Ill. Univ. Edwardsville
+- Sion King | Adams St  # first letter cut off on the scan; "S. King" in the bouts
+- Tom Meester | Augustana
+- Nick Brumbaugh | Kutztown
+place 1 Fuller
+place 2 Edmonds
+place 3 Meester
+place 4 Duncombe
+place 5 Kuchera
+place 6 Bauer
+place 7 Tietema
+place 8 Pyle
+
+@ 184
+- Matt Tyrrell | Findlay
+- Franco Santiago | Cent. Washington Univ
+- John Rolling | Cent. Missouri State
+- Chris Rufo | North Dakota State
+- Mauricio Wright | San Francisco State
+- David Spinelli | Gannon Univ
+- Zach Stalder | Nebraska Omaha
+- Rory Herring | Wisconsin Parkside
+- Jeff Henning | Central Oklahoma
+- Nate Whiting | St Cloud State
+- Chris Canale | Ashland Univ
+- Mark Dubrovich | Colo. School of Mines
+- Tyler Jones | South Dakota State
+- Ryan Kopiasz | Minnesota Moorhead
+- Andy Sistek | Nebraska Kearney
+- Ben McAvinew | Mercyhurst
+place 1 Wright
+place 2 Jones
+place 3 Henning
+place 4 Rufo
+place 5 Stalder
+place 6 Santiago
+place 7 Rolling
+place 8 Herring
+
+@ 197
+- Brian Scislo | Findlay
+- John Berry | Indianapolis
+- Todd Paszek | South Dakota State
+- Jeff Rusher | Chadron State
+- Muhammed Lawal | Central Oklahoma
+- Ben Kuntz | Pitt - Johnstown
+- Blake Wilson | Western State
+- Brian Kraemer | North Dakota State
+- Chad Wallace | Nebraska Omaha
+- Brian King | Fort Hays State
+- Justin Mautz | Mercyhurst
+- Jake Anderson | Minnesota Moorhead
+- Drew Dunbar | San Francisco State
+- Aaron Pyfferoen | Minnesota Mankato
+- Luke Goral | Wisconsin Parkside
+- Clell Cox | Ashland Univ
+place 1 Lawal
+place 2 Wallace
+place 3 Paszek
+place 4 Scislo
+place 5 Mautz
+place 6 Goral
+place 7 Kraemer
+place 8 Dunbar
+
+@ 285
+- Josh Hendricks | Ashland Univ
+- Dustin Darveaux | St Cloud State
+- Dupree Lacey | Cent. Washington Univ
+- Ryan Deprey | Wisconsin Parkside
+- Nick Severson | North Dakota State
+- Tom Poe | West Liberty State
+- Aaron Blanchard | Northern State
+- Cody Parks | Fort Hays State
+- Cody Beguin | Chadron State
+- Evan Love | Indianapolis  # first letter cut off; "E. Love" in the bouts
+- Lyneil Mitchell | Gannon Univ  # first letter cut off; "L. Mitchell" in the bouts
+- Jon Madsen | South Dakota State  # first letter cut off on the scan; "Jon Madsen" in the 7th-place bout
+- Willie McGowan | Cent. Missouri State
+- Ryan Corn | Western State
+- James Garvey | Augustana
+- Brent Beckstein | Pitt - Johnstown
+place 1 Severson
+place 2 Mitchell
+place 3 Garvey
+place 4 Darveaux
+place 5 Hendricks
+place 6 Lacey
+place 7 Madsen
+place 8 Beguin

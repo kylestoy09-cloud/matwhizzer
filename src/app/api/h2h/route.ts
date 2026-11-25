@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getSeasons } from '@/lib/seasons-server'
+import { getSeasons, getHistorySeasons } from '@/lib/seasons-server'
 import { liveSeasonId, seasonLabel } from '@/lib/seasons'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
-import { getExpectedOutcomeRank, OUTCOME_LABELS } from '@/lib/hammerScore'
+import { PUBLIC_CDN_HEADERS } from '@/lib/supabase/public-cached'
+import { project, V1_PARAMS, NO_FINISHES, type Finishes } from '@/lib/projection'
+import { activeProjectionSettings } from '@/lib/projectionTrack'
+import { STRENGTH_START, STRENGTH_PER_WRR } from '@/lib/strengthRating'
+import { weightGroup } from '@/lib/weightGroups'
 
 export const dynamic = 'force-dynamic'
 
@@ -47,6 +51,8 @@ export type PredictionResult = {
   componentCommonOpp: number | null
   componentH2H: number | null
   weights: { hammer: number; commonOpp: number; h2h: number }
+  /** the three likeliest outcomes, when the active projection version uses outcome odds */
+  odds?: { winner: 'a' | 'b'; kind: string; pct: number }[]
 }
 
 export type H2HResponse = {
@@ -94,16 +100,6 @@ function getMatchOutcomeScore(
     return null
   }
   return rankToScore(rank)
-}
-
-function nearestWinLabel(absScore: number): string {
-  let bestRank = 1
-  let bestDist = Math.abs(absScore - rankToScore(1))
-  for (let r = 2; r <= 16; r++) {
-    const dist = Math.abs(absScore - rankToScore(r))
-    if (dist < bestDist) { bestRank = r; bestDist = dist }
-  }
-  return OUTCOME_LABELS[bestRank] ?? 'Decision'
 }
 
 function fmtDetail(resultType: string | null, winnerScore: number | null, loserScore: number | null, fallTimeSecs: number | null): string | null {
@@ -254,11 +250,14 @@ export async function GET(req: NextRequest) {
   {
     const fetchPostseason = async (wId: string) => {
       // Get all entry IDs for this wrestler
-      const { data: entries } = await db
+      let { data: entries } = await db
         .from('tournament_entries')
         .select('id, tournament_id, tournaments(tournament_type, season_id, district_id, region_id)')
         .eq('wrestler_id', wId)
 
+      // Playoff History seasons count only once switched on (they're left out of getSeasons until then)
+      const shownSeasons = new Set([...seasonById.keys(), ...(await getHistorySeasons(gender === 'F' ? 'F' : 'M')).filter(h => h.public).map(h => h.id)])
+      entries = (entries ?? []).filter(e => { const t = e.tournaments as unknown as { season_id?: number } | null; return t?.season_id == null || shownSeasons.has(t.season_id) })
       if (!entries?.length) return []
 
       const entryIds = entries.map(e => e.id as string)
@@ -429,14 +428,6 @@ export async function GET(req: NextRequest) {
   const hammerA = hammerMap.get(idA) ?? null
   const hammerB = hammerMap.get(idB) ?? null
 
-  // Hammer component (from A's perspective; positive = A favored)
-  let componentHammer = 0
-  if (hammerA !== null && hammerB !== null) {
-    const diff = hammerA - hammerB
-    const expectedRank = getExpectedOutcomeRank(Math.abs(diff))
-    const expectedScore = rankToScore(expectedRank)
-    componentHammer = diff >= 0 ? expectedScore : -expectedScore
-  }
 
   // Common opponent component (avg of A_score - B_score per opponent)
   let componentCommonOpp: number | null = null
@@ -470,28 +461,52 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  // Weighted average
-  const hasH2H = componentH2H !== null
-  const hasComm = componentCommonOpp !== null
-  let weights: { hammer: number; commonOpp: number; h2h: number }
-  let rawScore: number
-  if (hasH2H && hasComm) {
-    weights = { hammer: 0.25, commonOpp: 0.25, h2h: 0.50 }
-    rawScore = 0.25 * componentHammer + 0.25 * componentCommonOpp! + 0.50 * componentH2H!
-  } else if (hasH2H) {
-    weights = { hammer: 0.50, commonOpp: 0, h2h: 0.50 }
-    rawScore = 0.50 * componentHammer + 0.50 * componentH2H!
-  } else if (hasComm) {
-    weights = { hammer: 0.50, commonOpp: 0.50, h2h: 0 }
-    rawScore = 0.50 * componentHammer + 0.50 * componentCommonOpp!
-  } else {
-    weights = { hammer: 1.0, commonOpp: 0, h2h: 0 }
-    rawScore = componentHammer
+  // The blend, the ladder and the finish levers come from the active projection settings (src/lib/projection.ts,
+  // Projection Accuracy) — the same function the tracker grades (match_projections)
+  const settings = await activeProjectionSettings(db, gender)
+  const params = settings?.params ?? V1_PARAMS
+  const levers = params.finishStyle.on || params.bonusCap.on || params.hardToPin.on || params.fromRecord.on || params.odds.on
+  const finishes = new Map<string, Finishes>()
+  if (levers && hammerSeasonLabel) {
+    const { data: logRows } = await db.from('wrestler_match_score_log').select('wrestler_id, outcome_rank')
+      .in('wrestler_id', [idA, idB]).eq('season', hammerSeasonLabel).gte('match_date', `${hammerSeasonLabel.slice(0, 4)}-08-01`)
+    for (const r of logRows ?? []) {
+      const f = finishes.get(r.wrestler_id) ?? { ...NO_FINISHES }
+      const k = r.outcome_rank as number
+      if (k <= 16) { f.wins++; if (k <= 12) { if (k % 2) f.pins++; else f.techs++ } else if (k === 13) f.majors++ }
+      else { f.losses++; const wr = 33 - k; if (wr <= 12) { if (wr % 2) f.pinned++; else f.teched++ } }
+      finishes.set(r.wrestler_id, f)
+    }
   }
-  rawScore = Math.max(-40, Math.min(40, rawScore))
-
-  const favoredWrestler: 'a' | 'b' | 'even' = rawScore > 0 ? 'a' : rawScore < 0 ? 'b' : 'even'
-  const outcomeLabel = rawScore === 0 ? 'Toss-up' : nearestWinLabel(Math.abs(rawScore))
+  // strength ratings (src/lib/strengthRating.ts), when the active version blends them in
+  const strengths = new Map<string, number>()
+  if (params.strength.on && hammerSeasonLabel) {
+    const { data: sr } = await db.from('wrestler_strength').select('wrestler_id, strength').in('wrestler_id', [idA, idB]).eq('season', hammerSeasonLabel)
+    for (const r of sr ?? []) strengths.set(r.wrestler_id as string, Number(r.strength))
+  }
+  // a dead-even projection goes to someone (Kyle 2026-11-20): ?edge=a|b (the match card sends the home side), else at a
+  // tournament ?seedA / ?seedB → the lower seed (the bigger number; unseeded counts lowest), else the second wrestler
+  const edgeParam = searchParams.get('edge')
+  const seedOf = (v: string | null) => (v && /^\d+$/.test(v) ? Number(v) : null)
+  const sA = seedOf(searchParams.get('seedA')), sB = seedOf(searchParams.get('seedB'))
+  const edge: 'a' | 'b' = edgeParam === 'a' || edgeParam === 'b' ? edgeParam
+    : (sA != null || sB != null) ? ((sA ?? 999) > (sB ?? 999) ? 'a' : 'b')
+    : 'b'
+  // no strength yet this season (no bouts, or before the first rebuild): where the strength rating starts anyone —
+  // 1500 + 8 × their WRR (src/lib/strengthRating.ts) — so the projection always has both
+  const strengthOf = (id: string, wrr: number | null) => strengths.get(id) ?? (wrr != null ? STRENGTH_START + STRENGTH_PER_WRR * wrr : null)
+  // the bout's weight (?weight=, the match card sends it) → its weight group, for a version that uses weight groups
+  const wParam = parseInt(searchParams.get('weight') ?? '', 10)
+  const proj = project({ edge, weightGroup: weightGroup(gender, Number.isFinite(wParam) ? wParam : null), wrrA: hammerA, wrrB: hammerB, common: componentCommonOpp, meetings: componentH2H,
+    finA: finishes.get(idA) ?? NO_FINISHES, finB: finishes.get(idB) ?? NO_FINISHES,
+    strA: strengthOf(idA, hammerA), strB: strengthOf(idB, hammerB) }, params)
+  const componentHammer = proj.componentWrr
+  const weights = proj.weights
+  const rawScore = proj.score
+  const favoredWrestler = proj.winner
+  const outcomeLabel = proj.label
+  // with outcome odds on (a saved version), the three likeliest outcomes and their chances
+  const odds = proj.odds
 
   const prediction: PredictionResult = {
     favoredWrestler,
@@ -503,6 +518,7 @@ export async function GET(req: NextRequest) {
     componentCommonOpp,
     componentH2H,
     weights,
+    ...(odds ? { odds } : {}),
   }
 
   return NextResponse.json({
@@ -511,5 +527,5 @@ export async function GET(req: NextRequest) {
     directMatches,
     commonOpponents,
     prediction,
-  } satisfies H2HResponse)
+  } satisfies H2HResponse, { headers: PUBLIC_CDN_HEADERS })
 }

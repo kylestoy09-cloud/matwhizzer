@@ -1,0 +1,282 @@
+# NCAA Division III Championships 2015 — source: 2015.pdf (entrants from the PDF text; places read off the bracket pages, 2026-11-18)
+# qualifiers and places only (no bouts)
+
+@ 125
+- Ryan Weinmann | Wisconsin-La Crosse | 18-13
+6 Paul Bewak | Johns Hopkins | 38-4
+- Devan Richter | Chicago | 15-7
+1 Mike Fuenffinger | Augsburg | 34-1
+- Brian Amato | Worcester Polytechnic Institute | 14-7
+- Jan Rosenburg | Coe | 20-18
+8 Cole Ferguson | Wisconsin-Platteville | 28-9
+5 Asher Kramer | Brockport State | 23-9
+- Daniel Page | Central (IA) | 27-8
+- Jakob Stageberg | Concordia-Moorhead | 27-13
+4 Guesseppe Rea | Wilkes | 35-5
+3 Jesse Gunter | Baldwin Wallace | 6-3
+- Carlos Fuentez | Wheaton College (Illinois) | 5-3
+- James Kaishian | Ithaca | 29-8
+7 Jake Agnitsch | Wartburg | 28-7
+- Jacob Donato | New York University | 11-11
+- Bobby Jordan | Johnson & Wales (RI) | 35-14
+2 Lucas Malmberg | Messiah | 40-3
+place 1 Fuenffinger
+place 2 Malmberg
+place 3 Bewak
+place 4 Gunter
+place 5 Agnitsch
+place 6 Rea
+place 7 Page
+place 8 Amato
+
+@ 133
+- Nathan Pike | New York University | 25-9
+- Brandon Preston | Trine University | 15-6
+- Justin Colon | Johnson & Wales (RI) | 28-11
+4 Connor Campo | Wartburg | 27-7
+1 Nathaniel Giorgio | U.S. Coast Guard Academy | 41-2
+- Devin Broukal | Wabash | 11-6
+- Nathan Shank | Cornell College | 14-18
+8 Trevor Pruett | Wisconsin-Whitewater | 3-2
+5 Matthew Grossmann | Wilkes | 35-6
+- Jacob Spearman | Washington And Jefferson College | 28-8
+- Gabe Foltz | Concordia-Moorhead | 14-13
+3 Jeremy Border | Mount Union | 22-3
+- Zach Haynes | Delaware Valley | 29-9
+- Eric Harder | Pacific (OR) | 27-13
+6 Evan Obert | Luther | 27-7
+7 Ryan Flynn | York (PA) | 41-11
+- Chad Bartschenfeld | Augsburg | 30-12
+2 Alex Gomez | Ithaca | 20-5
+place 1 Grossmann
+place 2 Bartschenfeld
+place 3 Obert
+place 4 Gomez
+place 5 Giorgio
+place 6 Pike
+place 7 Haynes
+place 8 Campo
+
+@ 141
+- Adrian Berry | SUNY-Cortland | 24-15
+3 Jacoby Bergeron | Concordia-Moorhead | 37-8
+- Joshua Decatur | Baldwin Wallace | 6-3
+8 Nashid Barrow | Buena Vista University | 25-9
+1 Kaleb Loht | Messiah | 39-1
+- Cody See | Wisconsin-La Crosse | 12-10
+- Alvontae Drummond | McDaniel | 25-7
+5 Cary Palmer | Hunter | 35-1
+- Layten Binion | North Central (IL) | 16-6
+- Ben Henle | St. Johns (MN) | 26-10
+4 Brandon Jones | New York University | 25-5
+- Bryant Roby | Mount Union | 28-13
+- Jake Savoca | Williams College | 9-3
+6 Nick Steger | Loras | 28-3
+7 Matt Adcock | Wisconsin-Whitewater | 6-2
+- Michael Ferinde | Johnson & Wales (RI) | 35-11
+- Marcus Hamer | Augsburg | 28-20
+2 Drew Van Anrooy | Luther | 25-3
+place 1 Palmer
+place 2 Van Anrooy
+place 3 Loht
+place 4 Jones
+place 5 Steger
+place 6 Binion
+place 7 Adcock
+place 8 Ferinde
+
+@ 149
+- Dakota Gray | Luther | 29-13
+8 Elroy Perkin | Wisconsin-Whitewater | 10-3
+- Eamonn Gaffney | Ithaca | 27-9
+- Josh Evans | Wilkes | 21-14
+1 Dan Mirman | John Carroll | 27-4
+- Trevor Engle | Cornell College | 33-10
+- Timothy Garripoli | Williams College | 6-3
+5 Luke Lohr | Waynesburg | 39-7
+- Will Keeter | Augsburg | 33-13
+- Nathan Segal | North Central (IL) | 9-7
+4 Kenneth Martin | Wartburg | 30-3
+3 Vincent Fava | Delaware Valley | 26-4
+- Mason Bohm | Wisconsin-Platteville | 22-13
+6 Mark Savenok | Wheaton College (Illinois) | 4-2
+7 Brad Mayville | Rochester Institute Of Technology | 33-5
+- Jake Kostik | Concordia-Moorhead | 15-15
+- Daniel Del Gallo | Southern Maine | 36-5
+2 Derek Arnold | Ursinus | 38-3
+place 1 Martin
+place 2 Fava
+place 3 Mayville
+place 4 Arnold
+place 5 Perkin
+place 6 Mirman
+place 7 Keeter
+place 8 Lohr
+
+@ 157
+- Ty Herzog | Roger Williams | 41-15
+5 Steven DeWitt | Loras | 35-4
+- Gable Frandsen | Augsburg | 18-14
+- Kevin Collins | Ithaca | 24-8
+1 Nick Carr | Washington And Jefferson College | 27-0
+- Reed Van Anrooy | Luther | 12-6
+- Carl Elmer | St. Olaf | 23-7
+8 Michael Polizzi | Stevens Institute Of Technology | 32-5
+- Shawn Brewer | Alma College | 19-11
+- Tom Gerszewski | Wisconsin-Whitewater | 3-3
+4 Jon Garrison | Mount Union | 28-6
+3 Jorge Lopez | Williams College | 29-2
+- Antonio Mancella | The College Of New Jersey | 27-12
+- Ben Cousins | Concordia-Moorhead | 19-22
+6 Richie Jasinski | Ursinus | 28-4
+7 Drew Wagenhoffer | Wartburg | 30-8
+- Sean Byham | Thiel | 16-8
+2 Reece Lefever | Wabash | 22-2
+place 1 Carr
+place 2 Lefever
+place 3 Lopez
+place 4 DeWitt
+place 5 Wagenhoffer
+place 6 Collins
+place 7 Garrison
+place 8 Mancella
+
+@ 165
+- CJ Caserta | Stevens Institute Of Technology | 42-9
+3 Dylan Foley | Springfield | 24-4
+- Ethan Farmer | Wabash | 17-5
+- Jesse Bader | Hunter | 36-7
+1 Andrew Steiert | Wartburg | 18-6
+- Alec Horan | Delaware Valley | 16-9
+8 Nick Velez | Ithaca | 32-12
+5 Jake Krogstad | Concordia-Moorhead | 22-10
+- Francisco Colom | Roger Williams | 33-6
+- Mitchell Fucile | Lakeland | 22-13
+4 Tyler Schneider | Wisconsin-La Crosse | 23-6
+- Sam Guidi | Waynesburg | 43-6
+- Blake Letney | Luther | 19-13
+6 Nolan Barger | Lycoming | 36-8
+7 Terner Gott | John Carroll | 31-6
+- Stephen Aiello | Wheaton College (Illinois) | 3-3
+- Eric Hensel | Augsburg | 22-14
+2 Farai Sewera | Coe | 29-2
+place 1 Sewera
+place 2 Schneider
+place 3 Barger
+place 4 Guidi
+place 5 Hensel
+place 6 Steiert
+place 7 Farmer
+place 8 Bader
+
+@ 174
+- Ryan Sblendorio | Wesleyan University (Connecticut) | 19-9
+5 Jordan Newman | Wisconsin-Whitewater | 5-4
+- Dan Ressler | Roger Williams | 32-6
+- Tyrell Martin | Augsburg | 20-6
+1 Conner Lefever | Wabash | 20-1
+- Kyle Diesel | Wilkes | 24-10
+- Nicholas Allen | Olivet | 4-3
+8 Garrett Chase | Baldwin Wallace | 6-3
+- Joshua Sibblies | Centenary (NJ) | 30-10
+- Sebastian Gardner | Concordia-Moorhead | 25-10
+4 Brandon Welter | Wartburg | 21-9
+3 Zach Zotollo | The College Of New Jersey | 22-2
+- Mike Shermot | U.S. Coast Guard Academy | 21-6
+- Tory Cain | Rochester Institute Of Technology | 32-7
+6 Brent Hamm | Cornell College | 27-12
+7 Ryan Harrington | Coe | 20-6
+- Mason Mergener | Concordia (WI) | 20-11
+2 Josh Thomson | Messiah | 45-6
+place 1 Lefever
+place 2 Zotollo
+place 3 Thomson
+place 4 Harrington
+place 5 Cain
+place 6 Gardner
+place 7 Chase
+place 8 Newman
+
+@ 184
+- Michael Cole | Wisconsin-Platteville | 13-14
+- Richard Dowdley | Heidelberg | 40-4
+- Daniel Olsen | Wheaton College (Illinois) | 8-2
+- Matt Rieckhoff | Wisconsin-Eau Claire | 14-12
+1 Riley Lefever | Wabash | 20-0
+- Patrick Sheehan | New York University | 26-5
+- Conner Gabriel | Delaware Valley | 22-13
+8 Jeff Palmeri | Brockport State | 28-10
+5 Jayden DeVilbiss | Luther | 29-7
+- Daniel Manganaro | Ursinus | 25-5
+4 Christoper Chorzepa | Williams College | 42-3
+3 Tyler Beckwith | SUNY-Cortland | 25-7
+- Richard Carlson | Wisconsin-La Crosse | 27-9
+- Ryan Sheldon | Coe | 25-14
+6 Ben Swarr | Messiah | 18-3
+7 Devin Peterson | Wartburg | 16-4
+- Tom Teigen | Augsburg | 27-11
+2 Jonathan Deupree | Southern Maine | 26-5
+place 1 Lefever
+place 2 Peterson
+place 3 Olsen
+place 4 Chorzepa
+place 5 Dowdley
+place 6 Carlson
+place 7 Sheehan
+place 8 Beckwith
+
+@ 197
+- Johnathan Secor | Lycoming | 34-9
+- Hunter Ayen | Springfield | 24-8
+- Nathaniel Leer | The College Of New Jersey | 20-11
+4 Joe Giaramita | SUNY-Cortland | 32-1
+1 Eric Twohey | Wisconsin-La Crosse | 35-2
+- Danny Pike | Concordia-Moorhead | 11-12
+- Todd Gaydosh | John Carroll | 25-10
+8 Matt Hechsel | Augsburg | 30-11
+5 David Welch | Roger Williams | 35-4
+- Brian Olson | Mount Union | 35-13
+- Ryan Michaelis | St. Johns (MN) | 12-4
+3 Aaron Karns | Delaware Valley | 33-5
+- Donnie Horner | Coe | 30-11
+- Jared Groeneveld | Alma College | 32-10
+6 Gerard Roman | Wartburg | 31-7
+7 Matt Seabold | Central (IA) | 24-8
+- Ricky Fisher | U.s. Merchant Marine Academy | 29-11
+2 Shane Siefert | Wisconsin-Whitewater | 6-2
+place 1 Giaramita
+place 2 Siefert
+place 3 Twohey
+place 4 Karns
+place 5 Horner
+place 6 Roman
+place 7 Hechsel
+place 8 Seabold
+
+@ 285
+- Justin Karkula | Wisconsin-Eau Claire | 20-14
+5 Zachery Roseberry | Delaware Valley | 35-4
+- Chris Florek | Stevens Institute Of Technology | 34-10
+2 Donny Longendyke | Augsburg | 32-0
+1 Cody Lovejoy | Ohio Northern | 5-2
+- Justice Davis | Concordia-Moorhead | 24-12
+- Cole Tristram | Brockport State | 30-10
+8 Terrance Jean-Jacques | Rhode Island College | 34-2
+- Trevor Maresh | Alma College | 21-6
+- Nino Majoy | Heidelberg | 27-8
+4 Benjamin Nagle | Wartburg | 30-4
+3 Mackenzie Green | Trine University | 31-4
+- Kyle Foster | Roger Williams | 30-7
+- Matan Peleg | Ursinus | 9-4
+6 James Bethel | Oneonta State | 39-6
+7 Anthony Edgren | Wisconsin-Whitewater | 7-3
+- Conner Herman | Luther | 16-8
+- Jack Seaman | Augustana (IL) | 31-13
+place 1 Longendyke
+place 2 Jean-Jacques
+place 3 Roseberry
+place 4 Bethel
+place 5 Nagle
+place 6 Maresh
+place 7 Edgren
+place 8 Herman

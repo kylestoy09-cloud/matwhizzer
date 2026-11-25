@@ -1,0 +1,182 @@
+# NCAA Division II Championships 1997 — source: NCAA II 1997.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Damion Broadbent | San Francisco State
+- Keith Kizzar | Central Oklahoma
+- Johnny Vigil | Western State
+- Erin Razo | North Dakota
+- John Strittmatter | Pittsburgh-Johnstown
+- Chad Wickman | South Dakota State
+- Ralph Dasti | Chadron State
+- Mike Bailey | Central Missouri
+place 1 Damion Broadbent
+place 2 Keith Kizzar
+place 3 Johnny Vigil
+place 4 Erin Razo
+place 5 John Strittmatter
+place 6 Chad Wickman
+place 7 Ralph Dasti
+place 8 Mike Bailey
+
+@ 126
+- Adam Feldman | South Dakota State
+- Scott Braun | North Dakota
+- Jeff Kapusta | North Dakota State
+- Brian Anderson | SIU-Edwardsville
+- Craig Otto | Western State
+- Rafael Calixto | American International
+- Roger Spear | Wisconsin-Parkside
+- Brock Moore | Central Oklahoma
+place 1 Adam Feldman
+place 2 Scott Braun
+place 3 Jeff Kapusta
+place 4 Brian Anderson
+place 5 Craig Otto
+place 6 Rafael Calixto
+place 7 Roger Spear
+place 8 Brock Moore
+
+@ 134
+- George Thompson | North Dakota State
+- Francis Aquino | San Francisco State
+- Braumon Creighton | Nebraska-Omaha
+- Michael Barreras | Adams State
+- Matt Goodson | Central Oklahoma
+- Corey Kline | Ashland
+- Kip Platts | Western State
+- Chris Conroy | Massachusetts-Lowell
+place 1 George Thompson
+place 2 Francis Aquino
+place 3 Braumon Creighton
+place 4 Michael Barreras
+place 5 Matt Goodson
+place 6 Corey Kline
+place 7 Kip Platts
+place 8 Chris Conroy
+
+@ 142
+- Jason Reitmeier | Augustana SD
+- Ryan Vratil | Central Oklahoma
+- Tony Albertelli | Pittsburgh-Johnstown
+- Steve Hilas | San Francisco State
+- Troy Szydel | Minnesota State-Mankato
+- Tony Benallo | Northern Colorado
+- Chris Currier | Southern Colorado
+- Troy Brown | Western State
+place 1 Jason Reitmeier
+place 2 Ryan Vratil
+place 3 Tony Albertelli
+place 4 Steve Hilas
+place 5 Troy Szydel
+place 6 Tony Benallo
+place 7 Chris Currier
+place 8 Troy Brown
+
+@ 150
+- James Branch | West Liberty State
+- Barry Reighard | St. Cloud State
+- Benny Charles | Southern Colorado
+- Chance Stoeser | Augustana SD
+- Eddie Woody | Fort Hays State
+- Chris Blair | Nebraska-Omaha
+- Scott Hewit | Northern Colorado
+- Marc Hodgson | Nebraska-Kearney
+place 1 James Branch
+place 2 Barry Reighard
+place 3 Benny Charles
+place 4 Chance Stoeser
+place 5 Eddie Woody
+place 6 Chris Blair
+place 7 Scott Hewit
+place 8 Marc Hodgson
+
+@ 158
+- Greg Jackson | San Francisco State
+- Matt Surber | Central Oklahoma
+- Dan Lovell | Nebraska-Omaha
+- Myron Ellegood | Fort Hays State
+- Troy Barbush | Pittsburgh-Johnstown
+- Rich Foston | West Liberty State
+- Mark Pazdemik | North Dakota State
+- Justin Edwards | Southern Colorado
+place 1 Greg Jackson
+place 2 Matt Surber
+place 3 Dan Lovell
+place 4 Myron Ellegood
+place 5 Troy Barbush
+place 6 Rich Foston
+place 7 Mark Pazdemik
+place 8 Justin Edwards
+
+@ 167
+- Nate Hendrickson | Minnesota State-Moorhead
+- Jeron Quincy | Central Missouri
+- T.J. Deaguero | Northern Colorado
+- Kevin O'Neil | Pittsburgh-Johnstown
+- Paul Healy | San Francisco State
+- Tim Promfret | Ashland
+- Mark Cunningham | Central Oklahoma
+- Brett Svendsen | North Dakota State
+place 1 Nate Hendrickson
+place 2 Jeron Quincy
+place 3 T.J. Deaguero
+place 4 Kevin O'Neil
+place 5 Paul Healy
+place 6 Tim Promfret
+place 7 Mark Cunningham
+place 8 Brett Svendsen
+
+@ 177
+- Corry Royal | Nebraska-Omaha
+- Irwin Brambley | Pittsburgh-Johnstown
+- Jeremy Pascoe | South Dakota State
+- Link Steffen | Southwest Missouri
+- John Simpson | Colorado Mines
+- Scott Shipman | West Liberty State
+- Ed Hermsen | Chadron State
+- Charlie Hidgon | Carson-Newman
+place 1 Corry Royal
+place 2 Irwin Brambley
+place 3 Jeremy Pascoe
+place 4 Link Steffen
+place 5 John Simpson
+place 6 Scott Shipman
+place 7 Ed Hermsen
+place 8 Charlie Hidgon
+
+@ 190
+- Lee Lofton | San Francisco State
+- Pat Kelley | Nebraska-Omaha
+- Corey Arndt | Chadron State
+- Mike Schadwinkel | Adams State
+- Jason Carter | SIU-Edwardsville
+- Ross Johnson | Minnesota State-Mankato
+- Tyler Trieglaff | Minnesota State-Moorhead
+- James Short | Gardner-Webb
+place 1 Lee Lofton
+place 2 Pat Kelley
+place 3 Corey Arndt
+place 4 Mike Schadwinkel
+place 5 Jason Carter
+place 6 Ross Johnson
+place 7 Tyler Trieglaff
+place 8 James Short
+
+@ 275
+- Ryan Resel | South Dakota State
+- Shane Carwin | Western State
+- Josh Gooch | Fort Hays State
+- Chris Villalobos | Northern Colorado
+- Jerry Corner | Nebraska-Omaha
+- Mitch Schlepp | Southern Colorado
+- Mike Rogers | SIU-Edwardsville
+- Andy Lancaster | Southwest Missouri
+place 1 Ryan Resel
+place 2 Shane Carwin
+place 3 Josh Gooch
+place 4 Chris Villalobos
+place 5 Jerry Corner
+place 6 Mitch Schlepp
+place 7 Mike Rogers
+place 8 Andy Lancaster
+

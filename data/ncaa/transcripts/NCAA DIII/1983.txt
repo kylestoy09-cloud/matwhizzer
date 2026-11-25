@@ -1,0 +1,182 @@
+# NCAA Division III Championships 1983 — source: NCAA III 1983.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Greg Lonning | Luther
+- John Barna | College of New Jersey
+- Dick Gruber | Wisconsin-Oshkosh
+- Bob Panariello | Ithaca
+- Steven Gliva | Augsburg
+- Ryan Haines | Upper Iowa
+- Dave Averill | SUNY-Albany
+- John Leo | SUNY-Binghampton
+place 1 Greg Lonning
+place 2 John Barna
+place 3 Dick Gruber
+place 4 Bob Panariello
+place 5 Steven Gliva
+place 6 Ryan Haines
+place 7 Dave Averill
+place 8 John Leo
+
+@ 126
+- Frank Famiano | SUNY-Brockport
+- Greg Dravis | Minnesota-Morris
+- Curt Cawley | Buena Vista
+- Orlando Caceras | College of New Jersey
+- Bob Spagnoli | SUNY-Albany
+- John Pecora | Wisconsin-Whitewater
+- Jim Kerr | Baldwin Wallace
+- Gary Reesor | Lebanon Valley
+place 1 Frank Famiano
+place 2 Greg Dravis
+place 3 Curt Cawley
+place 4 Orlando Caceras
+place 5 Bob Spagnoli
+place 6 John Pecora
+place 7 Jim Kerr
+place 8 Gary Reesor
+
+@ 134
+- Bob Adams | Augsburg
+- Pat McMahon | Augustana Illinois
+- Steve Fernandez | College of New Jersey
+- Tom Miller | Cornell Iowa
+- Bart Morrow | Ithaca
+- Bob Pennotti | Montclair State
+- Ken Shull | MIT
+- Mark Howard | SUNY-Oswego
+place 1 Bob Adams
+place 2 Pat McMahon
+place 3 Steve Fernandez
+place 4 Tom Miller
+place 5 Bart Morrow
+place 6 Bob Pennotti
+place 7 Ken Shull
+place 8 Mark Howard
+
+@ 142
+- Darryl Leslie | RIT
+- Ron Bussey | College of New Jersey
+- Andy Seras | SUNY-Albany
+- Kevin Brockway | Glassboro
+- Dan Pantaleo | Olivet
+- Perry Graehling | Hiram
+- Tom Hall | Augsburg
+- Marty Jospeh | John Carroll
+place 1 Darryl Leslie
+place 2 Ron Bussey
+place 3 Andy Seras
+place 4 Kevin Brockway
+place 5 Dan Pantaleo
+place 6 Perry Graehling
+place 7 Tom Hall
+place 8 Marty Jospeh
+
+@ 150
+- Ron Winnie | SUNY-Brockport
+- Martin Butler | Amherst
+- Shea Kennedy | Augsburg
+- Dave Reifsteck | Wisconsin-Whitewater
+- Ed Trizzino | Hiram
+- Dave Krivus | Washington & Jefferson
+- ike Truncale | SUNY-Binghampton
+- Dave Alemi | York
+place 1 Ron Winnie
+place 2 Martin Butler
+place 3 Shea Kennedy
+place 4 Dave Reifsteck
+place 5 Ed Trizzino
+place 6 Dave Krivus
+place 7 ike Truncale
+place 8 Dave Alemi
+
+@ 158
+- Chris Casey | Augustana Illinois
+- Mark Bowman | SUNY-Oswego
+- Bob Glaberman | College of New Jersey
+- Scott Bouslog | Luther
+- Dennie Giaimo | Wisconsin-Stevens Point
+- Joe Beuter | Buena Vista
+- Don Valesky | Thiel
+- Bruce Stajnrajh | Delaware Valley
+place 1 Chris Casey
+place 2 Mark Bowman
+place 3 Bob Glaberman
+place 4 Scott Bouslog
+place 5 Dennie Giaimo
+place 6 Joe Beuter
+place 7 Don Valesky
+place 8 Bruce Stajnrajh
+
+@ 167
+- Todd Northrup | St. Lawrence
+- Bruce Arvold | Augsburg
+- Jeff Cox | SUNY-Brockport
+- Guy Ventura | Hunter
+- Matt Skalla | Wesleyan
+- Mark Morgan | Lycoming
+- Tom Stanbro | SUNY-Oswego
+- Jim Andrich | Rutgers-Newark
+place 1 Todd Northrup
+place 2 Bruce Arvold
+place 3 Jeff Cox
+place 4 Guy Ventura
+place 5 Matt Skalla
+place 6 Mark Morgan
+place 7 Tom Stanbro
+place 8 Jim Andrich
+
+@ 177
+- Tony Conetta | SUNY-Brockport
+- Leland Rogers | St. Lawrence
+- Kevin Troche | Hunter
+- Paul Lancaster | Wheaton
+- Dan Coons | Alma
+- Kurt Searvogel | Ripon
+- Brian Bedard | Buena Vista
+- Paul Newman | SUNY-Oswego
+place 1 Tony Conetta
+place 2 Leland Rogers
+place 3 Kevin Troche
+place 4 Paul Lancaster
+place 5 Dan Coons
+place 6 Kurt Searvogel
+place 7 Brian Bedard
+place 8 Paul Newman
+
+@ 190
+- Nick D'Angelo | John Carroll
+- Phil Lanzatella | St. Lawrence
+- Doug Morse | SUNY-Oswego
+- James Maurer | Lycoming
+- Brad Ellis | Glassboro
+- Bill Mays | York
+- Bob Henig | College of New Jersey
+- Guy Lucas | SUNY-Buffalo
+place 1 Nick D'Angelo
+place 2 Phil Lanzatella
+place 3 Doug Morse
+place 4 James Maurer
+place 5 Brad Ellis
+place 6 Bill Mays
+place 7 Bob Henig
+place 8 Guy Lucas
+
+@ 285
+- Bob Muth | Allegheny
+- Malcom McLeod | Concordia MN
+- Mike Connors | St. Lawrence
+- Scott Becker | Wartburg
+- Jim Viaene | Wisconsin-Stout
+- Scott Nichols | SUNY-Brockport
+- Vic Herman | SUNY-Albany
+- Steve Harter | Mount Union
+place 1 Bob Muth
+place 2 Malcom McLeod
+place 3 Mike Connors
+place 4 Scott Becker
+place 5 Jim Viaene
+place 6 Scott Nichols
+place 7 Vic Herman
+place 8 Steve Harter
+

@@ -129,7 +129,9 @@ export async function POST(req: NextRequest) {
     supabase.from('tournament_placements').update({ wrestler_id: keep_id }).eq('wrestler_id', merge_id),
     supabase.from('tournament_entries').update({ wrestler_id: keep_id }).eq('wrestler_id', merge_id),
     supabase.from('wrestler_name_aliases').update({ wrestler_id: keep_id }).eq('wrestler_id', merge_id),
-    supabase.from('ms_wrestlers').update({ hs_wrestler_id: keep_id }).eq('hs_wrestler_id', merge_id),
+    (supabase as any).from('boys_prospects').update({ wrestler_id: keep_id }).eq('wrestler_id', merge_id),
+    (supabase as any).from('girls_prospects').update({ wrestler_id: keep_id }).eq('wrestler_id', merge_id),
+    (supabase as any).from('mixed_prospects').update({ wrestler_id: keep_id }).eq('wrestler_id', merge_id),
   ])
 
   const errs = updates.map(r => r.error).filter(Boolean)

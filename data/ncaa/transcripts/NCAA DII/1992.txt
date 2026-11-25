@@ -1,0 +1,182 @@
+# NCAA Division II Championships 1992 — source: NCAA II 1992.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Randy Zellner | Central Oklahoma
+- Larry Hohman | Pittsburgh-Johnstown
+- Brian Kapusta | North Dakota State
+- Chris Guillot | Nebraska-Kearney
+- Oliver Richmond | Ferris State
+- Rob Rychner | St. Cloud State
+- Kris Hayward | SIU-Edwardsville
+- Gary Marquez | Portland State
+place 1 Randy Zellner
+place 2 Larry Hohman
+place 3 Brian Kapusta
+place 4 Chris Guillot
+place 5 Oliver Richmond
+place 6 Rob Rychner
+place 7 Kris Hayward
+place 8 Gary Marquez
+
+@ 126
+- Broderick Lee | Portland State
+- Scott Gates | Northern Colorado
+- Travis Moman | Central Oklahoma
+- Eric Bowser | Pittsburgh-Johnstown
+- Michael Pankratz | South Dakota State
+- Marc Bauer | Nebraska-Omaha
+- Dave Strejc | Grand Valley State
+- Tony Griffith | Central Missouri
+place 1 Broderick Lee
+place 2 Scott Gates
+place 3 Travis Moman
+place 4 Eric Bowser
+place 5 Michael Pankratz
+place 6 Marc Bauer
+place 7 Dave Strejc
+place 8 Tony Griffith
+
+@ 134
+- Lloyd Wurm | North Dakota State
+- Lane Williams | Portland State
+- Mark Passer | Nebraska-Omaha
+- Bob Milanazzo | Massachusetts-Lowell
+- Ryan Martin | Central Oklahoma
+- Mark Villalobos | Southern Colorado
+- Matt Ming | California-Davis
+- Eric McCourt | Ferris State
+place 1 Lloyd Wurm
+place 2 Lane Williams
+place 3 Mark Passer
+place 4 Bob Milanazzo
+place 5 Ryan Martin
+place 6 Mark Villalobos
+place 7 Matt Ming
+place 8 Eric McCourt
+
+@ 142
+- James Sisson | Portland State
+- Andy Pipher | Southern Colorado
+- Todd Drake | Central Oklahoma
+- Eric Roberson | SIU-Edwardsville
+- Sean Kiley | Springfield
+- Tim Cano | California-Davis
+- Marty Vigil | Northern Colorado
+- Jim Gale | Minnesota State-Mankato
+place 1 James Sisson
+place 2 Andy Pipher
+place 3 Todd Drake
+place 4 Eric Roberson
+place 5 Sean Kiley
+place 6 Tim Cano
+place 7 Marty Vigil
+place 8 Jim Gale
+
+@ 150
+- Dax Charles | Southern Colorado
+- Ali Amiri-Eliasi | Nebraska-Kearney
+- Bart Brown | Northern Colorado
+- Joel Vettel | North Dakota State
+- Mark Savoia | Ashland
+- Steve Vymola | North Dakota
+- Samuel Mantegna | Cheyney
+- Dwight Weevie | California-Davis
+place 1 Dax Charles
+place 2 Ali Amiri-Eliasi
+place 3 Bart Brown
+place 4 Joel Vettel
+place 5 Mark Savoia
+place 6 Steve Vymola
+place 7 Samuel Mantegna
+place 8 Dwight Weevie
+
+@ 158
+- Keith Cunningham | Central Oklahoma
+- Kendall Southerland | Cheyney
+- Kris Lengenfelder | North Dakota
+- Eustacio Torres | San Francisco State
+- Tom Blaha | SIU-Edwardsville
+- Mark Anderson | North Dakota State
+- Eric Bakey | Ferris State
+- Clint Pipher | Southern Colorado
+place 1 Keith Cunningham
+place 2 Kendall Southerland
+place 3 Kris Lengenfelder
+place 4 Eustacio Torres
+place 5 Tom Blaha
+place 6 Mark Anderson
+place 7 Eric Bakey
+place 8 Clint Pipher
+
+@ 167
+- Howard Moore | Central Oklahoma
+- Lance Koenig | North Dakota State
+- Dave Yahner | Pittsburgh-Johnstown
+- Jason Skapyak | North Dakota
+- Dan Hutcheson | Ferris State
+- Paul Coffland | Ashland
+- Jeff Butts | Springfield
+- Chad Lamer | South Dakota State
+place 1 Howard Moore
+place 2 Lance Koenig
+place 3 Dave Yahner
+place 4 Jason Skapyak
+place 5 Dan Hutcheson
+place 6 Paul Coffland
+place 7 Jeff Butts
+place 8 Chad Lamer
+
+@ 177
+- Mike Leberknight | Northern Colorado
+- Tony Champion | Portland State
+- Joe Bena | Southern Connecticut
+- Dan Radik | Nebraska-Omaha
+- Brandon Forga | Lake Superior
+- Brian Loeffler | South Dakota State
+- Chad Humphrey | SIU-Edwardsville
+- Keith Spataro | San Francisco State
+place 1 Mike Leberknight
+place 2 Tony Champion
+place 3 Joe Bena
+place 4 Dan Radik
+place 5 Brandon Forga
+place 6 Brian Loeffler
+place 7 Chad Humphrey
+place 8 Keith Spataro
+
+@ 190
+- Trevor Clark | SIU-Edwardsville
+- Cole Lucier | North Dakota
+- Pat Kelly | Nebraska-Omaha
+- David Surofcheck | Ferris State
+- Tony Freeman | Southern Colorado
+- Warren Tucker | Virginia State
+- Mike Gohde | Northern Colorado
+- Paul Kremer | Minnesota-Duluth
+place 1 Trevor Clark
+place 2 Cole Lucier
+place 3 Pat Kelly
+place 4 David Surofcheck
+place 5 Tony Freeman
+place 6 Warren Tucker
+place 7 Mike Gohde
+place 8 Paul Kremer
+
+@ 275
+- Jason Bingaman | Lake Superior
+- Tim Tekautz | North Dakota State
+- John Welsh | Nebraska-Kearney
+- Lee Pulse | Augustana SD
+- Harold Rogers | Cheyney
+- Jim Bezotte | Wisconsin-Parkside
+- Mike Faulkner | Ferris State
+- Ken Fontes | Portland State
+place 1 Jason Bingaman
+place 2 Tim Tekautz
+place 3 John Welsh
+place 4 Lee Pulse
+place 5 Harold Rogers
+place 6 Jim Bezotte
+place 7 Mike Faulkner
+place 8 Ken Fontes
+

@@ -189,7 +189,7 @@ function RankBadge({ rank }: { rank: number }) {
   return <span className={`tabular-nums font-mono text-sm ${color}`}>{rank}</span>
 }
 
-function UpsetBlurb({ u, weekNumber }: { u: UpsetRow; weekNumber: number }) {
+function UpsetBlurb({ u, weekNumber, base }: { u: UpsetRow; weekNumber: number; base: string }) {
   const win = fmtWinType(u.win_type)
   return (
     <div className="py-2.5 px-0 border-b border-slate-100 last:border-0">
@@ -205,10 +205,10 @@ function UpsetBlurb({ u, weekNumber }: { u: UpsetRow; weekNumber: number }) {
         </div>
         <div className="flex-1 min-w-0">
           <p className="text-sm text-slate-800 leading-snug">
-            <span className="font-semibold">{u.winner_name}</span>
+            <Link href={`${base}/${u.winner_id}`} className="hover:underline"><span className="font-semibold">{u.winner_name}</span></Link>
             <span className="text-slate-400 text-xs mx-1">({u.winner_school})</span>
             <span className="text-slate-500 text-xs">def.</span>
-            <span className="font-semibold ml-1">{u.loser_name}</span>
+            <Link href={`${base}/${u.loser_id}`} className="hover:underline"><span className="font-semibold ml-1">{u.loser_name}</span></Link>
             <span className="text-slate-400 text-xs mx-1">({u.loser_school})</span>
             {win && <span className="ml-1 text-xs font-semibold text-slate-600">{win}</span>}
           </p>
@@ -224,7 +224,7 @@ function UpsetBlurb({ u, weekNumber }: { u: UpsetRow; weekNumber: number }) {
   )
 }
 
-function ChangeLine({ c, upsets }: { c: Change; upsets: UpsetRow[] }) {
+function ChangeLine({ c, upsets, base }: { c: Change; upsets: UpsetRow[]; base: string }) {
   const arrow =
     c.kind === 'up'   ? <span className="text-emerald-500 font-bold text-sm">↑{c.delta}</span>
     : c.kind === 'down' ? <span className="text-red-500 font-bold text-sm">↓{c.delta}</span>
@@ -237,7 +237,7 @@ function ChangeLine({ c, upsets }: { c: Change; upsets: UpsetRow[] }) {
       <div className="flex items-start gap-2.5">
         <div className="w-8 shrink-0 flex justify-end mt-0.5">{arrow}</div>
         <div className="flex-1 min-w-0">
-          <span className="text-sm font-semibold text-slate-800">{c.name}</span>
+          <Link href={`${base}/${c.wrestler_id}`} className="hover:underline"><span className="text-sm font-semibold text-slate-800">{c.name}</span></Link>
           {c.school && <span className="text-xs text-slate-400 ml-1.5">{c.school}</span>}
           <span className="text-xs text-slate-400 ml-1.5">
             {c.kind === 'up'   && `${ordinal(c.prevRank!)} → ${ordinal(c.currRank!)}`}
@@ -247,7 +247,7 @@ function ChangeLine({ c, upsets }: { c: Change; upsets: UpsetRow[] }) {
           </span>
           {c.cause && (
             <p className="text-xs text-slate-400 mt-0.5 leading-snug">
-              lost to <span className="font-medium text-slate-600">{c.cause.winner_name}</span>
+              lost to <Link href={`${base}/${c.cause.winner_id}`} className="hover:underline"><span className="font-medium text-slate-600">{c.cause.winner_name}</span></Link>
               {c.cause.winner_school && <span className="ml-1">({c.cause.winner_school})</span>}
               {c.cause.win_type && <span className="ml-1">{fmtWinType(c.cause.win_type)}</span>}
               <span className="ml-1">{fmtDate(c.cause.match_date)}</span>
@@ -505,7 +505,7 @@ export function RankingsView({ gender, weeks, districts, regions, wrestlerBasePa
               </h3>
               <div className="border border-slate-200 px-3">
                 {changes.filter(c => c.kind !== 'same').map(c => (
-                  <ChangeLine key={c.wrestler_id} c={c} upsets={data.upsets} />
+                  <ChangeLine key={c.wrestler_id} c={c} upsets={data.upsets} base={wrestlerBasePath} />
                 ))}
               </div>
             </div>
@@ -523,7 +523,7 @@ export function RankingsView({ gender, weeks, districts, regions, wrestlerBasePa
               </h3>
               <div className="border border-black px-4">
                 {data.upsets.map(u => (
-                  <UpsetBlurb key={u.id} u={u} weekNumber={selectedWeek?.week_number ?? 1} />
+                  <UpsetBlurb key={u.id} u={u} weekNumber={selectedWeek?.week_number ?? 1} base={wrestlerBasePath} />
                 ))}
               </div>
             </div>

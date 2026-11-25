@@ -1,0 +1,182 @@
+# NCAA Division II Championships 1993 — source: NCAA II 1993.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Brian Kapusta | North Dakota State
+- Randy Zellner | Central Oklahoma
+- Larry Hohman | Pittsburgh-Johnstown
+- Mike Ward | Lake Superior
+- Adrian Simmons | North Dakota
+- Miles Van Hee | Western State
+- Jimmy Foster | Nebraska-Omaha
+- Travis McDermott | Chadron State
+place 1 Brian Kapusta
+place 2 Randy Zellner
+place 3 Larry Hohman
+place 4 Mike Ward
+place 5 Adrian Simmons
+place 6 Miles Van Hee
+place 7 Jimmy Foster
+place 8 Travis McDermott
+
+@ 126
+- Jeff Sill | Nebraska-Omaha
+- Mannie Garcia | Southern Colorado
+- Michael Pankratz | South Dakota State
+- Ariah Fasana | Portland State
+- Travis Moman | Central Oklahoma
+- Greg Alexander | Northern Colorado
+- Lee Schickel | Pittsburgh-Johnstown
+- Francis Aquino | San Francisco State
+place 1 Jeff Sill
+place 2 Mannie Garcia
+place 3 Michael Pankratz
+place 4 Ariah Fasana
+place 5 Travis Moman
+place 6 Greg Alexander
+place 7 Lee Schickel
+place 8 Francis Aquino
+
+@ 134
+- Glen Frank | Colorado Mines
+- Mike Keim | Central Oklahoma
+- Marc Bauer | Nebraska-Omaha
+- Tony DeAnda | Augustana SD
+- Martin Segovia | Nebraska-Kearney
+- Herb Pinkney | Ashland
+- Eric Boncher | Kutztown State
+- Jack Thompson | North Dakota State
+place 1 Glen Frank
+place 2 Mike Keim
+place 3 Marc Bauer
+place 4 Tony DeAnda
+place 5 Martin Segovia
+place 6 Herb Pinkney
+place 7 Eric Boncher
+place 8 Jack Thompson
+
+@ 142
+- Todd Drake | Central Oklahoma
+- James Sisson | Portland State
+- Lynn McChesney | North Dakota
+- Ron McClure | Minnesota-Duluth
+- Tom Trujillo | Adams State
+- Chris Cargill | Ferris State
+- Steve Costanzo | Nebraska-Omaha
+- Dan Willis | North Carolina-Pembroke
+place 1 Todd Drake
+place 2 James Sisson
+place 3 Lynn McChesney
+place 4 Ron McClure
+place 5 Tom Trujillo
+place 6 Chris Cargill
+place 7 Steve Costanzo
+place 8 Dan Willis
+
+@ 150
+- Jim Gale | Minnesota State-Mankato
+- Trent Snyder | Western State
+- Ali Amiri-Eliasi | Nebraska-Kearney
+- Biff Jones | Adams State
+- Joel Vettel | North Dakota State
+- Brent Loken | Augustana SD
+- Todd Livengood | Ashland
+- Gene Hanemann | Southern Connecticut
+place 1 Jim Gale
+place 2 Trent Snyder
+place 3 Ali Amiri-Eliasi
+place 4 Biff Jones
+place 5 Joel Vettel
+place 6 Brent Loken
+place 7 Todd Livengood
+place 8 Gene Hanemann
+
+@ 158
+- Wes White | Central Oklahoma
+- McAndre McKnight | Ashland
+- Kris Lengenfelder | North Dakota
+- Aaron Casetta | Adams State
+- Matt Cox | Central Missouri
+- Jeff Ersland | North Dakota State
+- Tim Wishard | South Dakota State
+- Bernard Valentin | Southern Connecticut
+place 1 Wes White
+place 2 McAndre McKnight
+place 3 Kris Lengenfelder
+place 4 Aaron Casetta
+place 5 Matt Cox
+place 6 Jeff Ersland
+place 7 Tim Wishard
+place 8 Bernard Valentin
+
+@ 167
+- Keith Cunningham | Central Oklahoma
+- Dan Hutcheson | Ferris State
+- Shannon Peters | Nebraska-Kearney
+- Justin Naumovitz | Truman State
+- John Hollman | Pittsburgh-Johnstown
+- Lance Koenig | North Dakota State
+- Gregg Nelson | Minnesota State-Mankato
+- Marc Cofer | Ashland
+place 1 Keith Cunningham
+place 2 Dan Hutcheson
+place 3 Shannon Peters
+place 4 Justin Naumovitz
+place 5 John Hollman
+place 6 Lance Koenig
+place 7 Gregg Nelson
+place 8 Marc Cofer
+
+@ 177
+- Mike Leberknight | Northern Colorado
+- Dan Radik | Nebraska-Omaha
+- Jason Skapyak | North Dakota
+- Darin Tiedt | Wisconsin-Parkside
+- Craig Thurber | Pittsburgh-Johnstown
+- Jason Roelofs | Lake Superior
+- David Larson | Adams State
+- Keith Spataro | San Francisco State
+place 1 Mike Leberknight
+place 2 Dan Radik
+place 3 Jason Skapyak
+place 4 Darin Tiedt
+place 5 Craig Thurber
+place 6 Jason Roelofs
+place 7 David Larson
+place 8 Keith Spataro
+
+@ 190
+- Brian Loeffler | South Dakota State
+- David Surofcheck | Ferris State
+- Pat Kelly | Nebraska-Omaha
+- Robert Finneseth | North Dakota State
+- Larry Kaufman | Ashland
+- Greg Eddy | Southern Colorado
+- Tom Chernich | SIU-Edwardsville
+- Jared Kuleck | Pittsburgh-Johnstown
+place 1 Brian Loeffler
+place 2 David Surofcheck
+place 3 Pat Kelly
+place 4 Robert Finneseth
+place 5 Larry Kaufman
+place 6 Greg Eddy
+place 7 Tom Chernich
+place 8 Jared Kuleck
+
+@ 275
+- Jason Bingaman | Lake Superior
+- Lee Pulse | Augustana SD
+- Tim Tekautz | North Dakota State
+- Jim Bezotte | Wisconsin-Parkside
+- Floyd Henning | Colorado Mines
+- Tyrone Davis | Southern Connecticut
+- Darin Tietz | Nebraska-Omaha
+- Dick Genadek | Minnesota-Duluth
+place 1 Jason Bingaman
+place 2 Lee Pulse
+place 3 Tim Tekautz
+place 4 Jim Bezotte
+place 5 Floyd Henning
+place 6 Tyrone Davis
+place 7 Darin Tietz
+place 8 Dick Genadek
+

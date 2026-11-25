@@ -1,0 +1,142 @@
+# NCAA Division III Championships 1974 — source: NCAA III 1974.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Eric Mast | Elizabethtown
+- Rich Mahonski | Wilkes
+- Ed Alber | Montclair State
+- Dave Whare | Millersville
+- Ron Angello | Ashland
+- Peter Berti | SUNY-Binghampton
+place 1 Eric Mast
+place 2 Rich Mahonski
+place 3 Ed Alber
+place 4 Dave Whare
+place 5 Ron Angello
+place 6 Peter Berti
+
+@ 126
+- Nabil Guketlov | Montclair State
+- Al Evangilista | John Carroll
+- Lon Balum | Wilkes
+- Jim Leyndyke | Lake Superior
+- Jim Craddox | College of New Jersey
+- Ed Hanley | MIT
+place 1 Nabil Guketlov
+place 2 Al Evangilista
+place 3 Lon Balum
+place 4 Jim Leyndyke
+place 5 Jim Craddox
+place 6 Ed Hanley
+
+@ 134
+- John Chakmakas | Wilkes
+- Rae McDonald | Mount Union
+- Mark Hawald | John Carroll
+- Dave Foxen | SUNY-Brockport
+- Craig Spencer | Montclair State
+- Ken Glueck | MacMurray State
+place 1 John Chakmakas
+place 2 Rae McDonald
+place 3 Mark Hawald
+place 4 Dave Foxen
+place 5 Craig Spencer
+place 6 Ken Glueck
+
+@ 142
+- Art Trovei | Wilkes
+- John Martellucci | SUNY-Brockport
+- Tim Pazyniak | John Carroll
+- Richard Zinck | Millersville
+- Larry Mims | SUNY-Albany
+- Dave Jirikovic | Lake Superior
+place 1 Art Trovei
+place 2 John Martellucci
+place 3 Tim Pazyniak
+place 4 Richard Zinck
+place 5 Larry Mims
+place 6 Dave Jirikovic
+
+@ 150
+- Mike Lee | Wilkes
+- Charles Becks | John Carroll
+- Kevin McCleary | Franklin & Marshall
+- Rich Tschantz | Mount Union
+- Steve Wagner | Wabash
+- Oscar Zavala | Montclair State
+place 1 Mike Lee
+place 2 Charles Becks
+place 3 Kevin McCleary
+place 4 Rich Tschantz
+place 5 Steve Wagner
+place 6 Oscar Zavala
+
+@ 158
+- Jim Fallis | Lake Superior
+- Gene Ashley | Wilkes
+- Lou Demyan | Kutztown State
+- Clayton Barnard | Ashland
+- Andy Fairle | Coe College
+- Mark Sassani | Mansfield State
+place 1 Jim Fallis
+place 2 Gene Ashley
+place 3 Lou Demyan
+place 4 Clayton Barnard
+place 5 Andy Fairle
+place 6 Mark Sassani
+
+@ 167
+- Mike Van Boxel | Ripon
+- Bill Hays | College of New Jersey
+- Paul Bruns | SUNY-Brockport
+- Jim Grant | Franklin & Marshall
+- Jim Weisenfluh | Wilkes
+- Fran Campbell | Delaware Valley
+place 1 Mike Van Boxel
+place 2 Bill Hays
+place 3 Paul Bruns
+place 4 Jim Grant
+place 5 Jim Weisenfluh
+place 6 Fran Campbell
+
+@ 177
+- Frank Calabria | SUNY-Brockport
+- Pat Cavanaugh | Augustana Illinois
+- Elijah Whitten | Ashland
+- Steve Strellner | Montclair State
+- Doug Cope | Delaware Valley
+- Tom Corbo | John Carroll
+place 1 Frank Calabria
+place 2 Pat Cavanaugh
+place 3 Elijah Whitten
+place 4 Steve Strellner
+place 5 Doug Cope
+place 6 Tom Corbo
+
+@ 190
+- Rich Molbury | SUNY-Potsdam
+- Jim Zoschg | Millersville
+- Glen Carson | College of New Jersey
+- Paul Iacovelli | Ithaca
+- John Reid | Montclair State
+- Dennis Luzon | SUNY-Oswego
+place 1 Rich Molbury
+place 2 Jim Zoschg
+place 3 Glen Carson
+place 4 Paul Iacovelli
+place 5 John Reid
+place 6 Dennis Luzon
+
+@ 285
+- Joe Bertolone | John Carroll
+- Al Scharer | Wilkes
+- Jim Murray | Coast Guard
+- Al Bartlebaugh | Delaware Valley
+- Greg Low | Ashland
+- Dave Schrey | Millersville
+place 1 Joe Bertolone
+place 2 Al Scharer
+place 3 Jim Murray
+place 4 Al Bartlebaugh
+place 5 Greg Low
+place 6 Dave Schrey
+

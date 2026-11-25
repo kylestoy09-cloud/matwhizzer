@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
 import { advanceRosterPool, rosterPoolPreview } from '@/lib/rosterPool'
+import { rolloverStatus } from '@/lib/rolloverStatus'
 
 // Girls grade rollover: the same steps as /api/admin/season-rollover, on girls wrestlers only
 
@@ -75,7 +76,10 @@ export async function GET(req: NextRequest) {
   if (error && (error.code === '42703' || error.message.includes('grade'))) {
     return NextResponse.json({ migrationPending: true })
   }
-  if (migrationPending) return NextResponse.json({ migrationPending: false })
+  if (migrationPending) {
+    try { return NextResponse.json({ migrationPending: false, status: await rolloverStatus(supabase, 'F') }) }
+    catch (e) { return NextResponse.json({ migrationPending: false, statusError: (e as Error).message }) }
+  }
 
   // Full preview query — paginated to avoid 1,000-row cap
   let wrestlers: Record<string, unknown>[]
@@ -120,12 +124,22 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({ preview, rosterPool })
 }
 
+const ID_BATCH = 300
+
 // POST — execute the rollover
 export async function POST(req: NextRequest) {
   const { user, email } = await requireAdmin()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const supabase = db()
+
+  // One rollover per season: once grades describe the working season, running again would advance everyone twice
+  try {
+    const st = await rolloverStatus(supabase, 'F')
+    if (st.rolled) return NextResponse.json({ error: `Already rolled over: grades describe ${st.gradesSeason}, the working season` }, { status: 409 })
+  } catch (e) {
+    return NextResponse.json({ error: (e as Error).message }, { status: 500 })
+  }
 
   // Fetch all confirmed-grade active wrestlers — paginated to avoid 1,000-row cap
   let wrestlerRows: Record<string, unknown>[]
@@ -165,20 +179,25 @@ export async function POST(req: NextRequest) {
   for (const g of ['So', 'Jr', 'Sr'] as Grade[]) {
     const ids = toAdvance.filter(r => r.grade === g).map(r => r.id)
     if (ids.length === 0) continue
-    const { error } = await supabase
-      .from('wrestlers')
-      .update({ grade: g, grade_confirmed_at: new Date().toISOString(), grade_confirmed_source: 'manual' })
-      .in('id', ids)
-    if (error) errors.push(`advance to ${g}: ${error.message}`)
+    // Batched: thousands of ids in one .in() make the request URL too long (400 Bad Request, 2026-11-11)
+    for (let i = 0; i < ids.length; i += ID_BATCH) {
+      const { error } = await supabase
+        .from('wrestlers')
+        .update({ grade: g, grade_confirmed_at: new Date().toISOString(), grade_confirmed_source: 'manual' })
+        .in('id', ids.slice(i, i + ID_BATCH))
+      if (error) { errors.push(`advance to ${g}: ${error.message}`); break }
+    }
   }
 
   // Graduate seniors
   if (toGraduate.length > 0) {
-    const { error } = await supabase
-      .from('wrestlers')
-      .update({ is_active: false })
-      .in('id', toGraduate)
-    if (error) errors.push(`graduate: ${error.message}`)
+    for (let i = 0; i < toGraduate.length; i += ID_BATCH) {
+      const { error } = await supabase
+        .from('wrestlers')
+        .update({ is_active: false })
+        .in('id', toGraduate.slice(i, i + ID_BATCH))
+      if (error) { errors.push(`graduate: ${error.message}`); break }
+    }
   }
 
   // Stored Track roster players (not yet tied to a wrestler) advance with them

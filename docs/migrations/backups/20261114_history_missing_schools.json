@@ -1,0 +1,47 @@
+[
+ {
+  "id": 53,
+  "level": "state",
+  "year": 1938,
+  "region": null,
+  "weight": "125",
+  "place": 3,
+  "tie": null,
+  "name": "L. Valenti",
+  "school": null,
+  "note": null,
+  "source": "njwh",
+  "gender": "M",
+  "region_name": null
+ },
+ {
+  "id": 3106,
+  "level": "state",
+  "year": 1998,
+  "region": null,
+  "weight": "145",
+  "place": 7,
+  "tie": "7/8",
+  "name": "Dave Castellini",
+  "school": null,
+  "note": null,
+  "source": "njwh",
+  "gender": "M",
+  "region_name": null
+ },
+ {
+  "id": 3279,
+  "level": "state",
+  "year": 2000,
+  "region": null,
+  "weight": "112",
+  "place": 7,
+  "tie": "7/8",
+  "name": "Rob Jimenez",
+  "school": null,
+  "note": null,
+  "source": "njwh",
+  "gender": "M",
+  "region_name": null
+ }
+]

@@ -575,7 +575,7 @@ function Card({ title, note, children }: { title: string; note?: string; childre
 }
 
 export function TeamBracketClient({
-  regularGroups, npGroups, leaderStats, meetResults, stateDates, picker,
+  regularGroups, npGroups, leaderStats, meetResults, stateDates, picker, viewTabs,
 }: {
   regularGroups: GroupBracket[]
   npGroups:      GroupBracket[]
@@ -583,6 +583,7 @@ export function TeamBracketClient({
   meetResults:   MeetResult[]
   stateDates:    StateDates
   picker:        ReactNode
+  viewTabs?:     ReactNode   // Brackets / History
 }) {
   const [group, setGroup] = useState('')
   const [section, setSection] = useState('')
@@ -591,10 +592,11 @@ export function TeamBracketClient({
   const sectionTabs = group === 'np' ? ['A', 'B'] : SECTION_NAMES
   const tabs = seeded ? (
     <>
+      {viewTabs && <div className="mb-3">{viewTabs}</div>}
       <SiteTabs items={GROUP_TABS.map(g => ({ key: g.key, label: g.label, onClick: () => { setGroup(x => (x === g.key ? '' : g.key)); setSection('') } }))} active={group} />
       <SiteTabs level={2} items={sectionTabs.map(sec => ({ key: sec, label: sec, onClick: () => setSection(x => (x === sec ? '' : sec)) }))} active={section} />
     </>
-  ) : undefined
+  ) : viewTabs
 
   const cards: ReactNode[] = []
   const showNP = group === 'np' || (!group && !section)

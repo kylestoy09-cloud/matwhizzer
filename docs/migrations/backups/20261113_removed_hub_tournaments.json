@@ -1,0 +1,338 @@
+[
+ {
+  "pool": "boys",
+  "tournament": {
+   "id": 20,
+   "hub": "offseason",
+   "name": "Who's Number One (FloWrestling WNO)",
+   "location": "Coralville, IA / Rotating Venue",
+   "time_of_year": "Early/Mid-October",
+   "in_state": "Out of state",
+   "format": "Folkstyle Match Series",
+   "platform": "FloWrestling",
+   "notes": "Elite made-for-broadcast #1 vs #2 individual showcase; regularly features top NJ hammers",
+   "sort_order": 30,
+   "is_active": false,
+   "created_at": "2026-11-12T13:18:25.959566+00:00",
+   "level": null,
+   "champion_rating": null,
+   "division_ratings": {}
+  },
+  "events": []
+ },
+ {
+  "pool": "boys",
+  "tournament": {
+   "id": 22,
+   "hub": "offseason",
+   "name": "Beast of the East",
+   "location": "Bob Carpenter Center (Univ of Delaware), Newark, DE",
+   "time_of_year": "Mid-December",
+   "in_state": "Out of state",
+   "format": "Folkstyle Individual",
+   "platform": "FloArena",
+   "notes": "Top mid-Atlantic in-season major; features NJ powers like Delbarton, Blair Academy, and Bergen Catholic",
+   "sort_order": 50,
+   "is_active": false,
+   "created_at": "2026-11-12T13:18:25.959566+00:00",
+   "level": null,
+   "champion_rating": null,
+   "division_ratings": {}
+  },
+  "events": []
+ },
+ {
+  "pool": "boys",
+  "tournament": {
+   "id": 23,
+   "hub": "offseason",
+   "name": "Walsh Jesuit Ironman",
+   "location": "Walsh Jesuit HS, Cuyahoga Falls, OH",
+   "time_of_year": "Early December",
+   "in_state": "Out of state",
+   "format": "Folkstyle Individual",
+   "platform": "FloArena",
+   "notes": "Considered the toughest in-season individual high school tournament in the US (Blair Academy regular)",
+   "sort_order": 60,
+   "is_active": false,
+   "created_at": "2026-11-12T13:18:25.959566+00:00",
+   "level": null,
+   "champion_rating": null,
+   "division_ratings": {}
+  },
+  "events": []
+ },
+ {
+  "pool": "boys",
+  "tournament": {
+   "id": 24,
+   "hub": "offseason",
+   "name": "PowerAde Tournament",
+   "location": "Canon-McMillan HS, Canonsburg, PA",
+   "time_of_year": "Late December",
+   "in_state": "Out of state",
+   "format": "Folkstyle Individual",
+   "platform": "FloArena",
+   "notes": "Marquee holiday national high school tournament attracting top national and NJ talent",
+   "sort_order": 70,
+   "is_active": false,
+   "created_at": "2026-11-12T13:18:25.959566+00:00",
+   "level": null,
+   "champion_rating": null,
+   "division_ratings": {}
+  },
+  "events": []
+ },
+ {
+  "pool": "boys",
+  "tournament": {
+   "id": 25,
+   "hub": "offseason",
+   "name": "Escape the Rock",
+   "location": "Council Rock South HS, Holland, PA",
+   "time_of_year": "Mid-January",
+   "in_state": "Out of state",
+   "format": "Folkstyle Individual",
+   "platform": "FloArena",
+   "notes": "Premier mid-season individual tournament featuring CBA, St. Joseph Regional, and Bergen Catholic",
+   "sort_order": 80,
+   "is_active": false,
+   "created_at": "2026-11-12T13:18:25.959566+00:00",
+   "level": null,
+   "champion_rating": null,
+   "division_ratings": {}
+  },
+  "events": []
+ },
+ {
+  "pool": "boys",
+  "tournament": {
+   "id": 26,
+   "hub": "offseason",
+   "name": "National Prep Championship",
+   "location": "Stabler Arena (Lehigh Univ), Bethlehem, PA",
+   "time_of_year": "Late February",
+   "in_state": "Out of state",
+   "format": "Folkstyle Individual",
+   "platform": "FloArena",
+   "notes": "National championship for top independent/prep schools; perennial battleground for Blair Academy",
+   "sort_order": 90,
+   "is_active": false,
+   "created_at": "2026-11-12T13:18:25.959566+00:00",
+   "level": null,
+   "champion_rating": null,
+   "division_ratings": {}
+  },
+  "events": []
+ },
+ {
+  "pool": "boys",
+  "tournament": {
+   "id": 37,
+   "hub": "offseason",
+   "name": "Tyrant Fall & Spring Duals",
+   "location": "Wildwood, NJ / York, PA",
+   "time_of_year": "Spring & Fall",
+   "in_state": "In state / Regional",
+   "format": "Folkstyle Duals",
+   "platform": "FloArena / Trackwrestling",
+   "notes": "Mid-Atlantic club team duals attracting top NJ varsity lineups",
+   "sort_order": 200,
+   "is_active": false,
+   "created_at": "2026-11-12T13:18:25.959566+00:00",
+   "level": null,
+   "champion_rating": null,
+   "division_ratings": {}
+  },
+  "events": []
+ },
+ {
+  "pool": "boys",
+  "tournament": {
+   "id": 34,
+   "hub": "offseason",
+   "name": "UWW U17 & U20 World Team Trials",
+   "location": "Las Vegas, NV / Louisville, KY",
+   "time_of_year": "April / May",
+   "in_state": "Out of state",
+   "format": "Freestyle & Greco Individual",
+   "platform": "FloArena",
+   "notes": "Determines the US World Championship teams; draws elite NJ state champions & All-Americans",
+   "sort_order": 170,
+   "is_active": false,
+   "created_at": "2026-11-12T13:18:25.959566+00:00",
+   "level": null,
+   "champion_rating": null,
+   "division_ratings": {}
+  },
+  "events": []
+ },
+ {
+  "pool": "girls",
+  "tournament": {
+   "id": 19,
+   "hub": "offseason",
+   "name": "Who's Number One (FloWrestling WNO)",
+   "location": "Coralville, IA / Rotating Venue",
+   "time_of_year": "Early/Mid-October",
+   "in_state": "Out of state",
+   "format": "Folkstyle Match Series",
+   "platform": "FloWrestling",
+   "notes": "Elite made-for-broadcast #1 vs #2 individual showcase; regularly features top NJ hammers",
+   "sort_order": 30,
+   "is_active": false,
+   "created_at": "2026-11-12T13:18:25.959566+00:00",
+   "level": null,
+   "champion_rating": null,
+   "division_ratings": {}
+  },
+  "events": []
+ },
+ {
+  "pool": "girls",
+  "tournament": {
+   "id": 21,
+   "hub": "offseason",
+   "name": "Beast of the East",
+   "location": "Bob Carpenter Center (Univ of Delaware), Newark, DE",
+   "time_of_year": "Mid-December",
+   "in_state": "Out of state",
+   "format": "Folkstyle Individual",
+   "platform": "FloArena",
+   "notes": "Top mid-Atlantic in-season major; features NJ powers like Delbarton, Blair Academy, and Bergen Catholic",
+   "sort_order": 50,
+   "is_active": false,
+   "created_at": "2026-11-12T13:18:25.959566+00:00",
+   "level": null,
+   "champion_rating": null,
+   "division_ratings": {}
+  },
+  "events": []
+ },
+ {
+  "pool": "girls",
+  "tournament": {
+   "id": 22,
+   "hub": "offseason",
+   "name": "Walsh Jesuit Ironman",
+   "location": "Walsh Jesuit HS, Cuyahoga Falls, OH",
+   "time_of_year": "Early December",
+   "in_state": "Out of state",
+   "format": "Folkstyle Individual",
+   "platform": "FloArena",
+   "notes": "Considered the toughest in-season individual high school tournament in the US (Blair Academy regular)",
+   "sort_order": 60,
+   "is_active": false,
+   "created_at": "2026-11-12T13:18:25.959566+00:00",
+   "level": null,
+   "champion_rating": null,
+   "division_ratings": {}
+  },
+  "events": []
+ },
+ {
+  "pool": "girls",
+  "tournament": {
+   "id": 23,
+   "hub": "offseason",
+   "name": "PowerAde Tournament",
+   "location": "Canon-McMillan HS, Canonsburg, PA",
+   "time_of_year": "Late December",
+   "in_state": "Out of state",
+   "format": "Folkstyle Individual",
+   "platform": "FloArena",
+   "notes": "Marquee holiday national high school tournament attracting top national and NJ talent",
+   "sort_order": 70,
+   "is_active": false,
+   "created_at": "2026-11-12T13:18:25.959566+00:00",
+   "level": null,
+   "champion_rating": null,
+   "division_ratings": {}
+  },
+  "events": []
+ },
+ {
+  "pool": "girls",
+  "tournament": {
+   "id": 24,
+   "hub": "offseason",
+   "name": "Escape the Rock",
+   "location": "Council Rock South HS, Holland, PA",
+   "time_of_year": "Mid-January",
+   "in_state": "Out of state",
+   "format": "Folkstyle Individual",
+   "platform": "FloArena",
+   "notes": "Premier mid-season individual tournament featuring CBA, St. Joseph Regional, and Bergen Catholic",
+   "sort_order": 80,
+   "is_active": false,
+   "created_at": "2026-11-12T13:18:25.959566+00:00",
+   "level": null,
+   "champion_rating": null,
+   "division_ratings": {}
+  },
+  "events": []
+ },
+ {
+  "pool": "girls",
+  "tournament": {
+   "id": 25,
+   "hub": "offseason",
+   "name": "National Prep Championship",
+   "location": "Stabler Arena (Lehigh Univ), Bethlehem, PA",
+   "time_of_year": "Late February",
+   "in_state": "Out of state",
+   "format": "Folkstyle Individual",
+   "platform": "FloArena",
+   "notes": "National championship for top independent/prep schools; perennial battleground for Blair Academy",
+   "sort_order": 90,
+   "is_active": false,
+   "created_at": "2026-11-12T13:18:25.959566+00:00",
+   "level": null,
+   "champion_rating": null,
+   "division_ratings": {}
+  },
+  "events": []
+ },
+ {
+  "pool": "girls",
+  "tournament": {
+   "id": 36,
+   "hub": "offseason",
+   "name": "Tyrant Fall & Spring Duals",
+   "location": "Wildwood, NJ / York, PA",
+   "time_of_year": "Spring & Fall",
+   "in_state": "In state / Regional",
+   "format": "Folkstyle Duals",
+   "platform": "FloArena / Trackwrestling",
+   "notes": "Mid-Atlantic club team duals attracting top NJ varsity lineups",
+   "sort_order": 200,
+   "is_active": false,
+   "created_at": "2026-11-12T13:18:25.959566+00:00",
+   "level": null,
+   "champion_rating": null,
+   "division_ratings": {}
+  },
+  "events": []
+ },
+ {
+  "pool": "girls",
+  "tournament": {
+   "id": 33,
+   "hub": "offseason",
+   "name": "UWW U17 & U20 World Team Trials",
+   "location": "Las Vegas, NV / Louisville, KY",
+   "time_of_year": "April / May",
+   "in_state": "Out of state",
+   "format": "Freestyle & Greco Individual",
+   "platform": "FloArena",
+   "notes": "Determines the US World Championship teams; draws elite NJ state champions & All-Americans",
+   "sort_order": 170,
+   "is_active": false,
+   "created_at": "2026-11-12T13:18:25.959566+00:00",
+   "level": null,
+   "champion_rating": null,
+   "division_ratings": {}
+  },
+  "events": []
+ }
+]

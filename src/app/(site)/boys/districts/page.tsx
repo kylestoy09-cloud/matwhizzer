@@ -1,14 +1,16 @@
 import Link from 'next/link'
+import { PostseasonHomeLink } from '@/components/site/PostseasonHomeLink'
 import Image from 'next/image'
 import { supabase } from '@/lib/supabase/public-cached'
-import { getActiveSeason } from '@/lib/get-season'
+import { getPostseasonSeason } from '@/lib/get-season'
+import { historySeasonInfo } from '@/lib/postseasonSeason'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { PageHeader } from '@/components/PageHeader'
 
 export const revalidate = 300
 
 export default async function BoysDistrictsPage() {
-  const season = await getActiveSeason('M')
+  const { season, options: seasonOptions } = await getPostseasonSeason('M')
 
   const { data: districtRows } = await supabase
     .from('districts')
@@ -21,6 +23,9 @@ export default async function BoysDistrictsPage() {
   }
 
   const districts = Array.from({ length: 32 }, (_, i) => i + 1)
+  // 2020-21 (COVID) had no districts: the season went straight to super regions
+  const hist = await historySeasonInfo('M', season)
+  const noDistricts = !!hist && !hist.districts
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-10">
@@ -31,16 +36,18 @@ export default async function BoysDistrictsPage() {
         ← Boys Search
       </Link>
 
+      <PostseasonHomeLink side="boys" season={season} options={seasonOptions} />
       <div className="mb-8 text-center">
         <PageHeader title="Boys District Brackets" />
         <div className="flex items-center justify-center gap-1 text-slate-500 text-sm mt-1">
           <span>NJSIAA</span>
-          <InlineSeasonPicker gender="M" activeSeason={season} />
+          <InlineSeasonPicker arrows gender="M" activeSeason={season} options={seasonOptions} />
           <span>· Select a district</span>
         </div>
       </div>
 
-      <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-3">
+      {noDistricts && <p className="text-center text-sm text-slate-600 mb-6">There were no district tournaments this season. It went straight to the <Link href="/boys/regions" className="underline">super regions</Link>.</p>}
+      <div className={`grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-3 ${noDistricts ? 'hidden' : ''}`}>
         {districts.map(d => {
           const logoUrl = logoMap.get(d) ?? null
           return (

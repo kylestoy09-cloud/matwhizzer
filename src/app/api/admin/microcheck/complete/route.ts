@@ -3,6 +3,9 @@ import { getNewestSeason } from '@/lib/season-context'
 import { createSupabaseServer }  from '@/lib/supabase/server'
 import { createSupabaseAdmin }   from '@/lib/supabase/service'
 import { nextMicrocheckTask, releaseTask } from '../_next'
+import { decideCollegeEntry } from '@/lib/ncaa/review'
+import { setStreamChoice, type StreamChoice } from '@/lib/streamingLinks'
+import { decideSpot, type SpotAction } from '@/lib/ncaa/spotCheck'
 
 export const dynamic = 'force-dynamic'
 
@@ -29,6 +32,46 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json()
   const db = createSupabaseAdmin()
+
+  // ── college_review ────────────────────────────────────────────────────────────
+  // The decision itself is the College page's (it covers the same name at the same college in every year); a
+  // completed microcheck_tasks row credits it on the scoreboard.
+  if (body.task_type === 'college_review') {
+    const { entry_id, gender, action, wrestler_id } = body as { entry_id: number; gender: 'M' | 'F'; action: string; wrestler_id?: string }
+    if ((gender !== 'M' && gender !== 'F') || !Number.isInteger(entry_id) || (action !== 'accept' && action !== 'not_ours')) {
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+    }
+    try {
+      await decideCollegeEntry(db, gender, entry_id, action, wrestler_id ?? null, user.email ?? '')
+    } catch (e) {
+      return NextResponse.json({ error: e instanceof Error ? e.message : String(e) }, { status: 400 })
+    }
+    const { error: logErr } = await db.from('microcheck_tasks').upsert({
+      task_type: 'college_review', entity_id: String(entry_id), gender, status: 'completed',
+      metadata: { action, wrestler_id: wrestler_id ?? null }, completed_at: new Date().toISOString(), completed_by: user.id,
+    }, { onConflict: 'task_type,entity_id,gender' })
+    if (logErr) return NextResponse.json({ error: logErr.message }, { status: 500 })
+    await releaseTask(db, `college:${gender}:${entry_id}`)
+    return NextResponse.json({ ok: true, task: await followingTask(db, user.id) })
+  }
+
+  // ── college_spot (Kyle 2026-11-19) ──────────────────────────────────────────────
+  if (body.task_type === 'college_spot') {
+    const { key, gender, action } = body as { key: string; gender: 'M' | 'F'; action: SpotAction }
+    if ((gender !== 'M' && gender !== 'F') || !/^[0-9a-f-]{36}\|\d+$/.test(key ?? '') || !['confirmed', 'not_him', 'cant_tell'].includes(action)) {
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+    }
+    try { await decideSpot(db, gender, key, action, user.email ?? user.id) } catch (e) {
+      return NextResponse.json({ error: e instanceof Error ? e.message : String(e) }, { status: 400 })
+    }
+    const { error: logErr } = await db.from('microcheck_tasks').upsert({
+      task_type: 'college_spot', entity_id: key, gender, status: 'completed',
+      metadata: { action }, completed_at: new Date().toISOString(), completed_by: user.id,
+    }, { onConflict: 'task_type,entity_id,gender' })
+    if (logErr) return NextResponse.json({ error: logErr.message }, { status: 500 })
+    await releaseTask(db, `spot:${gender}:${key}`)
+    return NextResponse.json({ ok: true, task: await followingTask(db, user.id) })
+  }
 
   // ── tie_resolution ────────────────────────────────────────────────────────────
   if (body.task_type === 'tie_resolution') {
@@ -82,6 +125,13 @@ export async function POST(req: NextRequest) {
   if (!school_id || !field || !status) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
+  // the home streaming account (Kyle 2026-11-19): NFHS, Hudl, Both or Neither — the links stay on file, the pick decides
+  // which the site shows
+  if (field === 'stream_choice' && status === 'completed') {
+    if (!['nfhs', 'hudl', 'both', 'neither'].includes(value ?? '')) return NextResponse.json({ error: 'Pick NFHS, Hudl, Both or Neither' }, { status: 400 })
+    const err = await setStreamChoice(db, gender, school_id, (await getNewestSeason()).id, value as StreamChoice, user.email ?? user.id)
+    if (err) return NextResponse.json({ error: err }, { status: 500 })
+  }
 
   // 1. Log the outcome (upsert — if they somehow hit it twice, last write wins)
   const { error: logErr } = await db.from('microcheck_task_log').upsert({
@@ -98,7 +148,8 @@ export async function POST(req: NextRequest) {
 
   // 2. Write value to target table (only for completed, not cant_find)
   const coachTable = gender === 'F' ? 'girls_coaches' : 'boys_coaches'
-  if (status === 'completed' && value?.trim()) {
+  // body.unchanged: a reset check confirmed what's on file ("Still right") — nothing to write
+  if (status === 'completed' && value?.trim() && !body.unchanged && field !== 'stream_choice') {
     if (SCHOOL_COLS.has(field)) {
       const { error: updateErr } = await db.from('schools')
         .update({ [field]: value.trim() })
@@ -106,14 +157,12 @@ export async function POST(req: NextRequest) {
       if (updateErr) return NextResponse.json({ error: updateErr.message }, { status: 500 })
 
     } else if (field === 'coach_name') {
-      // Insert new head coach row for the newest season, in this gender's coach table
-      const { error: coachErr } = await db.from(coachTable).insert({
-        name:      value.trim(),
-        title:     'Head Coach',
-        school_id,
-        season_id: (await getNewestSeason()).id,
-        is_active: true,
-      })
+      // The newest season's head coach: renamed when there is one (a reset check correcting it), else added
+      const seasonId = (await getNewestSeason()).id
+      const { data: existing } = await db.from(coachTable).select('id').eq('school_id', school_id).eq('season_id', seasonId).eq('is_active', true).maybeSingle()
+      const { error: coachErr } = existing
+        ? await db.from(coachTable).update({ name: value.trim() }).eq('id', existing.id)
+        : await db.from(coachTable).insert({ name: value.trim(), title: 'Head Coach', school_id, season_id: seasonId, is_active: true })
       if (coachErr) return NextResponse.json({ error: coachErr.message }, { status: 500 })
 
     } else if (field === 'coach_email') {

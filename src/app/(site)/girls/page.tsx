@@ -1,8 +1,10 @@
+import { schoolNameMatches } from '@/lib/saintNames'
+import { regionLabels } from '@/lib/postseasonSeason'
+import { TournamentButtons } from '@/app/(site)/postseason/individual/IndividualButtons'
 import { supabase } from '@/lib/supabase/public-cached'
 import { getSeasons, getStateTournamentId } from '@/lib/seasons-server'
-import Link from 'next/link'
 import Image from 'next/image'
-import { getActiveSeason } from '@/lib/get-season'
+import { getActiveSeason, getDirectorySeason } from '@/lib/get-season'
 import { PostseasonLeaders } from '@/components/PostseasonLeaders'
 import { StateChampions } from '@/components/StateChampions'
 import { PageHeader } from '@/components/PageHeader'
@@ -22,6 +24,7 @@ export default async function GirlsPage({
   const q  = rawQ?.trim()  ?? ''
   const sq = rawSq?.trim() ?? ''
   const season = await getActiveSeason('F')
+  const rl = await regionLabels('F', season)   // the region buttons' labels: the number, or a girls region's name
   const stateTid = await getStateTournamentId(season, 'F')
   const seasonEndYear = (await getSeasons()).find(x => x.id === season)?.end_year ?? 0
 
@@ -33,7 +36,7 @@ export default async function GirlsPage({
           .order('last_name').order('first_name').limit(30)
       : Promise.resolve({ data: null }),
     sq.length >= 2
-      ? supabase.rpc('school_directory', { p_gender: 'F', p_season: season })
+      ? supabase.rpc('school_directory', { p_gender: 'F', p_season: await getDirectorySeason('F') })   // last season's directory until the new one starts
       : Promise.resolve({ data: null }),
   ])
 
@@ -56,7 +59,7 @@ export default async function GirlsPage({
   if (sq.length >= 2 && schoolDirRes.data) {
     const ql = sq.toLowerCase()
     schools = (schoolDirRes.data as SchoolRow[])
-      .filter(s => s.school_name?.toLowerCase().includes(ql) || s.school?.toLowerCase().includes(ql))
+      .filter(s => schoolNameMatches(s.school_name, ql) || schoolNameMatches(s.school, ql))   // "st" / "st." / "saint" alike
       .slice(0, 15)
   }
 
@@ -137,57 +140,10 @@ export default async function GirlsPage({
         </div>
       )}
 
-      {/* ── Tournament grids ── */}
-      <div className="space-y-10 border-t border-slate-200 pt-10">
-
-        <section>
-          <Link
-            href="/girls/state"
-            className="flex items-center justify-center gap-2 w-full py-4 rounded-none bg-rose-600 hover:bg-rose-700 text-white font-bold text-lg transition-colors shadow-none mb-6"
-          >
-            <span className="text-2xl">🏆</span>
-            Girls State Tournament
-            <span className="text-white/70 ml-1">→</span>
-          </Link>
-        </section>
-
-        <section>
-          <div className="mb-4">
-            <h2 className="text-xl font-bold text-rose-900">Regions</h2>
-            <p className="text-slate-500 text-sm mt-0.5">Select a region</p>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            {Array.from({ length: 4 }, (_, i) => i + 1).map(r => (
-              <Link
-                key={r}
-                href={`/girls/regions/${r}`}
-                className="flex flex-col items-center justify-center py-4 rounded-none border border-black bg-white hover:bg-rose-50 hover:border-rose-400 transition-colors shadow-none"
-              >
-                <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide leading-none mb-0.5">Reg.</span>
-                <span className="text-base font-bold text-slate-800">{r}</span>
-              </Link>
-            ))}
-          </div>
-        </section>
-
-        <section>
-          <div className="mb-4">
-            <h2 className="text-xl font-bold text-rose-900">Districts</h2>
-            <p className="text-slate-500 text-sm mt-0.5">Select a district</p>
-          </div>
-          <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
-            {Array.from({ length: 12 }, (_, i) => i + 1).map(d => (
-              <Link
-                key={d}
-                href={`/girls/districts/${d}`}
-                className="flex flex-col items-center justify-center aspect-square rounded-none border border-black bg-white hover:bg-rose-50 hover:border-rose-400 transition-colors shadow-none"
-              >
-                <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide leading-none mb-0.5">Dist.</span>
-                <span className="text-xl font-bold text-slate-800">{d}</span>
-              </Link>
-            ))}
-          </div>
-        </section>
+      {/* ── Tournament buttons: the standard buttons, as on the Individual Post Season page (Kyle 2026-11-16) ── */}
+      <div className="border-t border-slate-200 pt-10">
+        <TournamentButtons side="girls" state regions={rl.order.length ? rl.order : Array.from({ length: 4 }, (_, i) => i + 1)}
+          districts={Array.from({ length: 12 }, (_, i) => i + 1)} regionNames={Object.fromEntries(Array.from({ length: 4 }, (_, i) => [i + 1, rl.button(i + 1)]))} />
       </div>
     </div>
   )

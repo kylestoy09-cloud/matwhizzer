@@ -1,0 +1,182 @@
+# NCAA Division II Championships 1983 — source: NCAA II 1983.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Adam Cuestas | Cal State-Bakersfield
+- Reggie Johnson | Ashland
+- Willie Ingold | Northern Michigan
+- Jose Martinez | California-Davis
+- Steve Werner | North Dakota State
+- Ray Garcia | SIU-Edwardsville
+- Scott Knowles | North Dakota
+- Darrell Burchfield | Saginaw
+place 1 Adam Cuestas
+place 2 Reggie Johnson
+place 3 Willie Ingold
+place 4 Jose Martinez
+place 5 Steve Werner
+place 6 Ray Garcia
+place 7 Scott Knowles
+place 8 Darrell Burchfield
+
+@ 126
+- Don Stevens | SIU-Edwardsville
+- Lyle Clem | North Dakota State
+- John Loomis | Cal State-Bakersfield
+- Mike Vania | Wisconsin-Parkside
+- Kraig Pressler | Augustana SD
+- Craig Kosinksi | Springfield
+- Brad Wilkerson | Oakland
+- Dave Morel | Ashland
+place 1 Don Stevens
+place 2 Lyle Clem
+place 3 John Loomis
+place 4 Mike Vania
+place 5 Kraig Pressler
+place 6 Craig Kosinksi
+place 7 Brad Wilkerson
+place 8 Dave Morel
+
+@ 134
+- Steve Carr | North Dakota State
+- Nick Karantinos | Augustana SD
+- Steve Stearns | SIU-Edwardsville
+- Bob Hoffman | Nebraska-Omaha
+- Dave Navarre | Humboldt State
+- Randy Dowden | Central Missouri
+- Pat Hughes | Springfield
+- Mario Decaro | San Francisco State
+place 1 Steve Carr
+place 2 Nick Karantinos
+place 3 Steve Stearns
+place 4 Bob Hoffman
+place 5 Dave Navarre
+place 6 Randy Dowden
+place 7 Pat Hughes
+place 8 Mario Decaro
+
+@ 142
+- Jesse Reyes | Cal State-Bakersfield
+- Mike Langlais | North Dakota State
+- Charlie Lucas | Portland State
+- Freddie Richardson | North Carolina-Pembroke
+- Gary Rucinski | St. Cloud State
+- D.J. West | Northern Colorado
+- Jeff Schumacher | North Dakota
+- Rick Babbitts | Southern Connecticut
+place 1 Jesse Reyes
+place 2 Mike Langlais
+place 3 Charlie Lucas
+place 4 Freddie Richardson
+place 5 Gary Rucinski
+place 6 D.J. West
+place 7 Jeff Schumacher
+place 8 Rick Babbitts
+
+@ 150
+- Mark Manning | Nebraska-Omaha
+- Mark Black | Ashland
+- Mark Kristoff | SIU-Edwardsville
+- Mike Muckerheide | Wisconsin-Parkside
+- Phil Sowers | Minnesota-Duluth
+- Alan Davis | North Carolina-Pembroke
+- Dave Wiklund | Augustana SD
+- Mike McGrath | St. Cloud State
+place 1 Mark Manning
+place 2 Mark Black
+place 3 Mark Kristoff
+place 4 Mike Muckerheide
+place 5 Phil Sowers
+place 6 Alan Davis
+place 7 Dave Wiklund
+place 8 Mike McGrath
+
+@ 158
+- John Davis | Morgan State
+- John Barrett | St. Cloud State
+- Lanny Paulson | Northern Colorado
+- Craig Noble | Cal State-Bakersfield
+- Tim Jones | North Dakota State
+- Terry Schumacker | Ferris State
+- Mike Specht | Augustana SD
+- Johnny Haynes | Winston-Salem
+place 1 John Davis
+place 2 John Barrett
+place 3 Lanny Paulson
+place 4 Craig Noble
+place 5 Tim Jones
+place 6 Terry Schumacker
+place 7 Mike Specht
+place 8 Johnny Haynes
+
+@ 167
+- Greg Veal | Morgan State
+- Kevin Benson | Portland State
+- Jim Kimsey | Nebraska-Omaha
+- John Revesz | Pittsburgh-Johnstown
+- John Morgan | North Dakota State
+- Dave Cornemann | South Dakota State
+- Stephen Scott | Elizabeth City State
+- Sam Williams | Central Missouri
+place 1 Greg Veal
+place 2 Kevin Benson
+place 3 Jim Kimsey
+place 4 John Revesz
+place 5 John Morgan
+place 6 Dave Cornemann
+place 7 Stephen Scott
+place 8 Sam Williams
+
+@ 177
+- Scott Mansur | Portland State
+- Booker Benford | SIU-Edwardsville
+- Mark Loomis | Cal State-Bakersfield
+- Phil Herbold | St. Cloud State
+- Steve Hammers | North Dakota State
+- Rick Heckendorn | Nebraska-Omaha
+- Dave Rothman | Central Connecticut
+- Craig McManaman | Grand Valley State
+place 1 Scott Mansur
+place 2 Booker Benford
+place 3 Mark Loomis
+place 4 Phil Herbold
+place 5 Steve Hammers
+place 6 Rick Heckendorn
+place 7 Dave Rothman
+place 8 Craig McManaman
+
+@ 190
+- Greg Wilcox | Nebraska-Omaha
+- Mike Blaske | Cal State-Bakersfield
+- Joe  Glasder | SIU-Edwardsville
+- Dave Hass | North Dakota State
+- Forrest Brown | Ferris State
+- Russ Jones | Cal State-Sacramento
+- Willard Crews | Morgan State
+- Wayne Beaman | Bemidji State
+place 1 Greg Wilcox
+place 2 Mike Blaske
+place 3 Joe  Glasder
+place 4 Dave Hass
+place 5 Forrest Brown
+place 6 Russ Jones
+place 7 Willard Crews
+place 8 Wayne Beaman
+
+@ 285
+- Mark Rigatuso | Nebraska-Omaha
+- Morris Johnson | San Francisco State
+- Jerome Larson | North Dakota
+- Bruce Lambert | Pfeifer
+- Wade Hall | Indianapolis
+- Rogelio Herrera | Cal State-Bakersfield
+- Al Sears | SIU-Edwardsville
+- Emanuel Yarbrough | Morgan State
+place 1 Mark Rigatuso
+place 2 Morris Johnson
+place 3 Jerome Larson
+place 4 Bruce Lambert
+place 5 Wade Hall
+place 6 Rogelio Herrera
+place 7 Al Sears
+place 8 Emanuel Yarbrough
+

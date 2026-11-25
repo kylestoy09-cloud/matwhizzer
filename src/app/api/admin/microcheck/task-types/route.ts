@@ -60,3 +60,15 @@ export async function PATCH(req: NextRequest) {
   }
   return NextResponse.json({ ok: true })
 }
+
+// POST { reset: key } — reset a check (Kyle 2026-11-19): answers before now stop counting, so every school is asked again
+export async function POST(req: NextRequest) {
+  if (!await requireMicrocheckAdmin()) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const { reset } = await req.json() as { reset?: string }
+  if (!reset) return NextResponse.json({ error: 'reset required' }, { status: 400 })
+  const db = createSupabaseAdmin()
+  const { data, error } = await db.from('microcheck_task_types').update({ reset_at: new Date().toISOString(), updated_at: new Date().toISOString() }).eq('key', reset).or('source.eq.school_field,queue_type.eq.college_spot').select('key')
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  if (!data?.length) return NextResponse.json({ error: 'Only school checks and the college spot check can be reset' }, { status: 400 })
+  return NextResponse.json({ ok: true })
+}

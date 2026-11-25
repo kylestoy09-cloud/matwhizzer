@@ -16,7 +16,12 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server'
+import { tableMissing, transferTable } from '@/lib/transfers'
+import { cronSkipBeforeSeason } from '@/lib/cronGuard'
+import { schoolIdsOfWrestlers } from '@/lib/hubSchools'
 import { getWorkingSeason, getPreviousSeason, parseGender } from '@/lib/season-context'
+import { recordProjections } from '@/lib/projectionTrack'
+import { orderBouts } from '@/lib/boutOrder'
 import { getSeasons } from '@/lib/seasons-server'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
@@ -24,7 +29,7 @@ import {
   classifyOutcome,
   computeMatchScore,
   computeMatchComponent,
-  computeTournamentComponent,
+  tournamentAverage,
   tournamentPointsForPlace,
   postseasonScore,
   totalHammerScore,
@@ -42,11 +47,13 @@ const BOOTSTRAP_SLOTS      = 20
 
 async function authorize(req: NextRequest): Promise<boolean> {
   // Vercel cron sends Authorization: Bearer <CRON_SECRET>
+  // (an unset secret never matches — "Bearer undefined" must not pass)
+  const secret = process.env.CRON_SECRET
   const authHeader = req.headers.get('authorization')
-  if (authHeader === `Bearer ${process.env.CRON_SECRET}`) return true
+  if (secret && authHeader === `Bearer ${secret}`) return true
   // Legacy header (manual calls)
   const cronSecret = req.headers.get('x-cron-secret')
-  if (cronSecret && cronSecret === process.env.CRON_SECRET) return true
+  if (secret && cronSecret === secret) return true
   // Admin session (any signed-in user is not enough: fans have accounts)
   const sb = await createSupabaseServer()
   const { data: { user } } = await sb.auth.getUser()
@@ -131,7 +138,9 @@ type WrestlerState = {
   wrestlerId:           string
   postseasonBase:       number
   postseasonAdjusted:   number
-  tournamentPlacements: Map<string, { pointsEarned: number; won: boolean }>
+  // Latest result at each tournament (keyed by tournament, across seasons), 12-month rolling (Kyle
+  // 2026-11-12): see tournamentAverage. Independent of the match part.
+  tournaments:          Map<string, TournamentEntry>
   matchScores:          number[]
   bootstrapSlots:       number
   bootstrapValue:       number
@@ -144,10 +153,35 @@ function buildScoreWindow(s: WrestlerState): number[] {
   return [...bootstrap, ...s.matchScores].slice(-BOOTSTRAP_SLOTS)
 }
 
-function getHammer(s: WrestlerState): number {
+type TournamentEntry = { date: string; points: number; won: boolean }
+
+/** True while a result dated `date` is under a year old on `asOf` (both YYYY-MM-DD). */
+function withinYear(date: string, asOf: string): boolean {
+  const d = new Date(`${date}T00:00:00Z`)
+  d.setUTCFullYear(d.getUTCFullYear() + 1)
+  return d.toISOString().slice(0, 10) > asOf
+}
+
+/** The tournament part on a given day: results under a year old. */
+function tournamentPart(s: WrestlerState, asOf: string): number {
+  return tournamentAverage([...s.tournaments.values()].filter(t => withinYear(t.date, asOf)))
+}
+
+/** One key per tournament across seasons ("2026 Beast of the East" = "Beast of the East"). Editions linked by
+ *  prior_id take the first edition's name (keyOf below); unlinked ones go by their own name. */
+function tournamentKey(name: string): string {
+  return name.toLowerCase()
+    .replace(/\b(19|20)\d{2}(-\d{2,4})?\b/g, ' ')
+    .replace(/\b\d+(st|nd|rd|th)\s+annual\b|\bannual\b/g, ' ')
+    .replace(/[^a-z0-9]+/g, ' ').trim()
+}
+
+// A loss at a tournament by injury default or medical forfeit (a plain forfeit or a DQ is not)
+const TOURNAMENT_MEDICAL = new Set(['Inj.', 'Def.', 'MFF', 'MFFL'])
+
+function getHammer(s: WrestlerState, asOf: string): number {
   const matchComp = computeMatchComponent(buildScoreWindow(s))
-  const tourComp  = computeTournamentComponent([...s.tournamentPlacements.values()])
-  return totalHammerScore(s.postseasonAdjusted, tourComp, matchComp)
+  return totalHammerScore(s.postseasonAdjusted, tournamentPart(s, asOf), matchComp)
 }
 
 function addMatchScore(s: WrestlerState, score: number, date: string): void {
@@ -273,13 +307,16 @@ export async function POST(req: NextRequest) {
   //                                          season); a row whose school is unchanged keeps
   //                                          its archived conference, section and
   //                                          classification, and current main weights are untouched
+  //   { season: '2025-26', dryRun: true }     computes everything and writes nothing: returns each
+  //                                          wrestler's rating, to compare formula changes
   const logOnly = body?.logOnly === true
   const archive = body?.archive === true
-  if ((logOnly || archive) && typeof body?.season !== 'string') {
-    return NextResponse.json({ error: 'logOnly / archive require season (a seasons.year_label)' }, { status: 400 })
+  const dryRun  = body?.dryRun === true
+  if ((logOnly || archive || dryRun) && typeof body?.season !== 'string') {
+    return NextResponse.json({ error: 'logOnly / archive / dryRun require season (a seasons.year_label)' }, { status: 400 })
   }
   const working = await getWorkingSeason(parseGender(gender))
-  const season = logOnly || archive
+  const season = logOnly || archive || dryRun
     ? (await getSeasons()).find(s => s.label === body.season)
     : working
   if (!season) return NextResponse.json({ error: `Unknown season ${body?.season}` }, { status: 400 })
@@ -300,8 +337,15 @@ export async function POST(req: NextRequest) {
 
   // ── 1. Compute postseason base scores (both seasons, take best per wrestler) ───
 
+  // Medical exits per season: a postseason loss by injury default or forfeit (in the postseason a
+  // forfeit is a medical forfeit; a DQ is not medical), or a region top-4 finisher missing from a
+  // loaded state bracket (in NJ the alternate replaces a qualifier who withdraws).
+  const medicalBySeason = new Map<number, Set<string>>()
+
   async function computePostseasonFacts(seasonId: number): Promise<Map<string, PostseasonFact>> {
     const factMap = new Map<string, PostseasonFact>()
+    const medical = new Set<string>()
+    medicalBySeason.set(seasonId, medical)
     const { data: psTournaments } = await db
       .from('tournaments')
       .select('id, tournament_type')
@@ -334,10 +378,10 @@ export async function POST(req: NextRequest) {
       e.id, { wrestlerId: e.wrestler_id, tournamentId: e.tournament_id }
     ]))
 
-    type MRow = { id: string; round: string; winner_entry_id: string | null; loser_entry_id: string | null }
+    type MRow = { id: string; round: string; win_type: string | null; winner_entry_id: string | null; loser_entry_id: string | null }
     const validated = [{ col: 'validated', val: true }]
-    const wMatches = await chunkIn<MRow>(db, 'matches', 'winner_entry_id', entryIds, 'id, round, winner_entry_id, loser_entry_id', validated)
-    const lMatches = await chunkIn<MRow>(db, 'matches', 'loser_entry_id',  entryIds, 'id, round, winner_entry_id, loser_entry_id', validated)
+    const wMatches = await chunkIn<MRow>(db, 'matches', 'winner_entry_id', entryIds, 'id, round, win_type, winner_entry_id, loser_entry_id', validated)
+    const lMatches = await chunkIn<MRow>(db, 'matches', 'loser_entry_id',  entryIds, 'id, round, win_type, winner_entry_id, loser_entry_id', validated)
     const matchMap = new Map<string, MRow>()
     for (const m of [...wMatches, ...lMatches]) matchMap.set(m.id, m)
 
@@ -396,6 +440,22 @@ export async function POST(req: NextRequest) {
           else if (round === '5th_Place' && (!fact.statePlacement || fact.statePlacement > 5)) fact.statePlacement = 6
           else if (round === '7th_Place' && (!fact.statePlacement || fact.statePlacement > 7)) fact.statePlacement = 8
         }
+        if (m.win_type === 'INJ' || m.win_type === 'FORF') medical.add(loserInfo.wrestlerId)
+      }
+    }
+
+    // A top-4 region finish qualifies for state (Kyle 2026-11-12): it counts as making state as soon as
+    // regions are loaded, not when the state bracket is. Top 4 = both wrestlers in a region final or
+    // 3rd-place bout.
+    const typeOf = new Map(psTournaments.map(t => [String(t.id), t.tournament_type as string]))
+    const inState = new Set(allEntries.filter(e => typeOf.get(String(e.tournament_id)) === stateType).map(e => e.wrestler_id))
+    for (const m of matchMap.values()) {
+      if (m.round !== 'F' && m.round !== '3rd_Place') continue
+      for (const eid of [m.winner_entry_id, m.loser_entry_id]) {
+        const info = eid ? entryToInfo.get(eid) : null
+        if (!info || typeOf.get(String(info.tournamentId)) !== regionsType) continue
+        getOrCreate(info.wrestlerId).madeState = true
+        if (inState.size && !inState.has(info.wrestlerId)) medical.add(info.wrestlerId)
       }
     }
 
@@ -409,6 +469,43 @@ export async function POST(req: NextRequest) {
   // entering the current season. Current-season postseason results are applied as the final
   // postseasonAdjusted after all in-season matches have been processed (see step 7).
   const psFactMap = psFactMap24
+
+  // ── Carry from last season (Kyle 2026-11-12: "the end of one season and the start of the next season is
+  // no different than day 45 to day 46") ─────────────────────────────────────────────────────────────
+  // When last season saved its end state (wrestler_rating_carry), this season continues from it: no
+  // placeholders and no replay of last season's postseason bouts (they're already in the last 20).
+  // Without it (the first season with regular-season data, 2025-26), the season starts the old way:
+  // postseason score from last season's postseason, 20 placeholder matches, its postseason bouts replayed.
+  type Carry = { postseason: number; matchScores: number[]; bootstrapSlots: number; bootstrapValue: number; tournaments: [string, TournamentEntry][]; weight: string | null }
+  const PREV_SEASON_STR = (await getPreviousSeason(season)).label
+  const carry = new Map<string, Carry>()
+  for (let offset = 0; ; offset += 1000) {
+    const { data, error } = await db.from('wrestler_rating_carry').select('wrestler_id, state')
+      .eq('season', PREV_SEASON_STR).eq('gender', gender).order('wrestler_id').range(offset, offset + 999)
+    // No carry table yet (before 20261112_wrestler_rating_carry.sql) = no carry: the season starts the old way
+    if (error && /wrestler_rating_carry/.test(error.message) && /does not exist|schema cache/.test(error.message)) break
+    if (error) throw new Error(`READ wrestler_rating_carry failed: ${error.message}`)
+    for (const r of data ?? []) carry.set(r.wrestler_id as string, r.state as Carry)
+    if (!data || data.length < 1000) break
+  }
+  const soup = carry.size > 0
+  // The postseason score carried into this season: last season's final one (soup), or its postseason
+  const carriedScore = (wId: string): number => {
+    if (soup) return carry.get(wId)?.postseason ?? 0
+    const f = psFactMap.get(wId); return f ? postseasonScore(f) : 0
+  }
+  // The weight for this season (Kyle 2026-11-13): this season's bouts; before any, the projected weight (set from
+  // offseason tournaments after 9/1, or by hand on the wrestler's profile); else last season's weight
+  const projected = new Map<string, string>()
+  for (let offset = 0; ; offset += 1000) {
+    const { data, error } = await db.from('wrestlers').select('id, projected_weight_class')
+      .eq('gender', gender).not('projected_weight_class', 'is', null).order('id').range(offset, offset + 999)
+    if (error) throw new Error(`READ projected weights failed: ${error.message}`)
+    for (const r of data ?? []) projected.set(r.id as string, String(r.projected_weight_class))
+    if (!data || data.length < 1000) break
+  }
+  for (const [wId, w] of projected) if (!mainWeightByWrestler.has(wId)) mainWeightByWrestler.set(wId, w)
+  for (const [wId, c] of carry) if (c.weight && !mainWeightByWrestler.has(wId)) mainWeightByWrestler.set(wId, c.weight)
 
   // ── 2. Initialize wrestler states — NJ wrestlers only ─────────────────────────
 
@@ -456,17 +553,30 @@ export async function POST(req: NextRequest) {
 
   function getState(wrestlerId: string): WrestlerState {
     if (!states.has(wrestlerId)) {
-      const fact = psFactMap.get(wrestlerId)
-      const realPsBase = fact ? postseasonScore(fact) : 0
-      // MS credit acts as a floor: if this wrestler has no real HS postseason history,
-      // use their MS prospect credit as the starting postseason component.
-      const msCredit = (!realPsBase && msCreditMap.has(wrestlerId)) ? msCreditMap.get(wrestlerId)! : 0
-      const psBase = realPsBase || msCredit
+      const c = carry.get(wrestlerId)
+      if (c) {
+        // Yesterday's soup: last season's end state, unchanged (last 20 matches, tournament results,
+        // postseason score). This season's first match is just the next match.
+        states.set(wrestlerId, {
+          wrestlerId,
+          postseasonBase:      c.postseason,
+          postseasonAdjusted:  c.postseason,
+          tournaments:         new Map(c.tournaments),
+          matchScores:         [...c.matchScores],
+          bootstrapSlots:      c.bootstrapSlots,
+          bootstrapValue:      c.bootstrapValue,
+          matchCount:          0,
+          lastMatchDate:       null,
+        })
+        return states.get(wrestlerId)!
+      }
+      const fact = soup ? undefined : psFactMap.get(wrestlerId)
+      const psBase = fact ? postseasonScore(fact) : 0
       states.set(wrestlerId, {
         wrestlerId,
         postseasonBase:      psBase,
         postseasonAdjusted:  psBase,
-        tournamentPlacements: new Map(),
+        tournaments:         new Map(),
         matchScores:         [],
         bootstrapSlots:      BOOTSTRAP_SLOTS,
         bootstrapValue:      psBase * 2,
@@ -477,43 +587,50 @@ export async function POST(req: NextRequest) {
     return states.get(wrestlerId)!
   }
 
-  // Compute MS postseason credit on-the-fly from ms_wrestlers → ms_placements → ms_tournament_tiers.
-  // Used as a floor for wrestlers with no real HS postseason history (typically incoming freshmen).
-  const msCreditMap = new Map<string, number>() // hs_wrestler_id → best single placement credit
-  {
-    const { data: msLinked } = await db
-      .from('ms_wrestlers')
-      .select(`
-        hs_wrestler_id,
-        ms_placements (
-          place,
-          ms_tournament:ms_tournaments (
-            tier:ms_tournament_tiers (
-              credit_1, credit_2, credit_3, credit_4,
-              credit_5, credit_6, credit_7, credit_8
-            )
-          )
-        )
-      `)
-      .not('hs_wrestler_id', 'is', null)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    for (const w of (msLinked ?? []) as any[]) {
-      if (!w.hs_wrestler_id) continue
-      let best = 0
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      for (const p of (w.ms_placements ?? []) as any[]) {
-        const tier = p.ms_tournament?.tier
-        if (!tier) continue
-        const credit = Number(tier[`credit_${p.place}`] ?? 0) || 0
-        if (credit > best) best = credit
-      }
-      if (best > 0) msCreditMap.set(w.hs_wrestler_id as string, best)
-    }
+  // In-season bump (Kyle 2026-11-12): a wrestler with no postseason entry last season gets a postseason
+  // score of 20 while their record against opponents whose postseason score is above 20 (state level) is a
+  // winning one over at least 2 such bouts (NJ opponents); it drops back to 0 if the record stops being a
+  // winning one. Counts current-season bouts only (not last season's postseason replay). Kyle chose this
+  // over WRR 20+ (2025-26: 25 boys bumped, 76% made state, vs 93 and 55%): "I'd rather miss a contender
+  // than bump a non contender."
+  const BUMP_OPPONENT_POSTSEASON = 20, BUMP_MIN_BOUTS = 2, BUMP_SCORE = 20
+  // Dry runs can test another opponent measure: { bumpTest: { measure: 'wrr' | 'postseason', min: number, strict?: boolean } }
+  const bumpTest = dryRun ? body?.bumpTest as { measure: 'wrr' | 'postseason'; min: number; strict?: boolean } | undefined : undefined
+  const strongOpponent = (opp: WrestlerState, oppHammer: number) => {
+    if (!bumpTest) return opp.postseasonAdjusted > BUMP_OPPONENT_POSTSEASON
+    const v = bumpTest.measure === 'postseason' ? opp.postseasonAdjusted : oppHammer
+    return bumpTest.strict ? v > bumpTest.min : v >= bumpTest.min
+  }
+  const bumpRecord = new Map<string, { w: number; l: number }>()
+  const bumpFirstOn = new Map<string, string>()   // wrestler → date the 20 was first earned (dry-run report)
+  let countBump = false
+  function applyBump(s: WrestlerState, opp: WrestlerState, opponentHammer: number, won: boolean, date: string) {
+    if (!countBump || psFactMap.has(s.wrestlerId) || !strongOpponent(opp, opponentHammer)) return
+    const r = bumpRecord.get(s.wrestlerId) ?? bumpRecord.set(s.wrestlerId, { w: 0, l: 0 }).get(s.wrestlerId)!
+    if (won) r.w++; else r.l++
+    const on = r.w > r.l && r.w + r.l >= BUMP_MIN_BOUTS
+    const base = carriedScore(s.wrestlerId)
+    s.postseasonBase = s.postseasonAdjusted = on ? Math.max(BUMP_SCORE, base) : base
+    if (!soup) s.bootstrapValue = on ? BUMP_SCORE * 2 : 0
+    if (on && !bumpFirstOn.has(s.wrestlerId)) bumpFirstOn.set(s.wrestlerId, date)
   }
 
-  // Only pre-seed states for NJ wrestlers
-  for (const [wId] of psFactMap) {
-    if (njWrestlerIds.has(wId)) getState(wId)
+  // Pre-seed states for NJ wrestlers: from the carry (still active, i.e. not graduated), or else from
+  // last season's postseason
+  const activeIds = new Set<string>()
+  if (soup) {
+    for (let offset = 0; ; offset += 1000) {
+      const { data, error } = await db.from('wrestlers').select('id').eq('gender', gender).eq('is_active', true)
+        .or('is_oos.is.null,is_oos.eq.false').order('id').range(offset, offset + 999)
+      if (error) throw new Error('active wrestlers: ' + error.message)
+      for (const r of data ?? []) activeIds.add(r.id as string)
+      if (!data || data.length < 1000) break
+    }
+    for (const wId of carry.keys()) if (activeIds.has(wId)) getState(wId)
+  } else {
+    for (const [wId] of psFactMap) {
+      if (njWrestlerIds.has(wId)) getState(wId)
+    }
   }
 
   const logEntries: {
@@ -542,14 +659,18 @@ export async function POST(req: NextRequest) {
     const stateB = (wrestlerBId && njWrestlerIds.has(wrestlerBId)) ? getState(wrestlerBId) : null
     if (!stateA && !stateB) return
 
-    const hammerA = stateA ? getHammer(stateA) : (round ? oosHammerForRound(round) : 0)
-    const hammerB = stateB ? getHammer(stateB) : (round ? oosHammerForRound(round) : 0)
-
     // Apply weight-class adjustment: a wrestler competing away from their main weight
     // gets –8 per class up or +6 per class down applied to their effective hammer.
     const matchWc = matchWeightClass ? normalizeWeight(matchWeightClass, gender as 'M' | 'F') : null
     const adjA = stateA ? getWeightAdjustment(mainWeightByWrestler.get(wrestlerAId!) ?? null, matchWc, gender as 'M' | 'F') : 0
     const adjB = stateB ? getWeightAdjustment(mainWeightByWrestler.get(wrestlerBId!) ?? null, matchWc, gender as 'M' | 'F') : 0
+
+    // A non-NJ (or unknown) opponent gets the round default in brackets. Duals have no
+    // round, so there it is rated equal to the NJ wrestler's effective rating (Kyle
+    // 2026-11-11): an even match, never the 0 it used to get.
+    const nonNj = (njState: WrestlerState, njAdj: number) => round ? oosHammerForRound(round) : getHammer(njState, date) + njAdj
+    const hammerA = stateA ? getHammer(stateA, date) : nonNj(stateB!, adjB)
+    const hammerB = stateB ? getHammer(stateB, date) : nonNj(stateA!, adjA)
 
     const { scoreA, scoreB } = computeMatchScore(hammerA + adjA, hammerB + adjB, outcomeRankA)
     const isWinnerA = outcomeRankA <= 16
@@ -575,15 +696,11 @@ export async function POST(req: NextRequest) {
       })
     }
 
-    // Discovery rule: unrated wrestler beats a district-tier or better opponent → grant PS=20
+    // NJ opponents only: a non-NJ opponent's rating is a stand-in, not a record
     if (stateA && stateB) {
-      const winner = isWinnerA ? stateA : stateB
-      const loser  = isWinnerA ? stateB : stateA
-      if (winner.postseasonBase === 0 && loser.postseasonBase >= 20) {
-        winner.postseasonBase     = 20
-        winner.postseasonAdjusted = 20
-        winner.bootstrapValue     = 40
-      }
+      const psA = stateA.postseasonAdjusted
+      applyBump(stateA, stateB, hammerB, isWinnerA, date)
+      applyBump(stateB, { ...stateA, postseasonAdjusted: psA }, hammerA, !isWinnerA, date)
     }
   }
 
@@ -650,7 +767,8 @@ export async function POST(req: NextRequest) {
       if (!matchDate) {
         throw new Error(`No ${t.tournament_type} date in the season calendar for season ${seasonId} — add it before recalculating`)
       }
-      for (const m of matchRowMap.values()) {
+      // in the order wrestled — each entrant's own rounds in sequence (src/lib/boutOrder.ts)
+      for (const m of orderBouts([...matchRowMap.values()], x => x.round, x => [x.winner_entry_id, x.loser_entry_id])) {
         const winnerWId = m.winner_entry_id ? entryToWrestler.get(m.winner_entry_id) ?? null : null
         const loserWId  = m.loser_entry_id  ? entryToWrestler.get(m.loser_entry_id)  ?? null : null
         const rank = classifyOutcome(normalizeWinType(m.win_type), m.fall_time_seconds, m.winner_score, m.loser_score, true)
@@ -659,12 +777,14 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  await processPostseasonMatches(POSTSEASON_SEASON_ID)
+  if (!soup) await processPostseasonMatches(POSTSEASON_SEASON_ID)
+  countBump = true
 
   // ── 4. Process current-season in-season tournaments + dual meets (chronological) ──────
   // All events are interleaved by date so a December dual meet is never scored
   // using a January tournament's match results as prior context.
   const schoolByWrestler = new Map<string, number>() // wrestler_id → school_id
+  const tournamentSchool = new Map<string, number>()  // wrestler_id → school on their latest in-season tournament bout this season
   {
     const PLACE_ROUNDS = ['F', '3rd_Place', '5th_Place', '7th_Place']
     const PLACE_ROUND_WINNER: Record<string, number> = { F: 1, '3rd_Place': 3, '5th_Place': 5, '7th_Place': 7 }
@@ -675,9 +795,22 @@ export async function POST(req: NextRequest) {
 
     const { data: tournaments } = await db
       .from(inSeasonTable)
-      .select('id, start_date, point_value')
+      .select('id, name, start_date, point_value, prior_id')
       .eq('season', CURRENT_SEASON_STR)
       .order('start_date', { ascending: true })
+
+    // A tournament linked to last season's edition (prior_id: the slate import or a Hub merge) keeps that edition's
+    // key, so a renamed event ("Gary Vittorio Holiday Classic" = "Parsippany Hills Holiday Tournament") is one tournament
+    const keyOf = new Map<string, string>()
+    for (const t of (tournaments ?? [])) {
+      let name = t.name as string, prior = (t.prior_id as string | null) ?? null
+      for (let hops = 0; prior && hops < 20; hops++) {
+        const { data: p } = await db.from(inSeasonTable).select('name, prior_id').eq('id', prior).maybeSingle()
+        if (!p) break
+        name = p.name as string; prior = (p.prior_id as string | null) ?? null
+      }
+      keyOf.set(String(t.id), tournamentKey(name))
+    }
 
     // Pre-fetch all tournament bouts grouped by tournament id (paginated for large events)
     const boutsByTournament = new Map<string, any[]>()
@@ -686,7 +819,7 @@ export async function POST(req: NextRequest) {
       for (let offset = 0; ; offset += 1000) {
         const { data: page } = await db
           .from(inSeasonBoutTable)
-          .select('id, round, wrestler1_id, wrestler2_id, winner, result_type, fall_time_seconds, winner_score, loser_score, weight_class')
+          .select('id, round, wrestler1_id, wrestler2_id, wrestler1_school_id, wrestler2_school_id, winner, result_type, fall_time_seconds, winner_score, loser_score, weight_class')
           .eq('in_season_tournament_id', t.id)
           .order('id')
           .range(offset, offset + 999)
@@ -695,6 +828,11 @@ export async function POST(req: NextRequest) {
         if (page.length < 1000) break
       }
       boutsByTournament.set(String(t.id), bouts)
+      // tournaments come oldest first, so the latest one's school wins
+      for (const b of bouts) {
+        if (b.wrestler1_id && b.wrestler1_school_id) tournamentSchool.set(b.wrestler1_id, b.wrestler1_school_id)
+        if (b.wrestler2_id && b.wrestler2_school_id) tournamentSchool.set(b.wrestler2_id, b.wrestler2_school_id)
+      }
     }
 
     // ── Fetch all dual meets ─────────────────────────────────────────────────────
@@ -731,12 +869,12 @@ export async function POST(req: NextRequest) {
 
     // ── Build chronologically ordered event list ─────────────────────────────────
     type SeasonEvent =
-      | { date: string; type: 'tournament'; id: string; pointValue: number }
+      | { date: string; type: 'tournament'; id: string; pointValue: number; key: string }
       | { date: string; type: 'meet'; id: string }
 
     const events: SeasonEvent[] = []
     for (const t of (tournaments ?? [])) {
-      events.push({ date: t.start_date as string, type: 'tournament', id: String(t.id), pointValue: t.point_value as number })
+      events.push({ date: t.start_date as string, type: 'tournament', id: String(t.id), pointValue: t.point_value as number, key: keyOf.get(String(t.id)) ?? tournamentKey(t.name as string) })
     }
     for (const [meetId, meetDate] of meetDateMap) {
       events.push({ date: meetDate, type: 'meet', id: meetId })
@@ -746,11 +884,13 @@ export async function POST(req: NextRequest) {
     // ── Process events in date order ────────────────────────────────────────────
     for (const event of events) {
       if (event.type === 'tournament') {
-        const bouts = boutsByTournament.get(event.id) ?? []
+        // in the order wrestled — each wrestler's own rounds in sequence (src/lib/boutOrder.ts); id order was random
+        const bouts = orderBouts(boutsByTournament.get(event.id) ?? [], b => b.round as string, b => [b.wrestler1_id as string | null, b.wrestler2_id as string | null])
         const tDate  = event.date
         const ptVal  = event.pointValue
         // wrestler-centric best-place tracking (handles multi-bracket tournaments)
         const wrestlerBestPlace = new Map<string, number>()
+        const entered = new Set<string>(), medicalOut = new Set<string>()
 
         for (const b of bouts) {
           const w1 = b.wrestler1_id as string | null
@@ -778,14 +918,25 @@ export async function POST(req: NextRequest) {
           }
 
           const w1IsWinner = b.winner === 1
+          if (w1) entered.add(w1)
+          if (w2) entered.add(w2)
+          if (loserOf && TOURNAMENT_MEDICAL.has(b.result_type as string)) medicalOut.add(loserOf)
           const rank = classifyOutcome(b.result_type, b.fall_time_seconds, b.winner_score, b.loser_score, w1IsWinner)
           if (rank !== null) recordMatch(tDate, 'tournament_bout', String(b.id), w1, w2, rank, b.round as string, b.weight_class as string | null)
         }
 
-        for (const [wId, place] of wrestlerBestPlace) {
+        // This edition's result replaces the wrestler's last one at this tournament (no place = 0). An
+        // injury default here averages the two (Kyle 2026-11-12), when the old one is under a year old.
+        for (const wId of entered) {
           if (!njWrestlerIds.has(wId)) continue
-          const earned = tournamentPointsForPlace(place, ptVal)
-          getState(wId).tournamentPlacements.set(event.id, { pointsEarned: earned, won: place === 1 })
+          const place = wrestlerBestPlace.get(wId)
+          const earned = place ? tournamentPointsForPlace(place, ptVal) : 0
+          const st = getState(wId)
+          const old = st.tournaments.get(event.key)
+          const prior = old && withinYear(old.date, tDate) ? old : null
+          st.tournaments.set(event.key, medicalOut.has(wId) && prior
+            ? { date: tDate, points: (prior.points + earned) / 2, won: false }
+            : { date: tDate, points: earned, won: place === 1 })
         }
       } else {
         // dual meet
@@ -816,16 +967,68 @@ export async function POST(req: NextRequest) {
   // Runs last so pre-match hammers for in-season matches reflect only prior-season base.
   await processPostseasonMatches(CURRENT_SEASON_ID)
 
-  // ── 7. Apply current-season postseason result as final postseasonAdjusted ────────────
-  // Now that all matches are scored, overwrite postseasonAdjusted with the
-  // wrestler's actual current-season postseason finish so the published hammer score
-  // reflects their true current-season standing, not their prior-season base.
-  for (const [wId, fact25] of psFactMap25) {
-    if (!njWrestlerIds.has(wId)) continue
-    const s = states.get(wId)
-    if (!s) continue
-    s.postseasonAdjusted = postseasonScore(fact25)
+  // ── 7. Postseason score from this season's postseason (Kyle 2026-11-12) ──────────────
+  // While the postseason is under way, only doing better than the score carried in counts right away
+  // (a returning state champ who wins districts stays at 50). Once state results are loaded:
+  //   matched or beat last season       → this season's result
+  //   finished lower                    → this season's result, or the average of the two after a
+  //                                       medical exit (injury default, medical forfeit, withdrawal)
+  //   never entered the postseason      → 75% of last season's score; a wrestler holding the in-season 20
+  //                                       keeps it (had they wrestled, odds are they'd have done well)
+  const medical25 = medicalBySeason.get(CURRENT_SEASON_ID) ?? new Set<string>()
+  const postseasonComplete = [...psFactMap25.values()].some(f => f.statePlacement === 1)
+  const psRule = new Map<string, string>()   // dry-run report: which rule set the postseason score
+  for (const s of states.values()) {
+    if (!njWrestlerIds.has(s.wrestlerId)) continue
+    const f25 = psFactMap25.get(s.wrestlerId)
+    const current = f25 ? postseasonScore(f25) : null
+    const carried = carriedScore(s.wrestlerId)
+    if (!postseasonComplete) {
+      if (current != null) s.postseasonAdjusted = Math.max(s.postseasonAdjusted, current)
+      psRule.set(s.wrestlerId, current != null && current > carried ? 'improved (live)' : 'in progress (carried)')
+    } else if (current == null) {
+      const held = !psFactMap.has(s.wrestlerId) ? s.postseasonAdjusted : 0   // the in-season 20, if held
+      s.postseasonAdjusted = Math.max(Math.round(carried * 0.75 * 100) / 100, held)
+      psRule.set(s.wrestlerId, held ? 'missed postseason (kept in-season 20)' : 'missed postseason (75%)')
+    } else if (current >= carried) {
+      s.postseasonAdjusted = current
+      psRule.set(s.wrestlerId, current > carried ? 'beat last season' : 'matched last season')
+    } else {
+      const med = medical25.has(s.wrestlerId)
+      s.postseasonAdjusted = med ? (carried + current) / 2 : current
+      psRule.set(s.wrestlerId, med ? 'lower, medical (average)' : 'lower (this season)')
+    }
   }
+
+  // Preseason (soup): a wrestler with no bout this season yet keeps last season's school, so their rating
+  // has a section, group and conference to sort by (Kyle 2026-11-12: state and sectional rankings). Their
+  // first bout this season sets the school from then on, so a transfer corrects itself.
+  if (soup) {
+    // a transfer logged for this season (src/lib/transfers.ts) comes first: they rate at the new team
+    for (let offset = 0; ; offset += 1000) {
+      const { data, error } = await db.from(transferTable(gender as 'M' | 'F')).select('wrestler_id, to_school_id, created_at')
+        .eq('season_id', CURRENT_SEASON_ID).order('created_at', { ascending: false }).range(offset, offset + 999)
+      if (tableMissing(error)) break   // before docs/migrations/20261116_transfers.sql
+      if (error) throw new Error(`READ this season's transfers failed: ${error.message}`)
+      for (const r of data ?? []) {
+        if (states.has(r.wrestler_id as string) && !schoolByWrestler.has(r.wrestler_id as string)) schoolByWrestler.set(r.wrestler_id as string, r.to_school_id as number)
+      }
+      if (!data || data.length < 1000) break
+    }
+    for (let offset = 0; ; offset += 1000) {
+      const { data, error } = await db.from('wrestler_hammer_scores').select('wrestler_id, school_id')
+        .eq('season', PREV_SEASON_STR).eq('gender', gender).not('school_id', 'is', null).order('wrestler_id').range(offset, offset + 999)
+      if (error) throw new Error(`READ last season's schools failed: ${error.message}`)
+      for (const r of data ?? []) {
+        if (states.has(r.wrestler_id as string) && !schoolByWrestler.has(r.wrestler_id as string)) schoolByWrestler.set(r.wrestler_id as string, r.school_id as number)
+      }
+      if (!data || data.length < 1000) break
+    }
+  }
+
+  // Anyone who only wrestled in-season tournaments this season: the school on their latest tournament bout (the dual
+  // pass doesn't see them; before 2026-11-17, 314 rated wrestlers in 2025-26 got no school this way)
+  for (const [w, school] of tournamentSchool) if (states.has(w) && !schoolByWrestler.has(w)) schoolByWrestler.set(w, school)
 
   // Build wrestlerMeta: school attrs from schoolByWrestler, district/region from postseason tournament entries.
   type WrestlerMeta = { schoolId: number | null; conference: string | null; section: string | null; classification: string | null; district: number | null; region: number | null }
@@ -907,6 +1110,27 @@ export async function POST(req: NextRequest) {
         if (meta.district && !meta.region) meta.region = districtRegionMap.get(meta.district) ?? null
       }
     }
+
+    // Last resort, after every source from this season: the wrestler's current school as the rest of the site reads
+    // it (transfer → roster row → latest bout → name link; schoolIdsOfWrestlers). Then section / group / conference
+    // for every school found after the first pass (a school from postseason entries used to get none: 20 rows in 2025-26).
+    const missing = [...states.keys()].filter(id => !schoolByWrestler.has(id))
+    if (missing.length) {
+      for (const [w, school] of await schoolIdsOfWrestlers(db, missing)) {
+        schoolByWrestler.set(w, school)
+        wrestlerMeta.set(w, { ...(wrestlerMeta.get(w) ?? { conference: null, section: null, classification: null, district: null, region: null }), schoolId: school })
+      }
+    }
+    const bare = [...wrestlerMeta.values()].filter(m => m.schoolId && !m.section && !m.classification && !m.conference)
+    const bareIds = [...new Set(bare.map(m => m.schoolId!))]
+    for (let i = 0; i < bareIds.length; i += 100) {
+      const { data: sc } = await db.from('schools').select('id, athletic_conference, section, classification').in('id', bareIds.slice(i, i + 100))
+      const byId = new Map((sc ?? []).map(x => [x.id as number, x]))
+      for (const m of bare) {
+        const a = byId.get(m.schoolId!)
+        if (a) { m.conference = (a.athletic_conference as string | null) ?? null; m.section = (a.section as string | null) ?? null; m.classification = (a.classification as string | null) ?? null }
+      }
+    }
   }
 
   // ── 6. Write main_weight to wrestlers table ───────────────────────────────────
@@ -917,11 +1141,54 @@ export async function POST(req: NextRequest) {
     if (!byWeight.has(wc)) byWeight.set(wc, [])
     byWeight.get(wc)!.push(wid)
   }
-  for (const [wc, ids] of logOnly || archive ? [] : byWeight) {
+  for (const [wc, ids] of logOnly || archive || dryRun ? [] : byWeight) {
     for (let i = 0; i < ids.length; i += 500) {
       const { error } = await db.from('wrestlers').update({ main_weight: wc }).in('id', ids.slice(i, i + 500))
       if (error) throw new Error(`UPDATE wrestlers.main_weight failed: ${error.message}`)
     }
+  }
+
+  // The rating as of today for the season in progress, as of the end of a past season. In the season in
+  // progress every returning (active) wrestler has a rating from day 1 (soup); otherwise a wrestler is
+  // rated once they wrestle this season.
+  const asOf = season.id === working.id ? new Date().toISOString().slice(0, 10) : `${season.end_year}-03-31`
+  const scoreRows = [...states.values()]
+    .filter(s => (s.matchCount > 0 && s.lastMatchDate != null && s.lastMatchDate >= `${season.start_year}-04-01`)
+      || (soup && carry.has(s.wrestlerId) && activeIds.has(s.wrestlerId)))
+    .map(s => {
+      const tourComp  = tournamentPart(s, asOf)
+      const matchComp = computeMatchComponent(buildScoreWindow(s))
+      const hammer    = totalHammerScore(s.postseasonAdjusted, tourComp, matchComp)
+      const meta      = wrestlerMeta.get(s.wrestlerId)
+      return {
+        wrestler_id:         s.wrestlerId,
+        season:              CURRENT_SEASON_STR,
+        gender,
+        postseason_base:     s.postseasonBase,
+        postseason_adjusted: s.postseasonAdjusted,
+        tournament_score:    tourComp,
+        match_score:         matchComp,
+        hammer_score:        hammer,
+        match_count:         s.matchCount,
+        last_match_date:     s.lastMatchDate,
+        weight_class:        weightByWrestler.get(s.wrestlerId) ?? projected.get(s.wrestlerId) ?? carry.get(s.wrestlerId)?.weight ?? null,
+        school_id:           meta?.schoolId ?? null,
+        conference:          meta?.conference ?? null,
+        section:             meta?.section ?? null,
+        classification:      meta?.classification ?? null,
+        district:            meta?.district ?? null,
+        region:              meta?.region ?? null,
+        last_calculated_at:  new Date().toISOString(),
+      }
+    })
+
+  if (dryRun) {
+    return NextResponse.json({ dry_run: true, season: CURRENT_SEASON_STR, gender, bouts_processed: logEntries.length, rows: scoreRows.map(r => ({
+      wrestler_id: r.wrestler_id, postseason_base: r.postseason_base, postseason_adjusted: r.postseason_adjusted,
+      tournament_score: r.tournament_score, match_score: r.match_score, hammer_score: r.hammer_score, match_count: r.match_count,
+      carried: carriedScore(r.wrestler_id), ps_rule: psRule.get(r.wrestler_id) ?? null,
+      bump_first_on: bumpFirstOn.get(r.wrestler_id) ?? null, bump_on_at_end: !psFactMap.has(r.wrestler_id) && r.postseason_base === BUMP_SCORE,
+    })) })
   }
 
   // ── 7. Write results to DB ────────────────────────────────────────────────────
@@ -985,34 +1252,12 @@ export async function POST(req: NextRequest) {
   const delLogErr = await deleteLogIds(oldLogIds)
   if (delLogErr) throw new Error(`DELETE old wrestler_match_score_log failed: ${delLogErr}`)
 
-  const scoreRows = [...states.values()]
-    .filter(s => s.matchCount > 0 && s.lastMatchDate != null && s.lastMatchDate >= `${season.start_year}-04-01`)
-    .map(s => {
-      const tourComp  = computeTournamentComponent([...s.tournamentPlacements.values()])
-      const matchComp = computeMatchComponent(buildScoreWindow(s))
-      const hammer    = totalHammerScore(s.postseasonAdjusted, tourComp, matchComp)
-      const meta      = wrestlerMeta.get(s.wrestlerId)
-      return {
-        wrestler_id:         s.wrestlerId,
-        season:              CURRENT_SEASON_STR,
-        gender,
-        postseason_base:     s.postseasonBase,
-        postseason_adjusted: s.postseasonAdjusted,
-        tournament_score:    tourComp,
-        match_score:         matchComp,
-        hammer_score:        hammer,
-        match_count:         s.matchCount,
-        last_match_date:     s.lastMatchDate,
-        weight_class:        weightByWrestler.get(s.wrestlerId) ?? null,
-        school_id:           meta?.schoolId ?? null,
-        conference:          meta?.conference ?? null,
-        section:             meta?.section ?? null,
-        classification:      meta?.classification ?? null,
-        district:            meta?.district ?? null,
-        region:              meta?.region ?? null,
-        last_calculated_at:  new Date().toISOString(),
-      }
-    })
+  // Projection tracking (src/lib/projectionTrack.ts): every new NJ-vs-NJ bout gets the active settings' projection,
+  // frozen; bouts on file get a corrected result. A failure here is reported, never fails the rating run.
+  let projections: { recorded: number; updated: number; orphaned?: number; skipped?: string } | { error: string }
+  try {
+    projections = await recordProjections(db, gender as 'M' | 'F', CURRENT_SEASON_STR, logEntries, logOnly || archive ? 'backfill' : 'live')
+  } catch (e) { projections = { error: (e as Error).message } }
 
   // School, district and region come from the season's own bouts and entries. Conference,
   // section and classification come from today's school record, which may have moved on
@@ -1050,12 +1295,34 @@ export async function POST(req: NextRequest) {
     if (staleErr) throw new Error(`DELETE stale wrestler_hammer_scores failed: ${staleErr.message}`)
   }
 
+  // Save this season's end state for the next season to continue from (wrestler_rating_carry). The
+  // season in progress rewrites it on every run, so its last run before the next season is the one carried.
+  if (!logOnly) {
+    const carryRows = scoreRows.map(r => {
+      const st = states.get(r.wrestler_id)!
+      return {
+        wrestler_id: r.wrestler_id, season: CURRENT_SEASON_STR, gender, updated_at: runStamp,
+        state: {
+          postseason: st.postseasonAdjusted, matchScores: st.matchScores, bootstrapSlots: st.bootstrapSlots,
+          bootstrapValue: st.bootstrapValue, tournaments: [...st.tournaments], weight: r.weight_class,
+        },
+      }
+    })
+    for (let i = 0; i < carryRows.length; i += BATCH) {
+      const { error } = await db.from('wrestler_rating_carry').upsert(carryRows.slice(i, i + BATCH), { onConflict: 'wrestler_id,season' })
+      if (error) throw new Error(`UPSERT wrestler_rating_carry failed at row ${i}: ${error.message}`)
+    }
+    const { error: staleCarry } = await db.from('wrestler_rating_carry').delete()
+      .eq('season', CURRENT_SEASON_STR).eq('gender', gender).lt('updated_at', runStamp)
+    if (staleCarry) throw new Error(`DELETE stale wrestler_rating_carry failed: ${staleCarry.message}`)
+  }
+
   const duration_ms = Date.now() - startedAt
   const wrestlers_scored = logOnly ? 0 : scoreRows.length
   const bouts_processed  = logEntries.length
 
-  const sb   = await createSupabaseServer()
-  const { data: { user } } = await sb.auth.getUser()
+  // A cron or script call has no session
+  const user = await createSupabaseServer().then(sb => sb.auth.getUser()).then(r => r.data.user).catch(() => null)
   await db.rpc('log_admin_activity', {
     p_admin_email: user?.email ?? 'cron',
     p_action:      'scoring_run',
@@ -1064,10 +1331,12 @@ export async function POST(req: NextRequest) {
     p_details: { wrestlers_scored, bouts_processed, duration_ms, season: CURRENT_SEASON_STR, gender, log_only: logOnly, archive },
   })
 
-  return NextResponse.json({ wrestlers_scored, bouts_processed, duration_ms, season: CURRENT_SEASON_STR, gender, log_only: logOnly, archive })
+  return NextResponse.json({ wrestlers_scored, bouts_processed, duration_ms, season: CURRENT_SEASON_STR, gender, log_only: logOnly, archive, projections })
 }
 
 // GET handler for Vercel cron job (crons fire GET, not POST)
 export async function GET(req: NextRequest) {
+  const skip = await cronSkipBeforeSeason(req)   // src/lib/cronGuard.ts
+  if (skip) return NextResponse.json({ skipped: skip })
   return POST(req)
 }

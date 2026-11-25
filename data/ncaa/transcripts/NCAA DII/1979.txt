@@ -1,0 +1,182 @@
+# NCAA Division II Championships 1979 — source: NCAA II 1979.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Joe Gonzales | Cal State-Bakersfield
+- Bill DePaoli | California PA
+- Tom Reed | SIU-Edwardsville
+- Greg Anderson | Central Missouri
+- Phil Lieblang | Oakland
+- Curtis Ellis | Morgan State
+- Matt Hawes | Springfield
+- Randy Blackman | Eastern Illinois
+place 1 Joe Gonzales
+place 2 Bill DePaoli
+place 3 Tom Reed
+place 4 Greg Anderson
+place 5 Phil Lieblang
+place 6 Curtis Ellis
+place 7 Matt Hawes
+place 8 Randy Blackman
+
+@ 126
+- John Azevedo | Cal State-Bakersfield
+- Sam Herriman | Augustana SD
+- Neal Seagren | Northern Michigan
+- Paul Bulzomi | Southern Connecticut
+- Terry Mulrenin | SIU-Edwardsville
+- Steve Fontana | C.W. Post
+- Fred Jenkins | California-Davis
+- David Stredig | Central Missouri
+place 1 John Azevedo
+place 2 Sam Herriman
+place 3 Neal Seagren
+place 4 Paul Bulzomi
+place 5 Terry Mulrenin
+place 6 Steve Fontana
+place 7 Fred Jenkins
+place 8 David Stredig
+
+@ 134
+- Bob McGuinn | Eastern Illinois
+- Gary Baldwin | Nebraska-Omaha
+- Lon Kvanli | Augustana SD
+- Kevin Finn | Northern Iowa
+- Tim Ervin | SIU-Edwardsville
+- Joe Lopez | Cal State-Bakersfield
+- Keith Lawn | Northern Michigan
+- Don Stinewalt | Cal State-Sacramento
+place 1 Bob McGuinn
+place 2 Gary Baldwin
+place 3 Lon Kvanli
+place 4 Kevin Finn
+place 5 Tim Ervin
+place 6 Joe Lopez
+place 7 Keith Lawn
+place 8 Don Stinewalt
+
+@ 142
+- Tom Gongora | Cal State-Bakersfield
+- Rick Jensen | South Dakota State
+- Lon Brew | North Dakota State
+- Ralph McCausland | Eastern Illinois
+- Randy Meier | Northern Michigan
+- Larry Luttrell | Northern Iowa
+- Dru Meshes | SIU-Edwardsville
+- Mark Salge | Central Connecticut
+place 1 Tom Gongora
+place 2 Rick Jensen
+place 3 Lon Brew
+place 4 Ralph McCausland
+place 5 Randy Meier
+place 6 Larry Luttrell
+place 7 Dru Meshes
+place 8 Mark Salge
+
+@ 150
+- Scott Madigan | Minnesota State-Mankato
+- Tom Napier | SIU-Edwardsville
+- Ken Gallagher | Northern Iowa
+- Marty Maciel | Cal State-Bakersfield
+- Mark Reimnitz | South Dakota State
+- Mike Wofford | Nebraska-Omaha
+- Mark Poletti | Lake Superior
+- Mike Duffy | Truman State
+place 1 Scott Madigan
+place 2 Tom Napier
+place 3 Ken Gallagher
+place 4 Marty Maciel
+place 5 Mark Reimnitz
+place 6 Mike Wofford
+place 7 Mark Poletti
+place 8 Mike Duffy
+
+@ 158
+- Bob Holland | Eastern Illinois
+- Roger Dallas | Lake Superior
+- Kevin Dugan | Cal State-Bakersfield
+- Ed Egan | Northern Michigan
+- Barry Gresh | Pittsburgh-Johnstown
+- Rich Dombrowski | Central Florida
+- Andy Wilson | Cal State-Sacramento
+- Dave Stilgenbauer | Youngstown State
+place 1 Bob Holland
+place 2 Roger Dallas
+place 3 Kevin Dugan
+place 4 Ed Egan
+place 5 Barry Gresh
+place 6 Rich Dombrowski
+place 7 Andy Wilson
+place 8 Dave Stilgenbauer
+
+@ 167
+- Michael Abrams | Grand Valley State
+- Bob Stout | Eastern Illinois
+- Greg Waggoner | Southwest Missouri
+- Keith Poolman | Northern Iowa
+- William Smith | Morgan State
+- John Newell | Nebraska-Omaha
+- Brad Bitterman | Northern Michigan
+- Phil Herbold | St. Cloud State
+place 1 Michael Abrams
+place 2 Bob Stout
+place 3 Greg Waggoner
+place 4 Keith Poolman
+place 5 William Smith
+place 6 John Newell
+place 7 Brad Bitterman
+place 8 Phil Herbold
+
+@ 177
+- Mark Hattendorf | SIU-Edwardsville
+- Joe Gormally | Northern Iowa
+- Brian Parlet | Augustana SD
+- Steve Draper | Cal State-Bakersfield
+- Ron Zmuda | Wisconsin-Parkside
+- Gerald Conklin | Southeast Missouri
+- Rolf Turner | St. Cloud State
+- Tim Harris | Northern Michigan
+place 1 Mark Hattendorf
+place 2 Joe Gormally
+place 3 Brian Parlet
+place 4 Steve Draper
+place 5 Ron Zmuda
+place 6 Gerald Conklin
+place 7 Rolf Turner
+place 8 Tim Harris
+
+@ 190
+- Kirk Myers | Northern Iowa
+- Geno Savegnago | Eastern Illinois
+- Norm Mitchell | SIU-Edwardsville
+- Al Minor | South Dakota
+- Randy Waggoner | Southwest Missouri
+- Ed King | Grand Valley State
+- John Linda | Minnesota State-Moorhead
+- Herb Alamed | Springfield
+place 1 Kirk Myers
+place 2 Geno Savegnago
+place 3 Norm Mitchell
+place 4 Al Minor
+place 5 Randy Waggoner
+place 6 Ed King
+place 7 John Linda
+place 8 Herb Alamed
+
+@ 285
+- Jeff Blatnick | Springfield
+- Jeff Grier | Augustana SD
+- Dave Klemm | Eastern Illinois
+- Mike Howe | Northern Michigan
+- Kevin Kurth | Northern Iowa
+- Joe Williams | Nebraska-Omaha
+- Chris Weers | Cal State-Bakersfield
+- George Nikolopolus | Wisconsin-Parkside
+place 1 Jeff Blatnick
+place 2 Jeff Grier
+place 3 Dave Klemm
+place 4 Mike Howe
+place 5 Kevin Kurth
+place 6 Joe Williams
+place 7 Chris Weers
+place 8 George Nikolopolus
+

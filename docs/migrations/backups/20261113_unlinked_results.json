@@ -1,0 +1,392 @@
+[
+ {
+  "pool": "boys",
+  "wrestler": "Christian Wolf",
+  "prospect": {
+   "id": 316,
+   "first_name": "Christian",
+   "last_name": "Wolf",
+   "state": "NJ",
+   "club_id": null,
+   "class_year": 2027,
+   "wrestler_id": "9ea1af01-640b-4a65-b918-25bf91c57bae",
+   "notes": null,
+   "created_at": "2026-11-13T00:48:34.692213+00:00",
+   "club_listed": null
+  },
+  "placement": {
+   "id": 316,
+   "event_id": 2,
+   "style": "folkstyle",
+   "division": "High School Boys",
+   "weight": "113",
+   "place": 97,
+   "name_listed": "Chris Wolf",
+   "club_listed": null,
+   "club_id": null,
+   "prospect_id": 316,
+   "created_at": "2026-11-13T00:49:17.198765+00:00",
+   "place_to": 128
+  }
+ },
+ {
+  "pool": "boys",
+  "wrestler": "Aiden Gonzalez",
+  "prospect": {
+   "id": 1998,
+   "first_name": "Aiden",
+   "last_name": "Gonzalez",
+   "state": "NJ",
+   "club_id": null,
+   "class_year": 2028,
+   "wrestler_id": "234246be-d03a-4914-bd57-4b3008392891",
+   "notes": null,
+   "created_at": "2026-11-13T03:22:48.588715+00:00",
+   "club_listed": "North Brunswick Township"
+  },
+  "placement": {
+   "id": 3129,
+   "event_id": 6,
+   "style": "folkstyle",
+   "division": "Sophomore",
+   "weight": "120",
+   "place": 97,
+   "name_listed": "Aiden Gonzalez",
+   "club_listed": null,
+   "club_id": null,
+   "prospect_id": 1998,
+   "created_at": "2026-11-13T03:26:14.472691+00:00",
+   "place_to": 128
+  }
+ },
+ {
+  "pool": "boys",
+  "wrestler": "Angel Mendoza",
+  "prospect": {
+   "id": 5579,
+   "first_name": "Angel",
+   "last_name": "Mendoza",
+   "state": "NJ",
+   "club_id": null,
+   "class_year": 2027,
+   "wrestler_id": "14d5e7bf-29cf-4eb3-b801-fa0595f67e6f",
+   "notes": null,
+   "created_at": "2026-11-13T03:27:42.368801+00:00",
+   "club_listed": "Central Islip"
+  },
+  "placement": {
+   "id": 6406,
+   "event_id": 7,
+   "style": "folkstyle",
+   "division": "High School",
+   "weight": "115",
+   "place": 9,
+   "name_listed": "Angel Mendoza",
+   "club_listed": "Central Islip",
+   "club_id": null,
+   "prospect_id": 5579,
+   "created_at": "2026-11-13T03:28:10.25052+00:00",
+   "place_to": 12
+  }
+ },
+ {
+  "pool": "boys",
+  "wrestler": "Chase Colon",
+  "prospect": {
+   "id": 5637,
+   "first_name": "Chase",
+   "last_name": "Colon",
+   "state": "NJ",
+   "club_id": null,
+   "class_year": null,
+   "wrestler_id": "18102281-cf32-477c-8f36-70ef3801302b",
+   "notes": null,
+   "created_at": "2026-11-13T03:27:46.015365+00:00",
+   "club_listed": "Kellenberg"
+  },
+  "placement": {
+   "id": 6483,
+   "event_id": 7,
+   "style": "folkstyle",
+   "division": "High School",
+   "weight": "122",
+   "place": 33,
+   "name_listed": "Chase Colon",
+   "club_listed": "Kellenberg",
+   "club_id": null,
+   "prospect_id": 5637,
+   "created_at": "2026-11-13T03:28:10.25052+00:00",
+   "place_to": 48
+  }
+ },
+ {
+  "pool": "boys",
+  "wrestler": "Miguel Cruz",
+  "prospect": {
+   "id": 5639,
+   "first_name": "Miguel",
+   "last_name": "Cruz",
+   "state": "NJ",
+   "club_id": null,
+   "class_year": 2027,
+   "wrestler_id": "e6812c29-71fb-46a7-b5c9-6092c0db6846",
+   "notes": null,
+   "created_at": "2026-11-13T03:27:46.117416+00:00",
+   "club_listed": "Longwood"
+  },
+  "placement": {
+   "id": 6486,
+   "event_id": 7,
+   "style": "folkstyle",
+   "division": "High School",
+   "weight": "122",
+   "place": 33,
+   "name_listed": "Miguel Cruz",
+   "club_listed": "Longwood",
+   "club_id": null,
+   "prospect_id": 5639,
+   "created_at": "2026-11-13T03:28:10.25052+00:00",
+   "place_to": 48
+  }
+ },
+ {
+  "pool": "boys",
+  "wrestler": "Sebastian Santos",
+  "prospect": {
+   "id": 5897,
+   "first_name": "Sebastian",
+   "last_name": "Santos",
+   "state": "NJ",
+   "club_id": null,
+   "class_year": 2026,
+   "wrestler_id": "e501682f-4195-4284-b2a1-993df65235d7",
+   "notes": null,
+   "created_at": "2026-11-13T03:28:00.737937+00:00",
+   "club_listed": "MacArthur"
+  },
+  "placement": {
+   "id": 6805,
+   "event_id": 7,
+   "style": "folkstyle",
+   "division": "High School",
+   "weight": "154",
+   "place": 49,
+   "name_listed": "Sebastian Santos",
+   "club_listed": "MacArthur",
+   "club_id": null,
+   "prospect_id": 5897,
+   "created_at": "2026-11-13T03:28:10.25052+00:00",
+   "place_to": 64
+  }
+ },
+ {
+  "pool": "boys",
+  "wrestler": "Max Garcia",
+  "prospect": {
+   "id": 6283,
+   "first_name": "Max",
+   "last_name": "Garcia",
+   "state": "NJ",
+   "club_id": null,
+   "class_year": 2029,
+   "wrestler_id": "adaa0c1c-36e7-4009-942a-38558f4b1abf",
+   "notes": null,
+   "created_at": "2026-11-13T04:21:25.475535+00:00",
+   "club_listed": "Impact Wrestling Academy"
+  },
+  "placement": {
+   "id": 7472,
+   "event_id": 5,
+   "style": "folkstyle",
+   "division": "14 U",
+   "weight": "90",
+   "place": 7,
+   "name_listed": "Max Garcia",
+   "club_listed": "Impact Wrestling Academy",
+   "club_id": null,
+   "prospect_id": 6283,
+   "created_at": "2026-11-13T04:21:42.055397+00:00",
+   "place_to": null
+  }
+ },
+ {
+  "pool": "boys",
+  "wrestler": "Anthony Messina",
+  "prospect": {
+   "id": 6352,
+   "first_name": "Anthony",
+   "last_name": "Messina",
+   "state": "NJ",
+   "club_id": null,
+   "class_year": 2029,
+   "wrestler_id": "9ef70ba4-5a47-4583-b36e-f631a761abae",
+   "notes": null,
+   "created_at": "2026-11-13T04:21:30.102236+00:00",
+   "club_listed": "The Outsiders Wrestling Club"
+  },
+  "placement": {
+   "id": 7576,
+   "event_id": 5,
+   "style": "folkstyle",
+   "division": "14 U",
+   "weight": "100",
+   "place": 3,
+   "name_listed": "Anthony Messina",
+   "club_listed": "The Outsiders Wrestling Club",
+   "club_id": null,
+   "prospect_id": 6352,
+   "created_at": "2026-11-13T04:21:42.055397+00:00",
+   "place_to": null
+  }
+ },
+ {
+  "pool": "boys",
+  "wrestler": "Anthony Messina",
+  "prospect": {
+   "id": 6352,
+   "first_name": "Anthony",
+   "last_name": "Messina",
+   "state": "NJ",
+   "club_id": null,
+   "class_year": 2029,
+   "wrestler_id": "9ef70ba4-5a47-4583-b36e-f631a761abae",
+   "notes": null,
+   "created_at": "2026-11-13T04:21:30.102236+00:00",
+   "club_listed": "The Outsiders Wrestling Club"
+  },
+  "placement": {
+   "id": 7867,
+   "event_id": 8,
+   "style": "freestyle",
+   "division": "14U Boys Freestyle",
+   "weight": "88",
+   "place": 1,
+   "name_listed": "Anthony Messina",
+   "club_listed": "The Outsiders Wrestling Club",
+   "club_id": null,
+   "prospect_id": 6352,
+   "created_at": "2026-11-13T04:22:05.012869+00:00",
+   "place_to": null
+  }
+ },
+ {
+  "pool": "boys",
+  "wrestler": "Brody Brown",
+  "prospect": {
+   "id": 6622,
+   "first_name": "Brody",
+   "last_name": "Brown",
+   "state": "NJ",
+   "club_id": null,
+   "class_year": 2027,
+   "wrestler_id": "02803c39-5540-4e0a-b242-2e56d9895dc1",
+   "notes": null,
+   "created_at": "2026-11-13T12:19:15.875776+00:00",
+   "club_listed": "South Hills Wrestling Academy"
+  },
+  "placement": {
+   "id": 8192,
+   "event_id": 9,
+   "style": "freestyle",
+   "division": "14U FS",
+   "weight": "120",
+   "place": 2,
+   "name_listed": "Brody Brown",
+   "club_listed": "South Hills Wrestling Academy",
+   "club_id": null,
+   "prospect_id": 6622,
+   "created_at": "2026-11-13T12:19:18.526131+00:00",
+   "place_to": null
+  }
+ },
+ {
+  "pool": "boys",
+  "wrestler": "Edward Lee",
+  "prospect": {
+   "id": 6664,
+   "first_name": "Edward",
+   "last_name": "Lee",
+   "state": "NJ",
+   "club_id": null,
+   "class_year": null,
+   "wrestler_id": "f7c3ddbe-8045-4e34-a853-39312cde8503",
+   "notes": null,
+   "created_at": "2026-11-13T12:19:17.669318+00:00",
+   "club_listed": "Broad Axe"
+  },
+  "placement": {
+   "id": 8241,
+   "event_id": 9,
+   "style": "freestyle",
+   "division": "14U FS",
+   "weight": "80",
+   "place": 4,
+   "name_listed": "Edward Lee",
+   "club_listed": "Broad Axe",
+   "club_id": null,
+   "prospect_id": 6664,
+   "created_at": "2026-11-13T12:19:18.526131+00:00",
+   "place_to": null
+  }
+ },
+ {
+  "pool": "girls",
+  "wrestler": "Angelica Garcia",
+  "prospect": {
+   "id": 1433,
+   "first_name": "Angelica",
+   "last_name": "Garcia",
+   "state": "NJ",
+   "club_id": null,
+   "class_year": 2028,
+   "wrestler_id": "bbef3238-87b5-4e67-82c6-c2813fb86da4",
+   "notes": null,
+   "created_at": "2026-11-13T03:29:30.898676+00:00",
+   "club_listed": null
+  },
+  "placement": {
+   "id": 1671,
+   "event_id": 9,
+   "style": "freestyle",
+   "division": "Junior Girls FS",
+   "weight": "105",
+   "place": 5,
+   "name_listed": "Angelica Garcia",
+   "club_listed": null,
+   "club_id": null,
+   "prospect_id": 1433,
+   "created_at": "2026-11-13T03:29:38.389942+00:00",
+   "place_to": null
+  }
+ },
+ {
+  "pool": "boys",
+  "wrestler": "Noah Hernandez",
+  "prospect": {
+   "id": 1811,
+   "first_name": "Noah",
+   "last_name": "Hernandez",
+   "state": "NJ",
+   "club_id": null,
+   "class_year": 2029,
+   "wrestler_id": "d1bf4b5c-15d5-4e0d-9e58-faf359f0af59",
+   "notes": null,
+   "created_at": "2026-11-13T03:22:39.084959+00:00",
+   "club_listed": "Ruthless"
+  },
+  "placement": {
+   "id": 1976,
+   "event_id": 4,
+   "style": "folkstyle",
+   "division": "High School Boys",
+   "weight": "132",
+   "place": 7,
+   "name_listed": "Noah Hernandez",
+   "club_listed": "Broad Axe",
+   "club_id": null,
+   "prospect_id": 1811,
+   "created_at": "2026-11-13T03:22:49.262566+00:00",
+   "place_to": 8
+  }
+ }
+]

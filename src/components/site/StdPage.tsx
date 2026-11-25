@@ -10,18 +10,22 @@ import { useSiteLook } from './SiteLookProvider'
 import { fontStack, lookAccent, lookBorder, lookTile, type SummaryKey } from '@/lib/siteLook'
 import { boysRegionOfDistrict, girlsRegionOfDistrict } from '@/lib/siteTheme'
 
-export function StdHeader({ title, summaryKey, picker, tabs }: { title: string; summaryKey: SummaryKey; picker?: ReactNode; tabs?: ReactNode }) {
+// hideSummary: no description under the picker (Kyle 2026-11-14: the Individual Post Season page)
+// noLogo: never the logo, whatever the look says (Kyle 2026-11-14: the bracket pages)
+// summary: the page's own line in place of the tool's (Kyle 2026-11-18: the college list, a line per level)
+export function StdHeader({ title, summaryKey, picker, tabs, hideSummary, noLogo, summary }: { title: string; summaryKey: SummaryKey; picker?: ReactNode; tabs?: ReactNode; hideSummary?: boolean; noLogo?: boolean; summary?: ReactNode }) {
   const look = useSiteLook()
   return (
-    <SitePageHeader title={title} picker={picker} summary={look.summaries[summaryKey]} tabs={tabs} showLogo={look.showLogo}
+    <SitePageHeader title={title} picker={picker} summary={summary ?? (hideSummary ? undefined : look.summaries[summaryKey])} tabs={tabs} showLogo={look.showLogo && !noLogo}
       titleFontFamily={fontStack(look.titleFont)} titleSize={look.titleSize} />
   )
 }
 
-export function StdTiles({ tiles, scale = 1, minWidth, groupSize, center }: { tiles: NumberTile[]; scale?: number; minWidth?: number; groupSize?: number; center?: boolean }) {
+// widthScale: tiles that many times wider than tall, for word labels (the girls' named regions: North I, Central …)
+export function StdTiles({ tiles, scale = 1, minWidth, groupSize, center, widthScale }: { tiles: NumberTile[]; scale?: number; minWidth?: number; groupSize?: number; center?: boolean; widthScale?: number }) {
   const look = useSiteLook()
   const size = Math.round(look.size * scale)
-  return <NumberTileGrid tiles={tiles} fontFamily={fontStack(look.font)} size={size} radius={look.radius} border={lookBorder(look)} minWidth={minWidth ?? size} groupSize={groupSize} center={center} />
+  return <NumberTileGrid tiles={tiles} fontFamily={fontStack(look.font)} size={size} radius={look.radius} border={lookBorder(look)} minWidth={widthScale ? Math.round(size * widthScale) : minWidth ?? size} groupSize={widthScale ? undefined : groupSize} center={center} />
 }
 
 export function useSideColors(side: 'boys' | 'girls') {

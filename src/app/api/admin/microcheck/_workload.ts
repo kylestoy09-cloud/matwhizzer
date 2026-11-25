@@ -9,6 +9,10 @@
 import { getNewestSeason, getRosterImportSeason, getWorkingSeason } from '@/lib/season-context'
 import type { createSupabaseAdmin } from '@/lib/supabase/service'
 import { FIELD_DEFS } from './_engine'
+import { loadReviewRows } from '@/lib/ncaa/review'
+import { streamingLinks, type StreamLinks } from '@/lib/streamingLinks'
+import { loadSpotCareers, type SpotCareer } from '@/lib/ncaa/spotCheck'
+import type { ReviewRow } from '@/lib/ncaa/reviewShared'
 
 type Db = ReturnType<typeof createSupabaseAdmin>
 type Gender = 'M' | 'F'
@@ -24,6 +28,7 @@ export type TaskType = {
   enabled:    boolean
   pinned_at:  string | null
   school_ids: number[] | null
+  reset_at?:  string | null   // a reset: answers before it don't count, so every school is asked again
 }
 
 // done       the data is on file
@@ -36,7 +41,7 @@ export type TaskType = {
 // na         does not apply (no program, or no coach yet for a coach email)
 export type CellStatus = 'done' | 'completed' | 'cant_find' | 'flagged' | 'missing' | 'waiting' | 'na'
 
-export type QueueItem = { id: string; entity_id: string; metadata: Record<string, unknown> }
+export type QueueItem = { id: string; entity_id: string; metadata: Record<string, unknown>; college?: ReviewRow; spot?: SpotCareer }
 
 export type WorkSchool = { id: number; name: string; boys: boolean; girls: boolean }
 
@@ -47,6 +52,8 @@ export type Workload = {
   nameFor: (type: TaskType, schoolId: number) => string
   queue:   Map<string, QueueItem[]>             // queue type key → pending tasks
   focus:   { id: string; task_key: string; school_id: number }[]
+  current: (type: TaskType, schoolId: number) => string | null   // the value on file
+  streams: (gender: Gender, schoolId: number) => StreamLinks | null
 }
 
 export const typeGenderLabel = (g: Gender | null) => (g === 'F' ? 'Girls' : g === 'M' ? 'Boys' : 'Both programs')
@@ -66,16 +73,17 @@ export async function loadWorkload(db: Db): Promise<Workload> {
     getWorkingSeason('M'), getWorkingSeason('F'), getNewestSeason(), getRosterImportSeason(db, 'M'), getRosterImportSeason(db, 'F'),
   ])
 
+  const [streamM, streamF] = await Promise.all([streamingLinks(db, 'M', newest.id), streamingLinks(db, 'F', newest.id)])
   const [typesRes, boysRes, girlsRes, schoolsRes, logRes, flagRes, inactiveRes, coachM, coachF, queueRes, focusRes, importRes, completeRes] = await Promise.all([
     db.from('microcheck_task_types').select('*'),
     db.from('boys_schools').select('school_id, display_name'),
     db.from('girls_schools').select('school_id, display_name'),
     db.from('schools').select('id, display_name, address, website_url, twitter_handle, facebook_url, ad_name, ad_email').eq('is_nj', true),
-    db.from('microcheck_task_log').select('school_id, gender, field, status').limit(100000),
+    db.from('microcheck_task_log').select('school_id, gender, field, status, completed_at').limit(100000),
     db.from('microcheck_roster_flags').select('school_id, gender').eq('resolved', false),
     db.from('inactive_school_seasons').select('school_id, gender, season_id').in('season_id', [workingM.id, workingF.id]),
-    db.from('boys_coaches').select('school_id, email').eq('season_id', newest.id).eq('is_active', true),
-    db.from('girls_coaches').select('school_id, email').eq('season_id', newest.id).eq('is_active', true),
+    db.from('boys_coaches').select('school_id, email, name').eq('season_id', newest.id).eq('is_active', true),
+    db.from('girls_coaches').select('school_id, email, name').eq('season_id', newest.id).eq('is_active', true),
     db.from('microcheck_tasks').select('id, task_type, entity_id, gender, metadata, priority, created_at').eq('status', 'pending')
       .order('priority', { ascending: false }).order('created_at', { ascending: true }),
     db.from('microcheck_focus').select('id, task_key, school_id, created_at').order('created_at'),
@@ -101,13 +109,18 @@ export async function loadWorkload(db: Db): Promise<Workload> {
     .sort((a, b) => a.name.localeCompare(b.name))
   const schoolById = new Map(schools.map(s => [s.id, s]))
 
-  const log = new Map<string, string>()                     // `${gender}|${school}|${field}` → status
-  for (const r of logRes.data ?? []) log.set(`${r.gender}|${r.school_id}|${r.field}`, r.status)
+  const log = new Map<string, { status: string; at: string }>()   // `${gender}|${school}|${field}` → status, when
+  for (const r of logRes.data ?? []) log.set(`${r.gender}|${r.school_id}|${r.field}`, { status: r.status, at: r.completed_at })
   const flagged = new Set((flagRes.data ?? []).map(r => `${String(r.gender).trim()}|${r.school_id}`))
   const coaches = {
     M: new Map((coachM.data ?? []).map(c => [c.school_id as number, (c.email as string | null) ?? null])),
     F: new Map((coachF.data ?? []).map(c => [c.school_id as number, (c.email as string | null) ?? null])),
   }
+  const coachNames = {
+    M: new Map((coachM.data ?? []).map(c => [c.school_id as number, (c.name as string | null) ?? null])),
+    F: new Map((coachF.data ?? []).map(c => [c.school_id as number, (c.name as string | null) ?? null])),
+  }
+  const streamsBy = { M: streamM, F: streamF }
 
   // Roster import per gender: which schools have rows matched to them, and whether any
   // rows are still unmatched (step 1 not finished: those rows carry only a school name)
@@ -131,9 +144,13 @@ export async function loadWorkload(db: Db): Promise<Workload> {
     if (!s || t.source !== 'school_field' || !t.field || !FIELD_DEFS[t.field]) return 'na'
     if (t.gender === 'M' && !s.boys) return 'na'
     if (t.gender === 'F' && !s.girls) return 'na'
-    const logged = (g: Gender) => log.get(`${g}|${schoolId}|${t.field}`)
+    // a reset (Kyle 2026-11-19: "all micro checks should be able to be reset and rechecked"): only answers given since
+    // count, and data on file no longer counts by itself — every school is asked again, shown what's there
+    const fresh = (at: string | null | undefined) => !t.reset_at || (!!at && at > t.reset_at)
+    const logged = (g: Gender) => { const e = log.get(`${g}|${schoolId}|${t.field}`); return e && fresh(e.at) ? e.status : undefined }
     // Shared data counts as handled when either program's microcheck handled it
     const loggedAny = t.gender ? logged(t.gender) : (logged('M') ?? logged('F'))
+    const onFile = !t.reset_at
     const fromLog = (st: string | undefined): CellStatus | null => st === 'completed' ? 'completed' : st === 'cant_find' ? 'cant_find' : null
 
     if (t.field === 'roster_match') {
@@ -152,12 +169,19 @@ export async function loadWorkload(db: Db): Promise<Workload> {
     if (t.field === 'coach_name' || t.field === 'coach_email') {
       const g = t.gender ?? 'M'
       const hasCoach = coaches[g].has(schoolId)
-      if (t.field === 'coach_name') return hasCoach ? 'done' : (fromLog(loggedAny) ?? 'missing')
+      if (t.field === 'coach_name') return hasCoach && onFile ? 'done' : (fromLog(loggedAny) ?? 'missing')
       if (!hasCoach) return 'na'
-      return coaches[g].get(schoolId)?.trim() ? 'done' : (fromLog(loggedAny) ?? 'missing')
+      return coaches[g].get(schoolId)?.trim() && onFile ? 'done' : (fromLog(loggedAny) ?? 'missing')
+    }
+    if (t.field === 'stream_choice') {
+      // only programs with a link to look at; done once someone picked (since the reset)
+      const l = streamsBy[t.gender ?? 'M'].get(schoolId)
+      if (!l) return 'na'
+      if (l.choice && fresh(l.choice_at)) return 'done'
+      return fromLog(loggedAny) ?? 'missing'
     }
     const value = njById.get(schoolId)?.[t.field]
-    if (typeof value === 'string' && value.trim()) return 'done'
+    if (typeof value === 'string' && value.trim() && onFile) return 'done'
     return fromLog(loggedAny) ?? 'missing'
   }
 
@@ -182,13 +206,35 @@ export async function loadWorkload(db: Db): Promise<Workload> {
   const queue = new Map<string, QueueItem[]>()
   for (const t of types) {
     if (t.source !== 'queue') continue
+    // College review: the entrants still waiting in that gender's college results, newest year first
+    if (t.queue_type === 'college_review') {
+      const rows = t.gender ? await loadReviewRows(db, t.gender) : []
+      queue.set(t.key, rows.map(r => ({ id: `${t.gender}:${r.id}`, entity_id: String(r.id), metadata: {}, college: r })))
+      continue
+    }
+    // College spot check: the careers the importer matched by itself, shuffled (src/lib/ncaa/spotCheck.ts)
+    if (t.queue_type === 'college_spot') {
+      const rows = t.gender ? await loadSpotCareers(db, t.gender, t.reset_at ?? null) : []
+      queue.set(t.key, rows.map(c => ({ id: `spot:${t.gender}:${c.key}`, entity_id: c.key, metadata: {}, spot: c })))
+      continue
+    }
     queue.set(t.key, (queueRes.data ?? [])
       .filter(q => q.task_type === t.queue_type && q.gender === t.gender)
       .map(q => ({ id: q.id as string, entity_id: String(q.entity_id), metadata: (q.metadata ?? {}) as Record<string, unknown> })))
   }
 
+  // the value on file for a school field (shown on a reset check to confirm or change)
+  function current(t: TaskType, schoolId: number): string | null {
+    const g = t.gender ?? 'M'
+    if (t.field === 'coach_name') return coachNames[g].get(schoolId) ?? null
+    if (t.field === 'coach_email') return coaches[g].get(schoolId) ?? null
+    if (!t.field || t.field === 'roster_match' || t.field === 'stream_choice') return null
+    const v = njById.get(schoolId)?.[t.field]
+    return typeof v === 'string' && v.trim() ? v : null
+  }
+
   return {
-    types, schools, status, nameFor, queue,
+    types, schools, status, nameFor, queue, current, streams: (g, id) => streamsBy[g].get(id) ?? null,
     focus: (focusRes.data ?? []).map(f => ({ id: f.id as string, task_key: f.task_key as string, school_id: f.school_id as number })),
   }
 }

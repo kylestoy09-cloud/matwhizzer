@@ -5,6 +5,7 @@
  * limit. Default: the gender's season in progress. ?season=<id> rebuilds another season.
  */
 import { NextRequest, NextResponse } from 'next/server'
+import { cronSkipBeforeSeason } from '@/lib/cronGuard'
 import { createSupabaseAdmin } from '@/lib/supabase/service'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { getWorkingSeason, parseGender } from '@/lib/season-context'
@@ -13,7 +14,8 @@ export const maxDuration = 300
 
 async function authorize(req: NextRequest): Promise<boolean> {
   // Vercel cron sends Authorization: Bearer <CRON_SECRET>
-  if (req.headers.get('authorization') === `Bearer ${process.env.CRON_SECRET}`) return true
+  // (an unset secret never matches — "Bearer undefined" must not pass)
+  if (process.env.CRON_SECRET && req.headers.get('authorization') === `Bearer ${process.env.CRON_SECRET}`) return true
   // or a signed-in admin (any signed-in user is not enough: fans have accounts)
   const sb = await createSupabaseServer()
   const { data: { user } } = await sb.auth.getUser()
@@ -24,6 +26,8 @@ async function authorize(req: NextRequest): Promise<boolean> {
 
 async function refresh(req: NextRequest) {
   if (!(await authorize(req))) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const skip = await cronSkipBeforeSeason(req)   // src/lib/cronGuard.ts
+  if (skip) return NextResponse.json({ skipped: skip })
   const gender = req.nextUrl.searchParams.get('gender') === 'F' ? 'F' : 'M'
   const seasonParam = Number(req.nextUrl.searchParams.get('season'))
   const season = seasonParam || (await getWorkingSeason(parseGender(gender))).id

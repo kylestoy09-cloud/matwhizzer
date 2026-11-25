@@ -1,8 +1,11 @@
+import { TournamentHistoryView, HistoryTabs } from '@/components/site/TournamentHistory'
 import Link from 'next/link'
+import { PostseasonHomeLink } from '@/components/site/PostseasonHomeLink'
 import { IconHint } from '@/components/site/IconHint'
 import { notFound } from 'next/navigation'
 import { supabase } from '@/lib/supabase/public-cached'
-import { getActiveSeason } from '@/lib/get-season'
+import { getPostseasonSeason } from '@/lib/get-season'
+import { seasonWeights, regionLabels } from '@/lib/postseasonSeason'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { StdHeader } from '@/components/site/StdPage'
 import { WeightTiles, NumberPills } from '@/components/site/PostseasonParts'
@@ -12,6 +15,7 @@ import { getBoysOfficialTeamScores } from '@/lib/boysOfficialTeamScores'
 import { SHOW_WRESTLER_TEAM_POINTS } from '@/lib/wrestlerTeamPoints'
 import { IndividualTeamPoints } from '@/components/IndividualTeamPoints'
 import RegionVideo from '@/components/RegionVideo'
+import { youtubeAvailable } from '@/lib/youtubeAvailable'
 import { getSchoolLogos } from '@/lib/school-logos'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 import { SchoolTag } from '@/components/SchoolTag'
@@ -111,12 +115,14 @@ function StatCard<T extends { wrestler_id: string; wrestler_name: string; school
   subtitle,
   value,
   note,
+  empty = 'No data',
 }: {
   title: string
   rows: T[]
   subtitle: (r: T) => string
   value: (r: T) => string
   note?: string
+  empty?: string
 }) {
   return (
     <div className="bg-white rounded-none border border-black shadow-none overflow-hidden">
@@ -126,7 +132,7 @@ function StatCard<T extends { wrestler_id: string; wrestler_name: string; school
       </div>
       <div className="divide-y divide-slate-100">
         {rows.length === 0 && (
-          <p className="px-4 py-3 text-sm text-slate-400">No data</p>
+          <p className="px-4 py-3 text-sm text-slate-400">{empty}</p>
         )}
         {rows.map((r, i) => (
           <div key={`${r.wrestler_id}-${i}`} className="flex items-center gap-2 px-4 py-2.5">
@@ -152,15 +158,33 @@ function StatCard<T extends { wrestler_id: string; wrestler_name: string; school
 // ── Page ─────────────────────────────────────────────────────────────────────
 
 export default async function RegionSummaryPage({
-  params,
+  params, searchParams,
 }: {
   params: Promise<{ region: string }>
+  searchParams: Promise<{ view?: string }>
 }) {
+  const view = (await searchParams).view === 'history' ? 'history' : 'brackets'
   const { region: raw } = await params
   const r = Number(raw)
   if (!r || r < 1 || r > 8) notFound()
 
-  const season = await getActiveSeason('M')
+  const { season, options: seasonOptions } = await getPostseasonSeason('M')
+  // a Playoff History season with its own regions (2020-21: four super regions) lists them by name
+  const rl = await regionLabels('M', season)   // one label everywhere: the region's own name, else "Region N"
+  // History tab (Kyle 2026-11-14): every year on file in the picker's seasons
+  if (view === 'history') return (
+    <div className="max-w-6xl mx-auto px-4 py-10">
+      <PostseasonHomeLink side="boys" season={season} options={seasonOptions} />
+      <StdHeader title={`Boys Region ${r}`} summaryKey="region" hideSummary
+        tabs={<div className="space-y-3"><NumberPills items={[1, 2, 3, 4, 5, 6, 7, 8].map(rn => ({ key: rn, label: `R${rn}`, href: `/boys/regions/${rn}?view=history` }))} active={r} /><HistoryTabs base={`/boys/regions/${r}`} view="history" /></div>} />
+      <TournamentHistoryView gender="M" level="region" num={r} seasons={seasonOptions.map(o => o.id)} />
+    </div>
+  )
+
+  if (rl.order.length && !rl.order.includes(r)) notFound()
+  const regionTitle = rl.label(r)
+
+  const weights = await seasonWeights('M', season, WEIGHTS)   // the season's own classes (Playoff History)
 
   const [placementsRes, matTimeRes, fastPinRes, fastTfRes, teamScoreRows, teamPtsRes, regionSchoolsRes, videoRes, ghostRes, regionEntriesRes, statePlacementsRes, logos] =
     await Promise.all([
@@ -187,11 +211,13 @@ export default async function RegionSummaryPage({
   const placements    = (placementsRes.data    ?? []) as PlacementRow[]
   const matTime       = ((matTimeRes.data   ?? []) as MatTimeRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
   const fastPin       = ((fastPinRes.data   ?? []) as FastestPinRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
-  const fastTf        = ((fastTfRes.data    ?? []) as FastestTfRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
+  // a tech of 0:15 or under isn't honored (Kyle 2026-11-14)
+  const fastTf        = ((fastTfRes.data    ?? []) as FastestTfRow[]).filter(r => r.fall_time_seconds > 15).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
   const teamScore     = (teamScoreRows as TeamScoreRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
   const teamPts       = ((teamPtsRes.data   ?? []) as TeamPtsRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
   const regionSchools = (regionSchoolsRes.data ?? []) as RegionSchoolRow[]
-  const youtubeUrl = (videoRes.data?.youtube_url as string | null) ?? null
+  const videoUrl = (videoRes.data?.youtube_url as string | null) ?? null
+  const youtubeUrl = videoUrl && await youtubeAvailable(videoUrl) ? videoUrl : null   // a removed stream is left off
 
   // Ghost champion IDs + seed map for badges
   const ghostIds = new Set(
@@ -230,12 +256,13 @@ export default async function RegionSummaryPage({
     <div>
 
       <div className="max-w-5xl mx-auto px-4 py-10">
-      <StdHeader title={`Boys Region ${r}`} summaryKey="region"
-        picker={<InlineSeasonPicker gender="M" activeSeason={season} />}
-        tabs={<NumberPills items={[1, 2, 3, 4, 5, 6, 7, 8].map(rn => ({ key: rn, label: `R${rn}`, href: `/boys/regions/${rn}` }))} active={r} />} />
+      <PostseasonHomeLink side="boys" season={season} options={seasonOptions} />
+      <StdHeader title={`Boys ${regionTitle}`} summaryKey="region" hideSummary
+        picker={<InlineSeasonPicker arrows gender="M" activeSeason={season} options={seasonOptions} />}
+        tabs={<div className="space-y-3"><NumberPills items={(rl.order.length ? rl.order : [1, 2, 3, 4, 5, 6, 7, 8]).map(rn => ({ key: rn, label: rl.pill(rn), href: `/boys/regions/${rn}` }))} active={r} /><HistoryTabs base={`/boys/regions/${r}`} view="brackets" /></div>} />
 
       {/* ── Bracket grid ── */}
-      <div className="mb-8"><WeightTiles side="boys" hrefBase={`/boys/regions/${r}`} weights={WEIGHTS} /></div>
+      <div className="mb-8"><WeightTiles side="boys" hrefBase={`/boys/regions/${r}`} weights={weights} /></div>
 
       {/* ── Placements ── */}
       <section className="mb-10">
@@ -258,7 +285,7 @@ export default async function RegionSummaryPage({
               </tr>
             </thead>
             <tbody>
-              {WEIGHTS.map((w, i) => {
+              {weights.map((w, i) => {
                 const row = placementsByWeight.get(w) ?? new Map<number, PlacementRow>()
                 return (
                   <tr key={w} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
@@ -315,12 +342,12 @@ export default async function RegionSummaryPage({
       </section>
 
       {/* ── Region Video ── */}
-      <RegionVideo youtubeUrl={youtubeUrl} regionName={`Region ${r}`} />
+      <RegionVideo youtubeUrl={youtubeUrl} regionName={regionTitle} />
 
       {/* ── Region Leaders ── */}
       <section className="mb-10">
         <h2 className="text-base font-semibold text-slate-800 mb-3">Region Leaders</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
           <StatCard<MatTimeRow>
             title="The Terminators"
@@ -332,6 +359,7 @@ export default async function RegionSummaryPage({
 
           <StatCard<FastestPinRow>
             title="Quickest Deck"
+            empty="No Pins"
             rows={fastPin}
             subtitle={r => `${r.school_id != null ? r.school_name : 'TBD'} · ${r.weight} lb`}
             value={r => fmtTime(r.fall_time_seconds)}
@@ -339,6 +367,7 @@ export default async function RegionSummaryPage({
 
           <StatCard<FastestTfRow>
             title="Quickest Tech"
+            empty="No Techs"
             rows={fastTf}
             subtitle={r => `${r.school_id != null ? r.school_name : 'TBD'} · ${r.weight} lb`}
             value={r => fmtTime(r.fall_time_seconds)}

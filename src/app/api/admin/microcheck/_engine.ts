@@ -1,7 +1,9 @@
 // Microcheck task shapes and the school fields a task can ask for. Which task comes
 // next is decided by _next.ts from the order set on the Task Order page.
 
-export type InputType = 'text' | 'url' | 'email' | 'roster'
+import type { ReviewRow } from '@/lib/ncaa/reviewShared'
+
+export type InputType = 'text' | 'url' | 'email' | 'roster' | 'stream_choice'
 
 export type SchoolProfileTask = {
   task_type:   'school_profile'
@@ -14,6 +16,9 @@ export type SchoolProfileTask = {
   label:       string
   input_type:  InputType
   placeholder: string
+  // what's on file (a reset check asks to confirm or change it — Kyle 2026-11-19); stream_choice: both links
+  current?:    string | null
+  links?:      { hudl: string | null; nfhs: string | null }
 }
 
 export type TieResolutionTask = {
@@ -33,7 +38,25 @@ export type TieResolutionTask = {
   dual_table:      string
 }
 
-export type TaskInfo = SchoolProfileTask | TieResolutionTask
+// College review (Kyle 2026-11-17): one college entrant who might be ours, with the whole review card
+export type CollegeReviewTask = {
+  task_type:   'college_review'
+  task_key:    string
+  group_label: string
+  gender:      'M' | 'F'
+  row:         ReviewRow
+}
+
+// College spot check (Kyle 2026-11-19): one automatically matched career to confirm
+export type CollegeSpotTask = {
+  task_type:   'college_spot'
+  task_key:    string
+  group_label: string
+  gender:      'M' | 'F'
+  career:      import('@/lib/ncaa/spotCheck').SpotCareer
+}
+
+export type TaskInfo = SchoolProfileTask | TieResolutionTask | CollegeReviewTask | CollegeSpotTask
 
 /** The school fields microcheck can ask for: wording shown to the person and the input to use. */
 export const FIELD_DEFS: Record<string, { label: string; input_type: InputType; placeholder: string }> = {
@@ -46,4 +69,6 @@ export const FIELD_DEFS: Record<string, { label: string; input_type: InputType; 
   coach_email:    { label: 'head coach email',        input_type: 'email',  placeholder: 'jsmith@district.k12.nj.us' },
   ad_name:        { label: 'athletic director name',  input_type: 'text',   placeholder: 'Jane Doe' },
   ad_email:       { label: 'athletic director email', input_type: 'email',  placeholder: 'jdoe@district.k12.nj.us' },
+  // Kyle 2026-11-19: look at both pages, pick the home account the meets are broadcast from
+  stream_choice:  { label: 'home streaming account',  input_type: 'stream_choice', placeholder: '' },
 }

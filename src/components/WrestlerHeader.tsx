@@ -71,8 +71,11 @@ export type WrestlerHeaderProps = {
   headerBackground: string | null
   wrestlerName: string
   grade: string | null
+  active?: string | null   // years active ("2013-14 – 2016-17"), shown when there is no grade
   primaryWeight: number | null
   schoolLink: string | null
+  note?: string | null     // the admin Status note, in italics under the name (Kyle 2026-11-17)
+  activeText?: string | null   // replaces the grade line ("Wrestled 2024-2026")
 }
 
 // ── Component ─────────────────────────────────────────────────────────────────
@@ -86,8 +89,11 @@ export function WrestlerHeader({
   headerBackground,
   wrestlerName,
   grade,
+  active,
   primaryWeight,
   schoolLink,
+  note,
+  activeText,
 }: WrestlerHeaderProps) {
   const bgColor   = headerBackground ?? secondaryColor ?? '#1a1a2e'
   const textColor = pickTextColor(bgColor, [primaryColor, secondaryColor])
@@ -171,9 +177,22 @@ export function WrestlerHeader({
             >
               {wrestlerName}
             </h1>
-            {fullGrade && (
+            {note && (
+              <p className="text-sm italic mt-0.5" style={{ color: textColor, opacity: 0.9 }}>
+                {note}
+              </p>
+            )}
+            {activeText ? (
+              <p className="text-sm mt-0.5" style={{ color: textColor, opacity: 0.8 }}>
+                {activeText}
+              </p>
+            ) : fullGrade ? (
               <p className="text-sm mt-0.5" style={{ color: textColor, opacity: 0.8 }}>
                 {fullGrade}
+              </p>
+            ) : active && (
+              <p className="text-sm mt-0.5" style={{ color: textColor, opacity: 0.8 }}>
+                Active {active}
               </p>
             )}
           </div>

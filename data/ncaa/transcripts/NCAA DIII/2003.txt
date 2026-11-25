@@ -1,0 +1,182 @@
+# NCAA Division III Championships 2003 — source: NCAA III 2003.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 125
+- Heath Ropp | Wartburg
+- Mitchell Marcks | Kings
+- Tom Prairie | Williams
+- Jared Selover | Baldwin Wallace
+- Jason Peck | SUNY-Cortland
+- Greg Brendemuehl | Augsburg
+- Salavador Cruz | SUNY-Brockport
+- Nick Kehagias | Chicago University
+place 1 Heath Ropp
+place 2 Mitchell Marcks
+place 3 Tom Prairie
+place 4 Jared Selover
+place 5 Jason Peck
+place 6 Greg Brendemuehl
+place 7 Salavador Cruz
+place 8 Nick Kehagias
+
+@ 133
+- Dave Llaria | College of New Jersey
+- Ozzie Saxton | Wartburg
+- Barry Wise | Delaware Valley
+- Mark Matzek | Augsburg
+- Mike Waldron | Lycoming
+- Brady Holtz | Wisconsin-Stevens Point
+- Tenkoran Agyeman | SUNY-Oswego
+- Gary Mikolay | Montclair State
+place 1 Dave Llaria
+place 2 Ozzie Saxton
+place 3 Barry Wise
+place 4 Mark Matzek
+place 5 Mike Waldron
+place 6 Brady Holtz
+place 7 Tenkoran Agyeman
+place 8 Gary Mikolay
+
+@ 141
+- Will Kelly | Wartburg
+- Jim Morgan | Kings
+- Jamell Tidwell | Augsburg
+- Kristopher Harrington | SUNY-Brockport
+- Keith Poloskey | Springfield
+- Matt Kapraun | Augustana Illinois
+- Nate Yeasted | Muhlenberg
+- Jeff Patzke | Luther
+place 1 Will Kelly
+place 2 Jim Morgan
+place 3 Jamell Tidwell
+place 4 Kristopher Harrington
+place 5 Keith Poloskey
+place 6 Matt Kapraun
+place 7 Nate Yeasted
+place 8 Jeff Patzke
+
+@ 149
+- Rami Ratel | Montclair State
+- Garrett Kurth | Luther
+- Bart Mehlert | Wartburg
+- Clint Manny | Simpson
+- Sean Collins | Wheaton
+- Troy Fabry | Wisconsin-La Crosse
+- Andrew Vogel | Loras College
+- Zak Kallai | Case-Western Reserve
+place 1 Rami Ratel
+place 2 Garrett Kurth
+place 3 Bart Mehlert
+place 4 Clint Manny
+place 5 Sean Collins
+place 6 Troy Fabry
+place 7 Andrew Vogel
+place 8 Zak Kallai
+
+@ 157
+- Marcus LeVesseur | Augsburg
+- Kevin Bratland | Wartburg
+- Aaron Loewens | Buena Vista
+- Garrett South | Luther
+- Greg Llaria | College of New Jersey
+- Dustin Roland | Central College IA
+- Darren Buseman | Scranton
+- Sean Howard | Ursinus
+place 1 Marcus LeVesseur
+place 2 Kevin Bratland
+place 3 Aaron Loewens
+place 4 Garrett South
+place 5 Greg Llaria
+place 6 Dustin Roland
+place 7 Darren Buseman
+place 8 Sean Howard
+
+@ 165
+- Jesse Revereson | Luther
+- Pat North | RIT
+- Cory DeBias | Roger Williams
+- Ryan Sturm | Wartburg
+- Artie Weidler | SUNY-Brockport
+- Jarald Ridley | Manchester
+- Bill Parry | Ithaca
+- Bill Deniz | Montclair State
+place 1 Jesse Revereson
+place 2 Pat North
+place 3 Cory DeBias
+place 4 Ryan Sturm
+place 5 Artie Weidler
+place 6 Jarald Ridley
+place 7 Bill Parry
+place 8 Bill Deniz
+
+@ 174
+- Cody Koenig | Wisconsin-Stevens Point
+- Eduard Aliakseynka | Montclair State
+- Jason Lulloff | Wisconsin-La Crosse
+- Gary Franck | Coe College
+- Joe Moon | Augsburg
+- Mark Strum | Wartburg
+- Paul Vaccaro | College of New Jersey
+- Chris Healy | Wabash
+place 1 Cody Koenig
+place 2 Eduard Aliakseynka
+place 3 Jason Lulloff
+place 4 Gary Franck
+place 5 Joe Moon
+place 6 Mark Strum
+place 7 Paul Vaccaro
+place 8 Chris Healy
+
+@ 184
+- Bradley Marten | Wisconsin-Stevens Point
+- Sonny Alvarez | Wartburg
+- Ricky Crone | Augsburg
+- Denny Gaul | Montclair State
+- Paul Cleary | Loras College
+- Artie Mauser | John Carroll
+- Dave Hirt | Wheaton
+- Jeff Edelstein | Ithaca
+place 1 Bradley Marten
+place 2 Sonny Alvarez
+place 3 Ricky Crone
+place 4 Denny Gaul
+place 5 Paul Cleary
+place 6 Artie Mauser
+place 7 Dave Hirt
+place 8 Jeff Edelstein
+
+@ 197
+- Brent Meyers | Upper Iowa
+- Yan White | Wisconsin-Stevens Point
+- Alain Djoumessi | Wartburg
+- Robert Cuffie | SUNY-Brockport
+- Adam Kolo | Wisconsin-Eau Clair
+- Justin Torres | Olivet
+- Bart George | Simpson
+- Matt Huset | Milwaukee Engineering
+place 1 Brent Meyers
+place 2 Yan White
+place 3 Alain Djoumessi
+place 4 Robert Cuffie
+place 5 Adam Kolo
+place 6 Justin Torres
+place 7 Bart George
+place 8 Matt Huset
+
+@ 285
+- Leroy Gardner | Wartburg
+- Ryan Allen | Wisconsin-La Crosse
+- Pat Thomas | Loras College
+- Jamie Salazar | Manchester
+- Chris Harrison | Coe College
+- Brian Black | Upper Iowa
+- Mike Blair | Trinity
+- Jim Pennise | SUNY-Brockport
+place 1 Leroy Gardner
+place 2 Ryan Allen
+place 3 Pat Thomas
+place 4 Jamie Salazar
+place 5 Chris Harrison
+place 6 Brian Black
+place 7 Mike Blair
+place 8 Jim Pennise
+

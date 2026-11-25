@@ -10,14 +10,24 @@ import { SiteTabs } from '@/components/site/SiteTabs'
 import { StdHeader } from '@/components/site/StdPage'
 import { ComingSoon } from '@/components/site/ComingSoon'
 import { IconHint } from '@/components/site/IconHint'
+import { HistoryTabs } from '@/components/site/TournamentHistory'
+import { TeamHistoryTable } from '@/components/site/TeamHistory'
+import { girlsTeamHistory } from '@/lib/teamHistory'
 
 const BASE = '/postseason/team/girls'
 
 export const revalidate = 300
 
 // Girls team postseason: North and South brackets, then the state final (src/lib/girlsTeamBracket.ts)
-export default async function GirlsTeamPostseasonPage({ searchParams }: { searchParams: Promise<{ section?: string }> }) {
-  const { section: sectionParam } = await searchParams
+export default async function GirlsTeamPostseasonPage({ searchParams }: { searchParams: Promise<{ section?: string; view?: string }> }) {
+  const { section: sectionParam, view } = await searchParams
+  // the History tab (Kyle 2026-11-16): the State, North and South champions by year
+  if (view === 'history') return (
+    <div className="max-w-6xl mx-auto px-4 py-10">
+      <StdHeader title="Girls Team Post Season" summaryKey="ps-team" tabs={<HistoryTabs base={BASE} view="history" />} />
+      <TeamHistoryTable group={await girlsTeamHistory()} />
+    </div>
+  )
   const section = sectionParam === 'north' || sectionParam === 'south' ? sectionParam : ''
   const season = await getActiveSeason('F')
   const [bracket, logos] = await Promise.all([getGirlsTeamBracket(season), getSchoolLogos()])
@@ -61,10 +71,13 @@ export default async function GirlsTeamPostseasonPage({ searchParams }: { search
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
-      {/* the standard header; North / South tabs toggle (click again to show both) */}
+      {/* the standard header; State (the final and both brackets), North, South (Kyle 2026-11-16: State as a tab, to get back) */}
       <StdHeader title="Girls Team Post Season" summaryKey="ps-team"
-        picker={<InlineSeasonPicker gender="F" activeSeason={season} />}
-        tabs={bracket ? <SiteTabs items={[['north', 'North'], ['south', 'South']].map(([k, l]) => ({ key: k, label: l, href: section === k ? BASE : `${BASE}?section=${k}` }))} active={section} /> : undefined} />
+        picker={<InlineSeasonPicker arrows gender="F" activeSeason={season} />}
+        tabs={<div className="space-y-3">
+          <HistoryTabs base={BASE} view="brackets" />
+          {bracket && <SiteTabs level={2} items={[['', 'State'], ['north', 'North'], ['south', 'South']].map(([k, l]) => ({ key: k, label: l, href: k ? `${BASE}?section=${k}` : BASE }))} active={section} />}
+        </div>} />
 
       {!bracket ? (
         <ComingSoon what="Brackets" />

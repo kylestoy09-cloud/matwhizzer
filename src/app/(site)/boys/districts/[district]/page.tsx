@@ -1,8 +1,11 @@
+import { TournamentHistoryView, HistoryTabs } from '@/components/site/TournamentHistory'
 import Link from 'next/link'
+import { PostseasonHomeLink } from '@/components/site/PostseasonHomeLink'
 import { IconHint } from '@/components/site/IconHint'
 import { notFound } from 'next/navigation'
 import { supabase } from '@/lib/supabase/public-cached'
-import { getActiveSeason } from '@/lib/get-season'
+import { getPostseasonSeason } from '@/lib/get-season'
+import { historySeasonInfo, seasonWeights } from '@/lib/postseasonSeason'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { StdHeader } from '@/components/site/StdPage'
 import { WeightTiles, NumberPills } from '@/components/site/PostseasonParts'
@@ -108,12 +111,14 @@ function StatCard<T extends { wrestler_id: string; wrestler_name: string; school
   subtitle,
   value,
   note,
+  empty = 'No data',
 }: {
   title: string
   rows: T[]
   subtitle: (r: T) => string
   value: (r: T) => string
   note?: string
+  empty?: string
 }) {
   return (
     <div className="bg-white rounded-none border border-black shadow-none overflow-hidden">
@@ -123,7 +128,7 @@ function StatCard<T extends { wrestler_id: string; wrestler_name: string; school
       </div>
       <div className="divide-y divide-slate-100">
         {rows.length === 0 && (
-          <p className="px-4 py-3 text-sm text-slate-400">No data</p>
+          <p className="px-4 py-3 text-sm text-slate-400">{empty}</p>
         )}
         {rows.map((r, i) => (
           <div key={`${r.wrestler_id}-${i}`} className="flex items-center gap-2 px-4 py-2.5">
@@ -151,15 +156,39 @@ function StatCard<T extends { wrestler_id: string; wrestler_name: string; school
 // ── Page ─────────────────────────────────────────────────────────────────────
 
 export default async function DistrictSummaryPage({
-  params,
+  params, searchParams,
 }: {
   params: Promise<{ district: string }>
+  searchParams: Promise<{ view?: string }>
 }) {
+  const view = (await searchParams).view === 'history' ? 'history' : 'brackets'
   const { district: raw } = await params
   const d = Number(raw)
   if (!d || d < 1 || d > 32) notFound()
 
-  const season = await getActiveSeason('M')
+  const { season, options: seasonOptions } = await getPostseasonSeason('M')
+  // History tab (Kyle 2026-11-14): every year on file in the picker's seasons
+  if (view === 'history') return (
+    <div className="max-w-6xl mx-auto px-4 py-10">
+      <PostseasonHomeLink side="boys" season={season} options={seasonOptions} />
+      <StdHeader title={`Boys District ${d}`} summaryKey="district" hideSummary
+        tabs={<div className="space-y-3"><NumberPills items={Array.from({ length: 32 }, (_, i) => i + 1).map(dn => ({ key: dn, label: `D${dn}`, href: `/boys/districts/${dn}?view=history` }))} active={d} /><HistoryTabs base={`/boys/districts/${d}`} view="history" /></div>} />
+      <TournamentHistoryView gender="M" level="district" num={d} seasons={seasonOptions.map(o => o.id)} />
+    </div>
+  )
+
+  // 2020-21 (COVID) had no districts: say so rather than show empty boards (as the district list does)
+  const hist = await historySeasonInfo('M', season)
+  if (hist && !hist.districts) return (
+    <div className="max-w-5xl mx-auto px-4 py-10">
+      <PostseasonHomeLink side="boys" season={season} options={seasonOptions} />
+      <StdHeader title={`Boys District ${d}`} summaryKey="district" hideSummary
+        picker={<InlineSeasonPicker arrows gender="M" activeSeason={season} options={seasonOptions} />} />
+      <p className="text-sm text-slate-600">There were no district tournaments this season. It went straight to the <Link href="/boys/regions" className="underline">super regions</Link>.</p>
+    </div>
+  )
+
+  const weights = await seasonWeights('M', season, WEIGHTS)   // the season's own classes (Playoff History)
 
   const [placementsRes, matTimeRes, fastPinRes, fastTfRes, schoolsRes, teamScoreRows, teamPtsRes, stateEntRes, ghostRes, distEntriesRes, statePlacementsRes, logos] =
     await Promise.all([
@@ -190,7 +219,8 @@ export default async function DistrictSummaryPage({
   const placements = (placementsRes.data ?? []) as PlacementRow[]
   const matTime    = ((matTimeRes.data   ?? []) as MatTimeRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
   const fastPin    = ((fastPinRes.data   ?? []) as FastestPinRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
-  const fastTf     = ((fastTfRes.data    ?? []) as FastestTfRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
+  // a tech of 0:15 or under isn't honored (Kyle 2026-11-14)
+  const fastTf     = ((fastTfRes.data    ?? []) as FastestTfRow[]).filter(r => r.fall_time_seconds > 15).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
   const schools    = (schoolsRes.data    ?? []) as SchoolRow[]
   const teamScore  = (teamScoreRows as TeamScoreRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
   const teamPts    = ((teamPtsRes.data   ?? []) as TeamPtsRow[]).map(r => ({ ...r, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }))
@@ -211,6 +241,17 @@ export default async function DistrictSummaryPage({
     statePlaceMap.set(sp.wrestler_id, sp.place)
   }
 
+  // A district with a podium but no bracket on file (history_podiums, e.g. 2012-13 District 24 from the Shore Conference
+  // archives — Kyle 2026-11-14): its team order stands in for team scores, and the page says where it came from
+  const { data: podTeams } = await supabase.from('history_podiums').select('place, school_id, source, school:schools(display_name), tournament:tournaments!inner(name, season_id)')
+    .eq('tournament.name', `Boy_s Districts District ${d}`).eq('tournament.season_id', season).is('weight', null).order('place')
+  const podiumSource = (podTeams ?? [])[0]?.source as string | undefined
+  const teamRows = teamScore.length || !podTeams?.length ? teamScore
+    : (podTeams as unknown as { school_id: number | null; school: { display_name: string } | null }[]).map(r => {
+        const name = r.school?.display_name ?? 'TBD'
+        return { school: name, school_name: name, school_id: r.school_id, total_points: null, logo_url: r.school_id != null ? (logos.byId.get(r.school_id) ?? null) : null, bg_color: r.school_id != null ? (logos.bgById.get(r.school_id) ?? null) : null }
+      })
+
   // Organize placements by weight → place
   const placementsByWeight = new Map<number, Map<number, PlacementRow>>()
   for (const p of placements) {
@@ -222,18 +263,25 @@ export default async function DistrictSummaryPage({
     <div>
 
       <div className="max-w-5xl mx-auto px-4 py-10">
-      <StdHeader title={`Boys District ${d}`} summaryKey="district"
-        picker={<InlineSeasonPicker gender="M" activeSeason={season} />}
-        tabs={<NumberPills items={Array.from({ length: 32 }, (_, i) => i + 1).map(dn => ({ key: dn, label: `D${dn}`, href: `/boys/districts/${dn}` }))} active={d} />} />
+      <PostseasonHomeLink side="boys" season={season} options={seasonOptions} />
+      <StdHeader title={`Boys District ${d}`} summaryKey="district" hideSummary
+        picker={<InlineSeasonPicker arrows gender="M" activeSeason={season} options={seasonOptions} />}
+        tabs={<div className="space-y-3"><NumberPills items={Array.from({ length: 32 }, (_, i) => i + 1).map(dn => ({ key: dn, label: `D${dn}`, href: `/boys/districts/${dn}` }))} active={d} /><HistoryTabs base={`/boys/districts/${d}`} view="brackets" /></div>} />
 
-      {/* ── Bracket grid ── */}
-      <div className="mb-8"><WeightTiles side="boys" hrefBase={`/boys/districts/${d}`} weights={WEIGHTS} /></div>
+      {podiumSource && (
+        <p className="mb-4 text-sm text-slate-600 border border-slate-300 bg-slate-50 px-3 py-2">
+          Bracket not available for this year — placers{teamScore.length ? '' : ' and team order'} from the {podiumSource}.
+        </p>
+      )}
+
+      {/* ── Bracket grid (none for a podium-only year: Kyle 2026-11-14, team scoring and placements only) ── */}
+      {!podiumSource && <div className="mb-8"><WeightTiles side="boys" hrefBase={`/boys/districts/${d}`} weights={weights} /></div>}
 
       {/* ── Team Results ── */}
       <section className="mb-10">
         <h2 className="text-base font-semibold text-slate-800 mb-3">Team Results</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <TeamScoreCard rows={teamScore} gender="boys" />
+          <TeamScoreCard rows={teamRows} gender="boys" />
 
           {SHOW_WRESTLER_TEAM_POINTS && <IndividualTeamPoints rows={teamPts} />}
         </div>
@@ -260,7 +308,7 @@ export default async function DistrictSummaryPage({
               </tr>
             </thead>
             <tbody>
-              {WEIGHTS.map((w, i) => {
+              {weights.map((w, i) => {
                 const row = placementsByWeight.get(w) ?? new Map<number, PlacementRow>()
                 return (
                   <tr key={w} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
@@ -327,9 +375,9 @@ export default async function DistrictSummaryPage({
       </section>
 
       {/* ── District Leaders ── */}
-      <section className="mb-10">
+      {!podiumSource && <section className="mb-10">
         <h2 className="text-base font-semibold text-slate-800 mb-3">District Leaders</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
           <StatCard<MatTimeRow>
             title="The Terminators"
@@ -341,6 +389,7 @@ export default async function DistrictSummaryPage({
 
           <StatCard<FastestPinRow>
             title="Quickest Deck"
+            empty="No Pins"
             rows={fastPin}
             subtitle={r => `${r.school_id != null ? r.school_name : 'TBD'} · ${r.weight} lb`}
             value={r => fmtTime(r.fall_time_seconds)}
@@ -348,6 +397,7 @@ export default async function DistrictSummaryPage({
 
           <StatCard<FastestTfRow>
             title="Quickest Tech"
+            empty="No Techs"
             rows={fastTf}
             subtitle={r => `${r.school_id != null ? r.school_name : 'TBD'} · ${r.weight} lb`}
             value={r => fmtTime(r.fall_time_seconds)}
@@ -355,10 +405,10 @@ export default async function DistrictSummaryPage({
 
 
         </div>
-      </section>
+      </section>}
 
       {/* ── Bracket Buster ── */}
-      <section className="mb-10">
+      {!podiumSource && <section className="mb-10">
         <BracketBuster
           season={season}
           gender="M"
@@ -367,7 +417,7 @@ export default async function DistrictSummaryPage({
           title="Bracket Buster — District Upsets"
           limit={8}
         />
-      </section>
+      </section>}
 
       {/* ── Schools ── */}
       {schools.length > 0 && (

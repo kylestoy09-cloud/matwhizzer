@@ -4,6 +4,13 @@
 //   node --env-file=.env.local scripts/backfill_snapshots.mts <M|F> <season label> <season id>          dry run
 //   node --env-file=.env.local scripts/backfill_snapshots.mts <M|F> <season label> <season id> --apply  backup, clear, rebuild
 //   node --env-file=.env.local scripts/backfill_snapshots.mts <M|F> <season label> <season id> --resume continue after the last saved day
+//   add --reuse to any of these to compute from the saved reads of the last run (no reads from the database)
+//
+// Every read the computation makes (all tables except the snapshot_* ones this
+// script writes) is saved to scripts/.snapshot_cache/<gender>_<season>/, and a
+// read repeated within the run is answered from there. A normal run starts the
+// cache over; --reuse keeps it, so a rerun after a code change only writes.
+// Do not use --reuse after the season's bouts or ratings have changed.
 //
 // Days = every date with a scored match in wrestler_match_score_log or a dual
 // meet, for that season and gender. Before rebuilding, the gender's existing
@@ -15,7 +22,8 @@
 import { createClient } from '@supabase/supabase-js'
 import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from 'fs'
 
-const [gender, season, seasonIdArg, flag] = process.argv.slice(2)
+const [gender, season, seasonIdArg, flag] = process.argv.slice(2).filter(a => a !== '--reuse')
+const REUSE = process.argv.includes('--reuse')
 if (!['M', 'F'].includes(gender) || !season || !seasonIdArg) throw new Error('usage: <M|F> <season label> <season id> [--apply]')
 const seasonId = Number(seasonIdArg)
 const RESUME = flag === '--resume'
@@ -43,17 +51,45 @@ async function retry<X>(fn: () => Promise<X>, what: string): Promise<X> {
     }
   }
 }
+// Reads for the computation go through a disk cache (2026-11-11: keep the load on Supabase down).
+const CACHE = `scripts/.snapshot_cache/${gender}_${season}`
+if (!REUSE) rmSync(CACHE, { recursive: true, force: true })
+mkdirSync(CACHE, { recursive: true })
+const { createHash } = await import('crypto')
+const cacheStats = { hits: 0, reads: 0 }
+function cachedQuery(table: string, calls: [string, any[]][]): any {
+  return new Proxy({}, {
+    get(_t, prop: string) {
+      if (prop === 'then') return (res: any, rej: any) => {
+        const file = `${CACHE}/${createHash('sha1').update(JSON.stringify([table, calls])).digest('hex')}.json`
+        if (existsSync(file)) { cacheStats.hits++; return Promise.resolve(JSON.parse(readFileSync(file, 'utf8'))).then(res, rej) }
+        cacheStats.reads++
+        let q: any = db.from(table)
+        for (const [m, a] of calls) q = q[m](...a)
+        return Promise.resolve(q).then((r: any) => {
+          const out = { data: r.data, error: r.error, count: r.count ?? null }
+          if (!r.error) writeFileSync(file, JSON.stringify(out))
+          return out
+        }).then(res, rej)
+      }
+      return (...args: any[]) => cachedQuery(table, [...calls, [prop, args]])
+    },
+  })
+}
+const cdb = { from: (table: string) => table.startsWith('snapshot_') ? db.from(table) : cachedQuery(table, []) }
 const okR = <X,>(what: string, q: () => PromiseLike<{ data: X; error: any }>) => retry(async () => ok(await q()), what)
 async function all(q: () => any) { let out: any[] = []; for (let i = 0; ; i += 1000) { const data = await retry(async () => { const { data, error } = await q().range(i, i + 999); if (error) throw error; return data }, 'read'); out = out.concat(data); if (data.length < 1000) break } return out }
 
-// The compute modules import './types' without an extension (Next resolves it,
+// The compute modules import their neighbours without an extension (Next resolves it,
 // Node does not), so load copies with the extension added.
 const TMP = 'scripts/.snapshot_tmp'
 mkdirSync(TMP, { recursive: true })
-for (const f of ['compute', 'compute-girls', 'types']) {
-  const src = readFileSync(`src/lib/snapshot/${f}.ts`, 'utf8').replace(/from '\.\/types'/g, "from './types.ts'")
+for (const f of ['compute', 'compute-girls', 'types', 'streaks', 'results']) {
+  const src = readFileSync(`src/lib/snapshot/${f}.ts`, 'utf8').replace(/from '\.\/([\w-]+)'/g, "from './$1.ts'")
   writeFileSync(`${TMP}/${f}.ts`, src)
 }
+// Streaks read every bout of the season: load them once, not once per day (2026-11-11)
+const streakMod = await import(`../${TMP}/streaks.ts`)
 const mod = await import(`../${TMP}/${G ? 'compute-girls' : 'compute'}.ts`)
 const compute = G ? mod.computeSnapshotGirls : mod.computeSnapshot
 const buildStreaks = G ? mod.buildStreakStateUpsertsGirls : mod.buildStreakStateUpserts
@@ -108,12 +144,14 @@ try {
   }
 
   // ── Rebuild, day by day ──────────────────────────────────────────────────
+  const streakSeason = await retry(() => streakMod.loadStreakEvents(cdb, gender, seasonId, season), 'streak bouts')
+  console.log('streak bouts loaded for', streakSeason.events.size, 'wrestlers')
   const t0 = Date.now()
   for (const [i, date] of days.entries()) {
     if (i < startAt) continue
     // Computing only reads, so a timed-out day can simply be computed again;
     // nothing for the day is saved until the compute succeeds.
-    const { payload, seasonHighUpdates, updatedStreaks, todayTeamHighs } = await retry(() => compute(date, season, seasonId, db), `${date} compute`)
+    const { payload, seasonHighUpdates, updatedStreaks, todayTeamHighs } = await retry(() => compute(date, season, seasonId, cdb, streakSeason), `${date} compute`)
     await okR(`${date} report`, () => db.from(T.reports).upsert({ report_date: date, season, payload, computed_at: new Date().toISOString() }, { onConflict: 'report_date' }))
 
     for (const [stat_key, { value, context, set_on }] of Object.entries(seasonHighUpdates as Record<string, any>)) {
@@ -138,7 +176,7 @@ try {
   }
   const after: Record<string, number> = {}
   for (const k of ['reports', 'streaks', 'highs', 'team'] as const) after[k] = (await db.from(T[k]).select('*', { count: 'exact', head: true }).eq('season', season)).count ?? 0
-  console.log('done:', after)
+  console.log('done:', after, `— database reads ${cacheStats.reads}, answered from the saved reads ${cacheStats.hits}`)
 } finally {
   rmSync(TMP, { recursive: true, force: true })
 }

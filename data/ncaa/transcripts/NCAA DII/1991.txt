@@ -1,0 +1,182 @@
+# NCAA Division II Championships 1991 — source: NCAA II 1991.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Donnell Rawls | Winston-Salem
+- Bret Maughan | North Dakota State
+- Rich Douglas | St. Cloud State
+- Brett Southwick | Cal State-Chico
+- Ted Nelson | Nebraska-Omaha
+- Robert Symans | Lake Superior
+- Scott Marvin | Grand Valley State
+- Randy Zellner | Central Oklahoma
+place 1 Donnell Rawls
+place 2 Bret Maughan
+place 3 Rich Douglas
+place 4 Brett Southwick
+place 5 Ted Nelson
+place 6 Robert Symans
+place 7 Scott Marvin
+place 8 Randy Zellner
+
+@ 126
+- Phil Johns | SIU-Edwardsville
+- Eric Bowser | Pittsburgh-Johnstown
+- Scott Gates | Northern Colorado
+- Chris Anderson | Colorado Mines
+- Michael Pankratz | South Dakota State
+- Casey Hankin | Cal State-Chico
+- Marc Bauer | Nebraska-Omaha
+- Erik Donders | Lake Superior
+place 1 Phil Johns
+place 2 Eric Bowser
+place 3 Scott Gates
+place 4 Chris Anderson
+place 5 Michael Pankratz
+place 6 Casey Hankin
+place 7 Marc Bauer
+place 8 Erik Donders
+
+@ 134
+- Mike Pantoya | Northern Colorado
+- Glen Frank | Colorado Mines
+- Jeff Gowens | Central Oklahoma
+- Lloyd Wurm | North Dakota State
+- Don Garriott | Cal State-Chico
+- Tom Boyd | Gannon
+- Dwayne Knieper | Grand Valley State
+- Shane Blake | Augustana SD
+place 1 Mike Pantoya
+place 2 Glen Frank
+place 3 Jeff Gowens
+place 4 Lloyd Wurm
+place 5 Don Garriott
+place 6 Tom Boyd
+place 7 Dwayne Knieper
+place 8 Shane Blake
+
+@ 142
+- Scott Ruff | Nebraska-Omaha
+- Marty Vigil | Northern Colorado
+- Todd Drake | Central Oklahoma
+- Jim Gale | Minnesota State-Mankato
+- Eric Roberson | SIU-Edwardsville
+- Ed Gallegos | Colorado Mines
+- Eric Winters | Portland State
+- Kris Pressler | North Dakota
+place 1 Scott Ruff
+place 2 Marty Vigil
+place 3 Todd Drake
+place 4 Jim Gale
+place 5 Eric Roberson
+place 6 Ed Gallegos
+place 7 Eric Winters
+place 8 Kris Pressler
+
+@ 150
+- Ali Amiri-Eliasi | Nebraska-Kearney
+- Michael Swift | California PA
+- Gary Hoopes | Ferris State
+- Herman Moultrie | Cheyney
+- Mark Savoia | Ashland
+- Tim Whiting | Wisconsin-Parkside
+- Blu Taylor | California-Davis
+- Dean Henderson | Humboldt State
+place 1 Ali Amiri-Eliasi
+place 2 Michael Swift
+place 3 Gary Hoopes
+place 4 Herman Moultrie
+place 5 Mark Savoia
+place 6 Tim Whiting
+place 7 Blu Taylor
+place 8 Dean Henderson
+
+@ 158
+- Chris Mihfield | Central Missouri
+- Mark Anderson | North Dakota State
+- James Wall | North Carolina-Pembroke
+- Tim O'Connor | Ashland
+- Eric Cluck | Lake Superior
+- Joel Thoreson | Minnesota State-Mankato
+- John Maute | Springfield
+- Scott Horrillo | Cal State-Chico
+place 1 Chris Mihfield
+place 2 Mark Anderson
+place 3 James Wall
+place 4 Tim O'Connor
+place 5 Eric Cluck
+place 6 Joel Thoreson
+place 7 John Maute
+place 8 Scott Horrillo
+
+@ 167
+- Dan Russell | Portland State
+- Howard Moore | Central Oklahoma
+- Jessie Smith | Nebraska-Omaha
+- Ernest Harris | Lake Superior
+- Mark Hemauer | Wisconsin-Parkside
+- Johnell Gainey | Norfolk State
+- Jeff Butts | Springfield
+- Dan Hutcheson | Ferris State
+place 1 Dan Russell
+place 2 Howard Moore
+place 3 Jessie Smith
+place 4 Ernest Harris
+place 5 Mark Hemauer
+place 6 Johnell Gainey
+place 7 Jeff Butts
+place 8 Dan Hutcheson
+
+@ 177
+- Tony Champion | Portland State
+- Joe Wypiszenski | Nebraska-Omaha
+- Mike Leberknight | Northern Colorado
+- Wayne Cole | Central Oklahoma
+- Brian Loeffler | South Dakota State
+- Joe Bena | Southern Connecticut
+- Dan Engles | SUNY-Buffalo
+- Brandon Forga | Lake Superior
+place 1 Tony Champion
+place 2 Joe Wypiszenski
+place 3 Mike Leberknight
+place 4 Wayne Cole
+place 5 Brian Loeffler
+place 6 Joe Bena
+place 7 Dan Engles
+place 8 Brandon Forga
+
+@ 190
+- Pat Gentzler | Nebraska-Omaha
+- Warren Tucker | Virginia State
+- Greg Oplotnik | Central Oklahoma
+- Tony Darone | Cal State-Chico
+- David Surofcheck | Ferris State
+- Bryan Nelson | North Dakota State
+- Larry Kaufman | San Francisco State
+- Greg Sayler | South Dakota State
+place 1 Pat Gentzler
+place 2 Warren Tucker
+place 3 Greg Oplotnik
+place 4 Tony Darone
+place 5 David Surofcheck
+place 6 Bryan Nelson
+place 7 Larry Kaufman
+place 8 Greg Sayler
+
+@ 275
+- Luke Parham | Humboldt State
+- Harold Rogers | Cheyney
+- Matt Blevin | San Francisco State
+- Barney Drenth | South Dakota State
+- Greg Matheis | Indianapolis
+- Jason Bingaman | Lake Superior
+- Jair Toedter | North Dakota
+- Mike Faulkner | Ferris State
+place 1 Luke Parham
+place 2 Harold Rogers
+place 3 Matt Blevin
+place 4 Barney Drenth
+place 5 Greg Matheis
+place 6 Jason Bingaman
+place 7 Jair Toedter
+place 8 Mike Faulkner
+

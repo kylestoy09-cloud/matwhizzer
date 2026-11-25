@@ -1,0 +1,510 @@
+{
+ "jamborees": [
+  {
+   "id": "b5c97dd6-aa15-4b7b-9688-bb71c2c2ccfa",
+   "season": "2025-26",
+   "name": "Metuchen Tri",
+   "start_date": "2025-12-31",
+   "end_date": null,
+   "host_school_id": null,
+   "source_name": "Metuchen/ South Hunterdon/ New Providence",
+   "created_at": "2026-11-11T17:24:39.305592+00:00"
+  },
+  {
+   "id": "9a59d58b-68c1-489e-abb4-fe6289111a68",
+   "season": "2025-26",
+   "name": "Point Pleasant Beach Round Robin",
+   "start_date": "2026-01-05",
+   "end_date": null,
+   "host_school_id": null,
+   "source_name": "Pt. Beach Round Robin",
+   "created_at": "2026-11-11T17:24:39.305592+00:00"
+  },
+  {
+   "id": "48b8d305-6bf9-43f0-9020-8ac537c0f5d4",
+   "season": "2025-26",
+   "name": "Lakeland Tri",
+   "start_date": "2026-01-09",
+   "end_date": null,
+   "host_school_id": null,
+   "source_name": "Pompton,Tenafly,Lakeland - Jamboree",
+   "created_at": "2026-11-11T17:24:39.305592+00:00"
+  },
+  {
+   "id": "eaea92cb-edc2-40b0-91aa-bf1efa5b1e6e",
+   "season": "2025-26",
+   "name": "Immaculata Tri",
+   "start_date": "2026-01-31",
+   "end_date": null,
+   "host_school_id": null,
+   "source_name": "lATA GIRLS DUAL",
+   "created_at": "2026-11-11T17:24:39.305592+00:00"
+  },
+  {
+   "id": "e4b19d96-5621-4518-bdeb-796aeb344456",
+   "season": "2025-26",
+   "name": "Long Branch Quad",
+   "start_date": "2026-02-07",
+   "end_date": null,
+   "host_school_id": null,
+   "source_name": "LB Quad Matches",
+   "created_at": "2026-11-11T17:24:39.305592+00:00"
+  },
+  {
+   "id": "8bc52771-7290-4edd-afac-d7eaed69904f",
+   "season": "2025-26",
+   "name": "Seneca Tri",
+   "start_date": "2026-02-11",
+   "end_date": null,
+   "host_school_id": null,
+   "source_name": "Cherokee/Seneca Match Up",
+   "created_at": "2026-11-11T17:24:39.305592+00:00"
+  },
+  {
+   "id": "95bcd044-4068-4f12-a2fb-27c4bbf0862e",
+   "season": "2025-26",
+   "name": "New Providence / Montgomery / Glen Rock / Westfield Jamboree",
+   "start_date": "2026-02-20",
+   "end_date": null,
+   "host_school_id": null,
+   "source_name": "New Prov/Montgomery/Glen Rock/Westfield Jamboree",
+   "created_at": "2026-11-11T17:24:39.305592+00:00"
+  },
+  {
+   "id": "84831849-3ba1-464b-abf9-23ec39086ec7",
+   "season": "2025-26",
+   "name": "Cliffside Park Tri",
+   "start_date": "2025-12-18",
+   "end_date": null,
+   "host_school_id": null,
+   "source_name": "JFK, EHS, & CP Tri",
+   "created_at": "2026-11-11T17:24:39.305592+00:00"
+  },
+  {
+   "id": "79525ea1-4727-4d05-8968-ae23c07637e2",
+   "season": "2025-26",
+   "name": "Deptford / Clayton / Palmyra / Sterling Quad",
+   "start_date": "2026-01-03",
+   "end_date": null,
+   "host_school_id": null,
+   "source_name": "Quad - Deptford, Clayton, Palmyra, Sterling",
+   "created_at": "2026-11-11T17:24:39.305592+00:00"
+  },
+  {
+   "id": "5fbf88b1-21eb-43d9-9ce9-fd6cea781d54",
+   "season": "2025-26",
+   "name": "Scotch Plains-Fanwood Tri",
+   "start_date": "2026-01-03",
+   "end_date": null,
+   "host_school_id": null,
+   "source_name": "Matches @ Scotch Plains-Fanwood",
+   "created_at": "2026-11-11T17:24:39.305592+00:00"
+  },
+  {
+   "id": "4f6fde0f-5b0c-4f7e-b94f-7ed0bcfd9647",
+   "season": "2025-26",
+   "name": "Hightstown Tri",
+   "start_date": "2026-01-03",
+   "end_date": null,
+   "host_school_id": null,
+   "source_name": "Tri vs Princeton, Moorestown",
+   "created_at": "2026-11-11T17:24:39.305592+00:00"
+  },
+  {
+   "id": "3fab44b4-f87f-4534-890d-8cbac7a60c7c",
+   "season": "2025-26",
+   "name": "Verona Quad",
+   "start_date": "2026-01-03",
+   "end_date": null,
+   "host_school_id": null,
+   "source_name": "Keansburg/Manville/Montgomery @ Verona",
+   "created_at": "2026-11-11T17:24:39.305592+00:00"
+  },
+  {
+   "id": "cdf8feac-ffd3-4856-9bd9-821a31f676ee",
+   "season": "2025-26",
+   "name": "Cherry Hill East Tri",
+   "start_date": "2026-01-07",
+   "end_date": null,
+   "host_school_id": null,
+   "source_name": "Cherry Hill East",
+   "created_at": "2026-11-11T17:24:39.305592+00:00"
+  },
+  {
+   "id": "50330bcc-da50-400b-b2e7-d5812b341937",
+   "season": "2025-26",
+   "name": "Delran Quad",
+   "start_date": "2026-02-07",
+   "end_date": null,
+   "host_school_id": null,
+   "source_name": "Delran Quad",
+   "created_at": "2026-11-11T17:24:39.305592+00:00"
+  },
+  {
+   "id": "2b935c08-a076-4767-894d-5c98a366aaba",
+   "season": "2025-26",
+   "name": "Bridgewater-Raritan Quad",
+   "start_date": "2026-02-07",
+   "end_date": null,
+   "host_school_id": null,
+   "source_name": "BR/H. Central/Steinert/MHS Quad",
+   "created_at": "2026-11-11T17:24:39.305592+00:00"
+  },
+  {
+   "id": "e75af9dc-a6da-4d8b-906a-0ab85359c717",
+   "season": "2025-26",
+   "name": "Pascack Hills Quad",
+   "start_date": "2026-02-21",
+   "end_date": null,
+   "host_school_id": null,
+   "source_name": "PH Quad",
+   "created_at": "2026-11-11T17:24:39.305592+00:00"
+  },
+  {
+   "id": "7b3a714b-7e10-4c97-bd25-8afa154e7a44",
+   "season": "2025-26",
+   "name": "Pemberton / Riverside / Hamilton West / Burlington City Quad",
+   "start_date": "2026-02-21",
+   "end_date": null,
+   "host_school_id": null,
+   "source_name": "pemberton/Riverside/HamiltonWest/BurlingtonCity",
+   "created_at": "2026-11-11T17:24:39.305592+00:00"
+  }
+ ],
+ "pairings": [
+  {
+   "id": "bc6a9652-21d9-4349-ae16-9e315c31d705",
+   "jamboree_id": "9a59d58b-68c1-489e-abb4-fe6289111a68"
+  },
+  {
+   "id": "031c6a42-273b-4db6-9a1e-4fc52bb3ba53",
+   "jamboree_id": "95bcd044-4068-4f12-a2fb-27c4bbf0862e"
+  },
+  {
+   "id": "39a4c7c1-ebd1-4ef4-a0ef-ac1c144a3379",
+   "jamboree_id": "8bc52771-7290-4edd-afac-d7eaed69904f"
+  },
+  {
+   "id": "fe903077-870d-421d-9280-870144debc09",
+   "jamboree_id": "95bcd044-4068-4f12-a2fb-27c4bbf0862e"
+  },
+  {
+   "id": "2f81d52c-b66d-4037-828f-a31f08a318ef",
+   "jamboree_id": "8bc52771-7290-4edd-afac-d7eaed69904f"
+  },
+  {
+   "id": "f35b1dc4-b8c7-420f-b4b0-a06efb3ec9f5",
+   "jamboree_id": "95bcd044-4068-4f12-a2fb-27c4bbf0862e"
+  },
+  {
+   "id": "375472d1-f8aa-4f1d-8018-dc982d704533",
+   "jamboree_id": "b5c97dd6-aa15-4b7b-9688-bb71c2c2ccfa"
+  },
+  {
+   "id": "2f35ca3c-0679-4693-aaf1-7a10445bf575",
+   "jamboree_id": "b5c97dd6-aa15-4b7b-9688-bb71c2c2ccfa"
+  },
+  {
+   "id": "ba84db56-a209-4dd1-9c07-5e140ad2d86f",
+   "jamboree_id": "9a59d58b-68c1-489e-abb4-fe6289111a68"
+  },
+  {
+   "id": "6dc746ab-b54c-4263-9f21-36cc14de7471",
+   "jamboree_id": "48b8d305-6bf9-43f0-9020-8ac537c0f5d4"
+  },
+  {
+   "id": "ed524b1b-0efb-48e2-81ca-f3b8a1d63f76",
+   "jamboree_id": "48b8d305-6bf9-43f0-9020-8ac537c0f5d4"
+  },
+  {
+   "id": "c7a7eb90-f9bd-47ef-abf5-64cc2d0ee66e",
+   "jamboree_id": "eaea92cb-edc2-40b0-91aa-bf1efa5b1e6e"
+  },
+  {
+   "id": "fb852852-ec38-4327-810e-f3d13afae9e4",
+   "jamboree_id": "eaea92cb-edc2-40b0-91aa-bf1efa5b1e6e"
+  },
+  {
+   "id": "912fee8a-accf-4cc1-93c8-1618b8e7298a",
+   "jamboree_id": "e4b19d96-5621-4518-bdeb-796aeb344456"
+  },
+  {
+   "id": "ff68d9d0-d7e0-4f88-b65a-98a5079c73fb",
+   "jamboree_id": "e4b19d96-5621-4518-bdeb-796aeb344456"
+  }
+ ],
+ "registry": [
+  {
+   "id": "ef4e0f02-8ad5-40b2-8b93-3b0b7a68f1a1",
+   "season": "2025-26",
+   "name": "Point Pleasant Beach Round Robin",
+   "date_start": "2026-01-05",
+   "date_end": null,
+   "state": "NJ",
+   "event_type": "jamboree",
+   "gender": "F",
+   "point_value": null,
+   "imported": true,
+   "in_season_tournament_id": null,
+   "notes": null,
+   "created_at": "2026-08-26T23:15:10.986703+00:00",
+   "jamboree_id": "9a59d58b-68c1-489e-abb4-fe6289111a68"
+  },
+  {
+   "id": "22d759ba-d6b7-44c2-8be1-b2f2cbabcb5b",
+   "season": "2025-26",
+   "name": "Cliffside Park Tri",
+   "date_start": "2025-12-18",
+   "date_end": null,
+   "state": "NJ",
+   "event_type": "jamboree",
+   "gender": "F",
+   "point_value": null,
+   "imported": true,
+   "in_season_tournament_id": null,
+   "notes": null,
+   "created_at": "2026-11-11T17:24:39.305592+00:00",
+   "jamboree_id": "84831849-3ba1-464b-abf9-23ec39086ec7"
+  },
+  {
+   "id": "48a2377c-195f-4ffc-a427-1a6f2da4c876",
+   "season": "2025-26",
+   "name": "Metuchen Tri",
+   "date_start": "2025-12-31",
+   "date_end": null,
+   "state": "NJ",
+   "event_type": "jamboree",
+   "gender": "F",
+   "point_value": null,
+   "imported": true,
+   "in_season_tournament_id": null,
+   "notes": null,
+   "created_at": "2026-11-11T17:24:39.305592+00:00",
+   "jamboree_id": "b5c97dd6-aa15-4b7b-9688-bb71c2c2ccfa"
+  },
+  {
+   "id": "197a2f60-9638-4d19-a4fb-2db16c662924",
+   "season": "2025-26",
+   "name": "Deptford / Clayton / Palmyra / Sterling Quad",
+   "date_start": "2026-01-03",
+   "date_end": null,
+   "state": "NJ",
+   "event_type": "jamboree",
+   "gender": "F",
+   "point_value": null,
+   "imported": true,
+   "in_season_tournament_id": null,
+   "notes": null,
+   "created_at": "2026-11-11T17:24:39.305592+00:00",
+   "jamboree_id": "79525ea1-4727-4d05-8968-ae23c07637e2"
+  },
+  {
+   "id": "6a66de65-9d53-4684-92b7-2ea5502f5bbe",
+   "season": "2025-26",
+   "name": "Scotch Plains-Fanwood Tri",
+   "date_start": "2026-01-03",
+   "date_end": null,
+   "state": "NJ",
+   "event_type": "jamboree",
+   "gender": "F",
+   "point_value": null,
+   "imported": true,
+   "in_season_tournament_id": null,
+   "notes": null,
+   "created_at": "2026-11-11T17:24:39.305592+00:00",
+   "jamboree_id": "5fbf88b1-21eb-43d9-9ce9-fd6cea781d54"
+  },
+  {
+   "id": "fa406d12-5b5b-44e5-9f8f-a2b146c6ff5e",
+   "season": "2025-26",
+   "name": "Hightstown Tri",
+   "date_start": "2026-01-03",
+   "date_end": null,
+   "state": "NJ",
+   "event_type": "jamboree",
+   "gender": "F",
+   "point_value": null,
+   "imported": true,
+   "in_season_tournament_id": null,
+   "notes": null,
+   "created_at": "2026-11-11T17:24:39.305592+00:00",
+   "jamboree_id": "4f6fde0f-5b0c-4f7e-b94f-7ed0bcfd9647"
+  },
+  {
+   "id": "0462a3b3-fe16-4bc8-a65f-cf6b69d70bf4",
+   "season": "2025-26",
+   "name": "Verona Quad",
+   "date_start": "2026-01-03",
+   "date_end": null,
+   "state": "NJ",
+   "event_type": "jamboree",
+   "gender": "F",
+   "point_value": null,
+   "imported": true,
+   "in_season_tournament_id": null,
+   "notes": null,
+   "created_at": "2026-11-11T17:24:39.305592+00:00",
+   "jamboree_id": "3fab44b4-f87f-4534-890d-8cbac7a60c7c"
+  },
+  {
+   "id": "4a34cf37-16b1-4fae-8946-3f326fe88475",
+   "season": "2025-26",
+   "name": "Cherry Hill East Tri",
+   "date_start": "2026-01-07",
+   "date_end": null,
+   "state": "NJ",
+   "event_type": "jamboree",
+   "gender": "F",
+   "point_value": null,
+   "imported": true,
+   "in_season_tournament_id": null,
+   "notes": null,
+   "created_at": "2026-11-11T17:24:39.305592+00:00",
+   "jamboree_id": "cdf8feac-ffd3-4856-9bd9-821a31f676ee"
+  },
+  {
+   "id": "1763dfbb-79bd-4a41-ba78-56cb5bfec836",
+   "season": "2025-26",
+   "name": "Lakeland Tri",
+   "date_start": "2026-01-09",
+   "date_end": null,
+   "state": "NJ",
+   "event_type": "jamboree",
+   "gender": "F",
+   "point_value": null,
+   "imported": true,
+   "in_season_tournament_id": null,
+   "notes": null,
+   "created_at": "2026-11-11T17:24:39.305592+00:00",
+   "jamboree_id": "48b8d305-6bf9-43f0-9020-8ac537c0f5d4"
+  },
+  {
+   "id": "ae8cfb0a-8ad5-42f0-8fb9-b8c86f88bc70",
+   "season": "2025-26",
+   "name": "Immaculata Tri",
+   "date_start": "2026-01-31",
+   "date_end": null,
+   "state": "NJ",
+   "event_type": "jamboree",
+   "gender": "F",
+   "point_value": null,
+   "imported": true,
+   "in_season_tournament_id": null,
+   "notes": null,
+   "created_at": "2026-11-11T17:24:39.305592+00:00",
+   "jamboree_id": "eaea92cb-edc2-40b0-91aa-bf1efa5b1e6e"
+  },
+  {
+   "id": "3232aff6-0e96-4340-8b99-eaec59b8d3b6",
+   "season": "2025-26",
+   "name": "Long Branch Quad",
+   "date_start": "2026-02-07",
+   "date_end": null,
+   "state": "NJ",
+   "event_type": "jamboree",
+   "gender": "F",
+   "point_value": null,
+   "imported": true,
+   "in_season_tournament_id": null,
+   "notes": null,
+   "created_at": "2026-11-11T17:24:39.305592+00:00",
+   "jamboree_id": "e4b19d96-5621-4518-bdeb-796aeb344456"
+  },
+  {
+   "id": "9190419b-60bb-4733-8567-bb154eead50c",
+   "season": "2025-26",
+   "name": "Delran Quad",
+   "date_start": "2026-02-07",
+   "date_end": null,
+   "state": "NJ",
+   "event_type": "jamboree",
+   "gender": "F",
+   "point_value": null,
+   "imported": true,
+   "in_season_tournament_id": null,
+   "notes": null,
+   "created_at": "2026-11-11T17:24:39.305592+00:00",
+   "jamboree_id": "50330bcc-da50-400b-b2e7-d5812b341937"
+  },
+  {
+   "id": "91398c4f-01dc-41fc-a99d-1cfffdb746b1",
+   "season": "2025-26",
+   "name": "Bridgewater-Raritan Quad",
+   "date_start": "2026-02-07",
+   "date_end": null,
+   "state": "NJ",
+   "event_type": "jamboree",
+   "gender": "F",
+   "point_value": null,
+   "imported": true,
+   "in_season_tournament_id": null,
+   "notes": null,
+   "created_at": "2026-11-11T17:24:39.305592+00:00",
+   "jamboree_id": "2b935c08-a076-4767-894d-5c98a366aaba"
+  },
+  {
+   "id": "e52bafca-d96e-4b77-9f49-e8dff2ef16ae",
+   "season": "2025-26",
+   "name": "Seneca Tri",
+   "date_start": "2026-02-11",
+   "date_end": null,
+   "state": "NJ",
+   "event_type": "jamboree",
+   "gender": "F",
+   "point_value": null,
+   "imported": true,
+   "in_season_tournament_id": null,
+   "notes": null,
+   "created_at": "2026-11-11T17:24:39.305592+00:00",
+   "jamboree_id": "8bc52771-7290-4edd-afac-d7eaed69904f"
+  },
+  {
+   "id": "c2ff868c-c40a-4407-97c8-34f2f562def6",
+   "season": "2025-26",
+   "name": "New Providence / Montgomery / Glen Rock / Westfield Jamboree",
+   "date_start": "2026-02-20",
+   "date_end": null,
+   "state": "NJ",
+   "event_type": "jamboree",
+   "gender": "F",
+   "point_value": null,
+   "imported": true,
+   "in_season_tournament_id": null,
+   "notes": null,
+   "created_at": "2026-11-11T17:24:39.305592+00:00",
+   "jamboree_id": "95bcd044-4068-4f12-a2fb-27c4bbf0862e"
+  },
+  {
+   "id": "77eaa657-6611-415a-b21f-2b5b45000f9d",
+   "season": "2025-26",
+   "name": "Pascack Hills Quad",
+   "date_start": "2026-02-21",
+   "date_end": null,
+   "state": "NJ",
+   "event_type": "jamboree",
+   "gender": "F",
+   "point_value": null,
+   "imported": true,
+   "in_season_tournament_id": null,
+   "notes": null,
+   "created_at": "2026-11-11T17:24:39.305592+00:00",
+   "jamboree_id": "e75af9dc-a6da-4d8b-906a-0ab85359c717"
+  },
+  {
+   "id": "987ff122-ad6b-4291-b33a-a5629a53dce8",
+   "season": "2025-26",
+   "name": "Pemberton / Riverside / Hamilton West / Burlington City Quad",
+   "date_start": "2026-02-21",
+   "date_end": null,
+   "state": "NJ",
+   "event_type": "jamboree",
+   "gender": "F",
+   "point_value": null,
+   "imported": true,
+   "in_season_tournament_id": null,
+   "notes": null,
+   "created_at": "2026-11-11T17:24:39.305592+00:00",
+   "jamboree_id": "7b3a714b-7e10-4c97-bd25-8afa154e7a44"
+  }
+ ]
+}

@@ -1,0 +1,54 @@
+# NCAA DIII TrackWrestling exports (2022, 2023, 2025): their full school names as aliases of our colleges (scripts/add_college_group.mts)
+Adrian | | | | Adrian College
+Albion | | | | Albion College
+Augsburg | | | | Augsburg University
+Augustana (IL) | | | | Augustana College (Illinois)
+Averett | | | | Averett University
+Baldwin Wallace | | | | Baldwin Wallace University
+Castleton | | | | Castleton University
+Centenary (NJ) | | | | Centenary University (New Jersey)
+Central (IA) | | | | Central College (Iowa)
+SUNY Brockport | | | | College At Brockport
+Elizabethtown | | | | Elizabethtown College
+Elmhurst | | | | Elmhurst College
+Gettysburg | | | | Gettysburg College
+Greensboro | | | | Greensboro College
+Ithaca | | | | Ithaca College
+John Carroll | | | | John Carroll University
+Johns Hopkins | | | | Johns Hopkins University
+Johnson & Wales | | | | Johnson & Wales University (Rhode Island)
+King's (PA) | | | | King`s College (Pennsylvania)
+Luther | | | | Luther College
+Lycoming | | | | Lycoming College
+McDaniel | | | | McDaniel College
+Messiah | | | | Messiah University
+Mount St. Joseph | | | | Mount St. Joseph University
+Muhlenberg | | | | Muhlenberg College
+New Jersey City | | | | New Jersey City University
+North Central (IL) | | | | North Central College
+Norwich | | | | Norwich University
+Ohio Northern | | | | Ohio Northern University
+Olivet | | | | Olivet College
+Otterbein | | | | Otterbein University
+Penn College | | | | Pennsylvania College Of Technology
+Roger Williams | | | | Roger Williams University
+Southern Virginia | | | | Southern Virginia University
+Springfield | | | | Springfield College
+SUNY Cortland | | | | State University Of New York At Cortland
+Trinity (CT) | | | | Trinity College (Connecticut)
+Dubuque | | | | University Of Dubuque
+Mount Union | | | | University Of Mount Union
+Wisconsin-Eau Claire | | | | University Of Wisconsin-Eau Claire
+Wisconsin-La Crosse | | | | University Of Wisconsin-La Crosse
+Wisconsin-Oshkosh | | | | University Of Wisconsin-Oshkosh
+Wisconsin-Platteville | | | | University Of Wisconsin-Platteville
+UW-Stevens Point | | | | University Of Wisconsin-Stevens Point
+UW-Whitewater | | | | University Of Wisconsin-Whitewater
+Ursinus | | | | Ursinus College
+Wabash | | | | Wabash College
+Wartburg | | | | Wartburg College
+Washington and Lee | | | | Washington And Lee University
+Waynesburg | | | | Waynesburg University
+Western New England | | | | Western New England University
+Wilkes | | | | Wilkes University
+York (PA) | | | | York College (Pennsylvania)

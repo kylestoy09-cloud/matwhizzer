@@ -1,0 +1,282 @@
+# NCAA Division III Championships 2019 — source: 2019.pdf (entrants from the PDF text — records unreadable on most pages; places read off the bracket pages, 2026-11-18)
+# qualifiers and places only (no bouts)
+
+@ 125
+- Collin Wickramaratna | Ursinus | 29-8
+7 Brady Kyner | Wartburg | 26-8
+- Josiah Gehr | Messiah | 36-7
+- Sawyer Sarbacker | Wis. La Crosse | 17-13
+1 Jay Albis | JWU (Providence) | 42-4
+- Carlos Champagne | Wabash | 12-5
+8 Ferdinand Mase | Ithaca | 31-7
+5 Cameron Timok | Central (IA) | 25-6
+- Dylan Nuttall | York (PA) | 14-12
+- Eron Haynes | Neb. Wesleyan | 33-12
+4 Dante Ginnetti | Baldwin Wallace | 25-10
+3 Victor Gliva | Augsburg | 28-7
+- Samuel Braswell | Averett | 30-11
+- Matt Caccamise | Brockport | 19-5
+6 Peter Del Gallo | Southern Me. | 26-3
+- Zack Murillo | Wesleyan (CT) | 28-10
+- Jordan Burkholder | Muskingum | 30-4
+2 Mike Tortorice | Wis.-Whitewater | 35-4
+place 1 Albis
+place 2 Tortorice
+place 3 Del Gallo
+place 4 Mase
+place 5 Gliva
+place 6 Timok
+place 7 Champagne
+place 8 Haynes
+
+@ 133
+- Ricky Cavallo | Johns Hopkins
+3 Brock Rathbun | Wartburg
+- Owen Doster | Wabash
+4 Bobby Jordan | JWU (Providence) | 22-7
+1 Jordin James | Mount Union
+- Levi Englman | Ferrum
+- Jacob Forsman | Norwich
+8 Jake Giordano | TCNJ
+5 Brice Everson | Loras
+- Taylor 'Kimo' Dial | Merchant Marine
+- Yoseph Borai | Stevens Institute Of Technology
+- Josh Stenger | Wis.La Crosse
+- Ian Tolotti | Springfield
+6 Charles Nash | Baldwin Wallace
+7 Ben Vosters | Wis.Stevens Point
+- Chase Petty | Central (IA)
+- Russell Benson | Delaware Valley
+2 Sam Bennyhoff | Augsburg
+place 1 James
+place 2 Vosters
+place 3 Jordan
+place 4 Nash
+place 5 Giordano
+place 6 Borai
+place 7 Englman
+place 8 Dial
+
+@ 141
+- Jarrod Brezovec | John Carroll
+- Joseph Ferinde | JWU (Providence)
+- Jimmy McAuliffe | Elmhurst
+1 Troy Stanich | Stevens Institute Of Technology
+- Mario Vasquez | Ferrum
+- Jordan Napier | Manchester
+8 David Flynn | Augsburg
+5 Brendan Ladd | Alma
+- Joseph Rossetti | Williams
+- Evan Drill | NYU
+4 Clint Lembeck | Loras
+3 Hazen Rice | Wis.-Whitewater
+- Brandon Woody | Averett
+- Robert Dinger | TCNJ
+6 Chris Williams | Millikin
+7 Brady Fritz | Wartburg
+- Tommy Stokes | Wilkes
+2 Ben Brisman | Ithaca
+place 1 Flynn
+place 2 Williams
+place 3 Lembeck
+place 4 Brisman
+place 5 Drill
+place 6 Fritz
+place 7 Ladd
+place 8 Vasquez
+
+@ 149
+- Kevin Kelly | Loras
+1 Da'mani Burns | JWU (Providence)
+- Ryan Budzek | TCNJ
+- Max Tempel | Castleton
+- Jarrad Lasko | John Carroll
+- Ty Johnson | ConcordiaM`head
+8 Gregory Warner | York (PA)
+5 Brett Kaliner | Stevens Institute Of Technology
+- Michael Heinl | Wash. & Jeff.
+- Ryan Snow | Brockport
+4 Kristian Rumph | Wartburg
+3 Stephen Maloney | Messiah
+- Sean Sax | Westminster (MO)
+- Luke Hernandez | Mount Union
+6 Alex Wilson | Augsburg
+7 Tyler Gazaway | Roger Williams
+- Logan Schlough | Wis.La Crosse
+2 Zachary Cooper | Alma
+place 1 Budzek
+place 2 Warner
+place 3 Kaliner
+place 4 Wilson
+place 5 Cooper
+place 6 Lasko
+place 7 Snow
+place 8 Hernandez
+
+@ 157
+- Hunter Neely | Wash. & Jeff.
+6 Bradan Birt | Millikin
+- Jared Lough | Averett
+5 Brandon Murray | Loras
+1 Cross Cannone | Wartburg
+- Tyler Marsh | WPI
+- Richard Burke | Baldwin Wallace
+8 Grant Zamin | Wis.La Crosse
+- Jared Timberman | Wabash
+- Christopher Muce | Centenary (NJ)
+4 Antwon Pugh | Mount Union
+3 Kaidon Winters | Rochester Institute of Technology
+- Dylan Dwyer | NYU
+- Ryan Monteiro | Western New Eng.
+7 Trevor Corl | Lycoming
+- Keone Derain | Elmhurst
+- JT Beirne | TCNJ
+2 Ryan Epps | Augsburg
+place 1 Epps
+place 2 Pugh
+place 3 Cannone
+place 4 Murray
+place 5 Winters
+place 6 Birt
+place 7 Derain
+place 8 Zamin
+
+@ 165
+- Adrian Gonzalez | JWU (Providence)
+4 Kyle Hatch | Wabash
+- Mark Choinski | Wis.-Oshkosh
+6 Anthony Arroyo | Baldwin Wallace
+1 Lucas Jeske | Augsburg
+- Sam Gross | John Carroll
+- Hadyn Swartwood | Lycoming
+8 Austin Whitney | Ithaca
+5 Eddie Smith | Loras
+- Jared Walker | Wash. & Jeff.
+- Michael Suarez | Luther
+3 Nicholas Racanelli | Wilkes
+- Nicholas Bonomo | Wis.-Whitewater
+- Brad Kerkhoff | Buena Vista
+7 Dempsey King | Rochester Institute of Technology
+- Nick Remke | Coast Guard
+- Alec Donovan | Centenary (NJ)
+2 Taylor Shay | Roger Williams
+place 1 Jeske
+place 2 King
+place 3 Choinski
+place 4 Smith
+place 5 Bonomo
+place 6 Hatch
+place 7 Shay
+place 8 Whitney
+
+@ 174
+5 Arthur Aeberli | Coast Guard
+- Michael Gargano | JWU (Providence)
+- Brian Shermeyer | Messiah
+- Blake Rosenbaum | Ferrum
+- Jacob Krakow | Loras
+1 Darden Schurg | Wabash
+- Jordan Juliano | Centenary (NJ)
+8 Jake Voss | Coe
+- Chibueze Chukwuezi | Ithaca
+- Jarrit Shinhoster | Wis.-Whitewater
+4 Daniel Kilroy | TCNJ
+3 Kyle Briggs | Wartburg
+- Malik Settles | New England Col.
+- Haydn Kinjorski | Olivet
+6 Ben Sarasin | Chicago
+7 Tanner Vassar | Augsburg
+- Colin Kowalski | Gettysburg
+2 Jairod James | Mount Union
+place 1 Schurg
+place 2 James
+place 3 Briggs
+place 4 Kilroy
+place 5 Vassar
+place 6 Aeberli
+place 7 Sarasin
+place 8 Krakow
+
+@ 184
+- Cody Baldridge | North Central (IL)
+2 Jake Ashcraft | Ithaca
+- Tevin Bailey | Dubuque
+8 Solomon Nielsen | Augsburg
+1 Dylan Roth | Heidelberg
+- Victor DeFrance | Messiah
+- Jake Paulson | Penn St.Behrend
+5 Paul Detwiler | Coast Guard
+- Josh Edel | Coe
+- Rexx Hallyburton | Wash. & Lee
+4 John Boyle | Western New Eng.
+3 Khamri Thomas | JWU (Providence)
+- Michael Dooley | Stevens Institute Of Technology
+- Justin Ransom | Baldwin Wallace
+6 Nick Stencel | Wis.-Whitewater
+7 Devon Pingel | Adrian
+- Joshua Glantzman | Merchant Marine
+- Kyle Peisker | Chicago
+place 1 Boyle
+place 2 Ashcraft
+place 3 Thomas
+place 4 Glantzman
+place 5 Peisker
+place 6 Roth
+place 7 Stencel
+place 8 Edel
+
+@ 197
+- Jonathan Wagner | Coast Guard
+- Tyler Hammack | Heidelberg
+- Zeckary Lehman | Baldwin Wallace
+2 Guy Patron | Loras
+1 Etiini Udott | Centenary (NJ)
+- Dan D'Agostini | Scranton
+8 Riley Kauzlaric | Wis.-Whitewater
+5 Antonio McCloud | Mt. St. Joseph
+- Michael Curtis | WPI
+- Luke Dodd | St. John`s (MN)
+4 Keajion Jennings | Millikin
+3 Lance Benick | Augsburg
+- Gage Gladysz | Thiel
+- Travis Ogden | Lycoming
+6 Michael DiNardo | JWU (Providence)
+7 Taylor Mehmen | Coe
+- Dylan Dubuque | SUNY Cortland
+- Ken Burrs | Waynesburg
+place 1 Benick
+place 2 Jennings
+place 3 Kauzlaric
+place 4 Udott
+place 5 Mehmen
+place 6 Patron
+place 7 Lehman
+place 8 McCloud
+
+@ 285
+- Trevor Piggott | Olivet
+- Lucius Rinehart | Wis.Platteville
+- Wade Ripple | Wabash
+8 Patrick Irwin | Coast Guard
+1 James Bethel | SUNY Oneonta
+- Jerhett Lee | Ozarks (AR)
+- Bowen Wileman | Wartburg
+5 Garrett Wesneski | Lycoming
+- Jesse Webb | Castleton
+- Connor Calkins | Rochester Institute of Technology
+4 Konrad Ernst | Wis.La Crosse
+3 Jake Evans | Waynesburg
+- Grant Miller | Wheaton (IL)
+- Tommy Wrzesien | JWU (Providence)
+6 Drew Kasper | Otterbein
+7 Jake O'Brien | Ithaca
+- Brandon Ballard | York (PA)
+2 Adarios Jones | Augustana (IL)
+place 1 Wesneski
+place 2 Jones
+place 3 Bethel
+place 4 O'Brien
+place 5 Kasper
+place 6 Wileman
+place 7 Ernst
+place 8 Calkins

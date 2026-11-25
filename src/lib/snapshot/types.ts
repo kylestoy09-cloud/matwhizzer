@@ -227,7 +227,8 @@ export type TournamentsData = {
   top_champs:       TournamentChampRow[]
   lowest_seed_wins: LowestSeedWinRow[]
   mat_times:        TournamentMatTimeRow[]
-  biggest_upset:    TournamentBiggestUpset | null
+  biggest_upset:    TournamentBiggestUpset | null   // winner already had a rating
+  biggest_upset_unrated?: TournamentBiggestUpset | null   // winner's pre-match rating was 0 (added 2026-11-11)
 }
 
 // ── Per-section data ──────────────────────────────────────────────────────────
@@ -237,7 +238,8 @@ export type SectionData = {
   snapped:             SnappedData
   top_rated_matches:   RatedMatchRow[]      // top 10
   top_rated_upsets:    RatedMatchRow[]      // top 10
-  top_upsets_by_gap:   UpsetByGapRow[]      // top 10
+  top_upsets_by_gap:   UpsetByGapRow[]      // top 10, winner already had a rating
+  top_upsets_by_gap_unrated?: UpsetByGapRow[]  // top 10, winner's pre-match rating was 0 (added 2026-11-11)
   top25_teams:         TeamRankEntry[]
   team_upsets:         TeamUpsetRow[]
   final_bout_wins:     FinalBoutRow[]

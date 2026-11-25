@@ -1,0 +1,182 @@
+# NCAA Division III Championships 1988 — source: NCAA III 1988.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Tim Jacoutot | College of New Jersey
+- John Conty | St. Lawrence
+- Joe Dasti | Kean
+- Scott Martin | Rhode Island College
+- Rob Beck | SUNY-Buffalo
+- Dave Jordan | Buena Vista
+- Chris Hoffman | Central College IA
+- Ryan Burns | Wisconsin-Stevens Point
+place 1 Tim Jacoutot
+place 2 John Conty
+place 3 Joe Dasti
+place 4 Scott Martin
+place 5 Rob Beck
+place 6 Dave Jordan
+place 7 Chris Hoffman
+place 8 Ryan Burns
+
+@ 126
+- Peter Gonzalez | Montclair State
+- Brad Brosdahl | Buena Vista
+- Rick Fioro | SUNY-Albany
+- John Fagen | College of New Jersey
+- Scott Arneson | Wisconsin-Platteville
+- Brad Rogers | Ohio Northern
+- Bob Carrigan | Chicago University
+- Stan Rhodes | John Carroll
+place 1 Peter Gonzalez
+place 2 Brad Brosdahl
+place 3 Rick Fioro
+place 4 John Fagen
+place 5 Scott Arneson
+place 6 Brad Rogers
+place 7 Bob Carrigan
+place 8 Stan Rhodes
+
+@ 134
+- John Beatty | Augsburg
+- Joe Boehenski | Chicago University
+- Kevin Bishop | St. Lawrence
+- Scott Sondergren | Coast Guard
+- Tony Pendolino | Allegheny
+- Tim Cotter | Ithaca
+- Jeff Bakken | Buena Vista
+- Scott Kaye | Ohio Northern
+place 1 John Beatty
+place 2 Joe Boehenski
+place 3 Kevin Bishop
+place 4 Scott Sondergren
+place 5 Tony Pendolino
+place 6 Tim Cotter
+place 7 Jeff Bakken
+place 8 Scott Kaye
+
+@ 142
+- Karl Monaco | Montclair State
+- Dean Salvaggio | SUNY-Buffalo
+- Shawn Voight | Cornell Iowa
+- Todd Bender | Wisconsin-Whitewater
+- Rodney Smith | Western New England
+- Brian Reed | St. Lawrence
+- Larry Pilcher | Buena Vista
+- Rich Venuto | College of New Jersey
+place 1 Karl Monaco
+place 2 Dean Salvaggio
+place 3 Shawn Voight
+place 4 Todd Bender
+place 5 Rodney Smith
+place 6 Brian Reed
+place 7 Larry Pilcher
+place 8 Rich Venuto
+
+@ 150
+- Mark Gumble | SUNY-Binghampton
+- Dave McLaughlin | William Penn
+- Dan Keating | St. Lawrence
+- Bob Kays | Salisbury
+- Scott Miller | Case-Western Reserve
+- Marty Nichols | Ithaca
+- Dave Zariczny | SUNY-Cortland
+- Matt Kretlow | Augsburg
+place 1 Mark Gumble
+place 2 Dave McLaughlin
+place 3 Dan Keating
+place 4 Bob Kays
+place 5 Scott Miller
+place 6 Marty Nichols
+place 7 Dave Zariczny
+place 8 Matt Kretlow
+
+@ 158
+- Mike Cronmiller | Ithaca
+- Mark Ambrose | Delaware Valley
+- Jim Capone | SUNY-Buffalo
+- Mickey Best | Wheaton
+- Tony Guinones | Loras College
+- Bill Cioffi | Glassboro
+- Tom Beeman | Luther
+- Dave Berg | St. Thomas
+place 1 Mike Cronmiller
+place 2 Mark Ambrose
+place 3 Jim Capone
+place 4 Mickey Best
+place 5 Tony Guinones
+place 6 Bill Cioffi
+place 7 Tom Beeman
+place 8 Dave Berg
+
+@ 167
+- Mark Hoppel | Muskigum
+- Joe Schmidt | John Carroll
+- Dana Spires | Thiel
+- Matt Parmely | Cornell Iowa
+- Gary Ridout | Simpson
+- Chris LaBrecque | Susquehanna
+- Jim Gorman | Hunter
+- Brian Glatz | William Penn
+place 1 Mark Hoppel
+place 2 Joe Schmidt
+place 3 Dana Spires
+place 4 Matt Parmely
+place 5 Gary Ridout
+place 6 Chris LaBrecque
+place 7 Jim Gorman
+place 8 Brian Glatz
+
+@ 177
+- Pete Georgeoutsos | Montclair State
+- Dennis McNamara | St. Thomas
+- Blair Early | Loras College
+- Brett Larson | Concordia MN
+- Dan Beiller | Ithaca
+- Garth Lakitsky | Delaware Valley
+- Jack Denholm | Wartburg
+- Joe Errigo | SUNY-Buffalo
+place 1 Pete Georgeoutsos
+place 2 Dennis McNamara
+place 3 Blair Early
+place 4 Brett Larson
+place 5 Dan Beiller
+place 6 Garth Lakitsky
+place 7 Jack Denholm
+place 8 Joe Errigo
+
+@ 190
+- Mike Himes | Upper Iowa
+- Vic Pozsonyi | College of New Jersey
+- Terry Schuler | Wisconsin-Whitewater
+- Tom Tuomi | Concordia MN
+- Todd McArdel | SUNY-Cortland
+- Mike Fusilli | Ithaca
+- Dean Gavin | Wartburg
+- Larry Danko | Kings
+place 1 Mike Himes
+place 2 Vic Pozsonyi
+place 3 Terry Schuler
+place 4 Tom Tuomi
+place 5 Todd McArdel
+place 6 Mike Fusilli
+place 7 Dean Gavin
+place 8 Larry Danko
+
+@ 275
+- Pat Conners | St. Lawrence
+- Kip Crandall | Millikin
+- Greg Geisenhof | SUNY-Binghampton
+- Jon Buhner | SUNY-Oswego
+- Steve Lacher | Mount Union
+- Mike Gilmore | Lycoming
+- Bob Bentz | Carthage
+- Rich Kane | Ithaca
+place 1 Pat Conners
+place 2 Kip Crandall
+place 3 Greg Geisenhof
+place 4 Jon Buhner
+place 5 Steve Lacher
+place 6 Mike Gilmore
+place 7 Bob Bentz
+place 8 Rich Kane
+

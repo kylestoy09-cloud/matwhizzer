@@ -1,0 +1,97 @@
+# DIII colleges and the spellings the 2004–2026 files use (scripts/add_college_group.mts)
+Adrian | Adrian | MI | Bulldogs |
+Albion | Albion | MI | Britons |
+Albright | Reading | PA | Lions |
+Alfred State | Alfred | NY | Pioneers | Alfred St.
+Alma | Alma | MI | Scots | Alma College
+Alvernia | Reading | PA | Golden Wolves | Alvernia University
+Arcadia | Glenside | PA | Knights |
+Augustana (IL) | | | | Augustana (Ill.)
+Aurora | Aurora | IL | Spartans | Aurora Universtiy
+Averett | Danville | VA | Cougars |
+Maranatha Baptist | Watertown | WI | Sabercats | Baptist BC; Maranatha BBC
+Bridgewater State | Bridgewater | MA | Bears | Bridgewater St; Bridgewater State Univers; Bridgewater State University
+Buena Vista | | | | Buena Vista University
+Carthage | Kenosha | WI | Firebirds | Carthage College
+Case Western Reserve | | | | CWRU; Case WRU; Case West Res
+Castleton | Castleton | VT | Spartans | VTSU Castleton
+Centenary (NJ) | Hackettstown | NJ | Cyclones | Centenary
+Central (IA) | | | | Central
+Chicago | | | | U of Chicago; UChicago; University of Chicago
+Coast Guard | | | | U.S. Coast Guard Academy; US Coast Guard
+Concordia (WI) | Mequon | WI | Falcons | Concordia (Wis.)
+Concordia-Moorhead | | | | Conc MHead; Concordia-M`head; ConcordiaM`head
+SUNY Cortland | | | | Cortland St; Cortland State; Cortland; SUNY Cort
+Delaware Valley | | | | Del Valley; Delaware Valley University
+Eastern | St. Davids | PA | Eagles |
+Elmhurst | Elmhurst | IL | Bluejays |
+Ferrum | Ferrum | VA | Panthers | Ferrum College
+Greensboro | Greensboro | NC | Pride |
+Heidelberg | Tiffin | OH | Student Princes |
+Hunter | New York | NY | Hawks |
+Johns Hopkins | Baltimore | MD | Blue Jays |
+Johnson & Wales | Providence | RI | Wildcats | JWU (Providence); John Wales; Johnson & Wales (RI); Johnson Wales; Johnson and Wales
+King's (PA) | Wilkes-Barre | PA | Monarchs | King`s (PA); Kings College; Kings
+Wisconsin-La Crosse | La Crosse | WI | Eagles | La Crosse; UW LaCrosse; Wis. La Crosse; Wis.-La Crosse; Wis.La Crosse
+Lakeland | Plymouth | WI | Muskies |
+Lawrence | Appleton | WI | Vikings |
+Loras | Dubuque | IA | Duhawks |
+MSOE | Milwaukee | WI | Raiders | Milw S Engr; Milwaukee School Of Engineering
+Manchester | North Manchester | IN | Spartans |
+McDaniel | Westminster | MD | Green Terror |
+Merchant Marine | | | | Merch Mar; Merchant Marine Academy; U.s. Merchant Marine Academy
+Messiah | Mechanicsburg | PA | Falcons |
+Millikin | Decatur | IL | Big Blue | Millikin University
+Montclair State | | | | Montclair St
+Mount St. Joseph | Cincinnati | OH | Lions | Mt St Joseph; Mt. St. Joseph
+Mount Union | Alliance | OH | Purple Raiders |
+Muskingum | New Concord | OH | Muskies |
+Nebraska Wesleyan | Lincoln | NE | Prairie Wolves | Neb. Wesleyan
+New England College | Henniker | NH | Pilgrims | New England Col.
+New Jersey City | Jersey City | NJ | Gothic Knights |
+North Central (IL) | | | | North Central
+Norwich | Northfield | VT | Cadets |
+Ohio Northern | | | | Ohio N
+Ohio Wesleyan | Delaware | OH | Battling Bishops |
+SUNY Oneonta | | | | Oneonta St; Oneonta St.; Oneonta State
+Wisconsin-Oshkosh | Oshkosh | WI | Titans | Oshkosh; Wis.-Oshkosh
+SUNY Oswego | | | | Oswego St; Oswego St.; Oswego State
+Otterbein | Westerville | OH | Cardinals |
+Ozarks (AR) | Clarksville | AR | Eagles | Ozarks; University of the Ozarks
+Pacific (OR) | Forest Grove | OR | Boxers | Pacific U
+Penn College | Williamsport | PA | Wildcats | Penn Tech
+Penn State Behrend | Erie | PA | Lions | Penn St.Behrend
+Wisconsin-Platteville | Platteville | WI | Pioneers | Platteville; Wis.-Platteville; Wis.Platteville
+Plymouth State | Plymouth | NH | Panthers | Plymouth St
+Rhode Island College | Providence | RI | Anchormen | RI College; Rhode Island Col.
+Roanoke | Salem | VA | Maroons | Roanoke College
+RIT | | | | Roch Inst; Rochester Institute Of Technology; Rochester Institute of Technology
+Roger Williams | Bristol | RI | Hawks | Roger Wms
+Southern Maine | Gorham | ME | Huskies | S Maine; Southern Me; Southern Me.; University Of Southern Maine
+SUNY Brockport | | | | Brockport St; Brockport State; Brockport
+Schreiner | Kerrville | TX | Mountaineers |
+Scranton | Scranton | PA | Royals |
+Simpson | Indianola | IA | Storm |
+Southern Virginia | Buena Vista | VA | Knights | Southern Va.
+St. John's (MN) | Collegeville | MN | Johnnies | St Johns; St. John`s (MN); St. John`s; St. Johns (MN)
+St. Olaf | Northfield | MN | Oles | St Olaf
+St. John Fisher | Rochester | NY | Cardinals |
+Stevens | Hoboken | NJ | Ducks | Stevens Institute Of Tech; Stevens Institute Of Technology; Stevens Tech; Stvns Inst
+UW-Stevens Point | | | | Stevens Pt; UW Stevens Pt; Wis-Stevens Point; Wis.-Stevens Point; Wis.Stevens Point; Wisconsin-Stevens Point
+TCNJ | | | | The College Of New Jersey; The College of New Jersey
+Thiel | Greenville | PA | Tomcats |
+Trine | Angola | IN | Thunder | Trine University
+Trinity (CT) | Hartford | CT | Bantams | Trinity
+UW-Whitewater | | | | UW Whitewater; Whitewater; Wis.-Whitewater; Wisconsin-Whitewater
+Wisconsin-Eau Claire | Eau Claire | WI | Blugolds | UW Eau Claire; Wis.-Eau Claire
+WPI | Worcester | MA | Engineers | Worcester Poly; Worcester Polytechnic Institute
+Wabash | Crawfordsville | IN | Little Giants |
+Washington & Jefferson | | | | Wash. & Jeff.; Washington And Jefferson College; Washington And Jefferson; Washington and Jefferson
+Washington and Lee | | | | Wash. & Lee
+Wesleyan | | | | Wesleyan (CT); Wesleyan University (Connecticut)
+Western New England | Springfield | MA | Golden Bears | Western New Eng.
+Westminster (MO) | Fulton | MO | Blue Jays | Westminster
+Wheaton (IL) | | | | Wheaton College (Illinois)
+Williams | | | | Williams College
+Wilmington (OH) | Wilmington | OH | Quakers | Wilmington
+York (PA) | York | PA | Spartans | York (Pa.); York

@@ -1,0 +1,182 @@
+# NCAA Division III Championships 1990 — source: NCAA III 1990.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Troy Monks | SUNY-Cortland
+- Bob Zoeke | St. Lawrence
+- Steve Rivera | College of New Jersey
+- Jason O'Brien | St. Thomas
+- Mitch Hegland | Augsburg
+- Tedd Engle | Olivet
+- Marshall Mundt | Augustana Illinois
+- Matt McClenahan | New York University
+place 1 Troy Monks
+place 2 Bob Zoeke
+place 3 Steve Rivera
+place 4 Jason O'Brien
+place 5 Mitch Hegland
+place 6 Tedd Engle
+place 7 Marshall Mundt
+place 8 Matt McClenahan
+
+@ 126
+- Fritz Zagorski | SUNY-Brockport
+- Joel Lamson | Ithaca
+- Joe Sickles | Augustana Illinois
+- Joe Hoialmen | Augsburg
+- John Topoly | Mount Union
+- Kurt Chesmore | Buena Vista
+- Armondo Nardone | Montclair State
+- Brian Hart | RIT
+place 1 Fritz Zagorski
+place 2 Joel Lamson
+place 3 Joe Sickles
+place 4 Joe Hoialmen
+place 5 John Topoly
+place 6 Kurt Chesmore
+place 7 Armondo Nardone
+place 8 Brian Hart
+
+@ 134
+- T.J. McStravik | Glassboro
+- David Buckiso | John Carroll
+- Bob Berceau | Wisconsin-Stevens Point
+- Tim McMillen | Wisconsin-Platteville
+- Robb Seil | Buena Vista
+- John Chapman | Monmouth IL
+- Troy Armstrong | Dubuque
+- Ken Hoff | Montclair State
+place 1 T.J. McStravik
+place 2 David Buckiso
+place 3 Bob Berceau
+place 4 Tim McMillen
+place 5 Robb Seil
+place 6 John Chapman
+place 7 Troy Armstrong
+place 8 Ken Hoff
+
+@ 142
+- John Beatty | Augsburg
+- Dean Bolte | Luther
+- A.T. Arneson | Loras College
+- Tim Fader | Augustana Illinois
+- Ron Gross | Ithaca
+- Frank Croce | Kean
+- Tony Pendolino | Allegheny
+- Scott Fenholz | St. John's
+place 1 John Beatty
+place 2 Dean Bolte
+place 3 A.T. Arneson
+place 4 Tim Fader
+place 5 Ron Gross
+place 6 Frank Croce
+place 7 Tony Pendolino
+place 8 Scott Fenholz
+
+@ 150
+- Shawn Voight | Cornell Iowa
+- Marty Nichols | Ithaca
+- Sandy Womack | Mount Union
+- Travis Young | Simpson
+- Steve Weers | Central College IA
+- Charles Hammack | Gallaudet
+- Tom Gleason | St. Lawrence
+- Shawn O'Meara | College of New Jersey
+place 1 Shawn Voight
+place 2 Marty Nichols
+place 3 Sandy Womack
+place 4 Travis Young
+place 5 Steve Weers
+place 6 Charles Hammack
+place 7 Tom Gleason
+place 8 Shawn O'Meara
+
+@ 158
+- Bob Llorca | Wisconsin-Whitewater
+- Mark Ambrose | Delaware Valley
+- Mike Cronmiller | Ithaca
+- John McGovern | Central College IA
+- Gary Ridout | Simpson
+- Monte Merz | Buena Vista
+- Sean Yengo | SUNY-Cortland
+- Tom Oelke | St. John's
+place 1 Bob Llorca
+place 2 Mark Ambrose
+place 3 Mike Cronmiller
+place 4 John McGovern
+place 5 Gary Ridout
+place 6 Monte Merz
+place 7 Sean Yengo
+place 8 Tom Oelke
+
+@ 167
+- Troy Gardner | Lycoming
+- Tom Weix | Wisconsin-Stevens Point
+- Joe Stutting | Central College IA
+- Chip Halverson | Concordia MN
+- Dennis Markou | Hunter College
+- Tom Rainville | Norwich
+- Tim Concannon | Concordia IL
+- Adam Marciniak | SUNY-Brockport
+place 1 Troy Gardner
+place 2 Tom Weix
+place 3 Joe Stutting
+place 4 Chip Halverson
+place 5 Dennis Markou
+place 6 Tom Rainville
+place 7 Tim Concannon
+place 8 Adam Marciniak
+
+@ 177
+- Mike Yanosik | SUNY-Cortland
+- Larry Danko | King's College
+- Joe Schmidt | John Carroll
+- Peter Wang | Chicago University
+- Bryan Neidigh | Lycoming
+- Greg Hoing | Buena Vista
+- Mike Nuzum | Coast Guard
+- Don Thein | St. Thomas
+place 1 Mike Yanosik
+place 2 Larry Danko
+place 3 Joe Schmidt
+place 4 Peter Wang
+place 5 Bryan Neidigh
+place 6 Greg Hoing
+place 7 Mike Nuzum
+place 8 Don Thein
+
+@ 190
+- Brian Quick | SUNY-Brockport
+- Scott Vega | Montclair State
+- Rich Caldwell | Buena Vista
+- Rick Kaliszewski | Allegheny
+- Kevin Schiltz | Augsburg
+- James Williams | Loras College
+- Carey Bowser | John Carroll
+- Ben Weinthal | New York University
+place 1 Brian Quick
+place 2 Scott Vega
+place 3 Rich Caldwell
+place 4 Rick Kaliszewski
+place 5 Kevin Schiltz
+place 6 James Williams
+place 7 Carey Bowser
+place 8 Ben Weinthal
+
+@ 275
+- Mike Fusilli | Ithaca
+- Tom Fye | Luther
+- Chester Grauberger | Augsburg
+- John Brigham | Norwich
+- Bob Goeller | Upper Iowa
+- Cary Starnal | Chicago University
+- Jared Kruse | Wartburg
+- Shawn Cavanaugh | SUNY-Cortland
+place 1 Mike Fusilli
+place 2 Tom Fye
+place 3 Chester Grauberger
+place 4 John Brigham
+place 5 Bob Goeller
+place 6 Cary Starnal
+place 7 Jared Kruse
+place 8 Shawn Cavanaugh
+

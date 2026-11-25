@@ -1,0 +1,327 @@
+{
+ "749": {
+  "school": [
+   {
+    "id": 749,
+    "display_name": "Blair Academy (B Team)",
+    "short_name": null,
+    "is_combined": false,
+    "section": null,
+    "classification": null,
+    "mascot": null,
+    "primary_color": null,
+    "secondary_color": null,
+    "tertiary_color": null,
+    "nickname": null,
+    "town": null,
+    "county": null,
+    "founded_year": null,
+    "website_url": null,
+    "athletic_conference": null,
+    "twitter_handle": null,
+    "logo_url": null,
+    "color_primary": null,
+    "color_secondary": null,
+    "color_tertiary": null,
+    "header_background": null,
+    "is_nj": false,
+    "logo_direction": null,
+    "locale_section": null,
+    "ad_name": null,
+    "ad_email": null,
+    "address": null,
+    "facebook_url": null
+   }
+  ],
+  "duals": [
+   {
+    "id": "8d650554-87e6-47a8-8059-af3cdf2455c8",
+    "season_id": 2026,
+    "team1_school_id": 135,
+    "team2_school_id": 749,
+    "meet_date": "2025-12-19",
+    "team1_score": 65,
+    "team2_score": 16,
+    "gender": "M",
+    "status": "final",
+    "created_at": "2026-08-01T05:05:30.610596+00:00",
+    "team1_school_name_raw": "North Hunterdon",
+    "team2_school_name_raw": "Blair Academy (B Team)",
+    "is_playoff": false,
+    "criteria_winner_school_id": null,
+    "confirmed_by_both_schools": false,
+    "schedule_source": null,
+    "meet_time": null,
+    "tiebreaker_pending": false
+   }
+  ],
+  "bouts": [
+   {
+    "id": "3c099445-2664-488e-8cd7-88d5ef685dd4",
+    "dual_meet_id": "8d650554-87e6-47a8-8059-af3cdf2455c8",
+    "school_a_id": 135,
+    "school_b_id": 749
+   },
+   {
+    "id": "4e26344e-1ba5-4b2f-97ec-fdf2978d9d68",
+    "dual_meet_id": "8d650554-87e6-47a8-8059-af3cdf2455c8",
+    "school_a_id": 135,
+    "school_b_id": 749
+   },
+   {
+    "id": "d640f0a2-e249-441b-b9d2-4c62fd3bb213",
+    "dual_meet_id": "8d650554-87e6-47a8-8059-af3cdf2455c8",
+    "school_a_id": 135,
+    "school_b_id": 749
+   },
+   {
+    "id": "3457dc2b-b729-4cef-882b-17102d744e32",
+    "dual_meet_id": "8d650554-87e6-47a8-8059-af3cdf2455c8",
+    "school_a_id": 135,
+    "school_b_id": 749
+   },
+   {
+    "id": "663b51fc-38e1-44f1-989a-65025504492a",
+    "dual_meet_id": "8d650554-87e6-47a8-8059-af3cdf2455c8",
+    "school_a_id": 135,
+    "school_b_id": 749
+   },
+   {
+    "id": "4994411e-fe32-45b1-858a-2d72c9a3dddd",
+    "dual_meet_id": "8d650554-87e6-47a8-8059-af3cdf2455c8",
+    "school_a_id": 135,
+    "school_b_id": 749
+   },
+   {
+    "id": "ac5f489c-6565-4cbd-b0fb-5540d925caa8",
+    "dual_meet_id": "8d650554-87e6-47a8-8059-af3cdf2455c8",
+    "school_a_id": 135,
+    "school_b_id": 749
+   },
+   {
+    "id": "631c68c1-a6d7-4ebe-9b2f-bd20525f634d",
+    "dual_meet_id": "8d650554-87e6-47a8-8059-af3cdf2455c8",
+    "school_a_id": 135,
+    "school_b_id": 749
+   },
+   {
+    "id": "87d3a20a-abf4-4d6f-a8ae-d36ccf85de13",
+    "dual_meet_id": "8d650554-87e6-47a8-8059-af3cdf2455c8",
+    "school_a_id": 135,
+    "school_b_id": 749
+   },
+   {
+    "id": "a261146c-1727-4981-9e53-ac176b00737c",
+    "dual_meet_id": "8d650554-87e6-47a8-8059-af3cdf2455c8",
+    "school_a_id": 135,
+    "school_b_id": 749
+   },
+   {
+    "id": "9bd5f995-3275-486f-9369-dbd55c492b50",
+    "dual_meet_id": "8d650554-87e6-47a8-8059-af3cdf2455c8",
+    "school_a_id": 135,
+    "school_b_id": 749
+   },
+   {
+    "id": "c591c965-1b0d-403b-97de-0610b989519f",
+    "dual_meet_id": "8d650554-87e6-47a8-8059-af3cdf2455c8",
+    "school_a_id": 135,
+    "school_b_id": 749
+   },
+   {
+    "id": "1a386ed2-65e2-4b62-a694-a9d1558f43f1",
+    "dual_meet_id": "8d650554-87e6-47a8-8059-af3cdf2455c8",
+    "school_a_id": 135,
+    "school_b_id": 749
+   },
+   {
+    "id": "3bbf5c18-7103-4705-9a7e-aeb85ed73cce",
+    "dual_meet_id": "8d650554-87e6-47a8-8059-af3cdf2455c8",
+    "school_a_id": 135,
+    "school_b_id": 749
+   }
+  ],
+  "tbouts": [],
+  "links": [
+   {
+    "id": 3829,
+    "raw_name": "Luke Hosonitz",
+    "school_id": 749,
+    "wrestler_id": "a9a1aee4-7bf2-4ec8-bcdb-b160d14c396e",
+    "created_at": "2026-07-31T21:56:40.77954+00:00"
+   },
+   {
+    "id": 3830,
+    "raw_name": "Wyatt Stauffer",
+    "school_id": 749,
+    "wrestler_id": "369d7c33-9eed-4ee8-86eb-08c99843503c",
+    "created_at": "2026-07-31T21:56:40.77954+00:00"
+   },
+   {
+    "id": 3831,
+    "raw_name": "Edward George",
+    "school_id": 749,
+    "wrestler_id": "bce739c1-b1bf-4d58-a95c-5d55ede3ec9c",
+    "created_at": "2026-07-31T21:56:40.77954+00:00"
+   },
+   {
+    "id": 3832,
+    "raw_name": "Ronan Montes",
+    "school_id": 749,
+    "wrestler_id": "57869597-451d-4857-a9a5-4b5848a0dc8a",
+    "created_at": "2026-07-31T21:56:40.77954+00:00"
+   },
+   {
+    "id": 3834,
+    "raw_name": "Michael Lynch",
+    "school_id": 749,
+    "wrestler_id": "32e86134-31fd-4114-8164-90616c4c4711",
+    "created_at": "2026-07-31T21:56:40.77954+00:00"
+   },
+   {
+    "id": 3835,
+    "raw_name": "Luca Cenatiempo",
+    "school_id": 749,
+    "wrestler_id": "9b5b70c7-ff9b-4a57-94c0-5bd7809a67cc",
+    "created_at": "2026-07-31T21:56:40.77954+00:00"
+   },
+   {
+    "id": 3837,
+    "raw_name": "Dylan Emond",
+    "school_id": 749,
+    "wrestler_id": "44883fca-9ad7-4f71-aad7-4fccf58e228e",
+    "created_at": "2026-07-31T21:56:40.77954+00:00"
+   }
+  ]
+ },
+ "814": {
+  "school": [
+   {
+    "id": 814,
+    "display_name": "Delmar Junior-Senior",
+    "short_name": null,
+    "is_combined": false,
+    "section": null,
+    "classification": null,
+    "mascot": null,
+    "primary_color": null,
+    "secondary_color": null,
+    "tertiary_color": null,
+    "nickname": null,
+    "town": null,
+    "county": null,
+    "founded_year": null,
+    "website_url": null,
+    "athletic_conference": null,
+    "twitter_handle": null,
+    "logo_url": null,
+    "color_primary": null,
+    "color_secondary": null,
+    "color_tertiary": null,
+    "header_background": null,
+    "is_nj": false,
+    "logo_direction": null,
+    "locale_section": null,
+    "ad_name": null,
+    "ad_email": null,
+    "address": null,
+    "facebook_url": null
+   }
+  ],
+  "duals": [],
+  "bouts": [],
+  "tbouts": [
+   {
+    "id": "a3b4c65f-907b-4eb6-951f-6b9ddcaaa67a",
+    "wrestler1_school_id": 814,
+    "wrestler2_school_id": 32
+   },
+   {
+    "id": "f2ba1fb1-7ae2-4867-a0a5-3366b7e72859",
+    "wrestler1_school_id": 32,
+    "wrestler2_school_id": 814
+   },
+   {
+    "id": "0be2e1ba-7a19-4959-9426-ebc48a6292e3",
+    "wrestler1_school_id": 814,
+    "wrestler2_school_id": 32
+   }
+  ],
+  "links": [
+   {
+    "id": 51759,
+    "raw_name": "Theodore Egolf",
+    "school_id": 814,
+    "wrestler_id": "1d4e57cc-eb4e-46f7-815e-784611ea74cd",
+    "created_at": "2026-11-02T20:39:58.209941+00:00"
+   },
+   {
+    "id": 51802,
+    "raw_name": "Ryland Vickers",
+    "school_id": 814,
+    "wrestler_id": "9202a3e2-cb7e-4089-9cdc-b7d59c55f19c",
+    "created_at": "2026-11-02T20:40:06.639026+00:00"
+   },
+   {
+    "id": 51784,
+    "raw_name": "Storm Hoffman",
+    "school_id": 814,
+    "wrestler_id": "32c1f806-8608-4dc2-8305-150ab6445f6e",
+    "created_at": "2026-11-02T20:40:03.683832+00:00"
+   }
+  ]
+ },
+ "832": {
+  "school": [
+   {
+    "id": 832,
+    "display_name": "IC Catholic Prep",
+    "short_name": null,
+    "is_combined": false,
+    "section": null,
+    "classification": null,
+    "mascot": null,
+    "primary_color": null,
+    "secondary_color": null,
+    "tertiary_color": null,
+    "nickname": null,
+    "town": null,
+    "county": null,
+    "founded_year": null,
+    "website_url": null,
+    "athletic_conference": null,
+    "twitter_handle": null,
+    "logo_url": null,
+    "color_primary": null,
+    "color_secondary": null,
+    "color_tertiary": null,
+    "header_background": null,
+    "is_nj": false,
+    "logo_direction": null,
+    "locale_section": null,
+    "ad_name": null,
+    "ad_email": null,
+    "address": null,
+    "facebook_url": null
+   }
+  ],
+  "duals": [],
+  "bouts": [],
+  "tbouts": [
+   {
+    "id": "f594cde2-2421-469b-b9a3-e428d4eddfab",
+    "wrestler1_school_id": 832,
+    "wrestler2_school_id": 82
+   }
+  ],
+  "links": [
+   {
+    "id": 51803,
+    "raw_name": "Brody Kelly",
+    "school_id": 832,
+    "wrestler_id": "9005432c-1b6c-4b75-8705-9481d7a589e7",
+    "created_at": "2026-11-02T20:40:06.791327+00:00"
+   }
+  ]
+ }
+}

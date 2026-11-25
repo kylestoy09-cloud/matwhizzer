@@ -1,0 +1,50 @@
+{
+ "profile": [
+  {
+   "id": "fb40c6eb-f7be-424f-8e06-b2d647820d5c",
+   "first_name": "Dan",
+   "last_name": "Vargas",
+   "suffix": null,
+   "gender": "M",
+   "graduation_year": null,
+   "created_at": "2026-08-06T01:30:22.564093+00:00",
+   "tw_id": null,
+   "is_stub": false,
+   "is_oos": true,
+   "main_weight": "175",
+   "grade": null,
+   "grade_confirmed_at": null,
+   "grade_confirmed_source": null,
+   "projected_weight_class": null,
+   "confirmed_weight_class": null,
+   "is_active": true
+  }
+ ],
+ "bouts": [
+  {
+   "id": "4aa00e57-4f2d-443f-92ae-d9df4cdaa608",
+   "dual_meet_id": "81350db6-9110-4f94-9e41-26ec44c653ac",
+   "weight_class": 175,
+   "wrestler_a_id": "7753842b-1ccb-426f-b53c-41b59ef69757",
+   "wrestler_b_id": "fb40c6eb-f7be-424f-8e06-b2d647820d5c",
+   "school_a_id": 7,
+   "school_b_id": 736,
+   "winner_id": "7753842b-1ccb-426f-b53c-41b59ef69757",
+   "result_type": "Fall",
+   "result_detail": null,
+   "fall_time_seconds": 137,
+   "team1_points": 6,
+   "team2_points": 0,
+   "is_double_forfeit": false,
+   "is_forfeit_win": false,
+   "validated": false,
+   "created_at": "2026-08-06T01:30:35.820856+00:00",
+   "wrestler_a_name_raw": "Gavin Geleta",
+   "wrestler_b_name_raw": "Dan Vargas",
+   "result_time_estimated": false,
+   "winner_score": null,
+   "loser_score": null,
+   "order_index": 10
+  }
+ ]
+}

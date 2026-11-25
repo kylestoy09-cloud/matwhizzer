@@ -1,0 +1,181 @@
+# NCAA Division III Championships 1997 — source: NCAA III 1997.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Henry Gerten | Augsburg
+- John Gemmell | Ithaca
+- Neil Rodak | Chicago University
+- Abdul Shabazz | Western New England
+- Jerry Boland | Lycoming
+- Mike Walker | College of New Jersey
+- Darren Torsone | Ursinus
+place 1 Henry Gerten
+place 2 John Gemmell
+place 3 Neil Rodak
+place 4 Abdul Shabazz
+place 5 Jerry Boland
+place 7 Mike Walker
+place 8 Darren Torsone
+vacant 6  # not on the sheet
+
+@ 126
+- Tom Smith | Wartburg
+- Joel O'Brien | St. Thomas
+- Brian Jones | Augsburg
+- Jason Goldman | SUNY-Binghampton
+- Anton Atterbury | College of New Jersey
+- Matt Colucci | John Carroll
+- Jeff Hoopes | Delaware Valley
+- Eric Gould | Springfield
+place 1 Tom Smith
+place 2 Joel O'Brien
+place 3 Brian Jones
+place 4 Jason Goldman
+place 5 Anton Atterbury
+place 6 Matt Colucci
+place 7 Jeff Hoopes
+place 8 Eric Gould
+
+@ 134
+- Dusty Rhodes | Wartburg
+- Vinnie Santaniello | College of New Jersey
+- Chad Veenendall | Wisconsin-La Crosse
+- Josh Hardman | Manchester
+- Jaimie Heglund | Wisconsin-Stevens Point
+- Don Spaulding | SUNY-Oswego
+- Ryan Muzykoski | Heidelberg
+- John Hatfield | Simpson
+place 1 Dusty Rhodes
+place 2 Vinnie Santaniello
+place 3 Chad Veenendall
+place 4 Josh Hardman
+place 5 Jaimie Heglund
+place 6 Don Spaulding
+place 7 Ryan Muzykoski
+place 8 John Hatfield
+
+@ 142
+- Ron Vosburg | SUNY-Brockport
+- Andy Goodwin | Springfield
+- Jerry Grammes | Wilmington
+- Wade Johnson | Augsburg
+- Dan Ambroziak | Mount Union
+- Breeding Greg | Central College IA
+- Ryan Schweitzberger | Buena Vista
+- Kevin Miller | Wartburg
+place 1 Ron Vosburg
+place 2 Andy Goodwin
+place 3 Jerry Grammes
+place 4 Wade Johnson
+place 5 Dan Ambroziak
+place 6 Breeding Greg
+place 7 Ryan Schweitzberger
+place 8 Kevin Miller
+
+@ 150
+- Aaron Fitt | Lycoming
+- Jessie Bakalyar | Augsburg
+- Brett Stamper | Wisconsin-Stevens Point
+- Eric Vandervest | Wisconsin-La Crosse
+- Chris Nord | St. Olaf
+- Joe Maiani | Ohio Northern
+- Dan Tschudi | St. John's
+- Greg Halsor | Wartburg
+place 1 Aaron Fitt
+place 2 Jessie Bakalyar
+place 3 Brett Stamper
+place 4 Eric Vandervest
+place 5 Chris Nord
+place 6 Joe Maiani
+place 7 Dan Tschudi
+place 8 Greg Halsor
+
+@ 158
+- Ricky Casarez | Loras College
+- Justin Hahn | Augsburg
+- Brian Roberts | Wartburg
+- Dan O'Cone | College of New Jersey
+- Jason Kessen | John Carroll
+- Ryan Kalman | Springfield
+- Jason Miller | Heidelberg
+- Matt Ryan | St. John's
+place 1 Ricky Casarez
+place 2 Justin Hahn
+place 3 Brian Roberts
+place 4 Dan O'Cone
+place 5 Jason Kessen
+place 6 Ryan Kalman
+place 7 Jason Miller
+place 8 Matt Ryan
+
+@ 167
+- Matt Hamill | RIT
+- Jason Dell | Gettysburg
+- John Newman | St. John's
+- Tom McAleer | York
+- Brian Unkert | College of New Jersey
+- Justin Kerr | John Carroll
+- Jim Peterson | Augsburg
+- Tom Ciezki | Loras College
+place 1 Matt Hamill
+place 2 Jason Dell
+place 3 John Newman
+place 4 Tom McAleer
+place 5 Brian Unkert
+place 6 Justin Kerr
+place 7 Jim Peterson
+place 8 Tom Ciezki
+
+@ 177
+- Paul Elsen | Wheaton
+- Ryan Birt | Upper Iowa
+- Etahn Brownback | Delaware Valley
+- Lance Baden | WPI
+- Scott Steepe | Montclair State
+- Chris Ortner | Augsburg
+- Joe Rens | Wisconsin-Stevens Point
+- Mark Winters | SUNY-Cortland
+place 1 Paul Elsen
+place 2 Ryan Birt
+place 3 Etahn Brownback
+place 4 Lance Baden
+place 5 Scott Steepe
+place 6 Chris Ortner
+place 7 Joe Rens
+place 8 Mark Winters
+
+@ 190
+- Dan Lewandowski | Augsburg
+- Tom Murphy | SUNY-Brockport
+- Ryan Reasland | Cornell Iowa
+- Ryan Finney | Manchester
+- Brandon Novak | St. John's
+- Matt Yonkin | Lycoming
+- Jeff Birschbach | Wisconsin-La Crosse
+- Garth McGraw | Simpson
+place 1 Dan Lewandowski
+place 2 Tom Murphy
+place 3 Ryan Reasland
+place 4 Ryan Finney
+place 5 Brandon Novak
+place 6 Matt Yonkin
+place 7 Jeff Birschbach
+place 8 Garth McGraw
+
+@ 275
+- Perry Miller | Wisconsin-Stevens Point
+- Nick Primozic | Manchester
+- Jason Spector | SUNY-Brockport
+- John Pena | Augsburg
+- Derrick Levake | Wisconsin-Whitewater
+- Jeremy Whalen | Simpson
+- Mike Bucci | SUNY-Cortland
+- Barrett Cervetto | Montclair State
+place 1 Perry Miller
+place 2 Nick Primozic
+place 3 Jason Spector
+place 4 John Pena
+place 5 Derrick Levake
+place 6 Jeremy Whalen
+place 7 Mike Bucci
+place 8 Barrett Cervetto
+

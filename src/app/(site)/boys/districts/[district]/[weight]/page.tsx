@@ -1,3 +1,4 @@
+import { WeightHistoryView } from '@/components/site/TournamentHistory'
 import { supabase } from '@/lib/supabase/public-cached'
 import { getSchoolLogos } from '@/lib/school-logos'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
@@ -6,9 +7,11 @@ import { SchoolTag } from '@/components/SchoolTag'
 type LogoMap = Awaited<ReturnType<typeof getSchoolLogos>>
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getActiveSeason } from '@/lib/get-season'
+import { getPostseasonSeason } from '@/lib/get-season'
+import { seasonWeights } from '@/lib/postseasonSeason'
 import { getSeasonLabel } from '@/lib/seasons-server'
-import { PageHeader } from '@/components/PageHeader'
+import { StdHeader } from '@/components/site/StdPage'
+import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { orderChampMatchesBySeed } from '@/lib/bracketOrder'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -448,7 +451,9 @@ export default async function DistrictBracketPage({
 
   if (!district || district < 1 || district > 32 || !weight) notFound()
 
-  const season = await getActiveSeason('M')
+  const { season, options: seasonOptions } = await getPostseasonSeason('M')
+
+  const weights = await seasonWeights('M', season, WEIGHTS)   // the season's own classes (Playoff History)
   const seasonLbl = await getSeasonLabel(season)
 
   const [{ data }, logos] = await Promise.all([
@@ -462,7 +467,38 @@ export default async function DistrictBracketPage({
   ])
 
   const matches = (data ?? []) as MatchRow[]
-  if (matches.length === 0) notFound()
+  if (matches.length === 0) {
+    // no bracket on file, but a podium (history_podiums, e.g. 2012-13 District 24 — Kyle 2026-11-14)
+    const { data: pod } = await supabase.from('history_podiums')
+      .select('place, source, wrestler_id, school_id, wrestler:wrestlers(first_name, last_name), school:schools(display_name), tournament:tournaments!inner(name, season_id)')
+      .eq('tournament.name', `Boy_s Districts District ${district}`).eq('tournament.season_id', season).eq('weight', weight).order('place')
+    const rows = (pod ?? []) as unknown as { place: number; source: string; wrestler_id: string | null; school_id: number | null; wrestler: { first_name: string; last_name: string } | null; school: { display_name: string } | null }[]
+    if (!rows.length) notFound()
+    return (
+      <div className="max-w-3xl mx-auto px-4 py-8">
+        <Link href={`/boys/districts/${district}`} className="inline-flex items-center text-sm text-slate-500 hover:text-slate-800 mb-6 transition-colors">
+          ← District {district}
+        </Link>
+        <StdHeader title={`Boys District ${district} · ${weight} lb`} summaryKey="district" hideSummary noLogo
+          picker={<><InlineSeasonPicker arrows gender="M" activeSeason={season} options={seasonOptions} /></>} />
+        <WeightNav weights={weights} current={weight} base={`/boys/districts/${district}`} />
+        <p className="mb-4 text-sm text-slate-600 border border-slate-300 bg-slate-50 px-3 py-2">
+          Bracket not available for this year — placers from the {rows[0].source}.
+        </p>
+        <table className="w-full text-sm border border-black">
+          <tbody>
+            {rows.map(r => (
+              <tr key={r.place} className="border-b border-slate-200">
+                <td className="px-3 py-1 w-16 font-semibold text-slate-500">{['', '1st', '2nd', '3rd', '4th'][r.place] ?? r.place}</td>
+                <td className="px-3 py-1 font-medium">{r.wrestler_id && r.wrestler ? <Link href={`/boys/wrestler/${r.wrestler_id}`} className="hover:underline">{r.wrestler.first_name} {r.wrestler.last_name}</Link> : 'TBD'}</td>
+                <td className="px-3 py-1 text-slate-600">{r.school_id != null ? <Link href={`/boys/schools/${r.school_id}`} className="hover:underline">{r.school?.display_name ?? 'TBD'}</Link> : 'TBD'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
 
   // Split championship vs consolation
   const champ  = matches.filter(m => m.bracket_side === 'championship')
@@ -513,12 +549,10 @@ export default async function DistrictBracketPage({
         ← District {district}
       </Link>
 
-      <div className="mb-8 text-center">
-        <PageHeader title={`District ${district} · ${weight} lb`} />
-        <p className="text-slate-500 text-sm mt-1">NJSIAA {seasonLbl ?? season} · Boys postseason</p>
-      </div>
+      <StdHeader title={`Boys District ${district} · ${weight} lb`} summaryKey="district" hideSummary noLogo
+        picker={<><InlineSeasonPicker arrows gender="M" activeSeason={season} options={seasonOptions} /></>} />
 
-      <WeightNav weights={WEIGHTS} current={weight} base={`/boys/districts/${district}`} />
+      <WeightNav weights={weights} current={weight} base={`/boys/districts/${district}`} />
 
       {/* Prelim round (R2) — hide bye-only prelims */}
       {r2Display.length > 0 && (
@@ -606,7 +640,9 @@ export default async function DistrictBracketPage({
       </div>
 
       <EntryRoster roster={buildRoster(matches)} logos={logos} />
-      <WeightNav weights={WEIGHTS} current={weight} base={`/boys/districts/${district}`} />
+      <WeightNav weights={weights} current={weight} base={`/boys/districts/${district}`} />
+
+      <WeightHistoryView gender="M" level="district" num={district} seasons={seasonOptions.map(o => o.id)} weight={weight} />
     </div>
   )
 }

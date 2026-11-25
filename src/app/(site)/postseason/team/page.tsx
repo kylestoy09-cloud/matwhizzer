@@ -2,6 +2,11 @@ import { createClient } from '@supabase/supabase-js'
 import { getActiveSeason } from '@/lib/get-season'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { TeamBracketClient } from './TeamBracketClient'
+import { HistoryTabs } from '@/components/site/TournamentHistory'
+import { SiteTabs } from '@/components/site/SiteTabs'
+import { StdHeader } from '@/components/site/StdPage'
+import { TeamHistoryTable } from '@/components/site/TeamHistory'
+import { boysTeamHistory } from '@/lib/teamHistory'
 
 export const revalidate = 300
 
@@ -48,7 +53,22 @@ export type MeetResult = {
   tiebreakerWinnerId?: number
 }
 
-export default async function PostseasonTeamPage() {
+export default async function PostseasonTeamPage({ searchParams }: { searchParams: Promise<{ view?: string; grp?: string }> }) {
+  // the History tab (Kyle 2026-11-16): each group's state and sectional champions by year
+  const { view, grp } = await searchParams
+  if (view === 'history') {
+    const groups = await boysTeamHistory()
+    const group = groups.find(g => g.key === grp) ?? groups[0]
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <StdHeader title="Boys Team Post Season" summaryKey="ps-team" tabs={<div className="space-y-3">
+          <HistoryTabs base="/postseason/team" view="history" />
+          <SiteTabs items={groups.map(g => ({ key: g.key, label: g.label, href: `/postseason/team?view=history&grp=${g.key}` }))} active={group.key} level={2} />
+        </div>} />
+        <TeamHistoryTable group={group} credit />
+      </div>
+    )
+  }
   // the picked season (season picker in the header); the live season by default
   const SEASON_ID = await getActiveSeason('M')
   const db = createClient(
@@ -238,7 +258,8 @@ export default async function PostseasonTeamPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <TeamBracketClient
-        picker={<InlineSeasonPicker gender="M" activeSeason={SEASON_ID} />}
+        picker={<InlineSeasonPicker arrows gender="M" activeSeason={SEASON_ID} />}
+        viewTabs={<HistoryTabs base="/postseason/team" view="brackets" />}
         regularGroups={regularGroups}
         npGroups={npGroups}
         leaderStats={leaderStats}

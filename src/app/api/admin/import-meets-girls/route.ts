@@ -22,6 +22,7 @@ import { createClient } from '@supabase/supabase-js'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { parseDualMeetGirlsText } from '@/lib/parseDualMeetGirls'
 import { parseJamboreeGirlsText } from '@/lib/parseJamboreeGirls'
+import { cleanEventName } from '@/lib/eventName'
 import { matchSchoolNames } from '@/lib/matchSchools'
 import { matchWrestler, reloadAliases, clearWrestlerCache } from '@/lib/matchWrestlers'
 import { boutResultToDb } from '@/lib/parseRtf'
@@ -53,6 +54,10 @@ type ImportRequest = {
   // Required when meetKind is 'jamboree': the event date (MM/DD/YYYY). Jamboree
   // listings carry no per-meet date line, so the parser takes it as an argument.
   jamboreeDate?: string
+  // The jamboree's name (Kyle 2026-11-11: jamborees are their own events, on their own tab). With 3+ schools
+  // the pairings are linked to a jamborees_girls row (found or created by name and date); a two-school
+  // event stays plain pairings.
+  jamboreeName?: string
 }
 
 // Meets with this many bouts are one-or-two-wrestler "random" meets. They are
@@ -146,7 +151,7 @@ export async function POST(req: NextRequest) {
   )
 
   const { data: seasonRow } = Number.isInteger(seasonId)
-    ? await supabase.from('seasons').select('id').eq('id', seasonId).maybeSingle()
+    ? await supabase.from('seasons').select('id, label').eq('id', seasonId).maybeSingle()
     : { data: null }
   if (!seasonRow) return NextResponse.json({ error: `Unknown season: ${seasonId}` }, { status: 400 })
 
@@ -186,6 +191,24 @@ export async function POST(req: NextRequest) {
 
   if (meets.length === 0) {
     return NextResponse.json({ error: 'Draft produced no parseable meets' }, { status: 400 })
+  }
+
+  // ── The jamboree these pairings belong to ──────────────────────────────────────
+  let jamboreeId: string | null = null
+  if (isJamboree && new Set(meets.flatMap(m => [m.team1Name, m.team2Name])).size >= 3) {
+    const name = cleanEventName((body.jamboreeName ?? '').trim())
+    if (!name) return NextResponse.json({ error: 'Name the jamboree before importing' }, { status: 400 })
+    const startDate = toISODate(body.jamboreeDate!)
+    const { data: found } = await supabase.from('jamborees_girls').select('id')
+      .eq('season', seasonRow.label).eq('name', name).eq('start_date', startDate).limit(1)
+    if (found?.length) jamboreeId = found[0].id
+    else {
+      const { data: created, error: jErr } = await supabase.from('jamborees_girls')
+        .insert({ season: seasonRow.label, name, start_date: startDate, source_name: body.jamboreeName!.trim() })
+        .select('id').single()
+      if (jErr || !created) return NextResponse.json({ error: `Jamboree not saved: ${jErr?.message ?? 'no row returned'}` }, { status: 500 })
+      jamboreeId = created.id
+    }
   }
 
   // ── Match schools server-side ─────────────────────────────────────────────────
@@ -488,6 +511,7 @@ export async function POST(req: NextRequest) {
         status:                 'final',
         meet_kind:              isJamboree ? 'jamboree' : 'dual',
         counts_toward_record:   !isJamboree,
+        ...(jamboreeId ? { jamboree_id: jamboreeId } : {}),
       })
       .select('id')
       .single()

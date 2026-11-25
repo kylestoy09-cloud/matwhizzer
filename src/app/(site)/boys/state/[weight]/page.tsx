@@ -1,11 +1,14 @@
+import { WeightHistoryView } from '@/components/site/TournamentHistory'
 import { supabase } from '@/lib/supabase/public-cached'
 import { IconHint } from '@/components/site/IconHint'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getActiveSeason } from '@/lib/get-season'
+import { getPostseasonSeason } from '@/lib/get-season'
+import { seasonWeights } from '@/lib/postseasonSeason'
 import { getSeasonLabel } from '@/lib/seasons-server'
 import { BracketPoll, type BracketEntry } from '@/components/BracketPoll'
-import { PageHeader } from '@/components/PageHeader'
+import { StdHeader } from '@/components/site/StdPage'
+import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import { orderChampMatchesBySeed } from '@/lib/bracketOrder'
 import { getSchoolLogos } from '@/lib/school-logos'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
@@ -567,7 +570,9 @@ export default async function StateBracketPage({
   const weight = Number(rawW)
   if (!weight) notFound()
 
-  const season = await getActiveSeason('M')
+  const { season, options: seasonOptions } = await getPostseasonSeason('M')
+
+  const weights = await seasonWeights('M', season, WEIGHTS)   // the season's own classes (Playoff History)
   const seasonLbl = await getSeasonLabel(season)
 
   const [{ data }, { data: entryData }, { data: ghostData }, logos] = await Promise.all([
@@ -634,12 +639,10 @@ export default async function StateBracketPage({
         ← State Championships
       </Link>
 
-      <div className="mb-8 text-center">
-        <PageHeader title={`Boys State · ${weight} lb`} goldTrim />
-        <p className="text-slate-500 text-sm mt-1">NJSIAA {seasonLbl ?? season} · 32-man double elimination</p>
-      </div>
+      <StdHeader title={`Boys State · ${weight} lb`} summaryKey="state" hideSummary noLogo
+        picker={<><InlineSeasonPicker arrows gender="M" activeSeason={season} options={seasonOptions} /><span>· 32-man double elimination</span></>} />
 
-      <WeightNav weights={WEIGHTS} current={weight} base="/boys/state" />
+      <WeightNav weights={weights} current={weight} base="/boys/state" />
 
       {matches.length === 0 ? null : (<>
 
@@ -693,7 +696,9 @@ export default async function StateBracketPage({
 
       {entries.length > 0 && <StateQualifiers entries={entries} logos={logos} />}
 
-      <WeightNav weights={WEIGHTS} current={weight} base="/boys/state" />
+      <WeightNav weights={weights} current={weight} base="/boys/state" />
+
+      <WeightHistoryView gender="M" level="state" num={null} seasons={seasonOptions.map(o => o.id)} weight={weight} />
     </div>
   )
 }

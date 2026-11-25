@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
+import { lockSeasonDirectory } from '@/lib/lockSeasonDirectory'
 
 export const dynamic = 'force-dynamic'
 
@@ -49,7 +50,10 @@ export async function GET() {
     })
   }
 
-  const result = (seasons ?? []).map(s => ({
+  // Playoff History seasons (stage 'history') aren't managed here: the boys Playoff History Review tool switches them on
+  const historyOnly = new Set((states ?? []).filter(s => s.stage === 'history').map(s => s.season_id))
+  for (const s of states ?? []) if (s.stage !== 'history') historyOnly.delete(s.season_id)
+  const result = (seasons ?? []).filter(s => !historyOnly.has(s.id)).map(s => ({
     id: s.id,
     year_label: s.year_label,
     created_at: s.created_at,
@@ -137,6 +141,11 @@ export async function POST(req: NextRequest) {
 
     const update: Record<string, unknown> = { stage }
     if (stage === 'archived') update.finalized_at = new Date().toISOString()
+    // Archiving ends the season: lock this side's school directory for it first (see finalize-season)
+    if (stage === 'archived') {
+      const lock = await lockSeasonDirectory(client, gender as 'M' | 'F', seasonId)
+      if (lock.error) return NextResponse.json({ error: `Locking the season's directory failed: ${lock.error}` }, { status: 500 })
+    }
 
     const { error: stageErr } = await client
       .from('season_gender_state')
@@ -174,6 +183,11 @@ export async function POST(req: NextRequest) {
       .single()
 
     if (curErr || !cur) return NextResponse.json({ error: 'Season not found' }, { status: 404 })
+
+    // 1b. Lock this side's school directory for the ending season before anything else changes, so the
+    //     next season's edits never touch it (Past Seasons → Directory shows and edits it)
+    const lock = await lockSeasonDirectory(client, gender as 'M' | 'F', seasonId)
+    if (lock.error) return NextResponse.json({ error: `Locking the ${cur.year_label} directory failed: ${lock.error}` }, { status: 500 })
 
     // 2. Archive this gender's state
     const { error: archErr } = await client
@@ -268,11 +282,11 @@ export async function POST(req: NextRequest) {
         p_action: 'finalize_season',
         p_entity_type: 'season_gender_state',
         p_entity_id: String(seasonId),
-        p_details: { archivedSeasonId: seasonId, newSeasonId, newLabel: nextLabel, gender, hammerConfigCopied },
+        p_details: { archivedSeasonId: seasonId, newSeasonId, newLabel: nextLabel, gender, hammerConfigCopied, directoryLocked: lock.locked },
       })
     } catch { /* non-fatal */ }
 
-    return NextResponse.json({ ok: true, newSeasonId, newLabel: nextLabel, hammerConfigCopied })
+    return NextResponse.json({ ok: true, newSeasonId, newLabel: nextLabel, hammerConfigCopied, directoryLocked: lock.locked })
   }
 
   return NextResponse.json({ error: 'Unknown action' }, { status: 400 })

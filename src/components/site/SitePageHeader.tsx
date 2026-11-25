@@ -24,7 +24,7 @@ export function SitePageHeader({ title, picker, summary, tabs, showLogo = false,
         <h1 className="text-2xl font-bold leading-tight" style={{ color: titleColor, fontFamily: titleFontFamily, fontSize: titleSize }}>{title}</h1>
       </div>
       {picker && <div className="mt-3 flex items-center gap-2 text-sm text-slate-600">{picker}</div>}
-      {summary && <p className="mt-2 text-sm text-slate-500">{summary}</p>}
+      {summary && (typeof summary === 'string' ? <p className="mt-2 text-sm text-slate-500">{summary}</p> : <div className="mt-2 text-sm text-slate-500">{summary}</div>)}
       {tabs && <div className="mt-4">{tabs}</div>}
     </header>
   )

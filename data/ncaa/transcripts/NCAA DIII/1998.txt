@@ -1,0 +1,182 @@
+# NCAA Division III Championships 1998 — source: NCAA III 1998.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- Henry Gerten | Augsburg
+- Russ Peloquin | Wisconsin-La Crosse
+- Zac Weiglein | Wartburg
+- Phil Byrd | Wisconsin-Whitewater
+- Robert Rivas | Luther
+- Michael Jones | Delaware Valley
+- Britt Marolf | Simpson
+- Jay Field | Buena Vista
+place 1 Henry Gerten
+place 2 Russ Peloquin
+place 3 Zac Weiglein
+place 4 Phil Byrd
+place 5 Robert Rivas
+place 6 Michael Jones
+place 7 Britt Marolf
+place 8 Jay Field
+
+@ 126
+- John Gremmel | Ithaca
+- Jim Balella | Springfield
+- Brian Jones | Augsburg
+- Matt Olson | Wisconsin-Platteville
+- Jack Granata | Hunter
+- Nick Dorhmann | Cornell Iowa
+- Ryan Normadin | College of New Jersey
+- Rick Schweitzberger | Buena Vista
+place 1 John Gremmel
+place 2 Jim Balella
+place 3 Brian Jones
+place 4 Matt Olson
+place 5 Jack Granata
+place 6 Nick Dorhmann
+place 7 Ryan Normadin
+place 8 Rick Schweitzberger
+
+@ 134
+- Florian Ghinea | Montclair State
+- Darrell Carr | Manchester
+- Nick Mitchell | Wartburg
+- Rob Anderson | Wisconsin-La Crosse
+- John Hatfield | Simpson
+- Jaimie Heglund | Wisconsin-Stevens Point
+- Ben Hahlen | John Carroll
+- Bryan Klass | Delaware Valley
+place 1 Florian Ghinea
+place 2 Darrell Carr
+place 3 Nick Mitchell
+place 4 Rob Anderson
+place 5 John Hatfield
+place 6 Jaimie Heglund
+place 7 Ben Hahlen
+place 8 Bryan Klass
+
+@ 142
+- Ben Shane | Wartburg
+- Jerry Grammes | Wilmington
+- Josh Hardman | Manchester
+- Josh Cagle | Augsburg
+- Chris Hubbard | John Carroll
+- Aaron Harris | Lycoming
+- Kevin Lesoine | Kings
+- Nathan Cross | Augustana Illinois
+place 1 Ben Shane
+place 2 Jerry Grammes
+place 3 Josh Hardman
+place 4 Josh Cagle
+place 5 Chris Hubbard
+place 6 Aaron Harris
+place 7 Kevin Lesoine
+place 8 Nathan Cross
+
+@ 150
+- Ryan Schweitzberger | Buena Vista
+- Joe Maiani | Ohio Northern
+- Nate Sambienet | John Carroll
+- Ted Kemmerling | Lebanon Valley
+- Wade Johnson | Augsburg
+- Mike Helm | Messiah
+- Chris Nord | St. Olaf
+- Mark Pereda | North Central Illinois
+place 1 Ryan Schweitzberger
+place 2 Joe Maiani
+place 3 Nate Sambienet
+place 4 Ted Kemmerling
+place 5 Wade Johnson
+place 6 Mike Helm
+place 7 Chris Nord
+place 8 Mark Pereda
+
+@ 158
+- Cory Christensen | Simpson
+- Brian Borkowski | Plymouth State
+- Dave Hamel | Norwich
+- Eric Vandervest | Wisconsin-La Crosse
+- Jeff Nolan | SUNY-Cortland
+- Jeremy Kulbartz | Coe College
+- Jessie Bakalyar | Augsburg
+- Mike Alesch | Wartburg
+place 1 Cory Christensen
+place 2 Brian Borkowski
+place 3 Dave Hamel
+place 4 Eric Vandervest
+place 5 Jeff Nolan
+place 6 Jeremy Kulbartz
+place 7 Jessie Bakalyar
+place 8 Mike Alesch
+
+@ 167
+- Jim Peterson | Augsburg
+- Jeremy Cardenas | Wisconsin-La Crosse
+- Justin Kerr | John Carroll
+- Jason Dell | Gettysburg
+- Michael Hoskins | Lawrence
+- Jeff Friedhof | Luther
+- Tony Wallace | RIT
+- Chris Roggie | Messiah
+place 1 Jim Peterson
+place 2 Jeremy Cardenas
+place 3 Justin Kerr
+place 4 Jason Dell
+place 5 Michael Hoskins
+place 6 Jeff Friedhof
+place 7 Tony Wallace
+place 8 Chris Roggie
+
+@ 177
+- Eric Vaughan | SUNY-Brockport
+- Nik Lewandowski | Augsburg
+- Andy Lein | St. John's
+- Mike Cruikshank | College of New Jersey
+- Dan Emerson | Wabash
+- Chris Ortner | Wartburg
+- Ray Jones | Trinity
+- Jim Ayers | John Carroll
+place 1 Eric Vaughan
+place 2 Nik Lewandowski
+place 3 Andy Lein
+place 4 Mike Cruikshank
+place 5 Dan Emerson
+place 6 Chris Ortner
+place 7 Ray Jones
+place 8 Jim Ayers
+
+@ 190
+- Matt Hamill | RIT
+- Josh Dodd | Wartburg
+- Wes Folk | Wisconsin-Platteville
+- Shane Wevley | Augsburg
+- Carlos Dolmo | SUNY-Oswego
+- Mike Gaydos | Springfield
+- Rashone Johnson | College of New Jersey
+- Chris Speziale | Loras College
+place 1 Matt Hamill
+place 2 Josh Dodd
+place 3 Wes Folk
+place 4 Shane Wevley
+place 5 Carlos Dolmo
+place 6 Mike Gaydos
+place 7 Rashone Johnson
+place 8 Chris Speziale
+
+@ 275
+- Perry Miller | Wisconsin-Stevens Point
+- John Pena | Augsburg
+- Matt Eckerman | Chicago University
+- Rich Eslich | John Carroll
+- Joe Gaboury | Springfield
+- Mike Bucci | SUNY-Cortland
+- Scott Bayer | Monmouth IL
+- Dave Lucia | Plymouth State
+place 1 Perry Miller
+place 2 John Pena
+place 3 Matt Eckerman
+place 4 Rich Eslich
+place 5 Joe Gaboury
+place 6 Mike Bucci
+place 7 Scott Bayer
+place 8 Dave Lucia
+

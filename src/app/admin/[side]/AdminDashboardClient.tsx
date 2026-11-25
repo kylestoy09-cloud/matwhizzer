@@ -177,7 +177,7 @@ export function AdminDashboardClient({ email }: { email: string }) {
                 { label: 'School Profiles',       href: a('/schools') },
                 { label: 'Seasons & Roster',      href: a('/seasons') },
                 { label: 'Bulk Schedule',         href: a('/schedule/bulk-import') },
-                { label: 'Tournament Rollover',   href: a('/tournaments/rollover') },
+                { label: 'Tournament Hub',        href: a('/tournament-hub') },
                 { label: 'Rankings Hub',          href: a('/rankings-hub') },
               ]}
             >

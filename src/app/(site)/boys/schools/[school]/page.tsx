@@ -11,5 +11,5 @@ export default async function BoysSchoolPage({
 }) {
   const { school } = await params
   const { tab } = await searchParams
-  return <SchoolProfileCore schoolParam={school} gender="boys" activeTab={tab ?? 'schedule'} />
+  return <SchoolProfileCore schoolParam={school} gender="boys" activeTab={tab ?? 'schedule'} preview={{ trophyCase: true }} />
 }

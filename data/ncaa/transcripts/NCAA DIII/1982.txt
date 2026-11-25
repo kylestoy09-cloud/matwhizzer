@@ -1,0 +1,182 @@
+# NCAA Division III Championships 1982 — source: NCAA III 1982.pdf (place winners only, from the wrestlingstats Champions and Place Winners sheet, 2026-11-18)
+
+@ 118
+- David Parisi | SUNY-Oswego
+- Dick Gruber | Wisconsin-Oshkosh
+- Greg Evans | Upsala
+- Curt Cawley | Buena Vista
+- Greg Lonning | Luther
+- Gary Reesor | Lebanon Valley
+- Dave Averill | SUNY-Albany
+- Randall Fee | Capital
+place 1 David Parisi
+place 2 Dick Gruber
+place 3 Greg Evans
+place 4 Curt Cawley
+place 5 Greg Lonning
+place 6 Gary Reesor
+place 7 Dave Averill
+place 8 Randall Fee
+
+@ 126
+- Frank Famiano | SUNY-Brockport
+- Jeff Merritt | Minnesota-Morris
+- Orlando Caceras | College of New Jersey
+- Jim Cornick | Buena Vista
+- Tim Hardy | Wisconsin-Whitewater
+- John Novinksa | Wisconsin-Platteville
+- Craig Lewis | Clarkson
+- Robert Grinsberg | Wesleyan
+place 1 Frank Famiano
+place 2 Jeff Merritt
+place 3 Orlando Caceras
+place 4 Jim Cornick
+place 5 Tim Hardy
+place 6 John Novinksa
+place 7 Craig Lewis
+place 8 Robert Grinsberg
+
+@ 134
+- Steve Fernandez | College of New Jersey
+- Robert Corbo | SUNY-Oswego
+- Pat McMahon | Augustana Illinois
+- Kai Togami | Wheaton
+- Ron Headlee | Messiah
+- Tony Novak | Delaware Valley
+- Brett Wyss | Hiram
+- Spero Theofilatos | SUNY-Albany
+place 1 Steve Fernandez
+place 2 Robert Corbo
+place 3 Pat McMahon
+place 4 Kai Togami
+place 5 Ron Headlee
+place 6 Tony Novak
+place 7 Brett Wyss
+place 8 Spero Theofilatos
+
+@ 142
+- Randy Viviani | John Carroll
+- Ron Bussey | College of New Jersey
+- Darryl Leslie | RIT
+- Andy Seras | SUNY-Albany
+- Shawn Hall | Coe College
+- Mike Marone | SUNY-Binghampton
+- Rich Tomazewski | Wisconsin-Oshkosh
+- Dave Krivus | Washington & Jefferson
+place 1 Randy Viviani
+place 2 Ron Bussey
+place 3 Darryl Leslie
+place 4 Andy Seras
+place 5 Shawn Hall
+place 6 Mike Marone
+place 7 Rich Tomazewski
+place 8 Dave Krivus
+
+@ 150
+- Ron Winnie | SUNY-Brockport
+- Martin Butler | Amherst
+- Dale Schmacht | Augustana Illinois
+- Todd Read | Clarkson
+- Jeff Ill | North Central Illinois
+- John Misita | College of New Jersey
+- Jeffrey David | Wisconsin-Platteville
+- Clark Brumbaugh | Case-Western Reserve
+place 1 Ron Winnie
+place 2 Martin Butler
+place 3 Dale Schmacht
+place 4 Todd Read
+place 5 Jeff Ill
+place 6 John Misita
+place 7 Jeffrey David
+place 8 Clark Brumbaugh
+
+@ 158
+- Bob Glaberman | College of New Jersey
+- Derek Bigford | SUNY-Brockport
+- Chris Casey | Augustana Illinois
+- Mike McInerney | Salisbury
+- Bryan Solomon | Western New England
+- Todd Northrup | St. Lawrence
+- Tony Azarian | Wisconsin-Whitewater
+- Guy Ventura | Hunter College
+place 1 Bob Glaberman
+place 2 Derek Bigford
+place 3 Chris Casey
+place 4 Mike McInerney
+place 5 Bryan Solomon
+place 6 Todd Northrup
+place 7 Tony Azarian
+place 8 Guy Ventura
+
+@ 167
+- Jeff Cox | SUNY-Brockport
+- Sean McCarthy | Wisconsin-Oshkosh
+- Scott Slade | SUNY-Buffalo
+- Juan DeJusus | SUNY-Oneonta
+- Tom Pilari | SUNY-Binghampton
+- Pat Murphy | College of New Jersey
+- Mark Arjes | Wartburg
+- Mitchell Ross | Rutgers-Newark
+place 1 Jeff Cox
+place 2 Sean McCarthy
+place 3 Scott Slade
+place 4 Juan DeJusus
+place 5 Tom Pilari
+place 6 Pat Murphy
+place 7 Mark Arjes
+place 8 Mitchell Ross
+
+@ 177
+- Brett Stamm | Wheaton
+- Tony Conetta | SUNY-Brockport
+- Ken Bringe | Augustana Illinois
+- Ken Tashjy | Susquehanna
+- Dan Coons | Alma
+- Mark Schell | John Carroll
+- James Refenes | Concordia IL
+- Tom Stanbro | SUNY-Oswego
+place 1 Brett Stamm
+place 2 Tony Conetta
+place 3 Ken Bringe
+place 4 Ken Tashjy
+place 5 Dan Coons
+place 6 Mark Schell
+place 7 James Refenes
+place 8 Tom Stanbro
+
+@ 190
+- Phil Lanzatella | St. Lawrence
+- Doug Morse | SUNY-Oswego
+- Nick D'Angelo | John Carroll
+- David Chute | Elizabeth City State
+- Randy Graves | Allegheny
+- John Brown | Buena Vista
+- Alan Logan | Muskigum
+- David Dotseth | Luther
+place 1 Phil Lanzatella
+place 2 Doug Morse
+place 3 Nick D'Angelo
+place 4 David Chute
+place 5 Randy Graves
+place 6 John Brown
+place 7 Alan Logan
+place 8 David Dotseth
+
+@ 285
+- Dennis Koslowski | Minnesota-Morris
+- Tim Carmin | Wisconsin-Whitewater
+- Sal D'Angelo | John Carroll
+- Malcom McLeod | Concordia MN
+- Chris Haley | SUNY-Brockport
+- Mike Connors | St. Lawrence
+- Bob Muth | Allegheny
+- Kevin Pryzbyszewski | Widener
+place 1 Dennis Koslowski
+place 2 Tim Carmin
+place 3 Sal D'Angelo
+place 4 Malcom McLeod
+place 5 Chris Haley
+place 6 Mike Connors
+place 7 Bob Muth
+place 8 Kevin Pryzbyszewski
+

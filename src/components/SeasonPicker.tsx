@@ -1,6 +1,7 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
+import { useEffect } from 'react'
 import { useSeasons } from '@/components/SeasonsProvider'
 import { seasonPickCookie, type Gender } from '@/lib/seasons'
 
@@ -11,32 +12,56 @@ export function InlineSeasonPicker({
   activeSeason,
   gender,
   seasons,
+  options,
+  urlParam,
+  arrows = false,
 }: {
   activeSeason: number
   gender: Gender
   seasons?: number[]
+  // postseason pages: their own list with labels, incl. Playoff History seasons (hidden ones for admins only, marked)
+  options?: { id: number; label: string; hidden: boolean }[]
+  // the page reads its year from ?season= (Individual Post Season); the session pick follows what it shows, so the
+  // district / region / state pages it links to open on the same year
+  urlParam?: boolean
+  // tournament pages (Kyle 2026-11-19): ‹ › beside the picker — the season before / after; none past either end
+  arrows?: boolean
 }) {
   const router = useRouter()
+  const path = usePathname()
+  useEffect(() => { if (urlParam) document.cookie = `${seasonPickCookie(gender)}=${activeSeason}; path=/; samesite=lax` }, [urlParam, gender, activeSeason])
   const { seasons: all, label, sortIds } = useSeasons()
 
   function pickSeason(id: number) {
     // Session cookie: returning visitors always land on the live season.
     document.cookie = `${seasonPickCookie(gender)}=${id}; path=/; samesite=lax`
-    router.refresh()
+    if (urlParam) router.push(`${path}?season=${id}`)
+    else router.refresh()
   }
 
-  const ids = sortIds(seasons ?? all.filter(s => s.public_genders.includes(gender)).map(s => s.id))
+  const ids = options ? options.map(o => o.id) : sortIds(seasons ?? all.filter(s => s.public_genders.includes(gender)).map(s => s.id))
+  const text = (id: number) => { const o = options?.find(x => x.id === id); return o ? `${o.label}${o.hidden ? ' (hidden — admin preview)' : ''}` : label(id) ?? String(id) }
 
   // Single season — render as non-interactive label
   if (ids.length === 1) {
     return (
       <span className="font-medium text-slate-600 text-sm">
-        {label(ids[0]) ?? ids[0]}
+        {text(ids[0])}
       </span>
     )
   }
 
-  return (
+  // seasons are keyed by their end year, so lower = earlier
+  const chrono = [...ids].sort((a, b) => a - b)
+  const at = chrono.indexOf(activeSeason)
+  const prev = at > 0 ? chrono[at - 1] : null
+  const next = at >= 0 && at < chrono.length - 1 ? chrono[at + 1] : null
+  const arrow = (id: number | null, dir: 'prev' | 'next') => id == null
+    ? <span className="inline-block w-6" aria-hidden />
+    : <button type="button" onClick={() => pickSeason(id)} title={`${dir === 'prev' ? 'Previous' : 'Next'} season: ${text(id)}`} aria-label={`${dir === 'prev' ? 'Previous' : 'Next'} season`}
+        className="inline-flex items-center justify-center w-6 h-6 border border-amber-300 bg-amber-50 text-amber-800 font-bold text-sm leading-none hover:bg-amber-100">{dir === 'prev' ? '‹' : '›'}</button>
+
+  const select = (
     <select
       value={activeSeason}
       onChange={e => pickSeason(Number(e.target.value))}
@@ -45,9 +70,11 @@ export function InlineSeasonPicker({
     >
       {ids.map(id => (
         <option key={id} value={id} className="text-slate-900 bg-white">
-          {label(id) ?? id}
+          {text(id)}
         </option>
       ))}
     </select>
   )
+  if (!arrows) return select
+  return <span className="inline-flex items-center gap-1">{arrow(prev, 'prev')}{select}{arrow(next, 'next')}</span>
 }
