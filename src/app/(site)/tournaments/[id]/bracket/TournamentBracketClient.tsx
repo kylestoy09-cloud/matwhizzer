@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { BoutBracket } from '@/components/bracket/BoutBracket'
-import { SplitBracket } from '@/components/bracket/SplitBracket'
+import { SplitBracket, BRACKET_LOOK_DEFAULT } from '@/components/bracket/SplitBracket'
 import type { BracketLook } from '@/lib/bracketLook'
 import type { WeightBracket } from '@/lib/boutBracket'
 
@@ -42,7 +42,9 @@ export function TournamentBracketClient({ tournamentName, weights, brackets, loo
       </div>
 
       {bracket && (bracket.champ.length || bracket.cons.length) ? (
-        look?.live ? <SplitBracket bracket={bracket} look={look} mixed={mixed} /> : <BoutBracket bracket={bracket} />
+        // the site's bracket format (Kyle 2026-11-25: the standard for every bracket); a weight whose bouts don't form
+        // one tree (a round label missing) keeps the by-round list
+        bracket.complete ? <SplitBracket bracket={bracket} look={look ?? BRACKET_LOOK_DEFAULT} mixed={mixed} /> : <BoutBracket bracket={bracket} />
       ) : (
         <div className="border border-dashed border-slate-300 py-12 text-center">
           <p className="text-sm text-slate-400">No bouts for {selectedWeight} lbs.</p>

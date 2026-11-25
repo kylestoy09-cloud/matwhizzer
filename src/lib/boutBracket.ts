@@ -20,7 +20,7 @@ export type ChampColumn = { label: string; cells: (BracketBout | null)[] }
 export type ConsColumn = { label: string; bouts: BracketBout[] }
 /** complete: a single final with the tree hung from it. other: championship bouts the tree doesn't reach (an odd
  *  round label), listed so nothing disappears */
-export type WeightBracket = { champ: ChampColumn[]; cons: ConsColumn[]; other: BracketBout[]; complete: boolean }
+export type WeightBracket = { champ: ChampColumn[]; cons: ConsColumn[]; other: BracketBout[]; complete: boolean; source?: 'slots' | 'bouts' }   // source: how a postseason bracket was placed (src/lib/postseasonBracket.ts)
 
 const ROUND_LABEL: Record<string, string> = {
   F: 'Final', SF: 'Semis', QF: 'Quarters', R1: 'Round 1', R2: 'Round 2', R3: 'Round 3', R4: 'Round 4', R5: 'Round 5',

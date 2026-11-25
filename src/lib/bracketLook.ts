@@ -14,6 +14,6 @@ export type BracketLook = {
   showSchool: boolean     // a school line under each name in the compact card
   hover: boolean          // hover opens the full bout
   fit: boolean            // card width sized so the whole tree fits the page width (cardW is then the most a card gets)
-  live: boolean           // the live bracket page uses this format (Kyle saves it on in the Aesthetic tool = approved)
+  live: boolean           // retired 2026-11-25 (this format is the standard everywhere); kept so older saves still read
 }
 export const BRACKET_LOOK_DEFAULT: BracketLook = { split: true, cardW: 120, rowH: 16, firstRowH: 13, pigtailRowH: 11, podiumRowH: 22, podiumFont: 12, gap: 3, font: 10, lastNameOnly: true, showSchool: false, hover: true, fit: true, live: false }

@@ -8,7 +8,8 @@ import { getSeasonLabel } from '@/lib/seasons-server'
 import { BracketPoll, type BracketEntry, type DistrictChamp } from '@/components/BracketPoll'
 import { StdHeader } from '@/components/site/StdPage'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
-import { orderChampMatchesBySeed } from '@/lib/bracketOrder'
+import { PostseasonBracket } from '@/components/bracket/PostseasonBracket'
+import { getSiteLook } from '@/lib/siteLookServer'
 import { getSchoolLogos } from '@/lib/school-logos'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 import { SchoolTag } from '@/components/SchoolTag'
@@ -47,55 +48,10 @@ type MatchRow = {
 
 const VALID_REGIONS = new Set(['1', '2', '3', '4', '5'])   // 5 = North (2018-19 to 2021-22)
 
-const CARD_H = 72
-
-const ROUND_LABEL: Record<string, string> = {
-  R1:          'Round 1',
-  R2:          'Prelims',
-  QF:          'Quarters',
-  SF:          'Semis',
-  F:           'Finals',
-  C1:          'Cons. R1',
-  C2:          'Cons. R2',
-  C3:          'Cons. Qtrs',
-  C4:          'Cons. Semis',
-  C5:          'Cons. R5',
-  C6:          'Cons. R6',
-  '3rd_Place': '3rd Place',
-  '5th_Place': '5th Place',
-}
-
 // DFS traversal
 const PREV_ROUND: Record<string, string> = { R2: 'R1', QF: 'R2', SF: 'QF', F: 'SF' }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
-
-function formatResult(m: MatchRow): string {
-  if (!m.win_type) return ''
-  if (m.win_type === 'FALL') {
-    if (m.fall_time_seconds) {
-      const mn = Math.floor(m.fall_time_seconds / 60)
-      const sc = String(m.fall_time_seconds % 60).padStart(2, '0')
-      return `Fall ${mn}:${sc}`
-    }
-    return 'Fall'
-  }
-  if (m.win_type === 'TF' || m.win_type === 'TF-1.5') {
-    const score = (m.winner_score != null && m.loser_score != null)
-      ? ` ${m.winner_score}-${m.loser_score}` : ''
-    const time = m.fall_time_seconds
-      ? ` ${Math.floor(m.fall_time_seconds / 60)}:${String(m.fall_time_seconds % 60).padStart(2, '0')}`
-      : ''
-    return `${m.win_type}${score}${time}`
-  }
-  if (m.win_type === 'MD' || m.win_type === 'DEC') {
-    const label = m.win_type === 'MD' ? 'MD' : 'Dec'
-    return (m.winner_score != null && m.loser_score != null)
-      ? `${label} ${m.winner_score}-${m.loser_score}`
-      : label
-  }
-  return m.win_type
-}
 
 // ── DFS ordering for championship ────────────────────────────────────────────
 
@@ -150,110 +106,6 @@ function orderChampMatches(allChamp: MatchRow[]): Map<string, MatchRow[]> {
 }
 
 // ── Match Card ────────────────────────────────────────────────────────────────
-
-function WrestlerRow({
-  wrestlerId,
-  name,
-  school,
-  schoolId,
-  seed,
-  isWinner,
-  hasResult,
-}: {
-  wrestlerId: string | null
-  name: string | null
-  school: string | null
-  schoolId?: number | null
-  seed: number | null
-  isWinner: boolean
-  hasResult?: boolean
-}) {
-  const isBye = !name && !hasResult
-
-  return (
-    <div
-      className={`flex items-center gap-1 px-2 ${isWinner ? 'bg-emerald-50' : ''}`}
-      style={{ height: 28 }}
-    >
-      {seed != null ? (
-        <span className="text-[10px] text-slate-400 w-3.5 shrink-0 text-right">{seed}</span>
-      ) : (
-        <span className="w-3.5 shrink-0" />
-      )}
-      <span className="flex-1 min-w-0 truncate">
-        {isBye ? (
-          <span className="text-[11px] text-slate-400 italic">Bye</span>
-        ) : wrestlerId ? (
-          <Link
-            href={`/girls/wrestler/${wrestlerId}`}
-            className={`text-[13px] truncate hover:underline ${
-              isWinner ? 'font-semibold text-slate-900' : 'font-medium text-slate-600'
-            }`}
-          >
-            {name}
-          </Link>
-        ) : (
-          <span className="text-[11px] text-slate-400">—</span>
-        )}
-      </span>
-      {!isBye && (
-        <span className="text-[11px] text-slate-400 shrink-0 flex items-center">
-          {wrestlerId && <SchoolTag id={schoolId} name={school} maxWidth={100} className="text-[11px] text-slate-400" />}
-        </span>
-      )}
-    </div>
-  )
-}
-
-function MatchCard({ m, entrySlot }: { m: MatchRow; entrySlot?: Map<string, number> }) {
-  const result = formatResult(m)
-
-  let topIsWinner = true
-  if (entrySlot && m.winner_entry_id && m.loser_entry_id) {
-    const wSlot = entrySlot.get(m.winner_entry_id) ?? 999
-    const lSlot = entrySlot.get(m.loser_entry_id) ?? 999
-    topIsWinner = wSlot <= lSlot
-  }
-
-  const top = topIsWinner
-    ? { id: m.winner_wrestler_id, name: m.winner_name, school: m.winner_school_name, schoolId: m.winner_school_id, seed: m.winner_seed, won: true }
-    : { id: m.loser_wrestler_id, name: m.loser_name, school: m.loser_school_name, schoolId: m.loser_school_id, seed: m.loser_seed, won: false }
-  const bot = topIsWinner
-    ? { id: m.loser_wrestler_id, name: m.loser_name, school: m.loser_school_name, schoolId: m.loser_school_id, seed: m.loser_seed, won: false }
-    : { id: m.winner_wrestler_id, name: m.winner_name, school: m.winner_school_name, schoolId: m.winner_school_id, seed: m.winner_seed, won: true }
-
-  return (
-    <div
-      className="bg-white border border-black rounded-none overflow-hidden shadow-none w-[216px] shrink-0"
-      style={{ height: CARD_H }}
-    >
-      <WrestlerRow
-        wrestlerId={top.id}
-        name={top.name}
-        school={top.school}
-        schoolId={top.schoolId}
-        seed={top.seed}
-        isWinner={top.won}
-      />
-      <div className="border-t border-slate-100" />
-      <WrestlerRow
-        wrestlerId={bot.id}
-        name={bot.name}
-        school={bot.school}
-        schoolId={bot.schoolId}
-        seed={bot.seed}
-        isWinner={bot.won}
-        hasResult={!!m.win_type}
-      />
-      <div
-        className="flex items-center justify-end px-2 border-t border-slate-100"
-        style={{ height: CARD_H - 57 }}
-      >
-        <span className="text-[11px] text-slate-400 tabular-nums">{result}</span>
-      </div>
-    </div>
-  )
-}
 
 // ── Entry Card (pre-tournament) ──────────────────────────────────────────────
 
@@ -519,40 +371,6 @@ function WeightNav({ weights, current, base }: {
 
 // ── Bracket column renderer ──────────────────────────────────────────────────
 
-function BracketColumn({
-  label,
-  matches: colMatches,
-  totalH,
-  entrySlot,
-}: {
-  label: string
-  matches: MatchRow[]
-  totalH: number
-  entrySlot?: Map<string, number>
-}) {
-  if (colMatches.length === 0) return null
-  const slotH = totalH / colMatches.length
-
-  return (
-    <div className="flex flex-col shrink-0">
-      <div className="h-7 flex items-center justify-center px-3">
-        <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest whitespace-nowrap">
-          {label}
-        </span>
-      </div>
-      {colMatches.map(m => (
-        <div
-          key={m.match_id}
-          className="flex items-center justify-center px-1"
-          style={{ height: slotH }}
-        >
-          <MatchCard m={m} entrySlot={entrySlot} />
-        </div>
-      ))}
-    </div>
-  )
-}
-
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default async function GirlsRegionBracketPage({
@@ -589,6 +407,7 @@ export default async function GirlsRegionBracketPage({
     }),
     getSchoolLogos(),
   ])
+  const look = (await getSiteLook()).bracket
 
   const matches = (matchData ?? []) as MatchRow[]
   const entries = ((entryData ?? []) as (BracketEntry & { tournament_id: number; weight_class_id: number })[])
@@ -606,48 +425,6 @@ export default async function GirlsRegionBracketPage({
   })
 
   if (matches.length === 0 && entries.length === 0) notFound()
-
-  // ── Build bracket data ──────────────────────────────────────────────────────
-
-  // Group all matches by round
-  const matchesByRound = new Map<string, MatchRow[]>()
-  for (const m of matches) {
-    const list = matchesByRound.get(m.round) ?? []
-    list.push(m)
-    matchesByRound.set(m.round, list)
-  }
-
-  // Seed-based slot ordering for championship side
-  const champ = matches.filter(m => m.bracket_side === 'championship')
-  const { byRound: champOrdered, entrySlot } = orderChampMatchesBySeed(champ, 16)
-
-  // Championship display: R1 → R2 → QF → SF → F
-  const champRounds = (['R1', 'R2', 'QF', 'SF', 'F'] as const).filter(r => (champOrdered.get(r) ?? []).length > 0)
-
-  // Consolation display: C1 → … → C4 (C5, C6 when a bracket ran six rounds: 2018-19, 2021-22) → 3rd_Place → 5th_Place
-  const consolRounds = (['C1', 'C2', 'C3', 'C4', 'C5', 'C6'] as const).filter(r => (matchesByRound.get(r) ?? []).length > 0)
-  // six rounds: the semis are C6, so C4 is just a round
-  const deep = consolRounds.includes('C6')
-  const consolLabel = (r: string) => (deep ? ({ C4: 'Cons. R4', C5: 'Cons. R5', C6: 'Cons. Semis' } as Record<string, string>)[r] ?? ROUND_LABEL[r] : ROUND_LABEL[r])
-  const thirdPlaceMatches = champOrdered.get('3rd_Place') ?? matchesByRound.get('3rd_Place') ?? []
-  const fifthPlaceMatches = matchesByRound.get('5th_Place') ?? []
-
-  // Heights
-  const champBaseCount = Math.max(
-    ...champRounds.map(r => (champOrdered.get(r) ?? []).length),
-    1,
-  )
-  const champTotalH = champBaseCount * CARD_H
-
-  const consolBaseCount = Math.max(
-    ...consolRounds.map(r => (matchesByRound.get(r) ?? []).length),
-    thirdPlaceMatches.length,
-    fifthPlaceMatches.length,
-    1,
-  )
-  const consolTotalH = consolBaseCount * CARD_H
-
-  const hasConsol = consolRounds.length > 0 || thirdPlaceMatches.length > 0 || fifthPlaceMatches.length > 0
 
   return (
     <div className="max-w-fit mx-auto px-4 py-8">
@@ -671,79 +448,7 @@ export default async function GirlsRegionBracketPage({
           entries.length > 0 && <EntriesView entries={entries as EntryRow[]} />
         ) : (<>
 
-        {/* ── Championship Bracket ── */}
-        <section>
-          <h2 className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest mb-2">
-            Championship Bracket
-          </h2>
-          <div
-            className="overflow-auto border border-slate-200 md:border-0 rounded-none md:rounded-none max-h-[70vh] md:max-h-none"
-            style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
-          >
-            <div className="flex gap-0 items-start min-w-max p-2 md:p-0">
-              {champRounds.map(round => (
-                <BracketColumn
-                  key={round}
-                  label={consolLabel(round)}
-                  matches={champOrdered.get(round) ?? []}
-                  totalH={champTotalH}
-                  entrySlot={entrySlot}
-                />
-              ))}
-
-            </div>
-          </div>
-          <p
-            className="md:hidden text-center text-[11px] text-slate-400 py-1 pointer-events-none"
-            style={{ animation: 'bracketFade 2s ease-out 1.5s forwards' }}
-          >
-            ← scroll →
-          </p>
-        </section>
-
-        {/* ── Consolation Bracket ── */}
-        {hasConsol && (
-          <section>
-            <div className="relative flex items-center my-4">
-              <div className="flex-1 border-t border-slate-300" />
-              <span className="px-4 text-[11px] font-semibold text-slate-400 uppercase tracking-widest">
-                Consolation Bracket
-              </span>
-              <div className="flex-1 border-t border-slate-300" />
-            </div>
-            <div
-              className="overflow-auto border border-slate-200 md:border-0 rounded-none md:rounded-none max-h-[50vh] md:max-h-none"
-              style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
-            >
-              <div className="flex gap-0 items-start min-w-max p-2 md:p-0">
-                {consolRounds.map(round => (
-                  <BracketColumn
-                    key={round}
-                    label={ROUND_LABEL[round]}
-                    matches={matchesByRound.get(round) ?? []}
-                    totalH={consolTotalH}
-                    entrySlot={entrySlot}
-                  />
-                ))}
-
-                {thirdPlaceMatches.length > 0 && (
-                  <BracketColumn label="3rd Place" matches={thirdPlaceMatches} totalH={consolTotalH} entrySlot={entrySlot} />
-                )}
-
-                {fifthPlaceMatches.length > 0 && (
-                  <BracketColumn label="5th Place" matches={fifthPlaceMatches} totalH={consolTotalH} entrySlot={entrySlot} />
-                )}
-              </div>
-            </div>
-            <p
-              className="md:hidden text-center text-[11px] text-slate-400 py-1 pointer-events-none"
-              style={{ animation: 'bracketFade 2s ease-out 1.5s forwards' }}
-            >
-              ← scroll →
-            </p>
-          </section>
-        )}
-
+        <PostseasonBracket matches={matches} size={16} look={look} />
         </>)}
 
         {/* ── Seed List ── */}

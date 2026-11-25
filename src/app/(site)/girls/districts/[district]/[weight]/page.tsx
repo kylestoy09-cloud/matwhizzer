@@ -7,7 +7,8 @@ import { StdHeader } from '@/components/site/StdPage'
 import { InlineSeasonPicker } from '@/components/SeasonPicker'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { orderChampMatchesBySeed } from '@/lib/bracketOrder'
+import { PostseasonBracket } from '@/components/bracket/PostseasonBracket'
+import { getSiteLook } from '@/lib/siteLookServer'
 import { getSchoolLogos } from '@/lib/school-logos'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
 import { SchoolTag } from '@/components/SchoolTag'
@@ -46,21 +47,6 @@ type MatchRow = {
 
 const CARD_H = 88
 
-const ROUND_LABEL: Record<string, string> = {
-  BYE: 'Byes',
-  R2: 'Prelims',
-  QF: 'Quarters',
-  SF: 'Semis',
-  F: 'Finals',
-  C1: 'Cons. Round 1',
-  C2: 'Cons. Round 2',
-  C3: 'Cons. Semis',
-  '3rd_Place': '3rd Place',
-  '5th_Place': '5th Place',
-  '7th_Place': '7th Place',
-}
-
-const CHAMP_COLS = ['QF', 'SF', 'F'] as const
 const PREV_ROUND: Record<string, string> = { SF: 'QF', F: 'SF', QF: 'R2' }
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
@@ -146,50 +132,6 @@ function orderChampMatches(allChamp: MatchRow[]): Map<string, MatchRow[]> {
 }
 
 // ── Bye synthesis from match data ──────────────────────────────────────────────
-
-function synthesizeByesFromMatches(
-  champMatches: MatchRow[],
-  firstRound: string,
-  feedingRound: string,
-): MatchRow[] {
-  const inFeeding = new Set<string>()
-  for (const m of champMatches) {
-    if (m.round === feedingRound) {
-      if (m.winner_entry_id) inFeeding.add(m.winner_entry_id)
-      if (m.loser_entry_id) inFeeding.add(m.loser_entry_id)
-    }
-  }
-  const byes: MatchRow[] = []
-  const seen = new Set<string>()
-  for (const m of champMatches) {
-    if (m.round === firstRound) {
-      for (const side of ['winner', 'loser'] as const) {
-        const eid = side === 'winner' ? m.winner_entry_id : m.loser_entry_id
-        if (!eid || inFeeding.has(eid) || seen.has(eid)) continue
-        seen.add(eid)
-        byes.push({
-          match_id: `bye-${eid}`,
-          round: 'BYE',
-          bracket_side: 'championship',
-          win_type: 'BYE',
-          winner_score: null, loser_score: null, fall_time_seconds: null,
-          winner_entry_id: eid,
-          winner_wrestler_id: side === 'winner' ? m.winner_wrestler_id : m.loser_wrestler_id,
-          winner_name: side === 'winner' ? m.winner_name : m.loser_name,
-          winner_school: side === 'winner' ? m.winner_school : m.loser_school,
-          winner_school_name: side === 'winner' ? m.winner_school_name : m.loser_school_name,
-          winner_school_id: side === 'winner' ? m.winner_school_id : m.loser_school_id,
-          winner_seed: side === 'winner' ? m.winner_seed : m.loser_seed,
-          winner_grade: side === 'winner' ? m.winner_grade : m.loser_grade,
-          loser_entry_id: null, loser_wrestler_id: null,
-          loser_name: null, loser_school: null, loser_school_name: null, loser_school_id: null,
-          loser_seed: null, loser_grade: null,
-        })
-      }
-    }
-  }
-  return byes.sort((a, b) => (a.winner_seed ?? 99) - (b.winner_seed ?? 99))
-}
 
 // ── Match Card ─────────────────────────────────────────────────────────────────
 
@@ -454,42 +396,10 @@ export default async function GirlsDistrictBracketPage({
     }),
     getSchoolLogos(),
   ])
+  const look = (await getSiteLook()).bracket
 
   const matches = (data ?? []) as MatchRow[]
   if (matches.length === 0) notFound()
-
-  const champ  = matches.filter(m => m.bracket_side === 'championship')
-  const consol = matches.filter(m => m.bracket_side === 'consolation')
-
-  const { byRound: champOrdered, entrySlot } = orderChampMatchesBySeed(champ, 16)
-
-  const r2Matches = champOrdered.get('R2') ?? []
-  const r2Display = r2Matches.filter(m => m.loser_wrestler_id !== null)
-  // Synthesize bye cards: entries in QF but not in R2
-  const byeMatches = synthesizeByesFromMatches(champ, 'QF', 'R2')
-
-  const champCols = CHAMP_COLS.filter(r => (champOrdered.get(r) ?? []).length > 0)
-
-  const qfCount = (champOrdered.get('QF') ?? []).length || 1
-  const baseCount = Math.max(byeMatches.length, qfCount, 1)
-  const totalH = baseCount * CARD_H
-
-  // girls districts place six: cons. round 1 → cons. semis → 3rd and 5th place bouts
-  const consolRounds = ['C1', 'C2', 'C3', '3rd_Place', '5th_Place', '7th_Place'].filter(r =>
-    consol.some(m => m.round === r)
-  )
-  const consolByRound = new Map<string, MatchRow[]>()
-  for (const m of consol) {
-    const list = consolByRound.get(m.round) ?? []
-    list.push(m)
-    consolByRound.set(m.round, list)
-  }
-
-  const allRoundsOrdered = [
-    ...(['R2'] as const).filter(() => r2Display.length > 0),
-    ...champCols,
-    ...consolRounds,
-  ]
 
   return (
     <div className="max-w-fit mx-auto px-4 py-8">
@@ -505,91 +415,7 @@ export default async function GirlsDistrictBracketPage({
 
       <WeightNav weights={WEIGHTS} current={weight} base={`/girls/districts/${district}`} />
 
-      {r2Display.length > 0 && (
-        <div className="mb-6">
-          <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
-            Prelims
-          </h2>
-          <div className="flex gap-3 flex-wrap">
-            {r2Display.map(m => <MatchCard key={m.match_id} m={m} entrySlot={entrySlot} />)}
-          </div>
-        </div>
-      )}
-
-      {/* ── DESKTOP bracket ── */}
-      <div className="overflow-x-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
-        <div className="flex gap-0 items-start min-w-max">
-
-          {/* Bye column */}
-          {byeMatches.length > 0 && (
-            <div className="flex flex-col shrink-0">
-              <div className="h-8 flex items-center justify-center px-4">
-                <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">
-                  Byes
-                </span>
-              </div>
-              {byeMatches.map(m => (
-                <div
-                  key={m.match_id}
-                  className="flex items-center justify-center px-2"
-                  style={{ height: totalH / byeMatches.length }}
-                >
-                  <MatchCard m={m} entrySlot={entrySlot} />
-                </div>
-              ))}
-            </div>
-          )}
-
-          {champCols.map((round, ri) => {
-            const colMatches = champOrdered.get(round) ?? []
-            const slotH = totalH / colMatches.length
-
-            return (
-              <div key={round} className="flex flex-col shrink-0">
-                <div className="h-8 flex items-center justify-center px-4">
-                  <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest whitespace-nowrap">
-                    {ROUND_LABEL[round] ?? round}
-                  </span>
-                </div>
-                {colMatches.map(m => (
-                  <div
-                    key={m.match_id}
-                    className="flex items-center justify-center px-2"
-                    style={{ height: slotH }}
-                  >
-                    <MatchCard m={m} entrySlot={entrySlot} />
-                  </div>
-                ))}
-              </div>
-            )
-          })}
-
-        </div>
-      </div>
-
-      {/* ── Consolation bracket and place bouts ── */}
-      {consolRounds.length > 0 && (
-        <div className="mt-8">
-          <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">Consolation</h2>
-          <div className="overflow-x-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
-            <div className="flex gap-4 items-start min-w-max">
-              {consolRounds.map(round => (
-                <div key={round} className="flex flex-col gap-3 shrink-0">
-                  <div className="h-6 flex items-center justify-center">
-                    <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest whitespace-nowrap">
-                      {ROUND_LABEL[round] ?? round}
-                    </span>
-                  </div>
-                  {(consolByRound.get(round) ?? []).map(m => (
-                    <MatchCard key={m.match_id} m={m} entrySlot={entrySlot} />
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
+      <PostseasonBracket matches={matches} size={16} look={look} />
       <EntryRoster roster={buildRoster(matches)} logos={logos} />
       <WeightNav weights={WEIGHTS} current={weight} base={`/girls/districts/${district}`} />
 

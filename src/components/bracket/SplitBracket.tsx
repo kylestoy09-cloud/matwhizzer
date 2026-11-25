@@ -7,7 +7,7 @@
 // opens the full bout: names, schools, result. Sizes come from the Aesthetic tool's bracket settings (BracketLook).
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
-import type { BracketBout, BracketPerson, WeightBracket } from '@/lib/boutBracket'
+import { roundLabel as roundName, type BracketBout, type BracketPerson, type WeightBracket } from '@/lib/boutBracket'
 import { roundStep } from '@/lib/boutOrder'
 import { NjIcon } from '@/components/site/NjIcon'
 import { BRACKET_LOOK_DEFAULT, type BracketLook } from '@/lib/bracketLook'
@@ -52,7 +52,8 @@ function Full({ p, won, mark }: { p: BracketPerson | null; won: boolean; mark: b
 /** One bout: compact; on hover the full bout opens over it (toward the middle of the sheet) */
 function Card({ b, look, mark, toLeft, label, tagOf, podium }: { b: BracketBout | null; look: BracketLook & { seedSpace?: boolean }; mark: boolean; toLeft?: boolean; label?: string; tagOf?: (p: BracketPerson | null) => string | undefined; podium?: boolean }) {
   const h = cardH(look)
-  if (!b) return <div style={{ width: look.cardW, height: h }} />
+  // a bout not wrestled yet (a postseason bracket in progress): an empty card holds its place
+  if (!b) return <div className="border border-dashed border-slate-300 bg-slate-50/50" style={{ width: look.cardW, height: h }} />
   return (
     <div className="group relative" style={{ width: look.cardW, height: h }}>
       <div className={`h-full border bg-white overflow-hidden flex flex-col ${podium ? 'border-slate-900 ring-1 ring-slate-900' : 'border-slate-300'}`}>
@@ -101,7 +102,8 @@ export function SplitBracket({ bracket, look: given, mixed }: { bracket: WeightB
   const places = cons.filter(c => PLACE.test(c.label)).sort((a, b) => a.label.localeCompare(b.label))
   const wrestlebacks = cons.filter(c => !PLACE.test(c.label))
 
-  if (!tree) return <p ref={box} className="text-xs text-slate-500">This weight&apos;s championship bouts don&apos;t form one tree (a round label is missing); the full list is on the live bracket page.</p>
+  // bouts that don't form one tree (a round label missing): every bout listed, so none goes missing
+  if (!tree) return <div ref={box}><Unlinked bouts={[...champ.flatMap(c => c.cells.filter((b): b is BracketBout => !!b)), ...bracket.other, ...cons.flatMap(c => c.bouts)]} look={given} mixed={mixed} title="Bouts (no full bracket for this weight)" /></div>
 
   // geometry (Kyle 2026-11-21: "the first round matchups could be tighter still"): the tree is packed from its first
   // bouts up — a bout sits centered on the bouts that fed it, a bout with no feeders (its wrestlers had byes) takes only
@@ -121,15 +123,17 @@ export function SplitBracket({ bracket, look: given, mixed }: { bracket: WeightB
   const lookOf = (c: number, i: number) => (pig.has(`${c}|${i}`) ? pigLook : lookAt(c))
   const lineH = (lk: BracketLook) => (lk.showSchool ? lk.rowH * 1.6 : lk.rowH)
   const hasFeeders = (c: number, i: number) => c > 0 && !!(cell(c - 1, 2 * i) || cell(c - 1, 2 * i + 1))
+  // a place in the tree: a bout, or a bout still to be wrestled with bouts under it (postseason brackets in progress)
+  const has = (c: number, i: number): boolean => !!cell(c, i) || (c > 0 && (has(c - 1, 2 * i) || has(c - 1, 2 * i + 1)))
   const lay = (c: number, i: number, top: number): { h: number; mid: number } => {
-    const kids = c > 0 ? [[c - 1, 2 * i], [c - 1, 2 * i + 1]].filter(([cc, ii]) => cell(cc, ii)) : []
+    const kids = c > 0 ? [[c - 1, 2 * i], [c - 1, 2 * i + 1]].filter(([cc, ii]) => has(cc, ii)) : []
     let h: number, mid: number
     if (!kids.length) { h = hOf(c) + look.gap; mid = top + hOf(c) / 2 }
-    else if (kids.length === 1 && !hasFeeders(kids[0][0], kids[0][1])) {
-      const [kc, ki] = kids[0], k = cell(kc, ki)!, me = cell(c, i)!
+    else if (kids.length === 1 && cell(kids[0][0], kids[0][1]) && !hasFeeders(kids[0][0], kids[0][1])) {
+      const [kc, ki] = kids[0], k = cell(kc, ki)!, me = cell(c, i)
       // the line its winner takes: by who it is when we know, else by bracket position (even = top)
       const w = k.winner === 'top' ? k.top : k.winner === 'bottom' ? k.bottom : null
-      const bottom = w && pkey(w) === pkey(me.bottom) ? true : w && pkey(w) === pkey(me.top) ? false : ki % 2 === 1
+      const bottom = w && me && pkey(w) === pkey(me.bottom) ? true : w && me && pkey(w) === pkey(me.top) ? false : ki % 2 === 1
       const hp = hOf(c), ln = lineH(lookAt(c)), lineY = 1 + ln / 2 + (bottom ? ln + 1 : 0), hk = cardH(pigLook)
       const pTop = top + Math.max(0, hk / 2 - lineY), kMid = pTop + lineY
       pig.add(`${kc}|${ki}`); center.set(`${kc}|${ki}`, kMid)
@@ -150,10 +154,10 @@ export function SplitBracket({ bracket, look: given, mixed }: { bracket: WeightB
   const offset = new Map<string, number>()   // side → vertical offset of that half
   let H: number, finalMid: number
   if (look.split && D >= 2) {
-    const L = lay(D - 2, 0, 0), R = cell(D - 2, 1) ? lay(D - 2, 1, 0) : { h: 0, mid: 0 }
+    const L = has(D - 2, 0) ? lay(D - 2, 0, 0) : { h: 0, mid: 0 }, R = has(D - 2, 1) ? lay(D - 2, 1, 0) : { h: 0, mid: 0 }
     H = Math.max(L.h, R.h)
     offset.set('L', (H - L.h) / 2); offset.set('R', (H - R.h) / 2)
-    finalMid = R.h ? (L.mid + offset.get('L')! + R.mid + offset.get('R')!) / 2 : L.mid + offset.get('L')!
+    finalMid = L.h && R.h ? (L.mid + offset.get('L')! + R.mid + offset.get('R')!) / 2 : R.h ? R.mid + offset.get('R')! : L.mid + offset.get('L')!
   } else {
     const T = lay(D - 1, 0, 0)
     H = T.h; finalMid = T.mid
@@ -171,7 +175,7 @@ export function SplitBracket({ bracket, look: given, mixed }: { bracket: WeightB
   const lines: { x: number; y: number; w: number; h: number }[] = []
   for (let c = 0; c < D; c++) {
     champ[c].cells.forEach((b, i) => {
-      if (!b || (c < D - 1 && !center.has(`${c}|${i}`))) return   // a bye: no bout, no card, no line
+      if (c < D - 1 && !center.has(`${c}|${i}`)) return   // a bye: no bout, no card, no line
       const right = sideOf(c, i) === 'R', x = xOf(c, i), my = yOf(c, i)
       const lk = lookOf(c, i)
       cards.push({ b, x, y: my - cardH(lk) / 2, toLeft: right, label: champ[c].label, lk, podium: c === D - 1 })
@@ -204,12 +208,26 @@ export function SplitBracket({ bracket, look: given, mixed }: { bracket: WeightB
           {cards.map((p, i) => <div key={i} className="absolute" style={{ left: p.x, top: p.y }}><Card b={p.b} look={p.lk} mark={mixed} toLeft={p.toLeft} label={p.label} podium={p.podium} /></div>)}
         </div>
       </div>
+      {bracket.other.length > 0 && <Unlinked bouts={bracket.other} look={look} mixed={mixed} title="Championship bouts not linked to the bracket" />}
       {(wrestlebacks.length > 0 || places.length > 0) && (
         <div>
           <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">Consolation</p>
           <ConsTree bracket={bracket} look={{ ...look, cardW: given.cardW }} mixed={mixed} avail={width} maxW={given.cardW} />
         </div>
       )}
+    </div>
+  )
+}
+
+/** Bouts the tree couldn't link (a wrestler's name spelled two ways across rounds): listed so none goes missing */
+function Unlinked({ bouts, look, mixed, title }: { bouts: { b: BracketBout; label: string }[] | BracketBout[]; look: BracketLook & { seedSpace?: boolean }; mixed: boolean; title: string }) {
+  const list = (bouts as (BracketBout | { b: BracketBout; label: string })[]).map(x => ('b' in x ? x : { b: x, label: roundName(x.round) }))
+  return (
+    <div className="mt-3">
+      <p className="mb-1 text-[9px] font-bold uppercase tracking-wide text-slate-400">{title}</p>
+      <div className="flex flex-wrap gap-3">
+        {list.map(x => <div key={x.b.id}><div className="text-[9px] text-slate-400">{x.label}</div><Card b={x.b} look={look} mark={mixed} label={x.label} /></div>)}
+      </div>
     </div>
   )
 }
@@ -311,6 +329,8 @@ export function ConsTree({ bracket, look: given, mixed, avail = 0, maxW }: { bra
   }
   sides.forEach(sd => linkAll(sd, { x: centerX, mid: rootMid }))
   const under = [fifth && { b: fifth, label: '5th Place' }, seventh && { b: seventh, label: '7th Place' }].filter(Boolean) as { b: BracketBout; label: string }[]
+  const reached = new Set([third.id, ...under.map(u => u.b.id), ...placed.map(p => p.b.id)])
+  const unlinked = backs.filter(x => !reached.has(x.b.id))
   const tall = Math.max(H + lift, rootMid + CHp / 2 + 8 + under.length * (CHp + 18) + 10)
   return (
     <div className="overflow-x-auto pb-2">
@@ -329,6 +349,7 @@ export function ConsTree({ bracket, look: given, mixed, avail = 0, maxW }: { bra
           </div>
         ))}
       </div>
+      {unlinked.length > 0 && <Unlinked bouts={unlinked} look={look} mixed={mixed} title="Consolation bouts not linked to the bracket" />}
     </div>
   )
 }
