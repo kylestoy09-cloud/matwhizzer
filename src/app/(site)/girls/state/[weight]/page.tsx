@@ -49,9 +49,6 @@ type MatchRow = {
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-// DFS traversal (girls goes R1 → QF directly, no R2)
-const PREV_ROUND: Record<string, string> = { QF: 'R1', SF: 'QF', F: 'SF' }
-
 // ── State Qualifiers ─────────────────────────────────────────────────────────
 
 function StateQualifiers({ entries, logos }: { entries: (BracketEntry & { tournament_id: number; weight_class_id: number })[]; logos: LogoMap }) {
@@ -110,56 +107,6 @@ function StateQualifiers({ entries, logos }: { entries: (BracketEntry & { tourna
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 // ── DFS ordering for championship ────────────────────────────────────────────
-
-function orderChampMatches(allChamp: MatchRow[]): Map<string, MatchRow[]> {
-  const byRound = new Map<string, MatchRow[]>()
-  for (const m of allChamp) {
-    const list = byRound.get(m.round) ?? []
-    list.push(m)
-    byRound.set(m.round, list)
-  }
-
-  const byWinnerRound = new Map<string, MatchRow>()
-  for (const [, ms] of byRound) {
-    for (const m of ms) {
-      if (m.winner_entry_id) {
-        byWinnerRound.set(`${m.winner_entry_id}:${m.round}`, m)
-      }
-    }
-  }
-
-  const fMatches = byRound.get('F') ?? []
-  if (fMatches.length !== 1) return byRound
-
-  const ordered = new Map<string, MatchRow[]>()
-
-  function collect(m: MatchRow) {
-    const prev = PREV_ROUND[m.round]
-    if (prev) {
-      if (m.winner_entry_id) {
-        const top = byWinnerRound.get(`${m.winner_entry_id}:${prev}`)
-        if (top) collect(top)
-      }
-      if (m.loser_entry_id) {
-        const bot = byWinnerRound.get(`${m.loser_entry_id}:${prev}`)
-        if (bot) collect(bot)
-      }
-    }
-    const list = ordered.get(m.round) ?? []
-    if (!list.some(x => x.match_id === m.match_id)) {
-      list.push(m)
-      ordered.set(m.round, list)
-    }
-  }
-
-  collect(fMatches[0])
-
-  for (const [round, ms] of byRound) {
-    if (!ordered.has(round)) ordered.set(round, ms)
-  }
-
-  return ordered
-}
 
 // ── Match Card ────────────────────────────────────────────────────────────────
 
@@ -422,11 +369,12 @@ export default async function GirlsStateBracketPage({
       {/* ── PODIUM ── */}
       <Podium matches={matches} ghostIds={ghostIds} seedMap={seedMap} logos={logos} />
 
-      <PostseasonBracket matches={matches} size={16} look={look} />
+      <PostseasonBracket matches={matches} size={16} look={look} gender="F" />
       </>)}
 
       {entries.length > 0 && (
         <BracketPoll
+          gender="F"
           entries={entries}
           tournamentId={entries[0]?.tournament_id ?? 0}
           weightClassId={entries[0]?.weight_class_id ?? 0}

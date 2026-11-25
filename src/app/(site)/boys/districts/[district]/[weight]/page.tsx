@@ -2,7 +2,6 @@ import { WeightHistoryView } from '@/components/site/TournamentHistory'
 import { supabase } from '@/lib/supabase/public-cached'
 import { getSchoolLogos } from '@/lib/school-logos'
 import { SchoolLogoBadge } from '@/components/SchoolLogoBadge'
-import { SchoolTag } from '@/components/SchoolTag'
 
 type LogoMap = Awaited<ReturnType<typeof getSchoolLogos>>
 import Link from 'next/link'
@@ -45,232 +44,15 @@ type MatchRow = {
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-// Fixed card height in pixels — used to compute slot heights for alignment
-const CARD_H = 88
-
-const PREV_ROUND: Record<string, string> = { SF: 'QF', F: 'SF', QF: 'R2' }
-
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
-function formatResult(m: MatchRow): string {
-  if (!m.win_type) return ''
-  if (m.win_type === 'BYE') return 'Adv.'
-  if (m.win_type === 'FALL') {
-    if (m.fall_time_seconds) {
-      const mn = Math.floor(m.fall_time_seconds / 60)
-      const sc = String(m.fall_time_seconds % 60).padStart(2, '0')
-      return `Fall ${mn}:${sc}`
-    }
-    return 'Fall'
-  }
-  if (m.win_type === 'TF' || m.win_type === 'TF-1.5') {
-    const score = (m.winner_score != null && m.loser_score != null)
-      ? ` ${m.winner_score}-${m.loser_score}` : ''
-    const time = m.fall_time_seconds
-      ? ` ${Math.floor(m.fall_time_seconds / 60)}:${String(m.fall_time_seconds % 60).padStart(2, '0')}`
-      : ''
-    return `${m.win_type}${score}${time}`
-  }
-  if (m.win_type === 'MD' || m.win_type === 'DEC') {
-    const label = m.win_type === 'MD' ? 'MD' : 'Dec'
-    return (m.winner_score != null && m.loser_score != null)
-      ? `${label} ${m.winner_score}-${m.loser_score}`
-      : label
-  }
-  return m.win_type
-}
-
 // ── Bracket tree builder ───────────────────────────────────────────────────────
-
-/**
- * Given championship matches, builds an ordered Map<round, MatchRow[]> where
- * the order within each round reflects the top-to-bottom visual bracket order.
- * Uses DFS from the Final match through the winner-entry linkage.
- */
-function orderChampMatches(allChamp: MatchRow[]): Map<string, MatchRow[]> {
-  // Group by round
-  const byRound = new Map<string, MatchRow[]>()
-  for (const m of allChamp) {
-    const list = byRound.get(m.round) ?? []
-    list.push(m)
-    byRound.set(m.round, list)
-  }
-
-  // Build lookup: winner_entry_id + ":" + round → match
-  const byWinnerRound = new Map<string, MatchRow>()
-  for (const [, ms] of byRound) {
-    for (const m of ms) {
-      if (m.winner_entry_id) {
-        byWinnerRound.set(`${m.winner_entry_id}:${m.round}`, m)
-      }
-    }
-  }
-
-  const fMatches = byRound.get('F') ?? []
-  if (fMatches.length !== 1) {
-    // No final found — return rounds sorted by depth (fallback)
-    return byRound
-  }
-
-  const ordered = new Map<string, MatchRow[]>()
-
-  function collect(m: MatchRow) {
-    const prev = PREV_ROUND[m.round]
-    if (prev) {
-      if (m.winner_entry_id) {
-        const top = byWinnerRound.get(`${m.winner_entry_id}:${prev}`)
-        if (top) collect(top)
-      }
-      if (m.loser_entry_id) {
-        const bot = byWinnerRound.get(`${m.loser_entry_id}:${prev}`)
-        if (bot) collect(bot)
-      }
-    }
-    const list = ordered.get(m.round) ?? []
-    if (!list.some(x => x.match_id === m.match_id)) {
-      list.push(m)
-      ordered.set(m.round, list)
-    }
-  }
-
-  collect(fMatches[0])
-
-  // Append any rounds missed by the tree traversal
-  for (const [round, ms] of byRound) {
-    if (!ordered.has(round)) ordered.set(round, ms)
-  }
-
-  return ordered
-}
 
 // ── Bye synthesis from match data ──────────────────────────────────────────────
 
 // ── Match Card ─────────────────────────────────────────────────────────────────
 
-function WrestlerRow({
-  wrestlerId,
-  name,
-  school,
-  schoolId,
-  seed,
-  grade,
-  isWinner,
-  isBye,
-}: {
-  wrestlerId: string | null
-  name: string | null
-  school: string | null
-  schoolId?: number | null
-  seed: number | null
-  grade: string | null
-  isWinner: boolean
-  isBye: boolean
-}) {
-  const inner = isBye ? (
-    <span className="text-xs text-slate-400 italic">Bye</span>
-  ) : wrestlerId ? (
-    <Link
-      href={`/boys/wrestler/${wrestlerId}`}
-      className={`text-sm truncate hover:underline ${
-        isWinner ? 'font-semibold text-slate-900' : 'font-medium text-slate-600'
-      }`}
-    >
-      {name}
-    </Link>
-  ) : (
-    <span className="text-xs text-slate-400">—</span>
-  )
-
-  return (
-    <div
-      className={`flex items-center gap-1.5 px-2.5 ${isWinner ? 'bg-emerald-50' : ''}`}
-      style={{ height: 36 }}
-    >
-      {seed != null ? (
-        <span className="text-[10px] text-slate-400 w-3.5 shrink-0 text-right">{seed}</span>
-      ) : (
-        <span className="w-3.5 shrink-0" />
-      )}
-      <span className="flex-1 min-w-0 truncate">{inner}</span>
-      {!isBye && (
-        <span className="text-[10px] text-slate-400 shrink-0 flex items-center">
-          {wrestlerId && <SchoolTag id={schoolId} name={school} maxWidth={52} className="text-[10px] text-slate-400" />}
-          {grade ? <span className="ml-1 text-slate-300">{grade}</span> : null}
-        </span>
-      )}
-    </div>
-  )
-}
-
-function MatchCard({ m, entrySlot }: { m: MatchRow; entrySlot?: Map<string, number> }) {
-  const isBye = !m.loser_wrestler_id
-  const result = formatResult(m)
-
-  let topIsWinner = true
-  if (entrySlot && m.winner_entry_id && m.loser_entry_id) {
-    const wSlot = entrySlot.get(m.winner_entry_id) ?? 999
-    const lSlot = entrySlot.get(m.loser_entry_id) ?? 999
-    topIsWinner = wSlot <= lSlot
-  }
-
-  const top = topIsWinner
-    ? { id: m.winner_wrestler_id, name: m.winner_name, school: m.winner_school_name, schoolId: m.winner_school_id, seed: m.winner_seed, grade: m.winner_grade, won: true, isBye: false }
-    : { id: m.loser_wrestler_id, name: m.loser_name, school: m.loser_school_name, schoolId: m.loser_school_id, seed: m.loser_seed, grade: m.loser_grade, won: false, isBye: isBye }
-  const bot = topIsWinner
-    ? { id: m.loser_wrestler_id, name: m.loser_name, school: m.loser_school_name, schoolId: m.loser_school_id, seed: m.loser_seed, grade: m.loser_grade, won: false, isBye: isBye }
-    : { id: m.winner_wrestler_id, name: m.winner_name, school: m.winner_school_name, schoolId: m.winner_school_id, seed: m.winner_seed, grade: m.winner_grade, won: true, isBye: false }
-
-  return (
-    <div
-      className="bg-white border border-black rounded-none overflow-hidden shadow-none w-64 shrink-0"
-      style={{ height: CARD_H }}
-    >
-      <WrestlerRow
-        wrestlerId={top.id}
-        name={top.name}
-        school={top.school}
-        schoolId={top.schoolId}
-        seed={top.seed}
-        grade={top.grade}
-        isWinner={top.won}
-        isBye={top.isBye}
-      />
-      <div className="border-t border-slate-100" />
-      <WrestlerRow
-        wrestlerId={bot.id}
-        name={bot.name}
-        school={bot.school}
-        schoolId={bot.schoolId}
-        seed={bot.seed}
-        grade={bot.grade}
-        isWinner={bot.won}
-        isBye={bot.isBye}
-      />
-      {/* Result strip */}
-      <div
-        className="flex items-center justify-end px-2.5 border-t border-slate-100"
-        style={{ height: CARD_H - 36 - 36 - 1 - 1 }} // card - 2 rows - 2 borders
-      >
-        <span className="text-[10px] text-slate-400 tabular-nums">{result}</span>
-      </div>
-    </div>
-  )
-}
-
 // ── Mobile round list ──────────────────────────────────────────────────────────
-
-function MobileRound({ label, matches, entrySlot }: { label: string; matches: MatchRow[]; entrySlot?: Map<string, number> }) {
-  return (
-    <section>
-      <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">{label}</h3>
-      <div className="space-y-2">
-        {matches.map(m => (
-          <MatchCard key={m.match_id} m={m} entrySlot={entrySlot} />
-        ))}
-      </div>
-    </section>
-  )
-}
 
 // ── Roster builder ───────────────────────────────────────────────────────────
 
@@ -459,7 +241,7 @@ export default async function DistrictBracketPage({
 
       <WeightNav weights={weights} current={weight} base={`/boys/districts/${district}`} />
 
-      <PostseasonBracket matches={matches} size={16} look={look} />
+      <PostseasonBracket matches={matches} size={16} look={look} gender="M" prelims />
       <EntryRoster roster={buildRoster(matches)} logos={logos} />
       <WeightNav weights={weights} current={weight} base={`/boys/districts/${district}`} />
 

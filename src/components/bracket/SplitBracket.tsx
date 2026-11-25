@@ -15,6 +15,8 @@ export { BRACKET_LOOK_DEFAULT, type BracketLook }
 
 
 const KW = 14   // connector width
+/** the settings plus what a page adds: seedSpace (a bracket with seeds), profileBase (/boys/wrestler or /girls/wrestler) */
+type Look = BracketLook & { seedSpace?: boolean; profileBase?: string }
 const PLACE = /^(3rd|5th|7th)/
 
 const shortName = (n: string, last: boolean) => {
@@ -23,7 +25,7 @@ const shortName = (n: string, last: boolean) => {
   return parts.length > 1 ? parts.slice(1).join(' ') : n
 }
 
-function Line({ p, won, look, mark, tag }: { p: BracketPerson | null; won: boolean; look: BracketLook & { seedSpace?: boolean }; mark: boolean; tag?: string }) {
+function Line({ p, won, look, mark, tag }: { p: BracketPerson | null; won: boolean; look: Look; mark: boolean; tag?: string }) {
   if (!p) return <div className="flex items-center px-1 text-slate-300" style={{ height: look.rowH, fontSize: look.font }}>Bye</div>
   return (
     <div className={`flex items-center gap-0.5 px-1 min-w-0 ${won ? 'font-bold text-slate-900' : 'text-slate-500'}`} style={{ height: look.showSchool ? look.rowH * 1.6 : look.rowH, fontSize: look.font }}>
@@ -39,37 +41,36 @@ function Line({ p, won, look, mark, tag }: { p: BracketPerson | null; won: boole
   )
 }
 
-function Full({ p, won, mark }: { p: BracketPerson | null; won: boolean; mark: boolean }) {
+function Full({ p, won, mark, base }: { p: BracketPerson | null; won: boolean; mark: boolean; base?: string }) {
   if (!p) return <div className="px-2 py-1 text-[11px] text-slate-300">Bye</div>
   return (
     <div className={`px-2 py-1 ${won ? 'font-bold text-slate-900' : 'text-slate-600'}`}>
-      <div className="flex items-center gap-1 text-[12px]">{p.seed ? <span className="font-normal text-slate-400 tabular-nums">#{p.seed}</span> : null}{mark && p.nj && <NjIcon />}{p.id ? <Link href={`/wrestler/${p.id}`} className="hover:underline">{p.name}</Link> : p.name}</div>
+      <div className="flex items-center gap-1 text-[12px]">{p.seed ? <span className="font-normal text-slate-400 tabular-nums">#{p.seed}</span> : null}{mark && p.nj && <NjIcon />}{p.id ? <Link href={`${base ?? '/wrestler'}/${p.id}`} className="hover:underline">{p.name}</Link> : p.name}</div>
       {p.school && <div className="text-[10px] font-normal text-slate-400">{p.school}</div>}
     </div>
   )
 }
 
 /** One bout: compact; on hover the full bout opens over it (toward the middle of the sheet) */
-function Card({ b, look, mark, toLeft, label, tagOf, podium }: { b: BracketBout | null; look: BracketLook & { seedSpace?: boolean }; mark: boolean; toLeft?: boolean; label?: string; tagOf?: (p: BracketPerson | null) => string | undefined; podium?: boolean }) {
+function Card({ b, look, mark, toLeft, label, tagOf, podium }: { b: BracketBout | null; look: Look; mark: boolean; toLeft?: boolean; label?: string; tagOf?: (p: BracketPerson | null) => string | undefined; podium?: boolean }) {
   const h = cardH(look)
   // a bout not wrestled yet (a postseason bracket in progress): an empty card holds its place
   if (!b) return <div className="border border-dashed border-slate-300 bg-slate-50/50" style={{ width: look.cardW, height: h }} />
   return (
-    <div className="group relative" style={{ width: look.cardW, height: h }}>
-      <div className={`h-full border bg-white overflow-hidden flex flex-col ${podium ? 'border-slate-900 ring-1 ring-slate-900' : 'border-slate-300'}`}>
+    // a tap (focus) opens the full bout too — phones have no hover (review 2026-11-25); the hover setting is the mouse
+    <div tabIndex={0} className="group relative outline-none" style={{ width: look.cardW, height: h }}>
+      <div className={`h-full border bg-white overflow-hidden flex flex-col group-focus:ring-2 group-focus:ring-slate-400 ${podium ? 'border-slate-900 ring-1 ring-slate-900' : 'border-slate-300'}`}>
         <Line p={b.top} won={b.winner === 'top'} look={look} mark={mark} tag={tagOf?.(b.top)} />
         <div className="border-t border-slate-200" />
         <Line p={b.bottom} won={b.winner === 'bottom'} look={look} mark={mark} tag={tagOf?.(b.bottom)} />
       </div>
-      {look.hover && (
-        <div className={`pointer-events-none absolute top-1/2 z-30 hidden w-60 -translate-y-1/2 border border-black bg-white shadow-lg group-hover:block group-hover:pointer-events-auto ${toLeft ? 'right-0' : 'left-0'}`}>
-          {label && <div className="bg-slate-900 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">{label}</div>}
-          <Full p={b.top} won={b.winner === 'top'} mark={mark} />
-          <div className="border-t border-slate-200" />
-          <Full p={b.bottom} won={b.winner === 'bottom'} mark={mark} />
-          {b.result && <div className="border-t border-slate-100 px-2 py-0.5 text-[11px] text-slate-500">{b.result}</div>}
-        </div>
-      )}
+      <div className={`pointer-events-none absolute top-1/2 z-30 hidden w-60 -translate-y-1/2 border border-black bg-white shadow-lg group-focus-within:block group-focus-within:pointer-events-auto ${look.hover ? 'group-hover:block group-hover:pointer-events-auto' : ''} ${toLeft ? 'right-0' : 'left-0'}`}>
+        {label && <div className="bg-slate-900 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">{label}</div>}
+        <Full p={b.top} won={b.winner === 'top'} mark={mark} base={look.profileBase} />
+        <div className="border-t border-slate-200" />
+        <Full p={b.bottom} won={b.winner === 'bottom'} mark={mark} base={look.profileBase} />
+        {b.result && <div className="border-t border-slate-100 px-2 py-0.5 text-[11px] text-slate-500">{b.result}</div>}
+      </div>
     </div>
   )
 }
@@ -79,7 +80,7 @@ const cardH = (look: BracketLook) => (look.showSchool ? look.rowH * 1.6 : look.r
 // taller lines, bigger names, a dark outline; same card width, so the columns don't move
 const podiumLook = <L extends BracketLook>(look: L): L => ({ ...look, rowH: Math.max(look.podiumRowH, look.rowH), font: Math.max(look.podiumFont, look.font) })
 
-export function SplitBracket({ bracket, look: given, mixed }: { bracket: WeightBracket; look: BracketLook; mixed: boolean }) {
+export function SplitBracket({ bracket, look: given, mixed }: { bracket: WeightBracket; look: Look; mixed: boolean }) {
   const { champ, cons } = bracket
   const D = champ.length
   const tree = D > 0 && champ[D - 1].cells.length === 1 && champ.every((c, i) => c.cells.length === 2 ** (D - 1 - i))
@@ -98,7 +99,7 @@ export function SplitBracket({ bracket, look: given, mixed }: { bracket: WeightB
   // seeds: a bracket with any keeps a seed's width on every line, so the names line up
   const seeded = champ.some(c => c.cells.some(b => b?.top?.seed || b?.bottom?.seed))
   const look = { ...(given.fit ? { ...given, cardW: Math.max(56, Math.min(given.cardW, fitW)) } : given), seedSpace: seeded }
-  const CH = cardH(look), CW = look.cardW, STEP = CW + KW
+  const CW = look.cardW, STEP = CW + KW
   const places = cons.filter(c => PLACE.test(c.label)).sort((a, b) => a.label.localeCompare(b.label))
   const wrestlebacks = cons.filter(c => !PLACE.test(c.label))
 
@@ -170,7 +171,7 @@ export function SplitBracket({ bracket, look: given, mixed }: { bracket: WeightB
   const yOf = (c: number, i: number) => (c === D - 1 ? finalMid : center.get(`${c}|${i}`)! + offset.get(sideOf(c, i))!)
   const xOf = (c: number, i: number) => (c === D - 1 ? finalX : sideOf(c, i) === 'R' ? W - CW - c * STEP : c * STEP)
 
-  type Pos = { b: BracketBout | null; x: number; y: number; toLeft: boolean; label: string; lk: BracketLook & { seedSpace?: boolean }; podium?: boolean }
+  type Pos = { b: BracketBout | null; x: number; y: number; toLeft: boolean; label: string; lk: Look; podium?: boolean }
   const cards: Pos[] = []
   const lines: { x: number; y: number; w: number; h: number }[] = []
   for (let c = 0; c < D; c++) {
@@ -220,7 +221,7 @@ export function SplitBracket({ bracket, look: given, mixed }: { bracket: WeightB
 }
 
 /** Bouts the tree couldn't link (a wrestler's name spelled two ways across rounds): listed so none goes missing */
-function Unlinked({ bouts, look, mixed, title }: { bouts: { b: BracketBout; label: string }[] | BracketBout[]; look: BracketLook & { seedSpace?: boolean }; mixed: boolean; title: string }) {
+function Unlinked({ bouts, look, mixed, title }: { bouts: { b: BracketBout; label: string }[] | BracketBout[]; look: Look; mixed: boolean; title: string }) {
   const list = (bouts as (BracketBout | { b: BracketBout; label: string })[]).map(x => ('b' in x ? x : { b: x, label: roundName(x.round) }))
   return (
     <div className="mt-3">
@@ -240,7 +241,7 @@ const SHORT: Record<string, string> = { 'Round 1': 'R1', 'Round 2': 'R2', 'Round
  *  from the championship side (tagged ↓QF, ↓R2 …). The halves face each other like the championship tree; the 5th and
  *  7th place bouts sit under the 3rd. Columns are the consolation rounds, the same round in the same column on both
  *  sides. Without a 3rd place bout the rounds are listed as columns. */
-export function ConsTree({ bracket, look: given, mixed, avail = 0, maxW }: { bracket: WeightBracket; look: BracketLook & { seedSpace?: boolean }; mixed: boolean; avail?: number; maxW?: number }) {
+export function ConsTree({ bracket, look: given, mixed, avail = 0, maxW }: { bracket: WeightBracket; look: Look; mixed: boolean; avail?: number; maxW?: number }) {
   let look = given
   const { champ, cons } = bracket
   const placeOf = (n: string) => cons.find(c => c.label.startsWith(n))?.bouts[0] ?? null

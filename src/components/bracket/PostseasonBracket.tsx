@@ -6,13 +6,13 @@ import { SplitBracket } from '@/components/bracket/SplitBracket'
 import { buildPostseasonBracket, type PostseasonMatch } from '@/lib/postseasonBracket'
 import type { BracketLook } from '@/lib/bracketLook'
 
-export function PostseasonBracket({ matches, size, look }: { matches: PostseasonMatch[]; size: 32 | 16; look: BracketLook }) {
-  const bracket = buildPostseasonBracket(matches, size)
-  if (!bracket.champ.length && !bracket.cons.length) return null
+export function PostseasonBracket({ matches, size, look, gender, prelims = false }: { matches: PostseasonMatch[]; size: 32 | 16; look: BracketLook; gender: 'M' | 'F'; prelims?: boolean }) {
+  const bracket = buildPostseasonBracket(matches, size, { prelims })
+  if (!bracket.champ.length && !bracket.cons.length && !bracket.other.length) return null
   return (
     <section className="mt-6">
       <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">Championship</p>
-      <SplitBracket bracket={bracket} look={look} mixed={false} />
+      <SplitBracket bracket={bracket} look={{ ...look, profileBase: gender === 'F' ? '/girls/wrestler' : '/boys/wrestler' }} mixed={false} />
     </section>
   )
 }

@@ -31,12 +31,18 @@ export type PostseasonMatch = {
   loser_seed: number | null
 }
 
+// a side with an entry but no name (no profile matched) still wrestled: "Unknown"; an unresolved school is 'TBD'
+// (raw imported names never show on the site)
 const person = (m: PostseasonMatch, side: 'winner' | 'loser'): BracketPerson | null => {
-  const name = side === 'winner' ? m.winner_name : m.loser_name
-  if (!name) return null
-  return side === 'winner'
-    ? { id: m.winner_wrestler_id, name, school: m.winner_school_name, schoolId: m.winner_school_id ?? null, nj: true, seed: m.winner_seed }
-    : { id: m.loser_wrestler_id, name, school: m.loser_school_name, schoolId: m.loser_school_id ?? null, nj: true, seed: m.loser_seed }
+  const w = side === 'winner'
+  const name = w ? m.winner_name : m.loser_name, entry = w ? m.winner_entry_id : m.loser_entry_id
+  if (!name && !entry) return null
+  const schoolId = (w ? m.winner_school_id : m.loser_school_id) ?? null
+  return {
+    id: w ? m.winner_wrestler_id : m.loser_wrestler_id, name: name ?? 'Unknown',
+    school: schoolId != null ? (w ? m.winner_school_name : m.loser_school_name) ?? 'TBD' : 'TBD', schoolId,
+    nj: true, seed: w ? m.winner_seed : m.loser_seed,
+  }
 }
 
 /** a stored bout as a bracket bout; top = the wrestler from the lower slot (else the winner) */
@@ -53,20 +59,36 @@ const toBout = (m: PostseasonMatch, slot?: (entry: string | null) => number): Br
 
 const FROM_END: Record<string, number> = { F: 1, SF: 2, QF: 3 }
 
-/** One postseason weight's bracket. size: the bracket's slots (32 for boys state, 16 for the rest). */
-export function buildPostseasonBracket(matches: PostseasonMatch[], size: 32 | 16): WeightBracket {
-  // a bye is stored as a bout with no loser: not a bout
-  const real = matches.filter(m => m.round !== 'BYE' && m.winner_name && m.loser_name)
-  const isChamp = (m: PostseasonMatch) => roundStep(m.round) < 100 && m.round !== '2nd_Place_Match'
+/** One postseason weight's bracket. size: the bracket's slots (32 for boys state, 16 for the rest). prelims: the
+ *  first round is a prelim round (districts, regions), labeled "Prelims". */
+export function buildPostseasonBracket(matches: PostseasonMatch[], size: 32 | 16, opts: { prelims?: boolean } = {}): WeightBracket {
+  // a bye (round BYE, a BYE result, or no opponent at all — a forfeit to an empty side) is not a bout
+  const isBye = (m: PostseasonMatch) => m.round === 'BYE' || /^bye/i.test(m.win_type ?? '') || (!m.loser_name && !m.loser_entry_id) || (!m.winner_name && !m.winner_entry_id)
+  // the same bout stored twice is one bout
+  const seen = new Set<string>()
+  const real = matches.filter(m => {
+    if (isBye(m)) return false
+    const k = `${m.round}|${[m.winner_entry_id ?? m.winner_name, m.loser_entry_id ?? m.loser_name].sort().join('|')}`
+    if (seen.has(k)) return false
+    seen.add(k); return true
+  })
+  // championship vs consolation: the stored side; the round label only when no side is stored. A 2nd place bout is a
+  // consolation-side bout here (it isn't part of the championship tree)
+  const isChamp = (m: PostseasonMatch) => m.round !== '2nd_Place_Match' && (m.bracket_side ? m.bracket_side === 'championship' : roundStep(m.round) < 100)
   const champ = real.filter(isChamp)
   const cons = real.filter(m => !isChamp(m))
   const { entrySlot } = orderChampMatchesBySeed(champ as (PostseasonMatch & { [k: string]: unknown })[], size)
   const slot = (e: string | null) => (e != null ? entrySlot.get(e) ?? 999 : 999)
 
+  // the last numbered consolation round before a 3rd place bout is the consolation semifinal (C3 in regions and girls
+  // districts, C4 girls state, C6 boys state)
+  const lastC = Math.max(-1, ...cons.map(m => /^C(\d+)$/.exec(m.round)).filter(Boolean).map(x => Number(x![1])))
+  const consLabel = (r: string) => (lastC > 0 && r === `C${lastC}` && cons.some(m => m.round === '3rd_Place') ? 'Cons. Semis' : roundLabel(r))
   const consCols = [...new Set(cons.map(m => m.round))]
     .sort((a, b) => roundStep(a) - roundStep(b))
-    .map(r => ({ label: roundLabel(r), bouts: cons.filter(m => m.round === r).map(m => toBout(m)) }))
-  const fallback = () => ({ ...treeFromBouts(real.filter(isChamp).map(m => toBout(m)), size, consCols), source: 'bouts' as const })
+    .map(r => ({ label: consLabel(r), bouts: cons.filter(m => m.round === r).map(m => toBout(m)) }))
+  const champLabel = (r: string) => (opts.prelims && (r === 'R1' || r === 'R2') ? 'Prelims' : roundLabel(r))
+  const fallback = () => ({ ...treeFromBouts(champ.map(m => toBout(m)), size, consCols, champLabel), source: 'bouts' as const })
 
   // columns: F, SF, QF from the end; before them R1 → R2 in a 32-slot bracket, and R1 or R2 (the prelims) in a
   // 16-slot one (girls state stores R1, districts and regions R2). Any other round label → the in-season builder.
@@ -78,12 +100,14 @@ export function buildPostseasonBracket(matches: PostseasonMatch[], size: 32 | 16
   const cols: (BracketBout | null)[][] = Array.from({ length: D }, (_, k) => new Array(size / 2 ** (k + 1)).fill(null))
   const labels: string[] = Array.from({ length: D }, () => '')
   for (const m of champ) {
-    const k = colOf(m.round), s = Math.min(slot(m.winner_entry_id), slot(m.loser_entry_id))
-    if (s >= size) return fallback()
+    const k = colOf(m.round), sw = slot(m.winner_entry_id), sl = slot(m.loser_entry_id), s = Math.min(sw, sl)
+    if (Math.max(sw, sl) >= size) return fallback()
     const i = Math.floor(s / 2 ** (k + 1))
+    // both wrestlers' slots must lead to this bout (else the bracket isn't drawn by these seed slots)
+    if (Math.floor(Math.max(sw, sl) / 2 ** (k + 1)) !== i) return fallback()
     if (cols[k][i]) return fallback()
     cols[k][i] = toBout(m, slot)
-    labels[k] = roundLabel(m.round)
+    labels[k] = champLabel(m.round)
   }
   // the slots must agree with who wrestled whom: a wrestler's previous championship bout sits right under this one
   const where = new Map<string, [number, number]>()
@@ -113,8 +137,9 @@ export function buildPostseasonBracket(matches: PostseasonMatch[], size: 32 | 16
  *  have no seeds): the tree comes from who wrestled whom — each bout's two wrestlers' previous championship bouts under
  *  it. At each bout the side holding the better seed goes on top. Bouts still to be wrestled (no final yet) become
  *  empty places: the latest bouts are paired in seed order up to the final. */
-function treeFromBouts(champ: BracketBout[], size: 32 | 16, cons: WeightBracket['cons']): WeightBracket {
-  const empty: WeightBracket = { champ: [], cons, other: [], complete: false }
+function treeFromBouts(champ: BracketBout[], size: 32 | 16, cons: WeightBracket['cons'], champLabel: (r: string) => string = roundLabel): WeightBracket {
+  // no tree possible: every championship bout listed (none dropped)
+  const empty: WeightBracket = { champ: [], cons, other: champ, complete: false }
   if (!champ.length) return empty
   const key = (p: BracketPerson | null) => (p ? p.id ?? `${p.name}|${p.school ?? ''}` : '')
   const mine = new Map<string, BracketBout[]>()
@@ -161,7 +186,8 @@ function treeFromBouts(champ: BracketBout[], size: 32 | 16, cons: WeightBracket[
       if (low >= D - 1) return null
       const at = rs.filter(r => r.col === low).sort((a, b) => a.best - b.best), rest = rs.filter(r => r.col !== low)
       const ups: N[] = []
-      for (let j = 0; j < at.length; j += 2) ups.push({ b: null, col: low + 1, kids: [at[j], at[j + 1] ?? null], best: Math.min(at[j].best, at[j + 1]?.best ?? 99) })
+      // best against worst, as a bracket draws them (1 v 4, 2 v 3 in the semis): the outside pairs first
+      for (let j = 0, z = at.length - 1; j <= z; j++, z--) ups.push({ b: null, col: low + 1, kids: [at[j], j < z ? at[z] : null], best: at[j].best })
       rs = [...rest, ...ups]
     }
     return rs.length === 1 && rs[0].col === D - 1 ? rs[0] : null
@@ -186,6 +212,6 @@ function treeFromBouts(champ: BracketBout[], size: 32 | 16, cons: WeightBracket[
   }
   place(root, 0)
   const first = cols.findIndex(c => c.some(Boolean))
-  const label = (k: number) => roundLabel(order[k - (D - order.length)] ?? '')
+  const label = (k: number) => champLabel(order[k - (D - order.length)] ?? '')
   return { champ: cols.slice(first).map((cells, j) => ({ label: label(first + j), cells })), cons, other, complete: true }
 }

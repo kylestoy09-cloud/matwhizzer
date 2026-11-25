@@ -1,8 +1,11 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, createContext, useContext } from 'react'
 import Link from 'next/link'
 import { SchoolTagView, type SchoolBadge } from '@/components/SchoolTagView'
+
+// wrestler links go straight to the boys or girls profile (review 2026-11-25: /wrestler/id costs a lookup + redirect)
+const ProfileBase = createContext('/wrestler')
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -152,6 +155,7 @@ export function BracketPoll({
   bracketSize = 16,
   provenancePrefix = 'D',
   districtChamps = [],
+  gender,
 }: {
   entries: BracketEntry[]
   tournamentId: number
@@ -160,6 +164,7 @@ export function BracketPoll({
   bracketSize?: 16 | 32
   provenancePrefix?: string
   districtChamps?: DistrictChamp[]
+  gender?: 'M' | 'F'
 }) {
   const [picks, setPicks] = useState<MyPick>({ pick_1st: null, pick_2nd: null, pick_3rd: null, pick_4th: null, pick_5th: null, pick_6th: null, pick_7th: null, pick_8th: null })
   const [results, setResults] = useState<PollResult[]>([])
@@ -240,6 +245,7 @@ export function BracketPoll({
   const seededEntries = [...entries].sort((a, b) => (a.seed ?? 999) - (b.seed ?? 999))
 
   return (
+    <ProfileBase.Provider value={gender === 'F' ? '/girls/wrestler' : gender === 'M' ? '/boys/wrestler' : '/wrestler'}>
     <div className="mt-6 space-y-6">
       {/* ── Poll Results (only if votes exist) ── */}
       {!loading && totalVoters > 0 && (
@@ -292,6 +298,7 @@ export function BracketPoll({
         <DistrictPodiums champs={districtChamps} />
       )}
     </div>
+    </ProfileBase.Provider>
   )
 }
 
@@ -340,6 +347,7 @@ function buildPodium(
 // ── Podium Bar ──────────────────────────────────────────────────────────────
 
 function PodiumBar({ podium, totalVoters, loading }: { podium: PodiumEntry[]; totalVoters: number; loading: boolean }) {
+  const profileBase = useContext(ProfileBase)
   return (
     <div className="bg-white border border-black rounded-none p-4 shadow-none">
       <div className="flex items-center justify-between mb-3">
@@ -359,7 +367,7 @@ function PodiumBar({ podium, totalVoters, loading }: { podium: PodiumEntry[]; to
               {i + 1}
             </div>
             <Link
-              href={`/wrestler/${p.wrestler_id}`}
+              href={`${profileBase}/${p.wrestler_id}`}
               className="text-xs font-medium text-slate-800 hover:underline block truncate"
             >
               {p.wrestler_name}
@@ -430,6 +438,7 @@ function EntryRow({
   pollClosed: boolean
   provenancePrefix: string
 }) {
+  const profileBase = useContext(ProfileBase)
   const record = (entry.wins != null && entry.losses != null) ? `${entry.wins}-${entry.losses}` : null
   const provenance = provenanceLabel(provenancePrefix, entry.district_num, entry.district_place)
   const currentSlot = getPickSlot(entry.wrestler_id)
@@ -448,7 +457,7 @@ function EntryRow({
       {/* Wrestler info */}
       <div className="flex-1 min-w-0">
         <Link
-          href={`/wrestler/${entry.wrestler_id}`}
+          href={`${profileBase}/${entry.wrestler_id}`}
           className="text-[13px] font-medium text-slate-800 hover:underline truncate block"
         >
           {entry.wrestler_name}
@@ -502,6 +511,7 @@ function EntryRow({
 const PLACE_MEDAL = ['\u{1F947}', '\u{1F948}', '\u{1F949}']
 
 function DistrictPodiums({ champs }: { champs: DistrictChamp[] }) {
+  const profileBase = useContext(ProfileBase)
   const byDistrict = new Map<number, DistrictChamp[]>()
   for (const dc of champs) {
     const list = byDistrict.get(dc.district_num) ?? []
@@ -528,7 +538,7 @@ function DistrictPodiums({ champs }: { champs: DistrictChamp[] }) {
                     {dc.place <= 3 ? PLACE_MEDAL[dc.place - 1] : String(dc.place)}
                   </span>
                   <Link
-                    href={`/wrestler/${dc.wrestler_id}`}
+                    href={`${profileBase}/${dc.wrestler_id}`}
                     className={`text-[13px] font-medium hover:underline truncate ${dc.annotation === 'Withdrawn' ? 'text-slate-400 line-through' : 'text-slate-800'}`}
                   >
                     {dc.wrestler_name}
