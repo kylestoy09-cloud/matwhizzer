@@ -12,9 +12,9 @@ import { pdfPages } from '@/lib/bracketIntake/pdfText'
 import { readFloDraws, type WeightDraw } from '@/lib/bracketIntake/flo'
 import { readFloResults, type ResultRow } from '@/lib/bracketIntake/results'
 import { readFloCompleted, type CompletedWeight } from '@/lib/bracketIntake/completed'
-import { reviewIntake, levelName, type Fix, type Mark, type ReviewItem } from '@/lib/bracketIntake/review'
+import { reviewIntake, levelName, meet, type Fix, type Mark, type ReviewItem } from '@/lib/bracketIntake/review'
 import { buildIntakeBracket, type Cell } from '@/lib/bracketIntake/slots'
-import { norm } from '@/lib/bracketIntake/fit'
+import { norm, type Placed } from '@/lib/bracketIntake/fit'
 import { PRACTICE } from '@/lib/bracketIntake/practice'
 
 type PdfJs = typeof import('pdfjs-dist')
@@ -114,7 +114,9 @@ export function IntakeLab() {
   const [states, setStates] = useState<State[]>([])                 // [0] = as loaded; each fix adds one (undo = drop it)
   const [completed, setCompleted] = useState<(Pdf & { weights: CompletedWeight[] }) | null>(null)
   const [weight, setWeight] = useState<number | null>(null)
-  const [picked, setPicked] = useState<string | null>(null)
+  const [picked, setPickedRaw] = useState<string | null>(null)
+  const [savedNote, setSavedNote] = useState<string | null>(null)     // the last change, shown in the open panel
+  const setPicked = (id: string | null) => { setPickedRaw(id); setSavedNote(null) }
   const [busy, setBusy] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
@@ -160,7 +162,7 @@ export function IntakeLab() {
     f(rows)
     const manual = new Set(cur.manual); if (manualRow != null) manual.add(manualRow)
     setStates(s => [...s, { rows, manual, label }])
-    setPicked(null)
+    setSavedNote(label)          // the panel stays open and shows where the bout stands now
   }
   const teamOf = (name: string, code: string) => {
     for (const r of cur?.rows ?? []) { if (norm(r.winner) === norm(name)) return r.winnerTeam; if (norm(r.loser) === norm(name)) return r.loserTeam }
@@ -241,7 +243,8 @@ export function IntakeLab() {
       {picked && bracket && view && draw && (
         <BoutPanel
           key={picked} id={picked} view={view} draw={draw} bracket={bracket} completed={completed} report={report}
-          rows={cur?.rows ?? []} unplaced={unplaced} teamOf={teamOf}
+          rows={cur?.rows ?? []} unplaced={unplaced} teamOf={teamOf} savedNote={savedNote}
+          placed={report?.fits.find(f => f.weight === draw.weight)?.placed.filter(p => p.side === 'champ') ?? []}
           onClose={() => setPicked(null)} onApply={apply}
         />
       )}
@@ -258,9 +261,10 @@ export function IntakeLab() {
 
 /** The bout you clicked: its section of the PDF, what the file says, what the completed bracket shows, the problem
  *  and its suggested fixes, and the bout to set by hand */
-function BoutPanel({ id, view, draw, bracket, completed, report, rows, unplaced, teamOf, onClose, onApply }: {
+function BoutPanel({ id, view, draw, bracket, completed, report, rows, unplaced, teamOf, savedNote, placed, onClose, onApply }: {
   id: string; view: ReturnType<typeof buildIntakeBracket>; draw: WeightDraw; bracket: Pdf; completed: (Pdf & { weights: CompletedWeight[] }) | null
   report: ReturnType<typeof reviewIntake> | null; rows: ResultRow[]; unplaced: ReviewItem[]; teamOf: (name: string, code: string) => string
+  savedNote: string | null; placed: Placed[]
   onClose: () => void; onApply: (label: string, f: (rows: ResultRow[]) => void, manualRow?: number) => void
 }) {
   const cell: Cell | null = view.cells.get(id) ?? null
@@ -297,6 +301,16 @@ function BoutPanel({ id, view, draw, bracket, completed, report, rows, unplaced,
           <button onClick={onClose} className="px-2 text-lg leading-none text-slate-500 hover:text-slate-900">×</button>
         </div>
         <div className="space-y-3 p-3">
+          {savedNote && (() => {
+            const st = view.status[id]
+            const gone = !cell && !consRow && !loose
+            const ok = gone || st === 'ok' || st === 'manual'
+            return (
+              <p className={`border-l-4 px-2 py-1 text-xs ${ok ? 'border-emerald-500 bg-emerald-50 text-emerald-900' : 'border-red-500 bg-red-50 text-red-900'}`}>
+                <b>Saved:</b> {savedNote}. {gone ? 'This one is settled.' : ok ? 'This bout now fits the bracket.' : st === 'follows' ? 'This bout will fit once the red box it follows from is fixed.' : 'This bout still doesn’t fit. The reason is below.'}
+              </p>
+            )
+          })()}
           {show ? <PdfCrop doc={doc} show={show} marks={marks} /> : <p className="text-xs text-slate-500">{consRow ? 'Consolation bouts aren’t checked against the PDF yet.' : 'No PDF section for this one.'}</p>}
           <div className="grid gap-x-6 gap-y-3 text-xs text-slate-700 md:grid-cols-2">
             <div><H4>The results file says</H4><p>{row ? <>{boutText(row)} <span className="text-slate-400">· row {row.row}</span></> : <span className="text-slate-500">No bout for this box.</span>}</p></div>
@@ -310,7 +324,7 @@ function BoutPanel({ id, view, draw, bracket, completed, report, rows, unplaced,
               <div className="flex flex-wrap gap-1.5">{root.fixes.map((f: Fix) => <button key={f.label} onClick={() => onApply(`${root.weight} row ${root.row.row}: ${f.label}`, f.apply)} className="bg-slate-900 px-2 py-1 text-[11px] font-semibold text-white hover:bg-slate-700">{f.label}</button>)}</div>
             </div>
           )}
-          {cell && <ByHand cell={cell} draw={draw} D={D} row={row} rows={rows} teamOf={teamOf} onApply={onApply} />}
+          {cell && <ByHand cell={cell} draw={draw} D={D} row={row} rows={rows} placed={placed} teamOf={teamOf} onApply={onApply} />}
         </div>
       </div>
     </div>
@@ -318,7 +332,7 @@ function BoutPanel({ id, view, draw, bracket, completed, report, rows, unplaced,
 }
 
 /** Set the box's bout by hand: who wrestled (from the lines that can reach this box), who won, how */
-function ByHand({ cell, draw, D, row, rows, teamOf, onApply }: { cell: Cell; draw: WeightDraw; D: number; row: ResultRow | null; rows: ResultRow[]; teamOf: (name: string, code: string) => string; onApply: (label: string, f: (rows: ResultRow[]) => void, manualRow?: number) => void }) {
+function ByHand({ cell, draw, D, row, rows, placed, teamOf, onApply }: { cell: Cell; draw: WeightDraw; D: number; row: ResultRow | null; rows: ResultRow[]; placed: Placed[]; teamOf: (name: string, code: string) => string; onApply: (label: string, f: (rows: ResultRow[]) => void, manualRow?: number) => void }) {
   const span = 1 << cell.level
   const half = (k: 0 | 1) => { const from = (2 * cell.block + k) * span; return Array.from({ length: span }, (_, i) => from + i).filter(i => draw.lines[i]) }
   const lineOfName = (n: string | undefined) => (n ? draw.lines.findIndex(l => l && norm(l.name) === norm(n)) : -1)
@@ -331,11 +345,30 @@ function ByHand({ cell, draw, D, row, rows, teamOf, onApply }: { cell: Cell; dra
   const [type, setType] = useState(row?.winType || 'DEC')
   const [score, setScore] = useState(row?.result ?? '')
   const name = (l: number) => draw.lines[l]!.name
+  // putting a wrestler in this box means they won every earlier box on the way here. Where the file says they lost one
+  // of those, that result is turned around too (Kyle 2026-11-26: a hand fix to a semifinal "didn't save" — the file's
+  // quarterfinal still had the wrestler losing, so the box stayed red)
+  const earlier = (L: number) => {
+    const flip: { row: ResultRow; lvl: number }[] = [], odd: { row: ResultRow; lvl: number }[] = []
+    for (let lv = 0; lv < cell.level; lv++) {
+      const p = placed.find(x => meet(x.lines[0], x.lines[1]) === lv && x.lines[0] >> (lv + 1) === L >> (lv + 1))
+      if (!p) continue
+      if (p.lines[1] === L) flip.push({ row: p.row, lvl: lv })
+      else if (p.lines[0] !== L) odd.push({ row: p.row, lvl: lv })
+    }
+    return { flip, odd }
+  }
+  const chain = [top, bot].map(earlier)
+  const flips = chain.flatMap(c => c.flip), odds = chain.flatMap(c => c.odd)
   const save = () => {
     const w = win === 'top' ? top : bot, l = win === 'top' ? bot : top
     const wl = draw.lines[w]!, ll = draw.lines[l]!
     const target = row?.row ?? Math.max(0, ...rows.map(r => r.row)) + 1
-    onApply(`${draw.weight} ${levelName(cell.level, D).toLowerCase()}: ${wl.name} over ${ll.name} (by hand)`, rs => {
+    onApply(`${draw.weight} ${levelName(cell.level, D).toLowerCase()}: ${wl.name} over ${ll.name}${flips.length ? ` (and ${flips.length} earlier result${flips.length === 1 ? '' : 's'} turned around)` : ''}, by hand`, rs => {
+      for (const f of flips) {
+        const r = rs.find(x => x.row === f.row.row)
+        if (r) { [r.winner, r.loser] = [r.loser, r.winner]; [r.winnerTeam, r.loserTeam] = [r.loserTeam, r.winnerTeam] }
+      }
       let r = rs.find(x => x.row === target)
       if (!r) { const tpl = rs[0]; r = { ...tpl, row: target }; rs.push(r) }
       Object.assign(r, { weight: draw.weight, round: levelName(cell.level, D), winner: wl.name, winnerTeam: teamOf(wl.name, wl.code), loser: ll.name, loserTeam: teamOf(ll.name, ll.code), winType: type, result: score })
@@ -355,6 +388,17 @@ function ByHand({ cell, draw, D, row, rows, teamOf, onApply }: { cell: Cell; dra
         <label className="flex flex-col gap-0.5">Score / time<input value={score} onChange={e => setScore(e.target.value)} placeholder="6-5 or 1:36" className={`${sel} w-24`} /></label>
         <button onClick={save} className="bg-sky-700 px-3 py-1 font-semibold text-white hover:bg-sky-800">Save this bout</button>
       </div>
+      {flips.length > 0 && (
+        <div className="mt-2 border-l-4 border-sky-500 bg-sky-50 px-2 py-1 text-[11px] text-sky-900">
+          <b>Saving also changes:</b>
+          <ul className="list-disc pl-4">{flips.map(f => <li key={f.row.row}>row {f.row.row}, {levelName(f.lvl, D).toLowerCase()}: the file has {f.row.winner} beating {f.row.loser}. It becomes {f.row.loser} over {f.row.winner} ({f.row.winType} {f.row.result}), since {f.row.loser} wrestles in this box.</li>)}</ul>
+        </div>
+      )}
+      {odds.length > 0 && (
+        <p className="mt-2 border-l-4 border-amber-500 bg-amber-50 px-2 py-1 text-[11px] text-amber-900">
+          The file has {odds.map(o => `${o.row.winner} over ${o.row.loser} (${levelName(o.lvl, D).toLowerCase()}, row ${o.row.row})`).join('; ')}: neither is who you picked, so that box will need fixing too.
+        </p>
+      )}
       <p className="mt-1 text-[11px] text-slate-500">This changes {row ? `row ${row.row} of the results` : 'the results (a new row)'}; the bracket then checks again. Undo is under the bracket.</p>
     </div>
   )
