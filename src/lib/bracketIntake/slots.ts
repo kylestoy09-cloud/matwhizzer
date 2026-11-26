@@ -88,11 +88,15 @@ export function buildIntakeBracket(
     if (top == null || bottom == null) { if (!here.length) continue }
     const t = top ?? null, b = bottom ?? null
     cells.set(id, { id, weight: draw.weight, level: lvl, block, sides: [t, b], row, items: here, box })
-    const winLine = placed ? placed.win : here[0]?.slotLines[0] ?? null
+    // a bout the file has under another weight isn't in this weight's results: the box shows who should wrestle here,
+    // never that bout's winner or score (Kyle 2026-11-26: "if it was in the 175, than the 165 result for that bout
+    // wouldn't even show")
+    const filedHere = !row || row.weight === draw.weight
+    const winLine = placed ? placed.win : filedHere ? here[0]?.slotLines[0] ?? null : null
     champ[lvl].cells[block] = {
       id, round: lvl === D - 1 ? 'F' : `R${lvl + 1}`, top: person(t), bottom: person(b),
       winner: winLine != null && winLine === t ? 'top' : winLine != null && winLine === b ? 'bottom' : null,
-      result: row ? `${row.winType} ${row.result}`.trim() : '',
+      result: row && filedHere ? `${row.winType} ${row.result}`.trim() : '',
     }
     if (here.some(i => !i.knockOn)) status[id] = 'problem'
     else if (here.length) status[id] = 'follows'

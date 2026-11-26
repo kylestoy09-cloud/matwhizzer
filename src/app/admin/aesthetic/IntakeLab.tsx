@@ -151,8 +151,10 @@ export function IntakeLab() {
     return buildIntakeBracket(draw, fit, report?.items ?? [], completed?.weights.find(w => w.weight === draw.weight) ?? null, cur?.manual ?? new Set())
   }, [draw, report, completed, cur])
   // per weight: problems (red) to settle
-  const problemsAt = (w: number) => (report?.items ?? []).filter(i => !i.knockOn && (i.slot ? i.slot.weight === w : i.weight === w)).length
-  const unplaced = (report?.items ?? []).filter(i => !i.slot && i.weight === weight)
+  // a problem counts on the weight it belongs to and on the weight the file has it under (the wrong-weight case)
+  const problemsAt = (w: number) => (report?.items ?? []).filter(i => !i.knockOn && ((i.slot ? i.slot.weight === w : i.weight === w) || i.row.weight === w)).length
+  // in the file under this weight, but not in a box on this bracket (no place on it, or its place is on another weight)
+  const unplaced = (report?.items ?? []).filter(i => i.row.weight === weight && (!i.slot || i.slot.weight !== weight) && !i.knockOn)
   const totalProblems = (report?.items ?? []).filter(i => !i.knockOn).length
   const missing = view ? Object.values(view.status).filter(s => s === 'missing').length : 0
 
@@ -223,9 +225,9 @@ export function IntakeLab() {
               {missing > 0 && <p className="mt-2 text-[11px] text-slate-500">{missing} box{missing === 1 ? '' : 'es'} with both wrestlers known but no bout in the file (dashed). Click to enter it.</p>}
               {unplaced.length > 0 && (
                 <div className="mt-3 border-t border-slate-200 pt-2">
-                  <H4>In the file under {weight}, but not on this bracket</H4>
+                  <H4>In the results under {weight}, but not on the {weight} bracket</H4>
                   <div className="flex flex-wrap gap-2">
-                    {unplaced.map(it => <button key={it.id} onClick={() => setPicked(`u-${it.id}`)} className="border border-red-600 bg-red-50 px-2 py-1 text-left text-[11px] text-red-900 hover:bg-red-100">row {it.row.row}: {it.row.winner} over {it.row.loser}<br /><span className="text-red-700">{it.title}</span></button>)}
+                    {unplaced.map(it => <button key={it.id} onClick={() => setPicked(`u-${it.id}`)} className="border border-red-600 bg-red-50 px-2 py-1 text-left text-[11px] text-red-900 hover:bg-red-100">row {it.row.row}: {it.row.round ? `${it.row.round}, ` : ''}{it.row.winner} over {it.row.loser}<br /><span className="text-red-700">{it.slot && it.slot.weight !== weight ? `Both wrestlers are on the ${it.slot.weight} bracket` : it.title}</span></button>)}
                   </div>
                 </div>
               )}
@@ -313,7 +315,7 @@ function BoutPanel({ id, view, draw, bracket, completed, report, rows, unplaced,
           })()}
           {show ? <PdfCrop doc={doc} show={show} marks={marks} /> : <p className="text-xs text-slate-500">{consRow ? 'Consolation bouts aren’t checked against the PDF yet.' : 'No PDF section for this one.'}</p>}
           <div className="grid gap-x-6 gap-y-3 text-xs text-slate-700 md:grid-cols-2">
-            <div><H4>The results file says</H4><p>{row ? <>{boutText(row)} <span className="text-slate-400">· row {row.row}</span></> : <span className="text-slate-500">No bout for this box.</span>}</p></div>
+            <div><H4>The results file says</H4><p>{row ? <>{row.weight !== draw.weight && cell ? <b className="text-red-700">Filed under {row.weight}, not {draw.weight}: </b> : null}{boutText(row)} <span className="text-slate-400">· row {row.row}, under {row.weight}</span></> : <span className="text-slate-500">No bout for this box.</span>}</p></div>
             <div><H4>The completed bracket shows</H4><p>{boxShows ?? <span className="text-slate-400">{completed ? 'Nothing readable here.' : 'Not loaded.'}</span>}</p></div>
             {root && !root.knockOn && <div><H4>What doesn’t fit</H4><p>{root.reason}</p></div>}
             {root && !root.knockOn && root.hint && <div><H4>Why, most likely</H4><p>{root.hint}</p></div>}
