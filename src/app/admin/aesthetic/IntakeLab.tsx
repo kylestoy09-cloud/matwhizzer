@@ -151,10 +151,12 @@ export function IntakeLab() {
     return buildIntakeBracket(draw, fit, report?.items ?? [], completed?.weights.find(w => w.weight === draw.weight) ?? null, cur?.manual ?? new Set())
   }, [draw, report, completed, cur])
   // per weight: problems (red) to settle
-  // a problem counts on the weight it belongs to and on the weight the file has it under (the wrong-weight case)
-  const problemsAt = (w: number) => (report?.items ?? []).filter(i => !i.knockOn && ((i.slot ? i.slot.weight === w : i.weight === w) || i.row.weight === w)).length
-  // in the file under this weight, but not in a box on this bracket (no place on it, or its place is on another weight)
-  const unplaced = (report?.items ?? []).filter(i => i.row.weight === weight && (!i.slot || i.slot.weight !== weight) && !i.knockOn)
+  // each problem is counted once, on the weight whose bracket it's on; a bout filed under another weight is also marked
+  // on the weight it's filed under as "to move" (so the badges add up to the banner)
+  const problemsAt = (w: number) => (report?.items ?? []).filter(i => !i.knockOn && (i.slot ? i.slot.weight === w : i.weight === w)).length
+  const toMoveAt = (w: number) => (report?.items ?? []).filter(i => !i.knockOn && i.slot && i.slot.weight !== w && i.row.weight === w).length
+  // in the file under this weight but in no box on this bracket: misfiled bouts (red), and knock-ons with no box anywhere (amber)
+  const unplaced = (report?.items ?? []).filter(i => i.row.weight === weight && (!i.slot || i.slot.weight !== weight) && (!i.knockOn || !i.slot))
   const totalProblems = (report?.items ?? []).filter(i => !i.knockOn).length
   const missing = view ? Object.values(view.status).filter(s => s === 'missing').length : 0
 
@@ -195,7 +197,7 @@ export function IntakeLab() {
       {results && report && (
         totalProblems === 0
           ? <p className="border-l-4 border-emerald-500 bg-emerald-50 px-3 py-1.5 text-xs text-emerald-900"><b>Every bout fits{completed ? ' and matches the completed brackets' : ''}.</b> {report.placed} bouts ready to save. <button disabled className="ml-2 bg-emerald-700 px-2 py-0.5 font-semibold text-white opacity-60" title="Mock: nothing is saved here">Save results</button></p>
-          : <p className="border-l-4 border-red-500 bg-red-50 px-3 py-1.5 text-xs text-red-900"><b>{totalProblems} to fix</b> (red). Nothing is saved until they’re fixed.{!completed && ' Load the completed brackets (step 3) to check them against what was wrestled.'}</p>
+          : <p className="border-l-4 border-red-500 bg-red-50 px-3 py-1.5 text-xs text-red-900"><b>{totalProblems} to fix</b> (red). A bout filed under the wrong weight is counted on the weight it belongs to; the weight it’s filed under says “to move”. Nothing is saved until they’re fixed.{!completed && ' Load the completed brackets (step 3) to check them against what was wrestled.'}</p>
       )}
 
       {bracket && (
@@ -203,9 +205,10 @@ export function IntakeLab() {
           <div className="flex flex-wrap items-center gap-1 border-b border-slate-200 p-2">
             {bracket.draws.map(d => {
               const n = results ? problemsAt(d.weight) : 0
+              const mv = results ? toMoveAt(d.weight) : 0
               return (
-                <button key={d.weight} onClick={() => { setWeight(d.weight); setPicked(null) }} className={`px-2 py-0.5 text-xs border ${d.weight === weight ? 'bg-slate-900 text-white border-slate-900' : n ? 'border-red-500 text-red-700 bg-red-50' : results ? 'border-emerald-400 text-emerald-800' : 'border-slate-300 text-slate-700'}`}>
-                  {d.weight}{n ? ` · ${n}` : ''}
+                <button key={d.weight} onClick={() => { setWeight(d.weight); setPicked(null) }} className={`px-2 py-0.5 text-xs border ${d.weight === weight ? 'bg-slate-900 text-white border-slate-900' : n || mv ? 'border-red-500 text-red-700 bg-red-50' : results ? 'border-emerald-400 text-emerald-800' : 'border-slate-300 text-slate-700'}`}>
+                  {d.weight}{n ? ` · ${n}` : ''}{mv ? ` · ${mv} to move` : ''}
                 </button>
               )
             })}
@@ -227,7 +230,9 @@ export function IntakeLab() {
                 <div className="mt-3 border-t border-slate-200 pt-2">
                   <H4>In the results under {weight}, but not on the {weight} bracket</H4>
                   <div className="flex flex-wrap gap-2">
-                    {unplaced.map(it => <button key={it.id} onClick={() => setPicked(`u-${it.id}`)} className="border border-red-600 bg-red-50 px-2 py-1 text-left text-[11px] text-red-900 hover:bg-red-100">row {it.row.row}: {it.row.round ? `${it.row.round}, ` : ''}{it.row.winner} over {it.row.loser}<br /><span className="text-red-700">{it.slot && it.slot.weight !== weight ? `Both wrestlers are on the ${it.slot.weight} bracket` : it.title}</span></button>)}
+                    {unplaced.map(it => it.knockOn
+                      ? <button key={it.id} onClick={() => setPicked(`u-${it.id}`)} className="border border-amber-500 bg-amber-50 px-2 py-1 text-left text-[11px] text-amber-900 hover:bg-amber-100">row {it.row.row}: {it.row.round ? `${it.row.round}, ` : ''}{it.row.winner} over {it.row.loser}<br /><span className="text-amber-700">Follows from another problem; check it once that’s fixed</span></button>
+                      : <button key={it.id} onClick={() => setPicked(`u-${it.id}`)} className="border border-red-600 bg-red-50 px-2 py-1 text-left text-[11px] text-red-900 hover:bg-red-100">row {it.row.row}: {it.row.round ? `${it.row.round}, ` : ''}{it.row.winner} over {it.row.loser}<br /><span className="text-red-700">{it.slot && it.slot.weight !== weight ? `Both wrestlers are on the ${it.slot.weight} bracket` : it.title}</span></button>)}
                   </div>
                 </div>
               )}
@@ -274,7 +279,8 @@ function BoutPanel({ id, view, draw, bracket, completed, report, rows, unplaced,
   const loose = id.startsWith('u-') ? unplaced.find(i => `u-${i.id}` === id) ?? null : null
   const items = cell?.items ?? (loose ? [loose] : [])
   const D = Math.log2(draw.lines.length)
-  const root = items.find(i => !i.knockOn) ?? items[0] ?? null
+  // the bout filed under this weight first (matches the box: slots.ts), a misfiled one only when there's no other
+  const root = items.find(i => !i.knockOn && i.row.weight === draw.weight) ?? items.find(i => !i.knockOn) ?? items[0] ?? null
   const follows = items.find(i => i.knockOn)
   const rootOf = follows ? report?.items.find(i => i.id === follows.knockOn) : null
 
@@ -292,7 +298,7 @@ function BoutPanel({ id, view, draw, bracket, completed, report, rows, unplaced,
     if (ys.length) { show = { page: d.page, top: Math.min(...ys) - 30, bottom: Math.max(...ys) + 30, label: `${cdraw ? 'Completed bracket' : 'Bracket'} PDF, page ${d.page} · ${draw.weight}` }; doc = cdraw && completed ? completed.doc : bracket.doc }
   }
   const row = cell?.row ?? consRow ?? loose?.row ?? null
-  const title = cell ? `${draw.weight} · ${levelName(cell.level, D)}` : consRow ? `${draw.weight} · ${consRow.round || 'Consolation'}` : `${loose?.weight} · not on the bracket`
+  const title = cell ? `${draw.weight} · ${levelName(cell.level, D)}` : consRow ? `${draw.weight} · ${consRow.round || 'Consolation'}` : loose?.slot && loose.slot.weight !== loose.row.weight ? `${loose.row.weight} · belongs on the ${loose.slot.weight} bracket` : `${loose?.row.weight} · not on the bracket`
   const boxShows = cell?.box && cell.box.winner != null ? (() => { const b = cell.box!; const l = b.lines[0] === b.winner ? b.lines[1] : b.lines[0]; return `${draw.lines[b.winner!]!.name} over ${l != null ? draw.lines[l]!.name : '?'}${b.result ? ` · ${b.result}` : ''}` })() : root?.bracketShows ?? null
 
   return (
@@ -400,6 +406,9 @@ function ByHand({ cell, draw, D, row, rows, placed, teamOf, onApply }: { cell: C
         <p className="mt-2 border-l-4 border-amber-500 bg-amber-50 px-2 py-1 text-[11px] text-amber-900">
           The file has {odds.map(o => `${o.row.winner} over ${o.row.loser} (${levelName(o.lvl, D).toLowerCase()}, row ${o.row.row})`).join('; ')}: neither is who you picked, so that box will need fixing too.
         </p>
+      )}
+      {row && row.weight !== draw.weight && (
+        <p className="mt-2 border-l-4 border-sky-500 bg-sky-50 px-2 py-1 text-[11px] text-sky-900"><b>Saving moves row {row.row} from {row.weight} to {draw.weight}</b>: it leaves the {row.weight} results.</p>
       )}
       <p className="mt-1 text-[11px] text-slate-500">This changes {row ? `row ${row.row} of the results` : 'the results (a new row)'}; the bracket then checks again. Undo is under the bracket.</p>
     </div>

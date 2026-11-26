@@ -83,7 +83,9 @@ export function buildIntakeBracket(
     for (const l of [...(placed0 ? [placed0.win, placed0.lose] : []), ...here.flatMap(it => it.slotLines)]) if (l != null) { if (topHalf(l, lvl)) top ??= l; else bottom ??= l }
     if (lvl === 0 && (top == null || bottom == null)) continue                                    // a bye: no bout
     const placed = rowAt.get(k)
-    const row = placed?.row ?? here[0]?.row ?? null
+    // of the problems in this box, the bout filed under this weight comes first; a misfiled one only when there's no other
+    const lead = here.find(i => i.row.weight === draw.weight) ?? here[0] ?? null
+    const row = placed?.row ?? lead?.row ?? null
     const box = completed?.bouts.find(b => b.level === lvl && b.block === block) ?? null
     if (top == null || bottom == null) { if (!here.length) continue }
     const t = top ?? null, b = bottom ?? null
@@ -92,7 +94,7 @@ export function buildIntakeBracket(
     // never that bout's winner or score (Kyle 2026-11-26: "if it was in the 175, than the 165 result for that bout
     // wouldn't even show")
     const filedHere = !row || row.weight === draw.weight
-    const winLine = placed ? placed.win : filedHere ? here[0]?.slotLines[0] ?? null : null
+    const winLine = placed ? placed.win : filedHere ? lead?.slotLines[0] ?? null : null
     champ[lvl].cells[block] = {
       id, round: lvl === D - 1 ? 'F' : `R${lvl + 1}`, top: person(t), bottom: person(b),
       winner: winLine != null && winLine === t ? 'top' : winLine != null && winLine === b ? 'bottom' : null,
