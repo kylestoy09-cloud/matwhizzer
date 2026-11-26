@@ -7,7 +7,7 @@ import { isPlaceholder, roundKind, type ResultRow, type RoundKind } from './resu
 
 export type Placed = { row: ResultRow; side: 'champ' | 'cons'; lines: [number, number]; round: RoundKind }
 // kind: what tripped the check (the review page explains each and offers its fixes)
-export type FlagKind = 'bad-size' | 'not-on-bracket' | 'unknown-round' | 'wrong-round' | 'off-path'
+export type FlagKind = 'bad-size' | 'not-on-bracket' | 'unknown-round' | 'wrong-round' | 'off-path' | 'rematch'
 export type Flag = { row: ResultRow; kind: FlagKind; reason: string; lines?: [number | null, number | null] }
 export type WeightFit = { weight: number; placed: Placed[]; flags: Flag[]; skipped: number }
 
@@ -50,21 +50,50 @@ export function fitWeight(draw: WeightDraw, results: ResultRow[], codeToSchool?:
   }
   // the championship side by its path: in each block, the bout between the two wrestlers who advanced into it (a bye
   // advances the lone wrestler); its winner advances. Round names only break ties (a rematch in the wrestlebacks)
+  const meet = (a: number, c: number) => 31 - Math.clz32(a ^ c)                  // the championship column where two lines meet
   const champRow = new Set<ResultRow>()
   const used = new Set<number>()
+  // memoized: a block's advancer is worked out once (a tie-break below looks at the neighbouring block's)
+  const memo = new Map<string, number | null | undefined>(), busy = new Set<string>(), rematch = new Set<ResultRow>()
   const advance = (lvl: number, block: number): number | null | undefined => {     // undefined = not decided yet
+    const key = `${lvl}:${block}`
+    if (memo.has(key)) return memo.get(key)
+    if (busy.has(key)) return undefined
+    busy.add(key)
+    const r = decide(lvl, block)
+    busy.delete(key); memo.set(key, r)
+    return r
+  }
+  const decide = (lvl: number, block: number): number | null | undefined => {
     const sides = lvl === 0 ? [2 * block, 2 * block + 1].map(i => (draw.lines[i] ? i : null)) : [advance(lvl - 1, 2 * block), advance(lvl - 1, 2 * block + 1)]
     const [x, y] = sides
     if (x === undefined || y === undefined) return undefined
     if (x == null || y == null) return x ?? y                                    // a bye
     const cand = bouts.map((b, i) => [b, i] as const).filter(([b, i]) => !used.has(i) && ((b.a === x && b.c === y) || (b.a === y && b.c === x)))
     if (!cand.length) return undefined                                         // not wrestled (yet)
-    const [b, i] = cand.find(([b2]) => b2.kind !== 'CONS') ?? cand[0]
+    // two meetings (the championship bout and a wrestleback rematch: Region 7 2024 has four, all quarterfinals): a
+    // single championship label decides; with no labels, the championship bout is the one whose winner then
+    // wrestles the neighbouring block's advancer in the next championship round
+    const champLabeled = cand.filter(([b2]) => b2.kind !== 'CONS' && b2.kind !== 'BLANK')
+    let pick: (typeof cand)[number] | undefined = champLabeled.length === 1 ? champLabeled[0] : undefined
+    if (!pick && cand.length > 1 && lvl < D - 1 && new Set(cand.map(([b2]) => b2.a)).size > 1) {
+      const s = advance(lvl, block ^ 1)
+      if (s != null) pick = cand.filter(([b2]) => b2.kind !== 'CONS').find(([b2]) => bouts.some(o => (o.a === b2.a && o.c === s) || (o.a === s && o.c === b2.a)))
+    }
+    // still two with nothing to tell them apart (same winner both times, no labels): which result belongs to the
+    // championship bout is a guess, so neither is saved until the completed bracket settles it
+    const open = cand.filter(([b2]) => b2.kind !== 'CONS')
+    // the same winner and the same result both times (Region 7 2024 144: DEC 5-0 twice): either way it's the same data
+    const alike = open.length > 1 && open.every(([b2]) => b2.a === open[0][0].a && b2.row.winType === open[0][0].row.winType && b2.row.result === open[0][0].row.result)
+    if (!pick && open.length > 1 && !alike) for (const [b2] of open) if (!rematch.has(b2.row)) {
+      rematch.add(b2.row)
+      flags.push({ row: b2.row, kind: 'rematch', reason: `${b2.row.winner} and ${b2.row.loser} wrestled each other ${open.length} times and the file doesn't say which was the championship bout.`, lines: [b2.a, b2.c] })
+    }
+    const [b, i] = pick ?? cand.find(([b2]) => b2.kind !== 'CONS') ?? cand[0]
     used.add(i); champRow.add(b.row)
     return b.a
   }
   advance(D - 1, 0)
-  const meet = (a: number, c: number) => 31 - Math.clz32(a ^ c)                  // the championship column where two lines meet
   const COL: Partial<Record<RoundKind, number>> = { F: D - 1, SF: D - 2, QF: D - 3, ...(D === 5 ? { EARLY1: 0, EARLY2: 1 } : { EARLY1: 0, EARLY2: 0 }) }
   const KIND = (lvl: number): RoundKind => (lvl === D - 1 ? 'F' : lvl === D - 2 ? 'SF' : lvl === D - 3 ? 'QF' : lvl === 0 ? 'EARLY1' : 'EARLY2')
   // wrestlers who lost on the championship path: a bout between two of them is a placement / wrestleback bout,
@@ -72,6 +101,7 @@ export function fitWeight(draw: WeightDraw, results: ResultRow[], codeToSchool?:
   const lostOnPath = new Set<number>()
   for (const b of bouts) if (champRow.has(b.row)) lostOnPath.add(b.c)
   for (const b of bouts) {
+    if (rematch.has(b.row)) continue                                            // flagged above
     const lvl = meet(b.a, b.c)
     if (champRow.has(b.row)) {
       if (b.kind !== 'BLANK' && b.kind !== 'CONS' && COL[b.kind] !== lvl) { flags.push({ row: b.row, kind: 'wrong-round', reason: `${b.row.winner} and ${b.row.loser} meet in the ${KIND(lvl)} on the bracket, not the ${b.row.round}.`, lines: [b.a, b.c] }); continue }

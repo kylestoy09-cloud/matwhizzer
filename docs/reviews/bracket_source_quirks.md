@@ -81,3 +81,23 @@ Somerset County 2025 140/140 · Shore Conference 2025 207/207. Every consolation
 page numbers) and one or more brackets (`Default Pool`, or a pool's own bracket with `Page 1 of 2`), each with its own
 `Finals`. A weight is several brackets: key draws by (weight, pool) and place each bout in the pool whose draw holds
 both wrestlers. Not built yet.
+
+## 7. Completed Flo brackets and rematches (2026-11-26)
+
+- **The winner is marked only by font.** In a completed Flo bracket the bout's winner prints in UniNeue *Heavy*, the
+  loser in *Bold* or *Regular*. The final's winner isn't printed anywhere else (no champion line).
+  `src/lib/bracketIntake/completed.ts` reads it. Checked against the CSVs: every championship bout's winner and score
+  agree across state 2013–2024 (4,534), Region 7 2024, Union County, Somerset County and Shore Conference 2025.
+- **Byes in completed brackets:** a bye box prints a second "BYE" between the first two columns (not a wrestler);
+  a bye in a later round sits inside that round's column ("1 Daly" v "BYE", Union County 2025 113).
+- **2013 District 24 finals can't be read:** the final and the 3rd-place bout are printed on top of each other in one
+  box ("41Martin (TRS)DeLuise (BARN.)"). The reader returns "no winner", never a guess.
+- **Rematches with no round names (2024 Region 7: five pairs, all quarterfinals).** The same two wrestlers met in a
+  quarterfinal and again in the wrestlebacks, and the file has no round names. Before this, the importer took the
+  first one in the file as the championship bout. It fit either way, but at 120 the completed bracket shows it picked
+  the wrestleback's score. Now: if the winners differ, the championship bout is the one whose winner then wrestles
+  the neighbouring block's advancer; if the same wrestler won both with different results, it's flagged and the
+  completed bracket settles it; identical results (144: DEC 5-0 twice) need nothing.
+- End-to-end test: `scripts/bracket_intake/mutation_test.mts`. It runs the practice file
+  (`data/bracket_intake/2024_state_flo_practice.csv`, six mistakes, `practice.ts`) and Region 7 through steps 2–3,
+  then applies the suggested fixes. Both must end with nothing left and every row matching the real results.
