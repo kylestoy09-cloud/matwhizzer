@@ -74,6 +74,7 @@ Somerset County 2025 140/140 · Shore Conference 2025 207/207. Every consolation
 **CSV quirks**
 - Round names can be **blank for a whole event** (2024 Region 7: all 273). With the draw loaded, a blank or wrong label doesn't matter: two wrestlers meet on the championship side at exactly one round, which the lines give.
 - 2013–2016 state: bye rows with a blank round.
+- A round name can hold more than one kind of bout: 2013's `Finals (16 Man)` has the 1st **and** 3rd place bouts. The championship side is decided by the bracket's path (the bout between the two wrestlers who advanced into each block); a bout between two wrestlers who already lost on that path is placement, whatever its label.
 - In-season round names: `Round of 32`, `Round of 16`, `Quarter-Finals`, `Semi-Finals`, `Finals`, `Consi of 4`, `Consi-Semis`.
 
 **Pool-play events (in-season, e.g. Burlington County):** each weight has round-robin pools (`Pool A`–`D`, pages without
