@@ -1,4 +1,4 @@
-# Tournament Hub — 5 tabs (PLAN, for Kyle's approval before any page changes)
+# Tournament Hub — 5 tabs (PLAN — approved 2026-11-26)
 
 Drafted 2026-11-26. Decisions it follows: Kyle 2026-11-25 (one Tournament Hub, 5 tabs: In-season tournaments · Team
 postseason · District · Region · State; every event follows load bracket → load results → close out;
@@ -65,7 +65,11 @@ everywhere, so the Postseason dashboard can just count them.
 - Bracket drawing reads the stored draw first (`src/lib/postseasonBracket.ts`), seed slots / bout tree only for
   seasons without one.
 
-## Decisions for Kyle
+## Decisions (Kyle 2026-11-26: approved)
+
+1. Team postseason keeps its own layout — **yes**. 2. Postseason dashboard stays as a summary counting the hub's statuses — **yes**. 3. History as a switch inside each tab — **yes**. 4. Retire the hand-built Post-Season Bracket once Load bracket works — **yes**.
+
+### Original questions
 
 1. Does **Team postseason** keep its own layout (groups, seeds, dual brackets) rather than the 3 steps? (Recommended.)
 2. Should the **Postseason** dashboard (Dashboards › Season) stay as a one-page summary that counts the hub's statuses?

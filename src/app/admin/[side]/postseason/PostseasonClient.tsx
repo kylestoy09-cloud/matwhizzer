@@ -28,7 +28,7 @@ function Ring({ pct }: { pct: number }) {
 const TOOL_LINKS = [
   { label: 'Playoff Seeds',  href: '/admin/playoff-seeds' },
   { label: 'Import Hub',     href: '/admin/import-hub' },
-  { label: 'Region Seeds',   href: '/admin/region-seeds' },
+  { label: 'Region Seeds',   href: '/admin/tournament-hub?tab=region' },
   { label: 'Bracket Editor', href: '/admin/bracket' },
   { label: 'Team Scores',    href: '/admin/team-scores' },
   { label: 'PP Audit',       href: '/admin/pp-audit' },
@@ -56,7 +56,7 @@ const TEAM_STEP_CONFIG: Record<string, { label: string; href: string }> = {
 
 const INDIVIDUAL_STEP_CONFIG: Record<string, { label: string; href: string }> = {
   district_seeds_forecasted: { label: 'Forecast district seeds', href: '/admin/rankings/individual' },
-  district_seeds_set:        { label: 'Set district seeds',      href: '/admin/region-seeds' },
+  district_seeds_set:        { label: 'Set district seeds',      href: '/admin/tournament-hub?tab=region' },
   results_imported:          { label: 'Import individual results', href: '/admin/bracket' },
 }
 

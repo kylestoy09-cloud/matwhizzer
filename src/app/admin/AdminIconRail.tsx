@@ -111,12 +111,8 @@ function buildGender(side: AdminSide): RailEntry[] {
         { label: 'Rankings Hub',    href: a('/rankings-hub') },
         { label: 'Snap Shot',       href: a('/snapshot') },
       ]},
-      { heading: 'Postseason Hubs', items: [
-        { label: 'Team Playoffs',   href: a('/team-playoffs') },
-        { label: 'Districts',       href: a('/districts') },
-        { label: 'Regions',         href: a('/region-seeds') },
-        { label: 'States',          href: a('/states-hub') },
-      ]},
+      // Team Playoffs, Districts, Regions and States are tabs of the Tournament Hub since 2026-11-26 (Kyle: one hub,
+      // 5 tabs); their old URLs forward there
     ],
   },
   {
@@ -173,8 +169,7 @@ function buildGender(side: AdminSide): RailEntry[] {
       { heading: 'Admin Tools', items: [
         { label: 'Tie Resolution',          href: a('/tie-resolution') },
         { label: 'Resolve Unknowns',        href: a('/resolve-unknowns') },
-        // past postseasons rebuilt from TrackWrestling exports (Kyle 2026-11-13): boys 2013 on, girls 2019 on
-        { label: 'Playoff History Review',  href: a('/playoff-history') },
+        // Playoff History Review: the Tournament Hub's District / Region / State tabs → History (2026-11-26)
       ]},
       { heading: 'Coming Soon', items: [
         { label: 'Settings',    href: '#', future: true },

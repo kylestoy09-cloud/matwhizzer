@@ -248,7 +248,7 @@ export function AdminDashboardClient({ email }: { email: string }) {
               links={[
                 { label: 'Playoff Seeds',   href: a('/playoff-seeds') },
                 { label: 'Import Hub',      href: a('/import-hub') },
-                { label: 'Region Seeds',    href: a('/region-seeds') },
+                { label: 'Region Seeds',    href: a('/tournament-hub?tab=region') },
                 { label: 'Bracket Editor',  href: a('/bracket') },
                 { label: 'Team Scores',     href: a('/team-scores') },
                 { label: 'PP Audit',        href: a('/pp-audit') },

@@ -6,19 +6,38 @@ import { HubShell } from '../dashboards/HubShell'
 import { TournamentHubHeader } from './TournamentHubHeader'
 import { TournamentHubClient } from './TournamentHubClient'
 import { HistoryTab } from './HistoryTab'
-import Link from 'next/link'
+import { HubTabs, HUB_TABS, type HubTab } from './HubTabs'
+import { DistrictsSection } from '../districts/DistrictsSection'
+import { RegionsSection } from '../region-seeds/RegionsSection'
+import { TeamPostseasonSection } from '../team-playoffs/TeamPostseasonSection'
+import { StatesSection } from '../states-hub/StatesSection'
+import { PlayoffHistoryClient } from '../playoff-history/PlayoffHistoryClient'
 import { genderOfSide, type AdminSide } from '@/lib/admin-side'
 
 export const dynamic = 'force-dynamic'
 
-// Two tabs (Kyle 2026-11-20): Tournaments (this season) and History (every year we're loading, ?tab=history)
-export default async function TournamentHubPage({ params, searchParams }: { params: Promise<{ side: string }>; searchParams: Promise<{ tab?: string }> }) {
+// Five tabs (Kyle 2026-11-26): In-season tournaments · Team postseason · District · Region · State — the separate
+// postseason hubs live here now (their old URLs forward). ?tab=…&history=1 shows past seasons.
+// Older links: ?tab=history (the old History tab) → In-season, History.
+export default async function TournamentHubPage({ params, searchParams }: { params: Promise<{ side: string }>; searchParams: Promise<{ tab?: string; history?: string }> }) {
   const { side } = await params
-  const history = (await searchParams).tab === 'history'
+  const sp = await searchParams
+  const tab: HubTab = HUB_TABS.some(t => t.id === sp.tab) ? (sp.tab as HubTab) : 'inseason'
+  const history = sp.history === '1' || sp.tab === 'history'
   const supabase = await createSupabaseServer()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/admin/login')
 
+  const tabs = <HubTabs side={side} tab={tab} history={history} />
+  if (tab === 'team') return <>{tabs}<TeamPostseasonSection params={params} /></>
+  if (history && tab !== 'inseason') return <>{tabs}<div className="p-4"><PlayoffHistoryClient /></div></>
+  if (tab === 'district') return <>{tabs}<DistrictsSection params={params} /></>
+  if (tab === 'region') return <>{tabs}<RegionsSection params={params} /></>
+  if (tab === 'state') return <>{tabs}<StatesSection params={params} /></>
+  return <>{tabs}<InSeasonSection side={side} history={history} /></>
+}
+
+async function InSeasonSection({ side, history }: { side: string; history: boolean }) {
   const db = createSupabaseAdmin()
 
   // Season in progress per gender — the same season the tournament importers write to
@@ -56,12 +75,6 @@ export default async function TournamentHubPage({ params, searchParams }: { para
         />
       }
     >
-      <div className="flex gap-1 border-b border-slate-200 mb-4">
-        {[['Tournaments', ''], ['History', '?tab=history']].map(([t, q]) => (
-          <Link key={t} href={`/admin/${side}/tournament-hub${q}`}
-            className={`px-4 py-2 text-sm font-semibold border-b-2 -mb-px ${(t === 'History') === history ? 'border-slate-900 text-slate-900' : 'border-transparent text-slate-500 hover:text-slate-800'}`}>{t}</Link>
-        ))}
-      </div>
       {history ? <HistoryTab key={side} gender={genderOfSide(side as AdminSide)} /> : <TournamentHubClient seasonM={seasonM} seasonF={seasonF} />}
     </HubShell>
   )
