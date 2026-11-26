@@ -1,22 +1,24 @@
 'use client'
-// Import review (Kyle 2026-11-26): the bracket import run exactly as a worker will run it, so a problem shows up the
-// way it really would. 1 · load the bracket PDF. 2 · load the results CSV: every bout must fit; if any don't, nothing
-// is saved and the page asks for the completed brackets. 3 · load the completed brackets: every championship bout is
-// compared with them, each problem sits beside its section of the completed bracket, and the fixes change the file
-// and run the check again. Uses the real importer (src/lib/bracketIntake/). Nothing is saved here (a mock).
-// Practice files: 2024 NJSIAA State, with a results file that has mistakes written into it (practice.ts is the
-// answer key; the page isn't told about them).
-import { useEffect, useRef, useState } from 'react'
+// Import review (Kyle 2026-11-26: "empty bracket fills the names in, csv moves those names along as the record shows
+// and with each step, if there is an issue, it will be in red and we can fix"). The bracket import as a worker runs it,
+// shown on the site's own bracket: 1 · the bracket PDF puts the names on the draw; 2 · the results CSV moves winners
+// along — bouts that fit turn green, problems red; 3 · the completed brackets (asked for when anything is red) check
+// every championship bout. Click any bout: its section of the PDF opens with what the file says, what the bracket
+// shows, suggested fixes, and the bout to set by hand. Uses the real importer (src/lib/bracketIntake/). Nothing is
+// saved (a mock). Practice: 2024 NJSIAA State with mistakes written into its results file (practice.ts = answer key).
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { SplitBracket, BracketMarks, BRACKET_LOOK_DEFAULT } from '@/components/bracket/SplitBracket'
 import { pdfPages } from '@/lib/bracketIntake/pdfText'
 import { readFloDraws, type WeightDraw } from '@/lib/bracketIntake/flo'
 import { readFloResults, type ResultRow } from '@/lib/bracketIntake/results'
 import { readFloCompleted, type CompletedWeight } from '@/lib/bracketIntake/completed'
-import { reviewIntake, type ReviewItem } from '@/lib/bracketIntake/review'
+import { reviewIntake, levelName, type Fix, type Mark, type ReviewItem } from '@/lib/bracketIntake/review'
+import { buildIntakeBracket, type Cell } from '@/lib/bracketIntake/slots'
+import { norm } from '@/lib/bracketIntake/fit'
 import { PRACTICE } from '@/lib/bracketIntake/practice'
 
 type PdfJs = typeof import('pdfjs-dist')
 type PdfDoc = Awaited<ReturnType<PdfJs['getDocument']>['promise']>
-
 let pdfjsP: Promise<PdfJs> | null = null
 // pdf.js runs on the page itself: importing its worker module sets globalThis.pdfjsWorker, which pdf.js then uses
 const loadPdfJs = () => (pdfjsP ??= (async () => { await import('pdfjs-dist/build/pdf.worker.min.mjs'); return import('pdfjs-dist') })())
@@ -41,120 +43,78 @@ function drawPage(doc: PdfDoc, n: number) {
   return p
 }
 const TONE = { red: '#dc2626', amber: '#d97706', green: '#059669' }
+type Show = { page: number; top: number; bottom: number; label: string }
 
-function PdfCrop({ doc, item }: { doc: PdfDoc; item: ReviewItem }) {
+function PdfCrop({ doc, show, marks }: { doc: PdfDoc; show: Show; marks: Mark[] }) {
   const ref = useRef<HTMLCanvasElement>(null)
   const [err, setErr] = useState<string | null>(null)
-  const s = item.show
   useEffect(() => {
-    if (!s) return
     let alive = true
-    drawPage(doc, s.page).then(full => {
+    drawPage(doc, show.page).then(full => {
       const c = ref.current
       if (!alive || !c) return
-      const top = s.top * SCALE, h = Math.max(40, Math.min((s.bottom - s.top) * SCALE, full.height - top))
+      const top = Math.max(0, show.top * SCALE), h = Math.max(60, Math.min((show.bottom - show.top) * SCALE, full.height - top))
       c.width = full.width; c.height = h
       const g = c.getContext('2d')!
       g.drawImage(full, 0, top, full.width, h, 0, 0, full.width, h)
       g.font = `bold ${10 * SCALE}px system-ui, sans-serif`
-      for (const m of item.marks) {
+      for (const m of marks) {
         const y0 = m.top * SCALE - top, y1 = m.bottom * SCALE - top
         g.strokeStyle = TONE[m.tone]; g.lineWidth = 2.5
         g.strokeRect(m.x0 * SCALE, y0, (m.x1 - m.x0) * SCALE, y1 - y0)
         const tw = g.measureText(m.label).width
-        g.fillStyle = 'rgba(255,255,255,0.9)'; g.fillRect(m.x1 * SCALE + 4, y0, tw + 8, 13 * SCALE)
+        g.fillStyle = 'rgba(255,255,255,0.92)'; g.fillRect(m.x1 * SCALE + 4, y0, tw + 8, 13 * SCALE)
         g.fillStyle = TONE[m.tone]; g.fillText(m.label, m.x1 * SCALE + 8, y0 + 10 * SCALE)
       }
     }).catch(e => alive && setErr(String(e)))
     return () => { alive = false }
-  }, [doc, s, item.marks])
-  if (!s) return <p className="p-3 text-xs text-slate-500">No bracket in the PDF for this one.</p>
+  }, [doc, show, marks])
   if (err) return <p className="p-3 text-xs text-red-700">Couldn’t draw the PDF: {err}</p>
   return (
     <div>
-      <p className="mb-1 text-[11px] text-slate-500">{s.source === 'completed' ? 'Completed bracket' : 'Bracket'} PDF, page {s.page} · {s.weight}</p>
+      <p className="mb-1 text-[11px] text-slate-500">{show.label}</p>
       <canvas ref={ref} className="block w-full border border-slate-200 bg-white" />
     </div>
   )
 }
 
-const boutText = (r: ResultRow) => `${r.round || '(no round)'}: ${r.winner} (${r.winnerTeam}) over ${r.loser} (${r.loserTeam})${r.winType || r.result ? ` · ${r.winType} ${r.result}` : ''}`
-const H4 = ({ children }: { children: React.ReactNode }) => <h4 className="mb-1 text-[11px] font-bold uppercase tracking-wide text-slate-500">{children}</h4>
-
-function ItemCard({ doc, item, followers, onFix }: { doc: PdfDoc | null; item: ReviewItem; followers: ReviewItem[]; onFix: (i: number) => void }) {
-  return (
-    <div className="border border-slate-300 bg-white">
-      <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-slate-200 bg-amber-50 px-3 py-1.5">
-        <span className="text-sm font-bold text-slate-900">{item.weight} · {item.title}</span>
-        <span className="text-[11px] text-slate-500">results file row {item.row.row}</span>
-      </div>
-      <div className="space-y-3 p-3">
-        {doc && <PdfCrop doc={doc} item={item} />}
-        <div className="grid gap-x-6 gap-y-3 text-xs text-slate-700 md:grid-cols-2">
-          <div><H4>The results file says</H4><p>{boutText(item.row)}</p></div>
-          <div><H4>The completed bracket shows</H4><p>{item.bracketShows ?? <span className="text-slate-400">—</span>}</p></div>
-          <div><H4>What doesn’t fit</H4><p>{item.reason}</p></div>
-          {item.hint && <div><H4>Why, most likely</H4><p>{item.hint}</p></div>}
-          {item.related.length > 0 && (
-            <div className="md:col-span-2"><H4>Their other bouts in the file</H4>
-              <ul className="space-y-0.5">{item.related.map(r => <li key={r.row}>{boutText(r)} <span className="text-slate-400">· row {r.row}</span></li>)}</ul>
-            </div>
-          )}
-          <div className="md:col-span-2"><H4>Fix</H4>
-            <div className="flex flex-wrap gap-1.5">
-              {item.fixes.map((f, i) => <button key={f.label + i} onClick={() => onFix(i)} className="border border-slate-900 bg-slate-900 px-2 py-1 text-[11px] font-semibold text-white hover:bg-slate-700">{f.label}</button>)}
-              {!item.fixes.length && <span className="text-slate-500">Nothing the page can suggest: correct the file and load it again.</span>}
-            </div>
-          </div>
-          {followers.length > 0 && (
-            <div className="border-t border-slate-200 pt-2 md:col-span-2">
-              <H4>Also don’t fit because of this one ({followers.length})</H4>
-              <ul className="space-y-0.5 text-slate-600">{followers.map(f => <li key={f.id}>{boutText(f.row)} <span className="text-slate-400">· row {f.row.row}</span></li>)}</ul>
-              <p className="mt-1 text-[11px] text-slate-500">These fit on their own once this is fixed.</p>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  )
+type Pdf = { name: string; pages: Awaited<ReturnType<typeof pdfPages>>; draws: WeightDraw[]; doc: PdfDoc }
+async function readPdf(name: string, bytes: Uint8Array): Promise<Pdf> {
+  const pdfjs = await loadPdfJs()
+  const pages = await pdfPages(pdfjs as never, bytes.slice(), { weights: true })        // pdf.js takes the bytes it's given
+  const doc = await pdfjs.getDocument({ data: bytes.slice() }).promise
+  return { name, pages, draws: readFloDraws(pages), doc }
 }
-
-type Pdf = { name: string; bytes: Uint8Array; pages: Awaited<ReturnType<typeof pdfPages>>; draws: WeightDraw[]; doc: PdfDoc }
 const fetchPractice = async (f: 'pdf' | 'practice') => {
   const r = await fetch(`/api/admin/bracket-intake/sample?f=${f}`)
   if (!r.ok) throw new Error('Could not load the practice file')
   return f === 'pdf' ? new Uint8Array(await r.arrayBuffer()) : await r.text()
 }
-async function readPdf(name: string, bytes: Uint8Array): Promise<Pdf> {
-  const pdfjs = await loadPdfJs()
-  const pages = await pdfPages(pdfjs as never, bytes.slice(), { weights: true })        // pdf.js takes the bytes it's given
-  const doc = await pdfjs.getDocument({ data: bytes.slice() }).promise
-  return { name, bytes, pages, draws: readFloDraws(pages), doc }
-}
+const boutText = (r: ResultRow) => `${r.round || '(no round)'}: ${r.winner} (${r.winnerTeam}) over ${r.loser} (${r.loserTeam})${r.winType || r.result ? ` · ${r.winType} ${r.result}` : ''}`
+const H4 = ({ children }: { children: React.ReactNode }) => <h4 className="mb-1 text-[11px] font-bold uppercase tracking-wide text-slate-500">{children}</h4>
+const WIN_TYPES = ['DEC', 'MD', 'TF', 'F', 'FOR', 'DEF', 'DQ', 'INJ']
 
-function Step({ n, title, active, children }: { n: number; title: string; active: boolean; children: React.ReactNode }) {
+/** a step's file: pick a file, or the practice one */
+function Loader({ n, title, done, accept, onFile, practiceLabel, onPractice, disabled }: { n: number; title: string; done: string | null; accept: string; onFile: (f: File) => void; practiceLabel: string; onPractice: () => void; disabled?: boolean }) {
   return (
-    <section className={`border bg-white p-4 ${active ? 'border-slate-300' : 'border-slate-200 opacity-50'}`}>
-      <h3 className="mb-2 text-sm font-bold text-slate-900">{n} · {title}</h3>
-      {active ? children : <p className="text-xs text-slate-500">After step {n - 1}.</p>}
-    </section>
-  )
-}
-function Loader({ accept, onFile, practiceLabel, onPractice }: { accept: string; onFile: (f: File) => void; practiceLabel: string; onPractice: () => void }) {
-  return (
-    <div className="flex flex-wrap items-center gap-3 text-xs">
-      <input type="file" accept={accept} onChange={e => { const f = e.target.files?.[0]; if (f) onFile(f); e.target.value = '' }} />
-      <span className="text-slate-400">or</span>
-      <button onClick={onPractice} className="border border-slate-300 px-2 py-1 font-semibold text-slate-700 hover:bg-slate-50">{practiceLabel}</button>
+    <div className={`border p-3 text-xs ${done ? 'border-emerald-400 bg-emerald-50/40' : 'border-slate-300 bg-white'} ${disabled ? 'opacity-40 pointer-events-none' : ''}`}>
+      <p className="mb-1.5 font-bold text-slate-900">{n} · {title}</p>
+      {done ? <p className="mb-1.5 text-emerald-800">✓ {done}</p> : null}
+      <input type="file" accept={accept} className="block w-full text-[11px]" onChange={e => { const f = e.target.files?.[0]; if (f) onFile(f); e.target.value = '' }} />
+      <button onClick={onPractice} className="mt-1.5 border border-slate-300 bg-white px-2 py-0.5 font-semibold text-slate-700 hover:bg-slate-50">{practiceLabel}</button>
     </div>
   )
 }
 
+type State = { rows: ResultRow[]; manual: Set<number>; label: string }
+
 export function IntakeLab() {
   const [bracket, setBracket] = useState<Pdf | null>(null)
-  const [results, setResults] = useState<{ name: string; rows: ResultRow[]; practice: boolean } | null>(null)
-  const [history, setHistory] = useState<{ rows: ResultRow[]; label: string }[]>([])   // fixes applied (for undo)
+  const [results, setResults] = useState<{ name: string; practice: boolean } | null>(null)
+  const [states, setStates] = useState<State[]>([])                 // [0] = as loaded; each fix adds one (undo = drop it)
   const [completed, setCompleted] = useState<(Pdf & { weights: CompletedWeight[] }) | null>(null)
+  const [weight, setWeight] = useState<number | null>(null)
+  const [picked, setPicked] = useState<string | null>(null)
   const [busy, setBusy] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
@@ -165,109 +125,125 @@ export function IntakeLab() {
   const loadBracket = (name: string, bytes: Uint8Array) => guard('Reading the bracket PDF…', async () => {
     const p = await readPdf(name, bytes)
     if (!p.draws.length) throw new Error('No brackets found in that PDF. Is it the FloWrestling bracket printout?')
-    setBracket(p); setResults(null); setCompleted(null); setHistory([])
+    setBracket(p); setResults(null); setStates([]); setCompleted(null); setPicked(null); setWeight(p.draws[0].weight)
   })
   const loadResults = (name: string, text: string, practice: boolean) => guard('Reading the results…', async () => {
     const { rows, problems } = readFloResults(text)
     if (!rows.length) throw new Error(problems[0] ?? 'No bouts in that file.')
-    setResults({ name, rows, practice }); setCompleted(null); setHistory([])
+    setResults({ name, practice }); setStates([{ rows, manual: new Set(), label: 'loaded' }]); setCompleted(null); setPicked(null)
   })
   const loadCompleted = (name: string, bytes: Uint8Array) => guard('Reading the completed brackets…', async () => {
     if (!bracket) return
     const p = await readPdf(name, bytes)
     if (!p.draws.length) throw new Error('No brackets found in that PDF.')
-    setCompleted({ ...p, weights: readFloCompleted(p.pages, bracket.draws, p.draws) })
+    setCompleted({ ...p, weights: readFloCompleted(p.pages, bracket.draws, p.draws) }); setPicked(null)
   })
 
-  const rows = history.length ? history[history.length - 1].rows : results?.rows ?? []
-  const step2 = bracket && results ? reviewIntake(bracket.draws, results.rows) : null
-  const now = bracket && results ? reviewIntake(bracket.draws, rows, completed ? { weights: completed.weights, draws: completed.draws } : undefined) : null
-  const items = now?.items ?? []
-  const roots = items.filter(i => !i.knockOn)
-  const followersOf = (id: string) => items.filter(i => i.knockOn === id)
-  const fix = (item: ReviewItem, i: number) => {
-    const next = rows.map(r => ({ ...r }))
-    item.fixes[i].apply(next)
-    setHistory(h => [...h, { rows: next, label: `${item.weight} row ${item.row.row}: ${item.fixes[i].label}` }])
+  const cur = states[states.length - 1] ?? null
+  const report = useMemo(() => (bracket && cur ? reviewIntake(bracket.draws, cur.rows, completed ? { weights: completed.weights, draws: completed.draws } : undefined) : null), [bracket, cur, completed])
+  const firstReport = useMemo(() => (bracket && states[0] ? reviewIntake(bracket.draws, states[0].rows) : null), [bracket, states])
+  const draw = bracket?.draws.find(d => d.weight === weight) ?? null
+  const view = useMemo(() => {
+    if (!draw) return null
+    const fit = report?.fits.find(f => f.weight === draw.weight) ?? null
+    return buildIntakeBracket(draw, fit, report?.items ?? [], completed?.weights.find(w => w.weight === draw.weight) ?? null, cur?.manual ?? new Set())
+  }, [draw, report, completed, cur])
+  // per weight: problems (red) to settle
+  const problemsAt = (w: number) => (report?.items ?? []).filter(i => !i.knockOn && (i.slot ? i.slot.weight === w : i.weight === w)).length
+  const unplaced = (report?.items ?? []).filter(i => !i.slot && i.weight === weight)
+  const totalProblems = (report?.items ?? []).filter(i => !i.knockOn).length
+  const missing = view ? Object.values(view.status).filter(s => s === 'missing').length : 0
+
+  const apply = (label: string, f: (rows: ResultRow[]) => void, manualRow?: number) => {
+    if (!cur) return
+    const rows = cur.rows.map(r => ({ ...r }))
+    f(rows)
+    const manual = new Set(cur.manual); if (manualRow != null) manual.add(manualRow)
+    setStates(s => [...s, { rows, manual, label }])
+    setPicked(null)
   }
-  const needCompleted = !!step2 && step2.items.length > 0
-  const unreadable = completed?.weights.filter(w => w.problem) ?? []
+  const teamOf = (name: string, code: string) => {
+    for (const r of cur?.rows ?? []) { if (norm(r.winner) === norm(name)) return r.winnerTeam; if (norm(r.loser) === norm(name)) return r.loserTeam }
+    return code
+  }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       <p className="text-sm text-slate-600">
-        The bracket import, run the way a worker will run it. Use your own files, or the practice files: 2024 NJSIAA
-        State, with a results file that has mistakes in it. Nothing here is saved.
+        The bracket import, step by step, on the bracket itself. Bouts that check out turn <b className="text-emerald-700">green</b>.
+        Anything that doesn’t is <b className="text-red-700">red</b>: click it to see that part of the PDF and fix it. Nothing here is saved.
       </p>
       {busy && <p className="text-xs font-semibold text-slate-700">{busy}</p>}
       {error && <p className="border-l-4 border-red-500 bg-red-50 px-2 py-1 text-xs text-red-900">{error}</p>}
 
-      <Step n={1} title="Load the bracket (before the tournament)" active>
-        <Loader accept="application/pdf,.pdf" onFile={async f => loadBracket(f.name, new Uint8Array(await f.arrayBuffer()))}
-          practiceLabel="Practice: 2024 State bracket PDF" onPractice={() => guard('Getting the practice bracket…', async () => { await loadBracket('2024 NJSIAA State (practice)', await fetchPractice('pdf') as Uint8Array) })} />
-        {bracket && (
-          <div className="mt-3 text-xs text-slate-700">
-            <p><b>{bracket.name}</b>: {bracket.draws.length} weights read: {bracket.draws.map(d => `${d.weight} (${d.lines.length})`).join(' · ')}</p>
-            {bracket.name.includes('practice') && <p className="mt-1 text-[11px] text-slate-500">There’s no blank printout of 2024 State on file, so the practice uses the finished one. The import reads only the first round of a bracket, which is the same on both.</p>}
-          </div>
-        )}
-      </Step>
+      <div className="grid gap-2 md:grid-cols-3">
+        <Loader n={1} title="Bracket PDF (before)" done={bracket ? `${bracket.name}: ${bracket.draws.length} weights` : null} accept="application/pdf,.pdf"
+          onFile={async f => loadBracket(f.name, new Uint8Array(await f.arrayBuffer()))}
+          practiceLabel="Practice: 2024 State bracket" onPractice={() => guard('Getting the practice bracket…', async () => { await loadBracket('2024 State bracket (practice)', await fetchPractice('pdf') as Uint8Array) })} />
+        <Loader n={2} title="Results CSV (after)" disabled={!bracket} done={results && firstReport ? `${results.name}: ${firstReport.placed} bouts fit${firstReport.items.length ? `, ${firstReport.items.length} don’t` : ''}` : null} accept=".csv,text/csv"
+          onFile={async f => loadResults(f.name, await f.text(), false)}
+          practiceLabel="Practice: 2024 State results" onPractice={() => guard('Getting the practice results…', async () => { await loadResults('practice results', await fetchPractice('practice') as string, true) })} />
+        <Loader n={3} title="Completed brackets PDF (only if anything is red)" disabled={!results || !firstReport?.items.length} done={completed && report ? `${completed.name}: ${report.checked} bouts compared` : null} accept="application/pdf,.pdf"
+          onFile={async f => loadCompleted(f.name, new Uint8Array(await f.arrayBuffer()))}
+          practiceLabel="Practice: 2024 State completed" onPractice={() => guard('Getting the practice completed brackets…', async () => { await loadCompleted('2024 State completed (practice)', await fetchPractice('pdf') as Uint8Array) })} />
+      </div>
 
-      <Step n={2} title="Load the results (after the tournament)" active={!!bracket}>
-        <Loader accept=".csv,text/csv" onFile={async f => loadResults(f.name, await f.text(), false)}
-          practiceLabel="Practice: 2024 State results (Flo CSV)" onPractice={() => guard('Getting the practice results…', async () => { await loadResults('2024 NJSIAA State results (practice)', await fetchPractice('practice') as string, true) })} />
-        {step2 && (
-          <div className="mt-3 space-y-2 text-xs text-slate-700">
-            <p><b>{results!.name}</b>: {results!.rows.length} rows · {step2.placed} bouts fit the bracket</p>
-            {step2.items.length === 0 ? (
-              <p className="border-l-4 border-emerald-500 bg-emerald-50 px-2 py-1 text-emerald-900"><b>Every bout fits the bracket.</b> They’d be saved now. Done.</p>
-            ) : (
-              <>
-                <p className="border-l-4 border-amber-500 bg-amber-50 px-2 py-1 text-amber-900">
-                  <b>{step2.items.length} bout{step2.items.length === 1 ? '' : 's'} don’t fit the bracket. Nothing has been saved.</b> Print the whole
-                  tournament to PDF again now that the bouts are in, and load it in step 3.
-                </p>
-                <ul className="space-y-0.5">
-                  {step2.items.filter(i => !i.knockOn).map(i => <li key={i.id}><b>{i.weight}</b> row {i.row.row} · {i.title}: {i.reason}</li>)}
-                  {step2.items.some(i => i.knockOn) && <li className="text-slate-500">+ {step2.items.filter(i => i.knockOn).length} more that follow from these</li>}
-                </ul>
-              </>
-            )}
-          </div>
-        )}
-      </Step>
+      {results && report && (
+        totalProblems === 0
+          ? <p className="border-l-4 border-emerald-500 bg-emerald-50 px-3 py-1.5 text-xs text-emerald-900"><b>Every bout fits{completed ? ' and matches the completed brackets' : ''}.</b> {report.placed} bouts ready to save. <button disabled className="ml-2 bg-emerald-700 px-2 py-0.5 font-semibold text-white opacity-60" title="Mock: nothing is saved here">Save results</button></p>
+          : <p className="border-l-4 border-red-500 bg-red-50 px-3 py-1.5 text-xs text-red-900"><b>{totalProblems} to fix</b> (red). Nothing is saved until they’re fixed.{!completed && ' Load the completed brackets (step 3) to check them against what was wrestled.'}</p>
+      )}
 
-      {(!step2 || needCompleted) && (
-        <Step n={3} title="Load the completed brackets (only when something doesn’t fit)" active={needCompleted}>
-          <Loader accept="application/pdf,.pdf" onFile={async f => loadCompleted(f.name, new Uint8Array(await f.arrayBuffer()))}
-            practiceLabel="Practice: 2024 State completed brackets PDF" onPractice={() => guard('Getting the practice completed brackets…', async () => { await loadCompleted('2024 NJSIAA State completed (practice)', await fetchPractice('pdf') as Uint8Array) })} />
-          {completed && now && (
-            <div className="mt-3 space-y-3">
-              <p className="text-xs text-slate-700">
-                <b>{completed.name}</b>: {now.checked} championship bouts compared with the completed bracket.
-                {unreadable.length > 0 && <> Couldn’t read: {unreadable.map(w => `${w.weight} (${w.problem})`).join('; ')}</>}
-              </p>
-              {history.length > 0 && (
-                <div className="text-xs text-slate-600">
-                  <H4>Fixed so far</H4>
-                  <ol className="list-decimal pl-5">{history.map((h, i) => <li key={i}>{h.label}</li>)}</ol>
-                  <button onClick={() => setHistory(h => h.slice(0, -1))} className="mt-1 border border-slate-300 px-2 py-0.5 font-semibold hover:bg-slate-50">Undo the last fix</button>
+      {bracket && (
+        <div className="border border-slate-300 bg-white">
+          <div className="flex flex-wrap items-center gap-1 border-b border-slate-200 p-2">
+            {bracket.draws.map(d => {
+              const n = results ? problemsAt(d.weight) : 0
+              return (
+                <button key={d.weight} onClick={() => { setWeight(d.weight); setPicked(null) }} className={`px-2 py-0.5 text-xs border ${d.weight === weight ? 'bg-slate-900 text-white border-slate-900' : n ? 'border-red-500 text-red-700 bg-red-50' : results ? 'border-emerald-400 text-emerald-800' : 'border-slate-300 text-slate-700'}`}>
+                  {d.weight}{n ? ` · ${n}` : ''}
+                </button>
+              )
+            })}
+            <span className="ml-auto flex flex-wrap gap-2 text-[10px] text-slate-500">
+              <span><i className="inline-block h-2.5 w-2.5 border border-emerald-500 bg-emerald-50 align-middle" /> fits{completed ? ' + matches' : ''}</span>
+              <span><i className="inline-block h-2.5 w-2.5 border border-red-600 bg-red-50 align-middle" /> fix this</span>
+              <span><i className="inline-block h-2.5 w-2.5 border border-amber-500 bg-amber-50 align-middle" /> fits once the red one is fixed</span>
+              <span><i className="inline-block h-2.5 w-2.5 border border-sky-600 bg-sky-50 align-middle" /> set by hand</span>
+              <span><i className="inline-block h-2.5 w-2.5 border border-dashed border-slate-500 align-middle" /> no bout in the file</span>
+            </span>
+          </div>
+          {view && (
+            <div className="max-h-[72vh] overflow-auto p-3">
+              <BracketMarks.Provider value={{ status: view.status, onPick: id => setPicked(id), selected: picked }}>
+                <SplitBracket bracket={view.bracket} look={{ ...BRACKET_LOOK_DEFAULT, fit: false, cardW: 128, hover: false }} mixed={false} />
+              </BracketMarks.Provider>
+              {missing > 0 && <p className="mt-2 text-[11px] text-slate-500">{missing} box{missing === 1 ? '' : 'es'} with both wrestlers known but no bout in the file (dashed). Click to enter it.</p>}
+              {unplaced.length > 0 && (
+                <div className="mt-3 border-t border-slate-200 pt-2">
+                  <H4>In the file under {weight}, but not on this bracket</H4>
+                  <div className="flex flex-wrap gap-2">
+                    {unplaced.map(it => <button key={it.id} onClick={() => setPicked(`u-${it.id}`)} className="border border-red-600 bg-red-50 px-2 py-1 text-left text-[11px] text-red-900 hover:bg-red-100">row {it.row.row}: {it.row.winner} over {it.row.loser}<br /><span className="text-red-700">{it.title}</span></button>)}
+                  </div>
                 </div>
-              )}
-              {roots.length === 0 ? (
-                <div className="border-l-4 border-emerald-500 bg-emerald-50 px-3 py-2 text-xs text-emerald-900">
-                  <p><b>Everything fits the bracket and matches the completed bracket.</b> {now.placed} bouts ready to save.</p>
-                  <button disabled title="Mock: nothing is saved here" className="mt-2 bg-emerald-700 px-3 py-1 text-xs font-semibold text-white opacity-60">Save results</button>
-                </div>
-              ) : (
-                <>
-                  <p className="text-xs font-semibold text-amber-800">{roots.length} to settle{items.length > roots.length ? ` (+${items.length - roots.length} that fit once these are fixed)` : ''}</p>
-                  {roots.map(it => <ItemCard key={it.id} doc={it.show?.source === 'completed' ? completed.doc : bracket!.doc} item={it} followers={followersOf(it.id)} onFix={i => fix(it, i)} />)}
-                </>
               )}
             </div>
           )}
-        </Step>
+          {states.length > 1 && (
+            <div className="border-t border-slate-200 p-2 text-[11px] text-slate-600">
+              <b>Fixed so far:</b> {states.slice(1).map(s => s.label).join(' · ')}{' '}
+              <button onClick={() => setStates(s => s.slice(0, -1))} className="ml-2 border border-slate-300 px-2 py-0.5 font-semibold hover:bg-slate-50">Undo the last fix</button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {picked && bracket && view && draw && (
+        <BoutPanel
+          key={picked} id={picked} view={view} draw={draw} bracket={bracket} completed={completed} report={report}
+          rows={cur?.rows ?? []} unplaced={unplaced} teamOf={teamOf}
+          onClose={() => setPicked(null)} onApply={apply}
+        />
       )}
 
       {results?.practice && (
@@ -276,6 +252,110 @@ export function IntakeLab() {
           <ul className="mt-2 list-disc pl-5">{PRACTICE.map(p => <li key={p.key}>{p.label}</li>)}</ul>
         </details>
       )}
+    </div>
+  )
+}
+
+/** The bout you clicked: its section of the PDF, what the file says, what the completed bracket shows, the problem
+ *  and its suggested fixes, and the bout to set by hand */
+function BoutPanel({ id, view, draw, bracket, completed, report, rows, unplaced, teamOf, onClose, onApply }: {
+  id: string; view: ReturnType<typeof buildIntakeBracket>; draw: WeightDraw; bracket: Pdf; completed: (Pdf & { weights: CompletedWeight[] }) | null
+  report: ReturnType<typeof reviewIntake> | null; rows: ResultRow[]; unplaced: ReviewItem[]; teamOf: (name: string, code: string) => string
+  onClose: () => void; onApply: (label: string, f: (rows: ResultRow[]) => void, manualRow?: number) => void
+}) {
+  const cell: Cell | null = view.cells.get(id) ?? null
+  const consRow = view.consRows.get(id) ?? null
+  const loose = id.startsWith('u-') ? unplaced.find(i => `u-${i.id}` === id) ?? null : null
+  const items = cell?.items ?? (loose ? [loose] : [])
+  const D = Math.log2(draw.lines.length)
+  const root = items.find(i => !i.knockOn) ?? items[0] ?? null
+  const follows = items.find(i => i.knockOn)
+  const rootOf = follows ? report?.items.find(i => i.id === follows.knockOn) : null
+
+  // the PDF section: the problem's own crop, else this box on the completed bracket (or the draw lines on the blank)
+  const cdraw = completed?.draws.find(d => d.weight === draw.weight) ?? null
+  let show: Show | null = null, marks: Mark[] = [], doc: PdfDoc = bracket.doc
+  if (root?.show) {
+    show = { page: root.show.page, top: root.show.top, bottom: root.show.bottom, label: `${root.show.source === 'completed' ? 'Completed bracket' : 'Bracket'} PDF, page ${root.show.page} · ${root.show.weight}` }
+    marks = root.marks; doc = root.show.source === 'completed' && completed ? completed.doc : bracket.doc
+  } else if (cell) {
+    const d = cdraw ?? draw
+    for (const [k, l] of cell.sides.entries()) if (l != null) { const t = d.tops[l] ?? 0; marks.push({ top: t - 3, bottom: t + 11, x0: d.x - 5, x1: d.x + 122, tone: 'amber', label: `line ${l + 1} · ${draw.lines[l]!.name}${k ? '' : ''}` }) }
+    if (cell.box) marks.push({ top: cell.box.tops[0] - 3, bottom: cell.box.tops[1] + 22, x0: cell.box.x - 5, x1: cell.box.x + 118, tone: 'green', label: 'the completed bracket' })
+    const ys = marks.flatMap(m => [m.top, m.bottom])
+    if (ys.length) { show = { page: d.page, top: Math.min(...ys) - 30, bottom: Math.max(...ys) + 30, label: `${cdraw ? 'Completed bracket' : 'Bracket'} PDF, page ${d.page} · ${draw.weight}` }; doc = cdraw && completed ? completed.doc : bracket.doc }
+  }
+  const row = cell?.row ?? consRow ?? loose?.row ?? null
+  const title = cell ? `${draw.weight} · ${levelName(cell.level, D)}` : consRow ? `${draw.weight} · ${consRow.round || 'Consolation'}` : `${loose?.weight} · not on the bracket`
+  const boxShows = cell?.box && cell.box.winner != null ? (() => { const b = cell.box!; const l = b.lines[0] === b.winner ? b.lines[1] : b.lines[0]; return `${draw.lines[b.winner!]!.name} over ${l != null ? draw.lines[l]!.name : '?'}${b.result ? ` · ${b.result}` : ''}` })() : root?.bracketShows ?? null
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-auto bg-black/40 p-4" onClick={onClose}>
+      <div className="w-full max-w-5xl border border-slate-900 bg-white shadow-xl" onClick={e => e.stopPropagation()}>
+        <div className={`flex items-center justify-between border-b px-3 py-2 ${root && !root.knockOn ? 'bg-red-50' : follows ? 'bg-amber-50' : 'bg-slate-50'}`}>
+          <span className="text-sm font-bold text-slate-900">{title}{root && !root.knockOn ? ` · ${root.title}` : ''}</span>
+          <button onClick={onClose} className="px-2 text-lg leading-none text-slate-500 hover:text-slate-900">×</button>
+        </div>
+        <div className="space-y-3 p-3">
+          {show ? <PdfCrop doc={doc} show={show} marks={marks} /> : <p className="text-xs text-slate-500">{consRow ? 'Consolation bouts aren’t checked against the PDF yet.' : 'No PDF section for this one.'}</p>}
+          <div className="grid gap-x-6 gap-y-3 text-xs text-slate-700 md:grid-cols-2">
+            <div><H4>The results file says</H4><p>{row ? <>{boutText(row)} <span className="text-slate-400">· row {row.row}</span></> : <span className="text-slate-500">No bout for this box.</span>}</p></div>
+            <div><H4>The completed bracket shows</H4><p>{boxShows ?? <span className="text-slate-400">{completed ? 'Nothing readable here.' : 'Not loaded.'}</span>}</p></div>
+            {root && !root.knockOn && <div><H4>What doesn’t fit</H4><p>{root.reason}</p></div>}
+            {root && !root.knockOn && root.hint && <div><H4>Why, most likely</H4><p>{root.hint}</p></div>}
+            {follows && <div className="md:col-span-2"><H4>Why it’s amber</H4><p>{follows.hint}{rootOf?.slot ? ` It’s the red box at ${rootOf.slot.weight} (${levelName(rootOf.slot.level, D)}).` : ''}</p></div>}
+          </div>
+          {root && !root.knockOn && root.fixes.length > 0 && (
+            <div className="text-xs"><H4>Suggested fix</H4>
+              <div className="flex flex-wrap gap-1.5">{root.fixes.map((f: Fix) => <button key={f.label} onClick={() => onApply(`${root.weight} row ${root.row.row}: ${f.label}`, f.apply)} className="bg-slate-900 px-2 py-1 text-[11px] font-semibold text-white hover:bg-slate-700">{f.label}</button>)}</div>
+            </div>
+          )}
+          {cell && <ByHand cell={cell} draw={draw} D={D} row={row} rows={rows} teamOf={teamOf} onApply={onApply} />}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/** Set the box's bout by hand: who wrestled (from the lines that can reach this box), who won, how */
+function ByHand({ cell, draw, D, row, rows, teamOf, onApply }: { cell: Cell; draw: WeightDraw; D: number; row: ResultRow | null; rows: ResultRow[]; teamOf: (name: string, code: string) => string; onApply: (label: string, f: (rows: ResultRow[]) => void, manualRow?: number) => void }) {
+  const span = 1 << cell.level
+  const half = (k: 0 | 1) => { const from = (2 * cell.block + k) * span; return Array.from({ length: span }, (_, i) => from + i).filter(i => draw.lines[i]) }
+  const lineOfName = (n: string | undefined) => (n ? draw.lines.findIndex(l => l && norm(l.name) === norm(n)) : -1)
+  const rowWin = lineOfName(row?.winner), rowLose = lineOfName(row?.loser)
+  const startTop = cell.sides[0] ?? ([rowWin, rowLose].find(l => l >= 0 && half(0).includes(l)) ?? half(0)[0])
+  const startBot = cell.sides[1] ?? ([rowWin, rowLose].find(l => l >= 0 && half(1).includes(l)) ?? half(1)[0])
+  const [top, setTop] = useState<number>(startTop)
+  const [bot, setBot] = useState<number>(startBot)
+  const [win, setWin] = useState<'top' | 'bottom'>(rowWin === startBot ? 'bottom' : 'top')
+  const [type, setType] = useState(row?.winType || 'DEC')
+  const [score, setScore] = useState(row?.result ?? '')
+  const name = (l: number) => draw.lines[l]!.name
+  const save = () => {
+    const w = win === 'top' ? top : bot, l = win === 'top' ? bot : top
+    const wl = draw.lines[w]!, ll = draw.lines[l]!
+    const target = row?.row ?? Math.max(0, ...rows.map(r => r.row)) + 1
+    onApply(`${draw.weight} ${levelName(cell.level, D).toLowerCase()}: ${wl.name} over ${ll.name} (by hand)`, rs => {
+      let r = rs.find(x => x.row === target)
+      if (!r) { const tpl = rs[0]; r = { ...tpl, row: target }; rs.push(r) }
+      Object.assign(r, { weight: draw.weight, round: levelName(cell.level, D), winner: wl.name, winnerTeam: teamOf(wl.name, wl.code), loser: ll.name, loserTeam: teamOf(ll.name, ll.code), winType: type, result: score })
+    }, target)
+  }
+  const sel = 'border border-slate-300 px-1 py-0.5 text-xs'
+  return (
+    <div className="border-t border-slate-200 pt-3 text-xs">
+      <H4>Set this bout by hand</H4>
+      <div className="flex flex-wrap items-end gap-3">
+        <label className="flex flex-col gap-0.5"><span className="flex items-center gap-1"><input type="radio" checked={win === 'top'} onChange={() => setWin('top')} /> winner?</span>
+          <select value={top} onChange={e => setTop(Number(e.target.value))} className={sel}>{half(0).map(l => <option key={l} value={l}>line {l + 1}: {name(l)} ({draw.lines[l]!.code})</option>)}</select></label>
+        <span className="pb-1 text-slate-400">vs</span>
+        <label className="flex flex-col gap-0.5"><span className="flex items-center gap-1"><input type="radio" checked={win === 'bottom'} onChange={() => setWin('bottom')} /> winner?</span>
+          <select value={bot} onChange={e => setBot(Number(e.target.value))} className={sel}>{half(1).map(l => <option key={l} value={l}>line {l + 1}: {name(l)} ({draw.lines[l]!.code})</option>)}</select></label>
+        <label className="flex flex-col gap-0.5">How<select value={type} onChange={e => setType(e.target.value)} className={sel}>{WIN_TYPES.map(t => <option key={t}>{t}</option>)}</select></label>
+        <label className="flex flex-col gap-0.5">Score / time<input value={score} onChange={e => setScore(e.target.value)} placeholder="6-5 or 1:36" className={`${sel} w-24`} /></label>
+        <button onClick={save} className="bg-sky-700 px-3 py-1 font-semibold text-white hover:bg-sky-800">Save this bout</button>
+      </div>
+      <p className="mt-1 text-[11px] text-slate-500">This changes {row ? `row ${row.row} of the results` : 'the results (a new row)'}; the bracket then checks again. Undo is under the bracket.</p>
     </div>
   )
 }

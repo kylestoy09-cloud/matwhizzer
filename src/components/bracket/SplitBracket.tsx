@@ -6,7 +6,7 @@
 // Cards show last names only (the NJ outline for NJSIAA wrestlers where others are in the bracket); hovering a card
 // opens the full bout: names, schools, result. Sizes come from the Aesthetic tool's bracket settings (BracketLook).
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { roundLabel as roundName, type BracketBout, type BracketPerson, type WeightBracket } from '@/lib/boutBracket'
 import { roundStep } from '@/lib/boutOrder'
 import { NjIcon } from '@/components/site/NjIcon'
@@ -15,6 +15,18 @@ export { BRACKET_LOOK_DEFAULT, type BracketLook }
 
 
 const KW = 14   // connector width
+
+/** Bout colors + click, for the bracket import's review (Aesthetic Tool → Import review, 2026-11-26). The site never
+ *  provides it, so site brackets look exactly as before. Keyed by bout id. */
+export type BoutMark = 'ok' | 'problem' | 'follows' | 'manual' | 'missing'
+export const BracketMarks = createContext<{ status: Record<string, BoutMark>; onPick: (id: string) => void; selected?: string | null } | null>(null)
+const MARK_CLASS: Record<BoutMark, string> = {
+  ok: 'border-emerald-500 bg-emerald-50',
+  problem: 'border-red-600 bg-red-50 ring-1 ring-red-600',
+  follows: 'border-amber-500 bg-amber-50',
+  manual: 'border-sky-600 bg-sky-50',
+  missing: 'border-dashed border-slate-500 bg-white',
+}
 /** the settings plus what a page adds: seedSpace (a bracket with seeds), profileBase (/boys/wrestler or /girls/wrestler) */
 type Look = BracketLook & { seedSpace?: boolean; profileBase?: string }
 const PLACE = /^(3rd|5th|7th)/
@@ -55,11 +67,13 @@ function Full({ p, won, mark, base }: { p: BracketPerson | null; won: boolean; m
 function Card({ b, look, mark, toLeft, label, tagOf, podium }: { b: BracketBout | null; look: Look; mark: boolean; toLeft?: boolean; label?: string; tagOf?: (p: BracketPerson | null) => string | undefined; podium?: boolean }) {
   const h = cardH(look)
   // a bout not wrestled yet (a postseason bracket in progress): an empty card holds its place
+  const marks = useContext(BracketMarks)
   if (!b) return <div className="border border-dashed border-slate-300 bg-slate-50/50" style={{ width: look.cardW, height: h }} />
+  const st = marks?.status[b.id]
   return (
     // a tap (focus) opens the full bout too — phones have no hover (review 2026-11-25); the hover setting is the mouse
-    <div tabIndex={0} className="group relative outline-none" style={{ width: look.cardW, height: h }}>
-      <div className={`h-full border bg-white overflow-hidden flex flex-col group-focus:ring-2 group-focus:ring-slate-400 ${podium ? 'border-slate-900 ring-1 ring-slate-900' : 'border-slate-300'}`}>
+    <div tabIndex={0} onClick={marks ? () => marks.onPick(b.id) : undefined} className={`group relative outline-none ${marks ? 'cursor-pointer' : ''}`} style={{ width: look.cardW, height: h }}>
+      <div className={`h-full border overflow-hidden flex flex-col group-focus:ring-2 group-focus:ring-slate-400 ${st ? MARK_CLASS[st] : `bg-white ${podium ? 'border-slate-900 ring-1 ring-slate-900' : 'border-slate-300'}`} ${marks?.selected === b.id ? 'outline outline-2 outline-offset-1 outline-slate-900' : ''}`}>
         <Line p={b.top} won={b.winner === 'top'} look={look} mark={mark} tag={tagOf?.(b.top)} />
         <div className="border-t border-slate-200" />
         <Line p={b.bottom} won={b.winner === 'bottom'} look={look} mark={mark} tag={tagOf?.(b.bottom)} />

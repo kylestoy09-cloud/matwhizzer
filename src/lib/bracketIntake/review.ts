@@ -26,6 +26,10 @@ export type ReviewItem = {
   related: ResultRow[]
   fixes: Fix[]
   knockOn: string | null        // the id of the problem this one follows from (fix that and this fits)
+  /** the championship box on the bracket this bout belongs in (null: it has no place on a bracket yet), and the draw
+   *  lines of its winner and loser there (null where the name isn't on the draw) */
+  slot: { weight: number; level: number; block: number } | null
+  slotLines: [number | null, number | null]
 }
 export type IntakeReport = { fits: WeightFit[]; items: ReviewItem[]; placed: number; checked: number; noDraw: { weight: number; bouts: number }[] }
 
@@ -67,6 +71,7 @@ const byRow = (rows: ResultRow[], r: ResultRow) => rows.find(x => sameRow(x, r))
 /** "DEC 6-5" → { winType: DEC, result: 6-5 } */
 const splitResult = (s: string) => { const [t, ...rest] = s.trim().split(/\s+/); return { winType: (t ?? '').toUpperCase(), result: rest.join(' ') } }
 
+export { meet, labelLevel, linesOf }
 export function reviewIntake(draws: WeightDraw[], rows: ResultRow[], completed?: { weights: CompletedWeight[]; draws: WeightDraw[] }): IntakeReport {
   const byWeight = new Map(draws.map(d => [d.weight, d]))
   const fits = draws.map(d => fitWeight(d, rows.filter(r => r.weight === d.weight)))
@@ -111,6 +116,8 @@ export function reviewIntake(draws: WeightDraw[], rows: ResultRow[], completed?:
     let hint: string | null = null, bracketShows: string | null = null, reason = fl.reason
     let showDraw: WeightDraw | null = draw ?? null
     const fixes: Fix[] = []
+    let slot: ReviewItem['slot'] = null, slotLines: ReviewItem['slotLines'] = [null, null]
+    const setSlot = (w: number, a: number, c: number | null, lvl = c != null ? meet(a, c) : 0) => { slot = { weight: w, level: lvl, block: a >> (lvl + 1) } }
     // marks go on the completed bracket when it's loaded (its first column is the same draw), else on the blank one
     const markLine = (w: number, line: number, tone: Mark['tone'], label: string) => {
       const d = compDrawOf(w) ?? byWeight.get(w)
@@ -127,6 +134,7 @@ export function reviewIntake(draws: WeightDraw[], rows: ResultRow[], completed?:
       if (elsewhere) {
         showDraw = elsewhere
         const la = linesOf(elsewhere, row.winner)[0], lc = linesOf(elsewhere, row.loser)[0]
+        setSlot(elsewhere.weight, la, lc); slotLines = [la, lc]
         markLine(elsewhere.weight, la, 'amber', row.winner)
         markLine(elsewhere.weight, lc, 'amber', row.loser)
         const box = completed ? boxFor(elsewhere.weight, la, lc) : undefined
@@ -137,6 +145,8 @@ export function reviewIntake(draws: WeightDraw[], rows: ResultRow[], completed?:
         const known = a ?? c, missing = a == null ? row.winner : row.loser
         if (a != null) markLine(fl.weight, a, 'red', row.winner)
         if (c != null) markLine(fl.weight, c, 'red', row.loser)
+        const lvlLabel = labelLevel(row, D)
+        if (known != null && lvlLabel != null) { setSlot(fl.weight, known, null, lvlLabel); slotLines = [a, c] }
         if (a == null && c == null) hint = `Neither ${row.winner} nor ${row.loser} is on the ${fl.weight} bracket.`
         else {
           // who the bracket has there: the completed bracket's bout for the known wrestler with this result, else the
@@ -167,6 +177,7 @@ export function reviewIntake(draws: WeightDraw[], rows: ResultRow[], completed?:
     } else if (draw && fl.lines && fl.lines[0] != null && fl.lines[1] != null) {
       const [a, c] = fl.lines as [number, number]
       const lvl = meet(a, c)
+      setSlot(fl.weight, a, c); slotLines = [a, c]
       markLine(fl.weight, a, 'red', row.winner)
       markLine(fl.weight, c, 'red', row.loser)
       const box = completed ? boxFor(fl.weight, a, c) : undefined
@@ -219,7 +230,7 @@ export function reviewIntake(draws: WeightDraw[], rows: ResultRow[], completed?:
     const show = src && showDraw
       ? { weight: showDraw.weight, page: src.page, source: (compDrawOf(showDraw.weight) ? 'completed' : 'bracket') as 'completed' | 'bracket', top: Math.max(0, (tops.length ? Math.min(...tops) : src.tops[0] ?? 0) - 30), bottom: (bottoms.length ? Math.max(...bottoms) : (src.tops[src.tops.length - 1] ?? 400)) + 30 }
       : null
-    items.push({ id: `${fl.kind}-${fl.weight}-${row.row}`, weight: fl.weight, kind: fl.kind, title: TITLE[fl.kind], reason, row, bracketShows, show, marks, hint, related, fixes, knockOn: null })
+    items.push({ id: `${fl.kind}-${fl.weight}-${row.row}`, weight: fl.weight, kind: fl.kind, title: TITLE[fl.kind], reason, row, bracketShows, show, marks, hint, related, fixes, knockOn: null, slot, slotLines })
   }
   // knock-ons: a bout off the path because another problem involves one of its wrestlers earlier (that problem may
   // sit under another weight, e.g. a quarterfinal listed under the wrong weight)
