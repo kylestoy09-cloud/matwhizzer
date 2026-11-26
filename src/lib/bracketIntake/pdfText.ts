@@ -2,7 +2,13 @@
 // (scripts/bracket_intake/rehearse.mts). The caller passes the pdf.js module so each side loads its own build.
 import type { PageText } from './rows'
 
-type PdfJs = { getDocument: (src: { data: Uint8Array; verbosity?: number }) => { promise: Promise<any> } }
+type PdfPage = {
+  getViewport: (o: { scale: number }) => { width: number; height: number }
+  getTextContent: () => Promise<{ items: unknown[] }>
+  cleanup: () => void
+}
+type PdfDoc = { numPages: number; getPage: (n: number) => Promise<PdfPage>; destroy: () => Promise<void> }
+type PdfJs = { getDocument: (src: { data: Uint8Array; verbosity?: number }) => { promise: Promise<PdfDoc> } }
 
 export async function pdfPages(pdfjs: PdfJs, data: Uint8Array): Promise<PageText[]> {
   const doc = await pdfjs.getDocument({ data, verbosity: 0 }).promise
