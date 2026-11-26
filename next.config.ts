@@ -6,6 +6,10 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [{ source: '/:path*', has: [{ type: 'host', value: 'matwhizzer.vercel.app' }], destination: 'https://matwhizzer.com/:path*', permanent: true }]
   },
+  // the Import review tab's practice files (src/app/api/admin/bracket-intake/sample) are read from disk at run time
+  outputFileTracingIncludes: {
+    '/api/admin/bracket-intake/sample': ['./data/bracket_intake/**'],
+  },
   experimental: {
     serverActions: {
       bodySizeLimit: '10mb',

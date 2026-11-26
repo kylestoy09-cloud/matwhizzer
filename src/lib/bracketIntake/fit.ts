@@ -6,10 +6,12 @@ import type { WeightDraw } from './flo'
 import { isPlaceholder, roundKind, type ResultRow, type RoundKind } from './results'
 
 export type Placed = { row: ResultRow; side: 'champ' | 'cons'; lines: [number, number]; round: RoundKind }
-export type Flag = { row: ResultRow; reason: string; lines?: [number | null, number | null] }
+// kind: what tripped the check (the review page explains each and offers its fixes)
+export type FlagKind = 'bad-size' | 'not-on-bracket' | 'unknown-round' | 'wrong-round' | 'off-path'
+export type Flag = { row: ResultRow; kind: FlagKind; reason: string; lines?: [number | null, number | null] }
 export type WeightFit = { weight: number; placed: Placed[]; flags: Flag[]; skipped: number }
 
-const norm = (s: string) => s.replace(/`/g, "'").replace(/\([^)]*\)/g, ' ').normalize('NFD').toLowerCase().replace(/[^a-z]/g, '')
+export const norm = (s: string) => s.replace(/`/g, "'").replace(/\([^)]*\)/g, ' ').normalize('NFD').toLowerCase().replace(/[^a-z]/g, '')
 
 /** codeToSchool: Kyle's Flo code → school name list (before the season); until then the code is matched by its
  *  letters against the CSV's team name — only needed when two wrestlers share a name at one weight */
@@ -17,7 +19,7 @@ export function fitWeight(draw: WeightDraw, results: ResultRow[], codeToSchool?:
   const size = draw.lines.length, D = Math.log2(size)
   const placed: Placed[] = [], flags: Flag[] = []
   let skipped = 0
-  if (!Number.isInteger(D)) return { weight: draw.weight, placed, flags: results.map(row => ({ row, reason: `The bracket read as ${size} lines (should be 8, 16, 32 or 64) — reload this weight.` })), skipped }
+  if (!Number.isInteger(D)) return { weight: draw.weight, placed, flags: results.map(row => ({ row, kind: 'bad-size' as const, reason: `The bracket read as ${size} lines (should be 8, 16, 32 or 64) — reload this weight.` })), skipped }
   const byName = new Map<string, number[]>()
   draw.lines.forEach((l, i) => { if (l) { const k = norm(l.name); byName.set(k, [...(byName.get(k) ?? []), i]) } })
   const lineOf = (name: string, team: string): number | null => {
@@ -42,8 +44,8 @@ export function fitWeight(draw: WeightDraw, results: ResultRow[], codeToSchool?:
     // a bye, or a placeholder opponent (Forfeit Forfeit …), isn't a bout
     if (/^bye$/i.test(row.winType) || !row.loser.trim() || ((isPlaceholder(row.winner) || isPlaceholder(row.loser)) && (lineOf(row.winner, row.winnerTeam) == null || lineOf(row.loser, row.loserTeam) == null))) { skipped++; continue }
     const a = lineOf(row.winner, row.winnerTeam), c = lineOf(row.loser, row.loserTeam), kind = roundKind(row.round)
-    if (a == null || c == null) { flags.push({ row, reason: `${a == null ? row.winner : row.loser} isn't on the ${draw.weight} bracket.`, lines: [a, c] }); continue }
-    if (kind === 'UNKNOWN') { flags.push({ row, reason: `Round "${row.round}" isn't a round name the importer knows.`, lines: [a, c] }); continue }
+    if (a == null || c == null) { flags.push({ row, kind: 'not-on-bracket', reason: `${a == null ? row.winner : row.loser} isn't on the ${draw.weight} bracket.`, lines: [a, c] }); continue }
+    if (kind === 'UNKNOWN') { flags.push({ row, kind: 'unknown-round', reason: `Round "${row.round}" isn't a round name the importer knows.`, lines: [a, c] }); continue }
     bouts.push({ row, a, c, kind })
   }
   // the championship side by its path: in each block, the bout between the two wrestlers who advanced into it (a bye
@@ -72,13 +74,13 @@ export function fitWeight(draw: WeightDraw, results: ResultRow[], codeToSchool?:
   for (const b of bouts) {
     const lvl = meet(b.a, b.c)
     if (champRow.has(b.row)) {
-      if (b.kind !== 'BLANK' && b.kind !== 'CONS' && COL[b.kind] !== lvl) { flags.push({ row: b.row, reason: `${b.row.winner} and ${b.row.loser} meet in the ${KIND(lvl)} on the bracket, not the ${b.row.round}.`, lines: [b.a, b.c] }); continue }
+      if (b.kind !== 'BLANK' && b.kind !== 'CONS' && COL[b.kind] !== lvl) { flags.push({ row: b.row, kind: 'wrong-round', reason: `${b.row.winner} and ${b.row.loser} meet in the ${KIND(lvl)} on the bracket, not the ${b.row.round}.`, lines: [b.a, b.c] }); continue }
       placed.push({ row: b.row, side: 'champ', lines: [b.a, b.c], round: KIND(lvl) })
     } else if (b.kind === 'CONS' || b.kind === 'BLANK' || (lostOnPath.has(b.a) && lostOnPath.has(b.c))) {
       placed.push({ row: b.row, side: 'cons', lines: [b.a, b.c], round: 'CONS' })
     } else {
       // labeled championship, but not on the bracket's path: who won (or who advanced) doesn't add up
-      flags.push({ row: b.row, reason: `${b.row.round}: ${b.row.winner} over ${b.row.loser} isn't on the bracket's championship path (lines ${b.a + 1} and ${b.c + 1}) — check who won the earlier rounds.`, lines: [b.a, b.c] })
+      flags.push({ row: b.row, kind: 'off-path', reason: `${b.row.round}: ${b.row.winner} over ${b.row.loser} isn't on the bracket's championship path (lines ${b.a + 1} and ${b.c + 1}) — check who won the earlier rounds.`, lines: [b.a, b.c] })
     }
   }
   return { weight: draw.weight, placed, flags, skipped }
