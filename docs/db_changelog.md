@@ -9725,7 +9725,33 @@ No real athletes affected. `matches` and `precomputed_team_scores` for these sch
   - Confirming a team saves Track's names and abbreviation as `school_aliases` (`track_name` / `abbreviation`, never over an alias naming another school). Track's district or region is written for the season only when Kyle picks "use Track's".
   - Finding (2026-11-28): Track's Teams page still has last season's alignment. Its districts equal our 2025-26 districts for all 47 matched schools on page 1, and our 2026-27 districts for 14. The review shows those grey and leaves ours.
 
-**Migration status:** PENDING — Kyle runs `20261128_track_teams_review.sql` in the Supabase SQL editor (the page says so until then).
+**APPLIED** — run in Supabase SQL editor 2026-11-28 (check: boys_rows 0, girls_rows 0; service role reads both tables)
 
 **Reversible?** Tasks: yes, from the backup. Tables: drop (see the migration). Aliases / district writes: logged in `admin_activity_log` (`track_teams_confirm_{side}`).
 **Verified?** Task order read back after the change (table above in the script output). Review dry run on Kyle's page 1 (50 teams): 45 matched by name, 2 by abbreviation, 2 by close spelling (Bishop Eustace has no boys program yet; Chatham/Mendham → our Mendham program), 1 test team.
+
+---
+
+## 2026-11-28 — Roster Import (`boys_season_rosters`, `girls_season_rosters`, `boys_roster_loads`, `girls_roster_loads`)
+
+**Tables affected:** new tables (migration); through the import: `roster_grade_import` (new names stored as Track roster players), `wrestlers.grade` (filled only where empty, or when Kyle picks Track's grade), `{side}_transfers` + `wrestler_name_aliases` (a transfer Kyle confirms)
+
+**What changed:**
+- Migration `docs/migrations/20261128_season_rosters.sql`: this season's TrackWrestling rosters, one row per wrestler per school, with the match to our wrestler or stored roster player, the rollover's grade, whether they wrestled varsity last season, and review status. Also each school's loads (round, count, and the expected wrestlers Track didn't list).
+- New page `/admin/{side}/roster-import` (also in the preseason workspace). Rules in `src/lib/trackIntake/rosterReview.ts`:
+  - **Confirmed automatically:** an exact name expected at the school, with the same grade; a new freshman.
+  - **To review:** a close spelling, a grade difference, a girl on a boys roster, a new sophomore to senior, or the same name elsewhere.
+  - **Transfers** (Kyle: "this isn't a lock, but should be reviewed"): the same name and grade as a wrestler expected at another school but missing from that school's new roster. Confirming one logs it like the Transfers tool.
+- `src/lib/logTransfer.ts`: the Transfers tool's write, moved out of `/api/admin/transfers` so both tools log a transfer the same way. No change in behavior.
+- School page (`SchoolProfileCore.tsx` `seasonRoster`): a season's roster also lists that season's confirmed roster wrestlers who wrestled varsity the season before. It shows Track's weight, or else last season's most common one. Before the migration and before any import, it adds nothing.
+
+**Migration status:** PENDING — Kyle runs `20261128_season_rosters.sql` in the Supabase SQL editor.
+
+**Reversible?** Tables: drop (see the migration). Grades: `grade_confirmed_source = 'roster_upload'`. Stored players: `import_batch` like `2026-11-28_track_roster_r1`. Transfers: undo in the Transfers tool. Every resolve and dismissal is in `admin_activity_log` (`season_roster_*`).
+**Verified?** Dry run on Kyle's boys file (58 schools, 2,079 wrestlers; nothing written), about 9 seconds:
+- 911 matched to our wrestlers and 447 to stored players.
+- 417 new freshmen.
+- 314 to review (285 new sophomores to seniors).
+- 904 to show on school pages.
+
+Site snapshot unchanged before the deploy.

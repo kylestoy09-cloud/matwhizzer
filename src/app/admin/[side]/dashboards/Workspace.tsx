@@ -7,6 +7,7 @@ import { TransfersWorkspace }         from './tools/TransfersWorkspace'
 import { CoachesImportWorkspace }     from './tools/CoachesImportWorkspace'
 import { TournamentScheduleWorkspace } from './tools/TournamentScheduleWorkspace'
 import { SchoolDataReviewWorkspace }  from './tools/SchoolDataReviewWorkspace'
+import { RosterImportWorkspace }      from './tools/RosterImportWorkspace'
 
 function ScheduleImportStub() {
   return (
@@ -41,6 +42,7 @@ const TOOL_COMPONENTS: Record<string, React.ComponentType> = {
   tournament_schedule: TournamentScheduleWorkspace,
   schedule_import:    ScheduleImportStub,
   school_data_review: SchoolDataReviewWorkspace,
+  roster_import:      RosterImportWorkspace,
 }
 
 export function Workspace({ task, defaultContent }: { task: Task | null; defaultContent?: React.ReactNode }) {

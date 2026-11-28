@@ -469,6 +469,16 @@ async function seasonRoster(schoolId: number, g: 'M' | 'F', season: number, seas
     if (b.wrestler1_school_id === schoolId) add(b.wrestler1_id, b.weight_class)
     if (b.wrestler2_school_id === schoolId) add(b.wrestler2_id, b.weight_class)
   }
+  // the preseason roster (Kyle 2026-11-28): wrestlers on the school's Track roster for the season, confirmed in the
+  // Roster Import, who wrestled varsity the season before. Until they wrestle this season, at Track's weight (or
+  // last season's). Everyone else on Track's roster stays stored, not shown, until their first varsity match.
+  // Server key: the roster tables are service-role only. Before the migration the table isn't there: nothing added.
+  const { data: pre } = await createSupabaseAdmin().from(g === 'F' ? 'girls_season_rosters' : 'boys_season_rosters')
+    .select('wrestler_id, weight, last_weight').eq('season_id', season).eq('school_id', schoolId).eq('status', 'confirmed').eq('varsity_last', true)
+    .not('wrestler_id', 'is', null).limit(500)
+  const preWeight = new Map<string, number>()
+  for (const r of pre ?? []) if (r.wrestler_id && !weights.has(r.wrestler_id)) preWeight.set(r.wrestler_id, r.weight ?? r.last_weight ?? 0)
+  for (const [id, wt] of preWeight) weights.set(id, new Map([[wt, 1]]))
   const have = new Set(postseason.map(w => w.wrestler_id))
   const extra = [...weights.keys()].filter(id => !have.has(id))
   if (!extra.length) return postseason
