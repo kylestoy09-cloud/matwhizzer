@@ -9745,7 +9745,7 @@ No real athletes affected. `matches` and `precomputed_team_scores` for these sch
 - `src/lib/logTransfer.ts`: the Transfers tool's write, moved out of `/api/admin/transfers` so both tools log a transfer the same way. No change in behavior.
 - School page (`SchoolProfileCore.tsx` `seasonRoster`): a season's roster also lists that season's confirmed roster wrestlers who wrestled varsity the season before. It shows Track's weight, or else last season's most common one. Before the migration and before any import, it adds nothing.
 
-**Migration status:** PENDING — Kyle runs `20261128_season_rosters.sql` in the Supabase SQL editor.
+**APPLIED** — run in Supabase SQL editor 2026-11-28 (check: all four tables 0 rows; service role reads them)
 
 **Reversible?** Tables: drop (see the migration). Grades: `grade_confirmed_source = 'roster_upload'`. Stored players: `import_batch` like `2026-11-28_track_roster_r1`. Transfers: undo in the Transfers tool. Every resolve and dismissal is in `admin_activity_log` (`season_roster_*`).
 **Verified?** Dry run on Kyle's boys file (58 schools, 2,079 wrestlers; nothing written), about 9 seconds:
