@@ -9708,3 +9708,24 @@ No real athletes affected. `matches` and `precomputed_team_scores` for these sch
 
 **Reversible?** Yes — re-insert from the backup
 **Verified?** Yes — integrity check unchanged before/after (the usual 3 items)
+
+---
+
+## 2026-11-28 — Season intake order (tasks) + School Data Review (`boys_track_teams`, `girls_track_teams`)
+
+**Tables affected:** `admin_tasks` (data), new `boys_track_teams` / `girls_track_teams` (migration), and through the review: `school_aliases`, `{side}_school_districts`, `{side}_school_regions`, `schools` / `{side}_schools` (new schools, only when Kyle adds one)
+
+**What changed:**
+- Kyle: "roll over roster should be the last step to ending a season, not the first step in starting one." `scripts/season_intake_tasks_20261128.mts`:
+  - **Offseason (end of season):** Save the End of Season Report → Roll Over Roster (moved from preseason; this season's completion kept) → Archive the Season.
+  - **Preseason:** School Data Review → Complete Transfers → Roster Import → Enter Tournament Schedule → Coaches → Import Schedules Round 1 (11/28) and Round 2 (12/7).
+  - **Season:** Import Schedules Round 3 (12/21) and Round 4 (1/10/2027).
+  - Boys and girls rows each. Backup: `docs/migrations/backups/20261128_admin_tasks_before_intake_order.json`. Nothing deleted.
+- Migration `docs/migrations/20261128_track_teams_review.sql`: one row per TrackWrestling team per season (Track's season team, global team, abbreviation, governing body, leagues; our school; review status). New page `/admin/{side}/school-data-review` (also in the preseason workspace).
+  - Confirming a team saves Track's names and abbreviation as `school_aliases` (`track_name` / `abbreviation`, never over an alias naming another school). Track's district or region is written for the season only when Kyle picks "use Track's".
+  - Finding (2026-11-28): Track's Teams page still has last season's alignment. Its districts equal our 2025-26 districts for all 47 matched schools on page 1, and our 2026-27 districts for 14. The review shows those grey and leaves ours.
+
+**Migration status:** PENDING — Kyle runs `20261128_track_teams_review.sql` in the Supabase SQL editor (the page says so until then).
+
+**Reversible?** Tasks: yes, from the backup. Tables: drop (see the migration). Aliases / district writes: logged in `admin_activity_log` (`track_teams_confirm_{side}`).
+**Verified?** Task order read back after the change (table above in the script output). Review dry run on Kyle's page 1 (50 teams): 45 matched by name, 2 by abbreviation, 2 by close spelling (Bishop Eustace has no boys program yet; Chatham/Mendham → our Mendham program), 1 test team.
